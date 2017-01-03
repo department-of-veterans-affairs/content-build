@@ -1,7 +1,7 @@
 if (!process.env.BUILDTYPE || process.env.BUILDTYPE === 'development') {
-  const E2eHelpers = require('../util/e2e-helpers');
-  const Timeouts = require('../util/timeouts.js');
-  const EduHelpers = require('../util/edu-helpers');
+  const E2eHelpers = require('../../util/e2e-helpers');
+  const Timeouts = require('../../util/timeouts.js');
+  const EduHelpers = require('../../util/edu-helpers');
 
   module.exports = E2eHelpers.createE2eTest(
     (client) => {

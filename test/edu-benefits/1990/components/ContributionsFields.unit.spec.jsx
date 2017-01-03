@@ -4,8 +4,8 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import _ from 'lodash';
 
-import ContributionsFields from '../../../src/js/edu-benefits/components/military-history/ContributionsFields';
-import { createVeteran } from '../../../src/js/edu-benefits/utils/veteran';
+import ContributionsFields from '../../../../src/js/edu-benefits/1990/components/military-history/ContributionsFields';
+import { createVeteran } from '../../../../src/js/edu-benefits/1990/utils/veteran';
 
 function testGroup(conditions, index, result) {
   const veteran = createVeteran();

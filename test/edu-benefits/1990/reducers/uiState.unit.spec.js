@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import uiStateReducer from '../../../src/js/edu-benefits/reducers/uiState/index';
+import uiStateReducer from '../../../../src/js/edu-benefits/1990/reducers/uiState/index';
 import {
   UPDATE_COMPLETED_STATUS,
   UPDATE_INCOMPLETE_STATUS,
@@ -8,7 +8,7 @@ import {
   UPDATE_SUBMISSION_STATUS,
   UPDATE_SUBMISSION_ID,
   UPDATE_SUBMISSION_TIMESTAMP
-} from '../../../src/js/edu-benefits/actions/index';
+} from '../../../../src/js/edu-benefits/1990/actions/index';
 
 describe('uiState reducer', () => {
   it('should set the complete status', () => {

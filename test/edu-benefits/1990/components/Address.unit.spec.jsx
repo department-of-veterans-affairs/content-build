@@ -4,8 +4,8 @@ import { assert, expect } from 'chai';
 import sinon from 'sinon';
 
 import Address from
-    '../../../src/js/edu-benefits/components/Address';
-import { makeAddressField } from '../../../src/js/edu-benefits/utils/veteran';
+  '../../../../src/js/edu-benefits/1990/components/Address';
+import { makeAddressField } from '../../../../src/js/edu-benefits/1990/utils/veteran';
 
 describe('<Address>', () => {
   let component = null;

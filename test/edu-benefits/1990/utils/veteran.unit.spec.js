@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import { createVeteran, veteranToApplication } from '../../../src/js/edu-benefits/utils/veteran.js';
-import { makeField } from '../../../src/js/common/model/fields';
+import { createVeteran, veteranToApplication } from '../../../../src/js/edu-benefits/1990/utils/veteran.js';
+import { makeField } from '../../../../src/js/common/model/fields';
 
 describe('veteranToApplication', () => {
   it('converts empty fields to undefined', () => {

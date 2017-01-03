@@ -10,10 +10,10 @@ import {
   isValidRelinquishedDate,
   isValidEducationPeriod,
   isValidEducationHistoryPage
-} from '../../../src/js/edu-benefits/utils/validations.js';
+} from '../../../../src/js/edu-benefits/1990/utils/validations.js';
 
-import { createVeteran } from '../../../src/js/edu-benefits/utils/veteran.js';
-import { makeField } from '../../../src/js/common/model/fields.js';
+import { createVeteran } from '../../../../src/js/edu-benefits/1990/utils/veteran.js';
+import { makeField } from '../../../../src/js/common/model/fields.js';
 
 describe('Validation:', () => {
   describe('isValidPage:', () => {

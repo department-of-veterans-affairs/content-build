@@ -2,8 +2,8 @@ import React from 'react';
 import SkinDeep from 'skin-deep';
 import { expect } from 'chai';
 
-import SchoolSelectionReview from '../../../src/js/edu-benefits/components/school-selection/SchoolSelectionReview';
-import { createVeteran } from '../../../src/js/edu-benefits/utils/veteran';
+import SchoolSelectionReview from '../../../../src/js/edu-benefits/1990/components/school-selection/SchoolSelectionReview';
+import { createVeteran } from '../../../../src/js/edu-benefits/1990/utils/veteran';
 
 describe('<SchoolSelectionReview>', () => {
   it('should render', () => {
