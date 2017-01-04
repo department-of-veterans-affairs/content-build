@@ -3,8 +3,8 @@ import SkinDeep from 'skin-deep';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import EducationHistoryFields from '../../../src/js/edu-benefits/components/education-history/EducationHistoryFields';
-import { createVeteran } from '../../../src/js/edu-benefits/utils/veteran';
+import EducationHistoryFields from '../../../../src/js/edu-benefits/1990/components/education-history/EducationHistoryFields';
+import { createVeteran } from '../../../../src/js/edu-benefits/1990/utils/veteran';
 
 const makeTree = (_veteran) => {
   const veteran = _veteran || createVeteran();

@@ -3,8 +3,8 @@ import SkinDeep from 'skin-deep';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import BenefitsRelinquishmentFields from '../../../src/js/edu-benefits/components/benefits-eligibility/BenefitsRelinquishmentFields';
-import { createVeteran } from '../../../src/js/edu-benefits/utils/veteran';
+import BenefitsRelinquishmentFields from '../../../../src/js/edu-benefits/1990/components/benefits-eligibility/BenefitsRelinquishmentFields';
+import { createVeteran } from '../../../../src/js/edu-benefits/1990/utils/veteran';
 
 describe('<BenefitsRelinquishmentFields>', () => {
   const data = createVeteran();

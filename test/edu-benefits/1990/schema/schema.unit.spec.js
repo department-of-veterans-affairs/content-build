@@ -11,7 +11,7 @@ import {
   createEducationPeriod,
   createRotcScholarship,
   createEmploymentPeriod
-} from '../../../src/js/edu-benefits/utils/veteran';
+} from '../../../../src/js/edu-benefits/1990/utils/veteran';
 
 import {
   relinquishableBenefits,
@@ -22,7 +22,7 @@ import {
   serviceBranches,
   hoursTypes,
   ownBenefitsOptions
-} from '../../../src/js/edu-benefits/utils/options-for-select';
+} from '../../../../src/js/edu-benefits/1990/utils/options-for-select';
 
 const ajv = new Ajv();
 const validate = ajv.compile(schema);

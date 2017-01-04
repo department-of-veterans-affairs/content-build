@@ -2,8 +2,8 @@ import React from 'react';
 import SkinDeep from 'skin-deep';
 import { expect } from 'chai';
 
-import SubmitMessage from '../../../src/js/edu-benefits/components/SubmitMessage';
-import { createVeteran } from '../../../src/js/edu-benefits/utils/veteran';
+import SubmitMessage from '../../../../src/js/edu-benefits/1990/components/SubmitMessage';
+import { createVeteran } from '../../../../src/js/edu-benefits/1990/utils/veteran';
 
 describe('<BenefitsWaiverFields>', () => {
   const veteran = createVeteran();

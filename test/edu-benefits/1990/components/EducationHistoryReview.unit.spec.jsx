@@ -2,9 +2,9 @@ import React from 'react';
 import SkinDeep from 'skin-deep';
 import { expect } from 'chai';
 
-import EducationHistoryReview from '../../../src/js/edu-benefits/components/education-history/EducationHistoryReview';
-import { createVeteran } from '../../../src/js/edu-benefits/utils/veteran';
-import { makeField } from '../../../src/js/common/model/fields';
+import EducationHistoryReview from '../../../../src/js/edu-benefits/1990/components/education-history/EducationHistoryReview';
+import { createVeteran } from '../../../../src/js/edu-benefits/1990/utils/veteran';
+import { makeField } from '../../../../src/js/common/model/fields';
 
 describe('<EducationHistoryReview>', () => {
   it('should properly display the graduation date', () => {

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import veteranReducer from '../../../src/js/edu-benefits/reducers/veteran/index';
-import { VETERAN_FIELD_UPDATE, ENSURE_FIELDS_INITIALIZED } from '../../../src/js/edu-benefits/actions/index';
+import veteranReducer from '../../../../src/js/edu-benefits/1990/reducers/veteran/index';
+import { VETERAN_FIELD_UPDATE, ENSURE_FIELDS_INITIALIZED } from '../../../../src/js/edu-benefits/1990/actions/index';
 
 describe('veteran reducer', () => {
   it('should update a field', () => {
