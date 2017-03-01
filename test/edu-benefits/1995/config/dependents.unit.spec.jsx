@@ -1,14 +1,13 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import { expect } from 'chai';
-import sinon from 'sinon';
 import ReactTestUtils from 'react-addons-test-utils';
 
 import { DefinitionTester, submitForm } from '../../../util/schemaform-utils.jsx';
 import formConfig from '../../../../src/js/edu-benefits/1995/config/form';
 
-describe('Edu 1995 benefitSelection', () => {
-  const { schema, uiSchema } = formConfig.chapters.benefitSelection.pages.benefitSelection;
+describe('Edu 1995 dependents', () => {
+  const { schema, uiSchema } = formConfig.chapters.personalInformation.pages.dependents;
   it('should render', () => {
     const form = ReactTestUtils.renderIntoDocument(
       <DefinitionTester
@@ -17,25 +16,21 @@ describe('Edu 1995 benefitSelection', () => {
           uiSchema={uiSchema}/>
     );
 
-    expect(ReactTestUtils.scryRenderedDOMComponentsWithTag(form, 'input'))
-      .to.not.be.empty;
-  });
+    const formDOM = findDOMNode(form);
 
-  it('should have no required inputs', () => {
-    const onSubmit = sinon.spy();
+    expect(formDOM.querySelectorAll('input').length).to.equal(6);
+  });
+  it('should have all fields set as required', () => {
     const form = ReactTestUtils.renderIntoDocument(
       <DefinitionTester
           schema={schema}
-          onSubmit={onSubmit}
           data={{}}
           uiSchema={uiSchema}/>
     );
+
     const formDOM = findDOMNode(form);
     submitForm(form);
-    expect(Array.from(formDOM.querySelectorAll('.usa-input-error'))).to.be.empty;
 
-    submitForm(form);
-
-    expect(onSubmit.called).to.be.true;
+    expect(formDOM.querySelectorAll('.usa-input-error').length).to.equal(3);
   });
 });
