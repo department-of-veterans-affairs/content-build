@@ -1,5 +1,4 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -7,8 +6,9 @@ import ReactTestUtils from 'react-addons-test-utils';
 import { DefinitionTester, submitForm } from '../../../util/schemaform-utils.jsx';
 import formConfig from '../../../../src/js/edu-benefits/1995/config/form';
 
-describe('Edu 1995 benefitSelection', () => {
-  const { schema, uiSchema } = formConfig.chapters.benefitSelection.pages.benefitSelection;
+describe('Edu 1995 schoolSelection', () => {
+  const { schema, uiSchema } = formConfig.chapters.schoolSelection.pages.oldSchool;
+
   it('should render', () => {
     const form = ReactTestUtils.renderIntoDocument(
       <DefinitionTester
@@ -25,17 +25,17 @@ describe('Edu 1995 benefitSelection', () => {
     const onSubmit = sinon.spy();
     const form = ReactTestUtils.renderIntoDocument(
       <DefinitionTester
-          schema={schema}
+          formData={{}}
           onSubmit={onSubmit}
+          schema={schema}
           data={{}}
           uiSchema={uiSchema}/>
     );
-    const formDOM = findDOMNode(form);
-    submitForm(form);
-    expect(Array.from(formDOM.querySelectorAll('.usa-input-error'))).to.be.empty;
 
+    // Submit the form with no information
     submitForm(form);
 
+    // onSubmit will only be called if there were no validation errors
     expect(onSubmit.called).to.be.true;
   });
 });
