@@ -4,26 +4,26 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import ReactTestUtils from 'react-dom/test-utils';
 
-import { DefinitionTester, submitForm } from '../../util/schemaform-utils';
-import formConfig from '../../../src/js/hca-rjsf/config/form';
+import { DefinitionTester, submitForm } from '../../util/schemaform-utils.jsx';
+import formConfig from '../../../src/js/hca/config/form';
 
-
-describe('Hca deductible expenses', () => {
-  const { schema, uiSchema } = formConfig.chapters.householdInformation.pages.deductibleExpenses;
+describe('Hca additionalInformation', () => {
+  const { schema, uiSchema } = formConfig.chapters.militaryService.pages.additionalInformation;
+  const definitions = formConfig.defaultDefinitions;
   it('should render', () => {
     const form = ReactTestUtils.renderIntoDocument(
       <DefinitionTester
           schema={schema}
-          definitions={formConfig.defaultDefinitions}
-          uiSchema={uiSchema}/>
+          data={{}}
+          uiSchema={uiSchema}
+          definitions={definitions}/>
     );
     const formDOM = findDOMNode(form);
 
-    expect(formDOM.querySelectorAll('input, select').length)
-      .to.equal(3);
+    expect(formDOM.querySelectorAll('input').length).to.equal(9);
   });
 
-  it('should not submit empty form', () => {
+  it('should submit without data', () => {
     const onSubmit = sinon.spy();
     const form = ReactTestUtils.renderIntoDocument(
       <DefinitionTester
@@ -33,10 +33,9 @@ describe('Hca deductible expenses', () => {
           uiSchema={uiSchema}/>
     );
     const formDOM = findDOMNode(form);
-
     submitForm(form);
-
-    expect(formDOM.querySelectorAll('.usa-input-error').length).to.equal(3);
-    expect(onSubmit.called).to.be.false;
+    expect(formDOM.querySelectorAll('.usa-input-error').length).to.equal(0);
+    expect(onSubmit.called).to.be.true;
   });
 });
+

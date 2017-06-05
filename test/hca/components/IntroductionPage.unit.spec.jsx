@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import ReactTestUtils from 'react-dom/test-utils';
-import { IntroductionPage } from '../../../src/js/hca-rjsf/components/IntroductionPage';
+import { IntroductionPage } from '../../../src/js/hca/components/IntroductionPage';
 
 describe('hca <IntroductionPage>', () => {
   it('should render', () => {

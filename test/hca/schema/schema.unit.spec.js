@@ -3,8 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { Validator } from 'jsonschema';
 
-import { transform } from '../../../src/js/hca-rjsf/helpers';
-import formConfig from '../../../src/js/hca-rjsf/config/form';
+import { transform } from '../../../src/js/hca/helpers';
+import formConfig from '../../../src/js/hca/config/form';
 import fullSchemaHca from 'vets-json-schema/dist/10-10EZ-schema.json';
 
 describe('hca schema tests', () => {
