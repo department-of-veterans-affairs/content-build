@@ -5,23 +5,21 @@ import sinon from 'sinon';
 import ReactTestUtils from 'react-dom/test-utils';
 
 import { DefinitionTester, submitForm } from '../../util/schemaform-utils.jsx';
-import formConfig from '../../../src/js/hca-rjsf/config/form';
+import formConfig from '../../../src/js/hca/config/form';
 
-describe('Hca serviceInformation', () => {
-  const { schema, uiSchema } = formConfig.chapters.militaryService.pages.serviceInformation;
+describe('Hca financial disclosure', () => {
+  const { schema, uiSchema } = formConfig.chapters.householdInformation.pages.financialDisclosure;
   const definitions = formConfig.defaultDefinitions;
   it('should render', () => {
     const form = ReactTestUtils.renderIntoDocument(
       <DefinitionTester
           schema={schema}
-          data={{}}
           uiSchema={uiSchema}
           definitions={definitions}/>
     );
     const formDOM = findDOMNode(form);
 
     expect(formDOM.querySelectorAll('input').length).to.equal(2);
-    expect(formDOM.querySelectorAll('select').length).to.equal(6);
   });
 
   it('should not submit empty form', () => {
@@ -38,7 +36,7 @@ describe('Hca serviceInformation', () => {
 
     submitForm(form);
 
-    expect(formDOM.querySelectorAll('.usa-input-error').length).to.equal(4);
+    expect(formDOM.querySelectorAll('.usa-input-error').length).to.equal(1);
     expect(onSubmit.called).to.be.false;
   });
 
@@ -53,49 +51,34 @@ describe('Hca serviceInformation', () => {
     );
     const formDOM = findDOMNode(form);
 
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_lastServiceBranch'), {
+    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_discloseFinancialInformationYes'), {
       target: {
-        value: 'army'
-      }
-    });
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_lastEntryDateMonth'), {
-      target: {
-        value: 1
-      }
-    });
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_lastEntryDateDay'), {
-      target: {
-        value: 1
-      }
-    });
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_lastEntryDateYear'), {
-      target: {
-        value: '2010'
-      }
-    });
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_lastDischargeDateMonth'), {
-      target: {
-        value: 1
-      }
-    });
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_lastDischargeDateDay'), {
-      target: {
-        value: 1
-      }
-    });
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_lastDischargeDateYear'), {
-      target: {
-        value: '2011'
-      }
-    });
-    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_dischargeType'), {
-      target: {
-        value: 'honorable'
+        value: 'Y'
       }
     });
 
     submitForm(form);
     expect(formDOM.querySelectorAll('.usa-input-error').length).to.equal(0);
     expect(onSubmit.called).to.be.true;
+  });
+  it('should show a warning if No is selected', () => {
+    const onSubmit = sinon.spy();
+    const form = ReactTestUtils.renderIntoDocument(
+      <DefinitionTester
+          schema={schema}
+          definitions={definitions}
+          onSubmit={onSubmit}
+          uiSchema={uiSchema}/>
+    );
+    const formDOM = findDOMNode(form);
+    expect(Array.from(formDOM.querySelectorAll('.usa-alert-info')).length).to.equal(1);
+
+    ReactTestUtils.Simulate.change(formDOM.querySelector('#root_discloseFinancialInformationNo'), {
+      target: {
+        value: 'N'
+      }
+    });
+
+    expect(Array.from(formDOM.querySelectorAll('.usa-alert-info')).length).to.equal(2);
   });
 });

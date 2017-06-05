@@ -5,7 +5,7 @@ import ReactTestUtils from 'react-dom/test-utils';
 import sinon from 'sinon';
 
 import { DefinitionTester, submitForm } from '../../util/schemaform-utils.jsx';
-import formConfig from '../../../src/js/hca-rjsf/config/form.js';
+import formConfig from '../../../src/js/hca/config/form.js';
 
 describe('HCA veteranInformation', () => {
   it('should render veteranInformation page', () => {
