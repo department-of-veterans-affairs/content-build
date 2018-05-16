@@ -1,7 +1,7 @@
 ---
 title: Your Vets.gov Account
 layout: page-react.html
-entryname: account
+entryname: account-beta
 ---
 <div id="main">
   <nav class="va-nav-breadcrumbs">

@@ -1,7 +1,7 @@
 ---
 title: Your Vets.gov Dashboard
 layout: page-react.html
-entryname: dashboard
+entryname: dashboard-beta
 ---
 <div id="main">
   <nav class="va-nav-breadcrumbs">
