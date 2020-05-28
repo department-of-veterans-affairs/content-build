@@ -29,7 +29,7 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'protocol', type: String, defaultValue: 'http' },
   { name: 'public', type: String, defaultValue: null },
   { name: 'destination', type: String, defaultValue: null },
-  { name: 'asset-source', type: String, defaultValue: assetSources.LOCAL },
+  { name: 'asset-source', type: String, defaultValue: assetSources.DEPLOYED },
   { name: 'content-directory', type: String, defaultValue: defaultContentDir },
   { name: 'pull-drupal', type: Boolean, defaultValue: false },
   { name: 'use-cms-export', type: Boolean, defaultValue: false },
