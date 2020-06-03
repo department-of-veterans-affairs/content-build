@@ -1,5 +1,6 @@
 /* eslint-disable no-continue, no-param-reassign */
 
+const path = require('path');
 const environments = require('../../../constants/environments');
 
 const FILE_MANIFEST_FILENAME = 'generated/file-manifest.json';
@@ -41,6 +42,22 @@ function copyAssetsToTeamSitePaths(buildOptions, files, entryNamesDictionary) {
 }
 
 function getEntryNamesDictionary(buildOptions, files) {
+  const isDevBuild = [environments.LOCALHOST, environments.VAGOVDEV].includes(
+    buildOptions.buildtype,
+  );
+
+  if (isDevBuild) {
+    return {
+      get(entryName) {
+        const isJs = path.extname(entryName) === '.js';
+        const fileName = isJs
+          ? `${path.parse(entryName).name}.entry.js`
+          : entryName;
+        return `/generated/${fileName}`;
+      },
+    };
+  }
+
   const fileManifest = files[FILE_MANIFEST_FILENAME];
 
   if (!fileManifest) {
