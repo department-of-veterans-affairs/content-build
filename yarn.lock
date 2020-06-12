@@ -6504,10 +6504,6 @@ findup-sync@3.0.0:
     micromatch "^3.0.4"
     resolve-dir "^1.0.1"
 
-fine-uploader@^5.11.8:
-  version "5.14.2"
-  resolved "https://registry.yarnpkg.com/fine-uploader/-/fine-uploader-5.14.2.tgz#2bd3a6fd9ce2c086e968caf093fc4f4064740e16"
-
 first-chunk-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/first-chunk-stream/-/first-chunk-stream-2.0.0.tgz#1bdecdb8e083c0664b91945581577a43a9f31d70"
