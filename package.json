@@ -297,8 +297,7 @@
     "syswide-cas": "^5.3.0",
     "tar-fs": "^2.0.1",
     "tinyliquid": "^0.2.33",
-    "uswds": "1.6.10",
-    "whatwg-fetch": "^2.0.3"
+    "uswds": "1.6.10"
   },
   "resolutions": {
     "**/lodash": "4.17.15",
