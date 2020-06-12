@@ -280,7 +280,6 @@
     "moment": "^2.19.3",
     "moment-timezone": "^0.5.27",
     "number-to-words": "^1.2.4",
-    "prop-types": "^15.6.1",
     "raven": "^2.6.4",
     "syswide-cas": "^5.3.0",
     "tar-fs": "^2.0.1",
