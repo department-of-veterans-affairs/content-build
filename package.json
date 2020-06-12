@@ -283,7 +283,6 @@
     "prop-types": "^15.6.1",
     "raven": "^2.6.4",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0",
     "syswide-cas": "^5.3.0",
     "tar-fs": "^2.0.1",
     "tinyliquid": "^0.2.33",
