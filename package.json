@@ -285,7 +285,6 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-dropzone": "^4.2.5",
-    "react-leaflet": "^2.2.0",
     "syswide-cas": "^5.3.0",
     "tar-fs": "^2.0.1",
     "tinyliquid": "^0.2.33",
