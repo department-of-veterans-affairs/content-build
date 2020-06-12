@@ -249,7 +249,6 @@
     "classlist-polyfill": "^1.0.3",
     "classnames": "^2.2.5",
     "cookie": "^0.3.1",
-    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-http-proxy": "^1.5.1",
     "js-yaml": "^3.13.1",
