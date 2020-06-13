@@ -7816,10 +7816,6 @@ jest@^23.6.0:
     import-local "^1.0.0"
     jest-cli "^23.6.0"
 
-jpeg-js@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.2.0.tgz#53e448ec9d263e683266467e9442d2c5a2ef5482"
-
 js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
@@ -9537,13 +9533,6 @@ node-releases@^1.1.3:
   dependencies:
     semver "^5.3.0"
 
-node-resemble-js@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/node-resemble-js/-/node-resemble-js-0.2.0.tgz#8a36c6678a61e5d8455fec58009b1b0271b1909a"
-  dependencies:
-    jpeg-js "0.2.0"
-    pngjs "~2.2.0"
-
 nopt@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-4.0.1.tgz#d0d4685afd5415193c8c7505602d0d17cd64474d"
@@ -10334,10 +10323,6 @@ pn@^1.1.0:
 pngjs@^3.0.0, pngjs@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.3.3.tgz#85173703bde3edac8998757b96e5821d0966a21b"
-
-pngjs@~2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-2.2.0.tgz#649663609a0ebab87c8f08b3fe724048b51d9d7f"
 
 portfinder@0.4.x:
   version "0.4.0"
