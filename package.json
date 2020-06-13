@@ -227,7 +227,6 @@
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.5.1",
-    "webpack-manifest-plugin": "^2.0.0-rc.2",
     "yeoman-generator": "^4.2.0"
   },
   "optionalDependencies": {},
