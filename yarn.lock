@@ -3129,12 +3129,6 @@ camel-case@^4.1.1:
     pascal-case "^3.1.1"
     tslib "^1.10.0"
 
-camelcase-keys-recursive@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/camelcase-keys-recursive/-/camelcase-keys-recursive-0.8.2.tgz#06df121fbff46cd890350072cdff5657396f7d3a"
-  dependencies:
-    map-obj "^1.0.0"
-
 camelcase-keys@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/camelcase-keys/-/camelcase-keys-2.1.0.tgz#308beeaffdf28119051efa1d932213c91b8f92e7"
