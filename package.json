@@ -171,7 +171,6 @@
     "glob": "^7.1.2",
     "html-webpack-plugin": "^4.0.4",
     "http-server": "^0.9.0",
-    "imports-loader": "^0.6.5",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.2.1",
     "jsonschema": "^1.1.1",
