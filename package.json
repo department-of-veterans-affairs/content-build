@@ -4,7 +4,6 @@
   "description": "Frontend build for vets.gov website static assets.",
   "scripts": {
     "apps": "./script/app-list.sh",
-    "analyze": "webpack-bundle-analyzer build/vagovprod/generated/stats.json",
     "build": "./script/build.sh",
     "build-analyze": "NODE_ENV=production npm run build -- --buildtype vagovprod --analyzer; npm run analyze",
     "build:content": "node --max-old-space-size=4096 script/build-content.js",
@@ -224,7 +223,6 @@
     "uglify-js": "^3.4.0",
     "url-loader": "^0.6.2",
     "webpack": "^4.32.2",
-    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-server": "^3.5.1",
     "yeoman-generator": "^4.2.0"
   },
