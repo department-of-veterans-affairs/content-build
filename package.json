@@ -241,7 +241,6 @@
   "dependencies": {
     "@department-of-veterans-affairs/formation": "6.9.2",
     "@department-of-veterans-affairs/formation-react": "5.2.6",
-    "@department-of-veterans-affairs/react-jsonschema-form": "^1.0.0",
     "express": "^4.14.0",
     "express-http-proxy": "^1.5.1",
     "js-yaml": "^3.13.1",
