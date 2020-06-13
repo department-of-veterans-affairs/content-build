@@ -205,7 +205,6 @@
     "quick_check": "^0.7.0",
     "react-test-renderer": "^16.7.0",
     "recursive-readdir": "^2.2.2",
-    "recursive-uncache": "^0.1.1",
     "sass-lint": "^1.10.2",
     "saucelabs": "^1.4.0",
     "selenium-server": "^3.4.0",
