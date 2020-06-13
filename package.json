@@ -182,7 +182,6 @@
     "jsdom": "^15.2.1",
     "json2csv": "^4.2.1",
     "jsonschema": "^1.1.1",
-    "libxmljs": "^0.19.5",
     "metalsmith-assets": "^0.1.0",
     "metalsmith-date-in-filename": "^0.0.14",
     "mocha": "^3.5.0",
