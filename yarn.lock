@@ -13458,10 +13458,6 @@ text-encoding@0.6.4:
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
 
-text-loader@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/text-loader/-/text-loader-0.0.1.tgz#8bf75d749b7c0579c939920051c69ea572ebddc1"
-
 text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
