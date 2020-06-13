@@ -10495,10 +10495,6 @@ pngjs@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-2.2.0.tgz#649663609a0ebab87c8f08b3fe724048b51d9d7f"
 
-polyfill-function-prototype-bind@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/polyfill-function-prototype-bind/-/polyfill-function-prototype-bind-0.0.1.tgz#5067da58b3072cae261dd4184d151fda4cdd78e0"
-
 portfinder@0.4.x:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-0.4.0.tgz#a3ffadffafe4fb98e0601a85eda27c27ce84ca1e"
