@@ -239,7 +239,6 @@
   },
   "private": true,
   "dependencies": {
-    "@department-of-veterans-affairs/formation": "6.9.2",
     "express": "^4.14.0",
     "express-http-proxy": "^1.5.1",
     "js-yaml": "^3.13.1",
