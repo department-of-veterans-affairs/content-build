@@ -225,7 +225,6 @@
     "url-loader": "^0.6.2",
     "webpack": "^4.32.2",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.5.1",
     "yeoman-generator": "^4.2.0"
   },
