@@ -110,7 +110,6 @@
     "@babel/register": "^7.0.0",
     "@department-of-veterans-affairs/generator-vets-website": "^3.3.1",
     "@octokit/rest": "^16.43.1",
-    "@sentry/browser": "^5.4.0",
     "ajv": "^6.10.2",
     "ascii-table": "^0.0.9",
     "axe-core": "^2.6.0",
