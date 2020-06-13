@@ -168,7 +168,6 @@
     "find-root": "^1.1.0",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
-    "html-webpack-plugin": "^4.0.4",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.2.1",
     "jsonschema": "^1.1.1",
