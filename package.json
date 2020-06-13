@@ -162,7 +162,6 @@
     "eslint-stats": "^1.0.0",
     "exports-loader": "^0.6.3",
     "express-history-api-fallback": "^2.0.0",
-    "extract-text-webpack-plugin": "next",
     "find": "^0.2.9",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
