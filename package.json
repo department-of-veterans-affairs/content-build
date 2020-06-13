@@ -202,7 +202,6 @@
     "postcss-loader": "^3.0.0",
     "prettier": "^1.14.3",
     "puppeteer": "^1.9.0",
-    "quick_check": "^0.7.0",
     "recursive-readdir": "^2.2.2",
     "sass-lint": "^1.10.2",
     "saucelabs": "^1.4.0",
