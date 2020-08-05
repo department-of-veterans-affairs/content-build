@@ -6,11 +6,14 @@ jobs:
     docker:
       - image: circleci/node:10.15.3
     steps:
-      # - add-ssh-keys
+      - add-ssh-keys
       - checkout
-      # - run:
-      #     name: Checkout vets-website
-      #     command: git clone git@github.com:department-of-veterans-affairs/vets-website.git
+      - run:
+          name: Checkout vets-website
+          command: cd .. && git clone git@github.com:department-of-veterans-affairs/vets-website.git
+      - run:
+          name: Run validation script
+          command: cd vets-website && npm run build:compare
 
 workflows:
   validate:
