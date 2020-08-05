@@ -11,6 +11,10 @@ jobs:
       - run:
           name: Checkout vets-website
           command: cd .. && git clone git@github.com:department-of-veterans-affairs/vets-website.git
+
+      - run:
+          name: Where am I
+          command: pwd && ls
       - run:
           name: Run validation script
           command: cd vets-website && npm run build:compare
