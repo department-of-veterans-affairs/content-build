@@ -17,7 +17,7 @@ jobs:
           command: pwd && ls
       - run:
           name: Run validation script
-          command: cd vets-website && npm run build:compare
+          command: cd ../vets-website && npm run build:compare
 
 workflows:
   validate:
