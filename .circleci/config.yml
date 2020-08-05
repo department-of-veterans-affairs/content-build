@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: circleci/node:10.15.3
     steps:
-      - add-ssh-keys
+      - add_ssh_keys
       - checkout
       - run:
           name: Checkout vets-website
