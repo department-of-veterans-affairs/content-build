@@ -25,6 +25,8 @@ yalc.lock
 /test-results.xml
 package-lock.json
 src/applications/proxy-rewrite/tests/__image_snapshots__/__diff_output__/
+src/applications/
+!src/applications/registry.json
 temp
 
 # Ignore user's editor/IDE prefs
