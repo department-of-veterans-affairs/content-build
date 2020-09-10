@@ -221,12 +221,12 @@ for doing very specific things.
 6. Find the most recent `content-build` commit in `vets-website`, and start with the commit after the most recent `content-build` commit
 7. Open each commit, and scan the filenames to see if the commit should be in the `content-build` repo
    - If it's an app-specific file (for example, `src/applications/*`), it's reasonably safe to assume that file can be ignored
-   - if it's a content-build-related file (for example, `src/site/*`), it's reasonably safe to assume that file need
+   - If it's a content-build-related file (for example, `src/site/*`), it's reasonably safe to assume that file needs to be added to the `content-build` repo
 8. If there are no content-build files, then you can ignore that commit.
-9. If there are content-build files, in the `vets-website` terminal, run `git format-patch -1 ${SHA}` to create a patch file of that commit in the `vets-website` directory
+9. If there are content-build files, from the `vets-website` terminal, run `git format-patch -1 ${SHA}` to create a patch file of that commit in the `vets-website` directory
    - For example, `git format-patch -1 cb0609fedfe887ca48ee68eaa3198245db0718a0`
 10. In the `content-build` terminal, run `git am --signoff < ../vets-website/${PATCH_FILE}`
     - For example, `git am --signoff < ../vets-website/0001-Fix-padding-for-event-section-vamc-14138.patch`
-11. After the patch is successfully applied, in the `vets-website` terminal, run `rm ${PATCH_FILE}` to delete the patch file
+11. After the patch is successfully applied, from the `vets-website` terminal, run `rm ${PATCH_FILE}` to delete the patch file
     - For example, `rm 0001-Fix-padding-for-event-section-vamc-14138.patch`
 12. Proceed to the next commit
