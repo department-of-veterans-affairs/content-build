@@ -1,6 +1,25 @@
 const { usePartialSchema } = require('../../transformers/helpers');
 const eventSchema = require('./node-event');
 
+const reverseFieldSchema = {
+  type: 'object',
+  properties: {
+    entities: {
+      type: 'array',
+      items: {
+        /* eslint-disable react-hooks/rules-of-hooks */
+        entity: usePartialSchema(eventSchema, [
+          'title',
+          'entityUrl',
+          'fieldDate',
+          'fieldDescription',
+          'fieldLocationHumanreadable',
+        ]),
+      },
+    },
+  },
+};
+
 module.exports = {
   type: 'object',
   properties: {
@@ -19,32 +38,23 @@ module.exports = {
     fieldMetaTitle: { type: 'string' },
     fieldOffice: {
       oneOf: [
-        { $ref: 'output/node-health_care_region_page' },
-        { $ref: 'output/node-office' },
-      ],
-    },
-    reverseFieldList: {
-      type: 'array',
-      items: { $ref: 'output/node-event' },
-    },
-    pastEvents: {
-      type: 'object',
-      properties: {
-        entities: {
-          type: 'array',
-          items: {
-            /* eslint-disable react-hooks/rules-of-hooks */
-            entity: usePartialSchema(eventSchema, [
-              'title',
-              'entityUrl',
-              'fieldDate',
-              'fieldDescription',
-              'fieldLocationHumanreadable',
-            ]),
+        {
+          type: 'object',
+          properties: {
+            entity: { $ref: 'output/node-health_care_region_page' },
           },
         },
-      },
+        {
+          type: 'object',
+          properties: {
+            entity: { $ref: 'output/node-office' },
+          },
+        },
+        { type: 'null' },
+      ],
     },
+    reverseFieldListingNode: reverseFieldSchema,
+    pastEvents: reverseFieldSchema,
   },
   required: [
     'title',
@@ -58,5 +68,7 @@ module.exports = {
     'fieldIntroText',
     'fieldMetaTitle',
     'fieldOffice',
+    'reverseFieldListingNode',
+    'pastEvents',
   ],
 };

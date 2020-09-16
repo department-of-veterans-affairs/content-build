@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+jobs:
+  validate-content-build:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - add_ssh_keys
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Checkout vets-website
+          command: cd .. && git clone git@github.com:department-of-veterans-affairs/vets-website.git
+      - run:
+          name: Install vets-website dependencies
+          command: cd ../vets-website && yarn install
+      - run:
+          name: Where am I
+          command: pwd && ls
+      - run:
+          name: Run validation script
+          command: cd ../vets-website && npm run build:compare
+
+workflows:
+  validate:
+    jobs:
+      - validate-content-build
