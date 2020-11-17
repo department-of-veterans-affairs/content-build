@@ -1,8 +1,9 @@
 {% include "src/site/includes/header.html" with drupalTags = true %}
-
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" %}
+
+{% assign listchecklistItemIndex = 0 %}
 
 <div id="content" class="interior">
   <main class="va-l-detail-page">
@@ -21,10 +22,8 @@
           <!-- Title -->
           <h1>{{ title }}</h1>
 
-          <!-- Intro text -->
-          <div class="va-introtext">
-            {{ fieldIntroTextLimitedHtml.processed }}
-          </div>
+          <!-- Intro -->
+          <div class="va-introtext">{{ fieldIntroTextLimitedHtml.processed }}</div>
 
           <!-- Alert -->
           {% if fieldAlertSingle %}
@@ -33,51 +32,52 @@
 
           <!-- Buttons -->
           <div class="vads-u-margin-y--3">
-            {% for fieldButton in fieldButtons  %}
-              {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
-            {% endfor %}
-          </div>
+          {% for fieldButton in fieldButtons %}
+            {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+          {% endfor %}
+        </div>
 
-          <!-- TOC -->
-          {% if fieldTableOfContentsBoolean %}
-            <section id="table-of-contents">
-              <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-              <ul class="usa-unstyled-list"></ul>
-            </section>
-          {% endif %}
+          <!-- Checklist sections -->
+          <h2>Checklist</h2>
+          {% assign checklistSectionIndex = 0 %}
+          {% for checklistSection in fieldChecklist.entity.fieldChecklistSections %}
 
-          <!-- QAs -->
-          {% for fieldQAGroup in fieldQAGroups %}
-            <h2>{{ fieldQAGroup.entity.fieldSectionHeader }}</h2>
-            <div class="usa-accordion-bordered">
-              <ul class="usa-unstyled-list">
-                {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
-                  <li>
-                    <button type="button" aria-controls="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}"
-                      class="usa-accordion-button usa-button-unstyled"
-                      aria-expanded="false">{{ fieldQA.entity.title }}</button>
-                    <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}" class="usa-accordion-content"
-                      aria-hidden="true">
-                      {% for block in fieldQA.entity.fieldAnswer %}
-                        {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
-                        {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-                        {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
-                      {% endfor %}
-                    </div>
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
+            <!-- Checklist section header -->
+            {% if checklistSection.entity.fieldSectionHeader %}
+              <h3>{{ checklistSection.entity.fieldSectionHeader }}</h3>
+            {% endif %}
+
+            <!-- Checklist items -->
+            <ul class="usa-unstyled-list">
+              {% assign checklistItemIndex = 0 %}
+              {% for checklistItem in checklistSection.entity.fieldChecklistItems %}
+
+                {% assign listchecklistItemIndex = listchecklistItemIndex | plus: 1 %}
+                {% assign checkboxId = "checkbox-" | append: listchecklistItemIndex %}
+
+                <!-- Checklist item -->
+                <li>
+                  <input type="checkbox" id="{{ checkboxId }}" name="{{ checkboxId }}">
+                  <label for="{{ checkboxId }}">{{ checklistItem }}</label>
+                </li>
+
+                <!-- Increment the checkbox's index -->
+                {% assign checklistItemIndex = checklistItemIndex + 1 %}
+              {% endfor %}
+            </ul>
+
+            <!-- Increment the section's index -->
+            {% assign checklistSectionIndex = checklistSectionIndex + 1 %}
           {% endfor %}
 
-          <!-- Repeated buttons -->
+          <!-- Buttons -->
           {% if fieldButtonsRepeat %}
             <div class="vads-u-margin-y--3">
-              {% for fieldButton in fieldButtons  %}
+              {% for fieldButton in fieldButtons %}
                 {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
               {% endfor %}
             </div>
-          {% end %}
+          {% endif %}
         </article>
 
         <!-- Related Links -->
