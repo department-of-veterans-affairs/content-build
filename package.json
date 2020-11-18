@@ -164,7 +164,7 @@
     "jsonschema": "^1.1.1",
     "metalsmith-assets": "^0.1.0",
     "metalsmith-date-in-filename": "^0.0.14",
-    "mocha": "^3.5.0",
+    "mocha": "^8.2.1",
     "mocha-junit-reporter": "^1.17.0",
     "mocker-api": "^2.1.0",
     "moment-timezone": "^0.5.27",
