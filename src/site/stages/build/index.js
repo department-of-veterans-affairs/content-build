@@ -40,6 +40,7 @@ const updateExternalLinks = require('./plugins/update-external-links');
 const updateRobots = require('./plugins/update-robots');
 
 function build(BUILD_OPTIONS) {
+  global.buildOptions = BUILD_OPTIONS;
   const smith = silverSmith();
 
   registerLiquidFilters();
