@@ -1,4 +1,5 @@
 const moment = require('moment');
+const { getImageCrop } = require('./helpers');
 const {
   getDrupalValue,
   getWysiwygString,
@@ -7,23 +8,43 @@ const {
   isPublished,
 } = require('./helpers');
 
+const getSocialMediaObject = ({ uri, title }) =>
+  uri
+    ? {
+        url: { path: uri },
+        title,
+      }
+    : null;
+
 const transform = ({
   title,
   status,
   metatag: { value: metaTags },
+  fieldGovdeliveryIdEmerg,
+  fieldGovdeliveryIdNews,
+  fieldOperatingStatus,
   fieldNicknameForThisFacility,
   fieldRelatedLinks,
   fieldPressReleaseBlurb,
   fieldLinkFacilityEmergList,
-  fieldLeadership,
   reverseFieldRegionPage,
   reverseFieldOffice,
+  fieldMedia,
 }) => ({
   entityType: 'node',
   entityBundle: 'health_care_region_page',
   entityPublished: isPublished(getDrupalValue(status)),
   entityLabel: getDrupalValue(title),
   title: getDrupalValue(title),
+  fieldGovdeliveryIdEmerg: getDrupalValue(fieldGovdeliveryIdEmerg),
+  fieldGovdeliveryIdNews: getDrupalValue(fieldGovdeliveryIdNews),
+  fieldOperatingStatus: fieldOperatingStatus[0]
+    ? getSocialMediaObject(fieldOperatingStatus[0])
+    : null,
+  fieldMedia:
+    fieldMedia && fieldMedia.length
+      ? { entity: getImageCrop(fieldMedia[0], '_72MEDIUMTHUMBNAIL') }
+      : null,
   fieldNicknameForThisFacility: getDrupalValue(fieldNicknameForThisFacility),
   fieldLinkFacilityEmergList:
     fieldLinkFacilityEmergList && fieldLinkFacilityEmergList[0]
@@ -39,44 +60,8 @@ const transform = ({
     processed: getWysiwygString(getDrupalValue(fieldPressReleaseBlurb)),
   },
   entityMetatags: createMetaTagArray(metaTags),
-  fieldLeadership: fieldLeadership.length
-    ? fieldLeadership.map(n => ({
-        entity: {
-          entityPublished: n.entityPublished,
-          title: n.title,
-          fieldNameFirst: n.fieldNameFirst,
-          fieldLastName: n.fieldLastName,
-          fieldSuffix: n.fieldSuffix,
-          fieldEmailAddress: n.fieldEmailAddress,
-          fieldPhoneNumber: n.fieldPhoneNumber,
-          fieldDescription: n.fieldDescription,
-          fieldOffice: {
-            entity: {
-              entityLabel: 'VA Pittsburgh health care',
-              entityType: 'node',
-            },
-          },
-          fieldIntroText: n.fieldIntroText,
-          fieldPhotoAllowHiresDownload: n.fieldPhotoAllowHiresDownload,
-          fieldMedia: n.fieldMedia,
-          fieldBody: n.fieldBody,
-          changed: n.changed,
-          entityUrl: n.entityUrl,
-        },
-      }))
-    : [],
   reverseFieldRegionPageNode: {
-    entities: reverseFieldRegionPage
-      ? reverseFieldRegionPage
-          .filter(
-            reverseField =>
-              reverseField.entityBundle === 'health_care_local_facility',
-          )
-          .map(r => ({
-            title: r.title,
-            fieldOperatingStatusFacility: r.fieldOperatingStatusFacility,
-          }))
-      : [],
+    entities: reverseFieldRegionPage || [],
   },
   newsStoryTeasers: {
     entities: reverseFieldOffice
@@ -183,9 +168,10 @@ const transform = ({
             reverseField =>
               reverseField.fieldMainLocation && reverseField.entityPublished,
           )
-          .sort(
-            (a, b) =>
-              a.fieldNicknameForThisFacility - b.fieldNicknameForThisFacility,
+          .sort((a, b) =>
+            a.fieldNicknameForThisFacility.localeCompare(
+              b.fieldNicknameForThisFacility,
+            ),
           )
           .map(r => ({
             entityUrl: r.entityUrl,
@@ -214,9 +200,10 @@ const transform = ({
             reverseField =>
               !reverseField.fieldMainLocation && reverseField.entityPublished,
           )
-          .sort(
-            (a, b) =>
-              a.fieldNicknameForThisFacility - b.fieldNicknameForThisFacility,
+          .sort((a, b) =>
+            a.fieldNicknameForThisFacility.localeCompare(
+              b.fieldNicknameForThisFacility,
+            ),
           )
           .map(r => ({
             entityUrl: r.entityUrl,
@@ -337,12 +324,15 @@ module.exports = {
     'title',
     'status',
     'path',
-    'field_nickname_for_this_facility',
+    'field_govdelivery_id_emerg',
+    'field_govdelivery_id_news',
     'field_link_facility_emerg_list',
-    'field_related_links',
+    'field_media',
+    'field_nickname_for_this_facility',
+    'field_operating_status',
     'field_press_release_blurb',
+    'field_related_links',
     'metatag',
-    'field_leadership',
     'reverse_field_region_page',
     'reverse_field_office',
   ],

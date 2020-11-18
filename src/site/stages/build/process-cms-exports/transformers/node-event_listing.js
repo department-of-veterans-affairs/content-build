@@ -12,6 +12,7 @@ const reverseFields = reverseFieldListing => ({
           reverseField =>
             reverseField.entityBundle === 'event' && reverseField.status,
         )
+        .sort((a, b) => b.changed - a.changed)
         .map(reverseField => ({
           title: reverseField.title,
           entityUrl: reverseField.entityUrl,
@@ -19,6 +20,7 @@ const reverseFields = reverseFieldListing => ({
           fieldFeatured: reverseField.fieldFeatured,
           fieldDate: reverseField.fieldDate,
           fieldDescription: reverseField.fieldDescription,
+          fieldFacilityLocation: reverseField.fieldFacilityLocation,
           fieldLocationHumanreadable: reverseField.fieldLocationHumanreadable,
         }))
     : [],
@@ -36,13 +38,18 @@ const transform = (entity, { ancestors }) => ({
   fieldDescription: getDrupalValue(entity.fieldDescription),
   fieldIntroText: getDrupalValue(entity.fieldIntroText),
   fieldMetaTitle: getDrupalValue(entity.fieldMetaTitle),
-  fieldOffice:
-    entity.fieldOffice[0] &&
-    !ancestors.find(r => r.entity.uuid === entity.fieldOffice[0].uuid)
-      ? {
-          entity: entity.fieldOffice[0],
-        }
-      : null,
+  fieldOffice: entity.fieldOffice[0]
+    ? {
+        entity: !ancestors.find(
+          r => r.entity.uuid === entity.fieldOffice[0].uuid,
+        )
+          ? entity.fieldOffice[0]
+          : {
+              entityLabel: getDrupalValue(entity.fieldOffice[0].title),
+              entityType: entity.fieldOffice[0].entityType,
+            },
+      }
+    : null,
   reverseFieldListingNode: reverseFields(entity.reverseFieldListing),
   pastEvents: reverseFields(entity.reverseFieldListing),
 });

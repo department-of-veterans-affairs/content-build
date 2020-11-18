@@ -6,7 +6,12 @@ module.exports = {
     entityBundle: { enum: ['person_profile'] },
     entityUrl: { $ref: 'EntityUrl' },
     title: { type: 'string' },
-    fieldBody: { type: ['string', 'null'] },
+    fieldBody: {
+      type: ['object', 'null'],
+      properties: {
+        processed: { type: 'string' },
+      },
+    },
     fieldDescription: { type: ['string', 'null'] },
     fieldEmailAddress: { type: ['string', 'null'] },
     fieldLastName: { type: ['string', 'null'] },
@@ -22,8 +27,9 @@ module.exports = {
           properties: {
             entityLabel: { type: 'string' },
             entityType: { type: 'string' },
+            entityUrl: { $ref: 'EntityUrl' },
           },
-          required: ['entityLabel', 'entityType'],
+          required: ['entityLabel'],
         },
       },
       required: ['entity'],

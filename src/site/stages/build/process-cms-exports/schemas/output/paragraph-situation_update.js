@@ -15,13 +15,27 @@ module.exports = {
             value: { type: 'string' },
           },
         },
+        fieldDatetimeRangeTimezone: {
+          type: 'object',
+          properties: {
+            value: { type: 'string' },
+            endValue: { type: 'string' },
+            timezone: { type: 'string' },
+          },
+        },
         fieldSendEmailToSubscribers: { type: ['boolean'] },
-        fieldWysiwyg: { type: ['string'] },
+        fieldWysiwyg: {
+          type: 'object',
+          properties: {
+            processed: { type: 'string' },
+          },
+        },
       },
       required: [
         'entityType',
         'entityBundle',
         'fieldDateAndTime',
+        'fieldDatetimeRangeTimezone',
         'fieldSendEmailToSubscribers',
         'fieldWysiwyg',
       ],

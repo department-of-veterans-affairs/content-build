@@ -1,4 +1,6 @@
-const moment = require('moment');
+const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
+
+const moment = require('moment-timezone');
 const converter = require('number-to-words');
 const liquid = require('tinyliquid');
 const _ = require('lodash');
@@ -32,6 +34,21 @@ module.exports = function registerFilters() {
       return prettyTimeFormatted(timeZoneDate, format);
     }
     return dt;
+  };
+
+  // Convert a timezone string (e.g. 'America/Los_Angeles') to an abbreviation
+  // e.g. "PST"
+  liquid.filters.timezoneAbbrev = (timezone, timestamp) => {
+    if (!timezone || !timestamp) {
+      return 'ET';
+    }
+    if (moment.tz.zone(timezone)) {
+      return moment.tz.zone(timezone).abbr(timestamp);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('Invalid time zone: ', timezone);
+      return 'ET';
+    }
   };
 
   liquid.filters.toTitleCase = phrase =>
@@ -72,7 +89,12 @@ module.exports = function registerFilters() {
     return replaced;
   };
 
-  liquid.filters.dateFromUnix = (dt, format) => moment.unix(dt).format(format);
+  liquid.filters.dateFromUnix = (dt, format) => {
+    if (!dt) {
+      return null;
+    }
+    return moment.unix(dt).format(format);
+  };
 
   liquid.filters.unixFromDate = data => new Date(data).getTime();
 
@@ -390,6 +412,16 @@ module.exports = function registerFilters() {
     return fieldLink;
   };
 
+  liquid.filters.accessibleNumber = data => {
+    if (data) {
+      return data
+        .split('')
+        .join(' ')
+        .replace(/ -/g, '.');
+    }
+    return null;
+  };
+
   liquid.filters.deriveLastBreadcrumbFromPath = (
     breadcrumbs,
     string,
@@ -402,6 +434,32 @@ module.exports = function registerFilters() {
     breadcrumbs.push(last);
 
     return breadcrumbs;
+  };
+
+  liquid.filters.deriveLcBreadcrumbs = (
+    breadcrumbs,
+    string,
+    currentPath,
+    pageTitle,
+  ) => {
+    // Remove any resources crumb - we don't want the drupal page title.
+    const filteredCrumbs = breadcrumbs.filter(
+      crumb => crumb.url.path !== '/resources',
+    );
+    // Add the resources crumb with the correct crumb title.
+    filteredCrumbs.push({
+      url: { path: '/resources', routed: false },
+      text: 'Resources and support',
+    });
+
+    if (pageTitle) {
+      filteredCrumbs.push({
+        url: { path: currentPath, routed: true },
+        text: string,
+      });
+    }
+
+    return filteredCrumbs;
   };
 
   // used to get a base url path of a health care region from entityUrl.path
@@ -439,6 +497,7 @@ module.exports = function registerFilters() {
   liquid.filters.sortObjectsBy = (entities, path) => _.sortBy(entities, path);
 
   // get a value from a path of an object
+  // works for arrays as well
   liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
 
   // get a value from a path of an object in an array
@@ -452,7 +511,7 @@ module.exports = function registerFilters() {
   // react component `facility-appointment-wait-times-widget`
   // (line 22 in src/site/facilities/facility_health_service.drupal.liquid)
   liquid.filters.healthServiceApiId = serviceTaxonomy =>
-    serviceTaxonomy.fieldHealthServiceApiId;
+    serviceTaxonomy?.fieldHealthServiceApiId;
 
   // finds if a page is a child of a certain page using the entityUrl attribute
   // returns true or false
@@ -463,4 +522,9 @@ module.exports = function registerFilters() {
 
   // find out if date is in the past
   liquid.filters.isPastDate = contentDate => moment().diff(contentDate, 'days');
+
+  liquid.filters.isLaterThan = (timestamp1, timestamp2) =>
+    moment(timestamp1, 'YYYY-MM-DD').isAfter(moment(timestamp2, 'YYYY-MM-DD'));
+
+  liquid.filters.phoneNumberArrayToObject = phoneNumberArrayToObject;
 };

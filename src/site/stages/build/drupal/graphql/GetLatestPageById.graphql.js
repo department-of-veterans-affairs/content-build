@@ -3,24 +3,29 @@ const page = require('./page.graphql');
 const fragments = require('./fragments.graphql');
 const healthCareRegionPage = require('./healthCareRegionPage.graphql');
 
-const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
-const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
-const newsStoryPage = require('./newStoryPage.graphql');
-const vaFormPage = require('./vaFormPage.graphql');
-const nodeQa = require('./nodeQa.graphql');
-const faqMultipleQa = require('./faqMultipleQa.graphql');
-const pressReleasePage = require('./pressReleasePage.graphql');
-const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
-const sidebarQuery = require('./navigation-fragments/sidebar.nav.graphql');
-const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav.graphql');
-const nodeStepByStep = require('./nodeStepByStep.graphql');
+const alertsQuery = require('./alerts.graphql');
+const allSideNavMachineNamesQuery = require('./navigation-fragments/allSideNavMachineNames.nav.graphql');
+const bannerAlertsQuery = require('./bannerAlerts.graphql');
 const bioPage = require('./bioPage.graphql');
 const eventPage = require('./eventPage.graphql');
-const alertsQuery = require('./alerts.graphql');
-const bannerAlertsQuery = require('./bannerAlerts.graphql');
+const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav.graphql');
+const faqMultipleQa = require('./faqMultipleQa.graphql');
+const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
+const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const icsFileQuery = require('./file-fragments/ics.file.graphql');
-const allSideNavMachineNamesQuery = require('./navigation-fragments/allSideNavMachineNames.nav.graphql');
 const menuLinksQuery = require('./navigation-fragments/menuLinks.nav.graphql');
+const newsStoryPage = require('./newStoryPage.graphql');
+const nodeBasicLandingPage = require('./nodeBasicLandingPage.graphql');
+const nodeChecklist = require('./nodeChecklist.graphql');
+const nodeMediaListImages = require('./nodeMediaListImages.graphql');
+const nodeMediaListVideos = require('./nodeMediaListVideos.graphql');
+const nodeQa = require('./nodeQa.graphql');
+const nodeStepByStep = require('./nodeStepByStep.graphql');
+const nodeSupportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.graphql');
+const pressReleasePage = require('./pressReleasePage.graphql');
+const sidebarQuery = require('./navigation-fragments/sidebar.nav.graphql');
+const vaFormPage = require('./vaFormPage.graphql');
+const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 
 // Get current feature flags
 const { cmsFeatureFlags } = global;
@@ -35,8 +40,9 @@ const {
  * Queries for a page by the node id, getting the latest revision
  * To execute, run this query at http://staging.va.agile6.com/graphql/explorer.
  */
-module.exports = `
-
+const buildQuery = async () => {
+  const sideNavQuery = await facilitySidebarQuery.compiledQuery();
+  return `
   ${fragments}
   ${landingPage}
   ${page}
@@ -52,6 +58,11 @@ module.exports = `
   ${nodeQa}
   ${faqMultipleQa}
   ${nodeStepByStep}
+  ${nodeMediaListImages}
+  ${nodeChecklist}
+  ${nodeMediaListVideos}
+  ${nodeSupportResourcesDetailPage}
+  ${nodeBasicLandingPage}
 
   query GetLatestPageById($id: String!, $today: String!, $onlyPublishedContent: Boolean!) {
     nodes: nodeQuery(revisions: LATEST, filter: {
@@ -74,11 +85,16 @@ module.exports = `
         ... nodeQa
         ... faqMultipleQA
         ... nodeStepByStep
+        ... nodeMediaListImages
+        ... nodeChecklist
+        ... nodeMediaListVideos
+        ... nodeSupportResourcesDetailPage
+        ... nodeBasicLandingPage
       }
     }
     ${icsFileQuery}
     ${sidebarQuery}
-    ${facilitySidebarQuery}
+    ${sideNavQuery}
     ${alertsQuery}
     ${bannerAlertsQuery}
     ${
@@ -89,8 +105,9 @@ module.exports = `
     ${menuLinksQuery}
   }
 `;
+};
 
-const query = module.exports;
+const query = buildQuery();
 
 let regString = '';
 queryParamToBeChanged.forEach(param => {
@@ -98,4 +115,4 @@ queryParamToBeChanged.forEach(param => {
 });
 
 const regex = new RegExp(`${regString}`, 'g');
-module.exports = query.replace(regex, updateQueryString);
+module.exports = query.then(q => q.replace(regex, updateQueryString));

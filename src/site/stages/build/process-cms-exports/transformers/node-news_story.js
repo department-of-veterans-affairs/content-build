@@ -11,21 +11,31 @@ const transform = (entity, { ancestors }) => ({
   entityType: 'node',
   entityBundle: 'news_story',
   title: getDrupalValue(entity.title),
-  // Ignoring this for now as uid is causing issues
-  // uid: entity.uid[0],
   created: utcToEpochTime(getDrupalValue(entity.created)),
   promote: getDrupalValue(entity.promote),
   entityMetatags: createMetaTagArray(entity.metatag.value),
   entityPublished: isPublished(getDrupalValue(entity.status)),
-  fieldAuthor: entity.fieldAuthor[0] || null,
+  fieldAuthor: entity.fieldAuthor[0]
+    ? {
+        entity: {
+          title: entity.fieldAuthor[0].title,
+          fieldDescription: entity.fieldAuthor[0].fieldDescription,
+        },
+      }
+    : null,
   fieldFullStory: {
     processed: getWysiwygString(getDrupalValue(entity.fieldFullStory)),
   },
   fieldImageCaption: getDrupalValue(entity.fieldImageCaption),
   fieldIntroText: getDrupalValue(entity.fieldIntroText),
+  fieldListing: entity.fieldListing[0]
+    ? {
+        entity: { entityUrl: entity.fieldListing[0].entityUrl },
+      }
+    : null,
   fieldMedia:
     entity.fieldMedia && entity.fieldMedia.length
-      ? getImageCrop(entity.fieldMedia[0], '_21MEDIUMTHUMBNAIL')
+      ? { entity: getImageCrop(entity.fieldMedia[0], '_21MEDIUMTHUMBNAIL') }
       : null,
   fieldOffice:
     entity.fieldOffice &&
@@ -49,6 +59,7 @@ module.exports = {
     'field_full_story',
     'field_image_caption',
     'field_intro_text',
+    'field_listing',
     'field_media',
     'field_office',
     'status',
