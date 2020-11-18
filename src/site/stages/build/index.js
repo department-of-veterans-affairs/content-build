@@ -40,6 +40,7 @@ const updateExternalLinks = require('./plugins/update-external-links');
 const updateRobots = require('./plugins/update-robots');
 
 function build(BUILD_OPTIONS) {
+  global.buildOptions = BUILD_OPTIONS;
   const smith = silverSmith();
 
   registerLiquidFilters();
@@ -163,9 +164,9 @@ function build(BUILD_OPTIONS) {
   );
 
   /*
-  * This will replace links in static pages with a staging domain,
-  * if it is in the list of domains to replace
-  */
+   * This will replace links in static pages with a staging domain,
+   * if it is in the list of domains to replace
+   */
   smith.use(
     rewriteVaDomains(BUILD_OPTIONS),
     'Rewrite VA domains for the buildtype',
