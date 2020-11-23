@@ -288,21 +288,6 @@ workflows:
   test_and_build:
     jobs:
       - lint
-      - unit-test
-      - contract-test
-      - security-audit
-      - build-e2e
-      - can-i-deploy:
-          requires:
-            - contract-test
-      - build:
-          requires:
-            - lint
-            - unit-test
-            - security-audit
-      - e2e-test:
-          requires:
-            - build-e2e
   additional-linting:
     jobs:
       - additional-linting
