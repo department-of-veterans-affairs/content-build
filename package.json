@@ -196,6 +196,7 @@
   "private": true,
   "dependencies": {
     "blob-polyfill": "^4.0.20200601",
+    "core-js": "^2.5.7",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",
     "js-yaml": "^3.14.0",
