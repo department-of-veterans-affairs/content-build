@@ -1,5 +1,5 @@
-const { getDrupalValue } = require('./helpers');
 const { mapKeys, camelCase } = require('lodash');
+const { getDrupalValue } = require('./helpers');
 
 const transform = entity => ({
   entityType: 'paragraph',

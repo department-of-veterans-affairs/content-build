@@ -8,7 +8,7 @@ const hubNavNames = cmsFeatureFlags.FEATURE_ALL_HUB_SIDE_NAVS
   : null;
 
 // String Helpers
-const { camelize } = require('./../../../../../utilities/stringHelpers');
+const { camelize } = require('../../../../../utilities/stringHelpers');
 
 const SIDEBAR_QUERY = `
         name
