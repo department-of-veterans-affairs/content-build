@@ -24,9 +24,8 @@
 <testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/build-help.js">
 <testcase time="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/build-help.js" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/build-help" />
 </testsuite>
-<testsuite package="org.eslint" time="0" tests="2" errors="2" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/check-node-version.js">
-<testcase time="0" name="org.eslint.import/order" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/check-node-version"><failure message="`chalk` import should occur before import of `../package.json`"><![CDATA[line 4, col 15, Error - `chalk` import should occur before import of `../package.json` (import/order)]]></failure></testcase>
-<testcase time="0" name="org.eslint.prettier/prettier" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/check-node-version"><failure message="Replace `&#9166;&#183;&#183;&#183;&#183;&#183;&#183;&#183;&#183;process.version&#9166;&#183;&#183;&#183;&#183;&#183;&#183;` with `process.version`"><![CDATA[line 13, col 90, Error - Replace `&#9166;&#183;&#183;&#183;&#183;&#183;&#183;&#183;&#183;process.version&#9166;&#183;&#183;&#183;&#183;&#183;&#183;` with `process.version` (prettier/prettier)]]></failure></testcase>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/check-node-version.js">
+<testcase time="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/check-node-version.js" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/check-node-version" />
 </testsuite>
 <testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/cms/config.js">
 <testcase time="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/cms/config.js" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/cms/config" />
@@ -73,6 +72,9 @@
 <testsuite package="org.eslint" time="0" tests="2" errors="2" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/eslint-plugin-va/rules/use-resolved-path.js">
 <testcase time="0" name="org.eslint.prefer-destructuring" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/eslint-plugin-va/rules/use-resolved-path"><failure message="Use object destructuring."><![CDATA[line 50, col 15, Error - Use object destructuring. (prefer-destructuring)]]></failure></testcase>
 <testcase time="0" name="org.eslint.prefer-destructuring" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/eslint-plugin-va/rules/use-resolved-path"><failure message="Use object destructuring."><![CDATA[line 62, col 17, Error - Use object destructuring. (prefer-destructuring)]]></failure></testcase>
+</testsuite>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/pr-check.js">
+<testcase time="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/pr-check.js" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/pr-check" />
 </testsuite>
 <testsuite package="org.eslint" time="0" tests="1" errors="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/prearchive.js">
 <testcase time="0" name="/Users/timothycharleswright/Sites/va-gov/content-build/script/prearchive.js" classname="/Users/timothycharleswright/Sites/va-gov/content-build/script/prearchive" />
