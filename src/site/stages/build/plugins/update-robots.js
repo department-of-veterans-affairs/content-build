@@ -16,7 +16,7 @@ function updateRobots(buildOptions) {
     const robots = files['robots.txt'];
 
     // Update the robots.txt contents to disallow crawlers.
-    robots.contents = new Buffer('User-agent: *\nDisallow: /\n');
+    robots.contents = Buffer.from('User-agent: *\nDisallow: /\n');
 
     if (global.verbose) {
       // eslint-disable-next-line no-console
