@@ -15,6 +15,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run: mkdir -p ./test-results
+      - run: ls -ld ./test-results
       - run: npx eslint --ext .js --ext .jsx --format junit --output-file ./test-results/eslint.xml .
       - run: yarn lint:sass
       - store_test_results:
