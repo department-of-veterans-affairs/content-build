@@ -28,7 +28,7 @@ jobs:
           command: pwd && ls
       - run:
           name: Run validation script
-          command: cd ../application && yarn validate-content-build
+          command: cd ../project && yarn validate-content-build
 
 workflows:
   validate:
