@@ -1,7 +1,7 @@
 /*
-*
-* A service location for a facility service.
-*
+ *
+ * A service location for a facility service.
+ *
  */
 module.exports = `
   fieldServiceLocation {

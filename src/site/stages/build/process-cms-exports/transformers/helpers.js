@@ -93,7 +93,7 @@ function getDrupalValue(arr) {
  */
 function getImageCrop(obj, imageStyle = null) {
   if (imageStyle !== null) {
-    const imageObj = Object.assign({}, obj);
+    const imageObj = { ...obj };
     const image = mediaImageStyles.find(({ style }) => style === imageStyle);
     // If imageStyle is not found, it will return the raw obj
     if (!image) {

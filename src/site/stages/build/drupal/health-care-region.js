@@ -1,4 +1,7 @@
 /* eslint-disable no-param-reassign, no-continue */
+
+const _ = require('lodash');
+const moment = require('moment');
 const {
   createEntityUrlObj,
   createFileObj,
@@ -6,9 +9,6 @@ const {
   updateEntityUrlObj,
   generateBreadCrumbs,
 } = require('./page');
-
-const _ = require('lodash');
-const moment = require('moment');
 
 /**
  * Sort services.
@@ -38,7 +38,7 @@ function createPastEventListPages(page, drupalPagePath, files) {
   // separate current events from past events;
   allEvents.entities.forEach(eventTeaser => {
     // Get startdate from fieldDate Object
-    const startDate = eventTeaser.fieldDate.startDate;
+    const { startDate } = eventTeaser.fieldDate;
 
     // Convert the string to a date object to suppress a deprecation warning
     const startDateObj = new Date(startDate);
@@ -237,11 +237,10 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
  * @return nothing
  */
 function addGetUpdatesFields(page, pages) {
-  const regionPage = pages.find(
-    p =>
-      p.entityUrl
-        ? p.entityUrl.path === page.entityUrl.breadcrumb[1].url.path
-        : false,
+  const regionPage = pages.find(p =>
+    p.entityUrl
+      ? p.entityUrl.path === page.entityUrl.breadcrumb[1].url.path
+      : false,
   );
 
   if (regionPage) {

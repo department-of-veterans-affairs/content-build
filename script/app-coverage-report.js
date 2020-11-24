@@ -39,17 +39,20 @@ const generateCoverage = (rootDir, coverageSummary) => {
   const manifests = getAppManifests(path.join(__dirname, '../'));
 
   // Set initial coverage object
-  const initialCoverage = Object.assign(
-    ...manifests.map(({ entryName, entryFile }) => ({
-      [entryName]: {
-        path: entryFile.replace(rootDir, ''),
-        lines: { total: 0, covered: 0, pct: 0 },
-        statements: { total: 0, covered: 0, pct: 0 },
-        functions: { total: 0, covered: 0, pct: 0 },
-        branches: { total: 0, covered: 0, pct: 0 },
-      },
-    })),
-  );
+  const initialCoverage =
+    manifests.length > 0
+      ? Object.assign(
+          ...manifests.map(({ entryName, entryFile }) => ({
+            [entryName]: {
+              path: entryFile.replace(rootDir, ''),
+              lines: { total: 0, covered: 0, pct: 0 },
+              statements: { total: 0, covered: 0, pct: 0 },
+              functions: { total: 0, covered: 0, pct: 0 },
+              branches: { total: 0, covered: 0, pct: 0 },
+            },
+          })),
+        )
+      : '';
 
   // Iterate through coverages that are under src/applications
   return Object.keys(coverageSummary)

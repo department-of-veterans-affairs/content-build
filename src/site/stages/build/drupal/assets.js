@@ -1,6 +1,6 @@
-const getDrupalClient = require('./api');
 const cheerio = require('cheerio');
 const chalk = require('chalk');
+const getDrupalClient = require('./api');
 const { PUBLIC_URLS } = require('../../../constants/drupals');
 
 const PUBLIC_URLS_NO_SCHEME = Object.entries(PUBLIC_URLS).reduce(
@@ -35,11 +35,13 @@ function replacePathInData(data, replacer, ancestors = []) {
         newValue = replacePathInData(current[key], replacer, ancestors);
       }
 
+      /* eslint-disable prefer-object-spread */
       if (newValue !== current[key]) {
         current = Object.assign({}, current, {
           [key]: newValue,
         });
       }
+      /* eslint-enable prefer-object-spread */
     });
   }
 

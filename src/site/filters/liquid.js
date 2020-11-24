@@ -1,9 +1,8 @@
-const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
-
 const moment = require('moment-timezone');
 const converter = require('number-to-words');
 const liquid = require('tinyliquid');
 const _ = require('lodash');
+const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 
 function getPath(obj) {
   return obj.path;
@@ -44,6 +43,7 @@ module.exports = function registerFilters() {
     }
     if (moment.tz.zone(timezone)) {
       return moment.tz.zone(timezone).abbr(timestamp);
+      // eslint-disable-next-line no-else-return
     } else {
       // eslint-disable-next-line no-console
       console.log('Invalid time zone: ', timezone);

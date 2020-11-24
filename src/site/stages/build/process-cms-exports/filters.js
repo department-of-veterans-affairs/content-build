@@ -1,10 +1,10 @@
 const path = require('path');
+const { omit } = require('lodash/fp');
 const {
   getContentModelType,
   getAllImportsFrom,
   typeProperties,
 } = require('./helpers');
-const { omit } = require('lodash/fp');
 
 // Dynamically read in all the filters
 // They must be named after the content model type (E.g. node-page.js)

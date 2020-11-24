@@ -39,9 +39,9 @@ describe('CMS export transformer helpers', () => {
     });
 
     it('keeps an array as an array', () => {
-      expect(combineItemsInIndexedObject([['hello'], ['world']])).to.deep.equal(
-        [['hello'], ['world']],
-      );
+      expect(
+        combineItemsInIndexedObject([['hello'], ['world']]),
+      ).to.deep.equal([['hello'], ['world']]);
     });
   });
 
