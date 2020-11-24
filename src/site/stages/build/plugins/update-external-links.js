@@ -53,7 +53,8 @@ function updateExternalLinks() {
             !isNonVADomainThatOpensInSameTab(hrefAttr) &&
             ((!hrefAttr.includes('va.gov') && !hrefAttr.includes('vets.gov')) ||
               isVADomainThatOpensInNewTab(hrefAttr)) &&
-            (!targetAttr && targetAttr !== '_blank')
+            !targetAttr &&
+            targetAttr !== '_blank'
           ) {
             linkUpdated = true;
             link.attr('target', '_blank');

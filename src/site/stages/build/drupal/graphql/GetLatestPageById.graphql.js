@@ -34,7 +34,7 @@ const { cmsFeatureFlags } = global;
 const {
   updateQueryString,
   queryParamToBeChanged,
-} = require('./../../../../utilities/stringHelpers');
+} = require('../../../../utilities/stringHelpers');
 
 /**
  * Queries for a page by the node id, getting the latest revision

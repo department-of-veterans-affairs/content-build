@@ -27,6 +27,7 @@ package-lock.json
 src/applications/
 !src/applications/registry.json
 temp
+test-results/
 
 # Ignore user's editor/IDE prefs
 .vscode/

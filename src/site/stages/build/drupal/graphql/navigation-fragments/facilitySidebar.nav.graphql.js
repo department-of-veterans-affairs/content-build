@@ -4,7 +4,7 @@
  */
 
 // String Helpers
-const { camelize } = require('./../../../../../utilities/stringHelpers');
+const { camelize } = require('../../../../../utilities/stringHelpers');
 
 const { getSideNavsViaGraphQL } = require('../../metalsmith-drupal');
 

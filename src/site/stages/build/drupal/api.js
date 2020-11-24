@@ -6,10 +6,9 @@ const fetch = require('node-fetch');
 const chalk = require('chalk');
 const SocksProxyAgent = require('socks-proxy-agent');
 
+const syswidecas = require('syswide-cas');
 const DRUPALS = require('../../../constants/drupals');
 const { queries, getQuery } = require('./queries');
-
-const syswidecas = require('syswide-cas');
 
 const {
   readAllNodeNames,
@@ -43,7 +42,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   const say = clientOptions.verbose ? console.log : () => {};
 
   const envConfig = DRUPALS[buildOptions.buildtype];
-  const drupalConfig = Object.assign({}, envConfig, buildArgs);
+  const drupalConfig = { ...envConfig, ...buildArgs };
 
   const { address, user, password } = drupalConfig;
   const drupalUri = `${address}/graphql`;
@@ -74,12 +73,14 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         syswidecas.addCAs('certs/VA-Internal-S2-RCA1-v1.pem');
       }
 
+      /* eslint-disable prefer-object-spread */
       return fetch(
         url,
         Object.assign({}, options, {
           agent: this.usingProxy ? agent : undefined,
         }),
       );
+      /* eslint-enable prefer-object-spread */
     },
 
     async query(args) {
