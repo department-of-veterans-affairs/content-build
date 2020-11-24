@@ -322,6 +322,3 @@ workflows:
   additional-linting:
     jobs:
       - additional-linting
-  validate:
-    jobs:
-      - validate-content-build
