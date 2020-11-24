@@ -1,34 +1,5 @@
 version: 2
 jobs:
-  contract-test:
-    docker:
-      - image: circleci/node:14.15.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: yarn install --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run: mkdir -p ./test-results
-      - run: mkdir -p ./pacts
-      - run:
-          command: yarn test:contract
-          environment:
-            MOCHA_FILE: ./test-results/test-results.xml
-      - run: yarn pact:publish
-      - persist_to_workspace:
-          root: .
-          paths:
-            - pacts
-      - store_test_results:
-          path: ./test-results
-      - store_artifacts:
-          path: ./test-results
-
   security-audit:
     docker:
       - image: circleci/node:14.15.0
