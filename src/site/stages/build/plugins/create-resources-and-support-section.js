@@ -72,18 +72,20 @@ function groupByTags(allArticles) {
       terms.push(fieldAudienceBeneficiares);
     }
 
-    terms.map(fieldTopic => fieldTopic.entity).forEach(fieldTopic => {
-      const articleListing = articleListingsByTag[fieldTopic.name];
+    terms
+      .map(fieldTopic => fieldTopic.entity)
+      .forEach(fieldTopic => {
+        const articleListing = articleListingsByTag[fieldTopic.name];
 
-      if (!articleListing) {
-        articleListingsByTag[fieldTopic.name] = {
-          articles: [article],
-          entityUrl: fieldTopic.entityUrl,
-        };
-      } else {
-        articleListing.articles.push(article);
-      }
-    });
+        if (!articleListing) {
+          articleListingsByTag[fieldTopic.name] = {
+            articles: [article],
+            entityUrl: fieldTopic.entityUrl,
+          };
+        } else {
+          articleListing.articles.push(article);
+        }
+      });
   }
 
   return articleListingsByTag;
