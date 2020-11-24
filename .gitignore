@@ -33,7 +33,7 @@ temp
 # Ignore the hashed build files for comparison
 standaloneContentBuildHash.txt
 websiteContentBuildHash.txt
-
+cms.diff
 .idea/
 .swp
 .swo
