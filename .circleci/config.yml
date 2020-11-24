@@ -316,6 +316,7 @@ workflows:
               ignore: master
   test_and_build:
     jobs:
+      - lint
       - unit-test
       - security-audit
   additional-linting:
