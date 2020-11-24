@@ -22,6 +22,77 @@ jobs:
       - store_artifacts:
           path: ./test-results
 
+  unit-test:
+    docker:
+      - image: circleci/node:14.15.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: mkdir -p ./test-results
+      - run:
+          command: yarn test:unit --coverage
+          environment:
+            MOCHA_FILE: ./test-results/test-results.xml
+      - run: node ./script/app-coverage-report.js
+      - store_test_results:
+          path: ./test-results
+      - store_artifacts:
+          path: ./test-results
+
+  contract-test:
+    docker:
+      - image: circleci/node:14.15.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: mkdir -p ./test-results
+      - run: mkdir -p ./pacts
+      - run:
+          command: yarn test:contract
+          environment:
+            MOCHA_FILE: ./test-results/test-results.xml
+      - run: yarn pact:publish
+      - persist_to_workspace:
+          root: .
+          paths:
+            - pacts
+      - store_test_results:
+          path: ./test-results
+      - store_artifacts:
+          path: ./test-results
+
+  can-i-deploy:
+    docker:
+      - image: circleci/node:14.15.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn pact:can-i-deploy
+
   security-audit:
     docker:
       - image: circleci/node:14.15.0
@@ -29,32 +100,37 @@ jobs:
       - checkout
       - run: yarn security-check
 
-  icon-check:
+  additional-linting:
     docker:
       - image: circleci/node:14.15.0
-    environment:
-      CODE_PATTERN: (<i )|(<i$)
-      OVERALL_REVIEW_COMMENT: >
-        # Icon found
-
-        Icons can be decorative, but sometimes they are used to convey meaning.
-        If there are any semantics associated with an icon, those semantics
-        should also be conveyed to a screen reader.
-
-        ## What you can do
-
-        Review the markup and see if the icon provides information that isn't
-        represented textually, or wait for a VSP review.
-
-      LINE_COMMENT: icon found
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install dependencies
-          command: yarn install
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: npm run lint:circle
+
+  build:
+    docker:
+      - image: circleci/node:14.15.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Check PR for icon additions
-          command: npm run pr-check
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn build:webpack
 
   eslint-check:
     docker:
@@ -101,6 +177,86 @@ jobs:
           name: Check PR for Sentry calls
           command: npm run pr-check
 
+  icon-check:
+    docker:
+      - image: circleci/node:14.15.0
+    environment:
+      CODE_PATTERN: (<i )|(<i$)
+      OVERALL_REVIEW_COMMENT: >
+        # Icon found
+        Icons can be decorative, but sometimes they are used to convey meaning.
+        If there are any semantics associated with an icon, those semantics
+        should also be conveyed to a screen reader.
+        ## What you can do
+        Review the markup and see if the icon provides information that isn't
+        represented textually, or wait for a VSP review.
+      LINE_COMMENT: icon found
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: Check PR for icon additions
+          command: npm run pr-check
+
+  build-e2e:
+    working_directory: ~/vets-website
+    docker:
+      - image: cypress/base:14.15.0
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-e2e-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: yarn-packages-e2e-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - ~/.cache/Cypress
+      - run:
+          name: Build apps
+          command: yarn build:webpack --env.buildtype vagovprod --env.scaffold
+          no_output_timeout: 15m
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - vets-website/build
+
+  e2e-test:
+    working_directory: ~/vets-website
+    docker:
+      - image: cypress/base:14.15.0
+    resource_class: xlarge
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys:
+            - yarn-packages-e2e-{{ checksum "yarn.lock" }}
+      - run:
+          name: Installed Dependencies
+          command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+      - run:
+          name: Make Test Results Folder
+          command: mkdir -p ./test-results
+      - run:
+          name: Run Cypress Tests
+          command: yarn cy:test:circle
+      - store_test_results:
+          path: ./test-results
+      - store_artifacts:
+          path: ./test-results
+      - store_artifacts:
+          path: ./cypress/videos
+      - store_artifacts:
+          path: ./cypress/screenshots
+
 workflows:
   version: 2
   flag-for-manual-review:
@@ -120,4 +276,9 @@ workflows:
   test_and_build:
     jobs:
       - lint
+      - unit-test
+      - contract-test
       - security-audit
+  additional-linting:
+    jobs:
+      - additional-linting
