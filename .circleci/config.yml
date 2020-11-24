@@ -300,9 +300,6 @@ jobs:
 
 workflows:
   version: 2
-  validate:
-    jobs:
-      - validate-content-build
   flag-for-manual-review:
     jobs:
       - eslint-check:
@@ -320,8 +317,10 @@ workflows:
   test_and_build:
     jobs:
       - unit-test
-      - contract-test
       - security-audit
   additional-linting:
     jobs:
       - additional-linting
+  validate:
+    jobs:
+      - validate-content-build
