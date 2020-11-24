@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
-const Conf = require('./config');
 const _ = require('lodash');
+const Conf = require('./config');
 
 const conf = new Conf();
 /**

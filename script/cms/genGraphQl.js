@@ -9,7 +9,7 @@ const Conf = require('./config');
 const conf = new Conf();
 
 let graphqlDir = conf.nodeFileDir; // where we put the graphql nodes
-let graphqlFile = conf.graphqlFile; // The graphQL file
+let { graphqlFile } = conf; // The graphQL file
 
 if (process.argv[2] === '--transformers') {
   graphqlDir = conf.nodeTransformedFileDir; // where we put the transformed nodes
@@ -17,8 +17,8 @@ if (process.argv[2] === '--transformers') {
 }
 
 /*
-* Save a single node to file
-*/
+ * Save a single node to file
+ */
 
 function saveNode(node) {
   // Create the dir if it doesn't exist
@@ -46,7 +46,7 @@ function load() {
   const data = fs.readJsonSync(graphqlFile);
 
   // This is where in the graph the nodes are
-  const entities = data.data.nodeQuery.entities;
+  const { entities } = data.data.nodeQuery;
 
   // Traverse the nodes
   entities.map(value => saveNode(value));

@@ -122,9 +122,7 @@ app.get('/preview', async (req, res, next) => {
             return resp.json();
           }
           throw new Error(
-            `HTTP error when fetching manifest: ${resp.status} ${
-              resp.statusText
-            }`,
+            `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`,
           );
         },
       ),
@@ -135,9 +133,7 @@ app.get('/preview', async (req, res, next) => {
           return resp.json();
         }
         throw new Error(
-          `HTTP error when fetching header/footer data: ${resp.status} ${
-            resp.statusText
-          }`,
+          `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
         );
       }),
     ];
@@ -182,12 +178,12 @@ app.get('/preview', async (req, res, next) => {
     const files = {
       'generated/file-manifest.json': {
         path: 'generated/file-manifest.json',
-        contents: new Buffer(JSON.stringify(fileManifest)),
+        contents: Buffer.from(JSON.stringify(fileManifest)),
       },
       [drupalPath]: {
         ...fullPage,
         isPreview: true,
-        headerFooterData: new Buffer(JSON.stringify(headerFooterData)),
+        headerFooterData: Buffer.from(JSON.stringify(headerFooterData)),
         drupalSite:
           DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
           options['drupal-address'],

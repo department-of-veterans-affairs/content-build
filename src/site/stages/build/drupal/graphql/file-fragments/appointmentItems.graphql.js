@@ -1,7 +1,7 @@
 /*
-*
-* Appointments info for a facility service.
-*
+ *
+ * Appointments info for a facility service.
+ *
  */
 module.exports = `
   fieldOnlineSchedulingAvailabl
