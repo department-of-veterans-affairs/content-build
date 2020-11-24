@@ -4,7 +4,7 @@ orbs:
 jobs:
   validate-content-build:
     docker:
-      - image: circleci/node:10.15.3
+      - image: circleci/node:14.15.0
     steps:
       - add_ssh_keys
       - checkout
@@ -28,7 +28,7 @@ jobs:
           command: pwd && ls
       - run:
           name: Run validation script
-          command: cd ../vets-website && npm run build:compare
+          command: cd ../project && yarn validate-content-build
 
 workflows:
   validate:
