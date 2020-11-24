@@ -1,9 +1,8 @@
-const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
-
 const moment = require('moment-timezone');
 const converter = require('number-to-words');
 const liquid = require('tinyliquid');
 const _ = require('lodash');
+const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 
 function getPath(obj) {
   return obj.path;
@@ -44,6 +43,7 @@ module.exports = function registerFilters() {
     }
     if (moment.tz.zone(timezone)) {
       return moment.tz.zone(timezone).abbr(timestamp);
+      // eslint-disable-next-line no-else-return
     } else {
       // eslint-disable-next-line no-console
       console.log('Invalid time zone: ', timezone);
@@ -89,11 +89,28 @@ module.exports = function registerFilters() {
     return replaced;
   };
 
-  liquid.filters.dateFromUnix = (dt, format) => {
+  liquid.filters.dateFromUnix = (dt, format, tz = 'America/New_York') => {
     if (!dt) {
       return null;
     }
-    return moment.unix(dt).format(format);
+
+    let timezone = tz;
+
+    // TODO: figure out why this happens so frequently!
+    if (typeof tz !== 'string' || !tz.length) {
+      timezone = 'America/New_York';
+    } else if (!moment.tz.zone(tz)) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'Invalid timezone passed to dateFromUnix filter. Using default instead.',
+      );
+      timezone = 'America/New_York';
+    }
+
+    return moment
+      .unix(dt)
+      .tz(timezone)
+      .format(format);
   };
 
   liquid.filters.unixFromDate = data => new Date(data).getTime();
@@ -527,4 +544,7 @@ module.exports = function registerFilters() {
     moment(timestamp1, 'YYYY-MM-DD').isAfter(moment(timestamp2, 'YYYY-MM-DD'));
 
   liquid.filters.phoneNumberArrayToObject = phoneNumberArrayToObject;
+
+  liquid.filters.sortEntityMetatags = item =>
+    item ? item.sort((a, b) => a.key.localeCompare(b.key)) : undefined;
 };

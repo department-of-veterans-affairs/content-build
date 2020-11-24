@@ -93,7 +93,7 @@ function getDrupalValue(arr) {
  */
 function getImageCrop(obj, imageStyle = null) {
   if (imageStyle !== null) {
-    const imageObj = Object.assign({}, obj);
+    const imageObj = { ...obj };
     const image = mediaImageStyles.find(({ style }) => style === imageStyle);
     // If imageStyle is not found, it will return the raw obj
     if (!image) {
@@ -234,13 +234,13 @@ module.exports = {
       createMetaTag('MetaProperty', 'og:title', metaTags.og_title),
       createMetaTag('MetaValue', 'keywords', metaTags.keywords),
       createMetaTag('MetaProperty', 'og:description', metaTags.og_description),
+      createMetaTag('MetaValue', 'twitter:image', metaTags.twitter_cards_image),
+      createMetaTag('MetaProperty', 'og:image', metaTags.og_image_0),
       createMetaTag(
         'MetaProperty',
         'og:image:height',
         metaTags.og_image_height,
       ),
-      createMetaTag('MetaValue', 'twitter:image', metaTags.twitter_cards_image),
-      createMetaTag('MetaProperty', 'og:image', metaTags.og_image_0),
     ].filter(t => t.value);
   },
 
