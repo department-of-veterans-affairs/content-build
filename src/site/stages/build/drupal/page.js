@@ -238,7 +238,6 @@ function getFacilitySidebar(page, contentData) {
       : pageTitle;
 
     // choose the correct menu name to retrieve the object from contentData
-    // eslint-disable-next-line prefer-object-spread
     const facilitySidebarNavName = Object.keys(
       contentData.data,
     ).find(attribute =>

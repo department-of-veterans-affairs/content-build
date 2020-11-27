@@ -34,7 +34,8 @@ function runValeCheck(contentFilename) {
 
     vale.on('exit', code => {
       if (code !== 0) {
-        reject(new Error('Vale exited with non-zero exit code:', code));
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject('Vale exited with non-zero exit code:', code);
       }
       output.code = code.toString();
       resolve(output);

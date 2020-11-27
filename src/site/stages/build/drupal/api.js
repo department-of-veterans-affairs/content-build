@@ -42,7 +42,8 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   const say = clientOptions.verbose ? console.log : () => {};
 
   const envConfig = DRUPALS[buildOptions.buildtype];
-  const drupalConfig = { ...envConfig, ...buildArgs };
+  // eslint-disable-next-line prefer-object-spread
+  const drupalConfig = Object.assign({}, envConfig, buildArgs);
 
   const { address, user, password } = drupalConfig;
   const drupalUri = `${address}/graphql`;
@@ -73,14 +74,13 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         syswidecas.addCAs('certs/VA-Internal-S2-RCA1-v1.pem');
       }
 
-      /* eslint-disable prefer-object-spread */
       return fetch(
         url,
+        // eslint-disable-next-line prefer-object-spread
         Object.assign({}, options, {
           agent: this.usingProxy ? agent : undefined,
         }),
       );
-      /* eslint-enable prefer-object-spread */
     },
 
     async query(args) {

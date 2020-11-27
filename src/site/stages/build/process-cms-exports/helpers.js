@@ -56,12 +56,11 @@ function getContentModelType(entity) {
  * @returns {Object} - The new entity with the added properties
  */
 function addCommonProperties(entity, baseType, uuid) {
-  /* eslint-disable prefer-object-spread */
+  // eslint-disable-next-line prefer-object-spread
   const newEntity = Object.assign({}, entity, {
     baseType,
     uuid,
   });
-  /* eslint-enable prefer-object-spread */
   // getContentModelType uses baseType
   const contentModelType = getContentModelType(newEntity);
   const entityBundle = contentModelType.includes('-')
