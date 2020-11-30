@@ -1,5 +1,6 @@
 const path = require('path');
 const { omit } = require('lodash/fp');
+
 const {
   getContentModelType,
   getAllImportsFrom,
