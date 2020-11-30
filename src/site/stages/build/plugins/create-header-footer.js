@@ -72,12 +72,20 @@ function createHeaderFooterData(buildOptions) {
 
     // eslint-disable-next-line no-param-reassign
     files['generated/headerFooter.json'] = {
+<<<<<<< HEAD
       contents: Buffer.from(serialized),
+=======
+      contents: new Buffer(serialized),
+>>>>>>> sync-plugins
     };
 
     // eslint-disable-next-line no-param-reassign
     files['generated/drupalHeaderFooter.json'] = {
+<<<<<<< HEAD
       contents: Buffer.from(drupalMenuSerialized),
+=======
+      contents: new Buffer(drupalMenuSerialized),
+>>>>>>> sync-plugins
     };
 
     done();
