@@ -15,6 +15,10 @@ node('vetsgov-general-purpose') {
     ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
   }
 
+  stage("Setup") {
+    sh "echo Setting up"
+  }
+
   // def commonStages = load "vets-website/jenkins/common.groovy"
 
   // // setupStage
