@@ -25,7 +25,7 @@ const checkBrokenLinks = require('./plugins/check-broken-links');
 const checkCollections = require('./plugins/check-collections');
 const checkForCMSUrls = require('./plugins/check-cms-urls');
 const downloadAssets = require('./plugins/download-assets');
-const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
+// const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
 const processEntryNames = require('./plugins/process-entry-names');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
@@ -241,10 +241,10 @@ function build(BUILD_OPTIONS) {
   } else {
     // If the asset-source === 'local', the script/build.sh will run Webpack
     // Load the resulting files from disk
-    smith.use(
-      readAssetsFromDisk(BUILD_OPTIONS),
-      'Read application assets from disk',
-    );
+    // smith.use(
+    //  readAssetsFromDisk(BUILD_OPTIONS),
+    //  'Read application assets from disk',
+    // );
   }
 
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
