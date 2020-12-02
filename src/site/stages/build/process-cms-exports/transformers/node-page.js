@@ -21,7 +21,7 @@ function pageTransform(entity) {
     metatag: { value: metaTags },
   } = entity;
 
-  /* eslint-disable prefer-object-spread */
+  // eslint-disable-next-line prefer-object-spread
   const transformed = Object.assign({}, entity, {
     title: getDrupalValue(title),
     entityBundle: 'page',
@@ -44,7 +44,6 @@ function pageTransform(entity) {
     entityPublished: isPublished(getDrupalValue(status)),
     entityMetatags: createMetaTagArray(metaTags),
   });
-  /* eslint-enable prefer-object-spread */
 
   transformed.fieldAlert = !isEmpty(flatten(fieldAlert)) ? fieldAlert[0] : null;
 

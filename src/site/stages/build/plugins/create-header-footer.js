@@ -29,11 +29,10 @@ function replaceWithDrupalLinks(data, files) {
       }
 
       if (newValue !== current[key]) {
-        /* eslint-disable prefer-object-spread */
+        // eslint-disable-next-line prefer-object-spread
         current = Object.assign({}, current, {
           [key]: newValue,
         });
-        /* eslint-enable prefer-object-spread */
       }
     });
   }

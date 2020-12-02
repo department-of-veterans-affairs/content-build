@@ -35,13 +35,12 @@ function replacePathInData(data, replacer, ancestors = []) {
         newValue = replacePathInData(current[key], replacer, ancestors);
       }
 
-      /* eslint-disable prefer-object-spread */
       if (newValue !== current[key]) {
+        // eslint-disable-next-line prefer-object-spread
         current = Object.assign({}, current, {
           [key]: newValue,
         });
       }
-      /* eslint-enable prefer-object-spread */
     });
   }
 
