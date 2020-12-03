@@ -16,7 +16,6 @@ node('vetsgov-general-purpose') {
   }
 
   stage("Setup") {
-    sh "echo ---------------------------------------------------------------"
     sh "echo Setting up"
   }
 
