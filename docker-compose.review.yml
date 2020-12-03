@@ -1,6 +1,6 @@
 version: '3'
 services:
-  vets-website:
+  content-build:
     build:
       context: .
       args:
@@ -12,7 +12,7 @@ services:
       WEB_PORT: ${WEB_PORT:-3001}
     expose:
       - 3001
-    image: vets-website:${IMAGE_TAG:-latest}
+    image: content-build:${IMAGE_TAG:-latest}
     ports:
       - 3001:3001
     restart: unless-stopped
