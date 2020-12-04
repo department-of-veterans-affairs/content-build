@@ -13,13 +13,12 @@ const transform = (entity, { ancestors }) => ({
   entityPublished: isPublished(getDrupalValue(entity.status)),
   entityMetatags: createMetaTagArray(entity.metatag.value),
   fieldAlert: getDrupalValue(entity.fieldAlert),
-  fieldContentBlock: entity.fieldContentBlock.filter(
-    content =>
-      // Include only published content blocks.
-      // Limiting scope of this check to staff_profile for now.
-      content.entity?.entityBundle === 'staff_profile'
-        ? content.entity?.entityPublished
-        : true,
+  fieldContentBlock: entity.fieldContentBlock.filter(content =>
+    // Include only published content blocks.
+    // Limiting scope of this check to staff_profile for now.
+    content.entity?.entityBundle === 'staff_profile'
+      ? content.entity?.entityPublished
+      : true,
   ),
   fieldFeaturedContent: entity.fieldFeaturedContent,
   fieldIntroText: getDrupalValue(entity.fieldIntroText),
