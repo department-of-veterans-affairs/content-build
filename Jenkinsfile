@@ -59,8 +59,8 @@ node('vetsgov-general-purpose') {
   //   }
   // }
 
-  // // Perform a build for each build type
-  // envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
+  // Perform a build for each build type
+  envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
 
   // // Run E2E and accessibility tests
   // stage('Integration') {

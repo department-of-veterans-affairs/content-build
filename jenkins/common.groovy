@@ -238,7 +238,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
       parallel builds
       return envUsedCache
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }
