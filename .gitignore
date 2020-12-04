@@ -27,6 +27,7 @@ package-lock.json
 src/applications/
 !src/applications/registry.json
 temp
+dump.rdb
 test-results/
 
 # Ignore user's editor/IDE prefs
