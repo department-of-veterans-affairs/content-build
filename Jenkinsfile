@@ -16,7 +16,7 @@ node('vetsgov-general-purpose') {
   }
 
   stage("Setup") {
-    sh "echo Setting up"
+    sh "echo Setting up!"
   }
 
   // def commonStages = load "vets-website/jenkins/common.groovy"
