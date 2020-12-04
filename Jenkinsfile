@@ -1,8 +1,6 @@
 @Library('va.gov-devops-jenkins-lib') _
 import org.kohsuke.github.GitHub
 
-// WHITESPACE FTW!
-
 env.CONCURRENCY = 10
 
 
@@ -18,10 +16,10 @@ node('vetsgov-general-purpose') {
     ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
   }
 
-  // def commonStages = load "content-build/jenkins/common.groovy"
+  def commonStages = load "content-build/jenkins/common.groovy"
 
   // // setupStage
-  // dockerContainer = commonStages.setup()
+  dockerContainer = commonStages.setup()
 
   // stage('Lint|Security|Unit') {
   //   if (params.cmsEnvBuildOverride != 'none') { return }
