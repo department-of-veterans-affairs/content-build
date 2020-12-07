@@ -14,7 +14,7 @@ const permalinks = require('metalsmith-permalinks');
 
 const silverSmith = require('./silversmith');
 
-const assetSources = require('../../constants/assetSources');
+// const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
 const { getDrupalContent } = require('./drupal/metalsmith-drupal');
@@ -24,7 +24,7 @@ const addSubheadingsIds = require('./plugins/add-id-to-subheadings');
 const checkBrokenLinks = require('./plugins/check-broken-links');
 const checkCollections = require('./plugins/check-collections');
 const checkForCMSUrls = require('./plugins/check-cms-urls');
-const downloadAssets = require('./plugins/download-assets');
+// const downloadAssets = require('./plugins/download-assets');
 // const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
 const processEntryNames = require('./plugins/process-entry-names');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
@@ -234,17 +234,19 @@ function build(BUILD_OPTIONS) {
 
   smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
 
-  if (BUILD_OPTIONS['asset-source'] !== assetSources.LOCAL) {
-    // Download the pre-built application assets if needed
-    smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
-  } else {
-    // If the asset-source === 'local', the script/build.sh will run Webpack
-    // Load the resulting files from disk
-    // smith.use(
-    //  readAssetsFromDisk(BUILD_OPTIONS),
-    //  'Read application assets from disk',
-    // );
-  }
+  /*
+    if (BUILD_OPTIONS['asset-source'] !== assetSources.LOCAL) {
+      // Download the pre-built application assets if needed
+      smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
+    } else {
+      // If the asset-source === 'local', the script/build.sh will run Webpack
+      // Load the resulting files from disk
+      // smith.use(
+      //  readAssetsFromDisk(BUILD_OPTIONS),
+      //  'Read application assets from disk',
+      // );
+    }
+  */
 
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
