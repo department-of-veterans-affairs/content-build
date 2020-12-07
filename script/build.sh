@@ -50,13 +50,14 @@ if [ -d "${buildDir}" ]; then
 fi
 
 # Only run Webpack if the assetSource = local
-if [ "${assetSource}" = "local" ]; then
-    # echo "Building application assets"
-    # yarn build:webpack $webpackArgs
-    # cp -v "${buildDir}generated/vendor.entry.js" "${buildDir}generated/shared-modules.entry.js"
-else
-    echo "Will fetch application assets from the content build script"
-fi
+# if [ "${assetSource}" = "local" ]; then
+#     echo "Building application assets"
+#     yarn build:webpack $webpackArgs
+#     cp -v "${buildDir}generated/vendor.entry.js" "${buildDir}generated/shared-modules.entry.js"
+# else
+#     echo "Will fetch application assets from the content build script"
+# fi
+echo "Will fetch application assets from the content build script"
 
 # Always build the content
 yarn build:content $args
