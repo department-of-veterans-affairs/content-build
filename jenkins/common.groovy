@@ -323,7 +323,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
             sh "cd /application && node script/drupal-aws-cache.js --buildtype=${envName}"
           }
         } else {
-          slackCachedContent(envName)
+          // slackCachedContent(envName)
           // TODO: Read the envName-output.log and send that into the Slack message
         }
       }
