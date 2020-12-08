@@ -17,8 +17,8 @@ DRUPAL_CREDENTIALS = [
 ]
 
 ALL_VAGOV_BUILDTYPES = [
-  'vagovdev',
-  'vagovstaging',
+  // 'vagovdev',
+  // 'vagovstaging',
   'vagovprod'
 ]
 
@@ -34,9 +34,9 @@ IS_DEV_BRANCH = env.BRANCH_NAME == DEV_BRANCH
 IS_STAGING_BRANCH = env.BRANCH_NAME == STAGING_BRANCH
 IS_PROD_BRANCH = env.BRANCH_NAME == PROD_BRANCH
 
-DOCKER_ARGS = "-v ${WORKSPACE}/vets-website:/application -v ${WORKSPACE}/vagov-content:/vagov-content"
+DOCKER_ARGS = "-v ${WORKSPACE}/content-build:/application -v ${WORKSPACE}/vagov-content:/vagov-content"
 IMAGE_TAG = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
-DOCKER_TAG = "vets-website:" + IMAGE_TAG
+DOCKER_TAG = "content-build:" + IMAGE_TAG
 
 def isReviewable() {
   return !IS_DEV_BRANCH && !IS_STAGING_BRANCH && !IS_PROD_BRANCH
@@ -80,7 +80,7 @@ BUILDTIME=${buildtime}
 
 def slackNotify() {
   if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH) {
-    message = "vets-website ${env.BRANCH_NAME} branch CI failed. |${env.RUN_DISPLAY_URL}".stripMargin()
+    message = "content-build ${env.BRANCH_NAME} branch CI failed. |${env.RUN_DISPLAY_URL}".stripMargin()
     slackSend message: message,
       color: 'danger',
       failOnError: true
@@ -95,7 +95,7 @@ def slackIntegrationNotify() {
 }
 
 def slackCachedContent(envName) {
-  message = "vets-website built with cached Drupal data for ${envName}. |${env.RUN_DISPLAY_URL}".stripMargin()
+  message = "content-build built with cached Drupal data for ${envName}. |${env.RUN_DISPLAY_URL}".stripMargin()
   slackSend message: message,
     color: 'warning',
     failOnError: true
@@ -108,10 +108,10 @@ def setup() {
       checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
     }
 
-    dir("vets-website") {
+    dir("content-build") {
       sh "mkdir -p build"
-      sh "mkdir -p logs/selenium"
-      sh "mkdir -p coverage"
+      // sh "mkdir -p logs/selenium"
+      // sh "mkdir -p coverage"
       sh "mkdir -p temp"
 
       dockerImage = docker.build(DOCKER_TAG)
@@ -146,7 +146,7 @@ def findMissingQueryFlags(String buildLogPath, String envName) {
 def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnlyBuild) {
   // Look for broken links
   def csvFileName = "${envName}-broken-links.csv" // For use within the docker container
-  def csvFile = "${WORKSPACE}/vets-website/${csvFileName}" // For use outside of the docker context
+  def csvFile = "${WORKSPACE}/content-build/${csvFileName}" // For use outside of the docker context
 
   // Ensure the file isn't there if we had to rebuild
   if (fileExists(csvFile)) {
@@ -239,7 +239,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
       parallel builds
       return envUsedCache
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }
