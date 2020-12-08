@@ -268,7 +268,7 @@ def prearchiveAll(dockerContainer) {
 
       parallel builds
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }
@@ -302,7 +302,7 @@ def archiveAll(dockerContainer, String ref) {
       parallel archives
 
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }
@@ -335,7 +335,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
         }
       }
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }
