@@ -26,7 +26,7 @@ yalc.lock
 package-lock.json
 src/applications/
 !src/applications/registry.json
-temp
+/tmp
 dump.rdb
 test-results/
 
