@@ -60,6 +60,8 @@ function build(BUILD_OPTIONS) {
     enabledFeatureFlags: BUILD_OPTIONS.cmsFeatureFlags,
   });
 
+  // If you're on localhost, you probably want to see CSS/JS reflected in the build,
+  // so, this will set up a symlink into vets-website for you.
   if (BUILD_OPTIONS.buildtype === 'localhost') {
     smith.use(
       createMetalsmithSymlink(BUILD_OPTIONS),
