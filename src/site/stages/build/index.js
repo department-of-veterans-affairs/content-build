@@ -23,7 +23,7 @@ const checkCollections = require('./plugins/check-collections');
 const checkForCMSUrls = require('./plugins/check-cms-urls');
 // const downloadAssets = require('./plugins/download-assets');
 // const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
-// const processEntryNames = require('./plugins/process-entry-names');
+const processEntryNames = require('./plugins/process-entry-names');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const createHeaderFooter = require('./plugins/create-header-footer');
@@ -31,6 +31,7 @@ const createOutreachAssetsData = require('./plugins/create-outreach-assets-data'
 const createReactPages = require('./plugins/create-react-pages');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
+const createMetalsmithSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const parseHtml = require('./plugins/parse-html');
@@ -58,6 +59,13 @@ function build(BUILD_OPTIONS) {
     hostUrl: BUILD_OPTIONS.hostUrl,
     enabledFeatureFlags: BUILD_OPTIONS.cmsFeatureFlags,
   });
+
+  if (BUILD_OPTIONS.buildtype === 'localhost') {
+    smith.use(
+      createMetalsmithSymlink(BUILD_OPTIONS),
+      'Create symlink into vets-website for local development.',
+    );
+  }
 
   smith.use(createReactPages(BUILD_OPTIONS), 'Create React pages');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
@@ -177,18 +185,6 @@ function build(BUILD_OPTIONS) {
 
   smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
 
-  // if (BUILD_OPTIONS['asset-source'] !== assetSources.LOCAL) {
-  //   // Download the pre-built application assets if needed
-  //   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
-  // } else {
-  //   // If the asset-source === 'local', the script/build.sh will run Webpack
-  //   // Load the resulting files from disk
-  //   // smith.use(
-  //   //  readAssetsFromDisk(BUILD_OPTIONS),
-  //   //  'Read application assets from disk',
-  //   // );
-  // }
-
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
   smith.use(checkForCMSUrls(BUILD_OPTIONS), 'Check for CMS URLs');
@@ -207,10 +203,10 @@ function build(BUILD_OPTIONS) {
    * Convert onclick event handles into nonced script tags
    */
   smith.use(addNonceToScripts, 'Add nonce to script tags');
-  // smith.use(
-  //   processEntryNames(BUILD_OPTIONS),
-  //   'Process [data-entry-name] attributes into Webpack asset paths',
-  // );
+  smith.use(
+    processEntryNames(BUILD_OPTIONS),
+    'Process [data-entry-name] attributes into built asset paths',
+  );
   smith.use(updateExternalLinks(BUILD_OPTIONS), 'Update external links');
   smith.use(addSubheadingsIds(BUILD_OPTIONS), 'Add IDs to subheadings');
   smith.use(checkBrokenLinks(BUILD_OPTIONS), 'Check for broken links');
@@ -220,15 +216,24 @@ function build(BUILD_OPTIONS) {
   /* eslint-disable no-console */
   smith.build(err => {
     if (err) throw err;
+
+    // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
-      console.log('Metalsmith build finished!');
+      if (BUILD_OPTIONS.buildtype === 'localhost') {
+        console.log('TODO: Project is running at http://localhost:3002/');
+      }
+      console.log(
+        `Metalsmith output is served from /build/${BUILD_OPTIONS.buildtype}`,
+      );
+      console.log('Metalsmith is watching the files...');
     } else {
+      // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {
         smith.printSummary();
       }
-      console.log('Build finished!');
+      console.log('The Metalsmith build has completed.');
     }
-  });
+  }); // smith.build()
 }
 
 module.exports = build;
