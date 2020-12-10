@@ -7,7 +7,7 @@
     "build": "./script/build.sh",
     "build-analyze": "NODE_ENV=production npm run build -- --buildtype vagovprod --analyzer; npm run analyze",
     "build:compare": "node script/content-build-compare.js && diff --color websiteContentBuildHash.txt standaloneContentBuildHash.txt",
-    "build:content": "node --max-old-space-size=8192 script/build-content.js",
+    "build:content": "DEBUG=metalsmith-timer node --max-old-space-size=8192 script/build-content.js",
     "build:content:test": "node script/test-cms-export.js",
     "cms:compare": "./script/cms/compare.sh",
     "cms:diff": "./script/cms/diff.sh",
@@ -60,7 +60,7 @@
     "update:schema": "./script/update-json-schema.sh",
     "validate-content-build": "node ./script/validate-content-builds.js",
     "watch": "node ./script/watch.js",
-    "watch:content": "concurrently \"node --max-old-space-size=8192 script/build-content.js --watch\" \"http-server ./build/localhost -p 3002 -o\"",
+    "watch:content": "concurrently \"node --max-old-space-size=8192 script/build-content.js --watch\" \"http-server build/localhost -s -c-1 -p 3002\"",
     "watch:css-sourcemaps": "node --max-old-space-size=8192 script/build-content.js --watch --local-css-sourcemaps",
     "watch:review": "node ./script/run-review-instance-api.js",
     "watch:static": "concurrently -n metalsmith,webpack \"npm:watch:content\" \"npm run watch -- --env.entry=static-pages --progress=false\""

@@ -1,4 +1,5 @@
 // Builds the site using Metalsmith as the top-level build runner.
+const chalk = require('chalk');
 const assets = require('metalsmith-assets');
 const collections = require('metalsmith-collections');
 const dateInFilename = require('metalsmith-date-in-filename');
@@ -222,12 +223,21 @@ function build(BUILD_OPTIONS) {
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
       if (BUILD_OPTIONS.buildtype === 'localhost') {
-        console.log('TODO: Project is running at http://localhost:3002/');
+        console.log(' ');
+        console.log(
+          chalk.green('--------------------------------------------'),
+        );
+        console.log(' ');
+        console.log(
+          chalk.green('Project is running at http://localhost:3002/'),
+        );
       }
       console.log(
-        `Metalsmith output is served from /build/${BUILD_OPTIONS.buildtype}`,
+        chalk.green(
+          `Metalsmith output is served from /build/${BUILD_OPTIONS.buildtype}`,
+        ),
       );
-      console.log('Metalsmith is watching the files...');
+      console.log(chalk.green('Metalsmith is watching the files...'));
     } else {
       // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {

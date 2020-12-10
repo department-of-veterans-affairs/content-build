@@ -32,7 +32,7 @@ const helpSections = [
       {
         name: 'env.port',
         typeLabel: '{underline number}',
-        description: 'Run on a specific port. Defaults to {bold 3001}.',
+        description: 'Run on a specific port. Defaults to {bold 3002}.',
       },
       {
         name: 'env.public',

@@ -23,7 +23,7 @@ const { useFlags } = require('./drupal/load-saved-flags');
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'buildtype', type: String, defaultValue: defaultBuildtype },
   { name: 'host', type: String, defaultValue: defaultHost },
-  { name: 'port', type: Number, defaultValue: 3001 },
+  { name: 'port', type: Number, defaultValue: 3002 },
   { name: 'api', type: String, defaultValue: null },
   { name: 'watch', type: Boolean, defaultValue: false },
   { name: 'entry', type: String, defaultValue: null },
