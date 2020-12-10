@@ -32,7 +32,7 @@ const createOutreachAssetsData = require('./plugins/create-outreach-assets-data'
 const createReactPages = require('./plugins/create-react-pages');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
-const createMetalsmithSymlink = require('./plugins/create-symlink');
+const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const parseHtml = require('./plugins/parse-html');
@@ -63,9 +63,9 @@ function build(BUILD_OPTIONS) {
 
   // If you're on localhost, you probably want to see CSS/JS reflected in the build,
   // so, this will set up a symlink into vets-website for you.
-  if (BUILD_OPTIONS.buildtype === 'localhost') {
+  if (BUILD_OPTIONS.buildtype === 'localhost' && !BUILD_OPTIONS.nosymlink) {
     smith.use(
-      createMetalsmithSymlink(BUILD_OPTIONS),
+      createSymlink(BUILD_OPTIONS),
       'Create symlink into vets-website for local development.',
     );
   }
