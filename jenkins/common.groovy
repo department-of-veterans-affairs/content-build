@@ -335,7 +335,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
         }
       }
     } catch (error) {
-      // slackNotify()
+      // slackNotify() 
       throw error
     }
   }
