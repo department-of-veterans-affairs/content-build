@@ -4,25 +4,30 @@ const path = require('path');
 const environments = require('../../../constants/environments');
 
 let FILE_MANIFEST_FILENAME;
-let stub;
 
-// Map to the correct maifest file
-if (environments.VAGOVDEV) {
-  stub = 'dev';
-} else if (environments.VAGOVSTAGING) {
-  stub = 'staging';
-} else {
-  stub = 'prod';
-}
+/**
+ * Sets the URL for the file-manifest.json that is used when generating the HTML templates
+ * @returns {string} the URL for the relevant asset
+ */
+function setManifestOrigin() {
+  let stub;
 
-function setManifestOrigin(env) {
-  return `https://${env}-va-gov-assets.s3-us-gov-west-1.amazonaws.com/generated/file-manifest.json`;
+  // Map to the correct maifest file
+  if (environments.VAGOVDEV) {
+    stub = 'dev';
+  } else if (environments.VAGOVSTAGING) {
+    stub = 'staging';
+  } else {
+    stub = 'prod';
+  }
+
+  return `https://${stub}-va-gov-assets.s3-us-gov-west-1.amazonaws.com/generated/file-manifest.json`;
 }
 
 if (environments.LOCALHOST) {
   FILE_MANIFEST_FILENAME = 'generated/file-manifest.json';
 } else {
-  FILE_MANIFEST_FILENAME = setManifestOrigin(stub);
+  FILE_MANIFEST_FILENAME = setManifestOrigin();
 }
 
 function copyAssetsToTeamSitePaths(buildOptions, files, entryNamesDictionary) {
