@@ -108,9 +108,13 @@ function downloadAssets(buildOptions) {
     if (assetSource === assetSources.DEPLOYED) {
       await downloadFromLiveBucket(files, buildOptions);
       console.log('ATTN: deployed');
+      console.log(assetSource);
+      console.log(assetSources.DEPLOYED);
     } else {
       await downloadFromArchive(files, assetSource, buildOptions.buildtype);
       console.log('ATTN: from archive');
+      console.log(assetSource);
+      console.log(assetSources.DEPLOYED);
     }
 
     done();
