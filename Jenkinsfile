@@ -92,9 +92,10 @@ node('vetsgov-general-purpose') {
   //   }
   // }
 
+  // prearchive is relevant to assets, and assets are not relevant to content-build
   // commonStages.prearchiveAll(dockerContainer)
 
-  // commonStages.archiveAll(dockerContainer, ref);
+  commonStages.archiveAll(dockerContainer, ref);
   // commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
 
   // stage('Review') {
