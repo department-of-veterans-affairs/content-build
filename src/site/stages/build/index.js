@@ -12,7 +12,7 @@ const permalinks = require('metalsmith-permalinks');
 
 const silverSmith = require('./silversmith');
 
-const assetSources = require('../../constants/assetSources');
+// const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
 const { getDrupalContent } = require('./drupal/metalsmith-drupal');
@@ -185,14 +185,8 @@ function build(BUILD_OPTIONS) {
   );
   smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
   smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
-
   smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
-
-  if (BUILD_OPTIONS['asset-source'] !== assetSources.LOCAL) {
-    // Download the pre-built application assets if needed
-    smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
-  }
-
+  smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
   smith.use(checkForCMSUrls(BUILD_OPTIONS), 'Check for CMS URLs');
