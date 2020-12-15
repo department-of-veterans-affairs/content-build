@@ -322,10 +322,10 @@ workflows:
   additional-linting:
     jobs:
       - additional-linting
-  hourly:
+  hourly-content-validation:
     triggers:
       - schedule:
-        cron: "0 * * * *"
+          cron: "0 * * * *"
           filters:
             branches:
               only:
