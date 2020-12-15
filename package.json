@@ -13,6 +13,7 @@
     "cms:compare": "./script/cms/compare.sh",
     "cms:diff": "./script/cms/diff.sh",
     "cms:find-node": "./script/cms/find_node.sh",
+    "content-validation": "node script/content-validation/index.js",
     "fetch-drupal-cache": "node script/drupal-aws-cache.js --fetch",
     "prebuild": "node script/prebuild.js",
     "preview": "node script/preview.js",
