@@ -302,6 +302,3 @@ workflows:
       - lint
       - unit-test
       - security-audit
-  additional-linting:
-    jobs:
-      - additional-linting
