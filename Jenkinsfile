@@ -68,12 +68,8 @@ node('vetsgov-general-purpose') {
     dir("content-build") {
       try {
         parallel (
-          lint: {
-            dockerContainer.inside(commonStages.DOCKER_ARGS) {
-              sh "cd /application && npm --no-color run lint"
-            }
-          },
           'nightwatch-e2e': {
+            sh `echo "This is Jenkinsfile proper"`
             sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
           },
 
