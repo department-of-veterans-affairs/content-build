@@ -11,7 +11,7 @@ node('vetsgov-general-purpose') {
   dockerContainer = commonStages.setup()
 
   stage('Integration') {
-    dir("vets-website") {
+    dir("content-build") {
       try {
         parallel (
           nightwatch: {
