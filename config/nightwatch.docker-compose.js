@@ -21,7 +21,7 @@ module.exports = {
   test_workers: false,
   test_settings: {
     default: {
-      launch_url: `vets-website:${process.env.WEB_PORT || 3333}`,
+      launch_url: `content-build:${process.env.WEB_PORT || 3333}`,
       filter: '**/*.e2e.spec.js',
       selenium_host: 'selenium-chrome',
       selenium_port: selenium_server_port,

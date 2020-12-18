@@ -11,7 +11,7 @@ node('vetsgov-general-purpose') {
   dockerContainer = commonStages.setup()
 
   stage('Integration') {
-    dir("vets-website") {
+    dir("content-build") {
       try {
         parallel (
           nightwatch: {
@@ -22,7 +22,7 @@ node('vetsgov-general-purpose') {
           // }
         )
       } catch (error) {
-        commonStages.slackIntegrationNotify()
+        // commonStages.slackIntegrationNotify()
         throw error
       } finally {
         sh "docker-compose -p e2e down --remove-orphans"

@@ -21,7 +21,7 @@ module.exports = {
       username: 'vetsdotgov',
       access_key: process.env.SAUCE_ACCESS_KEY,
       use_ssl: false,
-      silent: true,
+      silent: false,
       output: true,
       screenshots: {
         enabled: false,

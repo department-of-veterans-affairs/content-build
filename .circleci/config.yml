@@ -302,3 +302,13 @@ workflows:
       - lint
       - unit-test
       - security-audit
+  hourly-content-validation:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - lint

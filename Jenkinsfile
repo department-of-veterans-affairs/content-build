@@ -23,7 +23,7 @@ node('vetsgov-general-purpose') {
 
   // stage('Lint|Security|Unit') {
   //   if (params.cmsEnvBuildOverride != 'none') { return }
-
+  //
   //   try {
   //     parallel (
   //       lint: {
@@ -31,7 +31,7 @@ node('vetsgov-general-purpose') {
   //           sh "cd /application && npm --no-color run lint"
   //         }
   //       },
-
+  //
   //       // Check package.json for known vulnerabilities
   //       security: {
   //         retry(3) {
@@ -40,7 +40,7 @@ node('vetsgov-general-purpose') {
   //           }
   //         }
   //       },
-
+  //
   //       unit: {
   //         dockerContainer.inside(commonStages.DOCKER_ARGS) {
   //           sh "/cc-test-reporter before-build"
@@ -62,35 +62,32 @@ node('vetsgov-general-purpose') {
   // Perform a build for each build type
   envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
 
-  // // Run E2E and accessibility tests
-  // stage('Integration') {
-  //   if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) { return }
-  //   dir("content-build") {
-  //     try {
-  //       parallel (
-  //         'nightwatch-e2e': {
-  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-  //         },
+  // Run E2E and accessibility tests
+  stage('Integration') {
+    // Remove for now since I want it to run.
+    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
+    dir("content-build") {
+      try {
+        parallel (
+          'nightwatch-e2e': {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker"
+          },
 
-  //         'nightwatch-accessibility': {
-  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
-  //         },
-
-  //         cypress: {
-  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p cypress up -d && docker-compose -p cypress run --rm --entrypoint=npm -e CI=true content-build --no-color run cy:test:docker"
-  //         }
-  //       )
-  //     } catch (error) {
-  //       commonStages.slackNotify()
-  //       throw error
-  //     } finally {
-  //       sh "docker-compose -p nightwatch down --remove-orphans"
-  //       sh "docker-compose -p accessibility down --remove-orphans"
-  //       sh "docker-compose -p cypress down --remove-orphans"
-  //       step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-  //     }
-  //   }
-  // }
+          'nightwatch-accessibility': {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility"
+          }
+        )
+      } catch (error) {
+        commonStages.slackNotify()
+        throw error
+      } finally {
+        sh "docker-compose -p nightwatch down --remove-orphans"
+        sh "docker-compose -p accessibility down --remove-orphans"
+        sh "docker-compose -p cypress down --remove-orphans"
+        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+      }
+    }
+  }
 
   // commonStages.prearchiveAll(dockerContainer)
 
