@@ -60,4 +60,4 @@ fi
 echo "Will fetch application assets from the content build script"
 
 # Always build the content
-yarn build:content $args
+yarn build $args

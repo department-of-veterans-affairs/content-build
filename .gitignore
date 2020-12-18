@@ -42,3 +42,10 @@ cms.diff
 all-links.csv
 .tern-port
 *.iml
+
+# Ignore the hashed build files for comparison
+standaloneContentBuildHash.txt
+websiteContentBuildHash.txt
+
+cms.diff
+graphql-data.json

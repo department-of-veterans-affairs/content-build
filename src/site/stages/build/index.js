@@ -1,7 +1,5 @@
 // Builds the site using Metalsmith as the top-level build runner.
-const fs = require('fs-extra');
-const path = require('path');
-
+const chalk = require('chalk');
 const assets = require('metalsmith-assets');
 const collections = require('metalsmith-collections');
 const dateInFilename = require('metalsmith-date-in-filename');
@@ -24,9 +22,9 @@ const addSubheadingsIds = require('./plugins/add-id-to-subheadings');
 const checkBrokenLinks = require('./plugins/check-broken-links');
 const checkCollections = require('./plugins/check-collections');
 const checkForCMSUrls = require('./plugins/check-cms-urls');
-// const downloadAssets = require('./plugins/download-assets');
+const downloadAssets = require('./plugins/download-assets');
 // const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
-// const processEntryNames = require('./plugins/process-entry-names');
+const processEntryNames = require('./plugins/process-entry-names');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const createHeaderFooter = require('./plugins/create-header-footer');
@@ -34,6 +32,7 @@ const createOutreachAssetsData = require('./plugins/create-outreach-assets-data'
 const createReactPages = require('./plugins/create-react-pages');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
+const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const parseHtml = require('./plugins/parse-html');
@@ -43,55 +42,6 @@ const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateExternalLinks = require('./plugins/update-external-links');
 const updateRobots = require('./plugins/update-robots');
-
-/**
- * Immediately copies the Webpack build output to a directory outside of
- * Metalsmith's build destination, then returns a function for use as a
- * Metalsmith plugin. This plugin copies the files back to their expected
- * location.
- *
- * This is needed because script/build.sh runs Webpack before the content build,
- * and Metalsmith's build method removes everything in the destination, which
- * wipes out the output of the Webpack build.
- *
- * This can be removed when we move the content build to a new repository and
- * this script no longer interacts with the Webpack output at all.
- */
-function preserveWebpackOutput(metalsmithDestination, buildType) {
-  const webpackBuildDirName = 'generated';
-  const tempDir = path.join(
-    __dirname,
-    '../../../../tmp/',
-    buildType,
-    webpackBuildDirName,
-  );
-  const webpackDir = path.join(metalsmithDestination, webpackBuildDirName);
-
-  const webpackDirExists = fs.existsSync(webpackDir);
-
-  // Immediately move the Webpack output to a new directory
-  if (webpackDirExists) {
-    // eslint-disable-next-line no-console
-    console.log(`Found Webpack directory at ${webpackDir}`);
-    fs.moveSync(webpackDir, tempDir, { overwrite: true });
-  }
-
-  return () => {
-    if (webpackDirExists) {
-      fs.moveSync(tempDir, webpackDir);
-      // Clean up tmp/ if it's empty. The empty check is needed for CI, where
-      // we're building multiple environments in parallel
-      if (!fs.readdirSync(path.resolve(tempDir, '..')).length) {
-        fs.rmdirSync(path.resolve(tempDir, '..'));
-      }
-    } else {
-      // eslint-disable-next-line no-console
-      console.log(
-        'No Webpack output found. Skipping the asset preservation step.',
-      );
-    }
-  };
-}
 
 function build(BUILD_OPTIONS) {
   const smith = silverSmith();
@@ -111,10 +61,14 @@ function build(BUILD_OPTIONS) {
     enabledFeatureFlags: BUILD_OPTIONS.cmsFeatureFlags,
   });
 
-  smith.use(
-    preserveWebpackOutput(BUILD_OPTIONS.destination, BUILD_OPTIONS.buildtype),
-    'Preserving Webpack build output',
-  );
+  // If you're on localhost, you probably want to see CSS/JS reflected in the build,
+  // so, this will set up a symlink into vets-website for you.
+  if (BUILD_OPTIONS.buildtype === 'localhost' && !BUILD_OPTIONS.nosymlink) {
+    smith.use(
+      createSymlink(BUILD_OPTIONS),
+      'Create symlink into vets-website for local development.',
+    );
+  }
 
   smith.use(createReactPages(BUILD_OPTIONS), 'Create React pages');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
@@ -231,21 +185,8 @@ function build(BUILD_OPTIONS) {
   );
   smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
   smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
-
   smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
-
-  // if (BUILD_OPTIONS['asset-source'] !== assetSources.LOCAL) {
-  //   // Download the pre-built application assets if needed
-  //   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
-  // } else {
-  //   // If the asset-source === 'local', the script/build.sh will run Webpack
-  //   // Load the resulting files from disk
-  //   // smith.use(
-  //   //  readAssetsFromDisk(BUILD_OPTIONS),
-  //   //  'Read application assets from disk',
-  //   // );
-  // }
-
+  smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
   smith.use(checkForCMSUrls(BUILD_OPTIONS), 'Check for CMS URLs');
@@ -264,10 +205,10 @@ function build(BUILD_OPTIONS) {
    * Convert onclick event handles into nonced script tags
    */
   smith.use(addNonceToScripts, 'Add nonce to script tags');
-  // smith.use(
-  //   processEntryNames(BUILD_OPTIONS),
-  //   'Process [data-entry-name] attributes into Webpack asset paths',
-  // );
+  smith.use(
+    processEntryNames(BUILD_OPTIONS),
+    'Process [data-entry-name] attributes into built asset paths',
+  );
   smith.use(updateExternalLinks(BUILD_OPTIONS), 'Update external links');
   smith.use(addSubheadingsIds(BUILD_OPTIONS), 'Add IDs to subheadings');
   smith.use(checkBrokenLinks(BUILD_OPTIONS), 'Check for broken links');
@@ -277,15 +218,33 @@ function build(BUILD_OPTIONS) {
   /* eslint-disable no-console */
   smith.build(err => {
     if (err) throw err;
+
+    // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
-      console.log('Metalsmith build finished!');
+      if (BUILD_OPTIONS.buildtype === 'localhost') {
+        console.log(' ');
+        console.log(
+          chalk.green('--------------------------------------------'),
+        );
+        console.log(' ');
+        console.log(
+          chalk.green('Project is running at http://localhost:3002/'),
+        );
+      }
+      console.log(
+        chalk.green(
+          `Metalsmith output is served from /build/${BUILD_OPTIONS.buildtype}`,
+        ),
+      );
+      console.log(chalk.green('Metalsmith is watching the files...'));
     } else {
+      // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {
         smith.printSummary();
       }
-      console.log('Build finished!');
+      console.log('The Metalsmith build has completed.');
     }
-  });
+  }); // smith.build()
 }
 
 module.exports = build;
