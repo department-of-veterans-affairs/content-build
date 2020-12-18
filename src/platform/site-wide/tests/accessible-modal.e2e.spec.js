@@ -20,8 +20,10 @@ module.exports = E2eHelpers.createE2eTest(client => {
   // --------------------- //
 
   // Open modal
-  client.focusOn(firstOpenControl).keys(ENTER);
-  // .assert.isActiveElement(firstModalItem);
+  client
+    .focusOn(firstOpenControl)
+    .keys(ENTER)
+    .assert.isActiveElement(firstModalItem);
 
   // Trap backward traversal
   client
