@@ -251,6 +251,37 @@ jobs:
           paths:
             - vets-website/build
 
+  nightwatch:
+    working_directory: ~/content-build
+    docker:
+      - image: circleci/node:14.15.0
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-e2e-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: yarn-packages-e2e-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Build site
+          command: yarn build --env.buildtype vagovstaging --env.scaffold
+      - run:
+          name: Run e2e tests
+          command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker
+      - run:
+          name: Run accessibility tests
+          command: docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - content-build/build
+
   e2e-test:
     working_directory: ~/vets-website
     docker:
@@ -302,6 +333,7 @@ workflows:
       - lint
       - unit-test
       - security-audit
+      - nightwatch
   hourly-content-validation:
     triggers:
       - schedule:
