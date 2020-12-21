@@ -270,7 +270,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Build site
-          command: yarn build --env.buildtype vagovstaging --env.scaffold
+          command: NODE_ENV=production ./script/build.sh --buildtype vagovstaging
       - run:
           name: Run e2e tests
           command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker
