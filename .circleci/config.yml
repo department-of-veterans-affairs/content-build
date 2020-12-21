@@ -270,13 +270,13 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Build site
-          command: NODE_ENV=production ./script/build.sh --buildtype vagovstaging
+          command: NODE_ENV=production ./script/build.sh --buildtype vagovdev
       - run:
           name: Run e2e tests
-          command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker
+          command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovdev content-build --no-color run nightwatch:docker
       - run:
           name: Run accessibility tests
-          command: docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility
+          command: docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovdev content-build --no-color run nightwatch:docker -- --env=accessibility
       - persist_to_workspace:
           root: ~/
           paths:
