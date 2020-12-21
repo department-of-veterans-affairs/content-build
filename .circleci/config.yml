@@ -321,6 +321,9 @@ workflows:
       - lint
       - unit-test
       - security-audit
+  nightwatch:
+    jobs:
+      - build-e2e
       - nightwatch
   hourly-content-validation:
     triggers:
