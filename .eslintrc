@@ -56,7 +56,7 @@
     "va/use-resolved-path": [
       0,
       {
-        "aliases": ["applications", "platform", "site", "vet360"]
+        "aliases": ["applications", "platform", "site", "@@vap-svc", "@@profile"]
       }
     ],
 
