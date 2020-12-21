@@ -225,9 +225,9 @@ jobs:
           command: npm run pr-check
 
   build-e2e:
-    working_directory: ~/vets-website
+    working_directory: ~/content-build
     docker:
-      - image: cypress/base:14.15.0
+      - image: circleci/node:14.15.0
     resource_class: xlarge
     steps:
       - checkout
@@ -249,7 +249,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - vets-website/build
+            - content-build/build
 
   nightwatch:
     working_directory: ~/content-build
@@ -258,29 +258,17 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - restore_cache:
           keys:
             - yarn-packages-e2e-{{ checksum "yarn.lock" }}
       - run:
-          name: Install Dependencies
+          name: Installed Dependencies
           command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
-      - save_cache:
-          key: yarn-packages-e2e-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
       - run:
-          name: Build site
-          command: ./script/build.sh --buildtype vagovdev
-      - run:
-          name: Run e2e tests
-          command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovdev content-build --no-color run nightwatch:docker
-      - run:
-          name: Run accessibility tests
-          command: docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovdev content-build --no-color run nightwatch:docker -- --env=accessibility
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - content-build/build
+          name: Run nightwatch tests
+          command: yarn start-server-and-test "node ../src/platform/testing/e2e/test-server.js --buildtype=vagovprod --port=3001 > /dev/null 2>&1" :3001 "yarn nightwatch"
 
   e2e-test:
     working_directory: ~/vets-website
