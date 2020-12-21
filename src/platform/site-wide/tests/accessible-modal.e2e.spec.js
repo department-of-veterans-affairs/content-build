@@ -54,6 +54,9 @@ module.exports = E2eHelpers.createE2eTest(client => {
     .keys(ENTER)
     .assert.isActiveElement(firstModalItem);
 
+  // Added and axe check is required to fully pass linting
+  client.axeCheck(overlay);
+
   client.keys(ESCAPE).assert.isActiveElement(thirdOpenControl);
 
   client.end();
