@@ -270,7 +270,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Build site
-          command: NODE_ENV=production ./script/build.sh --buildtype vagovdev
+          command: ./script/build.sh --buildtype vagovdev
       - run:
           name: Run e2e tests
           command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovdev content-build --no-color run nightwatch:docker
