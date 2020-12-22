@@ -29,10 +29,6 @@ do
       buildLog="${2}"
       shift 2
       ;;
-    --checkBrokenLinks)
-      checkBrokenLinks="${2}"
-      shift 2
-      ;;
     *)    # unknown option
       shift # past argument
       ;;
