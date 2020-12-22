@@ -80,7 +80,7 @@ node('vetsgov-general-purpose') {
           "check-broken-links": {
             sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
             sh "docker-compose -p check-broken-links up -d"
-            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build --validateContent --drupal-fail-fast --asset-source=local"
+            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color && NODE_ENV=production ./script/build.sh --buildtype vagovstaging --validateContent"
           },
         )
       } catch (error) {
