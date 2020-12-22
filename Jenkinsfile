@@ -78,7 +78,7 @@ node('vetsgov-general-purpose') {
           },
 
           "check-broken-links": {
-            sh "cd application && jenkins/build.sh --envName vagovstaging --assetSource local --drupalAddress http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --pull-drupal --buildLog /application/vagovstaging-build.log --verbose"
+            sh "jenkins/build.sh --envName vagovstaging --assetSource local --drupalAddress http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --pull-drupal --buildLog /application/vagovstaging-build.log --verbose"
           }
         )
       } catch (error) {
