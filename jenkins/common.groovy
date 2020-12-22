@@ -204,6 +204,38 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   }
 }
 
+def integration(String ref, dockerContainer) {
+  stage('Integration') {
+    // Remove for now since I want it to run.
+    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
+    dir("content-build") {
+      try {
+        parallel (
+          'nightwatch-e2e': {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker"
+          },
+
+          'nightwatch-accessibility': {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility"
+          },
+
+          // "check-broken-links": {
+          //   sh "jenkins/build.sh --envName vagovstaging --assetSource local --drupalAddress http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --pull-drupal --buildLog /application/vagovstaging-build.log --verbose"
+          // }
+        )
+      } catch (error) {
+        // commonStages.slackNotify()
+        throw error
+      } finally {
+        sh "docker-compose -p nightwatch down --remove-orphans"
+        sh "docker-compose -p accessibility down --remove-orphans"
+        sh "docker-compose -p check-broken-links down --remove-orphans"
+        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+      }
+    }
+  }
+}
+
 def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
   stage("Build") {
     if (shouldBail()) { return }
