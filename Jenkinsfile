@@ -78,7 +78,7 @@ node('vetsgov-general-purpose') {
           },
 
           "check-broken-links": {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p check-broken-links up -d && docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build:validate -- --env=check-broken-links"
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p check-broken-links up -d && docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build:validate"
           }
         )
       } catch (error) {
