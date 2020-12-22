@@ -82,6 +82,10 @@ node('vetsgov-general-purpose') {
             sh "docker-compose -p check-broken-links up -d"
             sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run NODE_ENV=production build --validateContent --buildtype=vagovstaging --drupal-fail-fast"
           },
+
+          'links-docker': {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p links-docker up -d && docker-compose -p links-docker run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build --validateContent --buildtype=vagovstaging --drupal-fail-fast"
+          },
         )
       } catch (error) {
         // commonStages.slackNotify()
@@ -90,6 +94,7 @@ node('vetsgov-general-purpose') {
         sh "docker-compose -p nightwatch down --remove-orphans"
         sh "docker-compose -p accessibility down --remove-orphans"
         sh "docker-compose -p check-broken-links down --remove-orphans"
+        sh "docker-compose -p links-docker down --remove-orphans"
         step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
       }
     }
