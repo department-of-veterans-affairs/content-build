@@ -188,9 +188,9 @@ def build(String ref, dockerContainer, Boolean checkBrokenLinks, String assetSou
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "/application/${envName}-build.log"
 
-      sh "cd /application && jenkins/build.sh --checkBrokenLinks ${checkBrokenLinks} --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
+      sh "cd /application && jenkins/build.sh --envName ${envName} --checkBrokenLinks ${checkBrokenLinks} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
 
-      if (checkBrokenLinks == true) {
+      if (envName == 'vagovprod' || checkBrokenLinks == true) {
 	       checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
 
