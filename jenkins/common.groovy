@@ -190,7 +190,11 @@ def build(String ref, dockerContainer, Boolean checkBrokenLinks, String assetSou
 
       sh "cd /application && jenkins/build.sh --envName ${envName} --checkBrokenLinks ${checkBrokenLinks} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
 
-      if (envName == 'vagovprod' || checkBrokenLinks == true) {
+      if (envName == 'vagovprod') {
+	       checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
+      }
+
+      if (checkBrokenLinks == true) {
 	       checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
 
