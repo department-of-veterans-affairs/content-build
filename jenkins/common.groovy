@@ -176,7 +176,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   }
 }
 
-def build(String ref, dockerContainer, String checkBrokenLinks, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild) {
+def build(String ref, dockerContainer, Boolean checkBrokenLinks, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild) {
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
   // Use Drupal prod for all environments
