@@ -176,7 +176,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   }
 }
 
-def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild) {
+def build(String ref, dockerContainer, String assetSource, String envName, Boolean checkBrokenLinks, Boolean useCache, Boolean contentOnlyBuild) {
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
   // Use Drupal prod for all environments
@@ -188,9 +188,9 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "/application/${envName}-build.log"
 
-      sh "cd /application && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
+      sh "cd /application && jenkins/build.sh --checkBrokenLinks ${checkBrokenLinks} --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
 
-      if (envName == 'vagovstaging') {
+      if (envName == 'vagovstaging' || checkBrokenLinks) {
 	       checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
 
@@ -217,7 +217,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         def envName = VAGOV_BUILDTYPES.get(i)
         builds[envName] = {
           try {
-            build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+            build(ref, dockerContainer, assetSource, envName, false, false, contentOnlyBuild)
             envUsedCache[envName] = false
           } catch (error) {
             // We're not using the cache for content only builds, because requesting
@@ -226,10 +226,10 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
-              build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild)
+              build(ref, dockerContainer, assetSource, envName, false, true, contentOnlyBuild)
               envUsedCache[envName] = true
             } else {
-              build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+              build(ref, dockerContainer, assetSource, envName, false, false, contentOnlyBuild)
               envUsedCache[envName] = false
             }
           }
