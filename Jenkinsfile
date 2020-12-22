@@ -77,11 +77,11 @@ node('vetsgov-general-purpose') {
             sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility"
           },
 
-          // "check-broken-links": {
-          //   sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
-          //   sh "docker-compose -p check-broken-links up -d"
-          //   sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build:validate"
-          // }
+          "check-broken-links": {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
+            sh "docker-compose -p check-broken-links up -d"
+            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build --validateContent --drupal-fail-fast"
+          },
         )
       } catch (error) {
         // commonStages.slackNotify()

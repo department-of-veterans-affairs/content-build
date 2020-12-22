@@ -34,6 +34,10 @@ for o in "$@"; do
             buildtype="${o#*=}"
             shift
             ;;
+        --validateContent=*)
+            validateContent="$2"
+            shift
+            ;;
         *)
             ;;
     esac
@@ -41,6 +45,7 @@ done
 
 echo "assetSource: ${assetSource}"
 echo "buildtype: ${buildtype}"
+echo "validateContent: ${validateContent}"
 echo
 
 buildDir="$(dirname "$0")/../build/${buildtype}/"
