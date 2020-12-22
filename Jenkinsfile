@@ -78,7 +78,7 @@ node('vetsgov-general-purpose') {
           },
 
           "check-broken-links": {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p check-broken-links up -d && docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build:validate"
+            sh "cd application && jenkins/build.sh --checkBrokenLinks true --envName vagovstaging --assetSource local --drupalAddress http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --pull-drupal --buildLog /application/vagovstaging-build.log --verbose"
           }
         )
       } catch (error) {
