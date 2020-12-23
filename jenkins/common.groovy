@@ -150,18 +150,18 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
   // Ensure the file isn't there if we had to rebuild
   if (fileExists(csvFile)) {
-    sh "rm /content-build/${csvFileName}"
+    sh "rm /application/${csvFileName}"
   }
 
   // Output a csv file with the broken links
-  sh "cd /content-build && jenkins/glean-broken-links.sh ${buildLogPath} ${csvFileName}"
+  sh "cd /application && jenkins/glean-broken-links.sh ${buildLogPath} ${csvFileName}"
   if (fileExists(csvFile)) {
     echo "Found broken links; notifying the Slack channel."
     // TODO: Move this slackUploadFile to cacheDrupalContent and update the echo statement above
     // slackUploadFile(filePath: csvFile, channel: 'dev_null', failOnError: true, initialComment: "Found broken links in the ${envName} build on `${env.BRANCH_NAME}`.")
 
     // Until slackUploadFile works...
-    def linkCount = sh(returnStdout: true, script: "cd /content-build && wc -l ${csvFileName} | cut -d ' ' -f1") as Integer
+    def linkCount = sh(returnStdout: true, script: "cd /application && wc -l ${csvFileName} | cut -d ' ' -f1") as Integer
     slackSend message: "${linkCount} broken links found in the ${envName} build on `${env.BRANCH_NAME}`\n${env.RUN_DISPLAY_URL}".stripMargin(),
       color: 'danger',
       failOnError: true,
