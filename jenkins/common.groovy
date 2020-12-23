@@ -245,7 +245,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
   }
 }
 
-def integration(String ref, dockerContainer, envName, Boolean contentOnlyBuild) {
+def groovyIntegration(String ref, dockerContainer, envName, Boolean contentOnlyBuild) {
   stage("Groovy Integration") {
     if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
 

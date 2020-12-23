@@ -23,7 +23,7 @@ node('vetsgov-general-purpose') {
 
   // Perform a build for each build type
   envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
-  intrgrationTest = commonStages.integration(ref, dockerContainer)
+  intrgrationTest = commonStages.groovyIntegration(ref, dockerContainer)
 
   // Run E2E and accessibility tests
   // stage('Integration') {
