@@ -202,7 +202,7 @@ jobs:
           command: NODE_ENV=production yarn build --buildtype=vagovstaging
       - run:
           name: Run e2e tests
-          command: BABEL_ENV=test BUILDTYPE=vagovstaging yarn nightwatch:docker --buildtype=vagovstaging
+          command: BABEL_ENV=test yarn nightwatch:docker
       - persist_to_workspace:
           root: ~/
           paths:
