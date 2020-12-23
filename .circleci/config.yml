@@ -189,7 +189,7 @@ jobs:
           command: yarn fetch-drupal-cache --buildtype=vagovstaging
       - run:
           name: Run build
-          command: yarn build --buildtype=vagovstaging
+          command: NODE_ENV=production yarn build --buildtype=vagovstaging
       - run:
           name: Run e2e Tests
           command: yarn nightwatch:docker
