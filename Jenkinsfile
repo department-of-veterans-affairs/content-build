@@ -45,9 +45,10 @@ node('vetsgov-general-purpose') {
             sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run fetch-drupal-cache -- --buildtype=vagovstaging"
             sh "ls -l"
             sh "pwd"
+            // sh "jenkins/build.sh --validateContent --envName vagovstaging --assetSource local --drupalAddress http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --buildLog /application/vagovstaging-build.log --verbose"
 
             commonStages.build(ref, dockerContainer, 'local', 'vagovstaging', true, false, false);
-            commonStages.checkForBrokenLinks('vagovstaging-build.log', 'vagovstaging', false);
+            // commonStages.checkForBrokenLinks('vagovstaging-build.log', 'vagovstaging', false);
             // sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color build --validateContent --drupal-fail-fast -- --buildtype=vagovstaging"
           },
         )
