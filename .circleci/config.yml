@@ -253,7 +253,7 @@ jobs:
           command: NODE_ENV=production yarn build --buildtype=vagovstaging
       - run:
           name: Run e2e tests
-          command: yarn nightwatch:docker
+          command: yarn nightwatch
       - persist_to_workspace:
           root: ~/
           paths:
