@@ -3,11 +3,9 @@
 
 const fs = require('fs-extra');
 const chromedriver = require('chromedriver');
-const seleniumServer = require('selenium-server');
+const seleniumServer = require('selenium-server-standalone-jar');
 
 require('@babel/register');
-require('core-js/stable');
-require('regenerator-runtime/runtime');
 
 const selenium_logs = './logs/selenium';
 const selenium_server_port = process.env.SELENIUM_PORT || 4444;
