@@ -246,7 +246,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
 }
 
 def integration(String ref, dockerContainer, envName, Boolean contentOnlyBuild) {
-  stage("Groovy Integration") {
+  stage("Integration") {
     if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
 
     def assetSource = contentOnlyBuild ? ref : 'local'
