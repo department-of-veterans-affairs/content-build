@@ -44,7 +44,9 @@ node('vetsgov-general-purpose') {
             sh "docker-compose -p check-broken-links up -d"
             sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run fetch-drupal-cache -- --buildtype=vagovstaging"
             sh "ls -l"
-            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color build --validateContent --drupal-fail-fast -- --buildtype=vagovstaging"
+
+            commonStages.checkForBrokenLinks('/vagovstaging-build.log', 'vagovstaging', false);
+            // sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color build --validateContent --drupal-fail-fast -- --buildtype=vagovstaging"
           },
         )
       } catch (error) {
