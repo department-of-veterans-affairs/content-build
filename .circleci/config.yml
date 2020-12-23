@@ -179,12 +179,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - yarn-packages-e2e-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
-          key: yarn-packages-e2e-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - run:
@@ -205,12 +205,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - yarn-packages-e2e-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
-          key: yarn-packages-e2e-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - run:
