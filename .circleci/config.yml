@@ -186,10 +186,10 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Fetch Drupal Cache
-          command: yarn fetch-drupal-cache --buildtype=vagovstaging
+          command: yarn fetch-drupal-cache --buildtype=vagovdev
       - run:
           name: Run build
-          command: NODE_ENV=production yarn build --buildtype=vagovstaging
+          command: NODE_ENV=production yarn build --buildtype=vagovdev
       - run:
           name: Run e2e Tests
           command: yarn nightwatch:docker
