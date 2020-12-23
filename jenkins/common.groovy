@@ -250,11 +250,18 @@ def integration(String ref, dockerContainer, envName, Boolean contentOnlyBuild) 
     if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
 
     def assetSource = contentOnlyBuild ? ref : 'local'
+    try {
+      dockerContainer.inside(DOCKER_ARGS) {
+        sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=vagovstaging"
+        build(ref, dockerContainer, 'local', 'vagovstaging', true, true, false)
+        envUsedCache[envName] = true
 
-    dockerContainer.inside(DOCKER_ARGS) {
-      sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
-      build(ref, dockerContainer, 'local', envName, true, true, contentOnlyBuild)
-      envUsedCache[envName] = true
+        parallel builds
+        return envUsedCache
+      }
+    } catch (error) {
+      // slackNotify()
+      throw error
     }
 
     dir("content-build") {
