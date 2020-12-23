@@ -1,9 +1,9 @@
-// const semver = require('semver');
+const semver = require('semver');
 const fs = require('fs');
 const path = require('path');
 
-// const nodeVersion = path.join(__dirname, '../.nvmrc');
-// const minimumNodeVersion = fs.readFileSync(nodeVersion).toString();
+const nodeVersion = path.join(__dirname, '../.nvmrc');
+const minimumNodeVersion = fs.readFileSync(nodeVersion).toString();
 
 if (process.env.INSTALL_HOOKS !== 'no') {
   // Make sure git pre-commit hooks are installed
@@ -17,8 +17,8 @@ if (process.env.INSTALL_HOOKS !== 'no') {
   });
 }
 
-// if (semver.compare(process.version, minimumNodeVersion) === -1) {
-//   process.stdout.write(`Node.js version (minimum): v${minimumNodeVersion}\n`);
-//   process.stdout.write(`Node.js version (installed): ${process.version}\n`);
-//   process.exit(1);
-// }
+if (semver.compare(process.version, minimumNodeVersion) === -1) {
+  process.stdout.write(`Node.js version (minimum): v${minimumNodeVersion}\n`);
+  process.stdout.write(`Node.js version (installed): ${process.version}\n`);
+  process.exit(1);
+}
