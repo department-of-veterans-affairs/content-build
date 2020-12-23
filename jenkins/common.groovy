@@ -251,6 +251,12 @@ def integration(String ref, dockerContainer, envName, Boolean contentOnlyBuild) 
 
     def assetSource = contentOnlyBuild ? ref : 'local'
 
+    dockerContainer.inside(DOCKER_ARGS) {
+      sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
+      build(ref, dockerContainer, 'local', envName, true, true, contentOnlyBuild)
+      envUsedCache[envName] = true
+    }
+
     dir("content-build") {
       try {
         parallel (
