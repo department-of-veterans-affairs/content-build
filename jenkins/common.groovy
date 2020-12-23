@@ -245,15 +245,6 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
   }
 }
 
-def integration(String ref, dockerContainer, envName, Boolean contentOnlyBuild) {
-  stage("Integration") {
-    dockerContainer.inside(DOCKER_ARGS) {
-      sh "pwd"
-      sh "ls -l"
-    }
-  }
-}
-
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node --max-old-space-size=8192 script/prearchive.js --buildtype=${envName}"
