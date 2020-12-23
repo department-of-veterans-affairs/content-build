@@ -25,38 +25,38 @@ node('vetsgov-general-purpose') {
   envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
 
   // Run E2E and accessibility tests
-  stage('Integration') {
-    // Remove for now since I want it to run.
-    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
-    dir("content-build") {
-      try {
-        parallel (
-          'nightwatch-e2e': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker"
-          },
-
-          'nightwatch-accessibility': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility"
-          },
-
-          "check-broken-links": {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
-            sh "docker-compose -p check-broken-links up -d"
-            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run fetch-drupal-cache -- --buildtype=vagovstaging"
-            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build --validateContent --drupal-fail-fast -- --buildtype=vagovstaging"
-          },
-        )
-      } catch (error) {
-        // commonStages.slackNotify()
-        throw error
-      } finally {
-        sh "docker-compose -p nightwatch down --remove-orphans"
-        sh "docker-compose -p accessibility down --remove-orphans"
-        sh "docker-compose -p check-broken-links down --remove-orphans"
-        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-      }
-    }
-  }
+  // stage('Integration') {
+  //   // Remove for now since I want it to run.
+  //   if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
+  //   dir("content-build") {
+  //     try {
+  //       parallel (
+  //         'nightwatch-e2e': {
+  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker"
+  //         },
+  //
+  //         'nightwatch-accessibility': {
+  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility"
+  //         },
+  //
+  //         "check-broken-links": {
+  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
+  //           sh "docker-compose -p check-broken-links up -d"
+  //           sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run fetch-drupal-cache -- --buildtype=vagovstaging"
+  //           sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build --validateContent --drupal-fail-fast -- --buildtype=vagovstaging"
+  //         },
+  //       )
+  //     } catch (error) {
+  //       // commonStages.slackNotify()
+  //       throw error
+  //     } finally {
+  //       sh "docker-compose -p nightwatch down --remove-orphans"
+  //       sh "docker-compose -p accessibility down --remove-orphans"
+  //       sh "docker-compose -p check-broken-links down --remove-orphans"
+  //       step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+  //     }
+  //   }
+  // }
 
   commonStages.integration(ref, dockerContainer)
 
