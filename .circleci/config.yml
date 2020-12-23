@@ -171,6 +171,7 @@ jobs:
           command: npm run pr-check
 
   nightwatch-e2e:
+    name: Nightwatch End to End Tests
     working_directory: ~/content-build
     docker:
       - image: circleci/node:14.15.0
@@ -199,7 +200,7 @@ jobs:
           command: NODE_ENV=production yarn build --buildtype=vagovstaging
       - run:
           name: Run e2e tests
-          command: yarn nightwatch:docker
+          command: yarn nightwatch
       - persist_to_workspace:
           root: ~/
           paths:
