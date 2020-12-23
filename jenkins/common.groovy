@@ -245,6 +245,47 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
   }
 }
 
+def integration(String ref, dockerContainer, envName, Boolean contentOnlyBuild) {
+  stage("Groovy Integration") {
+    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
+
+    def assetSource = contentOnlyBuild ? ref : 'local'
+
+    dir("content-build") {
+      try {
+        parallel (
+          'nightwatch-e2e': {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker"
+          },
+
+          'nightwatch-accessibility': {
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility"
+          },
+
+          // "check-broken-links": {
+          //   sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
+          //   sh "docker-compose -p check-broken-links up -d"
+          //   sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run ci:fetch-and-build"
+          // },
+          "check-broken-links": {
+            sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
+            build(ref, dockerContainer, 'local', envName, true, true, contentOnlyBuild)
+            envUsedCache[envName] = true
+          }
+        )
+      } catch (error) {
+        // commonStages.slackNotify()
+        throw error
+      } finally {
+        sh "docker-compose -p nightwatch down --remove-orphans"
+        sh "docker-compose -p accessibility down --remove-orphans"
+        sh "docker-compose -p check-broken-links down --remove-orphans"
+        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+      }
+    }
+  }
+}
+
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node --max-old-space-size=8192 script/prearchive.js --buildtype=${envName}"

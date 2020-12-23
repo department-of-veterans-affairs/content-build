@@ -42,7 +42,8 @@ node('vetsgov-general-purpose') {
           "check-broken-links": {
             sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
             sh "docker-compose -p check-broken-links up -d"
-            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run ci:fetch-and-build"
+            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run fetch-drupal-cache -- --buildtype=vagovstaging"
+            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run build --validateContent --drupal-fail-fast -- --buildtype=vagovstaging"
           },
         )
       } catch (error) {
@@ -56,6 +57,8 @@ node('vetsgov-general-purpose') {
       }
     }
   }
+
+  commonStages.integration(ref, dockerContainer)
 
   // commonStages.prearchiveAll(dockerContainer)
 
