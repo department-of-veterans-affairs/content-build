@@ -170,6 +170,48 @@ jobs:
           name: Try Diff
           command: npm run pr-check
 
+  nightwatch-e2e:
+    docker:
+      - image: circleci/node:14.15.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Fetch Drupal Cache
+          command: yarn fetch-drupal-cache -- --buildtype=vagovstaging
+      - run:
+          name: Run e2e Tests
+          command: yarn nightwatch:docker
+
+  nightwatch-accessibility:
+    docker:
+      - image: circleci/node:14.15.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Fetch Drupal Cache
+          command: yarn fetch-drupal-cache -- --buildtype=vagovstaging
+      - run:
+          name: Run e2e Tests
+          command: yarn nightwatch:docker -- --env=accessibility
+
   sentry-check:
     docker:
       - image: circleci/node:14.15.0
@@ -245,6 +287,10 @@ workflows:
       - lint
       - unit-test
       - security-audit
+  integration:
+    jobs:
+      - nightwatch-e2e
+      - nightwatch-accessibility
   hourly-content-validation:
     triggers:
       - schedule:
