@@ -212,7 +212,7 @@ jobs:
 
   nightwatch:
     working_directory: ~/content-build
-    executor: circleci-e2e
+    executor: cypress
     resource_class: xlarge
     steps:
       - checkout
