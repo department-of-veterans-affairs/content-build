@@ -18,8 +18,8 @@ DRUPAL_CREDENTIALS = [
 
 ALL_VAGOV_BUILDTYPES = [
   // 'vagovdev',
-  // 'vagovstaging'
-  'vagovprod'
+  'vagovstaging'
+  //'vagovprod'
 ]
 
 BUILD_TYPE_OVERRIDE = DRUPAL_MAPPING.get(params.cmsEnvBuildOverride, null)
