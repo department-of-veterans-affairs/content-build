@@ -239,30 +239,30 @@ jobs:
 
 workflows:
   version: 2
-  # flag-for-manual-review:
-  #   jobs:
-  #     - eslint-check:
-  #         filters:
-  #           branches:
-  #             ignore: master
-  #     - sentry-check:
-  #         filters:
-  #           branches:
-  #             ignore: master
-  #     - icon-check:
-  #         filters:
-  #           branches:
-  #             ignore: master
-  # test-and-build:
-  #   jobs:
-  #     - lint
-  #     - unit-test
-  #     - security-audit
-  #     - build-environment:
-  #         requires:
-  #           - lint
-  #           - unit-test
-  #           - security-audit
+  flag-for-manual-review:
+    jobs:
+      - eslint-check:
+          filters:
+            branches:
+              ignore: master
+      - sentry-check:
+          filters:
+            branches:
+              ignore: master
+      - icon-check:
+          filters:
+            branches:
+              ignore: master
+  test-and-build:
+    jobs:
+      - lint
+      - unit-test
+      - security-audit
+      - build-environment:
+          requires:
+            - lint
+            - unit-test
+            - security-audit
   integration:
     jobs:
       - build-environment
