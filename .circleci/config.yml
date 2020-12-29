@@ -227,7 +227,7 @@ jobs:
           command: mkdir -p ./test-results
       - run:
           name: Run nightwatch tests
-          command: npx nightwatch
+          command: npx nightwatch -c config/nightwatch.js
       - store_test_results:
           path: ./test-results
       - store_artifacts:
