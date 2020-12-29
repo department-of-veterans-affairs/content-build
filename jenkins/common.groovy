@@ -18,8 +18,8 @@ DRUPAL_CREDENTIALS = [
 
 ALL_VAGOV_BUILDTYPES = [
   // 'vagovdev',
-  'vagovstaging'
-  // 'vagovprod'
+  // 'vagovstaging'
+  'vagovprod'
 ]
 
 BUILD_TYPE_OVERRIDE = DRUPAL_MAPPING.get(params.cmsEnvBuildOverride, null)
@@ -190,7 +190,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
       sh "cd /application && jenkins/build.sh --validateContent ${validateContent} --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
 
-      if (envName == 'vagovstaging' || validateContent) {
+      if (envName == 'vagovprod' || validateContent) {
 	       checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
 
