@@ -6,7 +6,6 @@ jobs:
     docker:
       - image: circleci/node:14.15.0
     steps:
-      - add_ssh_keys
       - checkout
       - restore_cache:
           keys:
@@ -259,9 +258,9 @@ jobs:
     working_directory: ~/content-build
     docker:
       - image: circleci/node:14.15.0
+      - image: selenium/standalone-chrome:3.11.0
     resource_class: xlarge
     steps:
-      - add_ssh_keys
       - checkout
       - attach_workspace:
           at: ~/
