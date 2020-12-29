@@ -191,7 +191,7 @@ jobs:
 
   build-environment:
     working_directory: ~/content-build
-    executor: circleci-node
+    executor: cypress
     resource_class: xlarge
     steps:
       - checkout
