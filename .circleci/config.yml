@@ -9,7 +9,7 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      - image: karthikiyengar/node-nightwatch
+      - image: karthikiyengar/node-nightwatch:0.0.1
 
 commands:
   yarn-install-cache:
