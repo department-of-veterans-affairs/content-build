@@ -258,12 +258,13 @@ jobs:
     working_directory: ~/content-build
     docker:
       - image: circleci/node:14.15.0
-      - image: selenium/standalone-chrome:3.11.0
     resource_class: xlarge
     steps:
       - checkout
       - setup_remote_docker
       - run:
+      - attach_workspace:
+          at: ~/
           name: Create Docker network
           command: docker network create grid
       - run:
@@ -272,14 +273,16 @@ jobs:
       - run:
           name: Install selenium-node
           command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.11.0
-      - attach_workspace:
-          at: ~/
       - restore_cache:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: cd ../content-build && yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - run:
           name: Run nightwatch tests
           command: yarn nightwatch
