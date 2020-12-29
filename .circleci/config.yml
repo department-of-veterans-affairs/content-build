@@ -10,7 +10,7 @@ executors:
   circleci-e2e:
     docker:
       - image: circleci/node:14.15.0
-      - image: selenium/standalone-chrome:3.11.0
+      - image: selenium/standalone-chrome
 
 commands:
   yarn-install-cache:
@@ -213,6 +213,8 @@ jobs:
   nightwatch:
     working_directory: ~/content-build
     executor: circleci-e2e
+    depends_on:
+      - chrome
     resource_class: xlarge
     steps:
       - checkout

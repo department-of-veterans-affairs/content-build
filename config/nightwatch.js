@@ -27,7 +27,7 @@ module.exports = {
     default: {
       launch_url: `localhost:${process.env.WEB_PORT || 3333}`,
       filter: '**/*.e2e.spec.js',
-      selenium_host: 'localhost',
+      selenium_host: 'chrome',
       selenium_port: selenium_server_port,
       use_ssl: false,
       silent: false,
