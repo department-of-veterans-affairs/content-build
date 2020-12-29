@@ -271,8 +271,11 @@ jobs:
           name: Install Dependencies
           command: cd ../content-build && yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - run:
+          name: Setup nightwatch tests
+          command: node src/platform/testing/e2e/test-server.js --buildtype=vagovstaging --port=3001 > /dev/null 2>&1"
+      - run:
           name: Run nightwatch tests
-          command: yarn start-server-and-test "node src/platform/testing/e2e/test-server.js --buildtype=vagovstaging --port=3001 > /dev/null 2>&1" :3001 "yarn nightwatch"
+          command: yarn nightwatch
       - persist_to_workspace:
           root: ~/
           paths:
