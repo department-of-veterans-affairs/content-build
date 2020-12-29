@@ -229,13 +229,13 @@ jobs:
           command: docker run -d --rm -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.11.0
       - run:
           name: install selenium-node
-          command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.11.0
+          command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:14.15.0
       - run:
           name: install-npm
           command: npm install
       - run:
           name: Run accessibility tests
-          command: yarn test:accessibility:docker
+          command: yarn test:accessibility
 
 workflows:
   version: 2
