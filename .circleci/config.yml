@@ -9,7 +9,7 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      - image: circleci/node:14.15.0
+      - image: circleci/base:14.15.0
       - image: selenium/standalone-chrome:3.11.0
 
 commands:
@@ -224,14 +224,6 @@ jobs:
       - run:
           name: Run nightwatch tests
           command: yarn nightwatch:docker
-      - store_test_results:
-          path: ./test-results
-      - store_artifacts:
-          path: ./test-results
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - content-build/build
 
 workflows:
   version: 2
