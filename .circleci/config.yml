@@ -234,8 +234,8 @@ jobs:
           name: install-npm
           command: npm install
       - run:
-          name: Run nightwatch tests
-          command: yarn nightwatch:docker
+          name: Run accessibility tests
+          command: yarn test:accessibility:docker
 
 workflows:
   version: 2
