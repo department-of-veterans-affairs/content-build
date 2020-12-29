@@ -224,13 +224,12 @@ jobs:
           name: Check PR for icon additions
           command: npm run pr-check
 
-  nightwatch-e2e:
+  build-environment:
     working_directory: ~/content-build
     docker:
       - image: circleci/node:14.15.0
     resource_class: xlarge
     steps:
-      - add_ssh_keys
       - checkout
       - restore_cache:
           keys:
@@ -251,8 +250,29 @@ jobs:
       - run:
           name: Build site
           command: NODE_ENV=production yarn build --buildtype=vagovstaging
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - content-build/build
+
+  nightwatch:
+    working_directory: ~/content-build
+    docker:
+      - image: circleci/node:14.15.0
+    resource_class: xlarge
+    steps:
+      - add_ssh_keys
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Run e2e tests
+          name: Install Dependencies
+          command: cd ../content-build && yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+      - run:
+          name: Run nightwatch tests
           command: yarn start-server-and-test "node src/platform/testing/e2e/test-server.js --buildtype=vagovstaging --port=3001 > /dev/null 2>&1" :3001 "yarn nightwatch"
       - persist_to_workspace:
           root: ~/
@@ -282,7 +302,8 @@ workflows:
       - security-audit
   integration:
     jobs:
-      - nightwatch-e2e
+      - build-environment
+      - nightwatch
   hourly-content-validation:
     triggers:
       - schedule:
