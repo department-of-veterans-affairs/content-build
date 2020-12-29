@@ -65,23 +65,23 @@ node('vetsgov-general-purpose') {
   // Run E2E and accessibility tests
   stage('Integration') {
     // Remove for now since I want it to run.
-    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) { return }
+    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) { return }
     dir("content-build") {
       try {
         parallel (
           'nightwatch-e2e': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker"
           },
 
           'nightwatch-accessibility': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
+            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker -- --env=accessibility"
           },
 
           "check-broken-links": {
             sh "export IMAGE_TAG=${commonStages.IMAGE_TAG}"
             sh "docker-compose -p check-broken-links up -d"
-            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run fetch-drupal-cache -- --buildtype=vagovprod"
-            commonStages.build(ref, dockerContainer, 'local', 'vagovprod', true, false, false);
+            sh "docker-compose -p check-broken-links run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run fetch-drupal-cache -- --buildtype=vagovstaging"
+            commonStages.build(ref, dockerContainer, 'local', 'vagovstaging', true, false, false);
           },
         )
       } catch (error) {
