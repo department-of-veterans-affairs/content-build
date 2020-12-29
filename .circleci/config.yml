@@ -274,6 +274,9 @@ jobs:
       - run:
           name: Run nightwatch tests
           command: yarn nightwatch
+      - run
+          name: Run E2E Tests
+          command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker
       - persist_to_workspace:
           root: ~/
           paths:

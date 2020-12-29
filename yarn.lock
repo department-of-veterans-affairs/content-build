@@ -10595,11 +10595,6 @@ select-hose@^2.0.0:
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
 
-selenium-server-standalone-jar@^3.141.59:
-  version "3.141.59"
-  resolved "https://registry.yarnpkg.com/selenium-server-standalone-jar/-/selenium-server-standalone-jar-3.141.59.tgz#5d4b95d7960fef2a782196aee6ad6c7493538d90"
-  integrity sha512-gh7LagmKMkthQZo0q9qrDSWy+ISYnCUhOUW6IyRQIMGdg8Os/uMfChTDO17DYzxKmNIDx/h6+yfBj34QYALycw==
-
 selenium-server@^3.141.59:
   version "3.141.59"
   resolved "https://registry.yarnpkg.com/selenium-server/-/selenium-server-3.141.59.tgz#cbefdf50aae636ee4c67b819532a8233ce3fd6b0"
