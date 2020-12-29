@@ -300,7 +300,7 @@ workflows:
       - lint
       - unit-test
       - security-audit
-      - build-environment
+      - build-environment:
           requires:
             - lint
             - unit-test
@@ -308,9 +308,9 @@ workflows:
   integration:
     jobs:
       - build-environment
-      - nightwatch
-        requires:
-              - build-environment
+      - nightwatch:
+          requires:
+            - build-environment
   hourly-content-validation:
     triggers:
       - schedule:
