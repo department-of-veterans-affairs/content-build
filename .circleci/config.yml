@@ -1,22 +1,40 @@
 version: 2.1
-orbs:
-  node: circleci/node@3.0.0
-jobs:
-  validate-content-build:
+
+executors:
+  circleci-node:
     docker:
       - image: circleci/node:14.15.0
+  cypress:
+    docker:
+      - image: cypress/base:14.15.0
+  circleci-e2e:
+    docker:
+      - image: circleci/node:14.15.0
+      - image: selenium/standalone-chrome:3.11.0
+
+commands:
+  yarn-install-cache:
+    description: "Install packages with yarn using saved cache"
+    parameters:
+      key-prefix:
+        type: string
+        default: yarn-packages-
     steps:
-      - checkout
-      - add_ssh_keys
       - restore_cache:
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - << parameters.key-prefix >>{{ checksum "yarn.lock" }}
       - run:
           command: yarn install --frozen-lockfile
       - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: << parameters.key-prefix >>{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+jobs:
+  validate-content-build:
+    executor: circleci-node
+    steps:
+      - checkout
+      - yarn-install-cache
       - run:
           name: Checkout vets-website
           command: cd .. && git clone git@github.com:department-of-veterans-affairs/vets-website.git
@@ -30,19 +48,10 @@ jobs:
           name: Run validation script
           command: cd ../project && yarn validate-content-build
   lint:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+      - yarn-install-cache
       - run: mkdir -p ./test-results
       - run: npx eslint --ext .js --ext .jsx --format junit --output-file ./test-results/eslint.xml .
       - store_test_results:
@@ -51,19 +60,10 @@ jobs:
           path: ./test-results
 
   unit-test:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+      - yarn-install-cache
       - run: mkdir -p ./test-results
       - run:
           command: yarn test:unit --coverage
@@ -76,18 +76,10 @@ jobs:
           path: ./test-results
 
   contract-test:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: yarn install --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+      - yarn-install-cache
       - run: mkdir -p ./test-results
       - run: mkdir -p ./pacts
       - run:
@@ -105,48 +97,29 @@ jobs:
           path: ./test-results
 
   can-i-deploy:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     steps:
       - checkout
       - attach_workspace:
           at: .
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: yarn install --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+      - yarn-install-cache
       - run: yarn pact:can-i-deploy
 
   security-audit:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     steps:
       - checkout
       - run: yarn security-check
 
   build:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+      - yarn-install-cache
       - run: yarn build:webpack
 
   eslint-check:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     environment:
       CODE_PATTERN: (/* eslint-disable)|(// eslint-disable)
       OVERALL_REVIEW_COMMENT: >
@@ -163,16 +136,13 @@ jobs:
       LINE_COMMENT: ESLint disabled here
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - yarn-install-cache
       - run:
           name: Try Diff
           command: npm run pr-check
 
   sentry-check:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     environment:
       CODE_PATTERN: Sentry\.
       OVERALL_REVIEW_COMMENT: >
@@ -190,16 +160,13 @@ jobs:
       LINE_COMMENT: Sentry found
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - yarn-install-cache
       - run:
           name: Check PR for Sentry calls
           command: npm run pr-check
 
   icon-check:
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     environment:
       CODE_PATTERN: (<i )|(<i$)
       OVERALL_REVIEW_COMMENT: >
@@ -217,33 +184,21 @@ jobs:
       LINE_COMMENT: icon found
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - yarn-install-cache
       - run:
           name: Check PR for icon additions
           command: npm run pr-check
 
   build-environment:
     working_directory: ~/content-build
-    docker:
-      - image: circleci/node:14.15.0
+    executor: circleci-node
     resource_class: xlarge
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+      - yarn-install-cache
       - run:
           name: Checkout vagov-content
           command: cd .. && git clone git@github.com:department-of-veterans-affairs/vagov-content.git
-      - run:
-          name: Install Dependencies
-          command: cd ../content-build && yarn --frozen-lockfile --cache-folder ~/.cache/yarn
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
       - run:
           name: Fetch Drupal Cache
           command: yarn fetch-drupal-cache --buildtype=vagovstaging
@@ -257,23 +212,19 @@ jobs:
 
   nightwatch:
     working_directory: ~/content-build
-    docker:
-      - image: circleci/node:14.15.0
-      - image: selenium/standalone-chrome:3.11.0
+    executor: circleci-e2e
     resource_class: xlarge
     steps:
       - checkout
       - attach_workspace:
           at: ~/
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+      - yarn-install-cache
       - run:
           name: Install Dependencies
           command: cd ../content-build && yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - run:
           name: Run nightwatch tests
-          command: yarn nightwatch:docker
+          command: yarn nightwatch
       - persist_to_workspace:
           root: ~/
           paths:
