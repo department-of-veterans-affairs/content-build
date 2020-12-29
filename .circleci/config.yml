@@ -226,16 +226,19 @@ jobs:
           command: docker network create grid
       - run:
           name: install selenium-hub
-          command: docker run -d --rm -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.11.0
+          command: docker run -d --rm -p 4444:4444 --net grid --name selenium-hub selenium/hub:4.0.0-beta-1-prerelease-20201208
       - run:
           name: install selenium-node
-          command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/selenium/node-chrome:4.0.0-beta-1-prerelease-20201208
+          command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:4.0.0-beta-1-prerelease-20201208
       - run:
           name: install-npm
           command: npm install
       - run:
           name: Run accessibility tests
           command: yarn test:accessibility
+      - run:
+          name: Remove Docker grid network
+          command: docker network rm grid
 
 workflows:
   version: 2
