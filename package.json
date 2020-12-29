@@ -176,7 +176,6 @@
     "sass-lint": "^1.13.1",
     "saucelabs": "^1.4.0",
     "selenium-server": "^3.141.59",
-    "selenium-server-standalone-jar": "^3.141.59",
     "semver": "^7.3.2",
     "sentry-testkit": "^2.2.1",
     "sinon": "^3.2.1",

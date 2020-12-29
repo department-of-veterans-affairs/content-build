@@ -4,8 +4,6 @@
 const fs = require('fs-extra');
 
 require('@babel/register');
-require('core-js/stable');
-require('regenerator-runtime/runtime');
 
 const selenium_logs = './logs/selenium';
 const selenium_server_port = process.env.SELENIUM_PORT || 4444;
