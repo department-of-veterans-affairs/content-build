@@ -10,7 +10,7 @@ executors:
   circleci-e2e:
     docker:
       - image: circleci/node:14.15.0
-      - image: selenium/standalone-chrome
+      - image: selenium/standalone-chrome:3.11.0
 
 commands:
   yarn-install-cache:
@@ -191,7 +191,7 @@ jobs:
 
   build-environment:
     working_directory: ~/content-build
-    executor: cypress
+    executor: circleci-node
     resource_class: xlarge
     steps:
       - checkout
@@ -212,16 +212,12 @@ jobs:
 
   nightwatch:
     working_directory: ~/content-build
-    executor: cypress
+    executor: circleci-e2e
     resource_class: xlarge
     steps:
       - checkout
       - attach_workspace:
           at: ~/
-      - yarn-install-cache
-      - run:
-          name: Install Dependencies
-          command: cd ../content-build && yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - run:
           name: Make Test Results Folder
           command: mkdir -p ./test-results
@@ -232,6 +228,10 @@ jobs:
           path: ./test-results
       - store_artifacts:
           path: ./test-results
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - content-build/build
 
 workflows:
   version: 2
