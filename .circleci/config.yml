@@ -258,6 +258,7 @@ jobs:
     working_directory: ~/content-build
     docker:
       - image: circleci/node:14.15.0
+      - image: circleci/openjdk:9.0-jdk
       - image: selenium/standalone-chrome:3.11.0
     resource_class: xlarge
     steps:
