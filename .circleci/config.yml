@@ -9,8 +9,8 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      - image: circleci/base:14.15.0
-      - image: selenium/standalone-chrome:3.11.0
+      - image: circleci/node:14.15.0
+      - image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20201208
 
 commands:
   yarn-install-cache:
@@ -216,11 +216,24 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
+      - setup_remote_docker
       - attach_workspace:
           at: ~/
+      - yarn-install-cache
       - run:
-          name: Make Test Results Folder
-          command: mkdir -p ./test-results
+          name: create docker network
+          command: docker network create grid
+      - run:
+          name: install selenium-hub
+          command: docker run -d --rm -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.11.0
+
+      - run:
+          name: install selenium-node
+          command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.11.0
+
+      - run:
+          name: install-npm
+          command: npm install
       - run:
           name: Run nightwatch tests
           command: yarn nightwatch:docker
