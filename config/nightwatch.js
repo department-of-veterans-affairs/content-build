@@ -25,7 +25,7 @@ module.exports = {
   test_workers: false,
   test_settings: {
     default: {
-      launch_url: `localhost:${process.env.WEB_PORT || 3333}`,
+      launch_url: `chrome:${process.env.WEB_PORT || 3333}`,
       filter: '**/*.e2e.spec.js',
       selenium_host: 'chrome',
       selenium_port: selenium_server_port,

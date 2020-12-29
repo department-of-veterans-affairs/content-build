@@ -213,8 +213,6 @@ jobs:
   nightwatch:
     working_directory: ~/content-build
     executor: circleci-e2e
-    depends_on:
-      - chrome
     resource_class: xlarge
     steps:
       - checkout
