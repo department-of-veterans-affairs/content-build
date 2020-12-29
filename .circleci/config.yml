@@ -116,7 +116,7 @@ jobs:
     steps:
       - checkout
       - yarn-install-cache
-      - run: yarn build:webpack
+      - run: yarn build
 
   eslint-check:
     executor: circleci-node
@@ -223,12 +223,15 @@ jobs:
           name: Install Dependencies
           command: cd ../content-build && yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - run:
+          name: Make Test Results Folder
+          command: mkdir -p ./test-results
+      - run:
           name: Run nightwatch tests
-          command: yarn nightwatch
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - content-build/build
+          command: npx nightwatch
+      - store_test_results:
+          path: ./test-results
+      - store_artifacts:
+          path: ./test-results
 
 workflows:
   version: 2
