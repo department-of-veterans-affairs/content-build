@@ -295,15 +295,22 @@ workflows:
           filters:
             branches:
               ignore: master
-  test_and_build:
+  test-and-build:
     jobs:
       - lint
       - unit-test
       - security-audit
+      - build-environment
+          requires:
+            - lint
+            - unit-test
+            - security-audit
   integration:
     jobs:
       - build-environment
       - nightwatch
+        requires:
+              - build-environment
   hourly-content-validation:
     triggers:
       - schedule:
