@@ -235,7 +235,7 @@ jobs:
           command: npm install
       - run:
           name: Run accessibility tests
-          command: yarn test:accessibility
+          command: yarn nightwatch:docker
       - run:
           name: Remove Docker grid network
           command: docker network rm grid
