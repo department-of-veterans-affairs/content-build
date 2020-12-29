@@ -258,16 +258,16 @@ jobs:
     working_directory: ~/content-build
     docker:
       - image: circleci/node:14.15.0
+      - image: selenium/standalone-chrome:3.11.0
     resource_class: xlarge
     steps:
       - checkout
       - run:
-          name: Download Selenium
-          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+          name: install selenium-hub
+          command: docker run -d --rm -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.11.0
       - run:
-          name: Start Selenium
-          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-          background: true
+          name: install selenium-node
+          command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.11.0
       - attach_workspace:
           at: ~/
       - restore_cache:
