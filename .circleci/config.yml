@@ -201,10 +201,10 @@ jobs:
           command: cd .. && git clone git@github.com:department-of-veterans-affairs/vagov-content.git
       - run:
           name: Fetch Drupal Cache
-          command: yarn fetch-drupal-cache --buildtype=vagovstaging
+          command: yarn fetch-drupal-cache --buildtype=vagovprod
       - run:
           name: Build site
-          command: NODE_ENV=production yarn build --buildtype=vagovstaging
+          command: NODE_ENV=production yarn build --buildtype=vagovprod
       - persist_to_workspace:
           root: ~/
           paths:
