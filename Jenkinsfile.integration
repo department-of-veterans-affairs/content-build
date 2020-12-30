@@ -29,7 +29,7 @@ node('vetsgov-general-purpose') {
           },
         )
       } catch (error) {
-        // commonStages.slackNotify()
+        // commonStages.slackIntegrationNotify()
         throw error
       } finally {
         sh "docker-compose -p nightwatch down --remove-orphans"
