@@ -115,15 +115,7 @@ jobs:
     steps:
       - checkout
       - yarn-install-cache
-      - run:
-          name: Checkout vagov-content
-          command: cd .. && git clone git@github.com:department-of-veterans-affairs/vagov-content.git
-      - run:
-          name: Fetch Drupal Cache
-          command: yarn fetch-drupal-cache --buildtype=vagovprod
-      - run:
-          name: Build site
-          command: NODE_ENV=production yarn build --buildtype=vagovprod
+      - run: yarn build
 
   eslint-check:
     executor: circleci-node
@@ -198,10 +190,19 @@ jobs:
 
   build-environment:
     working_directory: ~/content-build
-    executor: circleci-node
+    executor: circleci-e2e
     resource_class: xlarge
     steps:
       - checkout
+      - run:
+          name: Use nvm for a specific node version...
+          command: |
+            set +e
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash &&  sudo /opt/circleci/.nvm/nvm.sh
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install v14.15.0
+            nvm use
       - yarn-install-cache
       - run:
           name: Checkout vagov-content
@@ -254,9 +255,9 @@ jobs:
 
 workflows:
   version: 2
-    build:
-      jobs:
-        - build
+  build:
+    jobs:
+      - build-environment
 #   flag-for-manual-review:
 #     jobs:
 #       - eslint-check:
