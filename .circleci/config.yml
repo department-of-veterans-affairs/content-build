@@ -195,6 +195,7 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
+      - run: node --version
       - yarn-install-cache
       - run:
           name: Checkout vagov-content
@@ -218,13 +219,13 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      # - yarn-install-cache
+      - yarn-install-cache
       - run: mkdir test-reports
       - run: node --version
       - run: java -version
-      # - run:
-      #     name: Run accessibility tests
-      #     command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
+      - run:
+          name: Run accessibility tests
+          command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
 
 workflows:
   version: 2
