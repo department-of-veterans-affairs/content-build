@@ -269,11 +269,9 @@ workflows:
 #           filters:
 #             branches:
 #               ignore: master
-  test-and-build:
+  build:
     jobs:
-      - lint
-      - unit-test
-      - security-audit
+      - build-environment
 #   integration:
 #     jobs:
 #       - build-environment
