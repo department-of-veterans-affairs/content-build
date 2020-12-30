@@ -1,4 +1,5 @@
 version: 2.1
+
 executors:
   circleci-node:
     docker:
@@ -8,8 +9,8 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      - image: circleci/node:14.15.0
-      - image: cimg/openjdk:15.0.1
+      # - image: circleci/node:14.15.0
+      - image: circleci/openjdk:8-jdk-node
 
 commands:
   yarn-install-cache:
@@ -190,7 +191,7 @@ jobs:
 
   build-environment:
     working_directory: ~/content-build
-    executor: circleci-node
+    executor: circleci-e2e
     resource_class: xlarge
     steps:
       - checkout
@@ -217,11 +218,13 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      - yarn-install-cache
-      - run: mkdir test-reports
-      - run:
-          name: Run accessibility tests
-          command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
+      run: node --version
+      run: java --version
+      # - yarn-install-cache
+      # - run: mkdir test-reports
+      # - run:
+      #     name: Run accessibility tests
+      #     command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
 
 workflows:
   version: 2
