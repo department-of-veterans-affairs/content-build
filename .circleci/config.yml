@@ -230,9 +230,9 @@ jobs:
       # - run:
       #     name: install selenium-node
       #     command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:4.0.0-beta-1-prerelease-20201208
-      - run:
-          name: install-npm
-          command: npm install
+      # - run:
+      #     name: install-npm
+      #     command: npm install
       - run:
           name: 2. Run accessibility tests
           command: NODE_ENV=production BABEL_ENV=test yarn nightwatch:docker --buildtype=vagovstaging
