@@ -110,12 +110,20 @@ jobs:
       - checkout
       - run: yarn security-check
 
-  # build:
-  #   executor: circleci-node
-  #   steps:
-  #     - checkout
-  #     - yarn-install-cache
-  #     - run: yarn build
+  build:
+    executor: circleci-node
+    steps:
+      - checkout
+      - yarn-install-cache
+      - run:
+          name: Checkout vagov-content
+          command: cd .. && git clone git@github.com:department-of-veterans-affairs/vagov-content.git
+      - run:
+          name: Fetch Drupal Cache
+          command: yarn fetch-drupal-cache --buildtype=vagovprod
+      - run:
+          name: Build site
+          command: NODE_ENV=production yarn build --buildtype=vagovprod
 
   eslint-check:
     executor: circleci-node
@@ -190,19 +198,10 @@ jobs:
 
   build-environment:
     working_directory: ~/content-build
-    executor: circleci-e2e
+    executor: circleci-node
     resource_class: xlarge
     steps:
       - checkout
-      - run:
-          name: Use nvm for a specific node version...
-          command: |
-            set +e
-            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash &&  sudo /opt/circleci/.nvm/nvm.sh
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install v14.15.0
-            nvm use
       - yarn-install-cache
       - run:
           name: Checkout vagov-content
@@ -253,8 +252,11 @@ jobs:
           name: Run accessibility tests
           command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
 
-# workflows:
-#   version: 2
+workflows:
+  version: 2
+    build:
+      jobs:
+        - build
 #   flag-for-manual-review:
 #     jobs:
 #       - eslint-check:
