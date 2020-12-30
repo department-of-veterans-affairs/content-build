@@ -9,7 +9,7 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      - image: circleci/openjdk:16-jdk-buster-node-browsers
+      - image: karthikiyengar/node-nightwatch:0.0.2
 
 commands:
   yarn-install-cache:
