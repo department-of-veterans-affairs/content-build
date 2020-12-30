@@ -216,29 +216,29 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
-      - setup_remote_docker
+      # - setup_remote_docker
       - attach_workspace:
           at: ~/
       - yarn-install-cache
-      - run: mkdir test-reports
-      - run:
-          name: create docker network
-          command: docker network create grid
-      - run:
-          name: install selenium-hub
-          command: docker run -d --rm -p 4444:4444 --net grid --name selenium-hub selenium/hub:4.0.0-beta-1-prerelease-20201208
-      - run:
-          name: install selenium-node
-          command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:4.0.0-beta-1-prerelease-20201208
+      # - run: mkdir test-reports
+      # - run:
+      #     name: create docker network
+      #     command: docker network create grid
+      # - run:
+      #     name: install selenium-hub
+      #     command: docker run -d --rm -p 4444:4444 --net grid --name selenium-hub selenium/hub:4.0.0-beta-1-prerelease-20201208
+      # - run:
+      #     name: install selenium-node
+      #     command: docker run -d --rm --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:4.0.0-beta-1-prerelease-20201208
       - run:
           name: install-npm
           command: npm install
       - run:
           name: Run accessibility tests
-          command: yarn nightwatch:docker
-      - run:
-          name: Remove Docker grid network
-          command: docker network rm grid
+          command: export IMAGE_TAG=run-nightwatch-circleci && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovstaging content-build --no-color run nightwatch:docker
+      # - run:
+      #     name: Remove Docker grid network
+      #     command: docker network rm grid
 
 workflows:
   version: 2
