@@ -218,8 +218,12 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      run: node --version
-      run: java --version
+      run:
+          name: node --version
+          command: node --version
+      run:
+          name: java --version
+          command: java --version
       # - yarn-install-cache
       # - run: mkdir test-reports
       # - run:
