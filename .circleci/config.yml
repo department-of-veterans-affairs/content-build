@@ -78,8 +78,11 @@ jobs:
           at: ~/
       - yarn-install-cache
       - run:
+          name: Start Docker
+          command: docker-compose -p nightwatch up -d
+      - run:
           name: Run tests
-          command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
+          command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
       # - run: mkdir test-reports
       # - run:
       #     name: Download Selenium
