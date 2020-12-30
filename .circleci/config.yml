@@ -77,12 +77,6 @@ jobs:
       - attach_workspace:
           at: ~/
       - yarn-install-cache
-      - run:
-          name: Start Docker
-          command: docker-compose -p nightwatch up -d
-      - run:
-          name: Run tests
-          command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
       # - run: mkdir test-reports
       # - run:
       #     name: Download Selenium
@@ -91,9 +85,9 @@ jobs:
       #     name: Start Selenium
       #     command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
       #     background: true
-      # - run:
-      #     name: Run accessibility tests
-      #     command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
+      - run:
+          name: Run accessibility tests
+          command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
 
 workflows:
   version: 2
