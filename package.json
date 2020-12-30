@@ -127,6 +127,8 @@
     "command-line-args": "^3.0.1",
     "command-line-usage": "^6.1.0",
     "concurrently": "^5.2.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "decompress": "^4.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
