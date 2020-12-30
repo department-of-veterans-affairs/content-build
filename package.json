@@ -127,8 +127,6 @@
     "command-line-args": "^3.0.1",
     "command-line-usage": "^6.1.0",
     "concurrently": "^5.2.0",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
     "decompress": "^4.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
@@ -181,7 +179,6 @@
     "sentry-testkit": "^2.2.1",
     "sinon": "^3.2.1",
     "socks-proxy-agent": "^5.0.0",
-    "start-server-and-test": "^1.11.6",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0",
     "yeoman-generator": "^4.2.0"
