@@ -49,7 +49,7 @@ jobs:
 
   build-environment:
     working_directory: ~/content-build
-    executor: circleci-node
+    executor: circleci-e2e
     resource_class: xlarge
     steps:
       - checkout
@@ -70,27 +70,27 @@ jobs:
 
   nightwatch:
     working_directory: ~/content-build
-    executor: circleci-node
+    executor: circleci-e2e
     resource_class: xlarge
     steps:
       - checkout
       - attach_workspace:
           at: ~/
       - yarn-install-cache
-      - run: mkdir test-reports
       - run:
-          name: Download Selenium
-          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      - run:
-          name: Start Selenium
-          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-          background: true
-      - run:
-          name: Run npm install again
-          command: npm install
-      - run:
-          name: Run accessibility tests
-          command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
+          name: Run tests
+          command: docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
+      # - run: mkdir test-reports
+      # - run:
+      #     name: Download Selenium
+      #     command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      # - run:
+      #     name: Start Selenium
+      #     command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+      #     background: true
+      # - run:
+      #     name: Run accessibility tests
+      #     command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
 
 workflows:
   version: 2
