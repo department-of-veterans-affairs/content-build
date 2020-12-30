@@ -39,7 +39,7 @@ node('vetsgov-general-purpose') {
         security: {
           retry(3) {
             dockerContainer.inside(commonStages.DOCKER_ARGS) {
-              sh "cd /application && npm run security-check"
+              sh "cd /application && npm --no-color run security-check"
             }
           }
         },

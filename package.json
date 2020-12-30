@@ -5,7 +5,6 @@
   "scripts": {
     "build": "node --max-old-space-size=8192 script/build-content.js",
     "build:compare": "node script/content-build-compare.js && diff --color websiteContentBuildHash.txt standaloneContentBuildHash.txt",
-    "build:validate": "node script/content-validation/index.js",
     "cms:compare": "./script/cms/compare.sh",
     "cms:diff": "./script/cms/diff.sh",
     "cms:find-node": "./script/cms/find_node.sh",
