@@ -229,7 +229,10 @@ jobs:
           name: Start Selenium
           command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
           background: true
-      - run: npm i
+      - run:
+          name: Run npm install again
+          command: npm install
+      - run: systemctl start docker
       - run:
           name: Install Chrome
           command: docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:4.0.0-beta-1-prerelease-20201208
