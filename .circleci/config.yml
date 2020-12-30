@@ -9,19 +9,8 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      - image: circleci/openjdk:8-jdk-node-browsers
+      - image: circleci/openjdk:10-jdk-node-browsers
       - image: selenium/standalone-chrome:3.11.0
-
-jobs:
-  install-node:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - checkout
-      - node/install:
-          install-yarn: true
-          node-version: latest
-      - run: node --version
 
 commands:
   yarn-install-cache:
@@ -204,8 +193,6 @@ jobs:
     working_directory: ~/content-build
     executor: circleci-e2e
     resource_class: xlarge
-    jobs:
-      - install-node
     steps:
       - checkout
       - yarn-install-cache
@@ -227,8 +214,6 @@ jobs:
     working_directory: ~/content-build
     executor: circleci-e2e
     resource_class: xlarge
-    jobs:
-      - install-node
     steps:
       - checkout
       - attach_workspace:
