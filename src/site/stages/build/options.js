@@ -61,7 +61,6 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
 
   // use the --nosymlink flag with a build to bypass symlink creation
   { name: 'nosymlink', type: Boolean, defaultValue: false },
-  { name: 'validateContent', type: Boolean, defaultValue: false },
 
   // HACK: The drupal-aws-cache script ends up here while trying to cache
   // the query for getting all pages. The 'fetch' option from that cache script

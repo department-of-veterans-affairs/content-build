@@ -14,9 +14,6 @@ if (process.argv[2] === 'help') {
 async function buildContent() {
   const buildOptions = await getOptions();
 
-  // Set content validation to true
-  buildOptions.validateContent = true;
-
   // Run the full metalsmith build
   build(buildOptions);
 }

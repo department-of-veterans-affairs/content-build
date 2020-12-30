@@ -269,11 +269,11 @@ workflows:
           filters:
             branches:
               ignore: master
-#   test-and-build:
-#     jobs:
-#       - lint
-#       - unit-test
-#       - security-audit
+  test-and-build:
+    jobs:
+      - lint
+      - unit-test
+      - security-audit
 #   integration:
 #     jobs:
 #       - build-environment
