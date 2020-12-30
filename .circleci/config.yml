@@ -221,7 +221,7 @@ jobs:
       # - yarn-install-cache
       - run: mkdir test-reports
       - run: node --version
-      - run: java --version
+      - run: java -version
       # - run:
       #     name: Run accessibility tests
       #     command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
