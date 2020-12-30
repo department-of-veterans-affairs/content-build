@@ -76,7 +76,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      # - yarn-install-cache
+      - yarn-install-cache
       - setup_remote_docker:
           version: 19.03.13
       - run:
@@ -84,7 +84,7 @@ jobs:
           command: docker-compose -p nightwatch up -d
       - run:
           name: Run tests
-          command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch
+          command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
       - run:
           name: Stop container
           command: docker-compose -p nightwatch stop
