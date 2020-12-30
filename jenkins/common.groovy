@@ -45,7 +45,7 @@ def isReviewable() {
 def isDeployable() {
   return (IS_DEV_BRANCH ||
           IS_STAGING_BRANCH) &&
-    !env.CHANGE_TARGET &&
+    !env.CHANGE_TARGET
 }
 
 def shouldBail() {
