@@ -253,8 +253,8 @@ jobs:
           name: Run accessibility tests
           command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
 
-# workflows:
-#   version: 2
+workflows:
+  version: 2
 #   flag-for-manual-review:
 #     jobs:
 #       - eslint-check:
