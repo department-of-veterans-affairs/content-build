@@ -10,9 +10,9 @@ executors:
   circleci-e2e:
     docker:
       - image: circleci/node:14.15.0
-      - image: selenium/hub
-      - image: selenium/node-chrome
-      - image: selenium/node-chrome-debug
+      - image: selenium/hub:latest
+      - image: selenium/node-chrome:latest
+      - image: selenium/node-chrome-debug:latest
 
 commands:
   yarn-install-cache:
