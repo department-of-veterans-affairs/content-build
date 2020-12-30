@@ -110,12 +110,12 @@ jobs:
       - checkout
       - run: yarn security-check
 
-  build:
-    executor: circleci-node
-    steps:
-      - checkout
-      - yarn-install-cache
-      - run: yarn build
+  # build:
+  #   executor: circleci-node
+  #   steps:
+  #     - checkout
+  #     - yarn-install-cache
+  #     - run: yarn build
 
   eslint-check:
     executor: circleci-node
