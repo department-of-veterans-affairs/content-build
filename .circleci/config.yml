@@ -216,7 +216,7 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
-      # - setup_remote_docker
+      - setup_remote_docker
       - attach_workspace:
           at: ~/
       - yarn-install-cache
