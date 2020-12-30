@@ -48,7 +48,7 @@ jobs:
           command: cd ../project && yarn validate-content-build
 
   build-environment:
-    working_directory: ~/content-build
+    working_directory: ~/application
     executor: circleci-node
     resource_class: xlarge
     steps:
@@ -66,10 +66,10 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - content-build/build
+            - application/build
 
   nightwatch:
-    working_directory: ~/content-build
+    working_directory: ~/application
     executor: circleci-e2e
     resource_class: xlarge
     steps:
@@ -84,7 +84,10 @@ jobs:
           command: docker-compose -p nightwatch up -d
       - run:
           name: Run tests
-          command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
+          command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod application --no-color run nightwatch:docker
+      - run:
+          name: Stop container
+          command: docker-compose -p nightwatch stop
       # - run: mkdir test-reports
       # - run:
       #     name: Download Selenium
