@@ -261,11 +261,6 @@ workflows:
       - lint
       - unit-test
       - security-audit
-      - build-environment:
-          requires:
-            - lint
-            - unit-test
-            - security-audit
   integration:
     jobs:
       - build-environment
