@@ -191,7 +191,7 @@ jobs:
 
   build-environment:
     working_directory: ~/content-build
-    executor: circleci-e2e
+    executor: circleci-node
     resource_class: xlarge
     steps:
       - checkout
@@ -218,14 +218,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-    run:
-        name: node --version
-        command: node --version
-    run:
-        name: java --version
-        command: java --version
       # - yarn-install-cache
-      # - run: mkdir test-reports
+      - run: mkdir test-reports
+      - run: node --version
+      - run: java --version
       # - run:
       #     name: Run accessibility tests
       #     command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
