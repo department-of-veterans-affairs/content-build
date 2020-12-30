@@ -242,51 +242,51 @@ jobs:
       - run:
           name: Download Selenium
           command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      # - run:
-      #     name: Start Selenium
-      #     command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-      #     background: true
-      # - run:
-      #     name: Run npm install again
-      #     command: npm install
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+      - run:
+          name: Run npm install again
+          command: npm install
       - run:
           name: Run accessibility tests
           command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
 
-workflows:
-  version: 2
-  flag-for-manual-review:
-    jobs:
-      - eslint-check:
-          filters:
-            branches:
-              ignore: master
-      - sentry-check:
-          filters:
-            branches:
-              ignore: master
-      - icon-check:
-          filters:
-            branches:
-              ignore: master
-  test-and-build:
-    jobs:
-      - lint
-      - unit-test
-      - security-audit
-  integration:
-    jobs:
-      - build-environment
-      - nightwatch:
-          requires:
-            - build-environment
-  hourly-content-validation:
-    triggers:
-      - schedule:
-          cron: "0 * * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - lint
+# workflows:
+#   version: 2
+#   flag-for-manual-review:
+#     jobs:
+#       - eslint-check:
+#           filters:
+#             branches:
+#               ignore: master
+#       - sentry-check:
+#           filters:
+#             branches:
+#               ignore: master
+#       - icon-check:
+#           filters:
+#             branches:
+#               ignore: master
+#   test-and-build:
+#     jobs:
+#       - lint
+#       - unit-test
+#       - security-audit
+#   integration:
+#     jobs:
+#       - build-environment
+#       - nightwatch:
+#           requires:
+#             - build-environment
+#   hourly-content-validation:
+#     triggers:
+#       - schedule:
+#           cron: "0 * * * *"
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#     jobs:
+#       - lint
