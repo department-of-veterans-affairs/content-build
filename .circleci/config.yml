@@ -194,6 +194,15 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
+      - run:
+          name: Use nvm for a specific node version...
+          command: |
+            set +e
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash &&  sudo /opt/circleci/.nvm/nvm.sh
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install v14.15.0
+            nvm use
       - yarn-install-cache
       - run:
           name: Checkout vagov-content
@@ -221,7 +230,7 @@ jobs:
           name: Use nvm for a specific node version...
           command: |
             set +e
-            # wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash &&  sudo /opt/circleci/.nvm/nvm.sh
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash &&  sudo /opt/circleci/.nvm/nvm.sh
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm install v14.15.0
