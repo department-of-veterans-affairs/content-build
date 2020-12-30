@@ -9,7 +9,6 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      # - image: circleci/node:14.15.0
       - image: circleci/openjdk:8-jdk-node
 
 commands:
@@ -230,8 +229,10 @@ jobs:
           name: Start Selenium
           command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
           background: true
-      - run: npm i webdriver-manager -g
-      - run: webdriver-manager update
+      - run: npm i
+      - run:
+          name: Install Chrome
+          command: docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:4.0.0-beta-1-prerelease-20201208
       - run:
           name: Run accessibility tests
           command: NODE_ENV=production BABEL_ENV=test yarn nightwatch:docker --buildtype=vagovstaging
