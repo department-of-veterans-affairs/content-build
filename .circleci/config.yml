@@ -235,7 +235,7 @@ jobs:
       #     command: npm install
       - run:
           name: 2. Run accessibility tests
-          command: NODE_ENV=production BABEL_ENV=test yarn nightwatch:docker --buildtype=vagovstaging
+          command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovstaging
       # - run:
       #     name: Remove Docker grid network
       #     command: docker network rm grid
