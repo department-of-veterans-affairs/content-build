@@ -9,8 +9,7 @@ executors:
       - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
-      - image: circleci/openjdk:10-jdk-node-browsers
-      - image: selenium/standalone-chrome:3.11.0
+      - image: circleci/openjdk:16-jdk-buster-node-browsers
 
 commands:
   yarn-install-cache:
