@@ -101,7 +101,7 @@ workflows:
   version: 2
   integration:
     jobs:
-      - nightwatch:
+      - nightwatch
 #   hourly-content-validation:
 #     triggers:
 #       - schedule:
