@@ -74,20 +74,17 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
-      - yarn-install-cache
       - setup_remote_docker:
           version: 19.03.13
       - run:
           name: Start Docker
-          command: docker-compose -p nightwatch up -d
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch up -d
       - run:
           name: Run tests
-          command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
       - run:
           name: Stop container
-          command: docker-compose -p nightwatch stop
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch stop
       # - run: mkdir test-reports
       # - run:
       #     name: Download Selenium
@@ -104,10 +101,7 @@ workflows:
   version: 2
   integration:
     jobs:
-      - build-environment
       - nightwatch:
-          requires:
-            - build-environment
 #   hourly-content-validation:
 #     triggers:
 #       - schedule:
