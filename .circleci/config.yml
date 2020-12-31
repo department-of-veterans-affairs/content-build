@@ -55,6 +55,9 @@ jobs:
       - checkout
       - yarn-install-cache
       - run:
+          name: Where am I
+          command: pwd && ls
+      - run:
           name: Checkout vagov-content
           command: cd .. && git clone git@github.com:department-of-veterans-affairs/vagov-content.git
       - run:
@@ -82,9 +85,10 @@ jobs:
       - run:
           name: Start Docker
           command: docker-compose -p nightwatch up -d
+      - run: cd ..
       - run:
           name: Where am I
-          command: pwd && ls && cd ..
+          command: pwd && ls
       - run:
           name: Run tests
           command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
