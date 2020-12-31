@@ -48,15 +48,12 @@ jobs:
           command: cd ../project && yarn validate-content-build
 
   build-environment:
-    working_directory: ~/application
+    working_directory: ~/content-build
     executor: circleci-node
     resource_class: xlarge
     steps:
       - checkout
       - yarn-install-cache
-      - run:
-          name: Where am I
-          command: pwd && ls
       - run:
           name: Checkout vagov-content
           command: cd .. && git clone git@github.com:department-of-veterans-affairs/vagov-content.git
@@ -69,10 +66,10 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - application/build
+            - content-build/build
 
   nightwatch:
-    working_directory: ~/application
+    working_directory: ~/content-build
     executor: circleci-e2e
     resource_class: xlarge
     steps:
@@ -85,10 +82,6 @@ jobs:
       - run:
           name: Start Docker
           command: docker-compose -p nightwatch up -d
-      - run: cd ..
-      - run:
-          name: Where am I
-          command: pwd && ls
       - run:
           name: Run tests
           command: docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
