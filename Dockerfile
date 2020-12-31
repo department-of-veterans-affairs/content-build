@@ -36,7 +36,7 @@ ENV AWS_CA_BUNDLE /aws/dist/botocore/cacert.pem
 RUN mkdir -p /application/content-build
 RUN chown -R vets-website:vets-website /application
 
-WORKDIR /application/
+WORKDIR /application/content-build
 
 USER vets-website
 
