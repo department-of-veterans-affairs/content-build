@@ -4,9 +4,6 @@ executors:
   circleci-node:
     docker:
       - image: circleci/node:14.15.0
-  cypress:
-    docker:
-      - image: cypress/base:14.15.0
   circleci-e2e:
     docker:
       - image: circleci/openjdk:8-jdk-node-browsers
@@ -47,28 +44,7 @@ jobs:
           name: Run validation script
           command: cd ../project && yarn validate-content-build
 
-  build-environment:
-    working_directory: ~/content-build
-    executor: circleci-node
-    resource_class: xlarge
-    steps:
-      - checkout
-      - yarn-install-cache
-      - run:
-          name: Checkout vagov-content
-          command: cd .. && git clone git@github.com:department-of-veterans-affairs/vagov-content.git
-      - run:
-          name: Fetch Drupal Cache
-          command: yarn fetch-drupal-cache --buildtype=vagovprod
-      - run:
-          name: Build site
-          command: NODE_ENV=production yarn build --buildtype=vagovprod
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - content-build/build
-
-  nightwatch:
+  nightwatch-e2e:
     working_directory: ~/content-build
     executor: circleci-e2e
     resource_class: xlarge
@@ -78,37 +54,45 @@ jobs:
           version: 19.03.13
       - run:
           name: Start Docker
-          command: docker-compose -f docker-compose.circle.yml -p nightwatch up -d
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-e2e up -d
       - run:
-          name: Run tests
-          command: docker-compose -f docker-compose.circle.yml -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
+          name: Run e2e tests
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-e2e run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
       - run:
           name: Stop container
-          command: docker-compose -f docker-compose.circle.yml -p nightwatch stop
-      # - run: mkdir test-reports
-      # - run:
-      #     name: Download Selenium
-      #     command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      # - run:
-      #     name: Start Selenium
-      #     command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-      #     background: true
-      # - run:
-      #     name: Run accessibility tests
-      #     command: NODE_ENV=production BABEL_ENV=test yarn nightwatch --buildtype=vagovprod
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-e2e stop
+
+  nightwatch-accessibility:
+    working_directory: ~/content-build
+    executor: circleci-e2e
+    resource_class: xlarge
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Start Docker
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-accessibility up -d
+      - run:
+          name: Run accessibility tests
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility
+      - run:
+          name: Stop container
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-accessibility stop
 
 workflows:
   version: 2
   integration:
     jobs:
-      - nightwatch
-#   hourly-content-validation:
+      - nightwatch-e2e
+      - nightwatch-accessibility
+#   daily-content-validation:
 #     triggers:
 #       - schedule:
-#           cron: "0 * * * *"
+#           cron: "0 16 * * 1-5"
 #           filters:
 #             branches:
 #               only:
 #                 - master
 #     jobs:
-#       - lint
+#       - nightwatch
