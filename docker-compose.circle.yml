@@ -4,9 +4,7 @@ services:
     image: content-build:${IMAGE_TAG:-latest}
     build:
       context: .
-      target: base
-    volumes:
-      - .:/application/content-build
+      target: builder
     environment:
       WEB_HOST: 'content-build'
       WEB_PORT: 3001
