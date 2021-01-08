@@ -29,7 +29,7 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   },
   { name: 'buildpath', type: String, defaultValue: null },
   { name: 'host', type: String, defaultValue: defaultHost },
-  { name: 'port', type: Number, defaultValue: process.env.PORT || 3001 },
+  { name: 'port', type: Number, defaultValue: process.env.PORT || 3002 },
   { name: 'entry', type: String, defaultValue: null },
   { name: 'protocol', type: String, defaultValue: 'http' },
   { name: 'destination', type: String, defaultValue: null },
@@ -67,7 +67,7 @@ const app = express();
 const drupalClient = getDrupalClient(options);
 
 const urls = {
-  [ENVIRONMENTS.LOCALHOST]: 'http://localhost:3001',
+  [ENVIRONMENTS.LOCALHOST]: 'http://localhost:3002',
   [ENVIRONMENTS.VAGOVDEV]:
     'http://dev.va.gov.s3-website-us-gov-west-1.amazonaws.com',
   [ENVIRONMENTS.VAGOVSTAGING]:
@@ -111,7 +111,7 @@ app.get('/preview', async (req, res, next) => {
     const smith = await createPipeline({
       ...options,
       isPreviewServer: true,
-      port: process.env.PORT || 3001,
+      port: process.env.PORT || 3002,
     });
 
     const requests = [

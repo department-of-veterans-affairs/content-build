@@ -2,9 +2,9 @@
 
 // NOTE this job is expected to run in two contexts:
 //
-// 1. This job will be triggered by the vets-website production
+// 1. This job will be triggered by the content-build production
 // release pipeline also known as the daily auto-deploy
-// http://jenkins.vfs.va.gov/job/deploys/job/vets-gov-autodeploy-vets-website/
+// http://jenkins.vfs.va.gov/job/deploys/job/vets-gov-autodeploy-content-build/
 // When run in this context the ref parameter will be populated with
 // the ref of the latest release.
 //
@@ -23,14 +23,14 @@ node('vetsgov-general-purpose') {
   refStatusState = ""
   ref = params.ref
   if (ref == "") {
-    ref = getLatestGitRef("vets-website", branch: "master")
+    ref = getLatestGitRef("content-build", branch: "master")
   }
 
   def jobFailed = false
   def refStatusState
   while({
     echo "checking build status..."
-    refStatusState = getGithubCommitState("vets-website", ref)
+    refStatusState = getGithubCommitState("content-build", ref)
     if ("${refStatusState}" == "SUCCESS") {
       return false
     } else if ("${refStatusState}" == "PENDING") {
@@ -42,7 +42,7 @@ node('vetsgov-general-purpose') {
   }()) continue
 
   if (jobFailed) {
-    message = "Web content refresh on ${params.env} aborted due to '${refStatusState}' status on vets-website commit ${ref}."
+    message = "Web content refresh on ${params.env} aborted due to '${refStatusState}' status on content-build commit ${ref}."
     echo "${message}"
     slackSend(message: "${message}",
               color: "warning",
@@ -52,11 +52,11 @@ node('vetsgov-general-purpose') {
     return
   }
 
-  dir("vets-website") {
-    checkout scm: [$class: 'GitSCM', branches: [[name: ref]], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
+  dir("content-build") {
+    checkout scm: [$class: 'GitSCM', branches: [[name: ref]], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/content-build.git']]]
   }
 
-  def commonStages = load "vets-website/jenkins/common.groovy"
+  def commonStages = load "content-build/jenkins/common.groovy"
 
   // Setup stage
   dockerContainer = commonStages.setup()
@@ -75,7 +75,7 @@ node('vetsgov-general-purpose') {
 
   stage("Deploy Dev or Staging") {
     if (params.env != "vagovprod" && params.deploy) {
-      commonStages.runDeploy("deploys/vets-website-${params.env}", ref, true)
+      commonStages.runDeploy("deploys/content-build-${params.env}", ref, true)
       message = "Web content refresh in ${params.env} completed."
       echo "${message}"
       slackSend(message: "${message}",

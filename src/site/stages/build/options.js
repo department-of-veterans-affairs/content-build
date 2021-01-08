@@ -23,7 +23,7 @@ const { useFlags } = require('./drupal/load-saved-flags');
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'buildtype', type: String, defaultValue: defaultBuildtype },
   { name: 'host', type: String, defaultValue: defaultHost },
-  { name: 'port', type: Number, defaultValue: 3001 },
+  { name: 'port', type: Number, defaultValue: 3002 },
   { name: 'api', type: String, defaultValue: null },
   { name: 'watch', type: Boolean, defaultValue: false },
   { name: 'entry', type: String, defaultValue: null },
@@ -58,6 +58,9 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'accessibility', type: Boolean, defaultValue: false },
   { name: 'lint-plain-language', type: Boolean, defaultValue: false },
   { name: 'verbose', alias: 'v', type: Boolean, defaultValue: false },
+
+  // use the --nosymlink flag with a build to bypass symlink creation
+  { name: 'nosymlink', type: Boolean, defaultValue: false },
 
   // HACK: The drupal-aws-cache script ends up here while trying to cache
   // the query for getting all pages. The 'fetch' option from that cache script

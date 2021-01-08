@@ -17,9 +17,9 @@ DRUPAL_CREDENTIALS = [
 ]
 
 ALL_VAGOV_BUILDTYPES = [
-  'vagovdev'
-  // 'vagovstaging'
-  // 'vagovprod'
+  'vagovdev',
+  'vagovstaging',
+  'vagovprod'
 ]
 
 BUILD_TYPE_OVERRIDE = DRUPAL_MAPPING.get(params.cmsEnvBuildOverride, null)
@@ -45,8 +45,7 @@ def isReviewable() {
 def isDeployable() {
   return (IS_DEV_BRANCH ||
           IS_STAGING_BRANCH) &&
-    !env.CHANGE_TARGET &&
-    !currentBuild.nextBuild // if there's a later build on this job (branch), don't deploy
+    !env.CHANGE_TARGET
 }
 
 def shouldBail() {
@@ -191,7 +190,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd /application && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
 
       if (envName == 'vagovprod') {
-	checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
+	       checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
 
       // Find any missing query flags in the log
