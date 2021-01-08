@@ -53,13 +53,11 @@ async function downloadFromLiveBucket(files, buildOptions) {
 
   const downloads = entryNames.map(async entryName => {
     let bundleFileName = fileManifest[entryName];
-    let bundleUrl;
+    let bundleUrl = `${bundleFileName}`;
 
-    // Fix this once the last webpack update is merged.
+    // Remove this once the last webpack update is merged.
     if (buildOptions.buildtype === 'vagovprod') {
       bundleUrl = `${bucket}${bundleFileName}`;
-    } else {
-      bundleUrl = `${bundleFileName}`;
     }
 
     const bundleResponse = await fetch(bundleUrl);
