@@ -191,7 +191,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd /application && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose"
 
       if (envName == 'vagovprod') {
-	       checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
+	    checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
 
       // Find any missing query flags in the log
