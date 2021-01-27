@@ -6,6 +6,7 @@ const commandLineArgs = require('command-line-args');
 const path = require('path');
 const express = require('express');
 const proxy = require('express-http-proxy');
+const jsesc = require('jsesc');
 const createPipeline = require('../src/site/stages/preview');
 
 const getDrupalClient = require('../src/site/stages/build/drupal/api');
@@ -126,16 +127,16 @@ app.get('/preview', async (req, res, next) => {
           );
         },
       ),
-      fetch(
-        `${urls[options.buildtype]}/generated/drupalHeaderFooter.json`,
-      ).then(resp => {
-        if (resp.ok) {
-          return resp.json();
-        }
-        throw new Error(
-          `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
-        );
-      }),
+      fetch(`${urls[options.buildtype]}/generated/headerFooter.json`).then(
+        resp => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          throw new Error(
+            `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
+          );
+        },
+      ),
     ];
 
     const [drupalData, fileManifest, headerFooterData] = await Promise.all(
@@ -175,6 +176,11 @@ app.get('/preview', async (req, res, next) => {
       `${compiledPage.entityBundle}.drupal.liquid`,
     );
 
+    const headerFooterDataSerialized = jsesc(JSON.stringify(headerFooterData), {
+      json: true,
+      isScriptContext: true,
+    });
+
     const files = {
       'generated/file-manifest.json': {
         path: 'generated/file-manifest.json',
@@ -183,7 +189,7 @@ app.get('/preview', async (req, res, next) => {
       [drupalPath]: {
         ...fullPage,
         isPreview: true,
-        headerFooterData: Buffer.from(JSON.stringify(headerFooterData)),
+        headerFooterData: headerFooterDataSerialized,
         drupalSite:
           DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
           options['drupal-address'],
