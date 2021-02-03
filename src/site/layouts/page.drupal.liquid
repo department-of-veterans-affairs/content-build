@@ -32,7 +32,7 @@
           </div>
           <h1>{{ title }}</h1>
           <div class="va-introtext">
-            <p>{{ fieldIntroText }}</p>
+            {{ fieldIntroTextLimitedHtml.processed }}
           </div>
           {% if fieldAlert.length %}
             {% for alert in fieldAlert %}
