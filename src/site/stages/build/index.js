@@ -1,4 +1,6 @@
 // Builds the site using Metalsmith as the top-level build runner.
+/* eslint-disable no-console */
+const fs = require('fs-extra');
 const chalk = require('chalk');
 const assets = require('metalsmith-assets');
 const collections = require('metalsmith-collections');
@@ -36,7 +38,39 @@ const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
 
+const pagesJSONPath = '.cache/localhost/drupal/pages.json';
+const backupPath = '/tmp/pages.json';
+
+function backupPagesJSON() {
+  try {
+    if (fs.existsSync(pagesJSONPath)) {
+      console.log('Backing up pages.json');
+      fs.renameSync(pagesJSONPath, backupPath);
+      console.log(`${pagesJSONPath} moved to ${backupPath}`);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function restorePagesJSON() {
+  try {
+    if (fs.existsSync(backupPath)) {
+      console.log('Restoring pages.json');
+      fs.renameSync(backupPath, pagesJSONPath);
+      console.log(`pages.json restored to ${pagesJSONPath}`);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 function build(BUILD_OPTIONS) {
+  const usingCMSExport = BUILD_OPTIONS['use-cms-export'];
+  if (usingCMSExport) {
+    backupPagesJSON();
+  }
+
   const smith = silverSmith();
 
   registerLiquidFilters();
@@ -189,7 +223,6 @@ function build(BUILD_OPTIONS) {
     'Parse a virtual DOM from every .html file and perform a variety of DOM sub-operations on each file',
   );
 
-  /* eslint-disable no-console */
   smith.build(err => {
     if (err) throw err;
 
@@ -217,6 +250,10 @@ function build(BUILD_OPTIONS) {
         smith.printSummary();
       }
       console.log('The Metalsmith build has completed.');
+
+      if (usingCMSExport) {
+        restorePagesJSON();
+      }
     }
   }); // smith.build()
 }
