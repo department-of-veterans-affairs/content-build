@@ -45,4 +45,3 @@
       g[aT].push(arguments);
     });
 })(window);
-
