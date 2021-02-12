@@ -101,7 +101,8 @@ module.exports = {
 
       // Assemble the filename so we can match it in the generated files array.
       const fileSearch =
-        buildOptions.buildtype === environments.LOCALHOST
+        buildOptions.buildtype === environments.LOCALHOST ||
+        buildOptions.buildtype === environments.VAGOVDEV
           ? `generated/${hashedEntryName.split('/generated/')[1]}`
           : hashedEntryName;
       // const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
@@ -119,7 +120,10 @@ module.exports = {
       }
 
       // Link the element to the hashed entry name w/o the S3 bucket
-      if (buildOptions.buildtype === environments.LOCALHOST) {
+      if (
+        buildOptions.buildtype === environments.LOCALHOST ||
+        buildOptions.buildtype === environments.VAGOVDEV
+      ) {
         $el.attr(attribute, `/${fileSearch}`);
       } else {
         $el.attr(attribute, `${fileSearch}`);
