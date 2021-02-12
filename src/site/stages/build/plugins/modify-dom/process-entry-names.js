@@ -2,6 +2,7 @@
 
 const path = require('path');
 const environments = require('../../../../constants/environments');
+const buckets = require('../../../../constants/buckets');
 
 const FILE_MANIFEST_FILENAME = 'generated/file-manifest.json';
 
@@ -78,6 +79,17 @@ module.exports = {
     const { dom } = file;
     if (!dom) return;
 
+    // Set full S3 path for preloaded assets
+    if (buildOptions.buildtype !== environments.LOCALHOST) {
+      dom('link[rel="preload"]').each((index, el) => {
+        const $el = dom(el);
+        const attr = $el.attr('href');
+        const fullAttr = `${buckets[buildOptions.buildtype]}${attr}`;
+
+        $el.attr('href', fullAttr);
+      });
+    }
+
     dom('script[data-entry-name],link[data-entry-name]').each((index, el) => {
       // Derive the element properties.
       const $el = dom(el);
@@ -88,7 +100,11 @@ module.exports = {
       const hashedEntryName = this.entryNamesDictionary.get(entryName) || [];
 
       // Assemble the filename so we can match it in the generated files array.
-      const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
+      const fileSearch =
+        buildOptions.buildtype === environments.LOCALHOST
+          ? `generated/${hashedEntryName.split('/generated/')[1]}`
+          : hashedEntryName;
+      // const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
 
       // Ensure we have valid options and that the entry exists.
       const entryExists = files[fileSearch];
@@ -99,11 +115,15 @@ module.exports = {
         !buildOptions.entry &&
         !entryExists
       ) {
-        throw new Error(`Entry Name "${entryName}" was not found.`);
+        throw new Error(`Entry Name "${fileSearch}" was not found.`);
       }
 
       // Link the element to the hashed entry name w/o the S3 bucket
-      $el.attr(attribute, `/${fileSearch}`);
+      if (buildOptions.buildtype === environments.LOCALHOST) {
+        $el.attr(attribute, `/${fileSearch}`);
+      } else {
+        $el.attr(attribute, `${fileSearch}`);
+      }
       file.modified = true;
     });
   },
