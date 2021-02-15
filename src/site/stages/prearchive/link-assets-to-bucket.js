@@ -89,15 +89,15 @@ function linkAssetsToBucket(options, fileNames) {
   }
 
   // The proxy-rewrite is a special case.
-  const proxyRewriteFileName = fileNames.find(file =>
-    file.endsWith('proxy-rewrite.entry.js'),
-  );
-  const proxyRewriteContents = fs.readFileSync(proxyRewriteFileName);
-  const newProxyRewriteContents = proxyRewriteContents
-    .toString()
-    .replace(/https:\/\/www\.va\.gov\/img/g, `${bucketPath}/img`);
+  // const proxyRewriteFileName = fileNames.find(file =>
+  //   file.endsWith('proxy-rewrite.entry.js'),
+  // );
+  // const proxyRewriteContents = fs.readFileSync(proxyRewriteFileName);
+  // const newProxyRewriteContents = proxyRewriteContents
+  //   .toString()
+  //   .replace(/https:\/\/www\.va\.gov\/img/g, `${bucketPath}/img`);
 
-  fs.writeFileSync(proxyRewriteFileName, newProxyRewriteContents);
+  // fs.writeFileSync(proxyRewriteFileName, newProxyRewriteContents);
 }
 
 module.exports = linkAssetsToBucket;
