@@ -356,17 +356,19 @@ const compareJson = (baseGraphQlObject, baseCmsExportObject) => {
     return keysToIgnore.includes(key);
   });
 
-  diffs = diffs?.filter(d => d.kind !== 'N').map(diff => {
-    return {
-      diffType: getDiffType(diff),
-      path: diff.index
-        ? `${diff.path.join('/')}[${diff.index}]`
-        : diff.path.join('/'),
-      ...(diff.item && { item: getDiffItem(diff.item) }),
-      ...('lhs' in diff && { graphQL: diff.lhs }),
-      ...('rhs' in diff && { cmsExport: diff.rhs }),
-    };
-  });
+  diffs = diffs
+    ?.filter(d => d.kind !== 'N')
+    .map(diff => {
+      return {
+        diffType: getDiffType(diff),
+        path: diff.index
+          ? `${diff.path.join('/')}[${diff.index}]`
+          : diff.path.join('/'),
+        ...(diff.item && { item: getDiffItem(diff.item) }),
+        ...('lhs' in diff && { graphQL: diff.lhs }),
+        ...('rhs' in diff && { cmsExport: diff.rhs }),
+      };
+    });
 
   return { deepDiffs: diffs, arrayDiffs };
 };
