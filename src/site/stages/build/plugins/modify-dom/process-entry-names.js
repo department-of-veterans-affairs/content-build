@@ -91,13 +91,6 @@ module.exports = {
       if (hashedEntryName.length <= 0) {
         return;
       }
-      /* eslint-disable no-console */
-      console.log('------------------');
-      console.log('------------------');
-      console.log(hashedEntryName);
-      console.log('------------------');
-      console.log('------------------');
-      /* eslint-enable no-console */
 
       // Assemble the filename so we can match it in the generated files array.
       const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
@@ -113,7 +106,9 @@ module.exports = {
         buildOptions.buildtype !== environments.LOCALHOST &&
         !buildOptions.isPreviewServer &&
         !buildOptions.entry &&
-        !entryExists
+        !entryExists &&
+        hashedEntryName !== '/generated/newForm.css' &&
+        hashedEntryName !== '/generated/newForm.entry.js'
       ) {
         throw new Error(`Entry Name "${s3Search}" was not found.`);
       }
@@ -122,7 +117,7 @@ module.exports = {
       if (buildOptions.buildtype === environments.LOCALHOST) {
         $el.attr(attribute, `/${fileSearch}`);
       } else {
-        $el.attr(attribute, `${fileSearch}`);
+        $el.attr(attribute, `${s3Search}`);
       }
       file.modified = true;
     });
