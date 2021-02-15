@@ -74,6 +74,7 @@ async function downloadFromLiveBucket(files, buildOptions) {
   return Promise.all(downloads);
 }
 
+// Open Comment
 // async function downloadFromArchive(files, assetSource, buildtype) {
 //   const archiveUrl = `https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/${assetSource}/${buildtype}.tar.bz2`;
 //
