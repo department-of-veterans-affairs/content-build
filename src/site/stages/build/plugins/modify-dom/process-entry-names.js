@@ -79,17 +79,6 @@ module.exports = {
     const { dom } = file;
     if (!dom) return;
 
-    // Set full S3 path for preloaded assets
-    if (buildOptions.buildtype !== environments.LOCALHOST) {
-      dom('link[rel="preload"]').each((index, el) => {
-        const $el = dom(el);
-        const attr = $el.attr('href');
-        const fullAttr = `${buckets[buildOptions.buildtype]}${attr}`;
-
-        $el.attr('href', fullAttr);
-      });
-    }
-
     dom('script[data-entry-name],link[data-entry-name]').each((index, el) => {
       // Derive the element properties.
       const $el = dom(el);
@@ -99,16 +88,26 @@ module.exports = {
       // Derive the hashed entry name.
       const hashedEntryName = this.entryNamesDictionary.get(entryName) || [];
 
+      if (hashedEntryName.length <= 0) {
+        return;
+      }
+      /* eslint-disable no-console */
+      console.log('------------------');
+      console.log('------------------');
+      console.log(hashedEntryName);
+      console.log('------------------');
+      console.log('------------------');
+      /* eslint-enable no-console */
+
       // Assemble the filename so we can match it in the generated files array.
-      const fileSearch =
-        buildOptions.buildtype === environments.LOCALHOST ||
-        buildOptions.buildtype === environments.VAGOVDEV
-          ? `generated/${hashedEntryName.split('/generated/')[1]}`
-          : hashedEntryName;
-      // const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
+      const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
+      const s3Search =
+        buildOptions.buildtype !== environments.LOCALHOST
+          ? `${buckets[buildOptions.buildtype]}/${fileSearch}`
+          : fileSearch;
 
       // Ensure we have valid options and that the entry exists.
-      const entryExists = files[fileSearch];
+      const entryExists = files[s3Search];
 
       if (
         buildOptions.buildtype !== environments.LOCALHOST &&
@@ -116,14 +115,11 @@ module.exports = {
         !buildOptions.entry &&
         !entryExists
       ) {
-        throw new Error(`Entry Name "${fileSearch}" was not found.`);
+        throw new Error(`Entry Name "${s3Search}" was not found.`);
       }
 
       // Link the element to the hashed entry name w/o the S3 bucket
-      if (
-        buildOptions.buildtype === environments.LOCALHOST ||
-        buildOptions.buildtype === environments.VAGOVDEV
-      ) {
+      if (buildOptions.buildtype === environments.LOCALHOST) {
         $el.attr(attribute, `/${fileSearch}`);
       } else {
         $el.attr(attribute, `${fileSearch}`);
