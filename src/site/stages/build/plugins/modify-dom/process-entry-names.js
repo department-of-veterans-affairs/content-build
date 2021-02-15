@@ -2,6 +2,7 @@
 
 const path = require('path');
 const environments = require('../../../../constants/environments');
+const buckets = require('../../../../constants/buckets');
 
 const FILE_MANIFEST_FILENAME = 'generated/file-manifest.json';
 
@@ -87,23 +88,37 @@ module.exports = {
       // Derive the hashed entry name.
       const hashedEntryName = this.entryNamesDictionary.get(entryName) || [];
 
+      if (hashedEntryName.length <= 0) {
+        return;
+      }
+
       // Assemble the filename so we can match it in the generated files array.
       const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
+      const s3Search =
+        buildOptions.buildtype !== environments.LOCALHOST
+          ? `${buckets[buildOptions.buildtype]}/${fileSearch}`
+          : fileSearch;
 
       // Ensure we have valid options and that the entry exists.
-      const entryExists = files[fileSearch];
+      const entryExists = files[s3Search];
 
       if (
         buildOptions.buildtype !== environments.LOCALHOST &&
         !buildOptions.isPreviewServer &&
         !buildOptions.entry &&
-        !entryExists
+        !entryExists &&
+        hashedEntryName !== '/generated/newForm.css' &&
+        hashedEntryName !== '/generated/newForm.entry.js'
       ) {
-        throw new Error(`Entry Name "${entryName}" was not found.`);
+        throw new Error(`Entry Name "${s3Search}" was not found.`);
       }
 
       // Link the element to the hashed entry name w/o the S3 bucket
-      $el.attr(attribute, `/${fileSearch}`);
+      if (buildOptions.buildtype === environments.LOCALHOST) {
+        $el.attr(attribute, `/${fileSearch}`);
+      } else {
+        $el.attr(attribute, `${s3Search}`);
+      }
       file.modified = true;
     });
   },
