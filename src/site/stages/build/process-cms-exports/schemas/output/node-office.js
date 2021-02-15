@@ -1,16 +1,27 @@
 module.exports = {
   type: 'object',
   properties: {
-    contentModelType: { enum: ['node-office'] },
-    entity: {
-      type: 'object',
-      properties: {
-        entityType: { enum: ['node'] },
-        entityBundle: { enum: ['office'] },
-        entityLabel: { type: 'string' },
-      },
-      required: ['entityLabel'],
-    },
+    targetId: { type: 'number' },
+    entityType: { type: 'string', enum: ['node'] },
+    entityBundle: { type: 'string', enum: ['office'] },
+    title: { type: 'string' },
+    created: { type: 'number' },
+    changed: { type: 'number' },
+    entityMetatags: { $ref: 'MetaTags' },
+    fieldAdministration: { $ref: 'output/taxonomy_term-administration' },
+    fieldBody: { $ref: 'ProcessedString' },
+    fieldDescription: { type: ['string', 'null'] },
+    fieldMetaTitle: { type: 'string' },
   },
-  required: ['entity'],
+  required: [
+    'targetId',
+    'title',
+    'created',
+    'changed',
+    'entityMetatags',
+    'fieldAdministration',
+    'fieldBody',
+    'fieldDescription',
+    'fieldMetaTitle',
+  ],
 };

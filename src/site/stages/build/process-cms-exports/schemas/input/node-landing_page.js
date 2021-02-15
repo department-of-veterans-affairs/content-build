@@ -23,6 +23,7 @@ module.exports = {
       items: { $ref: 'EntityReference' },
     },
     field_alert: { type: 'array' },
+    field_home_page_hub_label: { $ref: 'GenericNestedString' },
     field_intro_text: { $ref: 'GenericNestedString' },
     // This is essentially a list of paragraph-link_teaser,
     // but only containing the data in field_link
@@ -58,6 +59,7 @@ module.exports = {
     field_support_services: { $ref: 'EntityReferenceArray' },
     field_title_icon: { $ref: 'GenericNestedString' },
     metatag: { $ref: 'RawMetaTags' },
+    status: { $ref: 'GenericNestedBoolean' },
   },
   required: [
     'title',
@@ -65,6 +67,7 @@ module.exports = {
     'path',
     'field_administration',
     'field_alert',
+    'field_home_page_hub_label',
     'field_intro_text',
     'field_links',
     'field_page_last_built',
@@ -75,6 +78,6 @@ module.exports = {
     'field_support_services',
     'field_title_icon',
     'metatag',
-    'moderation_state',
+    'status',
   ],
 };

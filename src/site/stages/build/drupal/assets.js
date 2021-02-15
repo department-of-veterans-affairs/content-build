@@ -1,6 +1,6 @@
-const getDrupalClient = require('./api');
 const cheerio = require('cheerio');
 const chalk = require('chalk');
+const getDrupalClient = require('./api');
 const { PUBLIC_URLS } = require('../../../constants/drupals');
 
 const PUBLIC_URLS_NO_SCHEME = Object.entries(PUBLIC_URLS).reduce(
@@ -36,6 +36,7 @@ function replacePathInData(data, replacer, ancestors = []) {
       }
 
       if (newValue !== current[key]) {
+        // eslint-disable-next-line prefer-object-spread
         current = Object.assign({}, current, {
           [key]: newValue,
         });
@@ -81,26 +82,34 @@ function getAwsURI(siteURI, usingAWS) {
   return matchingEntries[0];
 }
 
-// @todo Explain _why_ this function is needed.
-function updateAttr(attr, doc, client) {
+function replaceHostIfUsingAWS(originalSrc, usingAWS) {
+  const cmsURLExpression = /https?:\/\/([a-zA-Z0-9-]+[.])*cms[.]va[.]gov/;
+  const siteURIMatches = originalSrc.match(cmsURLExpression);
+
+  if (siteURIMatches && usingAWS) {
+    const siteURI = siteURIMatches[0];
+    const awsURI = getAwsURI(siteURI, usingAWS);
+    return originalSrc.replace(siteURI, awsURI);
+  } else {
+    return originalSrc;
+  }
+}
+
+// Update WYSIWYG asset URLs based on environment (local vs CI)
+function updateAttr(attr, doc, usingAWS) {
   const assetsToDownload = [];
-  const usingAWS = !!PUBLIC_URLS[client.getSiteUri()];
 
   doc(`[${attr}*="cms.va.gov/sites"]`).each((i, el) => {
     const item = doc(el);
     const srcAttr = item.attr(attr);
 
-    const siteURI = srcAttr.match(
-      /https?:\/\/([a-zA-Z0-9]+[.])*cms[.]va[.]gov/,
-    )[0];
     // *.ci.cms.va.gov ENVs don't have AWS URLs.
     const newAssetPath = convertAssetPath(srcAttr);
-    const awsURI = getAwsURI(siteURI, usingAWS);
 
     assetsToDownload.push({
       // URLs in WYSIWYG content won't be the AWS URLs, they'll be CMS URLs.
       // This means we need to replace them with the AWS URLs if we're on Jenkins.
-      src: usingAWS ? srcAttr.replace(siteURI, awsURI) : srcAttr,
+      src: replaceHostIfUsingAWS(srcAttr, usingAWS),
       dest: newAssetPath,
     });
 
@@ -112,6 +121,7 @@ function updateAttr(attr, doc, client) {
 
 function convertDrupalFilesToLocal(drupalData, files, options) {
   const client = getDrupalClient(options);
+  const usingAWS = !!PUBLIC_URLS[client.getSiteUri()];
 
   return replacePathInData(drupalData, (data, key) => {
     if (data.match(/^.*\/sites\/.*\/files\//)) {
@@ -120,7 +130,7 @@ function convertDrupalFilesToLocal(drupalData, files, options) {
       // eslint-disable-next-line no-param-reassign
       files[decodedFileName] = {
         path: decodedFileName,
-        source: data,
+        source: replaceHostIfUsingAWS(data, usingAWS),
         isDrupalAsset: true,
         contents: '',
       };
@@ -131,8 +141,8 @@ function convertDrupalFilesToLocal(drupalData, files, options) {
     if (key === 'processed') {
       const doc = cheerio.load(data);
       const assetsToDownload = [
-        ...updateAttr('href', doc, client),
-        ...updateAttr('src', doc, client),
+        ...updateAttr('href', doc, usingAWS),
+        ...updateAttr('src', doc, usingAWS),
       ];
 
       if (assetsToDownload.length) {

@@ -2,6 +2,7 @@
 require('isomorphic-fetch');
 const path = require('path');
 const fs = require('fs-extra');
+const chalk = require('chalk');
 
 const { logDrupal: log } = require('../drupal/utilities-drupal');
 const getDrupalClient = require('../drupal/api');
@@ -31,12 +32,22 @@ async function downloadFile(
 
     downloadResults.downloadCount++;
 
-    log(`Finished downloading ${asset.src}`);
+    if (global.verbose) {
+      log(`Finished downloading ${asset.src}`);
+    } else {
+      process.stdout.write('.');
+      if (!assetsToDownload.length) process.stdout.write('\n');
+    }
   } else {
     // For now, not going to fail the build for a missing asset
     // Should get caught by the broken link checker, though
     downloadResults.errorCount++;
-    log(`Image download failed: ${response.statusText}: ${asset.src}`);
+    if (global.verbose) {
+      log(`Image download failed: ${response.statusText}: ${asset.src}`);
+    } else {
+      process.stdout.write(chalk.red('.'));
+      if (!assetsToDownload.length) process.stdout.write('\n');
+    }
   }
 
   const currentDownloadCount =
@@ -96,9 +107,7 @@ function downloadDrupalAssets(options) {
       log(`Downloaded ${downloadResults.downloadCount} asset(s) from Drupal`);
       if (downloadResults.errorCount) {
         log(
-          `${
-            downloadResults.errorCount
-          } error(s) downloading assets from Drupal`,
+          `${downloadResults.errorCount} error(s) downloading assets from Drupal`,
         );
       }
     }

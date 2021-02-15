@@ -1,12 +1,16 @@
+const fragments = require('./fragments.graphql');
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const socialMediaFields = require('./facilities-fragments/healthCareSocialMedia.fields.graphql');
+const serviceLocation = require('./paragraph-fragments/serviceLocation.paragraph.graphql');
+const appointmentItems = require('./file-fragments/appointmentItems.graphql');
 
-module.exports = `
+const { generatePaginatedQueries } = require('../individual-queries-helpers');
+
+const healthCareLocalFacilityPageFragment = `
   fragment healthCareLocalFacilityPage on NodeHealthCareLocalFacility {
     ${entityElementsFromPages}
     changed
     fieldFacilityLocatorApiId
-    fieldNicknameForThisFacility
     title
     fieldIntroText
     fieldOperatingStatusFacility
@@ -18,43 +22,6 @@ module.exports = `
           fieldTitle
           fieldWysiwyg {
             processed
-          }
-        }
-      }
-    }
-    fieldRegionPage {
-      entity {
-        ... on NodeHealthCareRegionPage {
-          fieldFacebook {
-            title
-            url {
-              path
-            }
-          }
-          fieldTwitter {
-            title
-            url {
-              path
-            }
-          }
-          fieldFlickr {
-            title
-            url {
-              path
-            }
-          }
-          fieldInstagram {
-            title
-            url {
-              path
-            }
-          }
-          fieldGovdeliveryIdEmerg
-          fieldGovdeliveryIdNews
-          fieldOperatingStatus {
-            url {
-              path
-            }
           }
         }
       }
@@ -93,10 +60,16 @@ module.exports = `
           entityId
           entityPublished
           title
-          fieldNicknameForThisFacility
           fieldRelatedLinks {
             entity {
               ... listOfLinkTeasers
+            }
+          }
+          fieldGovdeliveryIdEmerg
+          fieldGovdeliveryIdNews
+          fieldOperatingStatus {
+            url {
+              path
             }
           }
         }
@@ -109,6 +82,8 @@ module.exports = `
           fieldBody {
             processed
           }
+          ${serviceLocation}
+          ${appointmentItems}
           fieldRegionalHealthService
           {
             entity {
@@ -147,3 +122,46 @@ module.exports = `
     }
   }
 `;
+
+function getNodeHealthCareLocalFacilityPagesSlice(
+  operationName,
+  offset,
+  limit,
+) {
+  return `
+    ${fragments.listOfLinkTeasers}
+    ${fragments.linkTeaser}
+    ${healthCareLocalFacilityPageFragment}
+
+    query ${operationName}($onlyPublishedContent: Boolean!) {
+      nodeQuery(
+        limit: ${limit}
+        offset: ${offset}
+        sort: { field: "changed", direction:  ASC }
+        filter: {
+          conditions: [
+            { field: "status", value: ["1"], enabled: $onlyPublishedContent },
+            { field: "type", value: ["health_care_local_facility"] }
+          ]
+      }) {
+        entities {
+          ... healthCareLocalFacilityPage
+        }
+      }
+    }
+  `;
+}
+
+function getNodeHealthCareLocalFacilityPageQueries(entityCounts) {
+  return generatePaginatedQueries({
+    operationNamePrefix: 'GetNodeHealthCareLocalFacilityPages',
+    entitiesPerSlice: 50,
+    totalEntities: entityCounts.data.healthCareLocalFacility.count,
+    getSlice: getNodeHealthCareLocalFacilityPagesSlice,
+  });
+}
+
+module.exports = {
+  fragment: healthCareLocalFacilityPageFragment,
+  getNodeHealthCareLocalFacilityPageQueries,
+};

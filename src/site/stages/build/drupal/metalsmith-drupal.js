@@ -31,6 +31,8 @@ const PULL_DRUPAL_BUILD_ARG = 'pull-drupal';
 // should use the files in the cms-export directory
 const USE_CMS_EXPORT_BUILD_ARG = 'use-cms-export';
 const CMS_EXPORT_DIR_BUILD_ARG = 'cms-export-dir';
+const CMS_EXPORT_CACHE_FILENAME =
+  '.cache/localhost/drupal/pagesTransformed.json';
 
 const getDrupalCachePath = buildOptions =>
   buildOptions[USE_CMS_EXPORT_BUILD_ARG]
@@ -157,7 +159,7 @@ async function getContentViaGraphQL(buildOptions) {
 
     console.time(drupalTimer);
 
-    drupalPages = await contentApi.getAllPages();
+    drupalPages = await contentApi.getAllPagesViaIndividualGraphQlQueries();
 
     console.timeEnd(drupalTimer);
 
@@ -218,9 +220,20 @@ async function loadDrupal(buildOptions) {
     log(`Drupal content cache found: ${drupalCache}`);
   }
 
+  const contentTimer = `Total time to load content from ${
+    buildOptions[USE_CMS_EXPORT_BUILD_ARG] ? 'CMS export' : 'GraphQL'
+  }`;
+
+  console.time(contentTimer);
+
   const drupalPages = buildOptions[USE_CMS_EXPORT_BUILD_ARG]
     ? await getContentFromExport(buildOptions)
     : await getContentViaGraphQL(buildOptions);
+
+  console.timeEnd(contentTimer);
+
+  // Dynamic GraphQL from CMS build
+  fs.outputJsonSync(CMS_EXPORT_CACHE_FILENAME, drupalPages);
 
   log('Drupal successfully loaded!');
   return drupalPages;
@@ -238,7 +251,9 @@ async function loadCachedDrupalFiles(buildOptions, files) {
         path.join(buildOptions.cacheDirectory, 'drupal/downloads'),
         file,
       );
-      log(`Loaded Drupal asset from cache: ${relativePath}`);
+      if (global.verbose) {
+        log(`Loaded Drupal asset from cache: ${relativePath}`);
+      }
       files[relativePath] = {
         path: relativePath,
         isDrupalAsset: true,

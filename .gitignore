@@ -24,14 +24,31 @@ coverage
 yalc.lock
 /test-results.xml
 package-lock.json
-src/applications/proxy-rewrite/tests/__image_snapshots__/__diff_output__/
+src/applications/
+!src/applications/registry.json
 temp
+/tmp
+dump.rdb
+test-results/
 
 # Ignore user's editor/IDE prefs
 .vscode/
+# Ignore the hashed build files for comparison
+standaloneContentBuildHash.txt
+websiteContentBuildHash.txt
+cms.diff
 .idea/
 .swp
 .swo
 all-links.csv
 .tern-port
 *.iml
+
+# Ignore the hashed build files for comparison
+standaloneContentBuildHash.txt
+websiteContentBuildHash.txt
+
+cms.diff
+graphql-data.json
+/content-object-diffs
+content-object-diff.json

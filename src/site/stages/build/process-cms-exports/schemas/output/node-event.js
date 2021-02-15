@@ -6,53 +6,40 @@ module.exports = {
     entityBundle: { enum: ['event'] },
     title: { type: 'string' },
     entityUrl: { $ref: 'EntityUrl' },
-    entityMetaTags: {
-      // Probably should be a common schema...except it's got
-      // __typename instead of type, so it's different.
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          __typename: { type: 'string' },
-          key: { type: 'string' },
-          value: { type: 'string' },
-        },
-      },
-    },
     entityPublished: { type: 'boolean' },
     changed: { type: 'number' },
-    // uid: {
-    //   type: 'object',
-    //   properties: {
-    //     targetId: { type: 'number' },
-    //     entity: {
-    //       type: 'object',
-    //       properties: {
-    //         name: { type: 'string' },
-    //         timezone: { type: ['null'] }, // All the exmaples are null
-    //       },
-    //     },
-    //   },
-    // },
     fieldAdditionalInformationAbo: {
       oneOf: [{ $ref: 'ProcessedString' }, { type: 'null' }],
     },
     fieldAddress: { $ref: 'Address' },
     fieldBody: { $ref: 'ProcessedString' },
-    fieldDate: {
+    fieldDatetimeRangeTimezone: {
       type: 'object',
       properties: {
-        startDate: { type: 'string' }, // 2019-06-12 15:00:00 UTC
-        value: { type: 'string' }, //     2019-06-12T15:00:00
-        endDate: { type: 'string' }, //   2019-06-12 23:00:00 UTC
-        endValue: { type: 'string' }, //  2019-06-12T23:00:00
+        value: { type: 'number' },
+        endValue: { type: ['number', 'null'] },
+        timezone: { type: 'string' },
       },
     },
     fieldDescription: { type: ['string', 'null'] },
     fieldEventCost: { type: ['string', 'null'] },
     fieldEventCta: { type: ['string', 'null'] },
     fieldEventRegistrationrequired: { type: 'boolean' },
-    fieldFacilityLocation: { type: ['object', 'null'] }, // When it's an object, it's an entity of some sort
+    fieldFacilityLocation: {
+      type: ['object', 'null'],
+      properties: {
+        entity: {
+          type: 'object',
+          properties: {
+            entityUrl: { $ref: 'EntityUrl' },
+            title: { type: 'string' },
+          },
+          required: ['entityUrl', 'title'],
+        },
+      },
+      required: ['entity'],
+    },
+    fieldFeatured: { type: 'boolean' },
     fieldLink: {
       type: ['object', 'null'],
       properties: {
@@ -70,7 +57,6 @@ module.exports = {
   },
   required: [
     'title',
-    // 'uid',
     'changed',
     'entityUrl',
     'entityMetatags',
@@ -78,12 +64,13 @@ module.exports = {
     'fieldAdditionalInformationAbo',
     'fieldAddress',
     'fieldBody',
-    'fieldDate',
+    'fieldDatetimeRangeTimezone',
     'fieldDescription',
     'fieldEventCost',
     'fieldEventCta',
     'fieldEventRegistrationrequired',
     'fieldFacilityLocation',
+    'fieldFeatured',
     'fieldLink',
     'fieldLocationHumanreadable',
     'fieldMedia',

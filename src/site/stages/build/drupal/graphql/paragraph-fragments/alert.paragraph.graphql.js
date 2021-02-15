@@ -1,7 +1,7 @@
 /*
-*
-* A reusable or non-reusable alert, either "information status" or "warning status".
-*
+ *
+ * A reusable or non-reusable alert, either "information status" or "warning status".
+ *
  */
 module.exports = `
   fragment alertParagraph on ParagraphAlert {

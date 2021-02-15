@@ -4,26 +4,33 @@ const { mapKeys, camelCase } = require('lodash');
 const {
   createMetaTagArray,
   getDrupalValue,
+  utcToEpochTime,
   getWysiwygString,
   isPublished,
+  entityObjectForKey,
 } = require('./helpers');
 
 const transform = entity => ({
   entityType: 'node',
   entityBundle: 'press_release',
+  // Ignoring this for now as uid is causing issues
+  // uid: entity.uid[0],
   title: getDrupalValue(entity.title),
+  created: utcToEpochTime(getDrupalValue(entity.created)),
+  promote: getDrupalValue(entity.promote),
   entityMetatags: createMetaTagArray(entity.metatag.value),
   fieldAddress: entity.fieldAddress[0]
     ? mapKeys(entity.fieldAddress[0], (v, k) => camelCase(k))
     : null,
-
   fieldIntroText: getDrupalValue(entity.fieldIntroText),
-  fieldOffice: (entity.fieldOffice && entity.fieldOffice[0]) || null,
-  fieldPdfVersion: entity.fieldPdfVersion[0] || null,
+  fieldOffice: entityObjectForKey(entity, 'fieldOffice'),
+  fieldPdfVersion: entityObjectForKey(entity, 'fieldPdfVersion'),
   fieldPressReleaseContact: entity.fieldPressReleaseContact.map(i => ({
     entity: i,
   })),
-  fieldPressReleaseDownloads: entity.fieldPressReleaseDownloads,
+  fieldPressReleaseDownloads: entity.fieldPressReleaseDownloads.map(i => ({
+    entity: i,
+  })),
   fieldPressReleaseFulltext: {
     processed: getWysiwygString(
       getDrupalValue(entity.fieldPressReleaseFulltext),
@@ -35,11 +42,15 @@ const transform = entity => ({
       .utc(getDrupalValue(entity.fieldReleaseDate))
       .format('YYYY-MM-DD HH:mm:ss z'),
   },
-  entityPublished: isPublished(getDrupalValue(entity.moderationState)),
+  entityPublished: isPublished(getDrupalValue(entity.status)),
+  status: getDrupalValue(entity.status),
 });
 module.exports = {
   filter: [
+    // 'uid',
     'title',
+    'created',
+    'promote',
     'metatag',
     'path',
     'field_address',
@@ -50,7 +61,7 @@ module.exports = {
     'field_press_release_downloads',
     'field_press_release_fulltext',
     'field_release_date',
-    'moderation_state',
+    'status',
   ],
   transform,
 };

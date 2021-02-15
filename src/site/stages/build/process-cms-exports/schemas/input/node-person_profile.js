@@ -21,6 +21,14 @@ module.exports = {
     },
     field_phone_number: { $ref: 'GenericNestedString' },
     field_suffix: { $ref: 'GenericNestedString' },
+    // Used for reverse fields
+    field_intro_text: { $ref: 'GenericNestedString' },
+    field_photo_allow_hires_download: { $ref: 'GenericNestedBoolean' },
+    moderation_state: { $ref: 'GenericNestedString' },
+    changed: { $ref: 'GenericNestedString' },
+    status: { $ref: 'GenericNestedBoolean' },
+    metatag: { $ref: 'RawMetaTags' },
+    field_complete_biography: { $ref: 'GenericNestedString' },
   },
   required: [
     'path',
@@ -33,5 +41,12 @@ module.exports = {
     'field_office',
     'field_phone_number',
     'field_suffix',
+    'field_intro_text',
+    'field_photo_allow_hires_download',
+    'changed',
+    'moderation_state',
+    'status',
+    'metatag',
+    'field_complete_biography',
   ],
 };

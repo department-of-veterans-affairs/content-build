@@ -9,13 +9,21 @@ module.exports = {
     title: { type: 'string' },
     changed: { type: 'number' },
     entityUrl: { $ref: 'EntityUrl' },
+    path: {
+      type: 'object',
+      properties: {
+        alias: { type: 'string' },
+      },
+    },
     fieldAdministration: {
       $ref: 'output/taxonomy_term-administration',
     },
     fieldAlert: {
       oneOf: [{ $ref: 'output/block_content-alert' }, { type: 'null' }],
     },
+    fieldHomePageHubLabel: { type: 'string' },
     fieldIntroText: { type: 'string' },
+    fieldTeaserText: { type: 'string' },
     fieldLinks: {
       type: 'array',
       items: {
@@ -72,6 +80,7 @@ module.exports = {
     'entityPublished',
     'fieldAdministration',
     'fieldAlert',
+    'fieldHomePageHubLabel',
     'fieldIntroText',
     'fieldLinks',
     'fieldPageLastBuilt',

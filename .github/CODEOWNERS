@@ -1,0 +1,10 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+#  @department-of-veterans-affairs/frontend-review-group will be requested for
+# review when someone opens a pull request.
+#
+# Review the CODEOWNERS guide before editing:
+# https://github.com/department-of-veterans-affairs/va.gov-team/blob/master/platform/engineering/codeowners.md
+
+# VSP
+*       @department-of-veterans-affairs/frontend-review-group

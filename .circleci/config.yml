@@ -1,0 +1,95 @@
+version: 2.1
+
+executors:
+  circleci-node:
+    docker:
+      - image: circleci/node:14.15.0
+  circleci-e2e:
+    docker:
+      - image: circleci/openjdk:8-jdk-node-browsers
+
+commands:
+  yarn-install-cache:
+    description: "Install packages with yarn using saved cache"
+    parameters:
+      key-prefix:
+        type: string
+        default: yarn-packages-
+    steps:
+      - restore_cache:
+          keys:
+            - << parameters.key-prefix >>{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: << parameters.key-prefix >>{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+jobs:
+  validate-content-build:
+    executor: circleci-node
+    steps:
+      - checkout
+      - yarn-install-cache
+      - run:
+          name: Checkout vets-website
+          command: cd .. && git clone git@github.com:department-of-veterans-affairs/vets-website.git
+      - run:
+          name: Install vets-website dependencies
+          command: cd ../vets-website && yarn install
+      - run:
+          name: Where am I
+          command: pwd && ls
+      - run:
+          name: Run validation script
+          command: cd ../project && yarn validate-content-build
+
+  nightwatch-e2e:
+    working_directory: ~/content-build
+    executor: circleci-e2e
+    resource_class: xlarge
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Start Docker
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-e2e up -d
+      - run:
+          name: Run e2e tests
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-e2e run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker
+      - run:
+          name: Stop container
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-e2e stop
+
+  nightwatch-accessibility:
+    working_directory: ~/content-build
+    executor: circleci-e2e
+    resource_class: xlarge
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Start Docker
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-accessibility up -d
+      - run:
+          name: Run accessibility tests
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility
+      - run:
+          name: Stop container
+          command: docker-compose -f docker-compose.circle.yml -p nightwatch-accessibility stop
+
+workflows:
+  version: 2
+  daily-content-validation:
+    triggers:
+      - schedule:
+          cron: "0 16 * * 1-5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - nightwatch-e2e
+      - nightwatch-accessibility

@@ -6,7 +6,8 @@ const chromedriver = require('chromedriver');
 const seleniumServer = require('selenium-server');
 
 require('@babel/register');
-require('@babel/polyfill');
+require('core-js/stable');
+require('regenerator-runtime/runtime');
 
 const selenium_logs = './logs/selenium';
 const selenium_server_port = process.env.SELENIUM_PORT || 4444;
@@ -29,7 +30,7 @@ module.exports = {
       selenium_host: 'localhost',
       selenium_port: selenium_server_port,
       use_ssl: false,
-      silent: true,
+      silent: false,
       output: true,
       screenshots: {
         enabled: true,

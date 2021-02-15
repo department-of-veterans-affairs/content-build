@@ -18,10 +18,11 @@ function facilityLocationPath(regionPath, apiId, nickname) {
   return `${regionPath}/locations/${facilityPath}`;
 }
 
-function getDrupalCacheKey(env) {
+async function getDrupalCacheKey(env) {
+  const data = await getQuery(queries.GET_ALL_PAGES);
   const hash = crypto
     .createHash('md5')
-    .update(getQuery(queries.GET_ALL_PAGES))
+    .update(data)
     .digest('hex');
 
   return `${env}_${hash}`;
@@ -30,7 +31,7 @@ function getDrupalCacheKey(env) {
 function getRelatedHubByPath(link, pages) {
   const hub = pages.filter(page => {
     // Careful: Some pages are empty objects, and breadcrumbs are in flux.
-    if (page.entityUrl && page.entityUrl !== null) {
+    if (page && page.entityUrl && page.entityUrl !== null) {
       return (
         page.entityUrl.path === link.link.url.path &&
         page.entityBundle === 'landing_page'

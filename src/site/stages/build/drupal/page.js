@@ -6,6 +6,7 @@ const set = require('lodash/fp/set');
 // Creates the file object to add to the file list using the page and layout
 function createFileObj(page, layout) {
   // Exclude some types from sitemap.
+  // @todo remove basic_landing_page when /resources/ is ready to be indexed
   const privateTypes = ['outreach_asset', 'support_service'];
   let privStatus = false;
   if (privateTypes.indexOf(page.entityBundle) > -1) {
@@ -66,6 +67,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
     const pagedEntities = _.chunk(page[pageField].entities, perPage);
 
     for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
+      // eslint-disable-next-line prefer-object-spread
       let pagedPage = Object.assign({}, page);
 
       if (pageNum > 0) {
@@ -139,6 +141,7 @@ function updateEntityUrlObj(page, drupalPagePath, title, pathSuffix) {
       .replace(/\s+/g, '-')
       .toLowerCase();
 
+  // eslint-disable-next-line prefer-object-spread
   let generatedPage = Object.assign({}, page);
   const absolutePath = path.join('/', drupalPagePath, pathSuffix);
 
@@ -231,11 +234,12 @@ function getFacilitySidebar(page, contentData) {
       : pageTitle;
 
     // choose the correct menu name to retrieve the object from contentData
-    const facilitySidebarNavName = Object.keys(contentData.data).find(
-      attribute =>
-        contentData.data[attribute]
-          ? contentData.data[attribute].name === facilityNavName
-          : false,
+    const facilitySidebarNavName = Object.keys(
+      contentData.data,
+    ).find(attribute =>
+      contentData.data[attribute]
+        ? contentData.data[attribute].name === facilityNavName
+        : false,
     );
 
     if (facilitySidebarNavName) {
@@ -245,6 +249,27 @@ function getFacilitySidebar(page, contentData) {
 
   // return the default and most important of the menu structure
   return { links: [] };
+}
+
+function mergeTaxonomiesIntoResourcesAndSupportHomepage(
+  resourcesAndSupportHomepage,
+  allTaxonomies,
+) {
+  const audienceBundles = new Set([
+    'audience_beneficiaries',
+    'audience_non_beneficiaries',
+  ]);
+
+  const audienceTagsUnsorted = allTaxonomies.entities
+    .filter(taxonomy => audienceBundles.has(taxonomy.entityBundle))
+    .filter(audienceTag => audienceTag.fieldAudienceRsHomepage);
+
+  const audienceTags = _.sortBy(audienceTagsUnsorted, 'name');
+
+  return {
+    ...resourcesAndSupportHomepage,
+    audienceTags,
+  };
 }
 
 function compilePage(page, contentData) {
@@ -264,6 +289,9 @@ function compilePage(page, contentData) {
       alerts: alertsItem = {},
       bannerAlerts: bannerAlertsItem = {},
       outreachSidebarQuery: outreachSidebarNav = {},
+      allTaxonomies = {
+        entities: [],
+      },
     },
   } = contentData;
 
@@ -316,6 +344,7 @@ function compilePage(page, contentData) {
     case 'press_releases_listing':
     case 'health_services_listing':
     case 'health_care_region_detail_page':
+      // eslint-disable-next-line prefer-object-spread
       pageCompiled = Object.assign(
         {},
         page,
@@ -328,6 +357,7 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
+      // eslint-disable-next-line prefer-object-spread
       pageCompiled = Object.assign(
         {},
         page,
@@ -375,6 +405,7 @@ function compilePage(page, contentData) {
       sidebarNavItems = getHubSidebar(sideNavs, owner);
 
       // Build page with correct sidebar
+      // eslint-disable-next-line prefer-object-spread
       pageCompiled = Object.assign(
         {},
         page,
@@ -385,6 +416,13 @@ function compilePage(page, contentData) {
         pageId,
       );
       break;
+  }
+
+  if (entityUrl.path === '/resources') {
+    pageCompiled = mergeTaxonomiesIntoResourcesAndSupportHomepage(
+      pageCompiled,
+      allTaxonomies,
+    );
   }
 
   return pageCompiled;

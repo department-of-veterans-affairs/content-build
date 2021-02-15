@@ -1,3 +1,6 @@
+const { partialSchema } = require('../../transformers/helpers');
+const healthCareRegionPageSchema = require('./node-health_care_region_page');
+
 module.exports = {
   type: 'object',
   properties: {
@@ -5,11 +8,10 @@ module.exports = {
     entityBundle: { enum: ['health_services_listing'] },
     title: { type: 'string' },
     created: { type: 'number' },
-    changed: { type: 'number' },
     promote: { type: 'boolean' },
     sticky: { type: 'boolean' },
     defaultLangcode: { type: 'boolean' },
-    revisionTranslationAffected: { type: 'boolean' },
+    revisionTranslationAffected: { type: ['boolean', 'null'] },
     moderationState: { type: 'string' },
     entityMetatags: { $ref: 'MetaTags' },
     fieldAdministration: { $ref: 'output/taxonomy_term-administration' },
@@ -20,12 +22,21 @@ module.exports = {
     },
     fieldIntroText: { type: 'string' },
     fieldMetaTitle: { type: 'string' },
-    fieldOffice: { $ref: 'output/node-health_care_region_page' },
+    fieldOffice: {
+      type: ['object', 'null'],
+      properties: {
+        entity: partialSchema(healthCareRegionPageSchema, [
+          'entityUrl',
+          'entityType',
+          'title',
+          'reverseFieldRegionPageNode',
+        ]),
+      },
+    },
   },
   required: [
     'title',
     'created',
-    'changed',
     'promote',
     'sticky',
     'defaultLangcode',

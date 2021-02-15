@@ -34,6 +34,7 @@ function runValeCheck(contentFilename) {
 
     vale.on('exit', code => {
       if (code !== 0) {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject('Vale exited with non-zero exit code:', code);
       }
       output.code = code.toString();
@@ -65,9 +66,7 @@ function createTempFile(dataBuffer) {
 function buildDetailsMarkup(issues) {
   let details =
     '<details class="vads-u-background-color--primary-alt-lightest vads-u-border-color--secondary-lighter vads-u-border-bottom--2px vads-u-padding--1">';
-  details += `<summary><h4 class="vads-u-display--inline-block vads-u-margin-y--2">There are (${
-    issues.length
-  }) content suggestions found on this page.</h4></summary>`;
+  details += `<summary><h4 class="vads-u-display--inline-block vads-u-margin-y--2">There are (${issues.length}) content suggestions found on this page.</h4></summary>`;
 
   let issuesList =
     '<ul class="usa-unstyled-list vads-u-border-color--primary-darker vads-u-border-top--1px vads-u-padding-x--6 vads-u-padding-y--2">';
@@ -80,9 +79,7 @@ function buildDetailsMarkup(issues) {
     issueEl += `<ul class="usa-unstyled-list vads-u-padding-y--1 vads-u-padding-x--2">`;
     issueEl += `<li><strong>Rule</strong>: ${issue.Check}</li>`;
     issueEl += `<li><strong>Description</strong>: ${issue.Description}</li>`;
-    issueEl += `<li><strong>Learn More</strong>: <a href="${
-      issue.Link
-    }" target="blank" rel="noopener noreferrer">${issue.Link}</a></li>`;
+    issueEl += `<li><strong>Learn More</strong>: <a href="${issue.Link}" target="blank" rel="noopener noreferrer">${issue.Link}</a></li>`;
 
     issueEl += '</ul>';
     issueEl += '</details>';

@@ -8,7 +8,16 @@ const transform = entity => ({
   entityMetatags: createMetaTagArray(entity.metatag.value),
   fieldMediaInLibrary: getDrupalValue(entity.fieldMediaInLibrary),
   fieldOwner: entity.fieldOwner[0],
-  image: entity.image[0],
+  image: {
+    alt: entity.image[0].alt || '',
+    title: entity.image[0].title || '',
+    url: encodeURI(entity.thumbnail[0].url.replace('public:/', '/img')),
+    derivative: {
+      url: encodeURI(entity.thumbnail[0].url.replace('public:/', '/img')),
+      width: entity.image[0].width,
+      height: entity.image[0].height,
+    },
+  },
 });
 
 module.exports = {

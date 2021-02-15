@@ -1,5 +1,7 @@
 // Builds the site using Metalsmith as the top-level build runner.
-
+/* eslint-disable no-console */
+const fs = require('fs-extra');
+const chalk = require('chalk');
 const assets = require('metalsmith-assets');
 const collections = require('metalsmith-collections');
 const dateInFilename = require('metalsmith-date-in-filename');
@@ -12,33 +14,63 @@ const permalinks = require('metalsmith-permalinks');
 
 const silverSmith = require('./silversmith');
 
+// const assetSources = require('../../constants/assetSources');
+
 const registerLiquidFilters = require('../../filters/liquid');
 const { getDrupalContent } = require('./drupal/metalsmith-drupal');
 const addDrupalPrefix = require('./plugins/add-drupal-prefix');
-const addNonceToScripts = require('./plugins/add-nonce-to-scripts');
-const addSubheadingsIds = require('./plugins/add-id-to-subheadings');
-const checkBrokenLinks = require('./plugins/check-broken-links');
 const checkCollections = require('./plugins/check-collections');
 const checkForCMSUrls = require('./plugins/check-cms-urls');
 const downloadAssets = require('./plugins/download-assets');
-const processEntryNames = require('./plugins/process-entry-names');
+// const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const createHeaderFooter = require('./plugins/create-header-footer');
 const createOutreachAssetsData = require('./plugins/create-outreach-assets-data');
 const createReactPages = require('./plugins/create-react-pages');
+const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
+const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
-const parseHtml = require('./plugins/parse-html');
-const replaceContentsWithDom = require('./plugins/replace-contents-with-dom');
-const injectAxeCore = require('./plugins/inject-axe-core');
+const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
-const updateExternalLinks = require('./plugins/update-external-links');
 const updateRobots = require('./plugins/update-robots');
 
+const pagesJSONPath = '.cache/localhost/drupal/pages.json';
+const backupPath = '/tmp/pages.json';
+
+function backupPagesJSON() {
+  try {
+    if (fs.existsSync(pagesJSONPath)) {
+      console.log('Backing up pages.json');
+      fs.renameSync(pagesJSONPath, backupPath);
+      console.log(`${pagesJSONPath} moved to ${backupPath}`);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function restorePagesJSON() {
+  try {
+    if (fs.existsSync(backupPath)) {
+      console.log('Restoring pages.json');
+      fs.renameSync(backupPath, pagesJSONPath);
+      console.log(`pages.json restored to ${pagesJSONPath}`);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 function build(BUILD_OPTIONS) {
+  const usingCMSExport = BUILD_OPTIONS['use-cms-export'];
+  if (usingCMSExport) {
+    backupPagesJSON();
+  }
+
   const smith = silverSmith();
 
   registerLiquidFilters();
@@ -56,12 +88,27 @@ function build(BUILD_OPTIONS) {
     enabledFeatureFlags: BUILD_OPTIONS.cmsFeatureFlags,
   });
 
+  // If you're on localhost, you probably want to see CSS/JS reflected in the build,
+  // so, this will set up a symlink into vets-website for you.
+  if (BUILD_OPTIONS.buildtype === 'localhost' && !BUILD_OPTIONS.nosymlink) {
+    smith.use(
+      createSymlink(BUILD_OPTIONS),
+      'Create symlink into vets-website for local development.',
+    );
+  }
+
   smith.use(createReactPages(BUILD_OPTIONS), 'Create React pages');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
+
   smith.use(
     createOutreachAssetsData(BUILD_OPTIONS),
     'Create Outreach Assets Data',
+  );
+
+  smith.use(
+    createResourcesAndSupportWebsiteSection(BUILD_OPTIONS),
+    'Create "Resources and support" section of the website',
   );
 
   smith.use(
@@ -86,7 +133,7 @@ function build(BUILD_OPTIONS) {
   // Liquid substitution must occur before markdown is run otherwise markdown will escape the
   // bits of liquid commands (eg., quotes) and break things.
   //
-  // Unfortunately this must come before permalinks and navgation because of limitation in both
+  // Unfortunately this must come before permalinks and navigation because of limitation in both
   // modules regarding what files they understand. The consequence here is that liquid templates
   // *within* a single file do NOT have access to the final path that they will be rendered under
   // or any other metadata added by the permalinks() and navigation() filters.
@@ -113,7 +160,7 @@ function build(BUILD_OPTIONS) {
 
   // Responsible for create permalink structure. Most commonly used change foo.md to foo/index.html.
   //
-  // This must come before navigation module, otherwise breadcrunmbs will see the wrong URLs.
+  // This must come before navigation module, otherwise breadcrumbs will see the wrong URLs.
   //
   // It also must come AFTER the markdown() module because it only recognizes .html files. See
   // comment above the inPlace() module for explanation of effects on the metadata().
@@ -156,58 +203,59 @@ function build(BUILD_OPTIONS) {
   );
 
   /*
-  * This will replace links in static pages with a staging domain,
-  * if it is in the list of domains to replace
-  */
+   * This will replace links in static pages with a staging domain,
+   * if it is in the list of domains to replace
+   */
   smith.use(
     rewriteVaDomains(BUILD_OPTIONS),
     'Rewrite VA domains for the buildtype',
   );
   smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
   smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
-
   smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
-
   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
-
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
   smith.use(checkForCMSUrls(BUILD_OPTIONS), 'Check for CMS URLs');
 
-  /**
-   * Parse the HTML into a JS data structure for use in later plugins.
-   * Important: Only plugins that use the parsedContent to modify the
-   * content can go between the parseHtml and outputHtml plugins. If
-   * the content is modified directly between those two plugins, any
-   * changes will be overwritten during the outputHtml step.
-   */
-  smith.use(parseHtml, 'Parse HTML files');
-
-  /**
-   * Add nonce attribute with substition string to all inline script tags
-   * Convert onclick event handles into nonced script tags
-   */
-  smith.use(addNonceToScripts, 'Add nonce to script tags');
   smith.use(
-    processEntryNames(BUILD_OPTIONS),
-    'Process [data-entry-name] attributes into Webpack asset paths',
+    modifyDom(BUILD_OPTIONS),
+    'Parse a virtual DOM from every .html file and perform a variety of DOM sub-operations on each file',
   );
-  smith.use(updateExternalLinks(BUILD_OPTIONS), 'Update external links');
-  smith.use(addSubheadingsIds(BUILD_OPTIONS), 'Add IDs to subheadings');
-  smith.use(checkBrokenLinks(BUILD_OPTIONS), 'Check for broken links');
-  smith.use(injectAxeCore(BUILD_OPTIONS), 'Inject axe-core for accessibility');
-  smith.use(replaceContentsWithDom, 'Save the changes from the modified DOM');
 
-  /* eslint-disable no-console */
   smith.build(err => {
     if (err) throw err;
+
+    // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
-      console.log('Metalsmith build finished!');
+      if (BUILD_OPTIONS.buildtype === 'localhost') {
+        console.log(' ');
+        console.log(
+          chalk.green('--------------------------------------------'),
+        );
+        console.log(' ');
+        console.log(
+          chalk.green('Project is running at http://localhost:3002/'),
+        );
+      }
+      console.log(
+        chalk.green(
+          `Metalsmith output is served from /build/${BUILD_OPTIONS.buildtype}`,
+        ),
+      );
+      console.log(chalk.green('Metalsmith is watching the files...'));
     } else {
-      smith.printSummary();
-      console.log('Build finished!');
+      // If this isn't a watch, just output the normal "end of build" information
+      if (global.verbose) {
+        smith.printSummary();
+      }
+      console.log('The Metalsmith build has completed.');
+
+      if (usingCMSExport) {
+        restorePagesJSON();
+      }
     }
-  });
+  }); // smith.build()
 }
 
 module.exports = build;

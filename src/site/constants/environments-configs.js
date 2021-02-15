@@ -28,16 +28,17 @@ module.exports = {
     BASE_URL: 'https://dev.va.gov',
     API_URL: 'https://dev-api.va.gov',
   },
-
+  /* eslint-disable no-restricted-globals */
   [ENVIRONMENTS.LOCALHOST]: {
     BUILDTYPE: ENVIRONMENTS.LOCALHOST,
     BASE_URL: isNode
-      ? 'https://localhost:3001'
-      : `http://${location.hostname}${
-          location.port ? `:${location.port}` : ''
+      ? 'https://localhost:3002'
+      : `http://${location.hostname || 'localhost'}:${
+          location.port ? location.port : '3002'
         }`,
     API_URL: isNode
       ? 'http://localhost:3000'
-      : `http://${location.hostname}:3000`,
+      : `http://${location.hostname || 'localhost'}:3000`,
   },
+  /* eslint-enable no-restricted-globals */
 };

@@ -1,8 +1,47 @@
 const fs = require('fs');
 const assert = require('assert');
-const { sortBy, unescape, pick, omit } = require('lodash');
+const { sortBy, pick, omit } = require('lodash');
 const moment = require('moment-timezone');
 const { readEntity } = require('../helpers');
+
+const mediaImageStyles = [
+  {
+    style: '_1_1_SQUARE_MEDIUM_THUMBNAIL',
+    machine: '1_1_square_medium_thumbnail',
+    width: 240,
+    height: 240,
+  },
+  {
+    style: '_21MEDIUMTHUMBNAIL',
+    machine: '2_1_medium_thumbnail',
+    width: 480,
+    height: 240,
+  },
+  {
+    style: '_23MEDIUMTHUMBNAIL',
+    machine: '2_3_medium_thumbnail',
+    width: 320,
+    height: 480,
+  },
+  {
+    style: '_32MEDIUMTHUMBNAIL',
+    machine: '3_2_medium_thumbnail',
+    width: 480,
+    height: 320,
+  },
+  {
+    style: '_72MEDIUMTHUMBNAIL',
+    machine: '7_2_medium_thumbnail',
+    width: 1050,
+    height: 300,
+  },
+  {
+    style: 'LARGE',
+    machine: 'large',
+    width: 480,
+    height: 480,
+  },
+];
 
 /**
  * Takes a string with escaped unicode code points and replaces them
@@ -22,19 +61,59 @@ function unescapeUnicode(string) {
 }
 
 /**
- * A very specific helper function that expects to receive an
- * array with one item which is an object with a single `value` property
+ * Extracts a nested string from specific types of export data.
  *
+ * @param {Array} arr - An array with one item, which is an object with
+ *                      either a single `value` property or the properties
+ *                      `value`, `format`, and `processed`.
+ * @return {string} The value of `processed` if it exists or `value` otherwise.
  */
 function getDrupalValue(arr) {
-  if (arr.length === 0) return null;
+  if (!arr || arr.length === 0) return null;
+  if (arr.length === 1 && arr[0].processed === '') return null;
   if (arr.length === 1)
-    return typeof arr[0].value === 'string'
-      ? unescapeUnicode(arr[0].value)
-      : arr[0].value;
+    if (arr[0].processed)
+      return typeof arr[0].processed === 'string'
+        ? unescapeUnicode(arr[0].processed)
+        : arr[0].processed;
+    else
+      return typeof arr[0].value === 'string'
+        ? unescapeUnicode(arr[0].value)
+        : arr[0].value;
+
   // eslint-disable-next-line no-console
   console.warn(`Unexpected argument: ${arr.toString()}`);
   return null;
+}
+
+/**
+ * A very specific helper function that expects to receive an
+ * object and an imageStyle string
+ * @param {object}
+ * @return {object}
+ */
+function getImageCrop(obj, imageStyle = null) {
+  if (imageStyle !== null) {
+    // eslint-disable-next-line prefer-object-spread
+    const imageObj = Object.assign({}, obj);
+    const image = mediaImageStyles.find(({ style }) => style === imageStyle);
+    // If imageStyle is not found, it will return the raw obj
+    if (!image) {
+      throw new Error(
+        `${imageStyle} imageStyle was not found. mediaImageStyles available are ${mediaImageStyles
+          .map(s => s.style)
+          .join(', ')}.`,
+      );
+    }
+    const url = `/img/styles/${
+      image.machine
+    }/public${imageObj.image.derivative.url.replace('/img', '')}`;
+    imageObj.image.derivative.url = url;
+    imageObj.image.derivative.width = image.width;
+    imageObj.image.derivative.height = image.height;
+    return imageObj;
+  }
+  return obj;
 }
 
 /**
@@ -55,6 +134,7 @@ function uriToUrl(uri) {
 
 module.exports = {
   getDrupalValue,
+  getImageCrop,
   unescapeUnicode,
   uriToUrl,
 
@@ -79,13 +159,14 @@ module.exports = {
 
   /**
    * Takes a string and applies the following:
-   * - Transforms escaped unicode to characters
+   * Returns a blank string if the value is not defined,
+   * otherwise, returns the value
    *
    * @param {string}
    * @return {string}
    */
   getWysiwygString(value) {
-    return unescape(value);
+    return value || '';
   },
 
   /**
@@ -143,21 +224,29 @@ module.exports = {
       createMetaTag('MetaValue', 'description', metaTags.description),
       createMetaTag('MetaValue', 'twitter:title', metaTags.twitter_cards_title),
       createMetaTag('MetaValue', 'twitter:site', metaTags.twitter_cards_site),
+      createMetaTag('MetaValue', 'abstract', metaTags.abstract),
       createMetaTag('MetaLink', 'image_src', metaTags.image_src),
       createMetaTag('MetaProperty', 'og:title', metaTags.og_title),
+      createMetaTag('MetaValue', 'keywords', metaTags.keywords),
       createMetaTag('MetaProperty', 'og:description', metaTags.og_description),
+      createMetaTag('MetaValue', 'twitter:image', metaTags.twitter_cards_image),
+      createMetaTag(
+        'MetaValue',
+        'twitter:image:alt',
+        metaTags.twitter_cards_image_alt,
+      ),
+      createMetaTag('MetaProperty', 'og:image', metaTags.og_image_0),
       createMetaTag(
         'MetaProperty',
         'og:image:height',
         metaTags.og_image_height,
       ),
-      createMetaTag('MetaValue', 'twitter:image', metaTags.twitter_cards_image),
-      createMetaTag('MetaProperty', 'og:image', metaTags.og_image_0),
+      createMetaTag('MetaProperty', 'og:image:alt', metaTags.og_image_alt),
     ].filter(t => t.value);
   },
 
-  isPublished(moderationState) {
-    return moderationState === 'published';
+  isPublished(status) {
+    return status;
   },
 
   /**
@@ -180,7 +269,7 @@ module.exports = {
    *                                     that we want to use
    * @return {Object} The new schema
    */
-  usePartialSchema(schema, properties) {
+  partialSchema(schema, properties) {
     // Some sanity checking before we start
     assert(
       schema.type === 'object' ||
@@ -293,5 +382,20 @@ module.exports = {
         .filter(filter || (() => true))
         .map(entity => assembleEntityTree(entity))
     );
+  },
+
+  /**
+   * Returns an object with a single key "entity" and value entity[key][0].
+   * This is a very common pattern.
+   * @param entity
+   * @param key
+   * @returns {{entity: *}}
+   */
+  entityObjectForKey(entity, key) {
+    return entity && entity[key]
+      ? {
+          entity: entity[key][0],
+        }
+      : null;
   },
 };

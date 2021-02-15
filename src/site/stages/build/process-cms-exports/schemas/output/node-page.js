@@ -6,12 +6,16 @@ module.exports = {
     title: {
       type: 'string',
     },
+    fieldIntroTextLimitedHtml: {
+      oneOf: [{ type: 'null' }, { $ref: 'ProcessedString' }],
+    },
     fieldIntroText: {
-      type: ['string', 'null'],
+      oneOf: [{ type: 'null' }, { $ref: 'ProcessedString' }],
     },
     fieldDescription: {
       type: ['string', 'null'],
     },
+    fieldTableOfContentsBoolean: { type: ['boolean', 'null'] },
     fieldFeaturedContent: {
       type: 'array',
       items: {
@@ -19,33 +23,44 @@ module.exports = {
       },
     },
     fieldContentBlock: {
-      type: 'array',
-      items: {
-        $ref: 'Paragraph',
-      },
+      oneOf: [
+        { type: 'null' },
+        {
+          type: 'array',
+          items: {
+            $ref: 'Paragraph',
+          },
+        },
+      ],
     },
     fieldAlert: {
       type: ['object', 'null'],
     },
     fieldRelatedLinks: {
-      type: 'array',
-      items: {
-        $ref: 'output/paragraph-list_of_link_teasers',
-      },
+      oneOf: [
+        { type: 'null' },
+        { $ref: 'output/paragraph-list_of_link_teasers' },
+      ],
     },
     fieldAdministration: {
       $ref: 'output/taxonomy_term-administration',
     },
     fieldPageLastBuilt: {
-      type: 'object',
-      properties: {
-        date: { type: 'string' },
-      },
-      required: ['date'],
+      oneOf: [
+        { type: 'null' },
+        {
+          type: 'object',
+          properties: {
+            date: { type: 'string' },
+          },
+          required: ['date'],
+        },
+      ],
     },
-    entityMetaTags: {
+    entityMetatags: {
       $ref: 'MetaTags',
     },
+    entityPublished: { type: 'boolean' },
   },
   // required: getFilter('node-page'),
 };

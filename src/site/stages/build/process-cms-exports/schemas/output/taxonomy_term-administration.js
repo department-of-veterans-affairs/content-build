@@ -6,11 +6,13 @@ module.exports = {
   type: 'object',
   properties: {
     contentModelType: { enum: ['taxonomy_term-administration'] },
+    targetId: { type: 'number' },
     entity: {
       type: 'object',
       properties: {
         entityType: { enum: ['taxonomy_term'] },
         entityBundle: { enum: ['administration'] },
+        entityLabel: { type: 'string' },
         name: { type: 'string' },
         fieldAcronym: nullableString,
         fieldDescription: nullableString,
@@ -52,5 +54,5 @@ module.exports = {
       ],
     },
   },
-  required: ['entity'],
+  required: ['entity', 'targetId'],
 };

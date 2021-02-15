@@ -4,12 +4,11 @@ const {
   utcToEpochTime,
 } = require('./helpers');
 
-const transform = entity => ({
+const transform = (entity, { ancestors }) => ({
   entityType: 'node',
   entityBundle: 'health_services_listing',
   title: getDrupalValue(entity.title),
   created: utcToEpochTime(getDrupalValue(entity.created)),
-  changed: utcToEpochTime(getDrupalValue(entity.changed)),
   promote: getDrupalValue(entity.promote),
   sticky: getDrupalValue(entity.sticky),
   defaultLangcode: getDrupalValue(entity.defaultLangcode),
@@ -24,14 +23,33 @@ const transform = entity => ({
   fieldFeaturedContentHealthser: entity.fieldFeaturedContentHealthser,
   fieldIntroText: getDrupalValue(entity.fieldIntroText),
   fieldMetaTitle: getDrupalValue(entity.fieldMetaTitle),
-  fieldOffice: entity.fieldOffice[0],
+  fieldOffice:
+    entity.fieldOffice[0] &&
+    !ancestors.find(r => r.entity.uuid === entity.fieldOffice[0].uuid)
+      ? {
+          entity: {
+            entityUrl: entity.fieldOffice[0].entityUrl,
+            entityLabel: entity.fieldOffice[0].entityLabel,
+            entityType: entity.fieldOffice[0].entityType,
+            title: entity.fieldOffice[0].title,
+            reverseFieldRegionPageNode: {
+              entities: entity.fieldOffice[0].reverseFieldRegionPageNode
+                ? entity.fieldOffice[0].reverseFieldRegionPageNode.entities.filter(
+                    reverseField =>
+                      reverseField.entityBundle ===
+                      'regional_health_care_service_des',
+                  )
+                : [],
+            },
+          },
+        }
+      : null,
 });
 
 module.exports = {
   filter: [
     'title',
     'created',
-    'changed',
     'promote',
     'sticky',
     'default_langcode',
@@ -47,4 +65,12 @@ module.exports = {
     'field_office',
   ],
   transform,
+  getCacheKey: (entity, { ancestors }) => {
+    const hasCircularReference =
+      entity.field_office[0] &&
+      !ancestors.find(
+        r => r.entity.uuid === entity.field_office[0].target_uuid,
+      );
+    return `${entity.uuid}-${hasCircularReference ? 'true' : 'false'}`;
+  },
 };

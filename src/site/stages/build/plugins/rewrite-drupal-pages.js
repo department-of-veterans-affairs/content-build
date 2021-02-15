@@ -34,7 +34,7 @@ function rewriteDrupalPages(options) {
           contents = contents.replace(regex, domain.to);
         });
 
-        file.contents = new Buffer(contents);
+        file.contents = Buffer.from(contents);
       });
 
     done();

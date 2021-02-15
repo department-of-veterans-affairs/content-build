@@ -63,27 +63,24 @@ dev.va.gov.**
 
 VA.gov is a static site with individual applications served up on certain pages.
 When testing changes to static pages, or to see what your application looks like
-on VA.gov, you'll need to build the static pages.
+on VA.gov, you'll need to build these static pages using the following commands:
 
 ```sh
-yarn build:content
+`yarn build` (`—pull-drupal` runs by default)
 ```
 
-**Pro tip:** To see the same landing page for your application as what will be
-on VA.gov, run `yarn build:content` once to build the static HTML files, then
-`yarn watch` to watch for changes in your application and serve the site via
-`webpack-dev-server`. Any time run `yarn build:webpack` or `yarn watch`, the
-static HTML pages from the `build:content` task will not be overwritten.
+- needs active socks proxy connection
+- run once to pull the latest Drupal content and build the static HTML files
+- need to run this again when adding new templates based on new Drupal entities
 
-To **pull the latest Drupal content**, run:
+`yarn watch:content`
 
 ```sh
 yarn build:content --pull-drupal
 ```
 
-**Note:** This requires access to the SOCKS proxy. If you do not have access to
-the proxy, you can **fetch the latest cached version of the content** with the
-following:
+If you do not have access to the SOCKS proxy, you can **fetch the latest cached version
+of the content** with the following:
 
 ```sh
 yarn fetch-drupal-cache

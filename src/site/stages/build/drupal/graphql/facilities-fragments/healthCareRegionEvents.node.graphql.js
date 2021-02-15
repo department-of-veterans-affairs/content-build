@@ -15,11 +15,12 @@ const EVENTS_RESULTS = `
             }
           }
         }
-        fieldDate {
-            startDate
-            value
-            endDate
-            endValue
+        fieldDatetimeRangeTimezone {
+          value
+          startTime
+          endValue
+          endTime
+          timezone
         }
         fieldDescription
         fieldLocationHumanreadable
@@ -49,9 +50,9 @@ function queryFilter(isAll) {
     ${
       isAll
         ? ''
-        : '{ field: "field_featured" value: "1"}, { field: "field_date", value: [$today], operator: GREATER_THAN}'
+        : '{ field: "field_featured" value: "1"}, { field: "field_datetime_range_timezone", value: [$today], operator: GREATER_THAN}'
     }
-  ]} sort: [{field: "field_order", direction: ASC }, {field: "field_date", direction: ASC }] limit: ${
+  ]} sort: [{field: "field_order", direction: ASC }, {field: "field_datetime_range_timezone", direction: ASC }] limit: ${
     isAll ? '500' : '2'
   })
   `;

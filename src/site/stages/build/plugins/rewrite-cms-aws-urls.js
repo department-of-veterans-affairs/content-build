@@ -13,7 +13,7 @@ function rewriteAWSUrls(options) {
           const regex = new RegExp(options['drupal-address'], 'g');
           contents = contents.replace(regex, file.drupalSite);
 
-          file.contents = new Buffer(contents);
+          file.contents = Buffer.from(contents);
         });
     }
     done();
