@@ -6,6 +6,7 @@
     "build": "node --max-old-space-size=8192 script/build-content.js",
     "build:compare": "node script/content-build-compare.js && diff --color websiteContentBuildHash.txt standaloneContentBuildHash.txt",
     "cms:compare": "./script/cms/compare.sh",
+    "cms:compare:html": "node script/cms/compare-build-hashes.js",
     "cms:diff": "./script/cms/diff.sh",
     "cms:diff:json": "node script/cms/compare-json.js",
     "cms:find-node": "./script/cms/find_node.sh",
