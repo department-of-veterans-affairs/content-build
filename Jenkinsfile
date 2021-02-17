@@ -115,21 +115,21 @@ node('vetsgov-general-purpose') {
   //   }
   // }
 
-  // stage('Deploy dev or staging') {
-  //   try {
-  //     if (!commonStages.isDeployable()) { return }
+  stage('Deploy dev or staging') {
+    try {
+      // if (!commonStages.isDeployable()) { return }
 
-  //     if (commonStages.IS_DEV_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovdev')) {
-  //       commonStages.runDeploy('deploys/content-build-vagovdev', ref, false)
-  //     }
+      if (commonStages.VAGOV_BUILDTYPES.contains('vagovdev')) {
+        commonStages.runDeploy('deploys/content-build-vagovdev', ref, false)
+      }
 
-  //     if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
-  //       commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
-  //     }
+      // if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
+      //   commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
+      // }
 
-  //   } catch (error) {
-  //     commonStages.slackNotify()
-  //     throw error
-  //   }
-  // }
+    } catch (error) {
+      commonStages.slackNotify()
+      throw error
+    }
+  }
 }
