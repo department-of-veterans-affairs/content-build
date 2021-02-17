@@ -29,11 +29,11 @@ node('vetsgov-general-purpose') {
 
     try {
       parallel (
-        lint: {
-          dockerContainer.inside(commonStages.DOCKER_ARGS) {
-            sh "cd /application && npm --no-color run lint"
-          }
-        },
+        // lint: {
+        //   dockerContainer.inside(commonStages.DOCKER_ARGS) {
+        //     sh "cd /application && npm --no-color run lint"
+        //   }
+        // },
 
         // Check package.json for known vulnerabilities
         security: {
@@ -42,22 +42,22 @@ node('vetsgov-general-purpose') {
               sh "cd /application && npm --no-color run security-check"
             }
           }
-        },
-
-        unit: {
-          dockerContainer.inside(commonStages.DOCKER_ARGS) {
-            sh "/cc-test-reporter before-build"
-            sh "cd /application && npm --no-color run test:unit -- --coverage"
-            sh "cd /application && /cc-test-reporter after-build -r fe4a84c212da79d7bb849d877649138a9ff0dbbef98e7a84881c97e1659a2e24"
-          }
         }
+
+        // unit: {
+        //   dockerContainer.inside(commonStages.DOCKER_ARGS) {
+        //     sh "/cc-test-reporter before-build"
+        //     sh "cd /application && npm --no-color run test:unit -- --coverage"
+        //     sh "cd /application && /cc-test-reporter after-build -r fe4a84c212da79d7bb849d877649138a9ff0dbbef98e7a84881c97e1659a2e24"
+        //   }
+        // }
       )
     } catch (error) {
       // commonStages.slackNotify()
       throw error
     } finally {
       dir("content-build") {
-        step([$class: 'JUnitResultArchiver', testResults: 'test-results.xml'])
+        // step([$class: 'JUnitResultArchiver', testResults: 'test-results.xml'])
       }
     }
   }
