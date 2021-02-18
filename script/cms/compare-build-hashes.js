@@ -116,8 +116,8 @@ const compareBuilds = async (buildPaths = []) => {
 
   // Filter file hashes by pages that differ.
   for (const [filePath, hashes] of Object.entries(fileHashes)) {
-    const isContentEqual = hashes.reduce(
-      (acc, hash) => (acc === hash ? acc : false),
+    const isContentEqual = hashes.reduce((acc, hash) =>
+      acc === hash ? acc : false,
     );
 
     if (!isContentEqual) {
