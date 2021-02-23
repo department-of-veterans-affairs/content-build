@@ -17,8 +17,15 @@ function createErrorPage(drupalError) {
 }
 
 function createIndexPage(files) {
-  const drupalPages = Object.keys(files)
-    .filter(fileName => files[fileName].isDrupalPage)
+  const orderedObject = Object.keys(files)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = files[key];
+      return obj;
+    }, {});
+
+  const drupalPages = Object.keys(orderedObject)
+    .filter(fileName => orderedObject[fileName].isDrupalPage)
     .map(fileName => `<li><a href="/${fileName}">${fileName}</a></li>\n`)
     .join('');
 

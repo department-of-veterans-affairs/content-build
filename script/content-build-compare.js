@@ -30,6 +30,7 @@ function writeArrayToFile(arr, outputFile) {
   });
 
   arr.forEach(({ filename, hash }) => {
+    // skip this debug file
     file.write(`${hash} ${filename}\n`);
   });
   file.end();
@@ -85,4 +86,4 @@ function compareBuilds(buildtype) {
   /* eslint-enable no-console */
 }
 
-compareBuilds('localhost');
+compareBuilds('vagovprod');
