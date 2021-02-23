@@ -72,7 +72,7 @@ function compareBuilds(buildtype) {
     'websiteContentBuildHash.txt',
   );
   const standaloneContentBuild = hashBuildOutput(
-    path.join(__dirname, `../../content-build/build/${buildtype}`),
+    path.join(__dirname, `../../vets-website/build/${buildtype}`),
     'standaloneContentBuildHash.txt',
   );
 
