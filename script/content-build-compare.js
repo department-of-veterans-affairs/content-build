@@ -86,4 +86,4 @@ function compareBuilds(buildtype) {
   /* eslint-enable no-console */
 }
 
-compareBuilds('vagovprod');
+compareBuilds('localhost');
