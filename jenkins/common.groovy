@@ -209,7 +209,7 @@ def validateContentBuild(ref, dockerContainer) {
     build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
 
     dockerContainer.inside(DOCKER_ARGS) {
-      sh "cd /application && yarn build:compare"
+      sh "cd /application && ls && yarn build:compare"
     }
   }
 }
