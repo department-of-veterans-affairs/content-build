@@ -206,7 +206,7 @@ def validateContentBuild(ref, dockerContainer) {
   stage('Validate Content Build') {
     if (params.cmsEnvBuildOverride != 'none') { return }
 
-    dockerContainer.inside(commonStages.DOCKER_ARGS) {
+    dockerContainer.inside(DOCKER_ARGS) {
       build(ref, dockerContainer, 'local', 'localhost', false, false, false, '../vets-website')
     }
   }
@@ -226,7 +226,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
-      def buildLogPath = "/application/${envName}-build.log"
+      def buildLogPath = "${buildPath}/${envName}-build.log"
 
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination}"
 
@@ -236,7 +236,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
         findMissingQueryFlags(buildLogPath, envName)
       }
 
-      sh "cd /application && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
+      sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
     }
   }
 }
