@@ -17,6 +17,7 @@ DRUPAL_CREDENTIALS = [
 ]
 
 ALL_VAGOV_BUILDTYPES = [
+  'localhost',
   'vagovdev',
   'vagovstaging',
   'vagovprod'
@@ -264,8 +265,9 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         }
       }
 
-      builds['vets-website-localhost'] = { 
+      builds['vets-website'] = { 
         try {
+          // Using localhost because it doesn't produce file hashes that will mess up the diff
           build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
 
         } catch (error) {
@@ -286,9 +288,6 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
 def validateContentBuild(ref, dockerContainer) {
   stage('Validate Content Build') {
     if (shouldBail()) { return }
-
-    // Build a localhost version
-    build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/application')
 
     // Run the comparison script
     dockerContainer.inside(DOCKER_ARGS) {
