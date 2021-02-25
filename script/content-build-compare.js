@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
@@ -6,6 +7,7 @@ const { isEqual } = require('lodash');
 // Modeled after https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
 function getAllFiles(dirPath, arrayOfFiles = []) {
   const files = fs.readdirSync(dirPath);
+  console.log('getAllFiles');
 
   files.forEach(file => {
     if (fs.statSync(`${dirPath}/${file}`).isDirectory()) {
@@ -23,6 +25,7 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
  * Writes the array of filenames & hashes to a file
  */
 function writeArrayToFile(arr, outputFile) {
+  console.log('writeArrayToFile');
   const file = fs.createWriteStream(outputFile);
   file.on('error', err => {
     /* error handling */
@@ -40,6 +43,7 @@ function writeArrayToFile(arr, outputFile) {
  * Reads a file and returns its md5 hash
  */
 function getFileHash(filename) {
+  console.log('getFileHash');
   const data = fs.readFileSync(filename, { encoding: 'utf8' });
   const hash = crypto.createHash('md5');
   hash.update(data);
@@ -52,6 +56,7 @@ function getFileHash(filename) {
  * listing the hash for each build file
  */
 function hashBuildOutput(outputDir, hashFile) {
+  console.log('hashBuildOutput');
   // Get only the HTML build files
   const buildFiles = getAllFiles(outputDir).filter(
     filename => filename.split('.').slice(-1)[0] === 'html',
@@ -68,6 +73,7 @@ function hashBuildOutput(outputDir, hashFile) {
 }
 
 function compareBuilds(buildtype) {
+  console.log('compareBuilds');
   const websiteContentBuild = hashBuildOutput(
     path.join(__dirname, `../build/${buildtype}`),
     'websiteContentBuildHash.txt',
@@ -77,13 +83,11 @@ function compareBuilds(buildtype) {
     'standaloneContentBuildHash.txt',
   );
 
-  /* eslint-disable no-console */
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
   }
-  /* eslint-enable no-console */
 }
 
 compareBuilds('localhost');
