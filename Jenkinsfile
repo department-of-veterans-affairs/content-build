@@ -26,6 +26,7 @@ node('vetsgov-general-purpose') {
     if (params.cmsEnvBuildOverride != 'none') { return }
 
     dockerContainer.inside(commonStages.DOCKER_ARGS) {
+      sh "cd /application && ls"
       sh "cd /application && yarn build:validate"
     }
   }
