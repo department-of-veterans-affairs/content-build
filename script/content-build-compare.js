@@ -8,7 +8,6 @@ const { runCommandSync } = require('./utils');
 // Modeled after https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
 function getAllFiles(dirPath, arrayOfFiles = []) {
   const files = fs.readdirSync(dirPath);
-  console.log('getAllFiles');
 
   files.forEach(file => {
     if (fs.statSync(`${dirPath}/${file}`).isDirectory()) {
@@ -60,12 +59,6 @@ function hashBuildOutput(outputDir, hashFile) {
   console.log('hashBuildOutput');
   runCommandSync('ls');
 
-  console.log('---------------------------');
-  console.log('---------------------------');
-  console.log(outputDir);
-  console.log('---------------------------');
-  console.log('---------------------------');
-
   // Get only the HTML build files
   const buildFiles = getAllFiles(outputDir).filter(
     filename => filename.split('.').slice(-1)[0] === 'html',
@@ -91,6 +84,23 @@ function compareBuilds(buildtype) {
     path.join(__dirname, `../../vets-website/build/${buildtype}`),
     'standaloneContentBuildHash.txt',
   );
+
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
+  const data = fs.readFileSync('websiteContentBuildHash.txt', 'utf8');
+  console.log(data);
+  const data2 = fs.readFileSync('standaloneContentBuildHash.txt', 'utf8');
+  console.log(data2);
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
+  console.log('------------------------');
 
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');

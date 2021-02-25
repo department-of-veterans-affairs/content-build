@@ -214,7 +214,7 @@ def validateContentBuild(ref, dockerContainer) {
 
     // Run the comparison script
     dockerContainer.inside(DOCKER_ARGS) {
-      sh "cd /application && ls && yarn build:compare"
+      sh "cd /application && yarn build:compare"
     }
   }
 }
