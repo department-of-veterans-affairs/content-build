@@ -202,23 +202,6 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   }
 }
 
-def validateContentBuild(ref, dockerContainer) {
-  stage('Validate Content Build') {
-    if (shouldBail()) { return }
-
-    // Build vets-website.
-    build(ref, dockerContainer, 'local', 'vagovdev', false, false, false, '/vets-website')
-
-    // Build content-build
-    build(ref, dockerContainer, 'local', 'vagovdev', false, false, false, '/application')
-
-    // Run the comparison script
-    dockerContainer.inside(DOCKER_ARGS) {
-      sh "cd /application && yarn build:compare"
-    }
-  }
-}
-
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, Boolean useCMSExport, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
@@ -280,11 +263,32 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         }
       }
 
+      builds['vets-website-vagovdev'] = { 
+        try {
+          build(ref, dockerContainer, 'local', 'vagovdev', false, false, false, '/vets-website')
+        } catch (error) {
+          // Don't fail the build, just report the error
+          echo "Vets Website Build Failed: ${error}"
+        }
+      }
+
       parallel builds
       return envUsedCache
     } catch (error) {
       // slackNotify()
       throw error
+    }
+  }
+}
+
+def validateContentBuild(ref, dockerContainer) {
+  stage('Validate Content Build') {
+    if (shouldBail()) { return }
+
+    // Run the comparison script
+    dockerContainer.inside(DOCKER_ARGS) {
+      sh "cd /vets-website && node --max-old-space-size=8192 script/prearchive.js --buildtype=vagovdev"
+      sh "cd /application && yarn build:compare"
     }
   }
 }
