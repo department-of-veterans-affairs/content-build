@@ -210,6 +210,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
   def cmsExportFlag = useCMSExport ? '--use-cms-export' : ''
+  def localhostBuild = envName === 'localhost' ? '--omitdebug --port 3001 --nosymlink' : ''
 
   // Output CMS export builds to separate directories for comparison
   def destination = useCMSExport ? "${envName}-cms-export" : envName;
@@ -218,7 +219,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
 
-      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination} --omitdebug --port 3001"
+      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination} ${localhostBuild}"
 
       if (envName == 'vagovprod') {
         // Find any broken links in the log
