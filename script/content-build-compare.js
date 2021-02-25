@@ -3,7 +3,6 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const { isEqual } = require('lodash');
-const { runCommandSync } = require('./utils');
 
 // Modeled after https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
 function getAllFiles(dirPath, arrayOfFiles = []) {
@@ -43,7 +42,6 @@ function writeArrayToFile(arr, outputFile) {
  * Reads a file and returns its md5 hash
  */
 function getFileHash(filename) {
-  console.log('getFileHash');
   const data = fs.readFileSync(filename, { encoding: 'utf8' });
   const hash = crypto.createHash('md5');
   hash.update(data);
@@ -56,9 +54,6 @@ function getFileHash(filename) {
  * listing the hash for each build file
  */
 function hashBuildOutput(outputDir, hashFile) {
-  console.log('hashBuildOutput');
-  runCommandSync('ls');
-
   // Get only the HTML build files
   const buildFiles = getAllFiles(outputDir).filter(
     filename => filename.split('.').slice(-1)[0] === 'html',
@@ -85,27 +80,11 @@ function compareBuilds(buildtype) {
     'standaloneContentBuildHash.txt',
   );
 
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-  const data = fs.readFileSync('websiteContentBuildHash.txt', 'utf8');
-  console.log(data);
-  const data2 = fs.readFileSync('standaloneContentBuildHash.txt', 'utf8');
-  console.log(data2);
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-  console.log('------------------------');
-
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
+    // process.exit(1);
   }
 }
 
