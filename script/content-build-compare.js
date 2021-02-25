@@ -88,4 +88,4 @@ function compareBuilds(buildtype) {
   }
 }
 
-compareBuilds('localhost');
+compareBuilds('vagovdev');

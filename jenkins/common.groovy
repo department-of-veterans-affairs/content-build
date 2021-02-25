@@ -207,10 +207,10 @@ def validateContentBuild(ref, dockerContainer) {
     if (shouldBail()) { return }
 
     // Build vets-website
-    build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
+    build(ref, dockerContainer, 'local', 'vagovdev', false, false, false, '/vets-website')
 
     // Build content-build
-    build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/application')
+    build(ref, dockerContainer, 'local', 'vagovdev', false, false, false, '/application')
 
     // Run the comparison script
     dockerContainer.inside(DOCKER_ARGS) {
