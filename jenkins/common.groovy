@@ -206,8 +206,13 @@ def validateContentBuild(ref, dockerContainer) {
   stage('Validate Content Build') {
     if (shouldBail()) { return }
 
+    // Build vets-website
     build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
 
+    // Build content-build
+    build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/application')
+
+    // Run the comparison script
     dockerContainer.inside(DOCKER_ARGS) {
       sh "cd /application && ls && yarn build:compare"
     }

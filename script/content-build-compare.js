@@ -3,6 +3,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const { isEqual } = require('lodash');
+const { runCommandSync } = require('./utils');
 
 // Modeled after https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
 function getAllFiles(dirPath, arrayOfFiles = []) {
@@ -57,6 +58,14 @@ function getFileHash(filename) {
  */
 function hashBuildOutput(outputDir, hashFile) {
   console.log('hashBuildOutput');
+  runCommandSync('ls');
+
+  console.log('---------------------------');
+  console.log('---------------------------');
+  console.log(outputDir);
+  console.log('---------------------------');
+  console.log('---------------------------');
+
   // Get only the HTML build files
   const buildFiles = getAllFiles(outputDir).filter(
     filename => filename.split('.').slice(-1)[0] === 'html',
