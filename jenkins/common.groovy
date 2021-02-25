@@ -206,7 +206,7 @@ def validateContentBuild(ref, dockerContainer) {
   stage('Validate Content Build') {
     if (shouldBail()) { return }
 
-    // Build vets-website
+    // Build vets-website.
     build(ref, dockerContainer, 'local', 'vagovdev', false, false, false, '/vets-website')
 
     // Build content-build
