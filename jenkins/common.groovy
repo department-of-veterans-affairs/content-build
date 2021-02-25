@@ -17,7 +17,6 @@ DRUPAL_CREDENTIALS = [
 ]
 
 ALL_VAGOV_BUILDTYPES = [
-  'localhost',
   'vagovdev',
   'vagovstaging',
   'vagovprod'
@@ -219,7 +218,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
 
-      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination} --omitdebug --port 3001"
+      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination} --omitdebug --port 3001 --nosymlink"
 
       if (envName == 'vagovprod') {
         // Find any broken links in the log
@@ -289,6 +288,7 @@ def validateContentBuild(ref, dockerContainer) {
 
     // Run the comparison script
     dockerContainer.inside(DOCKER_ARGS) {
+      build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/application')
       sh "cd /application && yarn build:compare"
     }
   }
