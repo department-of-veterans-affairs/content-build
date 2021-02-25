@@ -21,17 +21,8 @@ node('vetsgov-general-purpose') {
   // // setupStage
   dockerContainer = commonStages.setup()
 
-  // Run Build validation
-  stage('Validate Content Build') {
-    if (params.cmsEnvBuildOverride != 'none') { return }
-
-    dockerContainer.inside(commonStages.DOCKER_ARGS) {
-      sh "cd /application && ls"
-      sh "cd /vets-website && ls"
-      sh "cd / && ls"
-      sh "cd /application && yarn build"
-    }
-  }
+  // Run content build validation
+  commonStages.validateContentBuild(ref, dockerContainer)
 
   // Perform a build for each build type
   envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
