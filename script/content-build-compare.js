@@ -3,6 +3,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const { isEqual } = require('lodash');
+const { runCommandSync } = require('./utils');
 
 // Modeled after https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
 function getAllFiles(dirPath, arrayOfFiles = []) {
@@ -84,6 +85,9 @@ function compareBuilds(buildtype) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
+    runCommandSync(
+      'diff -ur ../../vets-website/build/vagovdev/404.html build/vagovdev/404.html',
+    );
     // process.exit(1);
   }
 }
