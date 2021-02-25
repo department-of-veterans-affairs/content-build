@@ -27,6 +27,7 @@ node('vetsgov-general-purpose') {
 
     dockerContainer.inside(commonStages.DOCKER_ARGS) {
       sh "cd /application && ls"
+      sh "cd / && ls"
       sh "cd /application && yarn build:validate"
     }
   }
