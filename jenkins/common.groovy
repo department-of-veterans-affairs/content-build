@@ -17,9 +17,10 @@ DRUPAL_CREDENTIALS = [
 ]
 
 ALL_VAGOV_BUILDTYPES = [
-  'vagovdev'
-  // 'vagovstaging',
-  // 'vagovprod'
+  'localhost',
+  'vagovdev',
+  'vagovstaging',
+  'vagovprod'
 ]
 
 BUILD_TYPE_OVERRIDE = DRUPAL_MAPPING.get(params.cmsEnvBuildOverride, null)
@@ -263,13 +264,9 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         }
       }
 
-      builds['vets-website-vagovdev'] = { 
+      builds['vets-website-localhost'] = { 
         try {
-          build(ref, dockerContainer, 'local', 'vagovdev', false, false, false, '/vets-website')
-
-        dockerContainer.inside(DOCKER_ARGS) {
-          sh "cd /vets-website && node --max-old-space-size=8192 script/prearchive.js --buildtype=vagovdev"
-        }
+          build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
 
         } catch (error) {
           // Don't fail the build, just report the error

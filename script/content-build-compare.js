@@ -86,10 +86,10 @@ function compareBuilds(buildtype) {
   } else {
     console.log('The content builds do not match');
     runCommandSync(
-      'diff -ur ../../vets-website/build/vagovdev/404.html build/vagovdev/404.html',
+      'diff -ur ../../vets-website/build/localhost/404.html build/localhost/404.html',
     );
     // process.exit(1);
   }
 }
 
-compareBuilds('vagovdev');
+compareBuilds('localhost');
