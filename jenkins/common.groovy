@@ -207,7 +207,7 @@ def validateContentBuild(ref, dockerContainer) {
     if (params.cmsEnvBuildOverride != 'none') { return }
 
     dockerContainer.inside(DOCKER_ARGS) {
-      build(ref, dockerContainer, 'local', 'localhost', false, false, false, '../vets-website')
+      build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
     }
   }
 }
