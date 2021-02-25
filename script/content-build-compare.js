@@ -86,7 +86,7 @@ function compareBuilds(buildtype) {
   } else {
     console.log('The content builds do not match');
     runCommandSync(
-      'diff -ur ../../vets-website/build/disability/effective-date/index.html build/disability/effective-date/index.html',
+      'diff -ur ../../vets-website/build/localhost/disability/effective-date/index.html build/localhost/disability/effective-date/index.html',
     );
     // process.exit(1);
   }
