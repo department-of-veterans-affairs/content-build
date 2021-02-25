@@ -1,6 +1,6 @@
 # based on https://github.com/nodejs/docker-node/blob/master/4.7/slim/Dockerfile
 
-FROM public.ecr.aws/bitnami/node:14.15.5
+FROM public.ecr.aws/bitnami/node:14.15.5 as base
 
 # default case is Jenkins, but we want to be able to overwrite this
 ARG userid=504
@@ -58,6 +58,6 @@ RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-
 
 RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vets-website.git /application/vets-website
 
-RUN yarn fetch-drupal-cache --buildtype=vagovprod
+# RUN yarn fetch-drupal-cache --buildtype=vagovprod
 
-RUN NODE_ENV=production INSTALL_HOOKS='no' yarn build --buildtype=vagovprod
+# RUN NODE_ENV=production INSTALL_HOOKS='no' yarn build --buildtype=vagovprod

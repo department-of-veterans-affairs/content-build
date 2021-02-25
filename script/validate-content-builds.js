@@ -4,7 +4,7 @@ const useVetsWebsite = true;
 
 if (useVetsWebsite) {
   runCommandSync(
-    'cd ../vets-website/ && yarn build --omitdebug --pull-drupal --port 3001',
+    'cd ../vets-website/ && yarn && yarn build --omitdebug --pull-drupal --port 3001',
   ); // run vets-website build
   // runCommandSync('cp -r ../vets-website/.cache ./'); // move vets-website .cache into content-build
   runCommandSync('yarn build --omitdebug --port 3001 --pull-drupal'); // run content-build build
