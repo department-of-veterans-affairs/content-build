@@ -204,11 +204,9 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
 def validateContentBuild(ref, dockerContainer) {
   stage('Validate Content Build') {
-    if (params.cmsEnvBuildOverride != 'none') { return }
+    if (shouldBail()) { return }
 
-    dockerContainer.inside(DOCKER_ARGS) {
-      build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
-    }
+    build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
   }
 }
 
