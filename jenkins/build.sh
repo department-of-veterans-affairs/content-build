@@ -39,7 +39,7 @@ do
       ;;
     --omitdebug)
       omitdebug="${1}"
-      shift 2
+      shift
       ;;
     --port)
       port="${2}"
