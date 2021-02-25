@@ -207,6 +207,10 @@ def validateContentBuild(ref, dockerContainer) {
     if (shouldBail()) { return }
 
     build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
+
+    dockerContainer.inside(DOCKER_ARGS) {
+      sh "cd /application && yarn build:compare"
+    }
   }
 }
 
@@ -226,7 +230,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
 
-      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination}"
+      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination} --omitdebug"
 
       if (envName == 'vagovprod') {
         // Find any broken links in the log
