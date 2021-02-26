@@ -86,6 +86,7 @@ function build(BUILD_OPTIONS) {
     buildtype: BUILD_OPTIONS.buildtype,
     hostUrl: BUILD_OPTIONS.hostUrl,
     enabledFeatureFlags: BUILD_OPTIONS.cmsFeatureFlags,
+    omitdebug: BUILD_OPTIONS.omitdebug,
   });
 
   // If you're on localhost, you probably want to see CSS/JS reflected in the build,
