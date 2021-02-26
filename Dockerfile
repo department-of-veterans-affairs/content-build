@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
   fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils \
   x11vnc x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable \
-  xfonts-cyrillic x11-apps xvfb xauth netcat dumb-init
+  xfonts-cyrillic x11-apps xvfb xauth netcat dumb-init libgbm-dev
 
 RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /cc-test-reporter
 RUN chmod +x /cc-test-reporter
@@ -50,12 +50,6 @@ WORKDIR /application/content-build
 
 RUN yarn install --production=false
 
-
-
 FROM installer as builder
 
 RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-content.git /application/vagov-content
-
-RUN yarn fetch-drupal-cache --buildtype=vagovprod
-
-RUN NODE_ENV=production INSTALL_HOOKS='no' yarn build --buildtype=vagovprod
