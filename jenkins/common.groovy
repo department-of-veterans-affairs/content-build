@@ -17,7 +17,6 @@ DRUPAL_CREDENTIALS = [
 ]
 
 ALL_VAGOV_BUILDTYPES = [
-  'localhost',
   'vagovdev',
   'vagovstaging',
   'vagovprod'
@@ -272,6 +271,17 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         }
       }
 
+      builds['localhost'] = { 
+        try {
+          // Using localhost because it doesn't produce file hashes that will mess up the diff
+          build(ref, dockerContainer, 'local', 'localhost', false, false, '/application')
+
+        } catch (error) {
+          // Don't fail the build, just report the error
+          echo "Localhost Content Build Failed: ${error}"
+        }
+      }
+
       parallel builds
       return envUsedCache
     } catch (error) {
@@ -309,9 +319,7 @@ def prearchiveAll(dockerContainer) {
         def envName = VAGOV_BUILDTYPES.get(i)
 
         builds[envName] = {
-          if(envName != 'localhost') {
-            prearchive(dockerContainer, envName)
-          }
+          prearchive(dockerContainer, envName)
         }
       }
 
@@ -344,9 +352,7 @@ def archiveAll(dockerContainer, String ref) {
         def envName = VAGOV_BUILDTYPES.get(i)
 
         archives[envName] = {
-          if(envName != 'localhost') {
-            archive(dockerContainer, ref, envName)
-          }
+          archive(dockerContainer, ref, envName)
         }
       }
 
