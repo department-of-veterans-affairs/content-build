@@ -309,7 +309,9 @@ def prearchiveAll(dockerContainer) {
         def envName = VAGOV_BUILDTYPES.get(i)
 
         builds[envName] = {
-          prearchive(dockerContainer, envName)
+          if(envName != 'localhost') {
+            prearchive(dockerContainer, envName)
+          }
         }
       }
 
@@ -342,7 +344,9 @@ def archiveAll(dockerContainer, String ref) {
         def envName = VAGOV_BUILDTYPES.get(i)
 
         archives[envName] = {
-          archive(dockerContainer, ref, envName)
+          if(envName != 'localhost') {
+            archive(dockerContainer, ref, envName)
+          }
         }
       }
 
