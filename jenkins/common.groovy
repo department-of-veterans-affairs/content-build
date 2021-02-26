@@ -242,7 +242,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         def envName = VAGOV_BUILDTYPES.get(i)
         builds[envName] = {
           try {
-            build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, false, '/application')
+            build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
             envUsedCache[envName] = false
           } catch (error) {
             // We're not using the cache for content only builds, because requesting
@@ -251,10 +251,10 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
-              build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, false, '/application')
+              build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
               envUsedCache[envName] = true
             } else {
-              build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, false, '/application')
+              build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
               envUsedCache[envName] = false
             }
           }
@@ -264,7 +264,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
       builds['vets-website'] = { 
         try {
           // Using localhost because it doesn't produce file hashes that will mess up the diff
-          build(ref, dockerContainer, 'local', 'localhost', false, false, false, '/vets-website')
+          build(ref, dockerContainer, 'local', 'localhost', false, false, '/vets-website')
 
         } catch (error) {
           // Don't fail the build, just report the error
