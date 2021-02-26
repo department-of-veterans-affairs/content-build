@@ -197,23 +197,19 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   }
 }
 
-def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, Boolean useCMSExport) {
+def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild) {
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
   // Use Drupal prod for all environments
   def drupalAddress = DRUPAL_ADDRESSES.get('vagovprod')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
-  def cmsExportFlag = useCMSExport ? '--use-cms-export' : ''
-
-  // Output CMS export builds to separate directories for comparison
-  def destination = useCMSExport ? "${envName}-cms-export" : envName;
 
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "/application/${envName}-build.log"
 
-      sh "cd /application && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${cmsExportFlag} --destination ${destination}"
+      sh "cd /application && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose --destination ${destination}"
 
       if (envName == 'vagovprod') {
         // Find any broken links in the log
@@ -257,17 +253,6 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
           }
         }
       }
-
-      /******** Experimental CMS export build (dev) ********/
-      builds['vagovdev-cms-export'] = {
-        try {
-          build(ref, dockerContainer, assetSource, 'vagovdev', false, contentOnlyBuild, true)
-        } catch (error) {
-          // Don't fail the build, just report the error
-          echo "Experimental CMS export build failed: ${error}"
-        }
-      }
-      /******** End experimental CMS export build ********/
 
       parallel builds
       return envUsedCache
