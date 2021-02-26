@@ -33,7 +33,6 @@ do
       omitdebug="${1}"
       shift
       ;;
-      ;;
     *)    # unknown option
       shift # past argument
       ;;

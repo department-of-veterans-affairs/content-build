@@ -255,28 +255,6 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         }
       }
 
-      builds['vets-website'] = { 
-        try {
-          // Using localhost because it doesn't produce file hashes that will mess up the diff
-          build(ref, dockerContainer, 'local', 'localhost', false, false, '/vets-website')
-
-        } catch (error) {
-          // Don't fail the build, just report the error
-          echo "Vets Website Build Failed: ${error}"
-        }
-      }
-
-      builds['localhost'] = { 
-        try {
-          // Using localhost because it doesn't produce file hashes that will mess up the diff
-          build(ref, dockerContainer, 'local', 'localhost', false, false, '/application')
-
-        } catch (error) {
-          // Don't fail the build, just report the error
-          echo "Localhost Content Build Failed: ${error}"
-        }
-      }
-
       parallel builds
       return envUsedCache
     } catch (error) {
