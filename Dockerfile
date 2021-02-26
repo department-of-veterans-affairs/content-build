@@ -50,12 +50,6 @@ WORKDIR /application/content-build
 
 RUN yarn install --production=false
 
-
-
 FROM installer as builder
 
 RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-content.git /application/vagov-content
-
-RUN yarn fetch-drupal-cache --buildtype=vagovprod
-
-RUN NODE_ENV=production INSTALL_HOOKS='no' yarn build --buildtype=vagovprod
