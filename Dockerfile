@@ -1,6 +1,7 @@
 # based on https://github.com/nodejs/docker-node/blob/master/4.7/slim/Dockerfile
 
-FROM public.ecr.aws/bitnami/node:14.15.5 as base
+# FROM public.ecr.aws/bitnami/node:14.15.5 as base
+FROM node:14.15.0 as base
 
 # default case is Jenkins, but we want to be able to overwrite this
 ARG userid=504
@@ -31,7 +32,8 @@ RUN ./aws/install
 RUN aws --version # Verify AWS CLI installation.
 
 # Explicitly set CA cert to resolve SSL issues with AWS.
-ENV AWS_CA_BUNDLE /etc/ssl/certs/ca-certificates.crt
+# ENV AWS_CA_BUNDLE /etc/ssl/certs/ca-certificates.crt
+ENV AWS_CA_BUNDLE /aws/dist/botocore/cacert.pem
 
 RUN mkdir -p /application/content-build
 RUN chown -R vets-website:vets-website /application
