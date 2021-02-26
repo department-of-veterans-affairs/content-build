@@ -34,7 +34,6 @@ RUN aws --version # Verify AWS CLI installation.
 ENV AWS_CA_BUNDLE /etc/ssl/certs/ca-certificates.crt
 
 RUN mkdir -p /application/content-build
-RUN mkdir -p /application/vets-website
 
 RUN chown -R vets-website:vets-website /application
 
