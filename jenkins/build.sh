@@ -29,10 +29,6 @@ do
       buildLog="${2}"
       shift 2
       ;;
-    --use-cms-export)
-      useCMSExport="${1}"
-      shift
-      ;;
     --destination)
       destination="${2}"
       shift 2
@@ -59,6 +55,6 @@ done
 # exit code.  In this case, if the build command fails, the tee
 # command won't trick Jenkins into thinking the step passed.
 set -o pipefail
-npm --no-color run build -- --buildtype="$envName" --asset-source="$assetSource" --drupal-address="$drupalAddress" "$pullDrupal" "$useCMSExport" "$omitdebug" "$nosymlink" --destination="$destination" --port="$port" 2>&1 | tee "$buildLog"
+npm --no-color run build -- --buildtype="$envName" --asset-source="$assetSource" --drupal-address="$drupalAddress" "$pullDrupal" "$omitdebug" "$nosymlink" --destination="$destination" --port="$port" 2>&1 | tee "$buildLog"
 
 exit $?
