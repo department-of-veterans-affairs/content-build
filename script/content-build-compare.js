@@ -3,7 +3,6 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const { isEqual } = require('lodash');
-const { runCommandSync } = require('./utils');
 
 // Modeled after https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
 function getAllFiles(dirPath, arrayOfFiles = []) {
@@ -25,7 +24,6 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
  * Writes the array of filenames & hashes to a file
  */
 function writeArrayToFile(arr, outputFile) {
-  console.log('writeArrayToFile');
   const file = fs.createWriteStream(outputFile);
   file.on('error', err => {
     /* error handling */
@@ -71,7 +69,6 @@ function hashBuildOutput(outputDir, hashFile) {
 }
 
 function compareBuilds(buildtype) {
-  console.log('compareBuilds');
   const websiteContentBuild = hashBuildOutput(
     path.join(__dirname, `../build/${buildtype}`),
     'websiteContentBuildHash.txt',
@@ -85,10 +82,6 @@ function compareBuilds(buildtype) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
-    runCommandSync(
-      'diff -ur ../../vets-website/build/localhost/resources/how-do-i-change-my-name-in-my-deers-record/index.html build/localhost/resources/how-do-i-change-my-name-in-my-deers-record/index.html',
-    );
-    // process.exit(1);
   }
 }
 

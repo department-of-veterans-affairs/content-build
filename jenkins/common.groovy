@@ -34,7 +34,7 @@ IS_DEV_BRANCH = env.BRANCH_NAME == DEV_BRANCH
 IS_STAGING_BRANCH = env.BRANCH_NAME == STAGING_BRANCH
 IS_PROD_BRANCH = env.BRANCH_NAME == PROD_BRANCH
 
-DOCKER_ARGS = "-v ${WORKSPACE}/content-build:/application -v ${WORKSPACE}/vets-website:/vets-website -v ${WORKSPACE}/vagov-content:/vagov-content --ulimit nofile=8192:8192"
+DOCKER_ARGS = "-v ${WORKSPACE}/content-build:/application -v ${WORKSPACE}/vagov-content:/vagov-content --ulimit nofile=8192:8192"
 IMAGE_TAG = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 DOCKER_TAG = "content-build:" + IMAGE_TAG
 
@@ -108,10 +108,6 @@ def setup() {
       checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
     }
 
-    dir("vets-website") {
-      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
-    }
-
     dir("content-build") {
       sh "mkdir -p build"
       // sh "mkdir -p logs/selenium"
@@ -121,7 +117,6 @@ def setup() {
       dockerImage = docker.build(DOCKER_TAG)
       retry(5) {
         dockerImage.inside(DOCKER_ARGS) {
-          sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
           sh "cd /application && yarn install --production=false"
         }
       }
@@ -287,17 +282,6 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
     } catch (error) {
       // slackNotify()
       throw error
-    }
-  }
-}
-
-def validateContentBuild(ref, dockerContainer) {
-  stage('Validate Content Build') {
-    if (shouldBail()) { return }
-
-    // Run the comparison script
-    dockerContainer.inside(DOCKER_ARGS) {
-      sh "cd /application && yarn build:compare"
     }
   }
 }
