@@ -53,3 +53,7 @@ RUN yarn install --production=false
 FROM installer as builder
 
 RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-content.git /application/vagov-content
+
+RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vets-website.git /application/vets-website
+
+RUN cd /vets-website && yarn install --production=false

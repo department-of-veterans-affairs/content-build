@@ -24,6 +24,8 @@ node('vetsgov-general-purpose') {
   // Perform a build for each build type
   envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
 
+  commonStages.validateContent(dockerContainer);
+
   stage('Lint|Security|Unit') {
     if (params.cmsEnvBuildOverride != 'none') { return }
 

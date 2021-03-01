@@ -34,7 +34,7 @@ IS_DEV_BRANCH = env.BRANCH_NAME == DEV_BRANCH
 IS_STAGING_BRANCH = env.BRANCH_NAME == STAGING_BRANCH
 IS_PROD_BRANCH = env.BRANCH_NAME == PROD_BRANCH
 
-DOCKER_ARGS = "-v ${WORKSPACE}/content-build:/application -v ${WORKSPACE}/vagov-content:/vagov-content --ulimit nofile=8192:8192"
+DOCKER_ARGS = "-v ${WORKSPACE}/content-build:/application -v ${WORKSPACE}/vets-website:/vets-website -v ${WORKSPACE}/vagov-content:/vagov-content --ulimit nofile=8192:8192"
 IMAGE_TAG = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 DOCKER_TAG = "content-build:" + IMAGE_TAG
 
@@ -255,12 +255,27 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         }
       }
 
+      builds['vets-website'] = {
+        try {
+          build(ref, dockerContainer, assetSource, 'vagovdev', false, contentOnlyBuild, '/vets-website')
+        } catch (error) {
+          // Don't fail the build, just report the error
+          echo "vets-website build failed: ${error}"
+        }
+      }
+
       parallel builds
       return envUsedCache
     } catch (error) {
       // slackNotify()
       throw error
     }
+  }
+}
+
+def validateContent(dockerContainer) {
+  dockerContainer.inside(DOCKER_ARGS) {
+    sh "yarn build:compare --buildtype vagovdev"
   }
 }
 
