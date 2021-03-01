@@ -34,9 +34,7 @@ RUN aws --version # Verify AWS CLI installation.
 ENV AWS_CA_BUNDLE /etc/ssl/certs/ca-certificates.crt
 
 RUN mkdir -p /application/content-build
-RUN mkdir -p /vets-website
 RUN chown -R vets-website:vets-website /application
-RUN chown -R vets-website:vets-website /vets-website
 
 WORKDIR /application/content-build
 
@@ -55,4 +53,3 @@ RUN yarn install --production=false
 FROM installer as builder
 
 RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-content.git /application/vagov-content
-RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-content.git /vets-website
