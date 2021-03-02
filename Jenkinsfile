@@ -24,8 +24,6 @@ node('vetsgov-general-purpose') {
   // Perform a build for each build type
   envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
 
-  commonStages.validateContentBuild(ref, dockerContainer)
-
   stage('Lint|Security|Unit') {
     if (params.cmsEnvBuildOverride != 'none') { return }
 
@@ -64,8 +62,13 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  // Point all URLs to the proper S3 bucket
   commonStages.prearchiveAll(dockerContainer)
 
+  // Validate builds after everything has been properly processed
+  commonStages.validateContentBuild(ref, dockerContainer)
+
+  // Archive the tar file for each build type
   commonStages.archiveAll(dockerContainer, ref);
   commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
 

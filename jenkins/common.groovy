@@ -284,7 +284,6 @@ def validateContentBuild(ref, dockerContainer) {
 
     // Run the comparison script
     dockerContainer.inside(DOCKER_ARGS) {
-      sh "cd /vets-website && node --max-old-space-size=16384 /vets-website/script/prearchive.js --buildtype=vagovdev"
       sh "cd /application && yarn build:compare --buildtype vagovdev"
     }
   }
@@ -293,6 +292,7 @@ def validateContentBuild(ref, dockerContainer) {
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node --max-old-space-size=16384 script/prearchive.js --buildtype=${envName}"
+    sh "cd /vets-website && node --max-old-space-size=16384 /vets-website/script/prearchive.js --buildtype=vagovdev"
   }
 }
 
