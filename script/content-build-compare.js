@@ -98,11 +98,18 @@ function compareBuilds(buildtype) {
     'standaloneContentBuildHash.txt',
   );
 
+  const test1 = path.resolve(__dirname, '../build/vagovdev/404.html');
+  const test2 = path.resolve(
+    __dirname,
+    '../../vets-website/build/vagovdev/404.html',
+  );
+
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
     runCommand(`diff ${standaloneBuildFile} ${websiteContentBuildFile}`);
+    runCommand(`diff ${test1} ${test2}`);
   }
 }
 
