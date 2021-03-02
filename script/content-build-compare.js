@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
@@ -72,17 +73,15 @@ function compareBuilds(buildtype) {
     'websiteContentBuildHash.txt',
   );
   const standaloneContentBuild = hashBuildOutput(
-    path.join(__dirname, `../../content-build/build/${buildtype}`),
+    path.join(__dirname, `../../vets-website/build/${buildtype}`),
     'standaloneContentBuildHash.txt',
   );
 
-  /* eslint-disable no-console */
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
   }
-  /* eslint-enable no-console */
 }
 
 compareBuilds('localhost');

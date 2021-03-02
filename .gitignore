@@ -33,10 +33,6 @@ test-results/
 
 # Ignore user's editor/IDE prefs
 .vscode/
-# Ignore the hashed build files for comparison
-standaloneContentBuildHash.txt
-websiteContentBuildHash.txt
-cms.diff
 .idea/
 .swp
 .swo
@@ -47,7 +43,6 @@ all-links.csv
 # Ignore the hashed build files for comparison
 standaloneContentBuildHash.txt
 websiteContentBuildHash.txt
-
 cms.diff
 graphql-data.json
 /content-object-diffs
