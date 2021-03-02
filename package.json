@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node --max-old-space-size=8192 script/build-content.js",
     "build:compare": "node script/content-build-compare.js",
-    "build:validate-local": "node ./script/validate-content-builds.js",
+    "build:validate": "node ./script/validate-content-builds.js",
     "cms:compare": "./script/cms/compare.sh",
     "cms:compare:html": "node script/cms/compare-build-hashes.js",
     "cms:diff": "./script/cms/diff.sh",
