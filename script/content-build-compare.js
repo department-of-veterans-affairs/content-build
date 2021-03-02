@@ -98,18 +98,25 @@ function compareBuilds(buildtype) {
     'standaloneContentBuildHash.txt',
   );
 
-  const test1 = path.resolve(__dirname, '../build/vagovdev/404.html');
+  const test1 = path.resolve(__dirname, `../build/${buildtype}/404.html`);
   const test2 = path.resolve(
     __dirname,
-    '../../vets-website/build/vagovdev/404.html',
+    `../../vets-website/build/${buildtype}/404.html`,
   );
 
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
-    runCommand(`diff ${standaloneBuildFile} ${websiteContentBuildFile}`);
+    console.log(test1);
+    console.log(test2);
+    console.log('---------------------------');
+    console.log('---------------------------');
     runCommand(`diff ${test1} ${test2}`);
+    console.log('---------------------------');
+    console.log('---------------------------');
+    console.log('---------------------------');
+    runCommand(`diff ${standaloneBuildFile} ${websiteContentBuildFile}`);
   }
 }
 
