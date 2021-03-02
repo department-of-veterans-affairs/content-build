@@ -84,6 +84,12 @@ function compareBuilds(buildtype) {
     __dirname,
     '../standaloneContentBuildHash.txt',
   );
+
+  const standaloneContentBuild = hashBuildOutput(
+    path.join(__dirname, `../../vets-website/build/${buildtype}`),
+    'standaloneContentBuildHash.txt',
+  );
+
   const websiteContentBuildFile = path.resolve(
     __dirname,
     '../websiteContentBuildHash.txt',
@@ -93,16 +99,6 @@ function compareBuilds(buildtype) {
     path.join(__dirname, `../build/${buildtype}`),
     'websiteContentBuildHash.txt',
   );
-  const standaloneContentBuild = hashBuildOutput(
-    path.join(__dirname, `../../vets-website/build/${buildtype}`),
-    'standaloneContentBuildHash.txt',
-  );
-
-  // const test1 = path.resolve(__dirname, `../build/${buildtype}/404.html`);
-  // const test2 = path.resolve(
-  //   __dirname,
-  //   `../../vets-website/build/${buildtype}/404.html`,
-  // );
 
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');
