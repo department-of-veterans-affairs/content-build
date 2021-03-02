@@ -209,7 +209,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   def drupalAddress = DRUPAL_ADDRESSES.get('vagovprod')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
-  def localhostBuild = envName == 'localhost' ? '--omitdebug --port 3001 --nosymlink' : ''
+  def localhostBuild = envName == 'vagovdev' ? '--omitdebug' : ''
 
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
@@ -284,6 +284,7 @@ def validateContentBuild(ref, dockerContainer) {
 
     // Run the comparison script
     dockerContainer.inside(DOCKER_ARGS) {
+      sh "cd /vets-website && node --max-old-space-size=16384 /vets-website/script/prearchive.js --buildtype=vagovdev"
       sh "cd /application && yarn build:compare --buildtype vagovdev"
     }
   }
