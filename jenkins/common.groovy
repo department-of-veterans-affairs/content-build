@@ -34,7 +34,7 @@ IS_DEV_BRANCH = env.BRANCH_NAME == DEV_BRANCH
 IS_STAGING_BRANCH = env.BRANCH_NAME == STAGING_BRANCH
 IS_PROD_BRANCH = env.BRANCH_NAME == PROD_BRANCH
 
-DOCKER_ARGS = "-v ${WORKSPACE}/content-build:/application -v ${WORKSPACE}/vagov-content:/vagov-content --ulimit nofile=8192:8192"
+DOCKER_ARGS = "-v ${WORKSPACE}/content-build:/application -v ${WORKSPACE}/vets-website:/vets-website -v ${WORKSPACE}/vagov-content:/vagov-content --ulimit nofile=8192:8192"
 IMAGE_TAG = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 DOCKER_TAG = "content-build:" + IMAGE_TAG
 
@@ -108,6 +108,10 @@ def setup() {
       checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
     }
 
+    dir("vets-website") { 
+      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
+    }
+
     dir("content-build") {
       sh "mkdir -p build"
       // sh "mkdir -p logs/selenium"
@@ -117,6 +121,7 @@ def setup() {
       dockerImage = docker.build(DOCKER_TAG)
       retry(5) {
         dockerImage.inside(DOCKER_ARGS) {
+          sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
           sh "cd /application && yarn install --production=false"
         }
       }
@@ -204,7 +209,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   def drupalAddress = DRUPAL_ADDRESSES.get('vagovprod')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
-  def localhostBuild = envName == 'localhost' ? '--omitdebug --port 3001 --nosymlink' : ''
+  def localhostBuild = envName == 'vagovdev' ? '--omitdebug' : ''
 
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
@@ -255,6 +260,15 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
         }
       }
 
+      builds['vets-website'] = {
+        try {
+          build(ref, dockerContainer, assetSource, 'vagovdev', false, contentOnlyBuild, '/vets-website')
+        } catch (error) {
+          // Don't fail the build, just report the error
+          echo "vets-website build failed: ${error}"
+        }
+      }
+
       parallel builds
       return envUsedCache
     } catch (error) {
@@ -264,9 +278,21 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
   }
 }
 
+def validateContentBuild(ref, dockerContainer) {
+  stage('Validate Content Build') {
+    if (shouldBail()) { return }
+
+    // Run the comparison script
+    dockerContainer.inside(DOCKER_ARGS) {
+      sh "cd /application && yarn build:compare --buildtype vagovdev"
+    }
+  }
+}
+
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node --max-old-space-size=16384 script/prearchive.js --buildtype=${envName}"
+    sh "cd /vets-website && node --max-old-space-size=16384 /vets-website/script/prearchive.js --buildtype=vagovdev"
   }
 }
 

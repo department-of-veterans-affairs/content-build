@@ -3,6 +3,18 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const { isEqual } = require('lodash');
+const commandLineArgs = require('command-line-args');
+const { runCommand } = require('./utils');
+
+const ENVIRONMENTS = require('../src/site/constants/environments');
+
+const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
+
+const COMMAND_LINE_OPTIONS_DEFINITIONS = [
+  { name: 'buildtype', type: String, defaultValue: defaultBuildtype },
+];
+
+const options = commandLineArgs(COMMAND_LINE_OPTIONS_DEFINITIONS);
 
 // Modeled after https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
 function getAllFiles(dirPath, arrayOfFiles = []) {
@@ -68,20 +80,32 @@ function hashBuildOutput(outputDir, hashFile) {
 }
 
 function compareBuilds(buildtype) {
-  const websiteContentBuild = hashBuildOutput(
-    path.join(__dirname, `../build/${buildtype}`),
-    'websiteContentBuildHash.txt',
+  const standaloneBuildFile = path.resolve(
+    __dirname,
+    '../standaloneContentBuildHash.txt',
   );
+
   const standaloneContentBuild = hashBuildOutput(
     path.join(__dirname, `../../vets-website/build/${buildtype}`),
     'standaloneContentBuildHash.txt',
+  );
+
+  const websiteContentBuildFile = path.resolve(
+    __dirname,
+    '../websiteContentBuildHash.txt',
+  );
+
+  const websiteContentBuild = hashBuildOutput(
+    path.join(__dirname, `../build/${buildtype}`),
+    'websiteContentBuildHash.txt',
   );
 
   if (isEqual(websiteContentBuild, standaloneContentBuild)) {
     console.log('The content builds match!');
   } else {
     console.log('The content builds do not match');
+    runCommand(`diff ${standaloneBuildFile} ${websiteContentBuildFile}`);
   }
 }
 
-compareBuilds('localhost');
+compareBuilds(options.buildtype);
