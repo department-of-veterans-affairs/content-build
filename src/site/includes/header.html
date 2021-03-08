@@ -86,7 +86,7 @@
 </head>
 
 <body class="{{ body_class }} merger">
-  {% if buildtype == 'localhost' %}
+  {% if buildtype != 'vagovprod' %}
   <style>
     .va-env-flag {
       background-color:#000;
