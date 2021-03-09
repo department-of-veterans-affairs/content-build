@@ -66,7 +66,7 @@ node('vetsgov-general-purpose') {
   commonStages.prearchiveAll(dockerContainer)
 
   // Validate builds after everything has been properly processed
-  commonStages.validateContentBuild(ref, dockerContainer)
+  // commonStages.validateContentBuild(ref, dockerContainer)
 
   // Archive the tar file for each build type
   commonStages.archiveAll(dockerContainer, ref);
