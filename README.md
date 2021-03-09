@@ -10,11 +10,11 @@ There are several repositories that contain the code and content used to build V
 
 Once you have the site set up locally, these are some common commands you might find useful:
 
-| I want to...                                  | Then you should...                                       |
-| --------------------------------------------- | -------------------------------------------------------- |
-| fetch all dependencies                        | `yarn install`; run this any time `package.json` changes |
-| build static HTML pages                       | `yarn build`                                             |
-| run the dev server                            | `yarn watch`                                             |
+| I want to...                                  | Then you should...                                                           |
+| --------------------------------------------- | ---------------------------------------------------------------------------- |
+| fetch all dependencies                        | `yarn install`. Run this any time `package.json` changes                     |
+| build static HTML pages                       | `yarn build`                                                                 |
+| run the dev server                            | `yarn watch`. Uses port 3002, keeping 3001 free for vets-website dev server  |
 
 ### Building static content
 
@@ -75,12 +75,12 @@ for doing very specific things.
 | build the production site (dev features disabled).                                                          | `NODE_ENV=production yarn build --buildtype vagovprod`                                                                                                                                                                       |
 | fetch the latest content cache from S3                                                                      | `yarn fetch-drupal-cache` (does not require SOCKS proxy access)                                                                                                                                                              |
 | reset local environment (clean out node modules and runs npm install)                                       | `yarn reset:env`                                                                                                                                                                                                             |
-| run the site for local development with automatic rebuilding of sass **with** css sourcemaps | `yarn watch:css-sourcemaps` then visit `http://localhost:3001/`. You may also set `--env.buildtype` and `NODE_ENV` though setting `NODE_ENV` to production will make incremental builds slow.                                |
 | run the site so that devices on your local network can access it                                            | `yarn watch --env.host 0.0.0.0 --env.public 198.162.x.x:3001` Note that we use CORS to limit what hosts can access different APIs, so accessing with a `192.168.x.x` address may run into problems                           |
 | run all unit tests and watch                                                                                | `yarn test:watch`                                                                                                                                                                                                            |
+| run only e2e tests                                                                                          | Make sure the site is running locally (`yarn watch`) and run the tests with `yarn test:e2e`                                                                                                                                  |
+| run e2e tests in headless mode                                                                              | `yarn test:e2e:headless`                                                                                                                                                                                                     |
 | run all linters                                                                                             | `yarn lint`                                                                                                                                                                                                                  |
 | run only javascript linter                                                                                  | `yarn lint:js`                                                                                                                                                                                                               |
-| run only sass linter                                                                                        | `yarn lint:sass`                                                                                                                                                                                                             |
 | run lint on JS and fix anything that changed                                                                | `yarn lint:js:changed:fix`                                                                                                                                                                                                   |
 | run automated accessibility tests                                                                           | `yarn build && yarn test:accessibility`                                                                                                                                                                                      |
 | run visual regression testing                                                                               | Start the site. Generate your baseline image set using `yarn test:visual:baseline`. Make your changes. Then run `yarn test:visual`.                                                                                          |
