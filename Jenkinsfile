@@ -66,7 +66,7 @@ node('vetsgov-general-purpose') {
   commonStages.prearchiveAll(dockerContainer)
 
   // Validate builds after everything has been properly processed
-  commonStages.validateContentBuild(ref, dockerContainer)
+  // commonStages.validateContentBuild(ref, dockerContainer)
 
   // Archive the tar file for each build type
   commonStages.archiveAll(dockerContainer, ref);
@@ -99,7 +99,7 @@ node('vetsgov-general-purpose') {
       if (!commonStages.isDeployable()) { return }
 
       if (commonStages.IS_DEV_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovdev')) {
-        commonStages.runDeploy('deploys/content-build-vagovdev', ref, false)
+        commonStages.runDeploy('deploys/content-build-dev', ref, false)
       }
 
    // if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {

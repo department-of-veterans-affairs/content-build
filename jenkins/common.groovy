@@ -210,12 +210,17 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
   def localhostBuild = envName == 'vagovdev' ? '--omitdebug' : ''
+  def drupalMaxParallelRequests = 5;
+
+  if (contentOnlyBuild) {
+    drupalMaxParallelRequests = 15
+  }
 
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
 
-      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} ${drupalMode} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
+      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
 
       if (envName == 'vagovprod') {
         // Find any broken links in the log
@@ -292,7 +297,9 @@ def validateContentBuild(ref, dockerContainer) {
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node --max-old-space-size=16384 script/prearchive.js --buildtype=${envName}"
-    sh "cd /vets-website && node --max-old-space-size=16384 /vets-website/script/prearchive.js --buildtype=vagovdev"
+    if (envName == 'vagovdev') {
+      sh "cd /vets-website && node --max-old-space-size=16384 /vets-website/script/prearchive.js --buildtype=vagovdev"
+    }
   }
 }
 
