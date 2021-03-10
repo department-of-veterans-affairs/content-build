@@ -296,9 +296,9 @@ def validateContentBuild(ref, dockerContainer) {
 
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
-    sh "cd /application && node --max-old-space-size=16384 script/prearchive.js --buildtype=${envName}"
+    sh "cd /application && node script/prearchive.js --buildtype=${envName}"
     if (envName == 'vagovdev') {
-      sh "cd /vets-website && node --max-old-space-size=16384 /vets-website/script/prearchive.js --buildtype=vagovdev"
+      sh "cd /vets-website && node /vets-website/script/prearchive.js --buildtype=vagovdev"
     }
   }
 }
