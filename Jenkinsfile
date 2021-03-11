@@ -62,6 +62,9 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  // Run E2E and accessibility tests
+  commonStages.integrationTests(dockerContainer, ref);
+
   // Point all URLs to the proper S3 bucket
   commonStages.prearchiveAll(dockerContainer)
 

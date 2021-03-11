@@ -294,6 +294,34 @@ def validateContentBuild(ref, dockerContainer) {
   }
 }
 
+def integrationTests(dockerContainer, ref) {
+  stage("Integration") {
+    if (shouldBail()) { return }
+
+    dir("content-build") {
+      try {
+        parallel (
+          'nightwatch-e2e': {
+            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+          },
+
+          'nightwatch-accessibility': {
+            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
+          },
+        )
+      } catch (error) {
+        // commonStages.slackIntegrationNotify()
+        throw error
+      } finally {
+        sh "docker-compose -p nightwatch down --remove-orphans"
+        sh "docker-compose -p accessibility down --remove-orphans"
+        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+      }
+    }
+
+  }
+}
+
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node script/prearchive.js --buildtype=${envName}"
