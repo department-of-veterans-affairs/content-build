@@ -63,32 +63,32 @@ node('vetsgov-general-purpose') {
   }
 
   // Run E2E and accessibility tests
-  // commonStages.integrationTests(dockerContainer, ref);
+  commonStages.integrationTests(dockerContainer, ref);
 
-  stage('Integration') {
-    // Remove for now since I want it to run.
-    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) { return }
-    dir("content-build") {
-      try {
-        parallel (
-          'nightwatch-e2e': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-          },
+  // stage('Integration') {
+  //   // Remove for now since I want it to run.
+  //   if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) { return }
+  //   dir("content-build") {
+  //     try {
+  //       parallel (
+  //         'nightwatch-e2e': {
+  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+  //         },
 
-          'nightwatch-accessibility': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
-          },
-        )
-      } catch (error) {
-        // commonStages.slackIntegrationNotify()
-        throw error
-      } finally {
-        sh "docker-compose -p nightwatch down --remove-orphans"
-        sh "docker-compose -p accessibility down --remove-orphans"
-        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-      }
-    }
-  }
+  //         'nightwatch-accessibility': {
+  //           sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
+  //         },
+  //       )
+  //     } catch (error) {
+  //       // commonStages.slackIntegrationNotify()
+  //       throw error
+  //     } finally {
+  //       sh "docker-compose -p nightwatch down --remove-orphans"
+  //       sh "docker-compose -p accessibility down --remove-orphans"
+  //       step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+  //     }
+  //   }
+  // }
 
   // Point all URLs to the proper S3 bucket
   commonStages.prearchiveAll(dockerContainer)

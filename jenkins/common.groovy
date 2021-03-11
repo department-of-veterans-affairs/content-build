@@ -294,7 +294,7 @@ def validateContentBuild(ref, dockerContainer) {
   }
 }
 
-def integrationTests(dockerContainer, envName) {
+def integrationTests(dockerContainer, ref) {
   stage("Integration") {
     if (shouldBail()) { return }
 
@@ -302,11 +302,11 @@ def integrationTests(dockerContainer, envName) {
       try {
         parallel (
           'nightwatch-e2e': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
           },
 
           'nightwatch-accessibility': {
-            sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
+            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
           },
         )
       } catch (error) {
