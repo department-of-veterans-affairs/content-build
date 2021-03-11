@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign, no-continue */
 
 const ENVIRONMENTS = require('../../../constants/environments');
-const BUCKETS = require('../../../constants/buckets');
+const BUCKETS = require('../../../constants/buckets-content');
 
 const ENTITY_BUNDLES = {
   DOCUMENT: 'document',
