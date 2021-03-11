@@ -4,7 +4,6 @@ services:
     image: content-build:${IMAGE_TAG:-latest}
     build:
       context: .
-      target: base
     volumes:
       - .:/application/content-build
     environment:

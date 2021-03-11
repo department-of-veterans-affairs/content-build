@@ -62,7 +62,9 @@ node('vetsgov-general-purpose') {
     }
   }
 
-    // Run E2E and accessibility tests
+  // Run E2E and accessibility tests
+  // commonStages.integrationTests(dockerContainer, ref);
+
   stage('Integration') {
     // Remove for now since I want it to run.
     if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) { return }
