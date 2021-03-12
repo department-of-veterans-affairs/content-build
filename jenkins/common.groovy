@@ -224,7 +224,8 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
       if (envName == 'vagovprod') {
         // Find any broken links in the log
-	      checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
+        // @TODO: Add this feature back in post-release
+	      // checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
         findMissingQueryFlags(buildLogPath, envName)
       }
 
