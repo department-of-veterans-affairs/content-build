@@ -161,7 +161,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   // Output a csv file with the broken links
   sh "cd /application && jenkins/glean-broken-links.sh ${buildLogPath} ${csvFileName}"
   if (fileExists(csvFile)) {
-    echo "Found broken links."
+    echo "Found broken links (add slack alert back in after content-build release)."
 
     // Only break the build if broken links are found in master
     if (IS_PROD_BRANCH || contentOnlyBuild) {
@@ -174,16 +174,16 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
       def brokenLinksCount = sh(returnStdout: true, script: "wc -l /application/${csvFileName} | cut -d ' ' -f1") as Integer
       def brokenLinksMessage = "${brokenLinksCount} broken links found in the `${envName}` build on `${env.BRANCH_NAME}`\n@cmshelpdesk\n${env.RUN_DISPLAY_URL}\n${brokenLinks}".stripMargin()
 
-      slackSend(
-        message: brokenLinksMessage,
-        color: 'danger',
-        failOnError: true,
-        channel: 'cms-helpdesk-bot'
-        // attachments: brokenLinks
-        // TODO: errors out with ERROR: Slack notification failed with exception: net.sf.json.JSONException: Invalid JSON String
-        // needs to be formatted into JSON
-        // see also: https://stackoverflow.com/a/51556653/2043808
-      )
+      // slackSend(
+      //   message: brokenLinksMessage,
+      //   color: 'danger',
+      //   failOnError: true,
+      //   channel: 'cms-helpdesk-bot'
+      //   // attachments: brokenLinks
+      //   // TODO: errors out with ERROR: Slack notification failed with exception: net.sf.json.JSONException: Invalid JSON String
+      //   // needs to be formatted into JSON
+      //   // see also: https://stackoverflow.com/a/51556653/2043808
+      // )
 
       // TODO: Move this slackUploadFile to cacheDrupalContent and update the echo statement above
       // TODO: determine correct file path relative to agent's workspace
