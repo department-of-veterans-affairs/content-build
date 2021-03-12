@@ -174,6 +174,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
       def brokenLinksCount = sh(returnStdout: true, script: "wc -l /application/${csvFileName} | cut -d ' ' -f1") as Integer
       def brokenLinksMessage = "${brokenLinksCount} broken links found in the `${envName}` build on `${env.BRANCH_NAME}`\n@cmshelpdesk\n${env.RUN_DISPLAY_URL}\n${brokenLinks}".stripMargin()
 
+      // @TODO: Add this feature back in post-release
       // slackSend(
       //   message: brokenLinksMessage,
       //   color: 'danger',
