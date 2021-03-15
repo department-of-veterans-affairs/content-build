@@ -84,6 +84,7 @@ module.exports = {
       const $el = dom(el);
       const entryName = $el.data('entryName');
       const attribute = $el.is('script') ? 'src' : 'href';
+      const timestamp = new Date().getTime();
 
       // Derive the hashed entry name.
       const hashedEntryName = this.entryNamesDictionary.get(entryName) || [];
@@ -115,7 +116,7 @@ module.exports = {
 
       // Link the element to the hashed entry name w/o the S3 bucket
       if (buildOptions.buildtype === environments.LOCALHOST) {
-        $el.attr(attribute, `/${fileSearch}`);
+        $el.attr(attribute, `/${fileSearch}?t=${timestamp}`);
       } else {
         $el.attr(attribute, `${s3Search}`);
       }
