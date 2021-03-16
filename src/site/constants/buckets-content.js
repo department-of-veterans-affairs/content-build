@@ -8,8 +8,7 @@ const {
 const prodBucket = 'https://prod-va-gov-assets.s3-us-gov-west-1.amazonaws.com';
 const stagingBucket =
   'https://staging-va-gov-assets.s3-us-gov-west-1.amazonaws.com';
-const devBucket =
-  'http://content.dev.va.gov.s3-website-us-gov-west-1.amazonaws.com';
+const devBucket = 'https://s3-us-gov-west-1.amazonaws.com/content.dev.va.gov';
 
 module.exports = {
   [VAGOVDEV]: devBucket,
