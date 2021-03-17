@@ -110,11 +110,7 @@ module.exports = {
         hashedEntryName !== '/generated/newForm.css' &&
         hashedEntryName !== '/generated/newForm.entry.js'
       ) {
-        throw new Error(
-          `Entry Name "${s3Search}" was not found. File name: ${
-            Object.keys(files)[0]
-          }`,
-        );
+        throw new Error(`Entry Name "${s3Search}" was not found.`);
       }
 
       // Link the element to the hashed entry name w/o the S3 bucket
