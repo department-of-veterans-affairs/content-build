@@ -9,7 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const buckets = require('../../constants/buckets');
+const buckets = require('../../constants/buckets-content');
 const updateAssetLinkElements = require('./helpers');
 
 function linkAssetsToBucketHTML(options, fileNames, bucketPath) {
