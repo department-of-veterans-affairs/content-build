@@ -6,7 +6,8 @@ const {
 } = require('./environments');
 
 const prodBucket = 'https://prod-va-gov-assets.s3-us-gov-west-1.amazonaws.com';
-const stagingBucket = 'https://s3-us-gov-west-1.amazonaws.com/content.staging.va.gov';
+const stagingBucket =
+  'https://s3-us-gov-west-1.amazonaws.com/content.staging.va.gov';
 const devBucket = 'https://s3-us-gov-west-1.amazonaws.com/content.dev.va.gov';
 
 module.exports = {
