@@ -105,9 +105,9 @@ node('vetsgov-general-purpose') {
         commonStages.runDeploy('deploys/content-build-dev', ref, false)
       }
 
-   // if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
-   // commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
-   // }
+      if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
+        commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
+      }
 
     } catch (error) {
       // commonStages.slackNotify()
