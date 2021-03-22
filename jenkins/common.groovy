@@ -341,26 +341,37 @@ def validateContentBuild(ref, dockerContainer) {
 }
 
 def integrationTests(dockerContainer, ref) {
-  stage("Integration") {
-    if (shouldBail()) { return }
-
-    dir("content-build") {
+  stage('Integration') {
+    if (commonStages.shouldBail() || !commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) { return }
+    dir("vets-website") {
       try {
-        parallel (
-          'nightwatch-e2e': {
-            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-          },
-        )
+        if (commonStages.IS_PROD_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) {
+          parallel (
+            'nightwatch-e2e': {
+              sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod vets-website --no-color run nightwatch:docker"
+            },          
+            'nightwatch-accessibility': {
+                sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod vets-website --no-color run nightwatch:docker -- --env=accessibility"
+            }
+          )
+        } else {
+          parallel (
+            'nightwatch-e2e': {
+              sh "export IMAGE_TAG=${commonStages.IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod vets-website --no-color run nightwatch:docker"
+            }
+          )
+        }
       } catch (error) {
-        // commonStages.slackIntegrationNotify()
+        commonStages.slackNotify()
         throw error
       } finally {
         sh "docker-compose -p nightwatch down --remove-orphans"
-        sh "docker-compose -p accessibility down --remove-orphans"
+        if (commonStages.IS_PROD_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) {
+          sh "docker-compose -p accessibility down --remove-orphans"
+        }
         step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
       }
     }
-
   }
 }
 
