@@ -15,6 +15,7 @@
     "prebuild": "node script/prebuild.js",
     "preview": "node script/preview.js",
     "heroku-postbuild": "sh script/heroku-postbuild.sh",
+    "install-repos": "./script/install-repos.sh",
     "lint": "npm run lint:js",
     "lint:changed": "npm run lint:js:changed",
     "lint:js": "eslint --quiet --ext .js --ext .jsx .",
