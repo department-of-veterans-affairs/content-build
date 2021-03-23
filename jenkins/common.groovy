@@ -346,7 +346,7 @@ def integrationTests(dockerContainer, ref) {
 
     dir("content-build") {
       try {
-        if (commonStages.IS_PROD_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) {
+        if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
           parallel (
             'nightwatch-e2e': {
               sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
@@ -364,11 +364,11 @@ def integrationTests(dockerContainer, ref) {
           )
         }
       } catch (error) {
-        // commonStages.slackIntegrationNotify()
+        // slackIntegrationNotify()
         throw error
       } finally {
         sh "docker-compose -p nightwatch down --remove-orphans"
-        if (commonStages.IS_PROD_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovprod')) {
+        if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
           sh "docker-compose -p accessibility down --remove-orphans"
         }
         step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
