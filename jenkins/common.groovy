@@ -154,17 +154,17 @@ def accessibilityTests() {
   
   stage("Accessibility") {
 
-    //  slackSend(
-    //     message: "Starting the daily accessibility scan of vets-website... ${env.RUN_DISPLAY_URL}".stripMargin(),
-    //     color: 'good',
-    //     channel: '-daily-accessibility-scan'
-    //   )
+     slackSend(
+        message: 'Content build accessibility tests are running (please update this message post-release)',
+        color: 'good',
+        channel: '-daily-accessibility-scan'
+      )
 
     dir("vets-website") {
       try {
         parallel (
           'nightwatch-accessibility': {
-            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod vets-website --no-color run nightwatch:docker -- --env=accessibility"
+            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
           },
         )
 
