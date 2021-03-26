@@ -53,7 +53,7 @@ async function downloadFromLiveBucket(files, buildOptions) {
 
   const downloads = entryNames.map(async entryName => {
     let bundleFileName = fileManifest[entryName];
-    const bundleUrl = `${bundleFileName}`;
+    const bundleUrl = `${bucket}${bundleFileName}`;
     const bundleResponse = await fetch(bundleUrl);
 
     if (!bundleResponse.ok) {
