@@ -55,9 +55,7 @@ describe('phone-number', () => {
       const container = await renderHTML(layoutPath, data.numberWithExtension);
 
       expect(container.querySelector('a').innerHTML.trim()).to.equal(
-        `${data.numberWithExtension.number.fieldPhoneNumber}x ${
-          data.numberWithExtension.number.fieldPhoneExtension
-        }`,
+        `${data.numberWithExtension.number.fieldPhoneNumber}x ${data.numberWithExtension.number.fieldPhoneExtension}`,
       );
 
       expect(container.querySelector('a').getAttribute('aria-label')).to.equal(
