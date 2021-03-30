@@ -14,6 +14,7 @@
     "fetch-drupal-cache": "node script/drupal-aws-cache.js --fetch",
     "prebuild": "node script/prebuild.js",
     "preview": "node script/preview.js",
+    "heroku-serve": "http-server",
     "heroku-postbuild": "sh script/heroku-postbuild.sh",
     "install-repos": "./script/install-repos.sh",
     "lint": "npm run lint:js",
