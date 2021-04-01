@@ -122,7 +122,7 @@ def setup() {
 
       try {
         parallel (
-          install: {
+          "install-content-build": {
             retry(5) {
               dockerImage.inside(DOCKER_ARGS) {
                 sh "cd /application && yarn install --production=false"
@@ -130,7 +130,7 @@ def setup() {
             }
             return dockerImage
           },
-          install2: {
+          "install-vets-website": {
             retry(5) {
               dockerImage.inside(DOCKER_ARGS) {
                 sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
