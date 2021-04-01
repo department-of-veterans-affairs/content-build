@@ -132,7 +132,7 @@ def setup() {
           "install-vets-website": {
             retry(5) {
               dockerImage.inside(DOCKER_ARGS) {
-                sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
+                sh "cd /vets-website && yarn install --production=false"
               }
             }
             
