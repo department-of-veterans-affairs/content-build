@@ -1,0 +1,1013 @@
+<!DOCTYPE html><!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--><!--[if IE 7 ]> <html lang="en" class="ie7"> <![endif]--><!--[if IE 8 ]> <html lang="en" class="ie8"> <![endif]--><!--[if IE 9 ]> <html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--><html lang="en"><!--<![endif]--><!--
+  layout: 
+  path: 
+  entityId: 318
+--><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="robots" content="noindex">
+
+  <link rel="canonical" href="/pittsburgh-health-care">
+
+
+<meta content="//pittsburgh-health-care" property="og:url">
+
+<meta content="website" property="og:type">
+
+<!-- Metatags -->
+            <meta name="description" content="Find a health facility near you at VA Pittsburgh health care, and manage your health online. Our health care teams are deeply experienced and guided by the needs of Veterans, their families, and caregivers.">
+          <link rel="image_src" href="/img/2019-04/UD%20front.jpg">
+    <meta property="og:description" content="Find a health facility near you at VA Pittsburgh health care, and manage your health online. Our health care teams are deeply experienced and guided by the needs of Veterans, their families, and caregivers.">
+    <meta property="og:image" content="/img/2019-04/UD%20front.jpg">
+    <meta property="og:image:alt" content="Pittsburgh VAMC University Drive Facility Image">
+    <meta property="og:site_name" content="Veterans Affairs">
+    <meta property="og:title" content="VA Pittsburgh health care | Veterans Affairs">
+            <title>VA Pittsburgh Health Care | Veterans Affairs</title>
+                  <meta name="twitter:card" content="summary_large_image">
+                  <meta name="twitter:description" content="Find a health facility near you at VA Pittsburgh health care, and manage your health online. Our health care teams are deeply experienced and guided by the needs of Veterans, their families, and caregivers.">
+                  <meta name="twitter:image" content="/img/2019-04/UD%20front.jpg">
+                  <meta name="twitter:image:alt" content="Pittsburgh VAMC University Drive Facility Image">
+                  <meta name="twitter:site" content="@DeptVetAffairs">
+                  <meta name="twitter:title" content="VA Pittsburgh health care | Veterans Affairs">
+      
+  
+  <script nonce="**CSP_NONCE**" nomodule data-entry-name="polyfills.js" src="https://s3-us-gov-west-1.amazonaws.com/apps.dev.va.gov/generated/polyfills.entry.js"></script>
+
+  <script nonce="**CSP_NONCE**">
+/**
+ * An alias for window.dataLayer.push made available under the window so that it is accessible in content files.
+ * @module module:record-event
+ * @see https://developers.google.com/tag-manager/devguide
+ * @see module:platform/monitoring/record-event
+ * @param {object} data - The event data that will be sent to GA.
+ */
+window.dataLayer = [] || window.dataLayer;
+window.recordEvent = function(data) {
+  return window.dataLayer.push(data);
+}
+  </script>
+
+  <link rel="stylesheet" data-entry-name="web-components.css" href="https://s3-us-gov-west-1.amazonaws.com/apps.dev.va.gov/generated/web-components.css">
+  <script nonce="**CSP_NONCE**" data-entry-name="web-components.js" src="https://s3-us-gov-west-1.amazonaws.com/apps.dev.va.gov/generated/web-components.entry.js"></script>
+
+
+    
+
+
+<script data-e2e="analytics-script" nonce="**CSP_NONCE**">
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WFJWBD');
+      (function(window) {
+  function withFormContent(acc, data) {
+    //console.log("acc.content data",data.Content);
+    acc.content = data.Content;
+  }
+
+  function withFeedbackUUID(acc, data) {
+    acc.feedbackUUID = data.Feedback_UUID;
+  }
+
+  function mEvent(name, action, opts) {
+    opts = opts || {};
+    var custom = opts.custom;
+    var label = opts.label;
+
+    function handle(event) {
+      var start = +new Date();
+      var cm = window.cm || function() {};
+      var mData = event.detail;
+      var eData = {
+        category: 'Medallia',
+        action: action,
+        label: label || mData.Form_Type,
+        value: mData.Form_ID,
+        myParams: {},
+      };
+      if (custom) {
+        for (var i = 0; i < custom.length; i++)
+          custom[i](eData.myParams, mData);
+      }
+      var end = +new Date();
+      console.log('send', 'event', eData, end - start);
+      recordEvent({
+        event: eData.action,
+        'survey-tool': eData.category,
+        'survey-form-id': eData.value,
+        'survey-status': eData.label,
+        'survey-details': eData.myParams,
+      });
+    }
+    window.addEventListener('MDigital_' + name, handle);
+  }
+  mEvent('ShowForm_Called', 'survey-show-form-call');
+  mEvent('Form_Displayed', 'survey-start-form');
+  mEvent('Form_Next_Page', 'survey-next-click');
+  mEvent('Form_Back_Page', 'survey-back-click');
+  mEvent('Form_Close_Submitted', 'survey-submit-close');
+  mEvent('Form_Close_No_Submit', 'survey-no-submit-close');
+  mEvent('Feedback_Submit', 'survey-submit', {
+    custom: [withFeedbackUUID, withFormContent],
+  });
+  mEvent('Submit_Feedback', 'survey--submission', {
+    custom: [withFeedbackUUID, withFormContent],
+  });
+  mEvent('Feedback_Button_Clicked', 'survey-button-click', {
+    custom: [withFeedbackUUID],
+  });
+  mEvent('ThankYou_Displayed', 'survey--submission-successful', {
+    custom: [withFeedbackUUID, withFormContent],
+  });
+  mEvent('Invite_Displayed', 'survey-invitation-display', {
+    label: 'Invite',
+  });
+  mEvent('Invite_Accepted', 'survey-invitation-accept', {
+    label: 'Invite',
+  });
+  mEvent('Invite_Declined', 'survey-invitation-decline', {
+    label: 'Invite',
+  });
+  mEvent('Invite_Skipped', 'survey-invitation-skip', {
+    label: 'Invite',
+  });
+})(window);
+    
+  recordEvent({ environment: '' });
+  if ( self !== top ) {
+    recordEvent({ event: 'iframed', embeddedIn: document.referrer });
+  }
+</script>
+
+
+  <!-- Icons -->
+  <link href="/img/design/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed">
+  <link href="/img/design/icons/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+  <link href="/img/design/icons/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+  <link href="/img/design/icons/apple-touch-icon-152x152.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+  <link rel="shortcut icon" href="/img/design/icons/favicon.ico">
+
+  <meta name="msapplication-TileImage" content="/img/design/icons/apple-touch-icon-114x114">
+  <meta name="msapplication-TileColor" content="#144073">
+
+  <!-- Preload main fonts -->
+
+  <link rel="preload" href="/generated/sourcesanspro-bold-webfont.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/generated/sourcesanspro-regular-webfont.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/generated/bitter-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/generated/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS -->
+  <link rel="stylesheet" data-entry-name="style.css" href="https://s3-us-gov-west-1.amazonaws.com/apps.dev.va.gov/generated/style.css">
+  <link rel="stylesheet" data-entry-name="static-pages.css" href="https://s3-us-gov-west-1.amazonaws.com/apps.dev.va.gov/generated/static-pages.css">
+
+  <!-- Old IE -->
+
+  <!--[if lt IE 9]>
+<link rel='stylesheet' href='/assets/css/ie.css'>
+<![endif]-->
+
+
+  <script nonce="**CSP_NONCE**" defer data-entry-name="vendor.js" src="https://s3-us-gov-west-1.amazonaws.com/apps.dev.va.gov/generated/vendor.entry.js"></script>
+  <script nonce="**CSP_NONCE**" defer data-entry-name="static-pages.js" src="https://s3-us-gov-west-1.amazonaws.com/apps.dev.va.gov/generated/static-pages.entry.js"></script>
+
+  <!--
+  We participate in the US government’s analytics program. See the data at analytics.usa.gov.
+  https://github.com/digital-analytics-program/gov-wide-code
+-->
+  <script async type="text/javascript" nonce="**CSP_NONCE**" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=VA" id="_fed_an_ua_tag"></script>
+
+  <script nonce="**CSP_NONCE**" type="text/javascript">
+    window.VetsGov = window.VetsGov || {};
+    window.VetsGov.headerFooter = JSON.parse();
+  </script>
+
+
+
+</head>
+
+<body class=" merger">
+  <style>
+    .va-env-flag {
+      background-color:#000;
+      color: #fff;
+      padding: .5em;
+      text-align: center;
+    }
+  </style>
+  <div class="va-env-flag" aria-label="This environment is: ">
+    
+  </div>
+  <!-- Draft status -->
+
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WFJWBD"
+  height="0" width="0" class="csp-inline-patch-footer"></iframe></noscript>
+
+  <a class="show-on-focus" href="#content">Skip to Content</a>
+
+    <header class="header">
+  <div class="incompatible-browser-warning">
+    <div class="row full">
+      <div class="small-12">
+        Your browser is out of date. To use this website, please <a href="https://browsehappy.com/" target="_blank" rel="noopener ">update your browser</a> or use a different device.
+      </div>
+    </div>
+  </div>
+
+  <div class="va-notice--banner">
+    <div class="va-notice--banner-inner">
+<div class="usa-banner">
+  <div class="usa-accordion">
+    <div class="usa-banner-header">
+      <div class="usa-grid usa-banner-inner">
+      <img src="/img/tiny-usa-flag.png" alt="U.S. flag">
+      <p>An official website of the United States government</p>
+      <button id="usa-banner-toggle" class="usa-accordion-button usa-banner-button" aria-expanded="false" aria-controls="gov-banner">
+        <span class="usa-banner-button-text">Here&#x2019;s how you know</span>
+      </button>
+      </div>
+    </div>
+    <div class="usa-banner-content usa-grid usa-accordion-content" id="gov-banner" aria-hidden="true">
+      <div class="usa-banner-guidance-gov usa-width-one-half">
+        <img class="usa-banner-icon usa-media_block-img" src="/img/icon-dot-gov.svg" alt="Dot gov">
+        <div class="usa-media_block-body">
+          <p>
+            <strong>The .gov means it&#x2019;s official.</strong>
+            <br>
+            Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure you&apos;re on a federal government site.
+          </p>
+        </div>
+      </div>
+      <div class="usa-banner-guidance-ssl usa-width-one-half">
+        <img class="usa-banner-icon usa-media_block-img" src="/img/icon-https.svg" alt="SSL">
+        <div class="usa-media_block-body">
+          <p>
+            <strong>The site is secure.</strong>
+            <br> The <strong>https://</strong> ensures that you&apos;re connecting to the official website and that any information you provide is encrypted and sent securely.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="va-crisis-line-container">
+      <button onclick="recordEvent({ event: &apos;nav-crisis-header&apos; })" data-show="#modal-crisisline" class="va-crisis-line va-overlay-trigger">
+        <div class="va-crisis-line-inner">
+          <span class="va-crisis-line-icon" aria-hidden="true"></span>
+          <span class="va-crisis-line-text" onclick="recordEvent({ event: &apos;nav-jumplink-click&apos; });">Talk to the <strong>Veterans Crisis Line</strong> now</span>
+          <img class="va-crisis-line-arrow" src="/img/arrow-right-white.svg" aria-hidden="true">
+        </div>
+      </button>
+    </div>
+  </div>
+  <!-- /header alert box -->
+
+  <div class="row va-flex usa-grid usa-grid-full" id="va-header-logo-menu">
+    <div class="va-header-logo-wrapper">
+      <a href="/" class="va-header-logo">
+        <img src="/img/header-logo.png" alt="Go to VA.gov">
+      </a>
+    </div>
+      <div id="va-nav-controls"></div>
+      <div id="login-root" class="vet-toolbar"></div>
+  </div>
+    <div class="usa-grid usa-grid-full">
+      <div id="menu-rule" class="usa-one-whole"></div>
+      <div id="mega-menu"></div>
+      <!-- for the mega-menu, but if you add the ID the css breaks rn -->
+    </div>
+</header>
+  
+    
+      
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+    
+
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+    
+      
+  
+    
+
+  
+
+
+  <div data-widget-type="banners" data-homepage-banner-content data-homepage-banner-title data-homepage-banner-type data-homepage-banner-visible></div>
+
+  <script nonce="**CSP_NONCE**" type="text/javascript">
+  (function() {
+    var module = {};
+function checkBrowserCompatibility() {
+  var domReady = function(callback) {
+    document.readyState === 'interactive' || document.readyState === 'complete'
+      ? callback()
+      : document.addEventListener('DOMContentLoaded', callback);
+  };
+
+  domReady(function() {
+    // check whether browser is IE10 and older
+    if (window.navigator.userAgent.indexOf('MSIE ') > 0) {
+      var browserWarning = document.getElementsByClassName(
+        'incompatible-browser-warning'
+      )[0];
+
+      if (browserWarning) {
+        browserWarning.classList.add('visible');
+      }
+    }
+  });
+}
+
+if (module) {
+  module.exports = checkBrowserCompatibility;
+}
+    checkBrowserCompatibility();
+  })();
+  </script>
+  
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+
+  
+
+
+      
+      
+
+  
+
+
+      
+      
+
+  
+
+
+      
+      
+
+  
+
+
+      
+      
+
+  
+
+
+      
+      
+
+  
+
+
+      
+      
+
+  
+
+
+      
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+  
+      
+
+
+      
+
+<nav data-template="includes/breadcrumbs" aria-label="Breadcrumb" aria-live="polite" class="va-nav-breadcrumbs" id="va-breadcrumbs">
+  <ul class="row va-nav-breadcrumbs-list columns" id="va-breadcrumbs-list">
+    
+
+                                                        <li>
+          <a onclick="recordEvent({ &apos;event&apos;: &apos;nav-breadcrumb&apos;, &apos;breadcrumb-click-label&apos;: &apos;VA Pittsburgh health care&apos;, &apos;breadcrumb-click-level&apos;: &apos;2&apos;, &apos;breadcrumb-total-levels&apos;: &apos;2&apos; });" aria-current="page" href="/" lang="en">    
+            VA Pittsburgh health care
+          </a>
+        </li>
+      </ul>
+</nav>
+
+<div id="content" class="interior">
+  <main class="va-l-detail-page va-facility-page">
+    <div class="usa-grid usa-grid-full">
+
+
+
+
+<script nonce="**CSP_NONCE**" type="text/javascript">
+    window.sideNav = {"name":"VA Pittsburgh health care","description":"VISN 4 | va.gov/pittsburgh-health-care","links":[{"label":"VA Pittsburgh health care","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care"},"links":[{"label":"Services and locations","expanded":true,"description":null,"url":{"path":""},"links":[{"label":"Health services","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/health-services"},"links":[]},{"label":"Locations","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/locations"},"links":[{"label":"Pittsburgh VA Medical Center-University Drive","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care/locations/pittsburgh-va-medical-center-university-drive"},"links":[]},{"label":"H. John Heinz III Department of Veterans Affairs Medical Center","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center"},"links":[]},{"label":"Beaver County VA Clinic","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/locations/beaver-county-va-clinic"},"links":[]},{"label":"Belmont County VA Clinic","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/locations/belmont-county-va-clinic"},"links":[]},{"label":"Fayette County VA Clinic","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/locations/fayette-county-va-clinic"},"links":[]},{"label":"Washington County VA Clinic","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/locations/washington-county-va-clinic"},"links":[]},{"label":"Westmoreland County VA Clinic","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/locations/westmoreland-county-va-clinic"},"links":[]}]}]},{"label":"News and events","expanded":true,"description":null,"url":{"path":""},"links":[{"label":"Events","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/events"},"links":[]},{"label":"News releases","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/news-releases"},"links":[]},{"label":"Stories","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/stories"},"links":[]}]},{"label":"About VA Pittsburgh","expanded":true,"description":null,"url":{"path":""},"links":[{"label":"About us","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care/about"},"links":[{"label":"Mission and vision","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/mission-vision"},"links":[]},{"label":"History","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/history"},"links":[]},{"label":"Performance","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/performance"},"links":[]},{"label":"Leadership","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/leadership"},"links":[]}]},{"label":"Work with us","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care/work-with-us"},"links":[{"label":"Jobs and careers","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care/work-with-us/jobs-careers"},"links":[]},{"label":"Internships and fellowships","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/work-with-us/internships-fellowships"},"links":[{"label":"Psychology Internships and Fellowships","expanded":false,"description":"Psychology Internships and Fellowships","url":{"path":"/pittsburgh-health-care/work-with-us/internships-fellowships/psychology-internships-and-fellowships"},"links":[]}]},{"label":"Volunteer or donate","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/work-with-us/volunteer-or-donate"},"links":[]}]},{"label":"Programs","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care/programs"},"links":[{"label":"Cardiology at VA Pittsburgh","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/programs/cardiology"},"links":[]},{"label":"PIRATE","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/programs/pirate"},"links":[]}]},{"label":"Research","expanded":true,"description":null,"url":{"path":"/pittsburgh-health-care/research"},"links":[{"label":"GRECC","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/research/geriatric-research-education-and-clinical-center-grecc"},"links":[]},{"label":"Safety and security","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/research/safety-security"},"links":[]},{"label":"Research professionals","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/research/research-professionals"},"links":[]}]},{"label":"Policies","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/policies"},"links":[]},{"label":"Contact us","expanded":false,"description":null,"url":{"path":"/pittsburgh-health-care/contact-us"},"links":[]}]}]},{"label":"DAV Vans: transportation for Veterans","expanded":false,"description":null,"url":{"path":"/syracus-health-care/dav-vans-transportation-for-veterans"},"links":[]}]};
+</script>
+
+
+<nav data-template="navigation/facility_sidebar_nav" aria-label="secondary" data-widget-type="side-nav"></nav>
+      <div class="usa-width-three-fourths">
+        <article class="usa-content">
+          <!-- [AXE]: ARIA roles used must conform to valid values. Critical. -->
+          <h1 role="nonsense">VA Pittsburgh health care</h1>
+
+          <div class="duotone darken lighten medium-screen:vads-u-margin-bottom--0p5">
+            <!-- [AXE]: Images must have alternate text. Critical. -->
+            <img src="/img/styles/7_2_medium_thumbnail/public/2019-04/UD%20front.jpg" width="100%">
+
+            <!-- [AXE]: Buttons must have discernible text. Critical. -->
+            <button type="button"></button>
+
+            <ul>
+              <!-- [AXE]: <ul> and <ol> must only directly contain <li>, <script> or <template> elements. Serious. -->
+              <h3 id="this-heading-should-not-be-her">This heading should not be here</h3>
+              <li>One</li>
+              <li>Two</li>
+              <li>Three</li>
+              <li>Four</li>
+            </ul>
+          </div>
+
+          <div class="usa-grid usa-grid-full vads-u-margin-top--0 vads-u-margin-bottom--3">
+            
+<div data-template="facilities/main_buttons" class="vads-l-row">
+    <div class="medium-screen:vads-l-col--4 vads-l-col--12 vads-u-margin-right--2p5">
+        <a class="usa-button vads-u-margin-top--1 vads-u-margin--0 vads-u-width--full vads-u-font-size--md" href="/pittsburgh-health-care/make-an-appointment">Make an appointment</a>
+    </div>
+    <div class="medium-screen:vads-l-col--4 vads-l-col--12 vads-u-margin-right--2p5">
+        <a class="usa-button vads-u-margin-top--1 vads-u-margin--0 vads-u-width--full vads-u-font-size--md" href="/pittsburgh-health-care/health-services">View all health services</a>
+    </div>
+    <div class="medium-screen:vads-l-col--4 vads-l-col--12 vads-u-text-align--right vads-u-flex--fill">
+        <a class="usa-button vads-u-margin-top--1 vads-u-margin--0 vads-u-margin-x--0 vads-u-width--full vads-u-font-size--md" href="/pittsburgh-health-care/register-for-care">Register for care</a>
+    </div>
+</div>
+          </div>
+
+          <div class="va-introtext">
+            <p class="vads-u-margin-bottom--0">At VA Pittsburgh Healthcare System, our health care teams are deeply experienced and guided by the needs of Veterans, their families, and caregivers. Find a health facility near you, and manage your health online. Sign up for community events and updates.</p>
+          </div>
+
+          <section id="testId">
+            <h2 class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 medium-screen:vads-u-margin-bottom--2p5" id="locations">
+              Locations</h2>
+            <div data-template="includes/facilityListing" class="region-list usa-width-one-whole vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--4 medium-screen:vads-u-margin-bottom--5">
+  <section class="region-grid vads-u-margin-right--2">
+    <h3 class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md medium-screen:vads-u-font-size--lg" id="h-john-heinz-iii-department-of">
+      <a href="/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center">H. John Heinz III Department of Veterans Affairs Medical Center</a></h3>
+    <div class="vads-u-margin-bottom--1">
+      <address class="vads-u-margin-bottom--0">
+        <div>1010 Delafield Road</div>
+        <div>Pittsburgh,
+          PA
+          15240-1005
+        </div>
+      </address>
+      <div>
+        <a href="https://maps.google.com?saddr=Current+Location&amp;daddr=1010 Delafield Road, Pittsburgh, PA 15240-1005" target="_blank" rel="noopener noreferrer">
+          Directions
+        </a>
+      </div>
+    </div>
+    <div class="vads-u-margin-bottom--0">
+      <div class="main-phone vads-u-margin-bottom--1">
+        <strong>Main phone:</strong>
+        <a href="tel:412-360-6000">412-360-6000</a>
+      </div>
+        <div class="mental-health-clinic-phone">
+          <strong>Mental health clinic:</strong>
+          <a href="tel:412-360-6600">412-360-6600</a>
+        </div>
+    </div>
+  </section>
+  <section class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
+    <a href="/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center" aria-label="Heinz campus of the VA hospital system in Pittsburgh">
+      <img class="region-img" src="/img/styles/3_2_medium_thumbnail/public/2019-02/HJ-heinz-ambulatory-care3_0.jpg" alt="Heinz campus of the VA hospital system in Pittsburgh">
+    </a>
+  </section>
+</div>
+                        <div data-template="includes/facilityListing" class="region-list usa-width-one-whole vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--4 medium-screen:vads-u-margin-bottom--5">
+  <section class="region-grid vads-u-margin-right--2">
+    <h3 class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md medium-screen:vads-u-font-size--lg" id="pittsburgh-va-medical-center-u">
+      <a href="/pittsburgh-health-care/locations/pittsburgh-va-medical-center-university-drive">Pittsburgh VA Medical Center-University Drive</a></h3>
+    <div class="vads-u-margin-bottom--1">
+      <address class="vads-u-margin-bottom--0">
+        <div>University Drive C</div>
+        <div>Pittsburgh,
+          PA
+          15240-1003
+        </div>
+      </address>
+      <div>
+        <a href="https://maps.google.com?saddr=Current+Location&amp;daddr=University Drive C, Pittsburgh, PA 15240-1003" target="_blank" rel="noopener noreferrer">
+          Directions
+        </a>
+      </div>
+    </div>
+    <div class="vads-u-margin-bottom--0">
+      <div class="main-phone vads-u-margin-bottom--1">
+        <strong>Main phone:</strong>
+        <a href="tel:866-482-7488">866-482-7488</a>
+      </div>
+        <div class="mental-health-clinic-phone">
+          <strong>Mental health clinic:</strong>
+          <a href="tel:412-360-6600">412-360-6600</a>
+        </div>
+    </div>
+  </section>
+  <section class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
+    <a href="/pittsburgh-health-care/locations/pittsburgh-va-medical-center-university-drive" aria-label="The entrance to the Pittsburgh VA Medical Center--University Drive">
+      <img class="region-img" src="/img/styles/3_2_medium_thumbnail/public/2019-02/university-drive-consolidation-building2.jpg" alt="The entrance to the Pittsburgh VA Medical Center--University Drive">
+    </a>
+  </section>
+</div>
+             <a onclick="recordEvent({ event: &apos;nav-secondary-button-click&apos; });" class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md" href="/pittsburgh-health-care/locations">
+              See all locations <i class="fa fa-chevron-right va-l-font-size--12px">&#xA0;</i>
+            </a>
+          </section>
+
+          <!-- "Manage your health online" section -->
+          <!-- [AXE]: No duplicate IDs. Minor. -->
+          <section id="testId">
+            <h3 id="manage-your-health-online">Manage your health online</h3>
+            <div class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
+              <div class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
+                <div class="vads-facility-hub-cta">
+                  <!-- [AXE]: Links must have discernible text. Serious. -->
+                  <a onclick="recordEvent({ event: &apos;cta-hub-link-click&apos; });" href="/health-care/refill-track-prescriptions/" class="vads-u-height--full vads-u-width--full"></a>
+                </div>
+                <div class="vads-facility-hub-cta">
+                  <a onclick="recordEvent({ event: &apos;cta-hub-link-click&apos; });" href="/health-care/secure-messaging/" class="vads-u-height--full vads-u-width--full">
+                    <i class="far fa-comments vads-facility-hub-cta-circle">&#xA0;</i>
+                    <span class="vads-facility-hub-cta-label">Send a secure
+                      message to your health care team<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&#xA0;</i></span>
+                  </a>
+                </div>
+                <div class="vads-facility-hub-cta vads-u-border-color--primary-alt-light medium-screen:vads-u-border-bottom--1px">
+
+                  <a onclick="recordEvent({ event: &apos;cta-hub-link-click&apos; });" href="/health-care/schedule-view-va-appointments/" class="vads-u-height--full vads-u-width--full">
+                    <i class="far fa-calendar-check vads-facility-hub-cta-circle">&#xA0;</i>
+                    <span class="vads-facility-hub-cta-label">Schedule and manage
+                      health appointments<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&#xA0;</i></span>
+                  </a>
+                </div>
+              </div>
+              <div>
+                <div class="vads-facility-hub-cta">
+                  <a onclick="recordEvent({ event: &apos;cta-hub-link-click&apos; });" href="/health-care/get-medical-records/" class="vads-u-height--full vads-u-width--full">
+                    <i class="fa fa-file-medical vads-facility-hub-cta-circle">&#xA0;</i>
+                    <span class="vads-facility-hub-cta-label">Download your VA
+                      medical records (Blue Button)<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&#xA0;</i></span>
+                  </a>
+                </div>
+                <div class="vads-facility-hub-cta">
+                  <a onclick="recordEvent({ event: &apos;cta-hub-link-click&apos; });" href="/health-care/view-test-and-lab-results/" class="vads-u-height--full vads-u-width--full">
+                    <i class="fa fa-clipboard-list vads-facility-hub-cta-circle">&#xA0;</i>
+                    <span class="vads-facility-hub-cta-label">View your lab and
+                      test results<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&#xA0;</i></span>
+                  </a>
+                </div>
+                <div class="vads-facility-hub-cta vads-facility-hub-cta-last-line vads-u-border-top--1px vads-u-border-color--primary-alt-light">
+                  <a onclick="recordEvent({ event: &apos;cta-hub-link-click&apos; });" href="/health-care/order-hearing-aid-batteries-and-accessories/" class="vads-u-height--full vads-u-width--full">
+                    <i class="fa fa-deaf vads-facility-hub-cta-circle">&#xA0;</i>
+                    <span class="vads-facility-hub-cta-label">Order hearing aid batteries <br> and accessories<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&#xA0;</i></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- List of links section -->
+          <div class="vads-u-margin-top--5">
+
+<section data-template="paragraphs/list_of_link_teasers_facility" data-entity-id="3943" class="feature vads-u-padding-x--2 small-screen:vads-u-padding-x--4 vads-u-padding-top--3 vads-u-padding-bottom--2">
+    <h3 class="vads-u-margin-bottom--2" id="in-the-spotlight-at-va-pittsbu">
+        In the spotlight at VA Pittsburgh health care
+    </h3>
+
+    <div class="va-c-list-link-teasers">
+        <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+
+                                                    
+                                        <div class="usa-width-one-half vads-u-display--flex vads-u-flex-direction--column">
+                    <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="/pittsburgh-health-care/patient-advocates">
+                        Get help from a patient advocate
+                    </a>
+                    
+                                            <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="/pittsburgh-health-care/medical-records-office">
+                        Medical records office
+                    </a>
+                    
+                                            <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="/pittsburgh-health-care/contact-us">
+                        Phone directory
+                    </a>
+                    
+                                            <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="/pittsburgh-health-care/performance">
+                        Compare our performance with non-VA health facilities
+                    </a>
+                </div>
+                    
+                                        <div class="usa-width-one-half vads-u-display--flex vads-u-flex-direction--column">
+                    <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="/pittsburgh-health-care/billing-insurance">
+                        Billing and insurance
+                    </a>
+                    
+                                            <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="/pittsburgh-health-care/work-with-us/volunteer-or-donate">
+                        Become a volunteer
+                    </a>
+                    
+                                            <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="/pittsburgh-health-care/about#annual-reports-and-newsletters">
+                        Annual reports and newsletters
+                    </a>
+                    
+                                            <a onclick="recordEvent({ event: &apos;nav-featured-content-link-click&apos;, &apos;featured-content-header&apos;: &apos;In the Spotlight&apos; });" class="vads-u-margin-bottom--2" href="https://www.publichealth.va.gov/n-coronavirus/index.asp">
+                        Coronavirus Updates
+                    </a>
+                </div>
+                </div>
+    </div>
+
+</section>
+          </div>
+
+          <!-- Stories -->
+          <section>
+            <h2 class="vads-u-margin-bottom--3 medium-screen:vads-u-margin-top--5" id="stories">
+              Stories</h2>
+                        
+<div data-template="teasers/news_story" class="region-list usa-grid usa-grid-full vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row">
+    <div class="region-grid vads-u-margin-right--2 ">
+        <h3 class="vads-u-font-size--md medium-screen:vads-u-font-size--lg vads-u-margin-top--0 medium-screen:vads-u-margin-bottom--0p5" id="veterans-how-can-va-improve-yo"><a href="/pittsburgh-health-care/stories/veterans-how-can-va-improve-your-health-care">Veterans: How Can VA Improve Your Health Care?</a></h3>
+        <p class="vads-u-margin-y--0">Join a virtual listening session on March 10 to tell us how VA can improve your health care.</p>
+    </div>
+    <div class="region-grid  vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--0">
+        <img class="region-img" src="/img/styles/3_2_medium_thumbnail/public/2021-03/Listening-Session-Website-Graphic-730x370.jpg" alt="Various flags" title width="480" height="320">
+    </div>
+</div>
+
+                        <a onclick="recordEvent({ event: &apos;nav-secondary-button-click&apos; });" class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md vads-u-margin--0" href="/pittsburgh-health-care/stories">
+              See all stories <i class="fa fa-chevron-right va-l-font-size--12px"></i>
+            </a>
+          </section>
+
+          <!-- Events -->
+          <section>
+            <h2 class="vads-u-margin-top--4 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--2p5" id="events">
+              Events</h2>
+                                  
+    
+                
+            
+
+                
+    <div data-template="teasers/event" class="vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4">
+      <h3 class="vads-u-margin-top--0 vad-u-margin-bottom-1 vads-u-font-size--md medium-screen:vads-u-font-size--lg" id="the-bridge-screening-and-discu"><a href="/pittsburgh-health-care/events/the-bridge-screening-and-discussion">The Bridge Screening and Discussion</a></h3>
+      <p class="vads-u-margin-bottom--1p5 vads-u-margin-top--0">Watch the documentary and join our panel to talk about moral injury, suicide and mental health.</p>
+      <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
+        <div class="vads-u-margin-right--2 when-where-width">
+          <strong>When</strong>
+        </div>
+        <div class="usa-width-five-sixths">
+                                    <span>Friday, Sept. 20, 2019</span><br>
+                    <span>10:00 a.m. &#x2013; 2:00 p.m.</span>
+                        <span>ET</span>
+        </div>
+      </div>
+      <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--row">
+        <div class="vads-u-margin-right--2 when-where-width">
+          <strong>Where</strong>
+        </div>
+        <div class="usa-width-five-sixths">
+              <p class="vads-u-margin-top--0 vads-u-margin-bottom--1">
+                  <a href="/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center">H. John Heinz III Department of Veterans Affairs Medical Center</a>
+              </p>
+                <span>Learning Exchange</span>
+        </div>
+      </div>
+  </div>
+
+                                                
+    
+                
+            
+
+                
+    <div data-template="teasers/event" class="vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4">
+      <h3 class="vads-u-margin-top--0 vad-u-margin-bottom-1 vads-u-font-size--md medium-screen:vads-u-font-size--lg" id="mindful-mondays"><a href="/pittsburgh-health-care/events/mindful-mondays-2">Mindful Mondays</a></h3>
+      <p class="vads-u-margin-bottom--1p5 vads-u-margin-top--0">VA Pittsburgh&#x2019;s whole health facilitators invite you to join them once weekly for a moment of mindfulness.</p>
+      <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
+        <div class="vads-u-margin-right--2 when-where-width">
+          <strong>When</strong>
+        </div>
+        <div class="usa-width-five-sixths">
+                                    <span>Monday, Feb. 10, 2020</span><br>
+                    <span>9:00 a.m. &#x2013; 10:00 a.m.</span>
+                        <span>ET</span>
+        </div>
+      </div>
+  </div>
+
+                                                
+    
+                
+            
+
+                
+    <div data-template="teasers/event" class="vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4">
+      <h3 class="vads-u-margin-top--0 vad-u-margin-bottom-1 vads-u-font-size--md medium-screen:vads-u-font-size--lg" id="mindful-mondays-1"><a href="/pittsburgh-health-care/events/mindful-mondays-3">Mindful Mondays</a></h3>
+      <p class="vads-u-margin-bottom--1p5 vads-u-margin-top--0">VA Pittsburgh&#x2019;s whole health facilitators invite you to join them once weekly for a moment of mindfulness.</p>
+      <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
+        <div class="vads-u-margin-right--2 when-where-width">
+          <strong>When</strong>
+        </div>
+        <div class="usa-width-five-sixths">
+                                    <span>Monday, Dec. 23, 2019</span><br>
+                    <span>9:00 a.m. &#x2013; 10:00 a.m.</span>
+                        <span>ET</span>
+        </div>
+      </div>
+  </div>
+
+                          <a onclick="recordEvent({ event: &apos;nav-secondary-button-click&apos; });" class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md vads-u-margin--0" href="/pittsburgh-health-care/events">
+              See all events <i class="fa fa-chevron-right va-l-font-size--12px"></i>
+            </a>
+          </section>
+          <section data-template="facilities/facility_social_links" class="feature vads-u-background-color--gray-lightest vads-u-margin-top--4 small-screen:vads-u-margin-top--6 vads-u-padding-x--3 vads-u-padding-y--2p5">
+    <h2 class="vads-u-margin-bottom--2" id="get-updates-from-va-pittsburgh">Get updates from VA Pittsburgh health care</h2>
+    <div class="va-c-list-link-teasers usa-grid usa-grid-full">
+
+            <div class="usa-width-one-half social-links">
+                        <div class="social-links-email vads-u-margin-bottom--2">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="https://public.govdelivery.com/accounts/USVHA/subscriber/new?topic_id=USVHA_94" rel="noopener ">
+                                <i class="fas fa-envelope vads-u-margin-right--1"></i>
+                                <span class="vads-u-text-decoration--underline">Subscribe to
+                                    VA Pittsburgh health care news and announcements</span>
+                            </a>
+                        </div>
+
+                        <div class="social-links-email vads-u-margin-bottom--2">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="https://public.govdelivery.com/accounts/USVHA/subscriber/new?topic_id=USVHA_396" rel="noopener ">
+                                <i class="fas fa-envelope vads-u-margin-right--1"></i>
+                                <span class="vads-u-text-decoration--underline">Subscribe to VA Pittsburgh health care emergency notifications</span>
+                            </a>
+                        </div>
+
+                                        <div class="social-links-email vads-u-margin-bottom--2">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="/pittsburgh-health-care/operating-status">
+                                <i class="fas fa-dot-circle vads-u-margin-right--1"></i>
+                                <span class="vads-u-text-decoration--underline">VA Pittsburgh health care operating status</span>
+                            </a>
+                        </div>
+            </div>
+
+    </div>
+</section>
+
+        </article>
+      </div>
+    </div>
+  </main>
+<div id="announcement-root"></div>
+<footer class="footer" role="contentinfo">
+  <div id="footerNav"></div> <!-- let's try this React thing -->
+</footer>
+
+<!--
+“To care for him who shall have borne the battle and for his widow, and his orphan.”
+- Abraham Lincoln
+-->
+<script nonce="**CSP_NONCE**" type="text/javascript">
+(function() {
+  var module = {};
+function mountWidgets(widgets, slowLoadingThreshold) {
+  [].slice
+    .call(widgets)
+    .forEach(function(widget) {
+      var timeout = widget.getAttribute('data-widget-timeout');
+      if (timeout) {
+        timeout = parseInt(timeout, 10);
+      }
+      timeout = (timeout || 0) * 1000;
+
+      if (timeout > slowLoadingThreshold) {
+        setTimeout(function() {
+          var replacedWithWidget = !widget.querySelector('.static-widget-content');
+          var slowMessage = widget.querySelector('.loading-indicator-message--slow');
+          var regularMessage = widget.querySelector('.loading-indicator-message--normal');
+
+          if (!replacedWithWidget && regularMessage) {
+            regularMessage.setAttribute('aria-hidden', 'true');
+            regularMessage.classList.add('vads-u-display--none');
+          }
+
+          if (!replacedWithWidget && slowMessage) {
+            slowMessage.setAttribute('aria-hidden', 'false');
+            slowMessage.classList.remove('vads-u-display--none');
+          }
+        }, slowLoadingThreshold);
+      }
+
+      if (timeout > 0) {
+        setTimeout(function() {
+          var replacedWithWidget = !widget.querySelector('.static-widget-content');
+          var errorMessage = widget.querySelector('.sip-application-error');
+          var loadingMessage = widget.querySelector('.loading-indicator-container');
+
+          if (!replacedWithWidget && loadingMessage) {
+            loadingMessage.parentNode.removeChild(loadingMessage);
+          }
+
+          if (!replacedWithWidget && errorMessage) {
+            errorMessage.setAttribute('aria-hidden', 'false');
+            errorMessage.classList.remove('vads-u-display--none');
+          }
+        }, timeout);
+      }
+    });
+}
+
+if (module) {
+  module.exports = mountWidgets;
+}
+  mountWidgets(document.querySelectorAll('[data-widget-type]'), 6000);
+})();
+</script>
+
+
+
+    
+</div><script nonce="**CSP_NONCE**" type="text/javascript" src="/js/axe-core.js"></script><script nonce="**CSP_NONCE**" type="text/javascript" src="/js/execute-axe-check.js"></script></body></html>
