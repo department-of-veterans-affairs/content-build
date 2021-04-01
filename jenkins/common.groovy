@@ -114,25 +114,27 @@ def setup() {
 
     dir("content-build") {
 
-      sh "mkdir -p build"
-      sh "mkdir -p temp"
-
       dockerImage = docker.build(DOCKER_TAG)
 
       try {
         parallel (
+          "setup-directories": {
+            dockerImage.inside(DOCKER_ARGS) {
+              sh "mkdir -p build"
+              sh "mkdir -p temp"
+            }
+          },
           "install-content-build": {
             retry(5) {
               dockerImage.inside(DOCKER_ARGS) {
                 sh "cd /application && yarn install --production=false"
               }
             }
-            return dockerImage
           },
           "install-vets-website": {
             retry(5) {
               dockerImage.inside(DOCKER_ARGS) {
-                sh "cd /vets-website && yarn install --production=false"
+                sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
               }
             }
             
