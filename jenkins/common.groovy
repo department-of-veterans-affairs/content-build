@@ -114,16 +114,13 @@ def setup() {
 
     dir("content-build") {
 
+      sh "mkdir -p build"
+      sh "mkdir -p temp"
+
       dockerImage = docker.build(DOCKER_TAG)
 
       try {
         parallel (
-          "setup-directories": {
-            dockerImage.inside(DOCKER_ARGS) {
-              sh "mkdir -p build"
-              sh "mkdir -p temp"
-            }
-          },
           "install-content-build": {
             retry(5) {
               dockerImage.inside(DOCKER_ARGS) {
