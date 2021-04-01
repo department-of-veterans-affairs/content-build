@@ -119,13 +119,32 @@ def setup() {
       sh "mkdir -p temp"
 
       dockerImage = docker.build(DOCKER_TAG)
-      retry(5) {
-        dockerImage.inside(DOCKER_ARGS) {
-          sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
-          sh "cd /application && yarn install --production=false"
-        }
+
+      try {
+        parallel (
+          install: {
+            retry(5) {
+              dockerImage.inside(DOCKER_ARGS) {
+                sh "cd /application && yarn install --production=false"
+              }
+            }
+            return dockerImage
+          },
+          install2: {
+            retry(5) {
+              dockerImage.inside(DOCKER_ARGS) {
+                sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
+              }
+            }
+            
+          },
+        )
+      } catch (error) {
+        throw error
+      } finally {
+        return dockerImage
       }
-      return dockerImage
+
     }
   }
 }
