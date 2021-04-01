@@ -160,7 +160,7 @@ def accessibilityTests() {
         channel: '-daily-accessibility-scan'
       )
 
-    dir("vets-website") {
+    dir("content-build") {
       try {
         parallel (
           'nightwatch-accessibility': {
