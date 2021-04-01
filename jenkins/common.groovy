@@ -113,19 +113,39 @@ def setup() {
     }
 
     dir("content-build") {
-      sh "mkdir -p build"
-      // sh "mkdir -p logs/selenium"
-      // sh "mkdir -p coverage"
-      sh "mkdir -p temp"
 
       dockerImage = docker.build(DOCKER_TAG)
-      retry(5) {
-        dockerImage.inside(DOCKER_ARGS) {
-          sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
-          sh "cd /application && yarn install --production=false"
-        }
+
+      try {
+        parallel (
+          "setup-directories": {
+            dockerImage.inside(DOCKER_ARGS) {
+              sh "mkdir -p build"
+              sh "mkdir -p temp"
+            }
+          },
+          "install-content-build": {
+            retry(5) {
+              dockerImage.inside(DOCKER_ARGS) {
+                sh "cd /application && yarn install --production=false"
+              }
+            }
+          },
+          "install-vets-website": {
+            retry(5) {
+              dockerImage.inside(DOCKER_ARGS) {
+                sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
+              }
+            }
+            
+          },
+        )
+      } catch (error) {
+        throw error
+      } finally {
+        return dockerImage
       }
-      return dockerImage
+
     }
   }
 }
