@@ -124,9 +124,10 @@ def setup() {
           sh "cd /application && yarn install --production=false"
         }
 
+      }
     }
-  }
 
+  }
 }
 
 
