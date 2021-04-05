@@ -125,11 +125,11 @@ def setup() {
         }
 
       }
+      return dockerImage
     }
 
   }
 }
-
 
 /**
  * Searches the build log for missing query flags ands sends a notification
