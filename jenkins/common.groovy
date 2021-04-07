@@ -348,6 +348,8 @@ def integrationTests(dockerContainer, ref) {
       try {
         if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
           parallel (
+            failFast: true,
+
             'nightwatch-e2e': {
               sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
             },
@@ -358,6 +360,8 @@ def integrationTests(dockerContainer, ref) {
           )
         } else {
           parallel (
+            failFast: true,
+
             'nightwatch-e2e': {
               sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
             }
