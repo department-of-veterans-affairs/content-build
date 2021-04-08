@@ -8,12 +8,13 @@
 - Abraham Lincoln
 -->
 <script nonce="**CSP_NONCE**" type="text/javascript">
-(function() {
-  var module = {};
-  {% include "src/site/assets/js/static-page-widgets.js" %}
-  mountWidgets(document.querySelectorAll('[data-widget-type]'), 6000);
-})();
+  (function () {
+    var module = {};
+    {% include "../vets-website/src/site/assets/js/static-page-widgets.js" %}
+    mountWidgets(document.querySelectorAll('[data-widget-type]'), 6000);
+  })();
 </script>
 
 </body>
+
 </html>
