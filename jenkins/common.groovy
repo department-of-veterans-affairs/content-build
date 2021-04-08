@@ -120,8 +120,8 @@ def setup() {
       dockerImage = docker.build(DOCKER_TAG)
       retry(5) {
         dockerImage.inside(DOCKER_ARGS) {
-          sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
-          sh "cd /application && yarn install --production=false"
+          sh "cd /vets-website && yarn install --frozen-lockfile --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
+          sh "cd /application && yarn install --frozen-lockfile --production=false"
         }
 
       }
