@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-expressions */
 function checkBrowserCompatibility() {
-  var domReady = function(callback) {
+  const domReady = function(callback) {
     document.readyState === 'interactive' || document.readyState === 'complete'
       ? callback()
       : document.addEventListener('DOMContentLoaded', callback);
@@ -8,8 +9,8 @@ function checkBrowserCompatibility() {
   domReady(function() {
     // check whether browser is IE10 and older
     if (window.navigator.userAgent.indexOf('MSIE ') > 0) {
-      var browserWarning = document.getElementsByClassName(
-        'incompatible-browser-warning'
+      const browserWarning = document.getElementsByClassName(
+        'incompatible-browser-warning',
       )[0];
 
       if (browserWarning) {
