@@ -113,23 +113,23 @@ def setup() {
     }
 
     dir("content-build") {
+
       sh "mkdir -p build"
-      // sh "mkdir -p logs/selenium"
-      // sh "mkdir -p coverage"
       sh "mkdir -p temp"
 
       dockerImage = docker.build(DOCKER_TAG)
       retry(5) {
         dockerImage.inside(DOCKER_ARGS) {
-          sh "cd /vets-website && yarn install --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
-          sh "cd /application && yarn install --production=false"
+          sh "cd /vets-website && yarn install --frozen-lockfile --production=false --scripts-prepend-node-path=/opt/bitnami/node/bin/node"
+          sh "cd /application && yarn install --frozen-lockfile --production=false"
         }
+
       }
       return dockerImage
     }
+
   }
 }
-
 
 /**
  * Searches the build log for missing query flags ands sends a notification
@@ -160,7 +160,7 @@ def accessibilityTests() {
         channel: '-daily-accessibility-scan'
       )
 
-    dir("vets-website") {
+    dir("content-build") {
       try {
         parallel (
           'nightwatch-accessibility': {
@@ -348,6 +348,8 @@ def integrationTests(dockerContainer, ref) {
       try {
         if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
           parallel (
+            failFast: true,
+
             'nightwatch-e2e': {
               sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
             },
@@ -358,6 +360,8 @@ def integrationTests(dockerContainer, ref) {
           )
         } else {
           parallel (
+            failFast: true,
+
             'nightwatch-e2e': {
               sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
             }

@@ -12,7 +12,7 @@ node('vetsgov-general-purpose') {
 
   // Perform a build for vagovprod
   stage('Build') {
-    commonStages.build(ref, dockerContainer, 'local', 'vagovprod', false, false)
+    commonStages.build(ref, dockerContainer, 'local', 'vagovprod', false, false, '/application')
   }
 
   // Run accessibility tests
