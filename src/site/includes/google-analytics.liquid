@@ -7,7 +7,7 @@
 
   {% when 'vagovdev' %}
     {% capture google_analytics_js %}
-      {% include "src/site/assets/js/google-analytics/vagovdev.js" %}
+      {% include "../vets-website/src/site/assets/js/google-analytics/vagovdev.js" %}
     {% endcapture %}
 
     {% capture google_analytics_noscript %}
@@ -17,8 +17,8 @@
 
   {% when 'vagovstaging' %}
     {% capture google_analytics_js %}
-      {% include "src/site/assets/js/google-analytics/vagovstaging.js" %}
-      {% include "src/site/assets/js/google-analytics/medallia-events.js" %}
+      {% include "../vets-website//js/google-analytics/vagovstaging.js" %}
+      {% include "../vets-website/src/site/assets/js/google-analytics/medallia-events.js" %}
     {% endcapture %}
 
     {% capture google_analytics_noscript %}
@@ -28,8 +28,8 @@
 
   {% else %}
     {% capture google_analytics_js %}
-      {% include "src/site/assets/js/google-analytics/vagovprod.js" %}
-      {% include "src/site/assets/js/google-analytics/medallia-events.js" %}
+      {% include "../vets-website/src/site/assets/js/google-analytics/vagovprod.js" %}
+      {% include "../vets-website/src/site/assets/js/google-analytics/medallia-events.js" %}
     {% endcapture %}
 
     {% capture google_analytics_noscript %}
