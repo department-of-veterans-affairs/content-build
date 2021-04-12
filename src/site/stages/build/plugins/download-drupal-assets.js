@@ -33,9 +33,7 @@ async function downloadFile(
       if (retries > 0) {
         // eslint-disable-next-line no-console
         console.error(
-          `Error while fetching ${
-            asset.src
-          }. ${e} Retries remaining: ${retries}`,
+          `Error while fetching ${asset.src}. ${e} Retries remaining: ${retries}`,
         );
         // Pause to give the proxy connection a break.
         // eslint-disable-next-line no-await-in-loop
