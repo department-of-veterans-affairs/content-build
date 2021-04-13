@@ -6,7 +6,8 @@ const E2eHelpers = require('platform/testing/e2e/helpers');
 function verifyGoogleAnalytics(browser) {
   const googleAnalyticsCode = fs.readFileSync(
     path.join(
-      './../assets/js/google-analytics/',
+      __dirname,
+      '../../../../../vets-website/site/assets/js/google-analytics/',
       `${process.env.BUILDTYPE}.js`,
     ),
   );
