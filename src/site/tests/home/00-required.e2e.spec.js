@@ -7,7 +7,7 @@ function verifyGoogleAnalytics(browser) {
   const googleAnalyticsCode = fs.readFileSync(
     path.join(
       __dirname,
-      '../../../../../src/vets-website/site/assets/js/google-analytics/',
+      '../../site/assets/js/google-analytics/',
       `${process.env.BUILDTYPE}.js`,
     ),
   );
