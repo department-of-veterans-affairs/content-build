@@ -116,6 +116,8 @@ function setupJSDom() {
     },
   };
 
+  window.getSelection = () => '';
+
   window.Mocha = true;
 
   copyProps(window, global);
