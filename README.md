@@ -25,7 +25,7 @@ on VA.gov, you'll need to build these static pages using the following commands:
 `yarn build` (`—-pull-drupal` runs by default when cache is empty)
 
 - needs active socks proxy connection
-- creates symlink to `../vets-website/build/localhost/generated` allowing access to app bundles
+- creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
 - run once to pull and cache the latest Drupal content and build the static HTML files
 - need to run this again when adding new templates based on new Drupal entities (use `--pull-drupal` to fetch fresh content)
 

@@ -350,3 +350,16 @@ describe('replace', () => {
     );
   });
 });
+
+describe('concat', () => {
+  it('concatenates 2 or more arrays', () => {
+    expect(JSON.stringify(liquid.filters.concat([1], 2, [3], [[4]]))).to.equal(
+      JSON.stringify([1, 2, 3, [4]]),
+    );
+  });
+});
+describe('strip', () => {
+  it('removes leading and trailing whitespace', () => {
+    expect(liquid.filters.strip('   \nhello\n    ')).to.equal('hello');
+  });
+});
