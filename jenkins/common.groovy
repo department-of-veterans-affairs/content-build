@@ -351,11 +351,11 @@ def integrationTests(dockerContainer, ref) {
             failFast: true,
 
             'nightwatch-e2e': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
             },
 
             'nightwatch-accessibility': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
+              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} up -d && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
             },
           )
         } else {
@@ -363,7 +363,7 @@ def integrationTests(dockerContainer, ref) {
             failFast: true,
 
             'nightwatch-e2e': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch up -d && docker-compose -p nightwatch run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
             }
           )
         }
@@ -371,9 +371,9 @@ def integrationTests(dockerContainer, ref) {
         // slackIntegrationNotify()
         throw error
       } finally {
-        sh "docker-compose -p nightwatch down --remove-orphans"
+        sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
         if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-          sh "docker-compose -p accessibility down --remove-orphans"
+          sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
         }
         step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
       }
