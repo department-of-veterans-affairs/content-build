@@ -13,6 +13,7 @@
     "cms:find-node": "./script/cms/find_node.sh",
     "cy:open": "cypress open --config-file config/cypress.json",
     "cy:run": "cypress run --config-file config/cypress.json",
+    "cy:test:docker": "./script/run-cypress-tests-docker.sh",
     "fetch-drupal-cache": "node script/drupal-aws-cache.js --fetch",
     "prebuild": "node script/prebuild.js",
     "preview": "node script/preview.js",
