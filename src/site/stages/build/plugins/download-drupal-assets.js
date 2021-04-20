@@ -36,8 +36,8 @@ async function downloadFile(
           `Error while fetching ${asset.src}. ${e} Retries remaining: ${retries}`,
         );
         // Pause to give the proxy connection a break.
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(resolve => setTimeout(500, resolve));
+        // eslint-disable-next-line no-await-in-loop,no-loop-func
+        await new Promise(resolve => setTimeout(resolve, 2000 - retries * 500));
       } else {
         throw e;
       }
