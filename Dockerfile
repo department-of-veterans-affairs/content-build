@@ -46,9 +46,9 @@ ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 FROM base as installer
 
-COPY --chown=vets-website:vets-website . /application/content-build
+COPY --chown=vets-website:vets-website . /application
 
-WORKDIR /application/content-build
+WORKDIR /application
 
 RUN yarn install --production=false
 
