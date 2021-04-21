@@ -47,7 +47,7 @@ const { cmsFeatureFlags } = global;
 const {
   updateQueryString,
   queryParamToBeChanged,
-} = require('../../../../utilities/stringHelpers');
+} = require('./../../../../utilities/stringHelpers');
 
 const officePage = require('./officePage.graphql');
 
