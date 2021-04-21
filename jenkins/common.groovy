@@ -17,8 +17,8 @@ DRUPAL_CREDENTIALS = [
 ]
 
 ALL_VAGOV_BUILDTYPES = [
-  'vagovdev',
-  'vagovstaging',
+  // 'vagovdev',
+  // 'vagovstaging',
   'vagovprod'
 ]
 
@@ -366,9 +366,9 @@ def integrationTests(dockerContainer, ref) {
           parallel (
             failFast: true,
 
-            'nightwatch-e2e': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-            },
+            // 'nightwatch-e2e': {
+            //   sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+            // },
             cypress: {
               sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
             }
