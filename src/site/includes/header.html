@@ -92,6 +92,19 @@
 </head>
 
 <body class="{{ body_class }} merger">
+  {% if buildtype != 'vagovprod' %}
+  <style>
+    .va-env-flag {
+      background-color:#000;
+      color: #fff;
+      padding: .5em;
+      text-align: center;
+    }
+  </style>
+  <div class="va-env-flag" aria-label="This environment is: {{buildtype}}">
+    {{buildtype}}
+  </div>
+  {% endif %}
   <!-- Draft status -->
   {% if entityUrl.path && isPreview && !entityPublished %}
     <div class="vads-u-background-color--primary-alt-lightest vads-u-padding--1">

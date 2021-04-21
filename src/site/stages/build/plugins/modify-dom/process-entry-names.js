@@ -116,7 +116,7 @@ module.exports = {
 
       // Link the element to the hashed entry name w/o the S3 bucket
       if (buildOptions.buildtype === environments.LOCALHOST) {
-        $el.attr(attribute, `/${fileSearch}?t=`);
+        $el.attr(attribute, `/${fileSearch}?t=${timestamp}`);
       } else {
         $el.attr(attribute, `${s3Search}`);
       }
