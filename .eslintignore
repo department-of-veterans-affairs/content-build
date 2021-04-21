@@ -1,4 +1,5 @@
 src/site/assets/*
+src/site/assets-removed/*
 docs/*
 build/*
 src/applications/**/README.md

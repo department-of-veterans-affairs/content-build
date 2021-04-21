@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   {% if buildtype != 'vagovprod' %}
-    <meta name="robots" content="noindex">
+  <meta name="robots" content="noindex">
   {% endif %}
 
   {% if drupalTags %}
@@ -69,7 +69,7 @@
 <![endif]-->
 
   {% if botframework_cdn %}
-    <script nonce="**CSP_NONCE**" src="{{ botframework_cdn }}"></script>
+  <script nonce="**CSP_NONCE**" src="{{ botframework_cdn }}"></script>
   {% endif %}
 
   <script nonce="**CSP_NONCE**" defer data-entry-name="vendor.js"></script>
@@ -79,8 +79,8 @@
   We participate in the US government’s analytics program. See the data at analytics.usa.gov.
   https://github.com/digital-analytics-program/gov-wide-code
 -->
-  <script async type="text/javascript" nonce="**CSP_NONCE**" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=VA"
-    id="_fed_an_ua_tag"></script>
+  <script async type="text/javascript" nonce="**CSP_NONCE**"
+    src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=VA" id="_fed_an_ua_tag"></script>
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
     window.VetsGov = window.VetsGov || {};
@@ -95,7 +95,7 @@
   {% if buildtype != 'vagovprod' %}
   <style>
     .va-env-flag {
-      background-color:#000;
+      background-color: #000;
       color: #fff;
       padding: .5em;
       text-align: center;
@@ -107,39 +107,36 @@
   {% endif %}
   <!-- Draft status -->
   {% if entityUrl.path && isPreview && !entityPublished %}
-    <div class="vads-u-background-color--primary-alt-lightest vads-u-padding--1">
-      <div class="vads-l-grid-container medium-screen:vads-u-padding-x--0">
-        You are viewing a draft of "{{ entityUrl.path }}".
-        {% if drupalSite && entityId %}
-          <a data-same-tab href="{{ drupalSite }}/node/{{ entityId }}/edit">
-            Edit this page in the CMS.
-          </a>
-        {% endif %}
-      </div>
+  <div class="vads-u-background-color--primary-alt-lightest vads-u-padding--1">
+    <div class="vads-l-grid-container medium-screen:vads-u-padding-x--0">
+      You are viewing a draft of "{{ entityUrl.path }}".
+      {% if drupalSite && entityId %}
+      <a data-same-tab href="{{ drupalSite }}/node/{{ entityId }}/edit">
+        Edit this page in the CMS.
+      </a>
+      {% endif %}
     </div>
+  </div>
   {% endif %}
 
   {{ google_analytics_noscript }}
   <a class="show-on-focus" href="#content">Skip to Content</a>
 
   {% if !noHeader %}
-    {% include "src/site/includes/top-nav.html" %}
+  {% include "src/site/includes/top-nav.html" %}
   {% endif %}
 
   {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
 
-  <div
-    data-widget-type="banners"
-    data-homepage-banner-content="{{ homepage_banner.content | escape }}"
+  <div data-widget-type="banners" data-homepage-banner-content="{{ homepage_banner.content | escape }}"
     data-homepage-banner-title="{{ homepage_banner.title | escape }}"
-    data-homepage-banner-type="{{ homepage_banner.type }}"
-    data-homepage-banner-visible="{{ homepage_banner.visible }}"
-  ></div>
+    data-homepage-banner-type="{{ homepage_banner.type }}" data-homepage-banner-visible="{{ homepage_banner.visible }}">
+  </div>
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
-  (function() {
-    var module = {};
-    {% include "src/site/assets/js/incompatible-browser.js" %}
-    checkBrowserCompatibility();
-  })();
+    (function () {
+      var module = {};
+      {% include "src/site/assets/js/incompatible-browser.js" %};
+      checkBrowserCompatibility();
+    })();
   </script>
