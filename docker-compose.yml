@@ -15,6 +15,7 @@ services:
       - 3000
       - 3002
     command: ./script/run-docker-nightwatch.sh
+    command: docker network ls
   selenium-chrome:
     image: selenium/standalone-chrome:3.14.0-francium
     links:
