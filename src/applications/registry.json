@@ -1010,7 +1010,7 @@
     "entryName": "covid-vaccine",
     "rootUrl": "/health-care/covid-19-vaccine/sign-up/",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "title": "Sign up to get a vaccine",
       "description": "We’re working to provide COVID-19 vaccines as quickly and safely as we can. We base our vaccine plans on CDC guidelines, federal law, and available supply. Sign up to tell us you’d like to get a COVID-19 vaccine at VA.",
@@ -1035,7 +1035,6 @@
     "entryName": "1990s-edu-benefits",
     "rootUrl": "/education/other-va-education-benefits/veteran-rapid-retraining-assistance/apply-for-vrrap-form-22-1990s",
     "template": {
-      "vagovprod": false,
       "title": "Apply for the Veteran Rapid Retraining Assistance Program (VRRAP)",
       "heading": "Apply for the Veteran Rapid Retraining Assistance Program (VRRAP)",
       "layout": "page-react.html",
@@ -1050,11 +1049,11 @@
           "path": "education/other-va-education-benefits/"
         },
         {
-          "name": "Veteran Rapid Retraining Assistance Program",
-          "path": "education/other-va-education-benefits/"
+          "name": "Veteran Rapid Retraining Assistance Program (VRRAP)",
+          "path": "education/other-va-education-benefits/veteran-rapid-retraining-assistance"
         },
         {
-          "name": "Apply for VRRAP VA Form 22-1990s",
+          "name": "Apply for VRRAP VA Form 22 1990s",
           "path": "education/other-va-education-benefits/veteran-rapid-retraining-assistance/apply-for-vrrap-form-22-1990s"
         }
       ]
