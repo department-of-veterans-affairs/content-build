@@ -79,6 +79,18 @@ module.exports = {
     const { dom } = file;
     if (!dom) return;
 
+    // Set font preload URLs to point to apps bucket
+    dom('link[rel="preload"]').each((index, el) => {
+      const $el = dom(el);
+      const hrefVal = $el.attr('href');
+      const filePath =
+        buildOptions.buildtype !== environments.LOCALHOST
+          ? `${buckets[buildOptions.buildtype]}${hrefVal}`
+          : hrefVal;
+
+      $el.attr('href', filePath);
+    });
+
     dom('script[data-entry-name],link[data-entry-name]').each((index, el) => {
       // Derive the element properties.
       const $el = dom(el);
