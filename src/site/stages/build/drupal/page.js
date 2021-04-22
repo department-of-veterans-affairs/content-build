@@ -68,7 +68,6 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
     const pagedEntities = _.chunk(page[pageField].entities, perPage);
 
     for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-      // eslint-disable-next-line prefer-object-spread
       let pagedPage = Object.assign({}, page);
 
       if (pageNum > 0) {
@@ -142,7 +141,6 @@ function updateEntityUrlObj(page, drupalPagePath, title, pathSuffix) {
       .replace(/\s+/g, '-')
       .toLowerCase();
 
-  // eslint-disable-next-line prefer-object-spread
   let generatedPage = Object.assign({}, page);
   const absolutePath = path.join('/', drupalPagePath, pathSuffix);
 
@@ -372,7 +370,6 @@ function compilePage(page, contentData) {
     case 'health_services_listing':
     case 'vamc_system_policies_page':
     case 'health_care_region_detail_page':
-      // eslint-disable-next-line prefer-object-spread
       pageCompiled = Object.assign(
         {},
         page,
@@ -385,7 +382,6 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
-      // eslint-disable-next-line prefer-object-spread
       pageCompiled = Object.assign(
         {},
         page,
@@ -433,7 +429,6 @@ function compilePage(page, contentData) {
       sidebarNavItems = getHubSidebar(sideNavs, owner);
 
       // Build page with correct sidebar
-      // eslint-disable-next-line prefer-object-spread
       pageCompiled = Object.assign(
         {},
         page,
