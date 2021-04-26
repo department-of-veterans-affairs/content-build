@@ -65,17 +65,17 @@ node('vetsgov-general-purpose') {
   }
 
   // Run E2E tests
-  // commonStages.integrationTests(dockerContainer, ref);
+  commonStages.integrationTests(dockerContainer, ref);
 
   // Point all URLs to the proper S3 bucket
-  // commonStages.prearchiveAll(dockerContainer)
+  commonStages.prearchiveAll(dockerContainer)
 
   // Validate builds after everything has been properly processed
-  // commonStages.validateContentBuild(ref, dockerContainer)
+  commonStages.validateContentBuild(ref, dockerContainer)
 
   // Archive the tar file for each build type
-  // commonStages.archiveAll(dockerContainer, ref);
-  // commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
+  commonStages.archiveAll(dockerContainer, ref);
+  commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
 
   stage('Review') {
     if (commonStages.shouldBail()) {
@@ -88,7 +88,7 @@ node('vetsgov-general-purpose') {
         return
       }
       build job: 'deploys/vets-review-instance-deploy', parameters: [
-        stringParam(name: 'devops_branch', value: 'modify-review-instances'),
+        stringParam(name: 'devops_branch', value: 'master'),
         stringParam(name: 'api_branch', value: 'master'),
         stringParam(name: 'web_branch', value: env.BRANCH_NAME),
         stringParam(name: 'content_branch', value: env.BRANCH_NAME),
