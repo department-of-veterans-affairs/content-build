@@ -30,8 +30,7 @@
     <ul class="usa-unstyled-list">
         {% for accordionItem in entity.fieldVaParagraphs %}
             {% assign item = accordionItem.entity %}
-            {% assign id = item.entityId | formatSharableLinkID: item.fieldTitle %}
-            <li id={{id}}
+            <li id="{{ item.entityId | formatSharableLinkID: item.fieldTitle }}"
               data-template="paragraphs/collapsible_panel__panel"
               data-entity-id="{{ item.entityId }}"
               data-analytics-faq-text="{{ item.fieldTitle | escape }}">
@@ -41,9 +40,7 @@
                         aria-controls="{{ item.entityBundle }}-{{ item.entityId }}"
                         >
                     {{ item.fieldTitle }}
-                    
                 </button>
-                
                 <div id="{{ item.entityBundle }}-{{ item.entityId }}" class="usa-accordion-content" aria-hidden="{{ !entity.fieldCollapsiblePanelExpand }}">
                     {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
 
@@ -51,8 +48,6 @@
                         {%  assign bundleComponent = "src/site/paragraphs/" | append: paragraph.entity.entityBundle | append: ".drupal.liquid" %}
                         {% include {{ bundleComponent }} with entity = paragraph.entity %}
                     {%  endfor %}
-
-                    <div data-widget-type="sharable-link" parentId="{{id}}"></div>                
                 </div>
             </li>
         {% endfor %}
