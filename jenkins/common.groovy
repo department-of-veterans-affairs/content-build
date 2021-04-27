@@ -168,11 +168,11 @@ def accessibilityTests() {
           },
         )
 
-        // slackSend(
-        //   message: 'The daily accessibility scan has completed successfully.',
-        //   color: 'good',
-        //   channel: '-daily-accessibility-scan'
-        // )
+        slackSend(
+          message: 'The daily accessibility scan has completed successfully.',
+          color: 'good',
+          channel: '-daily-accessibility-scan'
+        )
 
       } catch (error) {
 
