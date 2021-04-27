@@ -176,12 +176,12 @@ def accessibilityTests() {
 
       } catch (error) {
 
-        // slackSend(
-        //     message: "@here Daily accessibility tests have failed. ${env.RUN_DISPLAY_URL}".stripMargin(),
-        //     color: 'danger',
-        //     failOnError: true,
-        //     channel: '-daily-accessibility-scan'
-        //   )
+        slackSend(
+            message: "@here Daily accessibility tests have failed. ${env.RUN_DISPLAY_URL}".stripMargin(),
+            color: 'danger',
+            failOnError: true,
+            channel: '-daily-accessibility-scan'
+          )
 
         throw error
       } finally {
