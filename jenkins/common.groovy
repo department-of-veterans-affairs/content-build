@@ -155,7 +155,7 @@ def accessibilityTests() {
   stage("Accessibility") {
 
      slackSend(
-        message: 'Content build accessibility tests are running (please update this message post-release)',
+        message: 'Content build accessibility tests are running',
         color: 'good',
         channel: '-daily-accessibility-scan'
       )
