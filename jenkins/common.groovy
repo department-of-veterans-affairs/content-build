@@ -323,7 +323,7 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
       parallel builds
       return envUsedCache
     } catch (error) {
-      // slackNotify()
+      slackNotify()
       throw error
     }
   }
@@ -375,7 +375,7 @@ def integrationTests(dockerContainer, ref) {
           )
         }
       } catch (error) {
-        // slackIntegrationNotify()
+        slackIntegrationNotify()
         throw error
       } finally {
         sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
@@ -415,7 +415,7 @@ def prearchiveAll(dockerContainer) {
 
       parallel builds
     } catch (error) {
-      // slackNotify()
+      slackNotify()
       throw error
     }
   }
@@ -449,7 +449,7 @@ def archiveAll(dockerContainer, String ref) {
       parallel archives
 
     } catch (error) {
-      // slackNotify()
+      slackNotify()
       throw error
     }
   }
@@ -470,7 +470,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
             sh "cd /application && node script/drupal-aws-cache.js --buildtype=${envName}"
           }
         } else {
-          // slackCachedContent(envName)
+          slackCachedContent(envName)
           // TODO: Read the envName-output.log and send that into the Slack message
         }
       }
@@ -482,7 +482,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
         }
       }
     } catch (error) {
-      // slackNotify()
+      slackNotify()
       throw error
     }
   }
