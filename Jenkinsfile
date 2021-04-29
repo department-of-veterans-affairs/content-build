@@ -24,8 +24,9 @@ node('vetsgov-general-purpose') {
   // Perform a build for each build type
   envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
 
-  stage('Lint|Security|Unit') {
-    if (params.cmsEnvBuildOverride != 'none') { return }
+  stage('Main') {
+    def contentOnlyBuild = params.cmsEnvBuildOverride != 'none'
+    def assetSource = contentOnlyBuild ? ref : 'local'
 
     try {
       parallel (
