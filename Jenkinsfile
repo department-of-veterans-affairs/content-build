@@ -3,7 +3,6 @@ import org.kohsuke.github.GitHub
 
 env.CONCURRENCY = 10
 
-
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']],
               parameters([choice(name: "cmsEnvBuildOverride",
@@ -17,6 +16,7 @@ node('vetsgov-general-purpose') {
   }
 
   def commonStages = load "content-build/jenkins/common.groovy"
+  def envUsedCache = [:]
 
   // // setupStage
   dockerContainer = commonStages.setup()
