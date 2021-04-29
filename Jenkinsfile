@@ -33,7 +33,7 @@ node('vetsgov-general-purpose') {
         failFast: true,
 
         buildDev: {
-          if (commonStages.shouldBail()) { return }
+          if (commonStages.shouldBail()) { echo "Bailing because commonStages.shouldBail() was true" }
           envName = 'vagovdev'
 
           shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
