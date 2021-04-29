@@ -37,7 +37,7 @@ node('vetsgov-general-purpose') {
           envName = 'vagovdev'
 
           shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
-          if (!shouldBuild) { return }
+          if (!shouldBuild) { echo "Bailing because of content-only build" }
 
           try {
             // try to build using fresh drupal content
