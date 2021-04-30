@@ -38,17 +38,17 @@ node('vetsgov-general-purpose') {
           if (!shouldBuild) { return }
 
           try {
-            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
             envUsedCache[envName] = false
           } catch (error) {
             if (!contentOnlyBuild) {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
-              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild)
+              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
               envUsedCache[envName] = true
             } else {
-              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
               envUsedCache[envName] = false
             }
           }
@@ -62,17 +62,17 @@ node('vetsgov-general-purpose') {
           if (!shouldBuild) { return }
 
           try {
-            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
             envUsedCache[envName] = false
           } catch (error) {
             if (!contentOnlyBuild) {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
-              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild)
+              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
               envUsedCache[envName] = true
             } else {
-              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
               envUsedCache[envName] = false
             }
           }
@@ -86,17 +86,17 @@ node('vetsgov-general-purpose') {
           if (!shouldBuild) { return }
                     
           try {
-            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
             envUsedCache[envName] = false
           } catch (error) {
             if (!contentOnlyBuild) {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
-              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild)
+              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
               envUsedCache[envName] = true
             } else {
-              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild)
+              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
               envUsedCache[envName] = false
             }
           }
