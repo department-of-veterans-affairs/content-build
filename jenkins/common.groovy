@@ -329,17 +329,6 @@ def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
   }
 }
 
-def validateContentBuild(ref, dockerContainer) {
-  stage('Validate Content Build') {
-    if (shouldBail()) { return }
-
-    // Run the comparison script
-    dockerContainer.inside(DOCKER_ARGS) {
-      sh "cd /application && yarn build:compare --buildtype vagovdev"
-    }
-  }
-}
-
 def integrationTests(dockerContainer, ref) {
   stage("Integration") {
     if (shouldBail()) { return }
@@ -392,9 +381,6 @@ def integrationTests(dockerContainer, ref) {
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node script/prearchive.js --buildtype=${envName}"
-    if (envName == 'vagovdev') {
-      sh "cd /vets-website && node /vets-website/script/prearchive.js --buildtype=vagovdev"
-    }
   }
 }
 
