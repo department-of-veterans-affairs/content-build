@@ -133,7 +133,7 @@ node('vetsgov-general-purpose') {
       commonStages.slackNotify()
       throw error
     } finally {
-      dir("vets-website") {
+      dir("content-build") {
         step([$class: 'JUnitResultArchiver', testResults: 'test-results.xml'])
       }
     }
