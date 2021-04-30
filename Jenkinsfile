@@ -17,21 +17,93 @@ node('vetsgov-general-purpose') {
   }
 
   def commonStages = load "content-build/jenkins/common.groovy"
+  def envUsedCache = [:]
 
   // // setupStage
   dockerContainer = commonStages.setup()
 
-  // Perform a build for each build type
-  envsUsingDrupalCache = commonStages.buildAll(ref, dockerContainer, params.cmsEnvBuildOverride != 'none')
-
-  stage('Lint|Security|Unit') {
-    if (params.cmsEnvBuildOverride != 'none') { return }
+  stage('Main') {
+    def contentOnlyBuild = params.cmsEnvBuildOverride != 'none'
+    def assetSource = contentOnlyBuild ? ref : 'local'
 
     try {
       parallel (
         failFast: true,
 
+        buildDev: {
+          if (commonStages.shouldBail()) { return }
+          envName = 'vagovdev'
+          
+          shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
+          if (!shouldBuild) { return }
+
+          try {
+            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
+            envUsedCache[envName] = false
+          } catch (error) {
+            if (!contentOnlyBuild) {
+              dockerContainer.inside(DOCKER_ARGS) {
+                sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
+              }
+              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
+              envUsedCache[envName] = true
+            } else {
+              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
+              envUsedCache[envName] = false
+            }
+          }
+        },
+
+        buildStaging: {
+          if (commonStages.shouldBail()) { return }
+          envName = 'vagovstaging'
+
+          shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
+          if (!shouldBuild) { return }
+
+          try {
+            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
+            envUsedCache[envName] = false
+          } catch (error) {
+            if (!contentOnlyBuild) {
+              dockerContainer.inside(DOCKER_ARGS) {
+                sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
+              }
+              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
+              envUsedCache[envName] = true
+            } else {
+              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
+              envUsedCache[envName] = false
+            }
+          }
+        },
+
+        buildProd: {
+          if (commonStages.shouldBail()) { return }
+          envName = 'vagovprod'
+
+          shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
+          if (!shouldBuild) { return }
+                    
+          try {
+            commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
+            envUsedCache[envName] = false
+          } catch (error) {
+            if (!contentOnlyBuild) {
+              dockerContainer.inside(DOCKER_ARGS) {
+                sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
+              }
+              commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
+              envUsedCache[envName] = true
+            } else {
+              commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
+              envUsedCache[envName] = false
+            }
+          }
+        },
+
         lint: {
+          if (params.cmsEnvBuildOverride != 'none') { return }
           dockerContainer.inside(commonStages.DOCKER_ARGS) {
             sh "cd /application && npm --no-color run lint"
           }
@@ -39,23 +111,26 @@ node('vetsgov-general-purpose') {
 
         // Check package.json for known vulnerabilities
         security: {
+          if (params.cmsEnvBuildOverride != 'none') { return }
           retry(3) {
             dockerContainer.inside(commonStages.DOCKER_ARGS) {
-              sh "cd /application && npm --no-color run security-check"
+              sh "cd /application && npm run security-check"
             }
           }
         },
 
         unit: {
+          if (params.cmsEnvBuildOverride != 'none') { return }
           dockerContainer.inside(commonStages.DOCKER_ARGS) {
             sh "/cc-test-reporter before-build"
             sh "cd /application && npm --no-color run test:unit -- --coverage"
             sh "cd /application && /cc-test-reporter after-build -r fe4a84c212da79d7bb849d877649138a9ff0dbbef98e7a84881c97e1659a2e24"
           }
-        }
+        },
+
       )
     } catch (error) {
-      // commonStages.slackNotify()
+      commonStages.slackNotify()
       throw error
     } finally {
       dir("content-build") {
@@ -70,11 +145,10 @@ node('vetsgov-general-purpose') {
   // Point all URLs to the proper S3 bucket
   commonStages.prearchiveAll(dockerContainer)
 
-  // Validate builds after everything has been properly processed
-  // commonStages.validateContentBuild(ref, dockerContainer)
-
   // Archive the tar file for each build type
   commonStages.archiveAll(dockerContainer, ref);
+
+  envsUsingDrupalCache = envUsedCache
   commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
 
   stage('Review') {
