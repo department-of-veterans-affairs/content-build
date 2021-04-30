@@ -262,6 +262,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   def drupalMode = useCache ? '' : '--pull-drupal'
   def localhostBuild = envName == 'vagovdev' ? '--omitdebug' : ''
   def drupalMaxParallelRequests = 15;
+  def noDrupalProxy = '--no-drupal-proxy'
 
   if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH) {
     drupalAddress = DRUPAL_ADDRESSES.get('vagovprod')
