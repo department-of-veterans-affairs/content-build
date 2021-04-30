@@ -39,7 +39,7 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
 RUN update-ca-certificates
 
 RUN mkdir -p /application/content-build
-RUN mkdir -p /application/vets-website
+# RUN mkdir -p /application/vets-website
 
 RUN chown -R vets-website:vets-website /application
 
