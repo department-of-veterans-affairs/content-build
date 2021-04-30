@@ -8,6 +8,9 @@ DRUPAL_ADDRESSES = [
   'vagovdev'    : 'http://internal-dsva-vagov-dev-cms-812329399.us-gov-west-1.elb.amazonaws.com',
   'vagovstaging': 'http://internal-dsva-vagov-staging-cms-1188006.us-gov-west-1.elb.amazonaws.com',
   'vagovprod'   : 'http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com',
+   // This is a Tugboat URL, rebuilt frequently from PROD CMS. See https://tugboat.vfs.va.gov/6042f35d6a89945fd6399dc3.
+   // If there are issues with this endpoint, please post in #cms-support Slack and tag @CMS DevOps Engineers.
+   'sandbox'     : 'https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov',
 ]
 
 DRUPAL_CREDENTIALS = [
@@ -108,7 +111,7 @@ def setup() {
       checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
     }
 
-    dir("vets-website") { 
+    dir("vets-website") {
       checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
     }
 
@@ -151,7 +154,7 @@ def findMissingQueryFlags(String buildLogPath, String envName) {
 def accessibilityTests() {
 
   if (shouldBail() || !VAGOV_BUILDTYPES.contains('vagovprod')) { return }
-  
+
   stage("Accessibility") {
 
      slackSend(
@@ -211,7 +214,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // Only break the build if broken links are found in master
     if (IS_PROD_BRANCH || contentOnlyBuild) {
       echo "Notifying Slack channel."
-      
+
       // slackUploadFile(filePath: csvFile, channel: 'dev_null', failOnError: true, initialComment: "Found broken links in the ${envName} build on `${env.BRANCH_NAME}`.")
 
       // Until slackUploadFile works...
@@ -250,22 +253,30 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
-  // Use Drupal prod for all environments
-  def drupalAddress = DRUPAL_ADDRESSES.get('vagovprod')
+  // Use the CMS's Sandbox (Tugboat) environment for all branches that
+  // are not configured to deploy to dev/staging/prod. Currently, this
+  // means to use the CMS Sandbox for any branch that is NOT master.
+  def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
   def localhostBuild = envName == 'vagovdev' ? '--omitdebug' : ''
   def drupalMaxParallelRequests = 5;
+  def noDrupalProxy = '--no-drupal-proxy'
 
   if (contentOnlyBuild) {
     drupalMaxParallelRequests = 15
   }
 
+   if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH || contentOnlyBuild) {
+     drupalAddress = DRUPAL_ADDRESSES.get('vagovprod')
+     noDrupalProxy = ''
+   }
+
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
 
-      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
+      sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
 
       if (envName == 'vagovprod') {
         // Find any broken links in the log
