@@ -10,3 +10,9 @@ if [ ! -d ../vets-website ]; then
 else
   echo "Repo vets-website already cloned."
 fi
+
+if [ ! -d ../content-build ]; then
+  git clone --single-branch --depth 1 https://github.com/department-of-veterans-affairs/content-build.git ../content-build
+else
+  echo "Repo content-build already cloned."
+fi
