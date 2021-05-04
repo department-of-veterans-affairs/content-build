@@ -25,8 +25,21 @@
                     <ul class="usa-unstyled-list">
                         {% for location in healthService.fieldLocalHealthCareService %}
                             {% assign facility = location.entity.fieldFacilityLocation.entity %}
-                            {% if facility != empty %}<li class="vads-u-margin-bottom--2">
-                                <a href="{{ facility.entityUrl.path }}">{{ facility.title }}</a></li>{% endif %}
+                            {% if facility != empty %}
+                                <li class="vads-u-margin-bottom--2">
+                                    <a
+                                        onclick="recordEvent(
+                                            {
+                                                'event': 'nav-accordion-link-click',
+                                                'accordion-parent-label': '{{ serviceTaxonomy.name }}',
+                                                'accordion-child-label': '{{ serviceTaxonomy.fieldAlsoKnownAs }}',
+                                                'accordion-section-label': '{{ sectionName }}'
+
+                                            })"
+                                        href="{{ facility.entityUrl.path }}">{{ facility.title }}
+                                    </a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 {% endif %}
