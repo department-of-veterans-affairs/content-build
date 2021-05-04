@@ -187,7 +187,7 @@ node('vetsgov-general-purpose') {
       }
 
     } catch (error) {
-      // commonStages.slackNotify()
+      commonStages.slackNotify()
       throw error
     }
   }
