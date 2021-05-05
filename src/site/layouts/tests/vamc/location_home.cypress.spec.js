@@ -1,4 +1,5 @@
 import path from 'path';
+import mockFacilityData from './fixtures/mock-facility-data-v1.json';
 
 const phoneRegex = /\d{3}-\d{3}-\d{4}/;
 
@@ -29,9 +30,9 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.get('.main-phone > a').contains(phoneRegex);
   cy.get('.mental-health-clinic-phone > a').contains(phoneRegex);
   cy.get('h3').contains('Clinical hours');
-  // cy.get('[data-widget-type="facility-map"]')
-  //   .find('img.facility-img')
-  //   .should('exist');
+  cy.get('[data-widget-type="facility-map"]')
+    .find('img.facility-img')
+    .should('exist');
   cy.get('h2').contains('Prepare for your visit');
   cy.get('#health_care_local_facility_servi-4202').should('not.be.visible');
   cy.get('button')
@@ -68,14 +69,14 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
       cy.task('log', 'window.contentData not found.');
     }
   });
-  // cy.get('#our-patient-satisfaction-scores').contains(
-  //   'Veteran satisfaction with appointment wait times at this location',
-  // );
+  cy.get('#our-patient-satisfaction-scores').contains(
+    'Veteran satisfaction with appointment wait times at this location',
+  );
   cy.get('[data-widget-type="facility-patient-satisfaction-scores"]').should(
     'exist',
   );
-  // cy.get('h3').contains('Urgent care appointments');
-  // cy.get('h3').contains('Routine care appointments');
+  cy.get('h3').contains('Urgent care appointments');
+  cy.get('h3').contains('Routine care appointments');
   cy.get('h2').contains('Get updates');
 });
 
@@ -88,12 +89,7 @@ describe('VAMC location home page', () => {
   });
 
   beforeEach(() => {
-    cy.server();
-    cy.route(
-      'GET',
-      '/v1/facilities/va/*',
-      'fx:fixtures/mock-facility-data-v1',
-    ).as('mockFacilityData');
+    cy.intercept('GET', '/v1/facilities/va/*', mockFacilityData);
   });
 
   it('has expected elements on desktop', () => {
