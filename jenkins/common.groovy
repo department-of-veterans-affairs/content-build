@@ -287,45 +287,47 @@ def integrationTests(dockerContainer, ref) {
     if (shouldBail()) { return }
 
     dir("content-build") {
-      try {
-        if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-          parallel (
-            failFast: true,
+      timeout(60) {
+        try {
+          if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
+            parallel (
+              failFast: true,
 
-            'nightwatch-e2e': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-            },
-            // PAUSED UNTIL FIXED
-            // 'nightwatch-accessibility': {
-            //   sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} up -d && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
-            // },
+              'nightwatch-e2e': {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+              },
+              // PAUSED UNTIL FIXED
+              // 'nightwatch-accessibility': {
+              //   sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} up -d && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
+              // },
 
-            cypress: {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-            }
-          )
-        } else {
-          parallel (
-            failFast: true,
+              cypress: {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
+              }
+            )
+          } else {
+            parallel (
+              failFast: true,
 
-            'nightwatch-e2e': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-            },
-            cypress: {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-            }
-          )
+              'nightwatch-e2e': {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+              },
+              cypress: {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
+              }
+            )
+          }
+        } catch (error) {
+          slackIntegrationNotify()
+          throw error
+        } finally {
+          sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
+          if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
+            sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
+          }
+          step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
         }
-      } catch (error) {
-        slackIntegrationNotify()
-        throw error
-      } finally {
-        sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
-        if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-          sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
-        }
-        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-      }
+      } // end timeout
     }
 
   }
