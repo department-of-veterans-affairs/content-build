@@ -8,7 +8,7 @@ node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']],
               parameters([choice(name: "cmsEnvBuildOverride",
                                  description: "Choose an environment to run a content only build. Select 'none' to run the regular pipeline.",
-                                 choices: ["none", "dev", "staging"].join("\n"))])]);
+                                 choices: ["none", "vagovdev", "vagovstaging"].join("\n"))])]);
 
   // Checkout content-build code
   dir("content-build") {
@@ -34,10 +34,11 @@ node('vetsgov-general-purpose') {
           if (commonStages.shouldBail()) { return }
           def envName = 'vagovdev'
           
-          shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
+          def shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
           if (!shouldBuild) { return }
 
           try {
+            // Try to build using fresh drupal content
             commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
             envUsedCache[envName] = false
           } catch (error) {
@@ -45,6 +46,7 @@ node('vetsgov-general-purpose') {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
+              // Try to build again using cached drupal content
               commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
               envUsedCache[envName] = true
             } else {
@@ -58,10 +60,11 @@ node('vetsgov-general-purpose') {
           if (commonStages.shouldBail()) { return }
           def envName = 'vagovstaging'
 
-          shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
+          def shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
           if (!shouldBuild) { return }
 
           try {
+            // Try to build using fresh drupal content
             commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
             envUsedCache[envName] = false
           } catch (error) {
@@ -69,6 +72,7 @@ node('vetsgov-general-purpose') {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
+              // Try to build again using cached drupal content
               commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
               envUsedCache[envName] = true
             } else {
@@ -82,10 +86,11 @@ node('vetsgov-general-purpose') {
           if (commonStages.shouldBail()) { return }
           def envName = 'vagovprod'
 
-          shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
+          def shouldBuild = !contentOnlyBuild || envName == params.cmsEnvBuildOverride
           if (!shouldBuild) { return }
                     
           try {
+            // Try to build using fresh drupal content
             commonStages.build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
             envUsedCache[envName] = false
           } catch (error) {
@@ -93,6 +98,7 @@ node('vetsgov-general-purpose') {
               dockerContainer.inside(DOCKER_ARGS) {
                 sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
               }
+              // Try to build again using cached drupal content
               commonStages.build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
               envUsedCache[envName] = true
             } else {
@@ -179,15 +185,15 @@ node('vetsgov-general-purpose') {
       if (!commonStages.isDeployable()) { return }
 
       if (commonStages.IS_DEV_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovdev')) {
-        commonStages.runDeploy('deploys/content-build-dev', ref, false)
+        commonStages.runDeploy('deploys/content-build-vagovdev', ref, false)
       }
 
       if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
-        commonStages.runDeploy('deploys/content-build-staging', ref, false)
+        commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
       }
 
     } catch (error) {
-      // commonStages.slackNotify()
+      commonStages.slackNotify()
       throw error
     }
   }

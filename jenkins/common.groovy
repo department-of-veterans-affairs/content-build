@@ -1,5 +1,3 @@
-import groovy.json.JsonSlurper
-
 DRUPAL_MAPPING = [
   'dev': 'vagovdev',
   'staging': 'vagovstaging',
@@ -160,7 +158,7 @@ def accessibilityTests() {
   stage("Accessibility") {
 
      slackSend(
-        message: 'Content build accessibility tests are running (please update this message post-release)',
+        message: 'Content build accessibility tests are running',
         color: 'good',
         channel: '-daily-accessibility-scan'
       )
@@ -173,20 +171,20 @@ def accessibilityTests() {
           },
         )
 
-        // slackSend(
-        //   message: 'The daily accessibility scan has completed successfully.',
-        //   color: 'good',
-        //   channel: '-daily-accessibility-scan'
-        // )
+        slackSend(
+          message: 'The daily accessibility scan has completed successfully.',
+          color: 'good',
+          channel: '-daily-accessibility-scan'
+        )
 
       } catch (error) {
 
-        // slackSend(
-        //     message: "@here Daily accessibility tests have failed. ${env.RUN_DISPLAY_URL}".stripMargin(),
-        //     color: 'danger',
-        //     failOnError: true,
-        //     channel: '-daily-accessibility-scan'
-        //   )
+        slackSend(
+            message: "@here Daily accessibility tests have failed. ${env.RUN_DISPLAY_URL}".stripMargin(),
+            color: 'danger',
+            failOnError: true,
+            channel: '-daily-accessibility-scan'
+          )
 
         throw error
       } finally {
@@ -203,8 +201,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
   if (fileExists(brokenLinksFile)) {
     def rawJsonFile = readFile(brokenLinksFile);
-    def jsonSlurper = new JsonSlurper();
-    def brokenLinks = jsonSlurper.parseText(rawJsonFile);
+    def brokenLinks = new groovy.json.JsonSlurper().parseText(rawJsonFile);
     def maxBrokenLinks = 10
     def color = 'warning'
 
@@ -227,11 +224,9 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
       return;
     }
 
-    // JSONObjects in Groovy are not serializable by default, which is an issue, because
-    // a Jenkinsfile has to be fully serializable for it to be able to pause state.
-    // To get around this, we unset our reference to the brokenLinks JSON file
-    // once we're done with it. It's important that we do this before slackSend, which
-    // is likely causes this pipeline to pause while waiting for the message to complete.
+    // Unset brokenLinks now that we're done with this, because Jenkins may temporarily
+    // freeze (through serialization) this pipeline while the Slack message is being sent.
+    // brokenLinks is an instance of JSONObject, which cannot be serialized by default.
     brokenLinks = null
 
     // slackSend(
@@ -250,9 +245,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
-  // Use the CMS's Sandbox (Tugboat) environment for all branches that
-  // are not configured to deploy to dev/staging/prod. Currently, this
-  // means to use the CMS Sandbox for any branch that is NOT master.
+  // are not configured to deploy to prod.
   def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
@@ -260,10 +253,16 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   def drupalMaxParallelRequests = 15;
   def noDrupalProxy = '--no-drupal-proxy'
 
-   if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH || contentOnlyBuild) {
+   // Build using the CMS Production instance only if we are doing
+  // a content-only build (as part of a Content Release) OR if
+  // we are building the master branch's production environment.
+  if (
+    contentOnlyBuild ||
+    (IS_PROD_BRANCH && envName == 'vagovprod')
+  ) {
      drupalAddress = DRUPAL_ADDRESSES.get('vagovprod')
      noDrupalProxy = ''
-   }
+  }
 
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
@@ -283,100 +282,52 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   }
 }
 
-def buildAll(String ref, dockerContainer, Boolean contentOnlyBuild) {
-  stage("Build") {
-    if (shouldBail()) { return }
-
-    try {
-      def builds = [:]
-      def envUsedCache = [:]
-      def assetSource = contentOnlyBuild ? ref : 'local'
-
-      for (int i=0; i<VAGOV_BUILDTYPES.size(); i++) {
-        def envName = VAGOV_BUILDTYPES.get(i)
-        builds[envName] = {
-          try {
-            build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
-            envUsedCache[envName] = false
-          } catch (error) {
-            // We're not using the cache for content only builds, because requesting
-            // a content only build is an attempt to refresh content from the current set
-            if (!contentOnlyBuild) {
-              dockerContainer.inside(DOCKER_ARGS) {
-                sh "cd /application && node script/drupal-aws-cache.js --fetch --buildtype=${envName}"
-              }
-              build(ref, dockerContainer, assetSource, envName, true, contentOnlyBuild, '/application')
-              envUsedCache[envName] = true
-            } else {
-              build(ref, dockerContainer, assetSource, envName, false, contentOnlyBuild, '/application')
-              envUsedCache[envName] = false
-            }
-          }
-        }
-      }
-
-      builds['vets-website'] = {
-        try {
-          build(ref, dockerContainer, assetSource, 'vagovdev', false, contentOnlyBuild, '/vets-website')
-        } catch (error) {
-          // Don't fail the build, just report the error
-          echo "vets-website build failed: ${error}"
-        }
-      }
-
-      parallel builds
-      return envUsedCache
-    } catch (error) {
-      // slackNotify()
-      throw error
-    }
-  }
-}
-
 def integrationTests(dockerContainer, ref) {
   stage("Integration") {
     if (shouldBail()) { return }
 
     dir("content-build") {
-      try {
-        if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-          parallel (
-            failFast: true,
+      timeout(60) {
+        try {
+          if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
+            parallel (
+              failFast: true,
 
-            'nightwatch-e2e': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-            },
-            // PAUSED UNTIL FIXED
-            // 'nightwatch-accessibility': {
-            //   sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} up -d && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
-            // },
+              'nightwatch-e2e': {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+              },
+              // PAUSED UNTIL FIXED
+              // 'nightwatch-accessibility': {
+              //   sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} up -d && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
+              // },
 
-            cypress: {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-            }
-          )
-        } else {
-          parallel (
-            failFast: true,
+              cypress: {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
+              }
+            )
+          } else {
+            parallel (
+              failFast: true,
 
-            'nightwatch-e2e': {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-            },
-            cypress: {
-              sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-            }
-          )
+              'nightwatch-e2e': {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
+              },
+              cypress: {
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
+              }
+            )
+          }
+        } catch (error) {
+          slackIntegrationNotify()
+          throw error
+        } finally {
+          sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
+          if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
+            sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
+          }
+          step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
         }
-      } catch (error) {
-        // slackIntegrationNotify()
-        throw error
-      } finally {
-        sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
-        if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-          sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
-        }
-        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-      }
+      } // end timeout
     }
 
   }
@@ -405,7 +356,7 @@ def prearchiveAll(dockerContainer) {
 
       parallel builds
     } catch (error) {
-      // slackNotify()
+      slackNotify()
       throw error
     }
   }
@@ -439,7 +390,7 @@ def archiveAll(dockerContainer, String ref) {
       parallel archives
 
     } catch (error) {
-      // slackNotify()
+      slackNotify()
       throw error
     }
   }
@@ -460,7 +411,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
             sh "cd /application && node script/drupal-aws-cache.js --buildtype=${envName}"
           }
         } else {
-          // slackCachedContent(envName)
+          slackCachedContent(envName)
           // TODO: Read the envName-output.log and send that into the Slack message
         }
       }
@@ -472,7 +423,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
         }
       }
     } catch (error) {
-      // slackNotify()
+      slackNotify()
       throw error
     }
   }
