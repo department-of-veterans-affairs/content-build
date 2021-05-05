@@ -8,7 +8,7 @@ node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']],
               parameters([choice(name: "cmsEnvBuildOverride",
                                  description: "Choose an environment to run a content only build. Select 'none' to run the regular pipeline.",
-                                 choices: ["none", "dev", "staging"].join("\n"))])]);
+                                 choices: ["none", "vagovdev", "vagovstaging"].join("\n"))])]);
 
   // Checkout content-build code
   dir("content-build") {
@@ -185,11 +185,11 @@ node('vetsgov-general-purpose') {
       if (!commonStages.isDeployable()) { return }
 
       if (commonStages.IS_DEV_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovdev')) {
-        commonStages.runDeploy('deploys/content-build-dev', ref, false)
+        commonStages.runDeploy('deploys/content-build-vagovdev', ref, false)
       }
 
       if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
-        commonStages.runDeploy('deploys/content-build-staging', ref, false)
+        commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
       }
 
     } catch (error) {
