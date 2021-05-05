@@ -240,7 +240,7 @@ function build(BUILD_OPTIONS) {
   );
 
   smith.build(err => {
-    if (err) throw err;
+    if (err) console.log(err);
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
