@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 
 require('isomorphic-fetch');
+// const e = require('express');
 // const https = require('https');
 // const fs = require('fs-extra');
 // const path = require('path');
@@ -56,19 +57,24 @@ async function downloadFromLiveBucket(files, buildOptions) {
     const bundleUrl = `${bucket}${bundleFileName}`;
     const bundleResponse = await fetch(bundleUrl);
 
-    if (!bundleResponse.ok) {
-      throw new Error(`Failed to download asset: ${bundleUrl}`);
+    if (bundleFileName.includes('generated/../')) {
+      console.log(`Excluding: ${bundleFileName} from download`);
+    } else {
+      if (!bundleResponse.ok) {
+        throw new Error(`Failed to download asset: ${bundleUrl}`);
+      }
+
+      if (bundleFileName.startsWith('/')) {
+        bundleFileName = bundleFileName.slice(1);
+      }
+
+      files[bundleFileName] = {
+        path: bundleFileName,
+        contents: await bundleResponse.buffer(),
+      };
+
+      console.log(`Successfully downloaded asset: ${bundleUrl}`);
     }
-
-    if (bundleFileName.startsWith('/'))
-      bundleFileName = bundleFileName.slice(1);
-
-    files[bundleFileName] = {
-      path: bundleFileName,
-      contents: await bundleResponse.buffer(),
-    };
-
-    console.log(`Successfully downloaded asset: ${bundleUrl}`);
   });
 
   return Promise.all(downloads);
