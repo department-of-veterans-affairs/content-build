@@ -17,11 +17,11 @@ const {
 const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
+const bucketsContent = require('../src/site/constants/buckets-content');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
 const defaultContentDir = '../../../../../vagov-content/pages';
-const bucketsContent = require('site/constants/buckets-content');
 
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   {
