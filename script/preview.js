@@ -21,6 +21,7 @@ const DRUPALS = require('../src/site/constants/drupals');
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
 const defaultContentDir = '../../../../../vagov-content/pages';
+const bucketsContent = require('site/constants/buckets-content');
 
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   {
@@ -128,7 +129,8 @@ app.get('/preview', async (req, res, next) => {
           );
         },
       ),
-      fetch(`${urls[options.buildtype]}/generated/headerFooter.json`).then(
+      fetch(
+        `${bucketsContent[options.buildtype]}/generated/headerFooter.json`,
         resp => {
           if (resp.ok) {
             return resp.json();
