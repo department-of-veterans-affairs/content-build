@@ -318,7 +318,7 @@ def integrationTests(dockerContainer, ref) {
             )
           }
         } catch (error) {
-          slackIntegrationNotify()
+          // slackIntegrationNotify()
           throw error
         } finally {
           sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
