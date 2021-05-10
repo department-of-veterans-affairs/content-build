@@ -79,6 +79,13 @@ const urls = {
     'http://www.va.gov.s3-website-us-gov-west-1.amazonaws.com',
 };
 
+const contentUrls = {
+  [ENVIRONMENTS.LOCALHOST]: 'http://localhost:3002',
+  [ENVIRONMENTS.VAGOVDEV]: bucketsContent[options.buildtype],
+  [ENVIRONMENTS.VAGOVSTAGING]: bucketsContent[options.buildtype],
+  [ENVIRONMENTS.VAGOVPROD]: bucketsContent[options.buildtype],
+};
+
 if (process.env.SENTRY_DSN) {
   app.use(Raven.requestHandler());
 }
@@ -130,16 +137,15 @@ app.get('/preview', async (req, res, next) => {
         },
       ),
       fetch(
-        `${bucketsContent[options.buildtype]}/generated/headerFooter.json`,
-        resp => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(
-            `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
-          );
-        },
-      ),
+        `${contentUrls[options.buildtype]}/generated/headerFooter.json`,
+      ).then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        }
+        throw new Error(
+          `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
+        );
+      }),
     ];
 
     const [drupalData, fileManifest, headerFooterData] = await Promise.all(
