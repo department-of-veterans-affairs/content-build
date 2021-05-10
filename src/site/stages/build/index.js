@@ -71,6 +71,19 @@ function build(BUILD_OPTIONS) {
     backupPagesJSON();
   }
 
+  console.log('Docker stats:');
+  const { exec } = require('child_process');
+  exec('docker stats', (err, stdout, stderr) => {
+    if (err) {
+      // node couldn't execute the command
+      console.log('error: ', err);
+      return;
+    }
+
+    console.log(stdout);
+    console.log(`stderr: ${stderr}`);
+  });
+
   const smith = silverSmith();
 
   registerLiquidFilters();
