@@ -47,7 +47,10 @@
             <section data-label="{{groupName}}">
               <h2>{{groupName}}</h2>
               {% for service in healthServiceGroup %}
-                {% include "src/site/facilities/health_service.drupal.liquid" with healthService = service %}
+                {% include "src/site/facilities/health_service.drupal.liquid" with
+                  healthService = service
+                  sectionName = groupName
+                %}
               {% endfor %}
             </section>
           {% endfor %}
