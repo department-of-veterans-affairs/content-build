@@ -71,11 +71,11 @@ function build(BUILD_OPTIONS) {
     backupPagesJSON();
   }
 
-  console.log('Docker stats:');
+  console.log('Docker memory limit:');
   const { exec } = require('child_process');
-  exec('docker stats', (err, stdout, stderr) => {
+  const command = 'cat /proc/meminfo';
+  exec(command, (err, stdout, stderr) => {
     if (err) {
-      // node couldn't execute the command
       console.log('error: ', err);
       return;
     }
