@@ -17,6 +17,7 @@ const {
 const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
+const bucketsContent = require('../src/site/constants/buckets-content');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -128,7 +129,8 @@ app.get('/preview', async (req, res, next) => {
           );
         },
       ),
-      fetch(`${urls[options.buildtype]}/generated/headerFooter.json`).then(
+      fetch(
+        `${bucketsContent[options.buildtype]}/generated/headerFooter.json`,
         resp => {
           if (resp.ok) {
             return resp.json();

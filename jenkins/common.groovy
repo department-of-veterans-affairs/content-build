@@ -229,12 +229,12 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // brokenLinks is an instance of JSONObject, which cannot be serialized by default.
     brokenLinks = null
 
-    // slackSend(
-    //   message: message,
-    //   color: color,
-    //   failOnError: true,
-    //   channel: 'vfs-platform-builds'
-    // )
+    slackSend(
+      message: message,
+      color: color,
+      failOnError: true,
+      channel: 'vfs-platform-builds'
+    )
 
     if (color == 'danger') {
       throw new Exception('Broken links found')
@@ -318,7 +318,7 @@ def integrationTests(dockerContainer, ref) {
             )
           }
         } catch (error) {
-          slackIntegrationNotify()
+          // slackIntegrationNotify()
           throw error
         } finally {
           sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
