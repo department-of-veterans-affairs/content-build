@@ -75,8 +75,7 @@ module.exports = {
     this.entryNamesDictionary = getEntryNamesDictionary(buildOptions, files);
   },
 
-  modifyFile(fileName, file, files, buildOptions) {
-    const { dom } = file;
+  modifyFile(fileName, file, dom, files, buildOptions) {
     if (!dom) return;
 
     const bucket = buckets[buildOptions.buildtype];

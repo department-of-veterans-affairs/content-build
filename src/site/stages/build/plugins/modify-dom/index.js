@@ -44,14 +44,13 @@ const modifyDom = BUILD_OPTIONS => files => {
     if (path.extname(fileName) === '.html') {
       // eslint-disable-next-line no-console
       console.log(`+ ${fileName} `);
-      file.dom = cheerio.load(file.contents);
+      const dom = cheerio.load(file.contents);
       for (const modifier of domModifiers) {
-        modifier.modifyFile(fileName, file, files, BUILD_OPTIONS);
+        modifier.modifyFile(fileName, file, dom, files, BUILD_OPTIONS);
       }
       if (file.modified) {
-        file.contents = Buffer.from(file.dom.html());
+        file.contents = Buffer.from(dom.html());
       }
-      delete file.dom;
     }
   }
 

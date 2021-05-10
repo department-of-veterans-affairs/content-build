@@ -23,10 +23,9 @@ function idGeneratorFactory(fileName) {
 }
 
 module.exports = {
-  modifyFile(fileName, file) {
+  modifyFile(fileName, file, dom) {
     if (path.extname(fileName) !== '.html') return;
 
-    const { dom } = file;
     dom('script').each((index, scriptEl) => {
       const s = dom(scriptEl);
       // Only add nonce to inline scripts

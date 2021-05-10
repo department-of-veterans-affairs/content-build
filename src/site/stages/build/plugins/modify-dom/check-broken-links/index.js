@@ -32,7 +32,7 @@ module.exports = {
     }
   },
 
-  modifyFile(fileName, file) {
+  modifyFile(fileName, file, dom) {
     if (this.isDisabled) {
       return;
     }
@@ -40,7 +40,7 @@ module.exports = {
     const isHtml = path.extname(fileName) === '.html';
     if (!isHtml) return;
 
-    const linkErrors = getBrokenLinks(file, this.allPaths);
+    const linkErrors = getBrokenLinks(file, dom, this.allPaths);
 
     if (linkErrors.length > 0) {
       this.brokenPages.push({
