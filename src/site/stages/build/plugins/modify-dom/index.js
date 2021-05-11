@@ -42,8 +42,6 @@ const modifyDom = BUILD_OPTIONS => files => {
   // at once would cause a massive amount of memory to be consumed.
   for (const [fileName, file] of Object.entries(files)) {
     if (path.extname(fileName) === '.html') {
-      // eslint-disable-next-line no-console
-      console.log(`+ ${fileName} `);
       const dom = cheerio.load(file.contents);
       for (const modifier of domModifiers) {
         modifier.modifyFile(fileName, file, dom, files, BUILD_OPTIONS);
