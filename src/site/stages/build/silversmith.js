@@ -3,6 +3,7 @@
 const Metalsmith = require('metalsmith');
 const chalk = require('chalk');
 const AsciiTable = require('ascii-table');
+const { exec } = require('child_process');
 
 const {
   overloadConsoleWrites,
@@ -68,6 +69,19 @@ module.exports = () => {
     }
   };
 
+  const logProcMeminfo = () => {
+    const command = 'cat /proc/meminfo';
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.log('error: ', err);
+        return;
+      }
+
+      console.log(`${command}:\n${stdout}`);
+      if (stderr) console.log(`stderr: ${stderr}`);
+    });
+  };
+
   // Override the normal use function to log additional information
   smith._use = smith.use;
   smith.use = function use(plugin, description = 'Unknown Plugin') {
@@ -82,6 +96,7 @@ module.exports = () => {
         heapUsedStart = process.memoryUsage().heapUsed;
         smith.stepStats[step].memoryStart = heapUsedStart;
         logStepStart(step, description);
+        logProcMeminfo();
         timerStart = process.hrtime.bigint();
       })
       ._use(plugin)

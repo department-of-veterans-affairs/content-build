@@ -71,19 +71,6 @@ function build(BUILD_OPTIONS) {
     backupPagesJSON();
   }
 
-  console.log('Docker memory limit:');
-  const { exec } = require('child_process');
-  const command = 'cat /proc/meminfo';
-  exec(command, (err, stdout, stderr) => {
-    if (err) {
-      console.log('error: ', err);
-      return;
-    }
-
-    console.log(stdout);
-    console.log(`stderr: ${stderr}`);
-  });
-
   const smith = silverSmith();
 
   registerLiquidFilters();
