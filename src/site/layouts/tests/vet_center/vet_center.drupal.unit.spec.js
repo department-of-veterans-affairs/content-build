@@ -4,7 +4,7 @@ import axeCheck from '~/site/tests/support/axe';
 
 const layoutPath = 'src/site/layouts/vet_center.drupal.liquid';
 import testData from './fixtures/vet_center_escanaba_data';
-// TODO fix test cases
+
 describe('Vet Center Main Page', () => {
   let container;
   const data = parseFixture(
@@ -29,6 +29,24 @@ describe('Vet Center Main Page', () => {
     );
   });
 
+  it('renders prepare for your field-cc-non-traditional-hours', () => {
+    expect(
+      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
+    ).to.equal(1);
+  });
+
+  it('renders prepare for your field-cc-non-traditional-hours', () => {
+    expect(
+      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
+    ).to.equal(1);
+  });
+
+  it('renders prepare for your visit field-cc-vet-call-center', () => {
+    expect(
+      container.querySelectorAll('.field-cc-vet-call-center p').length,
+    ).to.equal(1);
+  });
+
   it('renders prepare for your visit', () => {
     expect(
       container.querySelectorAll('va-accordion[id^=prepare-for-your-visit]')
@@ -39,6 +57,13 @@ describe('Vet Center Main Page', () => {
         'va-accordion-item[id^=prepare-for-your-visit]',
       ).length,
     ).to.equal(4);
+  });
+
+  it('renders prepare for your visit field-vet-center-feature-content', () => {
+    expect(
+      container.querySelectorAll('.field-vet-center-feature-content > ul > li')
+        .length,
+    ).to.equal(3);
   });
 
   it('renders counselling services', () => {
