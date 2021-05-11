@@ -79,11 +79,10 @@ const urls = {
     'http://www.va.gov.s3-website-us-gov-west-1.amazonaws.com',
 };
 
-const contentUrls = {
-  [ENVIRONMENTS.LOCALHOST]: 'http://localhost:3002',
-  [ENVIRONMENTS.VAGOVDEV]: bucketsContent[options.buildtype],
-  [ENVIRONMENTS.VAGOVSTAGING]: bucketsContent[options.buildtype],
-  [ENVIRONMENTS.VAGOVPROD]: bucketsContent[options.buildtype],
+const getContentUrl = env => {
+  return env === 'localhost'
+    ? 'http://localhost:3002'
+    : bucketsContent[options.buildtype];
 };
 
 if (process.env.SENTRY_DSN) {
@@ -137,7 +136,7 @@ app.get('/preview', async (req, res, next) => {
         },
       ),
       fetch(
-        `${contentUrls[options.buildtype]}/generated/headerFooter.json`,
+        `${getContentUrl(options.buildtype)}/generated/headerFooter.json`,
       ).then(resp => {
         if (resp.ok) {
           return resp.json();
