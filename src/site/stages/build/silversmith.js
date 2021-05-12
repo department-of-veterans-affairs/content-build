@@ -3,7 +3,6 @@
 const Metalsmith = require('metalsmith');
 const chalk = require('chalk');
 const AsciiTable = require('ascii-table');
-const { exec } = require('child_process');
 
 const {
   overloadConsoleWrites,
@@ -25,12 +24,21 @@ const logMemoryUsage = (heapUsedStart, heapUsedEnd) => {
   );
 };
 
+const logAllMemoryStats = () => {
+  const keys = ['heapUsed', 'heapTotal', 'rss'];
+  const stats = process.memoryUsage();
+  keys.forEach(key => console.log(`${key}: ${formatMemory(stats[key])}mb`));
+  console.log();
+};
+
 /**
  * It's Metalsmith with some added shine.
  */
 module.exports = () => {
   const smith = Metalsmith(__dirname);
   overloadConsoleWrites();
+
+  setInterval(logAllMemoryStats, 5 * 1000);
 
   smith.stepStats = [];
   let stepCount = 0;
@@ -69,19 +77,6 @@ module.exports = () => {
     }
   };
 
-  const logProcMeminfo = () => {
-    const command = 'cat /proc/meminfo';
-    exec(command, (err, stdout, stderr) => {
-      if (err) {
-        console.log('error: ', err);
-        return;
-      }
-
-      console.log(`${command}:\n${stdout}`);
-      if (stderr) console.log(`stderr: ${stderr}`);
-    });
-  };
-
   // Override the normal use function to log additional information
   smith._use = smith.use;
   smith.use = function use(plugin, description = 'Unknown Plugin') {
@@ -96,7 +91,6 @@ module.exports = () => {
         heapUsedStart = process.memoryUsage().heapUsed;
         smith.stepStats[step].memoryStart = heapUsedStart;
         logStepStart(step, description);
-        logProcMeminfo();
         timerStart = process.hrtime.bigint();
       })
       ._use(plugin)
