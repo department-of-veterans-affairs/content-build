@@ -8,14 +8,6 @@ function createEnvironmentFilter(options) {
     for (const fileName of Object.keys(files)) {
       const file = files[fileName];
 
-      // Do not include CLPs on production (except for the preview server).
-      if (
-        !options.isPreviewServer &&
-        environmentName === ENVIRONMENTS.VAGOVPROD
-      ) {
-        delete files[fileName];
-      }
-
       if (
         environmentName !== ENVIRONMENTS.LOCALHOST &&
         file.status === 'draft'
