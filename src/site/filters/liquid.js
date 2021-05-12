@@ -716,10 +716,6 @@ module.exports = function registerFilters() {
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 
-  liquid.filters.orderBy = (data, prop, orderBy) => {
-    return _.orderBy(data, prop, orderBy);
-  };
-
   liquid.filters.processDynamicContent = (entity, contentType) => {
     // TODO - add more cases as new centralized content types are added
     // eslint-disable-next-line sonarjs/no-small-switch
