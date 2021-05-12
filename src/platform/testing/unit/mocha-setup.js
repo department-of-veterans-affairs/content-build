@@ -12,6 +12,7 @@ import { JSDOM } from 'jsdom';
 import '../../site-wide/moment-setup';
 import ENVIRONMENTS from 'site/constants/environments';
 import * as Sentry from '@sentry/browser';
+import chaiAxe from './axe-plugin';
 
 import { sentryTransport } from './sentry';
 
@@ -155,6 +156,10 @@ function setupJSDom() {
 } // end setupJSDom()
 
 setupJSDom();
+
+// This needs to be after JSDom has been setup, otherwise
+// axe has strange issues with globals not being set up
+chai.use(chaiAxe);
 
 export const mochaHooks = {
   beforeEach() {
