@@ -34,7 +34,8 @@
                 </div>
             </address>
             <div>
-                <a href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
+                <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"
+                   href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
                    target="_blank" rel="noopener noreferrer">
                     Get directions
                 </a>
