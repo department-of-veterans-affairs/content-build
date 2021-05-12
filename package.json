@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Content build for vets.gov website static assets.",
   "scripts": {
-    "build": "NODE_TLS_REJECT_UNAUTHORIZED=0 node --max-old-space-size=10000 script/build-content.js",
+    "build": "NODE_TLS_REJECT_UNAUTHORIZED=0 node --max-old-space-size=5000 script/build-content.js",
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
     "cms:compare": "./script/cms/compare.sh",
