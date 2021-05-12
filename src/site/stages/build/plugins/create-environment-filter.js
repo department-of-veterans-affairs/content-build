@@ -11,8 +11,7 @@ function createEnvironmentFilter(options) {
       // Do not include CLPs on production (except for the preview server).
       if (
         !options.isPreviewServer &&
-        environmentName === ENVIRONMENTS.VAGOVPROD &&
-        file.entityBundle === 'campaign_landing_page'
+        environmentName === ENVIRONMENTS.VAGOVPROD
       ) {
         delete files[fileName];
       }
