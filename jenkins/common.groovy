@@ -271,9 +271,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
 
       if (envName == 'vagovprod') {
-        // Find any broken links in the log
-        // @TODO: Add this feature back in post-release
-	      // checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
+	checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
         findMissingQueryFlags(buildLogPath, envName)
       }
 
