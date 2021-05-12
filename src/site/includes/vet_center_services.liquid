@@ -13,7 +13,9 @@
                 {% if entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterServiceDescrip != empty %}
                     <p>{{ entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterServiceDescrip  }}</p>
                 {% endif %}
-                {{ entity.entity.fieldServiceNameAndDescripti.entity.description.processed | drupalToVaPath | outputLinks }}
+                <!-- Removing entity.entity.fieldServiceNameAndDescripti.entity.description.processed for now.
+                This field seems be VHA services related and a duplicate, TODO confirm is needed?
+                 -->
                 {% if entity.entity.fieldBody %}
                     <div id="field-body-health-services-{{ idService }}-{{ entity.entity.fieldServiceNameAndDescripti.entity.name }}">
                         {{ entity.entity.fieldBody.processed | drupalToVaPath | outputLinks }}
