@@ -105,8 +105,16 @@ if (process.env.SENTRY_DSN) {
 const nonNodeContent = {
   fileName: path.join(cacheDir, 'nonNodeContent.json'),
   content: null,
+  isRefreshing: false,
+  refreshProgress: 0,
 
   async refresh() {
+    if (this.isRefreshing) {
+      return;
+    }
+
+    this.isRefreshing = true;
+
     console.log(
       'Refreshing the non-node content (e.g. sidebars and other menus)...',
     );
@@ -120,8 +128,11 @@ const nonNodeContent = {
     }
 
     const freshNonNodeContent = { data: {} };
-
     const queries = Object.entries(nonNodeQueries());
+
+    this.refreshProgress = 0;
+
+    console.time('Node-node queries');
     for (const [queryName, query] of queries) {
       console.time(queryName);
 
@@ -129,11 +140,14 @@ const nonNodeContent = {
       const json = await drupalClient.query({ query });
       Object.assign(freshNonNodeContent.data, json.data);
       console.timeEnd(queryName);
+
+      this.refreshProgress += 1 / queries.length;
     }
+    console.timeEnd('Node-node queries');
 
     this.content = freshNonNodeContent;
-    console.log('Non-node content has been updated.');
     this.saveIntoCache();
+    this.isRefreshing = false;
   },
 
   initializeFromCache() {
@@ -183,6 +197,14 @@ app.get('/health', (req, res) => {
 
 app.get('/preview', async (req, res, next) => {
   try {
+    if (!nonNodeContent.content) {
+      const percent = Number(nonNodeContent.refreshProgress * 100).toFixed(2);
+      res.send(
+        `Please hold while the preview server is starting - ${percent}%`,
+      );
+      return;
+    }
+
     const smith = await createPipeline({
       ...options,
       isPreviewServer: true,
@@ -320,7 +342,7 @@ async function start() {
   // If there wasn't any non-node content in cache, fetch it
   // from the CMS...
   if (!nonNodeContent.content) {
-    await nonNodeContent.refresh();
+    nonNodeContent.refresh();
   }
 
   // Refresh the non-node data every 10 minutes...
