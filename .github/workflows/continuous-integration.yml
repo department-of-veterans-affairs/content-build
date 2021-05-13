@@ -90,12 +90,6 @@ jobs:
       - name: Annotate ESLint results
         run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
 
-      - name: Run Sass lint
-        run: yarn run sass-lint --format json --verbose --output sasslint-report.json
-
-      - name: Annotate Sass lint results
-        run: node ./script/github-actions/sasslint-annotation-format.js
-
   security-audit:
     name: Security Audit
     runs-on: ubuntu-latest
