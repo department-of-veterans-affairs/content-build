@@ -25,9 +25,10 @@ const logMemoryUsage = (heapUsedStart, heapUsedEnd) => {
 };
 
 const logAllMemoryStats = () => {
-  const keys = ['heapUsed', 'heapTotal', 'rss'];
   const stats = process.memoryUsage();
-  keys.forEach(key => console.log(`${key}: ${formatMemory(stats[key])}mb`));
+  const keys = Object.keys(stats);
+  console.log(chalk.bold('Memory stats:'));
+  keys.forEach(key => console.log(`- ${key}: ${formatMemory(stats[key])}mb`));
   console.log();
 };
 
@@ -37,8 +38,6 @@ const logAllMemoryStats = () => {
 module.exports = () => {
   const smith = Metalsmith(__dirname);
   overloadConsoleWrites();
-
-  setInterval(logAllMemoryStats, 5 * 1000);
 
   smith.stepStats = [];
   let stepCount = 0;
@@ -104,6 +103,7 @@ module.exports = () => {
         logStepEnd(step, description, timeElapsed);
         if (global.verbose) {
           logMemoryUsage(heapUsedStart, heapUsedEnd);
+          logAllMemoryStats();
         }
       });
   };
