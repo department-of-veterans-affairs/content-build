@@ -35,7 +35,7 @@ const downloadDrupalAssets = require('./plugins/download-drupal-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 // const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
-// const rewriteVaDomains = require('./plugins/rewrite-va-domains');
+const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
 
 const pagesJSONPath = '.cache/localhost/drupal/pages.json';
@@ -222,10 +222,10 @@ function build(BUILD_OPTIONS) {
    * This will replace links in static pages with a staging domain,
    * if it is in the list of domains to replace
    */
-  // smith.use(
-  //   rewriteVaDomains(BUILD_OPTIONS),
-  //   'Rewrite VA domains for the buildtype',
-  // );
+  smith.use(
+    rewriteVaDomains(BUILD_OPTIONS),
+    'Rewrite VA domains for the buildtype',
+  );
   smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
   smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
   smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
