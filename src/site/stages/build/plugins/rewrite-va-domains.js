@@ -8,12 +8,13 @@ function createRedirects(options) {
         .forEach(fileName => {
           const file = files[fileName];
           let contents = file.contents.toString();
+          delete file.contents;
           options.domainReplacements.forEach(domain => {
             const regex = new RegExp(domain.from, 'g');
             contents = contents.replace(regex, domain.to);
           });
 
-          // file.contents = Buffer.from(contents);
+          file.contents = Buffer.from(contents);
         });
 
       // const replacementsWithRegex = options.domainReplacements.map(domain => ({
