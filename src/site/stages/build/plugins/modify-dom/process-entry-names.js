@@ -108,12 +108,13 @@ module.exports = {
       // Assemble the filename so we can match it in the generated files array.
       const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
       const s3Search =
-        buildOptions.buildtype !== environments.LOCALHOST
+        buildOptions.buildtype !== environments.LOCALHOST &&
+        !fileSearch.includes('https')
           ? `${buckets[buildOptions.buildtype]}/${fileSearch}`
           : fileSearch;
 
       // Ensure we have valid options and that the entry exists.
-      const entryExists = files[fileSearch];
+      const entryExists = files[fileSearch] || files[s3Search];
 
       if (
         buildOptions.buildtype !== environments.LOCALHOST &&
