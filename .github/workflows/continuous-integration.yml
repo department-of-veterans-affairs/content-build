@@ -153,6 +153,7 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
+      fail-fast: true
       matrix:
         buildtype: [vagovdev, vagovstaging, vagovprod]
 
@@ -201,6 +202,14 @@ jobs:
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
+      # - name: Slack notification
+      #   run: echo Slack Message ${{ steps.get-broken-link-info.outputs.SLACK_MESSAGE }}. Outputting color for testing ${{ steps.get-broken-link-info.outputs.SLACK_COLOR }}
+      #   if: ${{ (steps.get-broken-link-info.outputs.SLACK_COLOR != '' || steps.get-broken-link-info.outputs.SLACK_MESSAGE != '') && github.ref == 'refs/heads/master' }} 
+
+  broken-links-notify:
+    name: Slack notify broken links
+    runs-on: ubuntu-latest
+    steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -226,7 +235,3 @@ jobs:
           message: "This is the message!"
           blocks: "[{\"type\": \"divider\"}, {\"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \":partywizard: Github Actions Workflow succeeded! :partywizard:\n <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow: ${{ github.workflow }} Run #: ${{ github.run_number }}>\"}}, {\"type\": \"divider\"}]"
           channel_id: "U01SPJ10WBC"
-
-      # - name: Slack notification
-      #   run: echo Slack Message ${{ steps.get-broken-link-info.outputs.SLACK_MESSAGE }}. Outputting color for testing ${{ steps.get-broken-link-info.outputs.SLACK_COLOR }}
-      #   if: ${{ (steps.get-broken-link-info.outputs.SLACK_COLOR != '' || steps.get-broken-link-info.outputs.SLACK_MESSAGE != '') && github.ref == 'refs/heads/master' }} 
