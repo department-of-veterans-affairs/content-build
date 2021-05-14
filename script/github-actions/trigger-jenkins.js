@@ -56,8 +56,6 @@ const handleError = error => {
   process.exit(1);
 };
 
-console.log('URL', url);
-
 fetch(url.toString(), options)
   .then(handleResponse)
   .catch(handleError);
