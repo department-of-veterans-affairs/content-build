@@ -36,7 +36,6 @@ const options = {
     Authorization: `Basic ${Buffer.from(
       `va-vfs-bot:${JENKINS_API_TOKEN}`,
     ).toString('base64')}`,
-    'Content-Type': 'application/json',
   },
 };
 
