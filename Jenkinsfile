@@ -145,6 +145,10 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  // Run accessibility tests
+  // TODO: Remove before merging!
+  commonStages.accessibilityTests();
+  
   // Run E2E tests
   commonStages.integrationTests(dockerContainer, ref);
 
