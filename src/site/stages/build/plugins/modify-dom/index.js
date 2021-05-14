@@ -43,12 +43,12 @@ const modifyDom = BUILD_OPTIONS => files => {
   for (const [fileName, file] of Object.entries(files)) {
     if (path.extname(fileName) === '.html') {
       const dom = cheerio.load(file.contents);
-      for (const modifier of domModifiers) {
-        modifier.modifyFile(fileName, file, dom, files, BUILD_OPTIONS);
-      }
-      if (file.modified) {
-        file.contents = Buffer.from(dom.html());
-      }
+      // for (const modifier of domModifiers) {
+      //   modifier.modifyFile(fileName, file, dom, files, BUILD_OPTIONS);
+      // }
+      // if (file.modified) {
+      file.contents = Buffer.from(dom.html());
+      // }
     }
   }
 
