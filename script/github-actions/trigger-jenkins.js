@@ -52,6 +52,7 @@ const handleError = error => {
 };
 
 console.log('GITHUB_REF', GITHUB_REF);
+console.log('Jenkins token?', !!JENKINS_API_TOKEN);
 console.log('Branch name', branchName);
 console.log('URL', url);
 
