@@ -8,7 +8,17 @@ node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']],
               parameters([choice(name: "cmsEnvBuildOverride",
                                  description: "Choose an environment to run a content only build. Select 'none' to run the regular pipeline.",
-                                 choices: ["none", "vagovdev", "vagovstaging"].join("\n"))])]);
+                                 choices: ["none", "vagovdev", "vagovstaging"].join("\n")),
+                          booleanParam(name: "cancelBuild",
+                                       defaultValue: true,
+                                       description: "Hack to cancel the run triggered by webhook")])]);
+
+  stage('Cancel build triggered by webhook') {
+    if (params.cancelBuild) {
+      currentBuild.result = 'ABORTED'
+      error("Aborting run triggered by webhook. Please wait for the run triggered by the GitHub Actions workflow.");
+    }
+  }
 
   // Checkout content-build code
   dir("content-build") {
