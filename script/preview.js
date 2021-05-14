@@ -8,9 +8,7 @@ const path = require('path');
 const express = require('express');
 const proxy = require('express-http-proxy');
 const jsesc = require('jsesc');
-const {
-  nonNodeQueries,
-} = require('../src/site/stages/build/drupal/individual-queries');
+const getNonNodeContent = require('../src/site/stages/build/drupal/non-node-content').getNonNodeContent;
 const createPipeline = require('../src/site/stages/preview');
 
 const getDrupalClient = require('../src/site/stages/build/drupal/api');
@@ -127,25 +125,9 @@ const nonNodeContent = {
       );
     }
 
-    const freshNonNodeContent = { data: {} };
-    const queries = Object.entries(nonNodeQueries());
-
     this.refreshProgress = 0;
 
-    console.time('Node-node queries');
-    for (const [queryName, query] of queries) {
-      console.time(queryName);
-
-      // eslint-disable-next-line no-await-in-loop
-      const json = await drupalClient.query({ query });
-      Object.assign(freshNonNodeContent.data, json.data);
-      console.timeEnd(queryName);
-
-      this.refreshProgress += 1 / queries.length;
-    }
-    console.timeEnd('Node-node queries');
-
-    this.content = freshNonNodeContent;
+    this.content = await getNonNodeContent(drupalClient, this.refreshProgress);
     this.saveIntoCache();
     this.isRefreshing = false;
   },

@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const tar = require('tar-fs');
 const moment = require('moment');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch').default;
 const chalk = require('chalk');
 const SocksProxyAgent = require('socks-proxy-agent');
 
@@ -14,11 +14,18 @@ const {
   CountEntityTypes,
 } = require('./individual-queries');
 
-const {
-  readAllNodeNames,
-  readEntity,
-} = require('../process-cms-exports/helpers');
-const entityTreeFactory = require('../process-cms-exports');
+// Using a global variable from the Webpack config, skip unnecessary requires
+// for CMS transformers code when building the content cache function.
+// eslint-disable-next-line no-undef
+const CONTENT_CACHE_FUNCTION = process.env.CONTENT_CACHE_FUNCTION;
+
+const { readAllNodeNames, readEntity } = CONTENT_CACHE_FUNCTION
+  ? {}
+  : require('../process-cms-exports/helpers');
+
+const entityTreeFactory = CONTENT_CACHE_FUNCTION
+  ? () => {}
+  : require('../process-cms-exports');
 
 function encodeCredentials({ user, password }) {
   const credentials = `${user}:${password}`;
