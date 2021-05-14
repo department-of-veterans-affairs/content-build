@@ -222,7 +222,5 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/JENKINS_API_TOKEN
           env_variable_name: JENKINS_API_TOKEN
 
-      - name: Get Jenkins API token
-        uses:
-        name: Trigger Jenkins CI
+      - name: Trigger Jenkins pipeline
         run: curl -X POST -L -u va-vfs-bot:${{ env.JENKINS_API_TOKEN}} https://dev.va.gov/jenkins/job/testing/job/vets-website/job/gha-jenkins/build --data-urlencode json='{"parameter": [{"name":"cmsEnvBuildOverride","value":"none"},{"name":"cancelBuild","value":"false"}]}'
