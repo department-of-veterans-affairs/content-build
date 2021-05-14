@@ -223,4 +223,4 @@ jobs:
           env_variable_name: JENKINS_API_TOKEN
 
       - name: Trigger Jenkins pipeline
-        run: curl -X POST -L -u va-vfs-bot:${{ env.JENKINS_API_TOKEN}} https://dev.va.gov/jenkins/job/testing/job/vets-website/job/gha-jenkins/build --data-urlencode json='{"parameter": [{"name":"cmsEnvBuildOverride","value":"none"},{"name":"cancelBuild","value":"false"}]}'
+        run: curl -X POST -L -u va-vfs-bot:${{ env.JENKINS_API_TOKEN }} https://dev.va.gov/jenkins/job/testing/job/vets-website/job/gha-jenkins/build --data-urlencode json='{"parameter": [{"name":"cmsEnvBuildOverride","value":"none"},{"name":"cancelBuild","value":"false"}]}'
