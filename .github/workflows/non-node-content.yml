@@ -52,17 +52,17 @@ jobs:
 
       - name: Generate and upload content cache function
         run: |
-          yarn webpack --config config/webpack.non-node-content.js
+          yarn webpack --config config/webpack.non-node-content-cache.js
           mkdir -p ./tmp
-          zip -j ./tmp/function.zip build/non-node-content/index.js
-          aws s3 cp ./tmp/function.zip s3://vetsgov-website-builds-s3-upload/non-node-content/master/function.zip --acl public-read
+          zip -j ./tmp/function.zip build/non-node-content-cache/index.js
+          aws s3 cp ./tmp/function.zip s3://vetsgov-website-builds-s3-upload/non-node-content-cache/master/function.zip --acl public-read
 
       - name: Update content cache function
         run: >
           aws lambda update-function-code
           --function-name cacheNonNodeContent
           --s3-bucket vetsgov-website-builds-s3-upload
-          --s3-key non-node-content/master/function.zip
+          --s3-key non-node-content-cache/master/function.zip
 
       - name: Invoke content cache function
         run: aws lambda invoke --function-name cacheNonNodeContent outfile.txt
