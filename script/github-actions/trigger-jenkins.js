@@ -31,7 +31,7 @@ const options = {
   body: JSON.stringify({
     parameter: [
       { name: 'cmsEnvBuildOverride', value: 'none' },
-      { name: 'cancelBuild', value: 'true' },
+      { name: 'cancelBuild', value: 'false' },
     ],
   }),
 };
