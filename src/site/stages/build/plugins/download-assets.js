@@ -54,7 +54,9 @@ async function downloadFromLiveBucket(files, buildOptions) {
 
   const downloads = entryNames.map(async entryName => {
     let bundleFileName = fileManifest[entryName];
-    const bundleUrl = `${bucket}${bundleFileName}`;
+    const bundleUrl = bundleFileName.includes(`${bucket}`)
+      ? `${bundleFileName}`
+      : `${bucket}${bundleFileName}`;
     const bundleResponse = await fetch(bundleUrl);
 
     if (bundleFileName.includes('generated/../')) {
