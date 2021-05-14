@@ -28,7 +28,7 @@ function createRedirects(options) {
             contentsString = contentsString.replace(domain.regex, domain.to);
           });
 
-          files[fileName].contents = Buffer.from(contentsString);
+          // files[fileName].contents = Buffer.from(contentsString);
         });
     }
 

@@ -5,7 +5,7 @@ const addNonceToScripts = require('./add-nonce-to-scripts');
 const processEntryNames = require('./process-entry-names');
 const updateExternalLinks = require('./update-external-links');
 const addSubheadingsIds = require('./add-id-to-subheadings');
-const checkBrokenLinks = require('./check-broken-links');
+// const checkBrokenLinks = require('./check-broken-links');
 const injectAxeCore = require('./inject-axe-core');
 
 const getDomModifiers = BUILD_OPTIONS => {
@@ -22,9 +22,9 @@ const getDomModifiers = BUILD_OPTIONS => {
     addNonceToScripts,
     processEntryNames,
     updateExternalLinks,
-    addSubheadingsIds,
-    checkBrokenLinks,
-    injectAxeCore,
+    // addSubheadingsIds,
+    // checkBrokenLinks,
+    // injectAxeCore,
   ];
 };
 
@@ -43,12 +43,12 @@ const modifyDom = BUILD_OPTIONS => files => {
   for (const [fileName, file] of Object.entries(files)) {
     if (path.extname(fileName) === '.html') {
       const dom = cheerio.load(file.contents);
-      // for (const modifier of domModifiers) {
-      //   modifier.modifyFile(fileName, file, dom, files, BUILD_OPTIONS);
-      // }
-      // if (file.modified) {
-      file.contents = Buffer.from(dom.html());
-      // }
+      for (const modifier of domModifiers) {
+        modifier.modifyFile(fileName, file, dom, files, BUILD_OPTIONS);
+      }
+      if (file.modified) {
+        file.contents = Buffer.from(dom.html());
+      }
     }
   }
 
