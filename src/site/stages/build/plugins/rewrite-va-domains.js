@@ -3,6 +3,8 @@
 function createRedirects(options) {
   return (files, metalsmith, done) => {
     if (options.domainReplacements) {
+      let itemsSinceCall = 0;
+
       Object.keys(files)
         .filter(fileName => fileName.endsWith('html'))
         .forEach(fileName => {
@@ -15,6 +17,14 @@ function createRedirects(options) {
           });
 
           file.contents = Buffer.from(contents);
+
+          itemsSinceCall++;
+          if (itemsSinceCall > 100) {
+            itemsSinceCall = 0;
+            global.gc();
+            /* eslint-disable no-console */
+            console.log('Called global.gc() in createRedirects()');
+          }
         });
 
       // const replacementsWithRegex = options.domainReplacements.map(domain => ({
