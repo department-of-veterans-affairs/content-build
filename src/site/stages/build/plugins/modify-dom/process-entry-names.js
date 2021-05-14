@@ -79,13 +79,15 @@ module.exports = {
     const { dom } = file;
     if (!dom) return;
 
+    const bucket = buckets[buildOptions.buildtype];
+
     // Set font preload URLs to point to apps bucket
     dom('link[rel="preload"]').each((index, el) => {
       const $el = dom(el);
       const hrefVal = $el.attr('href');
       const filePath =
         buildOptions.buildtype !== environments.LOCALHOST
-          ? `${buckets[buildOptions.buildtype]}${hrefVal}`
+          ? `${bucket}${hrefVal}`
           : hrefVal;
 
       $el.attr('href', filePath);
@@ -109,12 +111,12 @@ module.exports = {
       const fileSearch = `generated/${hashedEntryName.split('/generated/')[1]}`;
       const s3Search =
         buildOptions.buildtype !== environments.LOCALHOST &&
-        !fileSearch.includes('https')
-          ? `${buckets[buildOptions.buildtype]}/${fileSearch}`
+        !fileSearch.includes(bucket)
+          ? `${bucket}/${fileSearch}`
           : fileSearch;
 
       // Ensure we have valid options and that the entry exists.
-      const entryExists = files[fileSearch] || files[s3Search];
+      const entryExists = files[fileSearch];
 
       if (
         buildOptions.buildtype !== environments.LOCALHOST &&
