@@ -94,6 +94,8 @@ module.exports = () => {
       })
       ._use(plugin)
       ._use(() => {
+        global.gc();
+
         const heapUsedEnd = process.memoryUsage().heapUsed;
         smith.stepStats[step].memoryEnd = heapUsedEnd;
 
