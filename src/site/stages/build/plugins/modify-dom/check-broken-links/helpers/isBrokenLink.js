@@ -22,7 +22,7 @@ function isBrokenLink(link, pagePath, allPaths) {
     return false;
   }
 
-  let filePath = decodeURI(parsed.pathname);
+  let filePath = decodeURIComponent(parsed.pathname);
 
   if (path.isAbsolute(filePath)) {
     filePath = path.join('.', filePath);

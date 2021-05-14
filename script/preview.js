@@ -3,10 +3,14 @@
 require('isomorphic-fetch');
 const Raven = require('raven');
 const commandLineArgs = require('command-line-args');
+const fs = require('fs-extra');
 const path = require('path');
 const express = require('express');
 const proxy = require('express-http-proxy');
 const jsesc = require('jsesc');
+const {
+  nonNodeQueries,
+} = require('../src/site/stages/build/drupal/individual-queries');
 const createPipeline = require('../src/site/stages/preview');
 
 const getDrupalClient = require('../src/site/stages/build/drupal/api');
@@ -56,6 +60,8 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   },
 ];
 
+global.cmsFeatureFlags = {};
+
 if (process.env.SENTRY_DSN) {
   Raven.config(process.env.SENTRY_DSN).install();
 }
@@ -65,6 +71,13 @@ const options = commandLineArgs(COMMAND_LINE_OPTIONS_DEFINITIONS);
 if (options.buildpath === null) {
   options.buildpath = `build/${options.buildtype}`;
 }
+
+const cacheDir = path.join(
+  __dirname,
+  '../.cache',
+  options.buildtype,
+  'preview-server',
+);
 
 const app = express();
 const drupalClient = getDrupalClient(options);
@@ -79,9 +92,82 @@ const urls = {
     'http://www.va.gov.s3-website-us-gov-west-1.amazonaws.com',
 };
 
+const getContentUrl = env => {
+  return env === 'localhost'
+    ? 'http://localhost:3002'
+    : bucketsContent[options.buildtype];
+};
+
 if (process.env.SENTRY_DSN) {
   app.use(Raven.requestHandler());
 }
+
+const nonNodeContent = {
+  fileName: path.join(cacheDir, 'nonNodeContent.json'),
+  content: null,
+  isRefreshing: false,
+  refreshProgress: 0,
+
+  async refresh() {
+    if (this.isRefreshing) {
+      return;
+    }
+
+    this.isRefreshing = true;
+
+    console.log(
+      'Refreshing the non-node content (e.g. sidebars and other menus)...',
+    );
+
+    if (this.content) {
+      console.log('(This process will happen in the background)');
+    } else {
+      console.log(
+        'This will take a few minutes but will be cached into file storage once done.',
+      );
+    }
+
+    const freshNonNodeContent = { data: {} };
+    const queries = Object.entries(nonNodeQueries());
+
+    this.refreshProgress = 0;
+
+    console.time('Node-node queries');
+    for (const [queryName, query] of queries) {
+      console.time(queryName);
+
+      // eslint-disable-next-line no-await-in-loop
+      const json = await drupalClient.query({ query });
+      Object.assign(freshNonNodeContent.data, json.data);
+      console.timeEnd(queryName);
+
+      this.refreshProgress += 1 / queries.length;
+    }
+    console.timeEnd('Node-node queries');
+
+    this.content = freshNonNodeContent;
+    this.saveIntoCache();
+    this.isRefreshing = false;
+  },
+
+  initializeFromCache() {
+    if (fs.existsSync(this.fileName)) {
+      console.log(`Non-node content initializing from ${this.fileName}`);
+      this.content = fs.readJSONSync(this.fileName);
+    } else {
+      console.log(
+        `Non-node content not found in local cache at ${this.fileName}...`,
+      );
+    }
+  },
+
+  saveIntoCache() {
+    console.log(`Caching non-node content into ${this.fileName}...`);
+    fs.ensureFileSync(this.fileName);
+    fs.writeJSONSync(this.fileName, this.content);
+    console.log('Done!');
+  },
+};
 
 /**
  * Make the query params case-insensitive.
@@ -101,7 +187,7 @@ app.use((req, res, next) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-app.get('/error', (req, res) => {
+app.get('/error', (_req, _res) => {
   throw new Error('fake error');
 });
 
@@ -111,14 +197,30 @@ app.get('/health', (req, res) => {
 
 app.get('/preview', async (req, res, next) => {
   try {
+    if (!nonNodeContent.content) {
+      const percent = Number(nonNodeContent.refreshProgress * 100).toFixed(2);
+      res.send(
+        `Please hold while the preview server is starting - ${percent}%`,
+      );
+      return;
+    }
+
     const smith = await createPipeline({
       ...options,
       isPreviewServer: true,
       port: process.env.PORT || 3002,
     });
 
+    console.time(`Node ${req.query.nodeId}`);
+    const nodeQuery = drupalClient
+      .getLatestPageById(req.query.nodeId)
+      .then(response => {
+        console.timeEnd(`Node ${req.query.nodeId}`);
+        return response;
+      });
+
     const requests = [
-      drupalClient.getLatestPageById(req.query.nodeId),
+      nodeQuery,
       fetch(`${urls[options.buildtype]}/generated/file-manifest.json`).then(
         resp => {
           if (resp.ok) {
@@ -130,16 +232,15 @@ app.get('/preview', async (req, res, next) => {
         },
       ),
       fetch(
-        `${bucketsContent[options.buildtype]}/generated/headerFooter.json`,
-        resp => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(
-            `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
-          );
-        },
-      ),
+        `${getContentUrl(options.buildtype)}/generated/headerFooter.json`,
+      ).then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        }
+        throw new Error(
+          `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
+        );
+      }),
     ];
 
     const [drupalData, fileManifest, headerFooterData] = await Promise.all(
@@ -156,6 +257,8 @@ app.get('/preview', async (req, res, next) => {
       res.sendStatus(404);
       return;
     }
+
+    Object.assign(drupalData.data, nonNodeContent.content.data);
 
     const drupalPage = drupalData.data.nodes.entities[0];
     const drupalPath = `${req.path.substring(1)}/index.html`;
@@ -232,6 +335,23 @@ app.use((err, req, res, next) => {
   `);
 });
 
-app.listen(options.port, () => {
-  console.log(`Content preview server running on port ${options.port}`);
-});
+async function start() {
+  // Attempt to read non-node content from cache...
+  nonNodeContent.initializeFromCache();
+
+  // If there wasn't any non-node content in cache, fetch it
+  // from the CMS...
+  if (!nonNodeContent.content) {
+    nonNodeContent.refresh();
+  }
+
+  // Refresh the non-node data every 10 minutes...
+  const fifteenMinutes = 15 * 60 * 1000;
+  setInterval(() => nonNodeContent.refresh(), fifteenMinutes);
+
+  app.listen(options.port, () => {
+    console.log(`Content preview server running on port ${options.port}`);
+  });
+}
+
+start();

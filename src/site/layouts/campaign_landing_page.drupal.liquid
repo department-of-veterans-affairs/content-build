@@ -4,7 +4,7 @@
 <!-- Derive the total sections the page includes for analytics. -->
 {% assign clpTotalSections = 11 | deriveCLPTotalSections: fieldClpVideoPanel, fieldClpSpotlightPanel, fieldClpStoriesPanel, fieldClpResourcesPanel, fieldClpEventsPanel, fieldClpFaqPanel, fieldBenefitCategories %}
 
-<div id="content" class="interior vads-u-display--none" data-template="node-campaign_landing_page">
+<div id="content" class="interior" data-template="node-campaign_landing_page">
   <main>
     <!-- Hero-->
     <div class="va-u-background--image" style="background-image: url('{{ fieldHeroImage.entity.image.url }}">
@@ -312,7 +312,7 @@
           {% endfor %}
         </div>
 
-        {% if fieldClpResourcesCta %}
+        {% if fieldClpResourcesCta.entity.fieldButtonLink %}
           <div class="vads-l-row">
             <div class="vads-u-col--12">
               <a
@@ -501,7 +501,7 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="{{ fieldClpConnectWithUs.entity.fieldEmailUpdatesLinkText }} (opens in a new window)"
+                  aria-label="{{ fieldClpConnectWithUs.entity.fieldEmailUpdatesLinkText }} (opens in a new tab)"
                   href="{{ fieldClpConnectWithUs.entity.fieldEmailUpdatesUrl }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldClpConnectWithUs.entity.name | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpConnectWithUs.entity.fieldEmailUpdatesLinkText | encode }}' });"
                   rel="noreferrer noopener"
@@ -518,7 +518,7 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Twitter, {{ fieldClpConnectWithUs.entity.name }} (opens in a new window)"
+                  aria-label="Twitter, {{ fieldClpConnectWithUs.entity.name }} (opens in a new tab)"
                   href="https://twitter.com/{{ socialLinksObject.twitter.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldClpConnectWithUs.entity.name | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpConnectWithUs.entity.name | encode }} Twitter' });"
                   rel="noreferrer noopener"
@@ -535,7 +535,7 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Facebook, {{ fieldClpConnectWithUs.entity.name }} (opens in a new window)"
+                  aria-label="Facebook, {{ fieldClpConnectWithUs.entity.name }} (opens in a new tab)"
                   href="https://facebook.com/{{ socialLinksObject.facebook.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldClpConnectWithUs.entity.name | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpConnectWithUs.entity.name | encode }} Facebook' });"
                   rel="noreferrer noopener"
@@ -552,7 +552,7 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="YouTube, {{ fieldClpConnectWithUs.entity.name }} (opens in a new window)"
+                  aria-label="YouTube, {{ fieldClpConnectWithUs.entity.name }} (opens in a new tab)"
                   href="https://youtube.com/{{ socialLinksObject.youtube.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldClpConnectWithUs.entity.name | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpConnectWithUs.entity.name | encode }} YouTube' });"
                   rel="noreferrer noopener"
@@ -569,7 +569,7 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Linkedin, {{ fieldClpConnectWithUs.entity.name }} (opens in a new window)"
+                  aria-label="Linkedin, {{ fieldClpConnectWithUs.entity.name }} (opens in a new tab)"
                   href="https://linkedin.com/{{ socialLinksObject.linkedin.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldClpConnectWithUs.entity.name | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpConnectWithUs.entity.name | encode }} Linkedin' });"
                   rel="noreferrer noopener"
@@ -586,7 +586,7 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Instagram, {{ fieldClpConnectWithUs.entity.name }} (opens in a new window)"
+                  aria-label="Instagram, {{ fieldClpConnectWithUs.entity.name }} (opens in a new tab)"
                   href="https://instagram.com/{{ socialLinksObject.instagram.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldClpConnectWithUs.entity.name | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpConnectWithUs.entity.name | encode }} Instagram' });"
                   rel="noreferrer noopener"
@@ -639,7 +639,7 @@
     <!--/  VA Benefits -->
 
     <!-- Last Updated -->
-    <div class="vads-l-grid-container vads-u-background-color--white vads-u-padding-y--6 vads-u-padding-top--3 vads-u-padding-x--4 large-screen:vads-u-padding-x--0">
+    <div class="vads-l-grid-container vads-u-background-color--white vads-u-padding-bottom--6 vads-u-padding-x--4 large-screen:vads-u-padding-x--0">
       <div class="vads-l-row">
         <div class="vads-l-col--12 medium-screen:vads-l-col--9">
           <div class="last-updated">
@@ -654,42 +654,6 @@
     {% include "src/site/components/up_to_top_button.html" with isCampaignLandingPage = true %}
   </main>
 </div>
-
-<!-- TEMPORARY -->
-<!-- =============== -->
-<script>
-  function checkCLPAuth() {
-    // We have a find and replace in the build for `www.va.gov`, so this is us getting creative 😂 😂 😂
-    const prodURL = ['https://', 'www.', 'va', '.gov'].join('')
-
-    // Only show CLP auth on staging or prod.
-    if (window.location.origin === 'https://staging.va.gov' || window.location.origin === prodURL) {
-      // Prompt the user for the passphrase.
-      var clpPassphrase = prompt('This page is in BETA. Please enter the passphrase to access it:');
-
-      // Redirect to homepage if the passphrase is incorrect.
-      if (clpPassphrase !== 'clptest123') {
-        window.location.href = '/';
-        return;
-      }
-    }
-
-    // Derive the content element.
-    var content = document.getElementById('content');
-
-    // Escape early if we cannot find it.
-    if (!content) {
-      console.error('Unable to find #content to show.');
-      return;
-    }
-
-    // Show the content.
-    content.className = content.className.replace(' vads-u-display--none', '');
-  }
-
-  checkCLPAuth();
-</script>
-<!-- =============== -->
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
