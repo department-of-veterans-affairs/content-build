@@ -8,7 +8,7 @@ if (!process.env.GITHUB_REF) {
 }
 
 const { GITHUB_REF, JENKINS_API_TOKEN } = process.env;
-const [, branchName] = GITHUB_REF.match(/\/refs\/heads\/(.+)/);
+const [, branchName] = GITHUB_REF.match(/refs\/heads\/(.+)/);
 
 const url = new URL(
   path.join(
