@@ -116,7 +116,7 @@ module.exports = {
           : fileSearch;
 
       // Ensure we have valid options and that the entry exists.
-      const entryExists = files[fileSearch];
+      const entryExists = files[fileSearch] || files[s3Search];
 
       if (
         buildOptions.buildtype !== environments.LOCALHOST &&
