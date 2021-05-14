@@ -78,7 +78,9 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
 ];
 
 function gatherFromCommandLine() {
-  const options = commandLineArgs(COMMAND_LINE_OPTIONS_DEFINITIONS);
+  const projectRoot = process.env.CONTENT_CACHE_FUNCTION
+    ? '/tmp' // The Lambda environment can only write to /tmp.
+    : path.resolve(__dirname, '../../../../');
 
   // Set defaults which require the value of other options
   options['cms-export-dir'] =
@@ -238,7 +240,10 @@ async function setUpFeatureFlags(options) {
 }
 
 async function getOptions(commandLineOptions) {
-  const options = commandLineOptions || gatherFromCommandLine();
+  const options = {
+    ...gatherFromCommandLine(),
+    ...commandLineOptions,
+  };
 
   applyDefaultOptions(options);
   applyEnvironmentOverrides(options);
