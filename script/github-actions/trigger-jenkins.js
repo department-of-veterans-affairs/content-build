@@ -20,8 +20,15 @@ const url = new URL(
   ),
 );
 
-url.searchParams.append('cmsEnvBuildOverride', 'none');
-url.searchParams.append('cancelBuild', 'false');
+url.searchParams.append(
+  'json',
+  JSON.stringify({
+    parameter: [
+      { name: 'cmsEnvBuildOverride', value: 'none' },
+      { name: 'cancelBuild', value: 'false' },
+    ],
+  }),
+);
 
 const options = {
   method: 'POST',
