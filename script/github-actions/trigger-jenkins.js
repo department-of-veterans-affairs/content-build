@@ -20,6 +20,9 @@ const url = new URL(
   ),
 );
 
+url.searchParams.append('cmsEnvBuildOverride', 'none');
+url.searchParams.append('cancelBuild', 'false');
+
 const options = {
   method: 'POST',
   headers: {
@@ -28,12 +31,6 @@ const options = {
     ).toString('base64')}`,
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify({
-    parameter: [
-      { name: 'cmsEnvBuildOverride', value: 'none' },
-      { name: 'cancelBuild', value: 'false' },
-    ],
-  }),
 };
 
 const handleResponse = response => {
@@ -52,9 +49,6 @@ const handleError = error => {
   process.exit(1);
 };
 
-console.log('GITHUB_REF', GITHUB_REF);
-console.log('Jenkins token?', !!JENKINS_API_TOKEN);
-console.log('Branch name', branchName);
 console.log('URL', url);
 
 fetch(url.toString(), options)
