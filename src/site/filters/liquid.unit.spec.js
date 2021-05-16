@@ -10,24 +10,24 @@ registerFilters();
 describe('toTitleCase', () => {
   it('returns null when null is passed', () => {
     expect(liquid.filters.toTitleCase(null)).to.eq(null);
-  })
+  });
 
   it('returns an empty string when an empty string is passed', () => {
     expect(liquid.filters.toTitleCase('')).to.eq('');
-  })
+  });
 
   it('returns an empty string when an empty array is passed', () => {
     expect(liquid.filters.toTitleCase([])).to.eq('');
-  })
+  });
 
   it('returns a string with only the first letter of word capitalized', () => {
     expect(liquid.filters.toTitleCase('tEST')).to.eq('Test');
-  })
+  });
 
   it('returns all words in string with the first letter capitalized', () => {
     expect(liquid.filters.toTitleCase('t3sT String')).to.eq('T3st String');
-  })
-})
+  });
+});
 
 describe('isLaterThan', () => {
   it('returns true when the left arg is a timestamp later than the right arg', () => {

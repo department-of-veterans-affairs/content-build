@@ -94,7 +94,7 @@ module.exports = function registerFilters() {
       .toString()
       .toLowerCase()
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map(word => _.upperFirst(word))
       .join(' ');
   };
 
