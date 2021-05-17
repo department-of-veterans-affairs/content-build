@@ -158,7 +158,7 @@ def accessibilityTests() {
   stage("Accessibility") {
 
      slackSend(
-        message: 'Content build accessibility tests are running',
+        message: "Starting the daily accessibility scan of content-build... ${env.RUN_DISPLAY_URL}".stripMargin(),
         color: 'good',
         channel: '-daily-accessibility-scan'
       )
@@ -197,7 +197,7 @@ def accessibilityTests() {
 }
 
 def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnlyBuild) {
-  def brokenLinksFile = "${WORKSPACE}/vets-website/logs/${envName}-broken-links.json"
+  def brokenLinksFile = "${WORKSPACE}/content-build/logs/${envName}-broken-links.json"
 
   if (fileExists(brokenLinksFile)) {
     def rawJsonFile = readFile(brokenLinksFile);
