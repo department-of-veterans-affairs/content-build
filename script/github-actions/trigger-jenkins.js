@@ -47,7 +47,11 @@ const handleResponse = response => {
   }
 
   console.log('Successfully triggered Jenkins pipeline!');
-  process.exit(0);
+
+  return response.json().then(data => {
+    console.log('Response:', JSON.stringify(data, null, 2));
+    process.exit(0);
+  });
 };
 
 const handleError = error => {
