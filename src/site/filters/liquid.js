@@ -92,9 +92,8 @@ module.exports = function registerFilters() {
     if (phrase === null) return null;
     return phrase
       .toString()
-      .toLowerCase()
       .split(' ')
-      .map(word => _.upperFirst(word))
+      .map(_.capitalize)
       .join(' ');
   };
 
