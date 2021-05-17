@@ -189,7 +189,7 @@ def accessibilityTests() {
         throw error
       } finally {
         sh "docker-compose -p accessibility down --remove-orphans"
-        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+        // step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
       }
     }
 
@@ -323,7 +323,7 @@ def integrationTests(dockerContainer, ref) {
           if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
             sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
           }
-          step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+          // step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
         }
       } // end timeout
     }
