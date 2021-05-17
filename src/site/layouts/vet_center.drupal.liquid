@@ -151,7 +151,9 @@
       </div>
     </div>
   </main>
-    {% include "src/site/components/up_to_top_button.html" %}
+    <div id="vet-center-up-to-top" onclick="recordEvent({ event: 'back-to-top'});">
+        {% include "src/site/components/up_to_top_button.html" %}
+    </div>
 </div>
 
 {% include "src/site/includes/footer.html" %}
