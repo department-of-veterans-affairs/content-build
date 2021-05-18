@@ -271,6 +271,7 @@ app.get('/preview', async (req, res, next) => {
       res.send(`
         <p>This page isn't ready to be previewed yet.
           This may mean development is still in progress or that there's an issue with the preview server.
+          Make sure the query for this page has been added to src/site/stages/build/drupal/graphql/GetLatestPageById.graphql.js.
         </p>
       `);
       return;

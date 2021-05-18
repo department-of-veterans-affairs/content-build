@@ -16,6 +16,7 @@ const leadershipListingPage = `
       entity {
         ... on NodePersonProfile {
           title
+          status
           fieldPhoneNumber
           entityPublished
           fieldNameFirst
@@ -138,3 +139,5 @@ module.exports = {
   fragment: leadershipListingPage,
   GetNodeLeadershipListingPages,
 };
+
+// console.log(GetNodeLeadershipListingPages)
