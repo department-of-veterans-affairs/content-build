@@ -33,8 +33,8 @@ const logAllMemoryStats = () => {
 };
 
 setInterval(() => {
-  console.log('Called global.gc() at 10s');
-  global.gc();
+  console.log('Would have called global.gc() at 10s');
+  // global.gc();
 }, 10 * 1000);
 
 /**
