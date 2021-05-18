@@ -169,6 +169,41 @@ const nonNodeContent = {
   },
 };
 
+function fetchAllPageData(nodeId) {
+  console.time(`Node ${nodeId}`);
+  const nodeQuery = drupalClient.getLatestPageById(nodeId).then(response => {
+    console.log(response.data.nodes.entities);
+    console.timeEnd(`Node ${nodeId}`);
+    return response;
+  });
+
+  const requests = [
+    nodeQuery,
+    fetch(`${urls[options.buildtype]}/generated/file-manifest.json`).then(
+      resp => {
+        if (resp.ok) {
+          return resp.json();
+        }
+        throw new Error(
+          `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`,
+        );
+      },
+    ),
+    fetch(
+      `${getContentUrl(options.buildtype)}/generated/headerFooter.json`,
+    ).then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      }
+      throw new Error(
+        `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
+      );
+    }),
+  ];
+
+  return Promise.all(requests);
+}
+
 /**
  * Make the query params case-insensitive.
  */
@@ -211,40 +246,8 @@ app.get('/preview', async (req, res, next) => {
       port: process.env.PORT || 3002,
     });
 
-    console.time(`Node ${req.query.nodeId}`);
-    const nodeQuery = drupalClient
-      .getLatestPageById(req.query.nodeId)
-      .then(response => {
-        console.timeEnd(`Node ${req.query.nodeId}`);
-        return response;
-      });
-
-    const requests = [
-      nodeQuery,
-      fetch(`${urls[options.buildtype]}/generated/file-manifest.json`).then(
-        resp => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(
-            `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`,
-          );
-        },
-      ),
-      fetch(
-        `${getContentUrl(options.buildtype)}/generated/headerFooter.json`,
-      ).then(resp => {
-        if (resp.ok) {
-          return resp.json();
-        }
-        throw new Error(
-          `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
-        );
-      }),
-    ];
-
-    const [drupalData, fileManifest, headerFooterData] = await Promise.all(
-      requests,
+    const [drupalData, fileManifest, headerFooterData] = await fetchAllPageData(
+      req.query.nodeId,
     );
 
     if (drupalData.errors) {
@@ -311,6 +314,104 @@ app.get('/preview', async (req, res, next) => {
         res.send(newFiles[drupalPath].contents);
       }
     });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/publish', async (req, res, next) => {
+  try {
+    if (!nonNodeContent.content) {
+      const percent = Number(nonNodeContent.refreshProgress * 100).toFixed(2);
+      res.send(
+        `Please hold while the preview server is starting - ${percent}%`,
+      );
+      return;
+    }
+
+    const smith = await createPipeline({
+      ...options,
+      isPreviewServer: true,
+      isSinglePagePublish: true,
+      port: process.env.PORT || 3002,
+    });
+
+    const [drupalData, fileManifest, headerFooterData] = await fetchAllPageData(
+      req.query.nodeId,
+    );
+
+    if (drupalData.errors) {
+      throw new Error(
+        `Drupal errors: ${JSON.stringify(drupalData.errors, null, 2)}`,
+      );
+    }
+
+    if (!drupalData.data.nodes.entities.length) {
+      res.sendStatus(404);
+      return;
+    }
+
+    Object.assign(drupalData.data, nonNodeContent.content.data);
+
+    const drupalPage = drupalData.data.nodes.entities[0];
+    const drupalPath = `${req.path.substring(1)}/index.html`;
+
+    if (!drupalPage.entityBundle) {
+      if (process.env.SENTRY_DSN) {
+        Raven.captureMessage('Preview attempted on page that is not ready');
+      }
+
+      res.send(`
+        <p>This page isn't ready to be previewed yet.
+          This may mean development is still in progress or that there's an issue with the preview server.
+        </p>
+      `);
+      return;
+    }
+
+    const compiledPage = compilePage(drupalPage, drupalData);
+    const fullPage = createFileObj(
+      compiledPage,
+      `${compiledPage.entityBundle}.drupal.liquid`,
+    );
+
+    const headerFooterDataSerialized = jsesc(JSON.stringify(headerFooterData), {
+      json: true,
+      isScriptContext: true,
+    });
+
+    const files = {
+      'generated/file-manifest.json': {
+        path: 'generated/file-manifest.json',
+        contents: Buffer.from(JSON.stringify(fileManifest)),
+      },
+      [drupalPath]: {
+        ...fullPage,
+        isPreview: false,
+        headerFooterData: headerFooterDataSerialized,
+        drupalSite:
+          DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
+          options['drupal-address'],
+      },
+    };
+
+    const htmlPage = await new Promise(resolve => {
+      smith.run(files, (err, newFiles) => {
+        if (err) {
+          next(err);
+        } else {
+          resolve(newFiles[drupalPath].contents);
+        }
+      });
+    });
+
+    const fromTheDomain = await fetch(
+      `https://www.va.gov/${fullPage.entityUrl.path}`,
+    );
+
+    console.log(await fromTheDomain.text());
+
+    res.send(htmlPage);
   } catch (err) {
     next(err);
   }
