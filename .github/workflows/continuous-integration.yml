@@ -241,7 +241,7 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           message: "Broken links detected!"
-          blocks: ${{ jobs.build.steps.get-broken-link-info.outputs.SLACK_MESSAGE_${matrix.buildType} }}
+          blocks: ${{ needs.build.steps.get-broken-link-info.outputs.SLACK_MESSAGE_${matrix.buildType} }}
           channel_id: "U01SPJ10WBC"
 
       # - name: Broken links exceed max links
