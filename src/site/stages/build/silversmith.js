@@ -32,11 +32,6 @@ const logAllMemoryStats = () => {
   console.log();
 };
 
-setInterval(() => {
-  console.log('Would have called global.gc() at 10s');
-  // global.gc();
-}, 10 * 1000);
-
 /**
  * It's Metalsmith with some added shine.
  */

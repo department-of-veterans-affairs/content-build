@@ -19,11 +19,11 @@ function createRedirects(options) {
           file.contents = Buffer.from(contents);
 
           itemsSinceCall++;
-          if (itemsSinceCall > 100) {
+          if (itemsSinceCall > 1000) {
             itemsSinceCall = 0;
             global.gc();
             /* eslint-disable no-console */
-            console.log('Called global.gc() in createRedirects()');
+            console.log('global.gc() in createRedirects() at 1000 items');
           }
         });
 

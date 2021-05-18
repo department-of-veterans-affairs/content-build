@@ -52,11 +52,11 @@ const modifyDom = BUILD_OPTIONS => files => {
       }
     }
     itemsSinceCall++;
-    if (itemsSinceCall > 100) {
+    if (itemsSinceCall > 300) {
       itemsSinceCall = 0;
       global.gc();
       /* eslint-disable no-console */
-      console.log('Called global.gc() in modifyDom()');
+      console.log('global.gc() in modifyDom() at 300 items');
     }
   }
 
