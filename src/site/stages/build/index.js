@@ -193,6 +193,11 @@ function build(BUILD_OPTIONS) {
     'Generate navigation',
   );
 
+  const gcInterval = setInterval(() => {
+    console.log('Called global.gc() at 10s');
+    global.gc();
+  }, 10 * 1000);
+
   // Split the layout step by letter. This avoids "too many open files" errors
   // caused by the layouts plugin opening too many templates in parallel.
   // Metalsmith's concurrency setting does not fix the issue.
@@ -265,6 +270,7 @@ function build(BUILD_OPTIONS) {
       if (global.verbose) {
         smith.printSummary();
       }
+      clearInterval(gcInterval);
       console.log('The Metalsmith build has completed.');
 
       if (usingCMSExport) {
