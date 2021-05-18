@@ -28,7 +28,8 @@ const getDomModifiers = BUILD_OPTIONS => {
   ];
 };
 
-const modifyDom = BUILD_OPTIONS => files => {
+const modifyDom = BUILD_OPTIONS => async files => {
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const domModifiers = getDomModifiers(BUILD_OPTIONS);
 
   for (const modifier of domModifiers) {
@@ -52,11 +53,11 @@ const modifyDom = BUILD_OPTIONS => files => {
       }
     }
     itemsSinceCall++;
-    if (itemsSinceCall > 300) {
+    if (itemsSinceCall > 100) {
       itemsSinceCall = 0;
-      global.gc();
-      /* eslint-disable no-console */
-      console.log('global.gc() in modifyDom() at 300 items');
+      /* eslint-disable no-await-in-loop, no-console */
+      await sleep(1);
+      console.log('sleep for 1ms at 100 items');
     }
   }
 
