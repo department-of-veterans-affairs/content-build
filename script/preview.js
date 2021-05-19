@@ -392,6 +392,7 @@ app.get('/publish', async (req, res, next) => {
       [drupalPath]: {
         ...fullPage,
         isPreview: false,
+        isSinglePagePublish: true,
         headerFooterData: headerFooterDataSerialized,
         drupalSite:
           DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
