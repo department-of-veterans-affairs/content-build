@@ -238,7 +238,7 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           message: "Broken links detected!"
-          blocks: needs.build.steps.get-broken-link-info.outputs.SLACK_MESSAGE_${{ matrix.buildType }}
+          blocks: steps.get-broken-link-info.outputs.SLACK_MESSAGE
           channel_id: "U01SPJ10WBC"
 
       # - name: Slack notification

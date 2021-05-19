@@ -29,7 +29,7 @@ const testMessage = `[
     },
   },
 ]`;
-console.log(`::set-output name=SLACK_MESSAGE_${envName}::${testMessage}`);
+console.log(`::set-output name=SLACK_MESSAGE::${testMessage}`);
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
