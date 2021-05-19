@@ -43,39 +43,32 @@ if (fs.existsSync(reportPath)) {
   const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the ${envName} build on ${BRANCH_NAME} \n\n${SERVER_URL}\n\n`;
   // const message = `${heading}\n${brokenLinks.summary}`;
 
-  const message = `{
-    "attachments": [
-      {
-        "color": "${color}",
-        "blocks": [
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "${heading}"
-            }
-          },
-          {
-            "type": "divider"
-          },
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "${brokenLinks.summary}"
-            }
-          }
-        ]
-      }
-    ]
-  }`;
+  const message = `[
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "${heading}",
+      },
+    },
+    {
+      "type": "divider",
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "${brokenLinks.summary}",
+      },
+    },
+  ]`;
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
 
-  console.log(`::set-output name=SLACK_MESSAGE_${envName}::${message}`);
-  console.log(`::set-output name=${envName}_SHOULD_FAIL::${shouldFail}`);
+  console.log(`::set-output name=SLACK_MESSAGE::${message}`);
+  console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
   // console.log(`::set-output name=SLACK_COLOR_${envName}::${color}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {

@@ -235,12 +235,12 @@ jobs:
       - name: Slack notify
         uses: ./.github/actions/vsp-github-actions/slack-socket
         env:
-          SSL_CERT_FILE: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+          SSL_CERT_DIR: /etc/ssl/certs
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           message: "Broken links detected!"
-          blocks: steps.get-broken-link-info.outputs.SLACK_MESSAGE
+          blocks: steps.get-broken-link-info.outputs.testMessage
           channel_id: "U01SPJ10WBC"
 
       # - name: Slack notification
