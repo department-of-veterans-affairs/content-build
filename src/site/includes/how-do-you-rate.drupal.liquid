@@ -1,31 +1,32 @@
-{% if false %}
-  <section
-    class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
-    data-template="includes/how-do-you-rate"
-  >
-    <!-- Section title -->
-    <h2 class="vads-u-margin-top--0 vads-u-font-size--h3">How do you rate your experience on this page?</h2>
+<section
+  class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
+  data-template="includes/how-do-you-rate"
+>
+  <!-- Section title -->
+  <h2 class="vads-u-margin-top--0 vads-u-font-size--h3">How do you rate your experience on this page?</h2>
 
-    <!-- Rating options -->
-    <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
-      <div class="vads-u-display--flex">
-        <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" tabindex="1" />
-        <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
-      </div>
-      <div class="vads-u-display--flex">
-        <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" tabindex="2" />
-        <label class="vads-u-margin--0" for="bad">Bad</label>
-      </div>
+  <!-- Rating options -->
+  <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+    <div class="vads-u-display--flex">
+      <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" tabindex="1" />
+      <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
     </div>
-  </section>
+    <div class="vads-u-display--flex">
+      <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" tabindex="2" />
+      <label class="vads-u-margin--0" for="bad">Bad</label>
+    </div>
+  </div>
+</section>
 
-  <script>
-    function onRatingChange(event) {
-      var value = event.target.value;
-      var checked = event.target.checked;
-
-      console.log('value', value)
-      console.log('checked', checked)
+<script>
+  function onRatingChange(event) {
+    if (recordEvent) {
+      recordEvent({
+        'event': 'int-radio-button-option-click',
+        'radio-button-label': "How do you rate your experience on this page?",
+        'radio-button-optionLabel': event.target.value, // "Good" | "Bad"
+        'radio-button-required': false,
+      })
     }
-  </script>
-{% endif %}
+  }
+</script>
