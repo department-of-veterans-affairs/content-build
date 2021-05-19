@@ -12,20 +12,20 @@ const maxBrokenLinks = 10;
 
 const testMessage = `[
   {
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: 'HEADING BROKEN LINKS',
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "HEADING BROKEN LINKS",
     },
   },
   {
-    type: 'divider',
+    "type": "divider",
   },
   {
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: 'BROKENLINK_SUMMARY_HERE',
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "BROKENLINK_SUMMARY_HERE",
     },
   },
 ]`;
