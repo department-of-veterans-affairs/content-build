@@ -262,7 +262,7 @@ jobs:
         run: echo ::set-output name=SLACK_MESSAGE_${{ matrix.buildType }}::${{ matrix.buildType }}
 
       - name: echo matrix
-        run: echo ${{ fromJSON(steps.get-test-output.outputs) }}
+        run: echo ${{ toJSON(steps.get-test-output.outputs) }}
 
   # test2:
   #   name: test2
