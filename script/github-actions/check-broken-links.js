@@ -10,7 +10,8 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
-const testMessage = `[{type: "section",text: {type: "mrkdwn",text: "HEADING BROKEN LINKS"}},{type: "divider"},{type: "section",text: {type: "mrkdwn",text: "BROKENLINK_SUMMARY_HERE"}]`;
+const testMessage =
+  '[{"type": "section", "text": {"type": "plain_text", "text": "HEADER HERE"}},{"type": "divider"},{"type": "section", "text": {"type": "plain_text", "text": "Message here!"}}]';
 console.log(`::set-output name=SLACK_MESSAGE::${testMessage}`);
 
 // broken links detected
@@ -64,4 +65,6 @@ if (fs.existsSync(reportPath)) {
   if (color === 'danger') {
     throw new Error('Broken links found');
   }
+} else {
+  console.log('No broken links found!');
 }
