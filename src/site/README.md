@@ -329,6 +329,22 @@ The following query looks up the `entityId` for one page of the `entityBundle` (
 
 </details>
 
+## Handling draft (unpublished) content
+
+CMS nodes can be either "published" or "unpublished". Only published data should be rendered in production.
+This is achieved by adding a filter to the GraphQL query, like so:
+
+```json
+{ field: "status", value: ["1"], enabled: $onlyPublishedContent }
+```
+
+However, when previewing content, we DO want to see unpublished content. That's what the `$onlyPublishedContent` variable is for.
+The preview server sets `$onlyPublishedContent` to `false` to the queries to disable the status filter.
+
+In some cases, we have entity reference fields that need to be filtered in the templates.
+We do this by adding a `status` field to the query, and using the `filterBy` filter function to eliminate unpublished data.
+
+
 ## Liquid Template Unit Testing Framework
 
 Please see the documentation [here](https://github.com/department-of-veterans-affairs/va.gov-team/tree/master/platform/testing/liquid-templates).
