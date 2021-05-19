@@ -235,7 +235,7 @@ jobs:
       - name: Slack notify
         uses: ./.github/actions/vsp-github-actions/slack-socket
         env:
-          SSL_CERT_DIR: /usr/local/share/ca-certificates
+          SSL_CERT_DIR: /etc/ssl/certs
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
