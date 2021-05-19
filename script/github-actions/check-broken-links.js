@@ -15,19 +15,19 @@ const testMessage = `[
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": "HEADING BROKEN LINKS",
-    },
+      "text": "HEADING BROKEN LINKS"
+    }
   },
   {
-    "type": "divider",
+    "type": "divider"
   },
   {
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": "BROKENLINK_SUMMARY_HERE",
-    },
-  },
+      "text": "BROKENLINK_SUMMARY_HERE"
+    }
+  }
 ]`;
 console.log(`::set-output name=SLACK_MESSAGE::${testMessage}`);
 
