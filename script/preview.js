@@ -8,6 +8,9 @@ const path = require('path');
 const express = require('express');
 const proxy = require('express-http-proxy');
 const jsesc = require('jsesc');
+const Diff2Html = require('diff2html');
+const gitDiff = require('git-diff');
+
 const {
   nonNodeQueries,
 } = require('../src/site/stages/build/drupal/individual-queries');
@@ -331,6 +334,7 @@ app.get('/publish', async (req, res, next) => {
 
     const smith = await createPipeline({
       ...options,
+      buildtype: 'vagovprod',
       isPreviewServer: true,
       isSinglePagePublish: true,
       port: process.env.PORT || 3002,
@@ -395,23 +399,49 @@ app.get('/publish', async (req, res, next) => {
       },
     };
 
-    const htmlPage = await new Promise(resolve => {
+    const builtFromSinglePagePublish = await new Promise(resolve => {
       smith.run(files, (err, newFiles) => {
         if (err) {
           next(err);
         } else {
-          resolve(newFiles[drupalPath].contents);
+          resolve(newFiles[drupalPath].contents.toString());
         }
       });
     });
 
     const fromTheDomain = await fetch(
-      `https://www.va.gov/${fullPage.entityUrl.path}`,
+      `https://www.va.gov${fullPage.entityUrl.path}`,
     );
 
-    console.log(await fromTheDomain.text());
+    const liveFile = await fromTheDomain.text();
 
-    res.send(htmlPage);
+    const result = gitDiff(liveFile, builtFromSinglePagePublish);
+
+    const diffJson = Diff2Html.parse(
+      `
+diff --git live-file.html single-page-publish.html
+index 0000001..0ddf2ba
+--- live-file.html
++++ single-page-publish.html
+${result}
+`,
+    );
+
+    const htmlDiff = Diff2Html.html(diffJson, { drawFileList: true });
+
+    res.send(`
+      <!doctype html>
+      <html>
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+
+        <!-- Javascripts -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html.min.js"></script>
+        <body>
+          ${htmlDiff}
+        </body>
+      </html>
+    `);
   } catch (err) {
     next(err);
   }
