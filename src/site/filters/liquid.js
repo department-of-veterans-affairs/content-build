@@ -88,12 +88,14 @@ module.exports = function registerFilters() {
     }
   };
 
-  liquid.filters.toTitleCase = phrase =>
-    phrase
-      .toLowerCase()
+  liquid.filters.toTitleCase = phrase => {
+    if (phrase === null) return null;
+    return phrase
+      .toString()
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map(_.capitalize)
       .join(' ');
+  };
 
   liquid.filters.formatDate = (dt, format) => prettyTimeFormatted(dt, format);
 

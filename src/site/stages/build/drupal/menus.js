@@ -267,7 +267,9 @@ function makeSection(hostUrl, hub, arrayDepth, promo, pages) {
 function formatHeaderData(buildOptions, contentData) {
   if (!contentData?.data?.menuLinkContentQuery?.entities) {
     // eslint-disable-next-line no-console
-    throw new Error('formatHeaderData has no data');
+    throw new Error(
+      'contentData not recieved from Drupal, please check and restart SOCKS connection.',
+    );
   }
 
   let menuLinks = contentData.data.menuLinkContentQuery.entities;

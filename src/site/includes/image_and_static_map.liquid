@@ -3,6 +3,7 @@
     {% if facilityMedia.entity.image != empty %}
         {% assign image = facilityMedia.entity.image %}
         <a href="#" rel="noopener noreferrer" target="_blank"
+           onclick="recordEvent({ event: 'map-link-click', 'vet-center-facility-name': '{{ entityLabel }}'});"
            id="google-map-link-image">
             <img class="facility-img" src="{{ image.derivative.url }}"
                  alt="{{ image.alt }}" title="{{ image.title }}"
