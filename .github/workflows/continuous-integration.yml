@@ -259,17 +259,20 @@ jobs:
     steps:
       - name: set matrixes
         id: get-test-output
-        run: echo ::set-output name=SLACK_MESSAGE_${{ matrix.buildType }}::'message'
+        run: echo ::set-output name=SLACK_MESSAGE::${{ matrix.buildType }}
 
-  test2:
-    name: test2
-    needs: [test1]
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
-    steps:
       - name: echo matrix
-        run: echo ${{needs.test1.get-test-output.outputs.SLACK_MESSAGE_matrix.buildType }}
+        run: echo ${{needs.test1.get-test-output.outputs.SLACK_MESSAGE }}
+
+  # test2:
+  #   name: test2
+  #   needs: [test1]
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: true
+  #     matrix:
+  #       buildtype: [vagovdev, vagovstaging, vagovprod]
+
+  #   steps:
+  #     - name: echo matrix
+  #       run: echo ${{needs.test1.get-test-output.outputs.SLACK_MESSAGE_matrix.buildType }}
