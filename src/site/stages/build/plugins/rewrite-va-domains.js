@@ -12,7 +12,6 @@ function createRedirects(options) {
       for (const fileName of htmlFiles) {
         const file = files[fileName];
         let contents = file.contents.toString();
-        delete file.contents;
         options.domainReplacements.forEach(domain => {
           const regex = new RegExp(domain.from, 'g');
           contents = contents.replace(regex, domain.to);
@@ -28,20 +27,6 @@ function createRedirects(options) {
           console.log('sleep for 1ms at 100 items');
         }
       }
-      // const replacementsWithRegex = options.domainReplacements.map(domain => ({
-      //   ...domain,
-      //   regex: new RegExp(domain.from, 'g'),
-      // }));
-      // Object.keys(files)
-      //   .filter(fileName => fileName.endsWith('html'))
-      //   .forEach(fileName => {
-      //     let contentsString = files[fileName].contents.toString();
-      //     replacementsWithRegex.forEach(domain => {
-      //       contentsString = contentsString.replace(domain.regex, domain.to);
-      //     });
-
-      //     files[fileName].contents = Buffer.from(contentsString);
-      //   });
     }
 
     done();

@@ -44,13 +44,14 @@ const modifyDom = BUILD_OPTIONS => async files => {
   let itemsSinceCall = 0;
   for (const [fileName, file] of Object.entries(files)) {
     if (path.extname(fileName) === '.html') {
-      const dom = cheerio.load(file.contents);
+      file.dom = cheerio.load(file.contents);
       for (const modifier of domModifiers) {
-        modifier.modifyFile(fileName, file, dom, files, BUILD_OPTIONS);
+        modifier.modifyFile(fileName, file, files, BUILD_OPTIONS);
       }
       if (file.modified) {
-        file.contents = Buffer.from(dom.html());
+        file.contents = Buffer.from(file.dom.html());
       }
+      delete file.dom;
     }
     itemsSinceCall++;
     if (itemsSinceCall > 100) {

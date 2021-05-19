@@ -35,10 +35,11 @@ function createUniqueId(headingEl, headingOptions) {
 }
 
 module.exports = {
-  modifyFile(fileName, file, dom) {
+  modifyFile(fileName, file) {
     let idAdded = false;
 
     if (fileName.endsWith('html')) {
+      const { dom } = file;
       const tableOfContents = dom('#table-of-contents ul');
 
       if (!tableOfContents) {

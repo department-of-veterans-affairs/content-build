@@ -26,12 +26,14 @@ module.exports = {
     }
   },
 
-  modifyFile(fileName, file, dom) {
+  modifyFile(fileName, file) {
     if (!this.isEnabled) {
       return;
     }
 
     if (path.extname(fileName) !== '.html') return;
+
+    const { dom } = file;
 
     const axeCoreScript = dom(
       `<script nonce="**CSP_NONCE**" type="text/javascript" src="/${axeCoreFileName}"></script>`,

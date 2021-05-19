@@ -21,10 +21,11 @@ function isNonVADomainThatOpensInSameTab(href) {
 }
 
 module.exports = {
-  modifyFile(fileName, file, dom) {
+  modifyFile(fileName, file) {
     let linkUpdated = false;
 
     if (fileName.endsWith('html')) {
+      const { dom } = file;
       dom('a[href^="http"]').each((i, el) => {
         const link = dom(el);
         const relAttr = link.attr('rel');

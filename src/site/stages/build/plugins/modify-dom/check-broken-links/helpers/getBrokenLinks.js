@@ -7,8 +7,8 @@ const _isBrokenLink = require('./isBrokenLink');
  * @param {*} file The HTML file from the Metalsmith pipeline
  * @param {Set<string>} allPaths The paths of all files in the website. Used to confirm the existence of a file.
  */
-function getBrokenLinks(file, dom, allPaths, isBrokenLink = _isBrokenLink) {
-  const $ = dom;
+function getBrokenLinks(file, allPaths, isBrokenLink = _isBrokenLink) {
+  const $ = file.dom;
   const elements = $('a, img, script');
   const currentPath = file.path;
 

@@ -75,6 +75,11 @@ function build(BUILD_OPTIONS) {
 
   registerLiquidFilters();
 
+  const gcInterval = setInterval(() => {
+    console.log('Called global.gc() at 10s');
+    global.gc();
+  }, 10 * 1000);
+
   // Set up Metalsmith. BE CAREFUL if you change the order of the plugins. Read the comments and
   // add comments about any implicit dependencies you are introducing!!!
   //
@@ -193,11 +198,6 @@ function build(BUILD_OPTIONS) {
     'Generate navigation',
   );
 
-  const gcInterval = setInterval(() => {
-    console.log('Would have called global.gc() at 10s');
-    global.gc();
-  }, 10 * 1000);
-
   // Split the layout step by letter. This avoids "too many open files" errors
   // caused by the layouts plugin opening too many templates in parallel.
   // Metalsmith's concurrency setting does not fix the issue.
@@ -245,7 +245,10 @@ function build(BUILD_OPTIONS) {
   );
 
   smith.build(err => {
-    if (err) console.log(err);
+    if (err) {
+      clearInterval(gcInterval);
+      throw err;
+    }
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
