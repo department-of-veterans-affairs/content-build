@@ -342,8 +342,8 @@ However, when previewing content, we DO want to see unpublished content. That's 
 The preview server sets `$onlyPublishedContent` to `false` to the queries to disable the status filter.
 
 In some cases, we have entity reference fields that need to be filtered in the templates.
-We do this by adding a `status` field to the query, and using the `filterBy` filter function to eliminate unpublished data.
-
+We do this by adding a `entityPublished` field to the query, and using the `filterBy` filter function to eliminate unpublished data.
+In liquid templates you can check for `isPreview` to allow unpublished content to be visible when previewing.
 
 ## Liquid Template Unit Testing Framework
 

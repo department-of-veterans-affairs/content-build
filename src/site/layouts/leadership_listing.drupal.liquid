@@ -16,9 +16,9 @@
                             {{ fieldIntroText }}
                         </div>
                     {% endif %}
-                    {% assign iterator = fieldLeadership | filterBy: "entity.status", true %}
+                    {% assign iterator = fieldLeadership | filterBy: "entity.entityPublished", true %}
                     {% if pagedItems %}
-                        {% assign iterator = pagedItems | filterBy: "entity.status", true %}
+                        {% assign iterator = pagedItems | filterBy: "entity.entityPublished", true %}
                     {% endif %}
                     {% for bio in iterator %}
                         {% include "src/site/teasers/bio.drupal.liquid" with node = bio.entity %}

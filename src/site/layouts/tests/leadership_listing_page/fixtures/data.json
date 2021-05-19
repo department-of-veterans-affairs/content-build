@@ -96,7 +96,6 @@
     {
       "entity": {
         "title": "Megan O’Connor",
-        "status": false,
         "fieldPhoneNumber": "650-493-5000",
         "entityPublished": false,
         "fieldNameFirst": "Megan ",
@@ -136,7 +135,6 @@
     {
       "entity": {
         "title": "Daniel Kulenich",
-        "status": true,
         "fieldPhoneNumber": "650-493-5000, ext. 65404",
         "entityPublished": true,
         "fieldNameFirst": "Daniel ",
@@ -176,7 +174,6 @@
     {
       "entity": {
         "title": "Rina N. Shah",
-        "status": true,
         "fieldPhoneNumber": "650-493-5000",
         "entityPublished": true,
         "fieldNameFirst": " Rina N. ",
@@ -216,7 +213,6 @@
     {
       "entity": {
         "title": "Michelle R Mountfort",
-        "status": true,
         "fieldPhoneNumber": "650-493-5000",
         "entityPublished": true,
         "fieldNameFirst": "Michelle R ",
@@ -256,7 +252,6 @@
     {
       "entity": {
         "title": "David R Renfro",
-        "status": true,
         "fieldPhoneNumber": "650-849-1949",
         "entityPublished": true,
         "fieldNameFirst": "David R ",

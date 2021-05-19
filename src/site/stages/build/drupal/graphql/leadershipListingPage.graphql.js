@@ -16,7 +16,6 @@ const leadershipListingPage = `
       entity {
         ... on NodePersonProfile {
           title
-          status
           fieldPhoneNumber
           entityPublished
           fieldNameFirst
