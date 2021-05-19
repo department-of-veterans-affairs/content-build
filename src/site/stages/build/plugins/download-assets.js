@@ -72,8 +72,8 @@ async function downloadFromLiveBucket(files, buildOptions) {
 
       files[bundleFileName] = {
         path: bundleFileName,
-        // contents: await bundleResponse.buffer(),
-        contents: Buffer.from('nothing'),
+        contents: await bundleResponse.buffer(),
+        // contents: Buffer.from('nothing'),
       };
 
       console.log(`Successfully downloaded asset: ${bundleUrl}`);

@@ -51,13 +51,11 @@ async function downloadFile(
     files[asset.dest] = {
       path: asset.dest,
       isDrupalAsset: true,
-      // contents: await response.buffer(),
-      contents: Buffer.from('nothing'),
+      contents: await response.buffer(),
+      // contents: Buffer.from('nothing'),
     };
 
-    // fs.outputFileSync(fileOutputPath, files[asset.dest].contents);
-    const contents = await response.buffer();
-    fs.outputFileSync(fileOutputPath, contents);
+    fs.outputFileSync(fileOutputPath, files[asset.dest].contents);
 
     downloadResults.downloadCount++;
 
