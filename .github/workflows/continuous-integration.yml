@@ -259,7 +259,7 @@ jobs:
     steps:
       - name: set matrixes
         id: get-test-output
-        run: echo ::set-output name=SLACK_MESSAGE_${{ matrix.buildType }}
+        run: echo ::set-output name=SLACK_MESSAGE_${{ matrix.buildType }}::'message'
 
   test2:
     name: test2
