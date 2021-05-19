@@ -247,3 +247,29 @@ jobs:
       # - name: Broken links exceed max links
       #   if: ${{ jobs.build.steps.get-broken-link-info.outputs.${matrix.buildType}_SHOULD_FAIL }}
       #   run: return 1
+  
+  test1:
+    name: test1
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
+    steps:
+      - name: set matrixes
+        id: get-test-output
+        run: ::set-output name=SLACK_MESSAGE_${{ matrix.buildType }}
+
+  test2:
+    name: test2
+    needs: [test1]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
+    steps:
+      - name: echo matrix
+        run: echo needs.test1.get-test-output.outputs.SLACK_MESSAGE_${{ matrix.buildType }}
