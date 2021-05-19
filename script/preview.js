@@ -409,20 +409,19 @@ app.get('/publish', async (req, res, next) => {
       });
     });
 
-    const fromTheDomain = await fetch(
-      `https://www.va.gov${fullPage.entityUrl.path}`,
-    );
+    const bucketDomain = getContentUrl(options.buildtype);
+    const pagePath = `${fullPage.entityUrl.path}/index.html`;
 
-    const liveFile = await fromTheDomain.text();
-
+    const bucketPath = `${bucketDomain}${pagePath}`;
+    const liveFileRequest = await fetch(bucketPath);
+    const liveFile = await liveFileRequest.text();
     const result = gitDiff(liveFile, builtFromSinglePagePublish);
-
     const diffJson = Diff2Html.parse(
       `
-diff --git live-file.html single-page-publish.html
+diff --git ${pagePath}
 index 0000001..0ddf2ba
---- live-file.html
-+++ single-page-publish.html
+--- ${pagePath}
++++ ${pagePath}
 ${result}
 `,
     );
@@ -432,9 +431,9 @@ ${result}
     res.send(`
       <!doctype html>
       <html>
+        <!-- https://www.npmjs.com/package/diff2html -->
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
-
         <!-- Javascripts -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html.min.js"></script>
         <body>
