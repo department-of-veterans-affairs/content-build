@@ -272,4 +272,4 @@ jobs:
 
     steps:
       - name: echo matrix
-        run: echo needs.test1.get-test-output.outputs.SLACK_MESSAGE_${{ matrix.buildType }}
+        run: echo ${{needs.test1.get-test-output.outputs.SLACK_MESSAGE_${{ matrix.buildType }}}}
