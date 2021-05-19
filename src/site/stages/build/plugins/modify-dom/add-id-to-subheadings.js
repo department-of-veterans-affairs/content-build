@@ -82,6 +82,7 @@ module.exports = {
         if (
           el.tagName.toLowerCase() === 'h2' &&
           tableOfContents &&
+          heading.attr('id') &&
           heading.text().toLowerCase() !== 'on this page' &&
           !isInAccordionButton &&
           !isInAccordion
