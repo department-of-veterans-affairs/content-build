@@ -10,32 +10,25 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
-const testMessage = `{
-  "attachments": [
-    {
-      "color": "#000",
-      "blocks": [
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "HEADING BROKEN LINKS"
-          }
-        },
-        {
-          "type": "divider"
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "BROKENLINK_SUMMARY_HERE"
-          }
-        }
-      ]
-    }
-  ]
-}`;
+const testMessage = `[
+  {
+    type: 'section',
+    text: {
+      type: 'mrkdwn',
+      text: 'HEADING BROKEN LINKS',
+    },
+  },
+  {
+    type: 'divider',
+  },
+  {
+    type: 'section',
+    text: {
+      type: 'mrkdwn',
+      text: 'BROKENLINK_SUMMARY_HERE',
+    },
+  },
+]`;
 console.log(`::set-output name=SLACK_MESSAGE_${envName}::${testMessage}`);
 
 // broken links detected
