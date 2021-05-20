@@ -10,13 +10,6 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
-const testMessage = `[{"type": "section","text": {"type": "plain_text","text": "@CMS Team, # broken link found -- heading "}}]`;
-
-const testAttachment =
-  '[{"color": "#D33834", "text": "broken_link_summary information"}]';
-console.log(`::set-output name=SLACK_MESSAGE::${testMessage}`);
-console.log(`::set-output name=SLACK_ATTACHMENTS::${testAttachment}`);
-
 // broken links detected
 if (fs.existsSync(reportPath)) {
   const brokenLinksReport = fs.readFileSync(reportPath, 'utf8');
@@ -25,37 +18,16 @@ if (fs.existsSync(reportPath)) {
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
-
   const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the ${envName} build on ${BRANCH_NAME} \n\n${SERVER_URL}\n\n`;
-  // const message = `${heading}\n${brokenLinks.summary}`;
-
-  const message = `[
-    {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": "${heading}",
-      },
-    },
-    {
-      "type": "divider",
-    },
-    {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": "${brokenLinks.summary}",
-      },
-    },
-  ]`;
+  const slackBlocks = `[{"type": "section","text": {"type": "plain_text","text": "${heading}"}}]`;
+  const slackAttachments = `[{"color": "${color}", "text": "${brokenLinks.summary}"}]`;
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
 
-  console.log(`::set-output name=SLACK_MESSAGE::${message}`);
-  console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
-  // console.log(`::set-output name=SLACK_COLOR_${envName}::${color}`);
+  console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
+  console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
@@ -65,9 +37,8 @@ if (fs.existsSync(reportPath)) {
     // continue merging.
     return;
   }
-  if (color === 'danger') {
-    throw new Error('Broken links found');
-  }
+  // Only emit this flag if ran against master branch or during Content Release.
+  console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
 } else {
   console.log('No broken links found!');
 }
