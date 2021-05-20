@@ -55,7 +55,9 @@ async function downloadFile(
       contents: Buffer.from('nothing'),
     };
 
-    fs.outputFileSync(fileOutputPath, files[asset.dest].contents);
+    // fs.outputFileSync(fileOutputPath, files[asset.dest].contents);
+    const contents = await response.buffer();
+    fs.outputFileSync(fileOutputPath, contents);
 
     downloadResults.downloadCount++;
 
