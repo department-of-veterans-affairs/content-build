@@ -255,17 +255,16 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: $GITHUB_WORKSPACE/vets-website/build
+          path: $GITHUB_WORKSPACE/content-build/build
           retention-days: 1
 
   prearchive:
     name: Prearchive Optimizations
     runs-on: self-hosted
-    # TODO: readd security-audit
-    # needs: [unit-tests, linting, contract-tests, drupal-cache-test, build]
+    needs: [unit-tests, linting, contract-tests, drupal-cache-test, build]
     defaults:
       run:
-        working-directory: vets-website
+        working-directory: content-build
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
@@ -281,10 +280,10 @@ jobs:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
-      - name: Checkout vets-website
+      - name: Checkout content-build
         uses: actions/checkout@v2
         with:
-          path: vets-website
+          path: content-build
 
       - name: Get Node version
         id: get-node-version
@@ -316,7 +315,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: $GITHUB_WORKSPACE/vets-website/build
+          path: $GITHUB_WORKSPACE/content-build/build
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
