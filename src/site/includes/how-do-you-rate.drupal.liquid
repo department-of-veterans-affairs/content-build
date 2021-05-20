@@ -1,10 +1,11 @@
 {% if isPreview or buildtype != 'vagovprod' %}
+  {% assign ratingOptionsQuestion = "How do you rate your experience on this page?" %}
   <section
     class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
     data-template="includes/how-do-you-rate"
   >
     <!-- Section title -->
-    <h2 class="vads-u-margin-top--0 vads-u-font-size--h3">How do you rate your experience on this page?</h2>
+    <h2 class="vads-u-margin-top--0 vads-u-font-size--h3">{{ ratingOptionsQuestion }}</h2>
 
     <!-- Rating options -->
     <div id="rating-options" class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
@@ -26,7 +27,7 @@
       if (recordEvent) {
         recordEvent({
           'event': 'int-radio-button-option-click',
-          'radio-button-label': "How do you rate your experience on this page?",
+          'radio-button-label': "{{ ratingOptionsQuestion }}",
           'radio-button-optionLabel': event.target.value, // "Good" | "Bad"
           'radio-button-required': false,
         })
