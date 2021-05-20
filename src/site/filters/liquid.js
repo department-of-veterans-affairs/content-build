@@ -237,7 +237,7 @@ module.exports = function registerFilters() {
     return output;
   };
   liquid.filters.benefitTerms = data => {
-    if (data === null) return null
+    if (data === null) return null;
     let output = 'General benefits information';
     if (data != null) {
       switch (data) {
@@ -286,7 +286,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.hashReference = str => {
-    if (str === null) return null
+    if (str === null) return null;
     return str
       .toString()
       .toLowerCase()
