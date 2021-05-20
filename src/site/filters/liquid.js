@@ -175,7 +175,7 @@ module.exports = function registerFilters() {
   liquid.filters.fileSize = data => `${(data / 1000000).toFixed(2)}MB`;
 
   liquid.filters.fileExt = data => {
-    if (data === null) return null;
+    if (!data) return null;
     return data
       .toString()
       .split('.')

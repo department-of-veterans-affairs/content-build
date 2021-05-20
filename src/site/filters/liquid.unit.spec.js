@@ -166,6 +166,12 @@ describe('fileExt', () => {
   it('returns null when null is passed', () => {
     expect(liquid.filters.fileExt(null)).to.eq(null);
   });
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.fileExt(undefined)).to.eq(null);
+  });
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.fileExt('')).to.eq(null);
+  });
   it('returns an empty string when an empty array is passed', () => {
     expect(liquid.filters.fileExt([])).to.eq('');
   });
