@@ -65,6 +65,8 @@ function restorePagesJSON() {
   }
 }
 
+const formatMemory = m => Math.round((m / 1024 / 1024) * 100) / 100;
+
 function build(BUILD_OPTIONS) {
   const usingCMSExport = BUILD_OPTIONS['use-cms-export'];
   if (usingCMSExport) {
@@ -76,7 +78,9 @@ function build(BUILD_OPTIONS) {
   registerLiquidFilters();
 
   const gcInterval = setInterval(() => {
-    console.log('Called global.gc() at 10s');
+    const heap = formatMemory(process.memoryUsage().heapUsed);
+    const rss = formatMemory(process.memoryUsage().rss);
+    console.log(`heap: ${heap}mB, rss: ${rss}mB`);
     global.gc();
   }, 10 * 1000);
 
