@@ -193,7 +193,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Build
-        run: yarn build --buildtype ${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
+        run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
         timeout-minutes: 30
         env:
           NODE_ENV: production
@@ -250,3 +250,73 @@ jobs:
       - name: Max broken links exceeded
         if: ${{ steps.get-broken-link-info.outputs.SHOULD_FAIL && steps.get-broken-link-info.outputs.SHOULD_FAIL != '' }}
         run: return 1
+
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.buildtype }}
+          path: $GITHUB_WORKSPACE/vets-website/build
+          retention-days: 1
+
+  prearchive:
+    name: Prearchive Optimizations
+    runs-on: self-hosted
+    # TODO: readd security-audit
+    # needs: [unit-tests, linting, contract-tests, drupal-cache-test, build]
+    defaults:
+      run:
+        working-directory: vets-website
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
+    steps:
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
+
+      - name: Checkout vets-website
+        uses: actions/checkout@v2
+        with:
+          path: vets-website
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Make build directory
+        run: mkdir -p build
+
+      - name: Download build artifactory
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ matrix.buildtype }}
+          path: $GITHUB_WORKSPACE/vets-website/build
+
+      - name: Prearchive
+        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
