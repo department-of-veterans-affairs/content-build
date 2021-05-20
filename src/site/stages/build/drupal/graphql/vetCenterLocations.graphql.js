@@ -17,6 +17,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
   fieldNearbyVetCenters {
     entity {
       ... on NodeVetCenter {
+        fieldFacilityLocatorApiId
+        entityPublished
         title
         entityBundle
         fieldAddress {
