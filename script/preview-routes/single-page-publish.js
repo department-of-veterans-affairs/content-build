@@ -1,3 +1,5 @@
+// require('isomorphic-fetch');
+
 const Raven = require('raven');
 const jsesc = require('jsesc');
 const Diff2Html = require('diff2html');
@@ -14,6 +16,37 @@ const DRUPALS = require('../../src/site/constants/drupals');
 
 const convertDrupalFilesToLocal = require('../../src/site/stages/build/drupal/assets');
 const updateAssetLinkElements = require('../../src/site/stages/prearchive/helpers');
+
+async function calculateDiff(res, bucketPath, pagePath, updatedPage) {
+  const currentPageReq = await fetch(bucketPath);
+  const currentPage = await currentPageReq.text();
+  const result = gitDiff(currentPage, updatedPage);
+  const diffJson = Diff2Html.parse(
+    `
+diff --git ${pagePath}
+index 0000001..0ddf2ba
+--- ${pagePath}
++++ ${pagePath}
+${result}
+`,
+  );
+
+  const htmlDiff = Diff2Html.html(diffJson, { drawFileList: true });
+
+  res.send(`
+<!doctype html>
+<html>
+  <!-- https://www.npmjs.com/package/diff2html -->
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+  <!-- Javascripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html.min.js"></script>
+  <body>
+    ${htmlDiff}
+  </body>
+</html>
+`);
+}
 
 // Uses currying to pass dependencies from the parent module
 function singlePagePublish(
@@ -116,7 +149,7 @@ function singlePagePublish(
         },
       };
 
-      let builtFromSinglePagePublish = await new Promise(resolve => {
+      let updatedPage = await new Promise(resolve => {
         smith.run(files, (err, newFiles) => {
           if (err) {
             next(err);
@@ -128,8 +161,8 @@ function singlePagePublish(
 
       const bucketDomain = getContentUrl(options.buildtype);
 
-      builtFromSinglePagePublish = updateAssetLinkElements(
-        builtFromSinglePagePublish,
+      updatedPage = updateAssetLinkElements(
+        updatedPage,
         'script, img, link, picture > source',
         'va_files',
         bucketDomain,
@@ -139,34 +172,17 @@ function singlePagePublish(
 
       const pagePath = `${fullPage.entityUrl.path}/index.html`;
       const bucketPath = `${bucketDomain}${pagePath}`;
-      const liveFileRequest = await fetch(bucketPath);
-      const liveFile = await liveFileRequest.text();
-      const result = gitDiff(liveFile, builtFromSinglePagePublish);
-      const diffJson = Diff2Html.parse(
-        `
-diff --git ${pagePath}
-index 0000001..0ddf2ba
---- ${pagePath}
-+++ ${pagePath}
-${result}
-  `,
-      );
 
-      const htmlDiff = Diff2Html.html(diffJson, { drawFileList: true });
+      if (req.query.diff) {
+        calculateDiff(res, bucketPath, pagePath, updatedPage);
+        return;
+      }
 
-      res.send(`
-        <!doctype html>
-        <html>
-          <!-- https://www.npmjs.com/package/diff2html -->
-          <!-- CSS -->
-          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
-          <!-- Javascripts -->
-          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html.min.js"></script>
-          <body>
-            ${htmlDiff}
-          </body>
-        </html>
-      `);
+      // Update the file on the domain by uploading
+      // ${updatedPage} to ${bucketPath}
+
+      // Until that is implemented, do a redirect to the diff route.
+      res.redirect(`/publish?nodeId=${req.query.nodeId}&diff=1`);
     } catch (err) {
       next(err);
     }
