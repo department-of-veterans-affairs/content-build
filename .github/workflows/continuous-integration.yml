@@ -261,7 +261,7 @@ jobs:
   prearchive:
     name: Prearchive Optimizations
     runs-on: self-hosted
-    needs: [unit-tests, linting, contract-tests, drupal-cache-test, build]
+    needs: [unit-tests, linting, drupal-cache-test, build]
     defaults:
       run:
         working-directory: content-build
