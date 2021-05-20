@@ -1,5 +1,3 @@
-// require('isomorphic-fetch');
-
 const Raven = require('raven');
 const jsesc = require('jsesc');
 const Diff2Html = require('diff2html');
@@ -68,7 +66,6 @@ function singlePagePublish(
 
       const buildOptions = {
         ...options,
-        buildtype: 'vagovprod',
         isPreviewServer: true,
         isSinglePagePublish: true,
         port: process.env.PORT || 3002,
