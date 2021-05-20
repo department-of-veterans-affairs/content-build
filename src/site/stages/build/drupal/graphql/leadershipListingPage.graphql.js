@@ -138,5 +138,3 @@ module.exports = {
   fragment: leadershipListingPage,
   GetNodeLeadershipListingPages,
 };
-
-// console.log(GetNodeLeadershipListingPages)
