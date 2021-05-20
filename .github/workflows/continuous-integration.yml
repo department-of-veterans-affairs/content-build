@@ -223,6 +223,7 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
+      # TODO: Change ref (branch) to main upon merge of branch in vsp-github-action repo
       - name: Checkout department-of-veterans-affairs/vsp-github-actions
         uses: actions/checkout@v2
         with:
