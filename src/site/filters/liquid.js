@@ -174,11 +174,14 @@ module.exports = function registerFilters() {
 
   liquid.filters.fileSize = data => `${(data / 1000000).toFixed(2)}MB`;
 
-  liquid.filters.fileExt = data =>
-    data
+  liquid.filters.fileExt = data => {
+    if (data === null) return null;
+    return data
+      .toString()
       .split('.')
       .slice(-1)
       .pop();
+  };
 
   liquid.filters.breakIntoSingles = data => {
     let output = '';
@@ -234,6 +237,7 @@ module.exports = function registerFilters() {
     return output;
   };
   liquid.filters.benefitTerms = data => {
+    if (data === null) return null
     let output = 'General benefits information';
     if (data != null) {
       switch (data) {
@@ -281,11 +285,14 @@ module.exports = function registerFilters() {
     return output;
   };
 
-  liquid.filters.hashReference = str =>
-    str
+  liquid.filters.hashReference = str => {
+    if (str === null) return null
+    return str
+      .toString()
       .toLowerCase()
       .split(' ')
       .join('-');
+  };
 
   liquid.filters.facilityIds = facilities =>
     facilities.map(facility => facility.fieldFacilityLocatorApiId).join(',');
