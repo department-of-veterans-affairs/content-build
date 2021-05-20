@@ -26,6 +26,10 @@ const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
 
+// used for publish
+const convertDrupalFilesToLocal = require('../src/site/stages/build/drupal/assets');
+const updateAssetLinkElements = require('../src/site/stages/prearchive/helpers');
+
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
 const defaultContentDir = '../../../../../vagov-content/pages';
@@ -175,7 +179,6 @@ const nonNodeContent = {
 function fetchAllPageData(nodeId) {
   console.time(`Node ${nodeId}`);
   const nodeQuery = drupalClient.getLatestPageById(nodeId).then(response => {
-    console.log(response.data.nodes.entities);
     console.timeEnd(`Node ${nodeId}`);
     return response;
   });
@@ -332,13 +335,15 @@ app.get('/publish', async (req, res, next) => {
       return;
     }
 
-    const smith = await createPipeline({
+    const buildOptions = {
       ...options,
       buildtype: 'vagovprod',
       isPreviewServer: true,
       isSinglePagePublish: true,
       port: process.env.PORT || 3002,
-    });
+    };
+
+    const smith = await createPipeline(buildOptions);
 
     const [drupalData, fileManifest, headerFooterData] = await fetchAllPageData(
       req.query.nodeId,
@@ -357,7 +362,12 @@ app.get('/publish', async (req, res, next) => {
 
     Object.assign(drupalData.data, nonNodeContent.content.data);
 
-    const drupalPage = drupalData.data.nodes.entities[0];
+    const drupalDataWithUpdatedAssetRefs = convertDrupalFilesToLocal(
+      drupalData,
+      [],
+      buildOptions,
+    );
+    const drupalPage = drupalDataWithUpdatedAssetRefs.data.nodes.entities[0];
     const drupalPath = `${req.path.substring(1)}/index.html`;
 
     if (!drupalPage.entityBundle) {
@@ -373,7 +383,10 @@ app.get('/publish', async (req, res, next) => {
       return;
     }
 
-    const compiledPage = compilePage(drupalPage, drupalData);
+    const compiledPage = compilePage(
+      drupalPage,
+      drupalDataWithUpdatedAssetRefs,
+    );
     const fullPage = createFileObj(
       compiledPage,
       `${compiledPage.entityBundle}.drupal.liquid`,
@@ -400,7 +413,7 @@ app.get('/publish', async (req, res, next) => {
       },
     };
 
-    const builtFromSinglePagePublish = await new Promise(resolve => {
+    let builtFromSinglePagePublish = await new Promise(resolve => {
       smith.run(files, (err, newFiles) => {
         if (err) {
           next(err);
@@ -411,8 +424,17 @@ app.get('/publish', async (req, res, next) => {
     });
 
     const bucketDomain = getContentUrl(options.buildtype);
-    const pagePath = `${fullPage.entityUrl.path}/index.html`;
 
+    builtFromSinglePagePublish = updateAssetLinkElements(
+      builtFromSinglePagePublish,
+      'script, img, link, picture > source',
+      'va_files',
+      bucketDomain,
+    )
+      .html()
+      .toString();
+
+    const pagePath = `${fullPage.entityUrl.path}/index.html`;
     const bucketPath = `${bucketDomain}${pagePath}`;
     const liveFileRequest = await fetch(bucketPath);
     const liveFile = await liveFileRequest.text();
