@@ -168,7 +168,7 @@ describe('fileExt', () => {
   });
   it('returns an empty string when an empty array is passed', () => {
     expect(liquid.filters.fileExt([])).to.eq('');
-  })
+  });
 });
 
 describe('toTitleCase', () => {
