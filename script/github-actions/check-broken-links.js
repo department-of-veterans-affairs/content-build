@@ -12,7 +12,10 @@ const maxBrokenLinks = 10;
 
 const testMessage =
   '[{"type": "section", "text": {"type": "plain_text", "text": "HEADER HERE"}},{"type": "divider"},{"type": "section", "text": {"type": "plain_text", "text": "Message here!"}}]';
+
+const testAttachment = `[{"color": "#D33834","pretext": "@CMS Team Broken links here","text": "Here is where brokenlink summary enters"}]`;
 console.log(`::set-output name=SLACK_MESSAGE::${testMessage}`);
+console.log(`::set-output name=SLACK_ATTACHMENTS::${testAttachment}`);
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
