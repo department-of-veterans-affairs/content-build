@@ -10,15 +10,7 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
-const testMessage = `[
-  {
-    "type": "section",
-    "text": {
-      "type": "plain_text",
-      "text": "@CMS Team, # broken link found -- heading ",
-    },
-  },
-]`;
+const testMessage = `[{"type": "section","text": {"type": "plain_text","text": "@CMS Team, # broken link found -- heading "}}]`;
 
 const testAttachment =
   '[{"color": "#D33834", "text": "broken_link_summary information"}]';
