@@ -28,7 +28,7 @@ If we have a hit, show the alert.
       <div aria-live="assertive" class="usa-alert usa-alert-{{ entity.fieldAlertType }}" id="usa-alert-{{ entity.id }}" role="alert">
         {% if entity.fieldAlertDismissable == true %}
         <button id="usa-alert-dismiss-{{ entity.id }}" class="va-alert-close usa-alert-dismiss" data-parentwrap="usa-alert-full-width-{{ entity.id }}" data-frequency="{{ entity.fieldAlertFrequency }}" aria-label="Close notification">
-          <i aria-label="Close icon" class="fas fa-times-circle"></i>
+          <i class="fas fa-times-circle" aria-hidden="true"></i>
         </button>
         {% endif %}
 
