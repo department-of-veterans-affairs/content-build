@@ -247,6 +247,6 @@ jobs:
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: "U01SPJ10WBC"
 
-      - name: Max broken links exceeded
+      - name: Fail from broken links
         if: ${{ steps.get-broken-link-info.outputs.SHOULD_FAIL && steps.get-broken-link-info.outputs.SHOULD_FAIL != '' }}
         run: return 1
