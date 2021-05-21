@@ -22,7 +22,7 @@ if (fs.existsSync(reportPath)) {
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
   const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} <${SERVER_URL}>`;
   const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
-  const slackAttachments = `[{"color": "${color}", "text": "${brokenLinks.summary}"}]`; // TODO: Debug why summary not displaying "mrkdwn_in": ["text"]
+  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${brokenLinks.summary}"}]`;
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
