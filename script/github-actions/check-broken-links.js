@@ -19,7 +19,7 @@ if (fs.existsSync(reportPath)) {
   const shouldFail =
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
-  const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
+  // const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
   // const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the ${envName} build on ${BRANCH_NAME} \n\n${SERVER_URL}\n\n`;
   // const slackBlocks = `[{"type": "section", "text": {"type": "plain_text", "text": "${heading}"}}]`;
   const slackBlocks = `[
@@ -31,7 +31,9 @@ if (fs.existsSync(reportPath)) {
       },
     },
   ]`;
-  const slackAttachments = `[{"color": "${color}", "text": "${brokenLinks.summary}"}]`;
+  const slackAttachments =
+    '[{"color": "#D33834", "text": "broken_link_summary information"}]';
+  // const slackAttachments = `[{"color": "${color}", "text": "${brokenLinks.summary}"}]`;
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
