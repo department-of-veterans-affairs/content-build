@@ -234,7 +234,7 @@ jobs:
           path: ./.github/actions/vsp-github-actions
 
       # TODO: Change to correct channel_id when ready
-      - name: Slack notify
+      - name: Notify Slack about broken links
         uses: ./.github/actions/vsp-github-actions/slack-socket
         if: ${{ (steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS != '' || steps.get-broken-link-info.outputs.SLACK_BLOCKS != '') && github.ref == 'refs/heads/master' }} 
         env:
