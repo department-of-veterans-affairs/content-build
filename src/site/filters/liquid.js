@@ -4,6 +4,8 @@ const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
+const cheerio = require('cheerio');
+
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 
@@ -751,6 +753,41 @@ module.exports = function registerFilters() {
 
     // Encode the string.
     return he.encode(stringWithoutSingleQuotes, { useNamedReferences: true });
+  };
+
+  // Check for duplicate ID values in the WYSIWYG editor output
+  liquid.filters.checkForDuplicateIdValues = content => {
+    // Caching some variables
+    let replaced = content;
+    let index;
+    let searchedIdValue;
+    let idList;
+
+    try {
+      // Load the DOM fragement into Cheerio so we can parse it.
+      const $ = cheerio.load(replaced);
+
+      // Loop through all the IDs.
+      $('[id]').each(function() {
+        searchedIdValue = $(this).attr('id');
+        idList = $(`[id="${searchedIdValue}"]`);
+
+        // See if there is more than one ID in the DOM.
+        if (idList.length > 1) {
+          // If a duplicate ID is found, append and index value to the end so it will be unique.
+          idList.each(function() {
+            index = $(this).index();
+            $(this).attr('id', `${searchedIdValue}-${index}`);
+          });
+          // Return the cleaned HTML.
+          replaced = $.html();
+        }
+      });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+    return replaced;
   };
 
   // fieldCcVetCenterFeaturedCon data structure is different

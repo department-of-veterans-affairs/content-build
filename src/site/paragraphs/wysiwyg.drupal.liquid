@@ -11,7 +11,7 @@
 
 <div data-template="paragraphs/wysiwyg" data-entity-id="{{ entity.entityId }}" class="processed-content">
   <div itemprop="text">
-    {{ entity.fieldWysiwyg.processed | drupalToVaPath | outputLinks }}
+    {{ entity.fieldWysiwyg.processed | drupalToVaPath | outputLinks | checkForDuplicateIdValues }}
   </div>
 </div>
 
