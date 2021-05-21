@@ -38,8 +38,11 @@ if (fs.existsSync(reportPath)) {
     return;
   }
   // Only emit this flag if ran against master branch or during Content Release.
-  console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
+  if (shouldFail) {
+    console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
+    throw new Error('Broken links found');
+  }
 } else {
   console.log('No broken links found!');
-  throw new Error('Froce error');
 }
+throw new Error('Froce error');
