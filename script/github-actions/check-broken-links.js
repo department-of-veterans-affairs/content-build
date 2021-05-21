@@ -23,7 +23,7 @@ if (fs.existsSync(reportPath)) {
   // const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the ${envName} build on ${BRANCH_NAME} \n\n${SERVER_URL}\n\n`;
   // const slackBlocks = `[{"type": "section", "text": {"type": "plain_text", "text": "${heading}"}}]`;
   const slackBlocks = `[{"type": "section","text": {"type": "plain_text","text": "@CMS Team, # broken link found -- heading "}}]`;
-  const slackAttachments = `[{"color": "${color}", "text": "broken_link_summary information"}]`;
+  const slackAttachments = `[{"color": "${color}", "text": "${brokenLinks.summary}"}]`;
   // const slackAttachments = `[{"color": "${color}", "text": "${brokenLinks.summary}"}]`;
 
   console.log(
