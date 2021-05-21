@@ -41,4 +41,5 @@ if (fs.existsSync(reportPath)) {
   console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
 } else {
   console.log('No broken links found!');
+  throw new Error('Froce error');
 }
