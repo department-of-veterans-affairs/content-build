@@ -24,6 +24,7 @@ if (fs.existsSync(reportPath)) {
   const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
   const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": ${brokenLinks.summary} }]`;
 
+  console.log('typeof', typeof brokenLinks.summary);
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
