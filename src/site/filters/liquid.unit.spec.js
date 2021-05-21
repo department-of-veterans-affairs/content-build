@@ -67,7 +67,7 @@ describe('benefitTerms', () => {
   it('returns Pension', () => {
     expect(liquid.filters.benefitTerms('pension')).to.eq('Pension');
   });
-  
+
   it('returns Service memeber benefits', () => {
     expect(liquid.filters.benefitTerms('service')).to.eq(
       'Service member benefits',
@@ -193,7 +193,7 @@ describe('fileExt', () => {
   it('returns null when empty string is passed', () => {
     expect(liquid.filters.fileExt('')).to.eq(null);
   });
-  
+
   it('returns an empty string when an empty array is passed', () => {
     expect(liquid.filters.fileExt([])).to.eq('');
   });

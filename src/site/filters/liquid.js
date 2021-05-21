@@ -22,8 +22,6 @@ module.exports = function registerFilters() {
   liquid.filters.humanizeDate = dt =>
     moment(dt, 'YYYY-MM-DD').format('MMMM D, YYYY');
 
-  liquid.filters.humanizeTime = dt => moment(dt).format('LT');
-
   liquid.filters.humanizeTimestamp = dt =>
     moment.unix(dt).format('MMMM D, YYYY');
 
@@ -154,8 +152,6 @@ module.exports = function registerFilters() {
       .replace(/PM/g, 'p.m.');
   };
 
-  liquid.filters.unixFromDate = data => new Date(data).getTime();
-
   liquid.filters.currentTimeInSeconds = () => {
     const time = new Date();
     return Math.floor(time.getTime() / 1000);
@@ -164,8 +160,6 @@ module.exports = function registerFilters() {
   liquid.filters.numToWord = numConvert => converter.toWords(numConvert);
 
   liquid.filters.jsonToObj = jsonString => JSON.parse(jsonString);
-
-  liquid.filters.modulo = item => item % 2;
 
   liquid.filters.genericModulo = (i, n) => i % n;
 
@@ -222,20 +216,6 @@ module.exports = function registerFilters() {
     return `${hyphenatedDesc}-${id}`;
   };
 
-  liquid.filters.breakTerms = data => {
-    let output = '';
-    if (data != null) {
-      const count = data.length;
-      data.forEach((element, index) => {
-        if (index < count - 1) {
-          output += `${element}, `;
-        } else {
-          output += `${element}`;
-        }
-      });
-    }
-    return output;
-  };
   liquid.filters.benefitTerms = data => {
     if (data === null) return null;
     let output = 'General benefits information';
@@ -294,25 +274,6 @@ module.exports = function registerFilters() {
       .join('-');
   };
 
-  liquid.filters.facilityIds = facilities =>
-    facilities.map(facility => facility.fieldFacilityLocatorApiId).join(',');
-
-  // Used for the react widget "Facilities List" - includes the facility locator api id and the image object from drupal
-  liquid.filters.widgetFacilitiesList = facilities => {
-    const facilityList = {};
-    facilities.forEach(f => {
-      // Facility Locator ids - the ids NEED to match what is returned from the facility locator api
-      const facilityLocatorApiId = f.fieldFacilityLocatorApiId
-        .split('_')[1]
-        .toUpperCase();
-      const id = `vha_`.concat(facilityLocatorApiId);
-
-      facilityList[id] = f.fieldMedia ? f.fieldMedia.entity.image : {};
-      facilityList[id].entityUrl = f.entityUrl;
-    });
-    return JSON.stringify(facilityList);
-  };
-
   // We might not need this filter, refactor
   liquid.filters.widgetFacilityDetail = facility => {
     const facilityLocatorApiId = facility.split('_')[1].toUpperCase();
@@ -322,14 +283,6 @@ module.exports = function registerFilters() {
 
   liquid.filters.sortMainFacility = item =>
     item ? item.sort((a, b) => a.entityId - b.entityId) : undefined;
-
-  liquid.filters.eventSorter = item =>
-    item &&
-    item.sort((a, b) => {
-      const start1 = moment(a.fieldDatetimeRangeTimezone.startTime);
-      const start2 = moment(b.fieldDatetimeRangeTimezone.startTime);
-      return start1.isAfter(start2);
-    });
 
   // Find the current path in an array of nested link arrays and then return it's depth + it's parent and children
   liquid.filters.findCurrentPathDepth = (linksArray, currentPath) => {
@@ -475,8 +428,6 @@ module.exports = function registerFilters() {
       : null;
   };
 
-  liquid.filters.getPagerPage = page => parseInt(page.split('page-')[1], 10);
-
   liquid.filters.featureSingleValueFieldLink = fieldLink => {
     if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
       return fieldLink[0];
@@ -565,14 +516,6 @@ module.exports = function registerFilters() {
     return inMenu !== -1;
   };
 
-  // check if this is a pittsburgh page
-  liquid.filters.isPitt = path => {
-    if (path.includes('pittsburgh-health-care')) {
-      return true;
-    }
-    return false;
-  };
-
   liquid.filters.detectLang = url => {
     if (url?.endsWith('-esp')) return 'es';
     if (url?.endsWith('-tag')) return 'tl';
@@ -605,9 +548,6 @@ module.exports = function registerFilters() {
     !!childPageEntityUrl.breadcrumb.find(
       b => b.text.toLowerCase() === parentPage.toLowerCase(),
     );
-
-  // find out if date is in the past
-  liquid.filters.isPastDate = contentDate => moment().diff(contentDate, 'days');
 
   liquid.filters.isLaterThan = (timestamp1, timestamp2) =>
     moment(timestamp1, 'YYYY-MM-DD').isAfter(moment(timestamp2, 'YYYY-MM-DD'));
