@@ -35,7 +35,8 @@ if (fs.existsSync(reportPath)) {
     // a Content Release. This way, if there is a broken link,
     // feature branches aren't affected, so VFS teams can
     // continue merging.
-    return;
+    throw new Error('Froce error');
+    // return;
   }
   // Only emit this flag if ran against master branch or during Content Release.
   if (shouldFail) {
