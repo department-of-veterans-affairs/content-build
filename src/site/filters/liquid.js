@@ -266,12 +266,12 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.hashReference = str => {
-    if (str === null) return null;
+    if (!str) return null;
     return str
       .toString()
       .toLowerCase()
-      .split(' ')
-      .join('-');
+      .trim()
+      .replace(/\s+/g, '-');
   };
 
   // We might not need this filter, refactor

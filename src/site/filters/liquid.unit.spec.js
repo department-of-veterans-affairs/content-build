@@ -170,12 +170,32 @@ describe('hashReference', () => {
     expect(liquid.filters.hashReference(null)).to.eq(null);
   });
 
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.hashReference(undefined)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.hashReference('')).to.eq(null);
+  });
+
   it('returns an empty string when an empty array is passed', () => {
     expect(liquid.filters.hashReference([])).to.eq('');
   });
 
-  it('returns string with spaces replaced by "-" ', () => {
-    expect(liquid.filters.hashReference('testing one two three')).to.eq(
+  it('returns a hyphenated string', () => {
+    expect(liquid.filters.hashReference('Testing One two three')).to.eq(
+      'testing-one-two-three',
+    );
+  });
+
+  it('returns hyphenated string and removes multiple spaces', () => {
+    expect(liquid.filters.hashReference('testing  one two  three')).to.eq(
+      'testing-one-two-three',
+    );
+  });
+
+  it('returns hyphenated string with spaces removed from both sides of string', () => {
+    expect(liquid.filters.hashReference('  Testing one two three   ')).to.eq(
       'testing-one-two-three',
     );
   });
