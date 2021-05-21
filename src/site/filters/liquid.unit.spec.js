@@ -182,6 +182,26 @@ describe('hashReference', () => {
 });
 
 describe('fileExt', () => {
+  it('returns the following string - testing', () => {
+    expect(liquid.filters.fileExt('testing')).to.eq('testing')
+  });
+
+  it('returns the following string - bar', () => {
+    expect(liquid.filters.fileExt('foo.bar')).to.eq('bar')
+  });
+
+  it('returns the following string - test', () => {
+    expect(liquid.filters.fileExt('foo.bar.test')).to.eq('test')
+  });
+
+  it('returns empty string', () => {
+    expect(liquid.filters.fileExt('foo.bar.test.')).to.eq('')
+  });
+
+  it('returns the following string - test', () => {
+    expect(liquid.filters.fileExt(['foo.bar.test'])).to.eq('test')
+  });
+
   it('returns null when null is passed', () => {
     expect(liquid.filters.fileExt(null)).to.eq(null);
   });
