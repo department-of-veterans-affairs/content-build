@@ -10,6 +10,8 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
+console.log(`::set-output name=NOTIFY_SLACK::true`);
+
 // broken links detected
 if (fs.existsSync(reportPath)) {
   const brokenLinksReport = fs.readFileSync(reportPath, 'utf8');
@@ -35,15 +37,19 @@ if (fs.existsSync(reportPath)) {
     // a Content Release. This way, if there is a broken link,
     // feature branches aren't affected, so VFS teams can
     // continue merging.
-    throw new Error('Froce error');
-    // return;
+    return;
   }
-  // Only emit this flag if ran against master branch or during Content Release.
+
+  /*
+   * Only emit this variable if ran against master branch or during Content Release.
+   * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
+   */
+  console.log(`::set-output name=NOTIFY_SLACK::true`);
+
   if (shouldFail) {
-    console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
     throw new Error('Broken links found');
   }
 } else {
   console.log('No broken links found!');
+  console.log(`::set-output name=NOTIFY_SLACK::false`);
 }
-throw new Error('Froce error');

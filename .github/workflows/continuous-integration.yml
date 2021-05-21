@@ -202,10 +202,6 @@ jobs:
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
-      - name: test failure
-        if: ${{ failure() }}
-        run: echo "this still execs"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -244,7 +240,7 @@ jobs:
       # TODO: Change to correct channel_id when ready
       - name: Notify Slack about broken links
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ (steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS != '' || steps.get-broken-link-info.outputs.SLACK_BLOCKS != '') && github.ref == 'refs/heads/master' }} 
+        if: ${{ failure() || steps.get-broken-link-info.outputs.NOTIFY_SLACK == true }} 
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
@@ -254,7 +250,3 @@ jobs:
           message: "Broken links detected!"
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: "U01SPJ10WBC"
-
-      - name: Fail from broken links
-        if: ${{ steps.get-broken-link-info.outputs.SHOULD_FAIL && steps.get-broken-link-info.outputs.SHOULD_FAIL != '' }}
-        run: return 1
