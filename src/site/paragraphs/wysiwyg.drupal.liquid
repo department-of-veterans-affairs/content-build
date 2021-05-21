@@ -9,9 +9,11 @@
   }
 {% endcomment %}
 
+{% if entity.fieldWysiwyg.processed }
 <div data-template="paragraphs/wysiwyg" data-entity-id="{{ entity.entityId }}" class="processed-content">
   <div itemprop="text">
     {{ entity.fieldWysiwyg.processed | drupalToVaPath | outputLinks | checkForDuplicateIdValues }}
   </div>
 </div>
+{% endif %}
 

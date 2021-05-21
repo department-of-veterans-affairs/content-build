@@ -27,7 +27,7 @@ function createUniqueId(headingEl, headingOptions) {
     .substring(0, length);
 
   if (headingOptions.previousHeadings.includes(anchor)) {
-    anchor += `${headingOptions.getHeadingId()}`;
+    anchor += `-${headingOptions.getHeadingId()}`;
   }
 
   headingOptions.previousHeadings.push(anchor);

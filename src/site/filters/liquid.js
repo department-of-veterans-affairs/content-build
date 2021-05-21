@@ -763,11 +763,12 @@ module.exports = function registerFilters() {
     let searchedIdValue;
     let idList;
 
-    try {
+    // If there's no content, don't run this because Cheerio will throw and error
+    if (replaced !== null) {
       // Load the DOM fragement into Cheerio so we can parse it.
       const $ = cheerio.load(replaced);
 
-      // Loop through all the IDs.
+      // Loop through all the IDs in the WYSIWYG output.
       $('[id]').each(function() {
         searchedIdValue = $(this).attr('id');
         idList = $(`[id="${searchedIdValue}"]`);
@@ -783,10 +784,8 @@ module.exports = function registerFilters() {
           replaced = $.html();
         }
       });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-    }
+    } // if()
+
     return replaced;
   };
 
