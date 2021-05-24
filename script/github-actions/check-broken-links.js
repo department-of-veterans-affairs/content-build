@@ -10,12 +10,6 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
-const testAttachment = `[{"mrkdwn_in": ["text"], "color": "#FFCC00", "text": "simple \\n <text>" }]`;
-const testBlock = `[{"type": "section","text": {"type": "mrkdwn","text": "broken link -- url info"}}]`;
-
-console.log(`::set-output name=SLACK_BLOCKS::${testBlock}`);
-console.log(`::set-output name=SLACK_ATTACHMENTS::${testAttachment}`);
-
 // broken links detected
 if (fs.existsSync(reportPath)) {
   const brokenLinksReport = fs.readFileSync(reportPath, 'utf8');
@@ -23,18 +17,20 @@ if (fs.existsSync(reportPath)) {
   const shouldFail =
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
+  const brokenLinksSummary = brokenLinks.summary;
+  const brokenLinksSummaryFormatted = brokenLinksSummary.replace('\n', '\\n'); // needs to be recognized by Slack API
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
-  const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} <${SERVER_URL}>`;
+  const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}>`;
   const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
-  // const slackAttachments = `[{"color": "${color}", "text": "broken_link_summary information"}]`;
-  // const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": ${brokenLinks.summary} }]`;
-  const slackAttachments = `[{"color": "${color}", "text": "simple \\n text"}]`; // "mrkdwn_in": [\"text\"],
+  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${brokenLinksSummaryFormatted}" }]`;
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
 
   console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
   console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
+
+  console.log(`::set-output name=NOTIFY_SLACK::true`); // TODO: Remove after testing
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
