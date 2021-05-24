@@ -192,12 +192,14 @@
             <h2 class="vads-u-margin-top--0">{{ fieldClpSpotlightHeader }}</h2>
             <p class="va-introtext vads-u-margin-top--1 vads-u-margin-bottom--4">
               {{ fieldClpSpotlightIntroText }}
-              <a
-                href="{{ fieldClpSpotlightCta.entity.fieldButtonLink.url.path }}"
-                onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpSpotlightCta.entity.fieldButtonLabel | encode }}' });"
-              >
-                {{ fieldClpSpotlightCta.entity.fieldButtonLabel }}
-              </a>
+              {% if fieldClpSpotlightCta.entity.fieldButtonLink.url.path %}
+                <a
+                  href="{{ fieldClpSpotlightCta.entity.fieldButtonLink.url.path }}"
+                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpSpotlightCta.entity.fieldButtonLabel | encode }}' });"
+                >
+                  {{ fieldClpSpotlightCta.entity.fieldButtonLabel }}
+                </a>
+              {% endif %}
             </p>
           </div>
         </div>
