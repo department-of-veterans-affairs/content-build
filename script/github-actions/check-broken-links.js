@@ -23,6 +23,9 @@ if (fs.existsSync(reportPath)) {
   const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}>`;
   const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
   const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${brokenLinksSummaryFormatted}" }]`;
+
+  console.log(brokenLinksSummaryFormatted);
+  console.log('----');
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
