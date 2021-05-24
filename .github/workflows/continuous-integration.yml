@@ -236,13 +236,10 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      - name: echo notify_slack
-        run: echo ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK }} 
-
       # TODO: Change to correct channel_id when ready
       - name: Notify Slack about broken links
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == true }} 
+        # if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == true }} 
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
