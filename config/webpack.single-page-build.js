@@ -12,10 +12,7 @@ module.exports = {
   },
   target: 'node',
   node: { __dirname: true },
-  plugins: [
-    new webpack.IgnorePlugin(/process-cms-exports$/),
-    new webpack.DefinePlugin({ 'process.env.IN_SINGLE_PAGE_BUILD': true }),
-  ],
+  plugins: [new webpack.IgnorePlugin(/process-cms-exports$/)],
   optimization: {
     // Disabling minimization to avoid errors from parsing optional chaining,
     // which our current versions of Terser + Webpack don't support.
