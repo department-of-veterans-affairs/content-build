@@ -10,6 +10,12 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
+const testAttachment = `[{"mrkdwn_in": ["text"], "color": "#FFCC00", "text": "simple \\n <text>" }]`;
+const testBlock = `[{"type": "section","text": {"type": "mrkdwn","text": "broken link -- url info"}}]`;
+
+console.log(`::set-output name=SLACK_BLOCKS::${testBlock}`);
+console.log(`::set-output name=SLACK_ATTACHMENTS::${testAttachment}`);
+
 // broken links detected
 if (fs.existsSync(reportPath)) {
   const brokenLinksReport = fs.readFileSync(reportPath, 'utf8');

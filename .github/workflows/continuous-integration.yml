@@ -227,7 +227,6 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      # TODO: Change ref (branch) to main upon merge of branch in vsp-github-action repo
       - name: Checkout VSP actions
         uses: actions/checkout@v2
         with:
@@ -237,10 +236,13 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
+      - name: echo notify_slack
+        run: echo ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK }} 
+
       # TODO: Change to correct channel_id when ready
       - name: Notify Slack about broken links
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK }} 
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == true }} 
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
