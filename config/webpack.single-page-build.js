@@ -6,7 +6,7 @@ const root = path.resolve(__dirname, '..');
 module.exports = {
   entry: path.join(root, 'src', 'platform', 'lambdas', 'single-page-build.js'),
   output: {
-    path: path.join(root, 'build', 'single-page-build'),
+    path: path.join(root, 'build', 'webpack.single-page-build'),
     filename: 'index.js',
     libraryTarget: 'commonjs',
   },

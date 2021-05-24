@@ -15,7 +15,12 @@ async function processSinglePage(nid, path) {
   }
 
   const uploadResponse = s3
-    .upload({ Bucket: S3_BUCKET, Key: path, Body: response.body })
+    .upload({
+      ACL: 'public-read',
+      Bucket: S3_BUCKET,
+      Key: path,
+      Body: response.body,
+    })
     .promise();
 
   try {
