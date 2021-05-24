@@ -61,13 +61,13 @@ module.exports = {
   getMarkdownSummary(brokenPages) {
     const markdownMessage = brokenPages.map(page => {
       const brokenLinksForPage = page.linkErrors.map(linkError => {
-        return `\`\`\`\n${linkError.html}\n\`\`\``;
+        return `\`\`\`\\n${linkError.html}\\n\`\`\``;
       });
 
-      return `*\`${page.path}\`* : \n${brokenLinksForPage.join('\n')}`;
+      return `*\`${page.path}\`* : \\n${brokenLinksForPage.join('\\n')}`;
     });
 
-    return markdownMessage.join('\n');
+    return markdownMessage.join('\\n');
   },
 
   conclude(buildOptions, files) {
