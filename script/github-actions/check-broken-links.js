@@ -23,7 +23,7 @@ if (fs.existsSync(reportPath)) {
   const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} <${SERVER_URL}>`;
   const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
   // const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": ${brokenLinks.summary} }]`;
-  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "*\`palo-alto-health-care/chaplain-services\`* \n \`\`\` <a> \`\`\` : "}]`;
+  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "*\`palo-alto-health-care/chaplain-services\`* \\n \`\`\` <a> \`\`\` : "}]`;
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
