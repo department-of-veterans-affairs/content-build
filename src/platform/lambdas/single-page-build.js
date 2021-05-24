@@ -42,11 +42,13 @@ exports.handler = async function(event, context) {
   console.log(`Event: ${JSON.stringify(event, null, 2)}`);
   console.log(`Context: ${JSON.stringify(context, null, 2)}`);
 
+  const processPromises = [];
   for (const record of event.Records) {
     const { body } = record;
     if (body.nid && body.path) {
-      // eslint-disable-next-line no-await-in-loop
-      await processSinglePage(body.nid, body.path);
+      processPromises.push(processSinglePage(body.nid, body.path));
     }
   }
+
+  await Promise.all(processPromises);
 };
