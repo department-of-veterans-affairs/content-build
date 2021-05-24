@@ -5,12 +5,10 @@ const args = process.argv.slice(2);
 const envName = args[0];
 const contentOnlyBuild = !!args[1];
 const reportPath = `./logs/${envName}-broken-links.json`;
-// const SERVER_URL = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+const SERVER_URL = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
-
-console.log(`::set-output name=NOTIFY_SLACK::true`);
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
@@ -20,9 +18,11 @@ if (fs.existsSync(reportPath)) {
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
-  // const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} <${SERVER_URL}>`;
-  const slackBlocks = `[{"type": "section","text": {"type": "plain_text","text": "@CMS Team, # broken link found -- heading "}}]`;
-  const slackAttachments = `[{"color": "${color}", "text": "broken_link_summary information"}]`;
+  const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} <${SERVER_URL}>`;
+  const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
+  // const slackAttachments = `[{"color": "${color}", "text": "broken_link_summary information"}]`;
+  // const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": ${brokenLinks.summary} }]`;
+  const slackAttachments = `[{"color": "${color}", "text": "simple \\n text"}]`; // "mrkdwn_in": [\"text\"],
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
