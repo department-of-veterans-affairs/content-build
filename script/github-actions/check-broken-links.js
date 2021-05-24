@@ -10,7 +10,7 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
-console.log(`::set-output name=NOTIFY_SLACK::true`); // TODO: Remove after testing
+// console.log(`::set-output name=NOTIFY_SLACK::true`); // TODO: Remove after testing
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
@@ -54,5 +54,5 @@ if (fs.existsSync(reportPath)) {
   }
 } else {
   console.log('No broken links found!');
-  // console.log(`::set-output name=NOTIFY_SLACK::false`);
+  console.log(`::set-output name=NOTIFY_SLACK::false`);
 }
