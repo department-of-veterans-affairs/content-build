@@ -10,8 +10,6 @@ const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
 
-// console.log(`::set-output name=NOTIFY_SLACK::true`); // TODO: Remove after testing
-
 // broken links detected
 if (fs.existsSync(reportPath)) {
   const brokenLinksReport = fs.readFileSync(reportPath, 'utf8');
@@ -20,7 +18,7 @@ if (fs.existsSync(reportPath)) {
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
   const brokenLinksSummary = brokenLinks.summary;
-  const brokenLinksSummaryFormatted = brokenLinksSummary.replace('\n', '\\n'); // needs to be recognized by Slack API
+  const brokenLinksSummaryFormatted = brokenLinksSummary.replace(/\\n/g, '\\n'); // needs to be recognized by Slack API
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
   const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}>`;
   const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
