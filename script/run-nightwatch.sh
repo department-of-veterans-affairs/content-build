@@ -31,13 +31,13 @@ BUILDTYPE=${BUILDTYPE:-vagovdev}
 
 "$(dirname "$0")"/run-mockapi.sh &
 
-# Check to see if we already have a server running on port 3001 (as with 'npm run build')
- if [ "$(nc -z localhost 3001; echo $?)" -ne 0 ]; then
+# Check to see if we already have a server running on port 3002 (as with 'npm run build')
+ if [ "$(nc -z localhost 3002; echo $?)" -ne 0 ]; then
   echo "Starting test-server.js..."
   node src/platform/testing/e2e/test-server.js --buildtype ${BUILDTYPE} &
 else
-  echo "Using webpack-dev-server as test server on port 3001"
-  export WEB_PORT=3001
+  echo "Using webpack-dev-server as test server on port 3002"
+  export WEB_PORT=3002
 fi
 
 
@@ -50,9 +50,9 @@ while ! echo exit | nc localhost ${WEB_PORT:-3333}; do sleep 3; done
 # until it is ready so executing a curl command for such a file ensures
 # the server is started before continuing.
 #
-# Do this after the nc localhost 3001 wait to ensure the server is up
+# Do this after the nc localhost 3002 wait to ensure the server is up
 # otherwise curl may race the server start and not actually block.
-#curl http://localhost:3001/generated/hca.entry.js > /dev/null 2>&1
+#curl http://localhost:3002/generated/hca.entry.js > /dev/null 2>&1
 
 # Execute the actual tests.
 if [ $SAUCE == true ]; then
