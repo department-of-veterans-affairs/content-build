@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const chokidar = require('chokidar');
 const chalk = require('chalk');
 const debounce = require('lodash/debounce');
