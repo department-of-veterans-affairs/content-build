@@ -1,6 +1,9 @@
 name: Manual Review
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - master
 
 env:
   BOT_NAME: va-vfs-bot
