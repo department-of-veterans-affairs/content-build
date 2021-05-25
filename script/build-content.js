@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const chokidar = require('chokidar');
 const chalk = require('chalk');
 const debounce = require('lodash/debounce');
@@ -8,7 +7,7 @@ const getOptions = require('../src/site/stages/build/options');
 const build = require('../src/site/stages/build');
 
 // If help, echo the options
-if (process.argv[2] === 'help') {
+if (process.argv[2] === 'helps') {
   printBuildHelp();
   process.exit(0);
 }
