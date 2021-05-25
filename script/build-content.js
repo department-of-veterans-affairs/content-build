@@ -7,7 +7,7 @@ const getOptions = require('../src/site/stages/build/options');
 const build = require('../src/site/stages/build');
 
 // If help, echo the options
-if (process.argv[2] === 'help') {
+if (process.argv[2] === 'helper') {
   printBuildHelp();
   process.exit(0);
 }
