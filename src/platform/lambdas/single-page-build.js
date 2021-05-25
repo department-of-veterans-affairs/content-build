@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-unresolved
+const s3 = require('aws-sdk/client/c3'); // eslint-disable-line import/no-unresolved
 const fetch = require('node-fetch');
 
-const s3 = new AWS.S3();
 const S3_BUCKET = process.env.INCREMENTAL_BUCKET;
 const PREVIEW_SERVER_BASE_URL = process.env.PREVIEW_SERVER_BASE_URL;
 
