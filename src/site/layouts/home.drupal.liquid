@@ -50,7 +50,7 @@
       <div class="usa-grid usa-grid-full homepage-benefits-row">
       {% for hub in hubs %}
         <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
-          <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h4>
+          <h2 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h2>
           <p class="homepage-benefits-description">{{ hub.entity.fieldTeaserText }}</p>
         </div>
         {% comment %} Close this row and open a new one when needed. {% endcomment %}
