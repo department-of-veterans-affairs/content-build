@@ -164,7 +164,6 @@ node('vetsgov-general-purpose') {
       }
     }
   }
-  
   // Run E2E tests
   commonStages.integrationTests(dockerContainer, ref);
 
