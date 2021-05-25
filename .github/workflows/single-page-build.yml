@@ -55,7 +55,7 @@ jobs:
           yarn webpack --config config/webpack.single-page-build.js
           mkdir -p ./tmp
           zip -j ./tmp/function.zip build/webpack.single-page-build/index.js
-          aws s3 cp ./tmp/function.zip s3://vetsgov-website-builds-s3-upload/webpack.single-page-build/master/function.zip --acl public-read
+          aws s3 cp ./tmp/function.zip s3://vetsgov-website-builds-s3-upload/single-page-build/master/function.zip --acl public-read
       - name: Update content cache function
         run: >
           aws lambda update-function-code

@@ -1,14 +1,16 @@
 /* eslint-disable no-console */
 
-const s3 = require('aws-sdk/clients/s3'); // eslint-disable-line import/no-unresolved
+const AWS = require('aws-sdk'); // eslint-disable-line import/no-unresolved
 const fetch = require('node-fetch');
 
+const s3 = new AWS.S3();
 const S3_BUCKET = process.env.INCREMENTAL_BUCKET;
 const PREVIEW_SERVER_BASE_URL = process.env.PREVIEW_SERVER_BASE_URL;
 
 async function processSinglePage(nid, path) {
   const previewServerUrl = PREVIEW_SERVER_BASE_URL + nid;
   const response = await fetch(previewServerUrl);
+  const fullPath = `${path}/index.html`;
 
   if (!response.ok) {
     throw new Error(`unexpected response ${response.statusText}`);
@@ -18,7 +20,7 @@ async function processSinglePage(nid, path) {
     .upload({
       ACL: 'public-read',
       Bucket: S3_BUCKET,
-      Key: path,
+      Key: fullPath,
       Body: response.body,
     })
     .promise();
@@ -36,7 +38,6 @@ async function processSinglePage(nid, path) {
  *
  * @param event
  * @param context
- * @returns {Promise<*>}
  */
 exports.handler = async function(event, context) {
   console.log(`Event: ${JSON.stringify(event, null, 2)}`);
@@ -46,7 +47,11 @@ exports.handler = async function(event, context) {
   for (const record of event.Records) {
     const { body } = record;
     if (body.nid && body.path) {
-      processPromises.push(processSinglePage(body.nid, body.path));
+      try {
+        processPromises.push(processSinglePage(body.nid, body.path));
+      } catch (e) {
+        console.log('Error creating upload promise', e.message);
+      }
     }
   }
 
