@@ -157,11 +157,11 @@ def accessibilityTests() {
 
   stage("Accessibility") {
 
-    //  slackSend(
-    //     message: "Starting the daily accessibility scan of content-build... ${env.RUN_DISPLAY_URL}".stripMargin(),
-    //     color: 'good',
-    //     channel: '-daily-accessibility-scan'
-    //   )
+     slackSend(
+        message: "Starting the daily accessibility scan of content-build... ${env.RUN_DISPLAY_URL}".stripMargin(),
+        color: 'good',
+        channel: '-daily-accessibility-scan'
+      )
 
     dir("content-build") {
       try {
@@ -171,25 +171,25 @@ def accessibilityTests() {
           },
         )
 
-        // slackSend(
-        //   message: 'The daily accessibility scan has completed successfully.',
-        //   color: 'good',
-        //   channel: '-daily-accessibility-scan'
-        // )
+        slackSend(
+          message: 'The daily accessibility scan has completed successfully.',
+          color: 'good',
+          channel: '-daily-accessibility-scan'
+        )
 
       } catch (error) {
 
-        // slackSend(
-        //     message: "@here Daily accessibility tests have failed. ${env.RUN_DISPLAY_URL}".stripMargin(),
-        //     color: 'danger',
-        //     failOnError: true,
-        //     channel: '-daily-accessibility-scan'
-        //   )
+        slackSend(
+            message: "@here Daily accessibility tests have failed. ${env.RUN_DISPLAY_URL}".stripMargin(),
+            color: 'danger',
+            failOnError: true,
+            channel: '-daily-accessibility-scan'
+          )
 
         throw error
       } finally {
         sh "docker-compose -p accessibility down --remove-orphans"
-        // step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
       }
     }
 
@@ -323,7 +323,7 @@ def integrationTests(dockerContainer, ref) {
           if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
             sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
           }
-          // step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
+          step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
         }
       } // end timeout
     }
