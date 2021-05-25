@@ -33,21 +33,6 @@ function linkAssetsToBucketHTML(options, fileNames, bucketPath) {
   });
 }
 
-function linkAssetsToBucketCSS(fileNames, bucketPath) {
-  const cssFileNames = fileNames.filter(file => path.extname(file) === '.css');
-  const cssUrlRegex = new RegExp(/url\(\/(?!(va_files))/, 'g');
-  const cssUrlBucket = `url(${bucketPath}/`;
-
-  for (const cssFileName of cssFileNames) {
-    const cssFile = fs.readFileSync(cssFileName);
-    const css = cssFile.toString();
-
-    const newCss = css.replace(cssUrlRegex, cssUrlBucket);
-
-    fs.writeFileSync(cssFileName, newCss);
-  }
-}
-
 function linkAssetsToBucketProxyRewrite(fileNames, bucketPath) {
   // The proxy-rewrite is a special case.
   const proxyRewriteFileName = fileNames.find(file =>
@@ -68,7 +53,6 @@ function linkAssetsToBucket(options, fileNames) {
   if (!bucketPath) return;
 
   linkAssetsToBucketHTML(options, fileNames, bucketPath);
-  linkAssetsToBucketCSS(fileNames, bucketPath);
   linkAssetsToBucketProxyRewrite(fileNames, bucketPath);
 }
 
