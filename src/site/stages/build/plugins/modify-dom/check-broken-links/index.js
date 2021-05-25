@@ -65,11 +65,11 @@ module.exports = {
         return `\`\`\`${linkError.html}\`\`\``;
       });
 
-      return `*\`${page.path}\`* : ${brokenLinksForPage.join('\\n')}`;
+      return `*\`${page.path}\`* : ${brokenLinksForPage.join('|')}`;
       // return `*\`${page.path}\`* : \\n${brokenLinksForPage.join('\\n')}`;
     });
 
-    return markdownMessage.join('\\n');
+    return markdownMessage.join('|');
   },
 
   conclude(buildOptions, files) {
