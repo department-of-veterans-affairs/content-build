@@ -32,6 +32,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}                           
       }          
       ... on NodeVetCenterOutstation {
+        fieldFacilityLocatorApiId
+        entityPublished
         title
         entityBundle
         fieldAddress {
@@ -45,6 +47,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}             
       }
       ... on NodeVetCenterCap {
+        fieldFacilityLocatorApiId
+        entityPublished
         title
         entityBundle
         fieldAddress {
@@ -57,6 +61,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}                           
       }
       ... on NodeVetCenterMobileVetCenter {
+        fieldFacilityLocatorApiId
+        entityPublished
         title
         entityBundle              
         fieldAddress {
