@@ -8,7 +8,7 @@ const SitemapHelpers = require('./sitemap-helpers');
 module.exports = {
   'sitemap 1/4': client => {
     client.timeoutsAsyncScript(1000);
-    SitemapHelpers.sitemapURLs().then(function runTestsOnFirstQuarterOfSitemap({
+    SitemapHelpers.sitemapURLs().then(function runFirstAxeCheck({
       urls,
       onlyTest508Rules, // eslint-disable-line no-unused-vars
     }) {
