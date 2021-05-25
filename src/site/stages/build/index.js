@@ -78,10 +78,11 @@ function build(BUILD_OPTIONS) {
   registerLiquidFilters();
 
   const gcInterval = setInterval(() => {
+    global.gc();
+
     const heap = formatMemory(process.memoryUsage().heapUsed);
     const rss = formatMemory(process.memoryUsage().rss);
     console.log(`heap: ${heap}mB, rss: ${rss}mB`);
-    global.gc();
   }, 10 * 1000);
 
   // Set up Metalsmith. BE CAREFUL if you change the order of the plugins. Read the comments and

@@ -193,7 +193,7 @@ jobs:
 
       - name: Build
         run: yarn build --buildtype ${{ matrix.buildtype }} --drupal-address="https://test.dev.cms.va.gov" --verbose --no-drupal-proxy
-        timeout-minutes: 30
+        timeout-minutes: 90
         env:
           NODE_ENV: production
 
