@@ -1,6 +1,6 @@
 name: Manual Review
 
-on: [pull_request]
+on: [push, pull_request]
 
 env:
   BOT_NAME: va-vfs-bot
