@@ -61,8 +61,9 @@ module.exports = {
   getMarkdownSummary(brokenPages) {
     const markdownMessage = brokenPages.map(page => {
       const brokenLinksForPage = page.linkErrors.map(linkError => {
+        const linkErrorHtml = linkError.html;
         // return `\`\`\`\\n${linkError.html}\\n\`\`\``;
-        return `\`\`\`${linkError.html}\`\`\``;
+        return `\`\`\`${linkErrorHtml.replace(/\n/g, '\\n')}\`\`\``;
       });
 
       return `*\`${page.path}\`* : ${brokenLinksForPage.join('|')}`;
