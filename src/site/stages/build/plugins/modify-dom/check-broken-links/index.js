@@ -64,7 +64,7 @@ module.exports = {
         const linkErrorHtml = linkError.html;
         return `\`\`\`\\n${linkErrorHtml
           .replace(/\n/g, '\\n')
-          .replace(/"/g, '"')}\\n\`\`\``; // format to slack & gha
+          .replace(/"/g, '\\"')}\\n\`\`\``; // format to slack & gha
       });
 
       return `*\`${page.path}\`* : \\n${brokenLinksForPage.join('\\n')}`;
