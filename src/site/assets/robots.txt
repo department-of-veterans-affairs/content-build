@@ -96,6 +96,7 @@ Disallow: /cgi-bin/
 Disallow: /drupal
 Disallow: /performance-dashboard
 Disallow: /covid19screen
+Disallow: /health-care/health-questionnaires/questionnaires/
 
 # disallow WIP VAMCs
 Disallow: /alaska-health-care
