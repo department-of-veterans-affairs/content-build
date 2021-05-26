@@ -62,17 +62,12 @@ module.exports = {
     const markdownMessage = brokenPages.map(page => {
       const brokenLinksForPage = page.linkErrors.map(linkError => {
         return `\`\`\`\n${linkError.html}\n\`\`\``;
-        // return `\`\`\`\\n${linkErrorHtml
-        //   .replace(/\n/g, '\\n')
-        //   .replace(/"/g, '\\"')}\\n\`\`\``; // format to slack & gha
       });
 
       return `*\`${page.path}\`* : \n${brokenLinksForPage.join('\n')}`;
-      // return `*\`${page.path}\`* : \\n${brokenLinksForPage.join('\\n')}`;
     });
 
     return markdownMessage.join('\n');
-    // return markdownMessage.join('\\n');
   },
 
   conclude(buildOptions, files) {
