@@ -32,8 +32,7 @@ if (fs.existsSync(reportPath)) {
   console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
   console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
 
-  // console.log(`::set-output name=NOTIFY_SLACK::true`); // TODO: Remove when testing done
-  console.log(`::set-output name=NOTIFY_SLACK::0`); // TODO: Remove when testing done
+  console.log(`::set-output name=NOTIFY_SLACK::1`); // TODO: Remove when testing done
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
@@ -48,12 +47,12 @@ if (fs.existsSync(reportPath)) {
    * Only emit this variable if ran against master branch or during Content Release.
    * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
    */
-  console.log(`::set-output name=NOTIFY_SLACK::true`);
+  console.log(`::set-output name=NOTIFY_SLACK::1`);
 
   if (shouldFail) {
     throw new Error('Broken links found');
   }
 } else {
   console.log('No broken links found!');
-  console.log(`::set-output name=NOTIFY_SLACK::false`);
+  console.log(`::set-output name=NOTIFY_SLACK::0`);
 }
