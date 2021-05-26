@@ -47,7 +47,7 @@ ${result}
 }
 
 // Uses currying to pass dependencies from the parent module
-function singlePagePublish(
+function singlePageDiff(
   nonNodeContent,
   options,
   fetchAllPageData,
@@ -170,20 +170,11 @@ function singlePagePublish(
       const pagePath = `${fullPage.entityUrl.path}/index.html`;
       const bucketPath = `${bucketDomain}${pagePath}`;
 
-      if (req.query.diff) {
-        calculateDiff(res, bucketPath, pagePath, updatedPage);
-        return;
-      }
-
-      // Update the file on the domain by uploading
-      // ${updatedPage} to ${bucketPath}
-
-      // Until that is implemented, do a redirect to the diff route.
-      res.redirect(`/publish?nodeId=${req.query.nodeId}&diff=1`);
+      calculateDiff(res, bucketPath, pagePath, updatedPage);
     } catch (err) {
       next(err);
     }
   };
 }
 
-module.exports = singlePagePublish;
+module.exports = singlePageDiff;

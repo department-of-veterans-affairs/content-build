@@ -23,8 +23,7 @@ const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
-
-const singlePagePublish = require('./preview-routes/single-page-publish');
+const singlePageDiff = require('./preview-routes/single-page-diff');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -322,8 +321,8 @@ app.get('/preview', async (req, res, next) => {
 });
 
 app.get(
-  '/publish',
-  singlePagePublish(nonNodeContent, options, fetchAllPageData, getContentUrl),
+  '/diff',
+  singlePageDiff(nonNodeContent, options, fetchAllPageData, getContentUrl),
 );
 
 if (options.buildtype !== ENVIRONMENTS.LOCALHOST) {
