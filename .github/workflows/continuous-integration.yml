@@ -192,10 +192,8 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      # https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov
-      # https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
       - name: Build
-        run: yarn build --buildtype ${{ matrix.buildtype }} --drupal-address="https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov" --no-drupal-proxy
+        run: yarn build --buildtype ${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
         timeout-minutes: 30
         env:
           NODE_ENV: production

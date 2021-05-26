@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov -- Tugboat CMS with 2 broken links
 const fs = require('fs');
 
 const args = process.argv.slice(2);
@@ -23,7 +24,7 @@ if (fs.existsSync(reportPath)) {
   const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
   const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${summary
     .replace(/\n/g, '\\n')
-    .replace(/"/g, '\\"')}" }]`;
+    .replace(/"/g, '\\"')}" }]`; // format summary according to slack api
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
