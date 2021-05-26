@@ -70,7 +70,7 @@ module.exports = {
       return `*\`${page.path}\`* : \\n${brokenLinksForPage.join('\\n')}`;
     });
 
-    return markdownMessage.join('|');
+    return markdownMessage.join('\\n');
   },
 
   conclude(buildOptions, files) {
