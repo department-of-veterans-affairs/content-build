@@ -12,13 +12,17 @@
 
     {% for crumb in crumbs %}
       {% if forloop.last == true %}
+        {% assign pagePath = path %}
+        {% if entityUrl %}
+          {% assign pagePath = entityUrl.path %}
+        {% endif %}
         <li>
-          <a 
-          onclick="recordEvent({ 'event': 'nav-breadcrumb', 'breadcrumb-click-label': '{{ crumb.text }}', 'breadcrumb-click-level': '{{ forloop.index }}', 'breadcrumb-total-levels': '{{ crumbs.length }}' });" 
-          aria-current="page" 
-          href="/{{ path }}"
-          lang="{{ path | detectLang }}"
-          >    
+          <a
+          onclick="recordEvent({ 'event': 'nav-breadcrumb', 'breadcrumb-click-label': '{{ crumb.text }}', 'breadcrumb-click-level': '{{ forloop.index }}', 'breadcrumb-total-levels': '{{ crumbs.length }}' });"
+          aria-current="page"
+          href="{{ pagePath }}"
+          lang="{{ pagePath | detectLang }}"
+          >
             {{ crumb.text }}
           </a>
         </li>
