@@ -61,16 +61,18 @@ module.exports = {
   getMarkdownSummary(brokenPages) {
     const markdownMessage = brokenPages.map(page => {
       const brokenLinksForPage = page.linkErrors.map(linkError => {
-        const linkErrorHtml = linkError.html;
-        return `\`\`\`\\n${linkErrorHtml
-          .replace(/\n/g, '\\n')
-          .replace(/"/g, '\\"')}\\n\`\`\``; // format to slack & gha
+        return `\`\`\`\n${linkError.html}\n\`\`\``;
+        // return `\`\`\`\\n${linkErrorHtml
+        //   .replace(/\n/g, '\\n')
+        //   .replace(/"/g, '\\"')}\\n\`\`\``; // format to slack & gha
       });
 
-      return `*\`${page.path}\`* : \\n${brokenLinksForPage.join('\\n')}`;
+      return `*\`${page.path}\`* : \n${brokenLinksForPage.join('\n')}`;
+      // return `*\`${page.path}\`* : \\n${brokenLinksForPage.join('\\n')}`;
     });
 
-    return markdownMessage.join('\\n');
+    return markdownMessage.join('\n');
+    // return markdownMessage.join('\\n');
   },
 
   conclude(buildOptions, files) {
