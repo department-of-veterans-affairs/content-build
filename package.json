@@ -209,6 +209,7 @@
     "blob-polyfill": "^4.0.20200601",
     "core-js": "^3.8.1",
     "deep-diff": "^1.0.2",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",
     "js-yaml": "^3.14.0",
