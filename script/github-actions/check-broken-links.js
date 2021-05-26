@@ -32,7 +32,8 @@ if (fs.existsSync(reportPath)) {
   console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
   console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
 
-  console.log(`::set-output name=NOTIFY_SLACK::true`); // TODO: Remove when testing done
+  // console.log(`::set-output name=NOTIFY_SLACK::true`); // TODO: Remove when testing done
+  console.log(`::set-output name=NOTIFY_SLACK::false`); // TODO: Remove when testing done
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
