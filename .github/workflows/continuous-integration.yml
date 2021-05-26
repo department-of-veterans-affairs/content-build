@@ -260,7 +260,7 @@ jobs:
       # TODO: Change to correct channel_id when ready
       - name: Notify Slack about broken links
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: 0
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK }}
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
