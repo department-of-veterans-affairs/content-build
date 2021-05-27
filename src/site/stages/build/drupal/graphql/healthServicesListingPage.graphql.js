@@ -79,6 +79,7 @@ const healthServicesListingPage = `
                     description {
                       processed
                     }
+                    fieldServiceTypeOfCare
                     parent {
                       entity {
                         ... on TaxonomyTermHealthCareServiceTaxonomy {
