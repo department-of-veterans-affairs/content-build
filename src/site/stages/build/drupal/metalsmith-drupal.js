@@ -314,7 +314,8 @@ async function loadCachedDrupalFiles(buildOptions, files) {
       files[relativePath] = {
         path: relativePath,
         isDrupalAsset: true,
-        contents: fs.readFileSync(file),
+        // contents: fs.readFileSync(file),
+        contents: Buffer.from('nothing'),
       };
     });
   }

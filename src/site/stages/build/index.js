@@ -41,6 +41,8 @@ const updateRobots = require('./plugins/update-robots');
 const pagesJSONPath = '.cache/localhost/drupal/pages.json';
 const backupPath = '/tmp/pages.json';
 
+const GARBAGE_COLLECTION_FREQUENCY_SECONDS = 30;
+
 function backupPagesJSON() {
   try {
     if (fs.existsSync(pagesJSONPath)) {
@@ -74,6 +76,16 @@ function build(BUILD_OPTIONS) {
   const smith = silverSmith();
 
   registerLiquidFilters();
+
+  const formatMemory = m => Math.round((m / 1024 / 1024) * 100) / 100;
+
+  const gcInterval = setInterval(() => {
+    global.gc();
+
+    const heap = formatMemory(process.memoryUsage().heapUsed);
+    const rss = formatMemory(process.memoryUsage().rss);
+    console.log(`heap: ${heap}mB, rss: ${rss}mB`);
+  }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
 
   // Set up Metalsmith. BE CAREFUL if you change the order of the plugins. Read the comments and
   // add comments about any implicit dependencies you are introducing!!!
@@ -240,7 +252,10 @@ function build(BUILD_OPTIONS) {
   );
 
   smith.build(err => {
-    if (err) throw err;
+    if (err) {
+      clearInterval(gcInterval);
+      throw err;
+    }
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
@@ -265,6 +280,7 @@ function build(BUILD_OPTIONS) {
       if (global.verbose) {
         smith.printSummary();
       }
+      clearInterval(gcInterval);
       console.log('The Metalsmith build has completed.');
 
       if (usingCMSExport) {

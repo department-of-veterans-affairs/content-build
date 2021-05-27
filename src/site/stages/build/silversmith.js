@@ -24,6 +24,14 @@ const logMemoryUsage = (heapUsedStart, heapUsedEnd) => {
   );
 };
 
+const logAllMemoryStats = () => {
+  const stats = process.memoryUsage();
+  const keys = Object.keys(stats);
+  console.log(chalk.bold('Memory stats:'));
+  keys.forEach(key => console.log(`- ${key}: ${formatMemory(stats[key])}mb`));
+  console.log();
+};
+
 /**
  * It's Metalsmith with some added shine.
  */
@@ -86,6 +94,8 @@ module.exports = () => {
       })
       ._use(plugin)
       ._use(() => {
+        global.gc();
+
         const heapUsedEnd = process.memoryUsage().heapUsed;
         smith.stepStats[step].memoryEnd = heapUsedEnd;
 
@@ -95,6 +105,7 @@ module.exports = () => {
         logStepEnd(step, description, timeElapsed);
         if (global.verbose) {
           logMemoryUsage(heapUsedStart, heapUsedEnd);
+          logAllMemoryStats();
         }
       });
   };

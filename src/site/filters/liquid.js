@@ -14,9 +14,13 @@ function getPath(obj) {
 module.exports = function registerFilters() {
   const { cmsFeatureFlags } = global;
 
-  // Set timeout option to something higher (20mins)
-  // eslint-disable-next-line no-new
-  new liquid.Context({ timeout: 1200000 });
+  // Set timeout option to something higher (20mins).
+  const originalRun = liquid.run;
+  liquid.run = (astList, context, callback) => {
+    // eslint-disable-next-line no-param-reassign
+    context.options.timeout = 1200000;
+    originalRun(astList, context, callback);
+  };
 
   // Custom liquid filter(s)
   liquid.filters.humanizeDate = dt =>
@@ -159,7 +163,15 @@ module.exports = function registerFilters() {
 
   liquid.filters.numToWord = numConvert => converter.toWords(numConvert);
 
-  liquid.filters.jsonToObj = jsonString => JSON.parse(jsonString);
+  liquid.filters.jsonToObj = jsonString => {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`JSON.parse() failed for ${jsonString} with: ${error}`);
+      return {};
+    }
+  };
 
   liquid.filters.genericModulo = (i, n) => i % n;
 

@@ -28,7 +28,8 @@ const getDomModifiers = BUILD_OPTIONS => {
   ];
 };
 
-const modifyDom = BUILD_OPTIONS => files => {
+const modifyDom = BUILD_OPTIONS => async files => {
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const domModifiers = getDomModifiers(BUILD_OPTIONS);
 
   for (const modifier of domModifiers) {
@@ -40,6 +41,7 @@ const modifyDom = BUILD_OPTIONS => files => {
   // Store only one `file.dom` in memory at a time
   // because storing the virtual DOM of every .html file in memory
   // at once would cause a massive amount of memory to be consumed.
+  let itemsSinceCall = 0;
   for (const [fileName, file] of Object.entries(files)) {
     if (path.extname(fileName) === '.html') {
       file.dom = cheerio.load(file.contents);
@@ -50,6 +52,13 @@ const modifyDom = BUILD_OPTIONS => files => {
         file.contents = Buffer.from(file.dom.html());
       }
       delete file.dom;
+    }
+    itemsSinceCall++;
+    if (itemsSinceCall > 100) {
+      itemsSinceCall = 0;
+      /* eslint-disable no-await-in-loop, no-console */
+      await sleep(1);
+      console.log('sleep for 1ms at 100 items');
     }
   }
 
