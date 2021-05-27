@@ -203,14 +203,14 @@ jobs:
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
       - name: echo list
-        run: ls ${{ GITHUB_WORKSPACE }}/content-build/build
+        run: ls ${{ github.workspace }}/content-build/build
 
       # TODO: Add success condition
       - name: Upload build
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: ${{ GITHUB_WORKSPACE }}/content-build/build
+          path: ${{ github.workspace }}/content-build/build
           retention-days: 1
 
       - name: Configure AWS credentials
