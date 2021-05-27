@@ -6,13 +6,8 @@
     {% assign alertType = "info" %}
   {% endif %}
 
-  {% assign pagePath = path %}
-  {% if entityUrl %}
-    {% assign pagePath = entityUrl.path | replace_first: '/', '' %}
-  {% endif %}
-
-  {% assign region = pagePath | split: "/" | first | prepend: "/" %}
-  {% assign lastArg = pagePath | split: "/" | last | prepend: "/"%}
+  {% assign region = path | split: "/" | first | prepend: "/" %}
+  {% assign lastArg = path | split: "/" | last | prepend: "/"%}
 
   {% assign outputStatus = false %}
   {% assign emailUpdates = "" %}
