@@ -203,14 +203,14 @@ jobs:
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
       - name: echo list
-        run: ls $GITHUB_WORKSPACE/content-build/build
+        run: ls ${{ GITHUB_WORKSPACE }}/content-build/build
 
       # TODO: Add success condition
       - name: Upload build
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: $GITHUB_WORKSPACE/content-build/build
+          path: ${{ GITHUB_WORKSPACE }}/content-build/build
           retention-days: 1
 
       - name: Configure AWS credentials
@@ -239,7 +239,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/attachment
+          ref: refs/heads/main
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
