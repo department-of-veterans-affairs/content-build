@@ -18,7 +18,9 @@
           aria-current="page" 
           href="/{{ path }}"
           lang="{{ path | detectLang }}"
-          >  
+          >
+            {{ crumb.text }}
+        </a>
         </li>
       {% elsif crumb.url.path %}
         {% if crumb.url.path == '/' %}
