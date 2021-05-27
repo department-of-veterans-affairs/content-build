@@ -204,7 +204,7 @@ jobs:
 
       - name: Compress ${{ matrix.buildtype }} build
         if: ${{ success() }}
-        run: tar -zcvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz  ${{ github.workspace }}/content-build/build
+        run: tar -zcvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz  ${{ github.workspace }}/content-build/build
 
       # TODO: Add success condition
       - name: Upload build
@@ -324,7 +324,7 @@ jobs:
           path: ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz
 
       - name: Extract ${{ matrix.buildtype }} build
-        run: tar -xcvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz
+        run: tar -xcvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
