@@ -7,25 +7,9 @@
 <html lang="en">
 <!--<![endif]-->
 
-{% if isSinglePagePublish %}
-  <!--
-    Generated via single-page publish
-  -->
-{% endif %}
-
-{% comment %}
-  Markdown and Drupal pages (all Metalsmith pages actually) have a ".path" value but
-  only Drupal pages have an "entityUrl.path" value. We should use the latter when possible,
-  because during the preview server's preview, the path is always just "preview".
-{% endcomment %}
-{% assign pagePath = path %}
-{% if entityUrl %}
-  {% assign pagePath = entityUrl.path %}
-{% endif %}
-
 <!--
   layout: {{ layout }}
-  path: {{ pagePath }}
+  path: {{ path }}
   entityId: {{ entityId | default: 'N/A' }}
 -->
 
