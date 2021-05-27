@@ -204,7 +204,7 @@ jobs:
 
       - name: Compress ${{ matrix.buildtype }} build
         if: ${{ success() }}
-        run: tar ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz  ${{ github.workspace }}/content-build/build
+        run: tar -zcvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz  ${{ github.workspace }}/content-build/build
 
       # TODO: Add success condition
       - name: Upload build
