@@ -42,7 +42,11 @@
           </section>
           {% endif %}
 
+          <script>console.log({{ clinicalHealthServices | json }});</script>
+          
+          
           {% for healthServiceGroup in clinicalHealthServices %}
+
             {% assign groupName = healthServiceGroup.0.fieldServiceNameAndDescripti.entity.parent.0.entity.name %}
             <section data-label="{{groupName}}">
               <h2>{{groupName}}</h2>
