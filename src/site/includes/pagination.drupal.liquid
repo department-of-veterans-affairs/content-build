@@ -12,17 +12,13 @@
 {% endcomment %}
 
 {% assign totalPages = paginator.inner | size %}
-
-<!-- This logic is for src/site/layouts/event_listing.drupal.liquid:56 -->
-<!-- =============== -->
 {% assign totalItems = totalPages %}
+
 {% if numItems %}
   {% assign totalItems = numItems | times: .1 %}
 {% endif%}
-{% assign showOnEventListingPage = totalItems <= totalPages %}
-<!-- =============== -->
 
-{% if paginator != empty and 1 < totalPages and showOnEventListingPage %}
+{% if paginator != empty and totalItems <= totalPages and 1 < totalPages %}
   <div class="va-pagination" data-template="includes/pagination">
     <!-- Previous button -->
     {% if paginator.prev != empty %}
@@ -47,8 +43,6 @@
         >
           {{ page.label }}
         </a>
-
-        <!-- This logic is for src/site/layouts/event_listing.drupal.liquid:56 -->
         {% assign totalItems = totalItems | minus: 1 %}
       {% endfor %}
     </div>
