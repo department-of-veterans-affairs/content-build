@@ -31,7 +31,7 @@ async function processSinglePage(nid, path) {
 
   try {
     const uploadRes = await uploadResponse;
-    console.log('upload completed successfully', uploadRes);
+    console.log('upload completed', uploadRes);
   } catch (error) {
     console.log('upload failed.', error.message);
   }
@@ -49,15 +49,15 @@ exports.handler = async function(event, context) {
 
   const processPromises = [];
   for (const record of event.Records) {
-    console.log('record', record);
-    const { body } = record;
-    console.log('body', body);
+    const body = JSON.parse(record.body);
     if (body.nid && body.path) {
       try {
         processPromises.push(processSinglePage(body.nid, body.path));
       } catch (e) {
         console.log('Error creating upload promise', e.message);
       }
+    } else {
+      console.log('Body is not correctly formatted', body);
     }
   }
 
