@@ -62,5 +62,3 @@ jobs:
           --function-name singlePageBuild
           --s3-bucket vetsgov-website-builds-s3-upload
           --s3-key single-page-build/master/function.zip
-      - name: Invoke content cache function
-        run: aws lambda invoke --function-name singlePageBuild outfile.txt
