@@ -52,7 +52,7 @@
                         {% include {{ bundleComponent }} with entity = paragraph.entity %}
                     {%  endfor %}
 
-                    <div data-widget-type="sharable-link" parentId="{{id}}"></div>                
+                    <div data-widget-type="sharable-link" parentId="{{id}}" sharableText="{{item.fieldTitle}}"></div>                
                 </div>
             </li>
         {% endfor %}

@@ -7,6 +7,260 @@ import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredCo
 
 registerFilters();
 
+describe('benefitTerms', () => {
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.benefitTerms(null)).to.eq(null);
+  });
+
+  it('returns General benefits information', () => {
+    expect(liquid.filters.benefitTerms('')).to.eq(
+      'General benefits information',
+    );
+  });
+
+  it('returns General benefits information', () => {
+    expect(liquid.filters.benefitTerms('general')).to.eq(
+      'General benefits information',
+    );
+  });
+
+  it('returns Burials and memorials', () => {
+    expect(liquid.filters.benefitTerms('burial')).to.eq(
+      'Burials and memorials',
+    );
+  });
+
+  it('returns Careers and employment', () => {
+    expect(liquid.filters.benefitTerms('careers')).to.eq(
+      'Careers and employment',
+    );
+  });
+
+  it('returns Disability', () => {
+    expect(liquid.filters.benefitTerms('disability')).to.eq('Disability');
+  });
+
+  it('returns Education and training', () => {
+    expect(liquid.filters.benefitTerms('education')).to.eq(
+      'Education and training',
+    );
+  });
+
+  it('returns Family member benefits', () => {
+    expect(liquid.filters.benefitTerms('family')).to.eq(
+      'Family member benefits',
+    );
+  });
+
+  it('returns Health care', () => {
+    expect(liquid.filters.benefitTerms('healthcare')).to.eq('Health care');
+  });
+
+  it('returns Housing assistance', () => {
+    expect(liquid.filters.benefitTerms('housing')).to.eq('Housing assistance');
+  });
+
+  it('returns Life insurance', () => {
+    expect(liquid.filters.benefitTerms('insurance')).to.eq('Life insurance');
+  });
+
+  it('returns Pension', () => {
+    expect(liquid.filters.benefitTerms('pension')).to.eq('Pension');
+  });
+
+  it('returns Service memeber benefits', () => {
+    expect(liquid.filters.benefitTerms('service')).to.eq(
+      'Service member benefits',
+    );
+  });
+
+  it('returns Records', () => {
+    expect(liquid.filters.benefitTerms('records')).to.eq('Records');
+  });
+});
+
+describe('findCurrentPathDepth', () => {
+  it('returns {"depth":1}', () => {
+    const linksArr = [{ url: { path: '/home' } }];
+    assert.equal(
+      liquid.filters.findCurrentPathDepth(linksArr, '/home'),
+      '{"depth":1}',
+    );
+  });
+
+  it('returns  {"depth":2}', () => {
+    const linksArr = [
+      { url: { path: '/home' }, links: [{ url: { path: '/page' } }] },
+    ];
+    assert.equal(
+      liquid.filters.findCurrentPathDepth(linksArr, '/page'),
+      '{"depth":2}',
+    );
+  });
+
+  it('returns  {"depth":3}', () => {
+    const linksArr = [
+      {
+        url: { path: '/home' },
+        links: [
+          { url: { path: '/page' }, links: [{ url: { path: '/testing3' } }] },
+        ],
+      },
+    ];
+    assert.equal(
+      liquid.filters.findCurrentPathDepth(linksArr, '/testing3'),
+      '{"depth":3,"links":{"url":{"path":"/page"},"links":[{"url":{"path":"/testing3"}}]}}',
+    );
+  });
+
+  it('returns  {"depth":4}', () => {
+    const linksArr = [
+      {
+        url: { path: '/home' },
+        links: [
+          {
+            url: { path: '/page' },
+            links: [
+              {
+                url: { path: '/testing3' },
+                links: [{ url: { path: '/testing4' } }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    assert.equal(
+      liquid.filters.findCurrentPathDepth(linksArr, '/testing4'),
+      '{"depth":4,"links":{"url":{"path":"/testing3"},"links":[{"url":{"path":"/testing4"}}]}}',
+    );
+  });
+
+  it('returns  {"depth":5}', () => {
+    const linksArr = [
+      {
+        url: { path: '/home' },
+        links: [
+          {
+            url: { path: '/page' },
+            links: [
+              {
+                url: { path: '/testing3' },
+                links: [
+                  {
+                    url: { path: '/testing4' },
+                    links: [{ url: { path: '/testing5' } }],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    assert.equal(
+      liquid.filters.findCurrentPathDepth(linksArr, '/testing5'),
+      '{"depth":5,"links":{"url":{"path":"/testing4"},"links":[{"url":{"path":"/testing5"}}]}}',
+    );
+  });
+});
+
+describe('hashReference', () => {
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.hashReference(null)).to.eq(null);
+  });
+
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.hashReference(undefined)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.hashReference('')).to.eq(null);
+  });
+
+  it('returns an empty string when an empty array is passed', () => {
+    expect(liquid.filters.hashReference([])).to.eq('');
+  });
+
+  it('returns a hyphenated string', () => {
+    expect(liquid.filters.hashReference('Testing One two three')).to.eq(
+      'testing-one-two-three',
+    );
+  });
+
+  it('returns hyphenated string and removes multiple spaces', () => {
+    expect(liquid.filters.hashReference('testing  one two  three')).to.eq(
+      'testing-one-two-three',
+    );
+  });
+
+  it('returns hyphenated string with spaces removed from both sides of string', () => {
+    expect(liquid.filters.hashReference('  Testing one two three   ')).to.eq(
+      'testing-one-two-three',
+    );
+  });
+});
+
+describe('fileExt', () => {
+  it('returns the following string - testing', () => {
+    expect(liquid.filters.fileExt('testing')).to.eq('testing');
+  });
+
+  it('returns the following string - bar', () => {
+    expect(liquid.filters.fileExt('foo.bar')).to.eq('bar');
+  });
+
+  it('returns the following string - test', () => {
+    expect(liquid.filters.fileExt('foo.bar.test')).to.eq('test');
+  });
+
+  it('returns empty string', () => {
+    expect(liquid.filters.fileExt('foo.bar.test.')).to.eq('');
+  });
+
+  it('returns the following string - test', () => {
+    expect(liquid.filters.fileExt(['foo.bar.test'])).to.eq('test');
+  });
+
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.fileExt(null)).to.eq(null);
+  });
+
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.fileExt(undefined)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.fileExt('')).to.eq(null);
+  });
+
+  it('returns an empty string when an empty array is passed', () => {
+    expect(liquid.filters.fileExt([])).to.eq('');
+  });
+});
+
+describe('toTitleCase', () => {
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.toTitleCase(null)).to.eq(null);
+  });
+
+  it('returns an empty string when an empty string is passed', () => {
+    expect(liquid.filters.toTitleCase('')).to.eq('');
+  });
+
+  it('returns an empty string when an empty array is passed', () => {
+    expect(liquid.filters.toTitleCase([])).to.eq('');
+  });
+
+  it('returns a string with only the first letter of word capitalized', () => {
+    expect(liquid.filters.toTitleCase('tEST')).to.eq('Test');
+  });
+
+  it('returns all words in string with the first letter capitalized', () => {
+    expect(liquid.filters.toTitleCase('t3sT String')).to.eq('T3st String');
+  });
+});
+
 describe('isLaterThan', () => {
   it('returns true when the left arg is a timestamp later than the right arg', () => {
     expect(liquid.filters.isLaterThan('2020-01-11', '2016-07-10')).to.be.true;

@@ -442,7 +442,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Intimate partner violence support",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Social programs and services",
             "fieldVetCenterFriendlyName": "domestic violence, abuse",
             "fieldAlsoKnownAs": "domestic violence, abuse",
@@ -461,7 +461,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "LGBT Veteran care",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Social programs and services",
             "fieldVetCenterFriendlyName": "Lesbian, gay, bisexual and transgender",
             "fieldAlsoKnownAs": "Lesbian, gay, bisexual and transgender",
@@ -480,7 +480,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Mental health care",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Mental health care",
             "fieldVetCenterFriendlyName": null,
             "fieldAlsoKnownAs": "Behavioral health",
@@ -499,7 +499,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Military sexual trauma care",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Mental health care",
             "fieldVetCenterFriendlyName": null,
             "fieldAlsoKnownAs": null,
@@ -518,7 +518,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Minority Veteran care",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Social programs and services",
             "fieldVetCenterFriendlyName": null,
             "fieldAlsoKnownAs": null,
@@ -537,7 +537,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "PTSD care",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Mental health care",
             "fieldVetCenterFriendlyName": null,
             "fieldAlsoKnownAs": null,
@@ -556,7 +556,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Returning service member care",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Social programs and services",
             "fieldVetCenterFriendlyName": "Transition counseling",
             "fieldAlsoKnownAs": "Post-9/11 Veterans (OEF, OIF, OND) transition and care management services",
@@ -613,7 +613,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Whole health",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Specialty care",
             "fieldVetCenterFriendlyName": null,
             "fieldAlsoKnownAs": "Patient-centered care",
@@ -632,7 +632,7 @@
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Women Veteran care",
-            "fieldVetCenterTypeOfCare": "counselling",
+            "fieldVetCenterTypeOfCare": "counseling",
             "fieldServiceTypeOfCare": "Social programs and services",
             "fieldVetCenterFriendlyName": null,
             "fieldAlsoKnownAs": null,

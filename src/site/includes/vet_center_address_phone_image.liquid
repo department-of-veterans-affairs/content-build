@@ -34,7 +34,8 @@
                 </div>
             </address>
             <div>
-                <a href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
+                <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"
+                   href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
                    target="_blank" rel="noopener noreferrer">
                     Get directions
                 </a>
@@ -43,11 +44,11 @@
         <h4 class="force-small-header vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Phone</h4>
         <div>
             {% if vetCenter.entityBundle == "vet_center_cap" %}
-                <div class="main-phone vads-u-margin-bottom--1">
+                <div class="main-phone">
                     </strong><a href="tel:{{ mainVetCenterPhone }}">{{ mainVetCenterPhone }}</a>
                 </div>
             {% else %}
-                <div class="main-phone vads-u-margin-bottom--1">
+                <div class="main-phone">
                     </strong><a href="tel:{{ vetCenter.fieldPhoneNumber }}">{{ vetCenter.fieldPhoneNumber }}</a>
                 </div>
             {% endif %}
@@ -58,7 +59,7 @@
         {% if vetCenter.fieldMedia %}
             <a href="{{ vetCenter.path }}"
                aria-label="{{ vetCenter.fieldMedia.entity.image.alt }}">
-                <img class="facility-img"
+                <img class="region-img"
                      src="{{ vetCenter.fieldMedia.entity.image.derivative.url }}"
                      alt="{{ vetCenter.fieldMedia.entity.image.alt }}"
                 />

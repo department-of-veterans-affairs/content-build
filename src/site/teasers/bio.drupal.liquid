@@ -47,16 +47,25 @@ Example data:
                 title="{{ image.title }}">
         </div>
     {% endif %}
-    <div class="">
-
-        <a class="
-            vads-u-font-family--serif
-            vads-u-font-weight--bold
-            vads-u-display--block
-            vads-u-margin-bottom--1
-            vads-u-font-size--lg"
-           href="{{ node.entityUrl.path }}">{{ node.fieldNameFirst }}
-                {{ node.fieldLastName }} {{ node.fieldSuffix }}</a>
+    <div>
+        {% if node.entityUrl.path != empty %}
+            <a class="
+                vads-u-font-family--serif
+                vads-u-font-weight--bold
+                vads-u-display--block
+                vads-u-margin-bottom--1
+                vads-u-font-size--lg"
+               href="{{ node.entityUrl.path }}">{{ node.fieldNameFirst }} {{ node.fieldLastName }} {{ node.fieldSuffix }}</a>
+        {% else %}
+            <span class="
+                vads-u-font-family--serif
+                vads-u-font-weight--bold
+                vads-u-display--block
+                vads-u-margin-bottom--1
+                vads-u-font-size--lg">
+                {{ node.fieldNameFirst }} {{ node.fieldLastName }} {{ node.fieldSuffix }}
+            </span>
+        {% endif %}
 
         {% if node.fieldDescription %}
         <p class="
