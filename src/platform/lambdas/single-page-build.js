@@ -49,7 +49,9 @@ exports.handler = async function(event, context) {
 
   const processPromises = [];
   for (const record of event.Records) {
+    console.log('record', record);
     const { body } = record;
+    console.log('body', body);
     if (body.nid && body.path) {
       try {
         processPromises.push(processSinglePage(body.nid, body.path));
