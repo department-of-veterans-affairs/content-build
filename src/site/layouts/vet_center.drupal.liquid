@@ -34,8 +34,12 @@
                   <div>
                       <div class="vads-c-facility-detail">
                           <section class="vads-facility-detail">
-                                <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Main Location</h3>
-                                <div class="vads-u-margin-bottom--3">
+                              <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Main Location</h3>
+                              {% include "src/site/includes/expandable_operating_status.liquid" with
+                                  operatingStatusFacility = fieldOperatingStatusFacility
+                                  operatingStatusMoreInfo = fieldOperatingStatusMoreInfo
+                              %}
+                              <div class="vads-u-margin-bottom--3">
                                     <div>{{ fieldAddress.addressLine1 }}</div>
                                     {{ fieldAddress.locality }},
                                     {{ fieldAddress.administrativeArea }}
