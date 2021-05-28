@@ -75,6 +75,10 @@ function build(BUILD_OPTIONS) {
 
   registerLiquidFilters();
 
+  // Start manual garbage collection to limit large spikes in memory use.
+  // This prevents running out of memory on CI.
+  smith.startGarbageCollection();
+
   // Set up Metalsmith. BE CAREFUL if you change the order of the plugins. Read the comments and
   // add comments about any implicit dependencies you are introducing!!!
   //
@@ -240,7 +244,10 @@ function build(BUILD_OPTIONS) {
   );
 
   smith.build(err => {
-    if (err) throw err;
+    if (err) {
+      smith.endGarbageCollection();
+      throw err;
+    }
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
@@ -265,6 +272,10 @@ function build(BUILD_OPTIONS) {
       if (global.verbose) {
         smith.printSummary();
       }
+
+      smith.endGarbageCollection();
+      smith.printPeakMemory();
+
       console.log('The Metalsmith build has completed.');
 
       if (usingCMSExport) {

@@ -10,7 +10,25 @@ const {
   cleanConsole,
 } = require('./console');
 
+// Adjust the GC frequency to balance build time and peak memory usage.
+// Note: if the value is set too high, build time may actually increase, likely
+// due to heap size approaching the max, causing extra scavange GCs.
+// You may need to adjust --max-old-space-size (heap size) as well.
+// Use the --trace-gc flag to show garbage collection stats.
+const GARBAGE_COLLECTION_FREQUENCY_SECONDS = 10;
+let garbageCollectionInterval;
+let peakRSSUsed = 0;
+
 const formatMemory = m => Math.round((m / 1024 / 1024) * 100) / 100;
+
+const printGarbageCollectionStats = (memBefore, memAfter) => {
+  const getDiff = stat => formatMemory(memBefore[stat] - memAfter[stat]);
+  const getMsg = stat =>
+    `${stat}: ${formatMemory(memAfter[stat])}mB (${getDiff(stat)}mB less)`;
+  if (memBefore.rss > peakRSSUsed) peakRSSUsed = memBefore.rss;
+
+  console.log(`\n[MANUAL GC] ${getMsg('heapUsed')} ${getMsg('rss')}\n`);
+};
 
 const logMemoryUsage = (heapUsedStart, heapUsedEnd) => {
   console.log(
@@ -97,6 +115,29 @@ module.exports = () => {
           logMemoryUsage(heapUsedStart, heapUsedEnd);
         }
       });
+  };
+
+  smith.startGarbageCollection = function startGarbageCollection() {
+    if (global.gc) {
+      garbageCollectionInterval = setInterval(() => {
+        const memBefore = process.memoryUsage();
+        global.gc();
+        const memAfter = process.memoryUsage();
+        printGarbageCollectionStats(memBefore, memAfter);
+      }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
+    } else {
+      throw new Error(
+        'Manual garbage collection disabled. Enable with --expose-gc',
+      );
+    }
+  };
+
+  smith.endGarbageCollection = function endGarbageCollection() {
+    clearInterval(garbageCollectionInterval);
+  };
+
+  smith.printPeakMemory = function printPeakMemory() {
+    console.log(`\nPeak RSS used: ${formatMemory(peakRSSUsed)}mB\n`);
   };
 
   smith.printSummary = function printSummary() {
