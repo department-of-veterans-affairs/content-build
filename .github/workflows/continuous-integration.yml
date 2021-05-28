@@ -333,8 +333,12 @@ jobs:
 
       - name: echo matrix
         run: ls ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
-      # - name: Extract ${{ matrix.buildtype }} build
-      #   run: tar -zxvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz
+
+      - name: Extract ${{ matrix.buildtype }} build
+        run: tar -zxvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}/${{ matrix.buildType }}.tar.gz
+
+      - name: Remove tar file from build directory
+        run: rm ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}/${{ matrix.buildType }}.tar.gz
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
