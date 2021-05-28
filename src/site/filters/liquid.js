@@ -674,6 +674,11 @@ module.exports = function registerFilters() {
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 
+  // liquid.filters.groupBy = (data, groupBy) => {
+  //   console.log('DATAAAA', data)
+  //   return _.groupBy(data, groupBy)
+  // };
+
   liquid.filters.processDynamicContent = (entity, contentType) => {
     // TODO - add more cases as new centralized content types are added
     // eslint-disable-next-line sonarjs/no-small-switch
