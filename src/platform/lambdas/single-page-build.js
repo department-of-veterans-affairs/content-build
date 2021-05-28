@@ -16,6 +16,8 @@ async function processSinglePage(nid, path) {
     throw new Error(`unexpected response ${response.statusText}`);
   }
 
+  console.log(`Uploading nid: ${nid} path: ${path} to fullpath: ${fullPath}`);
+
   const uploadResponse = s3
     .upload({
       ACL: 'public-read',
@@ -28,8 +30,8 @@ async function processSinglePage(nid, path) {
     .promise();
 
   try {
-    await uploadResponse;
-    console.log('upload completed successfully');
+    const uploadRes = await uploadResponse;
+    console.log('upload completed successfully', uploadRes);
   } catch (error) {
     console.log('upload failed.', error.message);
   }
