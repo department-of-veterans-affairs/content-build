@@ -155,7 +155,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        # buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovdev]
 
     steps:
       - name: Checkout vagov-content
@@ -277,7 +278,8 @@ jobs:
 
     strategy:
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        # buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovdev]
 
     steps:
       - name: Checkout vagov-content
@@ -323,6 +325,14 @@ jobs:
           name: ${{ matrix.buildtype }}
           path: ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
 
+      - name: echo content-build
+        run: ls ${{ github.workspace }}/content-build
+
+      - name: echo build
+        run: ls ${{ github.workspace }}/content-build/build
+
+      - name: echo matrix
+        run: ls ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
       # - name: Extract ${{ matrix.buildtype }} build
       #   run: tar -zxvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz
 
