@@ -52,7 +52,12 @@ exports.handler = async function(event, context) {
     const body = JSON.parse(record.body);
     if (body.nid && body.path) {
       try {
-        processPromises.push(processSinglePage(body.nid, body.path));
+        let cleanPath = body.path;
+        // Drupal sends the path with a leading / which break aws.
+        if (cleanPath.startsWith('/')) {
+          cleanPath = body.path.slice(1);
+        }
+        processPromises.push(processSinglePage(body.nid, cleanPath));
       } catch (e) {
         console.log('Error creating upload promise', e.message);
       }
