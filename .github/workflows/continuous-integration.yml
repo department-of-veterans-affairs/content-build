@@ -324,7 +324,7 @@ jobs:
           path: ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz
 
       - name: Extract ${{ matrix.buildtype }} build
-        run: tar -xcvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz
+        run: tar -zxvf ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}.tar.gz
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
