@@ -24,21 +24,25 @@ const formatMemory = m => Math.round((m / 1024 / 1024) * 100) / 100;
 const printGarbageCollectionStats = (memBefore, memAfter) => {
   const getDiff = stat => formatMemory(memBefore[stat] - memAfter[stat]);
   const getMsg = stat =>
-    `${stat}: ${formatMemory(memAfter[stat])}mB (${getDiff(stat)}mB less)`;
+    `${stat}: ${formatMemory(memAfter[stat])}mB (${getDiff(stat)}mB collected)`;
   if (memBefore.rss > peakRSSUsed) peakRSSUsed = memBefore.rss;
 
   console.log(`\n[MANUAL GC] ${getMsg('heapUsed')} ${getMsg('rss')}\n`);
 };
 
-const logMemoryUsage = (heapUsedStart, heapUsedEnd) => {
+const logMemoryUsage = (heapUsedStart, heapUsedEnd, rssStart, rssEnd) => {
   console.log(
     chalk.bold('Starting memory:'),
-    `${formatMemory(heapUsedStart)}mB`,
+    `${formatMemory(heapUsedStart)}mB heap, ${formatMemory(rssStart)}mB rss`,
   );
-  console.log(chalk.bold('Ending memory:'), `${formatMemory(heapUsedEnd)}mB`);
   console.log(
-    chalk.bold('Delta:'),
-    `${formatMemory(heapUsedEnd - heapUsedStart)}mB`,
+    chalk.bold('Ending memory:'),
+    `${formatMemory(heapUsedEnd)}mB heap, ${formatMemory(rssEnd)}mB rss`,
+  );
+  console.log(
+    chalk.bold('Deltas:'),
+    `${formatMemory(heapUsedEnd - heapUsedStart)}mB heap, ` +
+      `${formatMemory(rssEnd - rssStart)}mB rss`,
   );
 };
 
@@ -94,25 +98,30 @@ module.exports = () => {
 
     let timerStart;
     let heapUsedStart;
+    let rssStart;
 
     return smith
       ._use(() => {
         heapUsedStart = process.memoryUsage().heapUsed;
+        rssStart = process.memoryUsage().rss;
         smith.stepStats[step].memoryStart = heapUsedStart;
+        smith.stepStats[step].rssStart = rssStart;
         logStepStart(step, description);
         timerStart = process.hrtime.bigint();
       })
       ._use(plugin)
       ._use(() => {
         const heapUsedEnd = process.memoryUsage().heapUsed;
+        const rssEnd = process.memoryUsage().rss;
         smith.stepStats[step].memoryEnd = heapUsedEnd;
+        smith.stepStats[step].rssEnd = rssEnd;
 
         const timeElapsed = (process.hrtime.bigint() - timerStart) / 1000000n;
         smith.stepStats[step].timeElapsed = timeElapsed;
 
         logStepEnd(step, description, timeElapsed);
         if (global.verbose) {
-          logMemoryUsage(heapUsedStart, heapUsedEnd);
+          logMemoryUsage(heapUsedStart, heapUsedEnd, rssStart, rssEnd);
         }
       });
   };
@@ -141,21 +150,28 @@ module.exports = () => {
   };
 
   smith.printSummary = function printSummary() {
+    const truncate = input =>
+      input.length > 55 ? `${input.substring(0, 55)}...` : input;
+
     const table = new AsciiTable('Step summary');
     table.setHeading(
       'Step',
       'Description',
       'Time Elapsed',
-      'Memory Used This Step',
-      'Total Memory Used After Step',
+      'Heap Change',
+      'Total Heap',
+      'RSS Change',
+      'Total RSS',
     );
     smith.stepStats.forEach((stats, index) =>
       table.addRow(
         index,
-        stats.description,
+        truncate(stats.description),
         `${stats.timeElapsed}ms`,
         `${formatMemory(stats.memoryEnd - stats.memoryStart)}mB`,
         `${formatMemory(stats.memoryEnd)}mB`,
+        `${formatMemory(stats.rssEnd - stats.rssStart)}mB`,
+        `${formatMemory(stats.rssEnd)}mB`,
       ),
     );
 
