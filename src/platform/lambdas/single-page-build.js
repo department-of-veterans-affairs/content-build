@@ -22,6 +22,8 @@ async function processSinglePage(nid, path) {
       Bucket: S3_BUCKET,
       Key: fullPath,
       Body: response.body,
+      CacheControl: 'public, no-cache',
+      ContentType: 'text/html',
     })
     .promise();
 
