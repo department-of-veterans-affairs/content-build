@@ -1,31 +1,14 @@
 {% assign servicesList = clinicalHealthServices | filterBy: "fieldServiceNameAndDescripti.entity.fieldServiceTypeOfCare", typeOfCare %}
-{% assign servicesListAlphabeticallyOrdered = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.name"%}
+{% assign servicesListOrderedByWeight = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.weight"%}
 
-<script>console.log({{ servicesList | json }});</script>
-
-<script>console.log({{ servicesListAlphabeticallyOrdered | json }});</script>
-
-{% if servicesListAlphabeticallyOrdered.length > 0 %}
-    {% if typeOfCare == "Primary care" %}
-      <section data-label="Primary care">
-      <h2>Primary care</h2>
-    {% elseif typeOfCare == "Mental health care" %}
-      <section data-label="Mental health care">
-      <h2>Mental health care</h2>
-    {% elseif typeOfCare == "Specialty care"%}
-    <section data-label="Specialty care">
-        <h2>Specialty care</h2>
-    {% elseif typeOfCare == "Social programs and services"%}
-    <section data-label="Social programs and services">
-        <h2>Social programs and services</h2>
-    {% elseif typeOfCare == "Other services"%}
-    <section data-label="Other services">
-        <h2>Other services</h2>
-    {% endif %}
-    {% for service in servicesListAlphabeticallyOrdered %}
+{% if servicesListOrderedByWeight.length > 0 %}
+  <section data-label="{{typeOfCare}}">
+    <h2>{{typeOfCare}}</h2>
+    {% for service in servicesListOrderedByWeight %}
       {% include "src/site/facilities/health_service.drupal.liquid" with
         healthService = service
         sectionName = typeOfCare
       %}
     {% endfor%}
+  </section>
 {% endif %}

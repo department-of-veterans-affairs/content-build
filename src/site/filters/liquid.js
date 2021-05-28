@@ -671,13 +671,9 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.filterBy = (data, filterBy, valueFilter) => {
+    if (!data) return null;
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
-
-  // liquid.filters.groupBy = (data, groupBy) => {
-  //   console.log('DATAAAA', data)
-  //   return _.groupBy(data, groupBy)
-  // };
 
   liquid.filters.processDynamicContent = (entity, contentType) => {
     // TODO - add more cases as new centralized content types are added

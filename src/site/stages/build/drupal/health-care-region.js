@@ -16,13 +16,6 @@ const {
  * @param sortItem The services array.
  * @return []
  */
-// function sortServices(sortItem) {
-//   return _(sortItem)
-//     .sortBy('fieldServiceNameAndDescripti.entity.weight')
-//     .sortBy('fieldServiceNameAndDescripti.entity.parent[0].entity.weight')
-//     .groupBy('fieldServiceNameAndDescripti.entity.parent[0].entity.name')
-//     .value();
-// }
 
 // Creates the past-events listing pages
 function createPastEventListPages(page, drupalPagePath, files) {
@@ -297,5 +290,4 @@ module.exports = {
   createPastEventListPages,
   addGetUpdatesFields,
   addPager,
-  // sortServices,
 };

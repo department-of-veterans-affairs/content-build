@@ -42,8 +42,6 @@
           </section>
           {% endif %}
 
-          <script>console.log({{ clinicalHealthServices | json }});</script>
-
           {% include "src/site/includes/health_services_listing_services.liquid" with
             clinicalHealthServices
             typeOfCare = "Primary care"
@@ -68,29 +66,6 @@
             clinicalHealthServices
             typeOfCare = "Other services"
           %}
-
-
-          {% comment %} {% assign servicesList = clinicalHealthServices | groupBy: "fieldServiceNameAndDescripti.entity.fieldServiceTypeOfCare" %}
-          {% assign servicesListAlphabeticallyOrdered = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.name"%} {% endcomment %}
-
-            {% comment %} <script>console.log({{ servicesList | json }});</script>
-          
-          {% comment %} {% for healthServiceGroup in servicesListAlphabeticallyOrdered %}
-            {% assign groupName = healthServiceGroup.0.fieldServiceNameAndDescripti.entity.fieldServiceTypeOfCare %}
-            <section data-label="{{groupName}}">
-              <h2>{{groupName}}</h2>
-              {% for service in healthServiceGroup %}
-                {% include "src/site/facilities/health_service.drupal.liquid" with
-                  healthService = service
-                  sectionName = groupName
-                %}
-              {% endfor %}
-            </section>
-          {% endfor %} {% endcomment %}
-
-
-
-          
 
           {% if clinicalHealthServices == false %}
             <div>No health services at this time.</div>
