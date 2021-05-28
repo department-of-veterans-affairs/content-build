@@ -11,16 +11,17 @@
   }
 {% endcomment %}
 
-{% assign totalPages = paginator.inner | size %}
-{% assign totalItems = totalPages %}
+
+{% assign paginatorCount = paginator.inner | size %}
+{% assign totalItems = paginatorCount %}
 
 {% if numItems %}
-  {% assign totalItems = numItems | times: .1 %}
+{% assign totalItems = numItems | times: .1 %}
 {% endif%}
 
-{% if paginator != empty and totalItems <= totalPages and 1 < totalPages %}
+{% if paginator != empty and totalItems <= paginatorCount %}
+
   <div class="va-pagination" data-template="includes/pagination">
-    <!-- Previous button -->
     {% if paginator.prev != empty %}
       <span class="va-pagination-prev">
         <a href="{{ paginator.prev }}" aria-label="Load previous page{{ paginator.ariaLabel }}">
@@ -28,8 +29,6 @@
         </a>
       </span>
     {% endif %}
-
-    <!-- Pages 1, 2, 3, ... -->
     <div class="va-pagination-inner">
       {% for page in paginator.inner %}
         <a
@@ -46,8 +45,6 @@
         {% assign totalItems = totalItems | minus: 1 %}
       {% endfor %}
     </div>
-
-    <!-- Next button -->
     {% if paginator.next != empty %}
       <span class="va-pagination-next">
         <a href="{{ paginator.next }}" aria-label="Load next page{{ paginator.ariaLabel }}">
