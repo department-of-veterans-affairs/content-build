@@ -1111,5 +1111,14 @@
         }
       ]
     }
+  },
+  {
+    "appName": "check-in",
+    "entryName": "check-in",
+    "rootUrl": "/check-in",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
   }
 ]
