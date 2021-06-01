@@ -317,7 +317,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Make build directory
-        run: mkdir -p build
+        run: mkdir -p build/${{ matrix.buildType }}
 
       - name: Download build artifactory
         uses: actions/download-artifact@v2
