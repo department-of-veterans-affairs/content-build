@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov -- Tugboat CMS with 2 broken links
 const fs = require('fs');
 
 const args = process.argv.slice(2);
@@ -17,17 +18,20 @@ if (fs.existsSync(reportPath)) {
   const shouldFail =
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
-  const color = shouldFail ? 'danger' : 'warning';
-
-  const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the ${envName} build on ${BRANCH_NAME} \n\n${SERVER_URL}\n\n`;
-  const message = `${heading}\n${brokenLinks.summary}`;
+  const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
+  const summary = brokenLinks.summary;
+  const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}>`;
+  const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
+  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${summary
+    .replace(/\n/g, '\\n')
+    .replace(/"/g, '\\"')}" }]`; // format summary according to slack api
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
 
-  console.log(`::set-output name=SLACK_MESSAGE::${message}`);
-  console.log(`::set-output name=SLACK_COLOR::${color}`);
+  console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
+  console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
@@ -37,7 +41,17 @@ if (fs.existsSync(reportPath)) {
     // continue merging.
     return;
   }
-  if (color === 'danger') {
+
+  /*
+   * Only emit this variable if ran against master branch or during Content Release.
+   * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
+   */
+  console.log(`::set-output name=NOTIFY_SLACK::1`);
+
+  if (shouldFail) {
     throw new Error('Broken links found');
   }
+} else {
+  console.log('No broken links found!');
+  console.log(`::set-output name=NOTIFY_SLACK::0`);
 }
