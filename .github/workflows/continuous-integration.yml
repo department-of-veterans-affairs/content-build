@@ -323,22 +323,22 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: ${{ github.workspace }}/content-build/${{ matrix.buildType }}
+          path: ${{ github.workspace }}/content-build/
 
-      - name: echo content-build
-        run: ls ${{ github.workspace }}/content-build
+      # - name: echo content-build
+      #   run: ls ${{ github.workspace }}/content-build
 
-      - name: echo build
-        run: ls ${{ github.workspace }}/content-build/build
+      # - name: echo build
+      #   run: ls ${{ github.workspace }}/content-build/build
 
-      - name: echo matrix
-        run: ls ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
+      # - name: echo matrix
+      #   run: ls ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
 
       - name: echo root
         run: ls ${{ github.workspace }}/content-build
 
       - name: Extract ${{ matrix.buildtype }} build
-        run: tar -zxvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
+        run: tar -zxvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}/${{ matrix.buildType }}.tar.gz -C ${{ github.workspace }}/content-build
 
       - name: echo root extracted
         run: ls ${{ github.workspace }}/content-build
