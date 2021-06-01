@@ -349,8 +349,5 @@ jobs:
       - name: echo matrix extracted
         run: ls ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
 
-      # - name: Remove tar file from build directory
-      #   run: rm ${{ github.workspace }}/content-build/${{ matrix.buildType }}/${{ matrix.buildType }}.tar.gz
-
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
