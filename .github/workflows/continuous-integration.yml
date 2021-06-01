@@ -231,20 +231,6 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      # - name: Get Docker Hub password
-      #   uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-      #   if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
-      #   with:
-      #     ssm_parameter: /devops/dockerhub/vavfsbot_password
-      #     env_variable_name: DOCKER_HUB_PASSWORD
-
-      # - name: Login to Docker Hub
-      #   uses: docker/login-action@v1
-      #   if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
-      #   with:
-      #     username: "vavfsbot"
-      #     password: ${{ env.VA_VFS_BOT_DOCKER_TOKEN }}
-
       - name: Checkout VSP actions
         uses: actions/checkout@v2
         if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
