@@ -16,7 +16,6 @@ const {
   createPastEventListPages,
   addGetUpdatesFields,
   addPager,
-  // sortServices,
 } = require('./health-care-region');
 
 const { addHubIconField } = require('./benefit-hub');
