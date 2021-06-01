@@ -203,12 +203,16 @@ jobs:
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
+      - name: Compress ${{ matrix.buildtype }} build
+        if: ${{ success() }}
+        run: tar -zcvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz  ${{ github.workspace }}/content-build/build
+
       - name: Upload build
         uses: actions/upload-artifact@v2
         if: ${{ success() }}
         with:
           name: ${{ matrix.buildtype }}
-          path: ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
+          path: ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz
           retention-days: 1
 
   prearchive:
@@ -262,14 +266,26 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      - name: Make build directory
-        run: mkdir -p build/
-
       - name: Download build artifactory
         uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: ${{ github.workspace }}/content-build/build/${{ matrix.buildtype }}
+          path: ${{ github.workspace }}/content-build/
+
+      - name: echo root
+        run: ls ${{ github.workspace }}/content-build
+
+      - name: Extract ${{ matrix.buildtype }} build
+        run: tar -zxvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz
+
+      - name: echo root extracted
+        run: ls ${{ github.workspace }}/content-build
+
+      - name: echo build extracted
+        run: ls ${{ github.workspace }}/content-build/build
+
+      - name: echo matrix extracted
+        run: ls ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
