@@ -717,3 +717,18 @@ describe('appendCentralizedFeaturedContent', () => {
     ).to.equal(2);
   });
 });
+
+describe('run', () => {
+  it('sets timeout to 20 minutes', () => {
+    // Save the context so we can check the timeout value
+    let savedContext = {};
+    const originalRun = liquid.run;
+    liquid.run = (astList, context, callback) => {
+      savedContext = context;
+      originalRun(astList, context, callback);
+    };
+
+    liquid.run([], { options: {} }, () => {});
+    expect(savedContext.options.timeout).to.eq(1200000);
+  });
+});
