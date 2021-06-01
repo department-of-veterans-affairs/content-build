@@ -671,6 +671,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.filterBy = (data, filterBy, valueFilter) => {
+    if (!data) return null;
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 

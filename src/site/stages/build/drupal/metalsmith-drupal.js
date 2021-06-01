@@ -16,7 +16,6 @@ const {
   createPastEventListPages,
   addGetUpdatesFields,
   addPager,
-  sortServices,
 } = require('./health-care-region');
 
 const { addHubIconField } = require('./benefit-hub');
@@ -101,9 +100,8 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
         );
         break;
       case 'health_services_listing':
-        pageCompiled.clinicalHealthServices = sortServices(
-          pageCompiled.fieldOffice.entity.reverseFieldRegionPageNode.entities,
-        );
+        pageCompiled.clinicalHealthServices =
+          pageCompiled.fieldOffice.entity.reverseFieldRegionPageNode.entities;
         break;
       case 'leadership_listing':
         pageCompiled.allStaffProfiles = page.fieldLeadership;

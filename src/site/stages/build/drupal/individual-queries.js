@@ -86,6 +86,7 @@ const {
 const { GetPolicyPages } = require('./graphql/vamcPoliciesPage.graphql');
 
 const { getVetCenterQueries } = require('./graphql/vetCenter.graphql');
+
 const {
   GetVetCenterLocations,
 } = require('./graphql/vetCenterLocations.graphql');
