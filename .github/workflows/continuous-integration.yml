@@ -208,7 +208,7 @@ jobs:
         if: ${{ success() }}
         with:
           name: ${{ matrix.buildtype }}
-          path: ${{ github.workspace }}/content-build/${{ matrix.buildType }}
+          path: ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
           retention-days: 1
 
   prearchive:
