@@ -1126,7 +1126,7 @@
     "entryName": "check-in",
     "rootUrl": "/check-in",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   }
