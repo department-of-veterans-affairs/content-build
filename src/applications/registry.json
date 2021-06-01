@@ -1113,15 +1113,6 @@
     }
   },
   {
-    "appName": "fhir-form",
-    "entryName": "fhir-form",
-    "rootUrl": "/fhir-form",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "check-in",
     "entryName": "check-in",
     "rootUrl": "/check-in",
