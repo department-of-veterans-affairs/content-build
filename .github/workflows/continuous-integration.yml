@@ -231,7 +231,7 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Get Docker token
+      - name: Get Docker Hub password
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' || failure() }}
         with:
