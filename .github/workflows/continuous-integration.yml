@@ -338,7 +338,7 @@ jobs:
         run: ls ${{ github.workspace }}/content-build
 
       - name: Extract ${{ matrix.buildtype }} build
-        run: tar -zxvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}/${{ matrix.buildType }}.tar.gz -C ${{ github.workspace }}/content-build
+        run: tar -zxvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz -C ${{ github.workspace }}/content-build
 
       - name: echo root extracted
         run: ls ${{ github.workspace }}/content-build
