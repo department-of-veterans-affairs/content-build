@@ -205,7 +205,7 @@ jobs:
 
       - name: Compress ${{ matrix.buildtype }} build
         if: ${{ success() }}
-        run: tar -zcvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz  ${{ github.workspace }}/content-build/build
+        run: tar -cvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz  ${{ github.workspace }}/content-build/build
 
       - name: Upload build
         uses: actions/upload-artifact@v2
@@ -272,7 +272,7 @@ jobs:
           name: ${{ matrix.buildtype }}
           path: content-build/
 
-      - name: echo ws/cb
+      - name: ls ws/cb
         run: ls ${{ github.workspace }}/content-build
 
       - name: ls ws
@@ -284,8 +284,14 @@ jobs:
       - name: pwd .
         run: pwd
 
-      - name: Extract ${{ matrix.buildtype }} build
-        run: tar -zxvf ${{ matrix.buildType }}.tar.gz
+      - name: Extract ${{ matrix.buildtype }} build in .
+        run: tar -xvf ${{ matrix.buildType }}.tar.gz
+
+      - name: Extract ${{ matrix.buildtype }} build in ws
+        run: tar -xvf ${{ github.workspace }}/${{ matrix.buildType }}.tar.gz
+
+      - name: extract verbose
+        run: tar -xvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz
 
       - name: ls ws
         run: ls ${{ github.workspace }}
