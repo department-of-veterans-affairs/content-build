@@ -270,10 +270,18 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: ${{ matrix.buildtype }}
+
+      - name: echo ws/cb
+        run: ls ${{ github.workspace }}/content-build
+
+      - name: echo ws
+        run: ls ${{ github.workspace }}
 
       - name: echo .
         run: ls .
+
+      - name: pwd .
+        run: pwd
 
       - name: Extract ${{ matrix.buildtype }} build
         run: tar -zxvf ${{ matrix.buildType }}.tar.gz
