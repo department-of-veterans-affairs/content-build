@@ -246,7 +246,9 @@
                       <img
                         alt="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.alt }}"
                         class="vads-l-col--12 medium-screen:vads-l-col--4 medium-screen:vads-u-margin-right--2"
-                        src="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.url }}"
+                        height="{{ storyTeaser.entity.fieldImage.entity.thumbnail.derivative.height }}"
+                        src="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.url }}"
+                        width="{{ storyTeaser.entity.fieldImage.entity.thumbnail.derivative.width }}"
                       />
                     {% endif %}
                     <div class="vads-u-margin-top--2 medium-screen:vads-u-margin-top--0">
