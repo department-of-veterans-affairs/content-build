@@ -61,7 +61,9 @@ function singlePageDiff(
         res
           .set('Retry-After', 30)
           .status(503)
-          .send(`Please hold while the preview server is starting - ${percent}%`);
+          .send(
+            `Please hold while the preview server is starting - ${percent}%`,
+          );
         return;
       }
 
