@@ -281,6 +281,9 @@ jobs:
       - name: ls .
         run: ls .
 
+      - name: ls ws/v
+        run: ls ${{ github.workspace }}/${{ matrix.buildtype }}
+
       - name: pwd .
         run: pwd
 
