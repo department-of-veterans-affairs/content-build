@@ -1071,7 +1071,7 @@
       "description": "Apply online to request a Board Appeal.",
       "includeBreadcrumbs": true,
       "keywords": "notice of disagreement, board appeal, NOD",
-      "vagovprod": false,
+      "vagovprod": true,
       "breadcrumbs_override": [
         {
           "name": "Decision reviews and appeals",
