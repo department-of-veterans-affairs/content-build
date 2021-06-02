@@ -235,9 +235,12 @@ app.get('/preview', async (req, res, next) => {
   try {
     if (!nonNodeContent.content) {
       const percent = Number(nonNodeContent.refreshProgress * 100).toFixed(2);
-      res.send(
-        `Please hold while the preview server is starting - ${percent}%`,
-      );
+      res
+        .set('Retry-After', 30)
+        .status(503)
+        .send(
+          `Please hold while the preview server is starting - ${percent}%`,
+        );
       return;
     }
 
