@@ -273,16 +273,16 @@ jobs:
           path: content-build/
 
       - name: ls ws/cb
-        run: ls ${{ github.workspace }}/content-build
+        run: ls -al ${{ github.workspace }}/content-build
 
       - name: ls ws
-        run: ls ${{ github.workspace }}
+        run: ls -al ${{ github.workspace }}
 
       - name: ls .
-        run: ls .
+        run: ls -al .
 
       - name: ls ws/v
-        run: ls ${{ github.workspace }}/${{ matrix.buildtype }}
+        run: ls -al ${{ github.workspace }}/${{ matrix.buildtype }}
 
       - name: pwd .
         run: pwd
@@ -297,13 +297,16 @@ jobs:
         run: tar -xvf ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.gz
 
       - name: ls ws
-        run: ls ${{ github.workspace }}
+        run: ls -al ${{ github.workspace }}
+
+      - name: ls ws/v
+        run: ls -al ${{ github.workspace }}/${{ matrix.buildtype }}
 
       - name: pwd .
         run: pwd
 
       - name: ls .
-        run: ls .
+        run: ls -al .
 
       - name: ls b
         run: ls build
