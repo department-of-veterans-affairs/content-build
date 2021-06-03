@@ -4,7 +4,7 @@
 require('isomorphic-fetch');
 // const e = require('express');
 // const https = require('https');
-const fs = require('fs-extra');
+// const fs = require('fs-extra');
 // const path = require('path');
 // const decompress = require('decompress');
 const buckets = require('../../../constants/buckets');
@@ -74,8 +74,6 @@ async function downloadFromLiveBucket(files, buildOptions) {
         path: bundleFileName,
         contents: '',
       };
-
-      fs.outputFileSync(bundleFileName, await bundleResponse.buffer());
 
       console.log(`Successfully downloaded asset: ${bundleUrl}`);
     }
