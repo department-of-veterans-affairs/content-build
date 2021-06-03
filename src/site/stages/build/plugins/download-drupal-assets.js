@@ -54,6 +54,7 @@ async function downloadFile(
       contents: '',
     };
 
+    // Store file contents directly on disk
     fs.outputFileSync(fileOutputPath, await response.buffer());
 
     downloadResults.downloadCount++;
