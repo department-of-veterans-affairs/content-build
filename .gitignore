@@ -7,7 +7,6 @@ src/site/tests/html/
 # Files to ignore
 ._*
 .cache
-.drupalAssets
 .config
 .DS_Store
 .env

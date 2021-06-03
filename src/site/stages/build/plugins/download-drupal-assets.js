@@ -19,33 +19,30 @@ async function downloadFile(
   if (!asset) {
     return;
   }
-  const fileOutputPath = path.join(options.assetDirectory, asset.dest);
+  const fileOutputPath = path.join(
+    options.cacheDirectory,
+    'drupal/downloads',
+    asset.dest,
+  );
 
-  let response = {};
-
-  if (fs.existsSync(fileOutputPath)) {
-    response.cached = true;
-  } else {
-    let retries = 3;
-    while (retries--) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        response = await client.proxyFetch(asset.src);
-        break;
-      } catch (e) {
-        if (retries > 0) {
-          // eslint-disable-next-line no-console
-          console.error(
-            `Error while fetching ${asset.src}. ${e} Retries remaining: ${retries}`,
-          );
-          // Pause to give the proxy connection a break.
-          // eslint-disable-next-line no-await-in-loop,no-loop-func
-          await new Promise(resolve =>
-            setTimeout(resolve, 2000 - retries * 500),
-          );
-        } else {
-          throw e;
-        }
+  let response;
+  let retries = 3;
+  while (retries--) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      response = await client.proxyFetch(asset.src);
+      break;
+    } catch (e) {
+      if (retries > 0) {
+        // eslint-disable-next-line no-console
+        console.error(
+          `Error while fetching ${asset.src}. ${e} Retries remaining: ${retries}`,
+        );
+        // Pause to give the proxy connection a break.
+        // eslint-disable-next-line no-await-in-loop,no-loop-func
+        await new Promise(resolve => setTimeout(resolve, 2000 - retries * 500));
+      } else {
+        throw e;
       }
     }
   }
@@ -67,9 +64,6 @@ async function downloadFile(
       process.stdout.write('.');
       if (!assetsToDownload.length) process.stdout.write('\n');
     }
-  } else if (response.cached) {
-    log(`${fileOutputPath} already downloaded; skipping`);
-    downloadResults.downloadCount++;
   } else {
     // For now, not going to fail the build for a missing asset
     // Should get caught by the broken link checker, though
