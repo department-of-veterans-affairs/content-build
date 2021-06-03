@@ -168,15 +168,7 @@ module.exports = function registerFilters() {
 
   liquid.filters.numToWord = numConvert => converter.toWords(numConvert);
 
-  liquid.filters.jsonToObj = jsonString => {
-    try {
-      return JSON.parse(jsonString);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`JSON.parse() failed for ${jsonString} with: ${error}`);
-      return {};
-    }
-  };
+  liquid.filters.jsonToObj = jsonString => JSON.parse(jsonString);
 
   liquid.filters.genericModulo = (i, n) => i % n;
 

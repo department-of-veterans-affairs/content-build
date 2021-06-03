@@ -246,7 +246,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
   // are not configured to deploy to prod.
-  def drupalAddress = 'https://test.dev.cms.va.gov'
+  def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
   def drupalMode = useCache ? '' : '--pull-drupal'
   def localhostBuild = envName == 'vagovdev' ? '--omitdebug' : ''
