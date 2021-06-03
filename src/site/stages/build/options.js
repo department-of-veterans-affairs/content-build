@@ -133,7 +133,6 @@ function applyDefaultOptions(options) {
       `${teasers}/**/*.{md,html,liquid}`,
     ],
     cacheDirectory: path.join(projectRoot, '.cache', options.buildtype),
-    assetDirectory: path.join(projectRoot, '.drupalAssets', options.buildtype),
     paramsDirectory: path.join(utilities, 'query-params'),
   });
 }
