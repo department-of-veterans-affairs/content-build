@@ -1,11 +1,17 @@
 name: Daily Accessibility Scan
+
 on: [push]
+
+env:
+  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+
 jobs:
   build:
     name: Accessibility Scan
     runs-on: self-hosted
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v2
@@ -18,7 +24,7 @@ jobs:
         run: yarn config set cafile "/ets/ssl/certs/ca-certificates.crt"
 
       - name: Install dependencies
-        run:  yarn install --frozen-lockfile --prefer-offline --ingore-optional
+        run:  yarn install --frozen-lockfile --prefer-offline
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
