@@ -2,6 +2,9 @@ name: Continuous Integration
 
 on: [push]
 
+env:
+  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+
 jobs:
   unit-tests:
     name: Unit Tests
@@ -150,7 +153,7 @@ jobs:
         working-directory: content-build
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
       fail-fast: true
@@ -189,11 +192,9 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
-        run: |
-          yarn config set cafile /etc/ssl/certs/ca-certificates.crt
-          yarn install --frozen-lockfile --prefer-offline
 
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
