@@ -196,8 +196,7 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
         run: |
-          yarn config delete cafile /ets/ssl/certs/ca-certificates.crt
-          yarn config delete set cafile /etc/ssl/certs/ca-certificates.crt
+          yarn config delete cafile
           yarn install --frozen-lockfile --prefer-offline
 
       - name: Build
