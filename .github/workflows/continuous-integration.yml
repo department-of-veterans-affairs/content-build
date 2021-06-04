@@ -189,9 +189,11 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
+        run: |
+          yarn config set cafile /ets/ssl/certs/ca-certificates.crt
+          yarn install --frozen-lockfile --prefer-offline
 
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
