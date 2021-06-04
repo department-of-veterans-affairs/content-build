@@ -206,16 +206,69 @@ jobs:
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
       - name: Compress ${{ matrix.buildtype }} build
-        if: ${{ success() }}
+        if: ${{ github.ref == 'refs/heads/master' && success() }}
         run: tar -zcvf ${{ matrix.buildType }}.tar.gz build
 
       - name: Upload build
         uses: actions/upload-artifact@v2
-        if: ${{ success() }}
+        if: ${{ github.ref == 'refs/heads/master' && success() }}
         with:
           name: ${{ matrix.buildtype }}
           path: ${{github.workspace}}/content-build/${{ matrix.buildType }}.tar.gz
           retention-days: 1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+          
+      - name: Get va-vsp-bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
+
+      # TODO: Change to correct channel_id when ready
+      - name: Notify Slack about broken links
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          message: "Broken links detected!"
+          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          channel_id: "U01SPJ10WBC"
 
   prearchive:
     name: Prearchive Optimizations

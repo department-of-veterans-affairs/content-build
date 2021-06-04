@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov -- Tugboat CMS with 2 broken links
 const fs = require('fs');
 
 const args = process.argv.slice(2);
@@ -18,9 +19,12 @@ if (fs.existsSync(reportPath)) {
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
-  const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the ${envName} build on ${BRANCH_NAME} \n\n${SERVER_URL}\n\n`;
-  const slackBlocks = `[{"type": "section","text": {"type": "plain_text","text": "${heading}"}}]`;
-  const slackAttachments = `[{"color": "${color}", "text": "${brokenLinks.summary}"}]`;
+  const summary = brokenLinks.summary;
+  const heading = `@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}>`;
+  const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
+  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${summary
+    .replace(/\n/g, '\\n')
+    .replace(/"/g, '\\"')}" }]`; // format summary according to slack api
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
@@ -37,8 +41,17 @@ if (fs.existsSync(reportPath)) {
     // continue merging.
     return;
   }
-  // Only emit this flag if ran against master branch or during Content Release.
-  console.log(`::set-output name=SHOULD_FAIL::${shouldFail}`);
+
+  /*
+   * Only emit this variable if ran against master branch or during Content Release.
+   * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
+   */
+  console.log(`::set-output name=NOTIFY_SLACK::1`);
+
+  if (shouldFail) {
+    throw new Error('Broken links found');
+  }
 } else {
   console.log('No broken links found!');
+  console.log(`::set-output name=NOTIFY_SLACK::0`);
 }
