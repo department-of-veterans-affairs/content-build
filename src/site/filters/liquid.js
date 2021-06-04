@@ -756,6 +756,18 @@ module.exports = function registerFilters() {
     return [featureContentObj, ...featureContentArray];
   };
 
+  liquid.filters.filterPastEvents = data => {
+    return data.filter(event => {
+      return moment(event.fieldDatetimeRangeTimezone.value * 1000).isBefore();
+    });
+  };
+
+  liquid.filters.filterUpcomingEvents = data => {
+    return data.filter(event => {
+      return moment(event.fieldDatetimeRangeTimezone.value * 1000).isAfter();
+    });
+  };
+
   liquid.filters.addPager = items => {
     // Sort events and remove stale items.
 

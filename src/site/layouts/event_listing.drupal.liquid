@@ -24,7 +24,10 @@
                 {% endif %}
               </div>
 
-              {% if pastEvents.entities.length > 0 %}
+              {% assign pastEvents = reverseFieldListingNode.entities | filterPastEvents %}
+              {% comment %} {{ pastEvents | json }} {% endcomment %}
+
+              {% if pastEvents.length > 0 %}
                 {% include "src/site/facilities/facilities_events_toggle.drupal.liquid" with url = entityUrl.path %}
               {% endif %}
 
@@ -55,15 +58,18 @@
                 {% endif %}
               {% endfor %}
 
-              {% assign pagedItems = reverseFieldListingNode.entities | addPager %}
+              {% assign pagedItems = reverseFieldListingNode.entities | addPager: ,'event_listing.drupal.liquid','event' %}
+              {% assign upcomingEvents = pagedItems | filterUpcomingEvents  %}
 
-              {{ pagedItems | json }}
+              {% comment %} {{ upcomingEvents | json }} {% endcomment %}
 
               {% assign numItems = pagedItems | size %}
+              {% comment %} {% assign numItems = upcomingEvents | size %} {% endcomment %}
               {% if numItems < 1 %}
                 <div class="clearfix-text">No events at this time.</div>
               {% endif %}
               {% for event in pagedItems %}
+              {% comment %} {% for event in upcomingEvents %} {% endcomment %}
                 {% if featuredUrl != event.entityUrl.path %}
                   <div class="clearfix-text">
                     {% include "src/site/teasers/event.drupal.liquid" with node = event %}
