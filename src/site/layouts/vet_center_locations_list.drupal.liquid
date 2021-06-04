@@ -41,7 +41,7 @@
                             Call us for more information about these locations.
                         </p>
                         {% for entityVetCenter in fieldOffice.entity.reverseFieldOfficeNode.entities %}
-                            {% include "src/site/includes/vet_center_address_phone_image.liquid" with
+                            {% include "src/site/includes/vet_centers/address_phone_image.liquid.liquid" with
                                 vetCenter = entityVetCenter
                                 mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
                         {% endfor %}
