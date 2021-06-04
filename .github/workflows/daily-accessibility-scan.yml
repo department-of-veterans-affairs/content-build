@@ -1,7 +1,5 @@
 name: Daily Accessibility Scan
 
-name: Continuous Integration
-
 on: [push]
 
 jobs:
