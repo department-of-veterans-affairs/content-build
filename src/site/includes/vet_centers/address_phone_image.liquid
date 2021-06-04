@@ -3,7 +3,7 @@
     <section class="region-grid vads-u-margin-right--2">
         {% if vetCenter.title %}
             <h3 class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md vads-u-font-size--lg">
-                {% if vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" or vetCenter.entityBundle == "vet_center_mobile_vet_center"  %}
+                {% if vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" or vetCenter.entityBundle == "vet_center_mobile_vet_center" %}
                     {{ vetCenter.title }}
                 {% else %}
                     <a href="{{ vetCenterUrl }}">{{ vetCenter.title }}</a>
@@ -13,7 +13,7 @@
         {% if vetCenter.fieldOperatingStatusFacility and vetCenter.fieldOperatingStatusFacility != 'normal' %}
             <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
                 {% include "src/site/includes/operation_status_information.liquid" with
-                    fieldOperatingStatusFacility = vetCenter.fieldOperatingStatusFacility
+                        fieldOperatingStatusFacility = vetCenter.fieldOperatingStatusFacility
                 %}
             </div>
         {% endif %}
@@ -37,7 +37,7 @@
                 <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"
                    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
                    target="_blank" rel="noopener noreferrer">
-                    Get directions
+                    Directions to {{ vetCenter.title }} on Google Maps (opens in new tab)
                 </a>
             </div>
         </div>
@@ -55,7 +55,8 @@
         </div>
     </section>
 
-    <section class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
+    <section
+            class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
         {% if vetCenter.fieldMedia %}
             <a href="{{ vetCenter.path }}"
                aria-label="{{ vetCenter.fieldMedia.entity.image.alt }}">
