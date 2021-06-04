@@ -204,12 +204,14 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     def brokenLinks = new groovy.json.JsonSlurper().parseText(rawJsonFile);
     def maxBrokenLinks = 10
     def color = 'warning'
+    // When broken links are reported in a content-only deployment the branch returns null
+    def source = env.BRANCH_NAME == null ? 'a content-only deployment' : env.BRANCH_NAME;
 
     if (brokenLinks.isHomepageBroken || brokenLinks.brokenLinksCount > maxBrokenLinks) {
         color = 'danger'
       }
 
-    def heading = "@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build on `${env.BRANCH_NAME}`\n\n${env.RUN_DISPLAY_URL}\n\n"
+    def heading = "@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
     def message = "${heading}\n${brokenLinks.summary}".stripMargin()
 
     echo "${brokenLinks.brokenLinksCount} broken links found"
