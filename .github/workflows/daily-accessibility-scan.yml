@@ -1,0 +1,30 @@
+name: Daily Accessibility Scan
+on: [pull_request]
+jobs:
+  build:
+    name: Accessibility Scan
+    runs-on: self-hosted
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+    steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+      
+      - name: Do the thing
+        run: docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility
+
+      - name: Build va.gov
+        run: yarn build
+        timeout-minutes: 60
+        env:
+          NODE_ENV: production
