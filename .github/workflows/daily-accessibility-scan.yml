@@ -3,6 +3,7 @@ on: [push]
 jobs:
   build:
     name: Accessibility Scan
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v2
