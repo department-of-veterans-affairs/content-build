@@ -38,6 +38,10 @@ on VA.gov, you'll need to build these static pages using the following commands:
 - You can run this concurrently with `yarn watch`. It adds local routes needed to preview Drupal nodes
   (e.g. `/preview?nodeId=XX`).
 
+`yarn server`
+
+- starts up a server without rebuilding
+
 If you do not have access to the SOCKS proxy, you can **fetch the latest cached version
 of the content** with the following:
 
