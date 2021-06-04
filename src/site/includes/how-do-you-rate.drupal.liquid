@@ -1,30 +1,49 @@
 {% if isPreview or buildtype != 'vagovprod' %}
   {% assign ratingOptionsQuestion = "How do you rate your experience on this page?" %}
 
-  <section
+  <form
     class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
     data-template="includes/how-do-you-rate"
+    onsubmit="onRatingSubmit(event)"
   >
     <!-- Section title -->
     <h2 class="vads-u-margin-top--0 vads-u-font-size--h3">{{ ratingOptionsQuestion }}</h2>
 
     <!-- Rating options -->
-    <div id="rating-options" class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+    <div id="rating-options" class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-top--1">
       <div class="vads-u-display--flex">
-        <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" tabindex="1" />
+        <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" tabindex="0" />
         <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
       </div>
       <div class="vads-u-display--flex">
-        <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" tabindex="2" />
+        <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" tabindex="0" />
         <label class="vads-u-margin--0" for="bad">Bad</label>
       </div>
     </div>
 
+    <div>
+      <button class="usa-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" disabled type="submit">
+        Submit
+      </button>
+    </div>
+
+    <!-- Thank you message -->
     <p aria-hidden="true" id="thank-you-message" class="vads-u-display--none vads-u-margin--0">Thank you for your feedback.</p>
-  </section>
+  </form>
 
   <script>
     function onRatingChange(event) {
+      var submitButton = document.getElementById('rating-submit');
+
+      // If the submit button is disabled, enable it.
+      if (submitButton && submitButton.disabled) {
+        submitButton.disabled = false;
+      }
+    }
+
+    function onRatingSubmit(event) {
+      event.preventDefault()
+
       if (recordEvent) {
         recordEvent({
           'event': 'int-radio-button-option-click',
@@ -32,6 +51,13 @@
           'radio-button-optionLabel': event.target.value, // "Good" | "Bad"
           'radio-button-required': false,
         })
+      }
+
+      // We don't need the submit button anymore, so hide it.
+      var submitButton = document.getElementById("rating-submit");
+      if (submitButton) {
+        submitButton.setAttribute('aria-hidden', 'true');
+        submitButton.className = submitButton.className + ' vads-u-display--none';
       }
 
       // We don't need the rating options anymore, so hide it.
