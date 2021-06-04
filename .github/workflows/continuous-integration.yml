@@ -150,7 +150,7 @@ jobs:
         working-directory: content-build
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
 
     strategy:
       fail-fast: true
@@ -192,7 +192,6 @@ jobs:
         run: yarn install --frozen-lockfile --prefer-offline
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
-          NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
 
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
