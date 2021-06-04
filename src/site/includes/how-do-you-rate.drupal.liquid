@@ -9,6 +9,13 @@
     <!-- Section title -->
     <h2 class="vads-u-margin-top--0 vads-u-font-size--h3">{{ ratingOptionsQuestion }}</h2>
 
+    <va-alert aria-hidden="true" class="vads-u-display--none vads-u-margin-y--1" id="rating-error-message" status="error">
+      <h3 slot="headline">
+        Please select an answer
+      </h3>
+      <div>Choose either "Good" or "Bad"</div>
+    </va-alert>
+
     <!-- Rating options -->
     <div id="rating-options" class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-top--1">
       <div class="vads-u-display--flex">
@@ -22,7 +29,7 @@
     </div>
 
     <div>
-      <button class="usa-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" disabled type="submit">
+      <button class="usa-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
         Submit
       </button>
     </div>
@@ -33,18 +40,34 @@
 
   <script>
     function onRatingChange(event) {
-      var submitButton = document.getElementById('rating-submit');
-
-      // If the submit button is disabled, enable it.
-      if (submitButton && submitButton.disabled) {
-        submitButton.disabled = false;
+      var ratingErrorElement = document.getElementById('rating-error-message');
+      if (ratingErrorElement) {
+        ratingErrorElement.setAttribute('aria-hidden', 'true');
+        ratingErrorElement.className = ratingErrorElement.className + ' vads-u-display--none';
       }
     }
 
     function onRatingSubmit(event) {
       event.preventDefault()
 
-      if (recordEvent) {
+      var goodElement = document.getElementById('good');
+      var goodChecked = goodElement && goodElement.checked;
+      var badElement = document.getElementById('bad');
+      var badChecked = badElement && badElement.checked;
+
+      // Show error message if neither good nor bad is checked.
+      if (!goodChecked && !badChecked) {
+        var ratingErrorElement = document.getElementById('rating-error-message');
+        if (ratingErrorElement) {
+          ratingErrorElement.setAttribute('aria-hidden', 'false');
+          ratingErrorElement.className = ratingErrorElement.className.replace('vads-u-display--none', '');
+        }
+        return;
+      }
+
+      // Record the event in analytics.
+      var optionLabel = goodChecked ? 'Good' : (badChecked ? 'Bad' : '');
+      if (recordEvent && optionLabel) {
         recordEvent({
           'event': 'int-radio-button-option-click',
           'radio-button-label': "{{ ratingOptionsQuestion }}",
