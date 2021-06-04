@@ -158,8 +158,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        # buildtype: [vagovdev, vagovstaging, vagovprod]
-        buildtype: [vagovdev]
+        buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
       - name: Checkout vagov-content
@@ -230,9 +229,9 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
+      fail-fast: true
       matrix:
-        # buildtype: [vagovdev, vagovstaging, vagovprod]
-        buildtype: [vagovdev]
+        buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
       - name: Checkout vagov-content
@@ -275,7 +274,7 @@ jobs:
           name: ${{ matrix.buildtype }}
           path: content-build/
 
-      - name: Extract ${{ matrix.buildtype }} build in .
+      - name: Extract ${{ matrix.buildtype }}
         run: tar -zxvf ${{ matrix.buildType }}.tar.gz
 
       - name: Prearchive
