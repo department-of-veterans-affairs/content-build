@@ -20,8 +20,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-      - name: Install Certs
-        run: yarn config set cafile "/ets/ssl/certs/ca-certificates.crt"
 
       - name: Install dependencies
         run:  yarn install --frozen-lockfile --prefer-offline
