@@ -275,47 +275,8 @@ jobs:
           name: ${{ matrix.buildtype }}
           path: content-build/
 
-      - name: ls ws/cb
-        run: ls -al ${{ github.workspace }}/content-build
-
-      - name: ls ws
-        run: ls -al ${{ github.workspace }}
-
-      - name: ls .
-        run: ls -al .
-
-      - name: ls ws/v
-        run: ls -al ${{ github.workspace }}/${{ matrix.buildtype }}
-
-      - name: pwd .
-        run: pwd
-
       - name: Extract ${{ matrix.buildtype }} build in .
         run: tar -zxvf ${{ matrix.buildType }}.tar.gz
-
-      - name: ls ws
-        run: ls -al ${{ github.workspace }}
-
-      - name: ls ws/v
-        run: ls -al ${{ github.workspace }}/${{ matrix.buildtype }}
-
-      - name: pwd .
-        run: pwd
-
-      - name: ls .
-        run: ls -al .
-
-      - name: ls b
-        run: ls build
-
-      - name: ls ws/cb
-        run: ls ${{ github.workspace }}/content-build
-
-      - name: ls ws/cb/b
-        run: ls ${{ github.workspace }}/content-build/build
-
-      - name: ls ws/cb/b/m
-        run: ls ${{ github.workspace }}/content-build/build/${{ matrix.buildType }}
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
