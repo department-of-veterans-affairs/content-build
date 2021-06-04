@@ -755,4 +755,29 @@ module.exports = function registerFilters() {
     }
     return [featureContentObj, ...featureContentArray];
   };
+
+  liquid.filters.addPager = items => {
+    // Sort events and remove stale items.
+
+    // if (page.allEventTeasers) {
+    //   page.allEventTeasers.entities = eventDateSorter(page.allEventTeasers);
+    // }
+    // Sort news teasers.
+    // if (page.allPressReleaseTeasers) {
+    //   page.allPressReleaseTeasers.entities = releaseDateSorter(
+    //     page.allPressReleaseTeasers,
+    //     true,
+    //     false,
+    //   );
+    // }
+
+    // Add our pager to page output.
+    // const pagingObject = paginatePages(page, files, field, template, aria);
+    // if (pagingObject[0]) {
+    //   page.pagedItems = pagingObject[0].pagedItems;
+    //   page.paginator = pagingObject[0].paginator;
+    // }
+
+    return items;
+  };
 };
