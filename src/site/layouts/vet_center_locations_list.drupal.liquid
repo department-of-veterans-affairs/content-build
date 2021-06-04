@@ -23,7 +23,7 @@
           medium-screen:vads-u-margin-bottom--3" id="main-location">
                         Main location
                     </h2>
-                    {% include "src/site/includes/vet_center_address_phone_image.liquid" with
+                    {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                         vetCenter = fieldOffice.entity
                         vetCenterUrl = entityUrl.breadcrumb.1.url.path %}
 
@@ -48,7 +48,7 @@
                     {% endif %}
 
                     {% if fieldNearbyVetCenters.length > 0 %}
-                        {% include 'src/site/includes/vet_center_nearby.liquid' with
+                        {% include 'src/site/includes/vet_centers/nearby.liquid' with
                             nearbyVetCenters = fieldNearbyVetCenters
                             mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
                         %}

@@ -7,6 +7,10 @@ const moment = require('moment-timezone');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 
+// The default 2-minute timeout is insufficient with high node counts, likely
+// because metalsmith runs many tinyliquid engines in parallel.
+const TINYLIQUID_TIMEOUT_MINUTES = 20;
+
 function getPath(obj) {
   return obj.path;
 }
@@ -14,9 +18,14 @@ function getPath(obj) {
 module.exports = function registerFilters() {
   const { cmsFeatureFlags } = global;
 
-  // Set timeout option to something higher (20mins)
-  // eslint-disable-next-line no-new
-  new liquid.Context({ timeout: 1200000 });
+  // Set the tinyliquid timeout. This requires access to the liquid context
+  // which is why we're replacing the run() method here.
+  const originalRun = liquid.run;
+  liquid.run = (astList, context, callback) => {
+    // eslint-disable-next-line no-param-reassign
+    context.options.timeout = TINYLIQUID_TIMEOUT_MINUTES * 60 * 1000;
+    originalRun(astList, context, callback);
+  };
 
   // Custom liquid filter(s)
   liquid.filters.humanizeDate = dt =>
@@ -662,6 +671,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.filterBy = (data, filterBy, valueFilter) => {
+    if (!data) return null;
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 

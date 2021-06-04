@@ -1071,7 +1071,7 @@
       "description": "Apply online to request a Board Appeal.",
       "includeBreadcrumbs": true,
       "keywords": "notice of disagreement, board appeal, NOD",
-      "vagovprod": false,
+      "vagovprod": true,
       "breadcrumbs_override": [
         {
           "name": "Decision reviews and appeals",
@@ -1110,6 +1110,15 @@
           "path": "housing-assistance/home-loans/apply-for-coe-form-26-1880"
         }
       ]
+    }
+  },
+  {
+    "appName": "check-in",
+    "entryName": "check-in",
+    "rootUrl": "/check-in",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
     }
   }
 ]
