@@ -196,7 +196,6 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
         run: |
-          yarn config unset cafile /ets/ssl/certs/ca-certificates.crt
           yarn config unset cafile /etc/ssl/certs/ca-certificates.crt
           yarn install --frozen-lockfile --prefer-offline
 
