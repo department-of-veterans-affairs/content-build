@@ -3,7 +3,7 @@
     <section class="region-grid vads-u-margin-right--2">
         {% if vetCenter.title %}
             <h3 class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md vads-u-font-size--lg">
-                {% if vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" or vetCenter.entityBundle == "vet_center_mobile_vet_center"  %}
+                {% if vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" or vetCenter.entityBundle == "vet_center_mobile_vet_center" %}
                     {{ vetCenter.title }}
                 {% else %}
                     <a href="{{ vetCenterUrl }}">{{ vetCenter.title }}</a>
@@ -35,7 +35,7 @@
                 <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"
                    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
                    target="_blank" rel="noopener noreferrer">
-                    Get directions
+                    Directions to {{ vetCenter.title }} on Google Maps (opens in new tab)
                 </a>
             </div>
         </div>
