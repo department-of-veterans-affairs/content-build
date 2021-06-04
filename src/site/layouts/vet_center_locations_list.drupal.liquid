@@ -23,7 +23,7 @@
           medium-screen:vads-u-margin-bottom--3" id="main-location">
                         Main location
                     </h2>
-                    {% include "src/site/includes/vet_center_address_phone_image.liquid" with
+                    {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                         vetCenter = fieldOffice.entity
                         vetCenterUrl = entityUrl.breadcrumb.1.url.path %}
 
@@ -48,16 +48,10 @@
                     {% endif %}
 
                     {% if fieldNearbyVetCenters.length > 0 %}
-                        <h2 class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 vads-u-margin-bottom--2p5
-                 medium-screen:vads-u-margin-bottom--3" id="other-near-locations">
-                            Other nearby Vet Centers
-                        </h2>
-                        {% for entityVetCenter in fieldNearbyVetCenters %}
-                            {% include "src/site/includes/vet_center_address_phone_image.liquid" with vetCenter = entityVetCenter.entity %}
-                        {% endfor %}
-                        {% for entityVetCenter in fieldNearbyMobileVetCenters %}
-                            {% include "src/site/includes/vet_center_address_phone_image.liquid" with vetCenter = entityVetCenter.entity %}
-                        {% endfor %}
+                        {% include 'src/site/includes/vet_centers/nearby.liquid' with
+                            nearbyVetCenters = fieldNearbyVetCenters
+                            mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
+                        %}
                     {% endif %}
 
                     <h2 class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 vads-u-margin-bottom--2p5
@@ -74,7 +68,9 @@
             </div>
         </div>
     </main>
-    {% include "src/site/components/up_to_top_button.html" %}
+    <div id="vet-center-up-to-top" onclick="recordEvent({ event: 'back-to-top'});">
+        {% include "src/site/components/up_to_top_button.html" %}
+    </div>
 </div>
 
 {% include "src/site/includes/footer.html" %}

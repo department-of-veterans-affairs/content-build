@@ -68,11 +68,11 @@ describe('Vet Center Main Page', () => {
 
   it('renders counselling services', () => {
     expect(
-      container.querySelectorAll('va-accordion[id^=counselling-accordion]')
+      container.querySelectorAll('va-accordion[id^=counseling-accordion]')
         .length,
     ).to.equal(9);
     expect(
-      container.querySelectorAll('va-accordion-item[id^=counselling-item]')
+      container.querySelectorAll('va-accordion-item[id^=counseling-item]')
         .length,
     ).to.equal(9);
   });

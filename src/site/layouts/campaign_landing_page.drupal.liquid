@@ -166,7 +166,7 @@
             {% endif %}
 
             <!-- Call to action -->
-            {% if fieldClpVideoPanelMoreVideo %}
+            {% if fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path and fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel %}
               <p>
                 <a
                   class="vads-c-action-link--blue"
@@ -192,12 +192,14 @@
             <h2 class="vads-u-margin-top--0">{{ fieldClpSpotlightHeader }}</h2>
             <p class="va-introtext vads-u-margin-top--1 vads-u-margin-bottom--4">
               {{ fieldClpSpotlightIntroText }}
-              <a
-                href="{{ fieldClpSpotlightCta.entity.fieldButtonLink.url.path }}"
-                onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpSpotlightCta.entity.fieldButtonLabel | encode }}' });"
-              >
-                {{ fieldClpSpotlightCta.entity.fieldButtonLabel }}
-              </a>
+              {% if fieldClpSpotlightCta.entity.fieldButtonLink.url.path and fieldClpSpotlightCta.entity.fieldButtonLabel %}
+                <a
+                  href="{{ fieldClpSpotlightCta.entity.fieldButtonLink.url.path }}"
+                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpSpotlightCta.entity.fieldButtonLabel | encode }}' });"
+                >
+                  {{ fieldClpSpotlightCta.entity.fieldButtonLabel }}
+                </a>
+              {% endif %}
             </p>
           </div>
         </div>
@@ -264,7 +266,7 @@
             {% endif %}
 
             <!-- Call to action -->
-            {% if fieldClpStoriesCta %}
+            {% if fieldClpStoriesCta.entity.fieldButtonLink.url %}
               <a
                 class="vads-c-action-link--blue"
                 href="{{ fieldClpStoriesCta.entity.fieldButtonLink.url }}"
@@ -312,7 +314,7 @@
           {% endfor %}
         </div>
 
-        {% if fieldClpResourcesCta.entity.fieldButtonLink %}
+        {% if fieldClpResourcesCta.entity.fieldButtonLink and fieldClpResourcesCta.entity.fieldButtonLabel %}
           <div class="vads-l-row">
             <div class="vads-u-col--12">
               <a
@@ -349,7 +351,7 @@
               <div class="medium-screen:vads-u-margin-x--6">
                 <!-- Title -->
                 <h3 class="vads-u-margin-top--0">
-                  {% if eventReference.entity.entityUrl.path %}
+                  {% if eventReference.entity.entityUrl.path and eventReference.entity.title %}
                     <a
                       href="{{ eventReference.entity.entityUrl.path }}"
                       onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.title | encode }}' });"
@@ -387,7 +389,7 @@
                     <!-- Event link -->
                     <div class="vads-u-display--flex vads-u-flex-direction--column">
                       <!-- Facility link -->
-                      {% if eventReference.entity.fieldFacilityLocation.entity.entityUrl.path %}
+                      {% if eventReference.entity.fieldFacilityLocation.entity.entityUrl.path and eventReference.entity.fieldFacilityLocation.entity.title %}
                         <a
                           href="{{ eventReference.entity.fieldFacilityLocation.entity.entityUrl.path }}"
                           onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.fieldFacilityLocation.entity.title | encode }}' });"
@@ -399,7 +401,7 @@
                       {% endif %}
 
                       <!-- Event link -->
-                      {% if eventReference.entity.fieldLink.uri %}
+                      {% if eventReference.entity.fieldLink.uri and eventReference.entity.fieldEventCta %}
                         <a
                           href="{{ eventReference.entity.fieldLink.uri }}"
                           onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.fieldEventCta | encode }}' });"
@@ -466,7 +468,7 @@
           </div>
         </div>
 
-        {% if fieldClpFaqCta %}
+        {% if fieldClpFaqCta.entity.fieldButtonLink.url.path and fieldClpFaqCta.entity.fieldButtonLabel %}
           <div class="vads-l-row">
             <div class="vads-u-col--12">
               <a
@@ -497,7 +499,7 @@
         </div>
 
         <div class="vads-l-row medium-screen:vads-u-margin-x--neg1">
-          {% if fieldClpConnectWithUs.entity.fieldEmailUpdatesUrl %}
+          {% if fieldClpConnectWithUs.entity.fieldEmailUpdatesUrl and fieldClpConnectWithUs.entity.fieldEmailUpdatesLinkText %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a

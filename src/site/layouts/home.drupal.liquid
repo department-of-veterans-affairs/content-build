@@ -14,12 +14,15 @@
         <div class="hub-links-container" data-e2e="bucket">
           <h2 class="heading-level-3 hub-links-title"><i class="icon-large-baseline icon-heading hub-icon-{{ card.label | downcase | replace: ' ', '-' }} hub-color-{{ card.label | downcase | replace: ' ', '-' }}"></i>{{ card.label }}</h2>
           <ul class="hub-links-list">
+            {% assign card_label = card.label %}
             {% for link in card.links %}
               <li>
                 <a href="{{ link.url.path }}"
                   onclick="recordEvent({
                     event: 'nav-zone-one',
                     'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                    'click-text': '{{ link.label | strip }}',
+                    heading: '{{ card_label | strip }}',
                   });"
                   >
                   {{ link.label }}
@@ -47,7 +50,7 @@
       <div class="usa-grid usa-grid-full homepage-benefits-row">
       {% for hub in hubs %}
         <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
-          <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h4>
+          <h2 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h2>
           <p class="homepage-benefits-description">{{ hub.entity.fieldTeaserText }}</p>
         </div>
         {% comment %} Close this row and open a new one when needed. {% endcomment %}

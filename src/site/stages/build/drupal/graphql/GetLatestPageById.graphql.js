@@ -8,6 +8,7 @@ const eventPage = require('./eventPage.graphql');
 const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
+const healthServicesListingPage = require('./healthServicesListingPage.graphql');
 const newsStoryPage = require('./newStoryPage.graphql');
 const nodeBasicLandingPage = require('./nodeBasicLandingPage.graphql');
 const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
@@ -23,6 +24,7 @@ const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.gra
 const vetCenters = require('./vetCenter.graphql');
 const vetCenterLocations = require('./vetCenterLocations.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
+const leadershipListingPage = require('./leadershipListingPage.graphql');
 
 // String Helpers
 const {
@@ -43,6 +45,7 @@ module.exports = `
   ${healthCareRegionPage.fragment}
   ${healthCareLocalFacilityPage.fragment}
   ${healthCareRegionDetailPage.fragment}
+  ${healthServicesListingPage.fragment}
   ${pressReleasePage.fragment}
   ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
@@ -61,6 +64,7 @@ module.exports = `
   ${vetCenters.fragment}
   ${vetCenterLocations.fragment}
   ${vamcPolicyPages.fragment}
+  ${leadershipListingPage.fragment}
 
   query GetLatestPageById($id: String!, $today: String!, $onlyPublishedContent: Boolean!) {
     nodes: nodeQuery(revisions: LATEST, filter: {
@@ -74,6 +78,7 @@ module.exports = `
         ... healthCareRegionPage
         ... healthCareLocalFacilityPage
         ... healthCareRegionDetailPage
+        ... healthServicesListingPage
         ... newsStoryPage
         ... pressReleasePage
         ... vamcOperatingStatusAndAlerts
@@ -92,6 +97,7 @@ module.exports = `
         ... vetCenterFragment
         ... vetCenterLocationsFragment
         ... policiesPageFragment
+        ... leadershipListingPage
       }
     }
   }

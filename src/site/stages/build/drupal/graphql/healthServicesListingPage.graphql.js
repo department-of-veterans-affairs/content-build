@@ -79,14 +79,7 @@ const healthServicesListingPage = `
                     description {
                       processed
                     }
-                    parent {
-                      entity {
-                        ... on TaxonomyTermHealthCareServiceTaxonomy {
-                          weight
-                          name
-                        }
-                      }
-                    }
+                    fieldServiceTypeOfCare
                   }
                 }
               }

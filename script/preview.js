@@ -8,6 +8,7 @@ const path = require('path');
 const express = require('express');
 const proxy = require('express-http-proxy');
 const jsesc = require('jsesc');
+
 const {
   nonNodeQueries,
 } = require('../src/site/stages/build/drupal/individual-queries');
@@ -22,6 +23,7 @@ const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
+const singlePageDiff = require('./preview-routes/single-page-diff');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -169,6 +171,40 @@ const nonNodeContent = {
   },
 };
 
+function fetchAllPageData(nodeId) {
+  console.time(`Node ${nodeId}`);
+  const nodeQuery = drupalClient.getLatestPageById(nodeId).then(response => {
+    console.timeEnd(`Node ${nodeId}`);
+    return response;
+  });
+
+  const requests = [
+    nodeQuery,
+    fetch(`${urls[options.buildtype]}/generated/file-manifest.json`).then(
+      resp => {
+        if (resp.ok) {
+          return resp.json();
+        }
+        throw new Error(
+          `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`,
+        );
+      },
+    ),
+    fetch(
+      `${getContentUrl(options.buildtype)}/generated/headerFooter.json`,
+    ).then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      }
+      throw new Error(
+        `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
+      );
+    }),
+  ];
+
+  return Promise.all(requests);
+}
+
 /**
  * Make the query params case-insensitive.
  */
@@ -199,9 +235,10 @@ app.get('/preview', async (req, res, next) => {
   try {
     if (!nonNodeContent.content) {
       const percent = Number(nonNodeContent.refreshProgress * 100).toFixed(2);
-      res.send(
-        `Please hold while the preview server is starting - ${percent}%`,
-      );
+      res
+        .set('Retry-After', 30)
+        .status(503)
+        .send(`Please hold while the preview server is starting - ${percent}%`);
       return;
     }
 
@@ -211,40 +248,8 @@ app.get('/preview', async (req, res, next) => {
       port: process.env.PORT || 3002,
     });
 
-    console.time(`Node ${req.query.nodeId}`);
-    const nodeQuery = drupalClient
-      .getLatestPageById(req.query.nodeId)
-      .then(response => {
-        console.timeEnd(`Node ${req.query.nodeId}`);
-        return response;
-      });
-
-    const requests = [
-      nodeQuery,
-      fetch(`${urls[options.buildtype]}/generated/file-manifest.json`).then(
-        resp => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(
-            `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`,
-          );
-        },
-      ),
-      fetch(
-        `${getContentUrl(options.buildtype)}/generated/headerFooter.json`,
-      ).then(resp => {
-        if (resp.ok) {
-          return resp.json();
-        }
-        throw new Error(
-          `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
-        );
-      }),
-    ];
-
-    const [drupalData, fileManifest, headerFooterData] = await Promise.all(
-      requests,
+    const [drupalData, fileManifest, headerFooterData] = await fetchAllPageData(
+      req.query.nodeId,
     );
 
     if (drupalData.errors) {
@@ -271,6 +276,7 @@ app.get('/preview', async (req, res, next) => {
       res.send(`
         <p>This page isn't ready to be previewed yet.
           This may mean development is still in progress or that there's an issue with the preview server.
+          Make sure the query for this page has been added to src/site/stages/build/drupal/graphql/GetLatestPageById.graphql.js.
         </p>
       `);
       return;
@@ -314,6 +320,11 @@ app.get('/preview', async (req, res, next) => {
     next(err);
   }
 });
+
+app.get(
+  '/diff',
+  singlePageDiff(nonNodeContent, options, fetchAllPageData, getContentUrl),
+);
 
 if (options.buildtype !== ENVIRONMENTS.LOCALHOST) {
   app.use(proxy(urls[options.buildtype]));
