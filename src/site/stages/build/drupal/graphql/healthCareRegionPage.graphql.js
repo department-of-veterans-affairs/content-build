@@ -34,6 +34,22 @@ const healthCareRegionPageFragment = `
     }
     fieldGovdeliveryIdEmerg
     fieldGovdeliveryIdNews
+    fieldFacebook {
+      title
+      uri
+    }    
+    fieldTwitter {
+      title    
+      uri
+    }
+    fieldFlickr {
+      title    
+      uri
+    }
+    fieldInstagram {
+      title    
+      uri
+    }    
     fieldIntroText
 	  fieldRelatedLinks {
       entity {
