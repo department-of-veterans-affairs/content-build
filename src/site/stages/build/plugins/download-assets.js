@@ -4,8 +4,8 @@
 require('isomorphic-fetch');
 // const e = require('express');
 // const https = require('https');
-// const fs = require('fs-extra');
-// const path = require('path');
+const fs = require('fs-extra');
+const path = require('path');
 // const decompress = require('decompress');
 const buckets = require('../../../constants/buckets');
 
@@ -81,8 +81,16 @@ async function downloadFromLiveBucket(files, buildOptions) {
 
       files[bundleFileName] = {
         path: bundleFileName,
+        // No need to store file contents here since
+        // assets will be stored directly on disk
         contents: '',
       };
+
+      // Store file contents directly on disk
+      fs.outputFileSync(
+        path.join(buildPath, bundleFileName),
+        await bundleResponse.buffer(),
+      );
 
       console.log(`Successfully downloaded asset: ${bundleUrl}`);
     }
