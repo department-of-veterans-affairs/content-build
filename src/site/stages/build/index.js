@@ -32,6 +32,7 @@ const createResourcesAndSupportWebsiteSection = require('./plugins/create-resour
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+const ignoreAssets = require('./plugins/ignore-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
@@ -238,6 +239,10 @@ function build(BUILD_OPTIONS) {
     modifyDom(BUILD_OPTIONS),
     'Parse a virtual DOM from every .html file and perform a variety of DOM sub-operations on each file',
   );
+
+  // Ignore Drupal and application assets when building pages, so they don't get overwritten.
+  // We no longer need to build them now that they are stored directly on disk
+  smith.use(ignoreAssets(), 'Ignore assets for build');
 
   smith.build(err => {
     if (err) throw err;
