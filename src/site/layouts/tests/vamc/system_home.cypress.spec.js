@@ -67,6 +67,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   });
 
   cy.get('h2').contains('Get updates');
+  cy.get('.social-links').contains('Facebook');
 });
 
 describe('VAMC system home page', () => {
