@@ -44,7 +44,8 @@
                                             <div>
                                                 <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ entityLabel }}'});"
                                                    href="https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}"
-                                                   target="_blank" rel="noopener noreferrer">Get directions
+                                                   target="_blank" rel="noopener noreferrer">
+                                                    Directions on Google Maps (opens in new tab)
                                                 </a>
                                             </div>
                                         </div>
@@ -56,7 +57,7 @@
                                             </div>
                                         </div>
 
-                                        {% include 'src/site/includes/vet_center_hours.liquid' with vetCenterHours = fieldOfficeHours %}
+                                        {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = fieldOfficeHours %}
 
                                         <div class="vads-u-margin-bottom--3">
                                             <h3 class="vads-u-font-size--lg vads-u-line-height--1 vads-u-margin-bottom--1">
@@ -119,24 +120,24 @@
                     <div class="field-vet-center-feature-content">
                         <ul class="usa-grid usa-grid-full vads-u-margin-top--3 vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
                             {% for entity in allFeaturedContent %}
-                                {% include "src/site/includes/vet_center_featured_content.liquid" with
+                                {% include "src/site/includes/vet_centers/featured_content.liquid" with
                                         entity = entity.entity
                                 %}
                             {% endfor %}
                         </ul>
                     </div>
 
-                    {% include "src/site/includes/vet_center_health_services.liquid" with
+                    {% include "src/site/includes/vet_centers/health_services.liquid" with
                             fieldHealthServices
                             typeOfCare = "counseling"
                     %}
 
-                    {% include "src/site/includes/vet_center_health_services.liquid" with
+                    {% include "src/site/includes/vet_centers/health_services.liquid" with
                             fieldHealthServices
                             typeOfCare = "referral"
                     %}
 
-                    {% include "src/site/includes/vet_center_health_services.liquid" with
+                    {% include "src/site/includes/vet_centers/health_services.liquid" with
                             fieldHealthServices
                             typeOfCare = "other"
                     %}
