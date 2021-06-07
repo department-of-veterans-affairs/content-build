@@ -30,7 +30,7 @@ module.exports = {
       selenium_host: 'localhost',
       selenium_port: selenium_server_port,
       use_ssl: false,
-      silent: false,
+      silent: true,
       output: true,
       screenshots: {
         enabled: true,
@@ -43,12 +43,7 @@ module.exports = {
         acceptSslCerts: true,
         webStorageEnabled: true,
         chromeOptions: {
-          args: [
-            '--headless',
-            '--no-sandbox',
-            '--disable-gpu',
-            '--window-size=1024,768',
-          ],
+          args: ['--window-size=1024,768', '--no-sandbox'],
         },
       },
       selenium: {
