@@ -68,7 +68,7 @@ jobs:
           NODE_ENV: production
 
       - name: Run Accessibility Scan?
-        run: yarn test:accessibility --buildtype ${{ matrix.buildtype }}
+        run: yarn test:accessibility
         timeout-minutes: 300
 
       - name: Get Slack app token
