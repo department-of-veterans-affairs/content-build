@@ -69,6 +69,7 @@ jobs:
 
       - name: Run Accessibility Scan
         run: yarn test:accessibility
+        timeout-minutes: 300
 
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
