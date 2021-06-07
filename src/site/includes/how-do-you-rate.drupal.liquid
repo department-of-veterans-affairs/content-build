@@ -9,24 +9,24 @@
     <!-- Section title -->
     <h2 class="vads-u-margin-top--0 vads-u-font-size--h3">{{ ratingOptionsQuestion }}</h2>
 
-    <va-alert aria-hidden="true" class="vads-u-display--none vads-u-margin-y--1" id="rating-error-message" status="error">
-      <h3 slot="headline">
-        Please select an answer
-      </h3>
-      <div>Choose either "Good" or "Bad"</div>
-    </va-alert>
-
     <!-- Rating options -->
-    <div id="rating-options" class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-top--1">
-      <div class="vads-u-display--flex">
-        <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" tabindex="0" />
-        <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
+    <fieldset id="rating-options" class="fieldset-input vads-u-margin-top--1">
+      <span class="vads-u-display--none usa-input-error-message" role="alert" id="rating-error-message">
+        <span class="sr-only">Error</span> Please select an answer
+      </span>
+      <div class="form-radio-buttons">
+        <div class="radio-button">
+          <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" tabindex="0" />
+          <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
+        </div>
       </div>
-      <div class="vads-u-display--flex">
-        <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" tabindex="0" />
-        <label class="vads-u-margin--0" for="bad">Bad</label>
+      <div class="form-radio-buttons">
+        <div class="radio-button">
+          <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" tabindex="0" />
+          <label class="vads-u-margin--0" for="bad">Bad</label>
+        </div>
       </div>
-    </div>
+    </fieldset>
 
     <div>
       <button class="usa-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
@@ -40,27 +40,38 @@
 
   <script>
     function onRatingChange(event) {
-      var ratingErrorElement = document.getElementById('rating-error-message');
-      if (ratingErrorElement) {
-        ratingErrorElement.setAttribute('aria-hidden', 'true');
-        ratingErrorElement.className = ratingErrorElement.className + ' vads-u-display--none';
+      // Derive the elements on the page.
+      var ratingOptionsElement = document.getElementById("rating-options");
+      var ratingErrorMessageElement = document.getElementById('rating-error-message');
+
+      if (ratingOptionsElement && ratingErrorMessageElement) {
+        ratingErrorMessageElement.setAttribute('aria-hidden', 'true');
+        ratingErrorMessageElement.className = ratingErrorMessageElement.className + ' vads-u-display--none';
+        ratingOptionsElement.className = ratingOptionsElement.className.replace(' usa-input-error', '');
       }
     }
 
     function onRatingSubmit(event) {
       event.preventDefault()
 
-      var goodElement = document.getElementById('good');
-      var goodChecked = goodElement && goodElement.checked;
+      // Derive the elements on the page.
+      var ratingOptionsElement = document.getElementById("rating-options");
+      var ratingErrorMessageElement = document.getElementById('rating-error-message');
+      var submitButton = document.getElementById("rating-submit");
+      var thankYouMessageElement = document.getElementById("thank-you-message");
       var badElement = document.getElementById('bad');
+      var goodElement = document.getElementById('good');
+
+      // Derive the radio button fields checked status.
+      var goodChecked = goodElement && goodElement.checked;
       var badChecked = badElement && badElement.checked;
 
       // Show error message if neither good nor bad is checked.
       if (!goodChecked && !badChecked) {
-        var ratingErrorElement = document.getElementById('rating-error-message');
-        if (ratingErrorElement) {
-          ratingErrorElement.setAttribute('aria-hidden', 'false');
-          ratingErrorElement.className = ratingErrorElement.className.replace('vads-u-display--none', '');
+        if (ratingOptionsElement && ratingErrorMessageElement) {
+          ratingErrorMessageElement.setAttribute('aria-hidden', 'false');
+          ratingErrorMessageElement.className = ratingErrorMessageElement.className.replace('vads-u-display--none', '');
+          ratingOptionsElement.className = ratingOptionsElement.className + ' usa-input-error';
         }
         return;
       }
@@ -77,21 +88,18 @@
       }
 
       // We don't need the submit button anymore, so hide it.
-      var submitButton = document.getElementById("rating-submit");
       if (submitButton) {
         submitButton.setAttribute('aria-hidden', 'true');
         submitButton.className = submitButton.className + ' vads-u-display--none';
       }
 
       // We don't need the rating options anymore, so hide it.
-      var ratingOptionsElement = document.getElementById("rating-options");
       if (ratingOptionsElement) {
         ratingOptionsElement.setAttribute('aria-hidden', 'true');
-        ratingOptionsElement.className = ratingOptionsElement.className.replace('vads-u-display--flex', 'vads-u-display--none');
+        ratingOptionsElement.className = ratingOptionsElement.className + ' vads-u-display--none';
       }
 
       // We need to show the thank you message, so show it.
-      var thankYouMessageElement = document.getElementById("thank-you-message");
       if (thankYouMessageElement) {
         thankYouMessageElement.setAttribute('aria-hidden', 'false');
         thankYouMessageElement.className = thankYouMessageElement.className.replace('vads-u-display--none', 'vads-u-display--block');
