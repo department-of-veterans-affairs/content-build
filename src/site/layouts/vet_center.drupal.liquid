@@ -2,7 +2,7 @@
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with
-        customHomeCrumbText = "VA.gov home"
+    customHomeCrumbText = "VA.gov home"
 %}
 <div class="interior" id="content">
     <main class="va-l-detail-page va-facility-page">
@@ -36,6 +36,11 @@
                                     <section class="vads-facility-detail">
                                         <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
                                             Main Location</h3>
+                                        <div data-widget-type="expandable-operating-status-{{ fieldFacilityLocatorApiId }}"
+                                             facilityId="{{ fieldFacilityLocatorApiId }}"
+                                             status="{{ fieldOperatingStatusFacility}}"
+                                             info="{{ fieldOperatingStatusMoreInfo }}">
+                                        </div>
                                         <div class="vads-u-margin-bottom--3">
                                             <div>{{ fieldAddress.addressLine1 }}</div>
                                             {{ fieldAddress.locality }},
@@ -73,8 +78,8 @@
 
                                         <div class="field-cc-non-traditional-hours">
                                             {% include "src/site/includes/dynamic-content.drupal.liquid" with
-                                                    entity = fieldCcNonTraditionalHours.fetched
-                                                    contentType = fieldCcNonTraditionalHours.fetchedBundle
+                                                entity = fieldCcNonTraditionalHours.fetched
+                                                contentType = fieldCcNonTraditionalHours.fetchedBundle
                                             %}
                                         </div>
                                     </section>
@@ -83,16 +88,16 @@
                         </div>
 
                         {% include "src/site/includes/image_and_static_map.liquid" with
-                                facilityMedia = fieldMedia
-                                facilityId = fieldFacilityLocatorApiId
+                            facilityMedia = fieldMedia
+                            facilityId = fieldFacilityLocatorApiId
                         %}
 
                     </div>
 
                     <div class="field-cc-vet-call-center">
                         {% include "src/site/includes/dynamic-content.drupal.liquid" with
-                                entity = fieldCcVetCenterCallCenter.fetched
-                                contentType = fieldCcVetCenterCallCenter.fetchedBundle
+                            entity = fieldCcVetCenterCallCenter.fetched
+                            contentType = fieldCcVetCenterCallCenter.fetchedBundle
                         %}
                     </div>
 
@@ -121,25 +126,25 @@
                         <ul class="usa-grid usa-grid-full vads-u-margin-top--3 vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
                             {% for entity in allFeaturedContent %}
                                 {% include "src/site/includes/vet_centers/featured_content.liquid" with
-                                        entity = entity.entity
+                                    entity = entity.entity
                                 %}
                             {% endfor %}
                         </ul>
                     </div>
 
                     {% include "src/site/includes/vet_centers/health_services.liquid" with
-                            fieldHealthServices
-                            typeOfCare = "counseling"
+                        fieldHealthServices
+                        typeOfCare = "counseling"
                     %}
 
                     {% include "src/site/includes/vet_centers/health_services.liquid" with
-                            fieldHealthServices
-                            typeOfCare = "referral"
+                        fieldHealthServices
+                        typeOfCare = "referral"
                     %}
 
                     {% include "src/site/includes/vet_centers/health_services.liquid" with
-                            fieldHealthServices
-                            typeOfCare = "other"
+                        fieldHealthServices
+                        typeOfCare = "other"
                     %}
 
                     {% if fieldCcVetCenterFaqs.fetched %}
@@ -152,8 +157,8 @@
                         {% endif %}
                         <div class="vads-u-margin-bottom--3" id="field-vet-center-faqs">
                             {% include "src/site/paragraphs/q_a.accordion_panel.drupal.liquid" with
-                                    fetched = fieldCcVetCenterFaqs.fetched
-                                    fetchedBundle = fieldCcVetCenterFaqs.fetchedBundle
+                                fetched = fieldCcVetCenterFaqs.fetched
+                                fetchedBundle = fieldCcVetCenterFaqs.fetchedBundle
                             %}
                         </div>
                     {% endif %}
