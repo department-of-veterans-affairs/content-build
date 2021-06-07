@@ -9,8 +9,6 @@ jobs:
   build:
     name: Accessibility Scan
     runs-on: self-hosted
-    env:
-      CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
     steps:
       - name: Checkout vagov-content
         uses: actions/checkout@v2
