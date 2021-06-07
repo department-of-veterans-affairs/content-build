@@ -68,7 +68,7 @@ jobs:
           NODE_ENV: production
 
       - name: Run Accessibility Scan
-        run: yarn test:accessibility:docker
+        run: yarn test:accessibility
 
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
