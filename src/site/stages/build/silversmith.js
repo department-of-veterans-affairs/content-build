@@ -132,7 +132,7 @@ module.exports = () => {
         const memBefore = process.memoryUsage();
         global.gc();
         const memAfter = process.memoryUsage();
-        printGarbageCollectionStats(memBefore, memAfter);
+        if (global.verbose) printGarbageCollectionStats(memBefore, memAfter);
       }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
     } else {
       throw new Error(

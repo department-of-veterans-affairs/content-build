@@ -271,10 +271,10 @@ function build(BUILD_OPTIONS) {
       // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {
         smith.printSummary();
+        smith.printPeakMemory();
       }
 
       smith.endGarbageCollection();
-      smith.printPeakMemory();
 
       console.log('The Metalsmith build has completed.');
 
