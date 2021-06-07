@@ -130,7 +130,6 @@
     "cheerio": "^1.0.0-rc.3",
     "chokidar": "^3.4.0",
     "choma": "^1.1.0",
-    "chromedriver": "^91.0.0",
     "cli-table": "^0.3.1",
     "command-line-args": "^3.0.1",
     "command-line-usage": "^6.1.0",
@@ -199,7 +198,9 @@
     "webpack-dev-server": "^3.11.0",
     "yeoman-generator": "^4.2.0"
   },
-  "optionalDependencies": {},
+  "optionalDependencies": {
+    "chromedriver": "^90.0.0"
+  },
   "engines": {
     "node": ">=14.15.0",
     "yarn": ">=1.21.1"
