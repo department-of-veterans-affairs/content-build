@@ -5,7 +5,9 @@ function ignoreAssets() {
     Object.entries(files)
       .filter(
         ([fileName, file]) =>
-          file.isDrupalAsset || fileName.includes('generated/'),
+          file.isDrupalAsset ||
+          (fileName.includes('generated/') &&
+            fileName !== 'generated/headerFooter.json'),
       )
       .forEach(([fileName]) => {
         delete files[fileName];
