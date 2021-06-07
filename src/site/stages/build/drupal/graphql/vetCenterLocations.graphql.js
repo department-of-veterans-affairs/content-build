@@ -21,6 +21,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         entityPublished
         title
         entityBundle
+        fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
         fieldAddress {
           locality
           administrativeArea
@@ -36,6 +38,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         entityPublished
         title
         entityBundle
+        fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
         fieldAddress {
           locality
           administrativeArea
@@ -51,6 +55,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         entityPublished
         title
         entityBundle
+        fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
         fieldAddress {
           locality
           administrativeArea
@@ -82,6 +88,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
       ... on NodeVetCenter {
         title
         entityBundle
+        fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
         fieldAddress {
           locality
           administrativeArea
@@ -95,6 +103,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
       ... on NodeVetCenterOutstation {
         title
         entityBundle
+        fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
         fieldAddress {
           locality
           administrativeArea
@@ -107,6 +117,8 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
       }
       ... on NodeVetCenterCap {
         title
+        fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
         entityBundle
         fieldAddress {
           locality
@@ -141,6 +153,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
               title
               entityBundle
               fieldOperatingStatusFacility
+              fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
               fieldAddress {
                 locality
@@ -154,6 +167,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
               title
               entityBundle
               fieldOperatingStatusFacility
+              fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
               fieldAddress {
                 locality
@@ -190,6 +204,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         }
         fieldPhoneNumber
         fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}
       }
     }
