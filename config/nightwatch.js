@@ -43,7 +43,12 @@ module.exports = {
         acceptSslCerts: true,
         webStorageEnabled: true,
         chromeOptions: {
-          args: ['--window-size=1024,768'],
+          args: [
+            '--headless',
+            '--no-sandbox',
+            '--disable-gpu',
+            '--window-size=1024,768',
+          ],
         },
       },
       selenium: {
