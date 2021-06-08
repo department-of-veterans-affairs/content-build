@@ -49,8 +49,9 @@
                                             <div>
                                                 <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ entityLabel }}'});"
                                                    href="https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}"
-                                                   target="_blank" rel="noopener noreferrer">
-                                                    Directions on Google Maps (opens in new tab)
+                                                   aria-label="Directions to {{ entityLabel }} on Google Maps"
+                                                >
+                                                    Directions on Google Maps
                                                 </a>
                                             </div>
                                         </div>
