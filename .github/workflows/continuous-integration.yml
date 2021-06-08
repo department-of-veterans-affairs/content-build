@@ -281,10 +281,10 @@ jobs:
           channel_id: "U01SPJ10WBC"
 
   prearchive:
-    name: Prearchive Optimizations
+    name: Prearchive
     runs-on: self-hosted
     if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [unit-tests, linting, drupal-cache-test, build]
+    needs: [security-audit, unit-tests, linting, drupal-cache-test, build]
     defaults:
       run:
         working-directory: content-build
