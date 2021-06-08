@@ -8,7 +8,7 @@ env:
 jobs:
 
   build:
-    name: Build
+    name: Run Scans
     runs-on: self-hosted
     defaults:
       run:
@@ -67,10 +67,6 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Run Accessibility Scan
-        run: yarn test:accessibility
-        timeout-minutes: 300
-
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
@@ -102,16 +98,33 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      # TODO: Change to correct channel_id when ready
-      - name: Notify Slack about broken links
+      - name: Run Accessibility Scan
+        id: accessibility-scan
+        run: yarn test:accessibility
+        timeout-minutes: 600
+
+      - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        if: ${{ failure() }}
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          message: "Testing Github Actions for Daily Accessibility Scan"
-          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          message: "FAILURE - Testing Github Actions for Daily Accessibility Scan"
+          # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          channel_id: "C01RAS1KAQK"
+
+      - name: Accessibility Test Success
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ success() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          message: "SUCCESS - Testing Github Actions for Daily Accessibility Scan"
+          # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: "C01RAS1KAQK"
