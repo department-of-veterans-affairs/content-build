@@ -216,12 +216,12 @@ jobs:
           EOF
 
       - name: Compress ${{ matrix.buildtype }} build
-        # if: ${{ github.ref == 'refs/heads/master' && success() }}
+        if: ${{ github.ref == 'refs/heads/master' && success() }}
         run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
 
       - name: Upload build
         uses: actions/upload-artifact@v2
-        # if: ${{ github.ref == 'refs/heads/master' && success() }}
+        if: ${{ github.ref == 'refs/heads/master' && success() }}
         with:
           name: ${{ matrix.buildtype }}
           path: ${{github.workspace}}/content-build/${{ matrix.buildType }}.tar.bz2
@@ -283,7 +283,7 @@ jobs:
   prearchive:
     name: Prearchive Optimizations
     runs-on: self-hosted
-    # if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [unit-tests, linting, drupal-cache-test, build]
     defaults:
       run:
@@ -344,17 +344,11 @@ jobs:
       - name: Extract ${{ matrix.buildtype }}
         run: tar -jxvf build/${{ matrix.buildType }}.tar.bz2
 
-      - name: ls
-        run: ls -al
-
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Compress ${{ matrix.buildtype }} build w/ urls updated
         run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
-
-      - name: ls
-        run: ls -al
 
       - name: Upload build
         uses: actions/upload-artifact@v2
@@ -366,7 +360,6 @@ jobs:
   archive:
     name: Archive
     runs-on: ubuntu-latest
-    # if: ${{ github.ref == 'refs/heads/master' }}
     needs: [prearchive]
 
     strategy:
@@ -403,5 +396,5 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      # - name: Upload build
-      #   run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
+      - name: Upload build
+        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
