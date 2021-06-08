@@ -8,7 +8,7 @@ env:
 jobs:
 
   build:
-    name: Run Scans
+    name: Run
     runs-on: self-hosted
     defaults:
       run:
@@ -23,6 +23,18 @@ jobs:
         buildtype: [vagovprod]
 
     steps:
+      - name: Alert Slack
+        uses: /content-build/.github/actions/vsp-github-actions/slack-socket
+        if: ${{ failure() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          message: "START - Testing Github Actions for Daily Accessibility Scan"
+          # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          channel_id: "C01RAS1KAQK"
       - name: Checkout vagov-content
         uses: actions/checkout@v2
         with:
