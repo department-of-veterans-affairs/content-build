@@ -182,7 +182,7 @@
     "mocker-api": "^2.1.0",
     "moment-timezone": "^0.5.31",
     "morgan": "^1.10.0",
-    "nightwatch": "^0.9.21",
+    "nightwatch": "^1.6.2",
     "node-fetch": "^2.6.1",
     "nyc": "^15.1.0",
     "prettier": "^1.14.3",
