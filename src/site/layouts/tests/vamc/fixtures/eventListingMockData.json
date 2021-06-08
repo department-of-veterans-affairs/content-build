@@ -1,0 +1,150 @@
+{
+  "entityBundle": "event_listing",
+  "entityId": "2807",
+  "entityPublished": true,
+  "title": "Events",
+  "vid": 16487,
+  "entityUrl": {
+    "breadcrumb": [ { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/pittsburgh-health-care", "routed": true },
+        "text": "VA Pittsburgh health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "News and events" },
+      { "url": { "path": "", "routed": true }, "text": "Events" } ],
+    "path": "/pittsburgh-health-care/events"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Events | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "VA Pittsburgh Health Care | Events | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Events | Veterans Affairs"
+    }
+  ],
+  "changed": 1583958997,
+  "fieldIntroText": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness.",
+  "pastEvents": { "entities": [] },
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "title": "Virtual Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/virtual-veterans-town-hall"
+        },
+        "fieldFeatured": true,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1624284000,
+          "endValue": 1624287600,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/mindful-mondays-2" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1581343200,
+          "endValue": 1581346800,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/mindful-mondays-3" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1577109600,
+          "endValue": 1577113200,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Caregiver Support Annual Resource Fair",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/caregiver-support-annual-resource-fair"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1620925200,
+          "endValue": 1620932400,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      }
+    ]
+  },
+  "fieldOffice": { 
+    "entity": { 
+      "entityLabel": "VA Pittsburgh health care" 
+    } 
+  },
+  "facilitySidebar": {
+    "name": "VA Pittsburgh health care",
+    "description": "VISN 4 | va.gov/pittsburgh-health-care",
+    "links": [  {
+      "label": "VA Pittsburgh health care",
+      "expanded": true,
+      "description": null,
+      "url": { "path": "/pittsburgh-health-care" },
+      "links": ["test"] } ]
+  },
+  "outreachSidebar": { "name": "Outreach and events", "description": " ", "links": [] },
+  "alert": {
+    "entities": []
+  },
+  "bannerAlert": {
+    "entities": []
+  },
+  "pid": 2807
+}
