@@ -273,7 +273,7 @@ jobs:
   prearchive:
     name: Prearchive Optimizations
     runs-on: self-hosted
-    if: ${{ github.ref == 'refs/heads/master' }}
+    # if: ${{ github.ref == 'refs/heads/master' }}
     needs: [unit-tests, linting, drupal-cache-test, build]
     defaults:
       run:
