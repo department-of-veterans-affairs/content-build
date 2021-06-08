@@ -30,7 +30,7 @@ module.exports = {
       selenium_host: 'localhost',
       selenium_port: selenium_server_port,
       use_ssl: false,
-      silent: false,
+      silent: true,
       output: true,
       screenshots: {
         enabled: true,
