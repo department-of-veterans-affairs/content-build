@@ -205,6 +205,16 @@ jobs:
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
+      - name: Generate build details
+        run: |
+          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
+          BUILDTYPE=${{ matrix.buildtype }}
+          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          RUN_ID=${{ github.run_id }}
+          REF=${{ github.sha }}
+          BUILDTIME=$(date +%s)
+          EOF
+
       - name: Compress ${{ matrix.buildtype }} build
         # if: ${{ github.ref == 'refs/heads/master' && success() }}
         run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
@@ -337,12 +347,11 @@ jobs:
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
-  # TODO: Change prearchive to align folder w/ archive
   archive:
     name: Archive
     runs-on: ubuntu-latest
     # if: ${{ github.ref == 'refs/heads/master' }}
-    # needs: [prearchive]
+    needs: [prearchive]
 
     strategy:
       fail-fast: true
@@ -355,16 +364,6 @@ jobs:
         with:
           name: ${{ matrix.buildtype }}
           path: ${{ matrix.buildtype }}
-
-      - name: Generate build details
-        run: |
-          cat > ${{ matrix.buildtype }}/BUILD.txt << EOF
-          BUILDTYPE=${{ matrix.buildtype }}
-          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
-          RUN_ID=${{ github.run_id }}
-          REF=${{ github.sha }}
-          BUILDTIME=$(date +%s)
-          EOF
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -389,5 +388,5 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      # - name: Upload build
-      #   run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/application-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
+      - name: Upload build
+        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
