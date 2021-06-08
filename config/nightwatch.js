@@ -68,12 +68,17 @@ module.exports = {
       },
     },
     accessibility: {
-      filter: './src/platform/site-wide/tests/sitemap/*.spec.js',
+      filter: './src/platform/site-wide/tests/sitemap/sitemap-1.spec.js',
     },
     headless: {
       desiredCapabilities: {
         chromeOptions: {
-          args: ['--headless', '--window-size=1024,768'],
+          args: [
+            '--headless',
+            '--no-sandbox',
+            '--disable-gpu',
+            '--window-size=1024,768',
+          ],
         },
       },
     },
