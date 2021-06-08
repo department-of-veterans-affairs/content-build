@@ -55,7 +55,7 @@ jobs:
           path: ./.github/actions/vsp-github-actions
 
       - name: Alert - Start Scan
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: ../.github/actions/vsp-github-actions/slack-socket
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
