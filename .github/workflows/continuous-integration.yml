@@ -335,7 +335,7 @@ jobs:
       - name: Make build directory
         run: mkdir -p build
 
-      - name: Download build artifactory
+      - name: Download build artifact
         uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
@@ -363,7 +363,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.buildtype }}
-          path: ${{ matrix.buildtype }}
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
