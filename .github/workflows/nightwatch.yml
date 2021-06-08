@@ -69,4 +69,6 @@ jobs:
 
       - name: Run Nightwatch E2E Tests
         run: yarn test:e2e
-        timeout-minutes: 600
+        timeout-minutes: 20
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
