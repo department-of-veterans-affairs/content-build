@@ -63,7 +63,7 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      - name: Alert - Start Scan
+      - name: Start Accessibility Scan
         if: ${{ always() }}
         uses: ./.github/actions/vsp-github-actions/slack-socket
         env:
