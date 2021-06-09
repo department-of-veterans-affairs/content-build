@@ -798,13 +798,7 @@ module.exports = function registerFilters() {
   liquid.filters.paginatePages = (page, items, aria) => {
     const perPage = 10;
 
-    let ariaLabel = aria;
-
-    if (typeof ariaLabel === 'undefined') {
-      ariaLabel = '';
-    } else {
-      ariaLabel = ` of ${ariaLabel}`;
-    }
+    const ariaLabel = aria ? ` of ${aria}` : '';
 
     const paginationPath = pageNum => {
       return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
@@ -845,6 +839,7 @@ module.exports = function registerFilters() {
               start = pageNum;
             }
           }
+
           for (let num = start; num < start + length; num++) {
             innerPages.push({
               href:

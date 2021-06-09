@@ -5,7 +5,7 @@ import registerFilters from './liquid';
 import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_escanaba_data';
 import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
-// import event_listing_mock_data2 from '../layouts/tests/vamc/fixtures/event_listing_mock_data2.json';
+import eventListingMockData2 from '../layouts/tests/vamc/fixtures/eventListingMockData2.json';
 
 registerFilters();
 
@@ -176,6 +176,19 @@ describe('paginatePages', () => {
 
     expect(result.pagedItems.length).to.be.below(11);
     expect(result.paginator.next).to.be.null;
+  });
+
+  it('passing in more than 10 events', () => {
+    const result = liquid.filters.paginatePages(
+      eventListingMockData2,
+      eventListingMockData2.reverseFieldListingNode.entities,
+    );
+
+    expect(result.pagedItems.length).to.be.below(11);
+    expect(result.paginator.next).to.not.equal(null);
+    expect(result.paginator.next).to.eq(
+      '/pittsburgh-health-care/events/page-2',
+    );
   });
 });
 
