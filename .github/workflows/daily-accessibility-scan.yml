@@ -71,7 +71,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          message: "@here <!here> Starting the daily accessibility scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+          message: "Starting the daily accessibility scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
           block: "this is a bloc"
           color: good
           channel_id: ${{ env.CHANNEL_ID }}
@@ -134,10 +134,10 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          message: "FAILURE - Testing Github Actions for Daily Accessibility Scan"
+          message: "<!here> FAILURE - Testing Github Actions for Daily Accessibility Scan"
           # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           # id: "C01RAS1KAQK"
-          channel_id: "C024DUC9S1K"
+          channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
         uses: ./.github/actions/vsp-github-actions/slack-socket
@@ -151,4 +151,4 @@ jobs:
           message: "SUCCESS - Testing Github Actions for Daily Accessibility Scan"
           # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           # channel_id: "C01RAS1KAQK"
-          channel_id: "C024DUC9S1K"
+          channel_id: ${{ env.CHANNEL_ID }}
