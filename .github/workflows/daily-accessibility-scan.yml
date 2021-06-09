@@ -73,6 +73,8 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           message: "Starting the daily scan of content-build... ${{ RUN_URL }}"
+          attachments: '[{"mrkdwn_in": ["text"], "color": "${color}", "text": "SUMMARY"'
+          blocks: '[{"type": "section","text": {"type": "mrkdwn","text": "headinghere"}}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
@@ -132,10 +134,9 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "${color}", "text": "SUMMARY"'
           message: "<!here> FAILURE - Testing Github Actions for Daily Accessibility Scan"
-          # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          # id: "C01RAS1KAQK"
+          blocks: '[{"type": "section","text": {"type": "mrkdwn","text": "headinghere"}}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
