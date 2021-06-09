@@ -5,7 +5,6 @@ on: [push]
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K
-  RUN_URL: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
 
 jobs:
 
@@ -72,7 +71,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          message: "Starting the daily scan of content-build... ${{ RUN_URL }}"
+          message: "Starting the daily scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
           attachments: '[{"mrkdwn_in": ["text"], "color": "${color}", "text": "SUMMARY"'
           blocks: '[{"type": "section","text": {"type": "mrkdwn","text": "headinghere"}}]'
           channel_id: ${{ env.CHANNEL_ID }}
