@@ -142,5 +142,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "The daily accessibility scan has completed successfully."}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "The daily accessibility scan has completed successfully. \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
           channel_id: ${{ env.CHANNEL_ID }}
