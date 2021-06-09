@@ -4,7 +4,8 @@ on: [push]
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  BUILD_URL: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+  BUILD_URL: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+  NEW_URL: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
 
 jobs:
 
@@ -72,9 +73,10 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          message: "START - Testing Github Actions for Daily Accessibility Scan - https://github.com/${{github.repository}}/actions/runs/${{github.run_id}} - ${{ env.BUILD_URL }}"
-          # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: "C01RAS1KAQK"
+          message: "${{BUILD_URL}} Starting the daily accessibility scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}" + ${{ BUILD_URL }}
+          blocks: "This is a block"
+          # channel_id: "C01RAS1KAQK"
+          channel_id: "C024DUC9S1K"
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -136,7 +138,8 @@ jobs:
           # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           message: "FAILURE - Testing Github Actions for Daily Accessibility Scan"
           # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: "C01RAS1KAQK"
+          # id: "C01RAS1KAQK"
+          channel_id: "C024DUC9S1K"
 
       - name: Accessibility Test Success
         uses: ./.github/actions/vsp-github-actions/slack-socket
@@ -149,4 +152,5 @@ jobs:
           # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           message: "SUCCESS - Testing Github Actions for Daily Accessibility Scan"
           # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: "C01RAS1KAQK"
+          # channel_id: "C01RAS1KAQK"
+          channel_id: "C024DUC9S1K"
