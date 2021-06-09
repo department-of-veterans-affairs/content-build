@@ -121,7 +121,7 @@ jobs:
       - name: Run Accessibility Scan
         id: accessibility-scan
         run: yarn test:accessibility
-        timeout-minutes: 300
+        timeout-minutes: 30
 
       - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
