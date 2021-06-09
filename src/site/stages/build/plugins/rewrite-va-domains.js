@@ -1,20 +1,32 @@
 /* eslint-disable no-param-reassign, no-continue */
 
 function createRedirects(options) {
-  return (files, metalsmith, done) => {
-    if (options.domainReplacements) {
-      Object.keys(files)
-        .filter(fileName => fileName.endsWith('html'))
-        .forEach(fileName => {
-          const file = files[fileName];
-          let contents = file.contents.toString();
-          options.domainReplacements.forEach(domain => {
-            const regex = new RegExp(domain.from, 'g');
-            contents = contents.replace(regex, domain.to);
-          });
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-          file.contents = Buffer.from(contents);
+  return async (files, metalsmith, done) => {
+    if (options.domainReplacements) {
+      const htmlFilter = filename => filename.endsWith('html');
+      const htmlFiles = Object.keys(files).filter(htmlFilter);
+      let numProcessed = 0;
+
+      for (const fileName of htmlFiles) {
+        const file = files[fileName];
+        let contents = file.contents.toString();
+        options.domainReplacements.forEach(domain => {
+          const regex = new RegExp(domain.from, 'g');
+          contents = contents.replace(regex, domain.to);
         });
+
+        file.contents = Buffer.from(contents);
+        numProcessed++;
+
+        // Pause for garbage collection to free unused buffer memory
+        // eslint-disable-next-line no-await-in-loop
+        if (numProcessed % 100 === 0) await sleep(1);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log(`Rewrote domains for ${numProcessed} files`);
     }
 
     done();
