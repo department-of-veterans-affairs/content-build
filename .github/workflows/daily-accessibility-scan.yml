@@ -72,7 +72,6 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily accessibility scan of content-build... \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
-          blocks: '[{ "type": "section", "text": {"type": "mrkdwn","text": "Starting the daily accessibility scan of content-build..."}}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
