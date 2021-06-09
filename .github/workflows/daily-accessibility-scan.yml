@@ -72,7 +72,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          message: "Starting the daily accessibility scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}" + ${{ BUILD_URL }}
+          message: "Starting the daily accessibility scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}} - ${{ BUILD_URL }}"
           blocks: "This is a block"
           # channel_id: "C01RAS1KAQK"
           channel_id: "C024DUC9S1K"
