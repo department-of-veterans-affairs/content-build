@@ -106,7 +106,12 @@
         {% for promo in fieldClpWhatYouCanDoPromos %}
           <div class="vads-l-col--12 medium-screen:vads-l-col--4 vads-u-align-content--stretch vads-u-margin-y--1 ">
             <div class="vads-u-background-color--gray-light-alt vads-u-height--full medium-screen:vads-u-margin-x--1 medium-screen:vads-u-margin-y--0">
-              <img alt="{{ promo.entity.fieldImage.entity.thumbnail.alt }}" height="{{ promo.entity.fieldImage.entity.thumbnail.derivative.height }}" width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}" src="{{ promo.entity.fieldImage.entity.thumbnail.derivative.url }}" />
+              <img
+                alt="{{ promo.entity.fieldImage.entity.thumbnail.alt }}"
+                height="{{ promo.entity.fieldImage.entity.thumbnail.derivative.height }}"
+                src="{{ promo.entity.fieldImage.entity.thumbnail.derivative.url }}"
+                width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}"
+              />
               <h3 class="vads-u-padding-x--2 vads-u-margin-top--1">
                 <a
                   href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
