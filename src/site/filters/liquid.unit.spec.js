@@ -6,6 +6,8 @@ import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_escan
 import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 
+const _ = require('lodash');
+
 registerFilters();
 
 const eventsMockData = [
@@ -168,9 +170,7 @@ describe('eventDateSorter', () => {
 
 describe('paginatePages', () => {
   it('passing in less than 10 events', () => {
-    const slicedEventListingMockData = JSON.parse(
-      JSON.stringify(eventListingMockData),
-    );
+    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
 
     slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
       0,
