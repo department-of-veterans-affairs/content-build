@@ -168,14 +168,18 @@ describe('eventDateSorter', () => {
 
 describe('paginatePages', () => {
   it('passing in less than 10 events', () => {
-    eventListingMockData.reverseFieldListingNode.entities = eventListingMockData.reverseFieldListingNode.entities.slice(
+    const slicedEventListingMockData = JSON.parse(
+      JSON.stringify(eventListingMockData),
+    );
+
+    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
       0,
       -6,
     );
 
     const result = liquid.filters.paginatePages(
-      eventListingMockData,
-      eventListingMockData.reverseFieldListingNode.entities,
+      slicedEventListingMockData,
+      slicedEventListingMockData.reverseFieldListingNode.entities,
     );
 
     expect(result.pagedItems.length).to.be.below(11);
