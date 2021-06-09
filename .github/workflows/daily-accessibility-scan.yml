@@ -73,7 +73,10 @@ jobs:
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           message: "Starting the daily scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
           attachments: '[{"mrkdwn_in": ["text"], "color": "green", "text": "SUMMARY"'
-          blocks: '[{"type": "section", "text": {"type": "mrkdwn","text": "headinghere", "color": "green"}}]'
+          blocks: '[{
+            "type": "section", 
+            "text": {"type": "mrkdwn","text": "Starting the daily scan of content-build...", "color": "green"}
+            }]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
