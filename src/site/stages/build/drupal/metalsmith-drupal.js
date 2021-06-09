@@ -312,8 +312,18 @@ async function loadCachedDrupalFiles(buildOptions, files) {
       files[relativePath] = {
         path: relativePath,
         isDrupalAsset: true,
-        contents: fs.readFileSync(file),
+        // No need to store Drupal file contents when we can
+        // directly store on disk and save memory
+        contents: '',
       };
+
+      // Copy Drupal file to build directory
+      const buildOutputPath = path.join(
+        'build',
+        buildOptions.buildtype,
+        relativePath,
+      );
+      fs.copySync(file, buildOutputPath);
     });
   }
 }

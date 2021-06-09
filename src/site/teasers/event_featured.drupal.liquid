@@ -1,27 +1,5 @@
-{% comment %}
-Required variable: node - the news story entity
-Optional variable: header - the header level ('h2','h3', etc.) defaults to h4
-Example data:
-  {
-    "title": "Another Test Event",
-    "fieldDescription": "This gives the user an overview of the event in teaser
-    views",
-    "fieldLocationHumanreadable": "Here",
-      "fieldFacilityLocation": {
-      "entity": {
-        "title": "Westmoreland County VA Clinic",
-          "entityUrl": {
-          "path": "/pittsburgh-health-care/locations/westmoreland-county"
-        }
-      }
-    },
-    "entityUrl": {
-      "path": "/node/98"
-    }
-  }
-{% endcomment %}
 {% if node != empty %}
-  {% include "src/site/includes/date.drupal.liquid" %}
+  {% include "src/site/includes/date.drupal.liquid" with fieldDatetimeRangeTimezone = node.fieldDatetimeRangeTimezone %}
 
   {% if header == empty %}
     {% assign header = "h2" %}
