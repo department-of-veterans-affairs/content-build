@@ -72,10 +72,10 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           message: "Starting the daily scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
-          attachments: '[{"mrkdwn_in": ["text"], "color": "green", "text": "SUMMARY"'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "green", "text": "SUMMARY"}]'
           blocks: '[{
-            "type": "section", 
-            "text": {"type": "mrkdwn","text": "Starting the daily scan of content-build...", "color": "green"}
+              "type": "section", 
+              "text": {"type": "mrkdwn","text": "Starting the daily scan of content-build...", "color": "green"}
             }]'
           channel_id: ${{ env.CHANNEL_ID }}
 
@@ -138,7 +138,7 @@ jobs:
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "${color}", "text": "SUMMARY"'
           message: "<!here> FAILURE - Testing Github Actions for Daily Accessibility Scan"
-          blocks: '[{"type": "section","text": {"type": "mrkdwn","text": "headinghere"}}]'
+          # blocks: '[{"type": "section","text": {"type": "mrkdwn","text": "headinghere"}}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
