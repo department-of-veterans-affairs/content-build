@@ -22,7 +22,6 @@ module.exports = {
   live_output: true,
   parallel_process_delay: 10,
   disable_colors: process.env.BUILDTYPE === 'production',
-  // test_workers: false,
   test_workers: { enabled: true, workers: 4 },
   test_settings: {
     default: {

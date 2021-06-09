@@ -20,8 +20,6 @@ jobs:
 
     strategy:
       fail-fast: true
-      matrix:
-        buildtype: [vagovprod]
 
     steps:
       - name: Configure AWS credentials
@@ -94,10 +92,6 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - uses: browser-actions/setup-chrome@latest
-        with:
-          chrome-version: latest
-
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
@@ -113,14 +107,14 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Build
-        run: yarn build --buildtype ${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
+        run: yarn build --buildtype vagovprod --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
         timeout-minutes: 60
         env:
           NODE_ENV: production
 
       - name: Run Accessibility Scan
         id: accessibility-scan
-        run: WEB_PORT=3002 yarn test:accessibility
+        run: WEB_PORT=3002 BUILDTYPE=vagovprod yarn test:accessibility
         timeout-minutes: 600
 
       - name: Accessibility Test Failure
