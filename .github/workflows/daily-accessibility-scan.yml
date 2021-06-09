@@ -4,6 +4,7 @@ on: [push]
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  CHANNEL_ID: C024DUC9S1K
 
 jobs:
 
@@ -72,7 +73,8 @@ jobs:
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           message: "@here <!here> Starting the daily accessibility scan of content-build... https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
           block: "this is a bloc"
-          channel_id: "C024DUC9S1K"
+          color: good
+          channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
