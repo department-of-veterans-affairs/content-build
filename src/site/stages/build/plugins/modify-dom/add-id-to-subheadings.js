@@ -37,9 +37,7 @@ function createUniqueId(headingEl, headingOptions) {
 module.exports = {
   modifyFile(fileName, file) {
     let idAdded = false;
-    const langAttribute = localStorage.getItem('redux')
-      ? JSON.parse(localStorage.getItem('redux')).i18State.lang
-      : 'en';
+
     if (fileName.endsWith('html')) {
       const { dom } = file;
       const tableOfContents = dom('#table-of-contents ul');
@@ -95,9 +93,7 @@ module.exports = {
             )}" onClick="recordEvent({ event: 'nav-jumplink-click', heading: '${heading.attr(
               'id',
             )}' });"
-              class="vads-u-display--flex vads-u-text-decoration--none"
-              lang=${langAttribute}
-              >
+              class="vads-u-display--flex vads-u-text-decoration--none">
               <i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1" aria-hidden="true">
               </i>${heading.text()}</a></li>`,
           );
