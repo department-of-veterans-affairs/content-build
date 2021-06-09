@@ -5,7 +5,6 @@ import registerFilters from './liquid';
 import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_escanaba_data';
 import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
-import eventListingMockData2 from '../layouts/tests/vamc/fixtures/eventListingMockData2.json';
 
 registerFilters();
 
@@ -169,6 +168,11 @@ describe('eventDateSorter', () => {
 
 describe('paginatePages', () => {
   it('passing in less than 10 events', () => {
+    eventListingMockData.reverseFieldListingNode.entities = eventListingMockData.reverseFieldListingNode.entities.slice(
+      0,
+      -6,
+    );
+
     const result = liquid.filters.paginatePages(
       eventListingMockData,
       eventListingMockData.reverseFieldListingNode.entities,
@@ -180,8 +184,8 @@ describe('paginatePages', () => {
 
   it('passing in more than 10 events', () => {
     const result = liquid.filters.paginatePages(
-      eventListingMockData2,
-      eventListingMockData2.reverseFieldListingNode.entities,
+      eventListingMockData,
+      eventListingMockData.reverseFieldListingNode.entities,
     );
 
     expect(result.pagedItems.length).to.be.below(11);
