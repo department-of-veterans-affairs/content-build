@@ -395,9 +395,6 @@ const nodeCampaignLandingPage = `
                     width
                     height
                   }
-                  height
-                  width
-                  url
                   targetId
                   alt
                   title
@@ -436,9 +433,6 @@ const nodeCampaignLandingPage = `
                     width
                     height
                   }
-                  height
-                  width
-                  url
                   targetId
                   alt
                   title
