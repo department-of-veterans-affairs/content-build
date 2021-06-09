@@ -72,9 +72,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          message: "Starting the daily scan of content-build... ${{ RUN_URL }}"
-          attachments: "[{'color': 'good'}]"
-          color: good
+          message: "Starting the daily scan of content-build...  \\n\\n ${{ RUN_URL }}"
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
