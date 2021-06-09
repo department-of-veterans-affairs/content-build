@@ -245,10 +245,10 @@
                     {% if storyTeaser.entity.fieldMedia.entity.thumbnail.url %}
                       <img
                         alt="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.alt }}"
-                        class="vads-l-col--12 medium-screen:vads-l-col--4 medium-screen:vads-u-margin-right--2"
-                        height="{{ storyTeaser.entity.fieldImage.entity.thumbnail.derivative.height }}"
+                        class="story-image vads-u-height--full medium-screen:vads-u-margin-right--2"
+                        height="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.height }}"
                         src="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.url }}"
-                        width="{{ storyTeaser.entity.fieldImage.entity.thumbnail.derivative.width }}"
+                        width="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.width }}"
                       />
                     {% endif %}
                     <div class="vads-u-margin-top--2 medium-screen:vads-u-margin-top--0">
@@ -658,6 +658,15 @@
     {% include "src/site/components/up_to_top_button.html" with isCampaignLandingPage = true %}
   </main>
 </div>
+
+<style>
+  /* 768px = $medium-screen */
+  @media (min-width: 768px) {
+    .story-image {
+      max-width: 40%;
+    }
+  }
+</style>
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
