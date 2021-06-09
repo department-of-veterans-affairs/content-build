@@ -4,6 +4,7 @@ on: [push]
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  BUILD_URL: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
 
 jobs:
 
@@ -71,7 +72,7 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           # attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          message: "START - Testing Github Actions for Daily Accessibility Scan"
+          message: "START - Testing Github Actions for Daily Accessibility Scan - https://github.com/${{github.repository}}/actions/runs/${{github.run_id}} - ${{ env.BUILD_URL }}"
           # blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: "C01RAS1KAQK"
 
