@@ -50,4 +50,4 @@ function main(browser) {
   verifyGoogleAnalytics(browser);
 }
 
-module.exports = E2eHelpers.createE2eTest(main);
+// module.exports = E2eHelpers.createE2eTest(main);
