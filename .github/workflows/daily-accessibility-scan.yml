@@ -120,7 +120,7 @@ jobs:
 
       - name: Run Accessibility Scan
         id: accessibility-scan
-        run: yarn test:accessibility
+        run: WEB_PORT=3002 yarn test:accessibility
         timeout-minutes: 600
 
       - name: Accessibility Test Failure
