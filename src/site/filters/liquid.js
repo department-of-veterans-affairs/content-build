@@ -779,7 +779,6 @@ module.exports = function registerFilters() {
       const start2 = b.fieldDatetimeRangeTimezone.value;
       return start1 - start2;
     });
-    // return sorted
   };
 
   //* paginatePages has limitations, it is not yet fully operational.
