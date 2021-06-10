@@ -72,7 +72,9 @@ module.exports = `
   mainFacilities: reverseFieldRegionPageNode(${queryFilter(true)}) {
     ${FACILITIES_RESULTS}
   }
-  otherFacilities: reverseFieldRegionPageNode(${queryFilter(false)}) {
+  otherFacilities: reverseFieldRegionPageNode(limit: 50, ${queryFilter(
+    false,
+  )}) {
     ${FACILITIES_RESULTS}
   }
 `;
