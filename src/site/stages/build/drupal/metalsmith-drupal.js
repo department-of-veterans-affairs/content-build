@@ -99,10 +99,6 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
           'press_release',
         );
         break;
-      case 'health_services_listing':
-        pageCompiled.clinicalHealthServices =
-          pageCompiled.fieldOffice.entity.reverseFieldRegionPageNode.entities;
-        break;
       case 'leadership_listing':
         pageCompiled.allStaffProfiles = page.fieldLeadership;
         addPager(
