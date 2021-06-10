@@ -62,7 +62,15 @@
                 {% assign pagingResult = debug | paginatePages: sortedUpcomingEvents, 'event' %}
                 {% assign pagedItems = pagingResult.pagedItems %}
                 {% assign paginator = pagingResult.paginator %}
-                {% else %}
+
+                {% for event in pagedItems %}
+                  {% if featuredEventUrl != event.entityUrl.path %}
+                    <div class="clearfix-text">
+                      {% include "src/site/teasers/event.drupal.liquid" with node = event %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
 
                 {% for event in pagedItems %}
                   {% if featuredEventUrl != event.entityUrl.path %}

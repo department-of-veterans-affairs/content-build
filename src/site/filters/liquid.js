@@ -792,7 +792,7 @@ module.exports = function registerFilters() {
       );
     }
 
-    return sorted;
+    return sorted.reverse();
   };
 
   liquid.filters.paginatePages = (page, items, aria) => {
