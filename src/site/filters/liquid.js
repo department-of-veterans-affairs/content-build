@@ -771,30 +771,18 @@ module.exports = function registerFilters() {
     });
   };
 
-  //* Sorts event dates (fieldDatetimeRangeTimezone) from oldest to newest, removing expired items.
-  liquid.filters.eventDateSorter = (
-    dates = [],
-    reverse = false,
-    stale = true,
-  ) => {
+  //* Sorts event dates (fieldDatetimeRangeTimezone) from newest to oldest.
+  liquid.filters.eventDateSorter = dates => {
     if (!dates) return null;
-    let sorted = dates.sort((a, b) => {
+    return dates.sort((a, b) => {
       const start1 = a.fieldDatetimeRangeTimezone.value;
       const start2 = b.fieldDatetimeRangeTimezone.value;
-      return reverse ? start2 - start1 : start1 - start2;
+      return start1 - start2;
     });
-
-    const currentDateUTC = new Date().getTime() / 1000;
-
-    if (stale) {
-      sorted = sorted.filter(
-        item => item.fieldDatetimeRangeTimezone.value > currentDateUTC,
-      );
-    }
-
-    return sorted.reverse();
+    // return sorted
   };
 
+  //* paginatePages has limitations, it is not yet fully operational.
   liquid.filters.paginatePages = (page, items, aria) => {
     const perPage = 10;
 
