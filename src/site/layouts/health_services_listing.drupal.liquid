@@ -42,32 +42,34 @@
           </section>
           {% endif %}
 
+          {% assign clinicalHealthServicesPreview = fieldOffice.entity.reverseFieldRegionPageNode.entities %}
+
           {% include "src/site/includes/health_services_listing_services.liquid" with
-            clinicalHealthServices
+            clinicalHealthServices or assign clinicalHealthServices = clinicalHealthServicesPreview
             typeOfCare = "Primary care"
           %}
 
           {% include "src/site/includes/health_services_listing_services.liquid" with
-            clinicalHealthServices
+            clinicalHealthServices or assign clinicalHealthServices = clinicalHealthServicesPreview
             typeOfCare = "Mental health care"
           %}
 
           {% include "src/site/includes/health_services_listing_services.liquid" with
-            clinicalHealthServices
+            clinicalHealthServices or assign clinicalHealthServices = clinicalHealthServicesPreview
             typeOfCare = "Specialty care"
           %}
 
           {% include "src/site/includes/health_services_listing_services.liquid" with
-            clinicalHealthServices
+            clinicalHealthServices or assign clinicalHealthServices = clinicalHealthServicesPreview
             typeOfCare = "Social programs and services"
           %}
 
           {% include "src/site/includes/health_services_listing_services.liquid" with
-            clinicalHealthServices
+            clinicalHealthServices or assign clinicalHealthServices = clinicalHealthServicesPreview
             typeOfCare = "Other services"
           %}
 
-          {% if clinicalHealthServices == false %}
+          {% if clinicalHealthServices.length == 0 or clinicalHealthServicesPreview.length == 0 %}
             <div>No health services at this time.</div>
           {% endif %}
 
