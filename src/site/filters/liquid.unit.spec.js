@@ -4,8 +4,201 @@ import { expect, assert } from 'chai';
 import registerFilters from './liquid';
 import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_escanaba_data';
 import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
+import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
+
+const _ = require('lodash');
 
 registerFilters();
+
+const eventsMockData = [
+  {
+    title: 'Virtual Veterans Town Hall',
+    fieldDatetimeRangeTimezone: {
+      endValue: 1620421341,
+      timezone: 'America/New_York',
+      value: 1620410541,
+    },
+  },
+  {
+    title: 'Community Town Hall on the Move',
+    fieldDatetimeRangeTimezone: {
+      endValue: 1617796941,
+      timezone: 'America/New_York',
+      value: 1617782541,
+    },
+  },
+  {
+    title: 'Brooklyn Community Garden Meetup',
+    fieldDatetimeRangeTimezone: {
+      endValue: 1578409341,
+      timezone: 'America/New_York',
+      value: 1578398541,
+    },
+  },
+  {
+    title: 'Clean-up Block Event',
+    fieldDatetimeRangeTimezone: {
+      endValue: 1628355741,
+      timezone: 'America/New_York',
+      value: 1628348541,
+    },
+  },
+  {
+    title: 'Holiday Office Dinner',
+    fieldDatetimeRangeTimezone: {
+      endValue: 1639670421,
+      timezone: 'America/New_York',
+      value: 1639659621,
+    },
+  },
+];
+
+describe('filterPastEvents', () => {
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.filterPastEvents(null)).to.eq(null);
+  });
+
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.filterPastEvents(undefined)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.filterPastEvents('')).to.eq(null);
+  });
+
+  it('returns events that occured BEFORE the current date and time', () => {
+    expect(
+      liquid.filters.filterPastEvents(eventsMockData),
+    ).to.deep.include.members([
+      {
+        title: 'Virtual Veterans Town Hall',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1620421341,
+          timezone: 'America/New_York',
+          value: 1620410541,
+        },
+      },
+      {
+        title: 'Community Town Hall on the Move',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1617796941,
+          timezone: 'America/New_York',
+          value: 1617782541,
+        },
+      },
+      {
+        title: 'Brooklyn Community Garden Meetup',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1578409341,
+          timezone: 'America/New_York',
+          value: 1578398541,
+        },
+      },
+    ]);
+  });
+});
+
+describe('filterUpcomingEvents', () => {
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.filterUpcomingEvents(null)).to.eq(null);
+  });
+
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.filterUpcomingEvents(undefined)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.filterUpcomingEvents('')).to.eq(null);
+  });
+
+  it('returns events that occured AFTER the current date and time', () => {
+    expect(
+      liquid.filters.filterUpcomingEvents(eventsMockData),
+    ).to.deep.include.members([
+      {
+        title: 'Clean-up Block Event',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1628355741,
+          timezone: 'America/New_York',
+          value: 1628348541,
+        },
+      },
+      {
+        title: 'Holiday Office Dinner',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1639670421,
+          timezone: 'America/New_York',
+          value: 1639659621,
+        },
+      },
+    ]);
+  });
+});
+
+describe('eventDateSorter', () => {
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.eventDateSorter(null)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.eventDateSorter('')).to.eq(null);
+  });
+
+  it('returns an array of upcoming events in date and time order starting with most recent to least recent', () => {
+    expect(
+      liquid.filters.eventDateSorter(eventsMockData),
+    ).to.deep.include.members([
+      {
+        title: 'Clean-up Block Event',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1628355741,
+          timezone: 'America/New_York',
+          value: 1628348541,
+        },
+      },
+      {
+        title: 'Holiday Office Dinner',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1639670421,
+          timezone: 'America/New_York',
+          value: 1639659621,
+        },
+      },
+    ]);
+  });
+});
+
+describe('paginatePages', () => {
+  it('passing in less than 10 events', () => {
+    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
+
+    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
+      0,
+      -6,
+    );
+
+    const result = liquid.filters.paginatePages(
+      slicedEventListingMockData,
+      slicedEventListingMockData.reverseFieldListingNode.entities,
+    );
+
+    expect(result.pagedItems.length).to.be.below(11);
+    expect(result.paginator.next).to.be.null;
+  });
+
+  it('passing in more than 10 events', () => {
+    const result = liquid.filters.paginatePages(
+      eventListingMockData,
+      eventListingMockData.reverseFieldListingNode.entities,
+    );
+
+    expect(result.pagedItems.length).to.be.below(11);
+    expect(result.paginator.next).to.not.equal(null);
+    expect(result.paginator.next).to.eq(
+      '/pittsburgh-health-care/events/page-2',
+    );
+  });
+});
 
 describe('benefitTerms', () => {
   it('returns null when null is passed', () => {
