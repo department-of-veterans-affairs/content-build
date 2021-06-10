@@ -69,7 +69,7 @@ function queryFilter(isMainLocation) {
 }
 
 module.exports = `
-  mainFacilities: reverseFieldRegionPageNode(${queryFilter(true)}) {
+  mainFacilities: reverseFieldRegionPageNode(limit: 50, ${queryFilter(true)}) {
     ${FACILITIES_RESULTS}
   }
   otherFacilities: reverseFieldRegionPageNode(limit: 50, ${queryFilter(
