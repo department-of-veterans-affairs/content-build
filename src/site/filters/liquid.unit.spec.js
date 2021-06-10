@@ -190,13 +190,29 @@ describe('paginatePages', () => {
     const result = liquid.filters.paginatePages(
       eventListingMockData,
       eventListingMockData.reverseFieldListingNode.entities,
+      'event',
     );
 
+    const expected = {
+      ariaLabel: ' of event',
+      prev: null,
+      inner: [
+        {
+          href: null,
+          label: 1,
+          class: 'va-pagination-active',
+        },
+        {
+          href: '/pittsburgh-health-care/events/page-2',
+          label: 2,
+          class: '',
+        },
+      ],
+      next: '/pittsburgh-health-care/events/page-2',
+    };
+
     expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator.next).to.not.equal(null);
-    expect(result.paginator.next).to.eq(
-      '/pittsburgh-health-care/events/page-2',
-    );
+    expect(result.paginator).to.deep.equal(expected);
   });
 });
 
