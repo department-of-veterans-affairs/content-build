@@ -9,7 +9,7 @@ env:
 jobs:
 
   build:
-    name: Run
+    name: Run Scan
     runs-on: self-hosted
     defaults:
       run:
@@ -106,7 +106,7 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      - name: Build
+      - name: Build vagovprod
         run: yarn build --buildtype vagovprod --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
         timeout-minutes: 60
         env:
