@@ -11,15 +11,14 @@
   }
 {% endcomment %}
 
-
 {% assign paginatorCount = paginator.inner | size %}
 {% assign totalItems = paginatorCount %}
 
 {% if numItems %}
-{% assign totalItems = numItems | times: .1 %}
+  {% assign totalItems = numItems | times: .1 %}
 {% endif%}
 
-{% if paginator != empty and totalItems <= paginatorCount %}
+{% if paginator != empty and totalItems <= paginatorCount and 1 < totalItems %}
 
   <div class="va-pagination" data-template="includes/pagination">
     {% if paginator.prev != empty %}
