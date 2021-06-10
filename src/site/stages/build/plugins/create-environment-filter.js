@@ -8,17 +8,6 @@ function createEnvironmentFilter(options) {
     for (const fileName of Object.keys(files)) {
       const file = files[fileName];
 
-      // Do not include the following pages on production (except for the preview server):
-      // va.gov/asistencia-y-recursos-en-espanol
-      // va.gov/tagalog-wika-mapagkukunan-at-tulong
-      if (
-        !options.isPreviewServer &&
-        environmentName === ENVIRONMENTS.VAGOVPROD &&
-        (file.entityId === '20078' || file.entityId === '20092')
-      ) {
-        delete files[fileName];
-      }
-
       if (
         environmentName !== ENVIRONMENTS.LOCALHOST &&
         file.status === 'draft'
