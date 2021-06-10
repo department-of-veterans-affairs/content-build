@@ -8,15 +8,6 @@ function createEnvironmentFilter(options) {
     for (const fileName of Object.keys(files)) {
       const file = files[fileName];
 
-      // Do not include random-lang-support-link on production (except for the preview server).
-      if (
-        !options.isPreviewServer &&
-        environmentName === ENVIRONMENTS.VAGOVPROD &&
-        file.entityBundle === 'random-lang-support-link'
-      ) {
-        delete files[fileName];
-      }
-
       if (
         environmentName !== ENVIRONMENTS.LOCALHOST &&
         file.status === 'draft'
