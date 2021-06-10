@@ -107,7 +107,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Build vagovprod
-        run: script/build.sh --buildtype vagovprod --drupalAddress https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --no-drupal-proxy
+        run: jenkins/build.sh --envName vagovprod --assetSource local --drupalAddress https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --drupalMaxParallelRequests 15 --pull-drupal --no-drupal-proxy
         timeout-minutes: 60
         env:
           NODE_ENV: production
