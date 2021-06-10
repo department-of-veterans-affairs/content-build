@@ -57,6 +57,11 @@ fragment vaFormPage on NodeVaForm {
     targetId
     entity {
       ... on NodeVaForm {
+        entityPublished
+        entityUrl {
+          path
+          routed
+        }
         fieldVaFormNumber
         fieldVaFormName
         fieldVaFormUsage {
