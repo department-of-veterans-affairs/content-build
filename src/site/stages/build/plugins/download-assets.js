@@ -20,17 +20,10 @@ async function downloadFromLiveBucket(files, buildOptions) {
 
   files[fileManifestPath] = {
     path: fileManifestPath,
-    // We don't need to store file manifest in 'file' object
-    contents: '',
+    contents: Buffer.from(JSON.stringify(fileManifest)),
   };
 
   const buildPath = path.join('build', buildOptions.buildtype);
-
-  // Store file manifest directly on disk
-  fs.outputFileSync(
-    path.join(buildPath, fileManifestPath),
-    Buffer.from(JSON.stringify(fileManifest)),
-  );
 
   const entryNames = Object.keys(fileManifest);
 

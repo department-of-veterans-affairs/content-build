@@ -22,7 +22,7 @@ module.exports = {
   live_output: true,
   parallel_process_delay: 10,
   disable_colors: process.env.BUILDTYPE === 'production',
-  test_workers: false,
+  test_workers: { enabled: true, workers: 4 },
   test_settings: {
     default: {
       launch_url: `localhost:${process.env.WEB_PORT || 3333}`,
@@ -30,7 +30,7 @@ module.exports = {
       selenium_host: 'localhost',
       selenium_port: selenium_server_port,
       use_ssl: false,
-      silent: false,
+      silent: true,
       output: true,
       screenshots: {
         enabled: true,
@@ -43,7 +43,13 @@ module.exports = {
         acceptSslCerts: true,
         webStorageEnabled: true,
         chromeOptions: {
-          args: ['--window-size=1024,768'],
+          w3c: false,
+          args: [
+            '--headless',
+            '--no-sandbox',
+            '--disable-gpu',
+            '--window-size=1024,768',
+          ],
         },
       },
       selenium: {
@@ -57,8 +63,8 @@ module.exports = {
         port: selenium_server_port,
       },
       test_workers: {
-        enabled: false,
-        workers: parseInt(process.env.CONCURRENCY || 1, 10),
+        enabled: true,
+        workers: 4,
       },
     },
     accessibility: {
@@ -67,7 +73,13 @@ module.exports = {
     headless: {
       desiredCapabilities: {
         chromeOptions: {
-          args: ['--headless', '--window-size=1024,768'],
+          w3c: false,
+          args: [
+            '--headless',
+            '--no-sandbox',
+            '--disable-gpu',
+            '--window-size=1024,768',
+          ],
         },
       },
     },

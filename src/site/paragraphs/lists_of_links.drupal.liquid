@@ -70,7 +70,7 @@
 </div>
 
 {% if formattedVaParagraphs.length > 6 %}
-  <script>
+  <script nonce="**CSP_NONCE**" type="text/javascript">
     function onShowAllTopics() {
       // Derive the extra paragraphs element.
       var extraParagraphsElements = document.querySelectorAll('[data-hidden-lists_of_links-entity-id="{{ entity.entityId }}"]');
