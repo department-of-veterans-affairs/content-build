@@ -1,6 +1,6 @@
 name: Daily Accessibility Scan
 
-on:[push]
+on: [push]
   # schedule:
   #   - cron: 'TZ=America/New_York\n0 8 * * 1-5'
 
