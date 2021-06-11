@@ -215,31 +215,29 @@ jobs:
           BUILDTIME=$(date +%s)
           EOF
 
-      - name: Compress ${{ matrix.buildtype }} build for E2E
-        # if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
-        if: ${{ matrix.buildType == 'vagovprod' }}
+      - name: Compress vagovprod build for E2E
+        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
         run: tar -jcvf test-build.tar.bz2 build/vagovprod
 
       - name: Upload build for E2E
         uses: actions/upload-artifact@v2
-        # if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
-        if: ${{ matrix.buildType == 'vagovprod' }}
+        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
         with:
           name: test-build.tar.bz2
-          path: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
           retention-days: 1
 
       - name: Prearchive
-        # if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Compress ${{ matrix.buildtype }} build w/ urls updated
-        # if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
 
-      - name: Upload build for archive
+      - name: Upload ${{ matrix.buildtype }} for archive
         uses: actions/upload-artifact@v2
-        # if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           name: ${{ matrix.buildtype }}.tar.bz2
           path: content-build/${{ matrix.buildType }}.tar.bz2
@@ -301,7 +299,7 @@ jobs:
   archive:
     name: Archive
     runs-on: ubuntu-latest
-    # if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [security-audit, unit-tests, linting, drupal-cache-test, build]
 
     strategy:
