@@ -219,7 +219,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
         run: tar -jcvf test-build.tar.bz2 build/vagovprod
 
-      - name: Upload build for E2E
+      - name: Upload artifact vagovprod build for E2E
         uses: actions/upload-artifact@v2
         if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
         with:
@@ -231,11 +231,11 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
-      - name: Compress ${{ matrix.buildtype }} build w/ urls updated
+      - name: Compress prearchived ${{ matrix.buildtype }} build
         if: ${{ github.ref == 'refs/heads/master' }}
         run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
 
-      - name: Upload ${{ matrix.buildtype }} for archive
+      - name: Upload artifact ${{ matrix.buildtype }} build for archive
         uses: actions/upload-artifact@v2
         if: ${{ github.ref == 'refs/heads/master' }}
         with:
