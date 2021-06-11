@@ -55,9 +55,9 @@ while ! echo exit | nc localhost ${WEB_PORT:-3333}; do sleep 3; done
 #curl http://localhost:3002/generated/hca.entry.js > /dev/null 2>&1
 
 # Execute the actual tests.
-if [ $SAUCE == true ]; then
+if [ "$SAUCE" == true ]; then
   BABEL_ENV=test npm --no-color run nightwatch-sauce -- "${@}"
-elif [ $VISUAL_REGRESSION_TESTING = true ]; then
+elif [ "$VISUAL_REGRESSION_TESTING" = true ]; then
   BABEL_ENV=test npm --no-color run nightwatch-visual -- "${@}"
 else
   BABEL_ENV=test npm --no-color run nightwatch -- "${@}"
