@@ -96,6 +96,7 @@ Disallow: /cgi-bin/
 Disallow: /drupal
 Disallow: /performance-dashboard
 Disallow: /covid19screen
+Disallow: /health-care/health-questionnaires/questionnaires/
 
 # disallow WIP VAMCs
 Disallow: /alaska-health-care
@@ -140,6 +141,7 @@ Disallow: /detroit-health-care
 Disallow: /dublin-health-care
 Disallow: /durham-health-care
 Disallow: /eastern-colorado-health-care
+Disallow: /eastern-kansas-health-care
 Disallow: /eastern-oklahoma-health-care
 Disallow: /el-paso-health-care
 Disallow: /erie-health-care
@@ -160,7 +162,6 @@ Disallow: /iowa-city-health-care
 Disallow: /iron-mountain-health-care
 Disallow: /jackson-health-care
 Disallow: /kansas-city-health-care
-Disallow: /leavenworth-health-care
 Disallow: /lebanon-health-care
 Disallow: /lexington-health-care
 Disallow: /loma-linda-health-care
@@ -225,7 +226,6 @@ Disallow: /tampa-health-care
 Disallow: /tennessee-valley-health-care
 Disallow: /texas-valley-health-care
 Disallow: /tomah-health-care
-Disallow: /topeka-health-care
 Disallow: /tuscaloosa-health-care
 Disallow: /wallawalla-health-care
 Disallow: /washington-dc-health-care

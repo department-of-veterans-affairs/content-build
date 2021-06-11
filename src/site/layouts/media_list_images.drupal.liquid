@@ -62,7 +62,7 @@
                         </{{ image_title_tag }}>
                       </dt>
 
-                      <dd>
+                      <dd class="va-c-position--relative">
                         <picture>
                           {% if mediaImage.entity.image.url == empty %}
                             <img
@@ -72,6 +72,14 @@
                               width="{{ mediaImage.entity.image.width }}"
                             />
                           {% else %}
+                            <a
+                              aria-label="Open image in new tab"
+                              class="vads-u-margin-right--1p5 vads-u-margin-top--1p5 vads-u-text-decoration--none vads-u-display--flex vads-u-align-items--center expand-image-button va-c-position--absolute va-c-position-top-right-corner vads-u-justify-content--center"
+                              href="{{ mediaImage.entity.image.url }}"
+                              target="_blank"
+                            >
+                              <i aria-hidden="true" class="fas fa-expand-arrows-alt" role="img"></i>
+                            </a>
                             <img
                               alt="{{ alt }}"
                               class="vads-u-border--1px vads-u-border-color--gray-light"
@@ -105,7 +113,7 @@
                               <{{image_title_tag}} class="{{image_title_classes }} medium-screen:vads-u-margin-top--0">{{ remainingImage.entity.entityLabel }}</{{image_title_tag}}>
                             </dt>
 
-                            <dd>
+                            <dd class="va-c-position--relative">
                               <picture>
                                 {% if remainingImage.entity.image.url == empty %}
                                   <img
@@ -115,6 +123,14 @@
                                     width="{{ remainingImage.entity.image.width }}"
                                   />
                                 {% else %}
+                                  <a
+                                    aria-label="Open image in new tab"
+                                    class="vads-u-margin-right--1p5 vads-u-margin-top--1p5 vads-u-text-decoration--none vads-u-display--flex vads-u-align-items--center expand-image-button va-c-position--absolute va-c-position-top-right-corner vads-u-justify-content--center"
+                                    href="{{ remainingImage.entity.image.url }}"
+                                    target="_blank"
+                                  >
+                                    <i aria-hidden="true" class="fas fa-expand-arrows-alt" role="img"></i>
+                                  </a>
                                   <img
                                     alt="{{ alt }}"
                                     class="vads-u-border--1px vads-u-border-color--gray-light"

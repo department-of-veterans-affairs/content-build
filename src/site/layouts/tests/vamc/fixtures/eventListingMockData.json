@@ -1,0 +1,262 @@
+{
+  "entityBundle": "event_listing",
+  "entityId": "2807",
+  "entityPublished": true,
+  "title": "Events",
+  "vid": 16487,
+  "entityUrl": {
+    "breadcrumb": [ { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/pittsburgh-health-care", "routed": true },
+        "text": "VA Pittsburgh health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "News and events" },
+      { "url": { "path": "", "routed": true }, "text": "Events" } ],
+    "path": "/pittsburgh-health-care/events"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Events | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "VA Pittsburgh Health Care | Events | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Events | Veterans Affairs"
+    }
+  ],
+  "changed": 1583958997,
+  "fieldIntroText": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness.",
+  "pastEvents": { "entities": [] },
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "title": "Virtual Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/virtual-veterans-town-hall"
+        },
+        "fieldFeatured": true,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1624284000,
+          "endValue": 1624287600,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/mindful-mondays-2" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1581343200,
+          "endValue": 1581346800,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/mindful-mondays-3" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1577109600,
+          "endValue": 1577113200,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Caregiver Support Annual Resource Fair",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/caregiver-support-annual-resource-fair"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1620925200,
+          "endValue": 1620932400,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "The Bridge Screening and Discussion",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/the-bridge-screening-and-discussion"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1568988000,
+          "endValue": 1569002400,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "Watch the documentary and join our panel to talk about moral injury, suicide and mental health.",
+        "fieldLocationHumanreadable": "Learning Exchange",
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/teal-tuesdays-2" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1619496000,
+          "endValue": 1619582400,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/teal-tuesdays-1" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618891200,
+          "endValue": 1619063940,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/teal-tuesdays-" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618286400,
+          "endValue": 1618372800,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/teal-tuesdays" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1617681600,
+          "endValue": 1617854340,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Veterans Breakfast Club Scuttlebutt ",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-breakfast-club-scuttlebutt-0"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1619442000,
+          "endValue": 1619445600,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Veterans Breakfast Club Scuttlebutt ",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-breakfast-club-scuttlebutt"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618837200,
+          "endValue": 1618840800,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Double Edged Sword of Military Culture: Helping and Hurting the Warrior",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/double-edged-sword-of-military-culture-helping-and-hurting-the-warrior"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618527600,
+          "endValue": 1618533000,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      }
+    ]
+  },
+  "fieldOffice": { 
+    "entity": { 
+      "entityLabel": "VA Pittsburgh health care" 
+    } 
+  },
+  "facilitySidebar": {
+    "name": "VA Pittsburgh health care",
+    "description": "VISN 4 | va.gov/pittsburgh-health-care",
+    "links": [  {
+      "label": "VA Pittsburgh health care",
+      "expanded": true,
+      "description": null,
+      "url": { "path": "/pittsburgh-health-care" },
+      "links": ["test"] } ]
+  },
+  "outreachSidebar": { "name": "Outreach and events", "description": " ", "links": [] },
+  "alert": {
+    "entities": []
+  },
+  "bannerAlert": {
+    "entities": []
+  },
+  "pid": 2807
+}

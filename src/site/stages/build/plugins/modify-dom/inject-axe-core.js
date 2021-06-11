@@ -20,6 +20,10 @@ module.exports = {
     };
 
     this.isEnabled = !!buildOptions.accessibility;
+
+    if (buildOptions.isSinglePagePublish) {
+      this.isEnabled = false;
+    }
   },
 
   modifyFile(fileName, file) {

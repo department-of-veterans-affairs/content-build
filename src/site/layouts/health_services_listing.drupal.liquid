@@ -25,7 +25,7 @@
             </div>
           </div>
 
-          <nav id="table-of-contents">
+          <nav id="table-of-contents" aria-labelledby="on-this-page">
             <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
             <ul class="usa-unstyled-list"></ul>
           </nav>
@@ -42,20 +42,34 @@
           </section>
           {% endif %}
 
-          {% for healthServiceGroup in clinicalHealthServices %}
-            {% assign groupName = healthServiceGroup.0.fieldServiceNameAndDescripti.entity.parent.0.entity.name %}
-            <section data-label="{{groupName}}">
-              <h2>{{groupName}}</h2>
-              {% for service in healthServiceGroup %}
-                {% include "src/site/facilities/health_service.drupal.liquid" with
-                  healthService = service
-                  sectionName = groupName
-                %}
-              {% endfor %}
-            </section>
-          {% endfor %}
+          {% assign clinicalHealthServices = fieldOffice.entity.reverseFieldRegionPageNode.entities %}
 
-          {% if clinicalHealthServices == false %}
+          {% include "src/site/includes/health_services_listing_services.liquid" with
+            clinicalHealthServices
+            typeOfCare = "Primary care"
+          %}
+
+          {% include "src/site/includes/health_services_listing_services.liquid" with
+            clinicalHealthServices
+            typeOfCare = "Mental health care"
+          %}
+
+          {% include "src/site/includes/health_services_listing_services.liquid" with
+            clinicalHealthServices
+            typeOfCare = "Specialty care"
+          %}
+
+          {% include "src/site/includes/health_services_listing_services.liquid" with
+            clinicalHealthServices
+            typeOfCare = "Social programs and services"
+          %}
+
+          {% include "src/site/includes/health_services_listing_services.liquid" with
+            clinicalHealthServices
+            typeOfCare = "Other services"
+          %}
+
+          {% if clinicalHealthServices.length == 0 %}
             <div>No health services at this time.</div>
           {% endif %}
 

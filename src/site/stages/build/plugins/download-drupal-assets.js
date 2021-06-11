@@ -19,11 +19,15 @@ async function downloadFile(
   if (!asset) {
     return;
   }
-  const fileOutputPath = path.join(
+  const cacheOutputPath = path.join(
     options.cacheDirectory,
     'drupal/downloads',
     asset.dest,
   );
+
+  const buildOutputPath = path.join('build', options.buildtype, asset.dest);
+
+  const outputPaths = [cacheOutputPath, buildOutputPath];
 
   let response;
   let retries = 3;
@@ -51,10 +55,13 @@ async function downloadFile(
     files[asset.dest] = {
       path: asset.dest,
       isDrupalAsset: true,
-      contents: await response.buffer(),
+      contents: '',
     };
 
-    fs.outputFileSync(fileOutputPath, files[asset.dest].contents);
+    const contents = await response.buffer();
+
+    // Store file contents directly on disk
+    outputPaths.forEach(outputPath => fs.outputFileSync(outputPath, contents));
 
     downloadResults.downloadCount++;
 
@@ -101,8 +108,14 @@ async function downloadFile(
 function downloadDrupalAssets(options) {
   const client = getDrupalClient(options);
   return async (files, metalsmith, done) => {
+    const buildPath = path.join('build', options.buildtype);
+
     const assetsToDownload = Object.entries(files)
-      .filter(entry => entry[1].isDrupalAsset && !entry[1].contents)
+      .filter(
+        entry =>
+          entry[1].isDrupalAsset &&
+          !fs.existsSync(path.join(buildPath, entry[1].path)),
+      )
       .map(([key, value]) => ({
         src: value.source,
         dest: key,

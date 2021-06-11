@@ -45,8 +45,10 @@ src/site/layouts/health*.drupal.liquid @department-of-veterans-affairs/vsa-facil
 src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/navigation/facility_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/includes/facilityListing.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
+src/site/includes/vet_centers @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/components/phone.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/components/phone-number.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
+src/site/teasers @department-of-veterans-affairs/vsa-facilities-frontend
 
 # GraphQL Queries, etc.
 # TODO: group these into folders to support team ownership

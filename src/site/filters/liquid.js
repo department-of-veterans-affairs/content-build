@@ -4,8 +4,13 @@ const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
+const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
+
+// The default 2-minute timeout is insufficient with high node counts, likely
+// because metalsmith runs many tinyliquid engines in parallel.
+const TINYLIQUID_TIMEOUT_MINUTES = 20;
 
 function getPath(obj) {
   return obj.path;
@@ -14,9 +19,14 @@ function getPath(obj) {
 module.exports = function registerFilters() {
   const { cmsFeatureFlags } = global;
 
-  // Set timeout option to something higher (20mins)
-  // eslint-disable-next-line no-new
-  new liquid.Context({ timeout: 1200000 });
+  // Set the tinyliquid timeout. This requires access to the liquid context
+  // which is why we're replacing the run() method here.
+  const originalRun = liquid.run;
+  liquid.run = (astList, context, callback) => {
+    // eslint-disable-next-line no-param-reassign
+    context.options.timeout = TINYLIQUID_TIMEOUT_MINUTES * 60 * 1000;
+    originalRun(astList, context, callback);
+  };
 
   // Custom liquid filter(s)
   liquid.filters.humanizeDate = dt =>
@@ -662,6 +672,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.filterBy = (data, filterBy, valueFilter) => {
+    if (!data) return null;
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 
@@ -670,12 +681,17 @@ module.exports = function registerFilters() {
     // eslint-disable-next-line sonarjs/no-small-switch
     switch (contentType) {
       case 'wysiwyg': {
-        return {
-          fieldWysiwyg: {
-            // eslint-disable-next-line camelcase
-            processed: entity?.field_wysiwyg[0]?.processed,
-          },
-        };
+        // handle normalized data format
+        if (entity.fieldWysiwyg) {
+          return entity;
+        } else {
+          return {
+            fieldWysiwyg: {
+              // eslint-disable-next-line camelcase
+              processed: entity?.field_wysiwyg[0]?.processed,
+            },
+          };
+        }
       }
       default: {
         return entity;
@@ -744,5 +760,113 @@ module.exports = function registerFilters() {
       featureContentObj.entity.fieldCta = buttonFeatured;
     }
     return [featureContentObj, ...featureContentArray];
+  };
+
+  liquid.filters.filterPastEvents = data => {
+    if (!data) return null;
+    return data.filter(event => {
+      return moment(event.fieldDatetimeRangeTimezone.value * 1000).isBefore();
+    });
+  };
+
+  liquid.filters.filterUpcomingEvents = data => {
+    if (!data) return null;
+    return data.filter(event => {
+      return moment(event.fieldDatetimeRangeTimezone.value * 1000).isAfter();
+    });
+  };
+
+  //* Sorts event dates (fieldDatetimeRangeTimezone) from newest to oldest.
+  liquid.filters.eventDateSorter = dates => {
+    if (!dates) return null;
+    return dates.sort((a, b) => {
+      const start1 = a.fieldDatetimeRangeTimezone.value;
+      const start2 = b.fieldDatetimeRangeTimezone.value;
+      return start1 - start2;
+    });
+  };
+
+  //* paginatePages has limitations, it is not yet fully operational.
+  liquid.filters.paginatePages = (page, items, aria) => {
+    const perPage = 10;
+
+    const ariaLabel = aria ? ` of ${aria}` : '';
+
+    const paginationPath = pageNum => {
+      return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
+    };
+
+    const pageReturn = [];
+
+    if (items.length > 0) {
+      const pagedEntities = _.chunk(items, perPage);
+
+      for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
+        let pagedPage = Object.assign({}, page);
+        if (pageNum > 0) {
+          pagedPage = set(
+            'entityUrl.path',
+            `${page.entityUrl.path}${paginationPath(pageNum)}`,
+            page,
+          );
+        }
+
+        pagedPage.pagedItems = pagedEntities[pageNum];
+        const innerPages = [];
+
+        if (pagedEntities.length > 0) {
+          // add page numbers
+          const numPageLinks = 3;
+          let start;
+          let length;
+          if (pagedEntities.length <= numPageLinks) {
+            start = 0;
+            length = pagedEntities.length;
+          } else {
+            length = numPageLinks;
+
+            if (pageNum + numPageLinks > pagedEntities.length) {
+              start = pagedEntities.length - numPageLinks;
+            } else {
+              start = pageNum;
+            }
+          }
+
+          for (let num = start; num < start + length; num++) {
+            innerPages.push({
+              href:
+                num === pageNum
+                  ? null
+                  : `${page.entityUrl.path}${paginationPath(num)}`,
+              label: num + 1,
+              class: num === pageNum ? 'va-pagination-active' : '',
+            });
+          }
+
+          pagedPage.paginator = {
+            ariaLabel,
+            prev:
+              pageNum > 0
+                ? `${page.entityUrl.path}${paginationPath(pageNum - 1)}`
+                : null,
+            inner: innerPages,
+            next:
+              pageNum < pagedEntities.length - 1
+                ? `${page.entityUrl.path}${paginationPath(pageNum + 1)}`
+                : null,
+          };
+          pageReturn.push(pagedPage);
+        }
+      }
+    }
+
+    if (!pageReturn[0]) {
+      return {};
+    }
+
+    return {
+      pagedItems: pageReturn[0].pagedItems,
+      paginator: pageReturn[0].paginator,
+    };
   };
 };

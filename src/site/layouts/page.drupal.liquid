@@ -4,9 +4,8 @@
 {% include "src/site/includes/breadcrumbs.drupal.liquid" %}
 
 <div itemscope itemprop="mainEntity" itemtype="https://schema.org/FAQPage">
-  {% assign lang = entityUrl.path | detectLang  %}
 
-  <div id="content" class="interior" lang={{lang}}>
+  <div id="content" class="interior">
     <main class="va-l-detail-page">
       <div class="usa-grid usa-grid-full">
 
@@ -37,7 +36,7 @@
           {% endif %}
 
           {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %}
-          <nav id="table-of-contents">
+          <nav id="table-of-contents" aria-labelledby="on-this-page">
             <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
             <ul class="usa-unstyled-list"></ul>
           </nav>

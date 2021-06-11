@@ -12,12 +12,14 @@ const newTabDomains = [
   'ethics.va.gov',
 ];
 
+const sameTabDomains = ['veteranscrisisline.net', 'maps.google.com'];
+
 function isVADomainThatOpensInNewTab(href) {
   return newTabDomains.some(domain => href.toLowerCase().includes(domain));
 }
 
 function isNonVADomainThatOpensInSameTab(href) {
-  return href.toLowerCase().includes('veteranscrisisline.net');
+  return sameTabDomains.some(domain => href.toLowerCase().includes(domain));
 }
 
 module.exports = {

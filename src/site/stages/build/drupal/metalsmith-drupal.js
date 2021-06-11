@@ -16,7 +16,6 @@ const {
   createPastEventListPages,
   addGetUpdatesFields,
   addPager,
-  sortServices,
 } = require('./health-care-region');
 
 const { addHubIconField } = require('./benefit-hub');
@@ -98,11 +97,6 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
           pageCompiled.allPressReleaseTeasers,
           'press_releases_listing.drupal.liquid',
           'press_release',
-        );
-        break;
-      case 'health_services_listing':
-        pageCompiled.clinicalHealthServices = sortServices(
-          pageCompiled.fieldOffice.entity.reverseFieldRegionPageNode.entities,
         );
         break;
       case 'leadership_listing':
@@ -314,8 +308,18 @@ async function loadCachedDrupalFiles(buildOptions, files) {
       files[relativePath] = {
         path: relativePath,
         isDrupalAsset: true,
-        contents: fs.readFileSync(file),
+        // No need to store Drupal file contents when we can
+        // directly store on disk and save memory
+        contents: '',
       };
+
+      // Copy Drupal file to build directory
+      const buildOutputPath = path.join(
+        'build',
+        buildOptions.buildtype,
+        relativePath,
+      );
+      fs.copySync(file, buildOutputPath);
     });
   }
 }

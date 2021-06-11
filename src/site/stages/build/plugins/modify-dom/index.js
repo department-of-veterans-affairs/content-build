@@ -8,6 +8,8 @@ const addSubheadingsIds = require('./add-id-to-subheadings');
 const checkBrokenLinks = require('./check-broken-links');
 const injectAxeCore = require('./inject-axe-core');
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const getDomModifiers = BUILD_OPTIONS => {
   if (BUILD_OPTIONS.liquidUnitTestingFramework) {
     return [
@@ -28,7 +30,7 @@ const getDomModifiers = BUILD_OPTIONS => {
   ];
 };
 
-const modifyDom = BUILD_OPTIONS => files => {
+const modifyDom = BUILD_OPTIONS => async files => {
   const domModifiers = getDomModifiers(BUILD_OPTIONS);
 
   for (const modifier of domModifiers) {
@@ -40,6 +42,7 @@ const modifyDom = BUILD_OPTIONS => files => {
   // Store only one `file.dom` in memory at a time
   // because storing the virtual DOM of every .html file in memory
   // at once would cause a massive amount of memory to be consumed.
+  let numProcessed = 0;
   for (const [fileName, file] of Object.entries(files)) {
     if (path.extname(fileName) === '.html') {
       file.dom = cheerio.load(file.contents);
@@ -50,6 +53,11 @@ const modifyDom = BUILD_OPTIONS => files => {
         file.contents = Buffer.from(file.dom.html());
       }
       delete file.dom;
+      numProcessed++;
+
+      // Pause for garbage collection to free unused buffer memory
+      // eslint-disable-next-line no-await-in-loop
+      if (numProcessed % 100 === 0) await sleep(1);
     }
   }
 
@@ -58,6 +66,9 @@ const modifyDom = BUILD_OPTIONS => files => {
       modifier.conclude(BUILD_OPTIONS, files);
     }
   }
+
+  // eslint-disable-next-line no-console
+  console.log(`\nParsed and created DOM for ${numProcessed} files.`);
 };
 
 module.exports = modifyDom;

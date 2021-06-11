@@ -49,7 +49,6 @@ fragment nodeMediaListImages on NodeMediaListImages {
       ... linkTeaser
     }
   }
-
   fieldMediaListImages {
     entity {
       ... on ParagraphMediaListImages {
