@@ -390,9 +390,11 @@ const nodeCampaignLandingPage = `
               ... on Media {
                 name
                 thumbnail {
-                  height
-                  width
-                  url
+                  derivative(style: _32MEDIUMTHUMBNAIL) {
+                    url
+                    width
+                    height
+                  }
                   targetId
                   alt
                   title
@@ -431,9 +433,6 @@ const nodeCampaignLandingPage = `
                     width
                     height
                   }
-                  height
-                  width
-                  url
                   targetId
                   alt
                   title

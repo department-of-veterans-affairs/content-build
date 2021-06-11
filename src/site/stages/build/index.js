@@ -32,6 +32,7 @@ const createResourcesAndSupportWebsiteSection = require('./plugins/create-resour
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+const ignoreAssets = require('./plugins/ignore-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
@@ -74,6 +75,10 @@ function build(BUILD_OPTIONS) {
   const smith = silverSmith();
 
   registerLiquidFilters();
+
+  // Start manual garbage collection to limit large spikes in memory use.
+  // This prevents running out of memory on CI.
+  smith.startGarbageCollection();
 
   // Set up Metalsmith. BE CAREFUL if you change the order of the plugins. Read the comments and
   // add comments about any implicit dependencies you are introducing!!!
@@ -239,8 +244,15 @@ function build(BUILD_OPTIONS) {
     'Parse a virtual DOM from every .html file and perform a variety of DOM sub-operations on each file',
   );
 
+  // Ignore Drupal and application assets when building pages, so they don't get overwritten.
+  // We no longer need to build them now that they are stored directly on disk
+  smith.use(ignoreAssets(), 'Ignore assets for build');
+
   smith.build(err => {
-    if (err) throw err;
+    if (err) {
+      smith.endGarbageCollection();
+      throw err;
+    }
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
@@ -264,7 +276,11 @@ function build(BUILD_OPTIONS) {
       // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {
         smith.printSummary();
+        smith.printPeakMemory();
       }
+
+      smith.endGarbageCollection();
+
       console.log('The Metalsmith build has completed.');
 
       if (usingCMSExport) {

@@ -5,6 +5,7 @@ const healthCareRegionPage = require('./healthCareRegionPage.graphql');
 
 const bioPage = require('./bioPage.graphql');
 const eventPage = require('./eventPage.graphql');
+const eventListingPage = require('./eventListingPage.graphql');
 const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
@@ -50,6 +51,7 @@ module.exports = `
   ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
   ${eventPage.fragment}
+  ${eventListingPage.fragment}
   ${bioPage.fragment}
   ${vaFormPage.fragment}
   ${nodeQa.fragment}
@@ -83,6 +85,7 @@ module.exports = `
         ... pressReleasePage
         ... vamcOperatingStatusAndAlerts
         ... eventPage
+        ... eventListingPage
         ... bioPage
         ... vaFormPage
         ... nodeQa

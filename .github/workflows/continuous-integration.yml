@@ -215,16 +215,32 @@ jobs:
           BUILDTIME=$(date +%s)
           EOF
 
-      - name: Compress ${{ matrix.buildtype }} build
-        if: ${{ github.ref == 'refs/heads/master' && success() }}
+      - name: Compress vagovprod build for E2E
+        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
+        run: tar -jcvf test-build.tar.bz2 build/vagovprod
+
+      - name: Upload artifact vagovprod build for E2E
+        uses: actions/upload-artifact@v2
+        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
+
+      - name: Prearchive
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+
+      - name: Compress prearchived ${{ matrix.buildtype }} build
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
 
-      - name: Upload build
+      - name: Upload artifact ${{ matrix.buildtype }} build for archive
         uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' && success() }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
-          name: ${{ matrix.buildtype }}
-          path: ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.bz2
+          name: ${{ matrix.buildtype }}.tar.bz2
+          path: content-build/${{ matrix.buildType }}.tar.bz2
           retention-days: 1
 
       - name: Configure AWS credentials
@@ -280,87 +296,11 @@ jobs:
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: "U01SPJ10WBC"
 
-  prearchive:
-    name: Prearchive
-    runs-on: self-hosted
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [security-audit, unit-tests, linting, drupal-cache-test, build]
-    defaults:
-      run:
-        working-directory: content-build
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
-    steps:
-      - name: Checkout vagov-content
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
-
-      - name: Checkout content-build
-        uses: actions/checkout@v2
-        with:
-          path: content-build
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-        env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
-
-      - name: Make build directory
-        run: mkdir -p build
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ matrix.buildtype }}
-          path: content-build/build
-
-      - name: Extract ${{ matrix.buildtype }}
-        run: tar -jxvf build/${{ matrix.buildType }}.tar.bz2
-
-      - name: Prearchive
-        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
-
-      - name: Compress ${{ matrix.buildtype }} build w/ urls updated
-        run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
-
-      - name: Upload build
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.buildtype }}
-          path: ${{ github.workspace }}/content-build/${{ matrix.buildType }}.tar.bz2
-          retention-days: 1
-
   archive:
     name: Archive
     runs-on: ubuntu-latest
-    needs: [prearchive]
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: [security-audit, unit-tests, linting, drupal-cache-test, build]
 
     strategy:
       fail-fast: true
@@ -371,7 +311,7 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ matrix.buildtype }}
+          name: ${{ matrix.buildtype }}.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
