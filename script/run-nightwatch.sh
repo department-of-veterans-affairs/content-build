@@ -25,14 +25,14 @@ done
 # endpoints that selenium can run against.
 
 # Ensure all running servers are terminated on script exit.
-trap 'if [[ $(jobs -p) ]] ; then kill $(jobs -p); fi' EXIT
+trap 'if [ $(jobs -p) ] ; then kill $(jobs -p); fi' EXIT
 
 BUILDTYPE=${BUILDTYPE:-vagovdev}
 
 "$(dirname "$0")"/run-mockapi.sh &
 
 # Check to see if we already have a server running on port 3002 (as with 'npm run build')
- if [[ "$(nc -z localhost 3002; echo $?)" -ne 0 ]]; then
+ if [ "$(nc -z localhost 3002; echo $?)" -ne 0 ]; then
   echo "Starting test-server.js..."
   node src/platform/testing/e2e/test-server.js --buildtype ${BUILDTYPE} &
 else
@@ -55,7 +55,7 @@ while ! echo exit | nc localhost ${WEB_PORT:-3333}; do sleep 3; done
 #curl http://localhost:3002/generated/hca.entry.js > /dev/null 2>&1
 
 # Execute the actual tests.
-if [[ $SAUCE == true ]]; then
+if [ $SAUCE == true ]; then
   BABEL_ENV=test npm --no-color run nightwatch-sauce -- "${@}"
 elif [ $VISUAL_REGRESSION_TESTING = true ]; then
   BABEL_ENV=test npm --no-color run nightwatch-visual -- "${@}"
