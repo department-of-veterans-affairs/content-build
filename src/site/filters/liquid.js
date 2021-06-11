@@ -681,12 +681,17 @@ module.exports = function registerFilters() {
     // eslint-disable-next-line sonarjs/no-small-switch
     switch (contentType) {
       case 'wysiwyg': {
-        return {
-          fieldWysiwyg: {
-            // eslint-disable-next-line camelcase
-            processed: entity?.field_wysiwyg[0]?.processed,
-          },
-        };
+        // handle normalized data format
+        if (entity.fieldWysiwyg) {
+          return entity;
+        } else {
+          return {
+            fieldWysiwyg: {
+              // eslint-disable-next-line camelcase
+              processed: entity?.field_wysiwyg[0]?.processed,
+            },
+          };
+        }
       }
       default: {
         return entity;
