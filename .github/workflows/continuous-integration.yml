@@ -226,7 +226,7 @@ jobs:
         if: ${{ matrix.buildType == 'vagovprod' }}
         with:
           name: test-build.tar.bz2
-          path: ${{ matrix.buildType }}.tar.bz2
+          path: test-build.tar.bz2
           retention-days: 1
 
       - name: Prearchive
@@ -242,7 +242,7 @@ jobs:
         # if: ${{ github.ref == 'refs/heads/master' }}
         with:
           name: ${{ matrix.buildtype }}.tar.bz2
-          path: ${{ matrix.buildType }}.tar.bz2
+          path: content-build/${{ matrix.buildType }}.tar.bz2
           retention-days: 1
 
       - name: Configure AWS credentials
@@ -302,7 +302,7 @@ jobs:
     name: Archive
     runs-on: ubuntu-latest
     # if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [build]
+    needs: [security-audit, unit-tests, linting, drupal-cache-test, build]
 
     strategy:
       fail-fast: true
