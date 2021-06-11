@@ -41,7 +41,7 @@
                 <div class="">
                     {% if fieldFacebook != empty %}
                         <div class="social-links social-links-facebook vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldFacebook.url.path }}">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldFacebook.uri }}">
                                 <i class="fab fa-facebook-square vads-u-margin-right--1"></i>
                                 <span class="vads-u-text-decoration--underline">{{ fieldFacebook.title }}</span>
                             </a>
@@ -50,7 +50,7 @@
 
                     {% if fieldTwitter != empty %}
                         <div class="social-links social-links-twitter vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldTwitter.url.path }}">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldTwitter.uri }}">
                                 <i class="fab fa-twitter vads-u-text-decoration--none vads-u-margin-right--1"></i>
                                 <span class="vads-u-text-decoration--underline">{{ fieldTwitter.title }}</span>
                             </a>
@@ -58,7 +58,7 @@
                     {% endif %}
                     {% if fieldFlickr != empty %}
                         <div class="social-links social-links-flickr vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldFlickr.url.path }}">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldFlickr.uri }}">
                                 <i class="fab fa-flickr vads-u-text-decoration--none vads-u-margin-right--1"></i>
                                 <span class="vads-u-text-decoration--underline">{{ fieldFlickr.title }}</span>
                             </a>
@@ -67,7 +67,7 @@
 
                     {% if fieldInstagram != empty %}
                         <div class="social-links social-links-instagram vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldInstagram.url.path }}">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" target="_blank" href="{{ fieldInstagram.uri }}">
                                 <i class="fab fa-instagram vads-u-text-decoration--none vads-u-margin-right--1"></i>
                                 <span class="vads-u-text-decoration--underline">{{ fieldInstagram.title }}</span>
                             </a>

@@ -10,17 +10,39 @@ const {
   cleanConsole,
 } = require('./console');
 
+// Adjust the GC frequency to balance build time and peak memory usage.
+// Note: if the value is set too high, build time may actually increase, likely
+// due to heap size approaching the max, causing extra scavange GCs.
+// You may need to adjust --max-old-space-size (heap size) as well.
+// Use the --trace-gc flag to show garbage collection stats.
+const GARBAGE_COLLECTION_FREQUENCY_SECONDS = 10;
+let garbageCollectionInterval;
+let peakRSSUsed = 0;
+
 const formatMemory = m => Math.round((m / 1024 / 1024) * 100) / 100;
 
-const logMemoryUsage = (heapUsedStart, heapUsedEnd) => {
+const printGarbageCollectionStats = (memBefore, memAfter) => {
+  const getDiff = stat => formatMemory(memBefore[stat] - memAfter[stat]);
+  const getMsg = stat =>
+    `${stat}: ${formatMemory(memAfter[stat])}mB (${getDiff(stat)}mB collected)`;
+  if (memBefore.rss > peakRSSUsed) peakRSSUsed = memBefore.rss;
+
+  console.log(`\n[MANUAL GC] ${getMsg('heapUsed')} ${getMsg('rss')}\n`);
+};
+
+const logMemoryUsage = (heapUsedStart, heapUsedEnd, rssStart, rssEnd) => {
   console.log(
     chalk.bold('Starting memory:'),
-    `${formatMemory(heapUsedStart)}mB`,
+    `${formatMemory(heapUsedStart)}mB heap, ${formatMemory(rssStart)}mB rss`,
   );
-  console.log(chalk.bold('Ending memory:'), `${formatMemory(heapUsedEnd)}mB`);
   console.log(
-    chalk.bold('Delta:'),
-    `${formatMemory(heapUsedEnd - heapUsedStart)}mB`,
+    chalk.bold('Ending memory:'),
+    `${formatMemory(heapUsedEnd)}mB heap, ${formatMemory(rssEnd)}mB rss`,
+  );
+  console.log(
+    chalk.bold('Deltas:'),
+    `${formatMemory(heapUsedEnd - heapUsedStart)}mB heap, ` +
+      `${formatMemory(rssEnd - rssStart)}mB rss`,
   );
 };
 
@@ -76,45 +98,80 @@ module.exports = () => {
 
     let timerStart;
     let heapUsedStart;
+    let rssStart;
 
     return smith
       ._use(() => {
         heapUsedStart = process.memoryUsage().heapUsed;
+        rssStart = process.memoryUsage().rss;
         smith.stepStats[step].memoryStart = heapUsedStart;
+        smith.stepStats[step].rssStart = rssStart;
         logStepStart(step, description);
         timerStart = process.hrtime.bigint();
       })
       ._use(plugin)
       ._use(() => {
         const heapUsedEnd = process.memoryUsage().heapUsed;
+        const rssEnd = process.memoryUsage().rss;
         smith.stepStats[step].memoryEnd = heapUsedEnd;
+        smith.stepStats[step].rssEnd = rssEnd;
 
         const timeElapsed = (process.hrtime.bigint() - timerStart) / 1000000n;
         smith.stepStats[step].timeElapsed = timeElapsed;
 
         logStepEnd(step, description, timeElapsed);
         if (global.verbose) {
-          logMemoryUsage(heapUsedStart, heapUsedEnd);
+          logMemoryUsage(heapUsedStart, heapUsedEnd, rssStart, rssEnd);
         }
       });
   };
 
+  smith.startGarbageCollection = function startGarbageCollection() {
+    if (global.gc) {
+      garbageCollectionInterval = setInterval(() => {
+        const memBefore = process.memoryUsage();
+        global.gc();
+        const memAfter = process.memoryUsage();
+        if (global.verbose) printGarbageCollectionStats(memBefore, memAfter);
+      }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
+    } else {
+      throw new Error(
+        'Manual garbage collection disabled. Enable with --expose-gc',
+      );
+    }
+  };
+
+  smith.endGarbageCollection = function endGarbageCollection() {
+    clearInterval(garbageCollectionInterval);
+  };
+
+  smith.printPeakMemory = function printPeakMemory() {
+    console.log(`\nPeak RSS used: ${formatMemory(peakRSSUsed)}mB\n`);
+  };
+
   smith.printSummary = function printSummary() {
+    const truncate = input =>
+      input.length > 55 ? `${input.substring(0, 55)}...` : input;
+
     const table = new AsciiTable('Step summary');
     table.setHeading(
       'Step',
       'Description',
       'Time Elapsed',
-      'Memory Used This Step',
-      'Total Memory Used After Step',
+      'Heap Change',
+      'Total Heap',
+      'RSS Change',
+      'Total RSS',
     );
     smith.stepStats.forEach((stats, index) =>
       table.addRow(
         index,
-        stats.description,
+        truncate(stats.description),
         `${stats.timeElapsed}ms`,
         `${formatMemory(stats.memoryEnd - stats.memoryStart)}mB`,
         `${formatMemory(stats.memoryEnd)}mB`,
+        `${formatMemory(stats.rssEnd - stats.rssStart)}mB`,
+        `${formatMemory(stats.rssEnd)}mB`,
       ),
     );
 
