@@ -18,33 +18,24 @@
                 </p>
                 {% endif %}
               </div>
-
-            {% assign stories = reverseFieldListingNode.entities %}
-              {% if paginator.prev == null %}
-                {% for storyFeature in stories %}
-                  {% if storyFeature.fieldFeatured == true %}
-                {% include "src/site/teasers/news_story_page_feature.drupal.liquid" with node = storyFeature %}
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-
+          {% assign stories = reverseFieldListingNode.entities %}
           {% if isPreview %}
             {% assign pagingResult = debug | paginatePages: stories, 'story' %}
             {% assign pagedItems = pagingResult.pagedItems%}
             {% assign paginator = pagingResult.paginator%}
-            {% for story in pagedItems %}
-              {% if story.fieldFeatured == false %}
-                {% include "src/site/teasers/news_story_page.drupal.liquid" with node = story %}
-              {% endif %}
-            {% endfor %}
-          {% else %}
-            {% for story in pagedItems %}
-              {% if story.fieldFeatured == false %}
-                {% include "src/site/teasers/news_story_page.drupal.liquid" with node = story %}
+          {% endif %}
+          {% if paginator.prev == null %}
+            {% for storyFeature in stories %}
+              {% if storyFeature.fieldFeatured == true %}
+                {% include "src/site/teasers/news_story_page_feature.drupal.liquid" with node = storyFeature %}
               {% endif %}
             {% endfor %}
           {% endif %}
-
+          {% for story in pagedItems %}
+            {% if story.fieldFeatured == false %}
+              {% include "src/site/teasers/news_story_page.drupal.liquid" with node = story %}
+            {% endif %}
+          {% endfor %}
           {% if stories.length == 0 %}
             <div class="clearfix-text">No stories at this time.</div>
           {% endif %}
