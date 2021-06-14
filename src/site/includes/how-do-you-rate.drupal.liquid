@@ -18,7 +18,7 @@
         <span class="sr-only">Error</span> Please select an answer
       </span>
 
-      <div id="rating-buttons" class="form-radio-buttons">
+      <div id="rating-buttons" class="form-radio-buttons vads-u-display--flex vads-u-align-items--center">
         <!-- Good rating -->
         <div class="radio-button">
           <input id="good" name="rating" type="radio" value="Good" />
@@ -34,8 +34,8 @@
     </fieldset>
 
     <div>
-      <button class="usa-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
-        Submit rating
+      <button class="usa-button usa-button-secondary vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
+        Submit feedback
       </button>
     </div>
 
@@ -102,7 +102,7 @@
       // We don't need the rating options anymore, so hide it.
       if (ratingButtonsElement) {
         ratingButtonsElement.setAttribute('aria-hidden', 'true');
-        ratingButtonsElement.className = ratingButtonsElement.className + ' vads-u-display--none';
+        ratingButtonsElement.className = ratingButtonsElement.className.replace('vads-u-display--flex', '') + ' vads-u-display--none';
       }
 
       // We need to show the thank you message, so show it.
