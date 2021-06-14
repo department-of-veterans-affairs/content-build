@@ -776,13 +776,15 @@ module.exports = function registerFilters() {
     });
   };
 
-  //* Sorts event dates (fieldDatetimeRangeTimezone) from newest to oldest.
-  liquid.filters.eventDateSorter = dates => {
+  //* Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
+  //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
+  liquid.filters.eventOrPressReleasesDateSorter = (dates, dateKey, reverse) => {
     if (!dates) return null;
     return dates.sort((a, b) => {
-      const start1 = a.fieldDatetimeRangeTimezone.value;
-      const start2 = b.fieldDatetimeRangeTimezone.value;
-      return start1 - start2;
+      const start1 = moment(a[dateKey].value);
+      const start2 = moment(b[dateKey].value);
+
+      return reverse ? start2 - start1 : start1 - start2;
     });
   };
 

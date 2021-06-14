@@ -68,19 +68,28 @@ larger space in the Fayette Plaza at 627 Pittsburgh Road, Suite 2, Uniontown,
               </p>
               {% endif %}
             </div>
+            
+            {% if isPreview %}
+              {% assign pressReleases = reverseFieldListingNode.entities %}
+              {% assign sortedReleases = pressReleases | eventOrPressReleasesDateSorter: 'fieldReleaseDate', true %}
+              {% assign pagingResult = debug | paginatePages: sortedReleases, 'press_release' %}
+              {% assign pagedItems = pagingResult.pagedItems %}
+              {% assign paginator = pagingResult.paginator %}
+            {% endif %}
+
             {% for pr in pagedItems %}
-            <section class="vads-u-margin-bottom--4">
-              <h2
-                class="vads-u-margin-bottom--1p5 vads-u-font-size--md medium-screen:vads-u-font-size--lg">
-                <a href="{{ pr.entityUrl.path }}">{{ pr.title }}</a></h2>
-              <strong>{{ pr.fieldReleaseDate.value | formatDate: "MMMM DD, YYYY" }}</strong>
-              <p class="vads-u-margin-top--0">
-                {{ pr.fieldIntroText | truncatewords: 60, "..." }}</p>
-            </section>
+              <section class="vads-u-margin-bottom--4">
+                <h2
+                  class="vads-u-margin-bottom--1p5 vads-u-font-size--md medium-screen:vads-u-font-size--lg">
+                  <a href="{{ pr.entityUrl.path }}">{{ pr.title }}</a></h2>
+                <strong>{{ pr.fieldReleaseDate.value | formatDate: "MMMM DD, YYYY" }}</strong>
+                <p class="vads-u-margin-top--0">
+                  {{ pr.fieldIntroText | truncatewords: 60, "..." }}</p>
+              </section>
             {% endfor %}
 
-            {% if pagedItems == false %}
-            <div class="clearfix-text">No news releases at this time.</div>
+            {% if pagedItems.length < 1 %}
+              <div class="clearfix-text">No news releases at this time.</div>
             {% endif %}
 
             {% include "src/site/includes/pagination.drupal.liquid" %}
