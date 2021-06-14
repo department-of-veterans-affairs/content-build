@@ -4,7 +4,7 @@
   <form
     class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
     data-template="includes/how-do-you-rate"
-    onsubmit="onRatingSubmit(event)"
+    id="how-do-you-rate-form"
     >
     <!-- Rating options -->
     <fieldset id="rating-options" class="fieldset-input vads-u-margin-top--1">
@@ -21,13 +21,13 @@
       <div id="rating-buttons" class="form-radio-buttons">
         <!-- Good rating -->
         <div class="radio-button">
-          <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" />
+          <input id="good" name="rating" type="radio" value="Good" />
           <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
         </div>
 
         <!-- Bad rating -->
         <div class="radio-button">
-          <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" />
+          <input id="bad" name="rating" type="radio" value="Bad" />
           <label class="vads-u-margin--0" for="bad">Bad</label>
         </div>
       </div>
@@ -113,5 +113,16 @@
         thankYouMessageElement.focus();
       }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Derive elements that need event listeners.
+      var howDoYouRateForm = document.getElementById('how-do-you-rate-form');
+      var goodField = document.getElementById('good');
+      var badField = document.getElementById('bad');
+
+      if (howDoYouRateForm) howDoYouRateForm.addEventListener('submit', onRatingSubmit);
+      if (goodField) goodField.addEventListener('click', onRatingChange);
+      if (badField) badField.addEventListener('click', onRatingChange);
+    });
   </script>
 {% endif %}
