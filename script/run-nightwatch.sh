@@ -25,7 +25,7 @@ done
 # endpoints that selenium can run against.
 
 # Ensure all running servers are terminated on script exit.
-trap 'if [ "$(jobs -p)"] ; then kill "$(jobs -p);" fi' EXIT
+# trap 'if [ "$(jobs -p)"] ; then kill "$(jobs -p);" fi' EXIT
 
 BUILDTYPE=${BUILDTYPE:-vagovdev}
 
