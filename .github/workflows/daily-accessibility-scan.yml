@@ -22,6 +22,8 @@ jobs:
 
     strategy:
       fail-fast: true
+      matrix:
+        sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
 
     steps:
       - name: Configure AWS credentials
@@ -116,7 +118,7 @@ jobs:
 
       - name: Run Accessibility Scan
         id: accessibility-scan
-        run: WEB_PORT=3002 BUILDTYPE=vagovprod yarn test:accessibility
+        run: WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
         timeout-minutes: 600
 
       - name: Accessibility Test Failure

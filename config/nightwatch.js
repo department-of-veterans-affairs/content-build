@@ -67,7 +67,7 @@ module.exports = {
       },
     },
     accessibility: {
-      filter: './src/platform/site-wide/tests/sitemap/*.spec.js',
+      filter: `./src/platform/site-wide/tests/sitemap/{$process.env.SITEMAP}.spec.js`,
     },
     headless: {
       desiredCapabilities: {
@@ -83,7 +83,7 @@ module.exports = {
     },
     bestpractice: {
       globals: {
-        rules: ['section508', 'wcag2a', 'wcag2aa', 'best-practice'],
+        rules: ['section508', 'wcag2a', 'wcag2aa'],
       },
     },
   },
