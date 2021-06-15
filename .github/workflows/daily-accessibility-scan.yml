@@ -22,6 +22,7 @@ jobs:
 
     strategy:
       # fail-fast: true
+      max-parallel: 4
       matrix:
         sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
 
