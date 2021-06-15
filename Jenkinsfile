@@ -26,11 +26,12 @@ node('vetsgov-general-purpose') {
   stage('Main') {
     def contentOnlyBuild = params.cmsEnvBuildOverride != 'none'
     def assetSource = contentOnlyBuild ? ref : 'local'
+    GH_ORG = 'department-of-veterans-affairs'
 
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-vfs-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
     GitHub github = new GitHubBuilder().withPassword(env.USERNAME, env.TOKEN).build();
-    if (github.getRepository(GH_ORG + '/' + app).getLastCommitStatus(ref)) {
-      def r = github.getRepository(GH_ORG + '/' + app).getLastCommitStatus(ref).getState()
+    if (github.getRepository(GH_ORG + '/' + params.app).getLastCommitStatus(ref)) {
+      def r = github.getRepository(GH_ORG + '/' + params.app).getLastCommitStatus(ref).getState()
       return r.toString()
     } else {
       return "NULL"
