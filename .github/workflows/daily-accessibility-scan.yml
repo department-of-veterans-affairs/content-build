@@ -21,17 +21,9 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
-      fail-fast: false
+      # fail-fast: true
       matrix:
-        include:
-          - sitemap: sitemap-1
-            port: 3002
-          - sitemap: sitemap-2
-            port: 3003
-          - sitemap: sitemap-3
-            port: 3004
-          - sitemap: sitemap-4
-            port: 3005
+        sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
 
     steps:
       - name: Configure AWS credentials
@@ -119,17 +111,30 @@ jobs:
         env:
           NODE_ENV: production
 
+      - name: Sleep for 2 mins
+        if: ${{ matrix.sitemap == 'sitemap-2' }}
+        uses: whatnick/wait-action@master
+        with:
+          time: '2m'
+
+      - name: Sleep for 4 mins
+        if: ${{ matrix.sitemap == 'sitemap-3' }}
+        uses: whatnick/wait-action@master
+        with:
+          time: '4m'
+
+      - name: Sleep for 6 mins
+        if: ${{ matrix.sitemap == 'sitemap-4' }}
+        uses: whatnick/wait-action@master
+        with:
+          time: '6m'
+
       - name: Run Accessibility Scan
         id: accessibility-scan
-        continue-on-error: true
-        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=${{ matrix.port }} SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
-        timeout-minutes: 30
+        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
+        timeout-minutes: 45
 
-      - name: Kill all nodes
-        if: ${{ steps.accessibility-scan.outcome == 'failure' }}
-        run: kill $(lsof -t -i:${{ matrix.port }})
-
-      - name: Sleep for 5 mins
+      - name: Sleep for 4 mins
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
         uses: whatnick/wait-action@master
         with:
@@ -138,8 +143,8 @@ jobs:
       - name: Retry Accessibility Scan
         id: retry-accessibility-scan
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
-        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=${{ matrix.port }} SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
-        timeout-minutes: 30
+        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
+        timeout-minutes: 45
 
       - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
