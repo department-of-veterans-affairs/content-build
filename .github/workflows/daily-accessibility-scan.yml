@@ -22,6 +22,7 @@ jobs:
 
     strategy:
       # fail-fast: true
+      max-parallel: 2
       matrix:
         sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
 
@@ -112,22 +113,10 @@ jobs:
           NODE_ENV: production
 
       - name: Sleep for 2 mins
-        if: ${{ matrix.sitemap == 'sitemap-2' }}
+        if: ${{ matrix.sitemap != 'sitemap-1' }}
         uses: whatnick/wait-action@master
         with:
           time: '2m'
-
-      - name: Sleep for 4 mins
-        if: ${{ matrix.sitemap == 'sitemap-3' }}
-        uses: whatnick/wait-action@master
-        with:
-          time: '4m'
-
-      - name: Sleep for 6 mins
-        if: ${{ matrix.sitemap == 'sitemap-4' }}
-        uses: whatnick/wait-action@master
-        with:
-          time: '6m'
 
       - name: Run Accessibility Scan
         id: accessibility-scan
