@@ -56,13 +56,8 @@ module.exports = {
         cli_args: {
           'webdriver.chrome.driver': chromedriver.path,
         },
-        // start_process: true,
         server_path: seleniumServer.path,
-        // log_path: selenium_logs,
-        // host: '127.0.0.1',
-        // port: selenium_server_port,
-
-        start_process: false,
+        start_process: true,
         log_path: selenium_logs,
         host: 'selenium-chrome',
         port: selenium_server_port,
