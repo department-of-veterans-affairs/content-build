@@ -119,7 +119,7 @@ jobs:
 
       - name: Kill all nodes
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
-        uses: killall node
+        run: killall node
 
       - name: Sleep for 5 mins
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
