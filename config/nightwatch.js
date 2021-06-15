@@ -22,7 +22,7 @@ module.exports = {
   live_output: true,
   parallel_process_delay: 10,
   disable_colors: process.env.BUILDTYPE === 'production',
-  test_workers: { enabled: false, workers: 4 },
+  test_workers: { enabled: true, workers: 4 },
   test_settings: {
     default: {
       launch_url: `localhost:${process.env.WEB_PORT || 3333}`,
@@ -63,8 +63,8 @@ module.exports = {
         port: selenium_server_port,
       },
       test_workers: {
-        enabled: false,
-        // workers: 4,
+        enabled: true,
+        workers: 4,
       },
     },
     accessibility: {

@@ -62,7 +62,7 @@ jobs:
           path: ./.github/actions/vsp-github-actions
 
       - name: Alert Slack
-        if: ${{ matrix.sitemap == 'sitemap-1' }}
+        # if: ${{ matrix.sitemap == 'sitemap-1' }}
         uses: ./.github/actions/vsp-github-actions/slack-socket
         env:
           SSL_CERT_DIR: /etc/ssl/certs
