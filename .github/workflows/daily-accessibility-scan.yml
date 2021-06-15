@@ -115,7 +115,11 @@ jobs:
         id: accessibility-scan
         continue-on-error: true
         run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
-        timeout-minutes: 25
+        timeout-minutes: 30
+
+      - name: Kill all nodes
+        if: ${{ steps.accessibility-scan.outcome == 'failure' }}
+        uses: killall node
 
       - name: Sleep for 5 mins
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
@@ -127,7 +131,7 @@ jobs:
         id: retry-accessibility-scan
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
         run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
-        timeout-minutes: 25
+        timeout-minutes: 30
 
       - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
