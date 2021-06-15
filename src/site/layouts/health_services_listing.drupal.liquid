@@ -42,6 +42,8 @@
           </section>
           {% endif %}
 
+          {% assign clinicalHealthServices = fieldOffice.entity.reverseFieldRegionPageNode.entities %}
+
           {% include "src/site/includes/health_services_listing_services.liquid" with
             clinicalHealthServices
             typeOfCare = "Primary care"
@@ -67,7 +69,7 @@
             typeOfCare = "Other services"
           %}
 
-          {% if clinicalHealthServices == false %}
+          {% if clinicalHealthServices.length == 0 %}
             <div>No health services at this time.</div>
           {% endif %}
 

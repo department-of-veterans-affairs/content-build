@@ -4,7 +4,7 @@
   <form
     class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
     data-template="includes/how-do-you-rate"
-    onsubmit="onRatingSubmit(event)"
+    id="how-do-you-rate-form"
     >
     <!-- Rating options -->
     <fieldset id="rating-options" class="fieldset-input vads-u-margin-top--1">
@@ -18,24 +18,24 @@
         <span class="sr-only">Error</span> Please select an answer
       </span>
 
-      <div id="rating-buttons" class="form-radio-buttons">
+      <div id="rating-buttons" class="form-radio-buttons vads-u-display--flex vads-u-align-items--center">
         <!-- Good rating -->
         <div class="radio-button">
-          <input id="good" onclick="onRatingChange(event)" name="rating" type="radio" value="Good" />
+          <input id="good" name="rating" type="radio" value="Good" />
           <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
         </div>
 
         <!-- Bad rating -->
         <div class="radio-button">
-          <input id="bad" onclick="onRatingChange(event)" name="rating" type="radio" value="Bad" />
+          <input id="bad" name="rating" type="radio" value="Bad" />
           <label class="vads-u-margin--0" for="bad">Bad</label>
         </div>
       </div>
     </fieldset>
 
     <div>
-      <button class="usa-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
-        Submit rating
+      <button class="usa-button usa-button-secondary vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
+        Submit feedback
       </button>
     </div>
 
@@ -43,7 +43,7 @@
     <p aria-hidden="true" id="thank-you-message" class="vads-u-display--none vads-u-margin--0">Thank you for your feedback.</p>
   </form>
 
-  <script>
+  <script nonce="**CSP_NONCE**" type="text/javascript">
     function onRatingChange(event) {
       // Derive the elements on the page.
       var ratingOptionsElement = document.getElementById("rating-options");
@@ -102,7 +102,7 @@
       // We don't need the rating options anymore, so hide it.
       if (ratingButtonsElement) {
         ratingButtonsElement.setAttribute('aria-hidden', 'true');
-        ratingButtonsElement.className = ratingButtonsElement.className + ' vads-u-display--none';
+        ratingButtonsElement.className = ratingButtonsElement.className.replace('vads-u-display--flex', '') + ' vads-u-display--none';
       }
 
       // We need to show the thank you message, so show it.
@@ -113,5 +113,16 @@
         thankYouMessageElement.focus();
       }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Derive elements that need event listeners.
+      var howDoYouRateForm = document.getElementById('how-do-you-rate-form');
+      var goodField = document.getElementById('good');
+      var badField = document.getElementById('bad');
+
+      if (howDoYouRateForm) howDoYouRateForm.addEventListener('submit', onRatingSubmit);
+      if (goodField) goodField.addEventListener('click', onRatingChange);
+      if (badField) badField.addEventListener('click', onRatingChange);
+    });
   </script>
 {% endif %}
