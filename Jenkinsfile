@@ -2,6 +2,7 @@
 import org.kohsuke.github.GitHub
 import org.kohsuke.github.GitHubBuilder
 
+
 env.CONCURRENCY = 10
 
 
@@ -30,12 +31,14 @@ node('vetsgov-general-purpose') {
 
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-vfs-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
     GitHub github = new GitHubBuilder().withPassword(env.USERNAME, env.TOKEN).build();
-    if (github.getRepository(GH_ORG + '/' + params.app).getLastCommitStatus(ref)) {
-      def r = github.getRepository(GH_ORG + '/' + params.app).getLastCommitStatus(ref).getState()
-      return r.toString()
-    } else {
-      return "NULL"
-    }
+    def r = github.getRepository(GH_ORG + '/content-build').getCheckRuns(ref);
+    echo "${r}"
+    // if (github.getRepository(GH_ORG + '/content-build').getLastCommitStatus(ref)) {
+    //   def r = github.getRepository(GH_ORG + '/content-build').getLastCommitStatus(ref).getState()
+    //   return r.toString()
+    // } else {
+    //   return "NULL"
+    // }
   }
 
     // try {
