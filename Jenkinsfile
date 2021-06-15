@@ -31,8 +31,10 @@ node('vetsgov-general-purpose') {
 
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-vfs-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
     GitHub github = new GitHubBuilder().withPassword(env.USERNAME, env.TOKEN).build();
-    def r = github.getRepository(GH_ORG + '/content-build').getCheckRuns(ref);
+    def r = github.getRepository(GH_ORG + '/content-build');
     echo "${r}"
+    def x = github.getRepository(GH_ORG + '/content-build').getCheckRun();
+    echo "${x}"
     // if (github.getRepository(GH_ORG + '/content-build').getLastCommitStatus(ref)) {
     //   def r = github.getRepository(GH_ORG + '/content-build').getLastCommitStatus(ref).getState()
     //   return r.toString()
