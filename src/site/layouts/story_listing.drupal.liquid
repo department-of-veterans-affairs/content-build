@@ -18,21 +18,27 @@
                 </p>
                 {% endif %}
               </div>
-          {% if paginator.prev == null %}
-          {% for storyFeature in allNewsStoryTeasers.entities %}
-            {% if storyFeature.fieldFeatured == true %}
-              {% include "src/site/teasers/news_story_page_feature.drupal.liquid" with node = storyFeature %}
-            {% endif %}
-          {% endfor %}
+          {% assign stories = reverseFieldListingNode.entities %}
+          {% assign isFirstPage = isPreview or paginator | isFirstPage %}
+          {% if isPreview %}
+            {% assign pagingResult = debug | paginatePages: stories, 'story' %}
+            {% assign pagedItems = pagingResult.pagedItems%}
+            {% assign paginator = pagingResult.paginator%}
+          {% endif %}
+          {% if isFirstPage %}
+            {% for storyFeature in stories %}
+              {% if storyFeature.fieldFeatured == true %}
+                {% include "src/site/teasers/news_story_page_feature.drupal.liquid" with node = storyFeature %}
+              {% endif %}
+            {% endfor %}
           {% endif %}
           {% for story in pagedItems %}
             {% if story.fieldFeatured == false %}
               {% include "src/site/teasers/news_story_page.drupal.liquid" with node = story %}
             {% endif %}
           {% endfor %}
-
-          {% if pagedItems == false %}
-          <div class="clearfix-text">No stories at this time.</div>
+          {% if stories.length == 0 %}
+            <div class="clearfix-text">No stories at this time.</div>
           {% endif %}
 
           {% include "src/site/includes/pagination.drupal.liquid" %}
