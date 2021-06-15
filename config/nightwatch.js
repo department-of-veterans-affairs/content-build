@@ -2,7 +2,7 @@
 'use strict';
 
 const fs = require('fs-extra');
-const chromedriver = require('chromedriver');
+// const chromedriver = require('chromedriver');
 const seleniumServer = require('selenium-server');
 
 require('@babel/register');
@@ -53,9 +53,6 @@ module.exports = {
         },
       },
       selenium: {
-        cli_args: {
-          'webdriver.chrome.driver': chromedriver.path,
-        },
         server_path: seleniumServer.path,
         start_process: true,
         log_path: selenium_logs,
