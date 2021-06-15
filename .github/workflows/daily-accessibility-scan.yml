@@ -21,7 +21,7 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
-      fail-fast: true
+      # fail-fast: true
       matrix:
         sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
 
