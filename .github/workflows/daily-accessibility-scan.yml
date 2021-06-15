@@ -21,8 +21,7 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
-      # fail-fast: true
-      max-parallel: 4
+      fail-fast: false
       matrix:
         sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
 
@@ -114,8 +113,21 @@ jobs:
 
       - name: Run Accessibility Scan
         id: accessibility-scan
+        continue-on-error: true
         run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
-        timeout-minutes: 600
+        timeout-minutes: 25
+
+      - name: Sleep for 5 mins
+        if: ${{ steps.accessibility-scan.outcome == 'failure' }}
+        uses: whatnick/wait-action@master
+        with:
+          time: '4m'
+
+      - name: Retry Accessibility Scan
+        id: retry-accessibility-scan
+        if: ${{ steps.accessibility-scan.outcome == 'failure' }}
+        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
+        timeout-minutes: 25
 
       - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
