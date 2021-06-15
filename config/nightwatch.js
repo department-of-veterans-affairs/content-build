@@ -27,7 +27,7 @@ module.exports = {
     default: {
       launch_url: `localhost:${process.env.WEB_PORT || 3333}`,
       filter: '**/*.e2e.spec.js',
-      selenium_host: 'localhost',
+      selenium_host: 'selenium-chrome',
       selenium_port: selenium_server_port,
       use_ssl: false,
       silent: true,
@@ -56,10 +56,15 @@ module.exports = {
         cli_args: {
           'webdriver.chrome.driver': chromedriver.path,
         },
-        start_process: true,
+        // start_process: true,
         server_path: seleniumServer.path,
+        // log_path: selenium_logs,
+        // host: '127.0.0.1',
+        // port: selenium_server_port,
+
+        start_process: false,
         log_path: selenium_logs,
-        host: '127.0.0.1',
+        host: 'selenium-chrome',
         port: selenium_server_port,
       },
       test_workers: {
