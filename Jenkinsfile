@@ -1,6 +1,7 @@
 @Library('va.gov-devops-jenkins-lib') _
 import org.kohsuke.github.GitHub
 import org.kohsuke.github.GitHubBuilder
+import org.kohsuke.github.GHObject
 
 
 env.CONCURRENCY = 10
@@ -33,8 +34,8 @@ node('vetsgov-general-purpose') {
     GitHub github = new GitHubBuilder().withPassword(env.USERNAME, env.TOKEN).build();
     def r = github.getRepository(GH_ORG + '/content-build');
     echo "${r}"
-    def x = github.getRepository(GH_ORG + '/content-build').getCheckRun();
-    echo "${x}"
+    GHObject gh = github.getRepository(GH_ORG + '/content-build').getCommit(ref);
+    echo "${gh}"
     // if (github.getRepository(GH_ORG + '/content-build').getLastCommitStatus(ref)) {
     //   def r = github.getRepository(GH_ORG + '/content-build').getLastCommitStatus(ref).getState()
     //   return r.toString()
