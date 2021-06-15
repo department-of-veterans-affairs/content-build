@@ -120,7 +120,7 @@ jobs:
 
       - name: Run Accessibility Scan
         id: accessibility-scan
-        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility --verbose
+        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
         timeout-minutes: 30
 
       - name: Sleep for 4 mins
