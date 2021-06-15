@@ -24,6 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
+        port: [3002, 3003, 3004, 3005]
 
     steps:
       - name: Configure AWS credentials
@@ -114,12 +115,12 @@ jobs:
       - name: Run Accessibility Scan
         id: accessibility-scan
         continue-on-error: true
-        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
+        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=${{ matrix.port }} SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
         timeout-minutes: 30
 
       - name: Kill all nodes
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
-        run: killall node
+        run: kill $(lsof -t -i:${{ matrix.port }})
 
       - name: Sleep for 5 mins
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
@@ -130,7 +131,7 @@ jobs:
       - name: Retry Accessibility Scan
         id: retry-accessibility-scan
         if: ${{ steps.accessibility-scan.outcome == 'failure' }}
-        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
+        run: NODE_OPTIONS=--max_old_space_size=8192 WEB_PORT=${{ matrix.port }} SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
         timeout-minutes: 30
 
       - name: Accessibility Test Failure
