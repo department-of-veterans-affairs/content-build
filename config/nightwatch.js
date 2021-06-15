@@ -68,7 +68,7 @@ module.exports = {
       },
     },
     accessibility: {
-      filter: `./src/platform/site-wide/tests/sitemap/${process.env.SITEMAP}.spec.js`,
+      filter: `./src/platform/site-wide/tests/sitemap/*.spec.js`,
     },
     headless: {
       desiredCapabilities: {

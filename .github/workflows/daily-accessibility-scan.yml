@@ -21,10 +21,10 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
-      # fail-fast: true
-      max-parallel: 4
-      matrix:
-        sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
+      fail-fast: true
+      # max-parallel: 4
+      # matrix:
+      #   sitemap: [sitemap-1, sitemap-2, sitemap-3, sitemap-4]
 
     steps:
       - name: Configure AWS credentials
