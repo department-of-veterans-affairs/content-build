@@ -869,4 +869,8 @@ module.exports = function registerFilters() {
       paginator: pageReturn[0].paginator,
     };
   };
+
+  liquid.filters.isFirstPage = paginator => {
+    return !paginator || paginator.prev === null;
+  };
 };
