@@ -39,7 +39,7 @@
                 Mobile clinics
               </h2>
               {% for mobile in fieldOffice.entity.mobileFacilities.entities %}
-                {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = mobile %}
+                {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = mobile type = 'mobile' %}
               {% endfor %}
             {% endif %}
 

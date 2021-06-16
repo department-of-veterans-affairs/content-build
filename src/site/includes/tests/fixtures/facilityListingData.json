@@ -1,0 +1,233 @@
+{
+  "main": {
+    "type": "main",
+    "entity": {
+      "entityUrl": {
+        "path": "/cheyenne-health-care/locations/cheyenne-va-medical-center"
+      },
+      "entityBundle": "health_care_local_facility",
+      "title": "Cheyenne VA Medical Center",
+      "entityId": "1114",
+      "changed": 1622058174,
+      "fieldMobile": false,
+      "fieldOperatingStatusFacility": "normal",
+      "fieldFacilityLocatorApiId": "vha_442",
+      "fieldIntroText": null,
+      "fieldLocationServices": [
+        {
+          "entity": {
+            "entityId": "11611",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Parking",
+            "fieldWysiwyg": {
+              "processed": "<p><strong>Cost:</strong> Free</p>\n\n<p><strong>Wheelchair availability:</strong> Cheyenne VA Medical Center has wheelchairs available upon arrival for patients who need them to access the building.</p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "11612",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Transportation services and schedules",
+            "fieldWysiwyg": {
+              "processed": "<h4 dir=\"ltr\">Van services for Veterans</h4>\n\n<h5 dir=\"ltr\">DAV vans</h5>\n\n<p dir=\"ltr\"><strong>Hours:</strong> Coming soon!</p>\n\n<p dir=\"ltr\">We work with Disabled American Veterans and county Veterans Affairs directors to provide transportation for Veterans and authorized caregivers to get to scheduled medical appointments.</p>\n\n<h5 dir=\"ltr\">Non-DAV van services</h5>\n\n<p dir=\"ltr\">Many localities in the region provide other van services to Veterans.</p>\n\n<p dir=\"ltr\"><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"5b9656cc-7b87-4c50-a25a-ec3f12b9104c\" href=\"/cheyenne-health-care/dav-vans-transportation-for-veterans\" title=\"DAV Vans: transportation for Veterans\">Learn more about DAV and the other van services available in your county</a></p>\n\n<h4 dir=\"ltr\">Local transportation services</h4>\n\n<h5 dir=\"ltr\">Cheyenne  Transit System</h5>\n\n<p dir=\"ltr\"><strong>Hours:</strong>  Coming soon!</p>\n\n<p dir=\"ltr\">Bus - Coming soon!</p>\n\n<h5 dir=\"ltr\">Other services</h5>\n\n<p dir=\"ltr\">Coming soon!</p>\n\n<h4 dir=\"ltr\">Beneficiary travel</h4>\n\n<p dir=\"ltr\">Beneficiary travel benefits include round-trip transportation from your home to the medical center, mileage reimbursement, or special mode transport. </p>\n\n<p dir=\"ltr\"><a href=\"http://localhost:3002/health-care/get-reimbursed-for-travel-pay/\">Find out if you qualify for beneficiary travel benefits</a></p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "11613",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Visitor hours and information",
+            "fieldWysiwyg": {
+              "processed": "<h4 dir=\"ltr\"><strong>Hours</strong></h4>\n\n<p dir=\"ltr\"><strong>Lobby entrance:</strong>  24/7<br /><br /><strong>General visiting:</strong> Coming soon!</p>\n\n<h5 dir=\"ltr\">Behavioral health inpatient wards</h5>\n\n<p dir=\"ltr\">Coming soon!</p>\n\n<h5 dir=\"ltr\">Veterans Community Living Center</h5>\n\n<p dir=\"ltr\">Coming soon!</p>\n\n<h4 dir=\"ltr\">Visitor policies</h4>\n\n<ul dir=\"ltr\"><li>No more than two visitors at a time</li>\n\t<li> Visitors may not bring food or beverages to patients without authorization from unit physicians or nurses</li>\n\t<li>Children are permitted on patient units when accompanied and closely supervised by an adult. Children are never to be left unattended.</li>\n</ul><p dir=\"ltr\"><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"2db5a13a-b9c6-4599-8984-3150b1b1e89d\" href=\"/cheyenne-health-care/policies\" title=\"Policies\">See VA Cheyenne's full visitation policy</a></p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "11614",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Lodging for patients and families",
+            "fieldWysiwyg": {
+              "processed": "<p dir=\"ltr\">Visitors are not permitted to stay overnight in the medical center itself. Here are some other options.</p>\n\n<h4 dir=\"ltr\">Nearby hotels</h4>\n\n<p dir=\"ltr\">When booking, ask for the hospital rate. Many hotels have shuttle service to VA hospitals. Check with the hotel you’re staying at.</p>\n\n<p dir=\"ltr\">Hotel #1 - Coming soon!<br />\nPhone</p>\n\n<p dir=\"ltr\"> </p>\n\n<p dir=\"ltr\"><em>NOTE: These links are provided for your convenience only. VA Cheyenne Healthcare System does not endorse and is not responsible for the content on the linked web sites.</em></p>\n\n<h4 dir=\"ltr\"><strong>Visit Cheyenne</strong></h4>\n\n<p dir=\"ltr\">The official tourism and promotion agency for Cheyenne has up-to-date listings for area hotels, as well as activities, transportation, restaurants, shops and more.  <a href=\"https://www.cheyenne.org/\">Visit Cheyenne</a></p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "11615",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Dining and retail",
+            "fieldWysiwyg": {
+              "processed": "<h4 dir=\"ltr\">Food and drink</h4>\n\n<h5 dir=\"ltr\">Medical Center Canteen</h5>\n\n<p dir=\"ltr\">Serving hot and cold entrees, beverages and desserts.</p>\n\n<p class=\"va-address-block\"><strong>Administration building</strong><br />\nFirst floor<br /><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"0273aea5-98b0-4636-a8e7-caef0ad498d9\" href=\"/cheyenne-health-care/cheyenne-medical-center-campus-map\" title=\"Cheyenne medical center - Campus map\">Map of Cheyenne campus</a><br /><strong>Hours:</strong> Monday through Friday, 7:30 a.m. to 2:00 p.m. MT</p>\n\n<h5 dir=\"ltr\">Vending machines</h5>\n\n<p dir=\"ltr\">Located around the corner from the retail store, available for your convenience 24 hours a day.</p>\n\n<h4 dir=\"ltr\">Retail</h4>\n\n<h5 dir=\"ltr\">The Retail Store </h5>\n\n<p dir=\"ltr\">A full-service retail store with such products as electronics, cosmetics, toiletries, and clothing. Purchases are tax-free.</p>\n\n<p class=\"va-address-block\"><strong>Administration building</strong><br />\nFirst floor<br /><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"0273aea5-98b0-4636-a8e7-caef0ad498d9\" href=\"/cheyenne-health-care/cheyenne-medical-center-campus-map\" title=\"Cheyenne medical center - Campus map\">Map of Cheyenne campus</a><br /><strong>Hours:</strong> Monday through Friday, 9:00 a.m. to 3:00 p.m. MT</p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "11617",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Library",
+            "fieldWysiwyg": {
+              "processed": "<p dir=\"ltr\">Veterans have access to patient education services at Cheyenne:</p>\n\n<ul><li>Our Patient Education Center is staffed by an experienced patient education librarian and program specialist. The center contains a collection of easy-to-read health and wellness books, respected health education newsletters, videos and other materials.</li>\n</ul><p class=\"va-address-block\" dir=\"ltr\"><strong>Administration building</strong><br />\nSecond floor<br /><strong>Hours:</strong> Monday through Friday, 8:00 a.m. to 4:30 p.m. MT</p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "11618",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Chaplain services and chapels",
+            "fieldWysiwyg": {
+              "processed": "<p class=\"va-address-block\" dir=\"ltr\"><strong>Administration building</strong><br />\nFirst floor<br /><strong>Hours:</strong> 24/7</p>\n\n<h4 dir=\"ltr\">Chaplains</h4>\n\n<p dir=\"ltr\">When you’re admitted, you can request or decline visits by a VA chaplain. Our chaplains provide spiritual, pastoral, and emotional care for you and your family, in accordance with your own beliefs and practices. This includes locating clergy or religious leaders in the community for needs that our chaplain staff cannot meet.</p>\n\n<h4 dir=\"ltr\">Interfaith chapel</h4>\n\n<p dir=\"ltr\">The chapel is open to anyone at any time for quiet meditation and reflection. The chapel also hosts regularly scheduled services for many denominations. </p>\n\n<p dir=\"ltr\"><a class=\"usa-button usa-button-secondary\" data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"c9924f42-cff1-4b47-9cdf-30f92cdc8d17\" href=\"/cheyenne-health-care/chaplain-services\" title=\"Chaplain services\">Learn how to request chaplain services during your stay at VA Cheyenne.</a></p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "11619",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Campus and building maps",
+            "fieldWysiwyg": {
+              "processed": "<p dir=\"ltr\">Use these maps to help you get around the campus.</p>\n\n<ul dir=\"ltr\"><li><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"0273aea5-98b0-4636-a8e7-caef0ad498d9\" href=\"/cheyenne-health-care/cheyenne-medical-center-campus-map\" title=\"Cheyenne medical center - Campus map\">Full Cheyenne campus map</a></li>\n</ul>"
+            }
+          }
+        }
+      ],
+      "fieldAddress": {
+        "addressLine1": "2360 East Pershing Boulevard",
+        "locality": "Cheyenne",
+        "administrativeArea": "WY",
+        "postalCode": "82001-5356"
+      },
+      "fieldPhoneNumber": "307-778-7550",
+      "fieldMentalHealthPhone": "307-778-7349",
+      "fieldFacilityHours": {
+        "value": [
+          [
+            "Mon",
+            "24/7"
+          ],
+          [
+            "Tue",
+            "24/7"
+          ],
+          [
+            "Wed",
+            "24/7"
+          ],
+          [
+            "Thu",
+            "24/7"
+          ],
+          [
+            "Fri",
+            "24/7"
+          ],
+          [
+            "Sat",
+            "24/7"
+          ],
+          [
+            "Sun",
+            "24/7"
+          ]
+        ]
+      },
+      "fieldMainLocation": true,
+      "fieldMedia": {
+        "entity": {
+          "image": {
+            "alt": "Cheyenne VA Medical Center",
+            "title": "",
+            "derivative": {
+              "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-03/Cheyenne%20VA%20Medical%20Center.jpg",
+              "width": 480,
+              "height": 320
+            }
+          }
+        }
+      }
+    }
+  },
+  "mobile": {
+    "type": "mobile",
+    "entity": {
+      "entityUrl": {
+        "path": "/cheyenne-health-care/locations/cheyenne-va-mobile-clinic"
+      },
+      "entityBundle": "health_care_local_facility",
+      "title": "Cheyenne VA Mobile Clinic",
+      "entityId": "8066",
+      "changed": 1620360164,
+      "fieldMobile": true,
+      "fieldOperatingStatusFacility": "normal",
+      "fieldFacilityLocatorApiId": "vha_442QF",
+      "fieldIntroText": null,
+      "fieldLocationServices": [
+        {
+          "entity": {
+            "entityId": "31242",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Parking",
+            "fieldWysiwyg": {
+              "processed": "<p><strong>Cost:</strong> Free</p>\n\n<p><strong>Wheelchair availability:</strong>  Wheelchairs available upon arrival for patients who need them to access the building.</p>"
+            }
+          }
+        },
+        {
+          "entity": {
+            "entityId": "31243",
+            "entityBundle": "health_care_local_facility_servi",
+            "fieldTitle": "Transportation services and schedules",
+            "fieldWysiwyg": {
+              "processed": "<h4 dir=\"ltr\">Van services for Veterans</h4>\n\n<h5 dir=\"ltr\">DAV vans</h5>\n\n<p dir=\"ltr\"><strong>Hours:</strong> Individual van schedules vary</p>\n\n<p dir=\"ltr\">We work with Disabled American Veterans and county Veterans Affairs directors to provide transportation for Veterans and authorized caregivers to get to scheduled medical appointments.</p>\n\n<h5 dir=\"ltr\">Non-DAV van services</h5>\n\n<p dir=\"ltr\">Many localities in the region provide other van services to Veterans.</p>\n\n<p dir=\"ltr\"><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"5b9656cc-7b87-4c50-a25a-ec3f12b9104c\" href=\"/cheyenne-health-care/dav-vans-transportation-for-veterans\" title=\"DAV Vans: transportation for Veterans\">Learn more about DAV and the other van services available in your county</a></p>\n\n<h4 dir=\"ltr\"><strong>Shuttle service at </strong></h4>\n\n<p dir=\"ltr\"><strong>Coming soon!</strong></p>\n\n<h5 dir=\"ltr\">Local transportation services</h5>\n\n<h5 dir=\"ltr\"><strong>Coming soon!</strong></h5>\n\n<p dir=\"ltr\">Other services</p>\n\n<p dir=\"ltr\"><strong>Coming soon!</strong></p>\n\n<p dir=\"ltr\">Beneficiary travel</p>\n\n<p dir=\"ltr\">Beneficiary travel benefits include round-trip transportation from your home to the medical center, mileage reimbursement, or special mode transport. </p>\n\n<p dir=\"ltr\"><a href=\"http://localhost:3002/health-care/get-reimbursed-for-travel-pay/\">Find out if you qualify for beneficiary travel benefits</a></p>"
+            }
+          }
+        }
+      ],
+      "fieldAddress": {
+        "addressLine1": "2360 East Pershing Boulevard",
+        "locality": "Cheyenne",
+        "administrativeArea": "WY",
+        "postalCode": "82001-5356"
+      },
+      "fieldPhoneNumber": "307-778-7550 x3816",
+      "fieldMentalHealthPhone": null,
+      "fieldFacilityHours": {
+        "value": [
+          [
+            "Mon",
+            "900AM-400PM"
+          ],
+          [
+            "Tue",
+            "900AM-400PM"
+          ],
+          [
+            "Wed",
+            "900AM-400PM"
+          ],
+          [
+            "Thu",
+            "900AM-400PM"
+          ],
+          [
+            "Fri",
+            "Closed"
+          ],
+          [
+            "Sat",
+            "Closed"
+          ],
+          [
+            "Sun",
+            "Closed"
+          ]
+        ]
+      },
+      "fieldMainLocation": false
+    }
+  }
+}
