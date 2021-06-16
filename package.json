@@ -23,7 +23,7 @@
     "lint:js:changed": "LIST=`git diff-index --diff-filter=d --name-only --cached HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --quiet --config changed.eslintrc.js $LIST; fi",
     "lint:js:changed:fix": "LIST=`git diff-index --name-only HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --fix --quiet $LIST; fi",
     "nightwatch:docker": "nightwatch -c config/nightwatch.docker-compose.js --suiteRetries 1",
-    "nightwatch": "nightwatch -c config/nightwatch.js",
+    "nightwatch": "nightwatch -c config/nightwatch.js --suiteRetries 1",
     "nightwatch-sauce": "nightwatch -c config/nightwatch-sauce.js",
     "nightwatch-visual": "node src/platform/testing/visual-regression/index.js",
     "pr-check": "node script/pr-check.js",
