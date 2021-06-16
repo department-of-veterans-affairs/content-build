@@ -2,7 +2,7 @@
 'use strict';
 
 const fs = require('fs-extra');
-// const chromedriver = require('chromedriver');
+const chromedriver = require('chromedriver');
 const seleniumServer = require('selenium-server');
 
 require('@babel/register');
@@ -22,12 +22,12 @@ module.exports = {
   live_output: true,
   parallel_process_delay: 10,
   disable_colors: process.env.BUILDTYPE === 'production',
-  test_workers: { enabled: false, workers: 4 },
+  test_workers: { enabled: true, workers: 4 },
   test_settings: {
     default: {
       launch_url: `localhost:${process.env.WEB_PORT || 3333}`,
       filter: '**/*.e2e.spec.js',
-      selenium_host: 'selenium-chrome',
+      selenium_host: 'localhost',
       selenium_port: selenium_server_port,
       use_ssl: false,
       silent: true,
@@ -53,14 +53,17 @@ module.exports = {
         },
       },
       selenium: {
-        server_path: seleniumServer.path,
+        cli_args: {
+          'webdriver.chrome.driver': chromedriver.path,
+        },
         start_process: true,
+        server_path: seleniumServer.path,
         log_path: selenium_logs,
-        host: 'selenium-chrome',
+        host: '127.0.0.1',
         port: selenium_server_port,
       },
       test_workers: {
-        enabled: false,
+        enabled: true,
         workers: 4,
       },
     },
