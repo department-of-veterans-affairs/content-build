@@ -778,7 +778,11 @@ module.exports = function registerFilters() {
 
   //* Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
   //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
-  liquid.filters.eventOrPressReleasesDateSorter = (dates, dateKey, reverse) => {
+  liquid.filters.sortByDateKey = (
+    dates,
+    dateKey = 'fieldDatetimeRangeTimezone',
+    reverse = false,
+  ) => {
     if (!dates) return null;
     return dates.sort((a, b) => {
       const start1 = moment(a[dateKey].value);

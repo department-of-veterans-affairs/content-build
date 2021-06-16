@@ -5,6 +5,7 @@ import registerFilters from './liquid';
 import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_escanaba_data';
 import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
+import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 
 const _ = require('lodash');
 
@@ -53,48 +54,48 @@ const eventsMockData = [
   },
 ];
 
-const pressReleasesMockData = [
-  {
-    entityId: '19797',
-    entityUrl: {
-      path:
-        '/pittsburgh-health-care/news-releases/va-secretary…ttsburgh-nurse-for-dedication-service-to-veterans',
-    },
-    fieldIntroText:
-      'A VA Pittsburgh Healthcare System nurse recently won the Secretary’s Award for Excellence in Nursing and Advancement of Nursing Programs for helping to improve health care services for veterans.',
-    fieldReleaseDate: {
-      value: '2021-05-14T15:11:11',
-    },
-    title: 'VA secretary recognizes VA Pittsburgh nurse for',
-  },
-  {
-    entityId: '841',
-    entityUrl: {
-      path:
-        '/pittsburgh-health-care/news-releases/women-veterans-resource-fair-spotlights-va-and-community-care',
-    },
-    fieldIntroText:
-      'Veterans Affairs (VA) Pittsburgh Healthcare System is connecting women Veterans with VA and non-VA services during a resource fair on Friday, Aug. 16, from 10 a.m. to 1 p.m. ',
-    fieldReleaseDate: {
-      value: '2019-08-12T19:12:40',
-    },
-    title: 'Women Veterans resource fair spotlights VA and community care',
-  },
-  {
-    entityId: '7640',
-    entityUrl: {
-      path:
-        '/pittsburgh-health-care/news-releases/va-pittsburgh-named-lgbtq-healthcare-equality-leader-for-8th',
-    },
-    fieldIntroText:
-      'VA Pittsburgh Healthcare System was named a 2020 “LGBTQ Healthcare Equality Leader” by the Human Rights Campaign Foundation (HRC). The designation is the eighth time in as many years and is listed in the 13th edition of the Healthcare Equality Index (HEI). ',
-    fieldReleaseDate: {
-      value: '2020-09-14T11:40:46',
-    },
-    title:
-      'VA Pittsburgh named ‘LGBTQ Healthcare Equality Leader’ for 8th year',
-  },
-];
+// const pressReleasesMockData = [
+//   {
+//     entityId: '19797',
+//     entityUrl: {
+//       path:
+//         '/pittsburgh-health-care/news-releases/va-secretary…ttsburgh-nurse-for-dedication-service-to-veterans',
+//     },
+//     fieldIntroText:
+//       'A VA Pittsburgh Healthcare System nurse recently won the Secretary’s Award for Excellence in Nursing and Advancement of Nursing Programs for helping to improve health care services for veterans.',
+//     fieldReleaseDate: {
+//       value: '2021-05-14T15:11:11',
+//     },
+//     title: 'VA secretary recognizes VA Pittsburgh nurse for',
+//   },
+//   {
+//     entityId: '841',
+//     entityUrl: {
+//       path:
+//         '/pittsburgh-health-care/news-releases/women-veterans-resource-fair-spotlights-va-and-community-care',
+//     },
+//     fieldIntroText:
+//       'Veterans Affairs (VA) Pittsburgh Healthcare System is connecting women Veterans with VA and non-VA services during a resource fair on Friday, Aug. 16, from 10 a.m. to 1 p.m. ',
+//     fieldReleaseDate: {
+//       value: '2019-08-12T19:12:40',
+//     },
+//     title: 'Women Veterans resource fair spotlights VA and community care',
+//   },
+//   {
+//     entityId: '7640',
+//     entityUrl: {
+//       path:
+//         '/pittsburgh-health-care/news-releases/va-pittsburgh-named-lgbtq-healthcare-equality-leader-for-8th',
+//     },
+//     fieldIntroText:
+//       'VA Pittsburgh Healthcare System was named a 2020 “LGBTQ Healthcare Equality Leader” by the Human Rights Campaign Foundation (HRC). The designation is the eighth time in as many years and is listed in the 13th edition of the Healthcare Equality Index (HEI). ',
+//     fieldReleaseDate: {
+//       value: '2020-09-14T11:40:46',
+//     },
+//     title:
+//       'VA Pittsburgh named ‘LGBTQ Healthcare Equality Leader’ for 8th year',
+//   },
+// ];
 
 describe('filterPastEvents', () => {
   it('returns null when null is passed', () => {
@@ -178,21 +179,21 @@ describe('filterUpcomingEvents', () => {
   });
 });
 
-describe('eventOrPressReleasesDateSorter', () => {
+describe('sortByDateKey', () => {
   it('returns null when null is passed', () => {
-    expect(liquid.filters.eventOrPressReleasesDateSorter(null)).to.eq(null);
+    expect(liquid.filters.sortByDateKey(null)).to.eq(null);
   });
 
   it('returns null when empty string is passed', () => {
-    expect(liquid.filters.eventOrPressReleasesDateSorter('')).to.eq(null);
+    expect(liquid.filters.sortByDateKey('')).to.eq(null);
   });
 
-  it('returns an array of upcoming events in date order starting with most recent to least recent', () => {
+  it('returns an array of upcoming events in date/time order starting with most recent to least recent', () => {
     expect(
-      liquid.filters.eventOrPressReleasesDateSorter(
+      liquid.filters.sortByDateKey(
         eventsMockData,
         'fieldDatetimeRangeTimezone',
-        true,
+        false,
       ),
     ).to.deep.include.members([
       {
@@ -216,12 +217,12 @@ describe('eventOrPressReleasesDateSorter', () => {
 
   it('returns an array of press releases in date order from newest to oldest', () => {
     expect(
-      liquid.filters.eventOrPressReleasesDateSorter(
-        pressReleasesMockData,
+      liquid.filters.sortByDateKey(
+        pressReleasesMockData.entities,
         'fieldReleaseDate',
-        false,
+        true,
       ),
-    ).to.have.deep.members([
+    ).to.deep.equal([
       {
         entityId: '19797',
         entityUrl: {
@@ -261,6 +262,29 @@ describe('eventOrPressReleasesDateSorter', () => {
           value: '2019-08-12T19:12:40',
         },
         title: 'Women Veterans resource fair spotlights VA and community care',
+      },
+    ]);
+  });
+
+  it('returns an array of upcoming events in date/time order when no dateKey is passed', () => {
+    expect(
+      liquid.filters.sortByDateKey(eventsMockData),
+    ).to.deep.include.members([
+      {
+        title: 'Clean-up Block Event',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1628355741,
+          timezone: 'America/New_York',
+          value: 1628348541,
+        },
+      },
+      {
+        title: 'Holiday Office Dinner',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1639670421,
+          timezone: 'America/New_York',
+          value: 1639659621,
+        },
       },
     ]);
   });

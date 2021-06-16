@@ -71,7 +71,7 @@ larger space in the Fayette Plaza at 627 Pittsburgh Road, Suite 2, Uniontown,
             
             {% if isPreview %}
               {% assign pressReleases = reverseFieldListingNode.entities %}
-              {% assign sortedReleases = pressReleases | eventOrPressReleasesDateSorter: 'fieldReleaseDate', true %}
+              {% assign sortedReleases = pressReleases | sortByDateKey: 'fieldReleaseDate', true %}
               {% assign pagingResult = debug | paginatePages: sortedReleases, 'press_release' %}
               {% assign pagedItems = pagingResult.pagedItems %}
               {% assign paginator = pagingResult.paginator %}
