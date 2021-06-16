@@ -21,6 +21,7 @@ const nodeQa = require('./nodeQa.graphql');
 const nodeStepByStep = require('./nodeStepByStep.graphql');
 const nodeSupportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.graphql');
 const pressReleasePage = require('./pressReleasePage.graphql');
+const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
 const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 const vetCenters = require('./vetCenter.graphql');
@@ -49,6 +50,7 @@ module.exports = `
   ${healthCareRegionDetailPage.fragment}
   ${healthServicesListingPage.fragment}
   ${pressReleasePage.fragment}
+  ${pressReleasesListingPage.fragment}
   ${vamcOperatingStatusAndAlerts.fragment}
   ${storyListingPage.fragment}
   ${newsStoryPage.fragment}
@@ -86,6 +88,7 @@ module.exports = `
         ... storyListingPage
         ... newsStoryPage
         ... pressReleasePage
+        ... pressReleasesListingPage
         ... vamcOperatingStatusAndAlerts
         ... eventPage
         ... eventListingPage
