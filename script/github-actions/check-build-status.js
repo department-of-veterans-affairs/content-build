@@ -1,34 +1,58 @@
-/* eslint-disable no-console */
-const args = process.argv.slice(2);
-const headSHA = args[0];
 const fetch = require('node-fetch');
 
-const headers = { Accept: 'application/vnd.github.v3+json' };
+const args = process.argv.slice(2);
+const headSHA = args[0];
+const timeout = args[1] ? args[1] : 120;
+const checkRunURL = `https://api.github.com/repos/department-of-veterans-affairs/content-build/commits/${headSHA}/check-runs`;
+let commitNull = false;
 
-// try getting check_runs for x amount of times
-// if check_runs are not done (aka not null)
-// wait for a few mins and retry again
-// else if fail -- throw error
-// else we gucci
-
-fetch(
-  `https://api.github.com/repos/department-of-veterans-affairs/content-build/commits/${headSHA}/check-runs`,
-  headers,
-)
-  .then(res => res.json())
-  .then(githubObject => {
-    console.log(githubObject);
-    for (let i = 0; i < Object.keys(githubObject.check_runs); i++) {
-      if (githubObject.check_runs[i].status === 'failure') {
-        // throw/return error causing this script to fail to fail onto GH
-        console.log('fail');
-      } else if (
-        githubObject.check_runs[i].status === 'in_progress' ||
-        githubObject.check_runs[i].status === null
-      ) {
-        // need to wait for the job to finish. what do
-        console.log('wait');
-        // break?
+function getLatestCheckRun(URL) {
+  const headers = { Accept: 'application/vnd.github.v3+json' };
+  return fetch(URL, headers)
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      } else {
+        return response.json();
       }
+    })
+    .then(githubObject => {
+      for (let i = 0; i < Object.keys(githubObject.check_runs).length; i++) {
+        if (
+          githubObject.check_runs[i].conclusion === 'failure' ||
+          commitNull === true
+        ) {
+          const headerMessage = commitNull
+            ? 'Build aborted due to failed runs detected on'
+            : 'Build aborted due to check runs still in progress on';
+          throw Error(
+            `${headerMessage} ${headSHA}.\n\n ${githubObject.check_runs[i].html_URL}`,
+          );
+        } else if (
+          githubObject.check_runs[i].status === 'in_progress' ||
+          githubObject.check_runs[i].status === null
+        ) {
+          commitNull = true;
+          return;
+        }
+      }
+    });
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms * 1000));
+}
+
+async function main() {
+  try {
+    await getLatestCheckRun(checkRunURL);
+    if (!commitNull) {
+      await sleep(timeout);
+      await getLatestCheckRun(checkRunURL);
     }
-  });
+  } catch (error) {
+    throw Error(error);
+  }
+}
+
+main();
