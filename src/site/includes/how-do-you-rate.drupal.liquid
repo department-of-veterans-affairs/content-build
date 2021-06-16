@@ -1,128 +1,126 @@
-{% if isPreview or buildtype != 'vagovprod' %}
-  {% assign ratingOptionsQuestion = "How do you rate your experience on this page?" %}
+{% assign ratingOptionsQuestion = "How do you rate your experience on this page?" %}
 
-  <form
-    class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
-    data-template="includes/how-do-you-rate"
-    id="how-do-you-rate-form"
-    >
-    <!-- Rating options -->
-    <fieldset id="rating-options" class="fieldset-input vads-u-margin-top--1">
-      <!-- Section title -->
-      <legend>
-        <h2 class="vads-u-margin--0 vads-u-margin-bottom--1p5 vads-u-font-size--h3">{{ ratingOptionsQuestion }}</h2>
-      </legend>
+<form
+  class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 large-screen:vads-u-padding-x--0"
+  data-template="includes/how-do-you-rate"
+  id="how-do-you-rate-form"
+  >
+  <!-- Rating options -->
+  <fieldset id="rating-options" class="fieldset-input vads-u-margin-top--1">
+    <!-- Section title -->
+    <legend>
+      <h2 class="vads-u-margin--0 vads-u-margin-bottom--1p5 vads-u-font-size--h3">{{ ratingOptionsQuestion }}</h2>
+    </legend>
 
-      <!-- Error message -->
-      <span class="vads-u-display--none usa-input-error-message" role="alert" id="rating-error-message">
-        <span class="sr-only">Error</span> Please select an answer
-      </span>
+    <!-- Error message -->
+    <span class="vads-u-display--none usa-input-error-message" role="alert" id="rating-error-message">
+      <span class="sr-only">Error</span> Please select an answer
+    </span>
 
-      <div id="rating-buttons" class="form-radio-buttons vads-u-display--flex vads-u-align-items--center">
-        <!-- Good rating -->
-        <div class="radio-button">
-          <input id="good" name="rating" type="radio" value="Good" />
-          <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
-        </div>
-
-        <!-- Bad rating -->
-        <div class="radio-button">
-          <input id="bad" name="rating" type="radio" value="Bad" />
-          <label class="vads-u-margin--0" for="bad">Bad</label>
-        </div>
+    <div id="rating-buttons" class="form-radio-buttons vads-u-display--flex vads-u-align-items--center">
+      <!-- Good rating -->
+      <div class="radio-button">
+        <input id="good" name="rating" type="radio" value="Good" />
+        <label class="vads-u-margin--0 vads-u-margin-right--2" for="good">Good</label>
       </div>
-    </fieldset>
 
-    <div>
-      <button class="usa-button usa-button-secondary vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
-        Submit feedback
-      </button>
+      <!-- Bad rating -->
+      <div class="radio-button">
+        <input id="bad" name="rating" type="radio" value="Bad" />
+        <label class="vads-u-margin--0" for="bad">Bad</label>
+      </div>
     </div>
+  </fieldset>
 
-    <!-- Thank you message -->
-    <p aria-hidden="true" id="thank-you-message" class="vads-u-display--none vads-u-margin--0">Thank you for your feedback.</p>
-  </form>
+  <div>
+    <button class="usa-button usa-button-secondary vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5" id="rating-submit" type="submit">
+      Submit feedback
+    </button>
+  </div>
 
-  <script nonce="**CSP_NONCE**" type="text/javascript">
-    function onRatingChange(event) {
-      // Derive the elements on the page.
-      var ratingOptionsElement = document.getElementById("rating-options");
-      var ratingErrorMessageElement = document.getElementById('rating-error-message');
+  <!-- Thank you message -->
+  <p aria-hidden="true" id="thank-you-message" class="vads-u-display--none vads-u-margin--0">Thank you for your feedback.</p>
+</form>
 
+<script nonce="**CSP_NONCE**" type="text/javascript">
+  function onRatingChange(event) {
+    // Derive the elements on the page.
+    var ratingOptionsElement = document.getElementById("rating-options");
+    var ratingErrorMessageElement = document.getElementById('rating-error-message');
+
+    if (ratingOptionsElement && ratingErrorMessageElement) {
+      ratingErrorMessageElement.setAttribute('aria-hidden', 'true');
+      ratingErrorMessageElement.className = ratingErrorMessageElement.className + ' vads-u-display--none';
+      ratingOptionsElement.className = ratingOptionsElement.className.replace('usa-input-error', '');
+    }
+  }
+
+  function onRatingSubmit(event) {
+    event.preventDefault()
+
+    // Derive the elements on the page.
+    var ratingButtonsElement = document.getElementById("rating-buttons");
+    var ratingOptionsElement = document.getElementById("rating-options");
+    var ratingErrorMessageElement = document.getElementById('rating-error-message');
+    var submitButton = document.getElementById("rating-submit");
+    var thankYouMessageElement = document.getElementById("thank-you-message");
+    var badElement = document.getElementById('bad');
+    var goodElement = document.getElementById('good');
+
+    // Derive the radio button fields checked status.
+    var goodChecked = goodElement && goodElement.checked;
+    var badChecked = badElement && badElement.checked;
+
+    // Show error message if neither good nor bad is checked.
+    if (!goodChecked && !badChecked) {
       if (ratingOptionsElement && ratingErrorMessageElement) {
-        ratingErrorMessageElement.setAttribute('aria-hidden', 'true');
-        ratingErrorMessageElement.className = ratingErrorMessageElement.className + ' vads-u-display--none';
-        ratingOptionsElement.className = ratingOptionsElement.className.replace('usa-input-error', '');
+        ratingErrorMessageElement.setAttribute('aria-hidden', 'false');
+        ratingErrorMessageElement.className = ratingErrorMessageElement.className.replace('vads-u-display--none', '');
+        ratingOptionsElement.className = ratingOptionsElement.className + ' usa-input-error';
       }
+      return;
     }
 
-    function onRatingSubmit(event) {
-      event.preventDefault()
-
-      // Derive the elements on the page.
-      var ratingButtonsElement = document.getElementById("rating-buttons");
-      var ratingOptionsElement = document.getElementById("rating-options");
-      var ratingErrorMessageElement = document.getElementById('rating-error-message');
-      var submitButton = document.getElementById("rating-submit");
-      var thankYouMessageElement = document.getElementById("thank-you-message");
-      var badElement = document.getElementById('bad');
-      var goodElement = document.getElementById('good');
-
-      // Derive the radio button fields checked status.
-      var goodChecked = goodElement && goodElement.checked;
-      var badChecked = badElement && badElement.checked;
-
-      // Show error message if neither good nor bad is checked.
-      if (!goodChecked && !badChecked) {
-        if (ratingOptionsElement && ratingErrorMessageElement) {
-          ratingErrorMessageElement.setAttribute('aria-hidden', 'false');
-          ratingErrorMessageElement.className = ratingErrorMessageElement.className.replace('vads-u-display--none', '');
-          ratingOptionsElement.className = ratingOptionsElement.className + ' usa-input-error';
-        }
-        return;
-      }
-
-      // Record the event in analytics.
-      var optionLabel = goodChecked ? 'Good' : (badChecked ? 'Bad' : '');
-      if (recordEvent && optionLabel) {
-        recordEvent({
-          'event': 'int-radio-button-option-click',
-          'radio-button-label': "{{ ratingOptionsQuestion }}",
-          'radio-button-optionLabel': event.target.value, // "Good" | "Bad"
-          'radio-button-required': false,
-        })
-      }
-
-      // We don't need the submit button anymore, so hide it.
-      if (submitButton) {
-        submitButton.setAttribute('aria-hidden', 'true');
-        submitButton.className = submitButton.className + ' vads-u-display--none';
-      }
-
-      // We don't need the rating options anymore, so hide it.
-      if (ratingButtonsElement) {
-        ratingButtonsElement.setAttribute('aria-hidden', 'true');
-        ratingButtonsElement.className = ratingButtonsElement.className.replace('vads-u-display--flex', '') + ' vads-u-display--none';
-      }
-
-      // We need to show the thank you message, so show it.
-      if (thankYouMessageElement) {
-        thankYouMessageElement.setAttribute('aria-hidden', 'false');
-        thankYouMessageElement.setAttribute('aria-live', 'assertive');
-        thankYouMessageElement.className = thankYouMessageElement.className.replace('vads-u-display--none', 'vads-u-display--block');
-        thankYouMessageElement.focus();
-      }
+    // Record the event in analytics.
+    var optionLabel = goodChecked ? 'Good' : (badChecked ? 'Bad' : '');
+    if (recordEvent && optionLabel) {
+      recordEvent({
+        'event': 'int-radio-button-option-click',
+        'radio-button-label': "{{ ratingOptionsQuestion }}",
+        'radio-button-optionLabel': event.target.value, // "Good" | "Bad"
+        'radio-button-required': false,
+      })
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      // Derive elements that need event listeners.
-      var howDoYouRateForm = document.getElementById('how-do-you-rate-form');
-      var goodField = document.getElementById('good');
-      var badField = document.getElementById('bad');
+    // We don't need the submit button anymore, so hide it.
+    if (submitButton) {
+      submitButton.setAttribute('aria-hidden', 'true');
+      submitButton.className = submitButton.className + ' vads-u-display--none';
+    }
 
-      if (howDoYouRateForm) howDoYouRateForm.addEventListener('submit', onRatingSubmit);
-      if (goodField) goodField.addEventListener('click', onRatingChange);
-      if (badField) badField.addEventListener('click', onRatingChange);
-    });
-  </script>
-{% endif %}
+    // We don't need the rating options anymore, so hide it.
+    if (ratingButtonsElement) {
+      ratingButtonsElement.setAttribute('aria-hidden', 'true');
+      ratingButtonsElement.className = ratingButtonsElement.className.replace('vads-u-display--flex', '') + ' vads-u-display--none';
+    }
+
+    // We need to show the thank you message, so show it.
+    if (thankYouMessageElement) {
+      thankYouMessageElement.setAttribute('aria-hidden', 'false');
+      thankYouMessageElement.setAttribute('aria-live', 'assertive');
+      thankYouMessageElement.className = thankYouMessageElement.className.replace('vads-u-display--none', 'vads-u-display--block');
+      thankYouMessageElement.focus();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Derive elements that need event listeners.
+    var howDoYouRateForm = document.getElementById('how-do-you-rate-form');
+    var goodField = document.getElementById('good');
+    var badField = document.getElementById('bad');
+
+    if (howDoYouRateForm) howDoYouRateForm.addEventListener('submit', onRatingSubmit);
+    if (goodField) goodField.addEventListener('click', onRatingChange);
+    if (badField) badField.addEventListener('click', onRatingChange);
+  });
+</script>
