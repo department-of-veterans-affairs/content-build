@@ -68,7 +68,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily accessibility scan of `content-build` on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}> ... \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily accessibility scan of `content-build` for today, on Github Actions run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
@@ -124,7 +124,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily accessibility tests for `${{github.run_id}}` have failed. \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> The daily accessibility scan for today has failed on Github Actions run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
@@ -135,5 +135,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "The daily accessibility scan for `${{github.run_id}}` has completed successfully. \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "The daily accessibility scan for today has completed successfully on Github Actions run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
