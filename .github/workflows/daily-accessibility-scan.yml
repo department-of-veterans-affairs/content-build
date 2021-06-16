@@ -1,6 +1,8 @@
 name: Daily Accessibility Scan
 
-on: [push]
+on:
+  schedule:
+    - cron: '0 12 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
