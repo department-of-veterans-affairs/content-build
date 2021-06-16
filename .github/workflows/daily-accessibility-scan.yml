@@ -61,15 +61,14 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      - name: Alert Slack
-        # if: ${{ matrix.sitemap == 'sitemap-1' }}
+      - name: Notify Slack
         uses: ./.github/actions/vsp-github-actions/slack-socket
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily accessibility scan of content-build... \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily accessibility scan of content-build [${{github.run_id}}](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})... \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
@@ -114,7 +113,7 @@ jobs:
 
       - name: Run Accessibility Scan
         id: accessibility-scan
-        run: WEB_PORT=3002 SITEMAP=${{ matrix.sitemap }} BUILDTYPE=vagovprod yarn test:accessibility
+        run: WEB_PORT=3002 BUILDTYPE=vagovprod yarn test:accessibility
         timeout-minutes: 600
 
       - name: Accessibility Test Failure
@@ -125,7 +124,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily accessibility tests for `${{ matrix.sitemap }}` have failed. \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily accessibility tests for `${{github.run_id}}` have failed. \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
@@ -136,5 +135,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "The daily accessibility scan for `${{ matrix.sitemap }}` has completed successfully. \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "The daily accessibility scan for `${{github.run_id}}` has completed successfully. \nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"}]'
           channel_id: ${{ env.CHANNEL_ID }}
