@@ -10,8 +10,8 @@ env:
 
 jobs:
 
-  build:
-    name: Run Scan
+  accessibility-scan:
+    name: Accessibility Scan
     runs-on: self-hosted
     defaults:
       run:
