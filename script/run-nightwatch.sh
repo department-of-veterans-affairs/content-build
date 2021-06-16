@@ -24,9 +24,6 @@ done
 # a mock API server as well as a webserver with the content to provide
 # endpoints that selenium can run against.
 
-# Ensure all running servers are terminated on script exit.
-# trap 'if [ "$(jobs -p)"] ; then kill "$(jobs -p);" fi' EXIT
-
 BUILDTYPE=${BUILDTYPE:-vagovdev}
 
 "$(dirname "$0")"/run-mockapi.sh &
