@@ -3,14 +3,11 @@ name: Daily Deploy
 on: [push]
 
 # on:
-#   push:
-#     branches:
-#       - master
   # schedule:
   #   - cron: "0 18 * * *"
 
-# env:
-#   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+env:
+  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
 
 jobs:
   check-build:
