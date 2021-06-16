@@ -50,6 +50,7 @@ async function main() {
       await sleep(timeout);
       await getLatestCheckRun(checkRunURL);
     }
+    console.log(`All checks succeeded for ${headSHA}`); // eslint-disable-line no-console
   } catch (error) {
     throw Error(error);
   }
