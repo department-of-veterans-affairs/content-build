@@ -42,15 +42,16 @@
       {% endif %}
     </div>
   </section>
-  {% if entity.fieldMedia %}
+  {% if entity.fieldMedia and entity.entityUrl.path %}
     <section
         class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
       <a href="{{ entity.entityUrl.path }}"
          aria-label="{{ entity.fieldMedia.entity.image.alt }}">
-        <img class="region-img"
-             src="{{ entity.fieldMedia.entity.image.derivative.url }}"
-             alt="{{ entity.fieldMedia.entity.image.alt }}"
-        />
+        {% include src/site/components/image.drupal.liquid with
+            class = "region-img"
+            url = entity.fieldMedia.entity.image.derivative.url
+            alt = entity.fieldMedia.entity.image.alt
+        %}
       </a>
     </section>
   {% endif %}
