@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fetch = require('node-fetch');
 
 const args = process.argv.slice(2);
@@ -50,9 +51,9 @@ async function main() {
       await sleep(timeout);
       await getLatestCheckRun(checkRunURL);
     }
-    console.log(`All checks succeeded for ${headSHA}`); // eslint-disable-line no-console
+    console.log(`All checks succeeded for ${headSHA}`);
   } catch (error) {
-    throw new Error(error);
+    console.log(`::error::${error}`);
   }
 }
 
