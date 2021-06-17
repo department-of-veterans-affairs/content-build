@@ -17,11 +17,6 @@ jobs:
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovprod]
-
     steps:
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -67,7 +62,7 @@ jobs:
         run: yarn test:e2e
         timeout-minutes: 20
         env:
-          BUILDTYPE: ${{ matrix.buildtype }}
+          BUILDTYPE: vagovprod
 
       - name: Start content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
