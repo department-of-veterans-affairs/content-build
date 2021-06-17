@@ -1,17 +1,15 @@
 name: Daily Deploy
 
+# TODO: Remove and uncomment
 on: [push]
 
 # on:
   # schedule:
-  #   - cron: "0 18 * * *"
-
-# env:
-#   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  #   - cron: "0 18 * * 1-5"
 
 jobs:
-  check-build:
-    name: Check build status
+  check-runs:
+    name: Check runs status
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
