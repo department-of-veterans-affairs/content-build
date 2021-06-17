@@ -70,15 +70,11 @@ jobs:
           BUILDTYPE: ${{ matrix.buildtype }}
 
       - name: Start content-build
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 > test.txt 2>&1 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress E2E Tests
         run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
         timeout-minutes: 20
-
-      - name: Print webpack output
-        if: ${{ always() }}
-        run: cat test.txt
 
       - name: Publish test results
         if: ${{ always() }}
