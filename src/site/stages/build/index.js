@@ -1,5 +1,7 @@
 // Builds the site using Metalsmith as the top-level build runner.
 /* eslint-disable no-console */
+const fs = require('fs-extra');
+const path = require('path');
 const chalk = require('chalk');
 const assets = require('metalsmith-assets');
 const collections = require('metalsmith-collections');
@@ -37,6 +39,79 @@ const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
+
+function addDebugInfo(files, buildtype) {
+  try {
+    console.log('\nAdding debug info to Drupal pages...\n');
+
+    const keysToIgnore = [
+      'breadcrumb_path',
+      'collection',
+      'contents',
+      'filename',
+      'isDrupalPage',
+      'layout',
+      'modified',
+      'nav_children',
+      'nav_path',
+      'path',
+      'private',
+    ];
+
+    Object.keys(files)
+      .filter(fileName => files[fileName].isDrupalPage)
+      .forEach(fileName => {
+        const filePath = `build/${buildtype}/${fileName}`;
+        const tmpFilepath = `tmp/${filePath}`;
+        const tmpFileDir = path.dirname(tmpFilepath);
+
+        if (!fs.existsSync(tmpFileDir)) {
+          fs.mkdirSync(tmpFileDir, { recursive: true });
+        }
+
+        const readStream = fs.createReadStream(filePath, {
+          encoding: 'utf8',
+          autoClose: true,
+        });
+
+        const outputStream = fs.createWriteStream(tmpFilepath, {
+          encoding: 'utf8',
+          autoClose: true,
+        });
+
+        const debugInfo = Object.fromEntries(
+          Object.entries(files[fileName]).filter(
+            key => !keysToIgnore.includes(key[0]),
+          ),
+        );
+
+        // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
+        // when the `debug` key doesn't exist in the Metalsmith file entry.
+        // We want to replace all instances of that with the debug object.
+        readStream.on('data', data => {
+          outputStream.write(
+            data
+              .toString()
+              .replace(
+                'window.contentData = null;',
+                `window.contentData = ${JSON.stringify(debugInfo)};`,
+              ),
+          );
+        });
+
+        readStream.on('end', () => {
+          outputStream.end();
+        });
+
+        outputStream.on('finish', () => {
+          // Overwrite original file with new file
+          fs.moveSync(tmpFilepath, filePath, { overwrite: true });
+        });
+      });
+  } catch (error) {
+    console.error('\nError adding debug info to files.\n', error);
+  }
+}
 
 function build(BUILD_OPTIONS) {
   const smith = silverSmith();
@@ -215,7 +290,7 @@ function build(BUILD_OPTIONS) {
   // We no longer need to build them now that they are stored directly on disk
   smith.use(ignoreAssets(), 'Ignore assets for build');
 
-  smith.build(err => {
+  smith.build((err, files) => {
     if (err) {
       smith.endGarbageCollection();
       throw err;
@@ -249,6 +324,11 @@ function build(BUILD_OPTIONS) {
       smith.endGarbageCollection();
 
       console.log('The Metalsmith build has completed.');
+    }
+
+    if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {
+      // Add debug info to HTML files
+      addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
   }); // smith.build()
 }
