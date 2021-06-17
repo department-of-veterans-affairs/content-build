@@ -1,4 +1,4 @@
-name: Nightwatch E2E Tests
+name: E2E Tests
 
 on: [push]
 
@@ -8,7 +8,7 @@ env:
 jobs:
 
   build:
-    name: Nightwatch E2E Tests
+    name: E2E Tests
     runs-on: self-hosted
     defaults:
       run:
@@ -16,11 +16,6 @@ jobs:
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovprod]
 
     steps:
       - name: Checkout vagov-content
@@ -58,7 +53,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Build
-        run: yarn build --buildtype ${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
+        run: npm --no-color run build -- --verbose --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --no-drupal-proxy
         timeout-minutes: 60
         env:
           NODE_ENV: production
@@ -67,4 +62,33 @@ jobs:
         run: yarn test:e2e
         timeout-minutes: 20
         env:
-          BUILDTYPE: ${{ matrix.buildtype }}
+          BUILDTYPE: vagovprod
+
+      - name: Start content-build
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+
+      - name: Run Cypress E2E Tests
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
+        timeout-minutes: 20
+
+      - name: Publish test results
+        if: ${{ always() }}
+        uses: mikepenz/action-junit-report@v2.4.2
+        with:
+          check_name: 'Cypress Tests Summary'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: 'test-results/e2e-test-output-*.xml'
+
+      - name: Archive Cypress test videos
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: cypress-video-artifacts
+          path: cypress/videos
+
+      - name: Archive Cypress test screenshots
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: cypress-screenshot-artifacts
+          path: cypress/screenshots
