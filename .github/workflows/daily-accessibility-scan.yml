@@ -6,7 +6,7 @@ on:
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  CHANNEL_ID: C024DUC9S1K
+  CHANNEL_ID: C01RAS1KAQK
 
 jobs:
 
