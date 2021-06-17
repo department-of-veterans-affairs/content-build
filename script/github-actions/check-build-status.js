@@ -11,7 +11,7 @@ function getLatestCheckRun(URL) {
   return fetch(URL, headers)
     .then(response => {
       if (!response.ok) {
-        throw Error(response.statusText);
+        throw new Error(response.statusText);
       } else {
         return response.json();
       }
@@ -25,7 +25,7 @@ function getLatestCheckRun(URL) {
           const headerMessage = commitNull
             ? 'Build aborted due to failed runs detected on'
             : 'Build aborted due to check runs still in progress on';
-          throw Error(
+          throw new Error(
             `${headerMessage} ${headSHA}.\n\n ${githubObject.check_runs[i].html_URL}`,
           );
         } else if (
