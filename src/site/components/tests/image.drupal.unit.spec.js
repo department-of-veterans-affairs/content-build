@@ -9,12 +9,15 @@ describe('Facility Listing', () => {
       url: 'testUrl', // TODO: validate the url format?
       alt: 'testAlt',
       class: 'testClass',
+      title: 'testTitle',
+      width: 'testWidth',
+      height: 'testHeight',
     };
 
     const container = await renderHTML(layoutPath, data);
 
     expect(container.querySelector('img').outerHTML).to.equal(
-      '<img class="testClass" src="testUrl" alt="testAlt">',
+      '<img class="testClass" src="testUrl" alt="testAlt" title="testTitle" width="testWidth" height="testHeight">',
     );
   });
 
