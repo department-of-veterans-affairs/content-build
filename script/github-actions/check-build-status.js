@@ -52,7 +52,7 @@ async function main() {
     }
     console.log(`All checks succeeded for ${headSHA}`); // eslint-disable-line no-console
   } catch (error) {
-    throw Error(error);
+    throw new Error(error);
   }
 }
 
