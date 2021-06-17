@@ -63,14 +63,14 @@ jobs:
         env:
           NODE_ENV: production
 
-      # - name: Run Nightwatch E2E Tests
-      #   run: yarn test:e2e
-      #   timeout-minutes: 20
-      #   env:
-      #     BUILDTYPE: ${{ matrix.buildtype }}
+      - name: Run Nightwatch E2E Tests
+        run: yarn test:e2e
+        timeout-minutes: 20
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
 
       - name: Start content-build
-        run: yarn watch > test.txt 2>&1 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 > test.txt 2>&1 &
 
       - name: Run Cypress E2E Tests
         run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
