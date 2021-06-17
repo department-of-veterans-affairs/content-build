@@ -10,13 +10,7 @@ let commitNull = false;
 function getLatestCheckRun(URL) {
   const headers = { Accept: 'application/vnd.github.v3+json' };
   return fetch(URL, headers)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      } else {
-        return response.json();
-      }
-    })
+    .then(response => response.json())
     .then(githubObject => {
       for (let i = 0; i < Object.keys(githubObject.check_runs).length; i++) {
         if (
@@ -37,6 +31,10 @@ function getLatestCheckRun(URL) {
           return;
         }
       }
+    })
+    .catch(error => {
+      console.log(error);
+      process.exit(1);
     });
 }
 
@@ -45,20 +43,12 @@ function sleep(ms) {
 }
 
 async function main() {
-  try {
+  await getLatestCheckRun(checkRunURL);
+  if (!commitNull) {
+    await sleep(timeout);
     await getLatestCheckRun(checkRunURL);
-    if (!commitNull) {
-      await sleep(timeout);
-      await getLatestCheckRun(checkRunURL);
-    }
-    console.log(`All checks succeeded for ${headSHA}`);
-  } catch (error) {
-    throw new Error(error);
   }
+  console.log(`All checks succeeded for ${headSHA}`);
 }
 
-try {
-  main();
-} catch (err) {
-  throw new Error(err);
-}
+main();
