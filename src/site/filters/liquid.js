@@ -879,4 +879,10 @@ module.exports = function registerFilters() {
   liquid.filters.isFirstPage = paginator => {
     return !paginator || paginator.prev === null;
   };
+
+  liquid.filters.isFieldSituationUpdates = fieldBannerAlert => {
+    return _.find(fieldBannerAlert, e => {
+      return e.entity.fieldSituationUpdates.length > 0;
+    });
+  };
 };
