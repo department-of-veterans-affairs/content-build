@@ -105,5 +105,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>\\nView what's coming here <https://github.com/${{github.repository}}/compare/content-build/${{steps.get-tag-version.outputs.VERSION}}...${{github.sha}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}> View what's coming here <https://github.com/${{github.repository}}/compare/content-build/${{steps.get-tag-version.outputs.VERSION}}...${{github.sha}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
