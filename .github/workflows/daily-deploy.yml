@@ -43,12 +43,11 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/check-build-status.js ${{ github.sha }}
+        run: node ./script/github-actions/check-build-status.js 3333
 
   slack-notify:
     name: Notify Slack
     runs-on: ubuntu-latest
-    if: ${{ always() }}
     needs: [check-runs]
     steps:
       - name: Configure AWS credentials
@@ -90,20 +89,9 @@ jobs:
         uses: thebritican/fetch-latest-release@v2.0.0
 
       # TODO: Change to correct channel_id when ready
-      - name: Daily deploy failed
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ needs.check-runs.result != 'success' }}
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Production deploy for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
-
-      # TODO: Change to correct channel_id when ready
       # TODO: Verify tag version is correct one
       - name: Daily deploy succeess
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ needs.check-runs.result == 'success' }}
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
@@ -184,7 +172,6 @@ jobs:
     # TODO: Need to do for content-release
     - name: Daily deploy failed
       uses: ./.github/actions/vsp-github-actions/slack-socket
-      if: ${{ needs.check-runs.result != 'success' }}
       with:
         slack_app_token: ${{ env.SLACK_APP_TOKEN }}
         slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
