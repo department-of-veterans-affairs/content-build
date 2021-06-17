@@ -7,6 +7,9 @@ on: [push]
   # schedule:
   #   - cron: "0 18 * * 1-5"
 
+env:
+    CHANNEL_ID: U01SPJ10WBC
+
 jobs:
   check-runs:
     name: Check runs status
@@ -40,3 +43,65 @@ jobs:
 
       - name: Validate build status
         run: node ./script/github-actions/check-build-status.js ${{ github.sha }}
+
+  slack-notify:
+    name: Notify Slack
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [check-runs]
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+          
+      - name: Get va-vsp-bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
+
+      # TODO: Change to correct channel_id when ready
+      - name: Daily deploy failed
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ needs.check-runs.result != 'success' }}
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Production deploy for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          message: "Production failed for content-build!"
+          channel_id: ${{ env.CHANNEL_ID }}
+
+      # TODO: Change to correct channel_id when ready
+      - name: Daily deploy succeess
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ needs.check-runs.result == 'success' }}
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Stand by, production deploy for content-build coming up in 60 minutes: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          message: "Production success for content-build!"
+          channel_id: ${{ env.CHANNEL_ID }}
