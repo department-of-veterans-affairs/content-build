@@ -26,9 +26,6 @@ function getLatestCheckRun(URL) {
           const headerMessage = commitNull
             ? 'Build aborted due to failed runs detected on'
             : 'Build aborted due to check runs still in progress on';
-          console.error(
-            `::error::${headerMessage} ${headSHA}.\n\n ${githubObject.check_runs[i].html_URL}`,
-          );
           throw new Error(
             `${headerMessage} ${headSHA}.\n\n ${githubObject.check_runs[i].html_URL}`,
           );
@@ -55,10 +52,13 @@ async function main() {
       await getLatestCheckRun(checkRunURL);
     }
     console.log(`All checks succeeded for ${headSHA}`);
-    return 0;
   } catch (error) {
-    return 1; // Error
+    throw new Error(error);
   }
 }
 
-main();
+try {
+  main();
+} catch (err) {
+  throw new Error(err);
+}
