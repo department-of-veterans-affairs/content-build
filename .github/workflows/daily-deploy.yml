@@ -86,9 +86,7 @@ jobs:
       
       - name: Get the version
         id: fetch-latest-release
-        uses: thebritican/fetch-latest-release@v1
-        with:
-          github_token: ${{ github.token }}
+        uses: thebritican/fetch-latest-release@v2.0.0
 
       # TODO: Change to correct channel_id when ready
       - name: Daily deploy failed
