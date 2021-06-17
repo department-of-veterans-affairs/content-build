@@ -83,6 +83,10 @@ jobs:
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
+      
+      - name: Get the version
+        id: get-tag-version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
       # TODO: Change to correct channel_id when ready
       - name: Daily deploy failed
@@ -101,5 +105,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>\\nView what's coming here: <https://github.com/${{github.repository}}/compare/content-build/${{steps.get-tag-version.outputs.VERSION}}...${{github.sha}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
