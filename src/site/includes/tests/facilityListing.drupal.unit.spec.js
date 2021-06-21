@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { parseFixture, renderHTML } from '~/site/tests/support';
 
-const _ = require('lodash');
+import cloneDeep from '~/platform/utilities/data/cloneDeep';
 
 const layoutPath = 'src/site/includes/facilityListing.drupal.liquid';
 
@@ -48,7 +48,7 @@ describe('Facility Listing', () => {
 
   describe('Bad images', () => {
     it('does not render image section if alt tag is missing', async () => {
-      const missingAltImageData = _.cloneDeep(data.main);
+      const missingAltImageData = cloneDeep(data.main);
       missingAltImageData.entity.fieldMedia.entity.image.alt = '';
 
       container = await renderHTML(layoutPath, missingAltImageData);
@@ -56,7 +56,7 @@ describe('Facility Listing', () => {
     });
 
     it('does not render image section if alt tag is missing', async () => {
-      const missingUrlImageData = _.cloneDeep(data.main);
+      const missingUrlImageData = cloneDeep(data.main);
       missingUrlImageData.entity.fieldMedia.entity.image.derivative.url = '';
 
       container = await renderHTML(layoutPath, missingUrlImageData);
