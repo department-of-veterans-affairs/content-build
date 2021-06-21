@@ -133,13 +133,13 @@ jobs:
         if: ${{ github.event.inputs.release_wait == '' }}
         uses: whatnick/wait-action@master
         with:
-          time: '${{ github.event.inputs.release_wait ? github.event.inputs.release_wait : env.RELEASE_WAIT }}m'
+          time: '${{ env.RELEASE_WAIT }}m'
 
       - name: Sleep for ${{ github.event.inputs.release_wait }} (workflow_dispatch)
         if: ${{ github.event.inputs.release_wait != '' }}
         uses: whatnick/wait-action@master
         with:
-          time: '${{ github.event.inputs.release_wait ? github.event.inputs.release_wait : env.RELEASE_WAIT }}m'
+          time: '${{ github.event.inputs.release_wait }}m'
 
   # release:
   #   name: Release then trigger deploy
