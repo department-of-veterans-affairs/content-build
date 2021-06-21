@@ -54,6 +54,45 @@ const eventsMockData = [
   },
 ];
 
+describe('hasContentAtPath', () => {
+  let testArray;
+
+  beforeEach(() => {
+    testArray = [
+      {
+        entity: {
+          title: 'some time',
+          fieldSituationUpdates: [],
+          status: true,
+        },
+      },
+    ];
+  });
+
+  it('returns false if there is no content at the given path', () => {
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.false;
+  });
+
+  it('returns true if there is content at the given path', () => {
+    testArray[0].entity.fieldSituationUpdates = [
+      'field situation update 1',
+      'field situation update 2',
+    ];
+
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.true;
+  });
+});
+
 describe('filterPastEvents', () => {
   it('returns null when null is passed', () => {
     expect(liquid.filters.filterPastEvents(null)).to.eq(null);
