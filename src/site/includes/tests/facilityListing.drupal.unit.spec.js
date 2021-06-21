@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import { parseFixture, renderHTML } from '~/site/tests/support';
 
+const _ = require('lodash');
+
 const layoutPath = 'src/site/includes/facilityListing.drupal.liquid';
 
 describe('Facility Listing', () => {
@@ -39,8 +41,26 @@ describe('Facility Listing', () => {
       );
     });
 
-    it('renders an image', async () => {
-      expect(container.querySelector('img')).to.exist;
+    it('renders image section', async () => {
+      expect(container.querySelector('section-image')).to.exist;
+    });
+  });
+
+  describe('Bad images', () => {
+    it('does not render image section if alt tag is missing', async () => {
+      const missingAltImageData = _.cloneDeep(data.main);
+      missingAltImageData.entity.fieldMedia.entity.image.alt = '';
+
+      container = await renderHTML(layoutPath, missingAltImageData);
+      expect(container.querySelector('section-image')).not.to.exist;
+    });
+
+    it('does not render image section if alt tag is missing', async () => {
+      const missingUrlImageData = _.cloneDeep(data.main);
+      missingUrlImageData.entity.fieldMedia.entity.image.derivative.url = '';
+
+      container = await renderHTML(layoutPath, missingUrlImageData);
+      expect(container.querySelector('section-image')).not.to.exist;
     });
   });
 

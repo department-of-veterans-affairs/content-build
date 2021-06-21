@@ -42,8 +42,8 @@
       {% endif %}
     </div>
   </section>
-  {% if entity.fieldMedia and entity.entityUrl.path %}
-    <section
+  {% if entity.fieldMedia and entity.fieldMedia.entity.image.alt and entity.fieldMedia.entity.image.derivative.url and entity.entityUrl.path %}
+    <section-image
         class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
       <a href="{{ entity.entityUrl.path }}"
          aria-label="{{ entity.fieldMedia.entity.image.alt }}">
@@ -53,6 +53,6 @@
             alt = entity.fieldMedia.entity.image.alt
         %}
       </a>
-    </section>
+    </section-image>
   {% endif %}
 </div>
