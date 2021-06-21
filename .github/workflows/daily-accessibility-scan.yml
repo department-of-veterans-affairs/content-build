@@ -111,7 +111,6 @@ jobs:
 
       - name: Run Accessibility Scan
         if: ${{ always() }}
-        needs: build-vagovprod
         run: WEB_PORT=3002 BUILDTYPE=vagovprod yarn test:accessibility
 
       - name: Accessibility Test Failure
