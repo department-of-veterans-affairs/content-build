@@ -11,7 +11,7 @@ env:
 
 jobs:
 
-  accessibility-scan:
+  build:
     name: Accessibility Scan
     runs-on: self-hosted
     defaults:
