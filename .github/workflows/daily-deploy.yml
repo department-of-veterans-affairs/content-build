@@ -129,7 +129,14 @@ jobs:
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.fetch-latest-release.outputs.tag_name}}...${{github.sha}}"
       
-      - name: Sleep for ${{ github.event.inputs.release_wait }}
+      - name: Sleep for ${{ github.event.inputs.release_wait }} (default)
+        if: ${{ github.event.inputs.release_wait == '' }}
+        uses: whatnick/wait-action@master
+        with:
+          time: '${{ github.event.inputs.release_wait ? github.event.inputs.release_wait : env.RELEASE_WAIT }}m'
+
+      - name: Sleep for ${{ github.event.inputs.release_wait }} (workflow_dispatch)
+        if: ${{ github.event.inputs.release_wait != '' }}
         uses: whatnick/wait-action@master
         with:
           time: '${{ github.event.inputs.release_wait ? github.event.inputs.release_wait : env.RELEASE_WAIT }}m'
