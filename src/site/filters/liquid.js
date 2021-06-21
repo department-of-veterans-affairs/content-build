@@ -881,10 +881,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.hasContentAtPath = (rootArray, path) => {
-    for (let i = 0; i < rootArray.length; i++) {
-      const hasContent = _.get(rootArray[i], path)?.length > 0;
-      if (hasContent) return hasContent;
-    }
-    return false;
+    const hasContent = e => _.get(e, path)?.length > 0;
+    return rootArray.some(hasContent);
   };
 };
