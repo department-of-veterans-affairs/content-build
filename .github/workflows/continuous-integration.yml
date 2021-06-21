@@ -217,28 +217,25 @@ jobs:
           EOF
 
       - name: Compress vagovprod build for E2E
-        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
+        if: ${{ matrix.buildType == 'vagovprod' }}
         run: tar -jcvf test-build.tar.bz2 build/vagovprod
 
       - name: Upload artifact vagovprod build for E2E
         uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
+        if: ${{ matrix.buildType == 'vagovprod' }}
         with:
           name: test-build.tar.bz2
           path: content-build/test-build.tar.bz2
           retention-days: 1
 
       - name: Prearchive
-        if: ${{ github.ref == 'refs/heads/master' }}
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Compress prearchived ${{ matrix.buildtype }} build
-        if: ${{ github.ref == 'refs/heads/master' }}
         run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
 
       - name: Upload artifact ${{ matrix.buildtype }} build for archive
         uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           name: ${{ matrix.buildtype }}.tar.bz2
           path: content-build/${{ matrix.buildType }}.tar.bz2
@@ -449,7 +446,6 @@ jobs:
   archive:
     name: Archive
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
 
     strategy:
