@@ -218,27 +218,27 @@ jobs:
 
       - name: Compress vagovprod build for E2E
         if: ${{ matrix.buildType == 'vagovprod' }}
-        run: tar -jcvf test-build.tar.bz2 build/vagovprod
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
       - name: Upload artifact vagovprod build for E2E
         uses: actions/upload-artifact@v2
         if: ${{ matrix.buildType == 'vagovprod' }}
         with:
           name: test-build.tar.bz2
-          path: content-build/test-build.tar.bz2
+          path: test-build.tar.bz2
           retention-days: 1
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Compress prearchived ${{ matrix.buildtype }} build
-        run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
+        run: tar -C build/${{ matrix.buildType }} -cjf ${{ matrix.buildType }}.tar.bz2 .
 
       - name: Upload artifact ${{ matrix.buildtype }} build for archive
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.buildtype }}.tar.bz2
-          path: content-build/${{ matrix.buildType }}.tar.bz2
+          path: ${{ matrix.buildType }}.tar.bz2
           retention-days: 1
 
       - name: Configure AWS credentials
