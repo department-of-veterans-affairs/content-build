@@ -14,11 +14,7 @@
         {% assign image = node.fieldMedia.entity.image %}
         {% include src/site/components/image.drupal.liquid with
             class = "news-img"
-            url = image.derivative.url
-            alt = image.alt
-            title = image.title
-            width = image.derivative.width
-            height = image.derivative.height
+            image = image
         %}
     </div>
 </div>

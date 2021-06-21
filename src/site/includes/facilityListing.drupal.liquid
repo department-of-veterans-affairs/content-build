@@ -49,8 +49,7 @@
          aria-label="{{ entity.fieldMedia.entity.image.alt }}">
         {% include src/site/components/image.drupal.liquid with
             class = "region-img"
-            url = entity.fieldMedia.entity.image.derivative.url
-            alt = entity.fieldMedia.entity.image.alt
+            image = entity.fieldMedia.entity.image
         %}
       </a>
     </section-image>
