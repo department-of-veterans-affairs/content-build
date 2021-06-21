@@ -12,6 +12,13 @@
     </div>
     <div class="usa-width-one-half {% if isStoriesPage %}stories-list{% endif %} vads-u-order--first medium-screen:vads-u-order--initial vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--0">
         {% assign image = node.fieldMedia.entity.image %}
-        <img class="news-img" src="{{ image.derivative.url }}" alt="{{ image.alt }}" title="{{ image.title }}" width="{{ image.derivative.width }}" height="{{ image.derivative.height }}">
+        {% include src/site/components/image.drupal.liquid with
+            class = "news-img"
+            url = image.derivative.url
+            alt = image.alt
+            title = image.title
+            width = image.derivative.width
+            height = image.derivative.height
+        %}
     </div>
 </div>
