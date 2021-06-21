@@ -21,6 +21,7 @@ on:
 
 env:
   CHANNEL_ID: U01SPJ10WBC
+  RELEASE_WAIT: 60
 
 jobs:
   check-runs:
@@ -131,7 +132,7 @@ jobs:
       - name: Sleep for ${{ github.event.inputs.release_wait }}
         uses: whatnick/wait-action@master
         with:
-          time: '${{ github.event.inputs.release_wait }}m'
+          time: '${{ github.event.inputs.release_wait ? github.event.inputs.release_wait : env.RELEASE_WAIT }}m'
 
   # release:
   #   name: Release then trigger deploy
