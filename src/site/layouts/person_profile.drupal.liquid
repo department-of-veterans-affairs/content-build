@@ -8,8 +8,14 @@
         <div class="usa-grid usa-grid-full">
             {% if fieldOffice.entity.entityUrl.path %}
                 {% assign formattedTitle = title | replace: '"', '&quot;' %}
-                {% assign sidebarData = '{"depth": 5, "link": {"label":"' | append: formattedTitle | append: '","url": {"path": "/"}, "links": []}, "parent": {"label": "Leadership", "links": [], "url": {"path": "' | append: fieldOffice.entity.entityUrl.path | append: '/leadership"}}}' %}
-                {% include 'src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid' with entityUrl = entityUrl, sidebarData = sidebarData %}
+                {% assign changeLink = ''| featureChangeVamcLeadershipLink %}
+                {% if changeLink == true %}
+                    {% assign sidebarData = '{"depth": 5, "link": {"label":"' | append: formattedTitle | append: '","url": {"path": "/"}, "links": []}, "parent": {"label": "Leadership", "links": [], "url": {"path": "' | append: fieldOffice.entity.entityUrl.path | append: '/about-us/leadership"}}}' %}
+                    {% include 'src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid' with entityUrl = entityUrl  sidebarData = sidebarData %}
+                {% else %}
+                    {% assign sidebarData = '{"depth": 5, "link": {"label":"' | append: formattedTitle | append: '","url": {"path": "/"}, "links": []}, "parent": {"label": "Leadership", "links": [], "url": {"path": "' | append: fieldOffice.entity.entityUrl.path | append: '/leadership"}}}' %}
+                    {% include 'src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid' with entityUrl = entityUrl  sidebarData = sidebarData %}
+                {% endif %}
             {%  endif %}
             <div class="usa-width-three-fourths">
                 <article class="usa-content">
