@@ -450,7 +450,7 @@ jobs:
     name: Archive
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [security-audit, unit-tests, linting, drupal-cache-test, build]
+    needs: [cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
 
     strategy:
       fail-fast: true
@@ -493,7 +493,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [archive]
+    needs: archive
 
     strategy:
       matrix:
