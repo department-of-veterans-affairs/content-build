@@ -31,10 +31,11 @@
               {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = other %}
             {% endfor %}
             {% if mobileFacilities.entities.length %}
+              {% assign sortedMobileFacilities = mobileFacilities.entities | sortObjectsBy: 'title' %}
               <h2 class="medium-screen:vads-u-margin-bottom--4" id="mobile-clinic-locations">
                 Mobile clinics
               </h2>
-              {% for mobile in mobileFacilities.entities %}
+              {% for mobile in sortedMobileFacilities %}
                 {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = mobile type = 'mobile' %}
               {% endfor %}
             {% endif %}
