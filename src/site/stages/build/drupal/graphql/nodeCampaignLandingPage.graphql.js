@@ -185,7 +185,6 @@ const nodeCampaignLandingPage = `
                 }
                 fieldDescription
                 fieldIntroText
-                fieldMetaTitle
                 fieldOffice {
                   entity {
                     entityType
@@ -220,7 +219,6 @@ const nodeCampaignLandingPage = `
                       }
                       fieldDescription
                       fieldMetaTags
-                      fieldMetaTitle
                     }
                   }
                 }
