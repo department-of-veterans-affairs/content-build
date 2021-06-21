@@ -43,7 +43,7 @@ module.exports = {
         acceptSslCerts: true,
         webStorageEnabled: true,
         chromeOptions: {
-          // w3c: false,
+          w3c: false,
           args: [
             '--headless',
             '--no-sandbox',
@@ -73,7 +73,7 @@ module.exports = {
     headless: {
       desiredCapabilities: {
         chromeOptions: {
-          // w3c: false,
+          w3c: false,
           args: [
             '--headless',
             '--no-sandbox',
@@ -85,7 +85,7 @@ module.exports = {
     },
     bestpractice: {
       globals: {
-        rules: ['section508', 'wcag2a', 'wcag2aa', 'best-practice'],
+        rules: ['section508', 'wcag2a', 'wcag2aa'],
       },
     },
   },
