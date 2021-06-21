@@ -12,7 +12,7 @@ module.exports = {
       urls,
       onlyTest508Rules, // eslint-disable-line no-unused-vars
     }) {
-      const mark = 5;
+      const mark = 100;
       // eslint-disable-next-line no-unused-vars
       const segment = urls.splice(0, mark);
       SitemapHelpers.runTests(client, segment, onlyTest508Rules);
