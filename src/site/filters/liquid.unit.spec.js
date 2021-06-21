@@ -54,6 +54,37 @@ const eventsMockData = [
   },
 ];
 
+describe('hasFieldSituationUpdates', () => {
+  let fieldBannerAlert;
+
+  beforeEach(() => {
+    fieldBannerAlert = [
+      {
+        entity: {
+          title: 'some time',
+          fieldSituationUpdates: [],
+          status: true,
+        },
+      },
+    ];
+  });
+
+  it('returns false if there are no field situation updates', () => {
+    expect(liquid.filters.hasFieldSituationUpdates(fieldBannerAlert)).to.be
+      .false;
+  });
+
+  it('returns true if there are field situation updates', () => {
+    fieldBannerAlert[0].entity.fieldSituationUpdates = [
+      'field situation update 1',
+      'field situation update 2',
+    ];
+
+    expect(liquid.filters.hasFieldSituationUpdates(fieldBannerAlert)).to.be
+      .true;
+  });
+});
+
 describe('filterPastEvents', () => {
   it('returns null when null is passed', () => {
     expect(liquid.filters.filterPastEvents(null)).to.eq(null);

@@ -63,7 +63,7 @@
             </ul>
           </section>
 
-          {% assign situationUpdates = fieldBannerAlert | isFieldSituationUpdates %}
+          {% assign situationUpdates = fieldBannerAlert | hasFieldSituationUpdates %}
           {% if fieldBannerAlert and situationUpdates %}
             {% include "src/site/components/situation_updates.drupal.liquid" with fieldBannerAlert %}
           {% endif %}
