@@ -216,11 +216,11 @@ jobs:
           BUILDTIME=$(date +%s)
           EOF
 
-      - name: Compress vagovprod build for E2E
+      - name: Compress E2E test build
         if: ${{ matrix.buildType == 'vagovprod' }}
         run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      - name: Upload artifact vagovprod build for E2E
+      - name: Upload E2E test build artifact
         uses: actions/upload-artifact@v2
         if: ${{ matrix.buildType == 'vagovprod' }}
         with:
@@ -231,10 +231,10 @@ jobs:
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
-      - name: Compress prearchived ${{ matrix.buildtype }} build
+      - name: Compress prearchived build
         run: tar -C build/${{ matrix.buildType }} -cjf ${{ matrix.buildType }}.tar.bz2 .
 
-      - name: Upload artifact ${{ matrix.buildtype }} build for archive
+      - name: Upload prearchived build artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.buildtype }}.tar.bz2
