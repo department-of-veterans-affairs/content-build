@@ -225,7 +225,7 @@ jobs:
         if: ${{ matrix.buildType == 'vagovprod' }}
         with:
           name: test-build.tar.bz2
-          path: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
           retention-days: 1
 
       - name: Prearchive
@@ -238,7 +238,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.buildtype }}.tar.bz2
-          path: ${{ matrix.buildType }}.tar.bz2
+          path: content-build/${{ matrix.buildType }}.tar.bz2
           retention-days: 1
 
       - name: Configure AWS credentials
