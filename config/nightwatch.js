@@ -85,7 +85,7 @@ module.exports = {
     },
     bestpractice: {
       globals: {
-        rules: ['section508', 'wcag2a', 'wcag2aa'],
+        rules: ['section508', 'wcag2a', 'wcag2aa', 'best-practice'],
       },
     },
   },
