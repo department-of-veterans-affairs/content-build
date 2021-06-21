@@ -1,7 +1,19 @@
 name: Daily Deploy
 
 # TODO: Remove and uncomment
-on: [push]
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      release_wait:
+        description: "Release Wait (minutes)"
+        required: false
+        default: 60
+      use_latest_release:
+        description: "use_latest_release"
+        required: false
+        default: 'master'
+
 
 # on:
   # schedule:
@@ -9,7 +21,6 @@ on: [push]
 
 env:
   CHANNEL_ID: U01SPJ10WBC
-  RELEASE_WAIT: 60
 
 jobs:
   check-runs:
@@ -117,10 +128,10 @@ jobs:
         runs: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.fetch-latest-release.outputs.tag_name}}...${{github.sha}}"
       
-      - name: Sleep for ${{ env.RELEASE_WAIT }}
+      - name: Sleep for ${{ github.event.inputs.release_wait }}
         uses: whatnick/wait-action@master
         with:
-          time: '${{ env.RELEASE_WAIT }}m'
+          time: '${{ github.event.inputs.release_wait }}m'
 
   # release:
   #   name: Release then trigger deploy
