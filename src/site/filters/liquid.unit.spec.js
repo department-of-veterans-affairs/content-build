@@ -54,11 +54,11 @@ const eventsMockData = [
   },
 ];
 
-describe('hasFieldSituationUpdates', () => {
-  let fieldBannerAlert;
+describe('hasContentAtPath', () => {
+  let testArray;
 
   beforeEach(() => {
-    fieldBannerAlert = [
+    testArray = [
       {
         entity: {
           title: 'some time',
@@ -69,19 +69,27 @@ describe('hasFieldSituationUpdates', () => {
     ];
   });
 
-  it('returns false if there are no field situation updates', () => {
-    expect(liquid.filters.hasFieldSituationUpdates(fieldBannerAlert)).to.be
-      .false;
+  it('returns false if there is no content at the given path', () => {
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.false;
   });
 
-  it('returns true if there are field situation updates', () => {
-    fieldBannerAlert[0].entity.fieldSituationUpdates = [
+  it('returns true if there is content at the given path', () => {
+    testArray[0].entity.fieldSituationUpdates = [
       'field situation update 1',
       'field situation update 2',
     ];
 
-    expect(liquid.filters.hasFieldSituationUpdates(fieldBannerAlert)).to.be
-      .true;
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.true;
   });
 });
 

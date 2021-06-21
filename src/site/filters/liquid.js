@@ -880,9 +880,11 @@ module.exports = function registerFilters() {
     return !paginator || paginator.prev === null;
   };
 
-  liquid.filters.hasFieldSituationUpdates = fieldBannerAlert => {
-    return _.some(fieldBannerAlert, e => {
-      return e.entity.fieldSituationUpdates.length > 0;
-    });
+  liquid.filters.hasContentAtPath = (rootArray, path) => {
+    for (let i = 0; i < rootArray.length; i++) {
+      const hasLength = _.get(rootArray[i], path)?.length > 0;
+      if (hasLength) return hasLength;
+    }
+    return false;
   };
 };
