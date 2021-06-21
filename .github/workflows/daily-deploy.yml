@@ -43,7 +43,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/check-build-status.js 3333
+        run: node ./script/github-actions/check-build-status.js ${{ github.sha }}
 
   slack-notify:
     name: Notify Slack
@@ -103,24 +103,24 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: [check-runs, slack-notify]
 
-  # tag-release:
-  #   name: Wait to tag release
-  #   runs-on: ubuntu-latest
-  #   needs: [prerelease]
+  tag-release:
+    name: Wait to tag release
+    runs-on: ubuntu-latest
+    needs: [prerelease]
 
-  #   steps:
-  #     - name: Get the version
-  #       id: fetch-latest-release
-  #       uses: thebritican/fetch-latest-release@v2.0.0
+    steps:
+      - name: Get the version
+        id: fetch-latest-release
+        uses: thebritican/fetch-latest-release@v2.0.0
 
-  #     - name: Waiting to release 
-  #       runs: |
-  #         echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.fetch-latest-release.outputs.tag_name}}...${{github.sha}}"
+      - name: Waiting to release 
+        runs: |
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.fetch-latest-release.outputs.tag_name}}...${{github.sha}}"
       
-  #     - name: Sleep for ${{ env.RELEASE_WAIT }}
-  #       uses: whatnick/wait-action@master
-  #       with:
-  #         time: '${{ env.RELEASE_WAIT }}m'
+      - name: Sleep for ${{ env.RELEASE_WAIT }}
+        uses: whatnick/wait-action@master
+        with:
+          time: '${{ env.RELEASE_WAIT }}m'
 
   # release:
   #   name: Release then trigger deploy
