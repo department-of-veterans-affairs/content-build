@@ -120,20 +120,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Repo latest information
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
-
-      - name: Get previous tag
-        id: get-latest-tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-
-      - name: Get info
-        id: get-ref
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - name: Waiting to release 
         run: |
@@ -152,11 +142,11 @@ jobs:
       #   with:
       #     time: '${{ github.event.inputs.release_wait }}m'
 
-      - name: Get next tag version
-        id: bump-tag-version
-        uses: "WyriHaximus/github-action-next-semvers@v1"
-        with:
-          version: "v0.0.416"
+      # - name: Get next tag version
+      #   id: bump-tag-version
+      #   uses: "WyriHaximus/github-action-next-semvers@v1"
+      #   with:
+      #     version: "v0.0.416"
 
       - name: Echo tag version
         run: |
