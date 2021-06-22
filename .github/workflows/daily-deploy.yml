@@ -127,7 +127,7 @@ jobs:
 
       - name: Get latest tag
         id: get-latest-tag
-        run: ::set-output name=TAG_VERSION::$(git tag -l | sort -V --reverse | head -n 1)
+        run: echo ::set-output name=TAG_VERSION::$(git tag -l | sort -V --reverse | head -n 1)
 
       - name: Waiting to release 
         run: |
