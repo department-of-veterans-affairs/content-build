@@ -119,12 +119,16 @@ jobs:
 
     steps:
       - name: Repo latest information
-        id: fetch-latest-release
+        id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
+
+      - name: Get previous tag
+        id: get-latest-tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.fetch-latest-release.outputs.tag_name}}...${{github.sha}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.get-latest-release.outputs.tag_name}}...${{github.sha}}"
       
       - name: Sleep for ${{ github.event.inputs.release_wait }} (default)
         if: ${{ github.event.inputs.release_wait == '' }}
@@ -137,6 +141,16 @@ jobs:
         uses: whatnick/wait-action@master
         with:
           time: '${{ github.event.inputs.release_wait }}m'
+
+      - name: Get next tag version
+        id: bump-tag-version
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+
+      - name: Echo tag version
+        run: |
+          echo ${{ steps.bump-tag-version.outputs.patch }}
 
   # release:
   #   name: Release then trigger deploy
