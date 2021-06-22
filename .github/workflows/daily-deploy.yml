@@ -127,7 +127,7 @@ jobs:
 
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.get-latest-release.outputs.tag_name}}...${{github.sha}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{steps.get-latest-release.outputs.tag_name}}...${{github.sha}}"
       
       # TODO: Uncomment
       # - name: Sleep for ${{ github.event.inputs.release_wait }} (default)
