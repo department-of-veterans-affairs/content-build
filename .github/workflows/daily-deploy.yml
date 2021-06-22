@@ -10,15 +10,13 @@ on:
         required: false
         default: 60
       use_latest_release:
-        description: "use_latest_release"
+        description: "use_latest_release (true/false)"
         required: false
-        default: 'master'
-
-
-# on:
+        default: false
   # schedule:
   #   - cron: "0 18 * * 1-5"
 
+# TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: U01SPJ10WBC
   RELEASE_WAIT: 60
@@ -100,7 +98,6 @@ jobs:
         id: fetch-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      # TODO: Change to correct channel_id when ready
       # TODO: Verify tag version is correct one
       - name: Daily deploy succeess
         uses: ./.github/actions/vsp-github-actions/slack-socket
@@ -115,13 +112,13 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: [check-runs, slack-notify]
 
-  tag-release:
-    name: Wait to tag release
+  wait-to-release:
+    name: Wait to release
     runs-on: ubuntu-latest
     # needs: [prerelease]
 
     steps:
-      - name: Get the version
+      - name: Repo latest information
         id: fetch-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
@@ -146,11 +143,11 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: [prerelease]
 
-  cleanup:
+  on-failure:
     name: On Failure
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
-    needs: [check-runs, slack-notify]
+    needs: [check-runs, slack-notify, tag-release]
 
     steps:
     - name: Configure AWS credentials
@@ -187,7 +184,6 @@ jobs:
         persist-credentials: false
         path: ./.github/actions/vsp-github-actions
 
-    # TODO: Change to correct channel_id when ready
     # TODO: Need to do for content-release
     - name: Daily deploy failed
       uses: ./.github/actions/vsp-github-actions/slack-socket
