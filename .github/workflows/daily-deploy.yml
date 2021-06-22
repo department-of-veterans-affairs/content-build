@@ -127,7 +127,8 @@ jobs:
 
       - name: Get latest tag
         id: get-latest-tag
-        run: echo ::set-output name=TAG_VERSION::$(git tag -l | sort -V --reverse | head -n 1)
+        # run: echo ::set-output name=TAG_VERSION::$(git tag -l | sort -V --reverse | head -n 1)
+        run: git tag -l 
 
       - name: Waiting to release 
         run: |
@@ -146,15 +147,15 @@ jobs:
       #   with:
       #     time: '${{ github.event.inputs.release_wait }}m'
 
-      - name: Get next tag version
-        id: bump-tag-version
-        uses: "WyriHaximus/github-action-next-semvers@v1"
-        with:
-          version: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
+      # - name: Get next tag version
+      #   id: bump-tag-version
+      #   uses: "WyriHaximus/github-action-next-semvers@v1"
+      #   with:
+      #     version: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
 
-      - name: Echo tag version
-        run: |
-          echo ${{ steps.bump-tag-version.outputs.patch }}
+      # - name: Echo tag version
+      #   run: |
+      #     echo ${{ steps.bump-tag-version.outputs.patch }}
 
       # - name: Tag release
       #   run: |
