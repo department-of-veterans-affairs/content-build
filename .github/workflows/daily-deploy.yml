@@ -121,9 +121,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Repo latest information
+      - name: Get latest release
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
+
+      - name: Get latest tag
+        id: get-latest-tag
+        run: ::set-output name=TAG_VERSION::$(git tag -l | sort -V --reverse | head -n 1)
 
       - name: Waiting to release 
         run: |
@@ -142,15 +146,19 @@ jobs:
       #   with:
       #     time: '${{ github.event.inputs.release_wait }}m'
 
-      # - name: Get next tag version
-      #   id: bump-tag-version
-      #   uses: "WyriHaximus/github-action-next-semvers@v1"
-      #   with:
-      #     version: "v0.0.416"
+      - name: Get next tag version
+        id: bump-tag-version
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
 
       - name: Echo tag version
         run: |
-          echo ${{ steps.get-ref.outputs.tag }}
+          echo ${{ steps.bump-tag-version.outputs.patch }}
+
+      # - name: Tag release
+      #   run: |
+      #     git tag ${{ stuff }} && git push origin ${{ stuff }} 
 
   release:
     name: Release then trigger deploy
