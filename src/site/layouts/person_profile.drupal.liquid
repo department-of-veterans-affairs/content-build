@@ -8,7 +8,7 @@
         <div class="usa-grid usa-grid-full">
             {% if fieldOffice.entity.entityUrl.path %}
                 {% assign formattedTitle = title | replace: '"', '&quot;' %}
-                {% assign changeLink = ''| featureChangeVamcLeadershipLink %}
+                {% assign shouldChangeLink = ''| featureChangeVamcLeadershipLink %}
                 {% if changeLink == true %}
                     {% assign sidebarData = '{"depth": 5, "link": {"label":"' | append: formattedTitle | append: '","url": {"path": "/"}, "links": []}, "parent": {"label": "Leadership", "links": [], "url": {"path": "' | append: fieldOffice.entity.entityUrl.path | append: '/about-us/leadership"}}}' %}
                     {% include 'src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid' with entityUrl = entityUrl  sidebarData = sidebarData %}
