@@ -239,6 +239,7 @@ async function getOptions(commandLineOptions) {
   // Setting verbosity for the whole content build process as global so we don't
   // have to pass the buildOptions around for just that.
   global.verbose = options.verbose;
+  global.isPreviewServer = options.isPreviewServer;
 
   return options;
 }
