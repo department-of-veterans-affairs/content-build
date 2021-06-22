@@ -128,7 +128,7 @@ jobs:
       - name: Get latest tag
         id: get-latest-tag
         # run: echo ::set-output name=TAG_VERSION::$(git tag -l | sort -V --reverse | head -n 1)
-        run: echo ${GITHUB_REF/refs\/tags\//}
+        run: echo "${GITHUB_REF/refs\/tags\//}"
 
       - name: Waiting to release 
         run: |
