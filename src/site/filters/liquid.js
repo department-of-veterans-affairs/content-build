@@ -879,4 +879,9 @@ module.exports = function registerFilters() {
   liquid.filters.isFirstPage = paginator => {
     return !paginator || paginator.prev === null;
   };
+
+  liquid.filters.hasContentAtPath = (rootArray, path) => {
+    const hasContent = e => _.get(e, path)?.length > 0;
+    return rootArray.some(hasContent);
+  };
 };

@@ -28,6 +28,7 @@ const vetCenters = require('./vetCenter.graphql');
 const vetCenterLocations = require('./vetCenterLocations.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
+const locationsListingPage = require('./locationsListingPage.graphql');
 
 // String Helpers
 const {
@@ -71,6 +72,7 @@ module.exports = `
   ${vetCenterLocations.fragment}
   ${vamcPolicyPages.fragment}
   ${leadershipListingPage.fragment}
+  ${locationsListingPage.fragment}
 
   query GetLatestPageById($id: String!, $today: String!, $onlyPublishedContent: Boolean!) {
     nodes: nodeQuery(revisions: LATEST, filter: {
@@ -107,6 +109,7 @@ module.exports = `
         ... vetCenterLocationsFragment
         ... policiesPageFragment
         ... leadershipListingPage
+        ... locationListingPage
       }
     }
   }

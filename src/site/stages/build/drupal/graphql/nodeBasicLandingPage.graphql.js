@@ -32,7 +32,6 @@ fragment nodeBasicLandingPage on NodeBasicLandingPage {
     format
     processed
   }
-  fieldMetaTitle
   fieldProduct {
     entity {
       entityBundle
