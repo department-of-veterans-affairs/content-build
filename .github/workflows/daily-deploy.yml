@@ -131,6 +131,10 @@ jobs:
         id: get-latest-tag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
+      - name: Get info
+        id: get-ref
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
       - name: Waiting to release 
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/content-build/${{steps.get-latest-release.outputs.tag_name}}...${{github.sha}}"
@@ -156,7 +160,7 @@ jobs:
 
       - name: Echo tag version
         run: |
-          echo ${{ steps.bump-tag-version.outputs.patch }}
+          echo ${{ steps.get-ref.outputs.tag }}
 
   release:
     name: Release then trigger deploy
