@@ -3,11 +3,7 @@ const queries = {
   GET_LATEST_PAGE_BY_ID: './graphql/GetLatestPageById.graphql',
 };
 
-function getQuery(query, { useTomeSync } = {}) {
-  if (query === queries.GET_ALL_PAGES) {
-    // eslint-disable-next-line import/no-dynamic-require
-    return require(query)({ useTomeSync });
-  }
+function getQuery(query) {
   // eslint-disable-next-line import/no-dynamic-require
   return require(query);
 }
