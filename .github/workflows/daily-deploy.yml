@@ -118,8 +118,8 @@ jobs:
     # needs: [prerelease]
 
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Repo latest information
         id: get-latest-release
