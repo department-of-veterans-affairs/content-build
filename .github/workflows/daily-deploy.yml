@@ -152,16 +152,21 @@ jobs:
         run: |
           echo ${{ steps.bump-tag-version.outputs.patch }}
 
-  # release:
-  #   name: Release then trigger deploy
-  #   runs-on: ubuntu-latest
-  #   needs: [prerelease]
+  release:
+    name: Release then trigger deploy
+    runs-on: ubuntu-latest
+    needs: [prerelease]
+
+    steps:
+      - name: Repo latest information
+        id: get-latest-release
+        uses: thebritican/fetch-latest-release@v2.0.0
 
   on-failure:
     name: On Failure
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
-    needs: [check-runs, slack-notify, wait-to-release]
+    needs: [check-runs, slack-notify, wait-to-release, release]
 
     steps:
     - name: Configure AWS credentials
