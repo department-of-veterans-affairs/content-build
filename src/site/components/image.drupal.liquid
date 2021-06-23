@@ -1,4 +1,4 @@
-{% if image.derivative.url and image.alt %}
+{% if image.derivative.url and image.alt != empty %}
   <img
       {% if class %}
         class="{{ class }}"

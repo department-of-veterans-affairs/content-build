@@ -24,6 +24,23 @@ describe('Facility Listing', () => {
     );
   });
 
+  it('renders img tag if url exists and alt is empty string', async () => {
+    const data = {
+      image: {
+        derivative: {
+          url: 'testUrl',
+        },
+        alt: '',
+      },
+    };
+
+    const container = await renderHTML(layoutPath, data);
+
+    expect(container.querySelector('img').outerHTML).to.equal(
+      '<img src="testUrl" alt="">',
+    );
+  });
+
   it('omits width, height and class if not present', async () => {
     const data = {
       image: {
