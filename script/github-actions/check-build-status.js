@@ -18,8 +18,8 @@ function getLatestCheckRun(URL) {
           commitNull === true
         ) {
           const headerMessage = commitNull
-            ? 'Build aborted due to failed runs detected on'
-            : 'Build aborted due to check runs still in progress on';
+            ? 'Build aborted due to check runs still in progress on'
+            : 'Build aborted due to failed runs detected on';
           throw new Error(
             `${headerMessage} ${headSHA}.\n\n ${githubObject.check_runs[i].html_URL}`,
           );
@@ -45,6 +45,7 @@ function sleep(ms) {
 async function main() {
   await getLatestCheckRun(checkRunURL);
   if (!commitNull) {
+    console.log(`Check runs still pending. Sleeping for ${timeout}s`);
     await sleep(timeout);
     await getLatestCheckRun(checkRunURL);
   }
