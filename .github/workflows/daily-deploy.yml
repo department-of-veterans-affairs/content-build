@@ -139,7 +139,7 @@ jobs:
         id: bump-tag-version
         uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
-          version: ${{ env.TAG_VERSION }}
+          version: ${{ needs.slack-notify.env.TAG_VERSION }}
 
       - name: Echo next version
         run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
