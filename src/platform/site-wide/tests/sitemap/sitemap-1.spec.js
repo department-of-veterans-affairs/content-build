@@ -4,10 +4,11 @@
 // runs over the others. Crude, but this enables nightwatch to parallelize these.
 
 const SitemapHelpers = require('./sitemap-helpers');
+const Timeouts = require('../../../testing/e2e/timeouts.js');
 
 module.exports = {
   'sitemap 1/4': client => {
-    client.timeoutsAsyncScript(1000);
+    client.timeoutsAsyncScript(Timeouts.verySlow);
     SitemapHelpers.sitemapURLs().then(function runFirstAxeCheck({
       urls,
       onlyTest508Rules, // eslint-disable-line no-unused-vars
