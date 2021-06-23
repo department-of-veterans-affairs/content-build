@@ -194,7 +194,6 @@ jobs:
 
       - name: Upload artifact ${{ env.BUILDTYPE }} build for archive
         uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           name: ${{ env.BUILDTYPE }}.tar.bz2
           path: content-build/${{ env.BUILDTYPE }}.tar.bz2
