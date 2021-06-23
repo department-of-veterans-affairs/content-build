@@ -128,6 +128,7 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       BUILDTYPE: vagovprod
       DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+      CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
 
     steps:
       - name: Checkout vagov-content
