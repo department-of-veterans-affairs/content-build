@@ -151,13 +151,11 @@ jobs:
 
       - name: Get next tag version
         id: bump-tag-version
-        uses: "WyriHaximus/github-action-next-semvers@v1"
-        with:
-          version: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
+        run: echo ::set-output name=PATCH::${{ steps.get-latest-tag.outputs.TAG_VERSION + 0.0.1 }}
 
       - name: Echo tag version
         run: |
-          echo ${{ steps.bump-tag-version.outputs.patch }}
+          echo ${{ steps.bump-tag-version.outputs.PATCH }}
 
       # - name: Tag release
       #   run: |
