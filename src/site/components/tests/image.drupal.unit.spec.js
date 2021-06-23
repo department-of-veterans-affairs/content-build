@@ -9,11 +9,10 @@ describe('Facility Listing', () => {
       image: {
         derivative: {
           url: 'testUrl', // TODO: validate the url format?
-          width: 'testWidth',
-          height: 'testHeight',
+          width: 123,
+          height: 321,
         },
         alt: 'testAlt',
-        title: 'testTitle',
       },
       class: 'testClass',
     };
@@ -21,7 +20,24 @@ describe('Facility Listing', () => {
     const container = await renderHTML(layoutPath, data);
 
     expect(container.querySelector('img').outerHTML).to.equal(
-      '<img class="testClass" src="testUrl" alt="testAlt" title="testTitle" width="testWidth" height="testHeight">',
+      '<img class="testClass" src="testUrl" alt="testAlt" width="123" height="321">',
+    );
+  });
+
+  it('omits width, height and class if not present', async () => {
+    const data = {
+      image: {
+        derivative: {
+          url: 'testUrl',
+        },
+        alt: 'testAlt',
+      },
+    };
+
+    const container = await renderHTML(layoutPath, data);
+
+    expect(container.querySelector('img').outerHTML).to.equal(
+      '<img src="testUrl" alt="testAlt">',
     );
   });
 
@@ -29,12 +45,11 @@ describe('Facility Listing', () => {
     const data = {
       image: {
         derivative: {
-          width: 'testWidth',
-          height: 'testHeight',
+          width: 123,
+          height: 321,
         },
         alt: 'testAlt',
         class: 'testClass',
-        title: 'testTitle',
       },
     };
 
@@ -48,11 +63,10 @@ describe('Facility Listing', () => {
       image: {
         derivative: {
           url: 'testUrl',
-          width: 'testWidth',
-          height: 'testHeight',
+          width: 123,
+          height: 321,
         },
         class: 'testClass',
-        title: 'testTitle',
       },
     };
 
