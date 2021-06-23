@@ -293,6 +293,9 @@ app.get('/preview', async (req, res, next) => {
       isScriptContext: true,
     });
 
+    const drupalAddressUrl = DRUPALS.PUBLIC_URLS[options['drupal-address']];
+    const drupalSite = drupalAddressUrl || 'prod.cms.va.gov';
+
     const files = {
       'generated/file-manifest.json': {
         path: 'generated/file-manifest.json',
@@ -302,9 +305,7 @@ app.get('/preview', async (req, res, next) => {
         ...fullPage,
         isPreview: true,
         headerFooterData: headerFooterDataSerialized,
-        drupalSite:
-          DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
-          options['drupal-address'],
+        drupalSite,
       },
     };
 
