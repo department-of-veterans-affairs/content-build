@@ -55,7 +55,7 @@ describe('Facility Listing', () => {
       expect(container.querySelector('section-image')).not.to.exist;
     });
 
-    it('does not render image section if alt tag is missing', async () => {
+    it('does not render image section if url is missing', async () => {
       const missingUrlImageData = cloneDeep(data.main);
       missingUrlImageData.entity.fieldMedia.entity.image.derivative.url = '';
 
