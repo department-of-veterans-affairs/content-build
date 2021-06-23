@@ -23,6 +23,7 @@ const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
 const singlePageDiff = require('./preview-routes/single-page-diff');
+const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -73,6 +74,16 @@ if (options.buildpath === null) {
   options.buildpath = `build/${options.buildtype}`;
 }
 
+// Create symlink to 'vets-website/generated' if it doesn't exist
+// so we don't have to run the content build
+if (
+  options.buildtype === ENVIRONMENTS.LOCALHOST &&
+  !fs.existsSync(`${options.buildpath}/generated`)
+) {
+  options['apps-directory-name'] = 'vets-website';
+  createMetalSmithSymlink(options);
+}
+
 const cacheDir = path.join(
   __dirname,
   '../.cache',
@@ -94,7 +105,7 @@ const urls = {
 };
 
 const getContentUrl = env => {
-  return env === 'localhost'
+  return env === ENVIRONMENTS.LOCALHOST
     ? 'http://localhost:3002'
     : bucketsContent[options.buildtype];
 };
