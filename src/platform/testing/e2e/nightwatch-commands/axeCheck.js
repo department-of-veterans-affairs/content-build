@@ -59,6 +59,14 @@ export function command(context, config, _callback) {
 
       const scope = (config || {}).scope || '[n/a]';
 
+      console.log('---------------------');
+      console.log('---------------------');
+      console.log('---------------------');
+      console.log(response.value);
+      console.log('---------------------');
+      console.log('---------------------');
+      console.log('---------------------');
+
       if (err) {
         this.verify.fail(err);
         return;
