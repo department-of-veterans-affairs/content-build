@@ -6,10 +6,15 @@ const layoutPath =
   'src/site/layouts/health_care_region_locations_page.drupal.liquid';
 
 describe('health_care_region_locations_page', () => {
-  let container;
   const data = parseFixture(
     'src/site/layouts/tests/vamc/fixtures/health_care_region_page.json',
   );
+
+  let container;
+
+  before(async () => {
+    container = await renderHTML(layoutPath, data);
+  });
 
   it('reports no axe violations', async () => {
     const violations = await axeCheck(container);
@@ -17,7 +22,6 @@ describe('health_care_region_locations_page', () => {
   });
 
   it('should sort health clinics correctly', async () => {
-    container = await renderHTML(layoutPath, data, 'sorting');
     const expected = [
       'Pittsburgh VA Medical Center-University Drive',
       'H. John Heinz III Department of Veterans Affairs Medical Center',
@@ -36,8 +40,6 @@ describe('health_care_region_locations_page', () => {
   });
 
   it('should render main phone number', async () => {
-    container = await renderHTML(layoutPath, data, 'fieldPhoneNumber');
-
     expect(container.querySelector('.main-phone a').textContent).to.equal(
       data.mainFacilities.entities[0].fieldPhoneNumber,
     );
