@@ -3,7 +3,7 @@ import { renderHTML } from '~/site/tests/support';
 
 const layoutPath = 'src/site/components/image.drupal.liquid';
 
-describe('Facility Listing', () => {
+describe('image tag template', () => {
   it('renders img tag if url and alt are present', async () => {
     const data = {
       image: {
