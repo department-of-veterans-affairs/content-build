@@ -57,7 +57,7 @@ export function command(context, config, _callback) {
         // results: { violations },
       } = response.value;
 
-      // const scope = (config || {}).scope || '[n/a]';
+      const scope = (config || {}).scope || '[n/a]';
 
       if (err) {
         this.verify.fail(err);
@@ -66,24 +66,24 @@ export function command(context, config, _callback) {
 
       if (!results) {
         this.verify.fail('No scan results found');
-        // return;
+        return;
       }
 
-      // violations.forEach(violation => {
-      //   const nodeInfo = violation.nodes.reduce((str, node) => {
-      //     const { html, target } = node;
-      //     return [str, html, ...target].join('\n');
-      //   }, '');
-      //   const message = `
-      //     Description:  ${violation.help}
-      //     Impact:       ${violation.impact}
-      //     Rule ID:      ${violation.id}
-      //     URL:          ${scope}
-      //     DOM node:     ${nodeInfo}
-      //     More help:    ${violation.helpUrl}
-      //   `;
-      //   this.verify.fail(message);
-      // });
+      results.violations.forEach(violation => {
+        const nodeInfo = violation.nodes.reduce((str, node) => {
+          const { html, target } = node;
+          return [str, html, ...target].join('\n');
+        }, '');
+        const message = `
+          Description:  ${violation.help}
+          Impact:       ${violation.impact}
+          Rule ID:      ${violation.id}
+          URL:          ${scope}
+          DOM node:     ${nodeInfo}
+          More help:    ${violation.helpUrl}
+        `;
+        this.verify.fail(message);
+      });
     },
   );
 }
