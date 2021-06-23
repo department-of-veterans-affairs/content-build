@@ -74,7 +74,7 @@ if (options.buildpath === null) {
   options.buildpath = `build/${options.buildtype}`;
 }
 
-// Create symlink to 'vets-website/generated' if it doesn't exist
+// Create symlink to 'vets-website/generated' if one doesn't exist
 // so we don't have to run the content build
 if (
   options.buildtype === ENVIRONMENTS.LOCALHOST &&
