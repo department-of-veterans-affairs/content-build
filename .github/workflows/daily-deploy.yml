@@ -151,7 +151,8 @@ jobs:
 
       - name: Get next tag version
         id: bump-tag-version
-        run: echo ::set-output name=PATCH::${{ steps.get-latest-tag.outputs.TAG_VERSION + 0.0.1 }}
+        run: |
+          echo ::set-output name=PATCH::$((${{ steps.get-latest-tag.outputs.TAG_VERSION }} + 0.0.1))
 
       - name: Echo tag version
         run: |
