@@ -120,7 +120,7 @@ jobs:
     steps:
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.slack-notify.get-latest-tag.outputs.TAG_VERSION}}...${{github.sha}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.slack-notify.outputs.TAG_VERSION}}...${{github.sha}}"
       
       # TODO: Uncomment
       # - name: Sleep for ${{ github.event.inputs.release_wait }} (default)
@@ -139,7 +139,7 @@ jobs:
         id: bump-tag-version
         uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
-          version: ${{ needs.slack-notify.get-latest-tag.outputs.TAG_VERSION }}
+          version: ${{ needs.slack-notify.outputs.TAG_VERSION }}
 
       - name: Echo next version
         run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
