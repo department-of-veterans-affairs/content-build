@@ -6,6 +6,155 @@ env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
 
 jobs:
+  build:
+    name: Build
+    runs-on: self-hosted
+    timeout-minutes: 60
+
+    defaults:
+      run:
+        working-directory: content-build
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
+    steps:
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
+
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Build
+        run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
+        env:
+          NODE_ENV: production
+
+      - name: Check broken links
+        id: get-broken-link-info
+        run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
+
+      - name: Generate build details
+        run: |
+          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
+          BUILDTYPE=${{ matrix.buildtype }}
+          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          RUN_ID=${{ github.run_id }}
+          REF=${{ github.sha }}
+          BUILDTIME=$(date +%s)
+          EOF
+
+      - name: Compress E2E test build
+        if: ${{ matrix.buildType == 'vagovprod' }}
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
+        if: ${{ matrix.buildType == 'vagovprod' }}
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
+
+      - name: Prearchive
+        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+
+      - name: Compress prearchived build
+        run: tar -C build/${{ matrix.buildType }} -cjf ${{ matrix.buildType }}.tar.bz2 .
+
+      - name: Upload prearchived build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.buildtype }}.tar.bz2
+          path: content-build/${{ matrix.buildType }}.tar.bz2
+          retention-days: 1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+
+      - name: Get va-vsp-bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
+
+      # TODO: Change to correct channel_id when ready
+      - name: Notify Slack about broken links
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          message: "Broken links detected!"
+          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          channel_id: "U01SPJ10WBC"
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -145,32 +294,28 @@ jobs:
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
 
-  build:
-    name: Build
+  cypress-tests:
+    name: Cypress E2E Tests
     runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: content-build
+    needs: build
+    timeout-minutes: 30
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
     steps:
-      - name: Checkout vagov-content
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
-
       - name: Checkout content-build
         uses: actions/checkout@v2
+
+      - name: Download production build artifact
+        uses: actions/download-artifact@v2
         with:
-          path: content-build
+          name: test-build.tar.bz2
+
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf test-build.tar.bz2
 
       - name: Get Node version
         id: get-node-version
@@ -195,112 +340,88 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address="https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" --no-drupal-proxy
-        timeout-minutes: 30
-        env:
-          NODE_ENV: production
+      - name: Start server
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
-      - name: Check broken links
-        id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
+      - name: Run Cypress tests
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
 
-      - name: Generate build details
-        run: |
-          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
-          BUILDTYPE=${{ matrix.buildtype }}
-          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
-          RUN_ID=${{ github.run_id }}
-          REF=${{ github.sha }}
-          BUILDTIME=$(date +%s)
-          EOF
+      - name: Publish test results
+        if: ${{ always() }}
+        uses: mikepenz/action-junit-report@v2.4.2
+        with:
+          check_name: 'Cypress Tests Summary'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: 'test-results/e2e-test-output-*.xml'
 
-      - name: Compress vagovprod build for E2E
-        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
-        run: tar -jcvf test-build.tar.bz2 build/vagovprod
-
-      - name: Upload artifact vagovprod build for E2E
+      - name: Archive Cypress test videos
         uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' && matrix.buildType == 'vagovprod' }}
+        if: ${{ failure() }}
+        with:
+          name: cypress-video-artifacts
+          path: cypress/videos
+
+      - name: Archive Cypress test screenshots
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: cypress-screenshot-artifacts
+          path: cypress/screenshots
+
+  nightwatch-tests:
+    name: Nightwatch E2E Tests
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 30
+    steps:
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+
+      - name: Download production build artifact
+        uses: actions/download-artifact@v2
         with:
           name: test-build.tar.bz2
-          path: content-build/test-build.tar.bz2
-          retention-days: 1
 
-      - name: Prearchive
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf test-build.tar.bz2
 
-      - name: Compress prearchived ${{ matrix.buildtype }} build
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: tar -jcvf ${{ matrix.buildType }}.tar.bz2 build/${{ matrix.buildType }}
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
-      - name: Upload artifact ${{ matrix.buildtype }} build for archive
-        uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' }}
+      - name: Setup Node
+        uses: actions/setup-node@v2
         with:
-          name: ${{ matrix.buildtype }}.tar.bz2
-          path: content-build/${{ matrix.buildType }}.tar.bz2
-          retention-days: 1
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
-      - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
-          
-      - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
-
-      # TODO: Change to correct channel_id when ready
-      - name: Notify Slack about broken links
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
         env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          message: "Broken links detected!"
-          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: "U01SPJ10WBC"
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Start server
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+
+      - name: Run Nightwatch tests
+        run: yarn test:e2e
+        env:
+          BUILDTYPE: vagovprod
 
   archive:
     name: Archive
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [security-audit, unit-tests, linting, drupal-cache-test, build]
+    needs: [cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
 
     strategy:
       fail-fast: true
@@ -343,7 +464,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [archive]
+    needs: archive
 
     strategy:
       matrix:
