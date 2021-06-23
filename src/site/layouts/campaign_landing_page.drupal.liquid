@@ -247,7 +247,7 @@
               <div class="vads-u-display--flex vads-u-flex-direction--column">
                 {% for storyTeaser in fieldClpStoriesTeasers %}
                   <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4">
-                    {% if storyTeaser.entity.fieldMedia.entity.thumbnail.url %}
+                    {% if storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.url %}
                       <img
                         alt="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.alt }}"
                         class="story-image vads-u-height--full medium-screen:vads-u-margin-right--2"
