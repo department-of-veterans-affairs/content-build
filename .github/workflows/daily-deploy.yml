@@ -130,7 +130,7 @@ jobs:
       # TODO: Do we need massive depth and do we need to fetch all?
       - name: Get latest tag
         id: get-latest-tag
-        run: echo ::set-output name=TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1 | cut -c2-)
+        run: echo ::set-output name=TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
       - name: Waiting to release 
         run: |
@@ -151,12 +151,13 @@ jobs:
 
       - name: Get next tag version
         id: bump-tag-version
-        run: |
-          echo ::set-output name=PATCH::$((${{ steps.get-latest-tag.outputs.TAG_VERSION }} + 0.0.1))
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
 
       - name: Echo tag version
         run: |
-          echo ${{ steps.bump-tag-version.outputs.PATCH }}
+          echo ${{ steps.bump-tag-version.outputs.patch }}
 
       # - name: Tag release
       #   run: |
