@@ -115,6 +115,88 @@ jobs:
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
+  
+  build:
+    name: Build
+    runs-on: self-hosted
+    needs: [check-runs, slack-notify]
+    defaults:
+      run:
+        working-directory: content-build
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      BUILDTYPE: vagovprod
+      DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+
+    steps:
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
+
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Build
+        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address="${{ env.DRUPAL_ADDRESS }}" --no-drupal-proxy
+        timeout-minutes: 30
+        env:
+          NODE_ENV: production
+
+      - name: Check broken links
+        id: get-broken-link-info
+        run: node ./script/github-actions/check-broken-links.js {{ env.BUILDTYPE }}
+
+      - name: Generate build details
+        run: |
+          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
+          BUILDTYPE=${{ matrix.buildtype }}
+          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          RUN_ID=${{ github.run_id }}
+          REF=${{ github.sha }}
+          BUILDTIME=$(date +%s)
+          EOF
+
+      - name: Prearchive
+        run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
+
+      - name: Compress prearchived ${{ env.BUILDTYPE }} build
+        run: tar -jcvf ${{ env.BUILDTYPE }}.tar.bz2 build/${{ env.BUILDTYPE }}
+
+      - name: Upload artifact ${{ env.BUILDTYPE }} build for archive
+        uses: actions/upload-artifact@v2
+        if: ${{ github.ref == 'refs/heads/master' }}
+        with:
+          name: ${{ env.BUILDTYPE }}.tar.bz2
+          path: content-build/${{ env.BUILDTYPE }}.tar.bz2
+          retention-days: 1
 
   create-release:
     name: Create Release
