@@ -25,10 +25,18 @@ jobs:
   check-runs:
     name: Check runs status
     runs-on: ubuntu-latest
+    outputs: 
+      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get-latest-tag
+        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
       - name: Get Node version
         id: get-node-version
@@ -60,15 +68,8 @@ jobs:
     name: Notify Slack
     runs-on: ubuntu-latest
     needs: check-runs
-    outputs: 
-      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -103,17 +104,12 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      # TODO: Do we need massive depth and do we need to fetch all? -- move to check-runs
-      - name: Get latest tag
-        id: get-latest-tag
-        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
-
       - name: Daily deploy succeess
         uses: ./.github/actions/vsp-github-actions/slack-socket
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.check-runs.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
   
   build:
@@ -243,12 +239,12 @@ jobs:
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
-    needs: [build, archive]
+    needs: [check-runs, build, archive]
 
     steps:
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.slack-notify.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.check-runs.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
       
       # TODO: Uncomment
       # - name: Sleep for ${{ github.event.inputs.release_wait }} (default)
@@ -267,7 +263,7 @@ jobs:
         id: bump-tag-version
         uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
-          version: ${{ needs.slack-notify.outputs.LATEST_TAG_VERSION }}
+          version: ${{ needs.check-runs.outputs.LATEST_TAG_VERSION }}
 
       - name: Echo next version
         run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
