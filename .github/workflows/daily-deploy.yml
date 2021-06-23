@@ -153,7 +153,7 @@ jobs:
         id: bump-tag-version
         uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
-          version: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
+          version: ${{ steps.get-latest-tag.outputs.TAG_VERSION:1 }} # remove v from v${id}
 
       - name: Echo tag version
         run: |
