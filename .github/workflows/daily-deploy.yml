@@ -319,7 +319,7 @@ jobs:
     name: On Failure
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
-    needs: [check-runs, slack-notify, build, archive, create-release, deploy]
+    needs: deploy
 
     steps:
     - name: Configure AWS credentials
