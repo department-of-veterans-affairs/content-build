@@ -54,18 +54,10 @@ export function command(context, config, _callback) {
       const {
         err,
         results,
-        // results: { violations },
+        results: { violations },
       } = response.value;
 
       const scope = (config || {}).scope || '[n/a]';
-
-      console.log('---------------------');
-      console.log('---------------------');
-      console.log('---------------------');
-      console.log(response.value);
-      console.log('---------------------');
-      console.log('---------------------');
-      console.log('---------------------');
 
       if (err) {
         this.verify.fail(err);
@@ -77,7 +69,7 @@ export function command(context, config, _callback) {
         return;
       }
 
-      results.violations.forEach(violation => {
+      violations.forEach(violation => {
         const nodeInfo = violation.nodes.reduce((str, node) => {
           const { html, target } = node;
           return [str, html, ...target].join('\n');

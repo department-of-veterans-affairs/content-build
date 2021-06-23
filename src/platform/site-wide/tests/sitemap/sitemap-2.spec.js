@@ -1,8 +1,9 @@
 const SitemapHelpers = require('./sitemap-helpers');
+const Timeouts = require('../../../testing/e2e/timeouts.js');
 
 module.exports = {
   'sitemap 2/4': client => {
-    client.timeoutsAsyncScript(1000);
+    client.timeoutsAsyncScript(Timeouts.verySlow);
     SitemapHelpers.sitemapURLs().then(function runSecondAxeCheck({
       urls,
       onlyTest508Rules,
