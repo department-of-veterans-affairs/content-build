@@ -3,7 +3,7 @@
     {% if facilityMedia.entity.image != empty %}
         {% assign image = facilityMedia.entity.image %}
         <img class="facility-img" src="{{ image.derivative.url }}"
-             onclick="recordEvent({ event: 'map-link-click', 'vet-center-facility-name': '{{ entityLabel }}'});"
+             onclick="recordEvent({ event: 'image-click', 'facility-name': '{{ entityLabel }}'});"
              alt="{{ image.alt }}" title="{{ image.title }}"
              width="{{ image.derivative.width }}"
              height="{{ image.derivative.height }}" />

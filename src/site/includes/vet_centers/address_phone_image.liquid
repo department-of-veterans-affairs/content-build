@@ -57,7 +57,7 @@
         {% if vetCenter.fieldMedia %}
           {% assign image = vetCenter.fieldMedia.entity.image %}
           <img class="facility-img" src="{{ image.derivative.url }}"
-               onclick="recordEvent({ event: 'vet-center-image-click', 'vet-center-facility-name': '{{ vetCenter.title }}'});"
+               onclick="recordEvent({ event: 'image-click', 'facility-name': '{{ vetCenter.title }}'});"
                alt="{{ image.alt }}" title="{{ image.title }}"
                width="{{ image.derivative.width }}"
                height="{{ image.derivative.height }}" />
