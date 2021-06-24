@@ -15,6 +15,7 @@ on:
         default: false
   schedule:
     - cron: "0 18 * * 1-5"
+    - cron: "0 13-16,20-21 * * 1-5" #TODO: How do we add 1845?
 
 # TODO: Change to correct channel_id when ready
 env:
@@ -22,6 +23,38 @@ env:
   RELEASE_WAIT: 60
 
 jobs:
+  job-env:
+    name: Set env variables
+    runs-on: ubuntu-latest
+    outputs:
+      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
+      RELEASE_WAIT: ${{ steps.get-release-wait.outputs.RELEASE_WAIT }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get-latest-tag
+        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+
+      - name: Get release wait time (daily deploy)
+        if: ${{ github.event.schedule == '"0 18 * * 1-5"'}}
+        id: get-release-wait
+        run: echo ::set-output name=RELEASE_WAIT::60
+
+      - name: Get release wait time (content release)
+        if: ${{ github.event.schedule == '"0 18 * * 1-5"'}}
+        id: get-release-wait
+        run: echo ::set-output name=RELEASE_WAIT::0
+
+      - name: Get release wait time (workflow_dispatch)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        id: get-release-wait
+        run: echo ::set-output name=RELEASE_WAIT::${{ github.event.inputs.release_wait }}
+
   check-runs:
     name: Check runs status
     runs-on: ubuntu-latest
