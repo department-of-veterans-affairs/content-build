@@ -49,7 +49,7 @@ jobs:
 
       - name: Get latest release
         id: get-latest-release
-        uses: thebritican/fetch-latest-release
+        uses: thebritican/fetch-latest-release@v1
 
       - name: Check if content only deploy
         run: |
