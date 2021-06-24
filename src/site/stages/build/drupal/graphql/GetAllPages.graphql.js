@@ -58,8 +58,10 @@ queryParamToBeChanged.forEach(param => {
 
 const regex = new RegExp(`${regString}`, 'g');
 
-const buildQuery = () => {
-  const nodeContentFragments = `
+const buildQuery = ({ useTomeSync }) => {
+  const nodeContentFragments = useTomeSync
+    ? ''
+    : `
   ${ALL_FRAGMENTS}
   ${landingPage.fragment}
   ${page.fragment}
@@ -92,9 +94,11 @@ const buildQuery = () => {
   ${vamcPolicyPages.fragment}
 `;
 
-  const todayQueryVar = '$today: String!,';
+  const todayQueryVar = useTomeSync ? '' : '$today: String!,';
 
-  const nodeQuery = `
+  const nodeQuery = useTomeSync
+    ? ''
+    : `
     nodeQuery(limit: 5000, filter: {
       conditions: [
         { field: "status", value: ["1"], enabled: $onlyPublishedContent }
