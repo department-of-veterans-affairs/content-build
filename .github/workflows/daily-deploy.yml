@@ -14,9 +14,15 @@ on:
         required: false
         default: false
   schedule:
-    - cron: "0 18 * * 1-5"
-    - cron: "0 13-16,20-21 * * 1-5" #TODO: How do we add 1845?
+    - cron: "0 18 * * 1-5" # 1400 EST
+    - cron: "0 13-16,20-21 * * 1-5" #0900-1200 EST,1600-1700EST #TODO: How do we add 1845?
 
+# use_latest_ref = release
+# default = tag
+
+
+# use_latest_ref true = DD
+# use_latest_ref false = CO
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: U01SPJ10WBC
@@ -28,6 +34,8 @@ jobs:
     outputs:
       LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
+      REF: ${{ env.REF }}
+      CONTENT_ONLY: ${{ env.CONTENT_ONLY }}
 
     steps:
       - name: Checkout
@@ -38,6 +46,30 @@ jobs:
       - name: Get latest tag
         id: get-latest-tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+
+      - name: Get latest release
+        id: get-latest-release
+        uses: thebritican/fetch-latest-release
+
+      - name: Check if content only deploy
+        run: |
+          if [[ ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' || github.event.inputs.release_wait == 'false'}} ]]
+          then
+            echo "CONTENT_ONLY=true" >> $GITHUB_ENV
+          else
+            echo "CONTENT_ONLY=false" >> $GITHUB_ENV
+          fi
+
+      - name: test echo content_only flag
+        run: echo ${{env.CONTENT_ONLY}}
+
+      - name: Get ref (daily deploy or use_latest_release == true)
+        if: ${{ !env.CONTENT_ONLY }}
+        run: echo "REF=${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Get ref (content release or use_latest_release == false)
+        if: ${{ env.CONTENT_ONLY }}
+        run: echo "REF=${{ steps.get-latest-release.outputs.tag_name }}" >> $GITHUB_ENV
 
       - name: Get release wait time (test)
         if: ${{ github.event_name == 'push'}}
