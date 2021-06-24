@@ -3,6 +3,9 @@
       {% if class %}
         class="{{ class }}"
       {% endif %}
+      {% if onclick %}
+        onclick="{{ onclick }}"
+      {% endif %}
       src="{{ image.derivative.url }}"
       alt="{{ image.alt }}"
       {% if image.derivative.width %}

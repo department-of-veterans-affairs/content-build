@@ -15,12 +15,13 @@ describe('image tag template', () => {
         alt: 'testAlt',
       },
       class: 'testClass',
+      onclick: 'testOnClick',
     };
 
     const container = await renderHTML(layoutPath, data);
 
     expect(container.querySelector('img').outerHTML).to.equal(
-      '<img class="testClass" src="testUrl" alt="testAlt" width="123" height="321">',
+      '<img class="testClass" onclick="testOnClick" src="testUrl" alt="testAlt" width="123" height="321">',
     );
   });
 
