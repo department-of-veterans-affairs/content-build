@@ -112,7 +112,7 @@
                 src="{{ promo.entity.fieldImage.entity.thumbnail.derivative.url }}"
                 width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}"
               />
-              <h3 class="vads-u-padding-x--2 vads-u-margin-top--1">
+              <h3 class="vads-u-padding-x--2 vads-u-margin-top--2">
                 <a
                   href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'What you can do', 'clp-section-title': '{{ fieldClpWhatYouCanDoHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ promo.entity.fieldPromoLink.entity.fieldLink.title | encode }}' });"
