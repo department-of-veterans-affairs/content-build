@@ -26,7 +26,7 @@ jobs:
     name: Check runs status
     runs-on: ubuntu-latest
     outputs: 
-      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.TAG_VERSION }}
+      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
 
     steps:
       - name: Checkout
@@ -37,9 +37,6 @@ jobs:
       - name: Get latest tag
         id: get-latest-tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
-
-      - name: echo tag
-        run: echo ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}
 
       - name: Get Node version
         id: get-node-version
