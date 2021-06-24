@@ -39,12 +39,17 @@ jobs:
       - name: Get latest tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
+      - name: Get release wait time (test)
+        if: ${{ github.event_name == 'push'}}
+        run: echo "RELEASE_WAIT=10" >> $GITHUB_ENV
+
       - name: Get release wait time (daily deploy)
-        if: ${{ github.event.schedule == '"0 18 * * 1-5"'}}
+        if: ${{ github.event.schedule == '0 18 * * 1-5'}}
         run: echo "RELEASE_WAIT=60" >> $GITHUB_ENV
 
+      # TODO: Update if w/ correct cron schedule
       - name: Get release wait time (content release)
-        if: ${{ github.event.schedule == '"0 18 * * 1-5"'}}
+        if: ${{ github.event.schedule == '0 13-16,20-21 * * 1-5'}}
         id: get-release-wait
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
