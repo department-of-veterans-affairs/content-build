@@ -628,17 +628,20 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--6 {% if !forloop.first %}vads-u-margin-top--2 medium-screen:vads-u-margin-top--0{% endif %}">
               <div class="medium-screen:vads-u-margin-x--6">
                 <div class="vads-u-display--flex vads-u-align-items--center">
-                  <div class="inline hub-main-icon vads-u-margin-right--2">
-                    <i class="icon-large white hub-icon-{{ benefitCategory.entity.fieldTitleIcon }} hub-background-{{ benefitCategory.entity.fieldTitleIcon }}" role="presentation" aria-hidden="true"></i>
-                  </div>
+                  <i
+                    aria-hidden="true"
+                    class="vads-u-flex--auto icon-small white vads-u-margin-right--1 hub-icon-{{ benefitCategory.entity.fieldTitleIcon }} hub-background-{{ benefitCategory.entity.fieldTitleIcon }}"
+                    role="presentation"
+                  ></i>
                   <a
+                    class="vads-u-flex--1"
                     onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'VA Benefits', 'clp-section-title': 'Learn more about related VA benefits', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ benefitCategory.entity.title | encode }}' });"
                     href="{{ benefitCategory.entity.entityUrl.path }}"
                   >
-                    {{ benefitCategory.entity.title }}
+                    <h3 class="vads-u-margin--0 vads-u-font-size--h4">{{ benefitCategory.entity.title }}</h3>
                   </a>
                 </div>
-                <p class="vads-u-margin-top--0">{{ benefitCategory.entity.fieldTeaserText }}</p>
+                <p class="vads-u-margin-top--1">{{ benefitCategory.entity.fieldTeaserText }}</p>
               </div>
             </div>
           {% endfor %}
