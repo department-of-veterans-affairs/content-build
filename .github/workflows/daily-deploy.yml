@@ -20,7 +20,6 @@ on:
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: U01SPJ10WBC
-  RELEASE_WAIT: 60
 
 jobs:
   job-env:
@@ -37,6 +36,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get latest tag
+        id: get-latest-tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
       - name: Get release wait time (test)
@@ -60,22 +60,10 @@ jobs:
   check-runs:
     name: Check runs status
     runs-on: ubuntu-latest
-    needs: job-env
-    outputs: 
-      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Get latest tag
-        run: echo ${{ needs.job-env.outputs.RELEASE_WAIT }}
-
-      - name: Get latest tag
-        id: get-latest-tag
-        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
       - name: Get Node version
         id: get-node-version
@@ -106,7 +94,7 @@ jobs:
   slack-notify:
     name: Notify Slack
     runs-on: ubuntu-latest
-    needs: check-runs
+    needs: [job-env, check-runs]
 
     steps:
       - name: Configure AWS credentials
@@ -148,7 +136,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in 60 minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.check-runs.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in ${{ needs.job-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
   
   build:
@@ -278,31 +266,23 @@ jobs:
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
-    needs: [check-runs, build, archive]
+    needs: [job-env, build, archive]
 
     steps:
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.check-runs.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
-      
-      # TODO: Uncomment
-      # - name: Sleep for ${{ github.event.inputs.release_wait }} (default)
-      #   if: ${{ github.event.inputs.release_wait == '' }}
-      #   uses: whatnick/wait-action@master
-      #   with:
-      #     time: '${{ env.RELEASE_WAIT }}m'
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
 
-      # - name: Sleep for ${{ github.event.inputs.release_wait }} (workflow_dispatch)
-      #   if: ${{ github.event.inputs.release_wait != '' }}
-      #   uses: whatnick/wait-action@master
-      #   with:
-      #     time: '${{ github.event.inputs.release_wait }}m'
+      - name: Sleep for ${{ needs.job-env.outputs.RELEASE_WAIT }}
+        uses: whatnick/wait-action@master
+        with:
+          time: '${{ needs.job-env.outputs.RELEASE_WAIT }}m'
 
       - name: Get next tag version
         id: bump-tag-version
         uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
-          version: ${{ needs.check-runs.outputs.LATEST_TAG_VERSION }}
+          version: ${{ needs.job-env.outputs.LATEST_TAG_VERSION }}
 
       - name: Echo next version
         run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
