@@ -2,7 +2,7 @@ const SitemapHelpers = require('./sitemap-helpers');
 
 module.exports = {
   'sitemap 4/4': client => {
-    client.timeoutsAsyncScript(1000);
+    client.timeoutsAsyncScript(1001);
     SitemapHelpers.sitemapURLs().then(function runFourthAxeCheck({
       urls,
       onlyTest508Rules,
