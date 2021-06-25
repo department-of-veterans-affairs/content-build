@@ -25,11 +25,11 @@ const data = fetch(`http://localhost:3002/sitemap.xml`).text();
 const lol = xml.parse(data, options).urlset.url;
 
 describe('Accessibility tests', () => {
-  for (const abc of lol) {
-    it(`${abc.loc}`, () => {
-      cy.visit(abc.loc).injectAxe();
+//   for (const abc of lol) {
+    it(`${lol[0].loc}`, () => {
+      cy.visit(lol[0].loc).injectAxe();
       cy.get('body').should('be.visible', { timeout: normal });
       cy.axeCheck();
     });
-  }
+//   }
 });
