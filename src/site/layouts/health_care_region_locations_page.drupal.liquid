@@ -24,12 +24,26 @@
             {% for main in mainFacility %}
               {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = main %}
             {% endfor %}
-            <h2 class="medium-screen:vads-u-margin-bottom--4" id="community-clinic-locations">
-              Health clinic locations
-            </h2>
-            {% for other in otherFacilities.entities %}
-              {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = other %}
-            {% endfor %}
+
+            {% if otherFacilities.entities.length %}
+              {% assign sortedOtherFacilities = otherFacilities.entities | sortObjectsBy: 'title' %}
+              <h2 class="medium-screen:vads-u-margin-bottom--4" id="community-clinic-locations">
+                Health clinic locations
+              </h2>
+              {% for other in sortedOtherFacilities %}
+                {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = other %}
+              {% endfor %}
+            {% endif %}
+
+            {% if mobileFacilities.entities.length %}
+              {% assign sortedMobileFacilities = mobileFacilities.entities | sortObjectsBy: 'title' %}
+              <h2 class="medium-screen:vads-u-margin-bottom--4" id="mobile-clinic-locations">
+                Mobile clinics
+              </h2>
+              {% for mobile in sortedMobileFacilities %}
+                {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = mobile type = 'mobile' %}
+              {% endfor %}
+            {% endif %}
             {% if fieldOtherVaLocations != empty and fieldOtherVaLocations.length %}
               <h2 class="medium-screen:vads-u-margin-bottom--4" id="other-nearby-va-locations">
                 Other nearby VA locations

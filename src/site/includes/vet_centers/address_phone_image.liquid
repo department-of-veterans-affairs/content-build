@@ -54,14 +54,13 @@
     </section>
 
     <section class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
-        {% if vetCenter.fieldMedia %}
-            <a href="{{ vetCenter.path }}"
-               aria-label="{{ vetCenter.fieldMedia.entity.image.alt }}">
-                <img class="region-img"
-                     src="{{ vetCenter.fieldMedia.entity.image.derivative.url }}"
-                     alt="{{ vetCenter.fieldMedia.entity.image.alt }}"
-                />
-            </a>
-        {% endif %}
+      {% capture onclick %}
+        recordEvent({ event: 'image-click', 'facility-name': '{{ vetCenter.title }}'});
+      {% endcapture %}
+      {% include src/site/components/image.drupal.liquid with
+          class = "facility-img"
+          image = vetCenter.fieldMedia.entity.image
+          onclick = onclick
+      %}
     </section>
 </div>

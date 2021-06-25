@@ -907,8 +907,29 @@
           "name": " Manage VA debt"
         },
         {
-          "path": "manage-va-debt/request-debt-help-5655",
+          "path": "manage-va-debt/request-debt-help-form-5655",
           "name": "Request help with VA debt"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Medical Copays",
+    "entryName": "medical-copays",
+    "rootUrl": "/health-care/pay-copay-bill",
+    "template": {
+      "title": "Medical Copays",
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "/health-care/pay-copay-bill",
+          "name": "Manage your VA copay bills"
+        },
+        {
+          "path": "/health-care/pay-copay-bill/copays",
+          "name": "Current copay balances"
         }
       ]
     }

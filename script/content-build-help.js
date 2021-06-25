@@ -4,7 +4,6 @@ const commandLineUsage = require('command-line-usage');
 
 const parentDir = path.resolve(__dirname, '../../');
 const defaultContentDir = path.join(parentDir, 'vagov-content');
-const defaultCmsExportDir = path.join(parentDir, 'cms-export/content');
 
 const helpSections = [
   {
@@ -47,17 +46,6 @@ const helpSections = [
         type: Boolean,
         description:
           'Pull the latest content from Drupal. If false, the build will try to use the local cache found in .cache/',
-      },
-      {
-        name: 'use-cms-export',
-        type: Boolean,
-        description:
-          'Use the CMS export instead of GraphQL to fetch the content nodes.',
-      },
-      {
-        name: 'cms-export-dir',
-        type: String,
-        description: `Specify where to find the CMS export.\nDefaults to {underline ${defaultCmsExportDir}}`,
       },
       {
         name: 'drupal-fail-fast',

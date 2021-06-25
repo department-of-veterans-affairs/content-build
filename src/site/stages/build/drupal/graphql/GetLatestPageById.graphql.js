@@ -10,6 +10,7 @@ const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const healthServicesListingPage = require('./healthServicesListingPage.graphql');
+const storyListingPage = require('./storyListingPage.graphql');
 const newsStoryPage = require('./newStoryPage.graphql');
 const nodeBasicLandingPage = require('./nodeBasicLandingPage.graphql');
 const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
@@ -20,12 +21,14 @@ const nodeQa = require('./nodeQa.graphql');
 const nodeStepByStep = require('./nodeStepByStep.graphql');
 const nodeSupportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.graphql');
 const pressReleasePage = require('./pressReleasePage.graphql');
+const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
 const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 const vetCenters = require('./vetCenter.graphql');
 const vetCenterLocations = require('./vetCenterLocations.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
+const locationsListingPage = require('./locationsListingPage.graphql');
 
 // String Helpers
 const {
@@ -48,7 +51,9 @@ module.exports = `
   ${healthCareRegionDetailPage.fragment}
   ${healthServicesListingPage.fragment}
   ${pressReleasePage.fragment}
+  ${pressReleasesListingPage.fragment}
   ${vamcOperatingStatusAndAlerts.fragment}
+  ${storyListingPage.fragment}
   ${newsStoryPage.fragment}
   ${eventPage.fragment}
   ${eventListingPage.fragment}
@@ -67,6 +72,7 @@ module.exports = `
   ${vetCenterLocations.fragment}
   ${vamcPolicyPages.fragment}
   ${leadershipListingPage.fragment}
+  ${locationsListingPage.fragment}
 
   query GetLatestPageById($id: String!, $today: String!, $onlyPublishedContent: Boolean!) {
     nodes: nodeQuery(revisions: LATEST, filter: {
@@ -81,8 +87,10 @@ module.exports = `
         ... healthCareLocalFacilityPage
         ... healthCareRegionDetailPage
         ... healthServicesListingPage
+        ... storyListingPage
         ... newsStoryPage
         ... pressReleasePage
+        ... pressReleasesListingPage
         ... vamcOperatingStatusAndAlerts
         ... eventPage
         ... eventListingPage
@@ -101,6 +109,7 @@ module.exports = `
         ... vetCenterLocationsFragment
         ... policiesPageFragment
         ... leadershipListingPage
+        ... locationListingPage
       }
     }
   }
