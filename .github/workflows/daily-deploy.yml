@@ -51,6 +51,9 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
+      - name: echo commitish
+        run: echo ${{ steps.get-latest-tag.outputs.target_commitish}}
+
       - name: Check if content only deploy
         run: |
           if [[ ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' || github.event.inputs.release_wait == 'false'}} ]]
