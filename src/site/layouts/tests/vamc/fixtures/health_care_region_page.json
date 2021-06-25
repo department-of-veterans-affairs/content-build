@@ -1071,6 +1071,54 @@
       }
     ]
   },
+  "mobileFacilities": {
+    "entities": [
+      {
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/zzz-mobile-clinic"
+        },
+        "entityBundle": "health_care_local_facility",
+        "title": "ZZZ Mobile Clinic",
+        "fieldMobile": true,
+        "fieldMainLocation": false,
+        "entityId": "9000",
+        "changed": 1588070321,
+        "fieldOperatingStatusFacility": "normal",
+        "fieldFacilityLocatorApiId": "vha_646GC",
+        "fieldIntroText": "Our outpatient clinic offers general medical care, including physical exams, laboratory services, radiology, dietary services, and podiatry (foot care). Get address and hours, parking and transportation information, and health services offered at Beaver County VA Clinic.\r\n",
+        "fieldAddress": {
+          "addressLine1": "300 Brighton Avenue, Suite 110",
+          "locality": "Rochester",
+          "administrativeArea": "PA",
+          "postalCode": "15074-2135"
+        },
+        "fieldPhoneNumber": "724-709-6005",
+        "fieldMentalHealthPhone": "412-360-6600"
+      },
+      {
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/aaa-mobile-clinic"
+        },
+        "entityBundle": "health_care_local_facility",
+        "title": "AAA Mobile Clinic",
+        "fieldMobile": true,
+        "fieldMainLocation": false,
+        "entityId": "9001",
+        "changed": 1588070321,
+        "fieldOperatingStatusFacility": "normal",
+        "fieldFacilityLocatorApiId": "vha_646GD",
+        "fieldIntroText": "Our outpatient clinic offers general medical care, including physical exams, lab work, x-rays, nutrition counseling, and podiatry (foot care). Get address and hours, parking and transportation information, and health services offered at Washington County VA Clinic.",
+        "fieldAddress": {
+          "addressLine1": "95 West Beau Street, Crossroads Center, Suite 200",
+          "locality": "Washington",
+          "administrativeArea": "PA",
+          "postalCode": "15301-6800"
+        },
+        "fieldPhoneNumber": "724-250-7790",
+        "fieldMentalHealthPhone": "412-360-6600"
+      }
+    ]
+  },
   "fieldOtherVaLocations": [
     "vc_0211V",
     "vc_0233V",

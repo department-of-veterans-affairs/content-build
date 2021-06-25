@@ -1,0 +1,18 @@
+{% if image.derivative.url and image.alt != empty %}
+  <img
+      {% if class %}
+        class="{{ class }}"
+      {% endif %}
+      {% if onclick %}
+        onclick="{{ onclick }}"
+      {% endif %}
+      src="{{ image.derivative.url }}"
+      alt="{{ image.alt }}"
+      {% if image.derivative.width %}
+        width="{{ image.derivative.width }}"
+      {% endif %}
+      {% if image.derivative.height %}
+        height="{{ image.derivative.height }}"
+      {% endif %}
+  />
+{% endif %}
