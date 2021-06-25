@@ -17,12 +17,6 @@ on:
     - cron: "0 18 * * 1-5" # 1400 EST
     - cron: "0 13-16,20-21 * * 1-5" #0900-1200 EST,1600-1700EST #TODO: How do we add 1845?
 
-# use_latest_ref = release
-# default = tag
-
-
-# use_latest_ref true = DD
-# use_latest_ref false = CO
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: U01SPJ10WBC
@@ -188,7 +182,7 @@ jobs:
       run:
         working-directory: content-build
 
-    # TODO: CHange to prod when ready
+    # TODO: Change to prod when ready
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       BUILDTYPE: vagovprod
@@ -310,10 +304,9 @@ jobs:
     needs: [job-env, build, archive]
 
     steps:
-      # TODO: review compare and commit sha
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{needs.job-env.outputs.REF}}"
 
       - name: Sleep for ${{ needs.job-env.outputs.RELEASE_WAIT }}
         uses: whatnick/wait-action@master
