@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Content build for vets.gov website static assets.",
   "scripts": {
+    "a11y": "node src/platform/site-wide/tests/sitemap/sitemap-1.cypress.spec.js",
     "build": "node --max-old-space-size=5000 --expose-gc script/build-content.js",
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
@@ -162,6 +163,7 @@
     "eslint-plugin-unicorn": "^20.0.0",
     "eslint-plugin-va": "./script/eslint-plugin-va",
     "express-history-api-fallback": "^2.0.0",
+    "fast-xml-parser": "^3.19.0",
     "find": "^0.3.0",
     "find-root": "^1.1.0",
     "fs-extra": "^7.0.0",
