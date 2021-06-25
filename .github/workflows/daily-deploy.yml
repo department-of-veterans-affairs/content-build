@@ -166,9 +166,8 @@ jobs:
       - name: Generate slack message
         id: get-slack-message
         run: |
-          if [[ ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' || github.event.inputs.release_wait == 'false'}} ]]
+          if [[ ${{ needs.job-env.outputs.CONTENT_ONLY }} ]]
           then
-            echo "CONTENT_ONLY=true" >> $GITHUB_ENV
             echo ::set-output name=SLACK_MESSAGE::"Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
           else
             echo ::set-output name=SLACK_MESSAGE::"Stand by, production deploy for content-build coming up in ${{ needs.job-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"
@@ -179,7 +178,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "${{steps.get-slack-message.outputs.SLACK_MESSAGE}}"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "${{ steps.get-slack-message.outputs.SLACK_MESSAGE }}"}]'
           channel_id: ${{ env.CHANNEL_ID }}
   
   build:
@@ -418,11 +417,21 @@ jobs:
         persist-credentials: false
         path: ./.github/actions/vsp-github-actions
 
-    # TODO: Need to do for content-release
+    - name: Generate slack message
+      id: get-slack-message
+      run: |
+        if [[ ${{ needs.job-env.outputs.CONTENT_ONLY }} ]]
+        then
+          echo ::set-output name=SLACK_MESSAGE::"<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
+        else
+          echo ::set-output name=SLACK_MESSAGE::"<!here> Production deploy for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
+        fi
+
     - name: Daily deploy failed
+      if: ${{ always() }}
       uses: ./.github/actions/vsp-github-actions/slack-socket
       with:
         slack_app_token: ${{ env.SLACK_APP_TOKEN }}
         slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-        attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Production deploy for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+        attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "${{ steps.get-slack-message.outputs.SLACK_MESSAGE }}"}]'
         channel_id: ${{ env.CHANNEL_ID }}
