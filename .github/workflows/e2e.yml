@@ -58,25 +58,25 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Run Nightwatch E2E Tests
-        run: yarn test:e2e
-        timeout-minutes: 20
-        env:
-          BUILDTYPE: vagovprod
+      # - name: Run Nightwatch E2E Tests
+      #   run: yarn test:e2e
+      #   timeout-minutes: 20
+      #   env:
+      #     BUILDTYPE: vagovprod
 
       - name: Start content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress E2E Tests
-        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-1.cypress.spec.js"
+        run: yarn cy:run --spec "src/platform/site-wide/tests/sitemap/sitemap-1.cypress.spec.js"
 
-      - name: Publish test results
-        if: ${{ always() }}
-        uses: mikepenz/action-junit-report@v2.4.2
-        with:
-          check_name: 'Cypress Tests Summary'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          report_paths: 'test-results/e2e-test-output-*.xml'
+      # - name: Publish test results
+      #   if: ${{ always() }}
+      #   uses: mikepenz/action-junit-report@v2.4.2
+      #   with:
+      #     check_name: 'Cypress Tests Summary'
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     report_paths: 'test-results/e2e-test-output-*.xml'
 
       - name: Archive Cypress test videos
         uses: actions/upload-artifact@v2
