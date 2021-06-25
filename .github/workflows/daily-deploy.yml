@@ -51,9 +51,6 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: echo commitish
-        run: echo ${{ steps.get-latest-release.outputs.target_commitish}}
-
       - name: Check if content only deploy
         run: |
           if [[ ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' || github.event.inputs.release_wait == 'false'}} ]]
@@ -63,17 +60,15 @@ jobs:
             echo "CONTENT_ONLY=false" >> $GITHUB_ENV
           fi
 
-      - name: test echo content_only flag
-        run: echo ${{env.CONTENT_ONLY}}
-
-      - name: Get ref (daily deploy or use_latest_release == true)
+      - name: Get master ref (daily deploy or use_latest_release == true)
         if: ${{ !env.CONTENT_ONLY }}
         run: echo "REF=${{ github.sha }}" >> $GITHUB_ENV
 
-      - name: Get ref (content release or use_latest_release == false)
+      - name: Get latest_release ref (content release or use_latest_release == false)
         if: ${{ env.CONTENT_ONLY }}
-        run: echo "REF=${{ steps.get-latest-release.outputs.tag_name }}" >> $GITHUB_ENV
+        run: echo "REF=${{ steps.get-latest-release.outputs.target_commitish}}" >> $GITHUB_ENV
 
+      # TODO: REMOVE
       - name: Get release wait time (test)
         if: ${{ github.event_name == 'push'}}
         run: echo "RELEASE_WAIT=10" >> $GITHUB_ENV
@@ -95,6 +90,7 @@ jobs:
   check-runs:
     name: Check runs status
     runs-on: ubuntu-latest
+    needs: job-env
 
     steps:
       - name: Checkout
@@ -124,7 +120,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/check-build-status.js ${{ github.sha }}
+        run: node ./script/github-actions/check-build-status.js ${{ needs.job-env.outputs.REF }}
 
   slack-notify:
     name: Notify Slack
@@ -173,7 +169,7 @@ jobs:
           then
             echo ::set-output name=SLACK_MESSAGE::"Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
           else
-            echo ::set-output name=SLACK_MESSAGE::"Stand by, production deploy for content-build coming up in ${{ needs.job-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"
+            echo ::set-output name=SLACK_MESSAGE::"Stand by, production deploy for content-build coming up in ${{ needs.job-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{needs.job-env.outputs.REF}}>"
           fi
 
       - name: Daily deploy succeess
@@ -187,7 +183,7 @@ jobs:
   build:
     name: Build
     runs-on: self-hosted
-    needs: [check-runs, slack-notify]
+    needs: [job-env, check-runs, slack-notify]
     defaults:
       run:
         working-directory: content-build
@@ -250,7 +246,7 @@ jobs:
           BUILDTYPE=${{ matrix.buildtype }}
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
           RUN_ID=${{ github.run_id }}
-          REF=${{ github.sha }}
+          REF=${{ needs.job-env.outputs.REF }}
           BUILDTIME=$(date +%s)
           EOF
 
@@ -270,7 +266,7 @@ jobs:
   archive:
     name: Archive
     runs-on: ubuntu-latest
-    needs: build
+    needs: [job-env, build]
 
     env:
       BUILDTYPE: vagovprod
@@ -306,7 +302,7 @@ jobs:
 
       # TODO: Uncomment when ready, need to point to dev?
       # - name: Upload build
-      #   run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{github.sha}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
+      #   run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.job-env.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
@@ -314,6 +310,7 @@ jobs:
     needs: [job-env, build, archive]
 
     steps:
+      # TODO: review compare and commit sha
       - name: Waiting to release 
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.job-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
@@ -334,7 +331,7 @@ jobs:
 
       # TODO: Uncomment when ready, need to point to dev?
       # - name: Tag release
-      #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ github.sha }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
+      #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.job-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
 
   deploy:
     name: Deploy
@@ -376,7 +373,7 @@ jobs:
       # - name: Deploy
       #   run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
       #   env:
-      #     SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{github.sha}}/${{env.ENVIRONMENT}}.tar.bz2
+      #     SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.job-env.outputs.REF}}/${{env.ENVIRONMENT}}.tar.bz2
       #     DEST: s3://${{ env.BUCKET }}
 
   on-failure:
