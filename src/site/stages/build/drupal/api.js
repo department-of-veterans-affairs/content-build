@@ -1,6 +1,3 @@
-const path = require('path');
-const fs = require('fs-extra');
-const tar = require('tar-fs');
 const moment = require('moment');
 const fetch = require('node-fetch');
 const chalk = require('chalk');
@@ -13,12 +10,6 @@ const {
   getIndividualizedQueries,
   CountEntityTypes,
 } = require('./individual-queries');
-
-const {
-  readAllNodeNames,
-  readEntity,
-} = require('../process-cms-exports/helpers');
-const entityTreeFactory = require('../process-cms-exports');
 
 function encodeCredentials({ user, password }) {
   const credentials = `${user}:${password}`;
@@ -54,7 +45,6 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
 
   const { address, user, password } = drupalConfig;
   const drupalUri = `${address}/graphql`;
-  const contentExportUri = `${address}/cms-export/content`;
   const encodedCredentials = encodeCredentials({ user, password });
   const headers = {
     Authorization: `Basic ${encodedCredentials}`,
@@ -122,59 +112,6 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
       }
 
       throw new Error(`HTTP error: ${response.status}: ${response.statusText}`);
-    },
-
-    /**
-     * Fetches and untars the CMS export.
-     *
-     * @return {String} - The path to the untarred CMS export.
-     */
-    async fetchExportContent() {
-      say(
-        chalk.green('Fetching content export from'),
-        chalk.blue.underline(contentExportUri),
-      );
-
-      const timer = `${chalk.blue(contentExportUri)} reponse time`;
-      // eslint-disable-next-line no-console
-      console.time(timer);
-
-      const response = await this.proxyFetch(contentExportUri);
-
-      say('Status code:', response.status);
-
-      if (response.ok) {
-        say(
-          `Downloading and untarring CMS export to ${chalk.blue(
-            buildOptions['cms-export-dir'],
-          )}`,
-        );
-        await new Promise(resolve => {
-          const parentPath = path.join(buildOptions['cms-export-dir'], '..');
-          fs.emptyDirSync(path.resolve(buildOptions['cms-export-dir']));
-          // This untars to parentDir/cms-export-content/ because the tarball
-          // contains a single directory named cms-export-content.
-          response.body.pipe(tar.extract(parentPath));
-          response.body.on('end', () => {
-            // We now have to move it to the directory expected by the
-            // cms-export-dir option. The default will be 'cms-export-dir/', but
-            // if a non-default --cms-export-dir is specified, we have to move
-            // rename the directory to whatever the CLI option says it should be.
-            fs.moveSync(
-              path.join(parentPath, 'cms-export-content'),
-              path.join(
-                parentPath,
-                path.basename(buildOptions['cms-export-dir']),
-              ),
-            );
-            // eslint-disable-next-line no-console
-            console.timeEnd(timer);
-            resolve();
-          });
-        });
-      } else {
-        throw new Error('Failed to fetch the CMS export tarball');
-      }
     },
 
     async getAllPagesViaIndividualGraphQlQueries(onlyPublishedContent = true) {
@@ -311,38 +248,6 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
           onlyPublishedContent,
         },
       });
-    },
-
-    getExportedPages() {
-      say('Transforming CMS export');
-      const contentDir = buildOptions['cms-export-dir'];
-      const entities = readAllNodeNames(contentDir).map(entityDetails =>
-        readEntity(contentDir, ...entityDetails),
-      );
-      const assembleEntityTree = entityTreeFactory(contentDir);
-
-      const timerStart = process.hrtime.bigint();
-      const transformedEntities = entities.map(entity =>
-        assembleEntityTree(entity),
-      );
-      const timeElapsed = (process.hrtime.bigint() - timerStart) / 1000000n;
-
-      say(
-        `${chalk.green(
-          global.readEntityCacheHits,
-        )} cache hits while expanding entity references`,
-      );
-      say(
-        `${chalk.green(
-          global.transformerCacheHits,
-        )} cache hits while performing entity transformations`,
-      );
-      say(
-        `Total time to transform ${chalk.blue(
-          transformedEntities.length,
-        )} nodes: ${chalk.green(timeElapsed)}ms`,
-      );
-      return transformedEntities;
     },
 
     getLatestPageById(nodeId) {

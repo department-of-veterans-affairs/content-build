@@ -98,7 +98,6 @@
 
       </div>
     </section>
-
     <!-- end triple column -->
 
   </div> <!-- end #content -->
@@ -106,7 +105,6 @@
   <section class="usa-grid usa-grid-full">
     <div class="va-h-ruled--stars"></div>
   </section>
-
 
   <section id="homepage-news">
     <div class="usa-grid usa-grid-full">
@@ -116,8 +114,15 @@
         <div class="homepage-image-wrapper">
           <img class="lazy" width="552" data-src="{{ promo.entity.fieldImage.entity.image.url }}" alt="{{ promo.entity.fieldImage.entity.image.alt }}"/>
         </div>
-        <h4 class="homepage-news-story-title"><a class="no-external-icon" href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
-          onClick="recordEvent({ event: 'nav-footer-news-story' });"/>{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}</a></h4>
+        <h3 class="homepage-news-story-title vads-u-font-size--h4">
+          <a
+            class="no-external-icon"
+            href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
+            onClick="recordEvent({ event: 'nav-footer-news-story' });"
+          >
+            {{ promo.entity.fieldPromoLink.entity.fieldLink.title }}
+          </a>
+        </h3>
         <p class="homepage-news-story-desc">{{ promo.entity.fieldPromoLink.entity.fieldLinkSummary }}</p>
       </div>
       {% if hub.end_row == true and forloop.last != true %}
@@ -127,7 +132,6 @@
     {% endfor %}
     </div>
   </section>
-
 </main>
 
 {% include "src/site/includes/footer.html" %}
