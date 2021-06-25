@@ -44,7 +44,7 @@ function sleep(ms) {
 
 async function main() {
   await getLatestCheckRun(checkRunURL);
-  if (!commitNull) {
+  if (commitNull) {
     console.log(`Check runs still pending. Sleeping for ${timeout}s`);
     await sleep(timeout);
     await getLatestCheckRun(checkRunURL);
