@@ -380,7 +380,7 @@ jobs:
     name: On Failure
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
-    needs: deploy
+    needs: [job-env, deploy]
 
     steps:
     - name: Configure AWS credentials
