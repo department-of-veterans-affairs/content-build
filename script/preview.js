@@ -196,7 +196,9 @@ function fetchAllPageData(nodeId) {
           return resp.json();
         }
         throw new Error(
-          `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`,
+          options.buildtype !== ENVIRONMENTS.LOCALHOST
+            ? `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`
+            : 'file-manifest.json is missing. Try running "yarn build" in vets-website.',
         );
       },
     ),
