@@ -72,6 +72,9 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   // isn't actually a part of this list of options, but an error would be thrown
   // without it. Remove this when getOptions is decoupled from the cache script.
   { name: 'fetch', type: Boolean, defaultValue: false },
+
+  // use the --use-cached-assets flag with a build to bypass re-downloading asset files
+  { name: 'use-cached-assets', type: Boolean, defaultValue: false },
 ];
 
 function gatherFromCommandLine() {

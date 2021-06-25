@@ -106,6 +106,13 @@ async function downloadFile(
 }
 
 function downloadDrupalAssets(options) {
+  const useCachedAssetsArg = 'use-cached-assets';
+  if (options[useCachedAssetsArg]) {
+    log('using cached assets');
+    return;
+  }
+
+  log('not using cached assets');
   const client = getDrupalClient(options);
   return async (files, metalsmith, done) => {
     const buildPath = path.join('build', options.buildtype);
