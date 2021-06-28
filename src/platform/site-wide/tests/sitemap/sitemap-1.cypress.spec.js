@@ -28,8 +28,8 @@ describe(`Accessibility tests`, () => {
     // eslint-disable-next-line no-loop-func
     it(`${url.loc}`, () => {
       const localURL = url.loc.replace(
-        'https://www.va.gov',
-        'http://localhost:3002',
+        `https://www.va.gov`,
+        `http://localhost:${process.env.CONTENT_BUILD_PORT}`,
       );
       cy.visit(localURL).injectAxe();
       cy.get('body').should('be.visible', { timeout: normal });
