@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Content build for vets.gov website static assets.",
   "scripts": {
-    "a11y": "node src/platform/site-wide/tests/sitemap/sitemap-1.cypress.spec.js",
     "build": "node --max-old-space-size=5000 --expose-gc script/build-content.js",
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
@@ -163,7 +162,6 @@
     "eslint-plugin-unicorn": "^20.0.0",
     "eslint-plugin-va": "./script/eslint-plugin-va",
     "express-history-api-fallback": "^2.0.0",
-    "fast-xml-parser": "^3.19.0",
     "find": "^0.3.0",
     "find-root": "^1.1.0",
     "fs-extra": "^7.0.0",
@@ -175,12 +173,8 @@
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.2.1",
     "jsonschema": "^1.1.1",
-<<<<<<< HEAD
     "libxmljs2": "^0.26.5",
     "lint-staged": ">=10",
-=======
-    "libxmljs2": "^0.27.0",
->>>>>>> ec8d69313 (Migrate a11y tests to Cypress)
     "metalsmith-assets": "^0.1.0",
     "metalsmith-date-in-filename": "^0.0.14",
     "mocha": "^8.2.1",
