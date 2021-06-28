@@ -27,7 +27,7 @@ describe('Accessibility tests', () => {
   //   for (const url of splitURLs) {
   // eslint-disable-next-line no-loop-func
   it('test', () => {
-    cy.visit("http://localhost:3002").injectAxe();
+    cy.visit(String(splitURLs[0].loc)).injectAxe();
     cy.get('body').should('be.visible', { timeout: normal });
     cy.axeCheck();
   });
