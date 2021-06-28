@@ -1,6 +1,9 @@
 name: Continuous Integration
 
-on: [push]
+on: 
+  push:
+    tags-ignore:
+      - '**' # Ignores all tags
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
