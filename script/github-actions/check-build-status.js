@@ -14,7 +14,8 @@ function getLatestCheckRun(URL) {
     .then(githubObject => {
       for (let i = 0; i < Object.keys(githubObject.check_runs).length; i++) {
         if (
-          githubObject.check_runs[i].conclusion === 'failure' ||
+          (githubObject.check_runs[i].name !== 'Accessibility Scan' &&
+            githubObject.check_runs[i].conclusion === 'failure') ||
           commitNull === true
         ) {
           const headerMessage = commitNull
