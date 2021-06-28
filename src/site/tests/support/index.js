@@ -84,11 +84,9 @@ const updateHTML = (files, options) => {
   modifyDom(options)(files, null, done);
 };
 
-const isHeadPresent = html => html.includes('<head>');
+const isHeadMissing = html => !html.includes('<head>');
 
-const injectLangAttribute = dom => {
-  dom.window.document.documentElement.lang = 'en';
-};
+const injectLangAttribute = document => document.documentElement.lang = 'en';
 
 const renderHTML = (layoutPath, data, dataName) => {
   const options = getOptions();
@@ -115,7 +113,7 @@ const renderHTML = (layoutPath, data, dataName) => {
         reject(err);
       } else {
         const html = context.getBuffer();
-        const headPresent = isHeadPresent(html);
+        const isFragement = isHeadMissing(html);
         const htmlFileName = makeHTMLFileName(layoutPath, dataName);
         const files = {
           [htmlFileName]: { contents: html, isDrupalPage: true },
@@ -132,8 +130,8 @@ const renderHTML = (layoutPath, data, dataName) => {
           runScripts: 'dangerously',
         });
 
-        if (!headPresent) {
-          injectLangAttribute(dom);
+        if (isFragement) {
+          injectLangAttribute(dom.window.document);
         }
 
         resolve(dom.window.document);
