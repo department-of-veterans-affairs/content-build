@@ -80,9 +80,7 @@ jobs:
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=$CONTENT_BUILD_PORT &
 
       - name: Run Cypress E2E Tests
-        run: yarn cy:run --port $CYPRESS_PORT --config baseUrl=http://localhost:$CONTENT_BUILD_PORT --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.cypress.spec.js"
-        env:
-          CONTENT_BUILD_PORT: ${{ env.CONTENT_BUILD_PORT }}
+        run: CONTENT_BUILD_PORT=$CONTENT_BUILD_PORT yarn cy:run --port $CYPRESS_PORT --config baseUrl=http://localhost:$CONTENT_BUILD_PORT --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.cypress.spec.js"
 
       # - name: Publish test results
       #   if: ${{ always() }}
