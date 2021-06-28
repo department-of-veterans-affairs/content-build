@@ -18,7 +18,9 @@ const options = {
   stopNodes: ['parse-me-as-string'],
 };
 
-const data = fetch(`http://localhost:3002/sitemap.xml`).text();
+const data = fetch(
+  `http://localhost:${process.env.CONTENT_BUILD_PORT}/sitemap.xml`,
+).text();
 const urls = xml.parse(data, options).urlset.url.sort();
 const divider = Math.ceil(urls.length / 8);
 const splitURLs = urls.slice(divider * 3, divider * 4);
