@@ -19,7 +19,7 @@ const options = {
 };
 
 const data = fetch(
-  `http://localhost:${process.env.CONTENT_BUILD_PORT}/sitemap.xml`,
+  `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}}/sitemap.xml`,
 ).text();
 const urls = xml.parse(data, options).urlset.url.sort();
 const divider = Math.ceil(urls.length / 8);
@@ -31,7 +31,7 @@ describe(`Accessibility tests`, () => {
     it(`${url.loc}`, () => {
       const localURL = url.loc.replace(
         `https://www.va.gov`,
-        `http://localhost:${process.env.CONTENT_BUILD_PORT}`,
+        `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
       );
       cy.visit(localURL).injectAxe();
       cy.get('body').should('be.visible', { timeout: normal });
