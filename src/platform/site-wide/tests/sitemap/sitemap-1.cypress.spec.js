@@ -19,10 +19,12 @@ const options = {
 };
 
 const data = fetch(`http://localhost:3002/sitemap.xml`).text();
-const urls = xml.parse(data, options).urlset.url;
+const urls = xml.parse(data, options).urlset.url.sort();
+const divider = Math.ceil(urls.length / 4);
+const splitURLs = urls.slice(0, divider);
 
 describe('Accessibility tests', () => {
-  for (const url of urls) {
+  for (const url of splitURLs) {
     // eslint-disable-next-line no-loop-func
     it(`${url.loc}`, () => {
       cy.visit(url.loc).injectAxe();
