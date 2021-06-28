@@ -23,11 +23,11 @@ const urls = xml.parse(data, options).urlset.url.sort();
 const divider = Math.ceil(urls.length / 4);
 const splitURLs = urls.slice(0, divider);
 
-describe('Accessibility tests', () => {
+describe(`${urls[0].loc}`, () => {
   //   for (const url of splitURLs) {
   // eslint-disable-next-line no-loop-func
   it('test', () => {
-    cy.visit(String(splitURLs[0].loc)).injectAxe();
+    cy.visit('http://localhost:3002').injectAxe();
     cy.get('body').should('be.visible', { timeout: normal });
     cy.axeCheck();
   });
