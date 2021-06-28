@@ -10,6 +10,12 @@ jobs:
   build:
     name: E2E Tests
     runs-on: self-hosted
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        ci_node_total: [8]
+        ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8]
     defaults:
       run:
         working-directory: content-build
@@ -28,6 +34,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: content-build
+
+      - name: Set content-build port
+        run: echo "CONTENT_BUILD_PORT=$(( ( RANDOM % 2000 )  + 3001 ))" >> $GITHUB_ENV
+
+      - name: Set Cypress port
+        run: echo "CYPRESS_PORT=$(( ( RANDOM % 2000 )  + 3001 ))" >> $GITHUB_ENV
 
       - name: Get Node version
         id: get-node-version
@@ -65,10 +77,10 @@ jobs:
       #     BUILDTYPE: vagovprod
 
       - name: Start content-build
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=$CONTENT_BUILD_PORT &
 
       - name: Run Cypress E2E Tests
-        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
+        run: yarn cy:run --port $CYPRESS_PORT --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.cypress.spec.js"
 
       # - name: Publish test results
       #   if: ${{ always() }}
