@@ -20,20 +20,20 @@ const options = {
 
 const data = fetch(`http://localhost:3002/sitemap.xml`).text();
 const urls = xml.parse(data, options).urlset.url.sort();
-const divider = Math.ceil(urls.length / 4);
-const splitURLs = urls.slice(0, divider);
+// const divider = Math.ceil(urls.length / 4);
+// const splitURLs = urls.slice(0, divider);
 
-describe(`${urls[0].loc}`, () => {
-  //   for (const url of splitURLs) {
-  // eslint-disable-next-line no-loop-func
-  it('test', () => {
-    const testString = urls[0].loc.replace(
-      'https://www.va.gov',
-      'http://localhost:3002',
-    );
-    cy.visit(testString).injectAxe();
-    cy.get('body').should('be.visible', { timeout: normal });
-    cy.axeCheck();
-  });
-  //   }
+describe(`Accessibility tests`, () => {
+  for (const url of urls) {
+    // eslint-disable-next-line no-loop-func
+    it(`${url.loc}`, () => {
+      const localURL = url.loc.replace(
+        'https://www.va.gov',
+        'http://localhost:3002',
+      );
+      cy.visit(localURL).injectAxe();
+      cy.get('body').should('be.visible', { timeout: normal });
+      cy.axeCheck();
+    });
+  }
 });
