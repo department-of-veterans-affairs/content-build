@@ -200,7 +200,7 @@ module.exports = function registerFilters() {
     return `https://img.youtube.com/vi/${string}/sddefault.jpg`;
   };
 
-  liquid.filters.outputLinks = data => {
+  liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
     const replacePattern = /((\d{3}-))?\d{3}-\d{3}-\d{4}(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
     if (data) {
@@ -212,6 +212,7 @@ module.exports = function registerFilters() {
 
     return data;
   };
+
   //  liquid slice filter only works on strings
   liquid.filters.sliceArrayFromStart = (arr, startIndex) => {
     return _.slice(arr, startIndex);
