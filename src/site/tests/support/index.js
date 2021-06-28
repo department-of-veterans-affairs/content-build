@@ -86,7 +86,9 @@ const updateHTML = (files, options) => {
 
 const isHeadMissing = html => !html.includes('<head>');
 
-const injectLangAttribute = document => document.documentElement.lang = 'en';
+const injectLangAttribute = document => {
+  document.documentElement.lang = 'en';
+};
 
 const renderHTML = (layoutPath, data, dataName) => {
   const options = getOptions();
