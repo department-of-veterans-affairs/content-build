@@ -84,10 +84,7 @@ const updateHTML = (files, options) => {
   modifyDom(options)(files, null, done);
 };
 
-const langAttributeNotPresent = dom => {
-  const langValue = dom.window.document.getElementsByTagName('html')[0].getAttribute('lang');
-  return langValue === null;
-};
+const isHeadPresent = html => html.includes('<head>');
 
 const injectLangAttribute = dom => {
   dom.window.document.documentElement.lang = 'en';
@@ -118,6 +115,7 @@ const renderHTML = (layoutPath, data, dataName) => {
         reject(err);
       } else {
         const html = context.getBuffer();
+        const headPresent = isHeadPresent(html);
         const htmlFileName = makeHTMLFileName(layoutPath, dataName);
         const files = {
           [htmlFileName]: { contents: html, isDrupalPage: true },
@@ -134,7 +132,7 @@ const renderHTML = (layoutPath, data, dataName) => {
           runScripts: 'dangerously',
         });
 
-        if (langAttributeNotPresent(dom)) {
+        if (!headPresent) {
           injectLangAttribute(dom);
         }
 
