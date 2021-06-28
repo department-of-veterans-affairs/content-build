@@ -68,7 +68,7 @@ jobs:
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress E2E Tests
-        run: yarn cy:run --spec "src/platform/site-wide/tests/sitemap/sitemap-1.cypress.spec.js"
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
 
       # - name: Publish test results
       #   if: ${{ always() }}
