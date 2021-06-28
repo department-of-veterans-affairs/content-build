@@ -49,6 +49,7 @@ src/site/includes/vet_centers @department-of-veterans-affairs/vsa-facilities-fro
 src/site/components/phone.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/components/phone-number.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/teasers @department-of-veterans-affairs/vsa-facilities-frontend
+src/site/paragraphs/list_of_link_teasers_facility.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
 
 # GraphQL Queries, etc.
 # TODO: group these into folders to support team ownership
