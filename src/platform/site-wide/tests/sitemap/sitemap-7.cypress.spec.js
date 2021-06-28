@@ -21,7 +21,7 @@ const options = {
 const data = fetch(`http://localhost:3002/sitemap.xml`).text();
 const urls = xml.parse(data, options).urlset.url.sort();
 const divider = Math.ceil(urls.length / 8);
-const splitURLs = urls.slice(0, divider);
+const splitURLs = urls.slice(divider * 6, divider * 7);
 
 describe(`Accessibility tests`, () => {
   for (const url of splitURLs) {
