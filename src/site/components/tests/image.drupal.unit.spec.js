@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { renderHTML } from '~/site/tests/support';
+import axeCheck from '~/site/tests/support/axe.js';
 
 const layoutPath = 'src/site/components/image.drupal.liquid';
 
@@ -101,5 +102,12 @@ describe('image tag template', () => {
     const container = await renderHTML(layoutPath, data);
 
     expect(container.querySelector('img')).not.to.exist;
+  });
+
+  it('reports no axe violations', async () => {
+    const container = await renderHTML(layoutPath);
+    const violations = await axeCheck(container);
+
+    expect(violations.length).to.equal(0);
   });
 });
