@@ -289,6 +289,9 @@ app.get('/preview', async (req, res, next) => {
       `${compiledPage.entityBundle}.drupal.liquid`,
     );
 
+    const drupalAddressUrl = DRUPALS.PUBLIC_URLS[options['drupal-address']];
+    const drupalSite = drupalAddressUrl || 'prod.cms.va.gov';
+
     const files = {
       'generated/file-manifest.json': {
         path: 'generated/file-manifest.json',
@@ -297,9 +300,7 @@ app.get('/preview', async (req, res, next) => {
       [drupalPath]: {
         ...fullPage,
         isPreview: true,
-        drupalSite:
-          DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
-          options['drupal-address'],
+        drupalSite,
       },
     };
 
