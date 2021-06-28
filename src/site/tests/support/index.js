@@ -84,6 +84,15 @@ const updateHTML = (files, options) => {
   modifyDom(options)(files, null, done);
 };
 
+const langAttributeNotPresent = dom => {
+  const langValue = dom.window.document.getElementsByTagName('html')[0].getAttribute('lang');
+  return langValue === null;
+};
+
+const injectLangAttribute = dom => {
+  dom.window.document.documentElement.lang = 'en';
+};
+
 const renderHTML = (layoutPath, data, dataName) => {
   const options = getOptions();
   const siteWideMetadata = {
@@ -124,6 +133,10 @@ const renderHTML = (layoutPath, data, dataName) => {
         const dom = new JSDOM(files[htmlFileName].contents, {
           runScripts: 'dangerously',
         });
+
+        if (langAttributeNotPresent(dom)) {
+          injectLangAttribute(dom);
+        }
 
         resolve(dom.window.document);
       }
