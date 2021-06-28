@@ -27,7 +27,11 @@ describe(`${urls[0].loc}`, () => {
   //   for (const url of splitURLs) {
   // eslint-disable-next-line no-loop-func
   it('test', () => {
-    cy.visit('http://localhost:3002').injectAxe();
+    const testString = urls[0].loc.replace(
+      'https://www.va.gov',
+      'http://localhost:3002',
+    );
+    cy.visit(testString).injectAxe();
     cy.get('body').should('be.visible', { timeout: normal });
     cy.axeCheck();
   });
