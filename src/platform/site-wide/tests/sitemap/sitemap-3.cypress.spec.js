@@ -19,7 +19,7 @@ const options = {
 };
 
 const data = fetch(
-  `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}}/sitemap.xml`,
+  `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap.xml`,
 ).text();
 const urls = xml.parse(data, options).urlset.url.sort();
 const divider = Math.ceil(urls.length / 8);
