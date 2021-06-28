@@ -86,10 +86,6 @@ const updateHTML = (files, options) => {
 
 const isHeadMissing = html => !html.includes('<head>');
 
-const injectLangAttribute = document => {
-  document.documentElement.lang = 'en';
-};
-
 const renderHTML = (layoutPath, data, dataName) => {
   const options = getOptions();
   const siteWideMetadata = {
@@ -133,7 +129,7 @@ const renderHTML = (layoutPath, data, dataName) => {
         });
 
         if (isFragement) {
-          injectLangAttribute(dom.window.document);
+          dom.window.document.documentElement.lang = 'en';
         }
 
         resolve(dom.window.document);
