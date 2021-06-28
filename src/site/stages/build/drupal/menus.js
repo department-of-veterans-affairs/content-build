@@ -273,7 +273,10 @@ function formatHeaderData(buildOptions, contentData) {
   }
 
   let menuLinks = contentData.data.menuLinkContentQuery.entities;
-  const pages = contentData.data.nodeQuery.entities;
+  const pages = buildOptions.isPreviewServer
+    ? contentData.data.nodes.entities
+    : contentData.data.nodeQuery.entities;
+
   const headerData = [];
   const { hostUrl } = buildOptions;
 
