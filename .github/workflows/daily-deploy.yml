@@ -5,17 +5,17 @@ on:
   push:
   workflow_dispatch:
     inputs:
+      use_latest_release:
+        description: "use_latest_release (true/false - case sensitive!)"
+        required: true
+        default: 'true'
       release_wait:
         description: "Release Wait (minutes)"
         required: false
         default: 60
-      use_latest_release:
-        description: "use_latest_release (true/false)"
-        required: false
-        default: false
   schedule:
     - cron: "0 18 * * 1-5" # 1400 EST
-    - cron: "0 13-16,20-21 * * 1-5" #0900-1200 EST,1600-1700EST #TODO: How do we add 1845?
+    - cron: "0 13-16,19-21 * * 1-5" #0900-1200 EST,1500-1700EST
 
 # TODO: Change to correct channel_id when ready
 env:
@@ -45,20 +45,20 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Check if content only deploy
+      - name: Check if content release only deploy
         run: |
-          if [[ ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' || github.event.inputs.release_wait == 'false'}} ]]
+          if [[ ${{ github.event.schedule == '0 13-16,19-21 * * 1-5' || github.event.inputs.use_latest_release == 'true'}} ]]
           then
             echo "CONTENT_ONLY=true" >> $GITHUB_ENV
           else
             echo "CONTENT_ONLY=false" >> $GITHUB_ENV
           fi
 
-      - name: Get master ref (daily deploy or use_latest_release == true)
+      - name: Get master ref (full production deploy or use_latest_release == false)
         if: ${{ !env.CONTENT_ONLY }}
         run: echo "REF=${{ github.sha }}" >> $GITHUB_ENV
 
-      - name: Get latest_release ref (content release or use_latest_release == false)
+      - name: Get latest release ref (content release only or use_latest_release == true)
         if: ${{ env.CONTENT_ONLY }}
         run: echo "REF=${{ steps.get-latest-release.outputs.target_commitish}}" >> $GITHUB_ENV
 
@@ -67,14 +67,12 @@ jobs:
         if: ${{ github.event_name == 'push'}}
         run: echo "RELEASE_WAIT=10" >> $GITHUB_ENV
 
-      - name: Get release wait time (daily deploy)
+      - name: Get release wait time (full production deploy)
         if: ${{ github.event.schedule == '0 18 * * 1-5'}}
         run: echo "RELEASE_WAIT=60" >> $GITHUB_ENV
 
-      # TODO: Update if w/ correct cron schedule
       - name: Get release wait time (content release)
-        if: ${{ github.event.schedule == '0 13-16,20-21 * * 1-5'}}
-        id: get-release-wait
+        if: ${{ github.event.schedule == '0 13-16,19-21 * * 1-5'}}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Get release wait time (workflow_dispatch)
