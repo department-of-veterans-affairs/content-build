@@ -26,7 +26,7 @@ const splitURLs = urls.slice(0, divider);
 describe('Accessibility tests', () => {
   //   for (const url of splitURLs) {
   // eslint-disable-next-line no-loop-func
-  it(`test`, () => {
+  it('test', () => {
     cy.visit(splitURLs[0].loc).injectAxe();
     cy.get('body').should('be.visible', { timeout: normal });
     cy.axeCheck();
