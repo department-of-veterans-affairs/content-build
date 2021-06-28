@@ -54,6 +54,9 @@ jobs:
             echo "CONTENT_ONLY=false" >> $GITHUB_ENV
           fi
 
+      - name: echo
+        run: echo ${{ env.CONTENT_ONLY }}
+
       - name: Get master ref (full production deploy or use_latest_release == false)
         if: ${{ !env.CONTENT_ONLY }}
         run: echo "REF=${{ github.sha }}" >> $GITHUB_ENV
