@@ -24,12 +24,12 @@ const divider = Math.ceil(urls.length / 4);
 const splitURLs = urls.slice(0, divider);
 
 describe('Accessibility tests', () => {
-  for (const url of splitURLs) {
-    // eslint-disable-next-line no-loop-func
-    it(`${url.loc}`, () => {
-      cy.visit(url.loc).injectAxe();
-      cy.get('body').should('be.visible', { timeout: normal });
-      cy.axeCheck();
-    });
-  }
+  //   for (const url of splitURLs) {
+  // eslint-disable-next-line no-loop-func
+  it(`${splitURLs[0].loc}`, () => {
+    cy.visit(splitURLs[0].loc).injectAxe();
+    cy.get('body').should('be.visible', { timeout: normal });
+    cy.axeCheck();
+  });
+  //   }
 });
