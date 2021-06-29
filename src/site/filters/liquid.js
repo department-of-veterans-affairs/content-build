@@ -213,6 +213,22 @@ module.exports = function registerFilters() {
     return data;
   };
 
+  liquid.filters.trackLinks = (html, eventDataString) => {
+    // Add calls to "recordEvent" to all links found in html
+    const eventData = JSON.parse(eventDataString);
+    const replacePattern = /<a(.*)>(.*)<\/a>/g;
+    if (html) {
+      return html.replace(
+        replacePattern,
+        `<a onclick='recordEvent(${JSON.stringify({
+          ...eventData,
+          'alert-box-click-label': '$2',
+        })})'$1>$2</a>`,
+      );
+    }
+    return html;
+  };
+
   //  liquid slice filter only works on strings
   liquid.filters.sliceArrayFromStart = (arr, startIndex) => {
     return _.slice(arr, startIndex);
