@@ -49,9 +49,9 @@ jobs:
         run: |
           if [ ${{ github.event.schedule == '0 13-16,19-21 * * 1-5' || github.event.inputs.use_latest_release == 'true'}} = true ];
           then
-            echo "CONTENT_ONLY=true" >> $GITHUB_ENV
+            echo "CONTENT_ONLY=1" >> $GITHUB_ENV
           else
-            echo "CONTENT_ONLY=false" >> $GITHUB_ENV
+            echo "CONTENT_ONLY=0" >> $GITHUB_ENV
           fi
 
       - name: echo
