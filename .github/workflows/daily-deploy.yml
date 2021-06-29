@@ -414,7 +414,7 @@ jobs:
     - name: Generate slack message
       id: get-slack-message
       run: |
-        if [[ ${{ needs.job-env.outputs.CONTENT_ONLY }} ]]
+        if [[ ${{ needs.job-env.outputs.CONTENT_ONLY }} -eq 1 ]]
         then
           echo ::set-output name=SLACK_MESSAGE::"<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
         else
