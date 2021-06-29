@@ -107,58 +107,58 @@ async function downloadFile(
 
 function downloadDrupalAssets(options) {
   const useCachedAssetsArg = 'use-cached-assets';
-  if (options[useCachedAssetsArg]) {
-    log('using cached assets');
-    return;
-  }
-
-  log('not using cached assets');
+  const cacheOutputPath = path.join(options.cacheDirectory, 'drupal/downloads');
   const client = getDrupalClient(options);
   return async (files, metalsmith, done) => {
-    const buildPath = path.join('build', options.buildtype);
+    if (fs.existsSync(cacheOutputPath) && options[useCachedAssetsArg]) {
+      log('using cached assets');
+      done();
+    } else {
+      const buildPath = path.join('build', options.buildtype);
 
-    const assetsToDownload = Object.entries(files)
-      .filter(
-        entry =>
-          entry[1].isDrupalAsset &&
-          !fs.existsSync(path.join(buildPath, entry[1].path)),
-      )
-      .map(([key, value]) => ({
-        src: value.source,
-        dest: key,
-      }));
+      const assetsToDownload = Object.entries(files)
+        .filter(
+          entry =>
+            entry[1].isDrupalAsset &&
+            !fs.existsSync(path.join(buildPath, entry[1].path)),
+        )
+        .map(([key, value]) => ({
+          src: value.source,
+          dest: key,
+        }));
 
-    if (assetsToDownload.length) {
-      const downloadResults = {
-        downloadCount: 0,
-        errorCount: 0,
-        total: assetsToDownload.length,
-      };
+      if (assetsToDownload.length) {
+        const downloadResults = {
+          downloadCount: 0,
+          errorCount: 0,
+          total: assetsToDownload.length,
+        };
 
-      const downloadersCount = 5;
+        const downloadersCount = 5;
 
-      await new Promise(everythingDownloaded => {
-        for (let i = 0; i < downloadersCount; i++) {
-          downloadFile(
-            files,
-            options,
-            client,
-            assetsToDownload,
-            downloadResults,
-            everythingDownloaded,
+        await new Promise(everythingDownloaded => {
+          for (let i = 0; i < downloadersCount; i++) {
+            downloadFile(
+              files,
+              options,
+              client,
+              assetsToDownload,
+              downloadResults,
+              everythingDownloaded,
+            );
+          }
+        });
+
+        log(`Downloaded ${downloadResults.downloadCount} asset(s) from Drupal`);
+        if (downloadResults.errorCount) {
+          log(
+            `${downloadResults.errorCount} error(s) downloading assets from Drupal`,
           );
         }
-      });
-
-      log(`Downloaded ${downloadResults.downloadCount} asset(s) from Drupal`);
-      if (downloadResults.errorCount) {
-        log(
-          `${downloadResults.errorCount} error(s) downloading assets from Drupal`,
-        );
       }
-    }
 
-    done();
+      done();
+    }
   };
 }
 
