@@ -209,7 +209,7 @@ async function setUpFeatureFlags(options) {
     }
 
     // Write them to .cache/{buildtype}/drupal/feature-flags.json
-    fs.ensureDirSync(options.cacheDirectory);
+    fs.ensureDirSync(path.dirname(featureFlagFile));
     fs.writeJsonSync(featureFlagFile, rawFlags, { spaces: 2 });
   } else {
     logDrupal('Using cached feature flags');
