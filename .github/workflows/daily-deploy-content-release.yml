@@ -81,7 +81,7 @@ jobs:
       - name: Validate build status
         run: node ./script/github-actions/check-build-status.js ${{ needs.set-env.outputs.REF }}
 
-  slack-notify:
+  notify-start:
     name: Notify Start
     runs-on: ubuntu-latest
     needs: validate-build-status
@@ -132,7 +132,7 @@ jobs:
   build:
     name: Build
     runs-on: self-hosted
-    needs: [set-env, validate-build-status, notify-start]
+    needs: [set-env, notify-start]
     defaults:
       run:
         working-directory: content-build
@@ -284,7 +284,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: create-release
+    needs: [set-env, create-release]
 
     # TODO: Uncomment when ready for prod
     env:
