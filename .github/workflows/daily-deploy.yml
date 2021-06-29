@@ -14,8 +14,9 @@ on:
         required: false
         default: 60
   schedule:
-    - cron: "0 18 * * 1-5" # 1400 EST
-    - cron: "0 13-16,19-21 * * 1-5" #0900-1200 EST,1500-1700EST
+    - cron: "0 18 * * 1-5" # 1400 EST : full production
+    - cron: "0 13-16,20-21 * * 1-5" #0900-1200 EST,1600-1700EST : content release only
+    - cron: "45 17 * * 1-5" #1345 EST : content release only
 
 # TODO: Change to correct channel_id when ready
 env:
@@ -47,7 +48,7 @@ jobs:
 
       - name: Check if content release only deploy
         run: |
-          if [ ${{ github.event.schedule == '0 13-16,19-21 * * 1-5' || github.event.inputs.use_latest_release == 'true'}} = true ];
+          if [ ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' || github.event.schedule == "45 17 * * 1-5" || github.event.inputs.use_latest_release == 'true'}} = true ];
           then
             echo "CONTENT_ONLY=1" >> $GITHUB_ENV
           else
@@ -75,7 +76,7 @@ jobs:
         run: echo "RELEASE_WAIT=60" >> $GITHUB_ENV
 
       - name: Get release wait time (content release)
-        if: ${{ github.event.schedule == '0 13-16,19-21 * * 1-5'}}
+        if: ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' ||  github.event.schedule == "45 17 * * 1-5" }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Get release wait time (workflow_dispatch)
@@ -183,7 +184,7 @@ jobs:
       run:
         working-directory: content-build
 
-    # TODO: Change to prod when ready
+    # TODO: Change DRUPAL to prod when ready
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       BUILDTYPE: vagovprod
