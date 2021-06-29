@@ -58,11 +58,11 @@ jobs:
         run: echo ${{ env.CONTENT_ONLY }} ${{github.event.inputs.use_latest_release}}
 
       - name: Get master ref (full production deploy or use_latest_release == false)
-        if: ${{ !env.CONTENT_ONLY }}
+        if: ${{ env.CONTENT_ONLY == 0 }}
         run: echo "REF=${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Get latest release ref (content release only or use_latest_release == true)
-        if: ${{ env.CONTENT_ONLY }}
+        if: ${{ env.CONTENT_ONLY == 1 }}
         run: echo "REF=${{ steps.get-latest-release.outputs.target_commitish}}" >> $GITHUB_ENV
 
       # TODO: REMOVE
