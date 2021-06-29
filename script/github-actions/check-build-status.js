@@ -8,9 +8,9 @@ const timeout = 5; // minutes
 const checkRunURL = `https://api.github.com/repos/department-of-veterans-affairs/content-build/commits/${headSHA}/check-runs`;
 let commitNull = false;
 
-function getLatestCheckRun(URL) {
+function getLatestCheckRun(url) {
   const headers = { Accept: 'application/vnd.github.v3+json' };
-  return fetch(URL, headers)
+  return fetch(url, headers)
     .then(response => response.json())
     .then(({ check_runs }) => {
       const validCheckRuns = check_runs.filter(
