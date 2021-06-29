@@ -47,7 +47,7 @@ jobs:
 
       - name: Check if content release only deploy
         run: |
-          if [ ${{ github.event.schedule == '0 13-16,19-21 * * 1-5' || github.event.inputs.use_latest_release == 'true'}} = true ]
+          if [ ${{ github.event.schedule == '0 13-16,19-21 * * 1-5' || github.event.inputs.use_latest_release == 'true'}} = true ];
           then
             echo "CONTENT_ONLY=true" >> $GITHUB_ENV
           else
@@ -58,11 +58,11 @@ jobs:
         run: echo ${{ env.CONTENT_ONLY }} ${{github.event.inputs.use_latest_release}}
 
       - name: Get master ref (full production deploy or use_latest_release == false)
-        if: ${{ env.CONTENT_ONLY == false }}
+        if: ${{ !env.CONTENT_ONLY }}
         run: echo "REF=${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Get latest release ref (content release only or use_latest_release == true)
-        if: ${{ env.CONTENT_ONLY == true }}
+        if: ${{ env.CONTENT_ONLY }}
         run: echo "REF=${{ steps.get-latest-release.outputs.target_commitish}}" >> $GITHUB_ENV
 
       # TODO: REMOVE
