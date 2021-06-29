@@ -12,9 +12,9 @@
 <div data-template="paragraphs/wysiwyg" data-entity-id="{{ entity.entityId }}" class="processed-content">
   <div itemprop="text">
     {% if entity.fieldWysiwyg.processed %}
-      {{ entity.fieldWysiwyg.processed | drupalToVaPath | outputLinks }}
+      {{ entity.fieldWysiwyg.processed | drupalToVaPath | phoneLinks }}
     {% elsif entity.fieldWysiwyg.0.processed %}
-      {{ entity.fieldWysiwyg.0.processed | drupalToVaPath | outputLinks }}
+      {{ entity.fieldWysiwyg.0.processed | drupalToVaPath | phoneLinks }}
     {% endif %}
   </div>
 </div>

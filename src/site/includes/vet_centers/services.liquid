@@ -18,7 +18,7 @@
                  -->
                 {% if entity.entity.fieldBody %}
                     <div id="field-body-health-services-{{ idService }}-{{ entity.entity.fieldServiceNameAndDescripti.entity.name }}">
-                        {{ entity.entity.fieldBody.processed | drupalToVaPath | outputLinks }}
+                        {{ entity.entity.fieldBody.processed | drupalToVaPath | phoneLinks }}
                     </div>
                 {% endif %}
             </va-accordion-item>
