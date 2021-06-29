@@ -42,11 +42,11 @@ jobs:
 
       # TODO: REMOVE when testing done
       - name: Get release wait time (test)
-        if: ${{ github.event_name == 'push'}}
+        if: ${{ github.event_name == 'push' }}
         run: echo "RELEASE_WAIT=10" >> $GITHUB_ENV
 
       - name: Get release wait time (scheduled release)
-        if: ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' ||  github.event.schedule == "45 17 * * 1-5" }}
+        if: ${{ github.event.schedule == '0 13-16,20-21 * * 1-5' ||  github.event.schedule == '45 17 * * 1-5' }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Get release wait time (workflow_dispatch)
