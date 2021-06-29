@@ -21,15 +21,18 @@ const options = {
 const data = fetch(
   `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap.xml`,
 ).text();
-const urls = xml.parse(data, options).urlset.url.sort();
+const urls = xml
+  .parse(data, options)
+  .urlset.url.map(url => url.loc)
+  .sort();
 const divider = Math.ceil(urls.length / 8);
-const splitURLs = urls.slice(divider * 3, divider * 4);
+const splitURLs = urls.slice(3 * divider, 4 * divider);
 
 describe(`Accessibility tests`, () => {
   for (const url of splitURLs) {
     // eslint-disable-next-line no-loop-func
-    it(`${url.loc}`, () => {
-      const localURL = url.loc.replace(
+    it(`${url}`, () => {
+      const localURL = url.replace(
         `https://www.va.gov`,
         `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
       );
