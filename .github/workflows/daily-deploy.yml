@@ -47,7 +47,7 @@ jobs:
 
       - name: Check if content release only deploy
         run: |
-          if [ "${{ github.event_name }}" = "0 13-16,19-21 * * 1-5" ] || [ "${{ github.event.inputs.use_latest_release }}" = "true" }} ];
+          if "${{ github.event_name }}" = "0 13-16,19-21 * * 1-5" || "${{ github.event.inputs.use_latest_release }}" = "true" }};
           then
             echo "CONTENT_ONLY=true" >> $GITHUB_ENV
           else
