@@ -743,7 +743,6 @@ module.exports = function registerFilters() {
     if (!ccFeatureContent || !ccFeatureContent.fetched) {
       return featureContentArray;
     }
-    /* eslint-disable camelcase */
     const {
       fieldDescription,
       fieldSectionHeader,
