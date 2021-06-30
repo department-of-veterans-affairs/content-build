@@ -71,7 +71,7 @@ def runDeploy(String jobName, String ref, boolean waitForDeploy) {
 def getQueryStartTime(String buildLogPath, String envName) {
   def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
   if (queryStartTime) {
-     sh queryStartTime
+     echo "${queryStartTime}!"
   }
 }
 
