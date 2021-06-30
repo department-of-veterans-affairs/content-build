@@ -11,10 +11,6 @@ on:
     - cron: "0 13-16,20-21 * * 1-5"
     - cron: "45 17 * * 1-5"
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
-
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: C024DUC9S1K
@@ -41,9 +37,6 @@ jobs:
       - name: Get latest release
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
-
-      - name: echo
-        run: echo "another job"
 
       - name: Get release wait time (scheduled release)
         if: ${{ github.event.schedule != '' }}
