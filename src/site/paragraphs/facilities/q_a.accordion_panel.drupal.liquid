@@ -1,0 +1,15 @@
+{% for q in fetched.fieldQuestions %}
+  {% assign question = q.entity %}
+  <va-accordion bordered id="cc-question-accordion-{{ question.targetId }}">
+    <va-accordion-item id="cc-question-accordion-item-{{ question.targetId }}"
+                       header="{{ question.fieldQuestion.0.value }}"
+                       level="3">
+      {% for a in question.fieldAnswer %}
+        {% assign answer = a.entity %}
+        {% include "src/site/includes/dynamic-content.drupal.liquid" with
+            entity = answer
+            contentType = answer.entityBundle %}
+      {% endfor %}
+    </va-accordion-item>
+  </va-accordion>
+{% endfor %}
