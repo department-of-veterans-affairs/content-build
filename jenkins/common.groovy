@@ -68,27 +68,6 @@ def runDeploy(String jobName, String ref, boolean waitForDeploy) {
   ], wait: waitForDeploy
 }
 
-def getQueryStartTime(String buildLogPath, String envName) {
-  def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
-  if (queryStartTime) {
-     echo "${queryStartTime}!"
-  }
-}
-
-def buildDetails(String buildtype, String ref, Long buildtime, String queryStartTime) {
-  return """\
-BUILDTYPE=${buildtype}
-NODE_ENV=production
-BRANCH_NAME=${env.BRANCH_NAME}
-CHANGE_TARGET=${env.CHANGE_TARGET}
-BUILD_ID=${env.BUILD_ID}
-BUILD_NUMBER=${env.BUILD_NUMBER}
-REF=${ref}
-BUILDTIME=${buildtime}
-QUERY_START_TIME=${queryStartTime}
-"""
-}
-
 def slackNotify() {
   if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH) {
     message = "content-build ${env.BRANCH_NAME} branch CI failed. |${env.RUN_DISPLAY_URL}".stripMargin()
@@ -235,11 +214,32 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   }
 }
 
+
+// def getQueryStartTime(String buildLogPath, String envName) {
+//   def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
+//   if (queryStartTime) {
+//      echo "${queryStartTime}!"
+//   }
+// }
+
+def buildDetails(String buildtype, String ref, Long buildtime) {
+  return """\
+BUILDTYPE=${buildtype}
+NODE_ENV=production
+BRANCH_NAME=${env.BRANCH_NAME}
+CHANGE_TARGET=${env.CHANGE_TARGET}
+BUILD_ID=${env.BUILD_ID}
+BUILD_NUMBER=${env.BUILD_NUMBER}
+REF=${ref}
+BUILDTIME=${buildtime}
+"""
+}
+
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
-  def buildLogPath = "${buildPath}/${envName}-build.log";
-  def queryStartTime = getQueryStartTime(buildLogPath, envName);
-  def buildDetails = buildDetails(envName, ref, buildtime, queryStartTime);
+  // def buildLogPath = "${buildPath}/${envName}-build.log"
+  // def querystarttime = getQueryStartTime(buildLogPath, envName)
+  def buildDetails = buildDetails(envName, ref, buildtime)
   // are not configured to deploy to prod.
   def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
