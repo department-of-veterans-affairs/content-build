@@ -1,8 +1,8 @@
 name: Content Release
 
 on:
+  push:
   workflow_dispatch:
-    push:
     inputs:
       release_wait:
         description: "Minutes to wait before creating release"
@@ -12,9 +12,9 @@ on:
     - cron: "0 13-16,20-21 * * 1-5"
     - cron: "45 17 * * 1-5"
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+# concurrency:
+#   group: ${{ github.ref }}
+#   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 # TODO: Change to correct channel_id when ready
 env:
