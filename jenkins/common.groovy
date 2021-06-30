@@ -215,12 +215,12 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 }
 
 
-// def getQueryStartTime(String buildLogPath, String envName) {
-//   def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
-//   if (queryStartTime) {
-//      echo "${queryStartTime}!"
-//   }
-// }
+def getQueryStartTime(String buildLogPath, String envName) {
+  def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
+  if (queryStartTime) {
+     echo "${queryStartTime}!"
+  }
+}
 
 def buildDetails(String buildtype, String ref, Long buildtime) {
   return """\
