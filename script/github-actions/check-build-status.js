@@ -6,7 +6,7 @@ const args = process.argv.slice(2);
 const repo = args[0];
 const headSHA = args[1];
 const timeout = 2; // minutes
-const checkRunURL = `https://api.github.com/repos/${repo}/commits/${headSHA}/check-runs`;
+const checkRunURL = `https://api.github.com/repos/${repo}/commits/${headSHA}/check-runs?filter=latest`;
 
 /**
  * fetch request to github action URL provided
