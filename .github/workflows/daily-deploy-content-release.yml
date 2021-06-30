@@ -18,7 +18,8 @@ concurrency:
 
 # TODO: Change to correct channel_id when ready
 env:
-  CHANNEL_ID: C024DUC9S1K
+  # CHANNEL_ID: C024DUC9S1K
+  CHANNEL_ID: U01SPJ10WBC
 
 jobs:
   set-env:
@@ -202,7 +203,7 @@ jobs:
 
       - name: Check broken links
         id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links.js {{ env.BUILDTYPE }}
+        run: node ./script/github-actions/check-broken-links.js ${{ env.BUILDTYPE }}
 
       - name: Generate build details
         run: |
