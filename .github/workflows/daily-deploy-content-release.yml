@@ -2,6 +2,7 @@ name: Content Release
 
 on:
   workflow_dispatch:
+    push:
     inputs:
       release_wait:
         description: "Minutes to wait before creating release"
@@ -10,6 +11,10 @@ on:
   schedule:
     - cron: "0 13-16,20-21 * * 1-5"
     - cron: "45 17 * * 1-5"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 # TODO: Change to correct channel_id when ready
 env:
@@ -37,6 +42,11 @@ jobs:
       - name: Get latest release
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
+
+      # TODO: REMOVE when testing done
+      - name: Get release wait time (test)
+        if: ${{ github.event_name == 'push'}}
+        run: echo "RELEASE_WAIT=10" >> $GITHUB_ENV
 
       - name: Get release wait time (scheduled release)
         if: ${{ github.event.schedule != '' }}
@@ -251,8 +261,9 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - name: Upload build
-        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
+      # TODO: uncomment
+      # - name: Upload build
+      #   run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
