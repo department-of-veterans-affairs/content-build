@@ -373,5 +373,5 @@ jobs:
       with:
         slack_app_token: ${{ env.SLACK_APP_TOKEN }}
         slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-        attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+        attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
         channel_id: ${{ env.CHANNEL_ID }}
