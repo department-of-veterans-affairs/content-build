@@ -43,6 +43,9 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
+      - name: echo
+        run: echo "another job"
+
       # TODO: REMOVE when testing done
       - name: Get release wait time (test)
         if: ${{ github.event_name == 'push'}}
