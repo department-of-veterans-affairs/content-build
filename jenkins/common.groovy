@@ -68,7 +68,14 @@ def runDeploy(String jobName, String ref, boolean waitForDeploy) {
   ], wait: waitForDeploy
 }
 
-def buildDetails(String buildtype, String ref, Long buildtime) {
+def getQueryStartTime(String buildLogPath, String envName) {
+  def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
+  if (queryStartTime) {
+     sh queryStartTime
+  }
+}
+
+def buildDetails(String buildtype, String ref, Long buildtime, String queryStartTime) {
   return """\
 BUILDTYPE=${buildtype}
 NODE_ENV=production
@@ -78,6 +85,7 @@ BUILD_ID=${env.BUILD_ID}
 BUILD_NUMBER=${env.BUILD_NUMBER}
 REF=${ref}
 BUILDTIME=${buildtime}
+QUERY_START_TIME=${queryStartTime}
 """
 }
 
@@ -229,7 +237,9 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
-  def buildDetails = buildDetails(envName, ref, buildtime)
+  def buildLogPath = "${buildPath}/${envName}-build.log"
+  def queryStartTime = getQueryStartTime(buildLogPath, envName);
+  def buildDetails = buildDetails(envName, ref, buildtime, queryStartTime)
   // are not configured to deploy to prod.
   def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
