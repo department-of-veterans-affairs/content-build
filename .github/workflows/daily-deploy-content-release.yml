@@ -1,7 +1,6 @@
 name: Content Release
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       release_wait:
@@ -18,8 +17,7 @@ concurrency:
 
 # TODO: Change to correct channel_id when ready
 env:
-  # CHANNEL_ID: C024DUC9S1K
-  CHANNEL_ID: U01SPJ10WBC
+  CHANNEL_ID: C024DUC9S1K
 
 jobs:
   set-env:
@@ -46,11 +44,6 @@ jobs:
 
       - name: echo
         run: echo "another job"
-
-      # TODO: REMOVE when testing done
-      - name: Get release wait time (test)
-        if: ${{ github.event_name == 'push'}}
-        run: echo "RELEASE_WAIT=10" >> $GITHUB_ENV
 
       - name: Get release wait time (scheduled release)
         if: ${{ github.event.schedule != '' }}
@@ -265,9 +258,8 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      # TODO: uncomment
-      # - name: Upload build
-      #   run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
+      - name: Upload build
+        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
@@ -279,7 +271,6 @@ jobs:
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
 
-      # TODO: test `time` if it does need quotes
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         uses: whatnick/wait-action@master
         with:
