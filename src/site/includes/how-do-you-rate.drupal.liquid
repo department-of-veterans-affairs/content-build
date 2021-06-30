@@ -43,6 +43,16 @@
 </form>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
+  function deriveOptionLabel(goodChecked, badChecked) {
+    if (goodChecked) {
+      return 'Good';
+    }
+
+    if (badChecked) {
+      return 'Bad';
+    }
+  }
+
   function onRatingChange(event) {
     // Derive the elements on the page.
     var ratingOptionsElement = document.getElementById("rating-options");
@@ -82,7 +92,7 @@
     }
 
     // Record the event in analytics.
-    var optionLabel = goodChecked ? 'Good' : (badChecked ? 'Bad' : undefined);
+    var optionLabel = deriveOptionLabel(goodChecked, badChecked);
     if (recordEvent && optionLabel) {
       recordEvent({
         'event': 'int-radio-button-option-click',
