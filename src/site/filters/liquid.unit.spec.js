@@ -1059,3 +1059,28 @@ describe('run', () => {
     expect(savedContext.options.timeout).to.eq(1200000);
   });
 });
+
+describe('trackLinks', () => {
+  it('adds recordEvent to links', () => {
+    const html =
+      '<html><head></head><body><p>We hope you enjoy your look at our new website. ' +
+      'This is NOT our official website at this time, but will be soon. ' +
+      'To continue your health care journey in the Erie Healthcare System, please return ' +
+      'to our <a href="https://www.erie.va.gov/">official Erie health care website</a>.' +
+      '</p></body></html>';
+
+    const eventData =
+      '{"event":"nav-alert-box-link-click","alert-box-status":"info"}';
+
+    const expected =
+      '<html><head></head><body><p>We hope you enjoy your look at our new website. ' +
+      'This is NOT our official website at this time, but will be soon. ' +
+      'To continue your health care journey in the Erie Healthcare System, please return ' +
+      'to our <a onclick=\'recordEvent({"event":"nav-alert-box-link-click",' +
+      '"alert-box-status":"info","alert-box-click-label":"official Erie health care website"})\'' +
+      ' href="https://www.erie.va.gov/">official Erie health care website</a>.' +
+      '</p></body></html>';
+
+    expect(liquid.filters.trackLinks(html, eventData)).to.equal(expected);
+  });
+});

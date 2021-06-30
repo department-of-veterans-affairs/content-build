@@ -5,7 +5,7 @@
     {% endif %}
     {% if entity.fieldDescription %}
         <div id="featured-content-description{{ entity.fieldSectionHeader }}}}">
-            {{ entity.fieldDescription.processed | drupalToVaPath | outputLinks }}
+            {{ entity.fieldDescription.processed | drupalToVaPath | phoneLinks }}
         </div>
     {% endif %}
     {% if entity.fieldCta %}
