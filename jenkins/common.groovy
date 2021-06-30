@@ -260,16 +260,14 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
+      def querystarttime = getQueryStartTime(buildLogPath, envName)
+      def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
 
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
 
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
-
-      def buildLogPath = "${buildPath}/${envName}-build.log"
-      def querystarttime = getQueryStartTime(buildLogPath, envName)
-      def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
 
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
     }
