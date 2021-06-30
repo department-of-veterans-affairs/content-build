@@ -237,9 +237,9 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
-  def buildLogPath = "${buildPath}/${envName}-build.log"
+  def buildLogPath = "${buildPath}/${envName}-build.log";
   def queryStartTime = getQueryStartTime(buildLogPath, envName);
-  def buildDetails = buildDetails(envName, ref, buildtime, queryStartTime)
+  def buildDetails = buildDetails(envName, ref, buildtime, queryStartTime);
   // are not configured to deploy to prod.
   def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
