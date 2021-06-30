@@ -216,13 +216,13 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
 
 def getQueryStartTime(String buildLogPath, String envName) {
-  // def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
-  // if (queryStartTime) {
-  //    echo "${queryStartTime}!"
-  // }
+  def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
+  if (queryStartTime) {
+     echo "${queryStartTime}!"
+  }
 }
 
-def buildDetails(String buildtype, String ref, Long buildtime) {
+def buildDetails(String buildtype, String ref, Long buildtime, String querystarttime) {
   return """\
 BUILDTYPE=${buildtype}
 NODE_ENV=production
@@ -232,12 +232,12 @@ BUILD_ID=${env.BUILD_ID}
 BUILD_NUMBER=${env.BUILD_NUMBER}
 REF=${ref}
 BUILDTIME=${buildtime}
+QUERY_START_TIME=${querystarttime}
 """
 }
 
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
-  def buildDetails = buildDetails(envName, ref, buildtime)
   // are not configured to deploy to prod.
   def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
@@ -269,6 +269,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
       def buildLogPath = "${buildPath}/${envName}-build.log"
       def querystarttime = getQueryStartTime(buildLogPath, envName)
+      def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
 
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
     }
