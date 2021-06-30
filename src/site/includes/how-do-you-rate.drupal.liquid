@@ -82,12 +82,12 @@
     }
 
     // Record the event in analytics.
-    var optionLabel = goodChecked ? 'Good' : (badChecked ? 'Bad' : '');
+    var optionLabel = goodChecked ? 'Good' : (badChecked ? 'Bad' : undefined);
     if (recordEvent && optionLabel) {
       recordEvent({
         'event': 'int-radio-button-option-click',
         'radio-button-label': "{{ ratingOptionsQuestion }}",
-        'radio-button-optionLabel': event.target.value, // "Good" | "Bad"
+        'radio-button-optionLabel': optionLabel, // "Good" | "Bad"
         'radio-button-required': false,
       })
     }
