@@ -215,7 +215,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 }
 
 
-def getQueryStartTime(String buildLogPath, String envName) {
+def getQueryStartTime() {
   // def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
   // if (queryStartTime) {
   //    echo "${queryStartTime}!"
@@ -237,8 +237,8 @@ BUILDTIME=${buildtime}
 
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
-  def buildLogPath = "${buildPath}/${envName}-build.log"
-  def querystarttime = getQueryStartTime(buildLogPath, envName)
+  // def buildLogPath = "${buildPath}/${envName}-build.log"
+  def querystarttime = getQueryStartTime()
   def buildDetails = buildDetails(envName, ref, buildtime)
   // are not configured to deploy to prod.
   def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
