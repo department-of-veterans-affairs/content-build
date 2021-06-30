@@ -202,7 +202,7 @@ jobs:
 
       - name: Check broken links
         id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links.js {{ env.BUILDTYPE }}
+        run: node ./script/github-actions/check-broken-links.js ${{ env.BUILDTYPE }}
 
       - name: Generate build details
         run: |
