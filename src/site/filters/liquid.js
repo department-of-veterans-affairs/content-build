@@ -745,33 +745,33 @@ module.exports = function registerFilters() {
     }
     /* eslint-disable camelcase */
     const {
-      field_description,
-      field_section_header,
-      field_cta,
+      fieldDescription,
+      fieldSectionHeader,
+      fieldCta,
     } = ccFeatureContent.fetched;
 
-    if (!field_description || !field_section_header) return featureContentArray;
+    if (!fieldDescription || !fieldSectionHeader) return featureContentArray;
 
     const featureContentObj = {
       entity: {
         fieldDescription: {
-          processed: field_description[0]?.processed,
+          processed: fieldDescription[0]?.processed,
         },
-        fieldSectionHeader: field_section_header[0]?.value,
+        fieldSectionHeader: fieldSectionHeader[0]?.value,
       },
     };
 
     if (
-      field_cta.length > 0 &&
-      field_cta[0]?.field_button_link &&
-      field_cta[0]?.field_button_label
+      fieldCta.length > 0 &&
+      fieldCta[0]?.entity.fieldButtonLink &&
+      fieldCta[0]?.entity.fieldButtonLabel
     ) {
       const buttonFeatured = {
         entity: {
           fieldButtonLink: {
-            uri: field_cta[0]?.field_button_link[0].uri,
+            uri: fieldCta[0]?.entity.fieldButtonLink[0].uri,
           },
-          fieldButtonLabel: field_cta[0].field_button_label[0].value,
+          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0].value,
         },
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
