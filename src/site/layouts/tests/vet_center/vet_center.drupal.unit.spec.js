@@ -29,6 +29,17 @@ describe('Vet Center Main Page', () => {
     );
   });
 
+  it('renders address', () => {
+    expect(
+      container
+        .querySelector('address')
+        .innerHTML.replace(/\s+/g, ' ')
+        .trim(),
+    ).to.equal(
+      '<div>3500 Ludington Street</div> <div>Suite 200</div> Escanaba, MI 49829',
+    );
+  });
+
   it('renders prepare for your field-cc-non-traditional-hours', () => {
     expect(
       container.querySelectorAll('.field-cc-non-traditional-hours p').length,
