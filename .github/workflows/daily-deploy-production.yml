@@ -125,7 +125,7 @@ jobs:
   build:
     name: Build
     runs-on: self-hosted
-    needs: [notify-start]
+    needs: notify-start
     defaults:
       run:
         working-directory: content-build
