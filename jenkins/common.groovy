@@ -269,7 +269,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
       
       // To run after the build and access the buildLog
-      def querystarttime = getQueryStartTime(value=`cat config.txt`, envName)
+      def querystarttime = getQueryStartTime(buildLogPath, envName)
       sh "echo 268"
       def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
       sh "echo 270"
