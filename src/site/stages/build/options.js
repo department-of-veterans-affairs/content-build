@@ -72,6 +72,9 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   // isn't actually a part of this list of options, but an error would be thrown
   // without it. Remove this when getOptions is decoupled from the cache script.
   { name: 'fetch', type: Boolean, defaultValue: false },
+
+  // use the --use-cached-assets flag with a build to bypass re-downloading asset files
+  { name: 'use-cached-assets', type: Boolean, defaultValue: false },
 ];
 
 function gatherFromCommandLine() {
@@ -177,7 +180,7 @@ function deriveHostUrl(options) {
 /**
  * Sets up the CMS feature flags by either querying the CMS for them
  * or using ../../utilities/featureFlags. If we pull from Drupal, it'll
- * also ensure the cache directory exists and is empty.
+ * also ensure the cache directory exists.
  */
 async function setUpFeatureFlags(options) {
   global.buildtype = options.buildtype;
@@ -206,8 +209,7 @@ async function setUpFeatureFlags(options) {
     }
 
     // Write them to .cache/{buildtype}/drupal/feature-flags.json
-    fs.ensureDirSync(options.cacheDirectory);
-    fs.emptyDirSync(path.dirname(featureFlagFile));
+    fs.ensureDirSync(path.dirname(featureFlagFile));
     fs.writeJsonSync(featureFlagFile, rawFlags, { spaces: 2 });
   } else {
     logDrupal('Using cached feature flags');
@@ -228,6 +230,21 @@ async function setUpFeatureFlags(options) {
   });
 }
 
+/**
+ * If we pull from Drupal, this ensures the cache downloads directory is empty.
+ * Can be overridden with the --use-cached-assets flag.
+ */
+function clearDrupalCacheDirectory(options) {
+  const useCachedAssetsArg = 'use-cached-assets';
+  if (shouldPullDrupal(options) && !options[useCachedAssetsArg]) {
+    const drupalCacheDirectory = path.join(
+      options.cacheDirectory,
+      'drupal/downloads',
+    );
+    fs.emptyDirSync(drupalCacheDirectory);
+  }
+}
+
 async function getOptions(commandLineOptions) {
   const options = commandLineOptions || gatherFromCommandLine();
 
@@ -235,6 +252,7 @@ async function getOptions(commandLineOptions) {
   applyEnvironmentOverrides(options);
   deriveHostUrl(options);
   await setUpFeatureFlags(options);
+  clearDrupalCacheDirectory(options);
 
   // Setting verbosity for the whole content build process as global so we don't
   // have to pass the buildOptions around for just that.
