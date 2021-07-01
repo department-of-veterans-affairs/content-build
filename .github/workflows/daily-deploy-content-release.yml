@@ -79,7 +79,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/check-build-status.js ${{github.repository}} e2e ${{ needs.set-env.outputs.REF }}
+        run: node ./script/github-actions/validate-build-status.js ${{github.repository}} e2e ${{ needs.set-env.outputs.REF }}
 
   notify-start:
     name: Notify Start
