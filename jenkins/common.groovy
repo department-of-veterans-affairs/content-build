@@ -216,7 +216,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
 
 def getQueryStartTime(String buildLogPath, String envName) {
-  while read line; do
+  sh(while read line; do
   if [[ $line =~ "start: Get Drupal content" ]] ; 
     then def queryStartTime $line; 
     fi;
