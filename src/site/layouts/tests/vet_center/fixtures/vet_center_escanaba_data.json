@@ -278,7 +278,8 @@
     "locality": "Escanaba",
     "postalCode": "49829",
     "administrativeArea": "MI",
-    "addressLine1": "3500 Ludington Street"
+    "addressLine1": "3500 Ludington Street",
+    "addressLine2": "Suite 200"
   },
   "fieldOfficeHours": [
     {

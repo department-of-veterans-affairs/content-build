@@ -29,10 +29,15 @@ describe('Vet Center Main Page', () => {
     );
   });
 
-  it('renders prepare for your field-cc-non-traditional-hours', () => {
+  it('renders address', () => {
     expect(
-      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
-    ).to.equal(1);
+      container
+        .querySelector('address')
+        .innerHTML.replace(/\s+/g, ' ')
+        .trim(),
+    ).to.equal(
+      '<div>3500 Ludington Street</div> <div>Suite 200</div> Escanaba, MI 49829',
+    );
   });
 
   it('renders prepare for your field-cc-non-traditional-hours', () => {
@@ -41,7 +46,13 @@ describe('Vet Center Main Page', () => {
     ).to.equal(1);
   });
 
-  it('renders prepare for your visit field-cc-vet-call-center', () => {
+  it('renders prepare for your field-cc-non-traditional-hours', () => {
+    expect(
+      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
+    ).to.equal(1);
+  });
+
+  it('renders prepar(e for your visit field-cc-vet-call-center', () => {
     expect(
       container.querySelectorAll('.field-cc-vet-call-center p').length,
     ).to.equal(1);
