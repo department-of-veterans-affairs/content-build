@@ -264,9 +264,11 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
 
       def buildLogPath = "${buildPath}/${envName}-build.log"
+      sh "echo 267"
       def querystarttime = getQueryStartTime(buildLogPath, envName)
+      sh "echo 269"
       def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
-      sh "echo 268"
+      sh "echo 271"
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
