@@ -264,13 +264,17 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
       
       // To run after the build and access the buildLog
-      def querystarttime = getQueryStartTime(buildLogPath, envName)
+      def querystarttime = getQueryStartTime(value=`cat config.txt`, envName)
       sh "echo 268"
       def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
       sh "echo 270"
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
+      sh "echo A"
+      sh "value=`cat ${buildLogPath}`"
+      sh "echo B"
+      sh "$value"
       sh "echo 274"
       // sh "echo querystarttime: ${querystarttime}"
       sh "echo 276"
