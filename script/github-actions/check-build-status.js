@@ -4,15 +4,17 @@ const fetch = require('node-fetch');
 
 const args = process.argv.slice(2);
 const repo = args[0];
-const headSHA = args[1];
 const timeout = 2; // minutes
-const checkRunURL = `https://api.github.com/repos/${repo}/commits/${headSHA}/check-runs?filter=latest`;
+const ymlName = args[1]; // TODO: Once e2e is changed to continous integration, we can remove
+const releaseSHA = args[2];
+let page = 1;
+let checkWorkflowURL = `https://api.github.com/repos/${repo}/actions/workflows/${ymlName}.yml/runs?branch=master&page=${page}&per_page=50`;
 
 /**
- * fetch request to github action URL provided
+ * fetch request for github action URL provided
  * @param {string} url
  */
-function getLatestCheckRun(url) {
+function getLatestWorkflow(url) {
   const headers = { Accept: 'application/vnd.github.v3+json' };
   return fetch(url, headers)
     .then(response => {
@@ -23,25 +25,44 @@ function getLatestCheckRun(url) {
       }
       return response.json();
     })
-    .then(({ check_runs }) => {
-      const validCheckRuns = check_runs.filter(
-        ({ name }) => name !== 'Accessibility Scan',
-      );
-      for (let i = 0; i < validCheckRuns.length; i++) {
-        // html_url specific github key. ignoring camelcase lint
-        const { conclusion, html_url, status } = validCheckRuns[i];
-        if (conclusion === 'failure') {
-          return Promise.reject(
-            Error(
-              `Build aborted due to failed runs detected on ${headSHA}.\n\n ${html_url}`,
-            ),
-          );
-        } else if (status === 'in_progress' || status === null) {
-          return Promise.reject({});
-        }
+    .then(({ workflow_runs }) => {
+      if (workflow_runs.length === 0) {
+        return Promise.reject(Error(`No workflows returns. Aborting.`));
       }
-      console.log(`All checks succeeded for ${headSHA}`);
-      return Promise.resolve();
+
+      let validWorkflow;
+
+      // If SHA passed, get workflow information. Otherwise get the most recent
+      if (releaseSHA) {
+        validWorkflow = workflow_runs.find(
+          ({ head_sha }) => head_sha === releaseSHA,
+        );
+        if (validWorkflow === undefined) {
+          page += 1;
+          checkWorkflowURL = `https://api.github.com/repos/${repo}/actions/workflows/${ymlName}.yml/runs?branch=master&page=${page}&per_page=50`;
+          // TODO: check timestamp
+          return getLatestWorkflow(checkWorkflowURL);
+        }
+      } else {
+        validWorkflow = workflow_runs[0];
+      }
+
+      if (validWorkflow.conclusion === 'failure') {
+        return Promise.reject(
+          Error(
+            `Build aborted due to failed runs detected on.\n\n ${validWorkflow.html_url}`,
+          ),
+        );
+      } else if (
+        validWorkflow.status === 'in_progress' ||
+        validWorkflow.status === null ||
+        validWorkflow.status === 'queued'
+      ) {
+        return Promise.reject({});
+      } else {
+        console.log(`All checks succeeded for ${ymlName}`);
+        return Promise.resolve();
+      }
     });
 }
 
@@ -54,7 +75,7 @@ function sleep(minutes) {
  */
 async function main() {
   try {
-    return await getLatestCheckRun(checkRunURL);
+    return await getLatestWorkflow(checkWorkflowURL);
   } catch (e) {
     if (e.name !== undefined && e.name === 'Error') {
       console.log(e);

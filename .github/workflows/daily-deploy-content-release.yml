@@ -37,6 +37,11 @@ jobs:
       - name: Get latest release
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
+      
+      # TODO: REMOVE when testing done
+      - name: Get release wait time (test)
+        if: ${{ github.event_name == 'push'}}
+        run: echo "RELEASE_WAIT=10" >> $GITHUB_ENV
 
       - name: Get release wait time (scheduled release)
         if: ${{ github.event.schedule != '' }}
@@ -79,7 +84,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/check-build-status.js ${{github.repository}} ${{ needs.set-env.outputs.REF }}
+        run: node ./script/github-actions/check-build-status.js ${{github.repository}} e2e ${{ needs.set-env.outputs.REF }}
 
   notify-start:
     name: Notify Start
