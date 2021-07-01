@@ -269,7 +269,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
-
+      sh "querystarttime: ${querystarttime}"
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
     }
   }
