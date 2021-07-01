@@ -272,7 +272,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
       sh "echo A"
-      sh "value=`cat ${buildLogPath}`"
+      sh "value=cat ${buildLogPath}"
       sh "echo B"
       sh "$value"
       sh "echo 274"
