@@ -216,9 +216,10 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
 
 def getQueryStartTime(String buildLogPath, String envName) {
-  sh(returnStdout: true, script: "while read line; do if [[ $line =~ 'start: Get Drupal content' ]]; then def queryStartTime $line; fi; done <${buildLogPath}");
+  sh(returnStdout: true, script: "while read line; do if [[ '$line' =~ 'start: Get Drupal content' ]]; then queryStartTime='$line'; fi; done <${buildLogPath}");
   // def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
   sh "echo 220"
+  def queryStartTime = $queryStartTime;
   if (queryStartTime) {
      return ${queryStartTime}
   }
