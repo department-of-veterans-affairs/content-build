@@ -52,7 +52,7 @@ describe('Vet Center Main Page', () => {
     ).to.equal(1);
   });
 
-  it('renders prepar(e for your visit field-cc-vet-call-center', () => {
+  it('renders prepare for your visit field-cc-vet-call-center', () => {
     expect(
       container.querySelectorAll('.field-cc-vet-call-center p').length,
     ).to.equal(1);
