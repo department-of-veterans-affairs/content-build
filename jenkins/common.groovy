@@ -272,7 +272,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
       sh "echo 274"
-      sh "echo querystarttime: ${querystarttime}"
+      // sh "echo querystarttime: ${querystarttime}"
       sh "echo 276"
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
       sh "echo 278"
