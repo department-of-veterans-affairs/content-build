@@ -265,12 +265,17 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       
       // To run after the build and access the buildLog
       def querystarttime = getQueryStartTime(buildLogPath, envName)
+      sh "echo 268"
       def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
+      sh "echo 270"
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
+      sh "echo 274"
       sh "echo querystarttime: ${querystarttime}"
+      sh "echo 276"
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
+      sh "echo 278"
     }
   }
 }
