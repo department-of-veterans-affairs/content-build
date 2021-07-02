@@ -32,14 +32,21 @@
                 {{ fieldOffice.entity.title }}
                 we offer satellite locations that may be closer to you.
                 These satellite facilities provide select services with the same community, care, and
-                confidentiality in
-                a non-medical setting.
+                confidentiality in a non-medical setting.
                 Call us for more information about these locations.
             </p>
-            {% for entityVetCenter in fieldOffice.entity.reverseFieldOfficeNode.entities %}
+            {% for entityVetCenter in fieldOffice.entity.reverseFieldOfficeNode.entities | sortObjectsBy: 'title' %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                 vetCenter = entityVetCenter
                 mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
+            {% endfor %}
+          {% endif %}
+
+          {% if fieldNearbyMobileVetCenters.length > 0 %}
+            {% for mobileVetCenter in fieldNearbyMobileVetCenters | sortObjectsBy: 'title' %}
+              {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
+                  vetCenter = mobileVetCenter.entity
+                  mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
             {% endfor %}
           {% endif %}
 

@@ -140,7 +140,6 @@ Disallow: /dublin-health-care
 Disallow: /durham-health-care
 Disallow: /eastern-colorado-health-care
 Disallow: /eastern-kansas-health-care
-Disallow: /eastern-oklahoma-health-care
 Disallow: /el-paso-health-care
 Disallow: /erie-health-care
 Disallow: /fargo-health-care
@@ -160,7 +159,6 @@ Disallow: /iowa-city-health-care
 Disallow: /iron-mountain-health-care
 Disallow: /jackson-health-care
 Disallow: /kansas-city-health-care
-Disallow: /lebanon-health-care
 Disallow: /lexington-health-care
 Disallow: /loma-linda-health-care
 Disallow: /long-beach-health-care

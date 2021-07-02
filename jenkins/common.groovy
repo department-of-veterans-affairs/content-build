@@ -134,23 +134,6 @@ def setup() {
   }
 }
 
-/**
- * Searches the build log for missing query flags ands sends a notification
- * to Slack if any are found.
- *
- * NOTE: This function is meant to be called from within the
- * dockerContainer.inside() context so buildLog can point to the right file.
- */
-def findMissingQueryFlags(String buildLogPath, String envName) {
-  def missingFlags = sh(returnStdout: true, script: "sed -nr 's/Could not find query flag (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
-  if (missingFlags) {
-    slackSend message: "Missing query flags found in the ${envName} build on `${env.BRANCH_NAME}`. The following will flags be considered false:\n${missingFlags}",
-      color: 'warning',
-      failOnError: true,
-      channel: 'cms-team'
-  }
-}
-
 def accessibilityTests() {
 
   if (shouldBail() || !VAGOV_BUILDTYPES.contains('vagovprod')) { return }
@@ -274,7 +257,6 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
-        findMissingQueryFlags(buildLogPath, envName)
       }
 
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"

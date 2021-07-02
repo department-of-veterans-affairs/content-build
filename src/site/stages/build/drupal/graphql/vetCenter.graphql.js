@@ -68,6 +68,7 @@ const vetCenterFragment = `
          postalCode
          administrativeArea
          addressLine1
+         addressLine2
         }   
         fieldOfficeHours {
           day
