@@ -28,6 +28,10 @@ jobs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
 
     steps:
+      - name: Cancel DSVA Schedule
+        if: ${{ !env.DSVA_SCHEDULE_ENABLED }}
+        uses: andymckay/cancel-action@0.2
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -333,7 +337,7 @@ jobs:
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ failure() || cancelled() }}
+    if: ${{ failure() }}
     needs: deploy
 
     steps:
