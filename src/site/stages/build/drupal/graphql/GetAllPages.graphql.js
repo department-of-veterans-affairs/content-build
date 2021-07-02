@@ -58,10 +58,12 @@ queryParamToBeChanged.forEach(param => {
 
 const regex = new RegExp(`${regString}`, 'g');
 
-const buildQuery = ({ useTomeSync }) => {
-  const nodeContentFragments = useTomeSync
-    ? ''
-    : `
+// const buildQuery = ({ useTomeSync }) => {
+//   const nodeContentFragments = useTomeSync
+//     ? ''
+//     : `
+const buildQuery = () => {
+  const nodeContentFragments = `
   ${ALL_FRAGMENTS}
   ${landingPage.fragment}
   ${page.fragment}
@@ -94,11 +96,13 @@ const buildQuery = ({ useTomeSync }) => {
   ${vamcPolicyPages.fragment}
 `;
 
-  const todayQueryVar = useTomeSync ? '' : '$today: String!,';
+  // const todayQueryVar = useTomeSync ? '' : '$today: String!,';
+  const todayQueryVar = '$today: String!,';
 
-  const nodeQuery = useTomeSync
-    ? ''
-    : `
+  // const nodeQuery = useTomeSync
+  //   ? ''
+  //   : `
+  const nodeQuery = `
     nodeQuery(limit: 5000, filter: {
       conditions: [
         { field: "status", value: ["1"], enabled: $onlyPublishedContent }
