@@ -47,6 +47,10 @@ function getFilesToUpdate() {
       )
       .forEach(key => {
         files[key] = global.metalsmithFiles[key];
+
+        // Remove file contents for files that use layouts
+        // to avoid duplicating contents
+        files[key].contents = '';
       });
 
     const numFilesChanged = Object.keys(files).length - numStartingFiles;
