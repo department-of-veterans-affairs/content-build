@@ -1,6 +1,7 @@
 name: Content Release
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       release_wait:
@@ -14,8 +15,10 @@ on:
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: C024DUC9S1K
+  DSVA_SCHEDULE_ENABLED: false
 
 jobs:
+  if: ${{ env.DSVA_SCHEDULE_ENABLED }}
   set-env:
     name: Set Env Variables
     runs-on: ubuntu-latest
