@@ -36,8 +36,6 @@ jobs:
           - buildtype: vagovprod
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
     steps:
       - name: Checkout vagov-content
         uses: actions/checkout@v2
