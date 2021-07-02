@@ -76,6 +76,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           administrativeArea
           postalCode
           addressLine1
+          addressLine2          
           organization
         }      
         fieldPhoneNumber
@@ -160,6 +161,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 administrativeArea
                 postalCode
                 addressLine1
+                addressLine2
                 organization
               }
             }
@@ -174,6 +176,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 administrativeArea
                 postalCode
                 addressLine1
+                addressLine2                
                 organization
               }
               fieldPhoneNumber              
@@ -187,6 +190,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 administrativeArea
                 postalCode
                 addressLine1
+                addressLine2                
                 organization
               }
               fieldPhoneNumber              
@@ -200,6 +204,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           locality
           postalCode
           addressLine1
+          addressLine2
           organization
         }
         fieldPhoneNumber

@@ -482,9 +482,11 @@ const nodeCampaignLandingPage = `
         entityId
         ... on MediaImage {
           image {
-            height
-            width
-            url
+            derivative(style: VIEWPORTWIDTH) {
+              height
+              url
+              width
+            }
             targetId
             alt
             title

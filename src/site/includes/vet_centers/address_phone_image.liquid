@@ -1,66 +1,73 @@
 <div data-template="includes/vet_center_address_phone_image"
      class="region-list usa-width-one-whole vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--4 medium-screen:vads-u-margin-bottom--5">
-    <section class="region-grid vads-u-margin-right--2">
-        {% if vetCenter.title %}
-            <h3 class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md vads-u-font-size--lg">
-                {% if vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" or vetCenter.entityBundle == "vet_center_mobile_vet_center" %}
-                    {{ vetCenter.title }}
-                {% else %}
-                    <a href="{{ vetCenterUrl }}">{{ vetCenter.title }}</a>
-                {% endif %}
-            </h3>
+  <section class="region-grid vads-u-margin-right--2">
+    {% if vetCenter.title %}
+      <h3 class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md vads-u-font-size--lg">
+        {% if vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" or vetCenter.entityBundle == "vet_center_mobile_vet_center" %}
+          {{ vetCenter.title }}
+        {% else %}
+          <a href="{{ vetCenterUrl }}">{{ vetCenter.title }}</a>
         {% endif %}
-        <div data-widget-type="expandable-operating-status-{{ vetCenter.fieldFacilityLocatorApiId }}"
-             facilityId="{{ vetCenter.fieldFacilityLocatorApiId }}"
-             status="{{ vetCenter.fieldOperatingStatusFacility}}"
-             info="{{ vetCenter.fieldOperatingStatusMoreInfo }}">
-        </div>
-        <h4 class="force-small-header vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-            {% if vetCenter.entityBundle == "vet_center_cap" %}
-                Located at
-            {% else %}
-                Address
-            {% endif %}
-        </h4>
-        <div class="vads-u-margin-bottom--3">
-            <address class="vads-u-margin-bottom--0">
-                <div>{{ vetCenter.fieldAddress.organization }}</div>
-                <div>{{ vetCenter.fieldAddress.addressLine1 }}</div>
-                <div>{{ vetCenter.fieldAddress.locality }},
-                    {{ vetCenter.fieldAddress.administrativeArea }}
-                    {{ vetCenter.fieldAddress.postalCode }}
-                </div>
-            </address>
-            <div>
-                <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"
-                   href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
-                   aria-label="Directions to {{ vetCenter.title }} on Google Maps">
-                    Directions on Google Maps
-                </a>
-            </div>
-        </div>
-        <h4 class="force-small-header vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Phone</h4>
+      </h3>
+    {% endif %}
+    <div data-widget-type="expandable-operating-status-{{ vetCenter.fieldFacilityLocatorApiId }}"
+         facilityId="{{ vetCenter.fieldFacilityLocatorApiId }}"
+         status="{{ vetCenter.fieldOperatingStatusFacility }}"
+         info="{{ vetCenter.fieldOperatingStatusMoreInfo }}">
+    </div>
+    {% if vetCenter.entityBundle != "vet_center_mobile_vet_center" %}
+      <h4 class="force-small-header vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+        {% if vetCenter.entityBundle == "vet_center_cap" %}
+          Located at
+        {% else %}
+          Address
+        {% endif %}
+      </h4>
+      <div class="vads-u-margin-bottom--3">
+        <address class="vads-u-margin-bottom--0">
+          <div>{{ vetCenter.fieldAddress.organization }}</div>
+          <div>{{ vetCenter.fieldAddress.addressLine1 }}</div>
+          {% if vetCenter.fieldAddress.addressLine2 %}
+            <div>{{ vetCenter.fieldAddress.addressLine2 }}</div>
+          {% endif %}
+          <div>{{ vetCenter.fieldAddress.locality }},
+            {{ vetCenter.fieldAddress.administrativeArea }}
+            {{ vetCenter.fieldAddress.postalCode }}
+          </div>
+        </address>
         <div>
-            {% if vetCenter.entityBundle == "vet_center_cap" %}
-                <div class="main-phone">
-                    </strong><a href="tel:{{ mainVetCenterPhone }}">{{ mainVetCenterPhone }}</a>
-                </div>
-            {% else %}
-                <div class="main-phone">
-                    </strong><a href="tel:{{ vetCenter.fieldPhoneNumber }}">{{ vetCenter.fieldPhoneNumber }}</a>
-                </div>
-            {% endif %}
+          <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"
+             href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
+             aria-label="Directions to {{ vetCenter.title }} on Google Maps">
+            Directions on Google Maps
+          </a>
         </div>
-    </section>
+      </div>
+    {% endif %}
 
-    <section class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
-      {% capture onclick %}
-        recordEvent({ event: 'image-click', 'facility-name': '{{ vetCenter.title }}'});
-      {% endcapture %}
-      {% include src/site/components/image.drupal.liquid with
-          class = "facility-img"
-          image = vetCenter.fieldMedia.entity.image
-          onclick = onclick
-      %}
-    </section>
+    <h4 class="force-small-header vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Phone</h4>
+    <div>
+      {% if vetCenter.entityBundle == "vet_center_cap" %}
+        <div class="main-phone">
+          </strong><a href="tel:{{ mainVetCenterPhone }}">{{ mainVetCenterPhone }}</a>
+        </div>
+      {% else %}
+        <div class="main-phone">
+          </strong><a href="tel:{{ vetCenter.fieldPhoneNumber }}">{{ vetCenter.fieldPhoneNumber }}</a>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section
+      class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
+    {% capture onclick %}
+      recordEvent({ event: 'image-click', 'facility-name': '{{ vetCenter.title }}'});
+    {% endcapture %}
+    {% include src/site/components/image.drupal.liquid with
+        class = "facility-img"
+        image = vetCenter.fieldMedia.entity.image
+        onclick = onclick
+    %}
+  </section>
 </div>
