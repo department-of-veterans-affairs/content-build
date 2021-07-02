@@ -1,4 +1,4 @@
-name: Full Production Release
+name: Daily Production Deploy
 
 on:
   workflow_dispatch:
