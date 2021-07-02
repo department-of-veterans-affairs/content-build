@@ -18,8 +18,8 @@ env:
   DSVA_SCHEDULE_ENABLED: false
 
 jobs:
-  if: ${{ env.DSVA_SCHEDULE_ENABLED }}
   set-env:
+    if: ${{ env.DSVA_SCHEDULE_ENABLED }}
     name: Set Env Variables
     runs-on: ubuntu-latest
     outputs:
