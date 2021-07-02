@@ -39,6 +39,8 @@ function getFilesToUpdate() {
       console.log('Layouts updated:\n', updatedLayouts.join('\n'), '\n');
     }
 
+    const numStartingFiles = Object.keys(files).length;
+
     Object.keys(global.metalsmithFiles)
       .filter(fileName =>
         updatedLayouts.includes(global.metalsmithFiles[fileName].layout),
@@ -47,9 +49,9 @@ function getFilesToUpdate() {
         files[key] = global.metalsmithFiles[key];
       });
 
-    console.log(
-      `Files associated with template change: ${Object.keys(files).length}`,
-    );
+    const numFilesChanged = Object.keys(files).length - numStartingFiles;
+
+    console.log(`Files associated with template change: ${numFilesChanged}`);
     done();
   };
 }
