@@ -188,6 +188,10 @@ module.exports = () => {
     fs.writeFileSync(
       `build/${BUILD_OPTIONS.buildtype}/metalsmith-build-data.json`,
       metalsmithBuildData,
+      err => {
+        if (err) throw err;
+        console.log('Metasmith data written to metalsmith-build-data.json');
+      },
     );
   };
 
