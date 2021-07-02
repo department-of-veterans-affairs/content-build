@@ -240,15 +240,15 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
       });
     },
 
-    getNonNodeContent(onlyPublishedContent = true) {
-      say('Querying for non-node content');
-      return this.query({
-        query: getQuery(queries.GET_ALL_PAGES, { useTomeSync: true }),
-        variables: {
-          onlyPublishedContent,
-        },
-      });
-    },
+    // getNonNodeContent(onlyPublishedContent = true) {
+    //   say('Querying for non-node content');
+    //   return this.query({
+    //     query: getQuery(queries.GET_ALL_PAGES, { useTomeSync: true }),
+    //     variables: {
+    //       onlyPublishedContent,
+    //     },
+    //   });
+    // },
 
     getLatestPageById(nodeId) {
       return this.query({
