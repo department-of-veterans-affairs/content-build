@@ -110,7 +110,7 @@ async function main() {
     if (!success) {
       // TODO: Check which jobs failed by fetching jobs_url and filtering on jobs we care about.
       console.error(
-        `Build aborted due to failed runs detected on.\n\n${workflow.html_url}`,
+        `Build aborted due to failed runs detected on:\n\n${workflow.html_url}`,
       );
       process.exit(1);
     }
