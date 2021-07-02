@@ -68,6 +68,19 @@ def runDeploy(String jobName, String ref, boolean waitForDeploy) {
   ], wait: waitForDeploy
 }
 
+def buildDetails(String buildtype, String ref, Long buildtime) {
+  return """\
+BUILDTYPE=${buildtype}
+NODE_ENV=production
+BRANCH_NAME=${env.BRANCH_NAME}
+CHANGE_TARGET=${env.CHANGE_TARGET}
+BUILD_ID=${env.BUILD_ID}
+BUILD_NUMBER=${env.BUILD_NUMBER}
+REF=${ref}
+BUILDTIME=${buildtime}
+"""
+}
+
 def slackNotify() {
   if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH) {
     message = "content-build ${env.BRANCH_NAME} branch CI failed. |${env.RUN_DISPLAY_URL}".stripMargin()
@@ -214,21 +227,9 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   }
 }
 
-def buildDetails(String buildtype, String ref, Long buildtime) {
-  return """\
-BUILDTYPE=${buildtype}
-NODE_ENV=production
-BRANCH_NAME=${env.BRANCH_NAME}
-CHANGE_TARGET=${env.CHANGE_TARGET}
-BUILD_ID=${env.BUILD_ID}
-BUILD_NUMBER=${env.BUILD_NUMBER}
-REF=${ref}
-BUILDTIME=${buildtime}
-"""
-}
-
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
+  def buildDetails = buildDetails(envName, ref, buildtime)
   // are not configured to deploy to prod.
   def drupalAddress = DRUPAL_ADDRESSES.get('sandbox')
   def drupalCred = DRUPAL_CREDENTIALS.get('vagovprod')
@@ -253,8 +254,6 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       def buildLogPath = "${buildPath}/${envName}-build.log"
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
       
-      // To run after the build and access the buildLog
-      def buildDetails = buildDetails(envName, ref, buildtime)
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
