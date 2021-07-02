@@ -28,6 +28,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
           - buildtype: vagovdev
             drupal-address: http://internal-dsva-vagov-dev-cms-812329399.us-gov-west-1.elb.amazonaws.com
@@ -485,6 +486,7 @@ jobs:
 
 #   strategy:
 #     matrix:
+#       environment: [vagovdev, vagovstaging]
 #       include:
 #         - environment: vagovdev
 #           bucket: content.dev.va.gov
