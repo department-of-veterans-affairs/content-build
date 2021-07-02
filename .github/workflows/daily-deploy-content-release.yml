@@ -15,7 +15,7 @@ on:
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: C024DUC9S1K
-  DSVA_SCHEDULE_ENABLED: false
+  DSVA_SCHEDULE_ENABLED: true
 
 jobs:
   set-env:
@@ -27,7 +27,7 @@ jobs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
 
     steps:
-      - name: Cancel DSVA Schedule
+      - name: Cancel workflow due to DSVA schedule
         if: ${{ env.DSVA_SCHEDULE_ENABLED == 'false' }}
         uses: andymckay/cancel-action@0.2
 
