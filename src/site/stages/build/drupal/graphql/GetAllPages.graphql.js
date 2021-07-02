@@ -58,12 +58,10 @@ queryParamToBeChanged.forEach(param => {
 
 const regex = new RegExp(`${regString}`, 'g');
 
-// const buildQuery = ({ useTomeSync }) => {
-//   const nodeContentFragments = useTomeSync
-//     ? ''
-//     : `
-const buildQuery = () => {
-  const nodeContentFragments = `
+const buildQuery = ({ useTomeSync }) => {
+  const nodeContentFragments = useTomeSync
+    ? ''
+    : `
   ${ALL_FRAGMENTS}
   ${landingPage.fragment}
   ${page.fragment}
