@@ -1,6 +1,5 @@
 // Builds the site using Metalsmith as the top-level build runner.
 /* eslint-disable no-console */
-// const fs = require('fs');
 const chalk = require('chalk');
 const assets = require('metalsmith-assets');
 const collections = require('metalsmith-collections');
@@ -40,8 +39,6 @@ const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
 
-const metalsmithTimgingData = {};
-
 function build(BUILD_OPTIONS) {
   const smith = silverSmith();
 
@@ -75,14 +72,7 @@ function build(BUILD_OPTIONS) {
   }
 
   smith.use(createReactPages(BUILD_OPTIONS), 'Create React pages');
-
-  metalsmithTimgingData.getDrupalContentStart = Date.now().toString();
-  console.log(`Date getDrupalContentStart: ${Date.now().toString()}`);
-
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
-  metalsmithTimgingData.getDrupalContentEnd = Date.now().toString();
-  console.log(`Date getDrupalContentEnd: ${Date.now().toString()}`);
-
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 
   smith.use(
@@ -253,14 +243,13 @@ function build(BUILD_OPTIONS) {
     } else {
       // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {
-        smith.printSummary();
+        smith.printSummary(BUILD_OPTIONS);
         smith.printPeakMemory();
       }
 
       smith.endGarbageCollection();
 
       console.log('The Metalsmith build has completed.');
-      console.log(metalsmithTimgingData);
     }
 
     if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {

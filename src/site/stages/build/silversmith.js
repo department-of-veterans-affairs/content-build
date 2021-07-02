@@ -3,6 +3,9 @@
 const Metalsmith = require('metalsmith');
 const chalk = require('chalk');
 const AsciiTable = require('ascii-table');
+const fs = require('fs');
+
+const metalsmithTimgingData = {};
 
 const {
   overloadConsoleWrites,
@@ -59,7 +62,9 @@ module.exports = () => {
 
   const logStepStart = (step, description) => {
     const logLine = `\nStep ${step + 1} of ${stepCount} start: ${description}`;
+    const descriptionSlug = description.replace(/\W/g, '').toLowerCase();
     console.log(chalk.cyan(logLine));
+    metalsmithTimgingData[descriptionSlug] = Date.now().toString();
     lastLogLineLength = logLine.length % process.stdout.columns;
     cleanConsole();
   };
@@ -149,7 +154,7 @@ module.exports = () => {
     console.log(`\nPeak RSS used: ${formatMemory(peakRSSUsed)}mB\n`);
   };
 
-  smith.printSummary = function printSummary() {
+  smith.printSummary = function printSummary(BUILD_OPTIONS) {
     const truncate = input =>
       input.length > 55 ? `${input.substring(0, 55)}...` : input;
 
@@ -177,6 +182,16 @@ module.exports = () => {
 
     table.removeBorder();
     console.log(table.toString());
+
+    fs.writeFile(
+      `build/${BUILD_OPTIONS.buildtype}/metalsmith-build-data.json`,
+      metalsmithTimgingData,
+      err => {
+        if (err) {
+          console.error(err);
+        }
+      },
+    );
   };
 
   return smith;
