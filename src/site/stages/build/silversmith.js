@@ -185,7 +185,7 @@ module.exports = () => {
 
     fs.writeFile(
       `build/${BUILD_OPTIONS.buildtype}/metalsmith-build-data.json`,
-      metalsmithTimgingData,
+      metalsmithTimgingData.toString(),
       err => {
         if (err) {
           console.error(err);
