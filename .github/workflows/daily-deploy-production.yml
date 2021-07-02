@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_wait:
-        description: "Release Wait (minutes)"
+        description: "Minutes to wait before creating release"
         required: false
         default: 60
   schedule:
@@ -72,7 +72,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/validate-build-status.js ${{github.repository}} e2e
+        run: node ./script/github-actions/validate-build-status.js ${{ github.repository }}
 
   notify-start:
     name: Notify Start
@@ -114,7 +114,7 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      - name: Notify check runs succeeded
+      - name: Notify Slack
         uses: ./.github/actions/vsp-github-actions/slack-socket
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
@@ -192,6 +192,7 @@ jobs:
           REF=${{ github.sha }}
           BUILDTIME=$(date +%s)
           EOF
+
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
 
@@ -254,19 +255,17 @@ jobs:
       - name: Waiting to release 
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
+
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         uses: whatnick/wait-action@master
         with:
-          time: '${{ needs.set-env.outputs.RELEASE_WAIT }}m'
+          time: ${{ needs.set-env.outputs.RELEASE_WAIT }}m
 
       - name: Get next tag version
         id: bump-tag-version
-        uses: "WyriHaximus/github-action-next-semvers@v1"
+        uses: WyriHaximus/github-action-next-semvers@v1
         with:
           version: ${{ needs.set-env.outputs.LATEST_TAG_VERSION }}
-
-      - name: Echo next version
-        run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
 
       # TODO: Uncomment when ready for prod
       # - name: Tag release
