@@ -117,8 +117,6 @@ module.exports = () => {
         'Parse a virtual DOM',
         'Create header and footer',
         'Rewrite VA domains',
-        'Plug the content into the templates',
-        'Translate the markdown to html',
       ];
 
       if (
