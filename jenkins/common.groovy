@@ -214,18 +214,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
   }
 }
 
-
-def getQueryStartTime(String buildLogPath, String envName) {
-  sh("while read line; do if [[ '$line' =~ 'start: Get Drupal content' ]]; then queryStartTime='$line'; fi; done <${buildLogPath}");
-  // def queryStartTime = sh(returnStdout: true, script: "sed -nr 's/Get Drupal content (.+)\\..+/\\1/p' ${buildLogPath} | sort | uniq")
-  sh "echo 220"
-  def queryStartTime = $queryStartTime;
-  if (queryStartTime) {
-     return ${queryStartTime}
-  }
-}
-
-def buildDetails(String buildtype, String ref, Long buildtime, String querystarttime) {
+def buildDetails(String buildtype, String ref, Long buildtime) {
   return """\
 BUILDTYPE=${buildtype}
 NODE_ENV=production
@@ -235,7 +224,6 @@ BUILD_ID=${env.BUILD_ID}
 BUILD_NUMBER=${env.BUILD_NUMBER}
 REF=${ref}
 BUILDTIME=${buildtime}
-QUERY_START_TIME=${querystarttime}
 """
 }
 
@@ -266,22 +254,12 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
       
       // To run after the build and access the buildLog
-      def querystarttime = getQueryStartTime(buildLogPath, envName)
-      sh "echo 268"
       def buildDetails = buildDetails(envName, ref, buildtime, querystarttime)
-      sh "echo 270"
       if (envName == 'vagovprod') {
         checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
-      sh "echo A"
-      sh "value=cat ${buildLogPath}"
-      sh "echo B"
-      sh "$value"
-      sh "echo 274"
-      // sh "echo querystarttime: ${querystarttime}"
-      sh "echo 276"
+
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
-      sh "echo 278"
     }
   }
 }
