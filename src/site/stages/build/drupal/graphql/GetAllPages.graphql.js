@@ -94,13 +94,11 @@ const buildQuery = ({ useTomeSync }) => {
   ${vamcPolicyPages.fragment}
 `;
 
-  // const todayQueryVar = useTomeSync ? '' : '$today: String!,';
-  const todayQueryVar = '$today: String!,';
+  const todayQueryVar = useTomeSync ? '' : '$today: String!,';
 
-  // const nodeQuery = useTomeSync
-  //   ? ''
-  //   : `
-  const nodeQuery = `
+  const nodeQuery = useTomeSync
+    ? ''
+    : `
     nodeQuery(limit: 5000, filter: {
       conditions: [
         { field: "status", value: ["1"], enabled: $onlyPublishedContent }
