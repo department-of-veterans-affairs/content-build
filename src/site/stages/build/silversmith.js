@@ -159,6 +159,8 @@ module.exports = () => {
       input.length > 55 ? `${input.substring(0, 55)}...` : input;
 
     const table = new AsciiTable('Step summary');
+    const metalsmithBuildData = JSON.stringify(metalsmithTimgingData);
+
     table.setHeading(
       'Step',
       'Description',
@@ -183,14 +185,9 @@ module.exports = () => {
     table.removeBorder();
     console.log(table.toString());
 
-    fs.writeFile(
+    fs.writeFileSync(
       `build/${BUILD_OPTIONS.buildtype}/metalsmith-build-data.json`,
-      metalsmithTimgingData.toString(),
-      err => {
-        if (err) {
-          console.error(err);
-        }
-      },
+      metalsmithBuildData,
     );
   };
 
