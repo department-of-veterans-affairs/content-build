@@ -21,7 +21,6 @@ jobs:
   set-env:
     name: Set Env Variables
     runs-on: ubuntu-latest
-    if: ${{ env.DSVA_SCHEDULE_ENABLED }}
     outputs:
       LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
