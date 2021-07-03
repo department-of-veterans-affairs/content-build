@@ -83,6 +83,7 @@ jobs:
 
       - name: Check broken links
         id: get-broken-link-info
+        if: ${{ matrix.buildtype == 'vagovprod '}}
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
       - name: Generate build details
