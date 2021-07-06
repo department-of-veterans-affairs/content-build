@@ -13,7 +13,7 @@ on:
 
 # TODO: Change to correct channel_id when ready
 env:
-  CHANNEL_ID: C024DUC9S1K
+  CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
 
 jobs:
   set-env:
