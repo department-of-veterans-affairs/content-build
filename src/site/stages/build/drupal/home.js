@@ -1,11 +1,7 @@
-/* eslint-disable no-param-reassign, no-continue */
-const fs = require('fs-extra');
-const path = require('path');
-const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
 
 // Processes the data received from the home page query.
-function addHomeContent(contentData, files, metalsmith, buildOptions) {
+function addHomeContent(contentData, files, _metalsmith, _buildOptions) {
   // We cannot limit menu items in Drupal, so we must do it here.
   const menuLength = 4;
 
