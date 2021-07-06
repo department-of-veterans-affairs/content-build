@@ -68,6 +68,15 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
 
   cy.get('h2').contains('Get updates');
   cy.get('.social-links').contains('Facebook');
+
+  cy.get('a')
+    .contains('Get help from a patient advocate')
+    .click();
+  cy.location().should(loc => {
+    expect(loc.pathname).to.eq(
+      '/pittsburgh-health-care/health-services/patient-advocates/',
+    );
+  });
 });
 
 describe('VAMC system home page', () => {

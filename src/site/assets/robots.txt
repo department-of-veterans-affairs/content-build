@@ -94,7 +94,6 @@ User-Agent: *
 Disallow: /analytics-opt-out.html
 Disallow: /cgi-bin/
 Disallow: /drupal
-Disallow: /performance-dashboard
 Disallow: /covid19screen
 Disallow: /health-care/health-questionnaires/questionnaires/
 
@@ -102,7 +101,6 @@ Disallow: /health-care/health-questionnaires/questionnaires/
 Disallow: /alaska-health-care
 Disallow: /albany-health-care
 Disallow: /alexandria-health-care
-Disallow: /altoona-health-care
 Disallow: /amarillo-health-care
 Disallow: /ann-arbor-health-care
 Disallow: /asheville-health-care
@@ -142,7 +140,6 @@ Disallow: /dublin-health-care
 Disallow: /durham-health-care
 Disallow: /eastern-colorado-health-care
 Disallow: /eastern-kansas-health-care
-Disallow: /eastern-oklahoma-health-care
 Disallow: /el-paso-health-care
 Disallow: /erie-health-care
 Disallow: /fargo-health-care
@@ -162,7 +159,6 @@ Disallow: /iowa-city-health-care
 Disallow: /iron-mountain-health-care
 Disallow: /jackson-health-care
 Disallow: /kansas-city-health-care
-Disallow: /lebanon-health-care
 Disallow: /lexington-health-care
 Disallow: /loma-linda-health-care
 Disallow: /long-beach-health-care
@@ -235,8 +231,6 @@ Disallow: /western-colorado-health-care
 Disallow: /western-new-york-health-care
 Disallow: /white-river-junction-health-care
 Disallow: /wichita-health-care
-Disallow: /wilkes-barre-health-care
-Disallow: /wilmington-health-care
 
 # sitemap index
 Sitemap: https://www.va.gov/sitemap.xml

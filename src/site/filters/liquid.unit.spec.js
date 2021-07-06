@@ -54,6 +54,45 @@ const eventsMockData = [
   },
 ];
 
+describe('hasContentAtPath', () => {
+  let testArray;
+
+  beforeEach(() => {
+    testArray = [
+      {
+        entity: {
+          title: 'some time',
+          fieldSituationUpdates: [],
+          status: true,
+        },
+      },
+    ];
+  });
+
+  it('returns false if there is no content at the given path', () => {
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.false;
+  });
+
+  it('returns true if there is content at the given path', () => {
+    testArray[0].entity.fieldSituationUpdates = [
+      'field situation update 1',
+      'field situation update 2',
+    ];
+
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.true;
+  });
+});
+
 describe('filterPastEvents', () => {
   it('returns null when null is passed', () => {
     expect(liquid.filters.filterPastEvents(null)).to.eq(null);
@@ -1018,5 +1057,45 @@ describe('run', () => {
 
     liquid.run([], { options: {} }, () => {});
     expect(savedContext.options.timeout).to.eq(1200000);
+  });
+});
+
+describe('trackLinks', () => {
+  it('adds recordEvent to links', () => {
+    const html =
+      '<html><head></head><body><p>We hope you enjoy your look at our new website. ' +
+      'This is NOT our official website at this time, but will be soon. ' +
+      'To continue your health care journey in the Erie Healthcare System, please return ' +
+      'to our <a href="https://www.erie.va.gov/">official Erie health care website</a>.' +
+      '</p></body></html>';
+
+    const eventData =
+      '{"event":"nav-alert-box-link-click","alert-box-status":"info"}';
+
+    const expected =
+      '<html><head></head><body><p>We hope you enjoy your look at our new website. ' +
+      'This is NOT our official website at this time, but will be soon. ' +
+      'To continue your health care journey in the Erie Healthcare System, please return ' +
+      'to our <a onclick=\'recordEvent({"event":"nav-alert-box-link-click",' +
+      '"alert-box-status":"info","alert-box-click-label":"official Erie health care website"})\'' +
+      ' href="https://www.erie.va.gov/">official Erie health care website</a>.' +
+      '</p></body></html>';
+
+    expect(liquid.filters.trackLinks(html, eventData)).to.equal(expected);
+  });
+});
+
+describe('phoneLinks', () => {
+  it('wraps text phone numbers in a link', () => {
+    const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
+  it('does not double-wrap phone numbers', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });

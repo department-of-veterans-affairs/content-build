@@ -28,6 +28,10 @@ const DRUPAL_HUB_NAV_FILENAME = 'hubNavNames.json';
 // should pull the latest Drupal data.
 const PULL_DRUPAL_BUILD_ARG = 'pull-drupal';
 
+// If "--use-cached-assets" is passed into the build args, then the
+// build should use the assets saved in cache instead of downloading new ones.
+const USE_CACHED_ASSETS_BUILD_ARG = 'use-cached-assets';
+
 const getDrupalCachePath = buildOptions => {
   return path.join(buildOptions.cacheDirectory, DRUPAL_CACHE_FILENAME);
 };
@@ -258,7 +262,11 @@ async function loadCachedDrupalFiles(buildOptions, files) {
     buildOptions.cacheDirectory,
     'drupal/downloads',
   );
-  if (!buildOptions[PULL_DRUPAL_BUILD_ARG] && fs.existsSync(cachedFilesPath)) {
+  if (
+    (!buildOptions[PULL_DRUPAL_BUILD_ARG] ||
+      buildOptions[USE_CACHED_ASSETS_BUILD_ARG]) &&
+    fs.existsSync(cachedFilesPath)
+  ) {
     const cachedDrupalFiles = await recursiveRead(cachedFilesPath);
     cachedDrupalFiles.forEach(file => {
       const relativePath = path.relative(

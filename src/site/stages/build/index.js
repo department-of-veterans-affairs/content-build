@@ -12,6 +12,7 @@ const navigation = require('metalsmith-navigation');
 const permalinks = require('metalsmith-permalinks');
 
 const silverSmith = require('./silversmith');
+const addDebugInfo = require('./add-debug-info');
 
 // const assetSources = require('../../constants/assetSources');
 
@@ -215,7 +216,7 @@ function build(BUILD_OPTIONS) {
   // We no longer need to build them now that they are stored directly on disk
   smith.use(ignoreAssets(), 'Ignore assets for build');
 
-  smith.build(err => {
+  smith.build((err, files) => {
     if (err) {
       smith.endGarbageCollection();
       throw err;
@@ -242,13 +243,18 @@ function build(BUILD_OPTIONS) {
     } else {
       // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {
-        smith.printSummary();
+        smith.printSummary(BUILD_OPTIONS);
         smith.printPeakMemory();
       }
 
       smith.endGarbageCollection();
 
       console.log('The Metalsmith build has completed.');
+    }
+
+    if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {
+      // Add debug info to HTML files
+      addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
   }); // smith.build()
 }

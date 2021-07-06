@@ -84,6 +84,8 @@ const updateHTML = (files, options) => {
   modifyDom(options)(files, null, done);
 };
 
+const isHeadMissing = html => !html.includes('<head>');
+
 const renderHTML = (layoutPath, data, dataName) => {
   const options = getOptions();
   const siteWideMetadata = {
@@ -109,6 +111,7 @@ const renderHTML = (layoutPath, data, dataName) => {
         reject(err);
       } else {
         const html = context.getBuffer();
+        const isFragement = isHeadMissing(html);
         const htmlFileName = makeHTMLFileName(layoutPath, dataName);
         const files = {
           [htmlFileName]: { contents: html, isDrupalPage: true },
@@ -124,6 +127,10 @@ const renderHTML = (layoutPath, data, dataName) => {
         const dom = new JSDOM(files[htmlFileName].contents, {
           runScripts: 'dangerously',
         });
+
+        if (isFragement) {
+          dom.window.document.documentElement.lang = 'en';
+        }
 
         resolve(dom.window.document);
       }

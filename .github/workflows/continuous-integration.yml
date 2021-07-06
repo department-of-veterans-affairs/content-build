@@ -1,0 +1,528 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+
+# TODO: Change to correct channel_id when ready
+env:
+  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
+
+jobs:
+  build:
+    name: Build
+    runs-on: self-hosted
+    timeout-minutes: 60
+
+    defaults:
+      run:
+        working-directory: content-build
+
+    env:
+      # Sandbox Drupal address is used on branches other than master.
+      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+        include:
+          - buildtype: vagovdev
+            drupal-address: http://internal-dsva-vagov-dev-cms-812329399.us-gov-west-1.elb.amazonaws.com
+          - buildtype: vagovstaging
+            drupal-address: http://internal-dsva-vagov-staging-cms-1188006.us-gov-west-1.elb.amazonaws.com
+          - buildtype: vagovprod
+            drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+
+    steps:
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
+
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Set Drupal address
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+
+      - name: Build
+        run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address=${{ env.DRUPAL_ADDRESS }} --no-drupal-proxy
+        env:
+          NODE_ENV: production
+
+      - name: Check broken links
+        id: get-broken-link-info
+        if: ${{ matrix.buildtype == 'vagovprod' }}
+        run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
+
+      - name: Generate build details
+        run: |
+          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
+          BUILDTYPE=${{ matrix.buildtype }}
+          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          RUN_ID=${{ github.run_id }}
+          REF=${{ github.sha }}
+          BUILDTIME=$(date +%s)
+          EOF
+
+      - name: Compress E2E test build
+        if: ${{ matrix.buildtype == 'vagovprod' }}
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
+        if: ${{ matrix.buildtype == 'vagovprod' }}
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
+
+      - name: Prearchive
+        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+
+      - name: Compress prearchived build
+        run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
+
+      - name: Upload prearchived build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.buildtype }}.tar.bz2
+          path: content-build/${{ matrix.buildtype }}.tar.bz2
+          retention-days: 1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+
+      - name: Get va-vsp-bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
+
+      - name: Notify Slack about broken links
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          channel_id: ${{ env.CHANNEL_ID}}
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Create test results folder
+        run: mkdir -p test-results
+
+      - name: Run unit tests
+        run: yarn test:unit --coverage
+        env:
+          MOCHA_FILE: test-results/unit-tests.xml
+
+      - name: Generate coverage report by app
+        run: node script/app-coverage-report.js > test-results/coverage_report.txt
+
+      - name: Get code coverage
+        id: code-coverage
+        run: echo ::set-output name=MARKDOWN::$(node ./script/github-actions/code-coverage-format-report.js)
+
+      - name: Publish test results
+        if: ${{ always() }}
+        uses: mikepenz/action-junit-report@v2.4.0
+        with:
+          check_name: 'Unit Tests Summary'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: 'test-results/unit-tests.xml'
+          summary: ${{ steps.code-coverage.outputs.MARKDOWN }}
+
+  linting:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Annotate ESLint results
+        run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Audit dependencies
+        run: yarn security-check
+
+  drupal-cache-test:
+    name: Drupal Cache Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Fetch Drupal cache
+        run: yarn fetch-drupal-cache
+
+  cypress-tests:
+    name: Cypress E2E Tests
+    runs-on: self-hosted
+    needs: build
+    timeout-minutes: 30
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+
+      - name: Download production build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test-build.tar.bz2
+
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf test-build.tar.bz2
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Start server
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+
+      - name: Run Cypress tests
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
+
+      - name: Publish test results
+        if: ${{ always() }}
+        uses: mikepenz/action-junit-report@v2.4.2
+        with:
+          check_name: 'Cypress Tests Summary'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: 'test-results/e2e-test-output-*.xml'
+
+      - name: Archive Cypress test videos
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: cypress-video-artifacts
+          path: cypress/videos
+
+      - name: Archive Cypress test screenshots
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: cypress-screenshot-artifacts
+          path: cypress/screenshots
+
+  nightwatch-tests:
+    name: Nightwatch E2E Tests
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 30
+    steps:
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+
+      - name: Download production build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test-build.tar.bz2
+
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf test-build.tar.bz2
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Start server
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+
+      - name: Run Nightwatch tests
+        run: yarn test:e2e
+        env:
+          BUILDTYPE: vagovprod
+
+# archive:
+#   name: Archive
+#   runs-on: ubuntu-latest
+#   needs: [cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
+
+#   strategy:
+#     fail-fast: true
+#     matrix:
+#       buildtype: [vagovdev, vagovstaging, vagovprod]
+
+#   steps:
+#     - name: Download build artifact
+#       uses: actions/download-artifact@v2
+#       with:
+#         name: ${{ matrix.buildtype }}.tar.bz2
+
+#     - name: Configure AWS credentials (1)
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-gov-west-1
+
+#     - name: Get role from Parameter Store
+#       uses: marvinpinto/action-inject-ssm-secrets@latest
+#       with:
+#         ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+#         env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+#     - name: Configure AWS Credentials (2)
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-gov-west-1
+#         role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+#         role-duration-seconds: 900
+#         role-session-name: vsp-frontendteam-githubaction
+
+#     - name: Upload build
+#       run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
+
+# deploy:
+#   name: Deploy
+#   runs-on: ubuntu-latest
+#   if: ${{ github.ref == 'refs/heads/master' }}
+#   needs: archive
+
+#   strategy:
+#     matrix:
+#       environment: [vagovdev, vagovstaging]
+#       include:
+#         - environment: vagovdev
+#           bucket: content.dev.va.gov
+#         - environment: vagovstaging
+#           bucket: content.staging.va.gov
+
+#   steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Configure AWS credentials (1)
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-gov-west-1
+
+#     - name: Get role from Parameter Store
+#       uses: marvinpinto/action-inject-ssm-secrets@latest
+#       with:
+#         ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+#         env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+#     - name: Configure AWS Credentials (2)
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-gov-west-1
+#         role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+#         role-duration-seconds: 900
+#         role-session-name: vsp-frontendteam-githubaction
+
+#     - name: Deploy
+#       run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
+#       env:
+#         SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
+#         DEST: s3://${{ matrix.bucket }}
