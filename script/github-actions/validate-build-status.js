@@ -37,7 +37,7 @@ function getJobsFailedDetails(url) {
       jobs.forEach(({ name, html_url, conclusion }) => {
         if (conclusion === 'success') return;
         console.error(
-          `Job "${name}" has failed. For more details, please see ${html_url}`,
+          `::error::Job "${name}" has failed. For more details, please see ${html_url}`,
         );
       });
     });
