@@ -463,6 +463,10 @@ module.exports = function registerFilters() {
     return fieldLink;
   };
 
+  liquid.filters.featureChangeVamcLeadershipLink = () => {
+    return cmsFeatureFlags.FEATURE_CHANGE_LEADERSHIP_LINK;
+  };
+
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
