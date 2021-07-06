@@ -34,7 +34,7 @@ describe('Vet Center Main Page', () => {
     );
   });
 
-  it('renders no a-tag and caret within the spotlight featured content section if there is no call to action data', async () => {
+  it('renders no a-tag and caret within the spotlight featured content section if call to action data is null', async () => {
     const mockData = _.cloneDeep(data);
     const nullCta = [
       {
@@ -45,6 +45,32 @@ describe('Vet Center Main Page', () => {
       },
     ];
     mockData.fieldCcVetCenterFeaturedCon.fetched.fieldCta = nullCta;
+
+    const newContainer = await renderHTML(layoutPath, mockData);
+    expect(
+      newContainer
+        .querySelector('.featured-content-list-item ')
+        .innerHTML.replace(/\s+/g, ' ')
+        .trim(),
+    ).to.equal(
+      '<h3 class="force-small-header" id="borne-the-battle-podcast-vet-c">Borne the Battle Podcast: Vet Centers</h3> <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary"> <div id="featured-content-descriptionBorne the Battle Podcast: Vet Centers}}"> <p>A Borne the Battle episode discusses some of the unique and generous benefits that Vet Centers offer.</p> </div>',
+    );
+  });
+
+  it('renders no a-tag and caret within the spotlight featured content section if fieldButtonLink is invalid', async () => {
+    const mockData = _.cloneDeep(data);
+    const invalidCta = [
+      {
+        entity: {
+          fieldButtonLabel: null,
+          fieldButtonLink: {
+            title: '',
+            uri: 'internal:/     ',
+          },
+        },
+      },
+    ];
+    mockData.fieldCcVetCenterFeaturedCon.fetched.fieldCta = invalidCta;
 
     const newContainer = await renderHTML(layoutPath, mockData);
     expect(
