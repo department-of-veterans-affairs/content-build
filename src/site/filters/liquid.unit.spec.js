@@ -1099,3 +1099,41 @@ describe('phoneLinks', () => {
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });
+
+describe('findHomepageBannerAlertInAlerts', () => {
+  it('returns the first alert with the correct type', () => {
+    const alerts = {
+      entities: [
+        {
+          id: 42,
+          fieldAlertContent: {
+            entity: {
+              entityRendered: '<p>Hello</p>',
+            },
+          },
+          fieldAlertTitle: 'Some title',
+          entityPublished: true,
+        },
+        {
+          id: 3,
+          fieldAlertContent: {
+            entity: {
+              entityRendered: '<p>Hello again</p>',
+            },
+          },
+          fieldAlertTitle: 'Some other title',
+          entityPublished: true,
+        },
+      ],
+    };
+
+    expect(
+      liquid.filters.findHomepageBannerAlertInAlerts(alerts),
+    ).to.deep.equal({
+      content: '<p>Hello</p>',
+      title: 'Some title',
+      type: 'info',
+      visible: 'true',
+    });
+  });
+});

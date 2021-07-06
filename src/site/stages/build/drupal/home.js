@@ -14,6 +14,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     let homeEntityObj = createEntityUrlObj('/');
     const {
       data: {
+        alerts,
         homePageMenuQuery,
         homePageHubListQuery,
         homePagePromoBlockQuery,
@@ -34,13 +35,9 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       },
     );
 
-    const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
-    const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
-    const bannerFile = fs.readFileSync(bannerLocation);
-    const banner = yaml.safeLoad(bannerFile);
-
     homeEntityObj = {
       ...homeEntityObj,
+      alerts, // Alerts.
       // Since homepage is not an independent node, we don't have a source for metatags. So we need to hard-code these for now.
       title: 'VA.gov Home',
       description:
@@ -48,8 +45,6 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       cards: homePageMenuQuery.links.slice(0, menuLength), // Top Tasks menu. We have a hard limit.
       hubs, // Full hub list.
       promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos, // Promo blocks.
-      // eslint-disable-next-line camelcase
-      homepage_banner: banner,
     };
 
     // Let Metalsmith know we're here.

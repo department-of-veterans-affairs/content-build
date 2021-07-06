@@ -900,4 +900,20 @@ module.exports = function registerFilters() {
     const hasContent = e => _.get(e, path)?.length > 0;
     return rootArray.some(hasContent);
   };
+
+  liquid.filters.findHomepageBannerAlertInAlerts = alerts => {
+    // Escape early if there are no alerts.
+    if (_.isEmpty(alerts?.entities)) return null;
+
+    // Find the homepage banner alert.
+    const homepageAlert = _.find(alerts?.entities, ['id', 42]);
+
+    // Return the formatted homepage banner alert.
+    return {
+      content: homepageAlert?.fieldAlertContent?.entity?.entityRendered,
+      title: homepageAlert?.fieldAlertTitle,
+      type: 'info',
+      visible: homepageAlert?.entityPublished ? 'true' : 'false',
+    };
+  };
 };
