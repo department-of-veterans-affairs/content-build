@@ -11,7 +11,7 @@
                     <p>{{ entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterComConditions }}</p>
                 {% endif %}
                 {% if entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterServiceDescrip != empty %}
-                    <p>{{ entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterServiceDescrip  }}</p>
+                    <p>{{ entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterServiceDescrip| phoneLinks }}</p>
                 {% endif %}
                 <!-- Removing entity.entity.fieldServiceNameAndDescripti.entity.description.processed for now.
                 This field seems be VHA services related and a duplicate, TODO confirm is needed?

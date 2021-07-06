@@ -1084,3 +1084,18 @@ describe('trackLinks', () => {
     expect(liquid.filters.trackLinks(html, eventData)).to.equal(expected);
   });
 });
+
+describe('phoneLinks', () => {
+  it('wraps text phone numbers in a link', () => {
+    const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
+  it('does not double-wrap phone numbers', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
