@@ -1,4 +1,4 @@
-name: Content Release
+name: Daily Production Deploy
 
 on:
   workflow_dispatch:
@@ -6,15 +6,13 @@ on:
       release_wait:
         description: "Minutes to wait before creating release"
         required: false
-        default: 5
+        default: 60
   schedule:
-    - cron: "0 13-16,20-21 * * 1-5"
-    - cron: "45 17 * * 1-5"
+    - cron: "0 18 * * 1-5"
 
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
-  DSVA_SCHEDULE_ENABLED: true
 
 jobs:
   set-env:
@@ -23,13 +21,8 @@ jobs:
     outputs:
       LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
-      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
 
     steps:
-      - name: Cancel workflow due to DSVA schedule
-        if: ${{ env.DSVA_SCHEDULE_ENABLED == 'false' }}
-        uses: andymckay/cancel-action@0.2
-
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -39,13 +32,9 @@ jobs:
         id: get-latest-tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
-      - name: Get latest release
-        id: get-latest-release
-        uses: thebritican/fetch-latest-release@v2.0.0
-
       - name: Get release wait time (scheduled release)
         if: ${{ github.event.schedule != '' }}
-        run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
+        run: echo "RELEASE_WAIT=60" >> $GITHUB_ENV
 
       - name: Get release wait time (workflow_dispatch)
         if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -54,7 +43,6 @@ jobs:
   validate-build-status:
     name: Validate Build Status
     runs-on: ubuntu-latest
-    needs: set-env
 
     steps:
       - name: Checkout
@@ -84,12 +72,12 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/validate-build-status.js ${{github.repository}} ${{ needs.set-env.outputs.REF }}
+        run: node ./script/github-actions/validate-build-status.js ${{ github.repository }}
 
   notify-start:
     name: Notify Start
     runs-on: ubuntu-latest
-    needs: validate-build-status
+    needs: [set-env, validate-build-status]
 
     steps:
       - name: Configure AWS credentials
@@ -131,13 +119,13 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
   
   build:
     name: Build
     runs-on: self-hosted
-    needs: [set-env, notify-start]
+    needs: notify-start
     defaults:
       run:
         working-directory: content-build
@@ -161,7 +149,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: content-build
-          ref: ${{ needs.set-env.outputs.REF }}
 
       - name: Get Node version
         id: get-node-version
@@ -194,7 +181,7 @@ jobs:
 
       - name: Check broken links
         id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links.js ${{ env.BUILDTYPE }}
+        run: node ./script/github-actions/check-broken-links.js {{ env.BUILDTYPE }}
 
       - name: Generate build details
         run: |
@@ -202,7 +189,7 @@ jobs:
           BUILDTYPE=${{ env.BUILDTYPE }}
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
           RUN_ID=${{ github.run_id }}
-          REF=${{ needs.set-env.outputs.REF }}
+          REF=${{ github.sha }}
           BUILDTIME=$(date +%s)
           EOF
 
@@ -222,7 +209,7 @@ jobs:
   archive:
     name: Archive
     runs-on: ubuntu-latest
-    needs: [set-env, build]
+    needs: build
 
     env:
       BUILDTYPE: vagovprod
@@ -257,7 +244,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{github.sha}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
@@ -267,7 +254,7 @@ jobs:
     steps:
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         uses: whatnick/wait-action@master
@@ -280,17 +267,14 @@ jobs:
         with:
           version: ${{ needs.set-env.outputs.LATEST_TAG_VERSION }}
 
-      - name: Echo next version
-        run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
-
       # TODO: Uncomment when ready for prod
       # - name: Tag release
-      #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
+      #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ github.sha }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
 
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: [set-env, create-release]
+    needs: create-release
 
     # TODO: Uncomment when ready for prod
     env:
@@ -329,7 +313,7 @@ jobs:
       - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.ENVIRONMENT}}.tar.bz2
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{github.sha}}/${{env.ENVIRONMENT}}.tar.bz2
           DEST: s3://${{ env.BUCKET }}
 
   notify-failure:
@@ -374,10 +358,9 @@ jobs:
         path: ./.github/actions/vsp-github-actions
 
     - name: Notify Slack
-      if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
       uses: ./.github/actions/vsp-github-actions/slack-socket
       with:
         slack_app_token: ${{ env.SLACK_APP_TOKEN }}
         slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-        attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+        attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Production deploy for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
         channel_id: ${{ env.CHANNEL_ID }}

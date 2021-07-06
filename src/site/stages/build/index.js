@@ -243,7 +243,7 @@ function build(BUILD_OPTIONS) {
     } else {
       // If this isn't a watch, just output the normal "end of build" information
       if (global.verbose) {
-        smith.printSummary();
+        smith.printSummary(BUILD_OPTIONS);
         smith.printPeakMemory();
       }
 
