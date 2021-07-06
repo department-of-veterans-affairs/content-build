@@ -29,7 +29,7 @@ const getWorkflowRunsUrl = (page = 1) => {
  * fetch request for github action URL provided
  * @param {string} url
  */
-function getLatestWorkflow(url) {
+async function getLatestWorkflow(url) {
   return fetch(url)
     .then(response => {
       if (!response.ok) {
@@ -47,20 +47,14 @@ function getLatestWorkflow(url) {
         const validWorkflow = workflow_runs.find(
           ({ head_sha }) => head_sha === releaseSHA,
         );
-        if (!validWorkflow) {
-          currentPage += 1;
-          const urlNextPage = getWorkflowRunsUrl(currentPage);
-          console.log(
-            'Workflow not found in current page. Checking next page.',
-          );
-          // TODO: check timestamp
-          return getLatestWorkflow(urlNextPage);
-        } else {
-          return validWorkflow;
-        }
-      } else {
-        return workflow_runs[0];
+        if (validWorkflow) return validWorkflow;
+        currentPage += 1;
+        const urlNextPage = getWorkflowRunsUrl(currentPage);
+        console.log('Workflow not found in current page. Checking next page.');
+        // TODO: check timestamp
+        return getLatestWorkflow(urlNextPage);
       }
+      return workflow_runs[0];
     });
 }
 
@@ -115,7 +109,7 @@ async function main() {
       process.exit(1);
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
     process.exit(1);
   }
 }
