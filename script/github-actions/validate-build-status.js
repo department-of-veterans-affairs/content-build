@@ -25,6 +25,24 @@ const getWorkflowRunsUrl = (page = 1) => {
   return url.toString();
 };
 
+function getJobsFailedDetails(url) {
+  return fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Response ${response.status} from ${url}. Aborting.`);
+      }
+      return response.json();
+    })
+    .then(({ jobs }) => {
+      jobs.forEach(({ name, html_url, conclusion }) => {
+        if (conclusion === 'success') return;
+        console.error(
+          `Job "${name}" has failed. For more details, please see ${html_url}`,
+        );
+      });
+    });
+}
+
 /**
  * fetch request for github action URL provided
  * @param {string} url
@@ -76,6 +94,7 @@ function validateWorkflowSuccess(workflow) {
     status === 'in_progress' || status === null || status === 'queued';
 
   if (isWorkflowInProgress) return undefined;
+
   if (conclusion === 'success') {
     console.log('All checks succeeded');
     return true;
@@ -102,10 +121,7 @@ async function main() {
     }
 
     if (!success) {
-      // TODO: Check which jobs failed by fetching jobs_url and filtering on jobs we care about.
-      console.error(
-        `Build aborted due to failed runs detected on:\n\n${workflow.html_url}`,
-      );
+      await getJobsFailedDetails(workflow.jobs_url);
       process.exit(1);
     }
   } catch (e) {
