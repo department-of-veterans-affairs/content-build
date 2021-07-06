@@ -906,6 +906,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.isValidUrl = str => {
+    if (!str) return null;
     let url;
 
     try {
