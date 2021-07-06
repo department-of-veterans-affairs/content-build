@@ -904,4 +904,8 @@ module.exports = function registerFilters() {
     const hasContent = e => _.get(e, path)?.length > 0;
     return rootArray.some(hasContent);
   };
+
+  liquid.filters.hasCharacterOtherThanSpace = string => {
+    return /\S/.test(string);
+  };
 };
