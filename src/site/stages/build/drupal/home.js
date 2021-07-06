@@ -22,6 +22,7 @@ function addHomeContent(contentData, files, _metalsmith, _buildOptions) {
       (hub, i) => {
         // We want 3 cards per row.
         if ((i + 1) % 3 === 0) {
+          // eslint-disable-next-line no-param-reassign
           hub = {
             ...hub,
             endRow: true,
@@ -44,6 +45,7 @@ function addHomeContent(contentData, files, _metalsmith, _buildOptions) {
     };
 
     // Let Metalsmith know we're here.
+    // eslint-disable-next-line no-param-reassign
     files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
   }
 }
