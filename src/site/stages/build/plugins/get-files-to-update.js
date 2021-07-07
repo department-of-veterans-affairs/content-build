@@ -45,17 +45,23 @@ function getFilesToUpdate() {
       .filter(fileName =>
         updatedLayouts.includes(global.metalsmithFiles[fileName].layout),
       )
-      .forEach(key => {
-        files[key] = global.metalsmithFiles[key];
+      .forEach(fileName => {
+        files[fileName] = global.metalsmithFiles[fileName];
 
         // Remove file contents for files that use layouts
         // to avoid duplicating contents
-        files[key].contents = '';
+        files[fileName].contents = '';
+
+        if (files[fileName]?.entityUrl?.breadcrumb) {
+          // Remove last element of breadcrumb array because this gets added on in the rebuild
+          files[fileName].entityUrl.breadcrumb.pop();
+        }
       });
 
     const numFilesChanged = Object.keys(files).length - numStartingFiles;
 
     console.log(`Files associated with template change: ${numFilesChanged}`);
+
     done();
   };
 }
