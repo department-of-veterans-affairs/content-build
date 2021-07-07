@@ -90,6 +90,14 @@ const FACILITY_MENU_NAMES = [
   'va-jackson-health-care',
   'va-shreveport-health-care',
   'va-southeast-louisiana-health-ca',
+  // VISN 17
+  'va-amarillo-health-care',
+  'va-central-texas-health-care',
+  'va-el-paso-health-care',
+  'va-north-texas-health-care', 
+  'va-south-texas-health-care',
+  'va-texas-valley-health-care',  
+  'va-west-texas-health-care',
   // VISN 19
   'va-cheyenne-health-care',
   'va-eastern-colorado-health-care',
