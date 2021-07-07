@@ -205,7 +205,6 @@ function build(BUILD_OPTIONS) {
   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
-  smith.use(checkForCMSUrls(BUILD_OPTIONS), 'Check for CMS URLs');
 
   smith.use(
     modifyDom(BUILD_OPTIONS),

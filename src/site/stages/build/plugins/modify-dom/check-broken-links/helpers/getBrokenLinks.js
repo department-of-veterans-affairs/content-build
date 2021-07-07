@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 
 const _isBrokenLink = require('./isBrokenLink');
+const isCMSUrl = require('./isCMSUrl');
 
 /**
  * Parses the <a> and <img> elements from an HTML file, validating each HREF/SRC value.
@@ -37,8 +38,9 @@ function getBrokenLinks(file, allPaths, isBrokenLink = _isBrokenLink) {
     }
 
     const isBroken = isBrokenLink(target, currentPath, allPaths);
+    const isCMS = isCMSUrl(target, file);
 
-    if (isBroken) {
+    if (isBroken || isCMS) {
       const html = cheerio.html($node);
       linkErrors.push({
         html,
