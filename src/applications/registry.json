@@ -1136,7 +1136,7 @@
   {
     "appName": "check-in",
     "entryName": "check-in",
-    "rootUrl": "/check-in",
+    "rootUrl": "/health-care/appointment-check-in",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html"
