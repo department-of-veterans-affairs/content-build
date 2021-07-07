@@ -94,9 +94,9 @@ const FACILITY_MENU_NAMES = [
   'va-amarillo-health-care',
   'va-central-texas-health-care',
   'va-el-paso-health-care',
-  'va-north-texas-health-care', 
+  'va-north-texas-health-care',
   'va-south-texas-health-care',
-  'va-texas-valley-health-care',  
+  'va-texas-valley-health-care',
   'va-west-texas-health-care',
   // VISN 19
   'va-cheyenne-health-care',
