@@ -18,7 +18,7 @@ const getWorkflowRunsUrl = (page = 1) => {
   const params = new URLSearchParams();
   params.append('branch', 'master');
   params.append('page', page);
-  params.append('per_page', 1);
+  params.append('per_page', 50);
   url.search = params;
 
   return url.toString();
