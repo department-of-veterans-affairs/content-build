@@ -6,7 +6,6 @@ const path = require('path');
 const args = process.argv.slice(2);
 const timeout = 2; // minutes
 const [repo, releaseSHA] = args;
-let currentPage = 1;
 
 const getWorkflowRunsUrl = (page = 1) => {
   const url = new URL(
@@ -19,13 +18,17 @@ const getWorkflowRunsUrl = (page = 1) => {
   const params = new URLSearchParams();
   params.append('branch', 'master');
   params.append('page', page);
-  params.append('per_page', 50);
+  params.append('per_page', 1);
   url.search = params;
 
   return url.toString();
 };
 
-function getJobsFailedDetails(url) {
+/**
+ * fetch request for github action URL provided
+ * @param {string} url
+ */
+async function getJobsFailedDetails(url) {
   return fetch(url)
     .then(response => {
       if (!response.ok) {
@@ -45,9 +48,10 @@ function getJobsFailedDetails(url) {
 
 /**
  * fetch request for github action URL provided
- * @param {string} url
+ * @param {number} page
  */
-async function getLatestWorkflow(url) {
+async function getLatestWorkflow(page) {
+  const url = getWorkflowRunsUrl(page);
   return fetch(url)
     .then(response => {
       if (!response.ok) {
@@ -55,7 +59,7 @@ async function getLatestWorkflow(url) {
       }
       return response.json();
     })
-    .then(({ workflow_runs }) => {
+    .then(async ({ workflow_runs }) => {
       if (workflow_runs.length === 0) {
         throw new Error('No workflows found. Aborting.');
       }
@@ -66,11 +70,8 @@ async function getLatestWorkflow(url) {
           ({ head_sha }) => head_sha === releaseSHA,
         );
         if (validWorkflow) return validWorkflow;
-        currentPage += 1;
-        const urlNextPage = getWorkflowRunsUrl(currentPage);
         console.log('Workflow not found in current page. Checking next page.');
-        // TODO: check timestamp
-        return getLatestWorkflow(urlNextPage);
+        await getLatestWorkflow(page + 1);
       }
       return workflow_runs[0];
     });
@@ -110,8 +111,8 @@ function validateWorkflowSuccess(workflow) {
  */
 async function main() {
   try {
-    const url = getWorkflowRunsUrl(currentPage);
-    const workflow = await getLatestWorkflow(url);
+    const page = 1;
+    const workflow = await getLatestWorkflow(page);
     const success = validateWorkflowSuccess(workflow);
 
     if (success === undefined) {
