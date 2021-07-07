@@ -82,7 +82,7 @@ const FACILITY_MENU_NAMES = [
   'va-saginaw-health-care',
   // VISN 12
   'lovell-fhcc-health care',
-  'va-chicago health care
+  'va-chicago health care',
   'va-hines-health-care',
   'va-illiana-health-care',
   'va-madison-health-care',
