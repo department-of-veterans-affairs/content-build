@@ -36,6 +36,13 @@ const FACILITY_MENU_NAMES = [
   'va-philadelphia-health-care',
   'va-wilkes-barre-health-care',
   'va-wilmington-health-care',
+  // VISN 5
+  'va-beckley-health-care',
+  'va-clarksburg-health-care',
+  'va-huntington-health-care',
+  'va-martinsburg-health-care',
+  'va-maryland-health-care',
+  'va-washington-dc-health-care',
   // VISN 6
   'va-asheville-health-care',
   'va-durham-health-care',
@@ -73,6 +80,15 @@ const FACILITY_MENU_NAMES = [
   'va-indiana-health-care',
   'va-northern-indiana-health-care',
   'va-saginaw-health-care',
+  // VISN 12
+  'lovell-fhcc-health care',
+  'va-chicago health care
+  'va-hines-health-care',
+  'va-illiana-health-care',
+  'va-madison-health-care',
+  'va-iron-mountain-health-care',
+  'va-milwaukee-health-care',
+  'va-tomah-health-care',
   // VISN 15
   'va-columbia-missouri-health-care',
   'va-eastern-kansas-health-care',
