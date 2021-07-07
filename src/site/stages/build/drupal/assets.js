@@ -124,7 +124,7 @@ function convertDrupalFilesToLocal(drupalData, files, options) {
   const usingAWS = !!PUBLIC_URLS[client.getSiteUri()];
 
   return replacePathInData(drupalData, (data, key) => {
-    if (data.match(/^.*\/sites\/.*\/files\//)) {
+    if (data.startsWith(`${client.getSiteUri()}/sites/default/files`)) {
       const newPath = convertAssetPath(data);
       const decodedFileName = decodeURIComponent(newPath).substring(1);
       // eslint-disable-next-line no-param-reassign
