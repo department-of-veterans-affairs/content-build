@@ -30,7 +30,7 @@ describe('Vet Center Main Page', () => {
         .innerHTML.replace(/\s+/g, ' ')
         .trim(),
     ).to.equal(
-      '<span> Listen to the podcast <i class="fa fa-chevron-right vads-facility-hub-cta-arrow"></i></span>',
+      '<span> Listen to the podcast <i class="fa fa-chevron-right vads-facility-hub-cta-arrow" aria-hidden="true"></i></span>',
     );
   });
 
