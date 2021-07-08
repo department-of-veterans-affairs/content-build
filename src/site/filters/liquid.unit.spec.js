@@ -55,16 +55,16 @@ const eventsMockData = [
 ];
 
 describe('hasCharacterOtherThanSpace', () => {
-  it('returns null if an empty string is passed', () => {
-    expect(liquid.filters.hasCharacterOtherThanSpace('')).to.be.null;
+  it('returns false if an empty string is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('')).to.be.false;
   });
 
-  it('returns null if null is passed', () => {
-    expect(liquid.filters.hasCharacterOtherThanSpace(null)).to.be.null;
+  it('returns false if null is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace(null)).to.be.false;
   });
 
-  it('returns null if undefined', () => {
-    expect(liquid.filters.hasCharacterOtherThanSpace(undefined)).to.be.null;
+  it('returns false if undefined', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace(undefined)).to.be.false;
   });
 
   it('returns false if a string with spaces is passed', () => {

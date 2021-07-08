@@ -906,7 +906,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.hasCharacterOtherThanSpace = str => {
-    if (!str) return null;
+    if (!str) return false;
     const substring = 'internal:/';
     let newStr;
 
