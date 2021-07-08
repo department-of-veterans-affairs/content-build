@@ -463,6 +463,10 @@ module.exports = function registerFilters() {
     return fieldLink;
   };
 
+  liquid.filters.featureChangeVamcLeadershipLink = () => {
+    return cmsFeatureFlags.FEATURE_CHANGE_LEADERSHIP_LINK;
+  };
+
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
@@ -899,5 +903,17 @@ module.exports = function registerFilters() {
   liquid.filters.hasContentAtPath = (rootArray, path) => {
     const hasContent = e => _.get(e, path)?.length > 0;
     return rootArray.some(hasContent);
+  };
+
+  liquid.filters.isValidUrl = str => {
+    if (!str) return null;
+    let url;
+
+    try {
+      url = new URL(str);
+    } catch (e) {
+      return false;
+    }
+    return url.protocol === 'http:' || url.protocol === 'https:';
   };
 };

@@ -54,6 +54,36 @@ const eventsMockData = [
   },
 ];
 
+describe('isValidUrl', () => {
+  it('returns null if an empty string is passed', () => {
+    expect(liquid.filters.isValidUrl('')).to.be.null;
+  });
+
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.isValidUrl(null)).to.be.null;
+  });
+
+  it('returns null if undefined', () => {
+    expect(liquid.filters.isValidUrl(undefined)).to.be.null;
+  });
+
+  it('returns false if a string with spaces is passed', () => {
+    expect(liquid.filters.isValidUrl('   ')).to.be.false;
+  });
+
+  it('returns false if an invalid url is passed', () => {
+    expect(liquid.filters.isValidUrl('www.google.com')).to.be.false;
+  });
+
+  it('returns true if a valid url is passed', () => {
+    expect(liquid.filters.isValidUrl('https:/testing.com')).to.be.true;
+  });
+
+  it('returns true if a valid url is passed', () => {
+    expect(liquid.filters.isValidUrl('http:/testing.com')).to.be.true;
+  });
+});
+
 describe('hasContentAtPath', () => {
   let testArray;
 
@@ -1082,5 +1112,20 @@ describe('trackLinks', () => {
       '</p></body></html>';
 
     expect(liquid.filters.trackLinks(html, eventData)).to.equal(expected);
+  });
+});
+
+describe('phoneLinks', () => {
+  it('wraps text phone numbers in a link', () => {
+    const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
+  it('does not double-wrap phone numbers', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });

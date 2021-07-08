@@ -33,8 +33,9 @@
             <div class="usa-width-one-half vads-u-display--flex vads-u-flex-direction--column">
             {% endif %}
             <a onclick="recordEvent({ event: 'nav-featured-content-link-click', 'featured-content-header': '{{ paragraph.fieldTitle }}', 'featured-content-click-label': '{{ link.title }}' });" 
-                class="vads-u-margin-bottom--2" 
-                >
+                class="vads-u-margin-bottom--2"
+                href="{{ link.url.path }}"
+            >
               {{ link.title }}
             </a>
             {% if forloop.last || everyEndItem == 0 %}

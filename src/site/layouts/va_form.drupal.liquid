@@ -80,24 +80,18 @@
             </div>
           {% endif %}
 
-          {% if isPreview or buildtype != 'vagovprod' %}
-            <h3 class="vads-u-margin-bottom--2">Downloadable PDF</h3>
-          {% else %}
-            <h3>Downloadable PDF</h3>
-          {% endif %}
+          <h3 class="vads-u-margin-bottom--2">Downloadable PDF</h3>
           <a
             href="{{ fieldVaFormUrl.uri }}"
             target="_blank"
             download
             data-widget-type="find-va-forms-invalid-pdf-alert"
             data-form-number="{{ fieldVaFormNumber }}">
-            {% if isPreview or buildtype != 'vagovprod' %}
               <i
                 aria-hidden="true"
                 class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
                 role="presentation"
               > </i>
-            {% endif %}
             Download VA Form {{ fieldVaFormNumber }} (PDF)
           </a>
         {% else %}
@@ -108,13 +102,11 @@
             download
             data-widget-type="find-va-forms-invalid-pdf-alert"
             data-form-number="{{ fieldVaFormNumber }}">
-            {% if isPreview or buildtype != 'vagovprod' %}
               <i
                 aria-hidden="true"
                 class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
                 role="presentation"
               > </i>
-            {% endif %}
             Download VA Form {{ fieldVaFormNumber }} (PDF)
           </a>
         {% endif %}
@@ -134,7 +126,6 @@
         {% if fieldVaFormToolUrl %}
           <h3>Online tool</h3>
           <p>{{ fieldVaFormToolIntro }}</p>
-          {% if isPreview or buildtype != 'vagovprod' %}
             <div class="vads-u-display--inline-block">
               <a
                 class="vads-u-text-decoration--none vads-u-display--flex vads-u-align-items--center"
@@ -148,13 +139,6 @@
                 <span class="vads-u-text-decoration--underline vads-u-font-weight--bold">Go to the online tool</span>
               </a>
             </div>
-          {% else %}
-            <a
-              href="{{ fieldVaFormToolUrl.uri }}" class="usa-button va-button-primary"
-              onclick="recordEvent({ event: 'cta-primary-button-click' });">
-              Go to the online tool <i role="presentation" aria-hidden="true" class="fa fa-chevron-right vads-u-margin-left--1"> </i>
-            </a>
-          {% endif %}
         {% endif %}
 
 
@@ -164,12 +148,12 @@
             <ul class="usa-unstyled-list">
             {% for vaForm in fieldVaFormRelatedForms %}
               <li>
-                  {% if isPreview or buildtype != 'vagovprod' and vaForm.entity.entityUrl.path %}
+                  {% if vaForm.entity.entityUrl.path and vaForm.entity.entityPublished %}
                     <a href="{{ vaForm.entity.entityUrl.path }}">
                       <h3 class="vads-u-display--inline-block vads-u-text-decoration--underline">VA Form {{ vaForm.entity.fieldVaFormNumber }}</h3>
                     </a>
                   {% else %}
-                    <h3>VA Form {{ vaForm.entity.fieldVaFormNumber }}</h3>
+                    <h3 class="vads-u-display--inline-block">VA Form {{ vaForm.entity.fieldVaFormNumber }}</h3>
                   {% endif %}
                   <p class="vads-u-margin-top--0 vads-u-font-size--h4 vads-u-font-weight--bold">
                     <dfn class="vads-u-visibility--screen-reader">Form name:</dfn> {{ vaForm.entity.fieldVaFormName }}
@@ -183,13 +167,11 @@
                   download
                   data-widget-type="find-va-forms-invalid-pdf-alert"
                   data-form-number="{{ vaForm.entity.fieldVaFormNumber }}">
-                  {% if isPreview or buildtype != 'vagovprod' %}
                     <i
                       aria-hidden="true"
                       class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
                       role="presentation"
                     > </i>
-                  {% endif %}
                   Download VA Form {{ vaForm.entity.fieldVaFormNumber }} (PDF)
                 </a>
               </li>

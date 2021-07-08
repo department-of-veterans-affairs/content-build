@@ -4,6 +4,9 @@ const Metalsmith = require('metalsmith');
 const chalk = require('chalk');
 const AsciiTable = require('ascii-table');
 const path = require('path');
+const fs = require('fs');
+
+const metalsmithTimgingData = {};
 
 const {
   overloadConsoleWrites,
@@ -60,7 +63,9 @@ module.exports = () => {
 
   const logStepStart = (step, description) => {
     const logLine = `\nStep ${step + 1} of ${stepCount} start: ${description}`;
+    const descriptionSlug = description.replace(/\W/g, '').toLowerCase();
     console.log(chalk.cyan(logLine));
+    metalsmithTimgingData[descriptionSlug] = Date.now().toString();
     lastLogLineLength = logLine.length % process.stdout.columns;
     cleanConsole();
   };
@@ -175,11 +180,13 @@ module.exports = () => {
     console.log(`\nPeak RSS used: ${formatMemory(peakRSSUsed)}mB\n`);
   };
 
-  smith.printSummary = function printSummary() {
+  smith.printSummary = function printSummary(BUILD_OPTIONS) {
     const truncate = input =>
       input.length > 55 ? `${input.substring(0, 55)}...` : input;
 
     const table = new AsciiTable('Step summary');
+    const metalsmithBuildData = JSON.stringify(metalsmithTimgingData);
+
     table.setHeading(
       'Step',
       'Description',
@@ -203,6 +210,15 @@ module.exports = () => {
 
     table.removeBorder();
     console.log(table.toString());
+
+    fs.writeFileSync(
+      `build/${BUILD_OPTIONS.buildtype}/metalsmith-build-data.json`,
+      metalsmithBuildData,
+      err => {
+        if (err) throw err;
+        console.log('Metasmith data written to metalsmith-build-data.json');
+      },
+    );
   };
 
   return smith;
