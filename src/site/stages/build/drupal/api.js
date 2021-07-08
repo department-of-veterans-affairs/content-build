@@ -11,6 +11,8 @@ const {
   CountEntityTypes,
 } = require('./individual-queries');
 
+const { getCurrentDayAsUnixTimestamp } = require('./utilities-drupal');
+
 function encodeCredentials({ user, password }) {
   const credentials = `${user}:${password}`;
   return Buffer.from(credentials).toString('base64');
@@ -234,7 +236,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
       return this.query({
         query: getQuery(queries.GET_ALL_PAGES),
         variables: {
-          today: moment().format('YYYY-MM-DD'),
+          today: getCurrentDayAsUnixTimestamp().toString(),
           onlyPublishedContent,
         },
       });
@@ -245,7 +247,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         query: getQuery(queries.GET_LATEST_PAGE_BY_ID),
         variables: {
           id: nodeId,
-          today: moment().format('YYYY-MM-DD'),
+          today: getCurrentDayAsUnixTimestamp().toString(),
           onlyPublishedContent: false,
         },
       });
