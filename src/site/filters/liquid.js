@@ -905,15 +905,14 @@ module.exports = function registerFilters() {
     return rootArray.some(hasContent);
   };
 
-  liquid.filters.isValidUrl = str => {
+  liquid.filters.hasCharacterOtherThanSpace = str => {
     if (!str) return null;
-    let url;
+    const substring = 'internal:/';
+    let newStr;
 
-    try {
-      url = new URL(str);
-    } catch (e) {
-      return false;
-    }
-    return url.protocol === 'http:' || url.protocol === 'https:';
+    if (str.includes(substring)) {
+      newStr = str.replace(substring, '');
+      return /\S/.test(newStr);
+    } else return /\S/.test(str);
   };
 };
