@@ -7,7 +7,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const express = require('express');
 const proxy = require('express-http-proxy');
-const jsesc = require('jsesc');
 
 const {
   nonNodeQueries,
@@ -24,6 +23,7 @@ const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
 const singlePageDiff = require('./preview-routes/single-page-diff');
+const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -74,6 +74,16 @@ if (options.buildpath === null) {
   options.buildpath = `build/${options.buildtype}`;
 }
 
+// Create symlink to 'vets-website/generated' if one doesn't exist
+// so we don't have to run the content build
+if (
+  options.buildtype === ENVIRONMENTS.LOCALHOST &&
+  !fs.existsSync(`${options.buildpath}/generated`)
+) {
+  options['apps-directory-name'] = 'vets-website';
+  createMetalSmithSymlink(options);
+}
+
 const cacheDir = path.join(
   __dirname,
   '../.cache',
@@ -95,7 +105,7 @@ const urls = {
 };
 
 const getContentUrl = env => {
-  return env === 'localhost'
+  return env === ENVIRONMENTS.LOCALHOST
     ? 'http://localhost:3002'
     : bucketsContent[options.buildtype];
 };
@@ -186,20 +196,12 @@ function fetchAllPageData(nodeId) {
           return resp.json();
         }
         throw new Error(
-          `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`,
+          options.buildtype !== ENVIRONMENTS.LOCALHOST
+            ? `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`
+            : 'file-manifest.json is missing. Try running "yarn build" in vets-website.',
         );
       },
     ),
-    fetch(
-      `${getContentUrl(options.buildtype)}/generated/headerFooter.json`,
-    ).then(resp => {
-      if (resp.ok) {
-        return resp.json();
-      }
-      throw new Error(
-        `HTTP error when fetching header/footer data: ${resp.status} ${resp.statusText}`,
-      );
-    }),
   ];
 
   return Promise.all(requests);
@@ -242,15 +244,14 @@ app.get('/preview', async (req, res, next) => {
       return;
     }
 
+    const [drupalData, fileManifest] = await fetchAllPageData(req.query.nodeId);
+
     const smith = await createPipeline({
       ...options,
+      drupalData,
       isPreviewServer: true,
       port: process.env.PORT || 3002,
     });
-
-    const [drupalData, fileManifest, headerFooterData] = await fetchAllPageData(
-      req.query.nodeId,
-    );
 
     if (drupalData.errors) {
       throw new Error(
@@ -283,15 +284,28 @@ app.get('/preview', async (req, res, next) => {
     }
 
     const compiledPage = compilePage(drupalPage, drupalData);
+
+    // This forces the locations_listing preview pages to use the same template
+    // as the full build.
+    if (compiledPage.entityBundle === 'locations_listing') {
+      compiledPage.entityBundle = 'health_care_region_locations_page';
+      compiledPage.mainFacilities =
+        compiledPage?.fieldOffice?.entity?.mainFacilities;
+      compiledPage.otherFacilities =
+        compiledPage?.fieldOffice?.entity?.otherFacilities;
+      compiledPage.mobileFacilities =
+        compiledPage?.fieldOffice?.entity?.mobileFacilities;
+      compiledPage.fieldOtherVaLocations =
+        compiledPage?.fieldOffice?.entity?.fieldOtherVaLocations;
+    }
+
     const fullPage = createFileObj(
       compiledPage,
       `${compiledPage.entityBundle}.drupal.liquid`,
     );
 
-    const headerFooterDataSerialized = jsesc(JSON.stringify(headerFooterData), {
-      json: true,
-      isScriptContext: true,
-    });
+    const drupalAddressUrl = DRUPALS.PUBLIC_URLS[options['drupal-address']];
+    const drupalSite = drupalAddressUrl || 'prod.cms.va.gov';
 
     const files = {
       'generated/file-manifest.json': {
@@ -301,10 +315,7 @@ app.get('/preview', async (req, res, next) => {
       [drupalPath]: {
         ...fullPage,
         isPreview: true,
-        headerFooterData: headerFooterDataSerialized,
-        drupalSite:
-          DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
-          options['drupal-address'],
+        drupalSite,
       },
     };
 

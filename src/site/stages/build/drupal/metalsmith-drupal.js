@@ -27,19 +27,16 @@ const DRUPAL_HUB_NAV_FILENAME = 'hubNavNames.json';
 // If "--pull-drupal" is passed into the build args, then the build
 // should pull the latest Drupal data.
 const PULL_DRUPAL_BUILD_ARG = 'pull-drupal';
-// If "--use-cms-export" is passed into the build args, then the build
-// should use the files in the cms-export directory
-const USE_CMS_EXPORT_BUILD_ARG = 'use-cms-export';
-const CMS_EXPORT_DIR_BUILD_ARG = 'cms-export-dir';
-const CMS_EXPORT_CACHE_FILENAME =
-  '.cache/localhost/drupal/pagesTransformed.json';
 
-const getDrupalCachePath = buildOptions =>
-  buildOptions[USE_CMS_EXPORT_BUILD_ARG]
-    ? buildOptions[CMS_EXPORT_DIR_BUILD_ARG]
-    : path.join(buildOptions.cacheDirectory, DRUPAL_CACHE_FILENAME);
+// If "--use-cached-assets" is passed into the build args, then the
+// build should use the assets saved in cache instead of downloading new ones.
+const USE_CACHED_ASSETS_BUILD_ARG = 'use-cached-assets';
 
-// We need to pull the Drupal content if we have --pull-drupal or --use-cms-export, OR if
+const getDrupalCachePath = buildOptions => {
+  return path.join(buildOptions.cacheDirectory, DRUPAL_CACHE_FILENAME);
+};
+
+// We need to pull the Drupal content if we have --pull-drupal, OR if
 // the content is not available in the cache.
 const shouldPullDrupal = buildOptions =>
   buildOptions[PULL_DRUPAL_BUILD_ARG] ||
@@ -239,27 +236,6 @@ async function getContentViaGraphQL(buildOptions) {
   return drupalPages;
 }
 
-/**
- * Use Drupal content via the CMS export. Fetch and untar the CMS export as needed.
- *
- * @param {Object} buildOptions
- * @return {Object} - The transformed content from the cms export
- */
-async function getContentFromExport(buildOptions) {
-  const contentApi = getApiClient(buildOptions);
-
-  if (shouldPullDrupal(buildOptions)) {
-    await contentApi.fetchExportContent();
-  }
-
-  const drupalPages = await contentApi.getNonNodeContent();
-  drupalPages.data.nodeQuery = {
-    entities: contentApi.getExportedPages(),
-  };
-
-  return drupalPages;
-}
-
 async function loadDrupal(buildOptions) {
   const drupalCache = getDrupalCachePath(buildOptions);
 
@@ -269,22 +245,13 @@ async function loadDrupal(buildOptions) {
     log(`Drupal content cache found: ${drupalCache}`);
   }
 
-  const contentTimer = `Total time to load content from ${
-    buildOptions[USE_CMS_EXPORT_BUILD_ARG] ? 'CMS export' : 'GraphQL'
-  }`;
+  const contentTimer = 'Total time to load content from GraphQL';
 
   console.time(contentTimer);
 
-  const drupalPages = buildOptions[USE_CMS_EXPORT_BUILD_ARG]
-    ? await getContentFromExport(buildOptions)
-    : await getContentViaGraphQL(buildOptions);
+  const drupalPages = await getContentViaGraphQL(buildOptions);
 
   console.timeEnd(contentTimer);
-
-  // Dynamic GraphQL from CMS build
-  if (buildOptions[USE_CMS_EXPORT_BUILD_ARG]) {
-    fs.outputJsonSync(CMS_EXPORT_CACHE_FILENAME, drupalPages);
-  }
 
   log('Drupal successfully loaded!');
   return drupalPages;
@@ -295,7 +262,11 @@ async function loadCachedDrupalFiles(buildOptions, files) {
     buildOptions.cacheDirectory,
     'drupal/downloads',
   );
-  if (!buildOptions[PULL_DRUPAL_BUILD_ARG] && fs.existsSync(cachedFilesPath)) {
+  if (
+    (!buildOptions[PULL_DRUPAL_BUILD_ARG] ||
+      buildOptions[USE_CACHED_ASSETS_BUILD_ARG]) &&
+    fs.existsSync(cachedFilesPath)
+  ) {
     const cachedDrupalFiles = await recursiveRead(cachedFilesPath);
     cachedDrupalFiles.forEach(file => {
       const relativePath = path.relative(
@@ -350,7 +321,6 @@ function getDrupalContent(buildOptions) {
       log('Failed to pipe Drupal content into Metalsmith!');
       if (
         buildOptions.buildtype !== ENVIRONMENTS.LOCALHOST ||
-        buildOptions[USE_CMS_EXPORT_BUILD_ARG] ||
         buildOptions['drupal-fail-fast']
       ) {
         done(err);

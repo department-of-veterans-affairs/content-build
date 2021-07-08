@@ -14,7 +14,13 @@
                 <article class="usa-content">
                     <h1>{{ title }}</h1>
                     {% assign image = fieldMedia.entity.image %}
-                    <img class="story-detail-img {% if fieldImageCaption == empty %}vads-u-margin-bottom--2p5{% else %}vads-u-margin-bottom--1{% endif %}" src="{{ image.derivative.url }}" alt="{{ image.alt }}" title="{{ image.title }}" width="100%">
+                    {% capture imageClass %}
+                        story-detail-img {% if fieldImageCaption == empty %}vads-u-margin-bottom--2p5{% else %}vads-u-margin-bottom--1{% endif %}
+                    {% endcapture %}
+                    {% include src/site/components/image.drupal.liquid with
+                        class = imageClass
+                        image = image
+                    %}
                     <div class="vads-u-font-size--sm vads-u-margin-bottom--2p5">{{ fieldImageCaption }}</div>
                     {% if fieldAuthor != empty and fieldAuthor.entity != empty %}
                         {% assign author = fieldAuthor.entity %}

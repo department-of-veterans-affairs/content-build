@@ -61,7 +61,7 @@ function runTests(client, segment, only508List) {
     client
       .perform(() => {})
       .openUrl(url)
-      .waitForElementVisible('body', Timeouts.normal)
+      .waitForElementVisible('body', Timeouts.extremelySlow)
       .axeCheck(
         'document',
         only508

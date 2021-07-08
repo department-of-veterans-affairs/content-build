@@ -5,6 +5,7 @@ import registerFilters from './liquid';
 import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_escanaba_data';
 import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
+import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 
 const _ = require('lodash');
 
@@ -52,6 +53,75 @@ const eventsMockData = [
     },
   },
 ];
+
+describe('isValidUrl', () => {
+  it('returns null if an empty string is passed', () => {
+    expect(liquid.filters.isValidUrl('')).to.be.null;
+  });
+
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.isValidUrl(null)).to.be.null;
+  });
+
+  it('returns null if undefined', () => {
+    expect(liquid.filters.isValidUrl(undefined)).to.be.null;
+  });
+
+  it('returns false if a string with spaces is passed', () => {
+    expect(liquid.filters.isValidUrl('   ')).to.be.false;
+  });
+
+  it('returns false if an invalid url is passed', () => {
+    expect(liquid.filters.isValidUrl('www.google.com')).to.be.false;
+  });
+
+  it('returns true if a valid url is passed', () => {
+    expect(liquid.filters.isValidUrl('https:/testing.com')).to.be.true;
+  });
+
+  it('returns true if a valid url is passed', () => {
+    expect(liquid.filters.isValidUrl('http:/testing.com')).to.be.true;
+  });
+});
+
+describe('hasContentAtPath', () => {
+  let testArray;
+
+  beforeEach(() => {
+    testArray = [
+      {
+        entity: {
+          title: 'some time',
+          fieldSituationUpdates: [],
+          status: true,
+        },
+      },
+    ];
+  });
+
+  it('returns false if there is no content at the given path', () => {
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.false;
+  });
+
+  it('returns true if there is content at the given path', () => {
+    testArray[0].entity.fieldSituationUpdates = [
+      'field situation update 1',
+      'field situation update 2',
+    ];
+
+    expect(
+      liquid.filters.hasContentAtPath(
+        testArray,
+        'entity.fieldSituationUpdates',
+      ),
+    ).to.be.true;
+  });
+});
 
 describe('filterPastEvents', () => {
   it('returns null when null is passed', () => {
@@ -135,18 +205,96 @@ describe('filterUpcomingEvents', () => {
   });
 });
 
-describe('eventDateSorter', () => {
+describe('sortByDateKey', () => {
   it('returns null when null is passed', () => {
-    expect(liquid.filters.eventDateSorter(null)).to.eq(null);
+    expect(liquid.filters.sortByDateKey(null)).to.eq(null);
   });
 
   it('returns null when empty string is passed', () => {
-    expect(liquid.filters.eventDateSorter('')).to.eq(null);
+    expect(liquid.filters.sortByDateKey('')).to.eq(null);
   });
 
-  it('returns an array of upcoming events in date and time order starting with most recent to least recent', () => {
+  it('returns an array of upcoming events in date/time order starting with most recent to least recent', () => {
     expect(
-      liquid.filters.eventDateSorter(eventsMockData),
+      liquid.filters.sortByDateKey(
+        eventsMockData,
+        'fieldDatetimeRangeTimezone',
+        false,
+      ),
+    ).to.deep.include.members([
+      {
+        title: 'Clean-up Block Event',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1628355741,
+          timezone: 'America/New_York',
+          value: 1628348541,
+        },
+      },
+      {
+        title: 'Holiday Office Dinner',
+        fieldDatetimeRangeTimezone: {
+          endValue: 1639670421,
+          timezone: 'America/New_York',
+          value: 1639659621,
+        },
+      },
+    ]);
+  });
+
+  it('returns an array of press releases in date order from newest to oldest', () => {
+    expect(
+      liquid.filters.sortByDateKey(
+        pressReleasesMockData.entities,
+        'fieldReleaseDate',
+        true,
+      ),
+    ).to.deep.equal([
+      {
+        entityId: '19797',
+        entityUrl: {
+          path:
+            '/pittsburgh-health-care/news-releases/va-secretary…ttsburgh-nurse-for-dedication-service-to-veterans',
+        },
+        fieldIntroText:
+          'A VA Pittsburgh Healthcare System nurse recently won the Secretary’s Award for Excellence in Nursing and Advancement of Nursing Programs for helping to improve health care services for veterans.',
+        fieldReleaseDate: {
+          value: '2021-05-14T15:11:11',
+        },
+        title: 'VA secretary recognizes VA Pittsburgh nurse for',
+      },
+      {
+        entityId: '7640',
+        entityUrl: {
+          path:
+            '/pittsburgh-health-care/news-releases/va-pittsburgh-named-lgbtq-healthcare-equality-leader-for-8th',
+        },
+        fieldIntroText:
+          'VA Pittsburgh Healthcare System was named a 2020 “LGBTQ Healthcare Equality Leader” by the Human Rights Campaign Foundation (HRC). The designation is the eighth time in as many years and is listed in the 13th edition of the Healthcare Equality Index (HEI). ',
+        fieldReleaseDate: {
+          value: '2020-09-14T11:40:46',
+        },
+        title:
+          'VA Pittsburgh named ‘LGBTQ Healthcare Equality Leader’ for 8th year',
+      },
+      {
+        entityId: '841',
+        entityUrl: {
+          path:
+            '/pittsburgh-health-care/news-releases/women-veterans-resource-fair-spotlights-va-and-community-care',
+        },
+        fieldIntroText:
+          'Veterans Affairs (VA) Pittsburgh Healthcare System is connecting women Veterans with VA and non-VA services during a resource fair on Friday, Aug. 16, from 10 a.m. to 1 p.m. ',
+        fieldReleaseDate: {
+          value: '2019-08-12T19:12:40',
+        },
+        title: 'Women Veterans resource fair spotlights VA and community care',
+      },
+    ]);
+  });
+
+  it('returns an array of upcoming events in date/time order when no dateKey is passed', () => {
+    expect(
+      liquid.filters.sortByDateKey(eventsMockData),
     ).to.deep.include.members([
       {
         title: 'Clean-up Block Event',
@@ -939,5 +1087,45 @@ describe('run', () => {
 
     liquid.run([], { options: {} }, () => {});
     expect(savedContext.options.timeout).to.eq(1200000);
+  });
+});
+
+describe('trackLinks', () => {
+  it('adds recordEvent to links', () => {
+    const html =
+      '<html><head></head><body><p>We hope you enjoy your look at our new website. ' +
+      'This is NOT our official website at this time, but will be soon. ' +
+      'To continue your health care journey in the Erie Healthcare System, please return ' +
+      'to our <a href="https://www.erie.va.gov/">official Erie health care website</a>.' +
+      '</p></body></html>';
+
+    const eventData =
+      '{"event":"nav-alert-box-link-click","alert-box-status":"info"}';
+
+    const expected =
+      '<html><head></head><body><p>We hope you enjoy your look at our new website. ' +
+      'This is NOT our official website at this time, but will be soon. ' +
+      'To continue your health care journey in the Erie Healthcare System, please return ' +
+      'to our <a onclick=\'recordEvent({"event":"nav-alert-box-link-click",' +
+      '"alert-box-status":"info","alert-box-click-label":"official Erie health care website"})\'' +
+      ' href="https://www.erie.va.gov/">official Erie health care website</a>.' +
+      '</p></body></html>';
+
+    expect(liquid.filters.trackLinks(html, eventData)).to.equal(expected);
+  });
+});
+
+describe('phoneLinks', () => {
+  it('wraps text phone numbers in a link', () => {
+    const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
+  it('does not double-wrap phone numbers', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });

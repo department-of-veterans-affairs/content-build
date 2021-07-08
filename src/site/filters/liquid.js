@@ -200,7 +200,7 @@ module.exports = function registerFilters() {
     return `https://img.youtube.com/vi/${string}/sddefault.jpg`;
   };
 
-  liquid.filters.outputLinks = data => {
+  liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
     const replacePattern = /((\d{3}-))?\d{3}-\d{3}-\d{4}(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
     if (data) {
@@ -212,6 +212,23 @@ module.exports = function registerFilters() {
 
     return data;
   };
+
+  liquid.filters.trackLinks = (html, eventDataString) => {
+    // Add calls to "recordEvent" to all links found in html
+    const eventData = JSON.parse(eventDataString);
+    const replacePattern = /<a(.*)>(.*)<\/a>/g;
+    if (html) {
+      return html.replace(
+        replacePattern,
+        `<a onclick='recordEvent(${JSON.stringify({
+          ...eventData,
+          'alert-box-click-label': '$2',
+        })})'$1>$2</a>`,
+      );
+    }
+    return html;
+  };
+
   //  liquid slice filter only works on strings
   liquid.filters.sliceArrayFromStart = (arr, startIndex) => {
     return _.slice(arr, startIndex);
@@ -444,6 +461,10 @@ module.exports = function registerFilters() {
     }
 
     return fieldLink;
+  };
+
+  liquid.filters.featureChangeVamcLeadershipLink = () => {
+    return cmsFeatureFlags.FEATURE_CHANGE_LEADERSHIP_LINK;
   };
 
   liquid.filters.accessibleNumber = data => {
@@ -681,12 +702,17 @@ module.exports = function registerFilters() {
     // eslint-disable-next-line sonarjs/no-small-switch
     switch (contentType) {
       case 'wysiwyg': {
-        return {
-          fieldWysiwyg: {
-            // eslint-disable-next-line camelcase
-            processed: entity?.field_wysiwyg[0]?.processed,
-          },
-        };
+        // handle normalized data format
+        if (entity.fieldWysiwyg) {
+          return entity;
+        } else {
+          return {
+            fieldWysiwyg: {
+              // eslint-disable-next-line camelcase
+              processed: entity?.field_wysiwyg[0]?.processed,
+            },
+          };
+        }
       }
       default: {
         return entity;
@@ -721,35 +747,34 @@ module.exports = function registerFilters() {
     if (!ccFeatureContent || !ccFeatureContent.fetched) {
       return featureContentArray;
     }
-    /* eslint-disable camelcase */
     const {
-      field_description,
-      field_section_header,
-      field_cta,
+      fieldDescription,
+      fieldSectionHeader,
+      fieldCta,
     } = ccFeatureContent.fetched;
 
-    if (!field_description || !field_section_header) return featureContentArray;
+    if (!fieldDescription || !fieldSectionHeader) return featureContentArray;
 
     const featureContentObj = {
       entity: {
         fieldDescription: {
-          processed: field_description[0]?.processed,
+          processed: fieldDescription[0]?.processed,
         },
-        fieldSectionHeader: field_section_header[0]?.value,
+        fieldSectionHeader: fieldSectionHeader[0]?.value,
       },
     };
 
     if (
-      field_cta.length > 0 &&
-      field_cta[0]?.field_button_link &&
-      field_cta[0]?.field_button_label
+      fieldCta.length > 0 &&
+      fieldCta[0]?.entity.fieldButtonLink &&
+      fieldCta[0]?.entity.fieldButtonLabel
     ) {
       const buttonFeatured = {
         entity: {
           fieldButtonLink: {
-            uri: field_cta[0]?.field_button_link[0].uri,
+            uri: fieldCta[0]?.entity.fieldButtonLink[0].uri,
           },
-          fieldButtonLabel: field_cta[0].field_button_label[0].value,
+          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0].value,
         },
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
@@ -771,13 +796,19 @@ module.exports = function registerFilters() {
     });
   };
 
-  //* Sorts event dates (fieldDatetimeRangeTimezone) from newest to oldest.
-  liquid.filters.eventDateSorter = dates => {
+  //* Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
+  //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
+  liquid.filters.sortByDateKey = (
+    dates,
+    dateKey = 'fieldDatetimeRangeTimezone',
+    reverse = false,
+  ) => {
     if (!dates) return null;
     return dates.sort((a, b) => {
-      const start1 = a.fieldDatetimeRangeTimezone.value;
-      const start2 = b.fieldDatetimeRangeTimezone.value;
-      return start1 - start2;
+      const start1 = moment(a[dateKey].value);
+      const start2 = moment(b[dateKey].value);
+
+      return reverse ? start2 - start1 : start1 - start2;
     });
   };
 
@@ -863,5 +894,26 @@ module.exports = function registerFilters() {
       pagedItems: pageReturn[0].pagedItems,
       paginator: pageReturn[0].paginator,
     };
+  };
+
+  liquid.filters.isFirstPage = paginator => {
+    return !paginator || paginator.prev === null;
+  };
+
+  liquid.filters.hasContentAtPath = (rootArray, path) => {
+    const hasContent = e => _.get(e, path)?.length > 0;
+    return rootArray.some(hasContent);
+  };
+
+  liquid.filters.isValidUrl = str => {
+    if (!str) return null;
+    let url;
+
+    try {
+      url = new URL(str);
+    } catch (e) {
+      return false;
+    }
+    return url.protocol === 'http:' || url.protocol === 'https:';
   };
 };

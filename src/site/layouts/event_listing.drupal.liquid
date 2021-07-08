@@ -58,7 +58,7 @@
 
               {% if isPreview %}
                 {% assign upcomingEvents = reverseFieldListingNode.entities | filterUpcomingEvents  %}
-                {% assign sortedUpcomingEvents = upcomingEvents | eventDateSorter %}
+                {% assign sortedUpcomingEvents = upcomingEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
                 {% assign pagingResult = debug | paginatePages: sortedUpcomingEvents, 'event' %}
                 {% assign pagedItems = pagingResult.pagedItems %}
                 {% assign paginator = pagingResult.paginator %}

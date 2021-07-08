@@ -8,8 +8,15 @@
         <div class="usa-grid usa-grid-full">
             {% if fieldOffice.entity.entityUrl.path %}
                 {% assign formattedTitle = title | replace: '"', '&quot;' %}
-                {% assign sidebarData = '{"depth": 5, "link": {"label":"' | append: formattedTitle | append: '","url": {"path": "/"}, "links": []}, "parent": {"label": "Leadership", "links": [], "url": {"path": "' | append: fieldOffice.entity.entityUrl.path | append: '/leadership"}}}' %}
-                {% include 'src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid' with entityUrl = entityUrl, sidebarData = sidebarData %}
+                {% assign shouldChangeLink = ''| featureChangeVamcLeadershipLink %}
+
+                {% assign leadershipPath = '/leadership"}}}' %}
+
+                {% if shouldChangeLink == true %}
+                  {% assign leadershipPath = '/about-us/leadership"}}}' %}
+                {% endif %}
+                {% assign sidebarData = '{"depth": 5, "link": {"label":"' | append: formattedTitle | append: '","url": {"path": "/"}, "links": []}, "parent": {"label": "Leadership", "links": [], "url": {"path": "' | append: fieldOffice.entity.entityUrl.path | append: leadershipPath  %}
+                {% include 'src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid' with entityUrl = entityUrl  sidebarData = sidebarData %}
             {%  endif %}
             <div class="usa-width-three-fourths">
                 <article class="usa-content">

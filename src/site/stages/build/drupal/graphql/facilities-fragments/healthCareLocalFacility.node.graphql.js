@@ -15,6 +15,7 @@ const FACILITIES_RESULTS = `
       entityId
       entityBundle
       changed
+      fieldMobile
       fieldOperatingStatusFacility
       fieldFacilityLocatorApiId
       fieldIntroText
@@ -61,11 +62,15 @@ const FACILITIES_RESULTS = `
   }
 `;
 
-function queryFilter(isMainLocation) {
+function queryFilter(isMainLocation, isMobile = false) {
   return `
-    filter: {conditions: [{field: "status", value: "1", operator: EQUAL, enabled: $onlyPublishedContent}, {field: "field_main_location", value: "${
-      isMainLocation ? '1' : '0'
-    }", operator: EQUAL}]}`;
+    filter: {conditions: [
+      {field: "status", value: "1", operator: EQUAL, enabled: $onlyPublishedContent},
+      {field: "field_main_location", value: "${
+        isMainLocation ? '1' : '0'
+      }", operator: EQUAL}
+      {field: "field_mobile", value: "${isMobile ? '1' : '0'}", operator: EQUAL}
+    ]}`;
 }
 
 module.exports = `
@@ -74,6 +79,12 @@ module.exports = `
   }
   otherFacilities: reverseFieldRegionPageNode(limit: 50, ${queryFilter(
     false,
+  )}) {
+    ${FACILITIES_RESULTS}
+  }
+  mobileFacilities: reverseFieldRegionPageNode(limit: 50, ${queryFilter(
+    false,
+    true,
   )}) {
     ${FACILITIES_RESULTS}
   }

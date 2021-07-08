@@ -7,12 +7,12 @@
 <div id="content" class="interior" data-template="node-campaign_landing_page">
   <main>
     <!-- Hero-->
-    <div class="va-u-background--image" style="background-image: url('{{ fieldHeroImage.entity.image.url }}">
+    <div class="va-u-background--image" style="background-image: url('{{ fieldHeroImage.entity.image.derivative.url }}">
       <!-- Hero Content -->
       <div class="vads-l-grid-container vads-u-padding-x--0">
         <div class="vads-l-row">
           <div class="vads-l-col--12 medium-screen:vads-l-col--6">
-            <div class="va-u-background--gradiant-blue vads-u-padding-x--4 vads-u-padding-y--6  medium-screen:vads-u-margin-right--4">
+            <div class="va-u-background--gradiant-blue vads-u-padding-x--4 vads-u-padding-bottom--6 vads-u-padding-top--4 medium-screen:vads-u-margin-right--4">
               <h1 class="vads-u-color--white">{{ title }}</h1>
               <hr class="va-c-blue-line--large vads-u-border-color--primary-alt vads-u-border--2px vads-u-margin-y--2" />
               <p class="va-introtext vads-u-color--white">{{ fieldHeroBlurb }}</p>
@@ -38,7 +38,7 @@
       <div class="vads-l-grid-container vads-u-padding-y--6 vads-u-padding-bottom--3 vads-u-padding-x--4 large-screen:vads-u-padding-x--0">
         <div class="vads-l-row">
           <!-- Content -->
-          <div class="vads-l-col--12 medium-screen:vads-l-col--9">
+          <div class="vads-l-col--12 medium-screen:vads-l-col--8">
             <h2 class="vads-u-margin--0 vads-u-margin-bottom--2">Why this matters to you</h2>
             <p class="va-introtext vads-u-margin-top--0 vads-u-margin-bottom--2">{{ fieldClpWhyThisMatters }}</p>
             {% if fieldSecondaryCallToAction %}
@@ -53,15 +53,15 @@
           </div><!-- /Content -->
 
           <!-- This page is for -->
-          <div class="vads-l-col--12 medium-screen:vads-l-col--3">
-            <div class=" vads-u-margin-top--3 medium-screen:vads-u-margin-top--0 medium-screen:vads-u-margin-left--2">
+          <div class="vads-l-col--12 medium-screen:vads-l-col--3 medium-screen:vads-u-margin-left--6">
+            <div class=" vads-u-margin-top--3 medium-screen:vads-u-margin-top--0">
               {% if fieldClpAudience != empty %}
                 <div class="va-c-white-box vads-u-background-color--white vads-u-padding--2 vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--2">
                   <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin--0">This page is for</p>
                   <hr class="va-c-blue-line vads-u-border-color--primary-alt vads-u-margin-y--2" />
                   <ul class="usa-unstyled-list">
                     {% for clpAudience in fieldClpAudience %}
-                      <li class="vads-u-font-size--sm vads-u-font-weight--bold vads-u-margin-top--1">
+                      <li class="vads-u-font-size--sm vads-u-font-weight--bold vads-u-margin-top--2 vads-u-line-height--2">
                         {{ clpAudience.entity.name }}
                       </li>
                     {% endfor %}
@@ -112,7 +112,7 @@
                 src="{{ promo.entity.fieldImage.entity.thumbnail.derivative.url }}"
                 width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}"
               />
-              <h3 class="vads-u-padding-x--2 vads-u-margin-top--1">
+              <h3 class="vads-u-padding-x--2 vads-u-margin-top--2">
                 <a
                   href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'What you can do', 'clp-section-title': '{{ fieldClpWhatYouCanDoHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ promo.entity.fieldPromoLink.entity.fieldLink.title | encode }}' });"
@@ -135,7 +135,7 @@
       <div class="vads-l-grid-container vads-u-padding-y--3 vads-u-padding-x--4 large-screen:vads-u-padding-x--0">
         <div class="vads-l-row">
           <!-- CONTENT -->
-          <div class="vads-l-col--12 medium-screen:vads-l-col--9">
+          <div class="vads-l-col--12 medium-screen:vads-l-col--8">
             <!-- Title -->
             <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin-bottom--0">Video</p>
             <h2 class="vads-u-margin--0">{{ fieldClpVideoPanelHeader }}</h2>
@@ -146,7 +146,7 @@
               <iframe
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                class="va-c-video vads-u-margin-top--4"
+                class="vads-u-margin-top--4 medium-screen:vads-u-padding-right--1"
                 frameBorder="0"
                 height="315"
                 src="{{ videoURL }}"
@@ -247,7 +247,7 @@
               <div class="vads-u-display--flex vads-u-flex-direction--column">
                 {% for storyTeaser in fieldClpStoriesTeasers %}
                   <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4">
-                    {% if storyTeaser.entity.fieldMedia.entity.thumbnail.url %}
+                    {% if storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.url %}
                       <img
                         alt="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.alt }}"
                         class="story-image vads-u-height--full medium-screen:vads-u-margin-right--2"
@@ -309,7 +309,7 @@
                 <h3 class="vads-u-margin--0">{{ resource.entity.name }}</h3>
                 <p class="vads-u-flex--1">{{ resource.entity.fieldDescription }}</p>
                 <a
-                  alt="Download {{ resource.entity.name }} PDF"
+                  aria-label="Download {{ resource.entity.name }} PDF"
                   download
                   href="{{ resource.entity.fieldMediaExternalFile.uri }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Downloadable resources', 'clp-section-title': '{{ fieldClpResourcesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': 'Download {{ resource.entity.name | encode }}' });"
@@ -449,7 +449,7 @@
     {% if fieldClpFaqPanel %}
       <div class="vads-l-grid-container vads-u-padding-y--3 vads-u-padding-x--4 large-screen:vads-u-padding-x--0">
         <div class="vads-l-row">
-          <div class="vads-l-col--12 medium-screen:vads-l-col--9">
+          <div class="vads-l-col--12 medium-screen:vads-l-col--8">
             <!-- Title -->
             <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin-bottom--0">FAQ</p>
             <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
@@ -628,17 +628,20 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--6 {% if !forloop.first %}vads-u-margin-top--2 medium-screen:vads-u-margin-top--0{% endif %}">
               <div class="medium-screen:vads-u-margin-x--6">
                 <div class="vads-u-display--flex vads-u-align-items--center">
-                  <div class="inline hub-main-icon vads-u-margin-right--2">
-                    <i class="icon-large white hub-icon-{{ benefitCategory.entity.fieldTitleIcon }} hub-background-{{ benefitCategory.entity.fieldTitleIcon }}" role="presentation" aria-hidden="true"></i>
-                  </div>
+                  <i
+                    aria-hidden="true"
+                    class="vads-u-flex--auto icon-small white vads-u-margin-right--1 hub-icon-{{ benefitCategory.entity.fieldTitleIcon }} hub-background-{{ benefitCategory.entity.fieldTitleIcon }}"
+                    role="presentation"
+                  ></i>
                   <a
+                    class="vads-u-flex--1"
                     onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'VA Benefits', 'clp-section-title': 'Learn more about related VA benefits', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ benefitCategory.entity.title | encode }}' });"
                     href="{{ benefitCategory.entity.entityUrl.path }}"
                   >
-                    {{ benefitCategory.entity.title }}
+                    <h3 class="vads-u-margin--0 vads-u-font-size--h4">{{ benefitCategory.entity.title }}</h3>
                   </a>
                 </div>
-                <p class="vads-u-margin-top--0">{{ benefitCategory.entity.fieldTeaserText }}</p>
+                <p class="vads-u-margin-top--1">{{ benefitCategory.entity.fieldTeaserText }}</p>
               </div>
             </div>
           {% endfor %}

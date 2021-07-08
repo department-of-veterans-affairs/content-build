@@ -185,7 +185,6 @@ const nodeCampaignLandingPage = `
                 }
                 fieldDescription
                 fieldIntroText
-                fieldMetaTitle
                 fieldOffice {
                   entity {
                     entityType
@@ -220,7 +219,6 @@ const nodeCampaignLandingPage = `
                       }
                       fieldDescription
                       fieldMetaTags
-                      fieldMetaTitle
                     }
                   }
                 }
@@ -484,9 +482,11 @@ const nodeCampaignLandingPage = `
         entityId
         ... on MediaImage {
           image {
-            height
-            width
-            url
+            derivative(style: VIEWPORTWIDTH) {
+              height
+              url
+              width
+            }
             targetId
             alt
             title

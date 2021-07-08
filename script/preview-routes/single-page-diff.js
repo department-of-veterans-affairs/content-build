@@ -1,5 +1,4 @@
 const Raven = require('raven');
-const jsesc = require('jsesc');
 const Diff2Html = require('diff2html');
 const gitDiff = require('git-diff');
 
@@ -67,20 +66,19 @@ function singlePageDiff(
         return;
       }
 
+      const [drupalData, fileManifest] = await fetchAllPageData(
+        req.query.nodeId,
+      );
+
       const buildOptions = {
         ...options,
+        drupalData,
         isPreviewServer: true,
         isSinglePagePublish: true,
         port: process.env.PORT || 3002,
       };
 
       const smith = await createPipeline(buildOptions);
-
-      const [
-        drupalData,
-        fileManifest,
-        headerFooterData,
-      ] = await fetchAllPageData(req.query.nodeId);
 
       if (drupalData.errors) {
         throw new Error(
@@ -125,14 +123,6 @@ function singlePageDiff(
         `${compiledPage.entityBundle}.drupal.liquid`,
       );
 
-      const headerFooterDataSerialized = jsesc(
-        JSON.stringify(headerFooterData),
-        {
-          json: true,
-          isScriptContext: true,
-        },
-      );
-
       const files = {
         'generated/file-manifest.json': {
           path: 'generated/file-manifest.json',
@@ -142,7 +132,6 @@ function singlePageDiff(
           ...fullPage,
           isPreview: false,
           isSinglePagePublish: true,
-          headerFooterData: headerFooterDataSerialized,
           drupalSite:
             DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
             options['drupal-address'],
