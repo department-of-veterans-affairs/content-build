@@ -231,11 +231,6 @@ function build(BUILD_OPTIONS) {
       throw err;
     }
 
-    if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {
-      // Add debug info to HTML files
-      addDebugInfo(files, BUILD_OPTIONS.buildtype);
-    }
-
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
       // Avoid saving Metalsmith files object on rebuild to prevent overwriting the object
@@ -267,6 +262,11 @@ function build(BUILD_OPTIONS) {
       smith.endGarbageCollection();
 
       console.log('The Metalsmith build has completed.');
+    }
+
+    if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {
+      // Add debug info to HTML files
+      addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
   }); // smith.build()
 }
