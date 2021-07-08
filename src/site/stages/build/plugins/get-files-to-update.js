@@ -2,45 +2,50 @@
 const fs = require('fs');
 const path = require('path');
 
-function getFilesToUpdate() {
-  return (files, metalsmith, done) => {
-    const updatedLayouts = [];
+function getUpdatedLayouts(filePath, updatedLayouts, watchFiles) {
+  const fileName = path.basename(filePath);
+  const fileDirectory = path.basename(path.dirname(filePath));
 
-    if (path.basename(path.dirname(global.updatedFilePath)) === 'layouts') {
-      updatedLayouts.push(path.basename(global.updatedFilePath));
-    } else {
-      // Array of all layout paths
-      const layoutPaths = fs
-        .readdirSync(path.join(__dirname, '../../../layouts'), {
-          withFileTypes: true,
-        })
-        .filter(layoutPath => layoutPath.isFile())
-        .map(layoutPath => layoutPath.name);
+  if (fileDirectory === 'layouts' && !updatedLayouts.includes(fileName)) {
+    updatedLayouts.push(fileName);
+    return;
+  }
 
-      // Relative path of updated file
-      const relativePath = path.relative(
-        '../content-build',
-        global.updatedFilePath,
-      );
+  watchFiles.forEach(watchFile => {
+    if (watchFile !== filePath) {
+      const fileContents = fs.readFileSync(watchFile, 'utf8');
+      const relativeFilePath = path.relative('../content-build', filePath);
 
-      layoutPaths.forEach(layoutPath => {
-        const layout = fs.readFileSync(
-          path.join(__dirname, '../../../layouts', layoutPath),
-          'utf8',
-        );
-
-        // If the updated file is referenced in the layout,
-        // add layout to the array of layouts to update
-        if (layout.includes(relativePath)) {
-          updatedLayouts.push(layoutPath);
-        }
-      });
-
-      console.log('Layouts updated:\n', updatedLayouts.join('\n'), '\n');
+      if (fileContents.includes(relativeFilePath)) {
+        getUpdatedLayouts(watchFile, updatedLayouts, watchFiles);
+      }
     }
+  });
+}
+
+function getFilesToUpdate(buildOptions) {
+  return (files, metalsmith, done) => {
+    const watchDirectories = buildOptions.watchPaths.map(watchPath =>
+      path.dirname(watchPath).replace('**', ''),
+    );
+
+    const watchFiles = watchDirectories.reduce((acc, directory) => {
+      const directoryFiles = fs
+        .readdirSync(directory, { withFileTypes: true })
+        .filter(layoutPath => layoutPath.isFile())
+        .map(layoutPath => directory + layoutPath.name);
+
+      return acc.concat(...directoryFiles);
+    }, []);
+
+    const updatedLayouts = [];
+    getUpdatedLayouts(global.updatedFilePath, updatedLayouts, watchFiles);
+
+    console.log(`Layouts updated:\n${updatedLayouts.join('\n')}\n`);
 
     const numStartingFiles = Object.keys(files).length;
 
+    // Copy necessary cached file objects to Metalsmith files object for rebuild
     Object.keys(global.metalsmithFiles)
       .filter(fileName =>
         updatedLayouts.includes(global.metalsmithFiles[fileName].layout),
@@ -48,12 +53,11 @@ function getFilesToUpdate() {
       .forEach(fileName => {
         files[fileName] = global.metalsmithFiles[fileName];
 
-        // Remove file contents for files that use layouts
-        // to avoid duplicating contents
+        // Remove file contents for files that use layouts to avoid duplicating contents
         files[fileName].contents = '';
 
         if (files[fileName]?.entityUrl?.breadcrumb) {
-          // Remove last element of breadcrumb array because this gets added on in the rebuild
+          // Remove last element of breadcrumb array since it gets added in the rebuild
           files[fileName].entityUrl.breadcrumb.pop();
         }
       });
