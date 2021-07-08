@@ -54,6 +54,36 @@ const eventsMockData = [
   },
 ];
 
+describe('isValidUrl', () => {
+  it('returns null if an empty string is passed', () => {
+    expect(liquid.filters.isValidUrl('')).to.be.null;
+  });
+
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.isValidUrl(null)).to.be.null;
+  });
+
+  it('returns null if undefined', () => {
+    expect(liquid.filters.isValidUrl(undefined)).to.be.null;
+  });
+
+  it('returns false if a string with spaces is passed', () => {
+    expect(liquid.filters.isValidUrl('   ')).to.be.false;
+  });
+
+  it('returns false if an invalid url is passed', () => {
+    expect(liquid.filters.isValidUrl('www.google.com')).to.be.false;
+  });
+
+  it('returns true if a valid url is passed', () => {
+    expect(liquid.filters.isValidUrl('https:/testing.com')).to.be.true;
+  });
+
+  it('returns true if a valid url is passed', () => {
+    expect(liquid.filters.isValidUrl('http:/testing.com')).to.be.true;
+  });
+});
+
 describe('hasContentAtPath', () => {
   let testArray;
 

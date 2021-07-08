@@ -904,4 +904,16 @@ module.exports = function registerFilters() {
     const hasContent = e => _.get(e, path)?.length > 0;
     return rootArray.some(hasContent);
   };
+
+  liquid.filters.isValidUrl = str => {
+    if (!str) return null;
+    let url;
+
+    try {
+      url = new URL(str);
+    } catch (e) {
+      return false;
+    }
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  };
 };
