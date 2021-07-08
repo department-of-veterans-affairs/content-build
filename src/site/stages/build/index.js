@@ -64,7 +64,7 @@ function build(BUILD_OPTIONS) {
   });
 
   if (global.rebuild) {
-    smith.use(getFilesToUpdate(), 'Get files for rebuild');
+    smith.use(getFilesToUpdate(BUILD_OPTIONS), 'Get files for rebuild');
   }
 
   // If you're on localhost, you probably want to see CSS/JS reflected in the build,
