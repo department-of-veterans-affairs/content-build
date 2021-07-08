@@ -1120,5 +1120,14 @@
       "vagovprod": true,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "My Education Benefits",
+    "entryName": "my-education-benefits",
+    "rootUrl": "/my-education-benefits",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
