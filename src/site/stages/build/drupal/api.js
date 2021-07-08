@@ -156,7 +156,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         const request = this.query({
           query,
           variables: {
-            today: moment().format('YYYY-MM-DD'),
+            today: getCurrentDayAsUnixTimestamp().toString(),
             onlyPublishedContent,
           },
         });
