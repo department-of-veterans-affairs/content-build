@@ -4,7 +4,7 @@ const path = require('path');
 
 function addDebugInfo(files, buildtype) {
   try {
-    console.log('\nAdding debug info to Drupal pages...\n');
+    console.log('\nAdding debug info to Drupal pages...');
 
     const keysToIgnore = [
       'breadcrumb_path',
@@ -71,7 +71,9 @@ function addDebugInfo(files, buildtype) {
         });
       });
   } catch (error) {
-    console.error('\nError adding debug info to files.\n', error);
+    console.error('Error adding debug info to files.\n', error);
+  } finally {
+    console.log('Finished adding debug info to Drupal pages.\n');
   }
 }
 
