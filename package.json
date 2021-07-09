@@ -162,6 +162,7 @@
     "eslint-plugin-unicorn": "^20.0.0",
     "eslint-plugin-va": "./script/eslint-plugin-va",
     "express-history-api-fallback": "^2.0.0",
+    "fast-xml-parser": "^3.19.0",
     "find": "^0.3.0",
     "find-root": "^1.1.0",
     "fs-extra": "^7.0.0",
@@ -196,6 +197,7 @@
     "sentry-testkit": "^2.2.1",
     "sinon": "^3.2.1",
     "socks-proxy-agent": "^5.0.0",
+    "sync-fetch": "^0.3.0",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0",
     "yeoman-generator": "^4.2.0"
