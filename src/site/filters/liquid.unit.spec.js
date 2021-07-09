@@ -54,6 +54,44 @@ const eventsMockData = [
   },
 ];
 
+describe('hasCharacterOtherThanSpace', () => {
+  it('returns false if an empty string is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('')).to.be.false;
+  });
+
+  it('returns false if null is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace(null)).to.be.false;
+  });
+
+  it('returns false if undefined', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace(undefined)).to.be.false;
+  });
+
+  it('returns false if a string with spaces is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('   ')).to.be.false;
+  });
+
+  it('returns false if x number of spaces are passed in causing the output to include "internal:/x-number-of-spaces"', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('internal:/     ')).to.be
+      .false;
+  });
+
+  it('returns true if a url is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('interal:/testing.com')).to
+      .be.true;
+  });
+
+  it('returns true if a url is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('www.google.com')).to.be
+      .true;
+  });
+
+  it('returns true if a url is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('    https:/testing.com '))
+      .to.be.true;
+  });
+});
+
 describe('hasContentAtPath', () => {
   let testArray;
 

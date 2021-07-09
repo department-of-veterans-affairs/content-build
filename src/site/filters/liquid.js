@@ -463,6 +463,10 @@ module.exports = function registerFilters() {
     return fieldLink;
   };
 
+  liquid.filters.featureChangeVamcLeadershipLink = () => {
+    return cmsFeatureFlags.FEATURE_CHANGE_LEADERSHIP_LINK;
+  };
+
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
@@ -899,5 +903,16 @@ module.exports = function registerFilters() {
   liquid.filters.hasContentAtPath = (rootArray, path) => {
     const hasContent = e => _.get(e, path)?.length > 0;
     return rootArray.some(hasContent);
+  };
+
+  liquid.filters.hasCharacterOtherThanSpace = str => {
+    if (!str) return false;
+    const substring = 'internal:/';
+    let newStr;
+
+    if (str.includes(substring)) {
+      newStr = str.replace(substring, '');
+      return /\S/.test(newStr);
+    } else return /\S/.test(str);
   };
 };
