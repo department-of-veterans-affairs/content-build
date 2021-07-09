@@ -44,9 +44,16 @@ function getRelatedHubByPath(link, pages) {
   return hub[0];
 }
 
+function getCurrentDayAsUnixTimestamp() {
+  const now = new Date();
+  const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return startOfDay.getTime() / 1000;
+}
+
 module.exports = {
   logDrupal,
   facilityLocationPath,
   getDrupalCacheKey,
   getRelatedHubByPath,
+  getCurrentDayAsUnixTimestamp,
 };
