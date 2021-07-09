@@ -1,10 +1,10 @@
 {% assign servicesList = clinicalHealthServices | filterBy: "fieldServiceNameAndDescripti.entity.fieldServiceTypeOfCare", typeOfCare %}
-{% assign servicesListOrderedByWeight = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.weight"%}
+{% assign servicesListOrderedByName = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.name"%}
 
-{% if servicesListOrderedByWeight.length > 0 %}
+{% if servicesListOrderedByName.length > 0 %}
   <section data-label="{{typeOfCare}}">
     <h2>{{typeOfCare}}</h2>
-    {% for service in servicesListOrderedByWeight %}
+    {% for service in servicesListOrderedByName %}
       {% include "src/site/facilities/health_service.drupal.liquid" with
         healthService = service
         sectionName = typeOfCare

@@ -3,6 +3,7 @@
 const Metalsmith = require('metalsmith');
 const chalk = require('chalk');
 const AsciiTable = require('ascii-table');
+const path = require('path');
 const fs = require('fs');
 
 const metalsmithTimgingData = {};
@@ -104,6 +105,31 @@ module.exports = () => {
     let timerStart;
     let heapUsedStart;
     let rssStart;
+
+    // Skip unnecessary steps in 'yarn watch' rebuild for template updates
+    const fileTypes = ['.html', '.liquid'];
+
+    if (
+      global.rebuild &&
+      fileTypes.includes(path.extname(global.updatedFilePath))
+    ) {
+      // Prevent Metalsmith from emptying build directory
+      smith.clean(false);
+
+      const stepsToInclude = [
+        'Get files for rebuild',
+        'Apply layouts',
+        'Parse a virtual DOM',
+        'Create header and footer',
+        'Rewrite VA domains',
+      ];
+
+      if (
+        stepsToInclude.findIndex(stepName => description.includes(stepName)) < 0
+      ) {
+        return smith._use(() => {});
+      }
+    }
 
     return smith
       ._use(() => {
