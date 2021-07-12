@@ -19,6 +19,8 @@ const { shouldPullDrupal } = require('./drupal/metalsmith-drupal');
 const { logDrupal } = require('./drupal/utilities-drupal');
 const { useFlags } = require('./drupal/load-saved-flags');
 
+const { runCommandSync } = require('../../../../script/utils');
+
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'buildtype', type: String, defaultValue: defaultBuildtype },
   { name: 'host', type: String, defaultValue: defaultHost },
@@ -245,12 +247,33 @@ function clearDrupalCacheDirectory(options) {
   }
 }
 
+function fetchDrupalCache(options) {
+  const pullDrupalArg = 'pull-drupal';
+
+  const cachePaths = [
+    'drupal/downloads',
+    'drupal/feature-flags.json',
+    'drupal/pages.json',
+  ];
+  const cachePathMissing =
+    !fs.existsSync(options.cacheDirectory) ||
+    cachePaths.findIndex(
+      cachePath => !fs.existsSync(path.join(options.cacheDirectory, cachePath)),
+    ) > -1;
+
+  if (!options[pullDrupalArg] && cachePathMissing) {
+    logDrupal(`Attempting to fetch Drupal cache...`);
+    runCommandSync('yarn fetch-drupal-cache');
+  }
+}
+
 async function getOptions(commandLineOptions) {
   const options = commandLineOptions || gatherFromCommandLine();
 
   applyDefaultOptions(options);
   applyEnvironmentOverrides(options);
   deriveHostUrl(options);
+  fetchDrupalCache(options);
   await setUpFeatureFlags(options);
   clearDrupalCacheDirectory(options);
 
