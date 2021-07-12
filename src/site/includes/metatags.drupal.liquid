@@ -31,7 +31,7 @@
     {% endcase %}
   {% endfor %}
 {% else %}
-<!-- Metatags -->
+  <!-- Metatags -->
   {% if regionOrOffice %}
     {% assign metaTitle = title | append: " | " | append: regionOrOffice %}
     {% if regionOrOffice == "VA Pittsburgh health care" %}
@@ -42,7 +42,8 @@
     {% assign metaTitle = title %}
   {% endif %}
 
-  {% assign metaTitle = metaTitle | append: " | Veterans Affairs" %}
+  {% assign metaTitle = metaTitle | formatTitleTag %}
+
   <meta property="og:site_name" content="Veterans Affairs">
   <meta content="{{ metaTitle }}" property="og:title">
   <meta name="twitter:card" content="Summary">
