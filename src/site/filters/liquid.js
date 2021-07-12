@@ -924,6 +924,9 @@ module.exports = function registerFilters() {
       return formattedTitle;
     }
 
+    // Decode the title.
+    formattedTitle = he.decode(formattedTitle);
+
     // Ensure every word is capitalized.
     formattedTitle = formattedTitle
       ?.split(' ')
@@ -940,9 +943,6 @@ module.exports = function registerFilters() {
     if (!_.endsWith(_.toLower(formattedTitle), ' | veterans affairs')) {
       formattedTitle = `${formattedTitle} | Veterans Affairs`;
     }
-
-    // Decode the title.
-    formattedTitle = he.decode(formattedTitle);
 
     return formattedTitle;
   };
