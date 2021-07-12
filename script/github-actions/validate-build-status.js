@@ -1,40 +1,51 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-const fetch = require('node-fetch');
-const path = require('path');
+const { Octokit } = require('@octokit/rest');
 
 const args = process.argv.slice(2);
 const timeout = 2; // minutes
-const [repo, releaseSHA] = args;
+const [repoInfo, releaseSHA] = args;
+const [owner, repo] = repoInfo.split('/');
 
-const getWorkflowRunsUrl = (page = 1) => {
-  const url = new URL(
-    path.join(
-      'https://api.github.com',
-      `repos/${repo}`,
-      `actions/workflows/continuous-integration.yml/runs`,
-    ),
-  );
-  const params = new URLSearchParams();
-  params.append('branch', 'master');
-  params.append('page', page);
-  params.append('per_page', 50);
-  url.search = params;
+const octokit = new Octokit({
+  timeZone: 'America/New_York',
+  baseUrl: 'https://api.github.com',
+});
 
-  return url.toString();
+const getCIWorkflowRuns = (page = 1) => {
+  return {
+    owner,
+    repo,
+    workflow_id: 'continuous-integration.yml',
+    branch: 'master',
+    per_page: '50',
+    page,
+  };
+};
+
+const getWorkflowFailed = run_id => {
+  return {
+    owner,
+    repo,
+    run_id,
+  };
 };
 
 /**
  * fetch request for github action URL provided
- * @param {string} url
+ * @param {string} id
  */
-async function getJobsFailedDetails(url) {
-  return fetch(url)
+async function getJobsFailed(id) {
+  const workflowJobs = getWorkflowFailed(id);
+  return octokit.rest.actions
+    .listJobsForWorkflowRun(workflowJobs)
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`Response ${response.status} from ${url}. Aborting.`);
+      if (response.status !== 200) {
+        throw new Error(
+          `Response ${response.status} from ${response.url}. Aborting.`,
+        );
       }
-      return response.json();
+      return response.data;
     })
     .then(({ jobs }) => {
       jobs.forEach(({ name, html_url, conclusion }) => {
@@ -51,13 +62,16 @@ async function getJobsFailedDetails(url) {
  * @param {number} page
  */
 async function getLatestWorkflow(page) {
-  const url = getWorkflowRunsUrl(page);
-  return fetch(url)
+  const workflowRuns = getCIWorkflowRuns(page);
+  return octokit.rest.actions
+    .listWorkflowRuns(workflowRuns)
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`Response ${response.status} from ${url}. Aborting.`);
+      if (response.status !== 200) {
+        throw new Error(
+          `Response ${response.status} from ${response.url}. Aborting.`,
+        );
       }
-      return response.json();
+      return response.data;
     })
     .then(async ({ workflow_runs }) => {
       if (workflow_runs.length === 0) {
@@ -87,7 +101,10 @@ function sleep(minutes) {
  * @returns true, false, undefined
  */
 function validateWorkflowSuccess(workflow) {
-  const { status, conclusion } = workflow;
+  const { status, conclusion, head_commit, html_url } = workflow;
+  console.log(
+    `Validating latest commit ${head_commit.id}. Workflow associated ${html_url}`,
+  );
 
   if (conclusion === 'failure') return false;
 
@@ -122,7 +139,7 @@ async function main() {
     }
 
     if (!success) {
-      await getJobsFailedDetails(workflow.jobs_url);
+      await getJobsFailed(workflow.id);
       process.exit(1);
     }
   } catch (e) {
