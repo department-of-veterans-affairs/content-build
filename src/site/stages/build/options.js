@@ -180,6 +180,35 @@ function deriveHostUrl(options) {
 }
 
 /**
+ * Fetches Drupal cache when needed if the 'pull-drupal' and 'drupal-address'
+ * flags aren't in use.
+ */
+function fetchDrupalCache(options) {
+  const pullDrupalArg = 'pull-drupal';
+  const drupalAddressArg = 'drupal-address';
+
+  const cachePaths = [
+    'drupal/downloads',
+    'drupal/feature-flags.json',
+    'drupal/pages.json',
+  ];
+  const cachePathMissing =
+    !fs.existsSync(options.cacheDirectory) ||
+    cachePaths.findIndex(
+      cachePath => !fs.existsSync(path.join(options.cacheDirectory, cachePath)),
+    ) > -1;
+
+  if (
+    !options[pullDrupalArg] &&
+    !options[drupalAddressArg] &&
+    cachePathMissing
+  ) {
+    logDrupal(`Attempting to fetch Drupal cache...`);
+    runCommandSync('yarn fetch-drupal-cache');
+  }
+}
+
+/**
  * Sets up the CMS feature flags by either querying the CMS for them
  * or using ../../utilities/featureFlags. If we pull from Drupal, it'll
  * also ensure the cache directory exists.
@@ -244,27 +273,6 @@ function clearDrupalCacheDirectory(options) {
       'drupal/downloads',
     );
     fs.emptyDirSync(drupalCacheDirectory);
-  }
-}
-
-function fetchDrupalCache(options) {
-  const pullDrupalArg = 'pull-drupal';
-  const drupalAddress = 'drupal-address';
-
-  const cachePaths = [
-    'drupal/downloads',
-    'drupal/feature-flags.json',
-    'drupal/pages.json',
-  ];
-  const cachePathMissing =
-    !fs.existsSync(options.cacheDirectory) ||
-    cachePaths.findIndex(
-      cachePath => !fs.existsSync(path.join(options.cacheDirectory, cachePath)),
-    ) > -1;
-
-  if (!options[pullDrupalArg] && !options[drupalAddress] && cachePathMissing) {
-    logDrupal(`Attempting to fetch Drupal cache...`);
-    runCommandSync('yarn fetch-drupal-cache');
   }
 }
 
