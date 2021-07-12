@@ -4,8 +4,8 @@ const { Octokit } = require('@octokit/rest');
 
 const args = process.argv.slice(2);
 const timeout = 2; // minutes
-const [repoInfo, releaseSHA] = args;
-const [owner, repo] = repoInfo.split('/');
+const [githubInfo, commitSHA] = args;
+const [owner, repo] = githubInfo.split('/');
 
 const octokit = new Octokit({
   timeZone: 'America/New_York',
@@ -78,16 +78,12 @@ async function getLatestWorkflow(page) {
         throw new Error('No workflows found. Aborting.');
       }
 
-      // If SHA passed, get workflow information. Otherwise get the most recent
-      if (releaseSHA) {
-        const validWorkflow = workflow_runs.find(
-          ({ head_sha }) => head_sha === releaseSHA,
-        );
-        if (validWorkflow) return validWorkflow;
-        console.log('Workflow not found in current page. Checking next page.');
-        await getLatestWorkflow(page + 1);
-      }
-      return workflow_runs[0];
+      const workflow = workflow_runs.find(
+        ({ head_sha }) => head_sha === commitSHA,
+      );
+      if (workflow) return workflow;
+      console.log('Workflow not found in current page. Checking next page.');
+      return getLatestWorkflow(page + 1);
     });
 }
 
