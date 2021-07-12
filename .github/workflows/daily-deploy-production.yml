@@ -6,7 +6,7 @@ on:
       release_wait:
         description: "Minutes to wait before creating release"
         required: false
-        default: 60
+        default: 5
   schedule:
     - cron: "0 18 * * 1-5"
 
