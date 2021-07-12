@@ -35,8 +35,15 @@ const createSymlink = (src, dest) => {
     });
 };
 
+/**
+ * Returns a promise that resolves in x milliseconds, for use with await()
+ * @param {number} ms wait time before promise is resolved
+ */
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 module.exports = {
   runCommand,
   runCommandSync,
   createSymlink,
+  sleep,
 };
