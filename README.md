@@ -26,7 +26,7 @@ on VA.gov, you'll need to build these static pages using the following commands:
 
 - use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access)
 - creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
-- run once to build the static HTML files 
+- run once to build the static HTML files
 - need to run this again when adding new templates based on new Drupal entities 
 
 `yarn watch`
