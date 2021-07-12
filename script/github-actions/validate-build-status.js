@@ -136,6 +136,7 @@ async function main() {
       console.log(`Check runs still pending. Sleeping for ${timeout} minutes`);
       await sleep(timeout);
       await main();
+      return;
     }
 
     if (!success) {
