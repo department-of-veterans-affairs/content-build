@@ -31,7 +31,7 @@ describe('Vet Center Main Page', () => {
     ).to.equal('Escanaba Vet Center | Veterans Affairs');
   });
 
-  it('renders vet center name in title-tag', () => {
+  it('renders vet center name in title-tag - [Vet Center] | Veterans Affairs', () => {
     expect(container.querySelector('title').innerHTML).to.equal(
       'Escanaba Vet Center | Veterans Affairs',
     );
