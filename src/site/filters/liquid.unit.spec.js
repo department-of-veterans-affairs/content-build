@@ -1137,3 +1137,17 @@ describe('phoneLinks', () => {
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });
+
+describe('formatTitleTag', () => {
+  it('formats a title tag without " | Veteran Affairs"', () => {
+    const title = 'this is a-title';
+    const expected = 'This Is A-Title | Veteran Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+
+  it('formats a title tag with " | Veteran Affairs"', () => {
+    const title = 'this is a-title | Veteran Affairs';
+    const expected = 'This Is A-Title | Veteran Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+}

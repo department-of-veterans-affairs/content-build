@@ -10,9 +10,11 @@
   <meta name="DC.Date" content="{{lastupdate| date: '%Y-%m-%d'}}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
-{% if title %}
-  <meta content="{{ title }}" property="og:title">
-  <meta content="VA.gov - {{ title }}" name="twitter:title" >
+{% assign metaTitle = title | formatTitleTag %}
+
+{% if metaTitle %}
+  <meta content="{{ metaTitle }}" property="og:title">
+  <meta content="{{ metaTitle }}" name="twitter:title" >
 {% else %}
   <meta content="{{ hostUrl }}" property="og:title">
   <meta content="{{ hostUrl }}" name="twitter:title">
@@ -45,5 +47,5 @@
 {% if title === 'Home' %}
   <title>VA.gov</title>
 {% else %}
-  <title>{{ title }} | Veterans Affairs</title>
+  <title>{{ metaTitle }}</title>
 {% endif %}
