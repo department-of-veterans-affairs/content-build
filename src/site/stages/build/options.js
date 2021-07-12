@@ -249,6 +249,7 @@ function clearDrupalCacheDirectory(options) {
 
 function fetchDrupalCache(options) {
   const pullDrupalArg = 'pull-drupal';
+  const drupalAddress = 'drupal-address';
 
   const cachePaths = [
     'drupal/downloads',
@@ -261,7 +262,7 @@ function fetchDrupalCache(options) {
       cachePath => !fs.existsSync(path.join(options.cacheDirectory, cachePath)),
     ) > -1;
 
-  if (!options[pullDrupalArg] && cachePathMissing) {
+  if (!options[pullDrupalArg] && !options[drupalAddress] && cachePathMissing) {
     logDrupal(`Attempting to fetch Drupal cache...`);
     runCommandSync('yarn fetch-drupal-cache');
   }
