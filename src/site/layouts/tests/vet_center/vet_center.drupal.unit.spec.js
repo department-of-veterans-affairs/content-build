@@ -23,6 +23,20 @@ describe('Vet Center Main Page', () => {
     expect(violations.length).to.equal(0);
   });
 
+  it('renders vet center name in metatag - [Vet Center] | Veterans Affairs', () => {
+    expect(
+      container
+        .querySelector("meta[property='og:title']")
+        .getAttribute('content'),
+    ).to.equal('Escanaba Vet Center | Veterans Affairs');
+  });
+
+  it('renders vet center name in title-tag', () => {
+    expect(container.querySelector('title').innerHTML).to.equal(
+      'Escanaba Vet Center | Veterans Affairs',
+    );
+  });
+
   it('renders a-tag with caret within the spotlight featured content section if there is call to action data', () => {
     expect(
       container
