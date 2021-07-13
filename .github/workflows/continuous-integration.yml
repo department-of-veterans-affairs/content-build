@@ -12,7 +12,7 @@ env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
 
-# Cancel in-progress workflows from previous commits in feature branches.
+# Cancel in-progress workflows from previous commits in feature branches. TEST
 # Allow concurrent workflows from all commits in master.
 concurrency:
   group: ${{ fromJSON(format('["{0}", "{1}"]', github.ref, github.sha))[github.ref != 'refs/heads/master'] }}
