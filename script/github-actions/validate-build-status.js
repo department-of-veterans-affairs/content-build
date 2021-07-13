@@ -102,9 +102,7 @@ function sleep(minutes) {
  */
 function validateWorkflowSuccess(workflow) {
   const { status, conclusion, head_commit, html_url } = workflow;
-  console.log(
-    `Validating latest commit ${head_commit.id}. Workflow associated ${html_url}`,
-  );
+  console.log(`Validating commit ${head_commit.id}. Workflow: ${html_url}`);
 
   if (conclusion === 'failure') return false;
 
