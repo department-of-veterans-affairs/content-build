@@ -3,9 +3,9 @@ const fs = require('fs-extra');
 const path = require('path');
 const { sleep } = require('../../../../script/utils');
 
-function addDebugInfo(files, buildtype) {
+async function addDebugInfo(files, buildtype) {
   try {
-    console.log('\nAdding debug info to Drupal pages...');
+    console.log('\nAdding debug info to Drupal pages...\n');
 
     const keysToIgnore = [
       'breadcrumb_path',
@@ -21,68 +21,44 @@ function addDebugInfo(files, buildtype) {
       'private',
     ];
 
-    Object.keys(files)
-      .filter(fileName => files[fileName].isDrupalPage)
-      .forEach(fileName => {
-        const filePath = `build/${buildtype}/${fileName}`;
-        const tmpFilepath = `tmp/${filePath}`;
-        const tmpFileDir = path.dirname(tmpFilepath);
+    const drupalFileNames = Object.keys(files).filter(
+      fileName => files[fileName].isDrupalPage,
+    );
 
-        if (!fs.existsSync(tmpFileDir)) {
-          fs.mkdirSync(tmpFileDir, { recursive: true });
-        }
+    for (const fileName of drupalFileNames) {
+      const filePath = `build/${buildtype}/${fileName}`;
+      const tmpFilepath = `tmp/${filePath}`;
+      const tmpFileDir = path.dirname(tmpFilepath);
 
-        const readStream = fs.createReadStream(filePath, {
-          encoding: 'utf8',
-          autoClose: true,
-        });
+      if (!fs.existsSync(tmpFileDir)) {
+        fs.mkdirSync(tmpFileDir, { recursive: true });
+      }
 
-        const outputStream = fs.createWriteStream(tmpFilepath, {
-          encoding: 'utf8',
-          autoClose: true,
-        });
+      const debugInfo = Object.fromEntries(
+        Object.entries(files[fileName]).filter(
+          key => !keysToIgnore.includes(key[0]),
+        ),
+      );
+      const oldString = 'window.contentData = null;';
+      const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
 
-        // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
-        // when the `debug` key doesn't exist in the Metalsmith file entry.
-        // We want to replace all instances of that with the debug object.
-        readStream.on('data', data => {
-          const debugInfo = Object.fromEntries(
-            Object.entries(files[fileName]).filter(
-              key => !keysToIgnore.includes(key[0]),
-            ),
-          );
+      /* eslint-disable-next-line no-await-in-loop */
+      const originalContents = await fs.readFileSync(filePath, 'utf8');
+      const newContents = originalContents
+        .toString()
+        .replace(oldString, newString);
 
-          outputStream.write(
-            data
-              .toString()
-              .replace(
-                'window.contentData = null;',
-                `window.contentData = ${JSON.stringify(debugInfo)};`,
-              ),
-          );
-          console.log('- read/replaced contentData');
-        });
+      /* eslint-disable-next-line no-await-in-loop */
+      await fs.writeFileSync(filePath, newContents, { overwrite: true });
 
-        readStream.on('end', () => {
-          outputStream.end();
-          console.log('readStream "end" event');
-        });
+      console.log(`wrote file ${filePath}`);
 
-        outputStream.on('finish', async () => {
-          // Overwrite original file with new file
-          fs.moveSync(tmpFilepath, filePath, { overwrite: true });
-          console.log(`- completed ${filePath}`);
-
-          // Pause for garbage collection to free unused buffer memory
-          await sleep(1);
-        });
-
-        console.log(`+ initiated ${filePath}`);
-      });
+      // Pause for garbage collection to free unused buffer memory
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(1);
+    }
   } catch (error) {
-    console.error('Error adding debug info to files.\n', error);
-  } finally {
-    console.log('Finished adding debug info to Drupal pages.\n');
+    console.error('\nError adding debug info to files.\n', error);
   }
 }
 
