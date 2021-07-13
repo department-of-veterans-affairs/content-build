@@ -3,9 +3,8 @@ const fs = require('fs-extra');
 const _ = require('lodash');
 const { sleep } = require('../../../../script/utils');
 
-const NUM_CONCURRENT_FILES = 10;
-
-const keysToIgnore = [
+const NUM_CONCURRENT_FILES = 100;
+const KEYS_TO_IGNORE = [
   'breadcrumb_path',
   'collection',
   'contents',
@@ -23,10 +22,8 @@ async function writeFile(fileName, fileObject, buildtype) {
   if (!fileName) return;
 
   const filePath = `build/${buildtype}/${fileName}`;
-  console.log(`file ${fileName}`);
   const originalContents = await fs.readFileSync(filePath, 'utf8');
-  console.log('+ read file');
-  const debugInfo = _.omit(fileObject, keysToIgnore);
+  const debugInfo = _.omit(fileObject, KEYS_TO_IGNORE);
 
   // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
   // when the `debug` key doesn't exist in the Metalsmith file entry.
@@ -34,10 +31,9 @@ async function writeFile(fileName, fileObject, buildtype) {
   const oldString = 'window.contentData = null;';
   const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
   const newContents = originalContents.toString().replace(oldString, newString);
-  console.log('+ replaced contents');
 
   await fs.writeFileSync(filePath, newContents, { overwrite: true });
-  console.log(`+ wrote file ${filePath}`);
+  process.stdout.write('.');
 }
 
 async function addDebugInfo(files, buildtype) {
@@ -47,7 +43,6 @@ async function addDebugInfo(files, buildtype) {
       fileName => files[fileName].isDrupalPage,
     );
 
-    console.log('Looping through drupal filenames...');
     // Limit the number of simultaneous open files with an array of promises.
     // This also limits peak memory use.
     while (drupalFileNames.length) {
