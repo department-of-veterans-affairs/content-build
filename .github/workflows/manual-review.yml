@@ -1,6 +1,8 @@
 name: Manual Review
 
-on: [pull_request]
+on:
+  pull_request_review:
+    types: [edited, dismissed, submitted]
 
 env:
   BOT_NAME: va-vfs-bot
