@@ -125,7 +125,7 @@ jobs:
   build:
     name: Build
     runs-on: self-hosted
-    needs: [validate-build-status]
+    needs: [notify-start, validate-build-status]
     defaults:
       run:
         working-directory: content-build

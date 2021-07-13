@@ -136,7 +136,7 @@ jobs:
   build:
     name: Build
     runs-on: self-hosted
-    needs: [set-env, validate-build-status]
+    needs: [set-env, notify-start, validate-build-status]
     defaults:
       run:
         working-directory: content-build
