@@ -42,16 +42,16 @@ function addDebugInfo(files, buildtype) {
           autoClose: true,
         });
 
-        const debugInfo = Object.fromEntries(
-          Object.entries(files[fileName]).filter(
-            key => !keysToIgnore.includes(key[0]),
-          ),
-        );
-
         // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
         // when the `debug` key doesn't exist in the Metalsmith file entry.
         // We want to replace all instances of that with the debug object.
         readStream.on('data', data => {
+          const debugInfo = Object.fromEntries(
+            Object.entries(files[fileName]).filter(
+              key => !keysToIgnore.includes(key[0]),
+            ),
+          );
+
           outputStream.write(
             data
               .toString()
@@ -60,20 +60,24 @@ function addDebugInfo(files, buildtype) {
                 `window.contentData = ${JSON.stringify(debugInfo)};`,
               ),
           );
+          console.log('- read/replaced contentData');
         });
 
         readStream.on('end', () => {
           outputStream.end();
+          console.log('readStream "end" event');
         });
 
         outputStream.on('finish', async () => {
           // Overwrite original file with new file
           fs.moveSync(tmpFilepath, filePath, { overwrite: true });
-          console.log(`Completed ${filePath}`);
+          console.log(`- completed ${filePath}`);
 
           // Pause for garbage collection to free unused buffer memory
           await sleep(1);
         });
+
+        console.log(`+ initiated ${filePath}`);
       });
   } catch (error) {
     console.error('Error adding debug info to files.\n', error);
