@@ -1,0 +1,24 @@
+{
+  "titleTest": {
+    "title": "title test"
+  },
+  "entityLabelTest": {
+    "title": "title test",
+    "entityLabel": "entity label test"
+  },
+  "fieldOfficeTest": {
+    "title": "title test",
+    "entityLabel": "entity label test",
+    "fieldOffice": {
+      "entity": {
+        "title": "field office test"
+      }
+    }
+  },
+  "regionOrOfficeTest": {
+    "title": "title test",
+    "entityLabel": "entity label test",
+    "fieldOffice": "field office test",
+    "regionOrOffice": "region or office"
+  }
+}
