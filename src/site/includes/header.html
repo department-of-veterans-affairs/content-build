@@ -107,7 +107,11 @@
   {% endif %}
 
   {{ google_analytics_noscript }}
-  <a class="show-on-focus" id="skip-to-content" href="#content">Skip to Content</a>
+
+  <!-- Skip to Content -->
+  <form id="skip-to-content">
+    <button class="show-on-focus" type="submit">Skip to Content</button>
+  </form>
 
   {% if !noHeader %}
   {% include "src/site/includes/top-nav.html" %}
@@ -128,12 +132,12 @@
 
       // SKIP TO CONTENT
       // ------------------------
-      // Click handler for the skip-to-content link.
+      // Submit handler for the skip-to-content link.
       function handleSkipToContent(event) {
         event.preventDefault();
 
         // Derive the content ID element.
-        const contentIDElement = document.getElementById('content');
+        var contentIDElement = document.getElementById('content');
 
         // Focus it if it exists.
         if (contentIDElement) {
@@ -142,7 +146,7 @@
         }
 
         // Derive the h1 tag.
-        const h1Tag = document.querySelector('h1');
+        var h1Tag = document.querySelector('h1');
 
         // Focus it if it exists.
         if (h1Tag) {
@@ -150,13 +154,13 @@
         }
       }
 
-      // Derive the skip to content link.
-      const skipToContentLink = document.getElementById('skip-to-content');
+      document.addEventListener('DOMContentLoaded', function() {
+        // Derive elements that need event listeners.
+        var skipToContentElement = document.getElementById('skip-to-content');
 
-      // If the skip to content link exists, bind the click handler.
-      if (skipToContentLink) {
-        skipToContentLink.addEventListener('click', handleSkipToContent);
-      }
+        // Add the event listener.
+        if (skipToContentElement) skipToContentElement.addEventListener('submit', handleSkipToContent);
+      });
       // ------------------------
     })();
   </script>
