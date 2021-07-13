@@ -22,12 +22,12 @@ VA.gov contains many pages that include content generated from a Drupal-based co
 When testing changes to static pages, or to see what your application looks like
 on VA.gov, you'll need to build these static pages using the following commands:
 
-`yarn build` (`—-pull-drupal` runs by default when cache is empty)
+`yarn build` (fetches the latest content cache from S3 by default when cache is empty)
 
-- needs active socks proxy connection
+- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access)
 - creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
-- run once to pull and cache the latest Drupal content and build the static HTML files
-- need to run this again when adding new templates based on new Drupal entities (use `--pull-drupal` to fetch fresh content)
+- run once to build the static HTML files
+- need to run this again when adding new templates based on new Drupal entities 
 
 `yarn watch`
 
