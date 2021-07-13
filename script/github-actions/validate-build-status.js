@@ -12,7 +12,7 @@ const octokit = new Octokit({ auth });
 
 /**
  * uses octokit request for github action run_id provided
- * @param {number} id
+ * @param {number} run_id
  */
 function getJobsFailed(run_id) {
   const params = {
