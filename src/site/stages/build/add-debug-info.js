@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const _ = require('lodash');
 const { sleep } = require('../../../../script/utils');
 
-const NUM_CONCURRENT_FILES = 100;
+const NUM_CONCURRENT_FILES = 10;
 const KEYS_TO_IGNORE = [
   'breadcrumb_path',
   'collection',
@@ -39,6 +39,7 @@ async function writeFile(fileName, fileObject, buildtype) {
 async function addDebugInfo(files, buildtype) {
   try {
     console.log('\nAdding debug info to Drupal pages...\n');
+    console.time('Debug info time');
     const drupalFileNames = Object.keys(files).filter(
       fileName => files[fileName].isDrupalPage,
     );
@@ -60,6 +61,7 @@ async function addDebugInfo(files, buildtype) {
     console.error('Error adding debug info to files.\n', error);
   } finally {
     console.log('Finished adding debug info to Drupal pages.\n');
+    console.timeEnd('Debug info time');
   }
 }
 
