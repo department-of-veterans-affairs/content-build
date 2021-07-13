@@ -107,7 +107,7 @@
   {% endif %}
 
   {{ google_analytics_noscript }}
-  <a class="show-on-focus" href="#content">Skip to Content</a>
+  <a class="show-on-focus" id="skip-to-content" href="#content">Skip to Content</a>
 
   {% if !noHeader %}
   {% include "src/site/includes/top-nav.html" %}
@@ -125,5 +125,38 @@
       var module = {};
       {% include "src/site/assets/js/incompatible-browser.js" %};
       checkBrowserCompatibility();
+
+      // SKIP TO CONTENT
+      // ------------------------
+      // Click handler for the skip-to-content link.
+      function handleSkipToContent(event) {
+        event.preventDefault();
+
+        // Derive the content ID element.
+        const contentIDElement = document.getElementById('content');
+
+        // Focus it if it exists.
+        if (contentIDElement) {
+          contentIDElement.focus();
+          return;
+        }
+
+        // Derive the h1 tag.
+        const h1Tag = document.querySelector('h1');
+
+        // Focus it if it exists.
+        if (h1Tag) {
+          h1Tag.focus();
+        }
+      }
+
+      // Derive the skip to content link.
+      const skipToContentLink = document.getElementById('skip-to-content');
+
+      // If the skip to content link exists, bind the click handler.
+      if (skipToContentLink) {
+        skipToContentLink.addEventListener('click', handleSkipToContent);
+      }
+      // ------------------------
     })();
   </script>
