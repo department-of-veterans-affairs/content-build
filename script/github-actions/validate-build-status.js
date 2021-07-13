@@ -2,6 +2,9 @@
 /* eslint-disable camelcase */
 const { Octokit } = require('@octokit/rest');
 
+const {
+  GITHUB_TOKEN: auth, // Auth token used for the Github API
+} = process.env;
 const args = process.argv.slice(2);
 const timeout = 2; // minutes
 const [githubInfo, commitSHA] = args;
@@ -9,6 +12,7 @@ const [owner, repo] = githubInfo.split('/');
 
 const octokit = new Octokit({
   timeZone: 'America/New_York',
+  auth,
   baseUrl: 'https://api.github.com',
 });
 
