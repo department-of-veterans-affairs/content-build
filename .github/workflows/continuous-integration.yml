@@ -15,7 +15,7 @@ env:
 # Cancel in-progress workflows from previous commits in feature branches. TEST
 # Allow concurrent workflows from all commits in master.
 concurrency:
-  group: ${{ fromJSON(format('["{0}", "{1}"]', github.ref, github.sha))[github.ref != 'refs/heads/master'] }}
+  group: ${{ fromJSON(format('["{0}", "{1}"]', github.sha, github.ref))[github.ref != 'refs/heads/master'] }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 jobs:
