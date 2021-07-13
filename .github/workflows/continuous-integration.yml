@@ -12,10 +12,6 @@ env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
-
 jobs:
   build:
     name: Build
