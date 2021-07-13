@@ -8,39 +8,20 @@ const timeout = 2; // minutes
 const commitSHA = args[0];
 const [owner, repo] = GITHUB_REPOSITORY.split('/');
 
-const octokit = new Octokit({
-  timeZone: 'America/New_York',
-  auth,
-  baseUrl: 'https://api.github.com',
-});
+const octokit = new Octokit({ auth });
 
-const getCIWorkflowRuns = (page = 1) => {
-  return {
-    owner,
-    repo,
-    workflow_id: 'continuous-integration.yml',
-    branch: 'master',
-    per_page: '50',
-    page,
-  };
-};
-
-const getWorkflowFailed = run_id => {
-  return {
+/**
+ * uses octokit request for github action run_id provided
+ * @param {number} id
+ */
+function getJobsFailed(run_id) {
+  const params = {
     owner,
     repo,
     run_id,
   };
-};
-
-/**
- * fetch request for github action URL provided
- * @param {string} id
- */
-async function getJobsFailed(id) {
-  const workflowJobs = getWorkflowFailed(id);
   return octokit.rest.actions
-    .listJobsForWorkflowRun(workflowJobs)
+    .listJobsForWorkflowRun(params)
     .then(response => {
       if (response.status !== 200) {
         throw new Error(
@@ -60,13 +41,20 @@ async function getJobsFailed(id) {
 }
 
 /**
- * fetch request for github action URL provided
+ * uses octokit request for github action to get workflow with matching SHA
  * @param {number} page
  */
-async function getLatestWorkflow(page) {
-  const workflowRuns = getCIWorkflowRuns(page);
+function getLatestWorkflow(page) {
+  const params = {
+    owner,
+    repo,
+    workflow_id: 'continuous-integration.yml',
+    branch: 'master',
+    per_page: '50',
+    page,
+  };
   return octokit.rest.actions
-    .listWorkflowRuns(workflowRuns)
+    .listWorkflowRuns(params)
     .then(response => {
       if (response.status !== 200) {
         throw new Error(
@@ -75,7 +63,7 @@ async function getLatestWorkflow(page) {
       }
       return response.data;
     })
-    .then(async ({ workflow_runs }) => {
+    .then(({ workflow_runs }) => {
       if (workflow_runs.length === 0) {
         throw new Error('No workflows found. Aborting.');
       }
