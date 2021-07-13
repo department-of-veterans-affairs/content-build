@@ -13,7 +13,7 @@ env:
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha  }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 jobs:
