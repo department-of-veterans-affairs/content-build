@@ -20,7 +20,6 @@ const registerLiquidFilters = require('../../filters/liquid');
 const { getDrupalContent } = require('./drupal/metalsmith-drupal');
 const addDrupalPrefix = require('./plugins/add-drupal-prefix');
 const checkCollections = require('./plugins/check-collections');
-const checkForCMSUrls = require('./plugins/check-cms-urls');
 const downloadAssets = require('./plugins/download-assets');
 // const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
@@ -214,7 +213,6 @@ function build(BUILD_OPTIONS) {
   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
-  smith.use(checkForCMSUrls(BUILD_OPTIONS), 'Check for CMS URLs');
 
   smith.use(
     modifyDom(BUILD_OPTIONS),
