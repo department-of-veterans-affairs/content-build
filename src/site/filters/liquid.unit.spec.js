@@ -1150,4 +1150,10 @@ describe('formatTitleTag', () => {
     const expected = 'This Is A-Title | Veterans Affairs';
     expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
   });
+
+  it('formats a title tag with " | | Veteran Affairs"', () => {
+    const title = 'this is a-title | | Veterans Affairs';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
 });
