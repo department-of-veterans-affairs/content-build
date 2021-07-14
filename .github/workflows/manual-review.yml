@@ -2,7 +2,7 @@ name: Manual Review
 
 on: 
   pull_request:
-      types: [review_requested]
+      types: [review_requested, ready_for_review]
 
 env:
   BOT_NAME: va-vfs-bot
