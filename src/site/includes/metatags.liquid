@@ -1,49 +1,59 @@
+<!-- og:site_name -->
 <meta content="VA.gov" property="og:site_name">
-<!--twitter cards-->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="@DeptVetAffairs">
-<!-- description, title tags added below-->
-<meta name="twitter:image:src" content="{{ hostUrl }}/img/design/logo/va-og-twitter-image.png">
-<!-- end twitter cards -->
 
+<!-- Twitter metatags -->
+<meta name="twitter:card" content="Summary">
+<meta name="twitter:image" content="{{ hostUrl }}/img/design/logo/va-og-twitter-image.png">
+<meta name="twitter:site" content="@DeptVetAffairs">
+
+<!-- Last updated -->
 {% if lastupdate %}
   <meta name="DC.Date" content="{{lastupdate| date: '%Y-%m-%d'}}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
+<!-- Derive the title. -->
 {% assign metaTitle = title | formatTitleTag %}
 
+<!-- og:title + Twitter title metatag -->
 {% if metaTitle %}
-  <meta content="{{ metaTitle }}" property="og:title">
-  <meta content="{{ metaTitle }}" name="twitter:title" >
+  <meta property="og:title" content="{{ metaTitle }}">
+  <meta name="twitter:title" content="{{ metaTitle }}">
 {% else %}
-  <meta content="{{ hostUrl }}" property="og:title">
-  <meta content="{{ hostUrl }}" name="twitter:title">
+  <meta property="og:title" content="{{ hostUrl }}">
+  <meta name="twitter:title" content="{{ hostUrl }}">
 {% endif %}
 
-<meta content="website" property="og:type">
+<!-- og:type -->
+<meta property="og:type" content="website">
 
+<!-- og:url -->
 {% if path %}
-  <meta content="{{ hostUrl }}/{{ path }}" property="og:url">
+  <meta property="og:url" content="{{ hostUrl }}/{{ path }}">
 {% endif %}
 
+<!-- Add meta description tags. -->
 {% if description %}
-  <meta content="{{ description }}" property="og:description">
-  <meta content="{{ description }}" name="twitter:description" >
-  <meta content="{{ description }}" name="description">
+  <meta name="description" content="{{ description }}">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta property="og:description" content="{{ description }}">
 {% endif %}
 
-<meta content="{{ hostUrl }}/img/design/logo/va-og-image.png" property="og:image">
+<!-- og:image -->
+<meta property="og:image" content="{{ hostUrl }}/img/design/logo/va-og-image.png">
 
+<!-- article:tags -->
 {% if tags %}
   {% for tag in tags %}
-    <meta content="{{ tag }}" property="article:tag">
+    <meta property="article:tag" content="{{ tag }}">
   {% endfor %}
 {% endif %}
 
+<!-- keywords -->
 {% if keywords %}
   <meta name ="keywords" content="{{keywords}}">
 {% endif %}
 
+<!-- Title tag -->
 {% if title === 'Home' %}
   <title>VA.gov</title>
 {% else %}
