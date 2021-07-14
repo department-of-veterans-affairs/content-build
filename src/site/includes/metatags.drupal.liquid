@@ -34,12 +34,15 @@
   <!-- Metatags -->
   {% if regionOrOffice %}
     {% assign metaTitle = title | append: " | " | append: regionOrOffice %}
+  {% elsif fieldOffice %}
+    {% assign metaTitle = fieldOffice.entity.title %}
+  {% elsif entityLabel %}
+    {% assign metaTitle = entityLabel %}
   {% else %}
     {% assign metaTitle = title %}
   {% endif %}
 
   {% assign metaTitle = metaTitle | formatTitleTag %}
-
   <meta property="og:site_name" content="Veterans Affairs">
   <meta content="{{ metaTitle }}" property="og:title">
   <meta name="twitter:card" content="Summary">
