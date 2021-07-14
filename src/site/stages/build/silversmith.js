@@ -19,7 +19,7 @@ const {
 // due to heap size approaching the max, causing extra scavange GCs.
 // You may need to adjust --max-old-space-size (heap size) as well.
 // Use the --trace-gc flag to show garbage collection stats.
-const GARBAGE_COLLECTION_FREQUENCY_SECONDS = 60;
+const GARBAGE_COLLECTION_FREQUENCY_SECONDS = 10;
 let garbageCollectionInterval;
 let peakRSSUsed = 0;
 
