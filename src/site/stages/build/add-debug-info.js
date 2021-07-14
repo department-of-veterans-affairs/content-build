@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const _ = require('lodash');
 const { sleep } = require('../../../../script/utils');
 
-const NUM_CONCURRENT_FILES = 5;
+const NUM_CONCURRENT_FILES = 2;
 const KEYS_TO_IGNORE = [
   'breadcrumb_path',
   'collection',
