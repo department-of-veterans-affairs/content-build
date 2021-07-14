@@ -1,8 +1,6 @@
 name: Manual Review
 
-on: 
-  pull_request:
-      types: [review_requested, ready_for_review, synchronize, edited, reopened]
+on: [pull_request]
 
 env:
   BOT_NAME: va-vfs-bot
@@ -71,6 +69,7 @@ jobs:
   icon-check:
     name: Icon Check
     runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout
         uses: actions/checkout@v2
