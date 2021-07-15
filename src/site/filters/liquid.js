@@ -944,8 +944,9 @@ module.exports = function registerFilters() {
       formattedTitle = `${formattedTitle} | Veterans Affairs`;
     }
 
-    // Remove ' | | ' from the title.
+    // Remove ' | | ' and ' |  | ' from the title.
     formattedTitle = formattedTitle?.replace(' | | ', ' | ');
+    formattedTitle = formattedTitle?.replace(' |  | ', ' | ');
 
     return formattedTitle;
   };
