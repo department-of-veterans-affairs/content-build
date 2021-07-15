@@ -1,79 +1,67 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-await-in-loop */
 const fs = require('fs-extra');
-const path = require('path');
+const _ = require('lodash');
+const { sleep } = require('../../../../script/utils');
 
-function addDebugInfo(files, buildtype) {
+const NUM_CONCURRENT_FILES = 10;
+const KEYS_TO_IGNORE = [
+  'breadcrumb_path',
+  'collection',
+  'contents',
+  'filename',
+  'isDrupalPage',
+  'layout',
+  'modified',
+  'nav_children',
+  'nav_path',
+  'path',
+  'private',
+];
+
+async function writeFile(fileName, fileObject, buildtype) {
+  if (!fileName) return;
+
+  const filePath = `build/${buildtype}/${fileName}`;
+  const originalContents = await fs.readFileSync(filePath, 'utf8');
+  const debugInfo = _.omit(fileObject, KEYS_TO_IGNORE);
+
+  // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
+  // when the `debug` key doesn't exist in the Metalsmith file entry.
+  // We want to replace all instances of that with the debug object.
+  const oldString = 'window.contentData = null;';
+  const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
+  const newContents = originalContents.toString().replace(oldString, newString);
+
+  await fs.writeFileSync(filePath, newContents, { overwrite: true });
+  process.stdout.write('.');
+}
+
+async function addDebugInfo(files, buildtype) {
   try {
-    console.log('\nAdding debug info to Drupal pages...');
+    console.log('\nAdding debug info to Drupal pages...\n');
+    console.time('Debug info time');
+    const drupalFileNames = Object.keys(files).filter(
+      fileName => files[fileName].isDrupalPage,
+    );
 
-    const keysToIgnore = [
-      'breadcrumb_path',
-      'collection',
-      'contents',
-      'filename',
-      'isDrupalPage',
-      'layout',
-      'modified',
-      'nav_children',
-      'nav_path',
-      'path',
-      'private',
-    ];
+    // Limit the number of simultaneous open files with an array of promises.
+    // This also limits peak memory use.
+    while (drupalFileNames.length) {
+      const promises = [];
+      for (let i = 1; i <= NUM_CONCURRENT_FILES; i++) {
+        const fileName = drupalFileNames.pop();
+        promises.push(writeFile(fileName, files[fileName], buildtype));
+      }
+      await Promise.all(promises);
 
-    Object.keys(files)
-      .filter(fileName => files[fileName].isDrupalPage)
-      .forEach(fileName => {
-        const filePath = `build/${buildtype}/${fileName}`;
-        const tmpFilepath = `tmp/${filePath}`;
-        const tmpFileDir = path.dirname(tmpFilepath);
-
-        if (!fs.existsSync(tmpFileDir)) {
-          fs.mkdirSync(tmpFileDir, { recursive: true });
-        }
-
-        const readStream = fs.createReadStream(filePath, {
-          encoding: 'utf8',
-          autoClose: true,
-        });
-
-        const outputStream = fs.createWriteStream(tmpFilepath, {
-          encoding: 'utf8',
-          autoClose: true,
-        });
-
-        const debugInfo = Object.fromEntries(
-          Object.entries(files[fileName]).filter(
-            key => !keysToIgnore.includes(key[0]),
-          ),
-        );
-
-        // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
-        // when the `debug` key doesn't exist in the Metalsmith file entry.
-        // We want to replace all instances of that with the debug object.
-        readStream.on('data', data => {
-          outputStream.write(
-            data
-              .toString()
-              .replace(
-                'window.contentData = null;',
-                `window.contentData = ${JSON.stringify(debugInfo)};`,
-              ),
-          );
-        });
-
-        readStream.on('end', () => {
-          outputStream.end();
-        });
-
-        outputStream.on('finish', () => {
-          // Overwrite original file with new file
-          fs.moveSync(tmpFilepath, filePath, { overwrite: true });
-        });
-      });
+      // Pause for garbage collection to free unused buffer memory
+      await sleep(1);
+    }
   } catch (error) {
     console.error('Error adding debug info to files.\n', error);
   } finally {
     console.log('Finished adding debug info to Drupal pages.\n');
+    console.timeEnd('Debug info time');
   }
 }
 

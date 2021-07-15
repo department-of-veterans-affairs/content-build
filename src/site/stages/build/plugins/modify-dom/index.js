@@ -1,14 +1,13 @@
 /* eslint-disable no-param-reassign */
 const path = require('path');
 const cheerio = require('cheerio');
+const { sleep } = require('../../../../../../script/utils');
 const addNonceToScripts = require('./add-nonce-to-scripts');
 const processEntryNames = require('./process-entry-names');
 const updateExternalLinks = require('./update-external-links');
 const addSubheadingsIds = require('./add-id-to-subheadings');
 const checkBrokenLinks = require('./check-broken-links');
 const injectAxeCore = require('./inject-axe-core');
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const getDomModifiers = BUILD_OPTIONS => {
   if (BUILD_OPTIONS.liquidUnitTestingFramework) {

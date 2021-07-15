@@ -259,8 +259,6 @@ function build(BUILD_OPTIONS) {
         smith.printPeakMemory();
       }
 
-      smith.endGarbageCollection();
-
       console.log('The Metalsmith build has completed.');
     }
 
@@ -268,6 +266,8 @@ function build(BUILD_OPTIONS) {
       // Add debug info to HTML files
       addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
+
+    smith.endGarbageCollection();
   }); // smith.build()
 }
 
