@@ -945,8 +945,7 @@ module.exports = function registerFilters() {
     }
 
     // Remove ' | | ' and ' |  | ' from the title.
-    formattedTitle = formattedTitle?.replace(' | | ', ' | ');
-    formattedTitle = formattedTitle?.replace(' |  | ', ' | ');
+    formattedTitle = formattedTitle?.replace(/\s*\|\s*\|\s*/, ' | ');
 
     return formattedTitle;
   };
