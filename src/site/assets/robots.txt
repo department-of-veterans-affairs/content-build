@@ -130,7 +130,6 @@ Disallow: /chicago-health-care
 Disallow: /chillicothe-health-care
 Disallow: /cincinnati-health-care
 Disallow: /clarksburg-health-care
-Disallow: /coatesville-health-care
 Disallow: /columbia-missouri-health-care
 Disallow: /columbia-south-carolina-health-care
 Disallow: /connecticut-health-care
@@ -173,7 +172,6 @@ Disallow: /maryland-health-care
 Disallow: /memphis-health-care
 Disallow: /miami-health-care
 Disallow: /milwaukee-health-care
-Disallow: /minneapolis-health-care
 Disallow: /montana-health-care
 Disallow: /mountain-home-health-care
 Disallow: /nebraska-western-iowa-health-care
@@ -184,7 +182,6 @@ Disallow: /north-florida-health-care
 Disallow: /north-texas-health-care
 Disallow: /northeast-ohio-health-care
 Disallow: /northern-arizona-health-care
-Disallow: /northern-california-health-care
 Disallow: /northern-indiana-health-care
 Disallow: /northport-health-care
 Disallow: /oklahoma-city-health-care
@@ -215,7 +212,6 @@ Disallow: /southern-arizona-health-care
 Disallow: /southern-nevada-health-care
 Disallow: /southern-oregon-health-care
 Disallow: /spokane-health-care
-Disallow: /st-cloud-health-care
 Disallow: /st-louis-health-care
 Disallow: /syracuse-health-care
 Disallow: /tampa-health-care
