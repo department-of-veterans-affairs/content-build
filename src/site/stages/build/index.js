@@ -11,6 +11,8 @@ const markdown = require('metalsmith-markdownit');
 const navigation = require('metalsmith-navigation');
 const permalinks = require('metalsmith-permalinks');
 
+const { execSync } = require('child_process');
+
 const silverSmith = require('./silversmith');
 const addDebugInfo = require('./add-debug-info');
 
@@ -268,6 +270,8 @@ function build(BUILD_OPTIONS) {
     }
 
     smith.endGarbageCollection();
+
+    console.log(execSync(`du -sh build/${BUILD_OPTIONS.buildtype}`).toString());
   }); // smith.build()
 }
 
