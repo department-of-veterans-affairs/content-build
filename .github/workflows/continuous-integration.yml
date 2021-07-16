@@ -79,7 +79,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address=${{ env.DRUPAL_ADDRESS }} --no-drupal-proxy
+        run: yarn build --buildtype=${{ matrix.buildtype }}
         env:
           NODE_ENV: production
 
