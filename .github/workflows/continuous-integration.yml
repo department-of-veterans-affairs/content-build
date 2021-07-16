@@ -75,7 +75,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Fetch Drupal cache
-        run: yarn fetch-drupal-cache
+        run: yarn fetch-drupal-cache --buildtype=${{ matrix.buildtype }}
 
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }}
