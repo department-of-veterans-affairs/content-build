@@ -9,7 +9,6 @@ on:
 
 # TODO: Change to correct channel_id when ready
 env:
-  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
 
 concurrency:
@@ -19,7 +18,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 60
 
     defaults:
@@ -28,7 +27,7 @@ jobs:
 
     env:
       # Sandbox Drupal address is used on branches other than master.
-      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      # DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
@@ -37,11 +36,8 @@ jobs:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
           - buildtype: vagovdev
-            drupal-address: http://internal-dsva-vagov-dev-cms-812329399.us-gov-west-1.elb.amazonaws.com
           - buildtype: vagovstaging
-            drupal-address: http://internal-dsva-vagov-staging-cms-1188006.us-gov-west-1.elb.amazonaws.com
           - buildtype: vagovprod
-            drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
     steps:
       - name: Checkout vagov-content
