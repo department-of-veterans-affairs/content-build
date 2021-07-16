@@ -74,9 +74,8 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      - name: Set Drupal address
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+      - name: Fetch Drupal Cache
+        run: yarn fetch-drupal-cache
 
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }}
