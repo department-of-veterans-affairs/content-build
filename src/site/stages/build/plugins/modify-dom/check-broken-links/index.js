@@ -12,6 +12,7 @@ const applyIgnoredRoutes = require('./helpers/applyIgnoredRoutes');
 
 module.exports = {
   initialize(buildOptions, files) {
+    this.buildOptions = buildOptions;
     this.isDisabled = buildOptions.watch || buildOptions.isPreviewServer;
 
     if (this.isDisabled) {
@@ -40,7 +41,7 @@ module.exports = {
     const isHtml = path.extname(fileName) === '.html';
     if (!isHtml) return;
 
-    const linkErrors = getBrokenLinks(file, this.allPaths);
+    const linkErrors = getBrokenLinks(file, this.allPaths, this.buildOptions);
 
     if (linkErrors.length > 0) {
       this.brokenPages.push({
