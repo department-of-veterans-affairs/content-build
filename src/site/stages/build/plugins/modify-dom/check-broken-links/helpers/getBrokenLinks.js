@@ -12,8 +12,8 @@ const isCMSUrl = require('./isCMSUrl');
 function getBrokenLinks(
   file,
   allPaths,
-  isBrokenLink = _isBrokenLink,
   buildOptions,
+  isBrokenLink = _isBrokenLink,
 ) {
   const $ = file.dom;
   const elements = $('a, img, script');
