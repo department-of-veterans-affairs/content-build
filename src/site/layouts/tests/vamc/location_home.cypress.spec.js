@@ -35,13 +35,15 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
     .should('exist');
   cy.get('h2').contains('Prepare for your visit');
   cy.get('#health_care_local_facility_servi-4202').should('not.be.visible');
-  cy.get('button')
+  cy.get('va-accordion-item')
+    .shadow()
     .contains('Parking')
     .click()
     .then(() => {
       cy.get('#health_care_local_facility_servi-4202').should('be.visible');
     });
-  cy.get('button')
+  cy.get('va-accordion-item')
+    .shadow()
     .contains('Parking')
     .click()
     .then(() => {
