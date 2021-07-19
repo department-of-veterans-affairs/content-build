@@ -19,6 +19,8 @@ const { shouldPullDrupal } = require('./drupal/metalsmith-drupal');
 const { logDrupal } = require('./drupal/utilities-drupal');
 const { useFlags } = require('./drupal/load-saved-flags');
 
+const { runCommandSync } = require('../../../../script/utils');
+
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'buildtype', type: String, defaultValue: defaultBuildtype },
   { name: 'host', type: String, defaultValue: defaultHost },
@@ -178,6 +180,35 @@ function deriveHostUrl(options) {
 }
 
 /**
+ * Fetches Drupal cache when needed if the 'pull-drupal' and 'drupal-address'
+ * flags aren't in use.
+ */
+function fetchDrupalCache(options) {
+  const pullDrupalArg = 'pull-drupal';
+  const drupalAddressArg = 'drupal-address';
+
+  const cachePaths = [
+    'drupal/downloads',
+    'drupal/feature-flags.json',
+    'drupal/pages.json',
+  ];
+  const cachePathMissing =
+    !fs.existsSync(options.cacheDirectory) ||
+    cachePaths.findIndex(
+      cachePath => !fs.existsSync(path.join(options.cacheDirectory, cachePath)),
+    ) > -1;
+
+  if (
+    !options[pullDrupalArg] &&
+    !options[drupalAddressArg] &&
+    cachePathMissing
+  ) {
+    logDrupal(`Attempting to fetch Drupal cache...`);
+    runCommandSync('yarn fetch-drupal-cache');
+  }
+}
+
+/**
  * Sets up the CMS feature flags by either querying the CMS for them
  * or using ../../utilities/featureFlags. If we pull from Drupal, it'll
  * also ensure the cache directory exists.
@@ -251,6 +282,7 @@ async function getOptions(commandLineOptions) {
   applyDefaultOptions(options);
   applyEnvironmentOverrides(options);
   deriveHostUrl(options);
+  fetchDrupalCache(options);
   await setUpFeatureFlags(options);
   clearDrupalCacheDirectory(options);
 

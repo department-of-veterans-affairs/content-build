@@ -905,15 +905,48 @@ module.exports = function registerFilters() {
     return rootArray.some(hasContent);
   };
 
-  liquid.filters.isValidUrl = str => {
-    if (!str) return null;
-    let url;
+  liquid.filters.hasCharacterOtherThanSpace = str => {
+    if (!str) return false;
+    const substring = 'internal:/';
+    let newStr;
 
-    try {
-      url = new URL(str);
-    } catch (e) {
-      return false;
+    if (str.includes(substring)) {
+      newStr = str.replace(substring, '');
+      return /\S/.test(newStr);
+    } else return /\S/.test(str);
+  };
+
+  liquid.filters.formatTitleTag = title => {
+    let formattedTitle = _.trim(title);
+
+    // Escape early if no title is provided.
+    if (!formattedTitle) {
+      return formattedTitle;
     }
-    return url.protocol === 'http:' || url.protocol === 'https:';
+
+    // Decode the title.
+    formattedTitle = he.decode(formattedTitle);
+
+    // Ensure every word is capitalized.
+    formattedTitle = formattedTitle
+      ?.split(' ')
+      ?.map(word => _.upperFirst(word))
+      ?.join(' ');
+
+    // Ensure every word is capitalized following a hyphen.
+    formattedTitle = formattedTitle
+      ?.split('-')
+      ?.map(word => _.upperFirst(word))
+      ?.join('-');
+
+    // Add ' | Veterans Affairs' to the end of the title.
+    if (!_.endsWith(_.toLower(formattedTitle), ' | veterans affairs')) {
+      formattedTitle = `${formattedTitle} | Veterans Affairs`;
+    }
+
+    // Remove ' | | ' and ' |  | ' from the title.
+    formattedTitle = formattedTitle?.replace(/\s*\|\s*\|\s*/, ' | ');
+
+    return formattedTitle;
   };
 };

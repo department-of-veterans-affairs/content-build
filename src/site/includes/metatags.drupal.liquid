@@ -1,26 +1,30 @@
+<!-- Canonical URL -->
 <link rel="canonical" href="{{ hostUrl }}{{ entityUrl.path }}/" />
 
+<!-- Last updated -->
 {% if changed %}
   <meta name="DC.Date" scheme="W3CDTF" content="{{ changed| dateFromUnix: 'YYYY-MM-DD' }}">
 {% endif %}
 
+<!-- og:url -->
 {% if entityUrl.path %}
-  <meta content="{{ hostUrl }}{{ entityUrl.path }}/" property="og:url">
+  <meta property="og:url" content="{{ hostUrl }}{{ entityUrl.path }}/">
 {% else %}
-  <meta content="{{ hostUrl }}/" property="og:url">
+  <meta property="og:url" content="{{ hostUrl }}/">
 {% endif %}
 
-<meta content="website" property="og:type">
+<!-- og:type -->
+<meta property="og:type" content="website">
 
+<!-- Custom metatags -->
 {% assign tagsSize = entityMetatags | size %}
 {% if tagsSize > 0 %}
   {% assign sortedEntityMetatags = entityMetatags | sortEntityMetatags %}
-  <!-- Metatags -->
   {% for tag in sortedEntityMetatags %}
     {% case tag.__typename %}
       {% when "MetaValue" %}
         {% if tag.key == "title" %}
-          <title>{{ tag.value }}</title>
+          <title>{{ tag.value | formatTitleTag }}</title>
         {% else %}
           <meta name="{{ tag.key }}" content="{{ tag.value }}">
         {% endif %}
@@ -30,26 +34,34 @@
         <link rel="{{ tag.key }}" href="{{ tag.value }}">
     {% endcase %}
   {% endfor %}
+
+<!-- Default metatags -->
 {% else %}
-<!-- Metatags -->
+  <!-- Derive the title. -->
   {% if regionOrOffice %}
     {% assign metaTitle = title | append: " | " | append: regionOrOffice %}
-    {% if regionOrOffice == "VA Pittsburgh health care" %}
-      {% assign titleCaseTitle = title | toTitleCase %}
-      {% assign metaTitle = "VA Pittsburgh Health Care" | append: " | " | append: titleCaseTitle %}
-    {% endif %}
+  {% elsif fieldOffice %}
+    {% assign metaTitle = fieldOffice.entity.title %}
+  {% elsif entityLabel %}
+    {% assign metaTitle = entityLabel %}
   {% else %}
     {% assign metaTitle = title %}
   {% endif %}
+  {% assign metaTitle = metaTitle | formatTitleTag %}
 
-  {% assign metaTitle = metaTitle | append: " | Veterans Affairs" %}
+  <!-- og:site_name -->
   <meta property="og:site_name" content="Veterans Affairs">
-  <meta content="{{ metaTitle }}" property="og:title">
-  <meta name="twitter:card" content="Summary">
-  <meta name="twitter:site" content="@DeptVetAffairs">
-  <meta name="twitter:image" content="{{ hostUrl }}/img/design/logo/va-og-twitter-image.png">
-  <meta content="{{ metaTitle }}" name="twitter:title" >
 
+  <!-- og:title -->
+  <meta property="og:title" content="{{ metaTitle }}">
+
+  <!-- Twitter metatags -->
+  <meta name="twitter:card" content="Summary">
+  <meta name="twitter:image" content="{{ hostUrl }}/img/design/logo/va-og-twitter-image.png">
+  <meta name="twitter:site" content="@DeptVetAffairs">
+  <meta name="twitter:title" content="{{ metaTitle }}">
+
+  <!-- Derive the meta description. -->
   {% if fieldClinicalHealthServi %}
     {% assign description = fieldClinicalHealthServi.processed | strip_html %}
   {% elsif fieldPressReleaseBlurb %}
@@ -60,12 +72,16 @@
     {% assign description = fieldIntroText.processed | strip_html %}
   {% endif %}
 
+  <!-- Add meta description tags. -->
   {% if description %}
     <meta content="{{ description }}" property="og:description">
     <meta content="{{ description }}" name="twitter:description" >
     <meta content="{{ description }}" name="description">
   {% endif %}
 
+  <!-- og:image -->
   <meta content="{{ hostUrl }}/img/design/logo/va-og-image.png" property="og:image">
+
+  <!-- Title tag -->
   <title>{{ metaTitle }}</title>
 {% endif %}

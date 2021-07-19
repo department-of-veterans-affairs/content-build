@@ -92,8 +92,6 @@ const buildQuery = () => {
   ${vamcPolicyPages.fragment}
 `;
 
-  const todayQueryVar = '$today: String!,';
-
   const nodeQuery = `
     nodeQuery(limit: 5000, filter: {
       conditions: [
@@ -141,7 +139,7 @@ const buildQuery = () => {
 
   ${nodeContentFragments}
 
-  query GetAllPages(${todayQueryVar} $onlyPublishedContent: Boolean!) {
+  query GetAllPages($today: String!, $onlyPublishedContent: Boolean!) {
     ${nodeQuery}
     ${icsFileQuery.partialQuery}
     ${sidebarQuery.partialQuery}

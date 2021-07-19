@@ -1,5 +1,5 @@
 {% include "src/site/includes/header.html" %}
-<main>
+<main id="content">
 
   <!-- the hub -->
   <section class="homepage-hub">
@@ -34,8 +34,7 @@
   </section>
   <!-- /the hub -->
 
-  <section id="content">
-
+  <section>
     <section id="homepage-benefits">
       <div class="usa-grid usa-grid-full homepage-benefits-row">
       {% for hub in hubs %}
@@ -87,10 +86,7 @@
 
       </div>
     </section>
-
-    <!-- end triple column -->
-
-  </div> <!-- end #content -->
+  </div>
 
   <section class="usa-grid usa-grid-full">
     <div class="va-h-ruled--stars"></div>
@@ -118,7 +114,7 @@
 
   </section>
 
-</main>
+</main> <!-- end #content -->
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
   var hubLinksList = document.getElementsByClassName('hub-links-list');

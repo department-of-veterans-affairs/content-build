@@ -54,33 +54,41 @@ const eventsMockData = [
   },
 ];
 
-describe('isValidUrl', () => {
-  it('returns null if an empty string is passed', () => {
-    expect(liquid.filters.isValidUrl('')).to.be.null;
+describe('hasCharacterOtherThanSpace', () => {
+  it('returns false if an empty string is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('')).to.be.false;
   });
 
-  it('returns null if null is passed', () => {
-    expect(liquid.filters.isValidUrl(null)).to.be.null;
+  it('returns false if null is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace(null)).to.be.false;
   });
 
-  it('returns null if undefined', () => {
-    expect(liquid.filters.isValidUrl(undefined)).to.be.null;
+  it('returns false if undefined', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace(undefined)).to.be.false;
   });
 
   it('returns false if a string with spaces is passed', () => {
-    expect(liquid.filters.isValidUrl('   ')).to.be.false;
+    expect(liquid.filters.hasCharacterOtherThanSpace('   ')).to.be.false;
   });
 
-  it('returns false if an invalid url is passed', () => {
-    expect(liquid.filters.isValidUrl('www.google.com')).to.be.false;
+  it('returns false if x number of spaces are passed in causing the output to include "internal:/x-number-of-spaces"', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('internal:/     ')).to.be
+      .false;
   });
 
-  it('returns true if a valid url is passed', () => {
-    expect(liquid.filters.isValidUrl('https:/testing.com')).to.be.true;
+  it('returns true if a url is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('interal:/testing.com')).to
+      .be.true;
   });
 
-  it('returns true if a valid url is passed', () => {
-    expect(liquid.filters.isValidUrl('http:/testing.com')).to.be.true;
+  it('returns true if a url is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('www.google.com')).to.be
+      .true;
+  });
+
+  it('returns true if a url is passed', () => {
+    expect(liquid.filters.hasCharacterOtherThanSpace('    https:/testing.com '))
+      .to.be.true;
   });
 });
 
@@ -1127,5 +1135,31 @@ describe('phoneLinks', () => {
     const html =
       'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
+
+describe('formatTitleTag', () => {
+  it('formats a title tag without " | Veteran Affairs"', () => {
+    const title = 'this is a-title';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+
+  it('formats a title tag with " | Veteran Affairs"', () => {
+    const title = 'this is a-title | Veterans Affairs';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+
+  it('formats a title tag with " | | Veteran Affairs"', () => {
+    const title = 'this is a-title | | Veterans Affairs';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+
+  it('formats a title tag with " |  | Veteran Affairs"', () => {
+    const title = 'this is a-title |  | Veterans Affairs';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
   });
 });

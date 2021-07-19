@@ -1136,9 +1136,18 @@
   {
     "appName": "check-in",
     "entryName": "check-in",
-    "rootUrl": "/check-in",
+    "rootUrl": "/health-care/appointment-check-in",
     "template": {
       "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "My Education Benefits",
+    "entryName": "my-education-benefits",
+    "rootUrl": "/my-education-benefits",
+    "template": {
+      "vagovprod": false,
       "layout": "page-react.html"
     }
   }

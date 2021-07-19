@@ -31,6 +31,7 @@ const createResourcesAndSupportWebsiteSection = require('./plugins/create-resour
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+const getFilesToUpdate = require('./plugins/get-files-to-update');
 const ignoreAssets = require('./plugins/ignore-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const modifyDom = require('./plugins/modify-dom');
@@ -61,9 +62,17 @@ function build(BUILD_OPTIONS) {
     omitdebug: BUILD_OPTIONS.omitdebug,
   });
 
+  if (global.rebuild) {
+    smith.use(getFilesToUpdate(BUILD_OPTIONS), 'Get files for rebuild');
+  }
+
   // If you're on localhost, you probably want to see CSS/JS reflected in the build,
   // so, this will set up a symlink into vets-website for you.
-  if (BUILD_OPTIONS.buildtype === 'localhost' && !BUILD_OPTIONS.nosymlink) {
+  if (
+    BUILD_OPTIONS.buildtype === 'localhost' &&
+    !BUILD_OPTIONS.nosymlink &&
+    !global.rebuild
+  ) {
     smith.use(
       createSymlink(BUILD_OPTIONS),
       'Create symlink into vets-website for local development.',
@@ -222,6 +231,9 @@ function build(BUILD_OPTIONS) {
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
+      // Avoid saving Metalsmith files object on rebuild to prevent overwriting the object
+      if (!global.rebuild) global.metalsmithFiles = files;
+
       if (BUILD_OPTIONS.buildtype === 'localhost') {
         console.log(' ');
         console.log(
