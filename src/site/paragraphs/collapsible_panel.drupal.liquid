@@ -27,7 +27,11 @@
     data-entity-id="{{ entity.entityId }}"
     data-multiselectable="{{ entity.fieldCollapsiblePanelMulti }}"
 >
-    <va-accordion>
+    <va-accordion
+        {% if entity.fieldCollapsiblePanelBordered %}
+            bordered
+        {% endif %}
+    >
         {% for accordionItem in entity.fieldVaParagraphs %}
             {% assign item = accordionItem.entity %}
             {% assign id= item.entityId | formatSharableLinkID: item.fieldQuestion   %}

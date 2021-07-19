@@ -59,10 +59,12 @@
                         header="{{ fieldQA.entity.title }}"
                         data-faq-entity-id="{{ fieldQA.entity.entityId }}"
                       >
-                        {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
-                        {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
-                        {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-                        {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                        <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}">
+                          {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
+                          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                          {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                          {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                        </div>
                       </va-accordion-item>
                     {% endif %}
                   {% endfor %}

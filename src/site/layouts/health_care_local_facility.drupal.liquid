@@ -141,7 +141,9 @@
                     level="3"
                     data-label="{{ item.fieldTitle }}"
                   >
-                    {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
+                    <div id="{{ item.entityBundle }}-{{ item.entityId }}">
+                      {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
+                    </div>
                   </va-accordion-item>
                 {% endfor %}
               </va-accordion>
@@ -162,10 +164,10 @@
             <section class="local-health-services" id="local-health-services" data-label="Health services">
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
-              {{ localHealthServices.length }}
               {% for localService in localHealthServices %}
                 {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}
                 {% if localHealthService != empty and localService.entity.status == true %}
+
                   {% include "src/site/facilities/facility_health_service.drupal.liquid" with
                       healthService = localHealthService
                       locationEntity = localService.entity

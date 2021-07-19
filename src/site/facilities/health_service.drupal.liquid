@@ -5,9 +5,9 @@
             header="{{ serviceTaxonomy.name }}"
             {% if serviceTaxonomy.fieldAlsoKnownAs %}
                 subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
+                data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
             {% endif %}
             data-label="{{ serviceTaxonomy.name }}"
-            data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
         >
             <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
                 {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
