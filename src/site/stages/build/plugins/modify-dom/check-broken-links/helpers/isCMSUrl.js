@@ -1,3 +1,5 @@
+const url = require('url');
+
 const getApiClient = require('../../../../drupal/api');
 
 /**
@@ -18,7 +20,7 @@ function isCMSUrl(link, file, buildOptions) {
     return false;
   }
 
-  const parsed = new URL(link);
+  const parsed = url.parse(link);
   return !!(file.isDrupalPage && parsed.hostname.includes('cms.va.gov'));
 }
 
