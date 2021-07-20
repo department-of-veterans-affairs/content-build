@@ -3,10 +3,6 @@ const { expect } = require('chai');
 const isCMSUrl = require('../../helpers/isCMSUrl');
 
 describe('isCMSUrl', () => {
-  const file = {
-    isDrupalPage: true,
-  };
-
   const cmsLinks = [
     'https://prod.cms.va.gov/node/27168',
     'https://prod.cms.va.gov/',
@@ -24,7 +20,7 @@ describe('isCMSUrl', () => {
   ];
 
   const buildOptions = {
-    'drupal-address': '',
+    'drupal-address': 'https://prod.cms.va.gov',
     'drupal-user': '',
     'drupal-password': '',
     'drupal-max-parallel-requests': 15,
@@ -33,6 +29,9 @@ describe('isCMSUrl', () => {
 
   for (const cmsLink of cmsLinks) {
     it(`returns true if link points to CMS - ${cmsLink}`, () => {
+      const file = {
+        isDrupalPage: true,
+      };
       const result = isCMSUrl(cmsLink, file, buildOptions);
       expect(result).to.be.true;
     });
@@ -40,13 +39,18 @@ describe('isCMSUrl', () => {
 
   for (const nonCMSLink of nonCMSLinks) {
     it(`returns false if link does not point to CMS - ${nonCMSLink}`, () => {
+      const file = {
+        isDrupalPage: true,
+      };
       const result = isCMSUrl(nonCMSLink, file, buildOptions);
       expect(result).to.be.false;
     });
   }
 
   it('returns false if not a Drupal Page', () => {
-    file.isDrupalPage = false;
+    const file = {
+      isDrupalPage: false,
+    };
     const result = isCMSUrl(cmsLinks[0], file, buildOptions);
     expect(result).to.be.false;
   });
