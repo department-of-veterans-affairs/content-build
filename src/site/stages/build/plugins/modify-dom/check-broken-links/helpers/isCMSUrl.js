@@ -18,7 +18,8 @@ function isCMSUrl(link, file, buildOptions) {
     return false;
   }
 
-  return !!(file.isDrupalPage && link.includes('cms.va.gov'));
+  const parsed = new URL(link);
+  return !!(file.isDrupalPage && parsed.hostname.includes('cms.va.gov'));
 }
 
 module.exports = isCMSUrl;
