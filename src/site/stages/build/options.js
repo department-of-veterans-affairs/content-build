@@ -64,7 +64,11 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'accessibility', type: Boolean, defaultValue: false },
   { name: 'lint-plain-language', type: Boolean, defaultValue: false },
   { name: 'verbose', alias: 'v', type: Boolean, defaultValue: false },
-  { name: 'omitdebug', type: Boolean, defaultValue: false },
+  {
+    name: 'omitdebug',
+    type: Boolean,
+    defaultValue: process.env.OMIT_DEBUG || false,
+  },
 
   // use the --nosymlink flag with a build to bypass symlink creation
   { name: 'nosymlink', type: Boolean, defaultValue: false },
