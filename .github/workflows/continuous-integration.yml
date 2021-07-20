@@ -118,7 +118,7 @@ jobs:
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Compress prearchived build
-        run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
+        run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
 
       - name: Upload prearchived build artifact
         uses: actions/upload-artifact@v2
