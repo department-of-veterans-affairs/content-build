@@ -13,6 +13,9 @@ const getApiClient = require('../../../../drupal/api');
 function isCMSUrl(link, file, buildOptions) {
   if (!link) return false;
 
+  const parsed = url.parse(link);
+  if (!parsed.hostname) return false;
+
   // If asset paths are not being replaced then do not do
   // asset checks since all asset urls will include cms.va.gov
   const api = getApiClient(buildOptions);
@@ -20,7 +23,6 @@ function isCMSUrl(link, file, buildOptions) {
     return false;
   }
 
-  const parsed = url.parse(link);
   return !!(file.isDrupalPage && parsed.hostname.includes('cms.va.gov'));
 }
 
