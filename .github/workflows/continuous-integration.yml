@@ -19,7 +19,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     timeout-minutes: 60
 
     defaults:
@@ -319,7 +319,7 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     needs: build
     timeout-minutes: 30
 
