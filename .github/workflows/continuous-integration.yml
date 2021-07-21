@@ -102,30 +102,44 @@ jobs:
           BUILDTIME=$(date +%s)
           EOF
 
-      - name: Compress E2E test build
-        if: ${{ matrix.buildtype == 'vagovprod' }}
-        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+      # - name: Compress E2E test build
+      #   if: ${{ matrix.buildtype == 'vagovprod' }}
+      #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
+      # - name: Upload E2E test build artifact
+      #   uses: actions/upload-artifact@v2
+      #   if: ${{ matrix.buildtype == 'vagovprod' }}
+      #   with:
+      #     name: test-build.tar.bz2
+      #     path: content-build/test-build.tar.bz2
+      #     retention-days: 1
+
+      - name: Persist E2E test build
         if: ${{ matrix.buildtype == 'vagovprod' }}
-        with:
-          name: test-build.tar.bz2
-          path: content-build/test-build.tar.bz2
-          retention-days: 1
+        run: |
+          mkdir -p /tmp/${{ env.GITHUB_RUN_ID }}
+          rm -rf /tmp/${{ env.GITHUB_RUN_ID }}/test
+          cp -R build/vagovprod /tmp/${{ env.GITHUB_RUN_ID }}/test
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
-      - name: Compress prearchived build
-        run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
+      # - name: Compress prearchived build
+      #   run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
 
-      - name: Upload prearchived build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.buildtype }}.tar.bz2
-          path: content-build/${{ matrix.buildtype }}.tar.bz2
-          retention-days: 1
+      # - name: Upload prearchived build artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ matrix.buildtype }}.tar.bz2
+      #     path: content-build/${{ matrix.buildtype }}.tar.bz2
+      #     retention-days: 1
+
+      # TODO: Try using `mv` instead of `cp` for better performance.
+      - name: Persist prearchived build
+        run: |
+          mkdir -p /tmp/${{ env.GITHUB_RUN_ID }}
+          rm -rf /tmp/${{ env.GITHUB_RUN_ID }}/vagovprod
+          cp -R build/${{ matrix.buildtype }} /tmp/${{ env.GITHUB_RUN_ID }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -330,15 +344,20 @@ jobs:
       - name: Checkout content-build
         uses: actions/checkout@v2
 
-      - name: Download production build artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: test-build.tar.bz2
+      # - name: Download production build artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: test-build.tar.bz2
 
-      - name: Unpack build
+      # - name: Unpack build
+      #   run: |
+      #     mkdir -p build/vagovprod
+      #     tar -C build/vagovprod -xjf test-build.tar.bz2
+
+      - name: Restore test build
         run: |
-          mkdir -p build/vagovprod
-          tar -C build/vagovprod -xjf test-build.tar.bz2
+          mkdir -p build
+          cp -R /tmp/${{ env.GITHUB_RUN_ID }}/test build/vagovrod
 
       - name: Get Node version
         id: get-node-version
@@ -400,15 +419,20 @@ jobs:
       - name: Checkout vagov-content
         uses: actions/checkout@v2
 
-      - name: Download production build artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: test-build.tar.bz2
+      # - name: Download production build artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: test-build.tar.bz2
 
-      - name: Unpack build
+      # - name: Unpack build
+      #   run: |
+      #     mkdir -p build/vagovprod
+      #     tar -C build/vagovprod -xjf test-build.tar.bz2
+
+      - name: Restore test build
         run: |
-          mkdir -p build/vagovprod
-          tar -C build/vagovprod -xjf test-build.tar.bz2
+          mkdir -p build
+          cp -R /tmp/${{ env.GITHUB_RUN_ID }}/test build/vagovrod
 
       - name: Get Node version
         id: get-node-version
