@@ -12,7 +12,7 @@
     "cy:test:docker": "./script/run-cypress-tests-docker.sh",
     "fetch-drupal-cache": "node script/drupal-aws-cache.js --fetch",
     "prebuild": "node script/prebuild.js",
-    "preview": "node script/preview.js",
+    "preview": "DRUPAL_ADDRESS=https://localization-nwlghnqkwe3ftxcgy830jkfejcxjswak.demo.cms.va.gov/ node script/preview.js",
     "heroku-serve": "http-server",
     "heroku-postbuild": "sh script/heroku-postbuild.sh",
     "install-repos": "./script/install-repos.sh",

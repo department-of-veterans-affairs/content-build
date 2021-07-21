@@ -6,7 +6,9 @@
 <div itemscope itemprop="mainEntity" itemtype="https://schema.org/FAQPage">
 
   <div id="content" class="interior">
+
     <main class="va-l-detail-page">
+
       <div class="usa-grid usa-grid-full">
 
       {% include 'src/site/navigation/sidebar_nav.drupal.liquid' with sidebar %}
@@ -18,7 +20,14 @@
         {% endif %}
 
         <article class="usa-content">
-          <div data-widget-type="i18-select" data-lang="{{ }}"></div>
+
+          <div
+            data-widget-type="i18-select"
+            data-entity-url="{{ entityUrl.path }}"
+            data-language-code="{{ fieldLanguageCode }}"
+            data-translated-pages='{{ fieldTranslatedPages | json }}'>
+          </div>
+
           <h1>{{ title }}</h1>
           <div class="va-introtext">
             {{ fieldIntroTextLimitedHtml.processed }}
