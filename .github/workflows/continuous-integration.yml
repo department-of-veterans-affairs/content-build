@@ -357,7 +357,7 @@ jobs:
       - name: Restore test build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test build/vagovrod
+          cp -R /tmp/${{ github.run_id }}/test build/vagovprod
           du -h build/vagovprod
 
       - name: Get Node version
@@ -433,7 +433,7 @@ jobs:
       - name: Restore test build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test build/vagovrod
+          cp -R /tmp/${{ github.run_id }}/test build/vagovprod
           du -h build/vagovprod
 
       - name: Get Node version
