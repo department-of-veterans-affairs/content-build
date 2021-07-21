@@ -13,7 +13,7 @@ jobs:
 
   accessibility-scan:
     name: Accessibility Scan
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     defaults:
       run:
         working-directory: content-build
