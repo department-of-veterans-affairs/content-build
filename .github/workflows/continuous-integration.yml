@@ -117,9 +117,9 @@ jobs:
       - name: Persist E2E test build
         if: ${{ matrix.buildtype == 'vagovprod' }}
         run: |
-          mkdir -p /tmp/${{ env.GITHUB_RUN_ID }}
-          rm -rf /tmp/${{ env.GITHUB_RUN_ID }}/test
-          cp -R build/vagovprod /tmp/${{ env.GITHUB_RUN_ID }}/test
+          mkdir -p /tmp/${{ github.run_id }}
+          rm -rf /tmp/${{ github.run_id }}/test
+          cp -R build/vagovprod /tmp/${{ github.run_id }}/test
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
@@ -137,9 +137,9 @@ jobs:
       # TODO: Try using `mv` instead of `cp` for better performance.
       - name: Persist prearchived build
         run: |
-          mkdir -p /tmp/${{ env.GITHUB_RUN_ID }}
-          rm -rf /tmp/${{ env.GITHUB_RUN_ID }}/vagovprod
-          cp -R build/${{ matrix.buildtype }} /tmp/${{ env.GITHUB_RUN_ID }}
+          mkdir -p /tmp/${{ github.run_id }}
+          rm -rf /tmp/${{ github.run_id }}/vagovprod
+          cp -R build/${{ matrix.buildtype }} /tmp/${{ github.run_id }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -357,7 +357,7 @@ jobs:
       - name: Restore test build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ env.GITHUB_RUN_ID }}/test build/vagovrod
+          cp -R /tmp/${{ github.run_id }}/test build/vagovrod
 
       - name: Get Node version
         id: get-node-version
@@ -432,7 +432,7 @@ jobs:
       - name: Restore test build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ env.GITHUB_RUN_ID }}/test build/vagovrod
+          cp -R /tmp/${{ github.run_id }}/test build/vagovrod
 
       - name: Get Node version
         id: get-node-version
