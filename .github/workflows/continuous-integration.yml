@@ -341,7 +341,7 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
-      - name: Checkout content-build
+      - name: Checkout
         uses: actions/checkout@v2
 
       # - name: Download production build artifact
@@ -416,7 +416,7 @@ jobs:
     needs: build
     timeout-minutes: 30
     steps:
-      - name: Checkout vagov-content
+      - name: Checkout
         uses: actions/checkout@v2
 
       # - name: Download production build artifact
