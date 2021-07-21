@@ -231,7 +231,7 @@ function build(BUILD_OPTIONS) {
       throw err;
     }
 
-    // If we're running a watch, let the engineer know important information
+    // If we're running a watch, let the engineer know important information.
     if (BUILD_OPTIONS.watch) {
       // Avoid saving Metalsmith files object on rebuild to prevent overwriting the object
       if (!global.rebuild) global.metalsmithFiles = files;
