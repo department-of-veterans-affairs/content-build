@@ -416,6 +416,10 @@ jobs:
     runs-on: [self-hosted, Snoopy]
     needs: build
     timeout-minutes: 30
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
