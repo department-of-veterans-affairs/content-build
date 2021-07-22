@@ -223,7 +223,7 @@ function build(BUILD_OPTIONS) {
   // We no longer need to build them now that they are stored directly on disk
   smith.use(ignoreAssets(), 'Ignore assets for build');
 
-  smith.build((err, files) => {
+  smith.build(async (err, files) => {
     if (err) {
       smith.endGarbageCollection();
       throw err;
@@ -257,15 +257,15 @@ function build(BUILD_OPTIONS) {
         smith.printPeakMemory();
       }
 
-      smith.endGarbageCollection();
-
       console.log('The Metalsmith build has completed.');
     }
 
     if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {
       // Add debug info to HTML files
-      addDebugInfo(files, BUILD_OPTIONS.buildtype);
+      await addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
+
+    smith.endGarbageCollection();
   }); // smith.build()
 }
 
