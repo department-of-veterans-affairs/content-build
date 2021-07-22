@@ -1,20 +1,40 @@
 <!-- Canonical URL -->
-<link rel="canonical" href="{{ hostUrl }}{{ entityUrl.path }}/" />
+{% if entityUrl.path %}
+  <link rel="canonical" href="{{ hostUrl }}{{ entityUrl.path }}/" />
+{% else %}
+  <link rel="canonical" href="{{ hostUrl }}{{ path }}/" />
+{% endif %}
 
 <!-- Last updated -->
 {% if changed %}
   <meta name="DC.Date" scheme="W3CDTF" content="{{ changed| dateFromUnix: 'YYYY-MM-DD' }}">
 {% endif %}
 
+<!-- Last updated -->
+{% if lastupdate %}
+  <meta name="DC.Date" content="{{lastupdate| date: '%Y-%m-%d'}}" property="http://purl.org/dc/terms/date">
+{% endif %}
+
 <!-- og:url -->
-{% if entityUrl.path %}
-  <meta property="og:url" content="{{ hostUrl }}{{ entityUrl.path }}/">
+{% if entityUrl.path or path %}
+  {% if entityUrl.path %}
+    <meta property="og:url" content="{{ hostUrl }}{{ entityUrl.path }}/">
+  {% else %}
+    <meta property="og:url" content="{{ hostUrl }}/{{ path }}">
+  {% endif %}
 {% else %}
   <meta property="og:url" content="{{ hostUrl }}/">
 {% endif %}
 
 <!-- og:type -->
 <meta property="og:type" content="website">
+
+<!-- article:tags -->
+{% if tags %}
+  {% for tag in tags %}
+    <meta property="article:tag" content="{{ tag }}">
+  {% endfor %}
+{% endif %}
 
 <!-- Custom metatags -->
 {% assign tagsSize = entityMetatags | size %}
@@ -50,16 +70,29 @@
   {% assign metaTitle = metaTitle | formatTitleTag %}
 
   <!-- og:site_name -->
-  <meta property="og:site_name" content="Veterans Affairs">
+  {% if drupalTags == true %}
+    <meta property="og:site_name" content="Veterans Affairs">
+  {% else %}
+    <meta property="og:site_name" content="VA.gov">
+  {% endif %}
 
   <!-- og:title -->
-  <meta property="og:title" content="{{ metaTitle }}">
+  {% if title %}
+    <meta property="og:title" content="{{ metaTitle }}">
+  {% else %}
+    <meta property="og:title" content="{{ hostUrl }}">
+  {% endif %}
 
   <!-- Twitter metatags -->
+  {% if title %}
+    <meta name="twitter:title" content="{{ metaTitle }}">
+  {% else %}
+    <meta name="twitter:title" content="{{ hostUrl }}">
+  {% endif %}
+
   <meta name="twitter:card" content="Summary">
   <meta name="twitter:image" content="{{ hostUrl }}/img/design/logo/va-og-twitter-image.png">
   <meta name="twitter:site" content="@DeptVetAffairs">
-  <meta name="twitter:title" content="{{ metaTitle }}">
 
   <!-- Derive the meta description. -->
   {% if fieldClinicalHealthServi %}
@@ -82,6 +115,15 @@
   <!-- og:image -->
   <meta content="{{ hostUrl }}/img/design/logo/va-og-image.png" property="og:image">
 
+  <!-- keywords -->
+  {% if keywords %}
+    <meta name ="keywords" content="{{keywords}}">
+  {% endif %}
+
   <!-- Title tag -->
-  <title>{{ metaTitle }}</title>
+  {% if title === 'Home' %}
+    <title>VA.gov</title>
+  {% else %}
+    <title>{{ metaTitle }}</title>
+  {% endif %}
 {% endif %}
