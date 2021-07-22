@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign, no-continue */
 const fs = require('fs-extra');
 const path = require('path');
-const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
 
 // Processes the data received from the home page query.
@@ -35,9 +34,9 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     );
 
     const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
-    const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
+    const bannerLocation = path.join(fragmentsRoot, 'home/banner.json');
     const bannerFile = fs.readFileSync(bannerLocation);
-    const banner = yaml.safeLoad(bannerFile);
+    const banner = JSON.parse(bannerFile);
 
     homeEntityObj = {
       ...homeEntityObj,
@@ -49,7 +48,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       hubs, // Full hub list.
       promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos, // Promo blocks.
       // eslint-disable-next-line camelcase
-      homepage_banner: banner,
+      emergency_banner: banner,
     };
 
     // Let Metalsmith know we're here.

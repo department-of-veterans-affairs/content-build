@@ -215,7 +215,6 @@
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",
     "git-diff": "^2.0.6",
-    "js-yaml": "^3.14.0",
     "jsesc": "^3.0.2",
     "jsonschema": "^1.1.1",
     "lodash": "^4.17.21",
@@ -241,7 +240,6 @@
   },
   "resolutions": {
     "**/lodash": "4.17.21",
-    "**/js-yaml": "^3.13.1",
     "**/jpeg-js": "^0.4.0",
     "**/dot-prop": "^5.1.1",
     "**/handlebars": "^4.7.7",
