@@ -115,7 +115,6 @@ Disallow: /black-hills-health-care
 Disallow: /boise-health-care
 Disallow: /boston-health-care
 Disallow: /bronx-health-care
-Disallow: /butler-health-care
 Disallow: /caribbean-health-care
 Disallow: /central-alabama-health-care
 Disallow: /central-arkansas-health-care
@@ -175,7 +174,6 @@ Disallow: /milwaukee-health-care
 Disallow: /montana-health-care
 Disallow: /mountain-home-health-care
 Disallow: /nebraska-western-iowa-health-care
-Disallow: /new-jersey-health-care
 Disallow: /new-mexico-health-care
 Disallow: /new-york-harbor-health-care
 Disallow: /north-florida-health-care
@@ -184,7 +182,6 @@ Disallow: /northeast-ohio-health-care
 Disallow: /northern-arizona-health-care
 Disallow: /northern-indiana-health-care
 Disallow: /northport-health-care
-Disallow: /oklahoma-city-health-care
 Disallow: /orlando-health-care
 Disallow: /pacific-islands-health-care
 Disallow: /palo-alto-health-care
@@ -199,7 +196,6 @@ Disallow: /roseburg-health-care
 Disallow: /saginaw-health-care
 Disallow: /salem-health-care
 Disallow: /salisbury-health-care
-Disallow: /salt-lake-city-health-care
 Disallow: /san-diego-health-care
 Disallow: /san-francisco-health-care
 Disallow: /sheridan-health-care
@@ -213,7 +209,6 @@ Disallow: /southern-nevada-health-care
 Disallow: /southern-oregon-health-care
 Disallow: /spokane-health-care
 Disallow: /st-louis-health-care
-Disallow: /syracuse-health-care
 Disallow: /tampa-health-care
 Disallow: /tennessee-valley-health-care
 Disallow: /texas-valley-health-care
