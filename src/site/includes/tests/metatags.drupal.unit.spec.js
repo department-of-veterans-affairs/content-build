@@ -180,15 +180,7 @@ describe('Metatags', () => {
       ).to.equal('veterans');
     });
 
-    it('returns title VA.gov when title == "HOME', async () => {
-      container = await renderHTML(layoutPath, {
-        title: 'Home',
-      });
-
-      expect(container.querySelector('title').text).to.equal('VA.gov');
-    });
-
-    it('returns title {metaTitle} when title != "HOME', async () => {
+    it('returns title {metaTitle}', async () => {
       container = await renderHTML(layoutPath, {
         title: 'Search',
       });
