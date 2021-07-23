@@ -70,18 +70,10 @@
   {% assign metaTitle = metaTitle | formatTitleTag %}
 
   <!-- og:site_name -->
-  {% if drupalTags == true %}
-    <meta property="og:site_name" content="Veterans Affairs">
-  {% else %}
-    <meta property="og:site_name" content="VA.gov">
-  {% endif %}
+  <meta property="og:site_name" content="Veterans Affairs">
 
   <!-- og:title -->
-  {% if title %}
-    <meta property="og:title" content="{{ metaTitle }}">
-  {% else %}
-    <meta property="og:title" content="{{ hostUrl }}">
-  {% endif %}
+  <meta property="og:title" content="{{ metaTitle }}">
 
   <!-- Twitter metatags -->
   {% if title %}

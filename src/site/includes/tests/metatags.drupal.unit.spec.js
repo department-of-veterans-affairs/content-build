@@ -90,28 +90,14 @@ describe('Metatags', () => {
   });
 
   describe('legacy metatags.liquid', () => {
-    it('returns metatag - [og:site_name] | Veterans Affairs when drupalTags is included in content', async () => {
-      container = await renderHTML(layoutPath, {
-        drupalTags: true,
-      });
+    it('returns metatag - [og:site_name] | Veterans Affairs', async () => {
+      container = await renderHTML(layoutPath, {});
 
       expect(
         container
           .querySelector("meta[property='og:site_name']")
           .getAttribute('content'),
       ).to.equal('Veterans Affairs');
-    });
-
-    it('returns metatag - [og:site_name] | VA.gov when drupalTags is not included in content', async () => {
-      container = await renderHTML(layoutPath, {
-        drupalTags: false,
-      });
-
-      expect(
-        container
-          .querySelector("meta[property='og:site_name']")
-          .getAttribute('content'),
-      ).to.equal('VA.gov');
     });
 
     it('returns metatag - [DC.Date] | {date} when lastupdate is included', async () => {
