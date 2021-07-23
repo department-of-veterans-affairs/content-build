@@ -1163,3 +1163,20 @@ describe('formatTitleTag', () => {
     expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
   });
 });
+
+describe('isPaginatedPath', () => {
+  it('identifies a paginated path', () => {
+    const path = '/resources/tag/all-veterans/2/';
+    expect(liquid.filters.isPaginatedPath(path)).to.equal(true);
+  });
+
+  it('identifies a non-paginated path', () => {
+    const path = '/';
+    expect(liquid.filters.isPaginatedPath(path)).to.equal(false);
+  });
+
+  it('does not break when the path is undefined', () => {
+    const path = undefined;
+    expect(liquid.filters.isPaginatedPath(path)).to.equal(false);
+  });
+});

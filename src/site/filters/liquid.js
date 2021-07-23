@@ -949,4 +949,15 @@ module.exports = function registerFilters() {
 
     return formattedTitle;
   };
+
+  liquid.filters.isPaginatedPath = path => {
+    // Split the paths into sections.
+    const pathSections = path?.split('/')?.filter(section => !!section);
+
+    // Derive the last section.
+    const lastSection = pathSections?.[pathSections?.length - 1];
+
+    // If the last path section is a number greater than 2, return true.
+    return parseInt(lastSection, 10) >= 2;
+  };
 };
