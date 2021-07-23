@@ -32,7 +32,9 @@ on VA.gov, you'll need to build these static pages using the following commands:
 
 `yarn serve`
 
-- starts a local server for the site at port 3002
+- starts a local server for the site using the latest build
+- use `--port` to set the port for the server (`3002` by default)
+- use `--buildtype` to set the build type (`localhost` by default)
 
 `yarn watch`
 
