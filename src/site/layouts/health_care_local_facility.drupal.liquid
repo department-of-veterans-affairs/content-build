@@ -130,32 +130,23 @@
                   class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
               <p>Click on a topic for more details.</p>
-              <div class="usa-accordion-bordered">
-                <ul class="usa-unstyled-list">
-                  {% for accordionItem in fieldLocationServices %}
-                    {% assign item = accordionItem.entity %}
-                    <li class="vads-u-margin-bottom--1">
-                      <h3 class="vads-u-margin--0">
-                        {% comment %}
-                          See Google Analytics datalayer handling in src/applications/static-pages/subscribeAccordionEvents.js
-                        {% endcomment %}
-                        <button
-                            class="usa-accordion-button usa-button-unstyled vads-u-padding-y--2 vads-u-padding-left--2p5 vads-u-line-height--4"
-                            aria-expanded="false"
-                            aria-controls="{{ item.entityBundle }}-{{ item.entityId }}"
-                            data-label="{{ item.fieldTitle }}"
-                        >
-                          {{ item.fieldTitle }}
-                        </button>
-                      </h3>
-                      <div id="{{ item.entityBundle }}-{{ item.entityId }}"
-                           class="usa-accordion-content" aria-hidden="true">
-                        {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
-                      </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </div>
+              <va-accordion bordered>
+                {% for accordionItem in fieldLocationServices %}
+                  {% assign item = accordionItem.entity %}
+                  {% comment %}
+                    See Google Analytics datalayer handling in src/applications/static-pages/subscribeAccordionEvents.js
+                  {% endcomment %}
+                  <va-accordion-item
+                    header="{{ item.fieldTitle }}"
+                    level="3"
+                    data-label="{{ item.fieldTitle }}"
+                  >
+                    <div id="{{ item.entityBundle }}-{{ item.entityId }}">
+                      {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
+                    </div>
+                  </va-accordion-item>
+                {% endfor %}
+              </va-accordion>
             </section>
           {% endunless %}
 

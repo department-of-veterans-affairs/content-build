@@ -1,21 +1,20 @@
-<div data-template="facilities/health_service" class="usa-accordion-bordered service-accordion-output">
-    <ul class="usa-unstyled-list">
+<div data-template="facilities/health_service" class="service-accordion-output">
+    <va-accordion bordered>
         {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
-        <li>
-            <button
-                    class="usa-accordion-button usa-button-unstyled"
-                    aria-expanded="false"
-                    aria-controls="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}"
-                    data-label="{{ serviceTaxonomy.name }}"
-                    data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
-            >
-                {{ serviceTaxonomy.name }}
-                {% if serviceTaxonomy.fieldAlsoKnownAs %}
-                    <p class="vads-u-font-weight--normal vads-u-margin--0">{{ serviceTaxonomy.fieldAlsoKnownAs }}</p>
+        <va-accordion-item
+            header="{{ serviceTaxonomy.name }}"
+            {% if serviceTaxonomy.fieldAlsoKnownAs %}
+                subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
+                data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
+            {% endif %}
+            data-label="{{ serviceTaxonomy.name }}"
+        >
+            <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
+                {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
+                    <div class="vads-u-margin-bottom--2">
+                        <span class="vads-u-font-style--italic">Common conditions: </span>{{ serviceTaxonomy.fieldCommonlyTreatedCondition }}
+                    </div>
                 {% endif %}
-            </button>
-            <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}" class="usa-accordion-content" aria-hidden="true">
-                {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}<div class="vads-u-margin-bottom--2"><span class="vads-u-font-style--italic">Common conditions: </span>{{ serviceTaxonomy.fieldCommonlyTreatedCondition }}</div>{% endif %}
                 {% if serviceTaxonomy.description.processed  %}
                     <div>{{ serviceTaxonomy.description.processed }}</div>
                 {% endif %}
@@ -36,7 +35,9 @@
                                                 'accordion-section-label': '{{ sectionName }}'
 
                                             })"
-                                        href="{{ facility.entityUrl.path }}">{{ facility.title }}
+                                        href="{{ facility.entityUrl.path }}"
+                                    >
+                                        {{ facility.title }}
                                     </a>
                                 </li>
                             {% endif %}
@@ -48,6 +49,6 @@
                     <div>{{ healthService.fieldBody.processed }}</div>
                 {% endif %}
             </div>
-        </li>
-    </ul>
+        </va-accordion-item>
+    </va-accordion>
 </div>

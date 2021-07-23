@@ -455,23 +455,22 @@
             <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
 
             <!-- Questions/Answers -->
-            <div class="usa-accordion-bordered vads-u-margin-y--2">
-              <ul class="usa-unstyled-list">
-                {% for faqParagraph in fieldClpFaqParagraphs %}
-                  {% if faqParagraph.entity %}
-                    <li data-faq-entity-id="{{ faqParagraph.entity.entityId }}">
-                      <button aria-controls="{{ faqParagraph.entity.entityBundle }}-{{ faqParagraph.entity.entityId }}" class="usa-accordion-button usa-button-unstyled" aria-expanded="false" type="button">{{ faqParagraph.entity.fieldQuestion }}</button>
-                      <div id="{{ faqParagraph.entity.entityBundle }}-{{ faqParagraph.entity.entityId }}" class="usa-accordion-content" aria-hidden="true">
-                        {% assign fieldAnswer = faqParagraph.entity.fieldAnswer | first %}
-                        {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
-                        {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-                        {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
-                      </div>
-                    </li>
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            </div>
+            <va-accordion bordered>
+              {% for faqParagraph in fieldClpFaqParagraphs %}
+                {% if faqParagraph.entity %}
+                  <va-accordion-item
+                    header="{{ faqParagraph.entity.fieldQuestion }}"
+                    level="3"
+                    data-faq-entity-id="{{ faqParagraph.entity.entityId }}"
+                  >
+                    {% assign fieldAnswer = faqParagraph.entity.fieldAnswer | first %}
+                    {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                    {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                    {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                  </va-accordion-item>
+                {% endif %}
+              {% endfor %}
+            </va-accordion>
           </div>
         </div>
 
