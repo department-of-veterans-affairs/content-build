@@ -1,8 +1,10 @@
 <!-- Canonical URL -->
 {% if entityUrl.path %}
   <link rel="canonical" href="{{ hostUrl }}{{ entityUrl.path }}/" />
+{% elsif path %}
+  <link rel="canonical" href="{{ hostUrl }}/{{ path }}/" />
 {% else %}
-  <link rel="canonical" href="{{ hostUrl }}{{ path }}/" />
+  <link rel="canonical" href="{{ hostUrl }}/" />
 {% endif %}
 
 <!-- Last updated -->
@@ -10,18 +12,19 @@
   <meta name="DC.Date" scheme="W3CDTF" content="{{ changed| dateFromUnix: 'YYYY-MM-DD' }}">
 {% endif %}
 
+{% comment %}
+  This conditional is currently only truthy for the page https://www.va.gov/school-administrators/
+{% endcomment %}
 <!-- Last updated -->
 {% if lastupdate %}
   <meta name="DC.Date" content="{{lastupdate| date: '%Y-%m-%d'}}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
 <!-- og:url -->
-{% if entityUrl.path or path %}
-  {% if entityUrl.path %}
-    <meta property="og:url" content="{{ hostUrl }}{{ entityUrl.path }}/">
-  {% else %}
-    <meta property="og:url" content="{{ hostUrl }}/{{ path }}">
-  {% endif %}
+{% if entityUrl.path %}
+  <meta property="og:url" content="{{ hostUrl }}{{ entityUrl.path }}/">
+{% elsif path %}
+  <meta property="og:url" content="{{ hostUrl }}/{{ path }}">
 {% else %}
   <meta property="og:url" content="{{ hostUrl }}/">
 {% endif %}
