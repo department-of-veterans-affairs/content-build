@@ -7,6 +7,7 @@ function createSitemaps(BUILD_OPTIONS) {
   const metalsmithSitemapOptions = {
     hostname,
     omitIndex: true,
+    modifiedProperty: 'stats.mtime',
     lastmod: now,
   };
 
