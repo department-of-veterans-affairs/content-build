@@ -28,6 +28,7 @@
     "nightwatch-visual": "node src/platform/testing/visual-regression/index.js",
     "pr-check": "node script/pr-check.js",
     "security-check": "node ./script/security-check.js",
+    "serve": "node script/serve.js",
     "test": "npm run test:unit && npm run test:e2e",
     "test:e2e": "./script/run-nightwatch.sh",
     "test:e2e:headless": "./script/run-nightwatch.sh --env headless",
