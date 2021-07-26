@@ -120,9 +120,14 @@
 
   {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
 
-  <div data-widget-type="banners" data-homepage-banner-content="{{ homepage_banner.content | escape }}"
+  <div
+    data-widget-type="banners"
+    data-homepage-banner-content="{{ homepage_banner.content | escape }}"
     data-homepage-banner-title="{{ homepage_banner.title | escape }}"
-    data-homepage-banner-type="{{ homepage_banner.type }}" data-homepage-banner-visible="{{ homepage_banner.visible }}">
+    data-homepage-banner-type="{{ homepage_banner.type }}"
+    data-homepage-banner-visible="{{ homepage_banner.visible }}"
+    role="region"
+  >
   </div>
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
