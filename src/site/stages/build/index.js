@@ -262,7 +262,9 @@ function build(BUILD_OPTIONS) {
 
     if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {
       // Add debug info to HTML files
+      console.time('Debug info time');
       await addDebugInfo(files, BUILD_OPTIONS.buildtype);
+      console.timeEnd('Debug info time');
     }
 
     smith.endGarbageCollection();
