@@ -1,13 +1,20 @@
 const cheerio = require('cheerio');
 
 const _isBrokenLink = require('./isBrokenLink');
+const isCMSUrl = require('./isCMSUrl');
 
 /**
  * Parses the <a> and <img> elements from an HTML file, validating each HREF/SRC value.
  * @param {*} file The HTML file from the Metalsmith pipeline
  * @param {Set<string>} allPaths The paths of all files in the website. Used to confirm the existence of a file.
+ * @param {*} buildOptions The build options.
  */
-function getBrokenLinks(file, allPaths, isBrokenLink = _isBrokenLink) {
+function getBrokenLinks(
+  file,
+  allPaths,
+  buildOptions,
+  isBrokenLink = _isBrokenLink,
+) {
   const $ = file.dom;
   const elements = $('a, img, script');
   const currentPath = file.path;
@@ -37,8 +44,9 @@ function getBrokenLinks(file, allPaths, isBrokenLink = _isBrokenLink) {
     }
 
     const isBroken = isBrokenLink(target, currentPath, allPaths);
+    const isCMS = isCMSUrl(target, file, buildOptions);
 
-    if (isBroken) {
+    if (isBroken || isCMS) {
       const html = cheerio.html($node);
       linkErrors.push({
         html,
