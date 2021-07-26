@@ -566,6 +566,16 @@ describe('hashReference', () => {
   });
 });
 
+describe('fileSize', () => {
+  it('returns file size in MB when over 10,000 bytes in size', () => {
+    expect(liquid.filters.fileSize(48151)).to.eq('0.05MB');
+  });
+
+  it('returns file size in KB when under 10,000 bytes in size', () => {
+    expect(liquid.filters.fileSize(2342)).to.eq('2.34KB');
+  });
+});
+
 describe('fileExt', () => {
   it('returns the following string - testing', () => {
     expect(liquid.filters.fileExt('testing')).to.eq('testing');
@@ -601,6 +611,48 @@ describe('fileExt', () => {
 
   it('returns an empty string when an empty array is passed', () => {
     expect(liquid.filters.fileExt([])).to.eq('');
+  });
+});
+
+describe('fileDisplayName', () => {
+  it('returns the name of a file when provided only a name', () => {
+    expect(liquid.filters.fileDisplayName('file.txt')).to.eq('file.txt');
+  });
+
+  it('returns the name of a file when provided a filepath of depth 1', () => {
+    expect(liquid.filters.fileDisplayName('files/file.txt')).to.eq('file.txt');
+  });
+
+  it('returns name of a file when provided a filepath of depth > 1', () => {
+    expect(liquid.filters.fileDisplayName('file/texts/file.txt')).to.eq(
+      'file.txt',
+    );
+  });
+
+  it('returns name of a file with multiple extenstions', () => {
+    expect(liquid.filters.fileDisplayName('file.test.txt')).to.eq(
+      'file.test.txt',
+    );
+  });
+
+  it('returns name of a file when in an array', () => {
+    expect(liquid.filters.fileDisplayName(['file.txt'])).to.eq('file.txt');
+  });
+
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.fileDisplayName(null)).to.eq(null);
+  });
+
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.fileDisplayName(undefined)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.fileDisplayName('')).to.eq(null);
+  });
+
+  it('returns an empty string when an empty array is passed', () => {
+    expect(liquid.filters.fileDisplayName([])).to.eq('');
   });
 });
 

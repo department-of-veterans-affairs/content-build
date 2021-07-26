@@ -176,7 +176,13 @@ module.exports = function registerFilters() {
   liquid.filters.removeUnderscores = data =>
     data && data.length ? data.replace('_', ' ') : data;
 
-  liquid.filters.fileSize = data => `${(data / 1000000).toFixed(2)}MB`;
+  liquid.filters.fileSize = data => {
+    if (data < 10000) {
+      return `${(data / 1000).toFixed(2)}KB`;
+    }
+
+    return `${(data / 1000000).toFixed(2)}MB`;
+  };
 
   liquid.filters.fileExt = data => {
     if (!data) return null;
@@ -185,6 +191,18 @@ module.exports = function registerFilters() {
       .split('.')
       .slice(-1)
       .pop();
+  };
+
+  liquid.filters.fileDisplayName = data => {
+    if (!data) return null;
+
+    const match = data.toString().match(/[^/]+$/);
+
+    if (match && match.length) {
+      return data.toString().match(/[^/]+$/)[0] || data.toString();
+    }
+
+    return data.toString();
   };
 
   liquid.filters.breakIntoSingles = data => {
