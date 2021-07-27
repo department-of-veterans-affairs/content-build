@@ -86,7 +86,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 ${{ matrix.no-drpual-proxy }}
+        run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-max-parallel-requests=15 ${{ matrix.no-drpual-proxy }}
         env:
           NODE_ENV: production
 
