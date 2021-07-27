@@ -119,15 +119,19 @@
 <script nonce="**CSP_NONCE**" type="text/javascript">
   var hubLinksList = document.getElementsByClassName('hub-links-list');
 
-  for (var i=0; i < hubLinksList.length; i++) {
-    hubLinksList[i].addEventListener('click', function(e) {
-      var linkData = e.target.dataset;
+  if (hubLinksList) {
+    for (var i=0; i < hubLinksList.length; i++) {
+      if (hubLinksList[i]) {
+        hubLinksList[i].addEventListener('click', function(e) {
+          var linkData = e.target.dataset;
 
-      recordEvent({
-        event: 'nav-zone-one',
-        'nav-path': linkData.navPath,
-      });
-    });
+          recordEvent({
+            event: 'nav-zone-one',
+            'nav-path': linkData.navPath,
+          });
+        });
+      }
+    }
   }
 </script>
 
