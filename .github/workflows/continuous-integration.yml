@@ -30,7 +30,6 @@ jobs:
       # Sandbox Drupal address is used on branches other than master.
       DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-      NO-DRUPAL-PROXY: --no-drupal-proxy
 
     strategy:
       fail-fast: true
@@ -39,13 +38,10 @@ jobs:
         include:
           - buildtype: vagovdev
             drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
-            no-drupal-proxy: --no-drupal-proxy
           - buildtype: vagovstaging
             drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
-            no-drupal-proxy: --no-drupal-proxy
           - buildtype: vagovprod
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
-            no-drupal-proxy: ''
 
     steps:
       - name: Checkout vagov-content
@@ -84,12 +80,10 @@ jobs:
 
       - name: Set Drupal address & proxy
         if: ${{ github.ref == 'refs/heads/master' }}
-        run: |
-          echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
-          echo "NO-DRUPAL-PROXY=${{ matrix.no-drupal-proxy }}" >> $GITHUB_ENV
+        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 ${{ env.NO-DRUPAL-PROXY }}
+        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy
         env:
           NODE_ENV: production
 
