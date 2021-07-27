@@ -117,17 +117,20 @@
 </main> <!-- end #content -->
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
+  // Derive the list of hub links.
   var hubLinksList = document.getElementsByClassName('hub-links-list');
 
+  // Check to see if we found the hub links.
   if (hubLinksList) {
-    for (var i=0; i < hubLinksList.length; i++) {
+    // Iterate over each hub link.
+    for (var i = 0; i < hubLinksList.length; i++) {
+      // Check to see if we found the hub link.
       if (hubLinksList[i]) {
-        hubLinksList[i].addEventListener('click', function(e) {
-          var linkData = e.target.dataset;
-
+        // Add a click handler to the hub link to track clicks in analytics.
+        hubLinksList[i].addEventListener('click', function(event) {
           recordEvent({
             event: 'nav-zone-one',
-            'nav-path': linkData.navPath,
+            'nav-path': event ? event.target.dataset.navPath : null,
           });
         });
       }
