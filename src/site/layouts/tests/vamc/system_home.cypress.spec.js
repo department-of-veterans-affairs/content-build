@@ -20,6 +20,11 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
     cy.get('#sidenav-menu').should('not.be.visible');
   }
   cy.get('h1').contains('VA Pittsburgh health care');
+  cy.get('.system-img')
+    .should('be.visible')
+    .and($img => {
+      expect($img[0].naturalWidth).to.be.greaterThan(0);
+    });
   cy.get('h2').contains('Locations');
   cy.get('[data-template="includes/facilityListing"]').each($listing => {
     cy.wrap($listing)
