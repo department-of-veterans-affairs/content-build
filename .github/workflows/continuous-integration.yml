@@ -83,7 +83,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Set Drupal address & proxy
-        if: ${{ github.ref == 'refs/heads/fix/github-actions/ci' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
           echo "NO-DRUPAL-PROXY=${{ matrix.no-drupal-proxy }}" >> $GITHUB_ENV
