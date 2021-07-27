@@ -1138,6 +1138,15 @@ describe('phoneLinks', () => {
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
+  it('wraps multiple phone numbers', () => {
+    const text =
+      'Here is a phone number: (123)-456-7890. And (one) more: (890)-456-1234. Noice!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
+      'And (one) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
   it('does not double-wrap phone numbers', () => {
     const html =
       'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
