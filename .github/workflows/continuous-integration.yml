@@ -30,6 +30,7 @@ jobs:
       # Sandbox Drupal address is used on branches other than master.
       DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NO-DRUPAL-PROXY: --no-drupal-proxy
 
     strategy:
       fail-fast: true
@@ -83,10 +84,12 @@ jobs:
 
       - name: Set Drupal address
         if: ${{ github.ref == 'refs/heads/master' }}
-        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+        run: |
+          echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+          echo "NO-DRUPAL-PROXY=${{ matrix.no-drupal-proxy }}" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-max-parallel-requests=15 ${{ matrix.no-drupal-proxy }}
+        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 ${{ env.NO-DRUPAL-PROXY }}
         env:
           NODE_ENV: production
 
