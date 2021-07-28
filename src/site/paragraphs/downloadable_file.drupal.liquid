@@ -34,10 +34,18 @@
 
     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
         {% assign url = entity.fieldMedia.entity.fieldDocument.entity.url %}
-        <a class="file-download-with-icon" target="_blank"
-           href="{{url}}" download="{{url}}">
+        {% assign extenstion = url | fileExt %}
+        <a
+            class="file-download-with-icon"
+            target="_blank"
+            href="{{url}}"
+            download="{{url | fileDisplayName}}"
+            {% if extension == 'pdf' %}
+                type="application/{{extension}}"
+            {% endif %}
+        >
             <i class="fas fa-download vads-u-margin--0p5" aria-label="Download"></i>
-            {{entity.fieldTitle}} ({{url | fileExt | upcase}})
+            {{entity.fieldTitle}} ({{extension | upcase}})
         </a>
     {% endif %}
 
