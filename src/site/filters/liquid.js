@@ -220,11 +220,11 @@ module.exports = function registerFilters() {
 
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
-    const replacePattern = /((\d{3}-))?\d{3}-\d{3}-\d{4}(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
+    const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
     if (data) {
       return data.replace(
         replacePattern,
-        '<a target="_blank" href="tel:$&">$&</a>',
+        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
       );
     }
 
