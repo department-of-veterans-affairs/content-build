@@ -22,19 +22,23 @@ const KEYS_TO_IGNORE = [
   'private',
 ];
 
-async function writeFile(fileName, fileObject, buildtype) {
-  const filePath = path.join('build', buildtype, fileName);
-  const contents = await fs.readFileSync(filePath, 'utf8');
+function writeFile(fileName, fileObject, buildtype) {
+  return new Promise(resolve => {
+    const filePath = path.join('build', buildtype, fileName);
+    const contents = fs.readFileSync(filePath, 'utf8');
 
-  // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
-  // when the `debug` key doesn't exist in the Metalsmith file entry.
-  // We want to replace all instances of that with the debug object.
-  const oldString = 'window.contentData = null;';
-  const debugInfo = _.omit(fileObject, KEYS_TO_IGNORE);
-  const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
-  const newContents = contents.toString().replace(oldString, newString);
+    // `window.contentData = null` is added to Drupal pages from the debug.drupal.liquid template
+    // when the `debug` key doesn't exist in the Metalsmith file entry.
+    // We want to replace all instances of that with the debug object.
+    const oldString = 'window.contentData = null;';
+    const debugInfo = _.omit(fileObject, KEYS_TO_IGNORE);
+    const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
+    const newContents = contents.toString().replace(oldString, newString);
 
-  await fs.writeFileSync(filePath, newContents, { overwrite: true });
+    fs.writeFileSync(filePath, newContents, { overwrite: true });
+
+    resolve();
+  });
 }
 
 async function addDebugInfo(files, buildtype) {
@@ -43,6 +47,7 @@ async function addDebugInfo(files, buildtype) {
   try {
     console.log('\nAdding debug info to Drupal pages...\n');
     console.time(timeString);
+
     const isDrupalPage = fileName => files[fileName].isDrupalPage;
     const drupalFileNames = Object.keys(files).filter(isDrupalPage);
 
