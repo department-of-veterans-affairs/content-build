@@ -1,8 +1,7 @@
 /* eslint-disable no-param-reassign, no-continue */
+const { sleep } = require('../../../../../script/utils');
 
 function createRedirects(options) {
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
   return async (files, metalsmith, done) => {
     if (options.domainReplacements) {
       const htmlFilter = filename => filename.endsWith('html');
