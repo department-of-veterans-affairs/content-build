@@ -17,7 +17,7 @@
 {% endcomment %}
 <!-- Last updated -->
 {% if lastupdate %}
-  <meta name="DC.Date" content="{{lastupdate| date: '%Y-%m-%d'}}" property="http://purl.org/dc/terms/date">
+  <meta name="DC.Date" content="{{ lastupdate| date: '%Y-%m-%d' }}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
 <!-- og:url -->
