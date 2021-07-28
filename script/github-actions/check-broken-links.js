@@ -26,9 +26,9 @@ if (fs.existsSync(reportPath)) {
     .replace(/\n/g, '\\n')
     .replace(/"/g, '\\"')}" }]`; // format summary according to slack api
 
-  // console.log(
-  //   `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
-  // );
+  console.log(
+    `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
+  );
 
   console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
   console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);

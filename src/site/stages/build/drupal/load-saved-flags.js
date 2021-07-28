@@ -34,9 +34,9 @@ function useFlags(rawFlags, shouldLog = true) {
         // - only log once rather than 100's of times
         // - indicate the solution may be to pass the --pull-drupal flag to the build.
         // eslint-disable-next-line no-console
-        // console.error(
-        //   `Could not find query flag ${prop.toString()}. This could be a typo or the feature flag wasn't returned from Drupal.`,
-        // );
+        console.error(
+          `Could not find query flag ${prop.toString()}. This could be a typo or the feature flag wasn't returned from Drupal.`,
+        );
       }
 
       return obj[prop];

@@ -30,7 +30,7 @@ function createPastEventListPages(page, drupalPagePath, files) {
 
   // separate current events from past events;
   allEvents.entities.forEach(eventTeaser => {
-    const startDate = eventTeaser?.fieldDatetimeRangeTimezone?.value;
+    const startDate = eventTeaser.fieldDatetimeRangeTimezone.value;
 
     // Check if the date is in the past
     const startDateUTC = startDate;
@@ -190,11 +190,11 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
 function addGetUpdatesFields(page, pages) {
   const regionPageUrlPath = page.entityUrl.breadcrumb[1]?.url?.path;
 
-  // if (!regionPageUrlPath) {
-  //   throw new Error(
-  //     `CMS error while building breadcrumbs: "${page.entityUrl.path}" is missing reference to a parent or grandparent.`,
-  //   );
-  // }
+  if (!regionPageUrlPath) {
+    throw new Error(
+      `CMS error while building breadcrumbs: "${page.entityUrl.path}" is missing reference to a parent or grandparent.`,
+    );
+  }
 
   const regionPage = pages.find(p => p.entityUrl.path === regionPageUrlPath);
 
@@ -213,8 +213,8 @@ function addGetUpdatesFields(page, pages) {
  */
 function releaseDateSorter(legacyDates = [], reverse = false, stale = true) {
   let sorted = legacyDates.entities.sort((a, b) => {
-    const start1 = moment(a?.fieldReleaseDate?.value);
-    const start2 = moment(b?.fieldReleaseDate?.value);
+    const start1 = moment(a.fieldReleaseDate.value);
+    const start2 = moment(b.fieldReleaseDate.value);
     return reverse ? start2 - start1 : start1 - start2;
   });
 
@@ -237,8 +237,8 @@ function releaseDateSorter(legacyDates = [], reverse = false, stale = true) {
  */
 function eventDateSorter(dates = [], reverse = false, stale = true) {
   let sorted = dates.entities.sort((a, b) => {
-    const start1 = a?.fieldDatetimeRangeTimezone?.value;
-    const start2 = b?.fieldDatetimeRangeTimezone?.value;
+    const start1 = a.fieldDatetimeRangeTimezone.value;
+    const start2 = b.fieldDatetimeRangeTimezone.value;
     return reverse ? start2 - start1 : start1 - start2;
   });
 
@@ -246,7 +246,7 @@ function eventDateSorter(dates = [], reverse = false, stale = true) {
 
   if (stale) {
     sorted = sorted.filter(
-      item => item?.fieldDatetimeRangeTimezone?.value > currentDateUTC,
+      item => item.fieldDatetimeRangeTimezone.value > currentDateUTC,
     );
   }
 
