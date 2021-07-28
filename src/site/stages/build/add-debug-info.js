@@ -35,13 +35,14 @@ async function writeFile(fileName, fileObject, buildtype) {
   const newContents = contents.toString().replace(oldString, newString);
 
   await fs.writeFileSync(filePath, newContents, { overwrite: true });
-  process.stdout.write('.');
 }
 
 async function addDebugInfo(files, buildtype) {
+  const timeString = 'Debug info time';
+
   try {
     console.log('\nAdding debug info to Drupal pages...\n');
-    console.time('Debug info time');
+    console.time(timeString);
     const isDrupalPage = fileName => files[fileName].isDrupalPage;
     const drupalFileNames = Object.keys(files).filter(isDrupalPage);
 
@@ -64,8 +65,8 @@ async function addDebugInfo(files, buildtype) {
   } catch (error) {
     console.error('Error adding debug info to files.\n', error);
   } finally {
+    if (global.verbose) console.timeEnd(timeString);
     console.log('Finished adding debug info to Drupal pages.\n');
-    console.timeEnd('Debug info time');
   }
 }
 
