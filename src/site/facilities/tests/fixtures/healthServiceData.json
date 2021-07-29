@@ -1,0 +1,44 @@
+{
+  "healthService": {
+    "entityId": "7381",
+    "entityType": "node",
+    "entityUrl": {
+      "path": "/eastern-oklahoma-health-care/health-services/emergency-care-at-va-eastern-oklahoma-health-care"
+    },
+    "fieldBody": {
+      "processed": "<p>Testing phone numbers: 123-456-7890. (123)-456-7890. Yay!</p>"
+    },
+    "fieldLocalHealthCareService": [
+      {
+        "entity": {
+          "status": true,
+          "entityUrl": {
+            "path": "/eastern-oklahoma-health-care/locations/jack-c-montgomery-department-of-veterans-affairs-medical-4"
+          },
+          "fieldFacilityLocation": {
+            "entity": {
+              "entityUrl": {
+                "path": "/eastern-oklahoma-health-care/locations/jack-c-montgomery-department-of-veterans-affairs-medical"
+              },
+              "title": "Jack C. Montgomery Department of Veterans Affairs Medical Center"
+            }
+          }
+        }
+      }
+    ],
+    "fieldServiceNameAndDescripti": {
+      "entity": {
+        "weight": 0,
+        "entityId": "85",
+        "entityBundle": "health_care_service_taxonomy",
+        "fieldAlsoKnownAs": "Emergency room",
+        "fieldCommonlyTreatedCondition": null,
+        "name": "Emergency care",
+        "description": {
+          "processed": "<p>Testing phone numbers: 123-456-7890. (123)-456-7890. Yay!</p>"
+        },
+        "fieldServiceTypeOfCare": "Primary care"
+      }
+    }
+  }
+}
