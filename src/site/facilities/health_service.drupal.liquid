@@ -1,7 +1,6 @@
 <div data-template="facilities/health_service" class="service-accordion-output">
     <va-accordion bordered>
         {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
-      {{ serviceTaxonomy |  json }}
         <va-accordion-item
             header="{{ serviceTaxonomy.name }}"
             {% if serviceTaxonomy.fieldAlsoKnownAs %}
