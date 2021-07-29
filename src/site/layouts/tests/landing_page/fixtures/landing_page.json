@@ -22,5 +22,28 @@
     ],
     "path": "/records"
   },
-  "fieldIntroText": "Access your VA records and documents online to more easily manage your benefits."
+  "fieldIntroText": "Access your VA records and documents online to more easily manage your benefits.",
+  "fieldSupportServices": [
+    {
+      "entity": {
+        "title": "Jenny",
+        "fieldPhoneNumber": "312-867-5309",
+        "fieldLink": {
+          "url": {
+            "path": "tel+13128675309"
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "title": "TTY: 711"
+      }
+    },
+    {
+      "entity": {
+        "title": "Missing link"
+      }
+    }
+  ]
 }
