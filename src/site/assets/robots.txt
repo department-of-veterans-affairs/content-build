@@ -100,10 +100,8 @@ Disallow: /health-care/health-questionnaires/questionnaires/
 # disallow WIP VAMCs
 Disallow: /alaska-health-care
 Disallow: /albany-health-care
-Disallow: /alexandria-health-care
 Disallow: /amarillo-health-care
 Disallow: /ann-arbor-health-care
-Disallow: /asheville-health-care
 Disallow: /atlanta-health-care
 Disallow: /augusta-health-care
 Disallow: /battle-creek-health-care
@@ -145,7 +143,6 @@ Disallow: /fayetteville-arkansas-health-care
 Disallow: /fayetteville-coastal-health-care
 Disallow: /finger-lakes-health-care
 Disallow: /greater-los-angeles-health-care
-Disallow: /gulf-coast-health-care
 Disallow: /hampton-health-care
 Disallow: /hines-health-care
 Disallow: /houston-health-care
@@ -194,16 +191,11 @@ Disallow: /puget-sound-health-care
 Disallow: /richmond-health-care
 Disallow: /roseburg-health-care
 Disallow: /saginaw-health-care
-Disallow: /salem-health-care
-Disallow: /salisbury-health-care
 Disallow: /san-diego-health-care
 Disallow: /san-francisco-health-care
 Disallow: /sheridan-health-care
-Disallow: /shreveport-health-care
-Disallow: /sierra-nevada-health-care
 Disallow: /sioux-falls-health-care
 Disallow: /south-texas-health-care
-Disallow: /southeast-louisiana-health-care
 Disallow: /southern-arizona-health-care
 Disallow: /southern-nevada-health-care
 Disallow: /southern-oregon-health-care
@@ -219,7 +211,6 @@ Disallow: /washington-dc-health-care
 Disallow: /west-palm-beach-health-care
 Disallow: /west-texas-health-care
 Disallow: /western-colorado-health-care
-Disallow: /western-new-york-health-care
 Disallow: /white-river-junction-health-care
 Disallow: /wichita-health-care
 
