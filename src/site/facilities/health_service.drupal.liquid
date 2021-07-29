@@ -16,7 +16,7 @@
                     </div>
                 {% endif %}
                 {% if serviceTaxonomy.description.processed  %}
-                    <div>{{ serviceTaxonomy.description.processed }}</div>
+                    <description>{{ serviceTaxonomy.description.processed | phoneLinks }}</description>
                 {% endif %}
 
                 {% if healthService.fieldLocalHealthCareService.length > 0 %}
@@ -46,7 +46,7 @@
                 {% endif %}
 
                 {% if healthService.fieldBody.processed %}
-                    <div>{{ healthService.fieldBody.processed }}</div>
+                    <description>{{ healthService.fieldBody.processed | phoneLinks }}</description>
                 {% endif %}
             </div>
         </va-accordion-item>
