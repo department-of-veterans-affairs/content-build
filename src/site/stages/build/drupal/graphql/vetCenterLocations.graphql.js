@@ -11,6 +11,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
     path
     routed
   }
+  title
   entityBundle
   entityLabel
   fieldIntroText
