@@ -16,7 +16,7 @@ const path = require('path');
 const exec = util.promisify(require('child_process').exec);
 const https = require('https');
 const fs = require('fs-extra');
-const decompress = require('decompress');
+const tar = require('tar');
 
 const ENVIRONMENTS = require('../src/site/constants/environments');
 
@@ -42,9 +42,8 @@ const {
   getDrupalCacheKey,
 } = require('../src/site/stages/build/drupal/utilities-drupal');
 
-function downloadFile(url, dest) {
+function downloadAndExtractFile(url, dest) {
   return new Promise((resolve, reject) => {
-    const file = fs.createWriteStream(dest);
     https
       .get(url, response => {
         if (response.statusCode >= 300) {
@@ -52,10 +51,8 @@ function downloadFile(url, dest) {
             new Error(`HTTP error fetching archive: ${response.statusCode}`),
           );
         } else {
-          response.pipe(file);
-          file.on('finish', () => {
-            file.close(resolve);
-          });
+          response.pipe(tar.extract({ C: dest }));
+          response.on('finish', resolve);
         }
       })
       .on('error', err => {
@@ -73,19 +70,16 @@ async function fetchCache() {
       : options.buildtype;
   const cacheKey = await getDrupalCacheKey(cacheEnv);
   const fullCacheUrl = `${cacheUrl}/${cacheKey}.tar.bz2`;
-  const downloadPath = path.join(cacheDirectory, `${cacheKey}.tar.bz2`);
 
   fs.ensureDirSync(cacheDirectory);
 
   try {
-    await downloadFile(fullCacheUrl, downloadPath);
-    await decompress(downloadPath, cacheDirectory);
-
+    await downloadAndExtractFile(fullCacheUrl, cacheDirectory);
     console.log(`Downloaded ${fullCacheUrl}`);
     console.log(`Cache stored in ${cacheDirectory}`);
   } catch (e) {
     console.log(
-      `No cached content found for that environment and query: ${fullCacheUrl}`,
+      `Error fetching/extracting cached content ${fullCacheUrl}: ${e}`,
     );
   }
 }
