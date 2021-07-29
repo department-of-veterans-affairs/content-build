@@ -26,11 +26,7 @@
   {% endif %}
 
   <!-- Add metatags. -->
-  {% if drupalTags %}
-    {% include "src/site/includes/metatags.drupal.liquid" %}
-  {% else %}
-    {% include "src/site/includes/metatags.liquid" %}
-  {% endif %}
+  {% include "src/site/includes/metatags.drupal.liquid" %}
 
   <!-- Add polyfills. -->
   <script nonce="**CSP_NONCE**" nomodule data-entry-name="polyfills.js"></script>

@@ -1,4 +1,4 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with deriveBreadcrumbsFromUrl = true %}
@@ -27,7 +27,7 @@
             {% else %}
             <dt class="va-introtext">
               <dfn class="vads-u-visibility--screen-reader">Form name:</dfn>
-            {% endif %}            
+            {% endif %}
               {{ fieldVaFormName }}
             </dt>
           </div>

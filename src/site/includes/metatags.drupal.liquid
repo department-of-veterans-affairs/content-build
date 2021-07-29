@@ -1,20 +1,43 @@
 <!-- Canonical URL -->
-<link rel="canonical" href="{{ hostUrl }}{{ entityUrl.path }}/" />
+{% if entityUrl.path %}
+  <link rel="canonical" href="{{ hostUrl }}{{ entityUrl.path }}/" />
+{% elsif path %}
+  <link rel="canonical" href="{{ hostUrl }}/{{ path }}/" />
+{% else %}
+  <link rel="canonical" href="{{ hostUrl }}/" />
+{% endif %}
 
 <!-- Last updated -->
 {% if changed %}
   <meta name="DC.Date" scheme="W3CDTF" content="{{ changed| dateFromUnix: 'YYYY-MM-DD' }}">
 {% endif %}
 
+{% comment %}
+  This conditional is currently only truthy for the page https://www.va.gov/school-administrators/
+{% endcomment %}
+<!-- Last updated -->
+{% if lastupdate %}
+  <meta name="DC.Date" content="{{ lastupdate| date: '%Y-%m-%d' }}" property="http://purl.org/dc/terms/date">
+{% endif %}
+
 <!-- og:url -->
 {% if entityUrl.path %}
   <meta property="og:url" content="{{ hostUrl }}{{ entityUrl.path }}/">
+{% elsif path %}
+  <meta property="og:url" content="{{ hostUrl }}/{{ path }}">
 {% else %}
   <meta property="og:url" content="{{ hostUrl }}/">
 {% endif %}
 
 <!-- og:type -->
 <meta property="og:type" content="website">
+
+<!-- article:tags -->
+{% if tags %}
+  {% for tag in tags %}
+    <meta property="article:tag" content="{{ tag }}">
+  {% endfor %}
+{% endif %}
 
 <!-- Custom metatags -->
 {% assign tagsSize = entityMetatags | size %}
@@ -56,10 +79,15 @@
   <meta property="og:title" content="{{ metaTitle }}">
 
   <!-- Twitter metatags -->
+  {% if metaTitle %}
+    <meta name="twitter:title" content="{{ metaTitle }}">
+  {% else %}
+    <meta name="twitter:title" content="{{ hostUrl }}">
+  {% endif %}
+
   <meta name="twitter:card" content="Summary">
   <meta name="twitter:image" content="{{ hostUrl }}/img/design/logo/va-og-twitter-image.png">
   <meta name="twitter:site" content="@DeptVetAffairs">
-  <meta name="twitter:title" content="{{ metaTitle }}">
 
   <!-- Derive the meta description. -->
   {% if fieldClinicalHealthServi %}
@@ -81,6 +109,11 @@
 
   <!-- og:image -->
   <meta content="{{ hostUrl }}/img/design/logo/va-og-image.png" property="og:image">
+
+  <!-- keywords -->
+  {% if keywords %}
+    <meta name ="keywords" content="{{keywords}}">
+  {% endif %}
 
   <!-- Title tag -->
   <title>{{ metaTitle }}</title>
