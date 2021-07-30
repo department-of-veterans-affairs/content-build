@@ -934,7 +934,7 @@ module.exports = function registerFilters() {
     } else return /\S/.test(str);
   };
 
-  liquid.filters.formatTitleTag = (title, entityBundle, rawTitle) => {
+  liquid.filters.formatTitleTag = title => {
     let formattedTitle = _.trim(title);
 
     // Escape early if no title is provided.
@@ -964,13 +964,6 @@ module.exports = function registerFilters() {
 
     // Remove ' | | ' and ' |  | ' from the title.
     formattedTitle = formattedTitle?.replace(/\s*\|\s*\|\s*/, ' | ');
-
-    // Prepend the "raw" title (from graphql) for select bundle types
-    const labelPependBundleTypes = ['vet_center_locations_list'];
-
-    if (labelPependBundleTypes.includes(entityBundle) && rawTitle) {
-      formattedTitle = `${rawTitle} | ${formattedTitle}`;
-    }
 
     return formattedTitle;
   };

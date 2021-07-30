@@ -1244,18 +1244,6 @@ describe('formatTitleTag', () => {
     const expected = 'This Is A-Title | Veterans Affairs';
     expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
   });
-
-  it('prepends raw title for vet_center_locations_list', () => {
-    const title = 'Foo Vet Center | Veterans Affairs';
-    const expected = 'Locations | Foo Vet Center | Veterans Affairs';
-    expect(
-      liquid.filters.formatTitleTag(
-        title,
-        'vet_center_locations_list',
-        'Locations',
-      ),
-    ).to.equal(expected);
-  });
 });
 
 describe('isPaginatedPath', () => {
