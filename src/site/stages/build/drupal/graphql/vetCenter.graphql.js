@@ -12,6 +12,11 @@ const vetCenterFragment = `
           path
           routed
         }
+        entityMetatags {
+          __typename
+          key
+          value
+        }
         entityBundle
         entityLabel
         fieldIntroText
