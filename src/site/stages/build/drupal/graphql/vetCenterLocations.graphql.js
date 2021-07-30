@@ -12,6 +12,11 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
     routed
   }
   title
+  entityMetatags {
+    __typename
+    key
+    value
+  }
   entityBundle
   entityLabel
   fieldIntroText
