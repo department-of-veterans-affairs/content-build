@@ -58,7 +58,7 @@
                             <div class="vads-u-font-weight--bold vads-u-margin-bottom--1">Download media assets</div>
                             {% for asset in fieldPressReleaseDownloads %}
                                 {% assign a = asset.entity %}
-                                <ul class="vads-u-margin-bottom--1 usa-unstyled-list">
+                                <ul class="vads-u-margin-bottom--1 usa-unstyled-list" role="list">
                                     <li class="vads-u-margin-bottom--1">
                                         {% case a.entityBundle %}
                                         {% when 'document' %}
