@@ -1,7 +1,7 @@
 {% if audienceTags.length > 0 %}
   <div data-template="components/browse-by-audience">
     <h2>Browse by audience</h2>
-    <ul class="usa-unstyled-list">
+    <ul class="usa-unstyled-list" role="list">
 
     {% assign pageSize = 5 %}
 
@@ -25,7 +25,7 @@
 
         <span>
           <div class="additional-info-content">
-            <ul class="usa-unstyled-list">
+            <ul class="usa-unstyled-list" role="list">
               {% for audienceTag in remainingAudienceTags %}
                 <li class="vads-u-margin-y--2">
                   <a class="vads-u-font-weight--bold vads-u-text-decoration--none" href="{{ audienceTag.path.alias }}/">
