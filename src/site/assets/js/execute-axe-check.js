@@ -99,6 +99,6 @@ function processAxeCheckResults(error, results) {
         'color-contrast': { enabled: false },
       },
     },
-    processAxeCheckResults,
+    processAxeCheckResults
   );
 })();
