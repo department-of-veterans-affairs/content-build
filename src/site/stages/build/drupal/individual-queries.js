@@ -23,6 +23,10 @@ const {
 const { getNewsStoryQueries } = require('./graphql/newStoryPage.graphql');
 
 const {
+  GetNodeStoryListingPages,
+} = require('./graphql/storyListingPage.graphql');
+
+const {
   getPressReleaseQueries,
 } = require('./graphql/pressReleasePage.graphql');
 
@@ -35,10 +39,6 @@ const {
 } = require('./graphql/eventListingPage.graphql');
 
 const { getNodeEventQueries } = require('./graphql/eventPage.graphql');
-
-const {
-  GetNodeStoryListingPages,
-} = require('./graphql/storyListingPage.graphql');
 
 const {
   GetNodeLocationsListingPages,
@@ -92,25 +92,23 @@ const {
 } = require('./graphql/vetCenterLocations.graphql');
 
 function getNodeQueries(entityCounts) {
+  // Make sure Listing page queries run before individual queries
+  // so that the listing pages do not contain individual pages which do not exist.
   return {
+    GetNodePressReleaseListingPages,
+    GetNodeEventListingPage,
+    GetNodeStoryListingPages,
+    GetNodePublicationListingPages,
+    GetNodeLeadershipListingPages,
+    GetNodeLocationsListingPages,
+    ...getNodeHealthServicesListingPageQueries(entityCounts),
     ...getNodePageQueries(entityCounts),
     GetNodeLandingPages,
     ...getNodeVaFormQueries(entityCounts),
     ...getNodeHealthCareRegionPageQueries(entityCounts),
-    ...getNodePersonProfileQueries(entityCounts),
     GetNodeOffices,
     ...getNodeHealthCareLocalFacilityPageQueries(entityCounts),
-    ...getNodeHealthServicesListingPageQueries(entityCounts),
-    ...getNewsStoryQueries(entityCounts),
-    ...getPressReleaseQueries(entityCounts),
-    GetNodePressReleaseListingPages,
-    GetNodeEventListingPage,
-    ...getNodeEventQueries(entityCounts),
-    GetNodeStoryListingPages,
-    GetNodeLocationsListingPages,
-    GetNodeLeadershipListingPages,
     GetNodeVamcOperatingStatusAndAlerts,
-    GetNodePublicationListingPages,
     ...getNodeHealthCareRegionDetailPageQueries(entityCounts),
     ...getNodeQaQueries(entityCounts),
     GetNodeMultipleQaPages,
@@ -124,6 +122,10 @@ function getNodeQueries(entityCounts) {
     ...getVetCenterQueries(entityCounts),
     GetVetCenterLocations,
     GetPolicyPages,
+    ...getPressReleaseQueries(entityCounts),
+    ...getNodeEventQueries(entityCounts),
+    ...getNewsStoryQueries(entityCounts),
+    ...getNodePersonProfileQueries(entityCounts),
   };
 }
 
