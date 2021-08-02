@@ -93,7 +93,7 @@ const {
 
 function getNodeQueries(entityCounts) {
   // Make sure Listing page queries run before individual queries
-  // so that the listing pages do not contain individual pages which do nto exist.
+  // so that the listing pages do not contain individual pages which do not exist.
   return {
     GetNodePressReleaseListingPages,
     GetNodeEventListingPage,
