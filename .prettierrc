@@ -4,7 +4,7 @@
   "useTabs": false,
   "semi": true,
   "singleQuote": true,
-  "trailingComma": "es5",
+  "trailingComma": "all",
   "bracketSpacing": true,
   "jsxBracketSameLine": false,
   "proseWrap": "preserve",
@@ -13,6 +13,12 @@
       "files": "*.scss",
       "options": {
         "singleQuote": false
+      }
+    },
+    {
+      "files": "**/site/assets/js/**/*.js",
+      "options": {
+        "trailingComma": "es5"
       }
     }
   ]
