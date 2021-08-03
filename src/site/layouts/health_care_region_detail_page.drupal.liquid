@@ -5,6 +5,11 @@
 <div class="interior" id="content">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
+      {% comment %}
+        Note: this template has two very similar sections. The first is wrapped in the following "if" block
+        to prevent the sidenav from showing up. The second begins after the "else" statement on line 80.
+        TODO: REFACTOR!
+      {% endcomment %}.
       {% if entityUrl.path contains "/safety-security/" and buildtype != 'vagovprod' %}
           <article aria-labelledby="article-heading" role="region" class="usa-content">
             <h1 id="article-heading">{{ title }}</h1>
