@@ -74,18 +74,9 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --verbose
-          max_attempts: 3
-          timeout_minutes: 5
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
-
-      # - name: Install dependencies
-      #   run: yarn install --frozen-lockfile --prefer-offline --verbose
-      #   env:
-      #     YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Set Drupal address
         if: ${{ github.ref == 'refs/heads/master' }}
