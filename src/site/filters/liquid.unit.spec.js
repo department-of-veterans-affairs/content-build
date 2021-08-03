@@ -2,7 +2,7 @@ import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
 
 import registerFilters from './liquid';
-import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_escanaba_data';
+import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_data.json';
 import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';

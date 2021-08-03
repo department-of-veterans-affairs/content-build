@@ -7,7 +7,7 @@ const layoutPath = 'src/site/layouts/vet_center_locations_list.drupal.liquid';
 describe('Vet Center Locations Page', () => {
   let container;
   const data = parseFixture(
-    'src/site/layouts/tests/vet_center/fixtures/vet_center_escanaba_data.json',
+    'src/site/layouts/tests/vet_center/fixtures/vet_center_data.json',
   );
 
   beforeEach(async () => {
