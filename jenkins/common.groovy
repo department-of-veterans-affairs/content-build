@@ -200,6 +200,13 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     echo "${brokenLinks.brokenLinksCount} broken links found"
     echo message
 
+    dockerContainer.inside(DOCKER_ARGS) {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
+                      usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
+        sh "aws s3 cp ${brokenLinksFile} s3://vetsgov-website-builds-s3-upload/broken-links-report/${envName}-broken-links.json --acl public-read --region us-gov-west-1 --quiet"
+      }
+    }
+
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless
       // we are running either on the master branch or during
