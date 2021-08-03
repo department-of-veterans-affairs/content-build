@@ -34,7 +34,7 @@
 
             <!-- Videos List -->
             <h2>{{ fieldMediaListVideos.entity.fieldSectionHeader | default: 'Videos' }}</h2>
-            <ul class="usa-unstyled-list">
+            <ul class="usa-unstyled-list" role="list">
               {% for mediaVideo in fieldMediaListVideos.entity.fieldVideos %}
                 {% assign videoURL = mediaVideo.entity.fieldMediaVideoEmbedField | createEmbedYouTubeVideoURL %}
                 {% if videoURL %}
