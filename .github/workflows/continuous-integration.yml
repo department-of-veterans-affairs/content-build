@@ -73,12 +73,17 @@ jobs:
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
+      # - name: Install dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: yarn install --frozen-lockfile --prefer-offline --verbose
+      #     max_attempts: 3
+      #     timeout_minutes: 5
+      #   env:
+      #     YARN_CACHE_FOLDER: ~/.cache/yarn
+
       - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --verbose
-          max_attempts: 3
-          timeout_minutes: 5
+        run: yarn install --frozen-lockfile --prefer-offline --verbose
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
