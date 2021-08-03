@@ -88,7 +88,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovprod]
         include:
           - buildtype: vagovdev
             drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
