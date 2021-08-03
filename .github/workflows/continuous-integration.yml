@@ -11,7 +11,6 @@ on:
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
-  INSTANCE_TYPE: c5.4xlarge # Define instance size here OR later in the 'start-runner' step
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha  }}
@@ -23,6 +22,10 @@ jobs:
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+
+    env:
+      INSTANCE_TYPE: c5.4xlarge
+
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -573,6 +576,9 @@ jobs:
     needs: [cypress-tests, nightwatch-tests]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
+    env:
+      INSTANCE_TYPE: c5.4xlarge
+      
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
