@@ -573,12 +573,12 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [cypress-tests, nightwatch-tests]
+    needs: [start-runner, cypress-tests, nightwatch-tests]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
-      
+
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
