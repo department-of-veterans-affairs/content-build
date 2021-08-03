@@ -179,7 +179,7 @@ def accessibilityTests() {
   }
 }
 
-def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnlyBuild) {
+def checkForBrokenLinks(dockerContainer, String buildLogPath, String envName, Boolean contentOnlyBuild) {
   def brokenLinksFile = "${WORKSPACE}/content-build/logs/${envName}-broken-links.json"
 
   if (fileExists(brokenLinksFile)) {
@@ -200,12 +200,14 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     echo "${brokenLinks.brokenLinksCount} broken links found"
     echo message
 
-    dockerContainer.inside(DOCKER_ARGS) {
-      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-                      usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-        sh "aws s3 cp ${brokenLinksFile} s3://vetsgov-website-builds-s3-upload/broken-links-report/${envName}-broken-links.json --acl public-read --region us-gov-west-1 --quiet"
+    // if (!IS_PROD_BRANCH) {
+      dockerContainer.inside(DOCKER_ARGS) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
+                        usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
+          sh "aws s3 cp ${brokenLinksFile} s3://vetsgov-website-builds-s3-upload/broken-links-report/${envName}-broken-links.json --acl public-read --region us-gov-west-1 --quiet"
+        }
       }
-    }
+    // }
 
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless
@@ -262,9 +264,9 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
 
-      if (envName == 'vagovprod') {
-        checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
-      }
+      //if (envName == 'vagovprod') {
+        checkForBrokenLinks(dockerContainer, buildLogPath, envName, contentOnlyBuild)
+      //}
 
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
     }
