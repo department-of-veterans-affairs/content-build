@@ -1262,3 +1262,29 @@ describe('isPaginatedPath', () => {
     expect(liquid.filters.isPaginatedPath(path)).to.equal(false);
   });
 });
+
+describe('sortObjectsBy', () => {
+  const objectsToSort = [
+    {
+      title: 'Nashville Vet Center - Bowling Green',
+    },
+    {
+      title: 'Clarksville Outstation',
+    },
+  ];
+
+  const sortedObjects = [
+    {
+      title: 'Clarksville Outstation',
+    },
+    {
+      title: 'Nashville Vet Center - Bowling Green',
+    },
+  ];
+
+  it('sorts objects alphabetically by key', () => {
+    expect(liquid.filters.sortObjectsBy(objectsToSort, 'title')).to.deep.equal(
+      sortedObjects,
+    );
+  });
+});
