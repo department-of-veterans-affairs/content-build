@@ -208,14 +208,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
+            .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
         env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Create test results folder
         run: mkdir -p test-results
@@ -262,14 +262,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
+            .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
         env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Annotate ESLint results
         run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
@@ -314,14 +314,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
+            .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
         env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
@@ -363,14 +363,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
+            .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
         env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
@@ -433,14 +433,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
+            .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
         env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
