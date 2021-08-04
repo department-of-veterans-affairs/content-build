@@ -63,10 +63,12 @@ jobs:
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting Lighthouse Scan, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
+      - name: ls
+        run: ls -l
+
       - name: Run Performance Scan
         id: performance-scan
         run: npx lighthouse https://va.gov --config-path=./config/lighthouse.js --output-path=./logs/lighthouse/report.json --output json
-        timeout-minutes: 600
 
       - name: Performance Test Complete
         uses: ./.github/actions/vsp-github-actions/slack-socket
