@@ -14,4 +14,4 @@ jobs:
           # budgetPath: ./budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
       - name: Output Manifest
-        run: echo ${{fromJson(steps.lighthouse-checks.outputs.manifest).jsonPath}}
+        run: echo "${{fromJson(steps.lighthouse-checks.outputs.manifest).jsonPath}}"
