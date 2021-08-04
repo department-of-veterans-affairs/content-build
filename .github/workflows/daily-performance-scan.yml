@@ -64,7 +64,7 @@ jobs:
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: ls
-        run: ls -l
+        run: pwd && ls
 
       - name: Run Performance Scan
         id: performance-scan
