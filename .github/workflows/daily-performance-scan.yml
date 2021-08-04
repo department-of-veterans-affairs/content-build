@@ -108,7 +108,7 @@ jobs:
           NODE_ENV: production
 
       - name: Start Server
-        run: http-server build/vagovprod -s -c-1 -p 3002
+        run: npx http-server build/vagovprod -s -c-1 -p 3002
 
       - name: Run Performance Scan
         id: performance-scan
