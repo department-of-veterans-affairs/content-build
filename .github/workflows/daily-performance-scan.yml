@@ -3,6 +3,9 @@ on: push
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+    outputs:
+      resultsPath: ./.lighthouseci
+      links: true
     steps:
       - uses: actions/checkout@v2
       - name: Audit URLs using Lighthouse
@@ -13,6 +16,5 @@ jobs:
           # budgetPath: ./budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           temporaryPublicStorage: true # upload lighthouse report to the temporary storage
-          resultsPath: ./.lighthouseci
       - name: checker
         run: pwd && ls
