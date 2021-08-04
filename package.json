@@ -55,7 +55,8 @@
     "watch:css-sourcemaps": "node --max-old-space-size=5000 --expose-gc script/build-content.js --watch --local-css-sourcemaps",
     "watch:review": "node ./script/run-review-instance-api.js",
     "watch:static": "concurrently -n metalsmith,webpack \"npm:watch:content\" \"npm run watch -- --env.entry=static-pages --progress=false\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lighthouse": "lighthouse  http://localhost:3002 --config-path=./config/lighthouse.js --output-path=./logs/lighthouse/report.json --output json"
   },
   "repository": {
     "type": "git",
@@ -174,6 +175,7 @@
     "jsdom": "^15.2.1",
     "jsonschema": "^1.1.1",
     "libxmljs2": "^0.26.5",
+    "lighthouse": "^8.2.0",
     "lint-staged": ">=10",
     "metalsmith-assets": "^0.1.0",
     "metalsmith-date-in-filename": "^0.0.14",

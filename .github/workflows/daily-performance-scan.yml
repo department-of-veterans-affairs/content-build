@@ -1,0 +1,127 @@
+name: Daily Performance Scan
+
+on: push
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 12 * * 1-5'
+
+env:
+  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  CHANNEL_ID: C024DUC9S1K
+
+jobs:
+
+  performance-scan:
+    name: Performance Scan
+    runs-on: [self-hosted, asg]
+    defaults:
+      run:
+        working-directory: content-build
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+          
+      - name: Get va-vsp-bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
+
+      - name: Notify Slack
+        if: ${{ always() }}
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
+
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
+
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline --ignore-optional
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Build vagovprod
+        run: npm --no-color run build -- --verbose --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --no-drupal-proxy
+        timeout-minutes: 60
+        env:
+          NODE_ENV: production
+
+      - name: Start Server
+        run: http-server build/vagovprod -s -c-1 -p 3002
+
+      - name: Run Performance Scan
+        id: performance-scan
+        run: yarn lighthouse
+        timeout-minutes: 600
+
+      - name: Performance Test Complete
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ success() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
