@@ -916,22 +916,11 @@
   {
     "appName": "Medical Copays",
     "entryName": "medical-copays",
-    "rootUrl": "/health-care/pay-copay-bill",
+    "rootUrl": "/health-care/pay-copay-bill/your-current-balances",
     "template": {
       "title": "Medical Copays",
       "layout": "page-react.html",
-      "vagovprod": false,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "/health-care/pay-copay-bill",
-          "name": "Manage your VA copay bills"
-        },
-        {
-          "path": "/health-care/pay-copay-bill/copays",
-          "name": "Current copay balances"
-        }
-      ]
+      "vagovprod": false
     }
   },
   {
