@@ -368,7 +368,7 @@ jobs:
   cypress-tests:
     name: Cypress E2E Tests
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: build
+    needs: [start-runner, build]
     timeout-minutes: 30
 
     env:
@@ -438,7 +438,7 @@ jobs:
   nightwatch-tests:
     name: Nightwatch E2E Tests
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: build
+    needs: [start-runner, build]
     timeout-minutes: 30
     steps:
       - name: Checkout vagov-content
