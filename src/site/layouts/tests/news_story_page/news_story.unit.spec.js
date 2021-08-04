@@ -1,19 +1,27 @@
 import { expect } from 'chai';
 import { parseFixture, renderHTML } from '~/site/tests/support';
+import axeCheck from '~/site/tests/support/axe';
 
 const _ = require('lodash');
 
 const layoutPath = 'src/site/layouts/news_story.drupal.liquid';
-const data = parseFixture(
-  'src/site/layouts/tests/news_story_page/fixtures/news-story-data.json',
-);
 
 describe('News Story Page', () => {
+  const data = parseFixture(
+    'src/site/layouts/tests/news_story_page/fixtures/news-story-data.json',
+  );
+
   let container;
 
-  beforeEach(async () => {
+  before(async () => {
     container = await renderHTML(layoutPath, data);
   });
+
+  it('reports no axe violations', async () => {
+    const violations = await axeCheck(container);
+    expect(violations.length).to.equal(0);
+  });
+
   it('renders "See all stories" link with path(href) to see all stories', async () => {
     expect(
       container.querySelector('article > a').getAttribute('href'),
@@ -27,7 +35,7 @@ describe('News Story Page', () => {
     const newContainer = await renderHTML(layoutPath, clonedData);
 
     expect(newContainer.querySelector('article').innerHTML).to.not.include(
-      `<a onclick="recordEvent({ event: 'nav-secondary-button-click' });" class="testing vads-u-display--block vads-u-margin-bottom--7" href="/gulf-coast-health-care/stories">See all stories</a>`,
+      `<a onclick="recordEvent({ event: 'nav-secondary-button-click' });" class="vads-u-display--block vads-u-margin-bottom--7" href="/gulf-coast-health-care/stories">See all stories</a>`,
     );
   });
 });

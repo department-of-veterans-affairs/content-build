@@ -1,0 +1,52 @@
+{
+  "entityBundle": "news_story",
+  "entityId": "17638",
+  "entityPublished": false,
+  "fieldImageCaption": null,
+  "fieldIntroText": "Dr. Margaret Peak, the Gulf Coast Veterans Health Care System (GCVHCS) chief of Audiology, received the 2021 Joint Defense Veterans Audiology Conference (JDVAC) Lt. Frank B. Walkup IV Distinguished Service Award March 3.",
+  "pid": 17638,
+  "promote": false,
+  "title": "Audiologist Recognized at National Convention",
+  "vid": 500852,
+  "entityUrl": {
+    "breadcrumb": [
+      {
+        "text": "Home",
+        "url": {
+          "path": "/",
+          "routed": true
+        }
+      },
+      {
+        "text": "VA Gulf Coast health care",
+        "url": {
+          "path": "/gulf-coast-health-care",
+          "routed": true
+        }
+      },
+      {
+        "text": "Stories ",
+        "url": {
+          "path": "/gulf-coast-health-care/stories",
+          "routed": true
+        }
+      },
+      {
+        "text": "Audiologist Recognized at National Convention",
+        "url": {
+          "path": "/gulf-coast-health-care/stories/audiologist-recognized-at-national-convention",
+          "routed": true
+        }
+      }
+    ],
+    "path": "/gulf-coast-health-care/stories/audiologist-recognized-at-national-convention"
+  },
+  "fieldListing": {
+    "entity": {
+      "entityUrl": {
+        "path": "/gulf-coast-health-care/stories"
+      }
+    }
+  }
+}
+
