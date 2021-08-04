@@ -45,8 +45,7 @@ jobs:
           echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
           --owners 008577686731 \
           --filters Name=name,Values=packer-gha-runner-ubuntu2004* \
-          --filters Name=state,Values=available \
-          --query 'sort_by(Images,&CreationDate)[-1].ImageId'
+          --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
           --output text)" >> $GITHUB_ENV
       - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
         run: |
@@ -443,7 +442,7 @@ jobs:
     timeout-minutes: 30
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
+      
     steps:
       - name: Checkout vagov-content
         uses: actions/checkout@v2
