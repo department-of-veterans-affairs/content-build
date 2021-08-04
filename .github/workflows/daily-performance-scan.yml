@@ -14,5 +14,11 @@ jobs:
           # budgetPath: ./budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           temporaryPublicStorage: true # upload lighthouse report to the temporary storage
-      - name: Output Step for things and stuff
+      - name: Output Report Links
         run: echo ${{steps.lighthouse-checks.outputs.links}}
+      - name: Output Results Path
+        run: echo ${{steps.lighthouse-checks.outputs.resultsPath}}
+      - name: Output Assertion Results
+        run: echo ${{steps.lighthouse-checks.outputs.assertionResults}}
+      - name: Output Manifest
+        run: echo ${{steps.lighthouse-checks.outputs.manifest}}
