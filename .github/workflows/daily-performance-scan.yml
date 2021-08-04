@@ -6,7 +6,6 @@ on: push
   #   - cron: '0 12 * * 1-5'
 
 env:
-  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K
 
 jobs:
@@ -17,9 +16,6 @@ jobs:
     defaults:
       run:
         working-directory: content-build
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Configure AWS credentials
@@ -64,42 +60,8 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting Lighthouse Scan, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
-
-      - name: Checkout vagov-content
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
-
-      - name: Checkout content-build
-        uses: actions/checkout@v2
-        with:
-          path: content-build
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline --ignore-optional
-        env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Run Performance Scan
         id: performance-scan
@@ -114,5 +76,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Lighthouse scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
