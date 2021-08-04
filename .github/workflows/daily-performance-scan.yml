@@ -65,7 +65,7 @@ jobs:
 
       - name: Run Performance Scan
         id: performance-scan
-        run: yarn lighthouse
+        run: npx lighthouse https://va.gov --config-path=./config/lighthouse.js --output-path=./logs/lighthouse/report.json --output json
         timeout-minutes: 600
 
       - name: Performance Test Complete
