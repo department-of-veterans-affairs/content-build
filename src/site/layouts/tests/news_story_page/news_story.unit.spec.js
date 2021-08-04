@@ -22,10 +22,16 @@ describe('News Story Page', () => {
     expect(violations.length).to.equal(0);
   });
 
-  it('renders "See all stories" link with path(href) to see all stories', async () => {
+  it('href should include path (/(name)-health-care/stories) to stories', async () => {
     expect(
       container.querySelector('article > a').getAttribute('href'),
     ).to.equal('/gulf-coast-health-care/stories');
+  });
+
+  it('renders "See all stories" link with path(href) to see all stories', async () => {
+    expect(container.querySelector('article').innerHTML).to.include(
+      `<a onclick="recordEvent({ event: 'nav-secondary-button-click' });" class="vads-u-display--block vads-u-margin-bottom--7" href="/gulf-coast-health-care/stories">See all stories</a>`,
+    );
   });
 
   it('should not render "See all stories" link if href is empty', async () => {
