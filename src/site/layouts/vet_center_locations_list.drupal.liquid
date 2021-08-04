@@ -35,8 +35,8 @@
               confidentiality in a non-medical setting.
               Call us for more information about these locations.
             </p>
-            {% assign satteliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | sortObjectsBy: 'title' %}
-            {% for entityVetCenter in satteliteVetCenters %}
+            {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | sortObjectsBy: 'title' %}
+            {% for entityVetCenter in satelliteVetCenters %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                   vetCenter = entityVetCenter
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
