@@ -440,6 +440,9 @@ jobs:
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [start-runner, build]
     timeout-minutes: 30
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      
     steps:
       - name: Checkout vagov-content
         uses: actions/checkout@v2
