@@ -83,7 +83,7 @@ jobs:
     timeout-minutes: 60
     container:
       image: public.ecr.aws/h8j6b4m0/node14:latest
-      options: -u 0 -v /etc/ssl/certs:/certs
+      options: -u 0 -v /usr/local/share:/share
 
     defaults:
       run:
@@ -92,8 +92,8 @@ jobs:
     env:
       # Sandbox Drupal address is used on branches other than master.
       DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
-      # CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
-      NODE_EXTRA_CA_CERTS: /certs/VA-Internal-S2-RCA1-v1.cer.pem
+      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
+      NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
 
     # strategy:
     #   fail-fast: true
