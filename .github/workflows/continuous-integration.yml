@@ -82,7 +82,7 @@ jobs:
     runs-on: ${{ needs.start-runner.outputs.label }}
     timeout-minutes: 60
     container:
-      image: cypress/browsers:node14.17.0-chrome91-ff89
+      image: public.ecr.aws/h8j6b4m0/node14:latest
       options: -u 1001:1001 -v /usr/local/share:/share
 
     defaults:
