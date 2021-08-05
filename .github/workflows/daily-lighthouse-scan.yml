@@ -12,11 +12,6 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout content-build
-        uses: actions/checkout@v2
-        with:
-          path: content-build
-
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -78,6 +73,7 @@ jobs:
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily lighthouse scan with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
+      - uses: actions/checkout@v2
       - name: Audit URLs using Lighthouse
         id: lighthouse-checks
         uses: treosh/lighthouse-ci-action@v8
@@ -102,5 +98,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily lighthouse scan results: https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/lighthouse/homepage.html"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily lighthouse: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
