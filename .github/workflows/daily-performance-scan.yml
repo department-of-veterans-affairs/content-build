@@ -42,4 +42,4 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload lighthouse report
-        run: aws s3 cp ${{fromJSON(steps.lighthouse-checks.outputs.manifest).jsonPath}} s3://vetsgov-website-builds-s3-upload/lighthouse/report.json --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{fromJSON(steps.lighthouse-checks.outputs.manifest)[0].jsonPath}} s3://vetsgov-website-builds-s3-upload/lighthouse/report.json --acl public-read --region us-gov-west-1
