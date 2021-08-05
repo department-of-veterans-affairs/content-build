@@ -711,6 +711,11 @@ module.exports = function registerFilters() {
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 
+  liquid.filters.rejectBy = (data, filterBy, valueFilter) => {
+    if (!data) return null;
+    return data.filter(e => _.get(e, filterBy) !== valueFilter);
+  };
+
   liquid.filters.processDynamicContent = (entity, contentType) => {
     // TODO - add more cases as new centralized content types are added
     // eslint-disable-next-line sonarjs/no-small-switch
@@ -973,5 +978,9 @@ module.exports = function registerFilters() {
 
     // If the last path section is a number greater than 2, return true.
     return parseInt(lastSection, 10) >= 2;
+  };
+
+  liquid.filters.getValuesForKey = (array, key) => {
+    return array.map(e => e[key]);
   };
 };

@@ -35,17 +35,17 @@
               confidentiality in a non-medical setting.
               Call us for more information about these locations.
             </p>
-            {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | sortObjectsBy: 'title' %}
+            {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | rejectBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
             {% for entityVetCenter in satelliteVetCenters %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                   vetCenter = entityVetCenter
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
             {% endfor %}
 
-            {% assign mobileVetCenters = fieldNearbyMobileVetCenters | sortObjectsBy: 'title' %}
+            {% assign mobileVetCenters = fieldNearbyMobileVetCenters | getValuesForKey: 'entity' | concat: fieldOffice.entity.reverseFieldOfficeNode.entities | filterBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
             {% for mobileVetCenter in mobileVetCenters %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
-                  vetCenter = mobileVetCenter.entity
+                  vetCenter = mobileVetCenter
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
             {% endfor %}
           {% endif %}

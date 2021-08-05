@@ -1288,3 +1288,24 @@ describe('sortObjectsBy', () => {
     );
   });
 });
+
+describe('concat', () => {
+  it('concatenates all arrays passed as arguments', () => {
+    const a1 = [];
+    const a2 = [1, 2, 3];
+    const a3 = ['a', { foo: 'bar' }];
+
+    const result = [1, 2, 3, 'a', { foo: 'bar' }];
+
+    expect(liquid.filters.concat(a1, a2, a3)).to.deep.equal(result);
+  });
+});
+
+describe('getValuesForKey', () => {
+  it('returns an array of values for the given key', () => {
+    const array = [{ foo: 'bar' }, { foo: 'baz' }];
+    const result = ['bar', 'baz'];
+
+    expect(liquid.filters.getValuesForKey(array, 'foo')).to.deep.equal(result);
+  });
+});
