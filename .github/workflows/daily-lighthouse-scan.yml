@@ -35,24 +35,7 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - uses: actions/checkout@v2
-      - name: Audit URLs using Lighthouse
-        id: lighthouse-checks
-        uses: treosh/lighthouse-ci-action@v8
-        with:
-          urls: |
-            https://www.va.gov/
-          # budgetPath: ./budget.json # test performance budgets
-          uploadArtifacts: true # save results as an action artifacts
-          configPath: ./config/lighthouserc.json
-
-      - name: Upload lighthouse report (JSON)
-        run: aws s3 cp ${{fromJSON(steps.lighthouse-checks.outputs.manifest)[0].jsonPath}} s3://vetsgov-website-builds-s3-upload/lighthouse/homepage.json --acl public-read --region us-gov-west-1
-
-      - name: Upload lighthouse report (HTML)
-        run: aws s3 cp ${{fromJSON(steps.lighthouse-checks.outputs.manifest)[0].htmlPath}} s3://vetsgov-website-builds-s3-upload/lighthouse/homepage.html --acl public-read --region us-gov-west-1
-
-      - name: Get Slack app token
+     - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         with:
           ssm_parameter: /devops/github_actions_slack_socket_token
@@ -69,6 +52,23 @@ jobs:
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - uses: actions/checkout@v2
+      - name: Audit URLs using Lighthouse
+        id: lighthouse-checks
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: |
+            https://www.va.gov/
+          # budgetPath: ./budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          configPath: ./config/lighthouserc.json
+
+      - name: Upload lighthouse report (JSON)
+        run: aws s3 cp ${{fromJSON(steps.lighthouse-checks.outputs.manifest)[0].jsonPath}} s3://vetsgov-website-builds-s3-upload/lighthouse/homepage.json --acl public-read --region us-gov-west-1
+
+      - name: Upload lighthouse report (HTML)
+        run: aws s3 cp ${{fromJSON(steps.lighthouse-checks.outputs.manifest)[0].htmlPath}} s3://vetsgov-website-builds-s3-upload/lighthouse/homepage.html --acl public-read --region us-gov-west-1
 
       - name: Checkout VSP actions
         uses: actions/checkout@v2
@@ -88,4 +88,15 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily lighthouse: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
+
+      - name: Lighthouse Scan Failure
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ failure() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "[report-only] Lighthouse report for today failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
