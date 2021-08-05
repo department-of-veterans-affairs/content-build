@@ -21,3 +21,5 @@ WORKDIR /content-build
 
 CMD yarn install
 CMD NODE_ENV=${ NODE_ENV } yarn build --buildtype=${ BUILDTYPE } --asset-source=local --drupal-address=${{ DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+
+# TODO: Get output of /content-build/build
