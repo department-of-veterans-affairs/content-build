@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 2,
+      "numberOfRuns": 5,
       "settings": {
         "configPath": "./config/lighthouse-config.js"
       }
