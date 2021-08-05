@@ -13,7 +13,7 @@ jobs:
             https://www.va.gov/
           # budgetPath: ./budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
-          configPath: ../../config/lighthouserc.json
+          configPath: ./config/lighthouserc.json
  
       - name: Output Manifest
         # run: echo ${{steps.lighthouse-checks.outputs.manifest}}
