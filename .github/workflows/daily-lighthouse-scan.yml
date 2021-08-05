@@ -12,6 +12,11 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
         with:
