@@ -981,6 +981,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getValuesForKey = (array, key) => {
+    if (!array) return null;
     return array.map(e => e[key]);
   };
 };

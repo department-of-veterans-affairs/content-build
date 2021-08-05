@@ -1308,4 +1308,8 @@ describe('getValuesForKey', () => {
 
     expect(liquid.filters.getValuesForKey(array, 'foo')).to.deep.equal(result);
   });
+
+  it('returns null if array is null', () => {
+    expect(liquid.filters.getValuesForKey(null, 'foo')).to.be.null;
+  });
 });
