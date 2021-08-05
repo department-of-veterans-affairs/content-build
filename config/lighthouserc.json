@@ -4,7 +4,6 @@
       "numberOfRuns": 2,
       "settings": {
         "configPath": "./config/lighthouse-config.js",
-        "emulatedFormFactor": "desktop"
       }
     }
   }
