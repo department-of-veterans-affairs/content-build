@@ -127,5 +127,5 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Ending the Lighthouse Scan'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "View the Lighthouse scan for the va.gov homepage: <https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/lighthouse/homepage.html>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
