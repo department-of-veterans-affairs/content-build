@@ -19,22 +19,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
-
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         with:
@@ -53,6 +37,42 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
+
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Notify Slack
+        if: ${{ always() }}
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily lighthouse scan with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
+
       - uses: actions/checkout@v2
       - name: Audit URLs using Lighthouse
         id: lighthouse-checks
@@ -69,34 +89,3 @@ jobs:
 
       - name: Upload lighthouse report (HTML)
         run: aws s3 cp ${{fromJSON(steps.lighthouse-checks.outputs.manifest)[0].htmlPath}} s3://vetsgov-website-builds-s3-upload/lighthouse/homepage.html --acl public-read --region us-gov-west-1
-
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
-
-      - name: Lighthouse Scan Complete
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ success() }}
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily lighthouse: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
-
-      - name: Lighthouse Scan Failure
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ failure() }}
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "[report-only] Lighthouse report for today failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
