@@ -1,9 +1,10 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 1,
+      "numberOfRuns": 2,
       "settings": {
-        "configPath": "./config/lighthouse-config.js"
+        "configPath": "./config/lighthouse-config.js",
+        "emulatedFormFactor": "desktop"
       }
     }
   }
