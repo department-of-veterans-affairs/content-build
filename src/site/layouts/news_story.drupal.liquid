@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     {% if fieldListing.entity.entityUrl.path %}
-                        <a onClick="recordEvent({ event: 'nav-secondary-button-click' });" class="vads-u-display--block vads-u-margin-bottom--7" href="{{ fieldListing.entity.entityUrl.path }}">See all stories</a>
+                        <a onClick="recordEvent({ event: 'nav-secondary-button-click' });" class="vads-u-display--block vads-u-margin-bottom--7" href="{{ fieldListing.entity.entityUrl.path }}" id="news-stories-listing-link">See all stories</a>
                     {% endif %}
                 </article>
             </div>

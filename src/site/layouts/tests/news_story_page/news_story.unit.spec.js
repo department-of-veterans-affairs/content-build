@@ -22,15 +22,11 @@ describe('News Story Page', () => {
     expect(violations.length).to.equal(0);
   });
 
-  it('href should include path (/(name)-health-care/stories) to stories', async () => {
-    expect(
-      container.querySelector('article > a').getAttribute('href'),
-    ).to.equal('/gulf-coast-health-care/stories');
-  });
+  it('renders "See all stories" link with path(/(name)-health-care/stories) to see all stories', async () => {
+    expect(container.getElementById('news-stories-listing-link')).to.exist;
 
-  it('renders "See all stories" link with path(href) to see all stories', async () => {
-    expect(container.querySelector('article').innerHTML).to.include(
-      `<a onclick="recordEvent({ event: 'nav-secondary-button-click' });" class="vads-u-display--block vads-u-margin-bottom--7" href="/gulf-coast-health-care/stories">See all stories</a>`,
+    expect(container.getElementById('news-stories-listing-link').href).to.equal(
+      '/gulf-coast-health-care/stories',
     );
   });
 
@@ -40,8 +36,8 @@ describe('News Story Page', () => {
 
     const newContainer = await renderHTML(layoutPath, clonedData);
 
-    expect(newContainer.querySelector('article').innerHTML).to.not.include(
-      `<a onclick="recordEvent({ event: 'nav-secondary-button-click' });" class="vads-u-display--block vads-u-margin-bottom--7" href="/gulf-coast-health-care/stories">See all stories</a>`,
+    expect(newContainer.getElementById('news-stories-listing-link')).to.equal(
+      null,
     );
   });
 });
