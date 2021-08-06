@@ -179,11 +179,14 @@ def accessibilityTests() {
   }
 }
 
-def uploadBrokenLinksFile(dockerContainer, String brokenLinksFile, String envName) {
+def uploadBrokenLinksFile(dockerContainer, String envName) {
+  def brokenLinksFile = "/application/logs/${envName}-broken-links.json"
+  def s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
+
   dockerContainer.inside(DOCKER_ARGS) {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                      usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-      sh "aws s3 cp ${brokenLinksFile} s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json --acl public-read --region us-gov-west-1 --quiet"
+      sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
     }
   }
 }
@@ -215,7 +218,7 @@ def checkForBrokenLinks(dockerContainer, String buildLogPath, String envName, Bo
     // cannot be serialized by default.
     brokenLinks = null
 
-    uploadBrokenLinksFile(dockerContainer, brokenLinksFile, envName)
+    uploadBrokenLinksFile(dockerContainer, envName)
     echo "Uploaded broken links file for ${envName}"
 
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
