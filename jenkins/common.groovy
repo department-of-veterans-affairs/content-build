@@ -179,27 +179,14 @@ def accessibilityTests() {
   }
 }
 
-def uploadBrokenLinksFile(dockerContainer, String envName) {
-  def brokenLinksFile = "/application/logs/${envName}-broken-links.json"
-  def s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
+def uploadBrokenLinksFile(String brokenLinksFile, String envName) {
+  const s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
+  sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
 
-  dockerContainer.inside(DOCKER_ARGS) {
-    sh "cd /application; ls -l"
-  }
-
-  // dockerContainer.inside(DOCKER_ARGS) {
-    // echo "Inside container, directory listing:"
-    // sh "pwd; ls -l .; ls -l logs"
-    // echo "application and application/logs:"
-    // sh "ls -l /application; ls -l /application/logs"
-    // withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-    //                  usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-    //   sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
-    // }
-  // }
+  echo "Uploaded broken links file for ${envName}"
 }
 
-def checkForBrokenLinks(dockerContainer, String buildLogPath, String envName, Boolean contentOnlyBuild) {
+def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnlyBuild) {
   def brokenLinksFile = "${WORKSPACE}/content-build/logs/${envName}-broken-links.json"
 
   if (fileExists(brokenLinksFile)) {
@@ -226,8 +213,7 @@ def checkForBrokenLinks(dockerContainer, String buildLogPath, String envName, Bo
     // cannot be serialized by default.
     brokenLinks = null
 
-    uploadBrokenLinksFile(dockerContainer, envName)
-    echo "Uploaded broken links file for ${envName}"
+    uploadBrokenLinksFile(brokenLinksFile, envName)
 
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless
@@ -280,7 +266,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
 
       if (envName == 'vagovprod') {
-        checkForBrokenLinks(dockerContainer, buildLogPath, envName, contentOnlyBuild)
+        checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
       }
 
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
