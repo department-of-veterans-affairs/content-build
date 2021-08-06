@@ -184,11 +184,19 @@ def uploadBrokenLinksFile(dockerContainer, String envName) {
   def s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
 
   dockerContainer.inside(DOCKER_ARGS) {
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-                     usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-      sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
-    }
+    sh "cd /application; ls -l"
   }
+
+  // dockerContainer.inside(DOCKER_ARGS) {
+    // echo "Inside container, directory listing:"
+    // sh "pwd; ls -l .; ls -l logs"
+    // echo "application and application/logs:"
+    // sh "ls -l /application; ls -l /application/logs"
+    // withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
+    //                  usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
+    //   sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
+    // }
+  // }
 }
 
 def checkForBrokenLinks(dockerContainer, String buildLogPath, String envName, Boolean contentOnlyBuild) {
