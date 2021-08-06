@@ -1089,7 +1089,7 @@ describe('rejectBy', () => {
     { class: { abstract: { number: 1 } } },
   ];
 
-  it('returns all objects matching the given path and value', () => {
+  it('returns all objects not matching the given path and value', () => {
     expect(
       liquid.filters.rejectBy(testData, 'class.abstract.number', 1),
     ).to.deep.equal([
