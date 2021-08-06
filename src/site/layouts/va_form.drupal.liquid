@@ -181,7 +181,7 @@
         {% endif %}
 
         <section>
-          <div class="vads-u-background-color--gray-lightest vads-u-padding--3 vads-u-margin-y--4">
+          <div class="vads-u-background-color--gray-lightest vads-u-padding-x--2 vads-u-padding-y--2p5 vads-u-margin-y--4">
             <h2 class="vads-u-font-size--h3 vads-u-margin-top--0 vads-u-padding-bottom--1 vads-u-border-bottom--1px vads-u-border-color--gray-light">
               {% assign linkTeasersHeader = 'Helpful links' %}
               {% if fieldVaFormLinkTeasers.length > 0 %}
@@ -193,7 +193,7 @@
               {% if fieldVaFormLinkTeasers.length > 0 %}
                 {% for vaFormLinkTeaser in fieldVaFormLinkTeasers %}
                   <li>
-                    <h3 class="vads-u-font-size--h4 vads-u-margin-bottom--0 vads-u-font-family--sans">
+                    <h3 class="vads-u-font-size--h4">
                       <a
                         class="vads-u-text-decoration--none"
                         href="{{ vaFormLinkTeaser.entity.fieldLink.url.path }}"
@@ -201,13 +201,13 @@
                         {{ vaFormLinkTeaser.entity.fieldLink.title }}
                       </a>
                     </h3>
-                    <p>{{ vaFormLinkTeaser.entity.fieldLinkSummary }}</p>
+                    <p class="vads-u-margin--0">{{ vaFormLinkTeaser.entity.fieldLinkSummary }}</p>
                   </li>
                 {% endfor %}
               {% else %}
                 {% comment %} The default related links if custom links aren't defined {% endcomment %}
                 <li>
-                  <h3 class="vads-u-font-size--h4 vads-u-margin-bottom--0 vads-u-font-family--sans">
+                  <h3 class="vads-u-font-size--h4">
                     <a
                       class="vads-u-text-decoration--none"
                       href="/change-direct-deposit"
@@ -215,10 +215,10 @@
                       Change your direct deposit information
                     </a>
                   </h3>
-                  <p>Find out how to update your direct deposit information online for disability compensation, pension, or education benefits. </p>
+                  <p class="vads-u-margin--0">Find out how to update your direct deposit information online for disability compensation, pension, or education benefits. </p>
                 </li>
                 <li>
-                  <h3 class="vads-u-font-size--h4 vads-u-margin-bottom--0 vads-u-font-family--sans">
+                  <h3 class="vads-u-font-size--h4">
                     <a
                       class="vads-u-text-decoration--none"
                       href="/change-address"
@@ -226,10 +226,10 @@
                       Change your address
                     </a>
                   </h3>
-                  <p>Find out how to change your address and other information in your VA.gov profile for disability compensation, claims and appeals, VA health care, and other benefits.</p>
+                  <p class="vads-u-margin--0">Find out how to change your address and other information in your VA.gov profile for disability compensation, claims and appeals, VA health care, and other benefits.</p>
                 </li>
                 <li>
-                  <h3 class="vads-u-font-size--h4 vads-u-margin-bottom--0 vads-u-font-family--sans">
+                  <h3 class="vads-u-font-size--h4">
                     <a
                       class="vads-u-text-decoration--none"
                       href="/records/get-military-service-records/"
@@ -237,10 +237,10 @@
                       Request your military records, including DD214
                     </a>
                   </h3>
-                  <p>Submit an online request to get your DD214 or other military service records through the milConnect website.</p>
+                  <p class="vads-u-margin--0">Submit an online request to get your DD214 or other military service records through the milConnect website.</p>
                 </li>
                 <li>
-                  <h3 class="vads-u-font-size--h4 vads-u-margin-bottom--0 vads-u-font-family--sans">
+                  <h3 class="vads-u-font-size--h4">
                     <a
                       class="vads-u-text-decoration--none"
                       href="/records/"
@@ -248,7 +248,7 @@
                       Get your VA records and documents online
                     </a>
                   </h3>
-                  <p>Learn how to access your VA records, benefit letters, and documents online.</p>
+                  <p class="vads-u-margin--0">Learn how to access your VA records, benefit letters, and documents online.</p>
                 </li>
               {% endif %}
             </ul>
