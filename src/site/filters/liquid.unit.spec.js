@@ -1052,36 +1052,55 @@ describe('strip', () => {
 });
 
 describe('filterBy', () => {
-  it('filter array object by given path and value - 1', () => {
-    assert.deepEqual(
-      liquid.filters.filterBy(
-        [
-          { class: { abstract: { number: 3 } } },
-          { class: { abstract: { number: 5 } } },
-          { class: { abstract: { number: 4 } } },
-          { class: { abstract: { number: 1 } } },
-          { class: { abstract: { number: 1 } } },
-        ],
-        'class.abstract.number',
-        1,
-      ),
-      [
-        { class: { abstract: { number: 1 } } },
-        { class: { abstract: { number: 1 } } },
-      ],
-    );
+  const testData = [
+    { class: { abstract: { number: 3 } } },
+    { class: { abstract: { number: 5 } } },
+    { class: { abstract: { number: 4 } } },
+    { class: { abstract: { number: 1 } } },
+    { class: { abstract: { number: 1 } } },
+  ];
+
+  it('returns all objects matching the given path and value', () => {
+    expect(
+      liquid.filters.filterBy(testData, 'class.abstract.number', 1),
+    ).to.deep.equal([
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: 1 } } },
+    ]);
   });
-  it('filter array object by given path and value - 2', () => {
-    assert.deepEqual(
-      liquid.filters.filterBy([{ class: {} }], 'class.abstract.number', 2),
-      [],
-    );
+
+  it('returns empty array for zero matches', () => {
+    expect(
+      liquid.filters.filterBy(testData, 'class.abstract.number', 2),
+    ).to.deep.equal([]);
   });
-  it('filter array object by given path and value - 3', () => {
-    assert.deepEqual(
-      liquid.filters.filterBy([{}], 'class.abstract.number', 3),
-      [],
-    );
+
+  it('returns null for null', () => {
+    expect(liquid.filters.filterBy(null)).to.be.null;
+  });
+});
+
+describe('rejectBy', () => {
+  const testData = [
+    { class: { abstract: { number: 3 } } },
+    { class: { abstract: { number: 5 } } },
+    { class: { abstract: { number: 4 } } },
+    { class: { abstract: { number: 1 } } },
+    { class: { abstract: { number: 1 } } },
+  ];
+
+  it('returns all objects matching the given path and value', () => {
+    expect(
+      liquid.filters.rejectBy(testData, 'class.abstract.number', 1),
+    ).to.deep.equal([
+      { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: 5 } } },
+      { class: { abstract: { number: 4 } } },
+    ]);
+  });
+
+  it('returns null for null', () => {
+    expect(liquid.filters.rejectBy(null)).to.be.null;
   });
 });
 
