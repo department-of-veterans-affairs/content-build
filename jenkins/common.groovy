@@ -180,7 +180,7 @@ def accessibilityTests() {
 }
 
 def uploadBrokenLinksFile(String brokenLinksFile, String envName) {
-  const s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
+  def s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
   sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
 
   echo "Uploaded broken links file for ${envName}"
