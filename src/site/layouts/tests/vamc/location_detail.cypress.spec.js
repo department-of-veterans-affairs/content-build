@@ -1,5 +1,6 @@
 import path from 'path';
 import mockFacilityData from './fixtures/mock-facility-data-v1.json';
+import './commands.cypress';
 
 const phoneRegex = /\d{3}-\d{3}-\d{4}/;
 
@@ -16,11 +17,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.get('a.usa-button').contains('Make an appointment');
   cy.get('a.usa-button').contains('Register for care');
   cy.get('a.usa-button').contains('Pharmacy');
-  if (isMobile) {
-    cy.get('#sidenav-menu').should('be.visible');
-  } else {
-    cy.get('#sidenav-menu').should('not.be.visible');
-  }
+  cy.checkSideNav(isMobile);
   cy.get('#sidebar-nav-trigger').should('not.exist');
   cy.get('h1').contains('Pittsburgh VA Medical Center-University Drive');
   cy.get('h2').contains('Location and contact information');

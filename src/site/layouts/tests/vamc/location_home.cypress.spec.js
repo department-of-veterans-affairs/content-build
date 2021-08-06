@@ -1,5 +1,6 @@
 import path from 'path';
 import mockFacilityData from './fixtures/mock-facility-data-v1.json';
+import './commands.cypress';
 
 Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.visit(page);
@@ -13,11 +14,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.get('a.usa-button').contains('Make an appointment');
   cy.get('a.usa-button').contains('View all health services');
   cy.get('a.usa-button').contains('Register for care');
-  if (isMobile) {
-    cy.get('#sidenav-menu').should('be.visible');
-  } else {
-    cy.get('#sidenav-menu').should('not.be.visible');
-  }
+  cy.checkSideNav(isMobile);
   cy.get('#sidebar-nav-trigger').should('not.exist');
   cy.get('h1').contains('Locations');
   cy.get('h2').contains('Main locations');
