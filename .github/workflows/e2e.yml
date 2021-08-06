@@ -10,6 +10,9 @@ jobs:
   build:
     name: E2E Tests
     runs-on: self-hosted
+    container:
+      image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
+      options: -u 1001:1001 -v /usr/local/share:/share
     strategy:
       fail-fast: false
       max-parallel: 8
@@ -22,6 +25,7 @@ jobs:
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
       - name: Checkout vagov-content
@@ -34,21 +38,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: content-build
-
-      - name: Set content-build port
-        run: echo "CONTENT_BUILD_PORT=$(( ( RANDOM % 2000 )  + 3001 ))" >> $GITHUB_ENV
-
-      - name: Set Cypress port
-        run: echo "CYPRESS_PORT=$(( ( RANDOM % 2000 )  + 3001 ))" >> $GITHUB_ENV
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
       - name: Cache dependencies
         id: cache-dependencies
@@ -81,10 +70,10 @@ jobs:
       #     BUILDTYPE: vagovprod
 
       - name: Start content-build
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=$CONTENT_BUILD_PORT &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress E2E Tests
-        run: CYPRESS_CONTENT_BUILD_PORT=$CONTENT_BUILD_PORT yarn cy:run --port $CYPRESS_PORT --config baseUrl=http://localhost:$CONTENT_BUILD_PORT --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.cypress.spec.js"
+        run: CYPRESS_CONTENT_BUILD_PORT=$CONTENT_BUILD_PORT yarn cy:run --port 3001 --config baseUrl=http://localhost:3002--reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.cypress.spec.js"
 
       # - name: Publish test results
       #   if: ${{ always() }}
@@ -94,16 +83,16 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
       #     report_paths: 'test-results/e2e-test-output-*.xml'
 
-      - name: Archive Cypress test videos
-        uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: cypress-video-artifacts
-          path: cypress/videos
+      # - name: Archive Cypress test videos
+      #   uses: actions/upload-artifact@v2
+      #   if: ${{ failure() }}
+      #   with:
+      #     name: cypress-video-artifacts
+      #     path: cypress/videos
 
-      - name: Archive Cypress test screenshots
-        uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: cypress-screenshot-artifacts
-          path: cypress/screenshots
+      # - name: Archive Cypress test screenshots
+      #   uses: actions/upload-artifact@v2
+      #   if: ${{ failure() }}
+      #   with:
+      #     name: cypress-screenshot-artifacts
+      #     path: cypress/screenshots
