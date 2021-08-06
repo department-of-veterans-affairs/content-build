@@ -200,14 +200,20 @@ def checkForBrokenLinks(dockerContainer, String buildLogPath, String envName, Bo
     def source = env.BRANCH_NAME == null ? 'a content-only deployment' : env.BRANCH_NAME;
 
     if (brokenLinks.isHomepageBroken || brokenLinks.brokenLinksCount > maxBrokenLinks) {
-        color = 'danger'
-      }
+      color = 'danger'
+    }
 
     def heading = "@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
     def message = "${heading}\n${brokenLinks.summary}".stripMargin()
 
     echo "${brokenLinks.brokenLinksCount} broken links found"
     echo message
+
+    // Unset brokenLinks now that we're done with this, because Jenkins may temporarily
+    // freeze (through serialization) this pipeline while uploading the broken links file
+    // or sending the Slack message. brokenLinks is an instance of JSONObject, which
+    // cannot be serialized by default.
+    brokenLinks = null
 
     uploadBrokenLinksFile(dockerContainer, brokenLinksFile, envName)
     echo "Uploaded broken links file for ${envName}"
@@ -220,11 +226,6 @@ def checkForBrokenLinks(dockerContainer, String buildLogPath, String envName, Bo
       // continue merging.
       return;
     }
-
-    // Unset brokenLinks now that we're done with this, because Jenkins may temporarily
-    // freeze (through serialization) this pipeline while the Slack message is being sent.
-    // brokenLinks is an instance of JSONObject, which cannot be serialized by default.
-    brokenLinks = null
 
     slackSend(
       message: message,
