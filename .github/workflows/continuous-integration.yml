@@ -136,7 +136,7 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
-      - name: ls
+      - name: ls 
         run: ls
 
       - name: Set Drupal address
