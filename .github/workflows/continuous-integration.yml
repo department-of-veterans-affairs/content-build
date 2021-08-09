@@ -604,12 +604,14 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        - buildtype: vagovdev
-          id: vagovdev-id
-        - buildtype: vagovstage
-          id: vagovstage-id
-        - buildtype: vagovprod
-          id: vagovprod-id
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+        include:
+          - buildtype: vagovdev
+            id: vagovdev-id
+          - buildtype: vagovstage
+            id: vagovstage-id
+          - buildtype: vagovprod
+            id: vagovprod-id
 
     steps:
       # - name: Configure AWS Credentials
