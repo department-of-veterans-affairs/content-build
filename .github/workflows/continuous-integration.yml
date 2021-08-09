@@ -102,30 +102,30 @@ jobs:
           BUILDTIME=$(date +%s)
           EOF
 
-      - name: Compress E2E test build
-        if: ${{ matrix.buildtype == 'vagovprod' }}
-        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+      # - name: Compress E2E test build
+      #   if: ${{ matrix.buildtype == 'vagovprod' }}
+      #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
-        if: ${{ matrix.buildtype == 'vagovprod' }}
-        with:
-          name: test-build.tar.bz2
-          path: content-build/test-build.tar.bz2
-          retention-days: 1
+      # - name: Upload E2E test build artifact
+      #   uses: actions/upload-artifact@v2
+      #   if: ${{ matrix.buildtype == 'vagovprod' }}
+      #   with:
+      #     name: test-build.tar.bz2
+      #     path: content-build/test-build.tar.bz2
+      #     retention-days: 1
 
-      - name: Prearchive
-        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+      # - name: Prearchive
+      #   run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
-      - name: Compress prearchived build
-        run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
+      # - name: Compress prearchived build
+      #   run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
 
-      - name: Upload prearchived build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.buildtype }}.tar.bz2
-          path: content-build/${{ matrix.buildtype }}.tar.bz2
-          retention-days: 1
+      # - name: Upload prearchived build artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ matrix.buildtype }}.tar.bz2
+      #     path: content-build/${{ matrix.buildtype }}.tar.bz2
+      #     retention-days: 1
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
