@@ -86,11 +86,11 @@ jobs:
 
       - name: EC2 Runner Name
         id: start-ec2-runner-name
-        run: echo ::set-output name=${{ matrix.buildtype }}::${{ matrix.buildtype }}
+        run: echo ::set-output name=${{ matrix.buildtype }}::name
 
       - name: EC2 Runner ID
         id: start-ec2-runner-id
-        run: echo ::set-output name=${{ matrix.buildtype }}::${{ matrix.buildtype }}
+        run: echo ::set-output name=${{ matrix.buildtype }}::100
 
   build:
     name: Build
@@ -604,7 +604,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        - buildtype: vagovdev
+          id: vagovdev-id
+        - buildtype: vagovstage
+          id: vagovstage-id
+        - buildtype: vagovprod
+          id: vagovprod-id
 
     steps:
       # - name: Configure AWS Credentials
@@ -631,5 +636,5 @@ jobs:
       - name: echo test
         run: echo ${{ needs.start-runner.outputs}}
 
-      - name: echo test
+      - name: echo test name
         run: echo ${{ needs.start-runner.outputs[matrix.buildtype]}}
