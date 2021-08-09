@@ -34,7 +34,7 @@
 
     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
         {% assign url = entity.fieldMedia.entity.fieldDocument.entity.url %}
-        {% assign extenstion = url | fileExt %}
+        {% assign extension = url | fileExt %}
         <a
             class="file-download-with-icon"
             target="_blank"
