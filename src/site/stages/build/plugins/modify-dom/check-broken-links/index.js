@@ -59,6 +59,8 @@ module.exports = {
     return brokenPages.reduce((sum, page) => sum + page.linkErrors.length, 0);
   },
 
+  // This summary is posted in Slack, but also read and parsed by Drupal. Check
+  // with the CMS team before changing the format
   getMarkdownSummary(brokenPages) {
     const markdownMessage = brokenPages.map(page => {
       const brokenLinksForPage = page.linkErrors.map(linkError => {

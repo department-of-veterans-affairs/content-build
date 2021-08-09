@@ -179,6 +179,7 @@ def accessibilityTests() {
   }
 }
 
+// Upload the broken links file to S3 so Drupal can fetch it and notify editors
 def uploadBrokenLinksFile(String brokenLinksFile, String envName) {
   def s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
   sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
@@ -213,7 +214,8 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // cannot be serialized by default.
     brokenLinks = null
 
-    uploadBrokenLinksFile(brokenLinksFile, envName)
+    // Temporarily disabling this to test in GHA
+    //uploadBrokenLinksFile(brokenLinksFile, envName)
 
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless

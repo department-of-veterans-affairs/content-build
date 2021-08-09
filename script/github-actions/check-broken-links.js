@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 // https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov -- Tugboat CMS with 2 broken links
 const fs = require('fs');
+const { exec } = require('child_process');
 
 const args = process.argv.slice(2);
 const envName = args[0];
@@ -10,6 +11,17 @@ const SERVER_URL = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSI
 const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const maxBrokenLinks = 10;
+
+// Upload the broken links file to S3 so Drupal can fetch it and notify editors
+function uploadBrokenLinksFile() {
+  const s3Url = `s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json`;
+  const s3Command = `aws s3 cp ${reportPath} ${s3Url} --acl public-read --region us-gov-west-1 --quiet`;
+
+  console.log('Uploading broken links file to S3...');
+  exec(s3Command, error => {
+    console.log(error ? `Error uploading: ${error}` : 'Upload succeeded');
+  });
+}
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
@@ -32,6 +44,8 @@ if (fs.existsSync(reportPath)) {
 
   console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
   console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
+
+  uploadBrokenLinksFile();
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
