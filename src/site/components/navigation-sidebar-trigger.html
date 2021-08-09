@@ -24,10 +24,10 @@ used in a template with navigation-sidebar.html
   var mobileMediaQuery = window.matchMedia('(max-width: 767px)')
   var navTrigger = document.getElementsByClassName('va-btn-sidebarnav-trigger')[0]
   var buttonWrapper = document.querySelector(
-    '.va-btn-sidebarnav-trigger .button-wrapper',
+    '.va-btn-sidebarnav-trigger .button-wrapper'
   )
   var buttonBackground = document.querySelector(
-    '.va-btn-sidebarnav-trigger .button-background',
+    '.va-btn-sidebarnav-trigger .button-background'
   )
   var navTriggerPlaceholder = document.querySelector('.trigger-placeholder')
   var navTriggerPosition
@@ -96,7 +96,7 @@ used in a template with navigation-sidebar.html
       // browser widths
       pinTrigger()
     },
-    false,
+    false
   )
 
   window.addEventListener(
@@ -110,6 +110,6 @@ used in a template with navigation-sidebar.html
       // viewport
       pinTrigger()
     },
-    false,
+    false
   )
 </script>

@@ -481,10 +481,6 @@ module.exports = function registerFilters() {
     return fieldLink;
   };
 
-  liquid.filters.featureChangeVamcLeadershipLink = () => {
-    return cmsFeatureFlags.FEATURE_CHANGE_LEADERSHIP_LINK;
-  };
-
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
@@ -713,6 +709,11 @@ module.exports = function registerFilters() {
   liquid.filters.filterBy = (data, filterBy, valueFilter) => {
     if (!data) return null;
     return data.filter(e => _.get(e, filterBy) === valueFilter);
+  };
+
+  liquid.filters.rejectBy = (data, filterBy, valueFilter) => {
+    if (!data) return null;
+    return data.filter(e => _.get(e, filterBy) !== valueFilter);
   };
 
   liquid.filters.processDynamicContent = (entity, contentType) => {
@@ -977,5 +978,10 @@ module.exports = function registerFilters() {
 
     // If the last path section is a number greater than 2, return true.
     return parseInt(lastSection, 10) >= 2;
+  };
+
+  liquid.filters.getValuesForKey = (array, key) => {
+    if (!array) return null;
+    return array.map(e => e[key]);
   };
 };
