@@ -20,10 +20,12 @@ jobs:
   start-runner:
     runs-on: ubuntu-latest
     outputs:
-      vagovdev: ${{ steps.start-ec2-runner-env.outputs.vagovdev }}
-      vagovstage: ${{ steps.start-ec2-runner-env.outputs.vagovstage }}
-      vagovprod: ${{ steps.start-ec2-runner-env.outputs.vagovprod }}
-      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+      vagovdev: ${{ steps.start-ec2-runner-name.outputs.vagovdev }}
+      vagovstage: ${{ steps.start-ec2-runner-name.outputs.vagovstage }}
+      vagovprod: ${{ steps.start-ec2-runner-name.outputs.vagovprod }}
+      vagovdev-id: ${{ steps.start-ec2-runner-id.outputs.vagovdev }}
+      vagovstage-id: ${{ steps.start-ec2-runner-id.outputs.vagovstage }}
+      vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
       INSTANCE_TYPE: c5.4xlarge
 
@@ -33,9 +35,6 @@ jobs:
         buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
-      - name: test string
-        run: echo ${{ format('{0}', matrix.buildtype) }}
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -85,13 +84,17 @@ jobs:
             ]
 
       - name: EC2 Runner Name
-        id: start-ec2-runner-env
+        id: start-ec2-runner-name
         run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.label }}
+
+      - name: EC2 Runner ID
+        id: start-ec2-runner-id
+        run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
 
   build:
     name: Build
     needs: start-runner
-    runs-on: ${{ fromJSON(format('["{0}", "{1}"]', github.sha, github.ref))[github.ref != 'refs/heads/master'] }}
+    runs-on: ${{ format('needs.start-runner.outputs.{0}', matrix.buildtype) }}
     timeout-minutes: 60
 
     defaults:
@@ -621,5 +624,5 @@ jobs:
         with:
           mode: stop
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          label: ${{ format('{0}', matrix.buildtype) }}
-          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+          label: ${{ format('needs.start-runner.outputs.{0}', matrix.buildtype) }}
+          ec2-instance-id: ${{ format('needs.start-runner.outputs.{0}-id', matrix.buildtype) }}
