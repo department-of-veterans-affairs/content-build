@@ -18,8 +18,8 @@ function uploadBrokenLinksFile() {
   const s3Command = `aws s3 cp ${reportPath} ${s3Url} --acl public-read --region us-gov-west-1 --quiet`;
 
   console.log('Uploading broken links file to S3...');
-  exec(s3Command, error => {
-    console.log(error ? `Error uploading: ${error}` : 'Upload succeeded');
+  exec(s3Command, (error, stdout, stderr) => {
+    console.log(error ? `${error} - ${stderr}` : stdout);
   });
 }
 
