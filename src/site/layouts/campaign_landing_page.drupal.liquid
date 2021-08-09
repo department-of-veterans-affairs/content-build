@@ -1,4 +1,4 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 
 <!-- Derive the total sections the page includes for analytics. -->
@@ -59,7 +59,7 @@
                 <div class="va-c-white-box vads-u-background-color--white vads-u-padding--2 vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--2">
                   <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin--0">This page is for</p>
                   <hr class="va-c-blue-line vads-u-border-color--primary-alt vads-u-margin-y--2" />
-                  <ul class="usa-unstyled-list">
+                  <ul class="usa-unstyled-list" role="list">
                     {% for clpAudience in fieldClpAudience %}
                       <li class="vads-u-font-size--sm vads-u-font-weight--bold vads-u-margin-top--2 vads-u-line-height--2">
                         {{ clpAudience.entity.name }}
@@ -70,7 +70,7 @@
               {% endif %}
 
               <div data-template="includes/social-share" id="va-c-social-share">
-                <ul class="usa-unstyled-list">
+                <ul class="usa-unstyled-list" role="list">
                   <li class="vads-u-margin-bottom--2p5">
                     <a class="va-js-share-link" href="https://www.facebook.com/sharer/sharer.php?href={{ hostUrl }}{{ entityUrl.path }}">
                       <i class="va-c-social-icon fab fa-facebook vads-u-margin-right--0p5" role="presentation" aria-hidden="true"></i>Share on Facebook
@@ -455,23 +455,22 @@
             <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
 
             <!-- Questions/Answers -->
-            <div class="usa-accordion-bordered vads-u-margin-y--2">
-              <ul class="usa-unstyled-list">
-                {% for faqParagraph in fieldClpFaqParagraphs %}
-                  {% if faqParagraph.entity %}
-                    <li data-faq-entity-id="{{ faqParagraph.entity.entityId }}">
-                      <button aria-controls="{{ faqParagraph.entity.entityBundle }}-{{ faqParagraph.entity.entityId }}" class="usa-accordion-button usa-button-unstyled" aria-expanded="false" type="button">{{ faqParagraph.entity.fieldQuestion }}</button>
-                      <div id="{{ faqParagraph.entity.entityBundle }}-{{ faqParagraph.entity.entityId }}" class="usa-accordion-content" aria-hidden="true">
-                        {% assign fieldAnswer = faqParagraph.entity.fieldAnswer | first %}
-                        {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
-                        {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-                        {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
-                      </div>
-                    </li>
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            </div>
+            <va-accordion bordered>
+              {% for faqParagraph in fieldClpFaqParagraphs %}
+                {% if faqParagraph.entity %}
+                  <va-accordion-item
+                    header="{{ faqParagraph.entity.fieldQuestion }}"
+                    level="3"
+                    data-faq-entity-id="{{ faqParagraph.entity.entityId }}"
+                  >
+                    {% assign fieldAnswer = faqParagraph.entity.fieldAnswer | first %}
+                    {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                    {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                    {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                  </va-accordion-item>
+                {% endif %}
+              {% endfor %}
+            </va-accordion>
           </div>
         </div>
 

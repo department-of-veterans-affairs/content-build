@@ -121,7 +121,7 @@ function updateAttr(attr, doc, usingAWS) {
 
 function convertDrupalFilesToLocal(drupalData, files, options) {
   const client = getDrupalClient(options);
-  const usingAWS = !!PUBLIC_URLS[client.getSiteUri()];
+  const usingAWS = client.shouldReplaceAssetPath();
 
   return replacePathInData(drupalData, (data, key) => {
     if (data.match(/^.*\/sites\/.*\/files\//)) {

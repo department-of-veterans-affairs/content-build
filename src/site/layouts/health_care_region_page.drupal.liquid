@@ -1,4 +1,4 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
@@ -14,7 +14,7 @@
 
           <div
             class="duotone darken lighten medium-screen:vads-u-margin-bottom--0p5">
-            <img src="{{ image.derivative.url }}" aria-hidden="true" role="presentation" alt="" width="100%">
+            <img class="system-img" src="{{ image.derivative.url }}" aria-hidden="true" role="presentation" alt="" width="100%">
           </div>
 
           <div

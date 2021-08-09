@@ -8,6 +8,7 @@ const healthCareLocalFacilities = require('./facilities-fragments/healthCareLoca
 const healthCareRegionHealthServices = require('./facilities-fragments/healthCareRegionHealthServices.node.graphql');
 const healthCareRegionNewsStories = require('./facilities-fragments/healthCareRegionNewsStories.node.graphql');
 const healthCareRegionEvents = require('./facilities-fragments/healthCareRegionEvents.node.graphql');
+const socialMediaFields = require('./facilities-fragments/healthCareSocialMedia.fields.graphql');
 
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
@@ -34,22 +35,7 @@ const healthCareRegionPageFragment = `
     }
     fieldGovdeliveryIdEmerg
     fieldGovdeliveryIdNews
-    fieldFacebook {
-      title
-      uri
-    }    
-    fieldTwitter {
-      title    
-      uri
-    }
-    fieldFlickr {
-      title    
-      uri
-    }
-    fieldInstagram {
-      title    
-      uri
-    }    
+    ${socialMediaFields}   
     fieldIntroText
 	  fieldRelatedLinks {
       entity {

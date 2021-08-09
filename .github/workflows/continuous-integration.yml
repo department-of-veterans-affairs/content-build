@@ -12,10 +12,14 @@ env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
 
+concurrency:
+  group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha  }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
 jobs:
   build:
     name: Build
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     timeout-minutes: 60
 
     defaults:
@@ -33,9 +37,9 @@ jobs:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
           - buildtype: vagovdev
-            drupal-address: http://internal-dsva-vagov-dev-cms-812329399.us-gov-west-1.elb.amazonaws.com
+            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
           - buildtype: vagovstaging
-            drupal-address: http://internal-dsva-vagov-staging-cms-1188006.us-gov-west-1.elb.amazonaws.com
+            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
@@ -70,7 +74,7 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
@@ -79,7 +83,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --drupal-address=${{ env.DRUPAL_ADDRESS }} --no-drupal-proxy
+        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
@@ -315,7 +319,7 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     needs: build
     timeout-minutes: 30
 

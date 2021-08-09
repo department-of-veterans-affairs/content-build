@@ -1,4 +1,4 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with constructLcBreadcrumbs = true titleInclude = true %}
@@ -39,7 +39,7 @@
               <nav id="table-of-contents" aria-labelledby="on-this-page">
                 <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
                 <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-                <ul class="usa-unstyled-list"></ul>
+                <ul class="usa-unstyled-list" role="list"></ul>
               </nav>
             {% endif %}
 
@@ -52,26 +52,23 @@
               {% endif %}
 
               {% if fieldQAGroup.entity.fieldAccordionDisplay %}
-                <div class="usa-accordion-bordered">
-                  <ul class="usa-unstyled-list">
-                    {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
-                      {% if fieldQA.entity %}
-                        <li data-faq-entity-id="{{ fieldQA.entity.entityId }}">
-                          <button type="button" aria-controls="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}"
-                            class="usa-accordion-button usa-button-unstyled"
-                            aria-expanded="false">{{ fieldQA.entity.title }}</button>
-                          <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}" class="usa-accordion-content"
-                            aria-hidden="true">
-                            {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
-                            {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
-                            {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-                            {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
-                          </div>
-                        </li>
-                      {% endif %}
-                    {% endfor %}
-                  </ul>
-                </div>
+                <va-accordion bordered>
+                  {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
+                    {% if fieldQA.entity %}
+                      <va-accordion-item
+                        header="{{ fieldQA.entity.title }}"
+                        data-faq-entity-id="{{ fieldQA.entity.entityId }}"
+                      >
+                        <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}">
+                          {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
+                          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                          {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                          {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                        </div>
+                      </va-accordion-item>
+                    {% endif %}
+                  {% endfor %}
+                </va-accordion>
               {% else %}
                   {% assign fieldSectionHeaderTag = 'h2' %}
                   {% if fieldQAGroup.entity.fieldSectionHeader %}

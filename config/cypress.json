@@ -9,6 +9,7 @@
   "supportFile": "src/platform/testing/e2e/cypress/support/index.js",
   "testFiles": "**/tests/**/*.cypress.spec.js?(x)",
   "waitForAnimations": false,
+  "chromeWebSecurity": false,
   "retries": {
     "runMode": 0,
     "openMode": 0

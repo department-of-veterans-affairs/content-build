@@ -1,5 +1,5 @@
 {% include "src/site/includes/header.html" %}
-<main>
+<main id="content">
 
   <!-- the hub -->
   <section class="homepage-hub">
@@ -34,8 +34,7 @@
   </section>
   <!-- /the hub -->
 
-  <section id="content">
-
+  <section>
     <section id="homepage-benefits">
       <div class="usa-grid usa-grid-full homepage-benefits-row">
       {% for hub in hubs %}
@@ -87,10 +86,7 @@
 
       </div>
     </section>
-
-    <!-- end triple column -->
-
-  </div> <!-- end #content -->
+  </div>
 
   <section class="usa-grid usa-grid-full">
     <div class="va-h-ruled--stars"></div>
@@ -118,20 +114,27 @@
 
   </section>
 
-</main>
+</main> <!-- end #content -->
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
+  // Derive the list of hub links.
   var hubLinksList = document.getElementsByClassName('hub-links-list');
 
-  for (var i=0; i < hubLinksList.length; i++) {
-    hubLinksList[i].addEventListener('click', function(e) {
-      var linkData = e.target.dataset;
-
-      recordEvent({
-        event: 'nav-zone-one',
-        'nav-path': linkData.navPath,
-      });
-    });
+  // Check to see if we found the hub links.
+  if (hubLinksList) {
+    // Iterate over each hub link.
+    for (var i = 0; i < hubLinksList.length; i++) {
+      // Check to see if we found the hub link.
+      if (hubLinksList[i]) {
+        // Add a click handler to the hub link to track clicks in analytics.
+        hubLinksList[i].addEventListener('click', function(event) {
+          recordEvent({
+            event: 'nav-zone-one',
+            'nav-path': event ? event.target.dataset.navPath : null,
+          });
+        });
+      }
+    }
   }
 </script>
 

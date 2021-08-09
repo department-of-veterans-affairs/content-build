@@ -1,4 +1,4 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with constructLcBreadcrumbs = true titleInclude = true %}
@@ -34,7 +34,7 @@
 
             <!-- Videos List -->
             <h2>{{ fieldMediaListVideos.entity.fieldSectionHeader | default: 'Videos' }}</h2>
-            <ul class="usa-unstyled-list">
+            <ul class="usa-unstyled-list" role="list">
               {% for mediaVideo in fieldMediaListVideos.entity.fieldVideos %}
                 {% assign videoURL = mediaVideo.entity.fieldMediaVideoEmbedField | createEmbedYouTubeVideoURL %}
                 {% if videoURL %}

@@ -566,6 +566,16 @@ describe('hashReference', () => {
   });
 });
 
+describe('fileSize', () => {
+  it('returns file size in MB when over 10,000 bytes in size', () => {
+    expect(liquid.filters.fileSize(48151)).to.eq('0.05MB');
+  });
+
+  it('returns file size in KB when under 10,000 bytes in size', () => {
+    expect(liquid.filters.fileSize(2342)).to.eq('2.34KB');
+  });
+});
+
 describe('fileExt', () => {
   it('returns the following string - testing', () => {
     expect(liquid.filters.fileExt('testing')).to.eq('testing');
@@ -601,6 +611,48 @@ describe('fileExt', () => {
 
   it('returns an empty string when an empty array is passed', () => {
     expect(liquid.filters.fileExt([])).to.eq('');
+  });
+});
+
+describe('fileDisplayName', () => {
+  it('returns the name of a file when provided only a name', () => {
+    expect(liquid.filters.fileDisplayName('file.txt')).to.eq('file.txt');
+  });
+
+  it('returns the name of a file when provided a filepath of depth 1', () => {
+    expect(liquid.filters.fileDisplayName('files/file.txt')).to.eq('file.txt');
+  });
+
+  it('returns name of a file when provided a filepath of depth > 1', () => {
+    expect(liquid.filters.fileDisplayName('file/texts/file.txt')).to.eq(
+      'file.txt',
+    );
+  });
+
+  it('returns name of a file with multiple extenstions', () => {
+    expect(liquid.filters.fileDisplayName('file.test.txt')).to.eq(
+      'file.test.txt',
+    );
+  });
+
+  it('returns name of a file when in an array', () => {
+    expect(liquid.filters.fileDisplayName(['file.txt'])).to.eq('file.txt');
+  });
+
+  it('returns null when null is passed', () => {
+    expect(liquid.filters.fileDisplayName(null)).to.eq(null);
+  });
+
+  it('returns null when undefined is passed', () => {
+    expect(liquid.filters.fileDisplayName(undefined)).to.eq(null);
+  });
+
+  it('returns null when empty string is passed', () => {
+    expect(liquid.filters.fileDisplayName('')).to.eq(null);
+  });
+
+  it('returns an empty string when an empty array is passed', () => {
+    expect(liquid.filters.fileDisplayName([])).to.eq('');
   });
 });
 
@@ -1131,9 +1183,82 @@ describe('phoneLinks', () => {
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
+  it('wraps phone numbers with parentheses around the area code', () => {
+    const text = 'Here is a phone number: (123)-456-7890. Pretty cool!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
+  it('wraps phone numbers with space after the area code', () => {
+    const text = 'Here is a phone number: (123) 456-7890. Pretty cool!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
+  it('wraps phone numbers with no dash or space after the area code', () => {
+    const text = 'Here is a phone number: (123)456-7890. Pretty cool!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
+  it('wraps multiple phone numbers', () => {
+    const text =
+      'Here is a phone number: (123)-456-7890. And (1111) more: 890-456-1234. Noice!';
+    const expected =
+      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
+      'And (1111) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+    expect(liquid.filters.phoneLinks(text)).to.equal(expected);
+  });
+
   it('does not double-wrap phone numbers', () => {
     const html =
       'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
+
+describe('formatTitleTag', () => {
+  it('formats a title tag without " | Veteran Affairs"', () => {
+    const title = 'this is a-title';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+
+  it('formats a title tag with " | Veteran Affairs"', () => {
+    const title = 'this is a-title | Veterans Affairs';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+
+  it('formats a title tag with " | | Veteran Affairs"', () => {
+    const title = 'this is a-title | | Veterans Affairs';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+
+  it('formats a title tag with " |  | Veteran Affairs"', () => {
+    const title = 'this is a-title |  | Veterans Affairs';
+    const expected = 'This Is A-Title | Veterans Affairs';
+    expect(liquid.filters.formatTitleTag(title)).to.equal(expected);
+  });
+});
+
+describe('isPaginatedPath', () => {
+  it('identifies a paginated path', () => {
+    const path = '/resources/tag/all-veterans/2/';
+    expect(liquid.filters.isPaginatedPath(path)).to.equal(true);
+  });
+
+  it('identifies a non-paginated path', () => {
+    const path = '/';
+    expect(liquid.filters.isPaginatedPath(path)).to.equal(false);
+  });
+
+  it('does not break when the path is undefined', () => {
+    const path = undefined;
+    expect(liquid.filters.isPaginatedPath(path)).to.equal(false);
   });
 });

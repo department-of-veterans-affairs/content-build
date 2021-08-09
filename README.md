@@ -14,7 +14,8 @@ Once you have the site set up locally, these are some common commands you might 
 | --------------------------------------------- | ---------------------------------------------------------------------------- |
 | fetch all dependencies                        | `yarn install`. Run this any time `package.json` changes                     |
 | build static HTML pages                       | `yarn build`                                                                 |
-| run the dev server                            | `yarn watch`. Uses port 3002, keeping 3001 free for vets-website dev server  |
+| run the dev server                            | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server  |
+| watch for template changes                    | `yarn watch`. Runs the dev server while watching for changes                 |
 
 ### Building static content
 
@@ -22,12 +23,18 @@ VA.gov contains many pages that include content generated from a Drupal-based co
 When testing changes to static pages, or to see what your application looks like
 on VA.gov, you'll need to build these static pages using the following commands:
 
-`yarn build` (`—-pull-drupal` runs by default when cache is empty)
+`yarn build` (fetches the latest content cache from S3 by default when cache is empty)
 
-- needs active socks proxy connection
+- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access)
 - creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
-- run once to pull and cache the latest Drupal content and build the static HTML files
-- need to run this again when adding new templates based on new Drupal entities (use `--pull-drupal` to fetch fresh content)
+- run once to build the static HTML files
+- need to run this again when adding new templates based on new Drupal entities
+
+`yarn serve`
+
+- starts a local server for the site using the latest build
+- use `--port` to set the port for the server (`3002` by default)
+- use `--buildtype` to set the build type (`localhost` by default)
 
 `yarn watch`
 

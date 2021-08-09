@@ -3,7 +3,7 @@
         max-width: 90%;
     }
 </style>
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
@@ -32,7 +32,7 @@
             <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg" id="on-this-page">
                 On this page
             </h2>
-            <ul class="usa-unstyled-list">
+            <ul class="usa-unstyled-list" role="list">
 
               {% if fieldBannerAlert.0.entity.status != false and fieldBannerAlert.0.entity.fieldSituationUpdates.0.entity %}
                 <li class="vads-u-margin-bottom--2">

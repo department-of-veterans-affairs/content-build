@@ -1,5 +1,5 @@
 {% assign entryname = "public-outreach-materials" %}
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
@@ -167,12 +167,10 @@
                     {% if entity.fieldMedia.entity.entityBundle == 'image' %}
                     {% if entity.fieldMedia.entity.image.url %}
                     <img src="{{entity.fieldMedia.entity.image.url}}"
-                      alt="{{entity.fieldMedia.entity.image.alt}}"
-                      onerror="this.onerror=null;this.src='https://via.placeholder.com/318x212';" />
+                      alt="{{entity.fieldMedia.entity.image.alt}}" />
                     {% elsif entity.derivedFields.absoluteUrl %}
                     <img alt="{{entity.fieldMedia.entity.image.alt}}"
-                      src="{{entity.derivedFields.absoluteUrl}}"
-                      onerror="this.onerror=null;this.src='https://via.placeholder.com/318x212';" />
+                      src="{{entity.derivedFields.absoluteUrl}}" />
                     {% endif %}
                     {% endif %}
 
@@ -210,16 +208,23 @@
                   large-screen:vads-u-margin-bottom--3">
                       {% if entity.fieldMedia.entity.entityBundle == 'document' %}
                       {% assign url = entity.fieldMedia.entity.fieldDocument.entity.url %}
+                      {% assign extension = url | fileExt %}
                       {% if entity.derivedFields.absoluteUrl %}
                       {% assign url = entity.derivedFields.absoluteUrl %}
                       {% endif %}
-                      <a aria-label="Download {{url | fileExt | upcase}} {{entity.title}}"
-                        class="file-download-with-icon" target="_blank"
-                        href="{{url}}" download="{{url}}"><i
+                      <a
+                        aria-label="Download {{extension | upcase}} {{entity.title}}"
+                        class="file-download-with-icon"
+                        target="_blank"
+                        href="{{url}}"
+                        download="{{url | fileDisplayName}}"
+                        {% if extension == 'pdf' %}
+                          type="application/{{ extension }}"
+                        {% endif %}
+                      ><i
                           class="fas fa-download vads-u-padding-right--1"></i>Download
-                        {{url | fileExt | upcase}}
-                        ({{entity.fieldMedia.entity.fieldDocument.entity.filesize | fileSize}})
-                      </a>
+                        {{extension | upcase}}
+                        ({{entity.fieldMedia.entity.fieldDocument.entity.filesize | fileSize}})</a>
                       {% endif %}
 
                       {% if entity.fieldMedia.entity.entityBundle == 'video' %}

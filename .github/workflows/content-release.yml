@@ -84,12 +84,11 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/validate-build-status.js ${{github.repository}} ${{ needs.set-env.outputs.REF }}
+        run: node ./script/github-actions/validate-build-status.js ${{ needs.set-env.outputs.REF }}
 
   notify-start:
     name: Notify Start
     runs-on: ubuntu-latest
-    needs: validate-build-status
 
     steps:
       - name: Configure AWS credentials
@@ -136,8 +135,8 @@ jobs:
   
   build:
     name: Build
-    runs-on: self-hosted
-    needs: [set-env, notify-start]
+    runs-on: [self-hosted, asg]
+    needs: [set-env, notify-start, validate-build-status]
     defaults:
       run:
         working-directory: content-build

@@ -176,7 +176,13 @@ module.exports = function registerFilters() {
   liquid.filters.removeUnderscores = data =>
     data && data.length ? data.replace('_', ' ') : data;
 
-  liquid.filters.fileSize = data => `${(data / 1000000).toFixed(2)}MB`;
+  liquid.filters.fileSize = data => {
+    if (data < 10000) {
+      return `${(data / 1000).toFixed(2)}KB`;
+    }
+
+    return `${(data / 1000000).toFixed(2)}MB`;
+  };
 
   liquid.filters.fileExt = data => {
     if (!data) return null;
@@ -185,6 +191,18 @@ module.exports = function registerFilters() {
       .split('.')
       .slice(-1)
       .pop();
+  };
+
+  liquid.filters.fileDisplayName = data => {
+    if (!data) return null;
+
+    const match = data.toString().match(/[^/]+$/);
+
+    if (match && match.length) {
+      return data.toString().match(/[^/]+$/)[0] || data.toString();
+    }
+
+    return data.toString();
   };
 
   liquid.filters.breakIntoSingles = data => {
@@ -202,11 +220,11 @@ module.exports = function registerFilters() {
 
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
-    const replacePattern = /((\d{3}-))?\d{3}-\d{3}-\d{4}(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
+    const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
     if (data) {
       return data.replace(
         replacePattern,
-        '<a target="_blank" href="tel:$&">$&</a>',
+        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
       );
     }
 
@@ -461,10 +479,6 @@ module.exports = function registerFilters() {
     }
 
     return fieldLink;
-  };
-
-  liquid.filters.featureChangeVamcLeadershipLink = () => {
-    return cmsFeatureFlags.FEATURE_CHANGE_LEADERSHIP_LINK;
   };
 
   liquid.filters.accessibleNumber = data => {
@@ -914,5 +928,50 @@ module.exports = function registerFilters() {
       newStr = str.replace(substring, '');
       return /\S/.test(newStr);
     } else return /\S/.test(str);
+  };
+
+  liquid.filters.formatTitleTag = title => {
+    let formattedTitle = _.trim(title);
+
+    // Escape early if no title is provided.
+    if (!formattedTitle) {
+      return formattedTitle;
+    }
+
+    // Decode the title.
+    formattedTitle = he.decode(formattedTitle);
+
+    // Ensure every word is capitalized.
+    formattedTitle = formattedTitle
+      ?.split(' ')
+      ?.map(word => _.upperFirst(word))
+      ?.join(' ');
+
+    // Ensure every word is capitalized following a hyphen.
+    formattedTitle = formattedTitle
+      ?.split('-')
+      ?.map(word => _.upperFirst(word))
+      ?.join('-');
+
+    // Add ' | Veterans Affairs' to the end of the title.
+    if (!_.endsWith(_.toLower(formattedTitle), ' | veterans affairs')) {
+      formattedTitle = `${formattedTitle} | Veterans Affairs`;
+    }
+
+    // Remove ' | | ' and ' |  | ' from the title.
+    formattedTitle = formattedTitle?.replace(/\s*\|\s*\|\s*/, ' | ');
+
+    return formattedTitle;
+  };
+
+  liquid.filters.isPaginatedPath = path => {
+    // Split the paths into sections.
+    const pathSections = path?.split('/')?.filter(section => !!section);
+
+    // Derive the last section.
+    const lastSection = pathSections?.[pathSections?.length - 1];
+
+    // If the last path section is a number greater than 2, return true.
+    return parseInt(lastSection, 10) >= 2;
   };
 };

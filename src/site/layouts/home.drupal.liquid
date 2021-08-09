@@ -1,5 +1,5 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
-<main data-template="layouts/home">
+{% include "src/site/includes/header.html" %}
+<main data-template="layouts/home" id="content">
 
   <!-- the hub -->
   <section class="homepage-hub">
@@ -45,7 +45,7 @@
   </section>
   <!-- /the hub -->
 
-  <section id="content">
+  <section>
     <section id="homepage-benefits">
       <div class="usa-grid usa-grid-full homepage-benefits-row">
       {% for hub in hubs %}
@@ -99,8 +99,7 @@
       </div>
     </section>
     <!-- end triple column -->
-
-  </div> <!-- end #content -->
+  </div>
 
   <section class="usa-grid usa-grid-full">
     <div class="va-h-ruled--stars"></div>
@@ -132,7 +131,7 @@
     {% endfor %}
     </div>
   </section>
-</main>
+</main> <!-- end #content -->
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

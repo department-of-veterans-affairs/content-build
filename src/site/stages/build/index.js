@@ -20,7 +20,6 @@ const registerLiquidFilters = require('../../filters/liquid');
 const { getDrupalContent } = require('./drupal/metalsmith-drupal');
 const addDrupalPrefix = require('./plugins/add-drupal-prefix');
 const checkCollections = require('./plugins/check-collections');
-const checkForCMSUrls = require('./plugins/check-cms-urls');
 const downloadAssets = require('./plugins/download-assets');
 // const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
@@ -32,6 +31,7 @@ const createResourcesAndSupportWebsiteSection = require('./plugins/create-resour
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+const getFilesToUpdate = require('./plugins/get-files-to-update');
 const ignoreAssets = require('./plugins/ignore-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const modifyDom = require('./plugins/modify-dom');
@@ -62,9 +62,17 @@ function build(BUILD_OPTIONS) {
     omitdebug: BUILD_OPTIONS.omitdebug,
   });
 
+  if (global.rebuild) {
+    smith.use(getFilesToUpdate(BUILD_OPTIONS), 'Get files for rebuild');
+  }
+
   // If you're on localhost, you probably want to see CSS/JS reflected in the build,
   // so, this will set up a symlink into vets-website for you.
-  if (BUILD_OPTIONS.buildtype === 'localhost' && !BUILD_OPTIONS.nosymlink) {
+  if (
+    BUILD_OPTIONS.buildtype === 'localhost' &&
+    !BUILD_OPTIONS.nosymlink &&
+    !global.rebuild
+  ) {
     smith.use(
       createSymlink(BUILD_OPTIONS),
       'Create symlink into vets-website for local development.',
@@ -205,7 +213,6 @@ function build(BUILD_OPTIONS) {
   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
-  smith.use(checkForCMSUrls(BUILD_OPTIONS), 'Check for CMS URLs');
 
   smith.use(
     modifyDom(BUILD_OPTIONS),
@@ -216,7 +223,7 @@ function build(BUILD_OPTIONS) {
   // We no longer need to build them now that they are stored directly on disk
   smith.use(ignoreAssets(), 'Ignore assets for build');
 
-  smith.build((err, files) => {
+  smith.build(async (err, files) => {
     if (err) {
       smith.endGarbageCollection();
       throw err;
@@ -224,6 +231,9 @@ function build(BUILD_OPTIONS) {
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
+      // Avoid saving Metalsmith files object on rebuild to prevent overwriting the object
+      if (!global.rebuild) global.metalsmithFiles = files;
+
       if (BUILD_OPTIONS.buildtype === 'localhost') {
         console.log(' ');
         console.log(
@@ -247,15 +257,15 @@ function build(BUILD_OPTIONS) {
         smith.printPeakMemory();
       }
 
-      smith.endGarbageCollection();
-
       console.log('The Metalsmith build has completed.');
     }
 
     if (BUILD_OPTIONS.buildtype !== 'vagovprod' && !BUILD_OPTIONS.omitdebug) {
       // Add debug info to HTML files
-      addDebugInfo(files, BUILD_OPTIONS.buildtype);
+      await addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
+
+    smith.endGarbageCollection();
   }); // smith.build()
 }
 

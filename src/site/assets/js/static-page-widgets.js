@@ -9,13 +9,13 @@ function mountWidgets(widgets, slowLoadingThreshold) {
     if (timeout > slowLoadingThreshold) {
       setTimeout(function() {
         var replacedWithWidget = !widget.querySelector(
-          '.static-widget-content',
+          '.static-widget-content'
         );
         var slowMessage = widget.querySelector(
-          '.loading-indicator-message--slow',
+          '.loading-indicator-message--slow'
         );
         var regularMessage = widget.querySelector(
-          '.loading-indicator-message--normal',
+          '.loading-indicator-message--normal'
         );
 
         if (!replacedWithWidget && regularMessage) {
@@ -33,11 +33,11 @@ function mountWidgets(widgets, slowLoadingThreshold) {
     if (timeout > 0) {
       setTimeout(function() {
         var replacedWithWidget = !widget.querySelector(
-          '.static-widget-content',
+          '.static-widget-content'
         );
         var errorMessage = widget.querySelector('.sip-application-error');
         var loadingMessage = widget.querySelector(
-          '.loading-indicator-container',
+          '.loading-indicator-container'
         );
 
         if (!replacedWithWidget && loadingMessage) {

@@ -1,4 +1,4 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" %}
@@ -95,13 +95,23 @@
                   {% assign service = supportService.entity %}
                   <li>
                     {% if service.fieldPhoneNumber %}
-                    <a href="{{ service.fieldLink.url.path }}"
-                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
-                      <span>{{ service.title }}</span><br>
-                      <span>{{ service.fieldPhoneNumber }}</span>
-                    </a>
+                      <a href="{{ service.fieldLink.url.path }}"
+                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
+                        <span>{{ service.title }}</span><br>
+                        <span>{{ service.fieldPhoneNumber }}</span>
+                      </a>
+                    <!-- It was requested that we hardcode in the aria-label and href for the TTY service -->
+                    <!-- see: https://github.com/department-of-veterans-affairs/va.gov-team/issues/18151#issuecomment-879993959 -->
+                    {% elsif service.title contains "TTY: 711" %}
+                      <a
+                        href="tel:+1711"
+                        aria-label="TTY: 7 1 1."
+                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
+                      >
+                        <span>{{ service.title }}</span><br>
+                      </a>
                     {% else %}
-                    {{ service.title }}
+                      {{ service.title }}
                     {% endif %}
                   </li>
                   {% endfor %}

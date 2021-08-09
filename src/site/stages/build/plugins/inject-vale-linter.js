@@ -68,14 +68,14 @@ function buildDetailsMarkup(issues) {
   details += `<summary><h4 class="vads-u-display--inline-block vads-u-margin-y--2">There are (${issues.length}) content suggestions found on this page.</h4></summary>`;
 
   let issuesList =
-    '<ul class="usa-unstyled-list vads-u-border-color--primary-darker vads-u-border-top--1px vads-u-padding-x--6 vads-u-padding-y--2">';
+    '<ul class="usa-unstyled-list vads-u-border-color--primary-darker vads-u-border-top--1px vads-u-padding-x--6 vads-u-padding-y--2" role="list">';
 
   issues.forEach(issue => {
     let issueEl = '<li class=vads-u-margin-y--1">';
     issueEl += '<details>';
     issueEl += `<summary><strong>${issue.Message}</strong></summary>`;
 
-    issueEl += `<ul class="usa-unstyled-list vads-u-padding-y--1 vads-u-padding-x--2">`;
+    issueEl += `<ul class="usa-unstyled-list vads-u-padding-y--1 vads-u-padding-x--2" role="list">`;
     issueEl += `<li><strong>Rule</strong>: ${issue.Check}</li>`;
     issueEl += `<li><strong>Description</strong>: ${issue.Description}</li>`;
     issueEl += `<li><strong>Learn More</strong>: <a href="${issue.Link}" target="blank" rel="noopener noreferrer">${issue.Link}</a></li>`;

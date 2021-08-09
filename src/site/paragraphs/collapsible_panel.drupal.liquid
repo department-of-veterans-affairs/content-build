@@ -22,39 +22,37 @@
     }
   }
 {% endcomment %}
-{% assign accordionClass = 'usa-accordion' %}
-{% if entity.fieldCollapsiblePanelBordered %}
-    {% assign accordionClass = 'usa-accordion-bordered' %}
-{% endif %}
-<div data-template="paragraphs/collapsible_panel" data-entity-id="{{ entity.entityId }}" class="{{ accordionClass }}" data-multiselectable="{{ entity.fieldCollapsiblePanelMulti }}">
-    <ul class="usa-unstyled-list">
+<div
+    data-template="paragraphs/collapsible_panel"
+    data-entity-id="{{ entity.entityId }}"
+    data-multiselectable="{{ entity.fieldCollapsiblePanelMulti }}"
+>
+    <va-accordion
+        {% if entity.fieldCollapsiblePanelBordered %}
+            bordered
+        {% endif %}
+    >
         {% for accordionItem in entity.fieldVaParagraphs %}
             {% assign item = accordionItem.entity %}
-            {% assign id = item.entityId | formatSharableLinkID: item.fieldTitle %}
-            <li id={{id}}
-              data-template="paragraphs/collapsible_panel__panel"
-              data-entity-id="{{ item.entityId }}"
-              data-analytics-faq-text="{{ item.fieldTitle | escape }}">
-                <button
-                        class="usa-accordion-button usa-button-unstyled"
-                        aria-expanded="{{ entity.fieldCollapsiblePanelExpand }}"
-                        aria-controls="{{ item.entityBundle }}-{{ item.entityId }}"
-                        >
-                    {{ item.fieldTitle }}
-                    
-                </button>
-                
-                <div id="{{ item.entityBundle }}-{{ item.entityId }}" class="usa-accordion-content" aria-hidden="{{ !entity.fieldCollapsiblePanelExpand }}">
-                    {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
+            {% assign id= item.entityId | formatSharableLinkID: item.fieldQuestion   %}
+            <va-accordion-item header="{{ item.fieldTitle }}">
+                <div
+                    id={{id}}
+                    data-template="paragraphs/collapsible_panel__panel"
+                    data-entity-id="{{ item.entityId }}"
+                    data-analytics-faq-text="{{ item.fieldTitle | escape }}"
+                >
+                    <div id="{{ item.entityBundle }}-{{ item.entityId }}">
+                        {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
 
-                    {% for paragraph in item.fieldVaParagraphs %}
-                        {%  assign bundleComponent = "src/site/paragraphs/" | append: paragraph.entity.entityBundle | append: ".drupal.liquid" %}
-                        {% include {{ bundleComponent }} with entity = paragraph.entity %}
-                    {%  endfor %}
+                        {% for paragraph in item.fieldVaParagraphs %}
+                            {%  assign bundleComponent = "src/site/paragraphs/" | append: paragraph.entity.entityBundle | append: ".drupal.liquid" %}
+                            {% include {{ bundleComponent }} with entity = paragraph.entity %}
+                        {%  endfor %}
 
-                    <div data-widget-type="sharable-link" parentId="{{id}}" sharableText="{{item.fieldTitle}}"></div>                
+                    </div>
                 </div>
-            </li>
+            </va-accordion-item>
         {% endfor %}
-    </ul>
+    </va-accordion>
 </div>

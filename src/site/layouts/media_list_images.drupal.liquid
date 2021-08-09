@@ -1,4 +1,4 @@
-{% include "src/site/includes/header.html" with drupalTags = true %}
+{% include "src/site/includes/header.html" %}
 {% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with constructLcBreadcrumbs = true titleInclude = true %}
@@ -44,7 +44,7 @@
 
             <!-- Images List Start -->
             <!-- ================ -->
-            <dl class="media-list-images usa-unstyled-list">
+            <dl class="media-list-images usa-unstyled-list" role="list">
               {% if fieldMediaListImages.entity.fieldImages.size != 0 %}
                 {% assign pageSize = 10 %}
                 {% assign remainingImages = fieldMediaListImages.entity.fieldImages | sliceArrayFromStart: pageSize, fieldMediaListImages.entity.fieldImages.size %}

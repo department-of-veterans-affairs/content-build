@@ -65,6 +65,7 @@ const healthCareLocalFacilityPageFragment = `
               ... listOfLinkTeasers
             }
           }
+          ${socialMediaFields}          
           fieldGovdeliveryIdEmerg
           fieldGovdeliveryIdNews
           fieldOperatingStatus {
@@ -75,7 +76,6 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
-    ${socialMediaFields}
     fieldLocalHealthCareService {
       entity {
         ... on NodeHealthCareLocalHealthService {

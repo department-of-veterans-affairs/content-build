@@ -81,4 +81,57 @@ describe('intro', () => {
       expect(ogUrl).to.equal('https://dev.va.gov/records/');
     });
   });
+
+  describe('fieldSupportServices links', () => {
+    let container;
+    const data = parseFixture(
+      'src/site/layouts/tests/landing_page/fixtures/landing_page.json',
+    );
+
+    it('creates a link for a properly formatted fieldSupportService', async () => {
+      container = await renderHTML(layoutPath, {
+        ...data,
+        fieldSupportServices: data.fieldSupportServices.slice(0, 1),
+      });
+
+      const supportLink = container.querySelector(
+        '.va-nav-linkslist-list a[href="tel+13128675309"]',
+      );
+
+      expect(supportLink.text.trim().replace(/\W{2,}/g, ' ')).to.equal(
+        'Jenny 312-867-5309',
+      );
+    });
+
+    it('creates a link for a TTY 711 fieldSupportService', async () => {
+      container = await renderHTML(layoutPath, {
+        ...data,
+        fieldSupportServices: data.fieldSupportServices.slice(1, 2),
+      });
+
+      const supportLink = container.querySelector(
+        '.va-nav-linkslist-list a[href="tel:+1711"]',
+      );
+
+      expect(supportLink.text.trim().replace(/\W{2,}/g, ' ')).to.equal(
+        'TTY 711',
+      );
+      expect(supportLink.getAttribute('aria-label')).to.equal('TTY: 7 1 1.');
+    });
+
+    it('creates a link for a fieldSupportService with a url or filedPhoneNumber', async () => {
+      container = await renderHTML(layoutPath, {
+        ...data,
+        fieldSupportServices: data.fieldSupportServices.slice(2),
+      });
+
+      const supportLink = container.querySelectorAll(
+        '.va-nav-linkslist-list li',
+      )[1];
+
+      expect(supportLink.innerHTML.trim().replace(/\W{2,}/g, ' ')).to.equal(
+        'Missing link',
+      );
+    });
+  });
 });

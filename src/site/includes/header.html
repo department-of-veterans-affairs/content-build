@@ -20,28 +20,30 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Index only pages on production. -->
   {% if buildtype != 'vagovprod' %}
-  <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex">
   {% endif %}
 
-  {% if drupalTags %}
+  <!-- Add metatags. -->
   {% include "src/site/includes/metatags.drupal.liquid" %}
-  {% else %}
-  {% include "src/site/includes/metatags.liquid" %}
-  {% endif %}
 
+  <!-- Add polyfills. -->
   <script nonce="**CSP_NONCE**" nomodule data-entry-name="polyfills.js"></script>
 
+  <!-- Add analytics helpers. -->
   <script nonce="**CSP_NONCE**">
     {% include "src/site/assets/js/record-event.js" %}
   </script>
 
+  <!-- Add web components. -->
   <link rel="stylesheet" data-entry-name="web-components.css">
   <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
 
+  <!-- Render GA template. -->
   {% include 'src/site/includes/google-analytics.liquid' %}
 
-  <!-- Icons -->
+  <!-- Add Icons. -->
   <link href="/img/design/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed" />
   <link href="/img/design/icons/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72" />
   <link href="/img/design/icons/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114" />
@@ -52,7 +54,6 @@
   <meta name="msapplication-TileColor" content="#144073">
 
   <!-- Preload main fonts -->
-
   <link rel="preload" href="/generated/sourcesanspro-bold-webfont.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/generated/sourcesanspro-regular-webfont.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/generated/bitter-bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -115,9 +116,15 @@
 
   {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
 
-  <div data-widget-type="banners" data-homepage-banner-content="{{ homepage_banner.content | escape }}"
+  <div
+    data-widget-type="banners"
+    data-homepage-banner-content="{{ homepage_banner.content | escape }}"
     data-homepage-banner-title="{{ homepage_banner.title | escape }}"
-    data-homepage-banner-type="{{ homepage_banner.type }}" data-homepage-banner-visible="{{ homepage_banner.visible }}">
+    data-homepage-banner-type="{{ homepage_banner.type }}"
+    data-homepage-banner-visible="{{ homepage_banner.visible }}"
+    role="region"
+    aria-label="{{ homepage_banner.title | escape }}"
+  >
   </div>
 
   <script nonce="**CSP_NONCE**" type="text/javascript">

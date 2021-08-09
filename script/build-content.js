@@ -20,6 +20,11 @@ async function buildContent() {
     console.log(
       `Rebuilding content. Reason: ${chalk.green(event)} ${chalk.blue(path)}`,
     );
+
+    // Keep track of rebuild
+    global.rebuild = true;
+    global.updatedFilePath = event;
+
     build(buildOptions);
   }, 10);
 
