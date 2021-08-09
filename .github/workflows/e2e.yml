@@ -24,7 +24,7 @@ jobs:
         working-directory: content-build
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
