@@ -634,12 +634,3 @@ jobs:
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           label: ${{ needs.start-runner.outputs[matrix.buildtype]}}
           ec2-instance-id: ${{ needs.start-runner.outputs[matrix.id]}}
-
-      # - name: echo test
-      #   run: echo ${{ needs.start-runner.outputs}}
-
-      # - name: echo test name
-      #   run: echo ${{ needs.start-runner.outputs[matrix.buildtype]}}
-
-      # - name: echo test num
-      #   run: echo ${{ needs.start-runner.outputs[matrix.id]}}
