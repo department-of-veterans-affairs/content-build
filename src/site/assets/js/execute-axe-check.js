@@ -24,7 +24,7 @@ function processAxeCheckResults(error, results) {
     ') accessibility issues on this page.</h4></summary>';
 
   var violationsList =
-    '<ul class="usa-unstyled-list vads-u-border-color--primary-darker vads-u-border-top--1px vads-u-padding-x--6 vads-u-padding-y--2">';
+    '<ul class="usa-unstyled-list vads-u-border-color--primary-darker vads-u-border-top--1px vads-u-padding-x--6 vads-u-padding-y--2" role="list">';
 
   results.violations.forEach(function(violation) {
     var violationEl = '<li class="vads-u-margin-y--1">';
@@ -33,7 +33,7 @@ function processAxeCheckResults(error, results) {
     violationEl +=
       '<summary>' + sanitizeString(violation.help, 'strong') + '</summary>';
     violationEl +=
-      '<ul class="usa-unstyled-list vads-u-padding-y--1 vads-u-padding-x--2">';
+      '<ul class="usa-unstyled-list vads-u-padding-y--1 vads-u-padding-x--2" role="list">';
 
     violationEl +=
       '<li><strong>Description</strong>: ' +
@@ -99,6 +99,6 @@ function processAxeCheckResults(error, results) {
         'color-contrast': { enabled: false },
       },
     },
-    processAxeCheckResults,
+    processAxeCheckResults
   );
 })();

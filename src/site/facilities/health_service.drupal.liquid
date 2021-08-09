@@ -21,7 +21,7 @@
 
                 {% if healthService.fieldLocalHealthCareService.length > 0 %}
                     <h3>Available at these {{ regionOrOffice }} locations</h3>
-                    <ul class="usa-unstyled-list">
+                    <ul class="usa-unstyled-list" role="list">
                         {% for location in healthService.fieldLocalHealthCareService %}
                             {% assign facility = location.entity.fieldFacilityLocation.entity %}
                             {% if location.entity.status and facility != empty %}

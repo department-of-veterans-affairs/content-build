@@ -38,7 +38,7 @@
           {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %}
           <nav id="table-of-contents" aria-labelledby="on-this-page">
             <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-            <ul class="usa-unstyled-list"></ul>
+            <ul class="usa-unstyled-list" role="list"></ul>
           </nav>
           {% endif %}
 
@@ -60,9 +60,9 @@
           {% endfor %}
           {% if fieldRelatedLinks != empty %}
           <div class="row">
-            <div class="usa-content columns">
+            <div class="usa-content">
               <aside class="va-nav-linkslist va-nav-linkslist--related">
-                {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' entity = fieldRelatedLinks.entity %}
+                {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' with entity = fieldRelatedLinks.entity %}
               </aside>
             </div>
           </div>

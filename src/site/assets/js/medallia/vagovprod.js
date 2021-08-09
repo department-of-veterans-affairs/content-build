@@ -1,7 +1,7 @@
 // Medallia Embed Script
 (function(g) {
   var isStaging = window.location.host.includes('staging');
-  if (!isStaging) return
+  if (!isStaging) return;
 
   var teamSitePathnames = [
     // `/ORMDI` redirects to include a trailing slash (`/ORMDI/`)
@@ -22,8 +22,8 @@
     /\/adr\/$/i,
   ];
   var pathname = window.location.pathname;
-  var isApprovedPathname = teamSitePathnames.some(x => x.test(pathname))
-  if (!isApprovedPathname) return
+  var isApprovedPathname = teamSitePathnames.some(x => x.test(pathname));
+  if (!isApprovedPathname) return;
 
   var d = document,
     am = d.createElement('script'),

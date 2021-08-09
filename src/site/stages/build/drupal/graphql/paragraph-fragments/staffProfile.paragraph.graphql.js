@@ -7,6 +7,7 @@ module.exports = `
     queryFieldStaffProfile {
       entities {
         ...on NodePersonProfile {
+        entityPublished
         entityUrl {
           path
         }

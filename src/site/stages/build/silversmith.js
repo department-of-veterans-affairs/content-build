@@ -14,12 +14,16 @@ const {
   cleanConsole,
 } = require('./console');
 
+const { GITHUB_ACTIONS } = process.env;
+
 // Adjust the GC frequency to balance build time and peak memory usage.
 // Note: if the value is set too high, build time may actually increase, likely
 // due to heap size approaching the max, causing extra scavange GCs.
 // You may need to adjust --max-old-space-size (heap size) as well.
 // Use the --trace-gc flag to show garbage collection stats.
-const GARBAGE_COLLECTION_FREQUENCY_SECONDS = 10;
+//
+// Our GHA runners have additional memory so less GC is needed there vs Jenkins.
+const GARBAGE_COLLECTION_FREQUENCY_SECONDS = GITHUB_ACTIONS ? 60 : 10;
 let garbageCollectionInterval;
 let peakRSSUsed = 0;
 

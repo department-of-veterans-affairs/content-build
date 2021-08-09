@@ -5,6 +5,11 @@
 <div class="interior" id="content">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
+      {% comment %}
+        Note: this template has two very similar sections. The first is wrapped in the following "if" block
+        to prevent the sidenav from showing up. The second begins after the "else" statement on line 80.
+        TODO: REFACTOR!
+      {% endcomment %}.
       {% if entityUrl.path contains "/safety-security/" and buildtype != 'vagovprod' %}
           <article aria-labelledby="article-heading" role="region" class="usa-content">
             <h1 id="article-heading">{{ title }}</h1>
@@ -29,7 +34,7 @@
             {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %}
               <nav id="table-of-contents" aria-labelledby="on-this-page">
                 <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-                <ul class="usa-unstyled-list"></ul>
+                <ul class="usa-unstyled-list" role="list"></ul>
               </nav>
             {% endif %}
 
@@ -102,7 +107,7 @@
             {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %}
               <nav id="table-of-contents" aria-labelledby="on-this-page">
                 <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-                <ul class="usa-unstyled-list"></ul>
+                <ul class="usa-unstyled-list" role="list"></ul>
               </nav>
             {% endif %}
 
