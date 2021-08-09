@@ -97,12 +97,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovprod]
+        buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
-          # - buildtype: vagovdev
-          #   drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
-          # - buildtype: vagovstaging
-          #   drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+          - buildtype: vagovdev
+            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+          - buildtype: vagovstaging
+            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
@@ -391,7 +391,7 @@ jobs:
       - name: Restore vagovprod build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build build/vagovprod
+          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
           du -h build/vagovprod
 
       - name: Get Node version
@@ -460,7 +460,7 @@ jobs:
       - name: Restore vagovprod build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build build/vagovprod
+          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
           du -h build/vagovprod
 
       - name: Get Node version
