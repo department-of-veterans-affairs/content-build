@@ -20,13 +20,22 @@ jobs:
   start-runner:
     runs-on: ubuntu-latest
     outputs:
-      label: ${{ steps.start-ec2-runner.outputs.label }}
+      vagovdev: ${{ steps.start-ec2-runner-env.outputs.vagovdev }}
+      vagovstage: ${{ steps.start-ec2-runner-env.outputs.vagovstage }}
+      vagovprod: ${{ steps.start-ec2-runner-env.outputs.vagovprod }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
-
     env:
       INSTANCE_TYPE: c5.4xlarge
 
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
     steps:
+      - name: test string
+        run: echo ${{ format({0}, matrix.buildtype) }}
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -47,12 +56,14 @@ jobs:
           --filters Name=name,Values=packer-gha-runner-ubuntu2004* \
           --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
           --output text)" >> $GITHUB_ENV
+
       - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
         run: |
           echo "SUBNET_ID=$(aws ec2 describe-subnets \
           --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
           --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
           --output text)" >> $GITHUB_ENV
+
       - name: Start EC2 Runner
         id: start-ec2-runner
         uses: machulav/ec2-github-runner@v2
@@ -73,10 +84,14 @@ jobs:
               {"Key": "environment", "Value": "utility"}
             ]
 
+      - name: EC2 Runner Name
+        id: start-ec2-runner-env
+        run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.label }}
+
   build:
     name: Build
     needs: start-runner
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on: ${{ fromJSON(format('["{0}", "{1}"]', github.sha, github.ref))[github.ref != 'refs/heads/master'] }}
     timeout-minutes: 60
 
     defaults:
@@ -582,6 +597,11 @@ jobs:
     env:
       INSTANCE_TYPE: c5.4xlarge
 
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -601,5 +621,5 @@ jobs:
         with:
           mode: stop
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          label: ${{ needs.start-runner.outputs.label }}
+          label: ${{ format('{0}', matrix.buildtype) }}
           ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
