@@ -177,17 +177,17 @@ describe('filterPastEvents', () => {
 });
 
 describe('filterUpcomingEvents', () => {
-  // addOneDayToDate adds 1 full day to the current date
+  // addOneDayToDate() adds 1 full day to the current date
   // this allows us to always have upcoming events.
   const addOneDayToDate = () => {
     const d = new Date();
     return Math.round(d.getTime() + 1000 * 60 * 60 * 24);
   };
+
   const clonedData = _.cloneDeep(eventsMockData);
   clonedData[3].fieldDatetimeRangeTimezone.value = addOneDayToDate();
   clonedData[4].fieldDatetimeRangeTimezone.value = addOneDayToDate();
-  // const cleanupBlockEventStartValue = clonedData[3].fieldDatetimeRangeTimezone.value = addOneDayToDate()
-  // const holidayOfficeDinnerStartValue = clonedData[4].fieldDatetimeRangeTimezone.value = addOneDayToDate()
+
   it('returns null when null is passed', () => {
     expect(liquid.filters.filterUpcomingEvents(null)).to.eq(null);
   });
