@@ -21,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       vagovdev: ${{ steps.start-ec2-runner-name.outputs.vagovdev }}
-      vagovstage: ${{ steps.start-ec2-runner-name.outputs.vagovstage }}
+      vagovstaging: ${{ steps.start-ec2-runner-name.outputs.vagovstaging }}
       vagovprod: ${{ steps.start-ec2-runner-name.outputs.vagovprod }}
       vagovdev-id: ${{ steps.start-ec2-runner-id.outputs.vagovdev }}
-      vagovstage-id: ${{ steps.start-ec2-runner-id.outputs.vagovstage }}
+      vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
       vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
       INSTANCE_TYPE: c5.4xlarge
@@ -608,8 +608,8 @@ jobs:
         include:
           - buildtype: vagovdev
             id: vagovdev-id
-          - buildtype: vagovstage
-            id: vagovstage-id
+          - buildtype: vagovstaging
+            id: vagovstaging-id
           - buildtype: vagovprod
             id: vagovprod-id
 
@@ -640,3 +640,6 @@ jobs:
 
       - name: echo test name
         run: echo ${{ needs.start-runner.outputs[matrix.buildtype]}}
+
+      - name: echo test num
+        run: echo ${{ needs.start-runner.outputs[matrix.id]}}
