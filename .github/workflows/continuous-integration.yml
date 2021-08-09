@@ -136,6 +136,9 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: ls
+        run: ls
+
       - name: Set Drupal address
         if: ${{ github.ref == 'refs/heads/master' }}
         run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
