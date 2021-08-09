@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: test string
-        run: echo ${{ format({0}, matrix.buildtype) }}
+        run: echo ${{ format('{0}', matrix.buildtype) }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
