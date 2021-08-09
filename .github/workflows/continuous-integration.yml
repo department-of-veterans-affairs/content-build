@@ -81,13 +81,13 @@ jobs:
     needs: start-runner
     runs-on: ${{ needs.start-runner.outputs.label }}
     timeout-minutes: 60
-    container:
-      image: public.ecr.aws/h8j6b4m0/node14:latest
-      options: -u 0 -v /usr/local/share/ca-certificates:/certs
+    # container:
+    #   image: public.ecr.aws/h8j6b4m0/node14:latest
+    #   options: -u 0 -v /usr/local/share/ca-certificates:/certs
 
-    defaults:
-      run:
-        working-directory: content-build
+    # defaults:
+    #   run:
+    #     working-directory: content-build
 
     env:
       # Sandbox Drupal address is used on branches other than master.
@@ -108,16 +108,9 @@ jobs:
     #         drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
     steps:
-      - name: Checkout vagov-content
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
 
       - name: Checkout content-build
         uses: actions/checkout@v2
-        with:
-          path: content-build
 
       # - name: Get Node version
       #   id: get-node-version
@@ -144,12 +137,18 @@ jobs:
 
       - name: Set Drupal address
         if: ${{ github.ref == 'refs/heads/master' }}
-        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
-      - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-        env:
-          NODE_ENV: production
+      # TODO: Is this how we want to use?
+      - name: Use correct .dockerignore for node_modules
+        run: mv Dockerfile.github_action.dockerignore ./.dockerignore
+
+      # Does this have docker by default?
+      - name: Build container
+        run: docker build --file Dockerfile.github_action --no-cache -t content-build-gha-image
+
+      - name: Docker run
+        run: docker run --network="host" -v /tmp/${{ github.run_id }}/build:/application/content-build/build -e BUILDTYPE=vagovprod -e DRUPAL_ADDRESS=${{ env.DRUPAL_ADDRESS}} -it content-build-gha-image
 
       - name: Check broken links
         id: get-broken-link-info

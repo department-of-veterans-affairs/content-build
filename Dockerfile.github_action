@@ -1,0 +1,26 @@
+FROM public.ecr.aws/bitnami/node:14.15.5
+USER root
+
+ENV NODE_ENV production
+ENV DRUPAL_ADDRESS https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+
+# TODO: What should we have as default?
+ENV BUILDTYPE vagovprod
+
+RUN apt-get update
+
+# Add VA Root CA to Docker Certificate Authority (CA) Store so that NODE can use it for requests.
+ADD http://crl.pki.va.gov/PKI/AIA/VA/VA-Internal-S2-RCA1-v1.cer /usr/local/share/ca-certificates/
+RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.crt
+RUN update-ca-certificates
+
+RUN mkdir -p /application/content-build
+RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-content.git /application/vagov-content
+
+
+COPY . /application/content-build
+WORKDIR /application/content-build
+COPY /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt 
+ENV NODE_EXTRA_CA_CERTS /etc/ssl/certs/ca-certificates.crt
+
+CMD yarn build --buildtype=$BUILDTYPE --asset-source=local --drupal-address=$DRUPAL_ADDRESS --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
