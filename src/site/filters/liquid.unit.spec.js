@@ -1327,8 +1327,8 @@ describe('isBannerVisible', () => {
   });
 
   it('returns false if current path is not included in target paths', () => {
-    const targetPaths = ['/test'];
-    const currentPath = '/test/';
+    const targetPaths = ['/somepath/'];
+    const currentPath = '/someotherpath/';
 
     expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
       false,
