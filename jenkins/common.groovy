@@ -214,8 +214,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // cannot be serialized by default.
     brokenLinks = null
 
-    // Temporarily disabling this to test in GHA
-    //uploadBrokenLinksFile(brokenLinksFile, envName)
+    uploadBrokenLinksFile(brokenLinksFile, envName)
 
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless
