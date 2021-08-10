@@ -120,6 +120,10 @@ jobs:
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
     steps:
+      - name: Check available space
+        run: |
+          df -h
+
       - name: Checkout vagov-content
         uses: actions/checkout@v2
         with:
@@ -244,6 +248,11 @@ jobs:
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: ${{ env.CHANNEL_ID}}
+
+      - name: Check available space
+        run: |
+          df -h
+
 
   unit-tests:
     name: Unit Tests
@@ -454,6 +463,10 @@ jobs:
           name: cypress-screenshot-artifacts
           path: cypress/screenshots
 
+      - name: Check available space
+        run: |
+          df -h
+
   nightwatch-tests:
     name: Nightwatch E2E Tests
     runs-on: ${{ needs.start-runner.outputs.vagovprod }}
@@ -502,6 +515,10 @@ jobs:
         run: yarn test:e2e
         env:
           BUILDTYPE: vagovprod
+
+      - name: Check available space
+        run: |
+          df -h
 
 # archive:
 #   name: Archive
