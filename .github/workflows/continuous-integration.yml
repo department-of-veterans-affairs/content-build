@@ -20,11 +20,19 @@ jobs:
   start-runner:
     runs-on: ubuntu-latest
     outputs:
-      label: ${{ steps.start-ec2-runner.outputs.label }}
-      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
-
+      vagovdev: ${{ steps.start-ec2-runner-name.outputs.vagovdev }}
+      vagovstaging: ${{ steps.start-ec2-runner-name.outputs.vagovstaging }}
+      vagovprod: ${{ steps.start-ec2-runner-name.outputs.vagovprod }}
+      vagovdev-id: ${{ steps.start-ec2-runner-id.outputs.vagovdev }}
+      vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
+      vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
       INSTANCE_TYPE: c5.4xlarge
+
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
       - name: Configure AWS Credentials
@@ -44,15 +52,18 @@ jobs:
         run: |
           echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
           --owners 008577686731 \
+          --filters Name=state,Values=available \
           --filters Name=name,Values=packer-gha-runner-ubuntu2004* \
           --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
           --output text)" >> $GITHUB_ENV
+
       - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
         run: |
           echo "SUBNET_ID=$(aws ec2 describe-subnets \
           --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
           --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
           --output text)" >> $GITHUB_ENV
+
       - name: Start EC2 Runner
         id: start-ec2-runner
         uses: machulav/ec2-github-runner@v2
@@ -73,11 +84,19 @@ jobs:
               {"Key": "environment", "Value": "utility"}
             ]
 
+      - name: EC2 Runner Name
+        id: start-ec2-runner-name
+        run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.label }}
+
+      - name: EC2 Runner ID
+        id: start-ec2-runner-id
+        run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+
   build:
     name: Build
     needs: start-runner
-    runs-on: ${{ needs.start-runner.outputs.label }}
-    timeout-minutes: 120
+    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
+    timeout-minutes: 60
 
     defaults:
       run:
@@ -367,7 +386,7 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on: ${{ needs.start-runner.outputs.vagovprod }}
     needs: [start-runner, build]
     timeout-minutes: 30
 
@@ -437,7 +456,7 @@ jobs:
 
   nightwatch-tests:
     name: Nightwatch E2E Tests
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on: ${{ needs.start-runner.outputs.vagovprod }}
     needs: [start-runner, build]
     timeout-minutes: 30
     env:
@@ -582,6 +601,18 @@ jobs:
     env:
       INSTANCE_TYPE: c5.4xlarge
 
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+        include:
+          - buildtype: vagovdev
+            id: vagovdev-id
+          - buildtype: vagovstaging
+            id: vagovstaging-id
+          - buildtype: vagovprod
+            id: vagovprod-id
+
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -601,5 +632,5 @@ jobs:
         with:
           mode: stop
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          label: ${{ needs.start-runner.outputs.label }}
-          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+          label: ${{ needs.start-runner.outputs[matrix.buildtype]}}
+          ec2-instance-id: ${{ needs.start-runner.outputs[matrix.id]}}
