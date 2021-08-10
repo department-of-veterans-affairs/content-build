@@ -975,4 +975,18 @@ module.exports = function registerFilters() {
     if (!array) return null;
     return array.map(e => e[key]);
   };
+
+  liquid.filters.isBannerVisible = (targetPaths, currentPath) => {
+    // Escape early if arguments are missing.
+    if (!targetPaths || !currentPath) {
+      return false;
+    }
+
+    // Check to see if this page is a banner page.
+    if (targetPaths?.includes(currentPath)) {
+      return true;
+    }
+
+    return false;
+  };
 };

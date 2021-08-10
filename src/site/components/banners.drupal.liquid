@@ -1,0 +1,16 @@
+{% for banner in banners.entities %}
+  {% assign isVisible = banner.fieldTargetPaths | isBannerVisible: entityUrl.path %}
+  {% if isVisible %}
+    <div
+      aria-label="{{ banner.title | escape }}"
+      data-template="components/banners.drupal.liquid"
+      data-homepage-banner-content="{{ banner.body.processed | escape }}"
+      data-homepage-banner-title="{{ banner.title | escape }}"
+      data-homepage-banner-type="{{ banner.fieldAlertType }}"
+      data-homepage-banner-visible="{{ isVisible }}"
+      data-widget-type="banners"
+      role="region"
+    >
+    </div>
+  {% endif %}
+{% endfor %}

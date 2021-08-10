@@ -146,6 +146,7 @@ function nonNodeQueries() {
   } = require('./graphql/navigation-fragments/outreachSidebar.nav.graphql');
 
   const { GetAlerts } = require('./graphql/alerts.graphql');
+  const { GetBanners } = require('./graphql/banners.graphql');
   const { GetBannnerAlerts } = require('./graphql/bannerAlerts.graphql');
   const {
     GetOutreachAssets,
@@ -164,6 +165,7 @@ function nonNodeQueries() {
     ...VaFacilitySidebars,
     GetOutreachSidebar,
     GetAlerts,
+    GetBanners,
     GetBannnerAlerts,
     GetOutreachAssets,
     GetHomepage,

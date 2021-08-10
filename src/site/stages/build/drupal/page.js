@@ -298,23 +298,24 @@ function mergeTaxonomiesIntoResourcesAndSupportHomepage(
 function compilePage(page, contentData) {
   const {
     data: {
+      alerts: alertsItem = {},
+      allTaxonomies = {
+        entities: [],
+      },
+      banners,
+      bannerAlerts: bannerAlertsItem = {},
       burialsAndMemorialsBenefQuery: burialsHubSidebarNav = {},
       careersEmploymentBenefitsQuery: careersHubSidebarNav = {},
       decisionReviewsBenefitsHQuery: decisionHubSidebarNav = {},
+      decisionReviewsHubQuery: decisionReviewsSidebarNav = {},
       disabilityBenefitsHubQuery: disabilityHubSidebarNav = {},
       educationBenefitsHubQuery: educationHubSidebarNav = {},
       healthCareBenefitsHubQuery: healthcareHubSidebarNav = {},
       housingAssistanceBenefitsQuery: housingHubSidebarNav = {},
       lifeInsuranceBenefitsHubQuery: lifeInsuranceHubSidebarNav = {},
+      outreachSidebarQuery: outreachSidebarNav = {},
       pensionBenefitsHubQuery: pensionHubSidebarNav = {},
       recordsBenefitsHubQuery: recordsHubSidebarNav = {},
-      decisionReviewsHubQuery: decisionReviewsSidebarNav = {},
-      alerts: alertsItem = {},
-      bannerAlerts: bannerAlertsItem = {},
-      outreachSidebarQuery: outreachSidebarNav = {},
-      allTaxonomies = {
-        entities: [],
-      },
     },
   } = contentData;
 
@@ -344,7 +345,7 @@ function compilePage(page, contentData) {
   };
   const outreachSidebarNavItems = { outreachSidebar: outreachSidebarNav };
   const alertItems = { alert: alertsItem };
-  const bannerAlertsItems = { bannerAlert: bannerAlertsItem };
+  const bannerAlertsItems = { banners, bannerAlert: bannerAlertsItem };
 
   const { entityUrl, entityBundle } = page;
 
@@ -451,9 +452,9 @@ function compilePage(page, contentData) {
 
 module.exports = {
   compilePage,
-  createFileObj,
-  paginatePages,
   createEntityUrlObj,
-  updateEntityUrlObj,
+  createFileObj,
   generateBreadCrumbs,
+  paginatePages,
+  updateEntityUrlObj,
 };

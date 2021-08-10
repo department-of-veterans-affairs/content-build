@@ -111,19 +111,23 @@
   <a class="show-on-focus" href="#content">Skip to Content</a>
 
   {% if !noHeader %}
-  {% include "src/site/includes/top-nav.html" %}
+    {% include "src/site/includes/top-nav.html" %}
   {% endif %}
 
+  <!-- Fullwidth banner alerts -->
   {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
 
+  <!-- Banners -->
+  {% include "src/site/components/banners.drupal.liquid" %}
+
   <div
-    data-widget-type="banners"
+    aria-label="{{ homepage_banner.title | escape }}"
     data-homepage-banner-content="{{ homepage_banner.content | escape }}"
     data-homepage-banner-title="{{ homepage_banner.title | escape }}"
     data-homepage-banner-type="{{ homepage_banner.type }}"
     data-homepage-banner-visible="{{ homepage_banner.visible }}"
+    data-widget-type="banners"
     role="region"
-    aria-label="{{ homepage_banner.title | escape }}"
   >
   </div>
 
