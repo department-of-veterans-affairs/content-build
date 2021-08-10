@@ -22,7 +22,7 @@ const newsStoryFragment = `
           image {
             alt
             title
-            derivative(style: _21MEDIUMTHUMBNAIL) {
+            derivative(style: LARGE) {
               url
               width
               height
