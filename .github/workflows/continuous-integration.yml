@@ -129,7 +129,7 @@ jobs:
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
-        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        # if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
