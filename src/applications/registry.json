@@ -233,7 +233,7 @@
   {
     "appName": "686C-674",
     "entryName": "686C-674",
-    "rootUrl": "/view-change-dependents/add-remove-form-686c",
+    "rootUrl": "/view-change-dependents/add-remove-form-21-686c",
     "template": {
       "layout": "page-react.html",
       "vagovprod": true,
@@ -244,7 +244,7 @@
           "name": "View or change your dependents"
         },
         {
-          "path": "view-change-dependents/add-remove-form-686c/",
+          "path": "view-change-dependents/add-remove-form-21-686c/",
           "name": "Add or remove dependents form 21‑686c"
         }
       ]

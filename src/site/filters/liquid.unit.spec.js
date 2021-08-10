@@ -177,6 +177,17 @@ describe('filterPastEvents', () => {
 });
 
 describe('filterUpcomingEvents', () => {
+  // addOneDayToDate() adds 1 full day to the current date
+  // this allows us to always have upcoming events.
+  const addOneDayToDate = () => {
+    const d = new Date();
+    return Math.round(d.getTime() + 1000 * 60 * 60 * 24);
+  };
+
+  const clonedData = _.cloneDeep(eventsMockData);
+  clonedData[3].fieldDatetimeRangeTimezone.value = addOneDayToDate();
+  clonedData[4].fieldDatetimeRangeTimezone.value = addOneDayToDate();
+
   it('returns null when null is passed', () => {
     expect(liquid.filters.filterUpcomingEvents(null)).to.eq(null);
   });
@@ -192,14 +203,14 @@ describe('filterUpcomingEvents', () => {
   // TODO: update eventsMockData with future dates
   it.skip('returns events that occured AFTER the current date and time', () => {
     expect(
-      liquid.filters.filterUpcomingEvents(eventsMockData),
+      liquid.filters.filterUpcomingEvents(clonedData),
     ).to.deep.include.members([
       {
         title: 'Clean-up Block Event',
         fieldDatetimeRangeTimezone: {
           endValue: 1628355741,
           timezone: 'America/New_York',
-          value: 1628348541,
+          value: clonedData[3].fieldDatetimeRangeTimezone.value,
         },
       },
       {
@@ -207,7 +218,7 @@ describe('filterUpcomingEvents', () => {
         fieldDatetimeRangeTimezone: {
           endValue: 1639670421,
           timezone: 'America/New_York',
-          value: 1639659621,
+          value: clonedData[4].fieldDatetimeRangeTimezone.value,
         },
       },
     ]);
