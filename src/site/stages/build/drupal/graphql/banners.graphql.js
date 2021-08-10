@@ -3,7 +3,7 @@
  */
 
 const banners = `
-banners: nodeQuery(limit: 500, filter: {conditions: [{ field: "status", value: "1", operator: EQUAL }, { field: "type", value: "banner" }]}) {
+banners: nodeQuery(filter: { conditions: [{ field: "status", value: "1", operator: EQUAL }, { field: "type", value: "banner" }] }) {
   entities {
     ... on NodeBanner {
       body {
