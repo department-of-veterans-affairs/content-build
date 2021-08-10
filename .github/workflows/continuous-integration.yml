@@ -122,7 +122,7 @@ jobs:
     steps:
       - name: Check available space
         run: |
-          df -h
+          df -hl
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -251,7 +251,7 @@ jobs:
 
       - name: Check available space
         run: |
-          df -h
+          df -hl
 
 
   unit-tests:
@@ -465,7 +465,7 @@ jobs:
 
       - name: Check available space
         run: |
-          df -h
+          df -hl
 
   nightwatch-tests:
     name: Nightwatch E2E Tests
@@ -518,7 +518,7 @@ jobs:
 
       - name: Check available space
         run: |
-          df -h
+          df -hl
 
 # archive:
 #   name: Archive
