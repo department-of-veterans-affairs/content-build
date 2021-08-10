@@ -4,8 +4,9 @@
     {% assign sectionHeader = entity.fieldSectionHeader %}
 
     {% for accordionItem in questions %}
-        {% assign item = accordionItem.entity %}
-        {% assign id= item.entityId %}
+      {% assign item = accordionItem.entity %}
+      {% assign id= item.entityId %}
+
       <va-accordion-item header="{{ item.fieldQuestion }}">
         <div
           id={{id}}

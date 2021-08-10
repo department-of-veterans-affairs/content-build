@@ -1309,3 +1309,38 @@ describe('getValuesForKey', () => {
     expect(liquid.filters.getValuesForKey(null, 'foo')).to.be.null;
   });
 });
+
+describe('isBannerVisible', () => {
+  it('returns false if an argument is missing', () => {
+    const targetPaths = ['/'];
+    const currentPath = '/';
+
+    expect(liquid.filters.isBannerVisible(undefined, currentPath)).to.equal(
+      false,
+    );
+    expect(liquid.filters.isBannerVisible(targetPaths, undefined)).to.equal(
+      false,
+    );
+    expect(liquid.filters.isBannerVisible(undefined, undefined)).to.equal(
+      false,
+    );
+  });
+
+  it('returns false if current path is not included in target paths', () => {
+    const targetPaths = ['/test'];
+    const currentPath = '/test/';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      false,
+    );
+  });
+
+  it('returns true if banner is visible', () => {
+    const targetPaths = ['/'];
+    const currentPath = '/';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      true,
+    );
+  });
+});

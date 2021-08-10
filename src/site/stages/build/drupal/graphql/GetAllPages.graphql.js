@@ -4,6 +4,7 @@ const healthCareRegionPage = require('./healthCareRegionPage.graphql');
 
 const alertsQuery = require('./alerts.graphql');
 const allSideNavMachineNamesQuery = require('./navigation-fragments/allSideNavMachineNames.nav.graphql');
+const bannersQuery = require('./banners.graphql');
 const bannerAlertsQuery = require('./bannerAlerts.graphql');
 const basicLandingPage = require('./nodeBasicLandingPage.graphql');
 const benefitListingPage = require('./benefitListingPage.graphql');
@@ -127,7 +128,7 @@ const buildQuery = () => {
         ... nodeSupportResourcesDetailPage
         ... nodeBasicLandingPage
         ... nodeCampaignLandingPage
-        ... policiesPageFragment        
+        ... policiesPageFragment
       }
     }`;
 
@@ -146,6 +147,7 @@ const buildQuery = () => {
     ${facilitySidebarQuery.partialQuery}
     ${outreachSidebarQuery.partialQuery}
     ${alertsQuery.partialQuery}
+    ${bannersQuery.partialQuery}
     ${bannerAlertsQuery.partialQuery}
     ${outreachAssetsQuery.partialQuery}
     ${homePageQuery.partialQuery}
