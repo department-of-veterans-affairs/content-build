@@ -1,5 +1,6 @@
 const { normal, slow } = require('../../../../platform/testing/e2e/timeouts');
 const xml = require('fast-xml-parser');
+const fetch = require('sync-fetch');
 
 const options = {
   attributeNamePrefix: '@_',
@@ -44,10 +45,10 @@ describe(`Accessibility tests`, () => {
               timeout: slow,
             });
             cy.axeCheck();
+          } else {
+            cy.log('Page has no map');
+            cy.axeCheck();
           }
-
-          cy.log('Page has no map');
-          cy.axeCheck();
         });
     });
   }
