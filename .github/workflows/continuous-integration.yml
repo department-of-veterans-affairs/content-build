@@ -192,7 +192,7 @@ jobs:
         run: |
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
-          cp -R build/${{ matrix.buildtype }} /tmp/${{ github.run_id }}
+          mv build/${{ matrix.buildtype }} /tmp/${{ github.run_id }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
