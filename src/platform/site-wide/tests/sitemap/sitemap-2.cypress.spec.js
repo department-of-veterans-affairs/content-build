@@ -1,4 +1,4 @@
-const { normal } = require('../../../../platform/testing/e2e/timeouts');
+const { normal, slow } = require('../../../../platform/testing/e2e/timeouts');
 const xml = require('fast-xml-parser');
 const fetch = require('sync-fetch');
 
@@ -37,8 +37,19 @@ describe(`Accessibility tests`, () => {
         `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
       );
       cy.visit(localURL).injectAxe();
-      cy.get('body').should('be.visible', { timeout: normal });
-      cy.axeCheck();
+      cy.get('body')
+        .should('be.visible', { timeout: normal })
+        .then($body => {
+          if ($body.find('div[data-widget-type="facility-map"]').length) {
+            cy.get('a#generated-mapbox-image-link').should('be.visible', {
+              timeout: slow,
+            });
+            cy.axeCheck();
+          } else {
+            cy.log('Page has no map');
+            cy.axeCheck();
+          }
+        });
     });
   }
 });
