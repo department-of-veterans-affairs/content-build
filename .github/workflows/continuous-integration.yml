@@ -178,6 +178,13 @@ jobs:
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: ${{ env.CHANNEL_ID}}
 
+      - name: Configure AWS credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
       - name: Upload broken links file
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
