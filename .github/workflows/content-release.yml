@@ -267,14 +267,11 @@ jobs:
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
 
-      - name: Compress prearchived ${{ env.BUILDTYPE }} build
-        run: tar -jcvf ${{ env.BUILDTYPE }}.tar.bz2 build/${{ env.BUILDTYPE }}
-
       - name: Persist prearchived build
         run: |
           mkdir -p /tmp/${{ github.run_id }}
-          rm -rf /tmp/${{ github.run_id }}
-          mv ${{ env.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
+          rm -rf /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}
+          mv build/${{ env.BUILDTYPE }} /tmp/${{ github.run_id }}
 
   archive:
     name: Archive
@@ -287,7 +284,12 @@ jobs:
     steps:
       - name: Restore vagovprod build
         run: |
-          cp /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}.tar.bz2 .
+          mkdir -p build
+          cp -R /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }} build/${{ env.BUILDTYPE }}
+          du -h build/${{ env.BUILDTYPE }}
+
+      - name: Compress ${{ env.BUILDTYPE }} build
+        run: tar -jcvf ${{ env.BUILDTYPE }}.tar.bz2 build/${{ env.BUILDTYPE }}
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
