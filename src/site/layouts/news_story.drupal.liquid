@@ -15,7 +15,7 @@
                     <h1>{{ title }}</h1>
                     {% assign image = fieldMedia.entity.image %}
                     {% capture imageClass %}
-                        {% if fieldImageCaption == empty %}vads-u-margin-bottom--2p5{% else %}vads-u-margin-bottom--1{% endif %}
+                        story-detail-img {% if fieldImageCaption == empty %}vads-u-margin-bottom--2p5{% else %}vads-u-margin-bottom--1{% endif %}
                     {% endcapture %}
                     {% include src/site/components/image.drupal.liquid with
                         class = imageClass
