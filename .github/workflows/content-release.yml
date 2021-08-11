@@ -26,11 +26,6 @@ jobs:
     env:
       INSTANCE_TYPE: c5.4xlarge
 
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
