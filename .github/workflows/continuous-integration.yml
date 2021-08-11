@@ -400,7 +400,7 @@ jobs:
       - name: Restore vagovprod build
         run: |
           mkdir -p build
-          mv /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
           du -h build/vagovprod
 
       - name: Get Node version
@@ -457,7 +457,7 @@ jobs:
   nightwatch-tests:
     name: Nightwatch E2E Tests
     runs-on: ${{ needs.start-runner.outputs.vagovprod }}
-    needs: [start-runner, build, cypress-tests]
+    needs: [start-runner, build]
     timeout-minutes: 30
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
@@ -465,6 +465,12 @@ jobs:
     steps:
       - name: Checkout vagov-content
         uses: actions/checkout@v2
+
+      - name: Restore vagovprod build
+        run: |
+          mkdir -p build
+          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+          du -h build/vagovprod
 
       - name: Get Node version
         id: get-node-version
