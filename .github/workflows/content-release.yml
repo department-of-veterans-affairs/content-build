@@ -199,7 +199,7 @@ jobs:
   
   build:
     name: Build
-    runs-on: ${{ steps.start-ec2-runner.outputs.label }}
+    runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, notify-start, validate-build-status, start-runner]
     defaults:
       run:
@@ -280,7 +280,7 @@ jobs:
 
   archive:
     name: Archive
-    runs-on: ${{ steps.start-ec2-runner.outputs.label }}
+    runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, build, start-runner]
 
     env:
