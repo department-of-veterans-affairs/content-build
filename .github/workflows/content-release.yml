@@ -285,7 +285,7 @@ jobs:
       - name: Restore vagovprod build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+          cp -R /tmp/${{ github.run_id }}/vagovprod build/vagovprod
           du -h build/vagovprod
 
       - name: Configure AWS credentials (1)
