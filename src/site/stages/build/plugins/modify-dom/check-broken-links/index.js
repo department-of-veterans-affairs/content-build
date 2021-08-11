@@ -24,7 +24,7 @@ module.exports = {
     this.brokenPages = [
       {
         path: 'test-broken-link/health-services',
-        linkErrors: [{ html: '<a href="test.html">Test broken link</a>' }],
+        linkErrors: [{ html: `<a href="test.html">Test ${new Date()}</a>` }],
       },
     ];
     this.logFile = path.join(
