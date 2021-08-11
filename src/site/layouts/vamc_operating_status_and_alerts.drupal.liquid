@@ -15,37 +15,40 @@
         <article class="usa-content">
           <h1 class="vads-u-margin-bottom--2">Operating status</h1>
           <div class="va-introtext vads-u-margin-bottom--0">
-            {{facilitySidebar.name}}
+            {{ facilitySidebar.name }}
             facility operating statuses and emergency information.
           </div>
           {% if fieldOffice.entity.fieldLinkFacilityEmergList.url.path %}
             <div class="usa-grid usa-grid-full vads-u-margin-y--1p5">
               <div class="vads-l-row">
                 <div class="vads-u-margin-right--2p5">
-                  <a class="vads-u-padding-x--5 usa-button vads-u-margin-top--1 vads-u-margin--0 vads-u-width--full vads-u-font-size--md" href="{{fieldOffice.entity.fieldLinkFacilityEmergList.url.path}}">
-                      Subscriben to emergency notifications</a>
+                  <a class="vads-u-padding-x--5 usa-button vads-u-margin-top--1 vads-u-margin--0 vads-u-width--full vads-u-font-size--md"
+                     href="{{ fieldOffice.entity.fieldLinkFacilityEmergList.url.path }}">
+                    Subscribe to emergency notifications</a>
                 </div>
               </div>
             </div>
           {% endif %}
           <section aria-labelledby="on-this-page" class="table-of-contents" class="vads-u-margin-bottom--5">
             <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg" id="on-this-page">
-                On this page
+              On this page
             </h2>
             <ul class="usa-unstyled-list" role="list">
 
               {% if fieldBannerAlert.0.entity.status != false and fieldBannerAlert.0.entity.fieldSituationUpdates.0.entity %}
                 <li class="vads-u-margin-bottom--2">
-                  <a class="vads-u-display--flex vads-u-text-decoration--none" href="#situation-updates" onclick="recordEvent({ event: 'nav-jumplink-click' });">
+                  <a class="vads-u-display--flex vads-u-text-decoration--none" href="#situation-updates"
+                     onclick="recordEvent({ event: 'nav-jumplink-click' });">
                     <i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1"></i>
                     Situation updates and information
                   </a>
                 </li>
               {% endif %}
 
-              {% if fieldFacilityOperatingStatus.length > 0%}
+              {% if fieldFacilityOperatingStatus.length > 0 %}
                 <li class="vads-u-margin-bottom--2">
-                  <a class="vads-u-display--flex vads-u-text-decoration--none" href="#operating-statuses" onclick="recordEvent({ event: 'nav-jumplink-click' });">
+                  <a class="vads-u-display--flex vads-u-text-decoration--none" href="#operating-statuses"
+                     onclick="recordEvent({ event: 'nav-jumplink-click' });">
                     <i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1"></i>
                     Facility operating statuses
                   </a>
@@ -54,7 +57,8 @@
 
               {% if fieldLink.0.uri or fieldOperatingStatusEmergInf.value %}
                 <li class="vads-u-margin-bottom--2">
-                  <a class="vads-u-display--flex vads-u-text-decoration--none" href="#emergency-resources" onclick="recordEvent({ event: 'nav-jumplink-click' });">
+                  <a class="vads-u-display--flex vads-u-text-decoration--none" href="#emergency-resources"
+                     onclick="recordEvent({ event: 'nav-jumplink-click' });">
                     <i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1"></i>
                     Emergency resources
                   </a>
@@ -76,12 +80,14 @@
                   <div class="vads-l-row vads-u-border-top--1px vads-u-border-color--gray-light">
                     <dt class="vads-l-col--6 vads-u-margin-y--3 vads-u-display--flex operating-status-title">
                       <a class="facility-title-width vads-u-font-weight--bold" onclick="recordEvent({
-                                                                'event':'nav-health-care-facility-status-click'});" href="{{status.entity.entityUrl.path}}">{{ status.entity.title }}</a>
+                                                                'event':'nav-health-care-facility-status-click'});"
+                         href="{{ status.entity.entityUrl.path }}">{{ status.entity.title }}</a>
                     </dt>
                     <dd class="vads-l-col--6">
                       <div class="operating-status-info vads-u-padding-y--1p5 vads-u-padding-x--0">
                         {% if status.entity.fieldOperatingStatusFacility == 'notice' %}
-                          <span class="operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
+                          <span
+                              class="operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
                             <i aria-hidden="true" class="fa fa-info-circle"></i>
                             Facility notice
                           </span>
@@ -90,12 +96,14 @@
                             Normal services and hours
                           </span>
                         {% elsif status.entity.fieldOperatingStatusFacility == 'limited' %}
-                          <span class="operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
-                            <i aria-hidden="true" class="fa fa-exclamation-triangle"></i>
+                          <span
+                              class="operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
+                            <i aria-hidden="true" class="fa fa-info-circle"></i>
                             Limited services and hours
                           </span>
                         {% elsif status.entity.fieldOperatingStatusFacility == 'closed' %}
-                          <span class="operating-status usa-alert usa-alert-error background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
+                          <span
+                              class="operating-status usa-alert usa-alert-error background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
                             <i aria-hidden="true" class="fa fa-exclamation-circle"></i>
                             Facility Closed
                           </span>
