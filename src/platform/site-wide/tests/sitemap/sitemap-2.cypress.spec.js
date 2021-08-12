@@ -25,8 +25,9 @@ const urls = xml
   .parse(data, options)
   .urlset.url.map(url => url.loc)
   .sort();
-const divider = Math.ceil(urls.length / 8);
-const splitURLs = urls.slice(divider, 2 * divider);
+const divider = Math.ceil(urls.length / 40);
+const splitURLs = urls.slice(19 * divider, 21 * divider);
+// const splitURLs = ["http://localhost:3002/family-member-benefits/apply-for-caregiver-assistance-form-10-10cg/"];
 
 describe(`Accessibility tests`, () => {
   for (const url of splitURLs) {
@@ -44,10 +45,14 @@ describe(`Accessibility tests`, () => {
             cy.get('a#generated-mapbox-image-link').should('be.visible', {
               timeout: slow,
             });
-            cy.axeCheck();
+            cy.axeCheck({
+              exclude: ['.loading-indicator'],
+            });
           } else {
             cy.log('Page has no map');
-            cy.axeCheck();
+            cy.axeCheck({
+              exclude: ['.loading-indicator'],
+            });
           }
         });
     });

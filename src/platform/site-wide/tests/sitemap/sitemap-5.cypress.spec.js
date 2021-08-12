@@ -44,10 +44,14 @@ describe(`Accessibility tests`, () => {
             cy.get('a#generated-mapbox-image-link').should('be.visible', {
               timeout: slow,
             });
-            cy.axeCheck();
+            cy.axeCheck({
+              exclude: ['.loading-indicator'],
+            });
           } else {
             cy.log('Page has no map');
-            cy.axeCheck();
+            cy.axeCheck({
+              exclude: ['.loading-indicator'],
+            });
           }
         });
     });
