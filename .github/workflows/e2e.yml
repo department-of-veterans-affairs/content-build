@@ -115,12 +115,17 @@ jobs:
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
+      # - name: Install dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: yarn install --frozen-lockfile --prefer-offline --production=false
+      #     max_attempts: 3
+      #     timeout_minutes: 5
+      #   env:
+      #     YARN_CACHE_FOLDER: .cache/yarn
+
       - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --production=false
-          max_attempts: 3
-          timeout_minutes: 5
+        run: yarn install --frozen-lockfile --prefer-offline --production=false
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
