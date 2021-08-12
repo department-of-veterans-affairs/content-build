@@ -214,23 +214,23 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // cannot be serialized by default.
     brokenLinks = null
 
-    if (!IS_PROD_BRANCH && !contentOnlyBuild) {
-      // Ignore the results of the broken link checker unless
-      // we are running either on the master branch or during
-      // a Content Release. This way, if there is a broken link,
-      // feature branches aren't affected, so VFS teams can
-      // continue merging.
-      return;
-    }
+    // if (!IS_PROD_BRANCH && !contentOnlyBuild) {
+    //   // Ignore the results of the broken link checker unless
+    //   // we are running either on the master branch or during
+    //   // a Content Release. This way, if there is a broken link,
+    //   // feature branches aren't affected, so VFS teams can
+    //   // continue merging.
+    //   return;
+    // }
 
     uploadBrokenLinksFile(brokenLinksFile, envName)
 
-    slackSend(
-      message: message,
-      color: color,
-      failOnError: true,
-      channel: 'vfs-platform-builds'
-    )
+    // slackSend(
+    //   message: message,
+    //   color: color,
+    //   failOnError: true,
+    //   channel: 'vfs-platform-builds'
+    // )
 
     if (color == 'danger') {
       throw new Exception('Broken links found')
