@@ -1,0 +1,20 @@
+{
+  "alert": {
+    "entities": [
+      {
+        "id": 4815162342,
+        "fieldAlertTitle": "Take a look at banner, Michael!",
+        "fieldAlertType": "information",
+        "fieldAlertDismissable": true,
+        "fieldAlertFrequency": "once",
+        "fieldIsThisAHeaderAlert": "banner_alert",
+        "fieldNodeReference": [{ "targetId": null }],
+        "fieldAlertContent": {
+          "entity": {
+            "entityRendered": "Family Love Michael"
+          }
+        }
+      }
+    ]
+  }
+}
