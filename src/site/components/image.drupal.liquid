@@ -8,11 +8,18 @@
       {% endif %}
       src="{{ image.derivative.url }}"
       alt="{{ image.alt }}"
-      {% if image.derivative.width %}
+      {% if width %}
+        width={{ width }}
+      {% elseif image.derivative.width %}
         width="{{ image.derivative.width }}"
       {% endif %}
-      {% if image.derivative.height %}
+      {% if height %}
+        height={{ height }}
+      {% elseif image.derivative.height %}
         height="{{ image.derivative.height }}"
+      {% endif %}
+      {% if crop %}
+        style="object-fit: cover; object-position: top; {% if height %} height: {{ height }} {% endif %}"
       {% endif %}
   />
 {% endif %}
