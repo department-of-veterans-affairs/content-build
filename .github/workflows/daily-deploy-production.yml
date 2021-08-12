@@ -131,7 +131,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Validate build status
-        run: node ./script/github-actions/validate-build-status.js ${{ github.sha }}
+        run: node ./script/github-actions/validate-build-status.js 793ea26c70a0323c41a1ab91217daaa7ab51a507
 
   notify-start:
     name: Notify Start
