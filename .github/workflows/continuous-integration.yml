@@ -255,17 +255,17 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      # - name: Notify Slack about broken links
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-      #     blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-      #     channel_id: ${{ env.CHANNEL_ID}}
+      - name: Notify Slack about broken links
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ steps.get-broken-link-info.outputs.NOTIFY_SLACK == '1' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          channel_id: ${{ env.CHANNEL_ID}}
 
   unit-tests:
     name: Unit Tests
