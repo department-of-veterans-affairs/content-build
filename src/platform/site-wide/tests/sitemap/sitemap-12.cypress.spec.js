@@ -26,8 +26,7 @@ const urls = xml
   .urlset.url.map(url => url.loc)
   .sort();
 const divider = Math.ceil(urls.length / 16);
-const splitURLs = urls.slice(divider, 2 * divider);
-// const splitURLs = ["http://localhost:3002/family-member-benefits/apply-for-caregiver-assistance-form-10-10cg/"];
+const splitURLs = urls.slice(11 * divider, 12 * divider);
 
 describe(`Accessibility tests`, () => {
   for (const url of splitURLs) {

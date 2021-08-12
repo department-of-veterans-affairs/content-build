@@ -25,7 +25,7 @@ const urls = xml
   .parse(data, options)
   .urlset.url.map(url => url.loc)
   .sort();
-const divider = Math.ceil(urls.length / 8);
+const divider = Math.ceil(urls.length / 16);
 const splitURLs = urls.slice(5 * divider, 6 * divider);
 
 describe(`Accessibility tests`, () => {
