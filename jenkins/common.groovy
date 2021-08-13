@@ -208,12 +208,6 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     echo "${brokenLinks.brokenLinksCount} broken links found"
     echo message
 
-    // Unset brokenLinks now that we're done with this, because Jenkins may temporarily
-    // freeze (through serialization) this pipeline while uploading the broken links file
-    // or sending the Slack message. brokenLinks is an instance of JSONObject, which
-    // cannot be serialized by default.
-    brokenLinks = null
-
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless
       // we are running either on the master branch or during
@@ -222,6 +216,12 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
       // continue merging.
       return;
     }
+
+    // Unset brokenLinks now that we're done with this, because Jenkins may temporarily
+    // freeze (through serialization) this pipeline while uploading the broken links file
+    // or sending the Slack message. brokenLinks is an instance of JSONObject, which
+    // cannot be serialized by default.
+    brokenLinks = null
 
     uploadBrokenLinksFile(brokenLinksFile, envName)
 
