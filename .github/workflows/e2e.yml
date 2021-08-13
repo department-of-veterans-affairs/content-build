@@ -1,4 +1,4 @@
-name: E2E Tests
+name: Accessibility Tests
 
 on: [push]
 
@@ -73,7 +73,7 @@ jobs:
           retention-days: 1
   
   a11y:
-    name: E2E Tests
+    name: Accessibility Tests
     needs: build
     runs-on: [self-hosted, asg]
     container:
@@ -94,12 +94,6 @@ jobs:
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
-      - name: Checkout vagov-content
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
-
       - name: Checkout content-build
         uses: actions/checkout@v2
         with:
@@ -139,25 +133,3 @@ jobs:
 
       - name: Run Cypress E2E Tests
         run: CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.cypress.spec.js"
-
-      # - name: Publish test results
-      #   if: ${{ always() }}
-      #   uses: mikepenz/action-junit-report@v2.4.2
-      #   with:
-      #     check_name: 'Cypress Tests Summary'
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     report_paths: 'test-results/e2e-test-output-*.xml'
-
-      # - name: Archive Cypress test videos
-      #   uses: actions/upload-artifact@v2
-      #   if: ${{ failure() }}
-      #   with:
-      #     name: cypress-video-artifacts
-      #     path: cypress/videos
-
-      # - name: Archive Cypress test screenshots
-      #   uses: actions/upload-artifact@v2
-      #   if: ${{ failure() }}
-      #   with:
-      #     name: cypress-screenshot-artifacts
-      #     path: cypress/screenshots
