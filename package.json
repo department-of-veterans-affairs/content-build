@@ -165,7 +165,6 @@
     "glob": "^7.1.6",
     "http-server": "^0.12.3",
     "husky": ">=6",
-    "inquirer-autocomplete-prompt": "^1.0.2",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.2.1",
     "jsonschema": "^1.1.1",
