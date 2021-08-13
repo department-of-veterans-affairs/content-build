@@ -17,7 +17,7 @@
 {% endcomment %}
 
 {% assign headingTag = "h3" %}
-{% assign id = entity.entityId | formatSharableLinkID: entity.fieldQuestion %}
+{% assign id = entity.entityId %}
 
 {% if entity.parentFieldName == "field_questions" and sectionHeader == blank %}
   {% assign headingTag = "h2" %}
@@ -28,8 +28,6 @@
     <div class="vads-u-display--flex">
       <{{ headingTag }} itemprop="name">
         {{ entity.fieldQuestion }}
-        <span data-widget-type="sharable-link" parentId="{{id}}" sharableText="{{entity.fieldQuestion}}">
-        </span>
       </{{ headingTag }}>
 
     </div>
@@ -38,8 +36,8 @@
         {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
         {% include {{ bundleComponent }} with entity = answer.entity %}
       {% endfor %}
-     
+
     </div>
   </div>
-   
+
 </div>
