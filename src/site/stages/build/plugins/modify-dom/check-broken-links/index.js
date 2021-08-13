@@ -21,7 +21,23 @@ module.exports = {
 
     const fileNames = Object.keys(files);
     this.allPaths = new Set(fileNames);
-    this.brokenPages = [];
+    // this.brokenPages = [];
+    this.brokenPages = [
+      {
+        path: 'test-broken-link/health-services',
+        linkErrors: [
+          { html: `<a href="test.html">Test ${new Date()}</a>` },
+          { html: `<a href="test2.html">Test 2 ${new Date()}</a>` },
+        ],
+      },
+      {
+        path: 'test-broken-link/another',
+        linkErrors: [
+          { html: `<a href="another.html">Test another ${new Date()}</a>` },
+          { html: `<a href="another2.html">Test another2 ${new Date()}</a>` },
+        ],
+      },
+    ];
     this.logFile = path.join(
       __dirname,
       '../../../../../../../logs',
