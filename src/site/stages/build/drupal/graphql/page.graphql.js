@@ -11,17 +11,25 @@ const pageFragment = `
 
   fragment page on NodePage {
     ${entityElementsFromPages}
-    fieldIntroTextLimitedHtml {
-      processed
-    }
-    fieldDescription
-    fieldTableOfContentsBoolean
-    fieldFeaturedContent {
+    fieldLanguage,
+    fieldTranslatedPages {
       entity {
-        entityType
-        entityBundle
-        ... wysiwyg
-        ... qa
+        entityUrl {
+          path
+        }
+        ...on NodePage {
+          fieldLanguage
+          fieldTranslatedPages {
+            entity {
+              ...on NodePage {
+                fieldLanguage
+                entityUrl {
+                  path
+                }
+              }
+            }
+          }
+        }
       }
     }
     fieldContentBlock {
