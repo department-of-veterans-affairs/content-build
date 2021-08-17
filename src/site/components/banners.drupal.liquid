@@ -1,11 +1,16 @@
 <!-- Only show 3 banners maximum for now. -->
-{% assign filteredBanners = banners.entities | slice: 0, 3 %}
+{% assign maxVisibleBanners = 3 %}
+{% assign visibleBannersCount = 0 %}
 
-{% for banner in filteredBanners %}
+{% for banner in banner.entities %}
   <!-- Only show the banner if it's visible. -->
   {% assign isVisible = banner.fieldTargetPaths | isBannerVisible: entityUrl.path %}
 
-  {% if isVisible %}
+  {% if isVisible and visibleBannersCount <= maxVisibleBanners %}
+    <!-- Increment number of visible banners. -->
+    {% assign visibleBannersCount = visibleBannersCount | plus: 1 %}
+
+    <!-- Banner -->
     <div
       aria-label="{{ banner.title | escape }}"
       data-template="components/banners.drupal.liquid"
