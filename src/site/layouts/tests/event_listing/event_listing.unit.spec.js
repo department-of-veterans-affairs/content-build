@@ -1,15 +1,56 @@
 import { expect } from 'chai';
-import { parseFixture, renderHTML } from '~/site/tests/support';
+import { renderHTML } from '~/site/tests/support';
 import axeCheck from '~/site/tests/support/axe';
+import { readFileSync } from 'fs';
+import path from 'path';
 
-const _ = require('lodash');
+const layoutPath = 'src/site/layouts/event_listing.drupal.liquid';
 
-const layoutPath = 'src/site/layouts/news_story.drupal.liquid';
+const getFile = filePath =>
+  readFileSync(path.resolve(__dirname, `../../`, filePath), 'utf8');
 
-describe('News Story Page', () => {
-  const data = parseFixture(
-    'src/site/layouts/tests/news_story_page/fixtures/news-story-data.json',
-  );
+const getTomorrow = () => {
+  const d = new Date();
+  return Math.round(d.getTime() / 1000) + 60 * 60 * 24;
+};
+
+const getYesterday = () => {
+  const d = new Date();
+  return Math.round(d.getTime() / 1000) - 60 * 60 * 24;
+};
+
+const tomorrow = getTomorrow();
+const yesterday = getYesterday();
+
+const dateStringLookup = {
+  yesterday,
+  tomorrow,
+  tomorrowPlusOne: tomorrow + 1,
+};
+
+describe('Events Listing Page', () => {
+  let data;
+  const fixturePath = 'tests/event_listing/fixtures/event-listing-data.json';
+
+  try {
+    data = JSON.parse(getFile(fixturePath));
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.log(`Error parsing JSON fixture in:\n`, error);
+    /* eslint-enable no-console */
+  }
+
+  data.pastEvents.entities.forEach((event, index) => {
+    data.pastEvents.entities[index].fieldDatetimeRangeTimezone.value =
+      dateStringLookup[event.fieldDatetimeRangeTimezone.value];
+  });
+
+  data.reverseFieldListingNode.entities.forEach((event, index) => {
+    data.reverseFieldListingNode.entities[
+      index
+    ].fieldDatetimeRangeTimezone.value =
+      dateStringLookup[event.fieldDatetimeRangeTimezone.value];
+  });
 
   let container;
 
@@ -22,22 +63,23 @@ describe('News Story Page', () => {
     expect(violations.length).to.equal(0);
   });
 
-  it('renders "See all stories" link with path(/(name)-health-care/stories) to see all stories', async () => {
-    expect(container.getElementById('news-stories-listing-link')).to.exist;
+  it('renders upcoming/past events toggle', async () => {
+    expect(container.getElementById('events-list-toggle')).to.exist;
+  });
 
-    expect(container.getElementById('news-stories-listing-link').href).to.equal(
-      '/gulf-coast-health-care/stories',
+  it('renders correct spotlight event', async () => {
+    expect(container.querySelector('#featured-content a').innerHTML).to.equal(
+      'Virtual Veterans Town Hall',
     );
   });
 
-  it('should not render "See all stories" link if href is empty', async () => {
-    const clonedData = _.cloneDeep(data);
-    clonedData.fieldListing.entity.entityUrl.path = '';
+  it('renders correct upcoming event', async () => {
+    expect(
+      container.querySelector('#virtual-women-veterans-health- a').innerHTML,
+    ).to.equal('Virtual Women Veterans Health Public Forum');
+  });
 
-    const newContainer = await renderHTML(layoutPath, clonedData);
-
-    expect(newContainer.getElementById('news-stories-listing-link')).to.equal(
-      null,
-    );
+  it('does not render featured event twice', () => {
+    expect(container.querySelectorAll('h2 a').length).to.equal(2);
   });
 });

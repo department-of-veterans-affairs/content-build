@@ -54,7 +54,12 @@
                 {% endif %}
               {% endfor %}
 
-              {% if isPreview %}
+              {% comment %}
+                In full builds, pagedItems is computed in src/site/stages/build/drupal/health-care-region.js.
+                In preview mode and in unit tests, we need to compute pagedItems here.
+                TODO: remove the addPager call in health-care-region.js for full builds. (requires updates of all listing pages)
+              {% endcomment %}
+              {% if pagedItems == empty %}
                 {% assign sortedUpcomingEvents = upcomingEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
                 {% assign pagingResult = debug | paginatePages: sortedUpcomingEvents, 'event' %}
                 {% assign pagedItems = pagingResult.pagedItems %}
@@ -62,6 +67,7 @@
               {% endif %}
 
               {% for event in pagedItems %}
+                {% comment %} Don't render the featured event again {% endcomment %}
                 {% if featuredEventUrl != event.entityUrl.path %}
                   <div class="clearfix-text">
                     {% include "src/site/teasers/event.drupal.liquid" with node = event %}
