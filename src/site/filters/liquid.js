@@ -987,16 +987,19 @@ module.exports = function registerFilters() {
       return true;
     }
 
+    // Derive catch-all target paths.
+    const catchAllTargetPaths = targetPaths?.filter(path => path.includes('*'));
+
     // Check to see if this page is under a catch-all target path.
-    const isCatchAllPath = targetPaths?.some(targetPath => {
-      const formattedTargetPath = targetPath?.replace('*', '');
+    const isCatchAllPath = catchAllTargetPaths?.some(catchAllTargetPath => {
+      const formattedCatchAllTargetPath = catchAllTargetPath?.replace('*', '');
 
       // e.g. /about/ is not a catch-all path for /about/*.
-      if (currentPath === formattedTargetPath) {
+      if (currentPath === formattedCatchAllTargetPath) {
         return false;
       }
 
-      return currentPath?.startsWith(formattedTargetPath);
+      return currentPath?.startsWith(formattedCatchAllTargetPath);
     });
 
     if (isCatchAllPath) {
@@ -1004,6 +1007,31 @@ module.exports = function registerFilters() {
     }
 
     return false;
+  };
+
+  liquid.filters.deriveVisibleBanners = (banners, currentPath) => {
+    const MAX_VISIBLE_BANNERS_PER_PAGE = 3;
+
+    // If there are no banners, return an empty array.
+    if (_.isEmpty(banners)) return [];
+
+    // If there are no current path, return an empty array.
+    if (!currentPath) return [];
+
+    // Format banners to include an isVisible property.
+    const formattedBanners = banners?.map(banner => ({
+      ...banner,
+      isVisible: liquid.filters.isBannerVisible(
+        banner.fieldTargetPaths,
+        currentPath,
+      ),
+    }));
+
+    // Filter out banners that are not visible.
+    const visibleBanners = formattedBanners?.filter(banner => banner.isVisible);
+
+    // Return less or equal to the max amount of visible banners.
+    return _.take(visibleBanners, MAX_VISIBLE_BANNERS_PER_PAGE);
   };
 
   liquid.filters.formatAlertType = alertType => {

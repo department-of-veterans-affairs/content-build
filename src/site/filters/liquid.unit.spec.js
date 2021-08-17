@@ -1370,6 +1370,42 @@ describe('isBannerVisible', () => {
   });
 });
 
+describe('deriveVisibleBanners', () => {
+  it('returns an empty array if no banners are defined', () => {
+    const banners = [];
+    const currentPath = '/';
+
+    expect(
+      liquid.filters.deriveVisibleBanners(banners, currentPath),
+    ).to.deep.equal([]);
+  });
+
+  it('returns an empty array if no current path is defined', () => {
+    const banners = [{ fieldTargetPaths: ['/some/path/'] }];
+    const currentPath = undefined;
+
+    expect(
+      liquid.filters.deriveVisibleBanners(banners, currentPath),
+    ).to.deep.equal([]);
+  });
+
+  it('returns visible banners', () => {
+    const banners = [
+      { fieldTargetPaths: ['/some/path/'] },
+      { fieldTargetPaths: ['/some/*'] },
+      { fieldTargetPaths: ['/some/'] },
+    ];
+    const currentPath = '/some/path/';
+
+    expect(
+      liquid.filters.deriveVisibleBanners(banners, currentPath),
+    ).to.deep.equal([
+      { ...banners[0], isVisible: true },
+      { ...banners[1], isVisible: true },
+    ]);
+  });
+});
+
 describe('formatAlertType', () => {
   it('formats "information" to "info" alert type', () => {
     expect(liquid.filters.formatAlertType('INFORMATION')).to.equal('info');

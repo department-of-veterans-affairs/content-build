@@ -1,25 +1,16 @@
-<!-- Only show 3 banners maximum for now. -->
-{% assign maxVisibleBanners = 3 %}
-{% assign visibleBannersCount = 0 %}
+<!-- Derive visible banners. -->
+{% assign visibleBanners = banners.entities | deriveVisibleBanners %}
 
-{% for banner in banner.entities %}
-  <!-- Only show the banner if it's visible. -->
-  {% assign isVisible = banner.fieldTargetPaths | isBannerVisible: entityUrl.path %}
-
-  {% if isVisible and visibleBannersCount <= maxVisibleBanners %}
-    <!-- Increment number of visible banners. -->
-    {% assign visibleBannersCount = visibleBannersCount | plus: 1 %}
-
-    <!-- Banner -->
-    <div
-      aria-label="{{ banner.title | escape }}"
-      data-template="components/banners.drupal.liquid"
-      data-homepage-banner-content="{{ banner.body.processed | escape }}"
-      data-homepage-banner-title="{{ banner.title | escape }}"
-      data-homepage-banner-type="{{ banner.fieldAlertType | formatAlertType }}"
-      data-homepage-banner-visible="{{ isVisible }}"
-      data-widget-type="banners"
-      role="region"
-    ></div>
-  {% endif %}
+<!-- Banners -->
+{% for banner in visibleBanners %}
+  <div
+    aria-label="{{ banner.title | escape }}"
+    data-template="components/banners.drupal.liquid"
+    data-homepage-banner-content="{{ banner.body.processed | escape }}"
+    data-homepage-banner-title="{{ banner.title | escape }}"
+    data-homepage-banner-type="{{ banner.fieldAlertType | formatAlertType }}"
+    data-homepage-banner-visible="{{ isVisible }}"
+    data-widget-type="banners"
+    role="region"
+  ></div>
 {% endfor %}
