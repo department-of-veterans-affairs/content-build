@@ -345,7 +345,6 @@ function compilePage(page, contentData) {
   };
   const outreachSidebarNavItems = { outreachSidebar: outreachSidebarNav };
   const alertItems = { alert: alertsItem };
-  const bannerAlertsItems = { banners, bannerAlert: bannerAlertsItem };
 
   const { entityUrl, entityBundle } = page;
 
@@ -375,7 +374,8 @@ function compilePage(page, contentData) {
         facilitySidebarNavItems,
         outreachSidebarNavItems,
         alertItems,
-        bannerAlertsItems,
+        { bannerAlert: bannerAlertsItem },
+        { banners },
         pageId,
       );
       break;
@@ -386,7 +386,8 @@ function compilePage(page, contentData) {
         page,
         facilitySidebarNavItems,
         alertItems,
-        bannerAlertsItems,
+        { bannerAlert: bannerAlertsItem },
+        { banners },
         pageId,
       );
       break;
@@ -398,7 +399,8 @@ function compilePage(page, contentData) {
         facilitySidebarNavItems,
         outreachSidebarNavItems,
         alertItems,
-        bannerAlertsItems,
+        { bannerAlert: bannerAlertsItem },
+        { banners },
         pageId,
       );
       break;
@@ -408,6 +410,7 @@ function compilePage(page, contentData) {
         facilitySidebarNavItems,
         outreachSidebarNavItems,
         alertItems,
+        { banners },
         pageId,
       );
       break;
@@ -419,7 +422,8 @@ function compilePage(page, contentData) {
         facilitySidebarNavItems,
         outreachSidebarNavItems,
         alertItems,
-        bannerAlertsItems,
+        { bannerAlert: bannerAlertsItem },
+        { banners },
         pageId,
       );
       break;
@@ -434,7 +438,8 @@ function compilePage(page, contentData) {
         sidebarNavItems,
         outreachSidebarNavItems,
         alertItems,
-        bannerAlertsItems,
+        { bannerAlert: bannerAlertsItem },
+        { banners },
         pageId,
       );
       break;
