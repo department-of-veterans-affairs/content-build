@@ -1,5 +1,10 @@
-{% for banner in banners.entities %}
+<!-- Only show 3 banners maximum for now. -->
+{% assign filteredBanners = banners.entities | slice: 0, 3 %}
+
+{% for banner in filteredBanners %}
+  <!-- Only show the banner if it's visible. -->
   {% assign isVisible = banner.fieldTargetPaths | isBannerVisible: entityUrl.path %}
+
   {% if isVisible %}
     <div
       aria-label="{{ banner.title | escape }}"
@@ -10,7 +15,6 @@
       data-homepage-banner-visible="{{ isVisible }}"
       data-widget-type="banners"
       role="region"
-    >
-    </div>
+    ></div>
   {% endif %}
 {% endfor %}
