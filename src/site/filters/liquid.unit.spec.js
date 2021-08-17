@@ -1344,3 +1344,29 @@ describe('isBannerVisible', () => {
     );
   });
 });
+
+describe('formatAlertType', () => {
+  it('formats "information" to "info" alert type', () => {
+    expect(liquid.filters.formatAlertType('information')).to.equal('info');
+  });
+
+  it('defaults to "info" when no alertType is provided', () => {
+    expect(liquid.filters.formatAlertType()).to.equal('info');
+  });
+
+  it('formats "info" to "info" alert type', () => {
+    expect(liquid.filters.formatAlertType('info')).to.equal('info');
+  });
+
+  it('formats "error" to "error" alert type', () => {
+    expect(liquid.filters.formatAlertType('error')).to.equal('error');
+  });
+
+  it('formats "warning" to "warning" alert type', () => {
+    expect(liquid.filters.formatAlertType('warning')).to.equal('warning');
+  });
+
+  it('formats "success" to "success" alert type', () => {
+    expect(liquid.filters.formatAlertType('success')).to.equal('success');
+  });
+});
