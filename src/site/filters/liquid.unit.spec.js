@@ -13,12 +13,12 @@ registerFilters();
 
 const getTomorrow = () => {
   const d = new Date();
-  return Math.round(d.getTime() + 1000 * 60 * 60 * 24);
+  return Math.round(d.getTime() / 1000) + 60 * 60 * 24;
 };
 
 const getYesterday = () => {
   const d = new Date();
-  return Math.round(d.getTime() - 1000 * 60 * 60 * 24);
+  return Math.round(d.getTime() / 1000) - 60 * 60 * 24;
 };
 
 const tomorrow = getTomorrow();
@@ -153,7 +153,9 @@ describe('filterPastEvents', () => {
   });
 
   it('returns events that occurred BEFORE the current date and time', () => {
-    expect(liquid.filters.filterPastEvents(eventsMockData)).to.deep.equal([
+    const actual = liquid.filters.filterPastEvents(eventsMockData);
+    expect(actual.length).to.eq(3);
+    expect(actual).to.deep.include.members([
       {
         title: 'Yesterday',
         moderationState: 'published',
