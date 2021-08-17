@@ -987,11 +987,27 @@ module.exports = function registerFilters() {
       return true;
     }
 
+    // Check to see if this page is under a catch-all target path.
+    const isCatchAllPath = targetPaths?.some(targetPath => {
+      const formattedTargetPath = targetPath?.replace('*', '');
+
+      // e.g. /about/ is not a catch-all path for /about/*.
+      if (currentPath === formattedTargetPath) {
+        return false;
+      }
+
+      return currentPath?.startsWith(formattedTargetPath);
+    });
+
+    if (isCatchAllPath) {
+      return true;
+    }
+
     return false;
   };
 
   liquid.filters.formatAlertType = alertType => {
-    switch (_.toLower(alertType)) {
+    switch (alertType?.toLowerCase()) {
       case 'info':
       case 'information':
         return 'info';

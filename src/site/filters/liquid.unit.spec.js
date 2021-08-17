@@ -1343,10 +1343,36 @@ describe('isBannerVisible', () => {
       true,
     );
   });
+
+  it('returns true if we are under a catch-all target path', () => {
+    const targetPaths = ['/some/path/*'];
+    const currentPath = '/some/path/test';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      true,
+    );
+  });
+
+  it('returns false if we are not under a catch-all target path', () => {
+    let targetPaths = ['/some/path/*'];
+    let currentPath = '/some/path/';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      false,
+    );
+
+    targetPaths = ['/some/path/*'];
+    currentPath = '/some/';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      false,
+    );
+  });
 });
 
 describe('formatAlertType', () => {
   it('formats "information" to "info" alert type', () => {
+    expect(liquid.filters.formatAlertType('INFORMATION')).to.equal('info');
     expect(liquid.filters.formatAlertType('information')).to.equal('info');
   });
 
@@ -1355,18 +1381,22 @@ describe('formatAlertType', () => {
   });
 
   it('formats "info" to "info" alert type', () => {
+    expect(liquid.filters.formatAlertType('INFO')).to.equal('info');
     expect(liquid.filters.formatAlertType('info')).to.equal('info');
   });
 
   it('formats "error" to "error" alert type', () => {
+    expect(liquid.filters.formatAlertType('ERROR')).to.equal('error');
     expect(liquid.filters.formatAlertType('error')).to.equal('error');
   });
 
   it('formats "warning" to "warning" alert type', () => {
+    expect(liquid.filters.formatAlertType('WARNING')).to.equal('warning');
     expect(liquid.filters.formatAlertType('warning')).to.equal('warning');
   });
 
   it('formats "success" to "success" alert type', () => {
+    expect(liquid.filters.formatAlertType('SUCCESS')).to.equal('success');
     expect(liquid.filters.formatAlertType('success')).to.equal('success');
   });
 });
