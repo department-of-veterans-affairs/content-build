@@ -11,45 +11,53 @@ const _ = require('lodash');
 
 registerFilters();
 
+const getTomorrow = () => {
+  const d = new Date();
+  return Math.round(d.getTime() + 1000 * 60 * 60 * 24);
+};
+
+const getYesterday = () => {
+  const d = new Date();
+  return Math.round(d.getTime() - 1000 * 60 * 60 * 24);
+};
+
+const tomorrow = getTomorrow();
+const yesterday = getYesterday();
+
 const eventsMockData = [
   {
-    title: 'Virtual Veterans Town Hall',
+    title: 'Yesterday',
+    moderationState: 'published',
     fieldDatetimeRangeTimezone: {
-      endValue: 1620421341,
-      timezone: 'America/New_York',
-      value: 1620410541,
+      value: yesterday,
     },
   },
   {
-    title: 'Community Town Hall on the Move',
+    title: 'Yesterday Draft - 10',
+    moderationState: 'draft',
     fieldDatetimeRangeTimezone: {
-      endValue: 1617796941,
-      timezone: 'America/New_York',
-      value: 1617782541,
+      value: yesterday - 10,
     },
   },
   {
-    title: 'Brooklyn Community Garden Meetup',
+    title: 'Yesterday - 1',
+    moderationState: 'published',
     fieldDatetimeRangeTimezone: {
-      endValue: 1578409341,
-      timezone: 'America/New_York',
-      value: 1578398541,
+      value: yesterday - 1,
     },
   },
   {
-    title: 'Clean-up Block Event',
+    title: 'Tomorrow',
+    moderationState: 'published',
     fieldDatetimeRangeTimezone: {
-      endValue: 1628355741,
-      timezone: 'America/New_York',
-      value: 1628348541,
+      value: tomorrow,
     },
   },
   {
-    title: 'Holiday Office Dinner',
+    title: 'Tomorrow + 1 - archived',
+    moderationState: 'archived',
     fieldDatetimeRangeTimezone: {
-      endValue: 1639670421,
-      timezone: 'America/New_York',
-      value: 1639659621,
+      value: tomorrow + 1,
     },
   },
 ];
@@ -144,32 +152,27 @@ describe('filterPastEvents', () => {
     expect(liquid.filters.filterPastEvents('')).to.eq(null);
   });
 
-  it('returns events that occured BEFORE the current date and time', () => {
-    expect(
-      liquid.filters.filterPastEvents(eventsMockData),
-    ).to.deep.include.members([
+  it('returns events that occurred BEFORE the current date and time', () => {
+    expect(liquid.filters.filterPastEvents(eventsMockData)).to.deep.equal([
       {
-        title: 'Virtual Veterans Town Hall',
+        title: 'Yesterday',
+        moderationState: 'published',
         fieldDatetimeRangeTimezone: {
-          endValue: 1620421341,
-          timezone: 'America/New_York',
-          value: 1620410541,
+          value: yesterday,
         },
       },
       {
-        title: 'Community Town Hall on the Move',
+        title: 'Yesterday Draft - 10',
+        moderationState: 'draft',
         fieldDatetimeRangeTimezone: {
-          endValue: 1617796941,
-          timezone: 'America/New_York',
-          value: 1617782541,
+          value: yesterday - 10,
         },
       },
       {
-        title: 'Brooklyn Community Garden Meetup',
+        title: 'Yesterday - 1',
+        moderationState: 'published',
         fieldDatetimeRangeTimezone: {
-          endValue: 1578409341,
-          timezone: 'America/New_York',
-          value: 1578398541,
+          value: yesterday - 1,
         },
       },
     ]);
@@ -177,17 +180,6 @@ describe('filterPastEvents', () => {
 });
 
 describe('filterUpcomingEvents', () => {
-  // addOneDayToDate() adds 1 full day to the current date
-  // this allows us to always have upcoming events.
-  const addOneDayToDate = () => {
-    const d = new Date();
-    return Math.round(d.getTime() + 1000 * 60 * 60 * 24);
-  };
-
-  const clonedData = _.cloneDeep(eventsMockData);
-  clonedData[3].fieldDatetimeRangeTimezone.value = addOneDayToDate();
-  clonedData[4].fieldDatetimeRangeTimezone.value = addOneDayToDate();
-
   it('returns null when null is passed', () => {
     expect(liquid.filters.filterUpcomingEvents(null)).to.eq(null);
   });
@@ -200,25 +192,13 @@ describe('filterUpcomingEvents', () => {
     expect(liquid.filters.filterUpcomingEvents('')).to.eq(null);
   });
 
-  // TODO: update eventsMockData with future dates
-  it.skip('returns events that occured AFTER the current date and time', () => {
-    expect(
-      liquid.filters.filterUpcomingEvents(clonedData),
-    ).to.deep.include.members([
+  it('returns events that occurred AFTER the current date and time and are not archived', () => {
+    expect(liquid.filters.filterUpcomingEvents(eventsMockData)).to.deep.equal([
       {
-        title: 'Clean-up Block Event',
+        title: 'Tomorrow',
+        moderationState: 'published',
         fieldDatetimeRangeTimezone: {
-          endValue: 1628355741,
-          timezone: 'America/New_York',
-          value: clonedData[3].fieldDatetimeRangeTimezone.value,
-        },
-      },
-      {
-        title: 'Holiday Office Dinner',
-        fieldDatetimeRangeTimezone: {
-          endValue: 1639670421,
-          timezone: 'America/New_York',
-          value: clonedData[4].fieldDatetimeRangeTimezone.value,
+          value: tomorrow,
         },
       },
     ]);
@@ -234,29 +214,32 @@ describe('sortByDateKey', () => {
     expect(liquid.filters.sortByDateKey('')).to.eq(null);
   });
 
-  it('returns an array of upcoming events in date/time order starting with most recent to least recent', () => {
-    expect(
-      liquid.filters.sortByDateKey(
-        eventsMockData,
-        'fieldDatetimeRangeTimezone',
-        false,
-      ),
-    ).to.deep.include.members([
+  it('returns an array of events in date/time order from oldest to newest', () => {
+    expect(liquid.filters.sortByDateKey(eventsMockData)).to.deep.equal([
       {
-        title: 'Clean-up Block Event',
-        fieldDatetimeRangeTimezone: {
-          endValue: 1628355741,
-          timezone: 'America/New_York',
-          value: 1628348541,
-        },
+        title: 'Yesterday Draft - 10',
+        moderationState: 'draft',
+        fieldDatetimeRangeTimezone: { value: yesterday - 10 },
       },
       {
-        title: 'Holiday Office Dinner',
-        fieldDatetimeRangeTimezone: {
-          endValue: 1639670421,
-          timezone: 'America/New_York',
-          value: 1639659621,
-        },
+        title: 'Yesterday - 1',
+        moderationState: 'published',
+        fieldDatetimeRangeTimezone: { value: yesterday - 1 },
+      },
+      {
+        title: 'Yesterday',
+        moderationState: 'published',
+        fieldDatetimeRangeTimezone: { value: yesterday },
+      },
+      {
+        title: 'Tomorrow',
+        moderationState: 'published',
+        fieldDatetimeRangeTimezone: { value: tomorrow },
+      },
+      {
+        title: 'Tomorrow + 1 - archived',
+        moderationState: 'archived',
+        fieldDatetimeRangeTimezone: { value: tomorrow + 1 },
       },
     ]);
   });
@@ -308,29 +291,6 @@ describe('sortByDateKey', () => {
           value: '2019-08-12T19:12:40',
         },
         title: 'Women Veterans resource fair spotlights VA and community care',
-      },
-    ]);
-  });
-
-  it('returns an array of upcoming events in date/time order when no dateKey is passed', () => {
-    expect(
-      liquid.filters.sortByDateKey(eventsMockData),
-    ).to.deep.include.members([
-      {
-        title: 'Clean-up Block Event',
-        fieldDatetimeRangeTimezone: {
-          endValue: 1628355741,
-          timezone: 'America/New_York',
-          value: 1628348541,
-        },
-      },
-      {
-        title: 'Holiday Office Dinner',
-        fieldDatetimeRangeTimezone: {
-          endValue: 1639670421,
-          timezone: 'America/New_York',
-          value: 1639659621,
-        },
       },
     ]);
   });

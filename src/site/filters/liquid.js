@@ -794,15 +794,23 @@ module.exports = function registerFilters() {
 
   liquid.filters.filterPastEvents = data => {
     if (!data) return null;
+    const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return moment(event.fieldDatetimeRangeTimezone.value * 1000).isBefore();
+      return (
+        event.fieldDatetimeRangeTimezone.value < currentTimestamp &&
+        event.moderationState !== 'archived'
+      );
     });
   };
 
   liquid.filters.filterUpcomingEvents = data => {
     if (!data) return null;
+    const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return moment(event.fieldDatetimeRangeTimezone.value * 1000).isAfter();
+      return (
+        event.fieldDatetimeRangeTimezone.value >= currentTimestamp &&
+        event.moderationState !== 'archived'
+      );
     });
   };
 
