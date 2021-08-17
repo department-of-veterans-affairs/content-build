@@ -4,7 +4,7 @@
   "description": "Content build for vets.gov website static assets.",
   "scripts": {
     "build": "OMIT_DEBUG=true node --max-old-space-size=5000 --expose-gc script/build-content.js --use-cached-assets --pull-drupal",
-    "watch-aw": "DRUPAL_ADDRESS=https://cms-ezgnp2mymxyqhi4wodnaouqxdbixtrwo.demo.cms.va.gov/ OMIT_DEBUG=true concurrently \"node --max-old-space-size=5000 --expose-gc script/build-content.js --use-cached-assets --pull-drupal --watch\" \"http-server build/localhost -s -c-1 -p 3002\"",
+    "watch-lando": "DRUPAL_ADDRESS=http://va-gov-cms.lndo.site/ OMIT_DEBUG=true concurrently \"node --max-old-space-size=5000 --expose-gc script/build-content.js --use-cached-assets --pull-drupal --watch\" \"http-server build/localhost -s -c-1 -p 3002\"",
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
     "cy:open": "cypress open --config-file config/cypress.json",
@@ -13,6 +13,7 @@
     "fetch-drupal-cache": "node script/drupal-aws-cache.js --fetch",
     "prebuild": "node script/prebuild.js",
     "preview": "node script/preview.js",
+    "preview-lando": "DRUPAL_ADDRESS=http://va-gov-cms.lndo.site node script/preview.js",
     "heroku-serve": "http-server",
     "heroku-postbuild": "sh script/heroku-postbuild.sh",
     "install-repos": "./script/install-repos.sh",

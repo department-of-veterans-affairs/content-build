@@ -368,8 +368,8 @@ async function start() {
   }
 
   // Refresh the non-node data every 10 minutes...
-  const fifteenMinutes = 15 * 60 * 1000;
-  setInterval(() => nonNodeContent.refresh(), fifteenMinutes);
+  // const fifteenMinutes = 15 * 60 * 1000;
+  // setInterval(() => nonNodeContent.refresh(), fifteenMinutes);
 
   app.listen(options.port, () => {
     console.log(`Content preview server running on port ${options.port}`);
