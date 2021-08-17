@@ -989,4 +989,20 @@ module.exports = function registerFilters() {
 
     return false;
   };
+
+  liquid.filters.formatAlertType = alertType => {
+    switch (_.toLower(alertType)) {
+      case 'info':
+      case 'information':
+        return 'info';
+      case 'error':
+        return 'error';
+      case 'warning':
+        return 'warning';
+      case 'success':
+        return 'success';
+      default:
+        return 'info';
+    }
+  };
 };
