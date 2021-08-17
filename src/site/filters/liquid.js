@@ -252,15 +252,6 @@ module.exports = function registerFilters() {
     return _.slice(arr, startIndex);
   };
 
-  liquid.filters.formatSharableLinkID = (id, description) => {
-    if (!id) return '';
-    if (!description) return id;
-    const truncatedText = description.substring(0, 30);
-    const escaped = liquid.filters.escape(truncatedText);
-    const hyphenatedDesc = _.kebabCase(escaped);
-    return `${hyphenatedDesc}-${id}`;
-  };
-
   liquid.filters.benefitTerms = data => {
     if (data === null) return null;
     let output = 'General benefits information';

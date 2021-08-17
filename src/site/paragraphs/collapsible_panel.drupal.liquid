@@ -34,7 +34,7 @@
     >
         {% for accordionItem in entity.fieldVaParagraphs %}
             {% assign item = accordionItem.entity %}
-            {% assign id= item.entityId | formatSharableLinkID: item.fieldQuestion   %}
+            {% assign id = item.entityId %}
             <va-accordion-item header="{{ item.fieldTitle }}">
                 <div
                     id={{id}}
