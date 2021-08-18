@@ -5,7 +5,7 @@
 
     {% for accordionItem in questions %}
       {% assign item = accordionItem.entity %}
-      {% assign id= item.entityId %}
+      {% assign id = item.entityId %}
 
       <va-accordion-item header="{{ item.fieldQuestion }}">
         <div
@@ -18,11 +18,10 @@
           <div id="{{ item.entityBundle }}-{{ item.entityId }}">
             <div itemprop="acceptedAnswer" itemscope="" itemtype="http://schema.org/Answer">
               {% for answer in item.fieldAnswer %}
-                {%  assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
+                {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
                 {% include {{ bundleComponent }} with entity = answer.entity %}
               {% endfor %}
             </div>
-
           </div>
         </div>
       </va-accordion-item>
