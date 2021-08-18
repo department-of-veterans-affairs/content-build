@@ -59,7 +59,7 @@
                 In preview mode and in unit tests, we need to compute pagedItems here.
                 TODO: remove the addPager call in health-care-region.js for full builds. (requires updates of all listing pages)
               {% endcomment %}
-              {% if pagedItems != empty %}
+              {% if pagedItems == empty %}
                 {% assign sortedUpcomingEvents = upcomingEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
                 {% assign pagingResult = debug | paginatePages: sortedUpcomingEvents, 'event' %}
                 {% assign pagedItems = pagingResult.pagedItems %}
