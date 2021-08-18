@@ -5,7 +5,7 @@
 
     {% for accordionItem in questions %}
         {% assign item = accordionItem.entity %}
-        {% assign id= item.entityId | formatSharableLinkID: item.fieldQuestion   %}
+        {% assign id= item.entityId %}
       <va-accordion-item header="{{ item.fieldQuestion }}">
         <div
           id={{id}}

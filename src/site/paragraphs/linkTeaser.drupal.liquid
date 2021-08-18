@@ -33,9 +33,21 @@
   data-links-list-header="{{ link.title | escape }}"
   data-links-list-section-header="{{ section_header | escape }}"
   {% if parentFieldName === 'field_spokes' %}class="hub-page-link-list__item"{% endif %}>
+
+  {% if header === "h3" %}
+    {% if link.title != empty %}
+        <h3 class="{{ headerClass }}">
+            <a href="{{link.url.path}}"
+            {% if linkTeaser.options["target"] %}target="{{ linkTeaser.options["target"] }}"{% endif %}
+            >
+            {{ link.title }}
+            </a>
+        </h3>
+    {% endif %}
+  {% else %}
     <a href="{{link.url.path}}"
-      {% if linkTeaser.options["target"] %}target="{{ linkTeaser.options["target"] }}"{% endif %}
-      >
+    {% if linkTeaser.options["target"] %}target="{{ linkTeaser.options["target"] }}"{% endif %}
+    >
         {% if link.title != empty %}
             <{{ header }} class="{{ headerClass }}">{{ link.title }}</{{ header }}>
             {% if parentFieldName === "field_spokes" %}
@@ -43,7 +55,8 @@
             {% endif %}
         {% endif %}
     </a>
-    {% if linkTeaser.fieldLinkSummary != empty %}
-        <p class="va-nav-linkslist-description">{{ linkTeaser.fieldLinkSummary }}</p>
-    {% endif %}
+{% endif %}
+{% if linkTeaser.fieldLinkSummary != empty %}
+    <p class="va-nav-linkslist-description">{{ linkTeaser.fieldLinkSummary }}</p>
+{% endif %}
 </li>

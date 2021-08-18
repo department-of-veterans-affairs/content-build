@@ -131,7 +131,7 @@ const FACILITY_MENU_NAMES = [
   'va-roseburg-health-care',
   'va-southern-oregon-health-care',
   'va-spokane-health-care',
-  'va-wallawalla-health-care',
+  'va-walla-walla-health-care',
   // VISN 21
   'va-central-california-health-car',
   'va-northern-california-health-ca',

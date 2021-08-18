@@ -6,12 +6,12 @@ import axeCheck from '~/site/tests/support/axe';
 const layoutPath = 'src/site/layouts/vet_center.drupal.liquid';
 const _ = require('lodash');
 
-import testData from './fixtures/vet_center_escanaba_data';
+import testData from './fixtures/vet_center_data.json';
 
 describe('Vet Center Main Page', () => {
   let container;
   const data = parseFixture(
-    'src/site/layouts/tests/vet_center/fixtures/vet_center_escanaba_data.json',
+    'src/site/layouts/tests/vet_center/fixtures/vet_center_data.json',
   );
 
   beforeEach(async () => {

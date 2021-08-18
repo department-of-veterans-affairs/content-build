@@ -4,9 +4,9 @@
     {% if vetCenter.title %}
       <h3 class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md vads-u-font-size--lg">
         {% if vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" or vetCenter.entityBundle == "vet_center_mobile_vet_center" %}
-          {{ vetCenter.title }}
+          <vctitle>{{ vetCenter.title }}</vctitle>
         {% else %}
-          <a href="{{ vetCenterUrl }}">{{ vetCenter.title }}</a>
+          <a href="{{ vetCenterUrl }}"><vctitle>{{ vetCenter.title }}</vctitle></a>
         {% endif %}
       </h3>
     {% endif %}
