@@ -1,5 +1,5 @@
 <!-- Derive visible banners. -->
-{% assign visibleBanners = banners.entities | deriveVisibleBanners %}
+{% assign visibleBanners = banners.entities | deriveVisibleBanners: entityUrl.path %}
 
 <!-- Banners -->
 {% for banner in visibleBanners %}
