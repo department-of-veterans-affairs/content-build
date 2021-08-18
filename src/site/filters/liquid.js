@@ -985,7 +985,7 @@ module.exports = function registerFilters() {
     // Derive exception paths.
     const exceptionTargetPaths = targetPaths
       ?.filter(path => path?.startsWith('!'))
-      ?.map(path => path.replace('!', ''));
+      ?.map(path => path?.replace('!', ''));
 
     // The banner is not visible if it's an exact exception match.
     if (exceptionTargetPaths?.includes(currentPath)) {
