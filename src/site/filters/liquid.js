@@ -1042,20 +1042,31 @@ module.exports = function registerFilters() {
     // If there are no current path, return an empty array.
     if (!currentPath) return [];
 
-    // Format banners to include an isVisible property.
-    const formattedBanners = banners?.map(banner => ({
-      ...banner,
-      isVisible: liquid.filters.isBannerVisible(
+    // Populate our list of visible banners.
+    const visibleBanners = [];
+    for (let index = 0; index < banners.length; index++) {
+      // Derive the banner.
+      const banner = banners[index];
+
+      // Derive if the banner is visible.
+      const isVisible = liquid.filters.isBannerVisible(
         banner.fieldTargetPaths,
         currentPath,
-      ),
-    }));
+      );
 
-    // Filter out banners that are not visible.
-    const visibleBanners = formattedBanners?.filter(banner => banner.isVisible);
+      // Add the banner to our list if it is visible.
+      if (isVisible) {
+        visibleBanners.push({ ...banner, isVisible });
+      }
 
-    // Return less or equal to the max amount of visible banners.
-    return _.take(visibleBanners, MAX_VISIBLE_BANNERS_PER_PAGE);
+      // If we have MAX_VISIBLE_BANNERS_PER_PAGE banners, break.
+      if (visibleBanners.length >= MAX_VISIBLE_BANNERS_PER_PAGE) {
+        break;
+      }
+    }
+
+    // Return the visible banners.
+    return visibleBanners;
   };
 
   liquid.filters.formatAlertType = alertType => {
