@@ -1368,6 +1368,24 @@ describe('isBannerVisible', () => {
       false,
     );
   });
+
+  it('returns false if it is an exception path', () => {
+    const targetPaths = ['/some/path/', '!/some/path/'];
+    const currentPath = '/some/path/';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      false,
+    );
+  });
+
+  it('returns false if it is an exception catch-all path', () => {
+    const targetPaths = ['/some/path/about/', '/some/path/*', '!/some/path/*'];
+    const currentPath = '/some/path/about/';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      false,
+    );
+  });
 });
 
 describe('deriveVisibleBanners', () => {
