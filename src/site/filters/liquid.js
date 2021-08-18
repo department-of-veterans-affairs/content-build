@@ -977,35 +977,60 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.isBannerVisible = (targetPaths, currentPath) => {
-    // Escape early if arguments are missing.
+    // The banner is not visible if the target paths or the current path are missing.
     if (!targetPaths || !currentPath) {
       return false;
     }
 
-    // Check to see if this page is a banner page.
+    // Derive exception paths.
+    const exceptionTargetPaths = targetPaths
+      ?.filter(path => path?.startsWith('!'))
+      ?.map(path => path.replace('!', ''));
+
+    // The banner is not visible if it's an exact exception match.
+    const isExceptionPath = exceptionTargetPaths?.includes(currentPath);
+    if (exceptionTargetPaths?.includes(currentPath)) {
+      return false;
+    }
+
+    // Derive exception catch-all paths.
+    const exceptionCatchAllPaths = exceptionTargetPaths
+      ?.filter(exceptionPath => exceptionPath?.includes('*'))
+      ?.map(exceptionPath => exceptionPath.replace('*', ''));
+
+    // Check to see if this page is under a catch-all exception path.
+    const isExceptionCatchAllPath = exceptionCatchAllPaths?.some(
+      exceptionPath =>
+        currentPath?.startsWith(exceptionPath) && currentPath !== exceptionPath,
+    );
+
+    // If it is an exception catch-all path, the banner is not visible.
+    if (isExceptionCatchAllPath) {
+      return false;
+    }
+
+    // The banner is visible if it's an exact match.
     if (targetPaths?.includes(currentPath)) {
       return true;
     }
 
-    // Derive catch-all target paths.
-    const catchAllTargetPaths = targetPaths?.filter(path => path.includes('*'));
+    // Derive catch-all paths.
+    const catchAllTargetPaths = targetPaths
+      ?.filter(path => path?.includes('*') && !path?.startsWith('!'))
+      ?.map(catchAllPath => catchAllPath.replace('*', ''));
 
     // Check to see if this page is under a catch-all target path.
-    const isCatchAllPath = catchAllTargetPaths?.some(catchAllTargetPath => {
-      const formattedCatchAllTargetPath = catchAllTargetPath?.replace('*', '');
+    const isCatchAllPath = catchAllTargetPaths?.some(
+      catchAllPath =>
+        currentPath?.startsWith(catchAllPath) && currentPath !== catchAllPath,
+    );
 
-      // e.g. /about/ is not a catch-all path for /about/*.
-      if (currentPath === formattedCatchAllTargetPath) {
-        return false;
-      }
-
-      return currentPath?.startsWith(formattedCatchAllTargetPath);
-    });
-
+    // If it is a catch-all path, the banner is visible.
     if (isCatchAllPath) {
       return true;
     }
 
+    // The banner is not visible by default.
     return false;
   };
 
