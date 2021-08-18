@@ -13,6 +13,7 @@ banners: nodeQuery(filter: { conditions: [{ field: "status", value: "1", operato
       entityId
       entityPublished
       fieldAlertType
+      fieldDismissibleOption
       fieldTargetPaths
       title
     }

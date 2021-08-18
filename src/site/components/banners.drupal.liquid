@@ -7,12 +7,21 @@
     <div
       aria-label="{{ banner.title | escape }}"
       data-template="components/banners.drupal.liquid"
-      data-homepage-banner-content="{{ banner.body.processed | escape }}"
-      data-homepage-banner-title="{{ banner.title | escape }}"
-      data-homepage-banner-type="{{ banner.fieldAlertType | formatAlertType }}"
-      data-homepage-banner-visible="true"
+      data-content="{{ banner.body.processed | escape }}"
+      data-dismissible-status="{{ banner.fieldDismissibleOption }}"
+      data-title="{{ banner.title | escape }}"
+      data-type="{{ banner.fieldAlertType | formatAlertType }}"
+      data-visible="true"
       data-widget-type="banners"
       role="region"
     ></div>
   {% endfor %}
+  <!-- Banners END -->
 {% endif %}
+
+<!-- Maintenance banner -->
+<div
+  aria-label="Maintenance banner"
+  data-widget-type="maintenance-banner"
+  role="region"
+></div>
