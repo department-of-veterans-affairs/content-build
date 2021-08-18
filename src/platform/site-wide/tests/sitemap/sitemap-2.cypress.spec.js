@@ -1,4 +1,4 @@
-const { normal, slow } = require('../../../../platform/testing/e2e/timeouts');
+const { normal } = require('../../../../platform/testing/e2e/timeouts');
 const xml = require('fast-xml-parser');
 const fetch = require('sync-fetch');
 
@@ -27,7 +27,6 @@ const urls = xml
   .sort();
 const divider = Math.ceil(urls.length / 16);
 const splitURLs = urls.slice(divider, 2 * divider);
-// const splitURLs = ["http://localhost:3002/family-member-benefits/apply-for-caregiver-assistance-form-10-10cg/"];
 
 describe(`Accessibility tests`, () => {
   for (const url of splitURLs) {
@@ -38,23 +37,13 @@ describe(`Accessibility tests`, () => {
         `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
       );
       cy.visit(localURL).injectAxe();
-      cy.get('body')
-        .should('be.visible', { timeout: normal })
-        .then($body => {
-          if ($body.find('div[data-widget-type="facility-map"]').length) {
-            cy.get('a#generated-mapbox-image-link').should('be.visible', {
-              timeout: slow,
-            });
-            cy.axeCheck({
-              exclude: ['.loading-indicator'],
-            });
-          } else {
-            cy.log('Page has no map');
-            cy.axeCheck({
-              exclude: ['.loading-indicator'],
-            });
-          }
-        });
+      cy.get('body').should('be.visible', { timeout: normal });
+      cy.axeCheck({
+        exclude: [
+          ['.loading-indicator'],
+          ['div[data-widget-type="facility-map"]'],
+        ],
+      });
     });
   }
 });
