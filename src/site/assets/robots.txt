@@ -141,7 +141,6 @@ Disallow: /greater-los-angeles-health-care
 Disallow: /hampton-health-care
 Disallow: /hines-health-care
 Disallow: /houston-health-care
-Disallow: /hudson-valley-health-care
 Disallow: /huntington-health-care
 Disallow: /illiana-health-care
 Disallow: /indiana-health-care
@@ -165,6 +164,7 @@ Disallow: /miami-health-care
 Disallow: /milwaukee-health-care
 Disallow: /montana-health-care
 Disallow: /mountain-home-health-care
+Disallow: /nebraska-health-care
 Disallow: /new-mexico-health-care
 Disallow: /new-york-harbor-health-care
 Disallow: /north-florida-health-care
@@ -185,6 +185,7 @@ Disallow: /richmond-health-care
 Disallow: /roseburg-health-care
 Disallow: /saginaw-health-care
 Disallow: /san-diego-health-care
+Disallow: /san-francisco-health-care
 Disallow: /sheridan-health-care
 Disallow: /south-texas-health-care
 Disallow: /southern-arizona-health-care
