@@ -988,7 +988,6 @@ module.exports = function registerFilters() {
       ?.map(path => path.replace('!', ''));
 
     // The banner is not visible if it's an exact exception match.
-    const isExceptionPath = exceptionTargetPaths?.includes(currentPath);
     if (exceptionTargetPaths?.includes(currentPath)) {
       return false;
     }
@@ -998,7 +997,7 @@ module.exports = function registerFilters() {
       ?.filter(exceptionPath => exceptionPath?.includes('*'))
       ?.map(exceptionPath => exceptionPath.replace('*', ''));
 
-    // Check to see if this page is under a catch-all exception path.
+    // Derive if this page is under a catch-all exception path.
     const isExceptionCatchAllPath = exceptionCatchAllPaths?.some(
       exceptionPath =>
         currentPath?.startsWith(exceptionPath) && currentPath !== exceptionPath,
@@ -1009,7 +1008,7 @@ module.exports = function registerFilters() {
       return false;
     }
 
-    // The banner is visible if it's an exact match.
+    // If it's an exact match and not an exception, the banner is visible.
     if (targetPaths?.includes(currentPath)) {
       return true;
     }
@@ -1019,13 +1018,13 @@ module.exports = function registerFilters() {
       ?.filter(path => path?.includes('*') && !path?.startsWith('!'))
       ?.map(catchAllPath => catchAllPath.replace('*', ''));
 
-    // Check to see if this page is under a catch-all target path.
+    // Derive if this page is under a catch-all target path.
     const isCatchAllPath = catchAllTargetPaths?.some(
       catchAllPath =>
         currentPath?.startsWith(catchAllPath) && currentPath !== catchAllPath,
     );
 
-    // If it is a catch-all path, the banner is visible.
+    // If it is a catch-all path and not an exception, the banner is visible.
     if (isCatchAllPath) {
       return true;
     }
