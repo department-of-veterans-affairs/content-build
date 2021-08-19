@@ -143,7 +143,7 @@ jobs:
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ needs.set-env.outputs.REF }}
-        with:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   notify-start:
