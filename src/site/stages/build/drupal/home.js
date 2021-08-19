@@ -1,10 +1,8 @@
 /* eslint-disable no-param-reassign, no-continue */
-const fs = require('fs-extra');
-const path = require('path');
-const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
 
 // Processes the data received from the home page query.
+// eslint-disable-next-line no-unused-vars
 function addHomeContent(contentData, files, metalsmith, buildOptions) {
   // We cannot limit menu items in Drupal, so we must do it here.
   const menuLength = 4;
@@ -14,6 +12,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     let homeEntityObj = createEntityUrlObj('/');
     const {
       data: {
+        banners,
         homePageMenuQuery,
         homePageHubListQuery,
         homePagePromoBlockQuery,
@@ -34,11 +33,6 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       },
     );
 
-    const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
-    const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
-    const bannerFile = fs.readFileSync(bannerLocation);
-    const banner = yaml.safeLoad(bannerFile);
-
     homeEntityObj = {
       ...homeEntityObj,
       // Since homepage is not an independent node, we don't have a source for metatags. So we need to hard-code these for now.
@@ -48,8 +42,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       cards: homePageMenuQuery.links.slice(0, menuLength), // Top Tasks menu. We have a hard limit.
       hubs, // Full hub list.
       promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos, // Promo blocks.
-      // eslint-disable-next-line camelcase
-      homepage_banner: banner,
+      banners,
     };
 
     // Let Metalsmith know we're here.
