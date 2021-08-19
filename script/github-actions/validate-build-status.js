@@ -3,11 +3,13 @@
 const { Octokit } = require('@octokit/rest');
 const { sleep } = require('../../script/utils');
 
-const { GITHUB_TOKEN: auth, GITHUB_REPOSITORY } = process.env;
+const { GITHUB_TOKEN: auth, GITHUB_REPOSITORY, TEST } = process.env;
 const args = process.argv.slice(2);
 const timeout = 2; // minutes
 const commitSHA = args[0];
 const [owner, repo] = GITHUB_REPOSITORY.split('/');
+
+console.log(TEST);
 
 const octokit = new Octokit({ auth });
 
