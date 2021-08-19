@@ -1,6 +1,7 @@
 name: Content Release
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       release_wait:
@@ -143,8 +144,9 @@ jobs:
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ needs.set-env.outputs.REF }}
-        with:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TEST: HELLO WORLD
 
   notify-start:
     name: Notify Start
