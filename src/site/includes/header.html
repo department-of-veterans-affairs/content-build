@@ -120,6 +120,18 @@
   <!-- Banners -->
   {% include "src/site/components/banners.drupal.liquid" %}
 
+  <!-- Legacy homepage banner -->
+  <div
+    aria-label="{{ legacy_homepage_banner.title | escape }}"
+    data-content="{{ legacy_homepage_banner.content | escape }}"
+    data-title="{{ legacy_homepage_banner.title | escape }}"
+    data-type="{{ legacy_homepage_banner.type }}"
+    data-visible="{{ legacy_homepage_banner.visible }}"
+    data-widget-type="banner"
+    role="region"
+  >
+  </div>
+
   <script nonce="**CSP_NONCE**" type="text/javascript">
     (function () {
       var module = {};

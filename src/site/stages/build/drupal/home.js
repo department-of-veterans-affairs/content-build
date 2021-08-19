@@ -1,8 +1,10 @@
 /* eslint-disable no-param-reassign, no-continue */
+const fs = require('fs-extra');
+const path = require('path');
+const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
 
 // Processes the data received from the home page query.
-// eslint-disable-next-line no-unused-vars
 function addHomeContent(contentData, files, metalsmith, buildOptions) {
   // We cannot limit menu items in Drupal, so we must do it here.
   const menuLength = 4;
@@ -33,6 +35,11 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       },
     );
 
+    const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
+    const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
+    const bannerFile = fs.readFileSync(bannerLocation);
+    const banner = yaml.safeLoad(bannerFile);
+
     homeEntityObj = {
       ...homeEntityObj,
       banners,
@@ -41,6 +48,8 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
       entityUrl: { path: '/' },
       hubs,
+      // eslint-disable-next-line camelcase
+      legacy_homepage_banner: banner,
       promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
       title: 'VA.gov Home',
     };
