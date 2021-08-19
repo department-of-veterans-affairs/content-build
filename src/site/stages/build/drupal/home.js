@@ -35,14 +35,14 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
     homeEntityObj = {
       ...homeEntityObj,
-      // Since homepage is not an independent node, we don't have a source for metatags. So we need to hard-code these for now.
-      title: 'VA.gov Home',
+      banners,
+      cards: homePageMenuQuery.links.slice(0, menuLength),
       description:
         'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
-      cards: homePageMenuQuery.links.slice(0, menuLength), // Top Tasks menu. We have a hard limit.
-      hubs, // Full hub list.
-      promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos, // Promo blocks.
-      banners,
+      entityUrl: { path: '/' },
+      hubs,
+      promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
+      title: 'VA.gov Home',
     };
 
     // Let Metalsmith know we're here.
