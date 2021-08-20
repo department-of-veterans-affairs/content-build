@@ -1417,10 +1417,7 @@ describe('deriveVisibleBanners', () => {
 
     expect(
       liquid.filters.deriveVisibleBanners(banners, currentPath),
-    ).to.deep.equal([
-      { ...banners[0], isVisible: true },
-      { ...banners[1], isVisible: true },
-    ]);
+    ).to.deep.equal([banners[0], banners[1]]);
   });
 });
 
