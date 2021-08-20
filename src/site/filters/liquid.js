@@ -1056,7 +1056,7 @@ module.exports = function registerFilters() {
 
       // Add the banner to our list if it is visible.
       if (isVisible) {
-        visibleBanners.push({ ...banner, isVisible });
+        visibleBanners.push(banner);
       }
 
       // If we have MAX_VISIBLE_BANNERS_PER_PAGE banners, break.
