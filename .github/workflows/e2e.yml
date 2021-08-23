@@ -52,7 +52,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false
+          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false
           max_attempts: 3
           timeout_minutes: 5
         env:
@@ -103,6 +103,15 @@ jobs:
         with:
           path: content-build
 
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false
+          max_attempts: 3
+          timeout_minutes: 5
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+
       - name: Download production build artifact
         uses: actions/download-artifact@v2
         with:
@@ -112,15 +121,6 @@ jobs:
         run: |
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
-
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false
-          max_attempts: 3
-          timeout_minutes: 5
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Install Chrome
         uses: browser-actions/setup-chrome@latest
