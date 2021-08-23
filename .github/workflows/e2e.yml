@@ -50,9 +50,13 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+        uses: nick-invision/retry@v2
+        with:
+          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false
+          max_attempts: 3
+          timeout_minutes: 5
         env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Set Drupal address
         run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
