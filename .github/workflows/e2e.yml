@@ -6,79 +6,79 @@ env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
 
 jobs:
-  # build:
-  #   name: Build
-  #   runs-on: [self-hosted, asg]
-  #   timeout-minutes: 120
+  build:
+    name: Build
+    runs-on: [self-hosted, asg]
+    timeout-minutes: 120
 
-  #   defaults:
-  #     run:
-  #       working-directory: content-build
+    defaults:
+      run:
+        working-directory: content-build
 
-  #   env:
-  #     DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
-  #     NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+    env:
+      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
-  #   steps:
-  #     - name: Checkout vagov-content
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: department-of-veterans-affairs/vagov-content
-  #         path: vagov-content
+    steps:
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
 
-  #     - name: Checkout content-build
-  #       uses: actions/checkout@v2
-  #       with:
-  #         path: content-build
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
 
-  #     - name: Get Node version
-  #       id: get-node-version
-  #       run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-  #     - name: Cache dependencies
-  #       id: cache-dependencies
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: |
-  #           ~/.cache/yarn
-  #           node_modules
-  #         key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
-  #     - name: Install dependencies
-  #       uses: nick-invision/retry@v2
-  #       with:
-  #         command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false
-  #         max_attempts: 3
-  #         timeout_minutes: 5
-  #       env:
-  #         YARN_CACHE_FOLDER: .cache/yarn
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 5
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
 
-  #     - name: Set Drupal address
-  #       run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+      - name: Set Drupal address
+        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
-  #     - name: Build
-  #       run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-  #       env:
-  #         NODE_ENV: production
+      - name: Build
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        env:
+          NODE_ENV: production
 
-  #     - name: Compress E2E test build
-  #       run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+      - name: Compress E2E test build
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-  #     - name: Upload E2E test build artifact
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: test-build.tar.bz2
-  #         path: content-build/test-build.tar.bz2
-  #         retention-days: 1
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
   
   a11y:
     name: Accessibility Tests
-    # needs: build
+    needs: build
     runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
