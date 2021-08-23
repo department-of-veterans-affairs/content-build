@@ -140,7 +140,6 @@ Disallow: /fayetteville-coastal-health-care
 Disallow: /greater-los-angeles-health-care
 Disallow: /hampton-health-care
 Disallow: /hines-health-care
-Disallow: /houston-health-care
 Disallow: /huntington-health-care
 Disallow: /illiana-health-care
 Disallow: /indiana-health-care
@@ -173,7 +172,6 @@ Disallow: /northeast-ohio-health-care
 Disallow: /northern-arizona-health-care
 Disallow: /northern-indiana-health-care
 Disallow: /orlando-health-care
-Disallow: /pacific-islands-health-care
 Disallow: /palo-alto-health-care
 Disallow: /philadelphia-health-care
 Disallow: /phoenix-health-care
