@@ -27,35 +27,30 @@ const yesterday = getYesterday();
 const eventsMockData = [
   {
     title: 'Yesterday',
-    moderationState: 'published',
     fieldDatetimeRangeTimezone: {
       value: yesterday,
     },
   },
   {
     title: 'Yesterday Draft - 10',
-    moderationState: 'draft',
     fieldDatetimeRangeTimezone: {
       value: yesterday - 10,
     },
   },
   {
     title: 'Yesterday - 1',
-    moderationState: 'published',
     fieldDatetimeRangeTimezone: {
       value: yesterday - 1,
     },
   },
   {
     title: 'Tomorrow',
-    moderationState: 'published',
     fieldDatetimeRangeTimezone: {
       value: tomorrow,
     },
   },
   {
-    title: 'Tomorrow + 1 - archived',
-    moderationState: 'archived',
+    title: 'Tomorrow + 1',
     fieldDatetimeRangeTimezone: {
       value: tomorrow + 1,
     },
@@ -158,21 +153,18 @@ describe('filterPastEvents', () => {
     expect(actual).to.deep.include.members([
       {
         title: 'Yesterday',
-        moderationState: 'published',
         fieldDatetimeRangeTimezone: {
           value: yesterday,
         },
       },
       {
         title: 'Yesterday Draft - 10',
-        moderationState: 'draft',
         fieldDatetimeRangeTimezone: {
           value: yesterday - 10,
         },
       },
       {
         title: 'Yesterday - 1',
-        moderationState: 'published',
         fieldDatetimeRangeTimezone: {
           value: yesterday - 1,
         },
@@ -194,13 +186,18 @@ describe('filterUpcomingEvents', () => {
     expect(liquid.filters.filterUpcomingEvents('')).to.eq(null);
   });
 
-  it('returns events that occurred AFTER the current date and time and are not archived', () => {
+  it('returns events that occurred AFTER the current date', () => {
     expect(liquid.filters.filterUpcomingEvents(eventsMockData)).to.deep.equal([
       {
         title: 'Tomorrow',
-        moderationState: 'published',
         fieldDatetimeRangeTimezone: {
           value: tomorrow,
+        },
+      },
+      {
+        title: 'Tomorrow + 1',
+        fieldDatetimeRangeTimezone: {
+          value: tomorrow + 1,
         },
       },
     ]);
@@ -220,27 +217,22 @@ describe('sortByDateKey', () => {
     expect(liquid.filters.sortByDateKey(eventsMockData)).to.deep.equal([
       {
         title: 'Yesterday Draft - 10',
-        moderationState: 'draft',
         fieldDatetimeRangeTimezone: { value: yesterday - 10 },
       },
       {
         title: 'Yesterday - 1',
-        moderationState: 'published',
         fieldDatetimeRangeTimezone: { value: yesterday - 1 },
       },
       {
         title: 'Yesterday',
-        moderationState: 'published',
         fieldDatetimeRangeTimezone: { value: yesterday },
       },
       {
         title: 'Tomorrow',
-        moderationState: 'published',
         fieldDatetimeRangeTimezone: { value: tomorrow },
       },
       {
-        title: 'Tomorrow + 1 - archived',
-        moderationState: 'archived',
+        title: 'Tomorrow + 1',
         fieldDatetimeRangeTimezone: { value: tomorrow + 1 },
       },
     ]);

@@ -90,7 +90,6 @@
     "entities": [
       {
         "title": "Virtual Veterans Town Hall",
-        "moderationState": "published",
         "entityUrl": {
           "path": "/pittsburgh-health-care/events/virtual-veterans-town-hall"
         },
@@ -106,7 +105,6 @@
       },
       {
         "title": "Mindful Mondays",
-        "moderationState": "published",
         "entityUrl": {
           "path": "/pittsburgh-health-care/events/mindful-mondays-2"
         },
@@ -5707,7 +5705,6 @@
     "entities": [
       {
         "title": "Virtual Women Veterans Health Public Forum",
-        "moderationState": "published",
         "entityUrl": {
           "path": "/pittsburgh-health-care/events/virtual-employee-town-hall"
         },
@@ -5723,7 +5720,6 @@
       },
       {
         "title": "Virtual Veterans Town Hall",
-        "moderationState": "published",
         "entityUrl": {
           "path": "/pittsburgh-health-care/events/virtual-veterans-town-hall"
         },
@@ -5739,7 +5735,6 @@
       },
       {
         "title": "Virtual Veterans Town Hall",
-        "moderationState": "published",
         "entityUrl": {
           "path": "/pittsburgh-health-care/events/virtual-veterans-town-hall"
         },
@@ -5755,7 +5750,6 @@
       },
       {
         "title": "Mindful Mondays",
-        "moderationState": "archived",
         "entityUrl": {
           "path": "/pittsburgh-health-care/events/mindful-mondays-2"
         },

@@ -796,10 +796,7 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return (
-        event.fieldDatetimeRangeTimezone.value * 1000 < currentTimestamp &&
-        event.moderationState !== 'archived'
-      );
+      return event.fieldDatetimeRangeTimezone.value * 1000 < currentTimestamp;
     });
   };
 
@@ -807,10 +804,7 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return (
-        event.fieldDatetimeRangeTimezone.value * 1000 >= currentTimestamp &&
-        event.moderationState !== 'archived'
-      );
+      return event.fieldDatetimeRangeTimezone.value * 1000 >= currentTimestamp;
     });
   };
 

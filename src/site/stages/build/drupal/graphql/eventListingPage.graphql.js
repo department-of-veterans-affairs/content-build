@@ -14,13 +14,13 @@ const eventListingPage = `
     pastEvents: reverseFieldListingNode(limit: 500, filter: {
       conditions: [
         {field: "status", value: "1", operator: EQUAL, enabled: $onlyPublishedContent}, 
+        {field: "moderation_state", value: "archived", operator: NOT_EQUAL}, 
         {field: "type", value: "event"},
         {field: "field_datetime_range_timezone", value: [$today], operator: SMALLER_THAN}]},
       sort: {field: "changed", direction: DESC}) {
           entities {
             ... on NodeEvent {
               title
-              moderationState
               entityUrl {
                 path
               }
@@ -47,13 +47,13 @@ const eventListingPage = `
       filter: {
           conditions: [
             {field: "status", value: "1", operator: EQUAL, enabled: $onlyPublishedContent},
+            {field: "moderation_state", value: "archived", operator: NOT_EQUAL}, 
             {field: "type", value: "event"}
           ]}, 
       sort: {field: "changed", direction: DESC}) {
         entities {
           ... on NodeEvent {
             title
-            moderationState            
             entityUrl {
               path
             }
@@ -108,3 +108,5 @@ module.exports = {
   fragment: eventListingPage,
   GetNodeEventListingPage,
 };
+
+// console.log(eventListingPage);
