@@ -43,6 +43,8 @@ describe('Events Listing Page', () => {
   data.pastEvents.entities.forEach((event, index) => {
     data.pastEvents.entities[index].fieldDatetimeRangeTimezone.value =
       dateStringLookup[event.fieldDatetimeRangeTimezone.value];
+    data.pastEvents.entities[index].fieldDatetimeRangeTimezone.endValue =
+      dateStringLookup[event.fieldDatetimeRangeTimezone.endValue];
   });
 
   data.reverseFieldListingNode.entities.forEach((event, index) => {
@@ -50,6 +52,10 @@ describe('Events Listing Page', () => {
       index
     ].fieldDatetimeRangeTimezone.value =
       dateStringLookup[event.fieldDatetimeRangeTimezone.value];
+    data.reverseFieldListingNode.entities[
+      index
+    ].fieldDatetimeRangeTimezone.endValue =
+      dateStringLookup[event.fieldDatetimeRangeTimezone.endValue];
   });
 
   let container;
@@ -80,6 +86,10 @@ describe('Events Listing Page', () => {
   });
 
   it('does not render featured event twice', () => {
-    expect(container.querySelectorAll('h2 a').length).to.equal(2);
+    expect(
+      Array.from(container.querySelectorAll('h2 a')).filter(e => {
+        return e.text === 'Virtual Veterans Town Hall';
+      }).length,
+    ).to.equal(1);
   });
 });
