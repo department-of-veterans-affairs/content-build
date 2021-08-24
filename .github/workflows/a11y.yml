@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on: [push]
-  # workflow_dispatch:
-  # schedule:
-  #   - cron: '0 12 * * 1-5'
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
