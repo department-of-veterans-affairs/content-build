@@ -15,7 +15,6 @@ const options = {
   cdataTagName: '__cdata',
   cdataPositionChar: '\\c',
   parseTrueNumberOnly: false,
-  stopNodes: ['parse-me-as-string'],
 };
 
 const data = fetch(
