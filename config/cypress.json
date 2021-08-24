@@ -10,6 +10,7 @@
   "testFiles": "**/tests/**/*.cypress.spec.js?(x)",
   "waitForAnimations": false,
   "chromeWebSecurity": false,
+  "defaultCommandTimeout": 10000,
   "retries": {
     "runMode": 0,
     "openMode": 0
