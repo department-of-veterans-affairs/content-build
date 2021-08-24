@@ -68,6 +68,12 @@ const FACILITY_MENU_NAMES = [
   'va-orlando-health-care',
   'va-tampa-health-care',
   'va-west-palm-beach-health-care',
+  // VISN 9
+  'va-lexington-health-care',
+  'va-louisville-health-care',
+  'va-memphis-health-care',
+  'va-mountain-home-health-care',
+  'va-tennessee-valley-health-care',
   // VISN 10
   'va-ann-arbor-health-care',
   'va-central-ohio-health-care',
