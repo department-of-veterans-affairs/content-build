@@ -69,25 +69,6 @@
                     </div>
 
                     {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = fieldOfficeHours %}
-
-                    <div class="vads-u-margin-bottom--3">
-                      <h3 class="vads-u-font-size--lg vads-u-line-height--1 vads-u-margin-bottom--1">
-                        Other locations</h3>
-                      <div id="vet-center-other-locations">
-                        <p>Vet Centers are community based to be more
-                          accessible in areas where you live.
-                        </p>
-                        <p><a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
-                            locations</a></p>
-                      </div>
-                    </div>
-
-                    <div class="field-cc-non-traditional-hours">
-                      {% include "src/site/includes/dynamic-content.drupal.liquid" with
-                          entity = fieldCcNonTraditionalHours.fetched
-                          contentType = fieldCcNonTraditionalHours.fetchedBundle
-                      %}
-                    </div>
                   </section>
                 </div>
               </div>
@@ -98,6 +79,25 @@
                 facilityId = fieldFacilityLocatorApiId
             %}
 
+          </div>
+
+          <div class="vads-u-margin-bottom--3">
+            <h3 class="vads-u-font-size--lg vads-u-line-height--1 vads-u-margin-bottom--1">
+              Other locations</h3>
+            <div id="vet-center-other-locations">
+              <p>Vet Centers are community based to be more
+                accessible in areas where you live.
+              </p>
+              <p><a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
+                  locations</a></p>
+            </div>
+          </div>
+
+          <div class="field-cc-non-traditional-hours">
+            {% include "src/site/includes/dynamic-content.drupal.liquid" with
+                entity = fieldCcNonTraditionalHours.fetched
+                contentType = fieldCcNonTraditionalHours.fetchedBundle
+            %}
           </div>
 
           <div class="field-cc-vet-call-center">
