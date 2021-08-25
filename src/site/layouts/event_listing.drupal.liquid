@@ -77,7 +77,7 @@
 
               {% assign numItems = pagedItems | size %}
               {% if numItems < 1 %}
-                <div class="clearfix-text">No events at this time.</div>
+                <div id="no-events-message" class="clearfix-text">No events at this time.</div>
               {% endif %}
 
               {% include "src/site/includes/pagination.drupal.liquid" %}
