@@ -171,7 +171,7 @@ function generateBreadCrumbs(pathString) {
       const dehandlized =
         value === 'pittsburgh-health-care'
           ? 'VA Pittsburgh health care'
-          : value.charAt(0).toUpperCase() + value.replaceAll('-', ' ').slice(1);
+          : value.charAt(0).toUpperCase() + value.replace(/-/g, ' ').slice(1);
       entityUrlObj.breadcrumb.push({
         url: {
           path: `${previous}${value}`,
