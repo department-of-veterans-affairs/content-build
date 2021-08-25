@@ -151,7 +151,7 @@ const FACILITY_MENU_NAMES = [
   'va-loma-linda-health-care',
   'va-long-beach-health-care',
   'va-new-mexico-health-care',
-  'va-northern-arizona health-care',
+  'va-northern-arizona-health-care',
   'va-phoenix-health-care',
   'va-san-diego-health-care',
   'va-southern-arizona-health-care',
