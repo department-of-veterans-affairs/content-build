@@ -114,7 +114,6 @@ Disallow: /boston-health-care
 Disallow: /bronx-health-care
 Disallow: /caribbean-health-care
 Disallow: /central-alabama-health-care
-Disallow: /central-iowa-health-care
 Disallow: /central-ohio-health-care
 Disallow: /central-texas-health-care
 Disallow: /central-western-massachusetts-health-care
@@ -130,15 +129,12 @@ Disallow: /connecticut-health-care
 Disallow: /dayton-health-care
 Disallow: /detroit-health-care
 Disallow: /dublin-health-care
-Disallow: /durham-health-care
 Disallow: /eastern-colorado-health-care
 Disallow: /eastern-kansas-health-care
 Disallow: /el-paso-health-care
 Disallow: /erie-health-care
-Disallow: /fayetteville-arkansas-health-care
 Disallow: /fayetteville-coastal-health-care
 Disallow: /greater-los-angeles-health-care
-Disallow: /hampton-health-care
 Disallow: /hines-health-care
 Disallow: /huntington-health-care
 Disallow: /illiana-health-care
