@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 12 * * 1-5'
+on: [push]
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 12 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -228,7 +228,7 @@ jobs:
 
       - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ failure() }}
+        if: ${{ needs.a11y.result == 'failure' }}
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
@@ -239,7 +239,7 @@ jobs:
 
       - name: Accessibility Test Success
         uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ success() }}
+        if: ${{ needs.a11y.result == 'success' }}
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
