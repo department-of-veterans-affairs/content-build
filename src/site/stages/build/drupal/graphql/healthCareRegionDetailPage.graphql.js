@@ -23,6 +23,7 @@ const TABLE = '... table';
 const ALERT_PARAGRAPH = '... alertParagraph';
 const DOWNLOADABLE_FILE_PARAGRAPH = '... downloadableFile';
 const MEDIA_PARAGRAPH = '... embeddedImage';
+const SPANISH_SUMMARY = '... spanishSummary';
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
@@ -60,6 +61,7 @@ const healthCareRegionDetailPage = `
         ${ALERT_PARAGRAPH}
         ${DOWNLOADABLE_FILE_PARAGRAPH}
         ${MEDIA_PARAGRAPH}
+        ${SPANISH_SUMMARY}
       }
     }
     ${FIELD_RELATED_LINKS}
