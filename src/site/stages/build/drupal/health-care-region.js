@@ -106,28 +106,6 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
     'health_care_facility_status.drupal.liquid',
   );
 
-  // Create the top-level locations page for Health Care Regions
-  const locEntityUrl = createEntityUrlObj(drupalPagePath);
-  const locObj = {
-    mainFacilities: page.mainFacilities,
-    otherFacilities: page.otherFacilities,
-    mobileFacilities: page.mobileFacilities,
-    fieldOtherVaLocations: page.fieldOtherVaLocations,
-    facilitySidebar: sidebar,
-    entityUrl: locEntityUrl,
-    alert: page.alert,
-    title: page.title,
-  };
-  const locPage = updateEntityUrlObj(locObj, drupalPagePath, 'Locations');
-  const locPath = locPage.entityUrl.path;
-  locPage.regionOrOffice = page.title;
-  locPage.entityUrl = generateBreadCrumbs(locPath);
-
-  files[`${drupalPagePath}/locations/index.html`] = createFileObj(
-    locPage,
-    'health_care_region_locations_page.drupal.liquid',
-  );
-
   // Press Release listing page
   const prEntityUrl = createEntityUrlObj(drupalPagePath);
   const prObj = {
