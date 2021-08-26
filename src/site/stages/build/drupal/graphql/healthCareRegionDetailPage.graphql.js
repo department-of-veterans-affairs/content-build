@@ -94,6 +94,7 @@ function getNodeHealthCareRegionDetailPageSlice(operationName, offset, limit) {
     ${fragments.embeddedImage}
     ${fragments.linkTeaser}
     ${fragments.alert}
+    ${fragments.spanishSummary}
 
     ${healthCareRegionDetailPage}
 
