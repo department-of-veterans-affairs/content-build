@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 10 * * 1-5'
+on: [push]
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 10 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -182,6 +182,14 @@ jobs:
       - name: Run Cypress E2E Tests
         run: CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.a11y.spec.js"
 
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: cypress-mochawesome-test-results
+          path: cypress/results
+          retention-days: 1
+
   slack:
     name: Notify Slack
     runs-on: ubuntu-latest
@@ -247,3 +255,22 @@ jobs:
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
+
+      - name: Download Mochawesome test results
+        uses: actions/download-artifact@v2
+        with:
+          name: cypress-mochawesome-test-results
+          path: content-build/cypress/results/json/
+
+        - name: Merge test results into one file
+          run: yarn run cy:report:merge
+
+        - name: Generate HTML report
+          run: yarn run cy:report:generate
+
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-a11y-report
+          path: index.html
+          retention-days: 30
