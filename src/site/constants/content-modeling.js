@@ -16,7 +16,7 @@ const ENTITY_BUNDLES = {
   HEALTH_CARE_LOCAL_FACILITY: 'health_care_local_facility',
   HEALTH_CARE_LOCAL_HEALTH_SERVICE: 'health_care_local_health_service',
   HEALTH_CARE_REGION_DETAIL_PAGE: 'health_care_region_detail_page',
-  HEALTH_CARE_REGION_LOCATIONS_PAGE: 'health_care_region_locations_page',
+  HEALTH_CARE_REGION_LOCATIONS_PAGE: 'locations_listing',
   HEALTH_CARE_REGION_PAGE: 'health_care_region_page',
   HEALTH_SERVICES_LISTING: 'health_services_listing',
   HOME: 'home',

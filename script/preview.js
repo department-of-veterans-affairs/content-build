@@ -285,20 +285,6 @@ app.get('/preview', async (req, res, next) => {
 
     const compiledPage = compilePage(drupalPage, drupalData);
 
-    // This forces the locations_listing preview pages to use the same template
-    // as the full build.
-    if (compiledPage.entityBundle === 'locations_listing') {
-      compiledPage.entityBundle = 'health_care_region_locations_page';
-      compiledPage.mainFacilities =
-        compiledPage?.fieldOffice?.entity?.mainFacilities;
-      compiledPage.otherFacilities =
-        compiledPage?.fieldOffice?.entity?.otherFacilities;
-      compiledPage.mobileFacilities =
-        compiledPage?.fieldOffice?.entity?.mobileFacilities;
-      compiledPage.fieldOtherVaLocations =
-        compiledPage?.fieldOffice?.entity?.fieldOtherVaLocations;
-    }
-
     const fullPage = createFileObj(
       compiledPage,
       `${compiledPage.entityBundle}.drupal.liquid`,

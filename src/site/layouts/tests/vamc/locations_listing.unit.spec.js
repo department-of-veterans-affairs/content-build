@@ -2,12 +2,11 @@ import { expect } from 'chai';
 import { parseFixture, renderHTML } from '~/site/tests/support';
 import axeCheck from '~/site/tests/support/axe';
 
-const layoutPath =
-  'src/site/layouts/health_care_region_locations_page.drupal.liquid';
+const layoutPath = 'src/site/layouts/locations_listing.drupal.liquid';
 
-describe('health_care_region_locations_page', () => {
+describe('locations_listing', () => {
   const data = parseFixture(
-    'src/site/layouts/tests/vamc/fixtures/health_care_region_page.json',
+    'src/site/layouts/tests/vamc/fixtures/locations_listing.json',
   );
 
   let container;
@@ -39,9 +38,21 @@ describe('health_care_region_locations_page', () => {
     expect(actual).to.deep.equal(expected);
   });
 
-  it('should render main phone number', async () => {
-    expect(container.querySelector('.main-phone a').textContent).to.equal(
-      data.mainFacilities.entities[0].fieldPhoneNumber,
-    );
+  it('should render main phone numbers', () => {
+    expect(
+      Array.from(container.querySelectorAll('.main-phone a')).map(
+        link => link.textContent,
+      ),
+    ).to.deep.equal([
+      '866-482-7488',
+      '412-360-6000',
+      '724-709-6005',
+      '740-695-9321',
+      '724-439-4990',
+      '724-250-7790',
+      '724-216-0317',
+      '724-250-7790',
+      '724-709-6005',
+    ]);
   });
 });
