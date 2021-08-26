@@ -34,7 +34,7 @@ export function command(context, config, _callback) {
         {
           runOnly: {
             type: 'tag',
-            values: ['section508', 'wcag2a', 'wcag2aa', 'best-practice'],
+            values: ['section508', 'wcag2a', 'wcag2aa'],
           },
         },
         userConfig,
