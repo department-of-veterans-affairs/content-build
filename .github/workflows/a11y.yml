@@ -260,7 +260,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: cypress-mochawesome-test-results
-          path: content-build/cypress/results/json/
+          path: content-build/cypress/results/json
 
         - name: Merge test results into one file
           run: yarn run cy:report:merge
