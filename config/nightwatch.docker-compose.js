@@ -60,7 +60,7 @@ module.exports = {
       },
     },
     accessibility: {
-      filter: './src/platform/site-wide/tests/sitemap/*.spec.js',
+      filter: './src/platform/site-wide/tests/sitemap/*.a11y-nw.spec.js',
     },
     wcag2a: {
       globals: {
