@@ -24,7 +24,7 @@
                 {% endif %}
               </div>
 
-              {% if pastEvents.entities.length > 0 %}
+              {% if pastEvents.entities.length > 0 or entityUrl.path contains 'past-events' %}
                 {% include "src/site/facilities/facilities_events_toggle.drupal.liquid" with url = entityUrl.path %}
               {% endif %}
 
