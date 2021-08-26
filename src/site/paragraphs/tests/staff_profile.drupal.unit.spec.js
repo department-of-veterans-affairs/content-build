@@ -1,8 +1,10 @@
 import { expect } from 'chai';
 import { parseFixture, renderHTML } from '~/site/tests/support';
 
-const layoutPath = 'src/site/includes/bioParagraph.drupal.liquid';
-const data = parseFixture('src/site/includes/tests/fixtures/bioParagraph.json');
+const layoutPath = 'src/site/paragraphs/staff_profile.drupal.liquid';
+const data = parseFixture(
+  'src/site/paragraphs/tests/fixtures/staff_profile.json',
+);
 let container;
 
 describe('Unpublished', () => {
