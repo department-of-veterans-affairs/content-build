@@ -58,16 +58,16 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+      # - name: Notify Slack
+      #   if: ${{ always() }}
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -234,27 +234,27 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      - name: Accessibility Test Failure
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ needs.a11y.result == 'failure' }}
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "[report-only] Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Failure
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   if: ${{ needs.a11y.result == 'failure' }}
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "[report-only] Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
 
-      - name: Accessibility Test Success
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ needs.a11y.result == 'success' }}
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Success
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   if: ${{ needs.a11y.result == 'success' }}
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Download Mochawesome test results
         uses: actions/download-artifact@v2
@@ -262,11 +262,11 @@ jobs:
           name: cypress-mochawesome-test-results
           path: content-build/cypress/results/json
 
-        - name: Merge test results into one file
-          run: yarn run cy:report:merge
+      - name: Merge test results into one file
+        run: yarn run cy:report:merge
 
-        - name: Generate HTML report
-          run: yarn run cy:report:generate
+      - name: Generate HTML report
+        run: yarn run cy:report:generate
 
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v2
