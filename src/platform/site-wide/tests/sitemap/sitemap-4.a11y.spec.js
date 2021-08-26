@@ -41,6 +41,7 @@ describe(`Accessibility tests`, () => {
         exclude: [
           ['.loading-indicator'],
           ['div[data-widget-type="facility-map"]'],
+          ['#table-of-contents'],
         ],
       });
     });
