@@ -61,5 +61,9 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
     : axeBuilder;
 
   Cypress.log();
-  cy.checkA11y(context, axeConfig, processAxeCheckResults);
+  cy.checkA11y(
+    context,
+    { ...axeConfig, exclude: ['#table-of-contents'] },
+    processAxeCheckResults,
+  );
 });
