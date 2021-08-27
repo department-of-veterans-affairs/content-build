@@ -1,6 +1,4 @@
-{% if bio == empty %}
-  {% assign bio = entity.queryFieldStaffProfile.entities.0 %}
-{% endif %}
+{% assign bio = entity.queryFieldStaffProfile.entities.0 %}
 
 {% if bio.entityPublished %}
   <bio data-template="includes/bioParagraph"

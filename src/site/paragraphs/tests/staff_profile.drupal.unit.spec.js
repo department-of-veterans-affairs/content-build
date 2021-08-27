@@ -7,9 +7,23 @@ const data = parseFixture(
 );
 let container;
 
+const normalizeBioData = bioData => {
+  return {
+    entity: {
+      queryFieldStaffProfile: {
+        entities: [bioData.bio],
+      },
+    },
+  };
+};
+
 describe('unpublished', () => {
   before(async () => {
-    container = await renderHTML(layoutPath, data.unpublished, 'unpublished');
+    container = await renderHTML(
+      layoutPath,
+      normalizeBioData(data.unpublished),
+      'unpublished',
+    );
   });
 
   it('does not render bio', async () => {
@@ -19,7 +33,11 @@ describe('unpublished', () => {
 
 describe('published', () => {
   before(async () => {
-    container = await renderHTML(layoutPath, data.published, 'published');
+    container = await renderHTML(
+      layoutPath,
+      normalizeBioData(data.published),
+      'published',
+    );
   });
 
   it('renders bio', async () => {
@@ -35,7 +53,7 @@ describe('publishedNoBioBody', () => {
   before(async () => {
     container = await renderHTML(
       layoutPath,
-      data.publishedNoBioBody,
+      normalizeBioData(data.publishedNoBioBody),
       'publishedNoBioBody',
     );
   });
@@ -53,7 +71,7 @@ describe('publishedNoBioIntro', () => {
   before(async () => {
     container = await renderHTML(
       layoutPath,
-      data.publishedNoBioIntro,
+      normalizeBioData(data.publishedNoBioIntro),
       'publishedNoBioIntro',
     );
   });
