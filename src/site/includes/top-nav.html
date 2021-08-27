@@ -31,19 +31,19 @@
     </div>
     {% if !noNavOrLogin %}
       <div id="va-nav-controls"></div>
-      {% if !noMegamenu %}
-        <div class="usa-grid usa-grid-full">
+      {% unless noMegamenu %}
+        <div class="medium-screen:vads-u-display--none usa-grid usa-grid-full">
           <div class="menu-rule usa-one-whole"></div>
           <div class="mega-menu" id="mega-menu-mobile"></div>
         </div>
-      {% endif %}
+      {% endunless %}
       <div id="login-root" class="vet-toolbar"></div>
     {% endif %}
   </div>
-  {% if !noMegamenu %}
+  {% unless noMegamenu %}
     <div class="usa-grid usa-grid-full">
       <div class="menu-rule usa-one-whole"></div>
       <div class="mega-menu" id="mega-menu"></div>
     </div>
-  {% endif %}
+  {% endunless %}
 </header>
