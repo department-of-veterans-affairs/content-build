@@ -48,7 +48,7 @@ Example data:
         </div>
     {% endif %}
     <div>
-        {% if node.entityUrl.path != empty %}
+        {% if node.entityUrl.path != empty and node.fieldIntroText and node.fieldBody.processed %}
             <a class="
                 vads-u-font-family--serif
                 vads-u-font-weight--bold

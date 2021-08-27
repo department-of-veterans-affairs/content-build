@@ -24,4 +24,12 @@ describe('Staff Bio Page', () => {
       container.querySelector('span.vads-u-font-size--lg').innerHTML.trim(),
     ).to.equal('Joe No’link');
   });
+
+  it('renders name as a span when content does not exists', async () => {
+    const container = await getContainer('bioWithoutContent');
+    expect(container.querySelector('a.vads-u-font-size--lg')).to.be.null;
+    expect(
+      container.querySelector('span.vads-u-font-size--lg').innerHTML.trim(),
+    ).to.equal('Mary No Link');
+  });
 });
