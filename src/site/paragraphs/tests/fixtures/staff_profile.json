@@ -67,7 +67,44 @@
       }
     }
   },
-  "publishedNoBioContent": {
+  "publishedNoBioIntro": {
+    "bio": {
+      "entityPublished": true,
+      "entityUrl": {
+        "path": "/new-jersey-health-care/staff-profiles/christine-betros-farrell"
+      },
+      "fieldNameFirst": "Christine Betros",
+      "fieldLastName": "Farrell",
+      "fieldSuffix": "LCSW",
+      "fieldDescription": "Public Affairs Officer",
+      "fieldEmailAddress": "publicaffairs.vhanjh@va.gov",
+      "fieldPhoneNumber": "908-647-0180 ext. 21-4050",
+      "fieldBody": {
+        "processed": "Some text"
+      },
+      "fieldIntroText": "",
+      "fieldOffice": {
+        "entity": {
+          "entityLabel": "VA New Jersey health care",
+          "entityType": "node"
+        }
+      },
+      "fieldMedia": {
+        "entity": {
+          "image": {
+            "alt": "Public Affairs Officer",
+            "title": "",
+            "derivative": {
+              "url": "http://master-ldij0hdlillzgrlzsgjk8keqbcknof2i.demo.cms.va.gov/sites/default/files/styles/1_1_square_medium_thumbnail/public/2021-06/BETROS-FARRELL%2CCHRISTINE.jpg",
+              "width": 240,
+              "height": 240
+            }
+          }
+        }
+      }
+    }
+  },
+  "publishedNoBioBody": {
     "bio": {
       "entityPublished": true,
       "entityUrl": {
@@ -82,7 +119,7 @@
       "fieldBody": {
         "processed": ""
       },
-      "fieldIntroText": "",
+      "fieldIntroText": "Some text",
       "fieldOffice": {
         "entity": {
           "entityLabel": "VA New Jersey health care",

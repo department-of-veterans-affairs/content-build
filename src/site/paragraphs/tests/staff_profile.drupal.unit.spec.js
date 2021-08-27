@@ -31,12 +31,12 @@ describe('published', () => {
   });
 });
 
-describe('publishedNoBioContent', () => {
+describe('publishedNoBioBody', () => {
   before(async () => {
     container = await renderHTML(
       layoutPath,
-      data.publishedNoBioContent,
-      'publishedNoBioContent',
+      data.publishedNoBioBody,
+      'publishedNoBioBody',
     );
   });
 
@@ -44,7 +44,25 @@ describe('publishedNoBioContent', () => {
     expect(container.querySelector('bio').innerHTML).not.to.be.empty;
   });
 
-  it('does not render link because bio content is null', async () => {
+  it('does not render link because bio body is null', async () => {
+    expect(container.querySelector('a.bioLink')).to.be.null;
+  });
+});
+
+describe('publishedNoBioIntro', () => {
+  before(async () => {
+    container = await renderHTML(
+      layoutPath,
+      data.publishedNoBioIntro,
+      'publishedNoBioIntro',
+    );
+  });
+
+  it('renders bio', async () => {
+    expect(container.querySelector('bio').innerHTML).not.to.be.empty;
+  });
+
+  it('does not render link because bio intro is null', async () => {
     expect(container.querySelector('a.bioLink')).to.be.null;
   });
 });
