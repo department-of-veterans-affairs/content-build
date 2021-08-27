@@ -38,10 +38,11 @@ describe(`Accessibility tests`, () => {
       cy.visit(localURL).injectAxe();
       cy.get('body').should('be.visible', { timeout: normal });
       cy.axeCheck({
+        include: [['main'], ['.aut-iframe']],
         exclude: [
           ['.loading-indicator'],
           ['div[data-widget-type="facility-map"]'],
-          ['#table-of-contents'],
+          ['.aut-iframe', '#table-of-contents'],
         ],
       });
     });
