@@ -199,7 +199,16 @@ jobs:
     env:
       CHANNEL_ID: C01RAS1KAQK
 
+    defaults:
+      run:
+        working-directory: content-build
+
     steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
