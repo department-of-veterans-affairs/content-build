@@ -11,7 +11,10 @@
       "fieldDescription": "Public Affairs Officer",
       "fieldEmailAddress": "publicaffairs.vhanjh@va.gov",
       "fieldPhoneNumber": "908-647-0180 ext. 21-4050",
-      "fieldBody": null,
+      "fieldBody": {
+        "processed": "<p>Ms. Betros previously served as director of VA Butler Health Care and associate medical center director at Durham VA Health Care System in Durham, North Carolina. His service to the Veterans Health Administration began in 2010 and he has served in various positions there and at the Hampton VA Medical Center in Hampton, Virginia. Mr. Amick also served as a chief hospital corpsman and in other roles in the Navy Hospital Corps at various duty stations during his 21-year naval career.</p>\n\n<p>Mr. Amick holds master’s degrees in health administration and human resources management from Strayer University and a bachelor's degree in health science from Old Dominion University. He is a member of the American College of Healthcare Executives.</p>"
+      },
+      "fieldIntroText": "Christine Betros is acting director of VA Pittsburgh Healthcare System.",
       "fieldOffice": {
         "entity": {
           "entityLabel": "VA New Jersey health care",
@@ -63,5 +66,43 @@
         }
       }
     }
+  },
+  "publishedNoBioContent": {
+    "bio": {
+      "entityPublished": true,
+      "entityUrl": {
+        "path": "/new-jersey-health-care/staff-profiles/christine-betros-farrell"
+      },
+      "fieldNameFirst": "Christine Betros",
+      "fieldLastName": "Farrell",
+      "fieldSuffix": "LCSW",
+      "fieldDescription": "Public Affairs Officer",
+      "fieldEmailAddress": "publicaffairs.vhanjh@va.gov",
+      "fieldPhoneNumber": "908-647-0180 ext. 21-4050",
+      "fieldBody": {
+        "processed": ""
+      },
+      "fieldIntroText": "",
+      "fieldOffice": {
+        "entity": {
+          "entityLabel": "VA New Jersey health care",
+          "entityType": "node"
+        }
+      },
+      "fieldMedia": {
+        "entity": {
+          "image": {
+            "alt": "Public Affairs Officer",
+            "title": "",
+            "derivative": {
+              "url": "http://master-ldij0hdlillzgrlzsgjk8keqbcknof2i.demo.cms.va.gov/sites/default/files/styles/1_1_square_medium_thumbnail/public/2021-06/BETROS-FARRELL%2CCHRISTINE.jpg",
+              "width": 240,
+              "height": 240
+            }
+          }
+        }
+      }
+    }
   }
+
 }

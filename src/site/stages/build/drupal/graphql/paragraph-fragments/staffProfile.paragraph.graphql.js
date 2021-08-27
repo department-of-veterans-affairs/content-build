@@ -17,7 +17,7 @@ module.exports = `
         fieldDescription
         fieldEmailAddress
         fieldPhoneNumber
-
+        fieldIntroText
         fieldBody {
           processed
         }

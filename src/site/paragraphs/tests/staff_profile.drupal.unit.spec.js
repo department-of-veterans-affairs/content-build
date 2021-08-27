@@ -7,7 +7,7 @@ const data = parseFixture(
 );
 let container;
 
-describe('Unpublished', () => {
+describe('unpublished', () => {
   before(async () => {
     container = await renderHTML(layoutPath, data.unpublished, 'unpublished');
   });
@@ -27,6 +27,24 @@ describe('published', () => {
   });
 
   it('does not render link because bio.entityUrl.path is null', async () => {
+    expect(container.querySelector('a.bioLink')).to.be.null;
+  });
+});
+
+describe('publishedNoBioContent', () => {
+  before(async () => {
+    container = await renderHTML(
+      layoutPath,
+      data.publishedNoBioContent,
+      'publishedNoBioContent',
+    );
+  });
+
+  it('renders bio', async () => {
+    expect(container.querySelector('bio').innerHTML).not.to.be.empty;
+  });
+
+  it('does not render link because bio content is null', async () => {
     expect(container.querySelector('a.bioLink')).to.be.null;
   });
 });

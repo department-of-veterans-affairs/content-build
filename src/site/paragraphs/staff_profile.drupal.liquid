@@ -19,7 +19,7 @@
       {% endif %}
     </div>
     <div class="vads-u-flex--1">
-
+      {% assign bioContent = bio.fieldIntroText | append: fieldBody.processed %}
       <p class="
             vads-u-margin-top--0
             vads-u-font-family--serif
@@ -27,7 +27,7 @@
             vads-u-display--block
             vads-u-margin-bottom--0
             vads-u-font-size--md">
-        {% if bio.entityUrl.path == empty %}
+        {% if bio.entityUrl.path == empty or !bioContent or bioContent == empty %}
           {{ bio.fieldNameFirst }}
           {{ bio.fieldLastName }} {{ bio.fieldSuffix }}
         {% else %}
