@@ -36,21 +36,21 @@
           {% endif %}
 
           {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %}
-          <nav id="table-of-contents" aria-labelledby="on-this-page">
-            <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-            <ul class="usa-unstyled-list" role="list"></ul>
-          </nav>
+            <nav id="table-of-contents" aria-labelledby="on-this-page">
+              <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
+              <ul class="usa-unstyled-list" role="list"></ul>
+            </nav>
           {% endif %}
 
           {% assign featureCount = fieldFeaturedContent | size  %}
           {% if featureCount > 0 %}
-          <div class="feature">
-          {% for block in fieldFeaturedContent %}
-            {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
-            {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-            {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
-          {% endfor %}
-          </div>
+            <div class="feature">
+              {% for block in fieldFeaturedContent %}
+                {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
+                {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
+              {% endfor %}
+            </div>
           {% endif %}
 
           {% for block in fieldContentBlock %}
@@ -59,13 +59,13 @@
             {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
           {% endfor %}
           {% if fieldRelatedLinks != empty %}
-          <div class="row">
-            <div class="usa-content">
-              <aside class="va-nav-linkslist va-nav-linkslist--related">
-                {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' with entity = fieldRelatedLinks.entity %}
-              </aside>
+            <div class="row">
+              <div class="usa-content">
+                <aside class="va-nav-linkslist va-nav-linkslist--related">
+                  {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' with entity = fieldRelatedLinks.entity %}
+                </aside>
+              </div>
             </div>
-          </div>
           {%  endif %}
         </article>
 

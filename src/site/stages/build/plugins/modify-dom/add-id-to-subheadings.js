@@ -58,6 +58,7 @@ module.exports = {
 
       if (entityBundlesForResourcesAndSupport.has(file.entityBundle)) {
         nodes = dom('article h2');
+
         if (nodes.length < 2) {
           return;
         }
@@ -70,9 +71,11 @@ module.exports = {
         const parent = heading.parents();
         const isInAccordionButton = parent.hasClass('usa-accordion-button');
         const isInAccordion = parent.hasClass('usa-accordion-content');
+        const isInAlert = parent.hasClass('usa-alert-body');
 
-        // skip heading if it already has an id and skip heading if it's in an accordion button
-        if (!heading.attr('id') && !isInAccordionButton) {
+        // skip heading if it already has an id
+        // skip heading if it's in an accordion button or an alert
+        if (!heading.attr('id') && !isInAccordionButton && !isInAlert) {
           const headingID = createUniqueId(heading, headingOptions);
           heading.attr('id', headingID);
           idAdded = true;
@@ -85,7 +88,8 @@ module.exports = {
           heading.attr('id') &&
           heading.text().toLowerCase() !== 'on this page' &&
           !isInAccordionButton &&
-          !isInAccordion
+          !isInAccordion &&
+          !isInAlert
         ) {
           tableOfContents.append(
             `<li class="vads-u-margin-bottom--2"><a href="#${heading.attr(

@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
+import cheerio from 'cheerio';
 import { JSDOM } from 'jsdom';
 import liquid from 'tinyliquid';
 import registerFilters from '../../filters/liquid.js';
@@ -8,6 +9,7 @@ import createRedirects from '../../stages/build/plugins/rewrite-va-domains.js';
 import rewriteAWSUrls from '../../stages/build/plugins/rewrite-cms-aws-urls.js';
 import modifyDom from '../../stages/build/plugins/modify-dom';
 import ENVIRONMENT_CONFIGURATIONS from 'site/constants/environments-configs';
+import Metalsmith from 'metalsmith';
 
 const BUILDTYPE = ENVIRONMENT_CONFIGURATIONS[__BUILDTYPE__].BUILDTYPE;
 
@@ -138,4 +140,59 @@ const renderHTML = (layoutPath, data, dataName) => {
   );
 };
 
-export { renderHTML, parseFixture };
+// This is a simplified version of the function used in the metalsmith pipeline:
+// https://github.com/department-of-veterans-affairs/content-build/blob/master/src/site/stages/build/plugins/modify-dom/index.js
+const modifyDomPlugin = (domModifiers, BUILD_OPTIONS = {}) => async files => {
+  for (const modifier of domModifiers) {
+    if (modifier.initialize) {
+      modifier.initialize(BUILD_OPTIONS, files);
+    }
+  }
+
+  for (const [fileName, file] of Object.entries(files)) {
+    if (path.extname(fileName) === '.html') {
+      file.dom = cheerio.load(file.contents);
+
+      for (const modifier of domModifiers) {
+        modifier.modifyFile(fileName, file, files, BUILD_OPTIONS);
+      }
+
+      if (file.modified) {
+        file.contents = Buffer.from(file.dom.html());
+      }
+
+      delete file.dom;
+    }
+  }
+
+  for (const modifier of domModifiers) {
+    if (modifier.conclude) {
+      modifier.conclude(BUILD_OPTIONS, files);
+    }
+  }
+};
+
+const testMetalsmithPlugin = (
+  { fileName, fixturesPath, plugins },
+  callback,
+) => {
+  const metalsmith = Metalsmith(fixturesPath);
+
+  metalsmith
+    .use(modifyDomPlugin(plugins))
+    .source('./')
+    .destination(path.join(__dirname, '../html'))
+    .build(function(err, files) {
+      if (err) {
+        throw err;
+      }
+
+      const { document } = new JSDOM(
+        files[fileName].contents.toString(),
+      ).window;
+
+      return callback(document);
+    });
+};
+
+export { renderHTML, parseFixture, testMetalsmithPlugin };
