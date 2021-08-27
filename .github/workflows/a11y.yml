@@ -243,6 +243,15 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 5
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+
       # - name: Accessibility Test Failure
       #   uses: ./.github/actions/vsp-github-actions/slack-socket
       #   if: ${{ needs.a11y.result == 'failure' }}
