@@ -183,7 +183,7 @@ jobs:
         run: CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.a11y.spec.js"
 
       - name: Rename Mochawesome JSON file
-        run: mv content-build/mochawesome-report/mochawesome.json content-build/mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json 
+        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json 
 
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v2
