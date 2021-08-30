@@ -383,5 +383,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: cypress-a11y-report
-          path: content-build/public/index.html
+          path: content-build/public
           retention-days: 30
