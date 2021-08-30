@@ -82,7 +82,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
 describe('VAMC location detail page', () => {
   before(function() {
     cy.syncFixtures({
-      fixtures: path.join(__dirname, 'fixtures'),
+      fixtures: path.join(__dirname, '../fixtures'),
     });
   });
 
