@@ -1,5 +1,5 @@
 import path from 'path';
-import mockFacilityData from './fixtures/mock-facility-data-v1.json';
+import mockFacilityData from '../fixtures/mock-facility-data-v1.json';
 import './commands.cypress';
 
 Cypress.Commands.add('checkElements', (page, isMobile) => {
