@@ -604,7 +604,7 @@ jobs:
           npm config set always-auth true
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
