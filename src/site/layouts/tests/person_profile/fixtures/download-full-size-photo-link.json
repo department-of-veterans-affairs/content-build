@@ -1,0 +1,90 @@
+{
+  "trueFieldPhotoAllowHiresDownloadAndHasImageUrl": {
+    "entityUrl": {
+      "breadcrumb": [
+        {
+          "text": "text",
+          "url": {
+            "path": "/",
+            "routed": true
+          }
+        }
+      ],
+      "path": "/houston-health-care/staff-profiles/arnisha-carter"
+    },
+    "fieldPhotoAllowHiresDownload": true,
+    "fieldMedia": {
+      "entity": {
+        "image": {
+          "alt": "alt text",
+          "derivative": {
+            "height": 123,
+            "url": "url text",
+            "width": 321
+          },
+          "title": ""
+        }
+      }
+    }
+  },
+  "trueFieldPhotoAllowHiresDownloadAndNoFieldMedia": {
+    "entityUrl": {
+      "breadcrumb": [
+        {
+          "text": "text",
+          "url": {
+            "path": "/",
+            "routed": true
+          }
+        }
+      ],
+      "path": "/houston-health-care/staff-profiles/arnisha-carter"
+    },
+    "fieldPhotoAllowHiresDownload": true,
+    "fieldMedia": null
+  },
+  "falseFieldPhotoAllowHiresDownloadAndHasImageUrl": {
+    "entityUrl": {
+      "breadcrumb": [
+        {
+          "text": "text",
+          "url": {
+            "path": "/",
+            "routed": true
+          }
+        }
+      ],
+      "path": "/houston-health-care/staff-profiles/arnisha-carter"
+    },
+    "fieldPhotoAllowHiresDownload": false,
+    "fieldMedia": {
+      "entity": {
+        "image": {
+          "alt": "alt text",
+          "derivative": {
+            "height": 123,
+            "url": "url text",
+            "width": 321
+          },
+          "title": ""
+        }
+      }
+    }
+  },
+  "falseFieldPhotoAllowHiresDownloadAndNoFieldMedia": {
+    "entityUrl": {
+      "breadcrumb": [
+        {
+          "text": "text",
+          "url": {
+            "path": "/",
+            "routed": true
+          }
+        }
+      ],
+      "path": "/houston-health-care/staff-profiles/arnisha-carter"
+    },
+    "fieldPhotoAllowHiresDownload": false,
+    "fieldMedia": null
+  }
+}

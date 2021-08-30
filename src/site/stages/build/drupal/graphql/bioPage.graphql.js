@@ -33,7 +33,7 @@ const personProfileFragment = `
         image {
           alt
           title
-          derivative(style: _23MEDIUMTHUMBNAIL) {
+          derivative(style: ORIGINAL) {
             url
             width
             height
