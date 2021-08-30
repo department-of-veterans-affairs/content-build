@@ -182,7 +182,6 @@ jobs:
           npm config set registry ${{ env.NEXUS_REGISTRY }}
           npm config set email va-vsp-bot-1@va.gov
           npm config set always-auth true
-          npm config set strict-ssl false
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
