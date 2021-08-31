@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 // Node modules.
 const _ = require('lodash');
 const converter = require('number-to-words');
@@ -1087,7 +1088,9 @@ module.exports = function registerFilters() {
     }
   };
 
-  liquid.filters.deriveLanguageTranslation = (lang = 'en', whichNode, id) => {
+  liquid.filters.deriveLanguageTranslation = (lang, whichNode, id) => {
+    if (!lang) lang = 'en';
+
     const languages = {
       es: {
         downloadVaForm: `Descargar el formulario VA ${id}`,
