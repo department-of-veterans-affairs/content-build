@@ -131,7 +131,7 @@ function getJenkinsLatestWorkflow() {
       }
       return response.data;
     })
-    .then(state => {
+    .then(({ state }) => {
       return state;
     });
 }
