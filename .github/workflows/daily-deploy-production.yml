@@ -1,6 +1,7 @@
 name: Daily Production Deploy
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       release_wait:
