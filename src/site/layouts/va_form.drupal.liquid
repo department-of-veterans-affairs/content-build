@@ -81,35 +81,27 @@
           {% endif %}
 
           <h3 class="vads-u-margin-bottom--2">Downloadable PDF</h3>
-          <a
-            href="{{ fieldVaFormUrl.uri }}"
-            target="_blank"
-            download
-            data-widget-type="find-va-forms-invalid-pdf-alert"
-            data-form-number="{{ fieldVaFormNumber }}">
-              <i
-                aria-hidden="true"
-                class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                role="presentation"
-              > </i>
-            Download VA Form {{ fieldVaFormNumber }} (PDF)
-          </a>
-        {% else %}
-          <a
-            class="vads-u-margin-top--4"
-            href="{{ fieldVaFormUrl.uri }}"
-            target="_blank"
-            download
-            data-widget-type="find-va-forms-invalid-pdf-alert"
-            data-form-number="{{ fieldVaFormNumber }}">
-              <i
-                aria-hidden="true"
-                class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                role="presentation"
-              > </i>
-            Download VA Form {{ fieldVaFormNumber }} (PDF)
-          </a>
         {% endif %}
+        <a
+          href="{{ fieldVaFormUrl.uri }}"
+          target="_blank"
+          download
+          data-widget-type="find-va-forms-invalid-pdf-alert"
+          data-form-number="{{ fieldVaFormNumber }}"
+          lang="{{ fieldVaFormLanguage }}"
+          >
+            <i
+              aria-hidden="true"
+              class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
+              role="presentation"
+            > </i>
+
+          {% if fieldVaFormLanguage === "es" %}
+            Descargar el formulario {{ fieldVaFormNumber }} (PDF)
+          {% else %}
+            Download VA Form {{ fieldVaFormNumber }} (PDF)
+          {% endif %}
+        </a>
 
         {% if fieldAlert.length %}
           {% for alert in fieldAlert %}
@@ -160,19 +152,25 @@
                   </p>
 
                 {{ vaForm.entity.fieldVaFormUsage.processed }}
-
+                
                 <a
                   href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
                   target="_blank"
                   download
                   data-widget-type="find-va-forms-invalid-pdf-alert"
-                  data-form-number="{{ vaForm.entity.fieldVaFormNumber }}">
+                  data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
+                  lang="{{ vaForm.entity.fieldVaFormLanguage }}"
+                  >
                     <i
                       aria-hidden="true"
                       class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
                       role="presentation"
                     > </i>
-                  Download VA Form {{ vaForm.entity.fieldVaFormNumber }} (PDF)
+                    {% if vaForm.entity.fieldVaFormLanguage === "es" %}
+                      Descargar el formulario {{ vaForm.entity.fieldVaFormNumber }} (PDF)
+                    {% else %}
+                      Download VA Form {{ vaForm.entity.fieldVaFormNumber }} (PDF)
+                    {% endif %}
                 </a>
               </li>
             {% endfor %}

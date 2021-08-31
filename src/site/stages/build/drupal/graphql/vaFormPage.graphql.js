@@ -62,6 +62,7 @@ fragment vaFormPage on NodeVaForm {
           path
           routed
         }
+        fieldVaFormLanguage
         fieldVaFormNumber
         fieldVaFormName
         fieldVaFormUsage {
