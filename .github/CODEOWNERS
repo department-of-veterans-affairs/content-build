@@ -58,3 +58,6 @@ src/site/stages/build/drupal @department-of-veterans-affairs/vsa-public-websites
 
 # Liquid template filters
 src/site/filters @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-public-websites-frontend
+
+# Metalsmith plugins
+src/site/stages/build/plugins/modify-dom @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-public-websites-frontend
