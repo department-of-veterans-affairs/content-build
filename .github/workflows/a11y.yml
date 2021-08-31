@@ -391,6 +391,7 @@ jobs:
 
       - name: Move Mochawesome report to Daily Accessibility Report repo
         run: |
+          cd ..
           pwd
           ls
 
