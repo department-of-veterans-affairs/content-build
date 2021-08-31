@@ -109,13 +109,62 @@ function validateWorkflowSuccess(workflow) {
 }
 
 /**
+ * uses octokit request for jenkins to get workflow with matching SHA
+ * @returns (success | error | pending)
+ */
+function getJenkinsLatestWorkflow() {
+  const params = {
+    owner,
+    repo,
+    ref: commitSHA,
+  };
+  return octokit
+    .request('GET /repos/{owner}/{repo}/commits/{ref}/status', params)
+    .then(response => {
+      if (response.status !== 200) {
+        throw new Error(
+          `Response ${response.status} from ${response.url}. Aborting.`,
+        );
+      }
+      return response.data;
+    })
+    .then(state => {
+      return state;
+    });
+}
+
+/**
+ * Validates the workflow
+ * @param {string} state
+ * @returns true, false, undefined
+ */
+function validateJenkinsWorkflow(state) {
+  if (state === 'error') return false;
+  console.log(`Validating commit ${commitSHA}`);
+
+  const isWorkflowInProgress = state === 'pending';
+
+  if (isWorkflowInProgress) return undefined;
+
+  if (state === 'success') {
+    console.log('Jenkins succeeded');
+    return true;
+  }
+
+  throw new Error(`Unexpected error validating Jenkins`);
+}
+
+/**
  * Checks Github Actions url. Loops recursively until error is thrown.
  */
 async function main() {
   try {
-    const page = 1;
-    const workflow = await getLatestWorkflow(page);
-    const success = validateWorkflowSuccess(workflow);
+    // const page = 1; // TODO: Uncomment for GHA as source of truth
+    // const workflow = await getLatestWorkflow(page); // TODO: Uncomment for GHA as source of truth
+    // const success = validateWorkflowSuccess(workflow); // TODO: Uncomment for GHA as source of truth
+
+    const state = await getJenkinsLatestWorkflow();
+    const success = validateJenkinsWorkflow(state);
 
     if (success === undefined) {
       console.log(`Check runs still pending. Sleeping for ${timeout} minutes`);
@@ -125,7 +174,10 @@ async function main() {
     }
 
     if (!success) {
-      await getJobsFailed(workflow.id);
+      // await getJobsFailed(workflow.id); // TODO: Uncomment for GHA as source of truth
+      console.log(
+        'Error has occurred in Jenkins. Please check logs in Jenkins for more details',
+      ); // TODO: Remove when GHA as source of truth
       process.exit(1);
     }
   } catch (e) {
