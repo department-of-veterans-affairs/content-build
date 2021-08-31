@@ -525,48 +525,47 @@ jobs:
         env:
           BUILDTYPE: vagovprod
 
-  archive:
-    name: Archive
-    runs-on: ${{ needs.start-runner.outputs.vagovprod }}
-    needs: [start-runner, build]
-    env:
-      BUILDTYPE: vagovprod
+  # archive:
+  #   name: Archive
+  #   runs-on: ubuntu-latest
+  #   needs: [cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
 
-    steps:
-      - name: Restore vagovprod build
-        run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }} build/${{ env.BUILDTYPE }}
-          du -h build/${{ env.BUILDTYPE }}
+  #   strategy:
+  #     fail-fast: true
+  #     matrix:
+  #       buildtype: [vagovdev, vagovstaging, vagovprod]
 
-      - name: Compress ${{ env.BUILDTYPE }} build
-        run: tar -cvf ${{ env.BUILDTYPE }}.tar.bz2 build/${{ env.BUILDTYPE }}
+  #   steps:
+  #     - name: Download build artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: ${{ matrix.buildtype }}.tar.bz2
 
-      - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
+  #     - name: Configure AWS credentials (1)
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-gov-west-1
 
-      - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+  #     - name: Get role from Parameter Store
+  #       uses: marvinpinto/action-inject-ssm-secrets@latest
+  #       with:
+  #         ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+  #         env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-      - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
+  #     - name: Configure AWS Credentials (2)
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-gov-west-1
+  #         role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+  #         role-duration-seconds: 900
+  #         role-session-name: vsp-frontendteam-githubaction
 
-      - name: Upload build
-        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/temp-test/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
+  #     - name: Upload build
+  #       run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
 
   # deploy:
   #   name: Deploy
@@ -618,14 +617,14 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, nightwatch-tests, archive]
+    needs: [start-runner, cypress-tests, nightwatch-tests]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
