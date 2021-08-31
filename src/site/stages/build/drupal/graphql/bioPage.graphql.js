@@ -28,7 +28,20 @@ const personProfileFragment = `
   fieldIntroText
   fieldPhotoAllowHiresDownload
   fieldMedia {
-    entity {
+    thumbnail: entity {
+      ... on MediaImage {
+        image {
+          alt
+          title
+          derivative(style: _23MEDIUMTHUMBNAIL) {
+            url
+            width
+            height
+          }
+        }
+      }
+    }
+    hiRes: entity {
       ... on MediaImage {
         image {
           alt
@@ -40,7 +53,7 @@ const personProfileFragment = `
           }
         }
       }
-    }
+    }    
   }
   fieldBody {
     processed

@@ -14,12 +14,23 @@
     },
     "fieldPhotoAllowHiresDownload": true,
     "fieldMedia": {
-      "entity": {
+      "thumbnail": {
         "image": {
-          "alt": "alt text",
+          "alt": "alt thumbnail text",
           "derivative": {
             "height": 123,
-            "url": "url text",
+            "url": "url thumbnail text",
+            "width": 321
+          },
+          "title": ""
+        }
+      },
+      "hiRes": {
+        "image": {
+          "alt": "alt hi res text",
+          "derivative": {
+            "height": 123,
+            "url": "url hi res text",
             "width": 321
           },
           "title": ""
@@ -58,13 +69,24 @@
     },
     "fieldPhotoAllowHiresDownload": false,
     "fieldMedia": {
-      "entity": {
+      "thumbnail": {
         "image": {
-          "alt": "alt text",
+          "alt": "alt thumbnail text",
           "derivative": {
             "height": 123,
-            "url": "url text",
+            "url": "url thumbnail text",
             "width": 321
+          },
+          "title": ""
+        }
+      },
+      "hiRes": {
+        "image": {
+          "alt": "alt hi res text",
+          "derivative": {
+            "height": 567,
+            "url": "url hi res text",
+            "width": 765
           },
           "title": ""
         }

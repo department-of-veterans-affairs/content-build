@@ -18,7 +18,7 @@ describe('person-profile', () => {
       expect(
         container.querySelector('#download-full-size-photo-link a').href,
       ).to.equal(
-        data.trueFieldPhotoAllowHiresDownloadAndHasImageUrl.fieldMedia.entity
+        data.trueFieldPhotoAllowHiresDownloadAndHasImageUrl.fieldMedia.hiRes
           .image.derivative.url,
       );
     });
