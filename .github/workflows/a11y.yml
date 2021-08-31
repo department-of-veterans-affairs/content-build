@@ -379,6 +379,41 @@ jobs:
       - name: Generate HTML report
         run: yarn run cy:report:generate
 
+      - name: Checkout Daily Accessibility Report repo
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/daily-accessibiliy-report
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          path: daily-accessibiliy-report
+
+      - name: Generate UUID for Mochawesome report
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
+
+      - name: Move Mochawesome report to Daily Accessibility Report repo
+        run: mv content-build/public/index.html daily-accessbility-report/public/${{ env.UUID }}.html
+
+      - name: Add changes
+        run: git add .
+        working-directory: daily-accessbility-report
+
+      - name: Commit and push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          repository: department-of-veterans-affairs/daily-accessbility-report
+          directory: daily-accessbility-report
+          branch: master
+
+      - name: Accessibility Test Report Slack notification
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "TEST: Daily Cypress accessibility report: <https://automatic-garbanzo-342d36c9.pages.github.io/public/${{ env.UUID }}.html>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
+
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v2
         with:
