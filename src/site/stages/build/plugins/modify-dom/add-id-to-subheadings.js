@@ -37,12 +37,14 @@ function createUniqueId(headingEl, headingOptions) {
 module.exports = {
   modifyFile(fileName, file) {
     let idAdded = false;
+    let hasTOCLinks = false;
 
     if (fileName.endsWith('html')) {
       const { dom } = file;
-      const tableOfContents = dom('#table-of-contents ul');
+      const tableOfContents = dom('#table-of-contents');
+      const tableOfContentsList = dom('#table-of-contents ul');
 
-      if (!tableOfContents) {
+      if (!tableOfContentsList) {
         return;
       }
 
@@ -60,6 +62,8 @@ module.exports = {
         nodes = dom('article h2');
 
         if (nodes.length < 2) {
+          tableOfContents.remove();
+          file.modified = true;
           return;
         }
       } else {
@@ -84,14 +88,14 @@ module.exports = {
         // if it is an h2, add the h2 to the table of contents
         if (
           el.tagName.toLowerCase() === 'h2' &&
-          tableOfContents &&
+          tableOfContentsList &&
           heading.attr('id') &&
           heading.text().toLowerCase() !== 'on this page' &&
           !isInAccordionButton &&
           !isInAccordion &&
           !isInAlert
         ) {
-          tableOfContents.append(
+          tableOfContentsList.append(
             `<li class="vads-u-margin-bottom--2"><a href="#${heading.attr(
               'id',
             )}" onClick="recordEvent({ event: 'nav-jumplink-click', heading: '${heading.attr(
@@ -102,8 +106,15 @@ module.exports = {
               </i>${heading.text()}</a></li>`,
           );
           idAdded = true;
+          hasTOCLinks = true;
         }
       });
+
+      if (tableOfContents && !hasTOCLinks) {
+        tableOfContents.remove();
+        file.modified = true;
+        return;
+      }
 
       if (idAdded) {
         file.modified = true;
