@@ -1086,4 +1086,17 @@ module.exports = function registerFilters() {
         return 'info';
     }
   };
+
+  liquid.filters.deriveLanguageTranslation = (lang = 'en', whichNode, id) => {
+    const languages = {
+      es: {
+        downloadVaForm: `Descargar el formulario VA ${id}`,
+      },
+      en: {
+        downloadVaForm: `Download VA Form ${id}`,
+      },
+    };
+
+    return languages[lang][whichNode];
+  };
 };

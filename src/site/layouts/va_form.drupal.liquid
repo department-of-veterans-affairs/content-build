@@ -95,12 +95,8 @@
               class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
               role="presentation"
             > </i>
-
-          {% if fieldVaFormLanguage === "es" %}
-            Descargar el formulario {{ fieldVaFormNumber }} (PDF)
-          {% else %}
-            Download VA Form {{ fieldVaFormNumber }} (PDF)
-          {% endif %}
+          {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
+          {{ translatedDownloadText }} (PDF) 
         </a>
 
         {% if fieldAlert.length %}
@@ -166,11 +162,8 @@
                       class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
                       role="presentation"
                     > </i>
-                    {% if vaForm.entity.fieldVaFormLanguage === "es" %}
-                      Descargar el formulario {{ vaForm.entity.fieldVaFormNumber }} (PDF)
-                    {% else %}
-                      Download VA Form {{ vaForm.entity.fieldVaFormNumber }} (PDF)
-                    {% endif %}
+                    {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}
+                    {{ translatedDownloadText }} (PDF) 
                 </a>
               </li>
             {% endfor %}
