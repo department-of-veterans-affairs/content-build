@@ -394,7 +394,7 @@ jobs:
           cd ..
           mkdir -p content-build/content-build/public/index.html 
           touch content-build/content-build/public/index.html
-          cp content-build/content-build/public/index.html daily-accessbility-report/public/${{ env.UUID }}.html
+          cp -r content-build/content-build/public/index.html daily-accessbility-report/public/${{ env.UUID }}.html
 
       - name: Add changes
         run: git add .
