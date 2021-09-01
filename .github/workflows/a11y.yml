@@ -395,7 +395,7 @@ jobs:
           mkdir -p content-build/content-build/public/index.html 
           mkdir -p daily-accessibility-report/public
           touch content-build/content-build/public/index.html
-          cp -r content-build/content-build/public/index.html daily-accessbility-report/public/
+          cp -r content-build/content-build/public/index.html daily-accessibility-report/public/
           mv daily-accessibility-report/public/index.html daily-accessibility-report/public/${{ env.UUID }}.html
 
       - name: Add changes
