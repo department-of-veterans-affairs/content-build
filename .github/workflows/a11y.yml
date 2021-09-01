@@ -392,11 +392,9 @@ jobs:
       - name: Move Mochawesome report to Daily Accessibility Report repo
         run: |
           cd ..
-          mkdir -p content-build/content-build/public/index.html 
-          mkdir -p daily-accessibility-report/public
-          touch content-build/content-build/public/index.html
-          cp -r content-build/content-build/public/index.html daily-accessibility-report/public/
-          mv daily-accessibility-report/public/index.html daily-accessibility-report/public/${{ env.UUID }}.html
+          mkdir -p content-build/content-build/public
+          touch content-build/content-build/public/${{ env.UUID }}.html
+          cp -r content-build/content-build/public/${{ env.UUID }}.html daily-accessibility-report/public/
 
       - name: Add changes
         run: git add .
