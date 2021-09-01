@@ -379,13 +379,6 @@ jobs:
       # - name: Generate HTML report
       #   run: yarn run cy:report:generate
 
-      - name: Checkout Daily Accessibility Report repo
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/daily-accessibility-report
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          path: daily-accessibility-report
-
       - name: Generate UUID for Mochawesome report
         run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
 
@@ -394,26 +387,33 @@ jobs:
           cd ..
           mkdir -p content-build/content-build/public
           touch content-build/content-build/public/${{ env.UUID }}.html
-          cp -r content-build/content-build/public/${{ env.UUID }}.html daily-accessibility-report/public/
 
-      - name: Add changes
-        run: git add .
-        working-directory: daily-accessibility-report
-
-      - name: Commit and push changes
-        uses: actions-js/push@master
+      - name: Get AWS IAM role
+        uses: marvinpinto/action-inject-ssm-secrets@latest
         with:
-          github_token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          repository: department-of-veterans-affairs/daily-accessibility-report
-          directory: daily-accessibility-report
-          branch: master
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-      - name: Accessibility Test Report Slack notification
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "TEST: Daily Cypress accessibility report: <https://automatic-garbanzo-342d36c9.pages.github.io/public/${{ env.UUID }}.html>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Upload test report to s3
+        run: aws s3 cp content-build/public s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
+      # --------------------------
+
+      # - name: Accessibility Test Report Slack notification
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "TEST: Daily Cypress accessibility report: <https://automatic-garbanzo-342d36c9.pages.github.io/public/${{ env.UUID }}.html>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
