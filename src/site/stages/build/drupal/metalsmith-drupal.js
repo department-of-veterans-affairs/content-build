@@ -336,4 +336,8 @@ function getDrupalContent(buildOptions) {
   };
 }
 
-module.exports = { getDrupalContent, shouldPullDrupal };
+module.exports = {
+  getDrupalContent,
+  pipeDrupalPagesIntoMetalsmith,
+  shouldPullDrupal,
+};
