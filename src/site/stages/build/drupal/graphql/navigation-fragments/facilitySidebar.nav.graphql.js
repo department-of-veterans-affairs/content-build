@@ -15,7 +15,7 @@ const FACILITY_MENU_NAMES = [
   'va-maine-health-care',
   'va-manchester-health-care',
   'va-providence-health-care',
-  'va-white-river-junction-health-care',
+  'va-white-river-junction-health-c',
   // VISN-2
   'va-albany-health-care',
   'va-bronx-health-care',
@@ -139,15 +139,15 @@ const FACILITY_MENU_NAMES = [
   'va-spokane-health-care',
   'va-walla-walla-health-care',
   // VISN 21
-  'va-central-california-health-care',
-  'va-northern-california-health-care',
+  'va-central-california-health-car',
+  'va-northern-california-health-ca',
   'va-pacific-islands-health-care',
   'va-palo-alto-health-care',
   'va-san-francisco-health-care',
   'va-sierra-nevada-health-care',
   'va-southern-nevada-health-care',
   // VISN 22
-  'va-greater-los-angeles-health-care',
+  'va-greater-los-angeles-health-ca',
   'va-loma-linda-health-care',
   'va-long-beach-health-care',
   'va-new-mexico-health-care',
@@ -161,7 +161,7 @@ const FACILITY_MENU_NAMES = [
   'va-fargo-health-care',
   'va-iowa-city-health-care',
   'va-minneapolis-health-care',
-  'va-nebraska-western-iowa-health-care',
+  'va-nebraska-western-iowa-health-',
   'va-sioux-falls-health-care',
   'va-st-cloud-health-care',
 ];
