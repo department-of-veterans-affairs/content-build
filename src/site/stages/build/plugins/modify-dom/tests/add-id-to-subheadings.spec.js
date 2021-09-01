@@ -46,4 +46,19 @@ describe('addIdToSubheadings', () => {
       },
     );
   });
+
+  it('removes table-of-contents div if there are no H2 links found', done => {
+    testMetalsmithPlugin(
+      {
+        fileName: 'testSubheadingsNoH2.html',
+        fixturesPath:
+          './src/site/stages/build/plugins/modify-dom/tests/fixtures/',
+        plugins: [addSubheadingsIds],
+      },
+      document => {
+        expect(document.querySelector('#table-of-contents')).to.eq(null);
+        done();
+      },
+    );
+  });
 });

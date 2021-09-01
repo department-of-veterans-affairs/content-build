@@ -290,7 +290,7 @@ jobs:
           du -h build/${{ env.BUILDTYPE }}
 
       - name: Compress ${{ env.BUILDTYPE }} build
-        run: tar -jcvf ${{ env.BUILDTYPE }}.tar.bz2 build/${{ env.BUILDTYPE }}
+        run: tar -cvf ${{ env.BUILDTYPE }}.tar.bz2 build/${{ env.BUILDTYPE }}
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
