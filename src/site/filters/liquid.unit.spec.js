@@ -1404,4 +1404,40 @@ describe('formatAlertType', () => {
     expect(liquid.filters.formatAlertType('SUCCESS')).to.equal('success');
     expect(liquid.filters.formatAlertType('success')).to.equal('success');
   });
+
+  describe('it deriveLanguageTranslation', () => {
+    it('returns spanish translation of Download VA Form', () => {
+      expect(
+        liquid.filters.deriveLanguageTranslation(
+          'es',
+          'downloadVaForm',
+          '10-10EZ (esp)',
+        ),
+      ).to.equal('Descargar el formulario VA 10-10EZ (esp)');
+    });
+
+    it('returns english of Download VA Form', () => {
+      expect(
+        liquid.filters.deriveLanguageTranslation(
+          null,
+          'downloadVaForm',
+          '10-10EZ',
+        ),
+      ).to.equal('Download VA Form 10-10EZ');
+      expect(
+        liquid.filters.deriveLanguageTranslation(
+          undefined,
+          'downloadVaForm',
+          '10-10EZ',
+        ),
+      ).to.equal('Download VA Form 10-10EZ');
+      expect(
+        liquid.filters.deriveLanguageTranslation(
+          'en',
+          'downloadVaForm',
+          '10-10EZ',
+        ),
+      ).to.equal('Download VA Form 10-10EZ');
+    });
+  });
 });
