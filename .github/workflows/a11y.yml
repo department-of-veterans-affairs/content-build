@@ -382,9 +382,9 @@ jobs:
       - name: Checkout Daily Accessibility Report repo
         uses: actions/checkout@v2
         with:
-          repository: department-of-veterans-affairs/daily-accessibiliy-report
+          repository: department-of-veterans-affairs/daily-accessibility-report
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          path: daily-accessibiliy-report
+          path: daily-accessibility-report
 
       - name: Generate UUID for Mochawesome report
         run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
