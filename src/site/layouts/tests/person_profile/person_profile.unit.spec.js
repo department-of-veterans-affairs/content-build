@@ -7,6 +7,36 @@ const data = parseFixture(
 );
 
 describe('person-profile', () => {
+  describe('has fieldMedia', () => {
+    it('displays person profile detail page thumbnail image', async () => {
+      const container = await renderHTML(
+        layoutPath,
+        data.trueFieldPhotoAllowHiresDownloadAndHasImageUrl,
+        'trueFieldPhotoAllowHiresDownloadAndHasImageUrl',
+      );
+
+      expect(
+        container.querySelector('.person-profile-detail-page-image').src,
+      ).to.equal(
+        data.trueFieldPhotoAllowHiresDownloadAndHasImageUrl.fieldMedia.thumbnail
+          .image.derivative.url,
+      );
+    });
+  });
+
+  describe('has no fieldMedia', () => {
+    it('does not display person profile detail page thumbnail image', async () => {
+      const container = await renderHTML(
+        layoutPath,
+        data.falseFieldPhotoAllowHiresDownloadAndNoFieldMedia,
+        'falseFieldPhotoAllowHiresDownloadAndNoFieldMedia',
+      );
+
+      expect(container.querySelector('.person-profile-detail-page-image')).to
+        .not.exist;
+    });
+  });
+
   describe('fieldPhotoAllowHiresDownload equals true and has image url', () => {
     it('displays download-full-size-photo-link', async () => {
       const container = await renderHTML(
