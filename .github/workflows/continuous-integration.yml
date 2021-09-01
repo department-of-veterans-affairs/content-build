@@ -173,6 +173,7 @@ jobs:
       - name: Change registry in yarn.lock
         run: |
           sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
+          sed -i -e "s#https://github.com/#platform-npm-4988449-4988452-4988453-4988454-release#g" yarn.lock
 
       - name: Authenticate NEXUS
         run: |
@@ -183,7 +184,7 @@ jobs:
           npm config set always-auth true
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1 --verbose
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
@@ -192,7 +193,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy
         env:
           NODE_ENV: production
 
@@ -592,7 +593,6 @@ jobs:
       - name: Change registry in yarn.lock
         run: |
           sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://registry.npmjs.org/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
           sed -i -e "s#https://github.com/#platform-npm-4988449-4988452-4988453-4988454-release#g" yarn.lock
 
       - name: Authenticate NEXUS
