@@ -3,14 +3,14 @@ import { pipeDrupalPagesIntoMetalsmith } from '../metalsmith-drupal';
 import {
   personProfileWithoutBio,
   personProfileWithBio,
-} from './fixtures/metalsmith-drupdal.fixture';
+} from './fixtures/metalsmith-drupal.fixture';
 
-describe('addIdToSubheadings', () => {
+describe('person profile pages', () => {
   it('should not create a page for a person_profile without a bio', () => {
     const files = {};
     pipeDrupalPagesIntoMetalsmith(personProfileWithoutBio, files);
 
-    expect(files['profile-sans-bio/index.html']).to.equal(undefined);
+    expect(files['profile-sans-bio/index.html']).to.be.undefined;
   });
 
   it('should create a page for a person_profile with a bio', () => {
