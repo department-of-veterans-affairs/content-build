@@ -404,8 +404,8 @@ jobs:
         uses: actions-js/push@master
         with:
           github_token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          repository: department-of-veterans-affairs/daily-accessbility-report
-          directory: daily-accessbility-report
+          repository: department-of-veterans-affairs/daily-accessibility-report
+          directory: daily-accessibility-report
           branch: master
 
       - name: Accessibility Test Report Slack notification
