@@ -1426,6 +1426,13 @@ describe('formatAlertType', () => {
       ).to.equal('Download VA Form 10-10EZ');
       expect(
         liquid.filters.deriveLanguageTranslation(
+          undefined,
+          'downloadVaForm',
+          '10-10EZ',
+        ),
+      ).to.equal('Download VA Form 10-10EZ');
+      expect(
+        liquid.filters.deriveLanguageTranslation(
           'en',
           'downloadVaForm',
           '10-10EZ',

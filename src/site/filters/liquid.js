@@ -1088,8 +1088,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.deriveLanguageTranslation = (lang, whichNode, id) => {
-    // eslint-disable-next-line no-param-reassign
-    if (!lang) lang = 'en';
+    const language = lang || 'en';
 
     const languages = {
       es: {
@@ -1100,6 +1099,6 @@ module.exports = function registerFilters() {
       },
     };
 
-    return languages[lang][whichNode];
+    return languages[language][whichNode];
   };
 };
