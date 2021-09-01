@@ -85,7 +85,7 @@
 
                     {% if fieldPhotoAllowHiresDownload and fieldMedia %}
                     <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2" id="download-full-size-photo-link">
-                        <i class="va-c-social-icon fas fa-download"></i> <a href="{{ fieldMedia.hiRes.image.derivative.url }}"
+                        <i class="va-c-social-icon fas fa-download" aria-hidden="true"></i> <a href="{{ fieldMedia.hiRes.image.derivative.url }}"
                             download>Download full size photo</a>
                     </div>
                     {% endif %}
