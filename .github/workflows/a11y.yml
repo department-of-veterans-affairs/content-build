@@ -194,7 +194,7 @@ jobs:
           retention-days: 1
 
   slack:
-    name: Notify Slack
+    name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
     needs: a11y
     if: ${{ always() }}
@@ -381,12 +381,6 @@ jobs:
 
       - name: Generate UUID for Mochawesome report
         run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
-
-      - name: Move Mochawesome report to Daily Accessibility Report repo
-        run: |
-          cd ..
-          mkdir -p content-build/content-build/public
-          touch content-build/content-build/public/${{ env.UUID }}.html
 
       - name: Get AWS IAM role
         uses: marvinpinto/action-inject-ssm-secrets@latest
