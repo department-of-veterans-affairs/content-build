@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 // Node modules.
 const _ = require('lodash');
 const converter = require('number-to-words');
@@ -1089,6 +1088,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.deriveLanguageTranslation = (lang, whichNode, id) => {
+    // eslint-disable-next-line no-param-reassign
     if (!lang) lang = 'en';
 
     const languages = {
