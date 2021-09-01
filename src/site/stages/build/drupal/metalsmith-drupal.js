@@ -54,6 +54,11 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
     } = page;
 
     const pageCompiled = compilePage(page, contentData);
+
+    if (page.entityBundle === 'person_profile' && !pageCompiled) {
+      continue;
+    }
+
     const drupalPageDir = path.join('.', drupalUrl);
     const drupalFileName = path.join(drupalPageDir, 'index.html');
 
