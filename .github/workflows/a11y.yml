@@ -400,7 +400,7 @@ jobs:
 
       - name: Add changes
         run: git add .
-        working-directory: daily-accessbility-report
+        working-directory: daily-accessibility-report
 
       - name: Commit and push changes
         uses: actions-js/push@master
