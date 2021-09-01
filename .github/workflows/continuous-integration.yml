@@ -593,6 +593,7 @@ jobs:
         run: |
           sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
           sed -i -e "s#https://registry.npmjs.org/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
+          sed -i -e "s#https://github.com/#platform-npm-4988449-4988452-4988453-4988454-release#g" yarn.lock
 
       - name: Authenticate NEXUS
         run: |
