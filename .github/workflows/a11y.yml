@@ -196,7 +196,7 @@ jobs:
   slack:
     name: Notify Slack
     runs-on: ubuntu-latest
-    needs: a11y
+    # needs: a11y
     if: ${{ always() }}
 
     env:
@@ -212,172 +212,172 @@ jobs:
         with:
           path: content-build
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-gov-west-1'
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: 'us-gov-west-1'
 
-      - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+      # - name: Get va-vsp-bot token
+      #   uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+      #   with:
+      #     ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+      #     env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
+      # - name: Checkout VSP actions
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: department-of-veterans-affairs/vsp-github-actions
+      #     ref: refs/heads/main
+      #     token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+      #     persist-credentials: false
+      #     path: ./.github/actions/vsp-github-actions
 
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
+      # - name: Get Slack app token
+      #   uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+      #   with:
+      #     ssm_parameter: /devops/github_actions_slack_socket_token
+      #     env_variable_name: SLACK_APP_TOKEN
 
-      - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
+      # - name: Get Slack bot token
+      #   uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+      #   with:
+      #     ssm_parameter: /devops/github_actions_slack_bot_user_token
+      #     env_variable_name: SLACK_BOT_TOKEN
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 5
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
+      # - name: Install dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+      #     max_attempts: 3
+      #     timeout_minutes: 5
+      #   env:
+      #     YARN_CACHE_FOLDER: .cache/yarn
 
-      - name: Accessibility Test Failure
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ needs.a11y.result == 'failure' }}
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "[report-only] Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Failure
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   if: ${{ needs.a11y.result == 'failure' }}
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "[report-only] Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
 
-      - name: Accessibility Test Success
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        if: ${{ needs.a11y.result == 'success' }}
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Success
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   if: ${{ needs.a11y.result == 'success' }}
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-1
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-1
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-2
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-2
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-3
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-3
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-4
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-4
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-5
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-5
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-6
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-6
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-7
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-7
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-8
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-8
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-9
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-9
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-10
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-10
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-11
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-11
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-12
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-12
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-13
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-13
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-14
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-14
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-15
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-15
+      #     path: content-build/cypress/results/json
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-16
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results-16
+      #     path: content-build/cypress/results/json
 
-      - name: Merge test results into one file
-        run: yarn run cy:report:merge
+      # - name: Merge test results into one file
+      #   run: yarn run cy:report:merge
 
-      - name: Generate HTML report
-        run: yarn run cy:report:generate
+      # - name: Generate HTML report
+      #   run: yarn run cy:report:generate
 
       - name: Checkout Daily Accessibility Report repo
         uses: actions/checkout@v2
@@ -392,7 +392,9 @@ jobs:
       - name: Move Mochawesome report to Daily Accessibility Report repo
         run: |
           cd ..
-          mv content-build/content-build/public/index.html daily-accessbility-report/public/${{ env.UUID }}.html
+          mkdir -p content-build/content-build/public/index.html 
+          touch content-build/content-build/public/index.html
+          cp content-build/content-build/public/index.html daily-accessbility-report/public/${{ env.UUID }}.html
 
       - name: Add changes
         run: git add .
