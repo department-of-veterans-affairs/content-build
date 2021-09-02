@@ -30,6 +30,7 @@ src/platform/utilities/medical-centers @department-of-veterans-affairs/vsa-authd
 
 # Shared templates
 src/site/includes @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-caregiver-frontend
+src/site/components @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-caregiver-frontend
 
 # Public Websites
 src/platform/site-wide @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/frontend-review-group
