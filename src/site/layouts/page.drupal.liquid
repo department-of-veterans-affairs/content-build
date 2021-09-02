@@ -35,12 +35,12 @@
             {% endif %}
           {% endif %}
 
-          {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %}
-            <nav id="table-of-contents" aria-labelledby="on-this-page">
-              <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-              <ul class="usa-unstyled-list" role="list"></ul>
-            </nav>
-          {% endif %}
+          {% comment %} {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %} {% endcomment %}
+          {% comment %}   <nav id="table-of-contents" aria-labelledby="on-this-page"> {% endcomment %}
+          {% comment %}     <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2> {% endcomment %}
+          {% comment %}     <ul class="usa-unstyled-list" role="list"></ul> {% endcomment %}
+          {% comment %}   </nav> {% endcomment %}
+          {% comment %} {% endif %} {% endcomment %}
 
           {% assign featureCount = fieldFeaturedContent | size  %}
           {% if featureCount > 0 %}
