@@ -171,7 +171,7 @@
     "husky": ">=6",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.2.1",
-    "libxmljs2": "^0.26.5",
+    "libxmljs2": "^0.28.0",
     "lint-staged": ">=10",
     "metalsmith-assets": "^0.1.0",
     "metalsmith-date-in-filename": "^0.0.14",
