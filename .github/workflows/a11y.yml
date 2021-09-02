@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 10 * * 1-5'
+on: [push]
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 10 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -189,7 +189,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
-          name: cypress-mochawesome-test-results-${{ matrix.ci_node_index }}
+          name: cypress-mochawesome-test-results
           path: content-build/mochawesome-report
           retention-days: 1
 
@@ -280,97 +280,7 @@ jobs:
       - name: Download Mochawesome test results
         uses: actions/download-artifact@v2
         with:
-          name: cypress-mochawesome-test-results-1
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-2
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-3
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-4
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-5
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-6
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-7
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-8
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-9
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-10
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-11
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-12
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-13
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-14
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-15
-          path: content-build/cypress/results/json
-
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results-16
+          name: cypress-mochawesome-test-results
           path: content-build/cypress/results/json
 
       - name: Merge test results into one file
