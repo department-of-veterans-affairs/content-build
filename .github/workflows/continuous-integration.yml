@@ -36,7 +36,7 @@ jobs:
       - name: Create test results folder
         run: mkdir -p test-results
 
-      - name: Run unit tests
+      - name: Run unit tests 
         run: yarn test:unit --coverage
         env:
           MOCHA_FILE: test-results/unit-tests.xml
