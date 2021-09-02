@@ -263,7 +263,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "@here Testing notifications, please ignore."}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Testing notifications, please ignore."}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       # - name: Accessibility Test Success
