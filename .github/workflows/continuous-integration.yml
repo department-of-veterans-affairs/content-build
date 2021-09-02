@@ -103,7 +103,7 @@ jobs:
         working-directory: content-build
 
     env:
-      # Sandbox Drupal address is used on branches other than master.
+      # Sandbox Drupal address is used on branches other than master. 
       DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
