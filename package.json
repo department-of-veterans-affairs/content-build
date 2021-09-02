@@ -22,6 +22,7 @@
     "lint:js:fix": "eslint --fix --quiet --ext .js --ext .jsx .",
     "lint:js:changed": "LIST=`git diff-index --diff-filter=d --name-only --cached HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --quiet --config changed.eslintrc.js $LIST; fi",
     "lint:js:changed:fix": "LIST=`git diff-index --name-only HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --fix --quiet $LIST; fi",
+    "list-heading-order-violations": "cd build/localhost && node ../../script/heading-order-violations.js --dir . > ../../heading_order_violations.txt",
     "nightwatch:docker": "nightwatch -c config/nightwatch.docker-compose.js --suiteRetries 1",
     "nightwatch": "nightwatch -c config/nightwatch.js",
     "nightwatch-sauce": "nightwatch -c config/nightwatch-sauce.js",
