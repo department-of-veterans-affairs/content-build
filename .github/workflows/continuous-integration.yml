@@ -418,7 +418,7 @@ jobs:
         - /usr/local/share:/share
         - /tmp/{id}:/build
         - /tmp/${{ github.run_id }}/test-build/vagovprod
-        - /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
+        - /etc/ssl/certs
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
@@ -434,12 +434,13 @@ jobs:
           cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
           du -h build/vagovprod
 
+        # Required for Docker
+      - name: Move VA cert to /etc/ssl/certs
+        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
+
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: ls 
-        run: ls
 
       - name: Setup Node
         uses: actions/setup-node@v2
