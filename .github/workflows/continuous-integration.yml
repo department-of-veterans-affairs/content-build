@@ -425,12 +425,6 @@ jobs:
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
-      - name: ls
-        run: ls
-
-      - name: ls /
-        run: ls /etc
-
       - name: Checkout content-build
         uses: actions/checkout@v2
 
@@ -439,6 +433,15 @@ jobs:
       #     mkdir -p build
       #     cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
       #     du -h build/vagovprod
+
+      - name: ls
+        run: ls
+
+      - name: ls /
+        run: ls /etc/ssl
+
+      - name: move
+        run: cp certs/VA-Internal-S2-RCA1-v1.cer.pem /etc/ssl/certs/
 
       - name: Get Node version
         id: get-node-version
