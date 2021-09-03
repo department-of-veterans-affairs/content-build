@@ -423,7 +423,7 @@ jobs:
         - /etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: certs/VA-Internal-S2-RCA1-v1.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
@@ -436,6 +436,10 @@ jobs:
       #     cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
       #     du -h build/vagovprod
 
+        # Required for Docker
+      - name: Move VA cert to /etc/ssl/certs
+        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
+
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -445,10 +449,6 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: List files
-        run: |
-          ls
-
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
@@ -457,9 +457,6 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Set CA File
-        run: npm config set cafile certs/VA-Internal-S2-RCA1-v1.pem
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --production=false
