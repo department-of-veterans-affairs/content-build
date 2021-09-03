@@ -416,7 +416,6 @@ jobs:
       options: -u 0
       volumes:
         - /usr/local/share:/share
-        - /tmp/{id}:/build
         - /tmp/${{ github.run_id }}/test-build/vagovprod
         - /etc/ssl/certs
 
