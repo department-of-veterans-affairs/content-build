@@ -433,12 +433,6 @@ jobs:
       #     mkdir -p build
       #     cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
       #     du -h build/vagovprod
-      - name: List files
-        run: |
-          pwd
-          ls
-          ls certs
-          ls /
 
       - name: Get Node version
         id: get-node-version
@@ -457,9 +451,6 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Set CA File
-        run: npm config set cafile /certs/VA-Internal-S2-RCA1-v1.pem
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --production=false
