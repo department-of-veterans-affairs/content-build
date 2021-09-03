@@ -409,7 +409,7 @@ jobs:
   cypress-tests:
     name: Cypress E2E Tests
     runs-on: ${{ needs.start-runner.outputs.vagovprod }}
-    needs: [start-runner, build]
+    needs: [start-runner]
     timeout-minutes: 30
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
@@ -427,11 +427,11 @@ jobs:
       - name: Checkout content-build
         uses: actions/checkout@v2
 
-      - name: Restore vagovprod build
-        run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
-          du -h build/vagovprod
+      # - name: Restore vagovprod build
+      #   run: |
+      #     mkdir -p build
+      #     cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+      #     du -h build/vagovprod
 
       - name: Get Node version
         id: get-node-version
