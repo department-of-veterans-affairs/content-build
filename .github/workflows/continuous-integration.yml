@@ -426,12 +426,10 @@ jobs:
 
     steps:
       - name: ls
-        run: |
-          pwd
-          ls
+        run: ls
 
       - name: ls /
-        run: ls /
+        run: ls /etc
 
       - name: Checkout content-build
         uses: actions/checkout@v2
