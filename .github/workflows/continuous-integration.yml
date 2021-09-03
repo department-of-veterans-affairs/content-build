@@ -423,7 +423,7 @@ jobs:
         - /etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: certs/VA-Internal-S2-RCA1-v1.pem
+      NODE_EXTRA_CA_CERTS: /certs/VA-Internal-S2-RCA1-v1.pem
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
