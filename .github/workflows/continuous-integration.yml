@@ -94,7 +94,7 @@ jobs:
 
   build:
     name: Build
-    needs: [start-runner, cypress-tests]
+    needs: start-runner
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
     timeout-minutes: 60
 
@@ -409,7 +409,7 @@ jobs:
   cypress-tests:
     name: Cypress E2E Tests
     runs-on: ${{ needs.start-runner.outputs.vagovprod }}
-    needs: [start-runner]
+    needs: [start-runner, build]
     timeout-minutes: 30
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
