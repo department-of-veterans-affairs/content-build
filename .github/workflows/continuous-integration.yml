@@ -423,7 +423,7 @@ jobs:
         - /etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: /certs/VA-Internal-S2-RCA1-v1.pem
+      NODE_EXTRA_CA_CERTS: certs/VA-Internal-S2-RCA1-v1.pem
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
@@ -457,6 +457,9 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Set CA File
+        run: npm config set cafile certs/VA-Internal-S2-RCA1-v1.pem
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --production=false
