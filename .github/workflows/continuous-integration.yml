@@ -420,7 +420,7 @@ jobs:
         - /tmp/${{ github.run_id }}/test-build/vagovprod
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout content-build
