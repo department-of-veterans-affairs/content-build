@@ -444,6 +444,7 @@ jobs:
 
       - name: List files
         run: |
+          cd certs
           ls
 
       - name: Cache dependencies
