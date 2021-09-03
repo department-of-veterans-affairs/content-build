@@ -426,7 +426,9 @@ jobs:
 
     steps:
       - name: move
-        run: cp certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs
+        run: |
+          ls
+          cp certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs
 
       - name: Checkout content-build
         uses: actions/checkout@v2
