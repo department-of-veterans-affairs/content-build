@@ -425,10 +425,13 @@ jobs:
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
-      - name: move
+      - name: ls
         run: |
+          pwd
           ls
-          cp certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs
+
+      - name: ls /
+        run: ls /
 
       - name: Checkout content-build
         uses: actions/checkout@v2
