@@ -435,7 +435,7 @@ jobs:
       #     du -h build/vagovprod
 
       - name: ls
-        run: ls
+        run: ls certs
 
       - name: ls /
         run: ls /etc/ssl
