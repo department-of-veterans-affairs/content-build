@@ -94,7 +94,7 @@ jobs:
 
   build:
     name: Build
-    needs: start-runner
+    needs: [start-runner, cypress-tests]
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
     timeout-minutes: 60
 
