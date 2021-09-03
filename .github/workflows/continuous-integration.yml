@@ -425,6 +425,9 @@ jobs:
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
+      - name: move
+        run: cp certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs
+
       - name: Checkout content-build
         uses: actions/checkout@v2
 
@@ -451,9 +454,6 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-
-      - name: move
-        run: cp certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --production=false
