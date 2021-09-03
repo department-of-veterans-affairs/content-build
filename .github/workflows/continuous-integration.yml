@@ -421,7 +421,7 @@ jobs:
         - /etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: /certs/VA-Internal-S2-RCA1-v1.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout content-build
@@ -432,6 +432,12 @@ jobs:
       #     mkdir -p build
       #     cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
       #     du -h build/vagovprod
+      - name: List files
+        run: |
+          pwd
+          ls
+          ls certs
+          ls /
 
       - name: Get Node version
         id: get-node-version
@@ -441,11 +447,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: List files
-        run: |
-          cd certs
-          ls
 
       - name: Cache dependencies
         id: cache-dependencies
