@@ -438,10 +438,10 @@ jobs:
         run: ls certs
 
       - name: ls /
-        run: ls /etc/ssl
+        run: ls /etc/ssl/certs
 
       - name: move
-        run: cp certs/VA-Internal-S2-RCA1-v1.cer.pem /etc/ssl/certs/
+        run: cp certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
       - name: Get Node version
         id: get-node-version
