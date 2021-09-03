@@ -433,7 +433,6 @@ jobs:
           mkdir -p build
           cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
           du -h build/vagovprod
-          cp certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
       - name: Get Node version
         id: get-node-version
