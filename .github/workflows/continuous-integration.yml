@@ -431,6 +431,7 @@ jobs:
         run: |
           mkdir -p build
           cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+          ls build
           du -h build/vagovprod
 
         # Required for Docker
