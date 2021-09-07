@@ -697,8 +697,18 @@ module.exports = function registerFilters() {
     return string.replace(regex, newVal);
   };
 
-  liquid.filters.filterBy = (data, filterBy, valueFilter) => {
+  liquid.filters.filterBy = (
+    data,
+    filterBy,
+    valueFilter,
+    includeNull = false,
+  ) => {
     if (!data) return null;
+    if (includeNull) {
+      return data.filter(
+        e => _.get(e, filterBy) === valueFilter || _.get(e, filterBy) === null,
+      );
+    }
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 

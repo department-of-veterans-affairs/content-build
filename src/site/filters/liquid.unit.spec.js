@@ -989,6 +989,7 @@ describe('filterBy', () => {
     { class: { abstract: { number: 4 } } },
     { class: { abstract: { number: 1 } } },
     { class: { abstract: { number: 1 } } },
+    { class: { abstract: { number: null } } },
   ];
 
   it('returns all objects matching the given path and value', () => {
@@ -1004,6 +1005,16 @@ describe('filterBy', () => {
     expect(
       liquid.filters.filterBy(testData, 'class.abstract.number', 2),
     ).to.deep.equal([]);
+  });
+
+  it('includes entries where target is null if includeNull is true', () => {
+    const expected = [
+      { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: null } } },
+    ];
+    expect(
+      liquid.filters.filterBy(testData, 'class.abstract.number', 3, true),
+    ).to.deep.equal(expected);
   });
 
   it('returns null for null', () => {
