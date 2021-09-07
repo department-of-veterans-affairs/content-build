@@ -427,6 +427,10 @@ jobs:
       - name: Checkout content-build
         uses: actions/checkout@v2
 
+      - name: Log
+        run: |
+          ls tmp/${{github.run_id}}/test-build
+
       - name: Restore vagovprod build
         run: |
           mkdir -p build
