@@ -190,8 +190,8 @@ jobs:
           rm -rf /tmp/${{ github.run_id }}/test-build/vagovprod
           cp -R build/vagovprod /tmp/${{ github.run_id }}/test-build
 
-      - name: Prearchive
-        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+      # - name: Prearchive
+      #   run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Persist prearchived build
         run: |
