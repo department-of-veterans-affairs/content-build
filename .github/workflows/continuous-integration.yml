@@ -422,7 +422,7 @@ jobs:
       options: -u 0
       volumes:
         - /usr/local/share:/share
-        - /tmp/${{ github.run_id }}/test-build/vagovprod
+        - /tmp/${{ github.run_id }}/test-build/vagovprod:/tmp
         - /etc/ssl/certs
 
     env:
@@ -436,6 +436,9 @@ jobs:
       - name: Log
         run: |
           ls
+
+      - name: new /tmp
+        run: ls /tmp
 
       - name: /tmp  
         run: ls /tmp/${{ github.run_id }}/test-build/vagovprod
