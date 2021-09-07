@@ -429,7 +429,7 @@ jobs:
 
       - name: Log
         run: |
-          ls tmp/${{github.run_id}}/test-build
+          ls
 
       - name: Restore vagovprod build
         run: |
