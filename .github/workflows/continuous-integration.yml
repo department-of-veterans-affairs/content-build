@@ -170,7 +170,7 @@ jobs:
 
       - name: Hardcode
         run: |
-          mkdir -p build/${{ matrix.buildtype }}
+          mkdir -p build/${{ matrix.buildtype }} 
 
 
       - name: Generate build details
