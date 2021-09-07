@@ -422,7 +422,7 @@ jobs:
       options: -u 0
       volumes:
         - /usr/local/share:/share
-        - /tmp/${{ github.run_id }}/test-build/vagovprod/BUILD.txt
+        - /tmp/${{ github.run_id }}/test-build/vagovprod
         - /etc/ssl/certs
 
     env:
