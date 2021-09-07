@@ -434,6 +434,10 @@ jobs:
           ls build
           du -h build/vagovprod
 
+      - name: Log
+        run: |
+          ls
+
         # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
