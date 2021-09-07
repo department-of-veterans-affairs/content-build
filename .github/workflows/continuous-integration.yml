@@ -436,7 +436,7 @@ jobs:
         run: |
           ls
 
-      - name: /tmp 
+      - name: /tmp  
         run: ls /tmp/${{ github.run_id }}
 
       # - name: Restore vagovprod build
