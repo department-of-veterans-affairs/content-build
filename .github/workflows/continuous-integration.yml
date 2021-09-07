@@ -436,7 +436,7 @@ jobs:
 
       - name: Log
         run: |
-          ls
+          ls build/vagovprod
 
         # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
