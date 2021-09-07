@@ -189,7 +189,7 @@ jobs:
           mkdir -p /tmp/${{ github.run_id }}/test-build
           rm -rf /tmp/${{ github.run_id }}/test-build/vagovprod
           cp -R build/vagovprod /tmp/${{ github.run_id }}/test-build
-          ls /tmp/${{ github.run_id }}/test-build
+          ls /tmp/${{ github.run_id }}/test-build/vagovprod
 
       # - name: Prearchive
       #   run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
@@ -422,7 +422,7 @@ jobs:
       options: -u 0
       volumes:
         - /usr/local/share:/share
-        - /tmp/${{ github.run_id }}/test-build
+        - /tmp/${{ github.run_id }}/test-build/vagovprod
         - /etc/ssl/certs
 
     env:
