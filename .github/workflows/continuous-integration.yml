@@ -450,7 +450,7 @@ jobs:
         run: |
           ls build/vagovprod
 
-      - name: /tmp
+      - name: /tmp 
         run: ls /tmp
 
         # Required for Docker
