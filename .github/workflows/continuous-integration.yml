@@ -422,7 +422,7 @@ jobs:
       options: -u 0
       volumes:
         - /usr/local/share:/share
-        - /tmp/${{ github.run_id }}/test-build/vagovprod
+        - /tmp/${{ github.run_id }}/test-build/vagovprod/BUILD.txt
         - /etc/ssl/certs
 
     env:
@@ -439,6 +439,9 @@ jobs:
 
       - name: /tmp  
         run: ls /tmp/${{ github.run_id }}/test-build/vagovprod
+
+      - name: cat
+        run: cat /tmp/${{ github.run_id }}/test-build/vagovprod/BUILD.txt
 
       - name: Restore vagovprod build
         run: |
