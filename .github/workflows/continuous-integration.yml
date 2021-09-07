@@ -431,6 +431,9 @@ jobs:
         run: |
           ls
 
+      - name: Log build
+        run: ls build
+
       # - name: Restore vagovprod build
       #   run: |
       #     mkdir -p build
