@@ -446,9 +446,9 @@ jobs:
       #     ls build
       #     du -h build/vagovprod
 
-      - name: Log
-        run: |
-          ls build/vagovprod
+      # - name: Log
+      #   run: |
+      #     ls build/vagovprod
 
       - name: /tmp
         run: ls /tmp
