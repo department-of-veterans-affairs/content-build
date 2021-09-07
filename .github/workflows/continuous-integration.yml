@@ -416,7 +416,7 @@ jobs:
       options: -u 0
       volumes:
         - /usr/local/share:/share
-        - tmp/${{ github.run_id }}/test-build/vagovprod
+        - /tmp/${{ github.run_id }}/test-build/vagovprod:/build
         - /etc/ssl/certs
 
     env:
@@ -431,16 +431,19 @@ jobs:
         run: |
           ls
 
-      - name: Restore vagovprod build
-        run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
-          ls build
-          du -h build/vagovprod
+      # - name: Restore vagovprod build
+      #   run: |
+      #     mkdir -p build
+      #     cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+      #     ls build
+      #     du -h build/vagovprod
 
       - name: Log
         run: |
           ls build/vagovprod
+
+      - name: /tmp
+        run: ls /tmp
 
         # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
