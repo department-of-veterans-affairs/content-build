@@ -168,9 +168,9 @@ jobs:
         if: ${{ matrix.buildtype == 'vagovprod' }}
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
-      - name: Hardcode
-        run: |
-          mkdir -p build/${{ matrix.buildtype }} 
+      # - name: Hardcode
+      #   run: |
+      #     mkdir -p build/${{ matrix.buildtype }} 
 
 
       - name: Generate build details
