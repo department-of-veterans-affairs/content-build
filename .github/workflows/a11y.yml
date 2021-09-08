@@ -180,10 +180,21 @@ jobs:
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress E2E Tests
-        run: CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.a11y.spec.js"
+        run: CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.a11y.spec.js"
+
+      - name: Rename Mochawesome JSON file
+        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json 
+
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: cypress-mochawesome-test-results
+          path: content-build/mochawesome-report
+          retention-days: 1
 
   slack:
-    name: Notify Slack
+    name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
     needs: a11y
     if: ${{ always() }}
@@ -191,7 +202,16 @@ jobs:
     env:
       CHANNEL_ID: C01RAS1KAQK
 
+    defaults:
+      run:
+        working-directory: content-build
+
     steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -226,6 +246,15 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 5
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+
       - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
         if: ${{ needs.a11y.result == 'failure' }}
@@ -234,7 +263,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "[report-only] Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
@@ -246,4 +275,52 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
+
+      - name: Download Mochawesome test results
+        uses: actions/download-artifact@v2
+        with:
+          name: cypress-mochawesome-test-results
+          path: content-build/cypress/results/json
+
+      - name: Merge test results into one file
+        run: yarn run cy:report:merge
+
+      - name: Generate HTML report
+        run: yarn run cy:report:generate
+
+      - name: Generate UUID for Mochawesome report
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
+
+      - name: Rename Mochawesome report file
+        run: |
+          cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
+
+      - name: Get AWS IAM role
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Upload test report to s3
+        run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
+
+      - name: Accessibility Test Report Slack notification
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}

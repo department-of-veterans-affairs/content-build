@@ -16,6 +16,8 @@ const processAxeCheckResults = violations => {
       id,
       impact,
       description,
+      target: nodes[0].target,
+      html: nodes[0].html,
       nodes: nodes.length,
     }),
   );
