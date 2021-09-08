@@ -134,7 +134,6 @@ Disallow: /dublin-health-care/
 Disallow: /eastern-colorado-health-care/
 Disallow: /eastern-kansas-health-care/
 Disallow: /el-paso-health-care/
-Disallow: /erie-health-care/
 Disallow: /fayetteville-arkansas-health-care/
 Disallow: /fayetteville-coastal-health-care/
 Disallow: /greater-los-angeles-health-care/
