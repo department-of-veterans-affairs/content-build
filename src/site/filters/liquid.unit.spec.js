@@ -1452,3 +1452,23 @@ describe('formatAlertType', () => {
     });
   });
 });
+
+describe('getValueFromObjPath', () => {
+  it('returns object item at path', () => {
+    const testData = { class: { abstract: { number: 1 } } };
+    expect(
+      liquid.filters.getValueFromObjPath(testData, 'class.abstract.number'),
+    ).to.eq(1);
+  });
+
+  it('returns array of items at path', () => {
+    const testData = [
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: 2 } } },
+      { class: { abstract: { number: 3 } } },
+    ];
+    expect(
+      liquid.filters.getValueFromObjPath(testData, 'class.abstract.number'),
+    ).to.deep.equal([1, 2, 3]);
+  });
+});

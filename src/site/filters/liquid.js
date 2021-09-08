@@ -563,7 +563,13 @@ module.exports = function registerFilters() {
 
   // get a value from a path of an object
   // works for arrays as well
-  liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
+  liquid.filters.getValueFromObjPath = (obj, path) => {
+    if (Array.isArray(obj)) {
+      return obj.map(e => _.get(e, path));
+    } else {
+      return _.get(obj, path);
+    }
+  };
 
   // get a value from a path of an object in an array
   liquid.filters.getValueFromArrayObjPath = (entities, index, path) =>
