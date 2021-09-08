@@ -98,6 +98,9 @@ Disallow: /covid19screen
 Disallow: /health-care/health-questionnaires/questionnaires/
 
 # disallow WIP VAMCs
+# make sure to add a trailing slash at the end of the path
+# to prevent sub-directories from being indexed
+# see https://developers.google.com/search/docs/advanced/robots/create-robots-txt#useful-robots.txt-rules
 Disallow: /alaska-health-care/
 Disallow: /alexandria-health-care/
 Disallow: /amarillo-health-care/
