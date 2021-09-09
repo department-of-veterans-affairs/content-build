@@ -150,7 +150,7 @@ jobs:
         run: pwd
 
       - name: hash string
-        run: echo ${{ hashFiles('./yarn.lock') }}
+        run: echo ${{ hashFiles('**/yarn.lock') }}
 
       - name: cat yarn.lock
         run: cat yarn.lock
@@ -162,7 +162,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: ls
