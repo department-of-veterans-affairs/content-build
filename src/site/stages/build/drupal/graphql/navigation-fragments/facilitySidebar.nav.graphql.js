@@ -10,7 +10,7 @@ const FACILITY_MENU_NAMES = [
   // VISN 1
   'va-bedford-health-care',
   'va-boston-health-care',
-  'va-central-western-massachusetts-health-care',
+  'va-central-western-massachusetts',
   'va-connecticut-health-care',
   'va-maine-health-care',
   'va-manchester-health-care',
