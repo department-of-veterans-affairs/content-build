@@ -144,7 +144,6 @@ jobs:
         run: ls -la
 
       - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
         run: yarn cache dir
 
       - name: Cache dependencies
@@ -161,7 +160,6 @@ jobs:
         run: ls -la
 
       - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
         run: yarn cache dir
 
       - name: Install dependencies
