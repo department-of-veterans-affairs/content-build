@@ -1262,16 +1262,33 @@ describe('concat', () => {
   });
 });
 
-describe('getValuesForKey', () => {
-  it('returns an array of values for the given key', () => {
+describe('getValuesForPath', () => {
+  it('returns an array of values for single-part path', () => {
     const array = [{ foo: 'bar' }, { foo: 'baz' }];
     const result = ['bar', 'baz'];
 
-    expect(liquid.filters.getValuesForKey(array, 'foo')).to.deep.equal(result);
+    expect(liquid.filters.getValuesForPath(array, 'foo')).to.deep.equal(result);
+  });
+
+  it('returns an array of values for multi-part path', () => {
+    const array = [
+      { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: 5 } } },
+      { class: { abstract: { number: 4 } } },
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: null } } },
+    ];
+
+    const result = [3, 5, 4, 1, 1, null];
+
+    expect(
+      liquid.filters.getValuesForPath(array, 'class.abstract.number'),
+    ).to.deep.equal(result);
   });
 
   it('returns null if array is null', () => {
-    expect(liquid.filters.getValuesForKey(null, 'foo')).to.be.null;
+    expect(liquid.filters.getValuesForPath(null, 'foo')).to.be.null;
   });
 });
 
@@ -1459,16 +1476,5 @@ describe('getValueFromObjPath', () => {
     expect(
       liquid.filters.getValueFromObjPath(testData, 'class.abstract.number'),
     ).to.eq(1);
-  });
-
-  it('returns array of items at path', () => {
-    const testData = [
-      { class: { abstract: { number: 1 } } },
-      { class: { abstract: { number: 2 } } },
-      { class: { abstract: { number: 3 } } },
-    ];
-    expect(
-      liquid.filters.getValueFromObjPath(testData, 'class.abstract.number'),
-    ).to.deep.equal([1, 2, 3]);
   });
 });

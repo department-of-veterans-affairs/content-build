@@ -561,15 +561,7 @@ module.exports = function registerFilters() {
   // sort a list of objects by a certain property in the object
   liquid.filters.sortObjectsBy = (entities, path) => _.sortBy(entities, path);
 
-  // get a value from a path of an object
-  // works for arrays as well
-  liquid.filters.getValueFromObjPath = (obj, path) => {
-    if (Array.isArray(obj)) {
-      return obj.map(e => _.get(e, path));
-    } else {
-      return _.get(obj, path);
-    }
-  };
+  liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
 
   // get a value from a path of an object in an array
   liquid.filters.getValueFromArrayObjPath = (entities, index, path) =>
@@ -989,9 +981,9 @@ module.exports = function registerFilters() {
     return parseInt(lastSection, 10) >= 2;
   };
 
-  liquid.filters.getValuesForKey = (array, key) => {
+  liquid.filters.getValuesForPath = (array, path) => {
     if (!array) return null;
-    return array.map(e => e[key]);
+    return array.map(e => _.get(e, path));
   };
 
   liquid.filters.isBannerVisible = (targetPaths, currentPath) => {
