@@ -1042,7 +1042,7 @@ describe('rejectBy', () => {
     ]);
   });
 
-  it('returns all objects with the given path except those in value array', () => {
+  it('returns all objects with the given path except those in value list', () => {
     expect(
       liquid.filters.rejectBy(testData, 'class.abstract.number', '1|3'),
     ).to.deep.equal([
