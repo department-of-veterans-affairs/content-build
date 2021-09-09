@@ -1,4 +1,4 @@
-{% assign servicesList = fieldHealthServices | filterBy: "entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare", typeOfCare, true %}
+{% assign servicesList = fieldHealthServices | filterBy: "entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare", typeOfCare %}
 {% assign servicesListOrdered = servicesList | sortObjectsBy: "entity.fieldServiceNameAndDescripti.entity.name" %}
 
 {% if servicesListOrdered.length > 0 %}
