@@ -154,7 +154,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            /usr/local/share/.cache/yarn
+            .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
