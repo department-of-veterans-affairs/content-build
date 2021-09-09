@@ -153,8 +153,8 @@ jobs:
           path: |
             /usr/local/share/.cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
+          key: v2-${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: v2-${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: ls
         run: ls -la
