@@ -159,7 +159,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
             ... on NodeVetCenterCap {
               title
               entityBundle
-              fieldFacilityLocatorApiId              
               fieldOperatingStatusFacility
               fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
@@ -175,7 +174,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
             ... on NodeVetCenterOutstation {
               title
               entityBundle
-              fieldFacilityLocatorApiId
               fieldOperatingStatusFacility
               fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
@@ -192,7 +190,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
             ... on NodeVetCenterMobileVetCenter {
               title
               entityBundle
-              fieldFacilityLocatorApiId              
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
               fieldAddress {
                 locality
