@@ -1,4 +1,8 @@
-{% assign servicesList = fieldHealthServices | filterBy: "entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare", typeOfCare %}
+{% if typeOfCare == 'other' %}
+  {% assign servicesList = fieldHealthServices | rejectBy: "entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare", "counseling|referral", false %}
+{% else %}
+  {% assign servicesList = fieldHealthServices | filterBy: "entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare", typeOfCare %}
+{% endif %}
 {% assign servicesListOrdered = servicesList | sortObjectsBy: "entity.fieldServiceNameAndDescripti.entity.name" %}
 
 {% if servicesListOrdered.length > 0 %}
