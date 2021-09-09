@@ -307,9 +307,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            .cache/yarn
+            /usr/local/share/.cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: ls
