@@ -147,9 +147,6 @@ jobs:
         id: yarn-cache-dir-path
         run: yarn cache dir
 
-      - name: log cache dir
-        run: ls .cache
-
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
@@ -159,6 +156,13 @@ jobs:
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
+
+      - name: ls
+        run: ls -la
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: yarn cache dir
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
