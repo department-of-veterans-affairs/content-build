@@ -120,11 +120,11 @@ jobs:
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
     steps:
-      - name: Checkout vagov-content
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
+      # - name: Checkout vagov-content
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: department-of-veterans-affairs/vagov-content
+      #     path: vagov-content
 
       - name: Checkout content-build
         uses: actions/checkout@v2
@@ -146,6 +146,9 @@ jobs:
       - name: Get yarn cache directory path
         run: yarn cache dir
 
+      - name: pwd
+        run: pwd
+
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
@@ -160,6 +163,9 @@ jobs:
 
       - name: Get yarn cache directory path
         run: yarn cache dir
+      
+      - name: pwd
+        run: pwd
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
