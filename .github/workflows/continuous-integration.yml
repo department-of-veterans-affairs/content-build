@@ -162,8 +162,7 @@ jobs:
           path: |
             .cache/yarn
             **/node_modules
-          key: v3-${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: v3-${{ steps.get-node-version.outputs.NODE_VERSION }}-
+          key: v4-${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: ls
         run: ls -la
