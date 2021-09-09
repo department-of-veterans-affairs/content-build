@@ -1,0 +1,324 @@
+{
+  "entityBundle": "support_resources_detail_page",
+  "entityId": "8541",
+  "entityPublished": true,
+  "title": "Request a discharge upgrade or correction",
+  "vid": 339143,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/resources", "routed": true },
+        "text": "Resources and support"
+      }
+    ],
+    "path": "/resources/request-a-discharge-upgrade-or-correction"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Request a discharge upgrade or correction |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Request a discharge upgrade or correction |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Request a discharge upgrade or correction |  | Veterans Affairs"
+    }
+  ],
+  "changed": 1604526868,
+  "fieldContentBlock": [
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "13913",
+        "fieldWysiwyg": {
+          "processed": "<h2>Get personalized instructions for how to apply</h2>\n\n<p>First, <a href=\"https://www.va.gov/discharge-upgrade-instructions/\">answer a series of questions online</a>. </p>\n\n<p>Based on your answers, we’ll give you the information you need to apply for a discharge upgrade or correction:</p>\n\n<ul><li>Step-by-step instructions that are specific to your situation</li>\n\t<li>PDFs of the forms you'll need to complete that you can download</li>\n\t<li>The address where you’ll mail your application and supporting documents (be sure to use the address we give you so your application goes to the right board)</li>\n</ul><h2>Other ways to get the forms you need</h2>\n\n<p>You can also get application forms and instructions from:</p>\n\n<ul><li><a href=\"https://www.va.gov/find-locations\">Your nearest VA regional office</a>, <strong>or</strong></li>\n\t<li><a href=\"https://www.va.gov/disability/get-help-filing-claim/#how-do-i-find-an-accredited-re\">A Veterans Service Organization</a></li>\n</ul><p>Or call us at <a aria-label=\"8 0 0. 8 2 7. 1 0 0 0.\" href=\"tel:+18008271000\">800-827-1000</a>. We’re here Monday through Friday, 8:00 a.m. to 9:00 p.m. ET.</p>"
+        }
+      }
+    }
+  ],
+  "fieldTableOfContentsBoolean": false,
+  "fieldIntroTextLimitedHtml": {
+    "processed": "<p>You can apply for a discharge upgrade by mail or with the help of a Veterans Service Organization (VSO).</p>\n"
+  },
+  "fieldAlertSingle": {
+    "entity": {
+      "entityId": "13910",
+      "fieldAlertSelection": "NA",
+      "fieldAlertNonReusableRef": null,
+      "fieldAlertBlockReference": null
+    }
+  },
+  "fieldButtonsRepeat": false,
+  "fieldButtons": [
+    {
+      "entity": {
+        "entityId": "13911",
+        "entityBundle": "button",
+        "fieldButtonLabel": "How to apply for a discharge upgrade ",
+        "fieldButtonLink": {
+          "url": {
+            "path": "https://www.va.gov/discharge-upgrade-instructions/"
+          }
+        }
+      }
+    }
+  ],
+  "fieldContactInformation": {
+    "entity": {
+      "entityBundle": "contact_information",
+      "fieldBenefitHubContacts": {
+        "entity": {
+          "fieldHomePageHubLabel": "Records",
+          "fieldTeaserText": "Apply for a printed Veteran ID card, get your VA benefit letters and medical records, and learn how to apply for a discharge upgrade.",
+          "path": { "alias": "/records" },
+          "fieldSupportServices": [
+            {
+              "entity": {
+                "entityId": "59",
+                "title": "VA benefits hotline:",
+                "fieldLink": {
+                  "title": "",
+                  "url": { "path": "tel:1-800-827-1000", "routed": false }
+                },
+                "fieldPhoneNumber": "800-827-1000"
+              }
+            },
+            {
+              "entity": {
+                "entityId": "66",
+                "title": "My HealtheVet help desk:",
+                "fieldLink": {
+                  "title": "",
+                  "url": { "path": "tel:1-877-327-0022", "routed": false }
+                },
+                "fieldPhoneNumber": "877-327-0022"
+              }
+            },
+            {
+              "entity": {
+                "entityId": "60",
+                "title": "eBenefits technical support:",
+                "fieldLink": {
+                  "title": "",
+                  "url": { "path": "tel:1-800-983-0937", "routed": false }
+                },
+                "fieldPhoneNumber": "800-983-0937"
+              }
+            },
+            {
+              "entity": {
+                "entityId": "61",
+                "title": "MyVA411 main information line:",
+                "fieldLink": {
+                  "title": "",
+                  "url": { "path": "tel:1-800-698-2411", "routed": false }
+                },
+                "fieldPhoneNumber": "800-698-2411"
+              }
+            },
+            {
+              "entity": {
+                "entityId": "62",
+                "title": "If you have hearing loss, call TTY: 711.",
+                "fieldLink": null,
+                "fieldPhoneNumber": null
+              }
+            }
+          ]
+        }
+      },
+      "fieldContactInfoSwitch": "BHC",
+      "fieldContactDefault": {
+        "entity": {
+          "entityId": "61",
+          "title": "MyVA411 main information line:",
+          "fieldLink": {
+            "title": "",
+            "url": { "path": "tel:1-800-698-2411", "routed": false }
+          },
+          "fieldPhoneNumber": "800-698-2411"
+        }
+      },
+      "fieldAdditionalContact": null
+    }
+  },
+  "fieldRelatedBenefitHubs": [
+    {
+      "entity": {
+        "fieldHomePageHubLabel": "Records",
+        "fieldTeaserText": "Apply for a printed Veteran ID card, get your VA benefit letters and medical records, and learn how to apply for a discharge upgrade.",
+        "path": { "alias": "/records" },
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "59",
+              "title": "VA benefits hotline:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-827-1000", "routed": false }
+              },
+              "fieldPhoneNumber": "800-827-1000"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "66",
+              "title": "My HealtheVet help desk:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-877-327-0022", "routed": false }
+              },
+              "fieldPhoneNumber": "877-327-0022"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "60",
+              "title": "eBenefits technical support:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-983-0937", "routed": false }
+              },
+              "fieldPhoneNumber": "800-983-0937"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-698-2411", "routed": false }
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "fieldHomePageHubLabel": "Service member benefits",
+        "fieldTeaserText": "Find out what benefits you may be eligible for during service and which time-sensitive benefits to consider when separating or retiring.",
+        "path": { "alias": "/service-member-benefits" },
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "59",
+              "title": "VA benefits hotline:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-827-1000", "routed": false }
+              },
+              "fieldPhoneNumber": "800-827-1000"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "60",
+              "title": "eBenefits technical support:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-983-0937", "routed": false }
+              },
+              "fieldPhoneNumber": "800-983-0937"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-698-2411", "routed": false }
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "fieldRelatedInformation": [
+    {
+      "entity": {
+        "entityId": "13914",
+        "fieldLink": {
+          "url": { "path": "/records/get-military-service-records" },
+          "title": "Request your military service records (including DD214)",
+          "options": []
+        },
+        "fieldLinkSummary": null
+      }
+    },
+    {
+      "entity": {
+        "entityId": "14060",
+        "fieldLink": {
+          "url": { "path": "/resources/managing-your-vagov-profile" },
+          "title": "Managing your VA.gov profile",
+          "options": []
+        },
+        "fieldLinkSummary": null
+      }
+    }
+  ],
+  "fieldPrimaryCategory": {
+    "entity": {
+      "entityUrl": { "path": "/resources/other-topics-and-questions" },
+      "name": "Other topics and questions"
+    }
+  },
+  "fieldOtherCategories": [],
+  "fieldTags": {
+    "entity": {
+      "fieldAudienceBeneficiares": {
+        "entity": {
+          "entityUrl": { "path": "/resources/tag/all-veterans" },
+          "name": "All Veterans"
+        }
+      },
+      "fieldNonBeneficiares": null,
+      "fieldTopics": []
+    }
+  }
+}

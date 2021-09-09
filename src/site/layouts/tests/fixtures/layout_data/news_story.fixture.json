@@ -1,0 +1,122 @@
+{
+  "entityBundle": "news_story",
+  "entityId": "27061",
+  "entityPublished": true,
+  "title": "VA wants to protect Veterans against the COVID-19 Delta Variant",
+  "vid": 466351,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/eastern-oklahoma-health-care", "routed": true },
+        "text": "VA Eastern Oklahoma health care"
+      },
+      {
+        "url": {
+          "path": "/eastern-oklahoma-health-care/stories",
+          "routed": true
+        },
+        "text": "Stories"
+      }
+    ],
+    "path": "/eastern-oklahoma-health-care/stories/va-wants-to-protect-veterans-against-the-covid-19-delta-variant"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaLink",
+      "key": "image_src",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-07/covid-graphic.jpg"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "VA wants to protect Veterans against the COVID-19 Delta Variant |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Since the COVID-19 vaccines were made available to the Eastern Oklahoma VA Health Care System in December 2020, we have administered almost 27,000 COVID vaccines to Veterans. More than 13,500 of our Veterans are fully vaccinated. However, that is only 39% of our enrolled Veterans."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "VA wants to protect Veterans against the COVID-19 Delta Variant |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Since the COVID-19 vaccines were made available to the Eastern Oklahoma VA Health Care System in December 2020, we have administered almost 27,000 COVID vaccines to Veterans. More than 13,500 of our Veterans are fully vaccinated. However, that is only 39% of our enrolled Veterans."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-07/covid-graphic.jpg"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image:alt",
+      "value": "COVID-19 graphic"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Since the COVID-19 vaccines were made available to the Eastern Oklahoma VA Health Care System in December 2020, we have administered almost 27,000 COVID vaccines to Veterans. More than 13,500 of our Veterans are fully vaccinated. However, that is only 39% of our enrolled Veterans."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "VA wants to protect Veterans against the COVID-19 Delta Variant |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image:alt",
+      "value": "COVID-19 graphic"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-07/covid-graphic.jpg"
+    }
+  ],
+  "promote": false,
+  "created": 1625245824,
+  "fieldAuthor": null,
+  "fieldImageCaption": null,
+  "fieldIntroText": "Since the COVID-19 vaccines were made available to the Eastern Oklahoma VA Health Care System in December 2020, we have administered almost 27,000 COVID vaccines to Veterans. More than 13,500 of our Veterans are fully vaccinated. However, that is only 39% of our enrolled Veterans.",
+  "fieldMedia": {
+    "entity": {
+      "image": {
+        "alt": "COVID-19 graphic",
+        "title": "",
+        "derivative": {
+          "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-07/covid-graphic.jpg?h=f66a01d2",
+          "width": 480,
+          "height": 240
+        }
+      }
+    }
+  },
+  "fieldListing": {
+    "entity": {
+      "entityUrl": { "path": "/eastern-oklahoma-health-care/stories" }
+    }
+  },
+  "fieldFullStory": {
+    "processed": "<p>The great news is that almost 77% of our VA employees are fully vaccinated.</p>\n\n<p>Protecting Veterans, our staff and those in the VA community remains our top priority during the COVID-19 pandemic. While many states are relaxing their safety precautions, we must remain vigilant in preventing the spread of COVID-19.</p>\n\n<p>This new Delta variant, which was first detected in India and has been identified in 85 countries, now accounts for one in five infections in the United States. It is known to mostly impact those who are either unvaccinated or have only received the first of two doses of the Pfizer or Moderna vaccines.</p>\n\n<p>Furthermore, until high levels of vaccination are achieved, additional variants are expected to arise.</p>\n\n<p>Over the past month the Delta variant has rapidly spread and expanded in the United States. We believe this will soon become the dominant SARS-CoV-2 strain causing infections in the United States, and it is expected to lead to a rise in hospitalizations and deaths. In fact, we have received reports of hospitalizations, admissions to intensive care units and deaths of VA employees related to the outbreak of the Delta variant.</p>\n\n<p>The good news is the COVID-19 vaccines currently in use in the United States offer good protection against the COVID-19 causing virus variants we know the most about. Thus, full vaccination can prevent unnecessary deaths and hospitalizations. In the United Kingdom, COVID-19 vaccines have shown excellent effectiveness in preventing hospitalization from the Delta strain for persons who are fully vaccinated.</p>\n\n<p>Together we have achieved great things this year, and the goal is to emerge from the pandemic safely as a team. If you have not done so already, I encourage you to get vaccinated against COVID-19 as soon as possible, to complete your vaccine series if you have not yet had the opportunity to do so and to strongly encourage your loved ones to do the same.</p>\n\n<p>If you are undecided about getting the vaccine and need more information to make a decision, please visit the CDC website to learn more about COVID-19 vaccines.</p>\n\n<p>We want Veterans to know that if they decide to receive a COVID-19 vaccine, we stand ready to administer it to them.</p>\n\n<p>Veterans can call 888-397-8387 to request a COVID-19 vaccination appointment. Spouses and caregivers should call 888-397-8387, ext. 3900 to register.</p>"
+  }
+}

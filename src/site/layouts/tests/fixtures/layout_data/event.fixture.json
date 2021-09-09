@@ -1,0 +1,133 @@
+{
+  "entityBundle": "event",
+  "entityId": "20742",
+  "entityPublished": true,
+  "title": "Using Mind Body Skills with American Red Cross Military and Veteran Caregiver Network (MVCN)",
+  "vid": 434346,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/outreach-and-events", "routed": true },
+        "text": "Outreach and events"
+      },
+      {
+        "url": { "path": "/outreach-and-events/events", "routed": true },
+        "text": "Outreach events"
+      }
+    ],
+    "path": "/outreach-and-events/events/using-mind-body-skills-with-american-red-cross-military-and-veteran-caregiver-network-mvcn-cloned"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaLink",
+      "key": "image_src",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-06/American%20Red%20Cross%20MVCN.png"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "| Using Mind Body Skills with American Red Cross Military and Veteran Caregiver Network (MVCN) | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "#CaregiverSupport #MVCN"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Using Mind Body Skills with American Red Cross Military and Veteran Caregiver Network (MVCN) |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "#CaregiverSupport #MVCN"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-06/American%20Red%20Cross%20MVCN.png"
+    },
+    { "__typename": "MetaProperty", "key": "og:image:height", "value": "314" },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image:alt",
+      "value": "American Red Cross"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "#CaregiverSupport #MVCN"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Using Mind Body Skills with American Red Cross Military and Veteran Caregiver Network (MVCN) |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image:alt",
+      "value": "American Red Cross"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-06/American%20Red%20Cross%20MVCN.png"
+    }
+  ],
+  "changed": 1623174127,
+  "fieldMedia": {
+    "entity": {
+      "image": {
+        "alt": "American Red Cross",
+        "title": "",
+        "derivative": {
+          "url": "https://prod.cms.va.gov/sites/default/files/styles/7_2_medium_thumbnail/public/2021-06/American%20Red%20Cross%20MVCN.png",
+          "width": 1050,
+          "height": 300
+        }
+      }
+    }
+  },
+  "uid": {
+    "targetId": 1355,
+    "entity": { "name": "douglas.webb2@va.gov", "timezone": null }
+  },
+  "fieldDatetimeRangeTimezone": {
+    "value": 1624924800,
+    "endValue": 1624930200,
+    "timezone": "America/Chicago"
+  },
+  "fieldAddress": null,
+  "fieldFacilityLocation": null,
+  "fieldLocationHumanreadable": null,
+  "fieldDescription": "#CaregiverSupport #MVCN",
+  "fieldBody": {
+    "processed": "<p>Please join us for a virtual workshop that provides caregivers with ways to incorporate new mind-body techniques to develop higher levels of empathy, lower levels of stress, and enjoy greater life satisfaction. This workshop is for anyone that is a caregiver to a service member, veteran or if a veteran themselves that cares for another person. This will be a live, facilitated discussion. You will have an opportunity to share with others, learn and practice new skills and ask questions in a small online group. We invite you to join us on video and audio for a 90-minute conversation with a Red Cross mental health volunteer and other members of your community.</p>"
+  },
+  "fieldEventCost": "FREE",
+  "fieldEventCta": "register",
+  "fieldLink": {
+    "url": {
+      "path": "https://www.eventbrite.com/e/june-28th-using-mind-body-skills-with-mvcn-csor-tickets-153400467929"
+    }
+  },
+  "fieldEventRegistrationrequired": true,
+  "fieldAdditionalInformationAbo": null
+}

@@ -1,0 +1,257 @@
+{
+  "title": "LGBT Veteran care   ",
+  "entityBundle": "health_care_region_detail_page",
+  "entityId": "17653",
+  "entityPublished": true,
+  "vid": 449202,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/atlanta-health-care", "routed": true },
+        "text": "VA Atlanta health care"
+      },
+      {
+        "url": { "path": "", "routed": true },
+        "text": "SERVICES AND LOCATIONS"
+      },
+      {
+        "url": {
+          "path": "/atlanta-health-care/health-services",
+          "routed": true
+        },
+        "text": "Health services"
+      },
+      { "url": { "path": "", "routed": true }, "text": "LGBT Veteran care" }
+    ],
+    "path": "/atlanta-health-care/health-services/lgbt-veteran-care"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "LGBT Veteran care    | VA Atlanta health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Our LGBT Veteran care coordinators are fully equipped to support you."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "LGBT Veteran care    | VA Atlanta health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Our LGBT Veteran care coordinators are fully equipped to support you."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Our LGBT Veteran care coordinators are fully equipped to support you."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "LGBT Veteran care    | VA Atlanta health care | Veterans Affairs"
+    }
+  ],
+  "changed": 1624376430,
+  "fieldIntroText": "VA Atlanta health care employees receive training in clinical care that is responsive to the unique needs of LGBT Veterans. Our trained LGBT Veteran care coordinators are fully equipped to support the health, welfare, and dignity of you and your family.",
+  "fieldTableOfContentsBoolean": false,
+  "fieldFeaturedContent": [],
+  "fieldContentBlock": [
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "34339",
+        "fieldWysiwyg": {
+          "processed": "<h2>Connect with a care coordinator</h2>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "downloadable_file",
+        "fieldTitle": "Download map",
+        "fieldMedia": {
+          "entity": {
+            "entityBundle": "document",
+            "fieldDocument": {
+              "entity": {
+                "url": "files/file.pdf",
+                "filesize": 481516
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "staff_profile",
+        "queryFieldStaffProfile": {
+          "entities": [
+            {
+              "entityUrl": {
+                "path": "/atlanta-health-care/staff-profiles/cristina-nicole-vansant"
+              },
+              "fieldNameFirst": "Cristina Nicole ",
+              "fieldLastName": "VanSant",
+              "fieldSuffix": "LCSW",
+              "fieldDescription": "LGBT Veteran care coordinator",
+              "fieldEmailAddress": "cristina.vansant@va.gov",
+              "fieldPhoneNumber": "404-321-6111, ext. 203715",
+              "fieldBody": null,
+              "fieldOffice": {
+                "entity": {
+                  "entityLabel": "VA Atlanta health care",
+                  "entityType": "node"
+                }
+              },
+              "fieldMedia": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "staff_profile",
+        "queryFieldStaffProfile": {
+          "entities": [
+            {
+              "entityUrl": {
+                "path": "/atlanta-health-care/staff-profiles/deauna-shauri-webb"
+              },
+              "fieldNameFirst": "Deauna ",
+              "fieldLastName": "Shauri-Webb",
+              "fieldSuffix": "Psy.D",
+              "fieldDescription": "LGBT Veteran care coordinator",
+              "fieldEmailAddress": "deauna.webb@va.gov",
+              "fieldPhoneNumber": "404-321-6111, ext. 202982",
+              "fieldBody": null,
+              "fieldOffice": {
+                "entity": {
+                  "entityLabel": "VA Atlanta health care",
+                  "entityType": "node"
+                }
+              },
+              "fieldMedia": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "34341",
+        "fieldWysiwyg": {
+          "processed": "<h2>Care we provide at VA Atlanta health care</h2>\n\n<p>Our LGBT Veteran care coordinators can answer your questions, advocate for your right to quality care, handle complaints or concerns you have about your care, and help you get started with any of our services for LGBT Veterans. These include:</p>\n\n<ul><li>Mental health services, including psychosocial assessments for hormone therapy and gender confirming surgeries</li>\n\t<li>Creative arts therapies</li>\n\t<li>Hormone therapy</li>\n\t<li>Gender-affirming prosthetics</li>\n\t<li>Testing, counseling, and care for HIV and sexually transmitted infections, including post-exposure prophylaxis (PEP) and pre-exposure prophylaxis (PrEP) for Veterans at risk for HIV</li>\n\t<li>Other prevention, screening, wellness, and testing services</li>\n</ul><h2>Policies and practices to know</h2>\n\n<p>The care coordinator can help you get started with care or with navigating any of these issues.</p>\n\n<p><strong>Visitation:</strong> A same-sex partner, family member, friend, or other individual can be present with the patient for emotional support during the course of the patient's stay.</p>\n\n<p><strong>Definition of family:</strong> \"Family\" may include individual(s) not legally related to the individual. Family members include spouses, domestic partners, different-sex and same-sex significant others.</p>\n\n<p><strong>Advance directives:</strong> Veterans may designate any person as a decision-maker for care if they won't be able to make these decisions themselves. This includes same-sex partners. Advance directive agents are chosen by the Veteran and do not need to be biologically related.</p>\n\n<p><strong>Documentation in medical records: </strong>VA Atlanta maintains the confidentiality of information about sexual orientation, sexual behavior, and gender identity, just like any other private health information.</p>\n\n<p><strong>Changing name or sex in records: </strong>Your name in your medical record will reflect your legal name. The sex in your medical record should reflect your self-identified gender. You have the right to request that your name and sex are updated as appropriate. There are established procedures for changing your name and sex with the VA Privacy Officer.</p>"
+        }
+      }
+    }
+  ],
+  "fieldRelatedLinks": {
+    "entity": {
+      "parentFieldName": "field_related_links",
+      "fieldTitle": "Other resources",
+      "entityId": "34345",
+      "fieldVaParagraphs": [
+        {
+          "entity": {
+            "entityId": "34346",
+            "fieldLink": {
+              "url": {
+                "path": "/atlanta-health-care/health-services/patient-advocates"
+              },
+              "title": "Patient advocates",
+              "options": []
+            },
+            "fieldLinkSummary": "When to contact a patient advocate at VA Atlanta and how they can help."
+          }
+        },
+        {
+          "entity": {
+            "entityId": "34347",
+            "fieldLink": {
+              "url": {
+                "path": "/atlanta-health-care/health-services/mental-health-care"
+              },
+              "title": "Mental health care",
+              "options": []
+            },
+            "fieldLinkSummary": "Learn more about VA Atlanta's comprehensive mental and behavioral health program."
+          }
+        },
+        {
+          "entity": {
+            "entityId": "481516",
+            "fieldLink": {
+              "url": {
+                "path": "/atlanta-health-care/health-services/mental-health-care"
+              },
+              "title": "Mental health care",
+              "options": []
+            },
+            "fieldLinkSummary": "Learn more about VA Atlanta's comprehensive mental and behavioral health program."
+          }
+        },
+        {
+          "entity": {
+            "entityId": "34348",
+            "fieldLink": {
+              "url": {
+                "path": "https://www.patientcare.va.gov/LGBT/index.asp"
+              },
+              "title": "VA LGBT and related identities care",
+              "options": []
+            },
+            "fieldLinkSummary": "See VA's policies, training, and outreach efforts around caring for Veterans who identify as LGBT or a related identity."
+          }
+        }
+      ]
+    }
+  },
+  "fieldAlert": null,
+  "fieldOffice": {
+    "entity": {
+      "entityLabel": "VA Atlanta health care",
+      "title": "VA Atlanta health care"
+    }
+  },
+  "facilitySidebar": {
+    "depth": 1,
+    "description": null,
+    "expanded": true,
+    "hasChildren": true,
+    "href": "",
+    "id": "sidenav_31",
+    "isSelected": false,
+    "label": "ABOUT VA HOTLANTA",
+    "order": 2
+  }
+}

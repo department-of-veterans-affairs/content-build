@@ -1,0 +1,210 @@
+{
+  "entityBundle": "vamc_operating_status_and_alerts",
+  "entityId": "1010",
+  "entityPublished": true,
+  "title": "Operating status - VA Pittsburgh health care",
+  "vid": 338588,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/pittsburgh-health-care", "routed": true },
+        "text": "VA Pittsburgh health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "Operating status" }
+    ],
+    "path": "/pittsburgh-health-care/operating-status"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Operating status - VA Pittsburgh health care | VA Pittsburgh health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "VA Pittsburgh health care facility operating statuses and emergency information."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Operating status - VA Pittsburgh health care | VA Pittsburgh health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Operating status - VA Pittsburgh health care | VA Pittsburgh health care | Veterans Affairs"
+    }
+  ],
+  "nid": 1010,
+  "fieldOffice": { "entity": { "entityLabel": "VA Pittsburgh health care" } },
+  "fieldLinks": [
+    {
+      "uri": "https://www.pema.pa.gov/Pages/Default.aspx",
+      "title": "Pennsylvania Emergency Management Agency"
+    },
+    {
+      "uri": "https://www.psp.pa.gov/Pages/default.aspx",
+      "title": "Pennsylvania State Police"
+    },
+    {
+      "uri": "https://pittsburghpa.gov/publicsafety/ema-about",
+      "title": "Pittsburgh Emergency Management"
+    },
+    {
+      "uri": "https://www.penndot.gov/Pages/default.aspx",
+      "title": "Pennsylvania Department of Transportation (DOT)"
+    },
+    {
+      "uri": "https://pittsburghpa.gov/ems/",
+      "title": "Pittsburgh Emergency Medical Services"
+    },
+    {
+      "uri": "https://pittsburghpa.gov/fire/",
+      "title": "Pittsburgh Bureau of Fire"
+    },
+    {
+      "uri": "https://www.alleghenycounty.us/emergency-services/index.aspx",
+      "title": "Allegheny County Emergency Services"
+    },
+    {
+      "uri": "https://www.ema.ohio.gov",
+      "title": "Ohio Emergency Management Agency: ODPS"
+    },
+    {
+      "uri": "https://www.statepatrol.ohio.gov/",
+      "title": "Ohio State Highway Patrol"
+    },
+    {
+      "uri": "http://www.dot.state.oh.us/pages/home.aspx",
+      "title": "Ohio Department of Transportation"
+    }
+  ],
+  "fieldOperatingStatusEmergInf": {
+    "value": "<h3>Patient resources</h3>\r\n\r\n<p><strong>Emergency:</strong> <a href=\"tel:911\">911</a></p>\r\n\r\n<p><strong>Veterans Crisis Line: </strong><a href=\"tel:+1800-507-4571\">800-273-8255</a> (Press 1)</p>\r\n\r\n<p><strong>24 hour Nurse:</strong> <a href=\"tel:+18664827488\">866-482-7488</a>&nbsp;(or&nbsp;<a href=\"tel:+18885583812\">888-558-3812</a> on weekends and holidays)</p>\r\n\r\n<p><strong>Change Your Appointment:</strong> <a href=\"tel:+18664827488\">866-482-7488</a></p>\r\n\r\n<p><strong>National Veterans Helpline: </strong><a href=\"tel:+1800-507-4571\">800-507-4571</a></p>\r\n\r\n<p><strong>Patient Locator: </strong><a href=\"tel:+18664827488\">866-482-7488</a></p>\r\n\r\n<p><strong>Pharmacy Refill:</strong> <a href=\"tel:+14128223140\">412-822-3140</a></p>\r\n\r\n<p><strong>Staff Locator:</strong> <a href=\"tel:+18664827488\">866-482-7488</a></p>\r\n\r\n<p><strong>Telephone Care: </strong><a href=\"tel:+18664827488\">866-482-7488</a></p>\r\n"
+  },
+  "fieldFacilityOperatingStatus": [
+    {
+      "entity": {
+        "title": "Pittsburgh VA Medical Center-University Drive",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/pittsburgh-va-medical-center-university-drive",
+          "routed": true
+        },
+        "fieldOperatingStatusFacility": "normal",
+        "fieldOperatingStatusMoreInfo": null
+      }
+    },
+    {
+      "entity": {
+        "title": "H. John Heinz III Department of Veterans Affairs Medical Center",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center",
+          "routed": true
+        },
+        "fieldOperatingStatusFacility": "normal",
+        "fieldOperatingStatusMoreInfo": null
+      }
+    },
+    {
+      "entity": {
+        "title": "Beaver County VA Clinic",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/beaver-county-va-clinic",
+          "routed": true
+        },
+        "fieldOperatingStatusFacility": "normal",
+        "fieldOperatingStatusMoreInfo": null
+      }
+    },
+    {
+      "entity": {
+        "title": "Belmont County VA Clinic",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/belmont-county-va-clinic",
+          "routed": true
+        },
+        "fieldOperatingStatusFacility": "normal",
+        "fieldOperatingStatusMoreInfo": null
+      }
+    },
+    {
+      "entity": {
+        "title": "Fayette County VA Clinic",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/fayette-county-va-clinic",
+          "routed": true
+        },
+        "fieldOperatingStatusFacility": "normal",
+        "fieldOperatingStatusMoreInfo": null
+      }
+    },
+    {
+      "entity": {
+        "title": "Washington County VA Clinic",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/washington-county-va-clinic",
+          "routed": true
+        },
+        "fieldOperatingStatusFacility": "normal",
+        "fieldOperatingStatusMoreInfo": null
+      }
+    },
+    {
+      "entity": {
+        "title": "Westmoreland County VA Clinic",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/locations/westmoreland-county-va-clinic",
+          "routed": true
+        },
+        "fieldOperatingStatusFacility": "normal",
+        "fieldOperatingStatusMoreInfo": null
+      }
+    }
+  ],
+  "fieldBannerAlert": [
+    {
+      "entity": {
+        "status": true,
+        "title": "Help Limit the Spread of COVID-19 and other Illnesses",
+        "fieldBannerAlertSituationinfo": null,
+        "fieldSituationUpdates": [
+          {
+            "entity": {
+              "entityId": "22135",
+              "fieldDatetimeRangeTimezone": {
+                "value": 1615395600,
+                "startTime": null,
+                "endValue": 1615399200,
+                "endTime": null,
+                "timezone": "America/New_York"
+              },
+              "fieldWysiwyg": {
+                "processed": "<h2>Moving Forward Together: Safe Care is Our Mission</h2>\n\n<p>VA Pittsburgh Healthcare System (VAPHS) is continuing to provide health care during the coronavirus pandemic. As always, the safety of our patients and employees is our top priority. Thank you for your patience as we adjust our policies as necessary to allow us to continue to provide safe care.</p>\n\n<h3>COVID-19 TESTING</h3>\n\n<p><strong>Call before reporting for testing</strong></p>\n\n<p>COVID-19 testing is by appointment only. If you have a sore throat, dry cough, shortness of breath or fever, call 412-360-6000 and select option #3 to speak to a nurse before visiting our facilities or to schedule an appointment for drive-through testing at University Drive. Do not report to the Emergency Department just for a test. Do not report for testing without an appointment. If you are having a medical emergency, call 911.</p>\n\n<h3>ENTRY INFORMATION</h3>\n\n<p><strong>All entrants should know we:</strong></p>\n\n<ul><li>Screen all patients, visitors, support persons, and employees at entrances.</li>\n</ul><ul><li>Require everyone in our facilities to wear a face covering or mask when within 6 feet of another person. Bring your own or we will provide one. Please see CDC’s recommendations for cloth face masks. We will make an exception only for Veterans who have a documented medical condition that prevents them from wearing a face covering or mask. Other entrants who do not agree to wear a face covering or mask will not be admitted to our facilities.</li>\n</ul><ul><li>Eliminated valet services at the University Drive campus. Veteran parking has been expanded and personnel are available to assist patients to appointments, as needed.</li>\n</ul><h3><strong>VISITATION RESTRICTIONS</strong></h3>\n\n<p><strong>Emergency Department</strong></p>\n\n<p>No visitors are permitted in Emergency Department waiting areas. Clinical staff or the charge nurse may grant exceptions.</p>\n\n<p><strong>Inpatient Visitation</strong></p>\n\n<ul><li>For patients who are not COVID-positive, visitation on all units except Behavioral Health and the Community Living Center (CLC) is limited to one visitor per patient daily between 10 a.m. and 8 p.m. Visitors must pass COVID-19 screening.</li>\n\t<li>COVID-19 positive patients cannot receive in-person visitors unless they are near end of life. We will arrange in-person visitation for a maximum of two visitors daily for COVID-positive patients near end of life. Visitors must follow COVID-19 safety protocols, to include wearing a provided gown, gloves, eye protection and face mask. For all other COVID-positive patients, we will arrange visits by phone and Facetime, Skype, Zoom, etc.</li>\n\t<li>Visitation on the Behavioral Health unit is by appointment only between 1 and 2 p.m. and 6 and 7:30 p.m. Call the unit to arrange a visit.</li>\n\t<li>The CLC currently offers virtual visits by phone, Facetime, Skype, Zoom etc., or contact-free, in-person visits by appointment only. We reserve the right to suspend contact-free, in-person visits when necessary for COVID-19 safety. Please ask CLC staff for assistance scheduling either virtual or contact-free, in-person visits.</li>\n</ul><h3>VETERAN OUTPATIENTS</h3>\n\n<p><strong>Outpatient appointments/procedures</strong></p>\n\n<ul><li>Please ensure you have an appointment scheduled before you come in.</li>\n\t<li>We may call you 24-72 hours before your in-person, phone or VA Video Connect appointment to preregister you. We will verify your identity before asking you to confirm your insurance information, address, emergency contact, etc. This new process is safer because it minimizes your face-to-face contact with administrative staff, once you arrive for your appointment. If you do not feel comfortable taking the call from us, you will have the option to call us back so you can be certain you are speaking with someone from VA Pittsburgh. You can even call us back after hours because we have staff in place who can preregister you. PLEASE NOTE: We will never ask you for your full Social Security number, credit card or bank information.</li>\n\t<li>You can bring one support person for an outpatient visit or to check in for procedures between 6 a.m. and 6:30 p.m. Support persons must be 18 or older, pass COVID-19 screening, and wear a face covering.</li>\n\t<li>When you arrive for your appointment, follow the directions on the posted signs to check in via VEText with your mobile phone. If you don't have a mobile phone, enter the building no sooner than 15 minutes prior to your appointment.</li>\n\t<li>\n\t<p>You should arrive 15 minutes prior to your scheduled appointment time for screening and clearance.</p>\n\t</li>\n\t<li>\n\t<p>Some surgeries or procedures may require a COVID test within 48 hours of your appointment. Your care team will work with you to arrange this.</p>\n\t</li>\n</ul><p><strong>Additional information on outpatient appointments</strong></p>\n\n<ul><li>We continue to offer telehealth, wellness checks and phone consults as much as possible.</li>\n\t<li>We prioritize face-to-face appointments based on clinical need.</li>\n\t<li>If your appointment was deferred, you won’t have to call us to reschedule — we’ll call you.</li>\n\t<li>Reminder: Veterans can sign in to <a href=\"https://l.facebook.com/l.php?u=http%3A%2F%2Fwww.myhealth.va.gov%2F%3Ffbclid%3DIwAR2ic50C2VBI21Dej1FfXbK11Y6katVHQd8Es3HnIU6xGHgKE1VY2W4iGPA&amp;h=AT1iboTJXvFF7wwfxYYe1fFOOCs8oDhwEQ0QDwL8cC2MRqPbybEve8RxtHsCCZyO-WrkW0E-Q9op4_z6x3AreDQNbbX_zZl7qkcHbVKaaSkSXZ3Z-Dq2UumO8SC4jav9VTZK&amp;__tn__=-UK-R&amp;c%5b0%5d=AT2FJQzKMSRmpWL7umWYvmJBawzjoTowm6Ti4aqjB5-4AEQxNWTBIPZy9CpS8bjFWrrTWeXMUgSj7v55KZXAfXyXSAPSub-njJkoqh1dIMmnx0KcV83qXgdiQ48Zq_RVp8Ae6TFQ6kAh3QRwUzL4vKv4pjHkkL2hblJlMSSINCyuQN1QztP7yeHS_IfE2PDENY1HTCeRX597A2Mumg7yKQ\">www.myhealth.va.gov</a> anytime to send a non-urgent, secure message to your care team. Do not use secure messaging for urgent communication; staff may not be able to respond immediately.</li>\n</ul><p><strong>Outpatient radiology, H.J. Heinz III campus</strong></p>\n\n<p>If you have an outpatient radiology appointment on our H.J. Heinz III campus, you will be permitted access only through building 50. You will not be permitted to walk through the building 51/71 breezeway to get to radiology, the pharmacy, VCS Patriot Store or cafeteria. Once your radiology appointment is complete, you must exit through building 50.</p>\n\n<h3>PHARMACY</h3>\n\n<p>Pharmacy pickups are restricted to urgently needed medications. All other medications and refills are mailed. We will use overnight shipping if medically necessary.</p>\n\n<ul><li>Urgently needed prescriptions are medications that the patient cannot wait until the next day to start.</li>\n\t<li>If you are a Veteran in urgent need of a medication, please contact the pharmacy to arrange for pickup:\n\t<ul><li>Call 412-360-3389 between 7:30 a.m. and 9 p.m. on weekdays or between 7:30 a.m. and 4 p.m. on weekends.</li>\n\t\t<li>Send a secure message in My HealtheVet to “Ask a Pharmacist.”</li>\n\t</ul></li>\n</ul><h4>NO ADMITTANCE</h4>\n\n<ul><li>No one under the age of 18 will be admitted to any of our facilities for any reason.</li>\n\t<li>Credit union ATM use is restricted to staff and Veterans in the facilities on official business. Do not visit our campuses solely to use the ATM machines.</li>\n\t<li>No visitors are permitted at the H.J. Heinz III Veterans Recovery Center (building 69).</li>\n\t<li>On-site branch visits to the credit union at our University Drive and Heinz campuses is restricted to current staff and Veteran patients who are in the buildings on official business. Other branch visits are limited and by appointment only. Questions? UD: 412-360-1150 HZ: 412-822-3185.</li>\n</ul><h4>HELP LIMIT THE SPREAD OF COVID-19 AND OTHER ILLNESSES</h4>\n\n<ul><li>Veterans with a sore throat, dry cough, shortness of breath or fever should call 412-360-6000 and select option #3 to speak to a nurse before visiting our facilities.</li>\n\t<li>Veterans who have established care at VA Pittsburgh may be eligible for COVID-19 testing. Veterans with symptoms must call the Nurse Helpline at 412-360-6000 and select option 3 to schedule an appointment for drive-through testing at University Drive. No one should report to the Emergency Department for testing. Do not report for drive-through testing without an appointment.</li>\n</ul>"
+              }
+            }
+          }
+        ],
+        "fieldBody": {
+          "processed": "<p><strong>IMPORTANT UPDATES FROM VA PITTSBURGH</strong></p>\n\n<p><strong>COVID-19 vaccines at VA Pittsburgh:</strong> For information on vaccine eligibility and availability at our medical campuses and outpatient clinics, please see <a href=\"https://www.va.gov/pittsburgh-health-care/covid-19-vaccines/\">VAPHS COVID-19 Vaccines</a>.</p>\n\n<p><strong>COVID-19 testing:</strong> COVID-19 testing is by appointment only. If you have a sore throat, dry cough, shortness of breath or fever, call 412-360-6000 and select option #3 to speak to a nurse before visiting our facilities or to schedule an appointment for drive-through testing at University Drive.</p>\n\n<p><strong>Prepare for a visit:</strong> We screen everyone who enters our facilities for COVID-19 symptoms and limit the number of visitors. We require face coverings. For more information, please see <a href=\"https://www.va.gov/pittsburgh-health-care/operating-status/\">Operating Status</a>. Contact us before you visit: For some needs, we may be able to provide care by phone or video.</p>\n\n<p><strong>For the latest coronavirus information: </strong>Visit <a href=\"https://www.cdc.gov/coronavirus/2019-ncov/\">CDC: What you Need to Know</a></p>\n\n<p><strong>For VA-specific information:</strong> Visit <a href=\"https://www.va.gov/health-care/covid-19-vaccine/\">COVID-19 Vaccines at VA</a>, use VA’s <a href=\"https://www.va.gov/coronavirus-chatbot/\">Coronavirus Chatbot</a> or read <a href=\"https://www.va.gov/coronavirus-veteran-frequently-asked-questions/\">Coronavirus FAQs</a> and <a href=\"https://www.publichealth.va.gov/n-coronavirus/\">Novel Coronavirus Disease (COVID-19)</a>.         </p>"
+        }
+      }
+    }
+  ]
+}

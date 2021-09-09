@@ -1,0 +1,68 @@
+{
+  "entityBundle": "office",
+  "entityId": "735",
+  "entityPublished": true,
+  "title": "Outreach and events",
+  "vid": 338512,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      { "url": { "path": "", "routed": true }, "text": "Outreach and events" },
+      { "url": { "path": "", "routed": true }, "text": "Outreach and events" }
+    ],
+    "path": "/outreach-and-events"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Outreach And Events | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "VA proudly works alongside others to connect Veterans to the benefits they’ve earned. Explore resources for our outreach partners such as Veteran Service Organizations (VSOs), and sign up for events."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Outreach and events |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "VA proudly works alongside others to connect Veterans to the benefits they’ve earned. Explore resources for our outreach partners such as Veteran Service Organizations (VSOs), and sign up for events."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "VA proudly works alongside others to connect Veterans to the benefits they’ve earned. Explore resources for our outreach partners such as Veteran Service Organizations (VSOs), and sign up for events."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Outreach and events |  | Veterans Affairs"
+    }
+  ],
+  "changed": 1604086521,
+  "fieldDescription": "VA proudly works alongside others to connect Veterans to the benefits they’ve earned. Explore resources for our outreach partners such as Veteran Service Organizations (VSOs), and sign up for events.",
+  "fieldBody": {
+    "processed": "<h2 dir=\"ltr\"><a href=\"/outreach-and-events/outreach-materials\">Outreach materials</a></h2>\n\n<p dir=\"ltr\">Find and share posters, videos, fact sheets, and more. Our outreach materials library is here to help you connect Veterans with benefits they may be eligible for.</p>\n\n<h2 dir=\"ltr\"><a href=\"/outreach-and-events/events\">Outreach events</a></h2>\n\n<p dir=\"ltr\">Let’s talk about how we can help Veterans go from service to success. Join our events for conversation, information, and resources on VA benefits for Veterans. </p>\n\n<h2 dir=\"ltr\"><a href=\"https://public.govdelivery.com/accounts/USVA/subscriber/new?topic_id=USVA_46\">Email updates</a></h2>\n\n<p dir=\"ltr\">Sign up for invitations to our events on VA benefits outreach.</p>"
+  },
+  "reverseFieldOfficeNode": { "entities": [{}, {}] }
+}

@@ -1,0 +1,740 @@
+{
+  "entityBundle": "page",
+  "entityId": "16413",
+  "entityPublished": true,
+  "title": "Mga bakuna sa COVID-19 sa VA",
+  "vid": 434467,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/health-care", "routed": true },
+        "text": "Health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "Manage benefits" },
+      {
+        "url": { "path": "", "routed": true },
+        "text": "Mga bakuna sa COVID-19 sa VA"
+      }
+    ],
+    "path": "/health-care/covid-19-vaccine-tag"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Mga bakuna sa COVID-19 sa VA | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Ang lahat ng mga Beterano, kanilang mga asawa at mga tagapag-alaga at mga tumatanggap ng CHAMPVA ay maaari nang mabakunahan laban sa COVID-19. Alamin kung paano kayo mababakunahan. Alamin din ang pinakabagong mga balita ng VA tungkol sa bakuna at mga kasagutan sa mga karaniwang katanungan."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Mga bakuna sa COVID-19 sa VA |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Ang lahat ng mga Beterano, kanilang mga asawa at mga tagapag-alaga at mga tumatanggap ng CHAMPVA ay maaari nang mabakunahan laban sa COVID-19. Alamin kung paano kayo mababakunahan. Alamin din ang pinakabagong mga balita ng VA tungkol sa bakuna at mga kasagutan sa mga karaniwang katanungan."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Ang lahat ng mga Beterano, kanilang mga asawa at mga tagapag-alaga at mga tumatanggap ng CHAMPVA ay maaari nang mabakunahan laban sa COVID-19. Alamin kung paano kayo mababakunahan. Alamin din ang pinakabagong mga balita ng VA tungkol sa bakuna at mga kasagutan sa mga karaniwang katanungan."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Mga bakuna sa COVID-19 sa VA |  | Veterans Affairs"
+    }
+  ],
+  "fieldIntroTextLimitedHtml": {
+    "processed": "<p>Ang lahat ng mga Beterano, kanilang mga asawa at mga tagapag-alaga at mga tumatanggap ng CHAMPVA ay maaari nang mabakunahan laban sa COVID-19. Alamin kung paano kayo mababakunahan. Alamin din ang pinakabagong mga balita ng VA tungkol sa bakuna at mga kasagutan sa mga karaniwang katanungan.</p>\n"
+  },
+  "fieldDescription": "Ang lahat ng mga Beterano, kanilang mga asawa at mga tagapag-alaga at mga tumatanggap ng CHAMPVA ay maaari nang mabakunahan laban sa COVID-19. Alamin kung paano kayo mababakunahan. Alamin din ang pinakabagong mga balita ng VA tungkol sa bakuna at mga kasagutan sa mga karaniwang katanungan.",
+  "fieldTableOfContentsBoolean": true,
+  "fieldFeaturedContent": [
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "30076",
+        "fieldWysiwyg": {
+          "processed": "<h2>Paano mababakunahan para sa COVID-19 sa VA</h2>\n\n<p>Narito ang paraan kung paano mababakunahan sa pangkalusugang pasilidad ng VA na malapit sa inyo:</p>\n\n<ul><li><strong>Pumunta sa klinika ng pasilidad para sa bakuna sa mga oras na hindi kailangan ng tipan.</strong> Siguraduhing alamin muna ang mga oras na hindi nangangailangan  ng tipan bago kayo pumunta. Pagdating ninyo, maaaring maghintay muna kayo para maihanda ng tauhan ang inyong bakuna.</li>\n\t<li><strong>O kaya, tumawag sa pasilidad upang mabigyan ng tipan.</strong> Tutulungan kayo ng aming tauhan na humanap ng oras na naaayon sa inyo.</li>\n</ul><p>Narito ang kailangang malaman bago kayo pumunta:</p>\n\n<ul><li>Kung hindi kayo nagpapagamot sa VA, hinihikayat namin kayong magparehistro muna sa online nang hindi bababa sa 1 oras bago pumunta sa klinikang hindi nangangailangan ng tipan para hindi kayo maghintay nang matagal.<br /><a href=\"https://www.va.gov/health-care/covid-19-vaccine/sign-up/introduction\">Magparehistro para mabakunahan laban sa COVID-19 sa VA (sa English)</a></li>\n\t<li>Ang lahat ng papasok sa pasilidad ng VA ay kailangang magsuot ng panakip sa ilong at bibig at sagutin ang mga tanong patungkol sa mga sintomas ng COVID-19.</li>\n</ul><p><a href=\"https://www.va.gov/find-locations/?facilityType=health&amp;serviceType=Covid19Vaccine\">Hanapin ang pasilidad ng VA na malapit sa inyo na nag-aalok ng COVID-19 na mga bakuna (sa English)</a> </p>\n\n<h3>Hinda pa handang magpabakuna?</h3>\n\n<p>Maaari kayong magparehistro sa online upang manatiling maabisuhan tungkol sa inyong mga opsyon sa bakuna. Babalitaan namin kayo tungkol sa aming mga plano sa bakuna at iba pang makakatulong na impormasyon.</p>\n\n<p><a href=\"https://www.va.gov/health-care/covid-19-vaccine/stay-informed/form\">Magparehistro upang manatiling maabisuhan tungkol sa bakuna ng COVID-19 sa VA (sa English)</a></p>\n\n<p> </p>"
+        }
+      }
+    }
+  ],
+  "fieldContentBlock": [
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "35811",
+        "fieldWysiwyg": {
+          "processed": "<p><strong>Pagtatatuwa:</strong> Madalas naming ina-update ang website na ito. Ang ilan sa nilalaman ay maaaring nasa English lang hanggang sa maisaling-wika namin ang lahat ng bagong nilalaman.</p>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "29944",
+        "fieldWysiwyg": {
+          "processed": "<h2><strong>Sino na ang pwedeng magpabakuna para sa COVID-19 sa VA</strong></h2>\n\n<p>Maraming pangkalusugang pasilidad ng VA at mga klinika ang nag-aalok na ng mga bakuna para sa COVID-19 sa mga pangkat na ito:</p>\n\n<ul><li>Lahat ng mga Beterano</li>\n\t<li>Mga asawa o nabubuhay na asawa ng mga Beterano</li>\n\t<li>Mga tagapag-alaga ng mga Beterano. Upang maging nararapat sa bakuna para sa Covid-19, itinuturing namin ang tagapag-alaga bilang miyembro ng pamilya o kaibigan na nag-aalaga sa isang Beterano. Maaaring tulungan ng mga tagapag-alaga ang isang Beterano sa mga personal na pangangailangan tulad ng pagkain, paliligo at pagbibihis. Maaari rin silang tumulong sa Beterano sa mga gawain tulad ng pamimili o sa transportasyon. </li>\n\t<li>Mga tumatanggap ng benepisyo ng Civilian Health and Medical Program of Veterans Affairs (CHAMPVA)</li>\n</ul>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "collapsible_panel",
+        "entityId": "35730",
+        "fieldCollapsiblePanelMulti": false,
+        "fieldCollapsiblePanelExpand": false,
+        "fieldCollapsiblePanelBordered": false,
+        "fieldVaParagraphs": [
+          {
+            "entity": {
+              "entityId": "35729",
+              "entityBundle": "collapsible_panel_item",
+              "fieldTitle": "Sino ang mga Beteranong nararapat para sa bakuna?",
+              "fieldWysiwyg": {
+                "processed": "<p>Ang lahat ng mga Beterano ay karapat-dapat na para sa bakuna sa Covid-19 sa VA.</p>\n\n<p>Kasama dito ang kahit sinong naglingkod sa militar ng Estados Unidos, kasama ang U.S. National Guard, Reserves o Coast Guard.</p>\n\n<p>Kabilang din dito ang kahit sinong naglingkod sa kahit anong mga tungkulin:</p>\n\n<ul><li>Komisyonadong opisyal ng Regular o Reserve Corp ng Pampublikong Serbisyo para sa Kalusugan, <strong>o</strong></li>\n\t<li>Komisyonadong opisyal ng National Oceanic and Atmospheric Administration (o Coast and Geodetic Survey), <strong>o</strong></li>\n\t<li>Kadete sa U.S. Military, Air Force o Coast Guard Academy, <strong>o</strong></li>\n\t<li>Kadete sa hukbong-dagat sa United States Naval Academy</li>\n</ul>"
+              },
+              "fieldVaParagraphs": []
+            }
+          },
+          {
+            "entity": {
+              "entityId": "44174",
+              "entityBundle": "collapsible_panel_item",
+              "fieldTitle": "Para sa mga karapat-dapat na kabataang may edad na 12 hanggang 17, maaari bang makakuha ng bakuna para sa COVID-19 mula sa VA?",
+              "fieldWysiwyg": {
+                "processed": "<p>Opo. Para sa mga karapat-dapat na kabataang may edad na 12 hanggang 17, pwede nang mabakunahan ng Pfizer-BioNTech sa pasilidad ng VA na mayroon nito.</p>\n\n<p>Karapat-dapat ang mga kabataan kung matutugunan nila ang mga kailangan:</p>\n\n<ul><li>Tumatanggap sila ng mga benepisyong CHAMPVA, <strong>o</strong></li>\n\t<li>Nag-aalaga o tumutulong sila sa isang Beterano</li>\n</ul><p>Narito ang dapat malaman:</p>\n\n<ul><li>Sa kasalukuyan, ang Pfizer-BioNTech lamang ang awtorisadong bakuna na dapat gamitin para sa mga kabataan. Hindi lahat ng pasilidad ng VA ay nag-aalok ng bakunang ito. Siguraduhin muna ninyo na mayroong bakuna sa pasilidad bago kayo pumaroon. <br /><a href=\"https://www.va.gov/find-locations/?facilityType=health&amp;serviceType=Covid19Vaccine\">Hanapin ang inyong pinakamalapit na pangkalusugang pasilidad ng VA na nagbibigay ng COVID-19 na bakuna (sa English)</a></li>\n\t<li>Dapat samahan ng magulang o mga katiwala sa pag-aalaga ang kabataan kapag babakunahan. Kailangan na pareho silang magbigay ng pahintulot na mabakunahan.</li>\n</ul>"
+              },
+              "fieldVaParagraphs": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "30616",
+        "fieldWysiwyg": {
+          "processed": "<h3>Kung may mga katanungan kayo tungkol sa pagbabakuna sa VA:</h3>\n\n<ul><li><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"6a856794-6eb5-4207-8ef6-7340e195556c\" href=\"/coronavirus-veteran-frequently-asked-questions-tag\" title=\"Mga karaniwang katanungan tungkol sa Coronavirus: Detalye na kailangan malaman ng mga Beterano \">Bahasin ang mga madalas na itanong</a></li>\n\t<li><a href=\"https://www.va.gov/coronavirus-chatbot/\">Gamitin ang aming chatbot para sa coronavirus (sa English)</a></li>\n\t<li>Kung wala naman dito ang kasagutan, tumawag sa pangunahing linya ng impormasyon ng MyVA411 sa numerong  <a href=\"tel:+18006982411\">800-698-2411</a> <a href=\"tel:711\">(TTY: 711)</a>.</li>\n</ul><hr /><h2>Mga pangunahing impormasyon tungkol sa pagpapabakuna sa VA</h2>\n\n<h3>Saan kami nag-aalok ng mga bakuna</h3>\n\n<p>Nag-aalok kami ng mga bakuna para sa COVID-19 sa maraming pangkalusugang pasilidad ng VA at mga klinika.</p>\n\n<p><a href=\"https://www.va.gov/find-locations/?facilityType=health&amp;serviceType=Covid19Vaccine&amp;_ga=2.180091876.155958043.1619805477-314929476.1617377368\">Hanapin ang inyong pinakamalapit na pangkalusugang pasilidad ng VA na nag-aalok ng bakuna para sa COVID-19 (sa English)</a></p>\n\n<p>Nag-aalok kami ng mga bakuna para sa COVID-19 sa maraming pangkalusugang pasilidad ng VA at mga klinika. Ang mga lokasyon ng agarang pangangalaga at parmasya sa ating network sa pangangalaga ng komunidad ng mga bakuna sa COVID-19 sa mga Beterano. Sinusunod ng mga lokasyong ito ang kanilang mga panlokal, pang-estado o pangteritoryong plano sa bakuna. Mga Beterano hindi inuuna ang kaysa sa ibang gustong magpabakuna sa mga lokasyong ito.</p>\n\n<p>Kung kayo ay nakalista sa pangangalaga ng kalusugan ng VA at magpupunta kayo sa isang lokasyon ng pangangalaga ng komunidad para magpabakuna para sa COVID-19, i-download ang aming <a href=\"https://www.va.gov/COMMUNITYCARE/docs/programs/Pharmacy-Billing-Flyer.pdf\">pharmacy information card (PDF) (sa English)</a>. Ipakita ang card sa provider bago kayo magpabakuna.</p>\n\n<p><a href=\"https://www.va.gov/COMMUNITYCARE/providers/COVID-19_Guidance.asp\">Dagdagan ang nalalaman tungkol sa kung paano makakapagpabakuna para sa COVID-19 mula sa isang provider sa komunidad (sa English)</a></p>\n\n<p>Hinihikayat namin kayong kunin ang unang pagkakataon na mabakunahan sa lokasyon na pinakamaigi para sa inyo.</p>\n\n<p><a href=\"https://vaccines.gov/\">Hanapin ang iba pang mga nagbibigay ng bakuna na malapit sa inyo sa finder website ng bakuna ng CDC (sa English)</a></p>\n\n<h3>Kaligtasan ng bakuna</h3>\n\n<p>Bago bigyan ng awtorisasyon ng U.S. Food and Drug Adimistration (FDA) ang paggamit ng bakuna, pinag-aaralan nilang mabuti ang mga maaaring magamit na datos ng kaligtasan at mga resulta ng mga klinikal na pag-aaral para sa bakuna. Pinag-aralan ng mga siyentipiko ang mga 3 awtorisadong bakuna para sa COVID-19 sa sampung libong tao na sumailalim sa klinikal na pag-aaral. </p>\n\n<p>Nasa ilalim ng masusing pagsubaybay para sa kaligtasan sa kasaysayan ng Amerika ang milyun-milyong tao sa Estados Unidos na nabakunahan para sa COVID-19. Maraming tao ang nag-ulat ng bahagya lang na pangalawang epekto matapos mabakunahan para sa COVID-19. Bihira ang mga malalang pangalawang epekto.</p>\n\n<p>May kaunting bilang ng tao ang nagkaroon ng malubhang alerhiya (“analapilaksiya” kung tawagin) matapos mabakuhan para sa COVID-19. Ngunit, bihira ito. Pagkatapos ninyong mabakunahan sa VA, oobserbahan namin kayo ng 15 hanggang 30 minuto. Kung may reaksyon, may mga gamot naman kami para malunasan ito agad.</p>\n\n<h4>Balita tungkol sa Janssen (Johnson &amp; Johnson) na bakuna para sa COVID-19</h4>\n\n<p>Patuloy naming sinusunod ang patnubay mula sa CDC at FDA.</p>\n\n<p>Noong nagkaroon ng kaunting bilang ng taong nabakunahan ng Janssen ang nakaranas ng pambihira ngunit malubhang pamumuo ng dugo, iminungkahi ng mga dalubhasa ng CDC at FDA ang pagpapatigil sa nasabing bakuna. Ginawa nila ito upang mabigyan sila ng sapat na panahon na pag-aralan ang isyu. Pinag-aralan nila nang mabuti ang mga kaso at ang lahat ng magagamit na datos. Ayon sa kanilang pag-aaral, kompiyansa sila na ligtas gamitin ang bakunang ito at mabisa para makaiwas sa COVID-19.</p>\n\n<p>Ipinapakita ng mga nagagamit na datos na:</p>\n\n<ul><li>Higit na malaki ang kabutihan ng bakuna kaysa sa panganib.</li>\n\t<li>Masyadong maliit ang pagkakataong magkaroon ng pamumuo ng dugo matapos mabakunahan. Mga 7 sa bawat 1 milyong kababaihan na nasa pagitan ng 18 at 49 taong gulang na nabakunahan nito ang nakaranas ng mga pamumuo ng dugo. Para naman sa mga kababaihang 50 taong gulang at pataas at mga kalalakihan na kahit anong edad, mas pambihira pa ito.</li>\n\t<li>Dapat malaman ng mga kababaihang 50 taong gulang pababa ang mas mataas na panganib para sa kanila patungkol sa mga pambihirang pamumuo ng dugo.</li>\n</ul><p>Kung iaalok namin sa inyo ang Janssen na bakuna, ipapaalam namin sa inyo ang mga maaaring panganib at mga kabutihan. Kabilang dito ang pambihirang panganib para sa pamumuo ng dugo. Ipapaalam din namin sa inyo ang iba pang mga opsyon para sa bakuna. Kung may mga katungan kayo tungkol sa bakunang ito, makipag-ugnayan sa inyong panguhaning tagapangalagang mangagamot.</p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"ecfbba1c-d0c9-4a73-a539-e454f4bf9dfc\" href=\"/health-care/secure-messaging\" title=\"VA secure messaging\">Magpadala ng garantisadong ligtas na mensahe sa inyong tagapagbigay-kalinga ng VA para magtanong tungkol sa mga bakuna para sa COVID-19 (sa English)</a></p>\n\n<h4>Mas alamin ang tungkol sa kaligtasan ng bakuna para sa COVID-19</h4>\n\n<p><strong>Mga listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng Pfizer-BioNTech:</strong></p>\n\n<ul><li><a href=\"https://www.fda.gov/media/144663/download\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Pfizer-BioNTech (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/pfizer-biontech-covid-19-vaccine#additional\">Listahan ng impormasyon ng FDA Pfizer-BioNTech sa iba pang mga wika (sa English)</a></li>\n</ul><p><strong>Mga listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng Moderna:</strong></p>\n\n<ul><li><a href=\"https://www.fda.gov/media/144713/download\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Moderna (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/moderna-covid-19-vaccine/#additional\">Listahan ng impormasyon ng bakuna sa COVID-19 ng FDA Moderna COVID-19 sa iba pang mga wika (sa English)</a> </li>\n</ul><p><strong>Mga listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng Janssen:</strong></p>\n\n<ul><li><a href=\"https://www.fda.gov/media/146797/download\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Janssen (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/janssen-covid-19-vaccine#additional\">Listahan ng impormasyon ng bakuna sa COVID-19 ng FDA Janssen COVID-19 sa iba pang mga wika (sa English)</a></li>\n</ul><h4>Patuloy na pagsubaybay</h4>\n\n<p>Susubaybayan namin nang mabuti ang lahat ng magpapabakuna para sa COVID-19 pagdating sa mga reaksyon, side effect, o di-kanais-nais na kaganapan. Ang di-kanais-nais na kaganapan ay isang pinsala o kapahamakang mangyayari sa isang tao pagkatapos niyang mabakunahan, na maaaring dulot o hindi ng bakuna.</p>\n\n<p>Luulat namin ang impormasyong ito sa aming sistema ng pagmo-monitor at pagsubaybay sa bakuna. Ito rin ang sistemang ginagamit namin upang subaybayan ang mga reaksyon sa lahat ng bakuna, pati na rin ang para sa flu (trangkaso) at shingles (kulebra).</p>\n\n<p><strong>Para makakuha pa ng impormasyong tungkol sa kaligtasan sa bakuna sa COVID-19 sa iba't ibang wika, pumunta sa website ng CDC:</strong></p>\n\n<ul><li><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/keythingstoknow.html\">CDC: Key things to know about COVID-19 vaccines</a></li>\n\t<li><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/keythingstoknow.html\">CDC: </a><a href=\"https://espanol.cdc.gov/coronavirus/2019-ncov/vaccines/keythingstoknow.html\">Lo que debe saber acerca de las vacunas contra el COVID-19</a></li>\n\t<li><a href=\"https://chinese.cdc.gov/coronavirus/2019-ncov/vaccines/keythingstoknow.html\">CDC: COVID-19疫苗关键须知</a></li>\n\t<li><a href=\"https://vietnamese.cdc.gov/coronavirus/2019-ncov/vaccines/keythingstoknow.html\">CDC: Những điều quan trọng cần biết về vắc-xin COVID-19</a></li>\n\t<li><a href=\"https://korean.cdc.gov/coronavirus/2019-ncov/vaccines/keythingstoknow.html\">CDC: COVID-19 백신에 대해 알아야 할 주요 사항</a></li>\n\t<li><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/pdfs/fact-sheet-about-covid-19-vaccines-1_Tagalog.pdf\">CDC: COVID-19 na Bakuna (PDF)</a></li>\n</ul><h3>Pribasiya</h3>\n\n<p>Ibabahagi namin ang parehong impormasyong ibinabahagi namin para sa ibang mga bakuna sa CDC. Kasama dito ang mga sumusunod na impormasyon:</p>\n\n<ul><li>Demograpikong impormasyon (gaya ng edad, kasarian, lahi, at etnisidad) na makakatulong sa CDC na maunawaan kung aling pangkat ng mga tao ang nakakatanggap ng bakuna</li>\n\t<li>Mga di-kanais-nais na reaksyon sa bakuna</li>\n</ul><p>Hindi namin ibabahagi ang mga pangalan o tirahan</p>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "29945",
+        "fieldWysiwyg": {
+          "processed": "<hr /><h2>Mga tanong na maaaring mayroon ka tungkol sa mga bakuna sa COVID-19</h2>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "29946",
+        "fieldWysiwyg": {
+          "processed": "<h3>Pagsasaliksik sa bakuna at awtorisasyon ng FDA</h3>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "q_a_section",
+        "entityId": "29957",
+        "fieldSectionHeader": null,
+        "fieldSectionIntro": null,
+        "fieldAccordionDisplay": true,
+        "fieldQuestions": [
+          {
+            "entity": {
+              "entityId": "29959",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Mayroon bang lunas o anumang paggagamot na aprubado ng FDA para sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29960",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Walang lunas para sa COVID-19 sa ngayon. May mga paggagamot para sa COVID-19 ngunit ang panganib ng malubhang sakit at kamatayan ay mataas pa rin sa ilang pangkat ng mga tao.</p>\n\n<p>Kasalukuyang inaprubahan ng FDA ang remdesivir bilang ang unang gamot na panggamot ng COVID-19. Naipakita ng mga klinikal na pag-aaral na maaaring mabawasan ng remdesivir ang panganib ng kamatayan, at napapaikli nito ang tagal ng sakit sa ilang taong may COVID-19.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "29962",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Ano-anong bakuna sa COVID-19 na awtorisado ng FDA ang mayroon na ngayon? ",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29963",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Nagbigay ang FDA ng awtorisasyon sa 3 bakuna sa COVID-19 para sa pampublikong paggamit. Ang lahat ng bakunang ito ay napatunayang epektibo sa pagpigil ng malubhang sakit, pamamalagi sa ospital, at kamatayang dahil sa sakit na COVID-19.</p>\n\n<p><strong>Bakuna sa COVID-19 na gawa ng Pfizer-BioNTech</strong></p>\n\n<p>Ang bakuna sa COVID-19 na gawa ng Pfizer-BioNTech ay awtorisado para sa mga taong hindi bababa sa 16 taong gulang. Ang bakunang ito ay nangangailangan ng 2 dosis, na ibibigay nang 21 ang pagitan.</p>\n\n<p>Basahin ang mga listahan ng impormasyon ng bakuna para madagdagan ang nalalaman:</p>\n\n<ul><li><a href=\"https://www.fda.gov/media/144663/download\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Pfizer-BioNTech (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/pfizer-biontech-covid-19-vaccine#additional\">Listahan ng impormasyon ng FDA Pfizer-BioNTech sa iba pang mga wika (sa English)</a></li>\n</ul><p><strong>Bakuna sa COVID-19 na gawa ng Moderna</strong></p>\n\n<p>Ang bakuna sa COVID-19 na gawa ng Moderna ay awtorisado para sa mga taong hindi bababa sa 18 taong gulang. Ang bakunang ito ay nangangailangan ng 2 dosis, na ibibigay nang 28 ang pagitan.</p>\n\n<p>Basahin ang mga listahan ng impormasyon ng bakuna para madagdagan ang nalalaman:</p>\n\n<ul><li><a href=\"https://www.fda.gov/media/144713/download\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Moderna (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/moderna-covid-19-vaccine/#additional\">Listahan ng impormasyon ng bakuna sa COVID-19 ng FDA Moderna COVID-19 sa iba pang mga wika (sa English)</a></li>\n</ul><p><strong>Bakuna sa COVID-19 na gawa ng Janssen</strong></p>\n\n<p>Ang bakuna sa COVID-19 na gawa ng Janssen ay awtorisado para sa mga taong hindi bababa sa 18 taong gulang. Ang bakunang ito ay nangangailangan ng 1 dosis.</p>\n\n<p>Basahin ang mga listahan ng impormasyon ng bakuna para madagdagan ang nalalaman:</p>\n\n<ul><li><a href=\"https://www.fda.gov/media/146797/download\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Janssen (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/janssen-covid-19-vaccine#additional\">Listahan ng impormasyon ng bakuna sa COVID-19 ng FDA Janssen COVID-19 sa iba pang mga wika (sa English)</a></li>\n</ul><p>Ang mga pederal, pribado, at pang-akademikong katuwang ay patuloy na nagsisikap upang makapaghatid ng ligtas at epektibong mga bakuna sa COVID-19 sa lalong madaling panahon. </p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "29965",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Ano ang papel ng FDA sa pag-aapruba ng ligtas at epektibong bakuna laban sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29966",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Ang FDA ay ang ahensya ng gobyerno na namamahala sa lahat ng bakunang ginagamit sa U.S. Tinitiyak nito na sumusunod sa mahihigpit na prosesong siyentipiko at kontrol ang mga organisasyong gumagawa ng mga bakuna. Sinusuri din ng FDA ang lahat ng panglaboratoryo at pangklinikang datos ng bawat bakuna upang matiyak na ligtas at epektibo ang bakuna bago ito gamitin ng mga mamamayan ng Amerika. Kadalasang umaabot ng ilang taon ang proseso ng pagsusuri na ito.</p>\n\n<p>Sa panahon ng pampublikong emerhensya sa kalusugan gaya ng pandemyang COVID-19, maaaring mag-isyu ng Emergency Use Authorization (EUA) ang FDA. Pinabibilis ng EUA ang proseso ng pagsusuri ng FDA para maipagkaloob sa tao ang mga napakahalagang medikal na produkto na gaya ng mga bakuna sa pinakamabilis na panahong posible. Kasama pa rin sa proseso ang lahat ng mahalagang hakbang, ngunit sa mas maikling panahon.</p>\n\n<p>Pagkatapos bigyang-awtorisasyon ng FDA ang produkto, patuloy nilang susubaybayan ang kaligtasan at pagiging epektibo ng produkto. Kasama dito ang pagsubaybay sa anumang di-kanais-nais na reaksyon o side effect na maaaring iulat ng mga tao kapag ginagamit ang produkto.</p>\n\n<p>Para madagdagan ang nalalaman tungkol sa kung paano pinabibilis ng FDA at ng iba pang ahensya ng gobyerno ang proseso ng pagkakaloob ng bakuna sa COVID-19 sa publiko, <a href=\"https://media.defense.gov/2020/Aug/13/2002476369/-1/-1/0/200813-D-ZZ999-100.JPG\">pumunta sa infographic ng Operation Warp Speed tungkol sa Pinabilis na Proseso ng Bakuna sa COVID-19 </a><a href=\"https://www.youtube.com/watch?v=iGkwaESsGBQ&amp;feature=youtu.be\">(sa English)</a>.</p>\n\n<p>Para madagdagan ang nalalaman tungkol sa proseso ng EUA sa pangkalahatan,<a href=\"https://www.youtube.com/watch?v=iGkwaESsGBQ&amp;feature=youtu.be\"> i-play ang FDA video (YouTube) na ito (sa English)</a>.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "29968",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Kalahok ba ang VA sa mga pinag-aaralang pagsasaliksik para sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29969",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Oo. Bilang isa sa mga nangunguna sa pangkalusugang pagsasaliksik ng bansa, patuloy kaming lumalahok sa mga pinag-aaralang pagsasaliksik para sa mga bagong paggagamot at bakuna sa COVID-19. Ang mga pag-aaral na ito ay tinatawag ding mga klinikal na pagsubok.</p>\n\n<p>Kailangan namin ang mga pinag-aaralang pagsasaliksik upang makatulong sa paghahanap ng mas ligtas at epektibong mga paraan sa pagpigil at paggagamot ng COVID-19. Dahil napakabago ng COVID-19, marami pa tayong kailangang matutunan.</p>\n\n<p>Kung gusto ninyo, maaari kayong tumulong sa mga pagsisikap na ito sa pamamagitan ng pagsa-sign up sa aming listahan ng mga boluntaryo sa pagsasaliksik. Kung sa palagay namin ay maaari kayong maging kwalipikado bilang kalahok sa isa sa aming mga pinag-aaralang pagsasaliksik, makikipag-ugnayan kami sa iyo para talakayin ito. Pagkatapos nito, makakapagpasya kayo kung gusto ninyong sumali.</p>\n\n<p>Ang sinumang hindi bababa sa 18 taong gulang ay maaaring magboluntaryo. Hindi mo kailangang maging Beterano o naka-enroll sa health care ng VA. Hindi maaapektuhan sa anumang paraan ng inyong pasyang sumali sa pag-aaral, o ang anuman sa inyong mga benepisyo at serbisyong natatanggap mula sa VA.</p>\n\n<p><a href=\"http://www.va.gov/coronavirus-research\">Dagdagan ang nalalaman tungkol sa pagboboluntaryo sa pagsasaliksik para sa coronavirus sa VA (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "29971",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Iba ba ang mga awtorisadong bakuna sa COVID-19 sa VA kaysa sa mga bakunang natatanggap sa mga pinag-aaralang pagsasaliksik?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29972",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Oo. Ganap na naiiba ang aming pagsisikap na makapagbigay ng awtorisadong mga bakuna sa COVID-19 sa mga Beterano at empleyado ng health care ng VA sa aming paglahok sa mga pinag-aaralang pagsasaliksik para sa COVID-19.</p>\n\n<p>Narito ang kailangan ninyong malaman:</p>\n\n<ul><li><strong>Ang awtorisadong bakuna sa COVID-19</strong> ay ang natukoy ng FDA na ligtas at epektibong gamitin ng publiko. Kung kwalipikadong kang makapagpabakuna para sa COVID-19 sa VA, makakatanggap ka ng awtorisadong bakuna.</li>\n\t<li>Sinusubukan ng mga <strong>pinag-aaralang pagsasaliksik</strong> ang mga bagong bakuna upang matukoy kung talaga ngang ligtas at epektibo ang mga ito. Ang mga pinag-aaralang pagsasaliksik ay nangangailangan ng espesyal na pagpapa-enroll at pahintulot. Hindi namin kayo bibigyan ng pinag-aaralang bakuna kung hindi kayo magboboluntaryo na sumali sa isang pag-aaral.<br /><br />\n\tKung magboboluntaryo kayo para sa isang pag-aaral, makikipag-usap sa inyo ang team ng pag-aaral tungkol sa lahat ng detalye ng pag-aaral bago kayo sumali. Ipapaliwanag nila sa inyo ang lahat ng posibleng pakinabang at panganib. At maaari ninyong iwanan ang pag-aaral kailanman. <br /><br /><a href=\"http://www.va.gov/coronavirus-research\">Dagdagan ang nalalaman tungkol sa pagboboluntaryo sa pagsasaliksik para sa coronavirus sa VA (sa English)</a></li>\n</ul>"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "29973",
+        "fieldWysiwyg": {
+          "processed": "<h3>Paano gumagana ang mga bakuna sa COVID-19</h3>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "q_a_section",
+        "entityId": "29982",
+        "fieldSectionHeader": null,
+        "fieldSectionIntro": null,
+        "fieldAccordionDisplay": true,
+        "fieldQuestions": [
+          {
+            "entity": {
+              "entityId": "29984",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Bakit ko kailangan ng bakuna sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29985",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Ang sakit na coronavirus (COVID-19) ay nakapagdulot ng malulubhang sakit at kamatayan sa buong mundo. Ito rin ay dahil sa ang virus na nagdudulot ng COVID-19 ay madaling naikakalat mula sa bawat tao.</p>\n\n<p>Mayroon kaming ilang paggagamot na nakakatulong upang mabawasan ang mga epekto ng COVID-19 ngunit ang bakuna na nakakatulong upang mapigilan ang mga taong mahawa ang pinakamagandang paraan upang pabagalin o ihinto ang pagkalat ng virus.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "29987",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Paano ako pinoprotektahan laban sa pagkakasakit ng mga bakuna para sa mga virus na gaya ng coronavirus?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29988",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Tinutulungan ng mga bakuna na sanayin ang natural na immune system ng inyong katawan na kilalanin at labanan ang isang espesipikong sakit, sa pamamagitan ng pag-uudyok ng reaksyon sa virus na nagdudulot ng sakit.</p>\n\n<p>Kapag nakapasok ang isang virus sa inyong katawan sa unang pagkakataon, bumubuo ng depensa ang inyong immune system. Kasama dito ang paggawa ng antibodies na tumutulong na patayin o nyutralisahin ang virus. Kapag nalantad kayo ulit sa parehong virus, tinutulungan ng antibodies na ito ang inyong immune system na makilala at agad na labanan ang virus.</p>\n\n<p>Pumunta sa website ng CDC para <a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/how-they-work.html?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fcoronavirus%2F2019-ncov%2Fvaccines%2Fabout-vaccines%2Fhow-they-work.html\">madagdagan ang nalalaman tungkol sa kung paano gumagana ang mga bakuna sa COVID-19 (sa English)</a>. </p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30626",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Alam ba namin kung may ilang bakuna sa COVID-19 ang mas mahusay kaysa sa iba?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30625",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Hindi. May tatlo (3)nang magkakaibang bakuna sa COVID-19 ang nabigyang-awtorisasyon ng FDA. Nagpapakita ng iba't ibang resulta ang klinikal na pagsubok ng bawat bakuna. Ngunit ang bawat pagsubok ay isinagawa sa iba't ibang bahagi ng U.S. at ng mundo, nang magkakaibang panahon, at nang magkakaibang rate ng COVID-19.</p>\n\n<p>Ang natatanging paraan para malaman kung gaano kahusay ang epekto ng mga bakuna kung ihahambing sa isa't isa ay ang subukan ang mga ito sa magkaparehong klinikal na pagsubok (na tinatawag na head-to-head trial). Wala tayong anumang head-to-head trial para sa 3 awtorisadong bakuna sa COVID-19 sa ngayon.  </p>\n\n<p>Ang alam namin ay ang 3 bakuna ay napatunayang epektibo sa pagpigil sa malubhang sakit, pamamalagi sa ospital, at kamatayang dahil sa COVID-19. Alam din namin na ang pagpapabakuna para sa COVID-19 ay tumutulong na maprotektahan kayo at ang iba laban sa COVID-19.</p>\n\n<p><a href=\"https://www.fda.gov/emergency-preparedness-and-response/mcm-legal-regulatory-and-policy-framework/janssen-covid-19-vaccine-frequently-asked-questions\">Makakuha ng mas marami pang sagot mula sa FDA tungkol sa bakuna sa COVID-19 na gawa ng Janssen (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30628",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Maiiba ba ng isang bakunang mRNA ang aking DNA?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30627",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Hindi. Ang mga bakunang mRNA na poprotekta sa inyo laban sa COVID-19 ay hindi makapag-iiba sa inyong DNA. Ang mga bakunang ito ay gumagana sa labas ng nucleus ng inyong selula (kung saan naroroon ang inyong DNA). Tinuturuan ng mga bakuna ang inyong mga selula kung paano gumawa ng protina (protein) na magpapagana sa isang immune response. Pagkatapos, maghihiwal-hiwalay ang inyong mga selula at aalisin ang mRNA kapag naisagawa na ng mga ito ang lahat ng tagubilin.</p>\n\n<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/mrna.html\">Pumunta sa website ng CDC para madagdagan ang nalalaman tungkol sa mga bakunang mRNA (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "29990",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Paano makikinabang ang aking pamilya at komunidad sa pagpapabakuna?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29991",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Ang mga bakuna ay pumoprotekta sa inyo at sa mga tao sa paligid ninyo. Ang pagprotekta sa mga buong komunidad laban sa mga sakit na gaya ng COVID-19 ay isang mahalagang dahilan kung bakit dapat magpabakuna ang lahat. Tinatawag namin itong \"immunity ng komunidad.\"</p>\n\n<p>Kapag marami nang tao ang nabakunahan at magkaroon ng immunity sa isang partikular na virus, hindi na madali para sa virus ang kumalat sa bawat tao. Ang ibig sabihin nito ay hindi na masyadong mataas ang posibilidad na mahawahan ang lahat sa komunidad. Kahit na mahawahan pa rin ang iba, mas mababa na ang tsansang magka-outbreak na sanhi para magkasakit ang maraming tao sa komunidad nang sabay-sabay. Nakakatulong itong makapigil sa mga isyu na gaya ng agarang pangangailangan ng pangangalaga ng maraming tao, at kakulangan ng kama sa ospital o mga health care provider.</p>\n\n<p>Ipinapakita ng datos na may ilang komunidad ang desproporsyonadong naapektuhan ng COVID-19. Kasama dito ang mga Black, Hispanic, Native American, Pacific Islander, at Asian na komunidad. Maaaring maprotektahan ng mga miyembro ng mga komunidad na ito ang kanilang mga pamilya at kaibigan sa pamamagitan ng pagpapabakuna.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "29993",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Makakakuha ba ako ng COVID-19 mula sa alinman sa mga awtorisadong bakuna?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "29994",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Hindi. Ang mga awtorisadong bakuna sa COVID-19, at ang mga pinapaunlad pang bakuna ay gumagamit ng inactivated virus (patay na bakuna), mga bahagi ng virus, o gene na mula sa virus. Wala sa alinman sa mga ito ang makakapagdulot ng COVID-19.</p>\n\n<p>Pumunta sa website ng CDC para <a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/how-they-work.html\">madagdagan ang nalalaman tungkol sa kung paano gumagana ang mga bakuna sa COVID-19 (sa English)</a>.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "29995",
+        "fieldWysiwyg": {
+          "processed": "<h3>Pagpapabakuna para sa COVID-19</h3>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "q_a_section",
+        "entityId": "30014",
+        "fieldSectionHeader": null,
+        "fieldSectionIntro": null,
+        "fieldAccordionDisplay": true,
+        "fieldQuestions": [
+          {
+            "entity": {
+              "entityId": "30016",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Paano makikipag-ugnayan sa akin ang VA tungkol sa kung kailan ako mababakunahan para sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30017",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Kung tumatanggap na kayo ng pangangalaga sa VA, maaaring makipag-ugnayan sa inyo ang inyong lokal na pasilidad-pangkalusugan ng VA sa pamamagitan ng telepono, email, o text message. Kung kwalipikado kayo at gustong magpabakuna, hinihikayat namin kayong tumugon.</p>\n\n<p>Ngunit bago kayo magbigay ng anumang personal na impormasyon o bago kayo mag-click sa anumang mga link, tiyakin na ang tawag, email, o text ay talagang mula sa VA.</p>\n\n<ul><li>Ang mga text message ay palaging magmumula sa <strong>53079</strong>.</li>\n\t<li>Ang mga email ay palaging magmumula sa isang <strong>va.gov</strong> na email address.</li>\n\t<li>Kung may tatawag sa inyo na mula sa VA at hindi ninyo nakikilala ang numero ng telepono, humingi ng numero kung saan sila matatawagan. Pagkatapos ay tumawag sa pasilidad-pangkalusugan ng VA para berepikahin.</li>\n</ul><p>Maaari kayong imbitahan ng inyong pasilidad na makapagpabakuna sa ilang paraan:</p>\n\n<ul><li>Maaari nila kayong imbitahan sa isang kaganapan ng maramihang pagbabakuna, gaya ng drive-thru na klinika.</li>\n\t<li>Maaari nila kayong bigyan ng espesipikong petsa at oras para makapagpabakuna.</li>\n\t<li>Maaari nila kayong sabihan na mag-iskedyul ng appointment.</li>\n</ul>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30019",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Paano ko malalaman kung ligtas para sa akin ang magpabakuna para sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30020",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Matutulungan kayong magpasya ng inyong health care provider kung ligtas para sa inyo ang magpabakuna para sa COVID-19.</p>\n\n<p>Bago kayo magpabakuna, sabihin sa provider na magbibigay sa inyo ng bakuna ang tungkol sa lahat ng inyong mga medikal na kondisyon. Tiyakin na masasabi ninyo sa inyong provider kung naaangkop sa inyo ang anuman sa mga nasa ibaba:</p>\n\n<ul><li>Mayroon kayong mga alerhiya</li>\n\t<li>Mayroon kayong lagnat</li>\n\t<li>May problema kayo sa pagdurugo o gumagamit ng pampalabnaw ng dugo</li>\n\t<li>May kondisyon kayong nagpapahina sa inyong immune system at sanhi para kayo ay maging immunocompromised (gaya ng cancer, HIV, organ transplant, o genetic immune deficiency)</li>\n\t<li>Umiinom kayo ng gamot na nakakaapekto sa inyong immune system (gaya ng chemotherapy o corticosteriods)</li>\n\t<li>Kayo ay buntis, nagpaplanong mabuntis, o nagpapasuso</li>\n\t<li>Nakatanggap kayo ng ibang bakuna sa COVID-19</li>\n</ul><p>Kung nagkaroon kayo ng matinding alerhiya sa anumang sangkap ng bakuna sa COVID-19, hindi kayo dapat magpabakuna para sa COVID-19.</p>\n\n<p>Para madagdagan ang kaalaman tungkol sa dapat mong malaman bago magpabakuna pati na rin ang listahan ng sangkap, bashin ang mga listahan ng impormasyon ng FDA:</p>\n\n<ul><li><a href=\"https://www.fda.gov/media/144663/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Pfizer-BioNTech (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/media/144713/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Moderna (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/media/146797/download\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Janssen (PDF)</a></li>\n</ul><p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/safety/allergic-reaction.html\">Pumunta sa website ng CDC para madagdagan ang nalalaman tungkol sa mga bakuna sa COVID-19 at mga alerhiya (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30022",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Dapat ba akong magpabakuna para sa COVID-19 kung nagka-COVID-19 na ako?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30023",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Ipinapakita ng datos na mula sa klinikal na pagsubok na ligtas ang 3 awtorisadong bakuna sa COVID-19 sa mga taong nahawahan na na virus na nagdudulot ng COVID-19.</p>\n\n<p><strong>Kung kasalukuyan kayong may sakit dahli sa COVID-19,</strong> kailangan ninyong maghintay hanggang sa gumaling kayo, at hanggang sa tapos na kayo sa pagbubukod bago makapagpabakuna.</p>\n\n<p><strong>Kung tumanggap kayo ng passive antibody therapy para gamutin ang COVID-19,</strong> kailangan ninyong maghintay nang hindi bababa sa 90 araw bago magpabakuna para sa COVID-19.</p>\n\n<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/faq.html\">Pumunta sa website ng CDC para sa mga sagot sa mga mas karaniwang tanong tungkol sa mga bakuna sa COVID-19 (sa English)</a> </p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30025",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Pwede ko bang piliin kung aling awtorisadong bakuna sa COVID-19 ang para sa akin?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30026",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Para sa susunod na ilang buwan, limitado pa rin ang magiging bilang ng aming mga bakuna. </p>\n\n<p>Nasa sa inyo kung gusto ninyong magpabakuna o hindi. Hindi maaapektuhan sa anumang paraan ng inyong pasya ang inyong pangangalagang pangkalusugan sa VA, o ang anuman sa inyong mga benepisyong natatanggap mula sa VA.</p>\n\n<p>Kung magpapabakuna kayo para sa COVID-19 na nangangailangan ng 2 dosis, dapat ninyong kunin ang parehong bakuna para sa dalawang dosis na iyon. Para matulungan kaming matiyak ito, tatanggap ang bawat pasilidad-pangkalusugan ng VA na nag-aalok ng pagbabakuna para sa COVID-19 ng bakunang gawa ng Pfizer o ng Moderna. Kailangan mong makuha ang dalawang dosis sa parehong pasilidad.</p>\n\n<p>Para madagdagan ang nalalaman tungkol sa kasalukuyang plano ng inyong pasilidad, pumunta sa website ng pasilidad. Kapag nasa site na kayo, pumunta sa <strong>Health care services</strong>, at pagkatapos, sa <strong>COVID-19</strong> sa menu.</p>\n\n<p><a href=\"https://www.va.gov/find-locations/?facilityType=health&amp;serviceType=Covid19Vaccine\">Hanapin ang website ng inyong lokal na pasilidad-pangkalusugan ng VA (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30630",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Paano kung may mga inaalala ako tungkol sa pagpapabakuna ng isa sa mga bakuna?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30629",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Palagi nasa inyo ang karapatang magtanong tungkol sa anumang bakuna o paggagamot. Ang pinakamainam na taong dapat kausapin tungkol sa inyong mga alalahanin ay ang inyong tagabigay ng pangangalagang pangkalusugan. Maaari kayong bigyan ng mas maraming impormasyon ng inyong tagabigay ng pangangalagang pangkalusugan tungkol sa bawat bakuna, at matutulungan kayong magpasya nang nararapat para sa inyo.</p>\n\n<p><a href=\"https://www.va.gov/health-care/secure-messaging/\">Magpadala ng secure na mensahe sa inyong provider ng health care sa VA (sa English)</a></p>\n\n<p>Kung hindi kayo makakatanggap ng pangangalaga sa VA, makipag-ugnayan sa inyong pangunahing tagabigay ng pangangalagang pangkalusugan.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30028",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Pwede ba akong magpabakuna para sa COVID-19 at flu o iba pang bakuna nang sabay-sabay?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30029",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Hindi. Hindi kayo pwedeng magpabakuna para sa COVID-19 nang sabay sa bakuna sa flu, shingles, o iba pang bakuna. Kailangan ninyong maghintay nang hindi bababa sa 14 na araw sa pagitan ng pagpapabakuna para sa COVID-19 at iba pang bakuna. </p>\n\n<p>Ito ay dahil limitado ang impormasyon sa kaligtasan at pagkaepektibo sa ngayon, tungkol sa pagsasabay ang ibang bakuna sa bakuna sa COVID-19. Sinusunod namin ang patnubay ng CDC tungkol sa pagitan ng pagbabakuna. Habang padagdag nang padagdag ang impormasyon, maaaring magbago ang patnubay na ito. Matutulungan kayo ng inyong health care provider na magpasya sa pinakamainam na iskedyul ng pagbabakuna para sa iyo ng inyong pamilya.</p>\n\n<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/faq.html\">Pumunta sa website ng CDC para sa karagdagang mga sagot tungkol sa mga bakuna sa COVID-19 (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30031",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Pwede ba akong mag-iba ng isip pagkatapos magpaiskedyul ng pagpapabakuna?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30032",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Oo. Pwede kayong mag-iba ng isip tungkol sa pagpapabakuna kailanman.</p>\n\n<p>Sa panahong ito, limitado ang aming supply ng mga bakuna. Kung magbabago kayo ng isip, ang hinihiling lang namin ay ang makipag-ugnayan kayo sa inyong team sa pangangalaga sa lalong madaling panahon. Bibigyang-daan kami nito na ialok ang bakuna sa ibang Beterano.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30034",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Ilang dosis ng bakuna sa COVID-19 ang dapat kong makuha? Kailangan ko ba ng dosis na booster?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30035",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Depende sa uri ng bakuna sa COVID-19 ang bilang ng dosis na kakailanganin ninyo. Kailangang ipagpatuloy ng mga dalubhasa sa bakuna ang pag-aaral ng datos upang malaman kung at kung kailan mangangailangan ang mga tao ng dagdag na dosis ng bakuna para mapanatili ang proteksyon laban sa COVID-19.</p>\n\n<p><strong>Isang dosis na bakuna</strong></p>\n\n<p>Nangangailangan ng 1 dosis ang awtorisadong mga bakuna sa COVID-19 na gawa ng Janssen. Para madagdagan ang nalalaman tungkol sa bakunang ito, basahin ang listahan ng impormasyon ng bakuna ng FDA.</p>\n\n<p><a href=\"https://www.fda.gov/media/146797/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Janssen (PDF)</a></p>\n\n<p><strong>Mga bakunang nangangailangan ng 2 dosis</strong></p>\n\n<ul><li>Ang awtorisadong bakuna na gawa ng Pfizer-BioNTech ay nangangailangan ng 2 dosis na ibibigay nang 21 araw ang pagitan. Para madagdagan ang nalalaman tungkol sa bakunang ito, basahin ang listahan ng impormasyon ng bakuna ng FDA.<br /><a href=\"https://www.fda.gov/media/144663/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Pfizer-BioNTech (PDF)</a></li>\n\t<li>Ang awtorisadong bakuna sa COVID-19 na gawa ng Moderna ay nangangailangan ng 2 dosis, na ibibigay nang 28 ang pagitan. Para madagdagan ang nalalaman tungkol sa bakunang ito, basahin ang listahan ng impormasyon ng bakuna ng FDA.<br /><a href=\"https://www.fda.gov/media/144713/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Moderna (PDF)</a></li>\n</ul><p>Para sa bawat-isa sa mga bakunang ito, kailangan mong mabakunahan nang dalawang beses para gumana ang bakuna. Kunin ang pangalawang turok kahit na nagkaroon ka ng mga kakaibang epekto matapos ang una, maliban na lamang kung sasabihin sa iyo ng inyong tagabigay ng pangangalagang pangkalusugan na huwag na.</p>\n\n<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/faq.html\">Pumunta sa website ng CDC para sa mga sagot sa mga mas karaniwang tanong tungkol sa mga bakuna sa COVID-19 (sa English) </a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30037",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Kung ang bakunang makukuha ko ay mangangailangan ng 2 dosis, kailangan ko bang makuha ang dalawang dosis ng bakuna sa parehong pasilidad ng VA?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30038",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Oo. </p>\n\n<p>Sumailalim sa parehong pagsusuri sa kaligtasan ang mga bakuna sa COVID-19 na gawa ng Pfizer-BioNTech at Moderna, at ang dalawang ito ay nangangailangan ng 2 dosis para maging epektibo. </p>\n\n<p>Kung mabakunahan kayo ng isa sa mga ito, kakailanganin ninyong makuha ang dalawang dosis sa parehong pasilidad ng VA Kung kailangan ninyong lumipat o magbiyahe, pakiplano ito pagkatapos ninyong isagawa ang inyong unang iskedyul sa pagpapabakuna.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30040",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Ano ang dapat kong malaman kapag nagpabakuna ako para sa COVID-19 sa labas ng VA?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30041",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Maaari kayong alukin ng bakuna sa COVID-19 ng inyong employer o ng mga lokal na opisyal ng pampublikong kalusugan. Nasa sa inyo kung saan ninyo gustong magpabakuna.</p>\n\n<p>Pakitandaan na kung magpapabakuna kayo ng alinman sa mga bakuna sa COVID-19 na gawa sa Pfizer-NTech o Moderna, kailangan ninyong makakuha ng 2 dosis ng bakuna. Sumailalim sa parehong pagsusuri sa kaligtasan ang dalawang bakuna na ito at ang mga ito ay nangangailangan ng 2 dosis para maging epektibo. Kailangan ninyong magpabakuna ng dalawang dosis sa parehong lokasyon.</p>\n\n<p>Kung magpapasya kayong magpabakuna para sa COVID-19 sa labas ng VA, hinihikayat namin kayong ibahagi ang impormasyong ito sa inyong team sa health care ng VA.</p>\n\n<p>Pwede kayong magpadala ng litrato ng inyong record ng pagpapabakuna sa inyong <a href=\"https://www.va.gov/health-care/secure-messaging/\">VA provider sa pamamagitan ng secure messaging (sa English)</a>.</p>\n\n<p>Pwede rin ninyong idagdag ang inyong impormasyon sa bakuna sa inyong <strong>My HealtheVet</strong> na buod ng kalusugan para sa sarili ninyong record. Para maidagdag ang inyong impormasyon, kailangan ninyo ng Premium na <strong>My HealtheVet</strong> account. <a href=\"https://www.myhealth.va.gov/mhv-portal-web/ss20210112-covid19-vaccine-records-online?inheritRedirect=true\">Dagdagan ang nalalaman tungkol sa pamamahala ng inyong mga tala ng bakuna sa COVID-19 online (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "30042",
+        "fieldWysiwyg": {
+          "processed": "<h3>Pagkatapos magpabakuna para sa COVID-19</h3>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "q_a_section",
+        "entityId": "30051",
+        "fieldSectionHeader": null,
+        "fieldSectionIntro": null,
+        "fieldAccordionDisplay": true,
+        "fieldQuestions": [
+          {
+            "entity": {
+              "entityId": "30053",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Magkakaroon ba ako ng mga side effect pagkatapos kong magpabakuna para sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30054",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Maaari kayong magkaroon ng ilang side effect pagkatapos ninyong magpabakuna para sa COVID-19. Normal na mga senyales ang mga side effect na nagtatatag ng proteksyon ang inyong katawan laban sa COVID-19.</p>\n\n<p>Parang trangkaso ang pakiramdam ng mga side effect na ito. Maaari din nitong maapektuhan ang inyong kakayahang magtrabaho o gumawa ng ibang mga pang-araw-araw na aktibidad. Ngunit mawawala rin sa loob ng ilang araw ang anumang mga side effect.</p>\n\n<p>Ang ilang tao ay nakapag-ulat ng matinding mga alerhiya sa bakuna sa COVID-19. Kapag nagpabakuna kayo para sa COVID-19 sa VA, susubaybayan namin nang mabuti ang inyong reaksyon sa loob ng 15 o 30 minuto matapos kayong bakunahan. Ibibgay din namin sa inyo ang lahat ng impormasyong kailangan ninyo tungkol sa dapat gawin kung makaranas kayo ng anumang mga side effect.</p>\n\n<p>Pumunta sa website ng CDC para <a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/expect/after.html\">madagdagan ang nalalaman tungkol sa mga dapat asahan pagkatapos magpabakuna para sa COVID-19 (sa English)</a>.</p>\n\n<p>Para madagdagan ang nalalaman tungkol sa mga naiulat na side effect para sa 3 awtorisadong bakuna, basahin ang mga listahan ng impormasyon ng FDA:</p>\n\n<ul><li><a href=\"https://www.fda.gov/media/144663/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Pfizer-BioNTech (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/media/144713/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Moderna (PDF)</a></li>\n\t<li><a href=\"https://www.fda.gov/media/146797/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Janssen (PDF)</a></li>\n</ul>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30056",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Pwede pa ba akong magka-COVID-19 pagkatapos kong mabakunahan?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30057",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Bababaan ng epektibong bakuna ang panganib na kayo ay mahawahan ng virus na nagdudulot ng COVID-19. Kung mahawahan kayo, maaari ding pababain ng bakuna ang inyong panganib na magkaroon ng malubhang sakit. Ngunit walang bakuna na makakapagpigil sa lahat ng impeksyon. Kaya isang layunin ng bakuna sa COVID-19 ay ang mas pahirapin ang pagkalat ng virus sa iba.</p>\n\n<p>Ipinakita ng mga tuloy-tuloy na pag-aaral ang mga resultang ito para sa 3 awtorisadong bakuna:</p>\n\n<ul><li>Napipigilan ng bakuna sa COVID-19 na gawa ng Pfizer-BioNTech ang COVID-19 matapos ang 2 dosis, na ibinibigay nang 21 ang pagitan. Para madagdadgan ang nalalaman tungkol sa bakunang ito, basahin ang <a href=\"https://www.fda.gov/media/144663/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Pfizer-BioNTech (PDF)</a>.</li>\n\t<li>Napipigilan ng bakuna sa COVID-19 na gawa ng Moderna ang COVID-19 matapos ang 2 dosis, na ibinibigay nang 28 ang pagitan. Para madagdagan ang nalalaman tungkol sa bakunang ito, basahin ang <a href=\"https://www.fda.gov/media/144713/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Moderna (PDF)</a>.</li>\n\t<li>Napipigilan ng bakuna sa COVID-19 na gawa ng Janssen ang COVID-19 pagkatapos ng 1 dosis. Para madagdagan ang nalalaman tungkol sa bakunang ito, basahin ang <a href=\"https://www.fda.gov/media/146797/download\" target=\"_blank\">Listahan ng impormasyon ng bakuna sa COVID-19 na gawa ng FDA Janssen (PDF)</a>.</li>\n</ul><p>Magkakaroon pa kami ng ibayong impormasyon tungkol sa pangmatagalang epekto ng mga bakuna sa COVID-19 kapag nakumpleto na ang iba pang mga klinikal na pagsubok.</p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30059",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Gaano katagal ako mapoproteksyunan ng bakuna laban sa COVID-19?",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30060",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Hindi namin malalaman kung magiging hanggang kailan ang proteksyon hanggang sa magkaroon kami ng karagdagang datos ukol sa kung gaano kahusay ang epekto ng mga awtorisadong bakuna sa COVID-19.</p>\n\n<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/faq.html\">Pumunta sa website ng CDC para sa karagdagang mga sagot tungkol sa mga bakuna sa COVID-19 (sa English)</a></p>"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityId": "30062",
+              "parentFieldName": "field_questions",
+              "entityBundle": "q_a",
+              "fieldQuestion": "Kapag nakapagpabakuna na ako para sa COVID-19, pwede na ba akong hindi mag-mask sa mga pasilidad ng VA? ",
+              "fieldAnswer": [
+                {
+                  "entity": {
+                    "entityBundle": "wysiwyg",
+                    "entityId": "30063",
+                    "fieldWysiwyg": {
+                      "processed": "<p>Hindi. Kahit na nakapagpabakuna na kayo para sa COVID-19, kailangan pa rin ninyong magsuot ng mask na tumatakip sa inyong bibig at ilong kapag kayo ay nasa isang pasilidad ng VA. Kailangan din ninyong sundin ang iba pang mga patakaran sa kaligtasan ng VA gaya ng pananatiling malayo sa iba. Pinoprotektahan kayo nito, ang ibang mga Beterano, at ang aming staff. </p>"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "wysiwyg",
+        "entityId": "30064",
+        "fieldWysiwyg": {
+          "processed": "<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/faq.html\">Pumunta sa website ng CDC para sa karagdagang mga sagot tungkol sa mga bakuna sa COVID-19 (sa English)</a></p>"
+        }
+      }
+    }
+  ],
+  "fieldAlert": null,
+  "fieldRelatedLinks": null,
+  "fieldAdministration": { "entity": { "name": "Health care benefits hub" } },
+  "fieldPageLastBuilt": { "date": "2021-07-06 17:23:48 UTC" },
+  "changed": 1623182058
+}

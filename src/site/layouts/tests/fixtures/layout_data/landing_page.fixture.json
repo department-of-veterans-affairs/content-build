@@ -1,0 +1,297 @@
+{
+  "entityBundle": "landing_page",
+  "entityId": "79",
+  "entityPublished": true,
+  "title": "VA records",
+  "vid": 8793,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      { "url": { "path": "", "routed": true }, "text": "Records" }
+    ],
+    "path": "/records"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaLink",
+      "key": "image_src",
+      "value": "https://prod.cms.va.gov/sites/default/files/hub_promos/records.png"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "VA Records | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Access your VA records and documents online to manage your health and benefits. Download your VA letters, get Veteran ID Cards, get your VA medical records, request your DD214, view your payment history, and learn how to apply for a certificate of eligibility."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "VA records |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Access your VA records and documents online to manage your health and benefits. Download your VA letters, get Veteran ID Cards, get your VA medical records, request your DD214, view your payment history, and learn how to apply for a certificate of eligibility."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/hub_promos/records.png"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Access your VA records and documents online to manage your health and benefits. Download your VA letters, get Veteran ID Cards, get your VA medical records, request your DD214, view your payment history, and learn how to apply for a certificate of eligibility."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "VA records |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/hub_promos/records.png"
+    }
+  ],
+  "fieldIntroText": "Access your VA records and documents online to more easily manage your benefits.",
+  "fieldPromo": {
+    "entity": {
+      "fieldImage": {
+        "entity": {
+          "entityId": "9",
+          "image": {
+            "url": "https://prod.cms.va.gov/sites/default/files/hub_promos/records.png",
+            "alt": null,
+            "title": null,
+            "width": 456,
+            "height": 304,
+            "derivative": {
+              "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/hub_promos/records.png",
+              "width": 480,
+              "height": 320
+            }
+          }
+        }
+      },
+      "fieldPromoLink": {
+        "entity": {
+          "entityId": "3546",
+          "fieldLink": {
+            "url": { "path": "/records/download-va-letters" },
+            "title": "Confirm your VA benefit status",
+            "options": []
+          },
+          "fieldLinkSummary": "Download letters like your eligibility or award letter for certain benefits."
+        }
+      }
+    }
+  },
+  "fieldRelatedLinks": null,
+  "fieldAlert": null,
+  "fieldTitleIcon": "records",
+  "fieldSpokes": [
+    {
+      "entity": {
+        "parentFieldName": "field_spokes",
+        "fieldTitle": "Get your records and documents",
+        "entityId": "3775",
+        "fieldVaParagraphs": [
+          {
+            "entity": {
+              "entityId": "3776",
+              "fieldLink": {
+                "url": { "path": "/records/get-veteran-id-cards" },
+                "title": "Get Veteran ID cards",
+                "options": []
+              },
+              "fieldLinkSummary": "Find out how to get different types of identification cards to show your military status or your enrollment in VA health care."
+            }
+          },
+          {
+            "entity": {
+              "entityId": "3777",
+              "fieldLink": {
+                "url": { "path": "/records/get-military-service-records" },
+                "title": "Request your military records (DD214)",
+                "options": []
+              },
+              "fieldLinkSummary": "View and print documents from your official military personnel file (including your DD214)."
+            }
+          },
+          {
+            "entity": {
+              "entityId": "3778",
+              "fieldLink": {
+                "url": { "path": "/health-care/get-medical-records" },
+                "title": "Get your VA medical records (called VA Blue Button)",
+                "options": []
+              },
+              "fieldLinkSummary": "Set up your personal health record and download medical records, reports, and images to share with your VA and non-VA doctors."
+            }
+          },
+          {
+            "entity": {
+              "entityId": "3779",
+              "fieldLink": {
+                "url": { "path": "/records/download-va-letters" },
+                "title": "Download your VA benefit letters",
+                "options": []
+              },
+              "fieldLinkSummary": "Download letters like your eligibility or award letter for certain benefits."
+            }
+          },
+          {
+            "entity": {
+              "entityId": "3780",
+              "fieldLink": {
+                "url": {
+                  "path": "/housing-assistance/home-loans/how-to-apply"
+                },
+                "title": "Find out how to apply for a VA home loan Certificate of Eligibility",
+                "options": []
+              },
+              "fieldLinkSummary": "Get instructions for how to apply for your Certificate of Eligibility (COE), which confirms for your lender that you qualify for a VA-backed home loan. Then you can choose your loan type to learn about the rest of the loan application process."
+            }
+          },
+          {
+            "entity": {
+              "entityId": "3781",
+              "fieldLink": {
+                "url": { "path": "/discharge-upgrade-instructions/" },
+                "title": "Learn how to apply for a discharge upgrade",
+                "options": []
+              },
+              "fieldLinkSummary": "Answer a series of questions to get step-by-step instructions on how to apply for a discharge upgrade or correction. If your discharge gets upgraded, you'll be eligible for the VA benefits you earned during your period of service."
+            }
+          },
+          {
+            "entity": {
+              "entityId": "3782",
+              "fieldLink": {
+                "url": { "path": "/va-payment-history" },
+                "title": "View your VA payment history",
+                "options": []
+              },
+              "fieldLinkSummary": "Check the status of your VA disability, pension, and education benefits payments. You can also see payments for certain survivor benefits."
+            }
+          },
+          {
+            "entity": {
+              "entityId": "3783",
+              "fieldLink": {
+                "url": { "path": "https://www.archives.gov/" },
+                "title": "Search historical military records (National Archives)",
+                "options": []
+              },
+              "fieldLinkSummary": "Visit the National Archives website to research military records from the Revolutionary War to the present."
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "fieldLinks": [],
+  "fieldSupportServices": [
+    {
+      "entity": {
+        "entityId": "59",
+        "entityBundle": "support_service",
+        "title": "VA benefits hotline:",
+        "fieldLink": {
+          "url": { "path": "tel:1-800-827-1000" },
+          "title": "",
+          "options": []
+        },
+        "fieldPhoneNumber": "800-827-1000"
+      }
+    },
+    {
+      "entity": {
+        "entityId": "66",
+        "entityBundle": "support_service",
+        "title": "My HealtheVet help desk:",
+        "fieldLink": {
+          "url": { "path": "tel:1-877-327-0022" },
+          "title": "",
+          "options": []
+        },
+        "fieldPhoneNumber": "877-327-0022"
+      }
+    },
+    {
+      "entity": {
+        "entityId": "60",
+        "entityBundle": "support_service",
+        "title": "eBenefits technical support:",
+        "fieldLink": {
+          "url": { "path": "tel:1-800-983-0937" },
+          "title": "",
+          "options": []
+        },
+        "fieldPhoneNumber": "800-983-0937"
+      }
+    },
+    {
+      "entity": {
+        "entityId": "61",
+        "entityBundle": "support_service",
+        "title": "MyVA411 main information line:",
+        "fieldLink": {
+          "url": { "path": "tel:1-800-698-2411" },
+          "title": "",
+          "options": []
+        },
+        "fieldPhoneNumber": "800-698-2411"
+      }
+    },
+    {
+      "entity": {
+        "entityId": "62",
+        "entityBundle": "support_service",
+        "title": "If you have hearing loss, call TTY: 711.",
+        "fieldLink": null,
+        "fieldPhoneNumber": null
+      }
+    }
+  ],
+  "fieldPlainlanguageDate": null,
+  "fieldPageLastBuilt": { "date": "2021-07-06 17:23:48 UTC" },
+  "fieldTeaserText": "Apply for a printed Veteran ID card, get your VA benefit letters and medical records, and learn how to apply for a discharge upgrade.",
+  "changed": 1566356480,
+  "fieldAdministration": {
+    "entity": {
+      "name": "Records benefits hub",
+      "entityId": "76",
+      "entityBundle": "administration",
+      "fieldDescription": null,
+      "fieldLink": null,
+      "fieldEmailUpdatesUrl": null,
+      "fieldEmailUpdatesLinkText": null,
+      "fieldSocialMediaLinks": {
+        "platformValues": "{\"facebook\":{\"value\":\"\"},\"instagram\":{\"value\":\"\"},\"linkedin\":{\"value\":\"\"},\"twitter\":{\"value\":\"\"},\"youtube\":{\"value\":\"\"},\"youtube_channel\":{\"value\":\"\"}}",
+        "value": null,
+        "platform": null
+      }
+    }
+  }
+}

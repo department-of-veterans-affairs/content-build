@@ -1,0 +1,202 @@
+{
+  "entityBundle": "q_a",
+  "entityId": "15809",
+  "entityPublished": true,
+  "title": "What happens if VA refers my debt to the U.S. Treasury?",
+  "vid": 422698,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/resources", "routed": true },
+        "text": "Resources and support"
+      }
+    ],
+    "path": "/resources/what-happens-if-va-refers-my-debt-to-the-us-treasury"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "What happens if VA refers my debt to the U.S. Treasury? |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "What happens if VA refers my debt to the U.S. Treasury? |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "What happens if VA refers my debt to the U.S. Treasury? |  | Veterans Affairs"
+    }
+  ],
+  "changed": 1621281095,
+  "fieldStandalonePage": false,
+  "fieldAnswer": {
+    "entity": {
+      "entityType": "paragraph",
+      "entityBundle": "rich_text_char_limit_1000",
+      "entityId": "28521",
+      "fieldWysiwyg": {
+        "processed": "<p>The U.S. Treasury may take one or more of these actions to try to collect on your debt:</p>\n<ul>\n<li>Add fees and interest to your debt</li>\n<li>Keep part or all of your federal or state payments to pay down your debt. This is called an offset.</li>\n<li>Refer your account to a private collection agency</li>\n</ul>\n<p>If the U.S. Treasury offsets your payments, this could cause you to get a lower amount for one or more of these payments:</p>\n<ul>\n<li>Tax refunds</li>\n<li>Social Security benefits</li>\n<li>Salary from a federal or state job</li>\n<li>Federal or state retirement benefits</li>\n</ul>\n<p><a href=\"https://fiscal.treasury.gov/dms/faqs/for-the-general-public.html\">Go to the U.S. Treasury website to learn more about debt collection</a></p>\n"
+      }
+    }
+  },
+  "fieldAlertSingle": {
+    "entity": {
+      "entityId": "28520",
+      "fieldAlertSelection": "NA",
+      "fieldAlertNonReusableRef": null,
+      "fieldAlertBlockReference": null
+    }
+  },
+  "fieldButtons": [
+    {
+      "entity": {
+        "entityId": "28522",
+        "entityBundle": "button",
+        "fieldButtonLabel": "Manage your VA debt",
+        "fieldButtonLink": {
+          "url": { "path": "/Manage%25252520your%25252520VA%25252520debt" }
+        }
+      }
+    }
+  ],
+  "fieldContactInformation": {
+    "entity": {
+      "entityBundle": "contact_information",
+      "fieldBenefitHubContacts": null,
+      "fieldContactInfoSwitch": "DC",
+      "fieldContactDefault": {
+        "entity": {
+          "entityId": "61",
+          "title": "MyVA411 main information line:",
+          "fieldLink": {
+            "title": "",
+            "url": { "path": "tel:1-800-698-2411", "routed": false }
+          },
+          "fieldPhoneNumber": "800-698-2411"
+        }
+      },
+      "fieldAdditionalContact": null
+    }
+  },
+  "fieldRelatedBenefitHubs": [
+    {
+      "entity": {
+        "fieldHomePageHubLabel": "Health care",
+        "fieldTeaserText": "Apply for VA health care, find out how to access services, and manage your health and benefits online.",
+        "path": { "alias": "/health-care" },
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "65",
+              "title": "Health benefits hotline:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-877-222-VETS(8387)", "routed": false }
+              },
+              "fieldPhoneNumber": "877-222-VETS (8387)"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "66",
+              "title": "My HealtheVet help desk:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-877-327-0022", "routed": false }
+              },
+              "fieldPhoneNumber": "877-327-0022"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "60",
+              "title": "eBenefits technical support:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-983-0937", "routed": false }
+              },
+              "fieldPhoneNumber": "800-983-0937"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-698-2411", "routed": false }
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "fieldRelatedInformation": [
+    {
+      "entity": {
+        "entityId": "38165",
+        "fieldLink": {
+          "url": { "path": "/manage-va-debt" },
+          "title": "Manage your VA debt",
+          "options": []
+        },
+        "fieldLinkSummary": null
+      }
+    }
+  ],
+  "fieldPrimaryCategory": {
+    "entity": {
+      "entityUrl": { "path": "/resources/other-topics-and-questions" },
+      "name": "Other topics and questions"
+    }
+  },
+  "fieldOtherCategories": [],
+  "fieldTags": {
+    "entity": {
+      "fieldAudienceBeneficiares": {
+        "entity": {
+          "entityUrl": { "path": "/resources/tag/all-veterans" },
+          "name": "All Veterans"
+        }
+      },
+      "fieldNonBeneficiares": null,
+      "fieldTopics": [
+        {
+          "entity": {
+            "entityUrl": { "path": "/resources/tag/payments-and-debt" },
+            "name": "Payments and debt"
+          }
+        }
+      ]
+    }
+  }
+}

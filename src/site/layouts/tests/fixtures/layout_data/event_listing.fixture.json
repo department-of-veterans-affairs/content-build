@@ -1,0 +1,753 @@
+{
+  "entityBundle": "event_listing",
+  "entityId": "2807",
+  "entityPublished": true,
+  "title": "Events",
+  "vid": 16487,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/pittsburgh-health-care", "routed": true },
+        "text": "VA Pittsburgh health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "News and events" },
+      { "url": { "path": "", "routed": true }, "text": "Events" }
+    ],
+    "path": "/pittsburgh-health-care/events"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Events | VA Pittsburgh health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Events | VA Pittsburgh health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Events | VA Pittsburgh health care | Veterans Affairs"
+    }
+  ],
+  "changed": 1583958997,
+  "fieldIntroText": "Learn more about events in our VA Pittsburgh health care community, including classes on health and wellness.",
+  "pastEvents": { "entities": [] },
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "title": "Virtual Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/virtual-veterans-town-hall"
+        },
+        "fieldFeatured": true,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1624284000,
+          "endValue": 1624287600,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mindful-mondays-2"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1581343200,
+          "endValue": 1581346800,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mindful-mondays-3"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1577109600,
+          "endValue": 1577113200,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Caregiver Support Annual Resource Fair",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/caregiver-support-annual-resource-fair"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1620925200,
+          "endValue": 1620932400,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "The Bridge Screening and Discussion",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/the-bridge-screening-and-discussion"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1568988000,
+          "endValue": 1569002400,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": "Watch the documentary and join our panel to talk about moral injury, suicide and mental health.",
+        "fieldLocationHumanreadable": "Learning Exchange",
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "H. John Heinz III Department of Veterans Affairs Medical Center",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center"
+            }
+          }
+        }
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/teal-tuesdays-2"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1619496000,
+          "endValue": 1619582400,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/teal-tuesdays-1"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618891200,
+          "endValue": 1619063940,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/teal-tuesdays-0"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618286400,
+          "endValue": 1618372800,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Teal Tuesdays",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/teal-tuesdays" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1617681600,
+          "endValue": 1617854340,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Veterans Breakfast Club Scuttlebutt ",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-breakfast-club-scuttlebutt-0"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1619442000,
+          "endValue": 1619445600,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Veterans Breakfast Club Scuttlebutt ",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-breakfast-club-scuttlebutt"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618837200,
+          "endValue": 1618840800,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Double Edged Sword of Military Culture: Helping and Hurting the Warrior",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/double-edged-sword-of-military-culture-helping-and-hurting-the-warrior"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1618527600,
+          "endValue": 1618533000,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "MST and the Service Connection Claims Process",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mst-and-the-service-connection-claims-process"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1617984000,
+          "endValue": 1617987600,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Walk-in COVID-19 Vaccination Clinic",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/walk-in-covid-19-vaccination-clinic"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1612616400,
+          "endValue": 1612647000,
+          "timezone": "America/New_York"
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Pittsburgh VA Medical Center-University Drive",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/pittsburgh-va-medical-center-university-drive"
+            }
+          }
+        }
+      },
+      {
+        "title": "Vocational Services Virtual Career Fair",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/vocational-services-virtual-career-fair"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1605279600,
+          "endValue": 1605294000,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Virtual Veterans Town Hall - September 2020",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/virtual-veterans-town-hall-september-2020"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1600264800,
+          "endValue": 1600268400,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Introduction to Whole Health",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/introduction-to-whole-health"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1592233200,
+          "endValue": 1623685500,
+          "timezone": ""
+        },
+        "fieldDescription": "Whole Health",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "H.J. Heinz June 2020 Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/hj-heinz-june-2020-town-hall"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1592834400,
+          "endValue": 1592839800,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "VA2K",
+        "entityUrl": { "path": "/pittsburgh-health-care/events/va2k" },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1557936000,
+          "endValue": 1557937800,
+          "timezone": ""
+        },
+        "fieldDescription": "Get some exercise and help Veterans who are homeless during the annual VA2K on May 15.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "H. John Heinz III Department of Veterans Affairs Medical Center",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center"
+            }
+          }
+        }
+      },
+      {
+        "title": "Women Veterans Tea",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/women-veterans-tea"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1559142000,
+          "endValue": 1559149200,
+          "timezone": ""
+        },
+        "fieldDescription": "Open to all women Veterans and service members. Come and enjoy some tea and baked goods, and take home a tea cup and saucer!",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Pittsburgh VA Medical Center-University Drive",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/pittsburgh-va-medical-center-university-drive"
+            }
+          }
+        }
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mindful-mondays-4"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1577714400,
+          "endValue": 1577718000,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Washington County VA Outpatient Clinic Dedication",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/washington-county-va-outpatient-clinic-dedication"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1559235600,
+          "endValue": 1559242800,
+          "timezone": ""
+        },
+        "fieldDescription": "Join us to celebrate our new state-of-the-art outpatient clinic for Washington County area Veterans.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Washington County VA Clinic",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/washington-county-va-clinic"
+            }
+          }
+        }
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mindful-mondays-5"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1578319200,
+          "endValue": 1578322800,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Veterans Town Hall on the Move",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-town-hall-on-the-move"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1559250000,
+          "endValue": 1559253600,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh Healthcare System Interim Director Barbara Forsha invites you to attend the Town Hall event. Veterans, their families and the public are welcome to attend.",
+        "fieldLocationHumanreadable": "American Legion Post 175 ",
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Beaver County 2020 Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/beaver-county-2020-veterans-town-hall"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1582147800,
+          "endValue": 1582153200,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Beaver County VA Clinic",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/beaver-county-va-clinic"
+            }
+          }
+        }
+      },
+      {
+        "title": "Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-town-hall"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1561557600,
+          "endValue": 1561563000,
+          "timezone": ""
+        },
+        "fieldDescription": "The VA Pittsburgh Healthcare System Director invites you you to attend our Veterans Town Hall.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "H. John Heinz III Department of Veterans Affairs Medical Center",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center"
+            }
+          }
+        }
+      },
+      {
+        "title": "Washington County 2020 Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/washington-county-2020-veterans-town-hall"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1583271000,
+          "endValue": 1583276400,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Washington County VA Clinic",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/washington-county-va-clinic"
+            }
+          }
+        }
+      },
+      {
+        "title": "Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-town-hall-0"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1569247200,
+          "endValue": 1569252600,
+          "timezone": ""
+        },
+        "fieldDescription": "The VA Pittsburgh Healthcare System Director invites you to attend our Veterans Town Hall.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Pittsburgh VA Medical Center-University Drive",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/pittsburgh-va-medical-center-university-drive"
+            }
+          }
+        }
+      },
+      {
+        "title": "Fayette County 2020 Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/fayette-county-2020-veterans-town-hall"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1583872200,
+          "endValue": 1583877600,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Fayette County VA Clinic",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/fayette-county-va-clinic"
+            }
+          }
+        }
+      },
+      {
+        "title": "Veterans Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/veterans-town-hall-1"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1576508400,
+          "endValue": 1576513800,
+          "timezone": ""
+        },
+        "fieldDescription": "The VA Pittsburgh Healthcare System Director invites you to attend our Veterans Town Hall.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "H. John Heinz III Department of Veterans Affairs Medical Center",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center"
+            }
+          }
+        }
+      },
+      {
+        "title": "University Drive March 2020 Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/university-drive-march-2020-town-hall"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1583848800,
+          "endValue": 1583854200,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mindful-mondays"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1579528800,
+          "endValue": 1579532400,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mindful-mondays-0"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1580133600,
+          "endValue": 1580137200,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Community Town Hall on the Move",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/community-town-hall-on-the-move"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1568061000,
+          "endValue": 1568064600,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh Healthcare System Director invites you to attend our Veerans Town Hall on the Move.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Beaver County VA Clinic",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/beaver-county-va-clinic"
+            }
+          }
+        }
+      },
+      {
+        "title": "H.J. Heinz December 2020 Town Hall",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/hj-heinz-december-2020-town-hall"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1607958000,
+          "endValue": 1607963400,
+          "timezone": ""
+        },
+        "fieldDescription": null,
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "Community Town Hall on the Move",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/community-town-hall-on-the-move-0"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1568320200,
+          "endValue": 1568323800,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh Healthcare System Director invites you to attend our Veerans Town Hall on the Move.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "Westmoreland County VA Clinic",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/westmoreland-county-va-clinic"
+            }
+          }
+        }
+      },
+      {
+        "title": "Whole Health Fair",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/whole-health-fair"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1568383200,
+          "endValue": 1568395800,
+          "timezone": ""
+        },
+        "fieldDescription": "Learn about how whole health can help you.",
+        "fieldLocationHumanreadable": "Learning eXchange",
+        "fieldFacilityLocation": {
+          "entity": {
+            "title": "H. John Heinz III Department of Veterans Affairs Medical Center",
+            "entityUrl": {
+              "path": "/pittsburgh-health-care/locations/h-john-heinz-iii-department-of-veterans-affairs-medical-center"
+            }
+          }
+        }
+      },
+      {
+        "title": "Mindful Mondays",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/mindful-mondays-1"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1578924000,
+          "endValue": 1578927600,
+          "timezone": ""
+        },
+        "fieldDescription": "VA Pittsburgh’s whole health facilitators invite you to join them once weekly for a moment of mindfulness.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      },
+      {
+        "title": "The Bridge Screening and Discussion",
+        "entityUrl": {
+          "path": "/pittsburgh-health-care/events/the-bridge-screening-and-discussion-0"
+        },
+        "fieldFeatured": false,
+        "fieldDatetimeRangeTimezone": {
+          "value": 1569506400,
+          "endValue": 1569520800,
+          "timezone": ""
+        },
+        "fieldDescription": "Watch the documentary and join our panel to talk about moral injury, suicide and mental health.",
+        "fieldLocationHumanreadable": null,
+        "fieldFacilityLocation": null
+      }
+    ]
+  },
+  "fieldOffice": { "entity": { "entityLabel": "VA Pittsburgh health care" } }
+}

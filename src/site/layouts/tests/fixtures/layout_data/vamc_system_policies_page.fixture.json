@@ -1,0 +1,65 @@
+{
+  "title": "Policies",
+  "status": true,
+  "changed": 1619632486,
+  "entityBundle": "vamc_system_policies_page",
+  "entityUrl": { "path": "/butler-health-care/policies" },
+  "fieldCcIntroText": {
+    "fetched": {
+      "fieldWysiwyg": [
+        {
+          "value": "<p>Find VA policies on privacy and patient rights, family rights, visitation, and more.</p>\r\n",
+          "format": "rich_text",
+          "processed": "<p>Find VA policies on privacy and patient rights, family rights, visitation, and more.</p>"
+        }
+      ]
+    },
+    "fetchedBundle": "wysiwyg"
+  },
+  "fieldCcTopOfPageContent": {
+    "fetched": {
+      "fieldWysiwyg": [
+        {
+          "value": "<h2>Privacy and patient rights</h2>\r\n\r\n<p><a href=\"https://www.va.gov/health/rights/patientrights.asp\">Read VA's national privacy and patient rights policies</a></p>\r\n\r\n<h2>Family rights</h2>\r\n\r\n<p><a href=\"https://www.va.gov/health/rights/familyrights.asp\">Read VA's national family rights policy</a></p>\r\n\r\n<h2>Visitation policy</h2>\r\n",
+          "format": "rich_text",
+          "processed": "<h2>Privacy and patient rights</h2>\n\n<p><a href=\"https://www.va.gov/health/rights/patientrights.asp\">Read VA's national privacy and patient rights policies</a></p>\n\n<h2>Family rights</h2>\n\n<p><a href=\"https://www.va.gov/health/rights/familyrights.asp\">Read VA's national family rights policy</a></p>\n\n<h2>Visitation policy</h2>"
+        }
+      ]
+    },
+    "fetchedBundle": "wysiwyg"
+  },
+  "fieldVamcVisitationPolicy": {
+    "processed": "<p>Before visiting a patient at a VA facility, review these guidelines:　</p>\n\n<p><strong>Visiting church members</strong><br />\nIf you’re a member of the religious community, we encourage you to visit patients who belong to your church or religious group. However, you’re <strong>not </strong>allowed to do general visitation by going from bed to bed, ward to ward, or unit to unit.　</p>\n\n<p><strong>Bringing food</strong><br />\nYou may bring small amounts of candy, fruit, and other food items if the nursing staff says they are appropriate for a patient's diet. You may not bring fresh fruit and flowers to patients who are receiving critical care, and you can’t eat or drink in those units.</p>\n\n<p><strong>Washing hands</strong><br />\nYou must follow hand-hygiene policy guidelines, which require you to practice good hand hygiene when you enter and exit patient rooms, and at other times as directed by staff.</p>\n\n<p><strong>Following infection-control guidelines</strong><br />\nYou must follow guidelines on infection-control signs and report to the nurses' station for instructions before you enter a patient's room.</p>\n\n<p><strong>Staying home if you are ill</strong><br />\nIf you have a communicable disease, you won't be allowed to visit patients inside the medical center.</p>\n\n<p><strong>Prohibited items</strong><br />\nYou're not allowed to bring weapons, cameras, or other prohibited items into the medical center, except when you're conducting official business authorized by the Director or their designee. If you have questions about what qualifies as official business, please contact the facility's Director.　</p>\n\n<p><strong>Giving privacy</strong><br />\nOur staff may ask you to leave the room when they’re caring for patients. If a staff member asks you to leave a patient's room, you may continue your visit in the day room, waiting area, or any other public area of the facility.</p>\n\n<p><strong>Visiting seriously ill patients</strong><br />\nRelatives and friends may visit patients who are seriously ill or in hospice care at any time of day, unless the staff doctor says no.</p>\n\n<p><strong>Visiting patients in restraints</strong><br />\nIn general, you won't be allowed to visit patients who are in restraints. If the treatment team decides that your visit could have a positive effect on the patient, then you may have a supervised visit with the patient when a staff member removes the restraints. Our staff will document how the patient responds to you and other visitors.　</p>\n\n<p><strong>Bringing children to visit</strong><br />\nChildren of all ages can visit patients at our medical center. For infection-control and safety reasons, however, children under the age of 16 are not allowed to visit certain specialty-care units. . All children under the age of 16 must be directly supervised by an adult. Children's bedside visits are limited to 15 minutes.</p>\n\n<p><strong>Visiting psychiatric units with children</strong><br />\nChildren under the age of 16 may visit patients in psychiatric units with the doctor’s permission.</p>"
+  },
+  "fieldVamcOtherPolicies": null,
+  "fieldCcGenVisitationPolicy": {
+    "fetched": {
+      "fieldWysiwyg": [
+        {
+          "value": "<h3>VA general visitation policy</h3>\r\n\r\n<p>The medical center respects the patient's right to make decisions about his or her care, treatment and services, and to involve the patient's family in care, treatment, and services decisions to the extent permitted by the patient or surrogate decision-maker.&nbsp;</p>\r\n\r\n<p>\"Family\" is defined as a group of two or more persons united by blood, or adoptive, martial, domestic partnership, or other legal ties. The family may also be a person or persons not legally related to the individual (such as significant other, friend or caregiver) whom the individual considers to be family. A family member may be the surrogate decision-maker, as defined in VHA Handbook 1004.02, if authorized to make care decisions for the individual, should he or she lose decision-making capacity or choose to delegate decision making to another.&nbsp;</p>\r\n\r\n<p>The medical center allows a family member, friend or other individual to be present with the patient for emotional support during the course of their stay. The medical center allows for the presence of a support individual of the patient's choice, unless the individual's presence infringes on others’ rights or safety, or is medically or therapeutically contraindicated. The individual may or may not be the patient's surrogate decision-maker or legally authorized representative.&nbsp;</p>\r\n\r\n<p>The hospital prohibits discrimination based on age, race, ethnicity, religion, culture, language, physical or mental disability, socioeconomic status, sex, sexual orientation, and gender identity or expression.</p>\r\n",
+          "format": "rich_text",
+          "processed": "<h3>VA general visitation policy</h3>\n\n<p>The medical center respects the patient's right to make decisions about his or her care, treatment and services, and to involve the patient's family in care, treatment, and services decisions to the extent permitted by the patient or surrogate decision-maker. </p>\n\n<p>\"Family\" is defined as a group of two or more persons united by blood, or adoptive, martial, domestic partnership, or other legal ties. The family may also be a person or persons not legally related to the individual (such as significant other, friend or caregiver) whom the individual considers to be family. A family member may be the surrogate decision-maker, as defined in VHA Handbook 1004.02, if authorized to make care decisions for the individual, should he or she lose decision-making capacity or choose to delegate decision making to another. </p>\n\n<p>The medical center allows a family member, friend or other individual to be present with the patient for emotional support during the course of their stay. The medical center allows for the presence of a support individual of the patient's choice, unless the individual's presence infringes on others’ rights or safety, or is medically or therapeutically contraindicated. The individual may or may not be the patient's surrogate decision-maker or legally authorized representative. </p>\n\n<p>The hospital prohibits discrimination based on age, race, ethnicity, religion, culture, language, physical or mental disability, socioeconomic status, sex, sexual orientation, and gender identity or expression.</p>"
+        }
+      ]
+    },
+    "fetchedBundle": "wysiwyg"
+  },
+  "fieldCcBottomOfPageContent": {
+    "fetched": {
+      "fieldWysiwyg": [
+        {
+          "value": "<h2>Advance directives</h2>\r\n\r\n<p>When faced with difficult decisions about health care,&nbsp;you may struggle with the question of \"what should be done?\" These resources can help you deal with tough decisions about health care and how to plan for it.</p>\r\n\r\n<p><a href=\"https://www.ethics.va.gov/for_veterans.asp\">Health Care Ethics Resources for Veterans, Patients, and Families</a></p>\r\n\r\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"9d99f11d-981a-4dc3-b7bf-a8995ed52428\" href=\"/node/5722\">VA Form 10-0137 -&nbsp;VA Advance Directive: Durable Power of Attorney for Health Care and Living Will</a></p>\r\n\r\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"3795b66f-f712-49c1-a04c-17d470d224b9\" href=\"/node/5983\">What You Should Know about Advance Directives</a></p>\r\n\r\n<h2>Report patient quality of care concerns</h2>\r\n\r\n<p><a href=\"https://www.jointcommission.org/report_a_complaint.aspx\">Visit the Joint Commission page</a> to report concerns you have about the quality of patient care.</p>\r\n",
+          "format": "rich_text",
+          "processed": "<h2>Advance directives</h2>\n\n<p>When faced with difficult decisions about health care, you may struggle with the question of \"what should be done?\" These resources can help you deal with tough decisions about health care and how to plan for it.</p>\n\n<p><a href=\"https://www.ethics.va.gov/for_veterans.asp\">Health Care Ethics Resources for Veterans, Patients, and Families</a></p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"9d99f11d-981a-4dc3-b7bf-a8995ed52428\" href=\"/find-forms/about-form-10-0137\" title=\"About VA Form 10-0137\">VA Form 10-0137 - VA Advance Directive: Durable Power of Attorney for Health Care and Living Will</a></p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"3795b66f-f712-49c1-a04c-17d470d224b9\" href=\"/find-forms/about-form-10-0137a\" title=\"About VA Form 10-0137A\">What You Should Know about Advance Directives</a></p>\n\n<h2>Report patient quality of care concerns</h2>\n\n<p><a href=\"https://www.jointcommission.org/report_a_complaint.aspx\">Visit the Joint Commission page</a> to report concerns you have about the quality of patient care.</p>"
+        }
+      ]
+    },
+    "fetchedBundle": "wysiwyg"
+  },
+  "fieldOffice": {
+    "entity": {
+      "entityLabel": "VA Butler health care",
+      "title": "VA Butler health care"
+    }
+  }
+}

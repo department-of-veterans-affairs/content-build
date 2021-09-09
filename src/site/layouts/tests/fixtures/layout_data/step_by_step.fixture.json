@@ -1,0 +1,570 @@
+{
+  "entityBundle": "step_by_step",
+  "entityId": "8520",
+  "entityPublished": true,
+  "title": "How to check your VA claim, appeal, or decision review status online",
+  "vid": 364117,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/resources", "routed": true },
+        "text": "Resources and support"
+      }
+    ],
+    "path": "/resources/how-to-check-your-va-claim-appeal-or-decision-review-status-online"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "How to check your VA claim, appeal, or decision review status online |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "How to check your VA claim, appeal, or decision review status online |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "How to check your VA claim, appeal, or decision review status online |  | Veterans Affairs"
+    }
+  ],
+  "changed": 1612806081,
+  "fieldIntroTextLimitedHtml": {
+    "processed": "<p>Follow our step-by-step instructions for checking the status of your VA claim, appeal, or decision review online.</p>\n"
+  },
+  "fieldAlertSingle": {
+    "entity": {
+      "entityId": "13830",
+      "fieldAlertSelection": "NA",
+      "fieldAlertNonReusableRef": null,
+      "fieldAlertBlockReference": null
+    }
+  },
+  "fieldButtons": [
+    {
+      "entity": {
+        "entityId": "13831",
+        "entityBundle": "button",
+        "fieldButtonLabel": "Check your VA claim status",
+        "fieldButtonLink": { "url": { "path": "/claim-or-appeal-status" } }
+      }
+    }
+  ],
+  "fieldButtonsRepeat": true,
+  "fieldSteps": [
+    {
+      "entity": {
+        "fieldSectionHeader": "Step-by-step instructions",
+        "fieldStep": [
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>If you're not signed in to VA.gov,</strong> sign in now, starting with step 1. You can sign in with your <strong>DS Logon</strong>, <strong>My HealtheVet</strong>, or <strong>ID.me</strong> account. If you don't have an account, we’ll prompt you to create one.</p>\n<p><strong>If you're already signed in to VA.gov,</strong> you can skip to step 4 below. You'll go straight to the claim status tool.</p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13835",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Sign in screen shot",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-08/Step1signin.png"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>Choose how you want to receive your authentication code</strong></p>\n<p>You can choose to get either a text message or a phone call. </p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13851",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Verify ID screen shot",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-08/Step2VerifyID.png"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>Enter the authentication code you received</strong></p>\n<p>This is the 6-digit code we sent to your phone.</p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13853",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Screenshot of sign-in process. 6-digit code screen. ",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-11/step%203%20sequential%206%20digit%20code.png"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>Go to the claim status tool</strong></p>\n<p>After you’ve signed in, find the list of Disability links on the VA.gov home page. Click <strong>Check your claim or appeal status</strong>. </p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13855",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Step 4 claim and appeal",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-10/image.png"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>Review your claims, appeals, and decision reviews</strong></p>\n<p>You can review the date each one was last updated, the current status, and the date you submitted it. Click the <strong>View details</strong> button to see more details.</p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13857",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Screenshot of claim and appeals status tool. List of claims and appeals. ",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-11/cards%20with%20dates%20updated_0.png"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>Review the status of a claim</strong></p>\n<p>You’ll see where it is in the process. </p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13859",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Screenshot of claim and appeals status tool. Detail screen, status tab.",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-11/cst-compclaim-status-aug-dates-removed.png"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>Review the files for your claim</strong></p>\n<p>Click on the <strong>Files</strong> tab. You can see if there are any forms or documents we still need from you. You can also review the forms and documents we already have. And if you have additional evidence to support your claim, click the <strong>Add Files</strong> button to select files to upload.</p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13861",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Screenshot of claim and appeals status tool. Detail screen, files tab. ",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-11/cst-compclaim-detailscr-filetab-patch-110320.png"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "entity": {
+              "fieldWysiwyg": {
+                "processed": "<p><strong>Review the details of your claim </strong></p>\n<p>Click on the <strong>Details</strong> tab to see what you've claimed, who your representative is for VA claims, and other details. </p>\n"
+              },
+              "fieldAlert": {
+                "entity": {
+                  "entityId": "13863",
+                  "fieldAlertSelection": "NA",
+                  "fieldAlertNonReusableRef": null,
+                  "fieldAlertBlockReference": null
+                }
+              },
+              "fieldMedia": {
+                "entity": {
+                  "thumbnail": {
+                    "alt": "Screenshot of claim and appeals status tool. Detail screen, details tab. ",
+                    "url": "https://prod.cms.va.gov/sites/default/files/2020-11/cst-compclaim-detail-details-110220.png"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "fieldContactInformation": {
+    "entity": {
+      "entityBundle": "contact_information",
+      "fieldBenefitHubContacts": {
+        "entity": {
+          "fieldHomePageHubLabel": "Decision reviews and appeals",
+          "fieldTeaserText": "If you disagree with a VA claim decision, you can request a decision review. Decision review replaces the old (\"legacy\") VA appeals process.",
+          "path": { "alias": "/decision-reviews" },
+          "fieldSupportServices": [
+            {
+              "entity": {
+                "entityId": "59",
+                "title": "VA benefits hotline:",
+                "fieldLink": {
+                  "title": "",
+                  "url": { "path": "tel:1-800-827-1000", "routed": false }
+                },
+                "fieldPhoneNumber": "800-827-1000"
+              }
+            },
+            {
+              "entity": {
+                "entityId": "60",
+                "title": "eBenefits technical support:",
+                "fieldLink": {
+                  "title": "",
+                  "url": { "path": "tel:1-800-983-0937", "routed": false }
+                },
+                "fieldPhoneNumber": "800-983-0937"
+              }
+            },
+            {
+              "entity": {
+                "entityId": "61",
+                "title": "MyVA411 main information line:",
+                "fieldLink": {
+                  "title": "",
+                  "url": { "path": "tel:1-800-698-2411", "routed": false }
+                },
+                "fieldPhoneNumber": "800-698-2411"
+              }
+            },
+            {
+              "entity": {
+                "entityId": "62",
+                "title": "If you have hearing loss, call TTY: 711.",
+                "fieldLink": null,
+                "fieldPhoneNumber": null
+              }
+            }
+          ]
+        }
+      },
+      "fieldContactInfoSwitch": "BHC",
+      "fieldContactDefault": {
+        "entity": {
+          "entityId": "61",
+          "title": "MyVA411 main information line:",
+          "fieldLink": {
+            "title": "",
+            "url": { "path": "tel:1-800-698-2411", "routed": false }
+          },
+          "fieldPhoneNumber": "800-698-2411"
+        }
+      },
+      "fieldAdditionalContact": null
+    }
+  },
+  "fieldRelatedBenefitHubs": [
+    {
+      "entity": {
+        "fieldHomePageHubLabel": "Health care",
+        "fieldTeaserText": "Apply for VA health care, find out how to access services, and manage your health and benefits online.",
+        "path": { "alias": "/health-care" },
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "65",
+              "title": "Health benefits hotline:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-877-222-VETS(8387)", "routed": false }
+              },
+              "fieldPhoneNumber": "877-222-VETS (8387)"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "66",
+              "title": "My HealtheVet help desk:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-877-327-0022", "routed": false }
+              },
+              "fieldPhoneNumber": "877-327-0022"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "60",
+              "title": "eBenefits technical support:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-983-0937", "routed": false }
+              },
+              "fieldPhoneNumber": "800-983-0937"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-698-2411", "routed": false }
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "fieldHomePageHubLabel": "Decision reviews and appeals",
+        "fieldTeaserText": "If you disagree with a VA claim decision, you can request a decision review. Decision review replaces the old (\"legacy\") VA appeals process.",
+        "path": { "alias": "/decision-reviews" },
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "59",
+              "title": "VA benefits hotline:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-827-1000", "routed": false }
+              },
+              "fieldPhoneNumber": "800-827-1000"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "60",
+              "title": "eBenefits technical support:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-983-0937", "routed": false }
+              },
+              "fieldPhoneNumber": "800-983-0937"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-698-2411", "routed": false }
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity": {
+        "fieldHomePageHubLabel": "Disability",
+        "fieldTeaserText": "File a claim for disability compensation for conditions related to your military service, and manage your benefits over time.",
+        "path": { "alias": "/disability" },
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "59",
+              "title": "VA benefits hotline:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-827-1000", "routed": false }
+              },
+              "fieldPhoneNumber": "800-827-1000"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "60",
+              "title": "eBenefits technical support:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-983-0937", "routed": false }
+              },
+              "fieldPhoneNumber": "800-983-0937"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "title": "",
+                "url": { "path": "tel:1-800-698-2411", "routed": false }
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "fieldRelatedInformation": [
+    {
+      "entity": {
+        "entityId": "14148",
+        "fieldLink": {
+          "url": { "path": "/resources/what-your-claim-status-means" },
+          "title": "What your claim status means",
+          "options": []
+        },
+        "fieldLinkSummary": null
+      }
+    },
+    {
+      "entity": {
+        "entityId": "28136",
+        "fieldLink": {
+          "url": {
+            "path": "/resources/what-your-decision-review-or-appeal-status-means"
+          },
+          "title": "What your decision review or appeal status means",
+          "options": []
+        },
+        "fieldLinkSummary": null
+      }
+    },
+    {
+      "entity": {
+        "entityId": "14152",
+        "fieldLink": {
+          "url": { "path": "/resources/claim-status-tool-faqs" },
+          "title": "Claim status tool FAQs",
+          "options": []
+        },
+        "fieldLinkSummary": null
+      }
+    },
+    {
+      "entity": {
+        "entityId": "13834",
+        "fieldLink": {
+          "url": { "path": "/decision-reviews" },
+          "title": "VA decision reviews and appeals ",
+          "options": []
+        },
+        "fieldLinkSummary": null
+      }
+    }
+  ],
+  "fieldPrimaryCategory": {
+    "entity": {
+      "entityUrl": { "path": "/resources/decision-reviews-and-appeals" },
+      "name": "Decision reviews and appeals"
+    }
+  },
+  "fieldOtherCategories": [],
+  "fieldTags": {
+    "entity": {
+      "fieldAudienceBeneficiares": {
+        "entity": {
+          "entityUrl": { "path": "/resources/tag/all-veterans" },
+          "name": "All Veterans"
+        }
+      },
+      "fieldNonBeneficiares": null,
+      "fieldTopics": [
+        {
+          "entity": {
+            "entityUrl": { "path": "/resources/tag/claims-and-appeals-status" },
+            "name": "Claims and appeals status"
+          }
+        }
+      ]
+    }
+  }
+}

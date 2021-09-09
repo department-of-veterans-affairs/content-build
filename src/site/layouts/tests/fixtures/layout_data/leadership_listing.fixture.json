@@ -1,0 +1,800 @@
+{
+  "entityBundle": "leadership_listing",
+  "entityId": "4413",
+  "entityPublished": true,
+  "title": "Leadership",
+  "vid": 361560,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/erie-health-care", "routed": true },
+        "text": "VA Erie health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "About VA Erie" },
+      {
+        "url": { "path": "/erie-health-care/about-us", "routed": true },
+        "text": "About us"
+      },
+      { "url": { "path": "", "routed": true }, "text": "Leadership" }
+    ],
+    "path": "/erie-health-care/leadership"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Leadership | VA Erie health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Find contact information for members of VA Erie Health Care System's leadership team."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Leadership | VA Erie health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Find contact information for members of VA Erie Health Care System's leadership team."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Find contact information for members of VA Erie Health Care System's leadership team."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Leadership | VA Erie health care | Veterans Affairs"
+    }
+  ],
+  "fieldIntroText": "Find contact information for members of VA Erie Health Care System's leadership team.",
+  "fieldLeadership": [
+    {
+      "entity": {
+        "title": "John A. Gennaro",
+        "fieldPhoneNumber": "814-860-2576",
+        "entityPublished": true,
+        "fieldNameFirst": "John A.",
+        "fieldLastName": "Gennaro ",
+        "fieldSuffix": null,
+        "fieldDescription": "Director",
+        "fieldOffice": {
+          "entity": {
+            "entityLabel": "VA Erie health care",
+            "entityType": "node"
+          }
+        },
+        "fieldIntroText": "John A. Gennaro is the Director of the Erie VA Medical Center.  ",
+        "fieldPhotoAllowHiresDownload": false,
+        "fieldBody": {
+          "processed": "<p>Mr. John A. Gennaro was appointed as the CEO/Director of the Erie VA Medical Center on June 20, 2016. Mr. Gennaro oversees delivery of health care to more than 21,000 Veterans, 783 employees, and an operating budget of $144M. As CEO, Mr. Gennaro provides the strategic vision and operational oversight of the Erie VA Medical Center located in Erie, PA that is comprised of foundational services in Acute Medicine, Urgent Care, Primary Care, Behavioral Health, and Community Living Center/Nursing Home. Mr. Gennaro is also responsible for patient care delivery at five Community Based Outpatient Clinics located in Ashtabula, OH; Crawford, PA; Venango, PA; Warren PA; and Bradford, PA.</p>\n\n<p>Mr. Gennaro has more than 20 years of healthcare experience, with emphasis on operations, employee engagement and patient experience. He has served as the Director of the Cincinnati VA Medical Center from July 2015 - May 2016 and Director of VA Butler Healthcare System from 2012 - 2015.</p>\n\n<p>Mr. Gennaro has held several positions of increasing responsibility over his twenty years of healthcare experience. He began his career in the Research Foundation at the Cincinnati VAMC in 1997. He completed his healthcare administrative residency in 2001 at the Louis Stokes Cleveland VAMC. Mr. Gennaro has also served as the Deputy Director at VA Pittsburgh Healthcare System from 2008 - 2012, and Associate Director/COO at the Erie VAMC from 2006 - 2008.</p>\n\n<p>Mr. Gennaro received his bachelor's degree in natural sciences in 1999 and master's degrees in business administration and health care services administration from Xavier University in 2001. He is board certified as a fellow in the American College of Healthcare Executives. He served on the Board of Director's for the Allegheny Valley YMCA and was the 2015 Vice Chair of the Pittsburgh Federal Executive Board. Mr. Gennaro was the recipient of Modern Healthcare's Up and Comer award in 2013 and Becker’s Hospital Review Rising Star in Healthcare.</p>"
+        },
+        "changed": 1611068725,
+        "entityUrl": {
+          "path": "/erie-health-care/staff-profiles/john-a-gennaro"
+        },
+        "fieldMedia": {
+          "entity": {
+            "image": {
+              "alt": "John A. Gennaro",
+              "title": "",
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/2_3_medium_thumbnail/public/2020-03/John_A_Gennaro.jpg",
+                "width": 320,
+                "height": 480
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "title": "David M. Lavin",
+        "fieldPhoneNumber": "814-860-2581",
+        "entityPublished": true,
+        "fieldNameFirst": "David M.",
+        "fieldLastName": "Lavin",
+        "fieldSuffix": null,
+        "fieldDescription": "Chief of Staff",
+        "fieldOffice": {
+          "entity": {
+            "entityLabel": "VA Erie health care",
+            "entityType": "node"
+          }
+        },
+        "fieldIntroText": null,
+        "fieldPhotoAllowHiresDownload": false,
+        "fieldBody": {
+          "processed": "<p>Dr. David Lavin was named Chief of Staff in April 2015. Dr. Lavin oversees management efforts for medical decisions made throughout the medical center and the five community based outpatient clinics.</p>\n\n<p>Dr. Lavin will be involved in budget formulation and execution, including workload planning, utilization management, recruitment of medical staff, accreditation and quality management activities, adherence to medical ethical standards, and clinical training programs.</p>\n\n<p>In January, Dr. Lavin assumed the duties of Acting Chief of Staff. Prior to this role, he served as the Medical Director of Primary Care since April of 2007. He has been with the VA since June of 2001 where he joined the Erie VAMC team as a primary care physician, splitting his duties between outpatient clinic and hospitalist medicine. He is Board Certified in Internal Medicine.</p>\n\n<p>Dr. Lavin received his Medical Degree from Jefferson Medical College, Philadelphia, PA in 1978. He completed his medical training at Wilmington Medical Center, Wilmington, Delaware in 1981. His first attending position was as an Internal Medicine Physician at a private practice in Erie, PA from 1981-2001. Since assuming his post at the Erie VAMC, he has also served as an adjunct clinical faculty member for Lake Erie College of Osteopathic Medicine.</p>"
+        },
+        "changed": 1611068704,
+        "entityUrl": {
+          "path": "/erie-health-care/staff-profiles/david-m-lavin"
+        },
+        "fieldMedia": {
+          "entity": {
+            "image": {
+              "alt": "David M. Lavin",
+              "title": "",
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/2_3_medium_thumbnail/public/2020-03/David_M_Lavin.jpg",
+                "width": 320,
+                "height": 480
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "title": "Dorene M. Sommers",
+        "fieldPhoneNumber": "814-860-2583",
+        "entityPublished": true,
+        "fieldNameFirst": "Dorene M.",
+        "fieldLastName": "Sommers",
+        "fieldSuffix": "RN, BSN, MBA, VHA-CM ",
+        "fieldDescription": "Associate Director, Patient Care Services",
+        "fieldOffice": {
+          "entity": {
+            "entityLabel": "VA Erie health care",
+            "entityType": "node"
+          }
+        },
+        "fieldIntroText": null,
+        "fieldPhotoAllowHiresDownload": false,
+        "fieldBody": {
+          "processed": "<p>Ms. Dorene Sommers assumed the duties of Associate Director, Patient Care Services on May 22, 2011. As the Associate Director, Patient Care Services, Ms. Sommers joins the Medical Center Director in the overall management efforts with the responsibility for nursing and administrative duties delegated to her. She is involved in budget formulation and execution, including workload planning and utilization management; recruitment and retention of nursing staff; accreditation and quality management activities; and adherence to nursing practice and ethical standards. She is responsible for the nursing care provided throughout the medical center and in the associated Community Based Outpatient Clinics and she provides oversight for Nutrition and Food Services, Chaplain Services, and the Sterile Processing Services.</p>\n\n<p>Ms. Sommers joined Erie VA Medical Center in January 2007 as the Associate Nurse Executive. Prior to that appointment, she was the Nurse Manager of the Cardiac Surgical Intensive Care Unit at the Carilion Clinic in Roanoke, Virginia. In addition, she planned and implemented the opening of a Thoracic Surgery Care Unit. For several years she enjoyed working as a traveling nurse throughout the United States.</p>\n\n<p>Ms. Sommers received a Bachelor of Science Degree in Nursing from Duquesne University in Pittsburgh, Pennsylvania in 1997. Later, she earned a Master of Business Administration Degree from Averett University in Danville, Virginia. She is a member of the American Association of Critical Care Nurses, American College of Healthcare Executives, Nursing Organization of Veterans Affairs, and Sigma Theta Tau.</p>"
+        },
+        "changed": 1611068710,
+        "entityUrl": {
+          "path": "/erie-health-care/staff-profiles/dorene-m-sommers"
+        },
+        "fieldMedia": {
+          "entity": {
+            "image": {
+              "alt": "Dorene M. Sommers",
+              "title": "",
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/2_3_medium_thumbnail/public/2020-03/Dorene_M_Sommers.jpg",
+                "width": 320,
+                "height": 480
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "title": "David C. DiGiacomo",
+        "fieldPhoneNumber": "814-860-2568",
+        "entityPublished": true,
+        "fieldNameFirst": "David C.",
+        "fieldLastName": "DiGiacomo",
+        "fieldSuffix": null,
+        "fieldDescription": "Associate Director",
+        "fieldOffice": {
+          "entity": {
+            "entityLabel": "VA Erie health care",
+            "entityType": "node"
+          }
+        },
+        "fieldIntroText": null,
+        "fieldPhotoAllowHiresDownload": false,
+        "fieldBody": {
+          "processed": "<p>Mr. David DiGiacomo assumed the duties of the Associate Director on November 27, 2016 where he oversees management efforts for administrative and facility decisions including budget formulation and execution; staffing; facility planning; patient care services; and physical security.</p>\n\n<p>Previously, Mr. DiGiacomo served dual roles as the Compliance &amp; Business Integrity Officer for both Butler VA Healthcare and the VA Pittsburgh Healthcare System. In these roles, he ensured that business activities and health information practices were conducted as per laws, regulations, and industry standards.</p>\n\n<p>Mr. DiGiacomo joined VA in 2000 as a Registered Respiratory Therapist (RRT), where he served as the Respiratory Therapy Manager from September 2002-June 2010.</p>\n\n<p>Mr. DiGiacomo received his RRT from St. Francis School of Respiratory Care/Point Park College in Pittsburgh.</p>"
+        },
+        "changed": 1611068704,
+        "entityUrl": {
+          "path": "/erie-health-care/staff-profiles/david-c-digiacomo"
+        },
+        "fieldMedia": {
+          "entity": {
+            "image": {
+              "alt": "David C. DiGiacomo",
+              "title": "",
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/2_3_medium_thumbnail/public/2020-03/David_C_DiGiacomo.jpg",
+                "width": 320,
+                "height": 480
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "fieldOffice": {
+    "entity": {
+      "entityUrl": { "path": "/erie-health-care" },
+      "title": "VA Erie health care",
+      "reverseFieldOfficeNode": {
+        "entities": [
+          {
+            "title": "Briana R. Cummings",
+            "fieldNameFirst": "Briana R.",
+            "fieldLastName": "Cummings ",
+            "fieldSuffix": null,
+            "fieldDescription": "Visual Information Specialist",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068692,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/briana-r-cummings"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Cassandra A Brewer",
+            "fieldNameFirst": "Cassandra A",
+            "fieldLastName": "Brewer",
+            "fieldSuffix": null,
+            "fieldDescription": "Veteran Experience Officer",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068698,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/cassandra-a-brewer"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Cassandra A Brewer",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/Cassandra_A_Brewer.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Chaplain David Fugate",
+            "fieldNameFirst": "Chaplain David",
+            "fieldLastName": "Fugate",
+            "fieldSuffix": null,
+            "fieldDescription": "Room #2N235",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068698,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/chaplain-david-fugate"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Chaplain Eric Dye",
+            "fieldNameFirst": "Chaplain Eric",
+            "fieldLastName": "Dye",
+            "fieldSuffix": null,
+            "fieldDescription": "Room #2N230",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068698,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/chaplain-eric-dye"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Colby Mitchell-El",
+            "fieldNameFirst": "Colby",
+            "fieldLastName": "Mitchell-El",
+            "fieldSuffix": null,
+            "fieldDescription": "Suicide Prevention Coordinator",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068698,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/colby-mitchell-el"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Connie Faluszczak",
+            "fieldNameFirst": "Connie",
+            "fieldLastName": "Faluszczak",
+            "fieldSuffix": null,
+            "fieldDescription": "Minority Veteran Program Coordinator",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068698,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/connie-faluszczak"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Damian T. Siggia",
+            "fieldNameFirst": "Damian T.",
+            "fieldLastName": "Siggia",
+            "fieldSuffix": null,
+            "fieldDescription": "Veteran Experience Officer",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068704,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/damian-t-siggia"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Damian T. Siggia",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/Damian_T_Siggia.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "David C. DiGiacomo",
+            "fieldNameFirst": "David C.",
+            "fieldLastName": "DiGiacomo",
+            "fieldSuffix": null,
+            "fieldDescription": "Associate Director",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": {
+              "processed": "<p>Mr. David DiGiacomo assumed the duties of the Associate Director on November 27, 2016 where he oversees management efforts for administrative and facility decisions including budget formulation and execution; staffing; facility planning; patient care services; and physical security.</p>\n\n<p>Previously, Mr. DiGiacomo served dual roles as the Compliance &amp; Business Integrity Officer for both Butler VA Healthcare and the VA Pittsburgh Healthcare System. In these roles, he ensured that business activities and health information practices were conducted as per laws, regulations, and industry standards.</p>\n\n<p>Mr. DiGiacomo joined VA in 2000 as a Registered Respiratory Therapist (RRT), where he served as the Respiratory Therapy Manager from September 2002-June 2010.</p>\n\n<p>Mr. DiGiacomo received his RRT from St. Francis School of Respiratory Care/Point Park College in Pittsburgh.</p>"
+            },
+            "changed": 1611068704,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/david-c-digiacomo"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "David C. DiGiacomo",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/David_C_DiGiacomo.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "David M. Lavin",
+            "fieldNameFirst": "David M.",
+            "fieldLastName": "Lavin",
+            "fieldSuffix": null,
+            "fieldDescription": "Chief of Staff",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": {
+              "processed": "<p>Dr. David Lavin was named Chief of Staff in April 2015. Dr. Lavin oversees management efforts for medical decisions made throughout the medical center and the five community based outpatient clinics.</p>\n\n<p>Dr. Lavin will be involved in budget formulation and execution, including workload planning, utilization management, recruitment of medical staff, accreditation and quality management activities, adherence to medical ethical standards, and clinical training programs.</p>\n\n<p>In January, Dr. Lavin assumed the duties of Acting Chief of Staff. Prior to this role, he served as the Medical Director of Primary Care since April of 2007. He has been with the VA since June of 2001 where he joined the Erie VAMC team as a primary care physician, splitting his duties between outpatient clinic and hospitalist medicine. He is Board Certified in Internal Medicine.</p>\n\n<p>Dr. Lavin received his Medical Degree from Jefferson Medical College, Philadelphia, PA in 1978. He completed his medical training at Wilmington Medical Center, Wilmington, Delaware in 1981. His first attending position was as an Internal Medicine Physician at a private practice in Erie, PA from 1981-2001. Since assuming his post at the Erie VAMC, he has also served as an adjunct clinical faculty member for Lake Erie College of Osteopathic Medicine.</p>"
+            },
+            "changed": 1611068704,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/david-m-lavin"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "David M. Lavin",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/David_M_Lavin.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Dorene M. Sommers",
+            "fieldNameFirst": "Dorene M.",
+            "fieldLastName": "Sommers",
+            "fieldSuffix": "RN, BSN, MBA, VHA-CM ",
+            "fieldDescription": "Associate Director, Patient Care Services",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": {
+              "processed": "<p>Ms. Dorene Sommers assumed the duties of Associate Director, Patient Care Services on May 22, 2011. As the Associate Director, Patient Care Services, Ms. Sommers joins the Medical Center Director in the overall management efforts with the responsibility for nursing and administrative duties delegated to her. She is involved in budget formulation and execution, including workload planning and utilization management; recruitment and retention of nursing staff; accreditation and quality management activities; and adherence to nursing practice and ethical standards. She is responsible for the nursing care provided throughout the medical center and in the associated Community Based Outpatient Clinics and she provides oversight for Nutrition and Food Services, Chaplain Services, and the Sterile Processing Services.</p>\n\n<p>Ms. Sommers joined Erie VA Medical Center in January 2007 as the Associate Nurse Executive. Prior to that appointment, she was the Nurse Manager of the Cardiac Surgical Intensive Care Unit at the Carilion Clinic in Roanoke, Virginia. In addition, she planned and implemented the opening of a Thoracic Surgery Care Unit. For several years she enjoyed working as a traveling nurse throughout the United States.</p>\n\n<p>Ms. Sommers received a Bachelor of Science Degree in Nursing from Duquesne University in Pittsburgh, Pennsylvania in 1997. Later, she earned a Master of Business Administration Degree from Averett University in Danville, Virginia. She is a member of the American Association of Critical Care Nurses, American College of Healthcare Executives, Nursing Organization of Veterans Affairs, and Sigma Theta Tau.</p>"
+            },
+            "changed": 1611068710,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/dorene-m-sommers"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Dorene M. Sommers",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/Dorene_M_Sommers.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Erie VA medical center's behavioral health clinic",
+            "fieldNameFirst": "Erie VA medical center's behavioral health clinic",
+            "fieldLastName": null,
+            "fieldSuffix": null,
+            "fieldDescription": null,
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": {
+              "processed": "<p>Mental health is as significant to an individual's well-being as their physical health. Individuals who are experiencing mental health issues, such as depression, anxiety, or PTSD, find the quality of their lives impacted. They may have difficulty enjoying their relationships, family, or friends. The goals they have set for themselves may now feel beyond their reach. Recognizing the importance of good mental health, the Erie VA Medical Center's Behavioral Health Clinic offers a wide array of services to Veterans experiencing mental health issues. Services offered include individual, couple, family, and group therapy as well as psychiatric assessments.</p>"
+            },
+            "changed": 1611068710,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/erie-va-medical-centers-behavioral-health-clinic"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Behavioral clinic at Erie Healthcare system.",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-11/Behavioral_Clinic_Erie.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Jamie Zewe",
+            "fieldNameFirst": "Jamie",
+            "fieldLastName": "Zewe",
+            "fieldSuffix": null,
+            "fieldDescription": "VA Community Mental Health Point of Contact",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068725,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/jamie-zewe"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "John A. Gennaro",
+            "fieldNameFirst": "John A.",
+            "fieldLastName": "Gennaro ",
+            "fieldSuffix": null,
+            "fieldDescription": "Director",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": "John A. Gennaro is the Director of the Erie VA Medical Center.  ",
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": {
+              "processed": "<p>Mr. John A. Gennaro was appointed as the CEO/Director of the Erie VA Medical Center on June 20, 2016. Mr. Gennaro oversees delivery of health care to more than 21,000 Veterans, 783 employees, and an operating budget of $144M. As CEO, Mr. Gennaro provides the strategic vision and operational oversight of the Erie VA Medical Center located in Erie, PA that is comprised of foundational services in Acute Medicine, Urgent Care, Primary Care, Behavioral Health, and Community Living Center/Nursing Home. Mr. Gennaro is also responsible for patient care delivery at five Community Based Outpatient Clinics located in Ashtabula, OH; Crawford, PA; Venango, PA; Warren PA; and Bradford, PA.</p>\n\n<p>Mr. Gennaro has more than 20 years of healthcare experience, with emphasis on operations, employee engagement and patient experience. He has served as the Director of the Cincinnati VA Medical Center from July 2015 - May 2016 and Director of VA Butler Healthcare System from 2012 - 2015.</p>\n\n<p>Mr. Gennaro has held several positions of increasing responsibility over his twenty years of healthcare experience. He began his career in the Research Foundation at the Cincinnati VAMC in 1997. He completed his healthcare administrative residency in 2001 at the Louis Stokes Cleveland VAMC. Mr. Gennaro has also served as the Deputy Director at VA Pittsburgh Healthcare System from 2008 - 2012, and Associate Director/COO at the Erie VAMC from 2006 - 2008.</p>\n\n<p>Mr. Gennaro received his bachelor's degree in natural sciences in 1999 and master's degrees in business administration and health care services administration from Xavier University in 2001. He is board certified as a fellow in the American College of Healthcare Executives. He served on the Board of Director's for the Allegheny Valley YMCA and was the 2015 Vice Chair of the Pittsburgh Federal Executive Board. Mr. Gennaro was the recipient of Modern Healthcare's Up and Comer award in 2013 and Becker’s Hospital Review Rising Star in Healthcare.</p>"
+            },
+            "changed": 1611068725,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/john-a-gennaro"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "John A. Gennaro",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/John_A_Gennaro.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Kelly Mallory",
+            "fieldNameFirst": "Kelly",
+            "fieldLastName": "Mallory",
+            "fieldSuffix": null,
+            "fieldDescription": "Transition & Care Management Case Manager",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068725,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/kelly-mallory"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Laryssa Stolar",
+            "fieldNameFirst": "Laryssa",
+            "fieldLastName": "Stolar",
+            "fieldSuffix": null,
+            "fieldDescription": "Health Care for Homeless Veterans Coordinator",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068731,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/laryssa-stolar"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Nadean Sitter",
+            "fieldNameFirst": "Nadean",
+            "fieldLastName": "Sitter",
+            "fieldSuffix": null,
+            "fieldDescription": "LGBT Special Emphasis Program Manager, Women Veterans Program Manager",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068753,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/nadean-sitter"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Nadean Sitter",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/Nadean_Sitter.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Sarah Gudgeon",
+            "fieldNameFirst": "Sarah",
+            "fieldLastName": "Gudgeon",
+            "fieldSuffix": null,
+            "fieldDescription": "Public Affairs Officer",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068783,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/sarah-gudgeon"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Tammy Breter",
+            "fieldNameFirst": "Tammy",
+            "fieldLastName": "Breter",
+            "fieldSuffix": "LCSW",
+            "fieldDescription": "Transition & Care Management Program Manager",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068790,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/tammy-breter"
+            },
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Tammy Breter",
+                  "title": "",
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-03/Tammy_Breter.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Tess Jones",
+            "fieldNameFirst": "Tess",
+            "fieldLastName": "Jones",
+            "fieldSuffix": "LSW",
+            "fieldDescription": "Caregiver Support Coordinator",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068796,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/tess-jones"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Tricia Stritzinger",
+            "fieldNameFirst": "Tricia",
+            "fieldLastName": "Stritzinger",
+            "fieldSuffix": "LCSW",
+            "fieldDescription": "Caregiver Support Coordinator",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611068796,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/tricia-stritzinger"
+            },
+            "fieldMedia": null
+          },
+          {
+            "title": "Kimberly Hackbarth",
+            "fieldNameFirst": "Kimberly",
+            "fieldLastName": "Hackbarth",
+            "fieldSuffix": null,
+            "fieldDescription": "Public Affairs Specialist, LGBT Veteran Care Coordinator (VCC)",
+            "fieldOffice": {
+              "entity": {
+                "entityLabel": "VA Erie health care",
+                "entityType": "node"
+              }
+            },
+            "fieldIntroText": null,
+            "fieldPhotoAllowHiresDownload": false,
+            "fieldBody": null,
+            "changed": 1611608492,
+            "entityUrl": {
+              "path": "/erie-health-care/staff-profiles/kimberly-hackbarth-0"
+            },
+            "fieldMedia": null
+          }
+        ]
+      },
+      "entityLabel": "VA Erie health care"
+    },
+    "targetId": 2356
+  }
+}

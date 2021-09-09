@@ -1,0 +1,98 @@
+{
+  "entityBundle": "press_release",
+  "entityId": "23451",
+  "entityPublished": true,
+  "title": "Lebanon VA Medical Center expands COVID-19 vaccinations to adolescents under SAVE LIVES Act",
+  "vid": 448367,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/lebanon-health-care", "routed": true },
+        "text": "VA Lebanon health care"
+      },
+      {
+        "url": { "path": "/lebanon-health-care/news-releases", "routed": true },
+        "text": "News releases"
+      }
+    ],
+    "path": "/lebanon-health-care/news-releases/lebanon-va-medical-center-expands-covid-19-vaccinations-to-adolescents-under-save-lives-act"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Lebanon VA Medical Center expands COVID-19 vaccinations to adolescents under SAVE LIVES Act |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Lebanon VAMC announced it will begin vaccinating adolescents ages 12 to 17, who are caregivers of Veterans or are CHAMPVA beneficiaries under the SAVE LIVES Act."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Lebanon VA Medical Center expands COVID-19 vaccinations to adolescents under SAVE LIVES Act |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Lebanon VAMC announced it will begin vaccinating adolescents ages 12 to 17, who are caregivers of Veterans or are CHAMPVA beneficiaries under the SAVE LIVES Act."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Lebanon VAMC announced it will begin vaccinating adolescents ages 12 to 17, who are caregivers of Veterans or are CHAMPVA beneficiaries under the SAVE LIVES Act."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Lebanon VA Medical Center expands COVID-19 vaccinations to adolescents under SAVE LIVES Act |  | Veterans Affairs"
+    }
+  ],
+  "fieldReleaseDate": {
+    "value": "2021-06-09T14:15:14",
+    "date": "2021-06-09 14:15:14 UTC"
+  },
+  "fieldPdfVersion": {
+    "entity": {
+      "fieldDocument": {
+        "entity": {
+          "filename": "2021-06-09_Adolescent_Vaccines_20210609.pdf",
+          "url": "https://prod.cms.va.gov/sites/default/files/2021-06/2021-06-09_Adolescent_Vaccines_20210609.pdf"
+        }
+      }
+    }
+  },
+  "fieldAddress": { "locality": "Lebanon", "administrativeArea": "PA" },
+  "fieldIntroText": "Lebanon VAMC announced it will begin vaccinating adolescents ages 12 to 17, who are caregivers of Veterans or are CHAMPVA beneficiaries under the SAVE LIVES Act.",
+  "fieldPressReleaseFulltext": {
+    "processed": "<p>The medical center will expand its vaccine offering to adolescents beginning Monday, June 14, 2021 from 9:00 a.m. to 6:00 p.m. at the COVID-19 Vaccine Clinic in building 24 (Gymnasium) on the main campus. </p>\n\n<p>The vaccine will be available to Veteran caregivers including adolescents and those who qualify as <a href=\"https://www.va.gov/health-care/family-caregiver-benefits/champva/\">beneficiaries</a> under VA’s Civilian Health and Medical Program. This expansion is in line with <a href=\"https://www.cdc.gov/media/releases/2021/s0512-advisory-committee-signing.html\">recent recommendations</a> from the Centers for Disease Control and Prevention, and the Food and Drug Administration. Previously, VA was only vaccinating adults age 18 and older. </p>\n\n<p>The urgency to vaccinate as many eligible individuals as quickly as possible remains a top priority for VA, and this service ensures that all Veterans, spouses, caregivers and those authorized under the SAVE LIVES Act have an opportunity to receive COVID-19 vaccination from VA. The effort is in support of the President’s goal of administering at least one vaccine shot to 70% of the U.S. adult population by July 4, 2021. </p>\n\n<p>“As the school year comes to an end and before families get on with summer activities, the Lebanon VAMC is honored to expand its offering of the COVID-19 vaccine to the adolescents who care for Veterans under this new expanded authority,” said Robert W. Callahan, Jr. “We look forward to helping our community move forward in this effort.” </p>\n\n<p>For more information about the Lebanon VA COVID-19 vaccine clinic operations call (717) 228-5965 to make an appointment. Walk-in’s are also welcome. </p>\n\n<p>Lebanon VA Medical Center is one of 170 medical centers in the nation with the sole purpose of providing world-class medical care to America’s Veterans. Lebanon VAMC serves a nine-county area in South Central Pennsylvania covering Adams, Berks, Cumberland, Dauphin, Lancaster, Lebanon, Perry, Schuylkill, and York counties. Lebanon VAMC also currently oversees community clinics located in Lancaster, Mechanicsburg, Pottsville, Wyomissing, York and Fort Indiantown Gap. If you are a Veteran, you may be eligible to receive care and benefits from the U.S. Department of Veterans Affairs. To learn more, call (717) 272-6621, ext. 6000.</p>"
+  },
+  "fieldPressReleaseContact": [
+    {
+      "entity": {
+        "title": "Douglas Etter",
+        "fieldDescription": "Chief Communications Officer",
+        "fieldPhoneNumber": "717-228-6079",
+        "fieldEmailAddress": "Douglas.Etter@va.gov"
+      }
+    }
+  ],
+  "fieldPressReleaseDownloads": []
+}

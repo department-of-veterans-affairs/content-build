@@ -1,0 +1,316 @@
+{
+  "entityBundle": "basic_landing_page",
+  "entityId": "8296",
+  "entityPublished": true,
+  "title": "Resources and support",
+  "vid": 462835,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      { "url": { "path": "", "routed": true }, "text": "Resources and support" }
+    ],
+    "path": "/resources"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Resources and support |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Explore VA resources and support information. Find FAQs, step-by-step instructions for tools, and more helpful articles."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Resources and support |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Explore VA resources and support information. Find FAQs, step-by-step instructions for tools, and more helpful articles."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Explore VA resources and support information. Find FAQs, step-by-step instructions for tools, and more helpful articles."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Resources and support |  | Veterans Affairs"
+    }
+  ],
+  "changed": 1624906894,
+  "fieldContentBlock": [
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "lists_of_links",
+        "entityId": "13315",
+        "fieldSectionHeader": "Browse by topic",
+        "fieldVaParagraphs": [
+          {
+            "entity": {
+              "entityBundle": "list_of_links",
+              "fieldSectionHeader": "VA account and profile",
+              "fieldLink": {
+                "title": "Go to all articles",
+                "url": { "path": "/resources/va-account-and-profile" }
+              },
+              "fieldLinks": [
+                {
+                  "title": "Signing in to VA.gov",
+                  "url": { "path": "/resources/signing-in-to-vagov" }
+                },
+                {
+                  "title": "Change your address on file with VA",
+                  "url": {
+                    "path": "/resources/change-your-address-on-file-with-va"
+                  }
+                },
+                {
+                  "title": "Direct deposit for your VA benefit payments",
+                  "url": {
+                    "path": "/resources/direct-deposit-for-your-va-benefit-payments"
+                  }
+                },
+                {
+                  "title": "How to change direct deposit information for VA benefits",
+                  "url": {
+                    "path": "/resources/how-to-change-direct-deposit-information-for-va-benefits"
+                  }
+                },
+                {
+                  "title": "Managing your VA.gov profile",
+                  "url": { "path": "/resources/managing-your-vagov-profile" }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityBundle": "list_of_links",
+              "fieldSectionHeader": "Other topics and questions",
+              "fieldLink": {
+                "title": "Go to all articles",
+                "url": { "path": "/resources/other-topics-and-questions" }
+              },
+              "fieldLinks": [
+                {
+                  "title": "What your claim status means",
+                  "url": { "path": "/resources/what-your-claim-status-means" }
+                },
+                {
+                  "title": "Commissary and exchange privileges for Veterans",
+                  "url": {
+                    "path": "/resources/commissary-and-exchange-privileges-for-veterans"
+                  }
+                },
+                {
+                  "title": "Veteran Identification Card (VIC) FAQs",
+                  "url": {
+                    "path": "/resources/veteran-identification-card-vic-faqs"
+                  }
+                },
+                {
+                  "title": "Helpful VA phone numbers",
+                  "url": { "path": "/resources/helpful-va-phone-numbers" }
+                },
+                {
+                  "title": "What if I'm having trouble opening a PDF?",
+                  "url": {
+                    "path": "/resources/what-if-im-having-trouble-opening-a-pdf"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityBundle": "list_of_links",
+              "fieldSectionHeader": "Decision reviews and appeals",
+              "fieldLink": null,
+              "fieldLinks": [
+                {
+                  "title": "What your decision review or appeal status means",
+                  "url": {
+                    "path": "/resources/what-your-decision-review-or-appeal-status-means"
+                  }
+                },
+                {
+                  "title": "How to check your VA claim, appeal, or decision review status online",
+                  "url": {
+                    "path": "/resources/how-to-check-your-va-claim-appeal-or-decision-review-status-online"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityBundle": "list_of_links",
+              "fieldSectionHeader": "Education and training",
+              "fieldLink": {
+                "title": "Go to all articles",
+                "url": { "path": "/resources/education-and-training" }
+              },
+              "fieldLinks": [
+                {
+                  "title": "How VA education benefit payments affect your taxes",
+                  "url": {
+                    "path": "/resources/how-va-education-benefit-payments-affect-your-taxes"
+                  }
+                },
+                {
+                  "title": "How do I get college credits for my military service?",
+                  "url": {
+                    "path": "/resources/how-do-i-get-college-credits-for-my-military-service"
+                  }
+                },
+                {
+                  "title": "Can I get a replacement GI Bill benefit Certificate of Eligibility?",
+                  "url": {
+                    "path": "/resources/can-i-get-a-replacement-gi-bill-benefit-certificate-of-eligibility"
+                  }
+                },
+                {
+                  "title": "What if my school closes temporarily because of a natural disaster?",
+                  "url": {
+                    "path": "/resources/what-if-my-school-closes-temporarily-because-of-a-natural-disaster"
+                  }
+                },
+                {
+                  "title": "GI Bill and other VA education benefit payments FAQs",
+                  "url": {
+                    "path": "/resources/gi-bill-and-other-va-education-benefit-payments-faqs"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityBundle": "list_of_links",
+              "fieldSectionHeader": "Life insurance",
+              "fieldLink": null,
+              "fieldLinks": [
+                {
+                  "title": "Life insurance if you have preexisting conditions",
+                  "url": {
+                    "path": "/resources/life-insurance-if-you-have-preexisting-conditions"
+                  }
+                },
+                {
+                  "title": "Life insurance dividend payment options",
+                  "url": {
+                    "path": "/resources/life-insurance-dividend-payment-options"
+                  }
+                },
+                {
+                  "title": "Deciding how much life insurance to get",
+                  "url": {
+                    "path": "/resources/deciding-how-much-life-insurance-to-get"
+                  }
+                },
+                {
+                  "title": "How to find out if you should get a higher TSGLI payment",
+                  "url": {
+                    "path": "/resources/how-to-find-out-if-you-should-get-a-higher-tsgli-payment"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityBundle": "list_of_links",
+              "fieldSectionHeader": "Burials and memorials",
+              "fieldLink": null,
+              "fieldLinks": [
+                {
+                  "title": "Can I be buried in Arlington National Cemetery?",
+                  "url": {
+                    "path": "/resources/can-i-be-buried-in-arlington-national-cemetery"
+                  }
+                },
+                {
+                  "title": "Can I plan ahead for my burial in a VA national cemetery?",
+                  "url": {
+                    "path": "/resources/can-i-plan-ahead-for-my-burial-in-a-va-national-cemetery"
+                  }
+                },
+                {
+                  "title": "What does burial in a VA national cemetery include?",
+                  "url": {
+                    "path": "/resources/what-does-burial-in-a-va-national-cemetery-include"
+                  }
+                },
+                {
+                  "title": "Government headstones and markers FAQs",
+                  "url": {
+                    "path": "/resources/government-headstones-and-markers-faqs"
+                  }
+                },
+                {
+                  "title": "Requesting a replacement government headstone or marker",
+                  "url": {
+                    "path": "/resources/requesting-a-replacement-government-headstone-or-marker"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "entityBundle": "list_of_links",
+              "fieldSectionHeader": "Health care",
+              "fieldLink": null,
+              "fieldLinks": [
+                {
+                  "title": "How to set up direct deposit for VA travel pay reimbursement",
+                  "url": {
+                    "path": "/resources/how-to-set-up-direct-deposit-for-va-travel-pay-reimbursement"
+                  }
+                },
+                {
+                  "title": "Reimbursed VA travel expenses and mileage rate",
+                  "url": {
+                    "path": "/resources/reimbursed-va-travel-expenses-and-mileage-rate"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "fieldDescription": "Explore VA resources and support information. Find FAQs, step-by-step instructions for tools, and more helpful articles.",
+  "fieldIntroTextLimitedHtml": {
+    "value": "<p>You can find FAQs about VA benefits and services, step-by-step instructions for using VA.gov tools, and other helpful articles. If you have questions about how COVID-19 may affect your VA benefits and services, read our&nbsp;<a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"fda9b503-6548-46b5-985b-22aef50f063a\" href=\"/node/3014\">coronavirus FAQs</a>.</p>\r\n",
+    "format": "rich_text_limited",
+    "processed": "<p>You can find FAQs about VA benefits and services, step-by-step instructions for using VA.gov tools, and other helpful articles. If you have questions about how COVID-19 may affect your VA benefits and services, read our <a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"fda9b503-6548-46b5-985b-22aef50f063a\" href=\"/coronavirus-veteran-frequently-asked-questions\" title=\"Coronavirus FAQs: What Veterans need to know\">coronavirus FAQs</a>.</p>\n"
+  },
+  "fieldProduct": {
+    "entity": { "entityBundle": "products", "name": "Resources and support" }
+  },
+  "fieldTableOfContentsBoolean": false
+}

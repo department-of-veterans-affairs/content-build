@@ -1,0 +1,1558 @@
+{
+  "entityBundle": "health_services_listing",
+  "entityId": "17860",
+  "entityPublished": true,
+  "title": "Health services",
+  "vid": 465098,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/tuscaloosa-health-care", "routed": true },
+        "text": "VA Tuscaloosa health care"
+      },
+      {
+        "url": { "path": "", "routed": true },
+        "text": "SERVICES AND LOCATIONS"
+      },
+      { "url": { "path": "", "routed": true }, "text": "Health services" }
+    ],
+    "path": "/tuscaloosa-health-care/health-services"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Health services | VA Tuscaloosa health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "VA Tuscaloosa Healthcare System offers a wide range of health, support, and facility services for Veterans in western Alabama. Click on a service below for more details like which clinic or medical center offers that service."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Health services | VA Tuscaloosa health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "VA Tuscaloosa Healthcare System offers a wide range of health, support, and facility services for Veterans in western Alabama. Click on a service below for more details like which clinic or medical center offers that service."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "VA Tuscaloosa Healthcare System offers a wide range of health, support, and facility services for Veterans in western Alabama. Click on a service below for more details like which clinic or medical center offers that service."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Health services | VA Tuscaloosa health care | Veterans Affairs"
+    }
+  ],
+  "fieldIntroText": "VA Tuscaloosa Healthcare System offers a wide range of health, support, and facility services for Veterans in western Alabama.  Click on a service below for more details like which clinic or medical center offers that service.",
+  "fieldFeaturedContentHealthser": [
+    {
+      "entity": {
+        "entityId": "35373",
+        "fieldLinkSummary": "Learn about our leading mental health work",
+        "fieldLink": {
+          "title": "Mental Health at VA Tuscaloosa health care",
+          "url": {
+            "path": "/tuscaloosa-health-care/health-services/mental-health-care"
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityId": "35374",
+        "fieldLinkSummary": "VA Tuscaloosa health care provides compassionate care for LGBT Veterans",
+        "fieldLink": {
+          "title": "Health care for transgender Veterans",
+          "url": {
+            "path": "/tuscaloosa-health-care/health-services/lgbt-veteran-care"
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityId": "35375",
+        "fieldLinkSummary": "Find out how to get community care as a VA Tuscaloosa health care patient",
+        "fieldLink": {
+          "title": "The Mission Act",
+          "url": { "path": "https://www.missionact.va.gov/" }
+        }
+      }
+    }
+  ],
+  "fieldOffice": {
+    "entity": {
+      "entityUrl": { "path": "/tuscaloosa-health-care" },
+      "title": "VA Tuscaloosa health care",
+      "reverseFieldRegionPageNode": {
+        "entities": [
+          {
+            "entityId": "15305",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/covid-19-vaccines-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<ul><li>COVID-19 vaccines for eligible Veterans and staff</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"f6411bc5-77c0-405b-9ac9-0a67fd46eb4d\" href=\"/tuscaloosa-health-care/programs/covid-19-vaccines\" title=\"COVID-19 vaccines \">Learn more about COVID-19 vaccines at VA</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/locations/tuscaloosa-va-medical-center/covid-19-vaccines"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "321",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": "coronavirus, COVID-19",
+                "name": "COVID-19 vaccines",
+                "description": {
+                  "processed": "We provide COVID-19 vaccines to Veterans as well as their spouses and caregivers. We also provide vaccines to Civilian Health and Medical Program of the Department of Veterans Affairs (CHAMPVA) recipients and VA staff."
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21124",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/patient-advocates-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>Our patient advocates work hard to make sure you receive the best possible care at our health care facilities. They can:</p>\n\n<ul><li>Help you get answers or address concerns with your care team</li>\n\t<li>Advocate for patient and family rights</li>\n\t<li>Serve as advocates for minority Veterans, women Veterans, and Veterans with disabilities</li>\n\t<li>Offer specialized help to former prisoners of war and Veterans transitioning from Operation Enduring Freedom (OEF), Operation Iraqi Freedom (OIF), and Operation New Dawn (OND)</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"bde4120e-0bfb-43a9-9a5c-59f935d45ac0\" href=\"/tuscaloosa-health-care/health-services/patient-advocates\" title=\"Patient advocates\">Learn more and connect with a patient advocate</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/patient-advocates"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "118",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Patient advocates",
+                "description": {
+                  "processed": "<p>VA wants to make sure that you get the best possible care. If you need help finding care or getting problems resolved, please contact a patient advocate.</p>"
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21114",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/mental-health-care-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>Our medical center and clinics provide consultation, evaluation, and treatment for a range of issues that may impact your mental health or emotional well-being. Our confidential outpatient services include individual and group therapy for:</p>\n\n<ul><li>Psychiatric disorders such as schizophrenia, bipolar disorder, and depression</li>\n\t<li>Marriage and relationship problems</li>\n\t<li>Post-traumatic stress disorder (PTSD)</li>\n\t<li>Anxiety, addictive behaviors, and personality disorders</li>\n\t<li>Aggressive or self-harming behaviors</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"a074a27b-0e68-41c5-bd3e-faf6543933f6\" href=\"/tuscaloosa-health-care/health-services/mental-health-care\" title=\"Mental health care\">Learn more and connect with a care coordinator</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/mental-health-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              },
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/selma-va-clinic/mental-health-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/selma-va-clinic"
+                      },
+                      "title": "Selma VA Clinic"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "43",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Behavioral health",
+                "fieldCommonlyTreatedCondition": "addiction, depression, anxiety, trauma, PTSD, bipolar disorder, schizophrenia, OCD ",
+                "name": "Mental health care",
+                "description": {
+                  "processed": "<p>If you’re struggling with issues like PTSD, depression, grief, anger or trauma, we offer counseling and other support. All VA health care facilities offer same-day help. You may qualify even without enrolling in VA health care.</p>"
+                },
+                "fieldServiceTypeOfCare": "Mental health care"
+              }
+            }
+          },
+          {
+            "entityId": "21118",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/lgbt-veteran-care-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>We promote the health, welfare, and dignity of lesbian, gay, bisexual, and transgender (LGBT) Veterans and their families. We focus on ensuring a safe, welcoming, and affirmative environment when providing you with sensitive and high-quality health care services like:</p>\n\n<p> </p>\n\n<ul><li>Hormone therapy</li>\n\t<li>Substance use and alcohol treatment</li>\n\t<li>Testing and treatment for HIV and sexually transmitted infections (STI)</li>\n\t<li>Mental health care</li>\n\t<li>Psychosocial assessments for gender-confirming surgeries and hormone therapy</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"f97ec00d-ab9e-4fc7-a8b3-22e44d01b32e\" href=\"/tuscaloosa-health-care/health-services/lgbt-veteran-care\" title=\"LGBT Veteran care\">Learn more and connect with a care coordinator</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/lgbt-veteran-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "54",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Lesbian, gay, bisexual, transgender, and queer/questioning identities",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "LGBTQ+ Veteran care",
+                "description": {
+                  "processed": "If you're a Veteran who identifies as lesbian, gay, bisexual, transgender, queer/questioning, or a related identity, we’re committed to serving your needs. The LGBTQ+ Veteran care coordinator at your VA health care facility can help you get the care you need in a safe, sensitive environment."
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21116",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/homeless-veteran-care-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>We help Veterans who are homeless or at risk of becoming homeless due to financial hardship, unemployment, addiction, depression, or transition from jail. Contact one of our care coordinators to get help with:</p>\n\n<p> </p>\n\n<ul><li>Immediate food and shelter needs, including both transitional and permanent housing</li>\n\t<li>Job training, life skills development, and education</li>\n\t<li>Justice system navigation and community reentry from jail</li>\n\t<li>Financial support to prevent homelessness</li>\n\t<li>Addiction and depression treatment</li>\n\t<li>Health and dental care</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"aac1f995-5aa7-4f35-840b-aa6faffb10a8\" href=\"/tuscaloosa-health-care/health-services/homeless-veteran-care\" title=\"Homeless Veteran care\">Learn more and connect with a care coordinator</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/homeless-veteran-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "39",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Transitional and supportive housing, HUD-VASH",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Homeless Veteran care",
+                "description": {
+                  "processed": "If you’re homeless or at risk of becoming homeless, we can help. We offer many programs and services, including free health care. And we can help you connect with resources in your community."
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21110",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/caregiver-support-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>If you’re a caregiver for a Veteran, you can get support by contacting one of our caregiver support coordinators. If the Veteran you care for was injured post-9/11, you may be eligible for even more services, including a stipend to help with expenses, training, and medical coverage if you aren’t already covered. For all caregivers, we can:</p>\n\n<p> </p>\n\n<ul><li>Help you get caregiver assistance available through VA</li>\n\t<li>Provide progressive needs planning to help you manage degenerative conditions</li>\n\t<li>Match you with services and benefits</li>\n\t<li>Connect you with local resources and programs</li>\n\t<li>Listen to you when you struggle</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"18f9b77a-a5e0-484f-a719-cda9852df5b7\" href=\"/tuscaloosa-health-care/health-services/caregiver-support\" title=\"Caregiver support\">Learn more and connect with a support coordinator</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/caregiver-support"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "48",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Caregiver support",
+                "description": {
+                  "processed": "If you are caring for a Veteran with serious illness or disabilities, we can help you support them—and take care of yourself. You may qualify for services like training, counseling or respite care when you need a break."
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21125",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/pharmacy-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>Our pharmacy provides you and other Veterans with convenient, efficient service to make it easy to get your medications and medical supplies. You can:</p>\n\n<ul><li>Pick up new prescriptions in person</li>\n\t<li>Refill prescriptions online and by phone or mail</li>\n\t<li>Safely dispose of medicines</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"d2797305-72ce-4d59-b48b-21bbb0b55966\" href=\"/tuscaloosa-health-care/pharmacy\" title=\"Pharmacy\">Learn more about our pharmacy</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/pharmacy"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              },
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/selma-va-clinic/pharmacy"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/selma-va-clinic"
+                      },
+                      "title": "Selma VA Clinic"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "63",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Prescriptions, Rx, medications, pharmacist consultation",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Pharmacy",
+                "description": {
+                  "processed": "<p>Our specialists provide a full range of services to help you get and understand your prescription medicines and supplies. You can refill VA prescriptions online, by phone or by mail.</p>"
+                },
+                "fieldServiceTypeOfCare": "Primary care"
+              }
+            }
+          },
+          {
+            "entityId": "21109",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/audiology-and-speech-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>Our Audiology and Speech Pathology clinic provides diagnostic and rehabilitative services, VA compensation and pension examinations, and screening for employee hearing conservation. We offer a full range of audiology and speech pathology services like:</p>\n\n<p> </p>\n\n<ul><li>Hearing and balance evaluations</li>\n\t<li>Selection, management, and repair of hearing aids and assistive listening device assessments</li>\n\t<li>Evaluation, programming, and management of cochlear implants and bone-anchored implants</li>\n\t<li>Evaluation and treatment for auditory processing disorder</li>\n\t<li>Services that help with speech, language, fluency, voice, cognitive communication, swallowing, stuttering, and laryngectomy (surgical removal of the larynx, which contains your vocal cords)</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"938ea13f-7872-41bc-8efe-9482713387f9\" href=\"/health-care/order-hearing-aid-batteries-and-accessories\" title=\"Order hearing aid batteries and accessories from VA\">Learn more about VA hearing aids</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/audiology-and-speech"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "33",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Hearing, speech, and balance",
+                "fieldCommonlyTreatedCondition": "tinnitus, vertigo, hearing loss, vestibular conditions, swallowing conditions",
+                "name": "Audiology and speech",
+                "description": {
+                  "processed": "<p>We diagnose and treat conditions affecting your hearing, speech or balance. These include hearing loss, tinnitus (noise or ringing the ears) and dizziness—also speech, language, voice or swallowing disorders.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21120",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/my-healthevet-coordinator-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>My HealtheVet is a web-based tool you can use to manage your care and improve your health from your computer or mobile device. You can access your personal health records and use tools to manage your care through our My HealtheVet online system. You can also use My HealtheVet to refill your prescriptions, track appointments, and read informative health articles. If you need help using My HealtheVet, you can contact our coordinator by phone or in person. With My HealtheVet, you can:</p><p></p><ul><li>Ask questions and exchange secure online messages with your VA health care team</li><li>Check your lab and test results</li><li>Refill your prescriptions, track delivery, and view a list of your medications</li><li>Keep track of your VA medical appointments and get email reminders</li><li>View, download, or print a copy of your VA medical records</li><li>Enter or update your personal information</li></ul><p><a href=\"https://www.myhealth.va.gov/mhv-portal-web/home\">Learn more and register for My HealtheVet</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/my-healthevet-coordinator"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              },
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/selma-va-clinic/my-healthevet-coordinator"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/selma-va-clinic"
+                      },
+                      "title": "Selma VA Clinic"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "56",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "My HealtheVet coordinator",
+                "description": {
+                  "processed": "<p>Your My HealtheVet coordinator can help you start using the VA online portal to manage your appointments and records, refill prescriptions, view your lab and test results and communicate with your health care team.</p>"
+                },
+                "fieldServiceTypeOfCare": "Other services"
+              }
+            }
+          },
+          {
+            "entityId": "21117",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/laboratory-and-pathology-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>Our laboratories provide a full range of clinical and diagnostic testing services. Our laboratory and pathology services include:</p><p></p><ul><li>Study of blood, urine, and other bodily fluids for illness management</li><li>Testing for infectious diseases</li><li>Cytopathology (study of unusual cells) and surgical pathology (study of tissue removed during surgery)</li><li>Autopsy services</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/laboratory-and-pathology"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              },
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/selma-va-clinic/laboratory-and-pathology"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/selma-va-clinic"
+                      },
+                      "title": "Selma VA Clinic"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "88",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Blood draw and clinical testing",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Laboratory and pathology",
+                "description": {
+                  "processed": "<p>We offer blood tests and other advanced testing services to help you and your VA health care team monitor your health, find and understand any health problems and make informed treatment decisions.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21119",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/minority-veteran-care-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>If you’re a minority Veteran, we can help you get the services and benefits you need. Our Minority Veterans Program serves all Veterans who are Black American, Asian American, Hispanic American, and Native American (including American Indians, Alaska Natives, Native Hawaiians, and Pacific Island Americans). We work to:</p><p></p><ul><li>Help the medical center address minority Veterans’ needs</li><li>Meet minority Veterans’ needs in the local community</li><li>Identify barriers and create a more accessible environment for minority Veterans</li><li>Inform minority Veterans of VA benefits, services, and programs</li></ul><p>Learn more and connect with a care coordinator</p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/minority-veteran-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "152",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Minority Veteran care",
+                "description": {
+                  "processed": "<p>We offer resources and support for minority Veterans to help address your specific needs with benefits and services at VA.</p>"
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21122",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/hematologyoncology-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>We offer a range of hematology and oncology services. You can arrange appointments and consultation through your primary care provider. Our hematology and oncology services include:</p><p></p><ul><li>Chemotherapy</li><li>Blood and platelet transfusions</li><li>Mediport flushes to clean and maintain the small medical appliance inserted under your skin, making it easier to inject drugs and draw blood</li><li>Evaluation and treatment of blood disorders and cancer</li><li>Dedicated outpatient infusion center, working closely with radiation oncology, interventional radiology, general surgery, diagnostics, palliative care, and social services</li><li>Bone marrow biopsies, to see whether your bone tissue is healthy and making a normal number of blood cells</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/hematologyoncology"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "128",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Blood disorders and medical oncology",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Hematology/oncology",
+                "description": {
+                  "processed": "<p>If you have a diagnosis of anemia, lymphoma, leukemia or another blood cancer or disorder, we support you with expert care and treatment.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21123",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/optometry-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>Our optometrists provide many eye-related services and treatments like:</p><p></p><ul><li>Vision services and eye exams</li><li>Treatment for diseases and injuries of the retina, cornea, and other parts of your eye</li><li>Low-vision services for conditions like macular degeneration that can’t be corrected by glasses, surgery, or medication</li><li>Special eye exams for diabetic patients</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/optometry"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "91",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Vision care, corrective lenses and eyeglasses",
+                "fieldCommonlyTreatedCondition": "vision exams, prescription eyeglasses, contact lenses",
+                "name": "Optometry",
+                "description": {
+                  "processed": "<p>Our optometrists offer you routine eye exams, preventive vision testing and treatment for conditions like glaucoma. We also provide prescriptions for eyeglasses and other assistive devices.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21121",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/neurology-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>We provide inpatient and outpatient services for chronic diseases and disorders that affect your brain, spine, and the nerves that connect them. Our neurologists read electroencephalogram (EEG) recordings, which measure the electrical impulses brain cells use to communicate with each other. We evaluate and treat many neurological illnesses and disorders such as:</p><p></p><ul><li>Neuropathy (nerve damage), myelopathy and other spinal cord injuries, and radiculopathy (pinched nerves)</li><li>Parkinson’s disease, epilepsy, and multiple sclerosis</li><li>Stroke, dementia, and degenerative diseases</li><li>Other neurological conditions</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/neurology"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "159",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Brain, spine, and nervous system",
+                "fieldCommonlyTreatedCondition": "cognitive disorders, epilepsy, headache motor neuron and movement disorders, multiple sclerosis, stroke",
+                "name": "Neurology",
+                "description": {
+                  "processed": "<p>Our specialists evaluate and treat conditions and diseases of the brain, spine, and nervous system, including headache, stroke, Alzheimer's disease, epilepsy, Parkinson’s disease and other conditions.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21115",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/geriatrics-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>We assess your situation and condition to decide which outpatient geriatric services are right for you or a senior Veteran in your care, and then we coordinate your care. Our team of specialists provides geriatric services that include:</p><p></p><ul><li>Medicine and nursing</li><li>Psychology, psychiatry, and social work</li><li>Physical and occupational therapy</li></ul><p><a href=\"https://www.va.gov/GERIATRICS/\">Learn more about VA long-term care</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/geriatrics"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "36",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Older adult care, senior care",
+                "fieldCommonlyTreatedCondition": "memory problems, sleep problems, falls, bone loss, weight loss",
+                "name": "Geriatrics",
+                "description": {
+                  "processed": "<p>As you age, we offer a range of medical and support services to help you stay as healthy, active and independent as possible. We also offer help to family members and caregivers who may support you.</p>"
+                },
+                "fieldServiceTypeOfCare": "Primary care"
+              }
+            }
+          },
+          {
+            "entityId": "21126",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/physical-therapy-occupational-therapy-and-kinesiotherapy-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>If you’re living with or recovering from an injury, illness, or chronic condition that limits your mobility and independence, we can help. Our physical, occupational, and movement therapists combine therapeutic exercise, counseling, education, and training to help you improve your health and quality of life. Our services include:</p><p></p><ul><li>Pain relief and joint mobilization</li><li>Movement and exercise therapies to improve your strength, endurance, balance, and coordination</li><li>Mobility assessment and training with wheelchairs, scooters, and walking devices</li><li>Life skills training and activities to help you maintain the highest level of independence and functionality</li><li>Aquatic therapy to manage chronic pain</li><li>Evaluation and treatment for a wide range of medical, orthopedic, psychosocial, and neurological conditions</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/physical-therapy-occupational-therapy-and-kinesiotherapy"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "136",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "PT, OT, KT",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Physical therapy, occupational therapy and kinesiotherapy",
+                "description": {
+                  "processed": "<p>Physical therapy, occupational therapy and kinesiotherapy can help restore movement and function if you have been disabled by injury or disease.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21113",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/cardiology-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>We perform noninvasive and minimally invasive tests and procedures that check, support, and improve your heart health. We’ll work with you to develop a personalized treatment plan and treat you with the most effective medications. Our services include:</p><p></p><ul><li>Evaluating you for coronary heart disease, heart-valve disease, and heart defects</li><li>Determining how well blood flows through your heart vessels or find the cause of your heart failure</li><li>Treating your heart vessels with nonsurgical or minimally invasive operations that open and support them through balloon angioplasty or stent placement</li><li>Noninvasively monitoring you for changes in heart rhythm, using electrocardiograms (EKGs or ECGs), portable Holt monitors, or ultrasound</li><li>Performing surgical treatments like pacemaker implants or cardiac catheterization (inserting a long, thin tube into an artery or vein)</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/cardiology"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "81",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Heart and circulation",
+                "fieldCommonlyTreatedCondition": "heart disease, high blood pressure, heart rhythm disorders, angina, vascular diseases",
+                "name": "Cardiology",
+                "description": {
+                  "processed": "<p>Our cardiology specialists offer advanced treatment and care for conditions affecting your heart and blood vessels, including heart disease, stroke, heart rhythm disorders and high blood pressure. </p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21112",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/dentaloral-surgery-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>If you’re eligible for VA dental care, we offer a full range of quality dental services like:</p><p></p><ul><li>Routine exams and teeth cleaning</li><li>Restorative procedures, including fillings and crowns</li><li>Comprehensive surgical care, including extractions (pulling teeth) and oral cancer screening</li><li>Routine and advanced prosthodontic care, including bridges, dentures, and dental implants</li><li>Routine and advanced periodontal care, including root canals, gum treatments, and supporting bone care</li><li>Oral and facial reconstruction surgery to repair damage from traumatic injury or serious illness</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/dentaloral-surgery"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "83",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Mouth, teeth, gum, and oral care",
+                "fieldCommonlyTreatedCondition": "teeth cleaning, fillings, restorations, root canal, bridges, dental implants, dentures ",
+                "name": "Dental/oral surgery",
+                "description": {
+                  "processed": "<p>If you’re eligible for VA dental care, we provide dental screenings, cleanings, X-rays and fillings. We also provide specialty dental procedures like root canal, restorations and dentures.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21111",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/extended-care-and-rehabilitation-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>We provide long-term care to help you and your family when you’re dealing with a disability, chronic (long-lasting) illness, terminal illness, or serious health issues related to aging. Our long-term health care services include:</p><p></p><ul><li>24/7 nursing and medical care</li><li>Physical therapy</li><li>Help with daily tasks like bathing, dressing, making meals, and taking medicine</li><li>Pain management and palliative care to relieve suffering and improve quality of life for people with serious illnesses</li><li>Hospice care to provide comfort and compassionate care for people in the last phases of an incurable illness</li><li>To learn more about the different types of extended care that VA provides, see our guide to long-term services and support.</li></ul><p><a href=\"https://www.va.gov/GERIATRICS/\">Learn more about VA long-term care</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/extended-care-and-rehabilitation"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "113",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Extended care and rehabilitation",
+                "description": {
+                  "processed": "<p>We assist frail and elderly Veterans and their families as they deal with chronic illness or disabilities. Services include home, nursing and hospice and palliative care.  </p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21138",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/women-veteran-care-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>Our women's health program offers complete health care for women Veterans of all ages. Our primary care providers specialize in women’s health. They work closely with specialists in gynecology, obstetrics, female urology, oncology, medicine, radiology, surgery, and breast illness. Our services for women Veterans include:</p>\n\n<ul><li>Ultrasounds, mammograms, Pap and HPV tests</li>\n\t<li>Mental health care and counseling</li>\n\t<li>Lifestyle wellness services</li>\n\t<li>Menopause treatment, including hormonal therapy</li>\n\t<li>Family planning, contraceptive care, and infertility evaluation</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"1f421e55-3351-4657-9950-ba33144fa68c\" href=\"/tuscaloosa-health-care/health-services/women-veteran-care\" title=\"Women Veteran care\">Learn more and connect with a care coordinator</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/women-veteran-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "57",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": "women's primary care, mental health, obstetrics and gynecology, pap smear, mammogram",
+                "name": "Women Veteran care",
+                "description": {
+                  "processed": "<p>We offer women’s health services to meet your specific needs such as disease screenings, mental health treatment, recovery from military sexual trauma, maternity care and female-specific medical equipment.</p>"
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21136",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/suicide-prevention-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>We work with behavioral health providers and community organizations to help you and your family during times of crisis. We offer:</p>\n\n<ul><li>Suicide prevention care coordinators</li>\n\t<li>Suicide prevention case managers</li>\n\t<li>Gun safety locks</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"58b50466-d25f-4541-820c-dbdad4c4fa5e\" href=\"/tuscaloosa-health-care/health-services/suicide-prevention\" title=\"Suicide prevention\">Learn more and connect with a care coordinator</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/suicide-prevention"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "35",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Veterans Crisis Line",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Suicide prevention",
+                "description": {
+                  "processed": "<p>Call our Veterans Crisis Line at 800-273-8255 (select 1) for free, private help anytime 24/7. Our local suicide prevention coordinators can also connect you with ongoing counseling and services.</p>"
+                },
+                "fieldServiceTypeOfCare": "Mental health care"
+              }
+            }
+          },
+          {
+            "entityId": "21133",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/returning-service-member-care-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3>\n\n<p>We can help you readjust to civilian life if you’re returning from military service, on active duty, or an activated National Guard or Reserve member. Talk to one of our care coordinators about how to best use your health care benefits.</p>\n\n<ul><li>Polytrauma care (if you have multiple traumatic injuries)</li>\n\t<li>Counseling and rehabilitation</li>\n\t<li>Mental and behavioral health services</li>\n\t<li>Family benefits counseling and assistance</li>\n\t<li>Referral assistance</li>\n</ul><p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"e0d75ad3-613b-4d67-a270-66ae9d2fba57\" href=\"/tuscaloosa-health-care/health-services/returning-service-member-care\" title=\"Returning service member care\">Learn more and connect with a coordinator</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/returning-service-member-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "55",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Post-9/11 Veterans (OEF, OIF, OND) transition and care management services",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Returning service member care",
+                "description": {
+                  "processed": "<p>If you’re returning from military service, we can help you readjust to civilian life and get started with VA health care. We can also help connect you with programs like mental health services and education and career counseling.</p>"
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21128",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/primary-care-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>A strong network of family and internal medicine specialists and services can offer you the best possible care. Internal medicine doctors (internists) prevent, diagnose, and treat adult diseases. Doctors who specialize in family medicine provide primary health care to the entire family. Your primary care team can coordinate the many services you receive such as:</p><p></p><ul><li>Labs and blood work</li><li>Mental health care</li><li>Womens health care</li><li>Radiology</li><li>Social services</li><li>Telehealth</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/primary-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              },
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/selma-va-clinic/primary-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/selma-va-clinic"
+                      },
+                      "title": "Selma VA Clinic"
+                    }
+                  }
+                }
+              },
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-mobile-clinic/primary-care"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-mobile-clinic"
+                      },
+                      "title": "Tuscaloosa VA Mobile Clinic"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "37",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Family and internal medicine",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Primary care",
+                "description": {
+                  "processed": "<p>Your VA primary care provider will work closely with you to plan for all the care you need to stay healthy and well throughout your life. They will also work with family members or caregivers who support you.</p>"
+                },
+                "fieldServiceTypeOfCare": "Primary care"
+              }
+            }
+          },
+          {
+            "entityId": "21139",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/smoking-and-tobacco-cessation-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>You can quit smoking or chewing tobacco. Our goal is to provide support and strategies to add to optional nicotine replacement therapy prescribed by your primary care doctor. These include:</p><p></p><ul><li>FDA-approved medications to manage nicotine withdrawal and the urge to smoke.</li><li>Counseling in person or by phone</li><li>Tobacco Cessation Quitline for individual counseling and strategies</li><li>SmokefreeVET text message program for daily advice and interactive support</li><li>Stay Quit Coach mobile app to help you quit smoking and stay smoke-free</li></ul><p><a href=\"https://www.mentalhealth.va.gov/quit-tobacco/how-to-quit.asp\">Learn more about how to quit</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/selma-va-clinic/smoking-and-tobacco-cessation"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/selma-va-clinic"
+                      },
+                      "title": "Selma VA Clinic"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "119",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Quit smoking",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Smoking and tobacco cessation",
+                "description": {
+                  "processed": "<p>If you are trying to quit smoking or want to stop using tobacco, we can help you with support, resources and programs.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21130",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/psychology-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>Our psychology teams offer consultation, evaluation, and treatment to help with a range of mental and behavioral health problems like:</p><p></p><ul><li>Depression (including sadness and grief), anxiety (including worry and nervousness), and personality disorders</li><li>Addictive behaviors and substance abuse</li><li>Post-traumatic stress disorder (PTSD) and combat-related stress disorder</li><li>Emotional issues like anger management and relationship challenges</li><li>Confused thinking, memory problems, and invasive thoughts or ideas</li><li>Aggressive or self-harming behaviors</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/psychology"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "117",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Psychology",
+                "description": {
+                  "processed": "<p>If you’re struggling with a mental health problem—or just need to talk with someone—we can help. We offer treatment and support such as therapy, alternative treatments and medications when needed.</p>"
+                },
+                "fieldServiceTypeOfCare": "Mental health care"
+              }
+            }
+          },
+          {
+            "entityId": "21131",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/radiology-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>We offer radiology and imaging services to diagnose and treat many medical conditions. Our services include:</p><p></p><ul><li>X-ray</li><li>Ultrasound</li><li>Mammography (mammograms)</li><li>Computer tomography (CT)</li><li>Positron emission tomography (PET)</li><li>Magnetic resonance imaging (MRI)</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/radiology"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "124",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Radiology",
+                "description": {
+                  "processed": "<p>Our radiology service uses imaging to help screen for, diagnose and treat disease. We provide X-rays, ultrasound, mammography, MRI, CT and PET scans and other imaging procedures.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21132",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/pulmonary-medicine-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>If you find it difficult to breathe or sleep, our pulmonary (lung) specialists can help. We offer education, exercises, and treatments like:</p><p></p><ul><li>Oxygen therapy to help you stay active and breathe better</li><li>Pulmonary rehabilitation to build your strength and increase lung capacity</li><li>Healthy diets to help you manage your weight and improve energy</li><li>Strategies to help you increase your feelings of control, optimism, and self-esteem</li><li>Tests to measure your lung function, lung volume, and blood gas</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/pulmonary-medicine"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "139",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Lungs and breathing",
+                "fieldCommonlyTreatedCondition": "tuberculosis, respiratory conditions, sleep apnea, sleep problems",
+                "name": "Pulmonary medicine",
+                "description": {
+                  "processed": "<p>Our pulmonary medicine team treats diseases and conditions that affect the lungs and breathing, including asthma, tuberculosis, chronic obstructive pulmonary disease, acute respiratory distress syndrome and sleep apnea.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21129",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/rehabilitation-and-prosthetics-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>VA is the world’s largest and most comprehensive provider of sensory aides and prosthetic devices. Veterans enrolled in the VA health care system and referred by a physical medicine and rehabilitation physician can receive a full range of services and equipment like:</p><p></p><ul><li>Artificial limbs and surgical implants, including artificial joints and pacemakers</li><li>Wheelchairs and other medical devices</li><li>Aids for Veterans who are blind, have low vision, or are hearing impaired</li><li>Adaptive equipment and modifications to make your vehicle or home more accessible</li><li>Other devices and services to help increase your mobility, dignity, and independence</li><li>Clothing allowance for Veterans with devices that damage their clothing</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/rehabilitation-and-prosthetics"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "97",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Prosthetics, orthotics and medical equipment",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Rehabilitation and prosthetics",
+                "description": {
+                  "processed": "<p>We provide and help you use medical aids, hearing aids, state-of-the-art adaptive home equipment and other equipment to help you preserve and increase your mobility and independence.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21134",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/social-work-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>Social work is integral to health care. We can help you and your family manage stress-related problems due to injury or illness, and find VA community resources to meet your needs like:</p><p></p><ul><li>Home health services</li><li>Legal services</li><li>Transportation</li><li>Community living</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/social-work"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "114",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Social work",
+                "description": {
+                  "processed": "<p>Social workers are here to help Veterans, families and caregivers with almost any need, from help with finances or housing to questions about treatment to just feeling overwhelmed. We are here for you.</p>"
+                },
+                "fieldServiceTypeOfCare": "Social programs and services"
+              }
+            }
+          },
+          {
+            "entityId": "21135",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/spinal-cord-injury-and-disorders-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>VA has the nation’s largest system of care for spinal cord injuries and disorders. We provide a convenient, connected network of experts to care for you during each phase of your life. Our experienced primary care providers are trained to check for problems unique to spinal cord injuries.</p><p></p><ul><li>Pressure ulcers</li><li>Pneumonia</li><li>Blood clots</li><li>Bladder and sexual issues</li><li>Constipation and other gastrointestinal problems</li><li>Sexual issues</li></ul><p><a href=\"https://www.sci.va.gov/VAs_SCID_System_of_Care.asp\">Learn more about the VA spinal cord injuries and disorders care system</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/spinal-cord-injury-and-disorders"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "96",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Spinal cord injury and disorders",
+                "description": {
+                  "processed": "<p>If you have a spinal cord injury or disorder, our specialists provide coordinated care throughout your life. We work to help you achieve your goals for independence, productivity and quality of life.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21137",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/whole-health-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>Our whole health approach empowers and equips you to take charge of your health, well-being, and quality of life. Whole health goes beyond your illnesses, injuries, or disabilities, and focuses instead on your values, goals, and overall health. It includes self-care and complementary therapies along with conventional medical care. Our whole health program includes:</p><p></p><ul><li>Acupuncture to help you manage pain without drugs</li><li>Meditation and mindfulness training</li><li>Yoga, tai chi, and qi gong classes</li><li>Massage and manual therapy</li></ul><p><a href=\"https://www.va.gov/wholehealth/\">Learn more about VA whole health</a></p>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/whole-health"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "120",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Patient-centered care",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Whole health",
+                "description": {
+                  "processed": "Whole health puts you at the center of care, rather than your illnesses or conditions. We work with you to develop a personalized health plan based on your values, needs and goals."
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          },
+          {
+            "entityId": "21127",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/tuscaloosa-health-care/health-services/podiatry-at-va-tuscaloosa-health-care"
+            },
+            "fieldBody": {
+              "processed": "<h3>Care we provide at VA Tuscaloosa health care</h3><p>After years of walking, running, marching, jumping, rappelling, and parachuting, many Veterans experience trouble with their feet and ankles. We can help treat those problems so you can continue to enjoy an active lifestyle. Our podiatry services include:</p><p></p><ul><li>Arthritis care for inflamed, swollen, or damaged joints</li><li>Foot and ankle fracture treatment, repair of cartilage, torn tendons and ligaments</li><li>Injections to reduce pain and swelling</li><li>Joint arthroplasty (surgical repair or reconstruction) and replacement</li><li>Minimally invasive surgery and post-surgical rehabilitation</li><li>Foot health maintenance procedures (bunion removal, resurfacing, and nail trimming)</li></ul>"
+            },
+            "fieldLocalHealthCareService": [
+              {
+                "entity": {
+                  "status": true,
+                  "entityUrl": {
+                    "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center/podiatry"
+                  },
+                  "fieldFacilityLocation": {
+                    "entity": {
+                      "entityUrl": {
+                        "path": "/tuscaloosa-health-care/locations/tuscaloosa-va-medical-center"
+                      },
+                      "title": "Tuscaloosa VA Medical Center"
+                    }
+                  }
+                }
+              }
+            ],
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "weight": 0,
+                "entityId": "64",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Foot, ankle and lower extremities",
+                "fieldCommonlyTreatedCondition": "arthritis, bunions, diabetic foot care, foot deformities, skin and nail conditions",
+                "name": "Podiatry",
+                "description": {
+                  "processed": "<p>Our podiatry specialists evaluate and treat a wide range of injuries, diseases and disorders that affect your feet and ankles—from ingrown toenails to inflammation to diabetic foot ulcers.</p>"
+                },
+                "fieldServiceTypeOfCare": "Specialty care"
+              }
+            }
+          }
+        ]
+      },
+      "entityLabel": "VA Tuscaloosa health care"
+    },
+    "targetId": 14982
+  }
+}

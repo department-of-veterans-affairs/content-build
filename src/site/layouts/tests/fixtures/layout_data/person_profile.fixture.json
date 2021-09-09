@@ -1,0 +1,154 @@
+{
+  "entityBundle": "person_profile",
+  "entityId": "23218",
+  "entityPublished": true,
+  "title": "David Shernoff",
+  "vid": 444062,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/northern-california-health-care", "routed": true },
+        "text": "VA Northern California health care"
+      }
+    ],
+    "path": "/northern-california-health-care/staff-profiles/david-shernoff"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "David Shernoff | VA Northern California health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "David Shernoff | VA Northern California health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "David Shernoff | VA Northern California health care | Veterans Affairs"
+    }
+  ],
+  "fieldNameFirst": "David",
+  "fieldLastName": "Shernoff",
+  "fieldSuffix": "LCSW",
+  "fieldDescription": "Suicide Prevention Coordinator, East Bay",
+  "fieldEmailAddress": null,
+  "fieldPhoneNumber": null,
+  "fieldCompleteBiography": null,
+  "fieldOffice": {
+    "entity": {
+      "entityLabel": "VA Northern California health care",
+      "entityType": "node",
+      "entityBundle": "health_care_region_page",
+      "entityId": "7832",
+      "entityPublished": true,
+      "title": "VA Northern California health care",
+      "vid": 449517,
+      "entityUrl": {
+        "breadcrumb": [
+          { "url": { "path": "/", "routed": true }, "text": "Home" },
+          {
+            "url": { "path": "", "routed": true },
+            "text": "VA Northern California health care"
+          }
+        ],
+        "path": "/northern-california-health-care"
+      },
+      "entityMetatags": [
+        {
+          "__typename": "MetaLink",
+          "key": "image_src",
+          "value": "https://prod.cms.va.gov/sites/default/files/2020-09/Northern_California.jpg"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "title",
+          "value": "VA Northern California health care |  | Veterans Affairs"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "description",
+          "value": "At VA Northern California Healthcare System, our health care teams are deeply experienced and guided by the needs of Veterans, their families, and caregivers. Find a health facility near you, and manage your health online. Sign up for community events and updates."
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:site_name",
+          "value": "Veterans Affairs"
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:title",
+          "value": "VA Northern California health care |  | Veterans Affairs"
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:description",
+          "value": "At VA Northern California Healthcare System, our health care teams are deeply experienced and guided by the needs of Veterans, their families, and caregivers. Find a health facility near you, and manage your health online. Sign up for community events and updates."
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:image",
+          "value": "https://prod.cms.va.gov/sites/default/files/2020-09/Northern_California.jpg"
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:image:alt",
+          "value": "Sacramento Veteran Affairs medical center"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:card",
+          "value": "summary_large_image"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:description",
+          "value": "At VA Northern California Healthcare System, our health care teams are deeply experienced and guided by the needs of Veterans, their families, and caregivers. Find a health facility near you, and manage your health online. Sign up for community events and updates."
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:site",
+          "value": "@DeptVetAffairs"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:title",
+          "value": "VA Northern California health care |  | Veterans Affairs"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:image:alt",
+          "value": "Sacramento Veteran Affairs medical center"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:image",
+          "value": "https://prod.cms.va.gov/sites/default/files/2020-09/Northern_California.jpg"
+        }
+      ]
+    }
+  },
+  "fieldIntroText": null,
+  "fieldPhotoAllowHiresDownload": false,
+  "fieldMedia": null,
+  "fieldBody": null,
+  "changed": 1623710118
+}

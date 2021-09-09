@@ -1,0 +1,304 @@
+{
+  "entityBundle": "health_care_local_facility",
+  "entityId": "5580",
+  "entityPublished": true,
+  "title": "North Fargo VA Clinic",
+  "vid": 415861,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/fargo-health-care", "routed": true },
+        "text": "VA Fargo health care"
+      },
+      {
+        "url": { "path": "", "routed": true },
+        "text": "SERVICES AND LOCATIONS"
+      },
+      {
+        "url": { "path": "/fargo-health-care/locations", "routed": true },
+        "text": "Locations"
+      },
+      { "url": { "path": "", "routed": true }, "text": "North Fargo VA Clinic" }
+    ],
+    "path": "/fargo-health-care/locations/north-fargo-va-clinic"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaLink",
+      "key": "image_src",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-02/North%20Fargo%20VA%20Clinic.jpg"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "North Fargo VA Clinic |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Find address, hours of operation, and services provided at North Fargo VA Clinic."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "North Fargo VA Clinic |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Find address, hours of operation, and services provided at North Fargo VA Clinic."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-02/North%20Fargo%20VA%20Clinic.jpg"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image:alt",
+      "value": "North Fargo VA Clinic"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Find address, hours of operation, and services provided at North Fargo VA Clinic."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "North Fargo VA Clinic |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image:alt",
+      "value": "North Fargo VA Clinic"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image",
+      "value": "https://prod.cms.va.gov/sites/default/files/2021-02/North%20Fargo%20VA%20Clinic.jpg"
+    }
+  ],
+  "changed": 1620360162,
+  "fieldFacilityLocatorApiId": "vha_437QA",
+  "fieldIntroText": "Our outpatient clinic offers primary care to help you stay healthy and well throughout your life. Below, you’ll find our address and hours, parking and transportation information, and the other health services we offer at our North Fargo VA Clinic.",
+  "fieldOperatingStatusFacility": "normal",
+  "fieldLocationServices": [
+    {
+      "entity": {
+        "entityId": "28908",
+        "entityBundle": "health_care_local_facility_servi",
+        "fieldTitle": "Parking ",
+        "fieldWysiwyg": {
+          "processed": "<p><strong>Cost:</strong> Free</p>\n\n<p><strong>Wheelchair availability:</strong> North Fargo VA Clinic campus has wheelchairs upon arrival for patients who need them to access the building. </p>"
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityId": "28909",
+        "entityBundle": "health_care_local_facility_servi",
+        "fieldTitle": "Transportation services and schedules",
+        "fieldWysiwyg": {
+          "processed": "<h4 dir=\"ltr\"><strong>Van services for Veterans</strong></h4>\n\n<h5 dir=\"ltr\"><strong>DAV vans</strong></h5>\n\n<p dir=\"ltr\"><strong>Hours:</strong> Individual van schedules vary</p>\n\n<p dir=\"ltr\">We work with Disabled American Veterans and county Veterans Affairs directors to provide transportation for Veterans and authorized caregivers to get to scheduled medical appointments.</p>\n\n<h5 dir=\"ltr\">Non-DAV van services</h5>\n\n<p dir=\"ltr\">Many localities in the region provide other van services to Veterans.</p>\n\n<p dir=\"ltr\"><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"9e791fca-d7ba-4254-b978-752d7cdaf076\" href=\"/fargo-health-care/dav-vans-transportation-for-veterans\" title=\"DAV vans: Transportation for Veterans   \">Learn more about DAV and the other van services available in your county</a></p>\n\n<h4 dir=\"ltr\"><strong>Local transit services</strong></h4>\n\n<p dir=\"ltr\"><a href=\"https://www.dot.nd.gov/travel/public-trans.htm\">NDDOT</a></p>\n\n<p dir=\"ltr\"> </p>\n\n<h5 dir=\"ltr\">Other services</h5>\n\n<p dir=\"ltr\">Paratransit service (p.r.n. Health Service): Coming Soon!</p>\n\n<h4 dir=\"ltr\"><strong>Beneficiary travel</strong></h4>\n\n<p dir=\"ltr\">Beneficiary travel benefits include round-trip transportation from your home to the medical center, mileage reimbursement, or special mode transport. </p>\n\n<p dir=\"ltr\"><a href=\"https://www.va.gov/health-care/get-reimbursed-for-travel-pay/\">Find out if you qualify for beneficiary travel benefits</a></p>"
+        }
+      }
+    }
+  ],
+  "fieldAddress": {
+    "addressLine1": "721 1st Avenue North, Community Resource & Referral Center",
+    "locality": "Fargo",
+    "administrativeArea": "ND",
+    "postalCode": "58102-4903"
+  },
+  "fieldPhoneNumber": "701-461-7330",
+  "fieldMentalHealthPhone": null,
+  "fieldFacilityHours": {
+    "value": [
+      ["Mon", "800AM-430PM"],
+      ["Tue", "800AM-430PM"],
+      ["Wed", "800AM-430PM"],
+      ["Thu", "800AM-430PM"],
+      ["Fri", "800AM-430PM"],
+      ["Sat", "Closed"],
+      ["Sun", "Closed"]
+    ]
+  },
+  "fieldMainLocation": false,
+  "fieldMedia": {
+    "entity": {
+      "image": {
+        "alt": "North Fargo VA Clinic",
+        "title": "",
+        "derivative": {
+          "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-02/North%20Fargo%20VA%20Clinic.jpg",
+          "width": 480,
+          "height": 320
+        }
+      }
+    }
+  },
+  "fieldRegionPage": {
+    "entity": {
+      "entityBundle": "health_care_region_page",
+      "entityId": "8123",
+      "entityPublished": true,
+      "title": "VA Fargo health care",
+      "fieldRelatedLinks": {
+        "entity": {
+          "parentFieldName": "field_related_links",
+          "fieldTitle": "In the spotlight at VA Fargo health care",
+          "entityId": "13108",
+          "fieldVaParagraphs": [
+            {
+              "entity": {
+                "entityId": "13107",
+                "fieldLink": {
+                  "url": {
+                    "path": "/fargo-health-care/health-services/patient-advocates"
+                  },
+                  "title": "Get help from a patient advocate",
+                  "options": []
+                },
+                "fieldLinkSummary": null
+              }
+            },
+            {
+              "entity": {
+                "entityId": "28997",
+                "fieldLink": {
+                  "url": {
+                    "path": "/fargo-health-care/medical-records-office"
+                  },
+                  "title": "Access your health records",
+                  "options": []
+                },
+                "fieldLinkSummary": null
+              }
+            },
+            {
+              "entity": {
+                "entityId": "28998",
+                "fieldLink": {
+                  "url": { "path": "/fargo-health-care/contact-us" },
+                  "title": "Find a phone number",
+                  "options": []
+                },
+                "fieldLinkSummary": null
+              }
+            },
+            {
+              "entity": {
+                "entityId": "28999",
+                "fieldLink": {
+                  "url": { "path": "/fargo-health-care/billing-and-insurance" },
+                  "title": "Check your billing, insurance, and payment options",
+                  "options": []
+                },
+                "fieldLinkSummary": null
+              }
+            },
+            {
+              "entity": {
+                "entityId": "29000",
+                "fieldLink": {
+                  "url": {
+                    "path": "/fargo-health-care/work-with-us/volunteer-or-donate"
+                  },
+                  "title": "Volunteer or donate",
+                  "options": []
+                },
+                "fieldLinkSummary": null
+              }
+            },
+            {
+              "entity": {
+                "entityId": "38473",
+                "fieldLink": {
+                  "url": { "path": "https://www.visn23.va.gov/" },
+                  "title": "Read our annual reports and newsletters",
+                  "options": []
+                },
+                "fieldLinkSummary": null
+              }
+            },
+            {
+              "entity": {
+                "entityId": "38474",
+                "fieldLink": {
+                  "url": { "path": "/fargo-health-care/about-us/performance" },
+                  "title": "Compare our performance with non-VA facilities.",
+                  "options": []
+                },
+                "fieldLinkSummary": null
+              }
+            }
+          ]
+        }
+      },
+      "fieldGovdeliveryIdEmerg": "USVHA_498",
+      "fieldGovdeliveryIdNews": "USVHA_142",
+      "fieldOperatingStatus": null
+    }
+  },
+  "fieldLocalHealthCareService": [
+    {
+      "entity": {
+        "status": true,
+        "fieldFacilityLocation": {
+          "entity": {
+            "entityUrl": {
+              "path": "/west-palm-beach-health-care/locations/west-palm-beach-va-medical-center"
+            },
+            "title": "West Palm Beach VA Medical Center"
+          }
+        },
+        "fieldRegionalHealthService": {
+          "entity": {
+            "entityBundle": "regional_health_care_service_des",
+            "fieldBody": {
+              "processed": "<html><head></head><body><h3>Care we provide at VA Eastern Oklahoma health care</h3> <p>Our laboratories provide a full range of clinical and diagnostic testing services. Our laboratory and pathology services include:</p> <ul><li>Study of blood, urine, and other bodily fluids for illness management</li><li>Testing for infectious diseases</li><li>Cytopathology (study of unusual cells) and surgical pathology (study of tissue removed during surgery)</li><li>Autopsy services </li></ul></body></html>"
+            },
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "entityId": "88",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Blood draw and clinical testing",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Laboratory and pathology",
+                "description": {
+                  "processed": "<html><head></head><body><p>We offer blood tests and other advanced testing services to help you and your VA health care team monitor your health, find and understand any health problems&#xA0;and make informed treatment decisions.</p></body></html>"
+                },
+                "parent": [
+                  {
+                    "entity": {
+                      "name": "Specialty care"
+                    }
+                  }
+                ],
+                "fieldHealthServiceApiId": null
+              }
+            },
+            "status": true
+          }
+        }
+      }
+    }
+  ]
+}

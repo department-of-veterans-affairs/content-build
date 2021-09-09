@@ -1,0 +1,1578 @@
+{
+  "entityBundle": "campaign_landing_page",
+  "entityId": "19951",
+  "entityPublished": true,
+  "title": "Recognizing LGBTQ+ Veterans During Pride Month",
+  "vid": 431336,
+  "entityUrl": {
+    "breadcrumb": [{ "url": { "path": "/", "routed": true }, "text": "Home" }],
+    "path": "/initiatives/recognizing-lgbtq-veterans-during-pride-month"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Recognizing LGBTQ+ Veterans During Pride Month |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Recognizing LGBTQ+ Veterans During Pride Month |  | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Recognizing LGBTQ+ Veterans During Pride Month |  | Veterans Affairs"
+    }
+  ],
+  "changed": 1622567216,
+  "fieldAdministration": {
+    "entity": {
+      "fieldDescription": null,
+      "fieldEmailUpdatesLinkText": null,
+      "fieldEmailUpdatesUrl": null,
+      "fieldLink": null,
+      "fieldSocialMediaLinks": {
+        "platform": null,
+        "value": null,
+        "platformValues": "{\"facebook\":{\"value\":\"\"},\"instagram\":{\"value\":\"\"},\"linkedin\":{\"value\":\"\"},\"twitter\":{\"value\":\"\"},\"youtube\":{\"value\":\"\"},\"youtube_channel\":{\"value\":\"\"}}"
+      }
+    }
+  },
+  "fieldBenefitCategories": [
+    {
+      "entity": {
+        "entityType": "node",
+        "entityBundle": "landing_page",
+        "entityId": "810",
+        "entityPublished": true,
+        "title": "VA benefits for spouses, dependents, survivors, and family caregivers",
+        "vid": 347054,
+        "entityUrl": {
+          "breadcrumb": [
+            { "url": { "path": "/", "routed": true }, "text": "Home" },
+            {
+              "url": { "path": "", "routed": true },
+              "text": "Family member benefits"
+            }
+          ],
+          "path": "/family-member-benefits"
+        },
+        "entityMetatags": [
+          {
+            "__typename": "MetaLink",
+            "key": "image_src",
+            "value": "https://prod.cms.va.gov/sites/default/files/2019-09/family-caregiver.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "title",
+            "value": "VA Benefits For Spouses, Survivors, And Dependents | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "description",
+            "value": "Learn about VA benefits for spouses, dependents, survivors, and family caregivers of Veterans and service members."
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:site_name",
+            "value": "Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:title",
+            "value": "VA benefits for spouses, dependents, survivors, and family caregivers |  | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:description",
+            "value": "Learn about VA benefits for spouses, dependents, survivors, and family caregivers of Veterans and service members."
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:image",
+            "value": "https://prod.cms.va.gov/sites/default/files/2019-09/family-caregiver.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:card",
+            "value": "summary_large_image"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:description",
+            "value": "Learn about VA benefits for spouses, dependents, survivors, and family caregivers of Veterans and service members."
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:site",
+            "value": "@DeptVetAffairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:title",
+            "value": "VA benefits for spouses, dependents, survivors, and family caregivers |  | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:image",
+            "value": "https://prod.cms.va.gov/sites/default/files/2019-09/family-caregiver.png"
+          }
+        ],
+        "fieldIntroText": "As the spouse or dependent child of a Veteran or service member, you may qualify for certain benefits, like health care, life insurance, or money to help pay for school or training. As the survivor of a Veteran or service member, you may qualify for added benefits, including help with burial costs and survivor compensation. \r\n\r\n<p>If you’re caring for a Veteran, you may also be eligible for support to help you better care for the Veteran—and for yourself. Find out which benefits you may qualify for and how to access them.</p>\r\n",
+        "fieldPromo": {
+          "entity": {
+            "fieldImage": {
+              "entity": {
+                "entityId": "539",
+                "image": {
+                  "url": "https://prod.cms.va.gov/sites/default/files/2019-09/family-caregiver.png",
+                  "alt": "Family",
+                  "title": "",
+                  "width": 456,
+                  "height": 304,
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2019-09/family-caregiver.png",
+                    "width": 480,
+                    "height": 320
+                  }
+                }
+              }
+            },
+            "fieldPromoLink": {
+              "entity": {
+                "entityId": "5533",
+                "fieldLink": {
+                  "url": { "path": "https://www.caregiver.va.gov/" },
+                  "title": "VA Caregiver Support Program",
+                  "options": []
+                },
+                "fieldLinkSummary": "Find out how to get the support you need to care for a Veteran."
+              }
+            }
+          }
+        },
+        "fieldRelatedLinks": {
+          "entity": {
+            "parentFieldName": "field_related_links",
+            "fieldTitle": "Help a Veteran find benefits",
+            "entityId": "5623",
+            "fieldVaParagraphs": [
+              {
+                "entity": {
+                  "entityId": "5624",
+                  "fieldLink": {
+                    "url": { "path": "/health-care" },
+                    "title": "VA health care for Veterans",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Health care benefits and online health management tools for Veterans with service-connected disabilities or who meet other eligibility requirements"
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "5625",
+                  "fieldLink": {
+                    "url": { "path": "/disability" },
+                    "title": "Disability compensation",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Monthly payments and online benefit management tools for conditions related to military service"
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "5626",
+                  "fieldLink": {
+                    "url": { "path": "/pension/how-to-apply" },
+                    "title": "Veterans Pension",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Monthly payments for wartime Veterans with limited or no income who meet certain age and disability requirements"
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "5627",
+                  "fieldLink": {
+                    "url": { "path": "/housing-assistance" },
+                    "title": "Housing assistance for Veterans and service members",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Home loan programs for Veterans and service members, and disability housing grants to help Veterans with service-connected disabilities make changes to their home so they can live as independently as possible"
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "5628",
+                  "fieldLink": {
+                    "url": { "path": "/life-insurance" },
+                    "title": "Life insurance",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Life insurance options and online policy management tools for Veterans and their families"
+                }
+              }
+            ]
+          }
+        },
+        "fieldAlert": {
+          "entity": {
+            "entityId": "24",
+            "entityBundle": "alert",
+            "entityPublished": true,
+            "fieldAlertDismissable": false,
+            "fieldAlertType": "warning",
+            "fieldAlertTitle": "How do I get help for a Veteran who's in crisis?",
+            "fieldReusability": "reusable",
+            "fieldAlertContent": {
+              "entity": {
+                "entityId": "7117",
+                "entityBundle": "expandable_text",
+                "fieldWysiwyg": {
+                  "processed": "<p>If you're concerned about a Veteran in crisis, connect with our caring, qualified Veterans Crisis Line responders for confidential help. Many of them are Veterans themselves. This service is private, free, and available 24/7.</p>\n\n<p><strong>To connect with a Veterans Crisis Line responder anytime, day or night:</strong></p>\n\n<ul><li>Call <a href=\"tel:+1-800-273-8255\">800-273-8255</a>, then press 1.</li>\n\t<li><a href=\"https://www.veteranscrisisline.net/ChatTermsOfService.aspx?account=Veterans%20Chat/\">Start a confidential chat</a>.</li>\n\t<li>Text <a href=\"sms:838255\">838255</a>.</li>\n\t<li>If you have hearing loss, call TTY: 800-799-4889.</li>\n</ul><p><strong>If you're concerned about a Veteran who's homeless or at risk of becoming homeless</strong></p>\n\n<p>Call the National Call Center for Homeless Veterans at <a href=\"tel:+18774243838\">877-424-3838</a> for help 24 hours a day, 7 days a week. You or the Veteran can talk privately with a trained VA counselor for free.</p>"
+                },
+                "fieldTextExpander": "Find out how to get support anytime, day or night"
+              }
+            }
+          }
+        },
+        "fieldTitleIcon": "family-member",
+        "fieldSpokes": [
+          {
+            "entity": {
+              "parentFieldName": "field_spokes",
+              "fieldTitle": "Benefits for spouses, dependents, and survivors",
+              "entityId": "5629",
+              "fieldVaParagraphs": [
+                {
+                  "entity": {
+                    "entityId": "5630",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/family-caregiver-benefits"
+                      },
+                      "title": "Health care",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out if you may qualify for health care through our CHAMPVA program, the Department of Defense's TRICARE program, or one of our programs related to a Veteran's service-connected disability. If you already have health care through VA, learn how to manage your health and benefits. <br/><b>For spouse, dependent child, surviving spouse, surviving child</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5631",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/education/survivor-dependent-benefits"
+                      },
+                      "title": "Education and training",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out if you may be eligible for help paying for school or job training through our Survivors' and Dependents' Education Assistance Program (also called Chapter 35) or the Marine Gunnery Sergeant John David Fry Scholarship. And learn about how a Veteran may transfer their unused Post-9/11 GI Bill benefits to you. <br/><b>For spouse, dependent child, surviving spouse, surviving child</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "22720",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/careers-employment/dependent-benefits"
+                      },
+                      "title": "Employment",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out how to get free educational and career counseling if you're a dependent family member who is eligible for VA education benefits. <br/><b>For spouse, dependent child</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5633",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/housing-assistance/home-loans/surviving-spouse"
+                      },
+                      "title": "Home loan programs or financial counseling",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Apply for a Certificate of Eligibility (COE) for VA home loan programs to buy, build, repair, or refinance a home. Or, if you're having trouble making mortgage payments on a VA-backed loan, get help to avoid foreclosure and keep your house. <br/><b>For surviving spouse</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5634",
+                    "fieldLink": {
+                      "url": { "path": "/life-insurance" },
+                      "title": "Life insurance options, claims, and beneficiary assistance",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Learn how to apply for Family Servicemembers' Group Life Insurance (FSGLI) coverage, explore other coverage options, and manage an existing policy. If you're the beneficiary of a Veteran's or service member's policy, find out how to get free financial advice and will preparation services. <br/><b>For spouse, dependent child, surviving spouse, surviving child</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5635",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/burials-memorials/pre-need-eligibility"
+                      },
+                      "title": "Pre-need eligibility determination for burial in a VA national cemetery",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Apply in advance for eligiblity to be buried in a VA national cemetery. This can help you plan ahead to make the burial process easier for your family in their time of need. <br/><b>For spouse, dependent child, surviving spouse, surviving child</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5636",
+                    "fieldLink": {
+                      "url": { "path": "/burials-memorials" },
+                      "title": "Burial benefits and memorial items",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Get step-by-step guidance on how to plan a burial in a VA national cemetery, or in a state or tribal government Veterans cemetery. You can also apply for help paying for burial costs, request memorial items, and learn about bereavement (grief) counseling and transition support. <br/><b>For surviving spouse, surviving child, surviving parent</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5632",
+                    "fieldLink": {
+                      "url": { "path": "/pension/survivors-pension" },
+                      "title": "Survivors Pension",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "If you're the surviving spouse or child of a Veteran with wartime service, find out if you're eligible for monthly pension benefits. <br/><b>For surviving spouse, surviving child</b>"
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5637",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/disability/dependency-indemnity-compensation"
+                      },
+                      "title": "Compensation for surviving spouse and dependents (DIC)",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "If you’re the surviving spouse, child, or parent of a service member who died in the line of duty, or the survivor of a Veteran who died from a service-related injury or illness, find out how to apply for this tax-free monetary benefit. <br/><b>For surviving spouse, surviving child, surviving parent</b>"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "parentFieldName": "field_spokes",
+              "fieldTitle": "Support and services for caregivers of Veterans",
+              "entityId": "10525",
+              "fieldVaParagraphs": [
+                {
+                  "entity": {
+                    "entityId": "10523",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/family-member-benefits/comprehensive-assistance-for-family-caregivers"
+                      },
+                      "title": "The Program of Comprehensive Assistance for Family Caregivers",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Learn more about eligibility for this program and how to apply. The program offers support and services for family caregivers of eligible Veterans who were seriously injured in the line of duty during certain time periods and meet other eligibility requirements."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "10524",
+                    "fieldLink": {
+                      "url": {
+                        "path": "https://www.caregiver.va.gov/Care_Caregivers.asp"
+                      },
+                      "title": "The Program of General Caregiver Support Services",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out how to get resources, education, and support available to caregivers of eligible Veterans from all eras. For this program, the Veteran doesn't need to have a service-connected condition, for which the caregiver is needed, and may have served during any era. We don't require a formal application for this program."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "parentFieldName": "field_spokes",
+              "fieldTitle": "More resources for those supporting a Veteran or service member",
+              "entityId": "5638",
+              "fieldVaParagraphs": [
+                {
+                  "entity": {
+                    "entityId": "5641",
+                    "fieldLink": {
+                      "url": {
+                        "path": "https://www.benefits.va.gov/fiduciary/index.asp"
+                      },
+                      "title": "VA Fiduciary Program",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out how to apply to become a fiduciary who manages benefits for a Veteran who can't manage their financial affairs because of injury, health conditions, or age."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5642",
+                    "fieldLink": {
+                      "url": {
+                        "path": "https://www.socialwork.va.gov/fisher.asp"
+                      },
+                      "title": "Fisher House Program",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Learn about free, temporary accommodations where you can stay to be near a Veteran or active-duty service member who's receiving treatment in a VA health facility far from home."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "5643",
+                    "fieldLink": {
+                      "url": { "path": "https://www.mirecc.va.gov/coaching/" },
+                      "title": "Coaching into Care",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Connect with a licensed psychologist or social worker for guidance on how to support a Veteran who's readjusting to civilian life, dealing with mental health problems, or wanting to find services through VA or the community."
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "fieldLinks": [],
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "59",
+              "entityBundle": "support_service",
+              "title": "VA benefits hotline:",
+              "fieldLink": {
+                "url": { "path": "tel:1-800-827-1000" },
+                "title": "",
+                "options": []
+              },
+              "fieldPhoneNumber": "800-827-1000"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "853",
+              "entityBundle": "support_service",
+              "title": "Caregiver support line:",
+              "fieldLink": {
+                "url": { "path": "tel:1-855-260-3274" },
+                "title": "",
+                "options": []
+              },
+              "fieldPhoneNumber": "855-260-3274"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "entityBundle": "support_service",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "url": { "path": "tel:1-800-698-2411" },
+                "title": "",
+                "options": []
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "entityBundle": "support_service",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ],
+        "fieldPlainlanguageDate": null,
+        "fieldPageLastBuilt": { "date": "2021-07-06 17:23:48 UTC" },
+        "fieldTeaserText": "Learn about the benefits you may qualify for as a spouse, dependent, or survivor. And find out what you're eligible for as a family member caring for a Veteran with disabilities.",
+        "changed": 1607380842,
+        "fieldAdministration": {
+          "entity": {
+            "name": "Veterans Affairs",
+            "entityId": "5",
+            "entityBundle": "administration",
+            "fieldDescription": "VA Central Office",
+            "fieldLink": { "url": { "path": "https://www.va.gov" } },
+            "fieldEmailUpdatesUrl": "https://public.govdelivery.com/accounts/USVA/subscriber/new/",
+            "fieldEmailUpdatesLinkText": "VA email updates",
+            "fieldSocialMediaLinks": {
+              "platformValues": "{\"facebook\":{\"value\":\"VeteransAffairs\"},\"instagram\":{\"value\":\"deptvetaffairs\"},\"linkedin\":{\"value\":\"\"},\"twitter\":{\"value\":\"DeptVetAffairs\"},\"youtube\":{\"value\":\"DeptVetAffairs\"},\"youtube_channel\":{\"value\":\"\"}}",
+              "value": null,
+              "platform": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "node",
+        "entityBundle": "landing_page",
+        "entityId": "67",
+        "entityPublished": true,
+        "title": "VA health care",
+        "vid": 379991,
+        "entityUrl": {
+          "breadcrumb": [
+            { "url": { "path": "/", "routed": true }, "text": "Home" },
+            { "url": { "path": "", "routed": true }, "text": "Health care" }
+          ],
+          "path": "/health-care"
+        },
+        "entityMetatags": [
+          {
+            "__typename": "MetaLink",
+            "key": "image_src",
+            "value": "https://prod.cms.va.gov/sites/default/files/hub_promos/health-care.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "title",
+            "value": "VA Health Care | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "description",
+            "value": "Learn how to apply for and manage VA health care benefits for Veterans. We offer primary and specialty Veterans health care services, including home health, geriatric (elder), women's health, and mental health care, as well as prescriptions."
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "keywords",
+            "value": "va health care, veterans health care"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:site_name",
+            "value": "Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:title",
+            "value": "VA health care |  | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:description",
+            "value": "Learn how to apply for and manage VA health care benefits for Veterans. We offer primary and specialty Veterans health care services, including home health, geriatric (elder), women's health, and mental health care, as well as prescriptions."
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:image",
+            "value": "https://prod.cms.va.gov/sites/default/files/hub_promos/health-care.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:card",
+            "value": "summary_large_image"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:description",
+            "value": "Learn how to apply for and manage VA health care benefits for Veterans. We offer primary and specialty Veterans health care services, including home health, geriatric (elder), women's health, and mental health care, as well as prescriptions."
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:site",
+            "value": "@DeptVetAffairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:title",
+            "value": "VA health care |  | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:image",
+            "value": "https://prod.cms.va.gov/sites/default/files/hub_promos/health-care.png"
+          }
+        ],
+        "fieldIntroText": "With VA health care, you’re covered for regular checkups with your primary care provider and appointments with specialists (like cardiologists, gynecologists, and mental health providers). You can access Veterans health care services like home health and geriatric (elder) care, and you can get medical equipment, prosthetics, and prescriptions. Find out how to apply for and manage the health care benefits you've earned.",
+        "fieldPromo": {
+          "entity": {
+            "fieldImage": {
+              "entity": {
+                "entityId": "1",
+                "image": {
+                  "url": "https://prod.cms.va.gov/sites/default/files/hub_promos/health-care.png",
+                  "alt": null,
+                  "title": null,
+                  "width": 456,
+                  "height": 304,
+                  "derivative": {
+                    "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/hub_promos/health-care.png",
+                    "width": 480,
+                    "height": 320
+                  }
+                }
+              }
+            },
+            "fieldPromoLink": {
+              "entity": {
+                "entityId": "3538",
+                "fieldLink": {
+                  "url": {
+                    "path": "https://www.va.gov/health-care/covid-19-vaccine/"
+                  },
+                  "title": "COVID-19 vaccines at VA",
+                  "options": []
+                },
+                "fieldLinkSummary": "Get the latest information and sign up to stay informed about COVID-19 vaccines."
+              }
+            }
+          }
+        },
+        "fieldRelatedLinks": {
+          "entity": {
+            "parentFieldName": "field_related_links",
+            "fieldTitle": "Other VA benefits and services",
+            "entityId": "3547",
+            "fieldVaParagraphs": [
+              {
+                "entity": {
+                  "entityId": "3548",
+                  "fieldLink": {
+                    "url": { "path": "/disability" },
+                    "title": "Disability compensation (pay)",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Learn how to file a claim for disability compensation and manage your disability benefits."
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "3549",
+                  "fieldLink": {
+                    "url": { "path": "/life-insurance" },
+                    "title": "Life insurance",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Explore your life insurance options and find out how to apply as a service member, Veteran, or family member."
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "3550",
+                  "fieldLink": {
+                    "url": { "path": "/pension/aid-attendance-housebound" },
+                    "title": "Aid and attendance benefits and housebound allowance",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Find out if you can get increased pension pay as a Veteran or surviving spouse who has disabilities."
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "3551",
+                  "fieldLink": {
+                    "url": { "path": "/burials-memorials" },
+                    "title": "Burial benefits and memorial items",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Learn about Veterans burial benefits, how to plan a burial service, and how to get compensation as a survivor."
+                }
+              },
+              {
+                "entity": {
+                  "entityId": "3552",
+                  "fieldLink": {
+                    "url": { "path": "/education" },
+                    "title": "Education and training",
+                    "options": []
+                  },
+                  "fieldLinkSummary": "Apply for and manage GI Bill and other education benefits to help pay for college and training programs."
+                }
+              }
+            ]
+          }
+        },
+        "fieldAlert": {
+          "entity": {
+            "entityId": "4",
+            "entityBundle": "alert",
+            "entityPublished": true,
+            "fieldAlertDismissable": null,
+            "fieldAlertType": "warning",
+            "fieldAlertTitle": "How do I get help if I'm homeless or at risk of becoming homeless?",
+            "fieldReusability": "reusable",
+            "fieldAlertContent": {
+              "entity": {
+                "entityId": "3536",
+                "entityBundle": "expandable_text",
+                "fieldWysiwyg": {
+                  "processed": "<p>We offer many programs and services that may help—including free health care and, in some cases, free limited dental care. We can also help you connect with resources in your community, like homeless shelters or faith-based organizations.</p>\n\n<p><strong>Find the support you need:</strong></p>\n\n<ul><li><strong>Call the National Call Center for Homeless Veterans</strong> at (<a href=\"tel:+18774243838\">877-424-3838</a>) for help 24 hours a day, 7 days a week. You’ll talk privately with a trained VA counselor for free.</li>\n\t<li><strong>Contact your nearest VA medical center</strong> and ask to talk with the VA social worker. If you're a female Veteran, ask for the Women Veterans Program Manager.<br /><a href=\"/find-locations/\">Find the nearest VA medical center</a></li>\n</ul><p><strong>Talk with someone right now:</strong></p>\n\n<p>If you're a Veteran in crisis or concerned about one, connect with our caring, qualified Veterans Crisis Line responders for confidential help. Many of them are Veterans themselves. This service is private, free, and available 24/7.<br /><a href=\"https://www.veteranscrisisline.net/ChatTermsOfService.aspx?account=Homeless%20Veterans%20Chat\">Chat online with a trained VA staff member</a></p>"
+                },
+                "fieldTextExpander": "We may be able to help"
+              }
+            }
+          }
+        },
+        "fieldTitleIcon": "health-care",
+        "fieldSpokes": [
+          {
+            "entity": {
+              "parentFieldName": "field_spokes",
+              "fieldTitle": "Get VA health care",
+              "entityId": "3553",
+              "fieldVaParagraphs": [
+                {
+                  "entity": {
+                    "entityId": "3554",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/about-va-health-benefits"
+                      },
+                      "title": "About VA health benefits",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Learn how VA health care works and which Veterans health care services we cover."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3555",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/eligibility" },
+                      "title": "Eligibility",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out if you’re eligible for Veterans health care benefits and how priority groups work."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3556",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/how-to-apply" },
+                      "title": "How to apply",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Get instructions for how to prepare and apply for VA health care online, by phone, by mail, or in person."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3557",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/apply/application/introduction"
+                      },
+                      "title": "Apply online (VA Form 10-10EZ)",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Start your Veterans health care application now."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3558",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/after-you-apply" },
+                      "title": "After you apply",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out when to expect a decision on your application, and what to do next."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3559",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/family-caregiver-benefits"
+                      },
+                      "title": "Family and caregiver health benefits",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "See if you qualify for VA medical benefits as a spouse, surviving spouse, dependent child, or caregiver."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "parentFieldName": "field_spokes",
+              "fieldTitle": "Manage your health and benefits",
+              "entityId": "3560",
+              "fieldVaParagraphs": [
+                {
+                  "entity": {
+                    "entityId": "3561",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/refill-track-prescriptions"
+                      },
+                      "title": "Refill and track your VA prescriptions",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Order a prescription refill and track your shipment online."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3562",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/secure-messaging" },
+                      "title": "Use VA Secure Messaging",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Communicate privately with your VA health care team through Secure Messaging."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3563",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/schedule-view-va-appointments"
+                      },
+                      "title": "Schedule and manage health appointments",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Schedule, cancel, and manage some health appointments online."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3564",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/view-test-and-lab-results"
+                      },
+                      "title": "View your VA lab and test results",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "View, download, and print your labs and test results."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3565",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/order-hearing-aid-batteries-and-accessories"
+                      },
+                      "title": "Order hearing aid batteries and accessories",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Order these items online for home delivery."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3566",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/get-medical-records" },
+                      "title": "Get your VA medical records (also called \"VA Blue Button\")",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Set up your personal health record and download reports to share with your VA and non-VA doctors."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3567",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/update-health-information"
+                      },
+                      "title": "Update your health benefits information (VA Form 10-10EZR)",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Update your personal, financial, or insurance information after you’re enrolled in the VA health care program."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3568",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/pay-copay-bill" },
+                      "title": "Pay your VA copay bill",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Pay your VA copay securely online, by phone or mail, or in person—and find out what to do if you're struggling to make payments. "
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3569",
+                    "fieldLink": {
+                      "url": { "path": "/claim-or-appeal-status" },
+                      "title": "Check your VA claim status",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Track the status of an open VA health care appeal."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3570",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/get-reimbursed-for-travel-pay"
+                      },
+                      "title": "Get VA travel pay (reimbursement)",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out how to apply for reimbursement for your travel to a VA health facility."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "entity": {
+              "parentFieldName": "field_spokes",
+              "fieldTitle": "More information and resources",
+              "entityId": "3571",
+              "fieldVaParagraphs": [
+                {
+                  "entity": {
+                    "entityId": "3572",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/copay-rates" },
+                      "title": "VA health care copay rates",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "View our current copay rates for different types of care, tests, and medications."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3573",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/health-needs-conditions/mental-health"
+                      },
+                      "title": "Mental health services",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out how to access VA mental health services for posttraumatic stress disorder (PTSD), psychological effects of military sexual trauma (MST), depression, grief, anxiety, and other needs."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3574",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/health-needs-conditions" },
+                      "title": "Specific health needs and conditions",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out how to get care for specific needs (like women's health), and learn about service-related health concerns you should be aware of (like Agent Orange-related diseases or Camp Lejeune water contamination)."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3576",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/health-needs-conditions/chemical-hazardous-materials-exposure"
+                      },
+                      "title": "Chemical or hazardous material exposure",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Learn about health concerns linked to exposures during military service. Learn about the special VA health registries you can join that document Veterans' exposure to Agent Orange, depleted uranium, ionizing radiation, airborne hazards, and other hazardous materials."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3575",
+                    "fieldLink": {
+                      "url": { "path": "/health-care/wellness-programs" },
+                      "title": "Veterans programs for health and wellness",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Explore VA programs to help you get and stay healthy in both body and mind."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3577",
+                    "fieldLink": {
+                      "url": {
+                        "path": "https://www.va.gov/COMMUNITYCARE/programs/veterans/index.asp"
+                      },
+                      "title": "Community care",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "If you’re enrolled in VA health care, find out how you may be able to receive care from a provider in your local community through community care."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3578",
+                    "fieldLink": {
+                      "url": {
+                        "path": "/health-care/about-affordable-care-act"
+                      },
+                      "title": "The Affordable Care Act (ACA) and your VA health care coverage",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Find out what you need to know about the Affordable Care Act and what it means for Veterans."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3579",
+                    "fieldLink": {
+                      "url": { "path": "https://www.research.va.gov/mvp/" },
+                      "title": "The Million Veteran Program",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "See if you can be a part of this voluntary research study to better understand the role genes play in our health."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3580",
+                    "fieldLink": {
+                      "url": { "path": "https://www.accesstocare.va.gov/" },
+                      "title": "Access and quality in VA health care",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Get information about your VA facility, like how quickly you can be seen and what other Veterans say about their experiences."
+                  }
+                },
+                {
+                  "entity": {
+                    "entityId": "3581",
+                    "fieldLink": {
+                      "url": {
+                        "path": "https://www.va.gov/health/rights/patientrights.asp"
+                      },
+                      "title": "Patient rights and responsibilities",
+                      "options": []
+                    },
+                    "fieldLinkSummary": "Read about your basic rights and responsibilities when you receive care at a VA health facility or live in a VA community living center."
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "fieldLinks": [],
+        "fieldSupportServices": [
+          {
+            "entity": {
+              "entityId": "65",
+              "entityBundle": "support_service",
+              "title": "Health benefits hotline:",
+              "fieldLink": {
+                "url": { "path": "tel:1-877-222-VETS(8387)" },
+                "title": "",
+                "options": []
+              },
+              "fieldPhoneNumber": "877-222-VETS (8387)"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "66",
+              "entityBundle": "support_service",
+              "title": "My HealtheVet help desk:",
+              "fieldLink": {
+                "url": { "path": "tel:1-877-327-0022" },
+                "title": "",
+                "options": []
+              },
+              "fieldPhoneNumber": "877-327-0022"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "60",
+              "entityBundle": "support_service",
+              "title": "eBenefits technical support:",
+              "fieldLink": {
+                "url": { "path": "tel:1-800-983-0937" },
+                "title": "",
+                "options": []
+              },
+              "fieldPhoneNumber": "800-983-0937"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "61",
+              "entityBundle": "support_service",
+              "title": "MyVA411 main information line:",
+              "fieldLink": {
+                "url": { "path": "tel:1-800-698-2411" },
+                "title": "",
+                "options": []
+              },
+              "fieldPhoneNumber": "800-698-2411"
+            }
+          },
+          {
+            "entity": {
+              "entityId": "62",
+              "entityBundle": "support_service",
+              "title": "If you have hearing loss, call TTY: 711.",
+              "fieldLink": null,
+              "fieldPhoneNumber": null
+            }
+          }
+        ],
+        "fieldPlainlanguageDate": null,
+        "fieldPageLastBuilt": { "date": "2021-07-06 17:23:48 UTC" },
+        "fieldTeaserText": "Apply for VA health care, find out how to access services, and manage your health and benefits online.",
+        "changed": 1615841442,
+        "fieldAdministration": {
+          "entity": {
+            "name": "Veterans Health Administration",
+            "entityId": "3",
+            "entityBundle": "administration",
+            "fieldDescription": null,
+            "fieldLink": { "url": { "path": "https://www.va.gov/health/" } },
+            "fieldEmailUpdatesUrl": "https://public.govdelivery.com/accounts/USVHA/subscribers/qualify?category_id=USVHA_C4&email=dwdw%40gmail.com&commit.x=36&commit.y=11",
+            "fieldEmailUpdatesLinkText": "Veterans health email updates",
+            "fieldSocialMediaLinks": {
+              "platformValues": "{\"twitter\":{\"value\":\"VeteransHealth\"},\"facebook\":{\"value\":\"VeteransHealth\"},\"youtube\":{\"value\":\"user\\/VeteransHealthAdmin\"},\"youtube_channel\":{\"value\":\"\"},\"linkedin\":{\"value\":\"\"},\"instagram\":{\"value\":\"\"}}",
+              "value": null,
+              "platform": null
+            }
+          }
+        }
+      }
+    }
+  ],
+  "fieldClpAudience": [
+    {
+      "entity": {
+        "entityType": "taxonomy_term",
+        "entityBundle": "audience_beneficiaries",
+        "entityId": "268",
+        "name": "All Veterans"
+      }
+    },
+    {
+      "entity": {
+        "entityType": "taxonomy_term",
+        "entityBundle": "audience_beneficiaries",
+        "entityId": "280",
+        "name": "Family members and caregivers"
+      }
+    },
+    {
+      "entity": {
+        "entityType": "taxonomy_term",
+        "entityBundle": "audience_beneficiaries",
+        "entityId": "274",
+        "name": "LGBTQ+ Veterans"
+      }
+    }
+  ],
+  "fieldClpConnectWithUs": null,
+  "fieldClpEventsHeader": null,
+  "fieldClpEventsPanel": false,
+  "fieldClpEventsReferences": [],
+  "fieldClpFaqCta": null,
+  "fieldClpFaqPanel": true,
+  "fieldClpFaqParagraphs": [
+    {
+      "entity": {
+        "entityType": "4815",
+        "entityBundle": "q_a",
+        "entityId": "1",
+        "fieldAnswer": [
+          {
+            "entity": {
+              "entityType": "",
+              "entityBundle": "wysiwyg",
+              "entityId": "3",
+              "fieldWysiwyg": {
+                "value": "To see the Holy Grail",
+                "processed": "To see the Holy Grail"
+              }
+            }
+          }
+        ],
+        "fieldQuestion": "What is your quest?"
+      }
+    },
+    {
+      "entity": {
+        "entityType": "162342",
+        "entityBundle": "q_a",
+        "entityId": "2",
+        "fieldAnswer": [
+          {
+            "entity": {
+              "entityType": "",
+              "entityBundle": "wysiwyg",
+              "entityId": "4",
+              "fieldWysiwyg": {
+                "value": "Blue",
+                "processed": "Blue"
+              }
+            }
+          }
+        ],
+        "fieldQuestion": "What is your favorite color?"
+      }
+    }
+  ],
+  "fieldClpResources": [],
+  "fieldClpResourcesCta": {
+    "entity": {
+      "entityType": "paragraph",
+      "entityBundle": "button",
+      "entityId": "41599",
+      "fieldButtonLabel": null,
+      "fieldButtonLink": null
+    }
+  },
+  "fieldClpResourcesHeader": null,
+  "fieldClpResourcesIntroText": null,
+  "fieldClpResourcesPanel": false,
+  "fieldClpSpotlightCta": {
+    "entity": {
+      "entityType": "paragraph",
+      "entityBundle": "button",
+      "entityId": "44079",
+      "fieldButtonLabel": "Find your LGBTQ+ Care Coordinator ",
+      "fieldButtonLink": {
+        "url": {
+          "path": "https://www.patientcare.va.gov/LGBT/VAFacilities.asp"
+        }
+      }
+    }
+  },
+  "fieldClpSpotlightHeader": "Stories from the field: How we care for LGBTQ+ Veterans",
+  "fieldClpSpotlightIntroText": "Like most Veterans, the most important interaction LGBTQ+ Veterans have with VA is through their day-to-day interaction with their providers at medical centers across the country. Read below on how dedicated VA staff are working to improve the VA experience of LGBTQ+ Veterans across the country. ",
+  "fieldClpSpotlightLinkTeasers": [
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "link_teaser",
+        "entityId": "43402",
+        "fieldLink": {
+          "uri": "https://blogs.va.gov/VAntage/72726/pride-program-helps-employees-better-care-lgbtq-veterans/",
+          "title": "PRIDE program helps employees better care for LGBTQ+ Veterans"
+        },
+        "fieldLinkSummary": "Read about a VA training program that helps employees improve their interaction with LGBT Veterans and to better assist them as they seek access to VA programs. "
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "link_teaser",
+        "entityId": "43403",
+        "fieldLink": {
+          "uri": "https://blogs.va.gov/VAntage/85789/visibility-care-served-shadows/",
+          "title": "Visibility and care for those who served in the shadows"
+        },
+        "fieldLinkSummary": "Meet Dr. Christopher Holland-Deguire, an LGBTQ+ Veteran Care Coordinator who is working hard to improve the LGBTQ+ Veteran experience at the VA North Texas Health System."
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "link_teaser",
+        "entityId": "43404",
+        "fieldLink": {
+          "uri": "https://www.spreaker.com/user/11014928/womenshealth-lgbtq-shipherd-wmusic-maste",
+          "title": "Podcast highlights \"LGBTQ Care in the VA\""
+        },
+        "fieldLinkSummary": "Dr. Jillian Shipherd, LGBTQ+ Health Program Director at VA Central Office, discusses the ongoing efforts and strategies in VHA to provide inclusive and affirming care for Veterans with lesbian, gay, bisexual, transgender and related identities."
+      }
+    }
+  ],
+  "fieldClpSpotlightPanel": true,
+  "fieldClpStoriesCta": null,
+  "fieldClpStoriesHeader": "Spotlight on LGBTQ+ Veterans Making a Difference",
+  "fieldClpStoriesIntro": "During Pride Month, we celebrate the impact that many LGBTQ+ Veterans make to the quality of life of all Veterans. Here are a few inspiring stories of LGBTQ+ Veterans who are living their truth, fighting for equality and access for all.  ",
+  "fieldClpStoriesPanel": true,
+  "fieldClpStoriesTeasers": [
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "link_teaser_with_image",
+        "entityId": "43406",
+        "fieldLinkTeaser": {
+          "entity": {
+            "fieldLink": {
+              "uri": "https://blogs.va.gov/VAntage/37478/gay-veteran-committed-advocacy-equal-rights/",
+              "title": "Veteran committed to advocacy for equal rights"
+            },
+            "fieldLinkSummary": "After serving 10 years in the Navy, Vietnam Veteran Denny Meyer has dedicated his life to fighting on behalf of the LGBTQ+ community and ensuring equal access to benefits for LGBTQ+ service members and Veterans. "
+          }
+        },
+        "fieldMedia": {
+          "entity": {
+            "name": "Denny_Meyer_Veteran.jpg",
+            "thumbnail": {
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-05/Denny_Meyer_Veteran.jpg?h=1beb9f19",
+                "width": 480,
+                "height": 320
+              },
+              "targetId": 4463,
+              "alt": "Picture of Denny Meyer wearing a Navy Veteran hat",
+              "title": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "link_teaser_with_image",
+        "entityId": "43411",
+        "fieldLinkTeaser": {
+          "entity": {
+            "fieldLink": {
+              "uri": "https://blogs.va.gov/VAntage/28504/sharing-her-story-transgender-advocate-bring-personal-tale-to-veterans/",
+              "title": "Transgender advocate brings personal tale to Veterans"
+            },
+            "fieldLinkSummary": "Army Veteran and former Maryland State Guard NCO Soldier of the Year Karen Kendra Holmes uses her personal story to empower others to live their truth and to advocate for increased visibility for the trans community."
+          }
+        },
+        "fieldMedia": {
+          "entity": {
+            "name": "karen kendra holmes.png",
+            "thumbnail": {
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-05/karen%20kendra%20holmes.png",
+                "width": 480,
+                "height": 320
+              },
+              "targetId": 4464,
+              "alt": "Woman wearing white shirt and yellow jacket",
+              "title": null
+            }
+          }
+        }
+      }
+    }
+  ],
+  "fieldClpVideoPanel": true,
+  "fieldClpVideoPanelHeader": "LGBTQ+ Veterans living open, healthy lives",
+  "fieldClpVideoPanelMoreVideo": {
+    "entity": {
+      "entityType": "paragraph",
+      "entityBundle": "button",
+      "entityId": "43412",
+      "fieldButtonLabel": null,
+      "fieldButtonLink": null
+    }
+  },
+  "fieldClpWhatYouCanDoHeader": "VA Services",
+  "fieldClpWhatYouCanDoIntro": "LGBTQ+ Veterans have access to a wide array of services offered by the VA, from health care to home loans. Additionally, some LGBTQ+ Veterans may be able to receive discharge upgrades that would make them eligible for these services. Click the links below to find out more.  ",
+  "fieldClpWhatYouCanDoPromos": [
+    {
+      "entity": {
+        "entityType": "block_content",
+        "entityBundle": "promo",
+        "entityId": "92",
+        "fieldImage": {
+          "entity": {
+            "name": "Patient Care.jpg",
+            "thumbnail": {
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-06/iStock-Patient%20Care_1.jpg?h=8f206777",
+                "width": 480,
+                "height": 320
+              },
+              "targetId": 4491,
+              "alt": "A doctor speaks to a patient",
+              "title": null
+            }
+          }
+        },
+        "fieldOwner": {
+          "entity": {
+            "fieldDescription": null,
+            "fieldEmailUpdatesLinkText": null,
+            "fieldEmailUpdatesUrl": null,
+            "fieldLink": null,
+            "fieldSocialMediaLinks": {
+              "platform": null,
+              "value": null,
+              "platformValues": "{\"facebook\":{\"value\":\"\"},\"instagram\":{\"value\":\"\"},\"linkedin\":{\"value\":\"\"},\"twitter\":{\"value\":\"\"},\"youtube\":{\"value\":\"\"},\"youtube_channel\":{\"value\":\"\"}}"
+            }
+          }
+        },
+        "fieldPromoLink": {
+          "entity": {
+            "entityType": "paragraph",
+            "entityBundle": "link_teaser",
+            "entityId": "44077",
+            "fieldLink": {
+              "uri": "https://www.patientcare.va.gov/lgbt/",
+              "title": "Patient Care"
+            },
+            "fieldLinkSummary": "There is a wide array of healthcare services available to Veterans through the VA, including programs that are tailored specifically to their needs. Click here to learn more about these programs, find the LGBTQ+ Veteran Care Coordinator (VCC) at the facility near you, and find out how to enroll in VA care."
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "block_content",
+        "entityBundle": "promo",
+        "entityId": "93",
+        "fieldImage": {
+          "entity": {
+            "name": "iStock - Benefits.jpg",
+            "thumbnail": {
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-06/iStock%20-%20Benefits_2.jpg",
+                "width": 480,
+                "height": 320
+              },
+              "targetId": 4492,
+              "alt": "Hand holding a ribbon made of the American and Pride flags",
+              "title": null
+            }
+          }
+        },
+        "fieldOwner": {
+          "entity": {
+            "fieldDescription": null,
+            "fieldEmailUpdatesLinkText": null,
+            "fieldEmailUpdatesUrl": null,
+            "fieldLink": null,
+            "fieldSocialMediaLinks": {
+              "platform": null,
+              "value": null,
+              "platformValues": "{\"facebook\":{\"value\":\"\"},\"instagram\":{\"value\":\"\"},\"linkedin\":{\"value\":\"\"},\"twitter\":{\"value\":\"\"},\"youtube\":{\"value\":\"\"},\"youtube_channel\":{\"value\":\"\"}}"
+            }
+          }
+        },
+        "fieldPromoLink": {
+          "entity": {
+            "entityType": "paragraph",
+            "entityBundle": "link_teaser",
+            "entityId": "44078",
+            "fieldLink": {
+              "uri": "https://www.benefits.va.gov/persona/lgbt.asp",
+              "title": "Benefits"
+            },
+            "fieldLinkSummary": "LGBTQ+ Veterans and their families have access to programs and services through the VA, such as home loans, employment programs, or life insurance. Click here to learn about these programs and how to apply."
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "entityType": "block_content",
+        "entityBundle": "promo",
+        "entityId": "90",
+        "fieldImage": {
+          "entity": {
+            "name": "Discharge Upgrades.jpg",
+            "thumbnail": {
+              "derivative": {
+                "url": "https://prod.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-06/1000w_q95_1.jpg?h=472a5266",
+                "width": 480,
+                "height": 320
+              },
+              "targetId": 4489,
+              "alt": "A smiling military couple sitting in front of a house",
+              "title": null
+            }
+          }
+        },
+        "fieldOwner": {
+          "entity": {
+            "fieldDescription": null,
+            "fieldEmailUpdatesLinkText": null,
+            "fieldEmailUpdatesUrl": null,
+            "fieldLink": null,
+            "fieldSocialMediaLinks": {
+              "platform": null,
+              "value": null,
+              "platformValues": "{\"facebook\":{\"value\":\"\"},\"instagram\":{\"value\":\"\"},\"linkedin\":{\"value\":\"\"},\"twitter\":{\"value\":\"\"},\"youtube\":{\"value\":\"\"},\"youtube_channel\":{\"value\":\"\"}}"
+            }
+          }
+        },
+        "fieldPromoLink": {
+          "entity": {
+            "entityType": "paragraph",
+            "entityBundle": "link_teaser",
+            "entityId": "44075",
+            "fieldLink": {
+              "uri": "https://www.va.gov/discharge-upgrade-instructions/",
+              "title": "Discharge Upgrades"
+            },
+            "fieldLinkSummary": "Countless Lesbian, Gay, and Bisexual Veterans have been forced out of the military with \"bad papers\" simply for who they are, making them ineligible for VA services. Today, Lesbian, Gay, and Bisexual Veterans who received other-than-honorable discharge for their sexuality may be eligible for a discharge upgrade. Click here to learn more."
+          }
+        }
+      }
+    }
+  ],
+  "fieldClpWhyThisMatters": "At VA, we're committed to providing quality care and services to all Veterans, including those with LGBTQ+ identities. We also continue to expand the services we offer to address the specific concerns and needs of LGBTQ+ Veterans--and to deliver these services free of shame, fear, or stigma. ",
+  "fieldHeroBlurb": "During Pride Month, learn how we're creating a safe and inclusive environment for LGBTQ+ Veterans.",
+  "fieldHeroImage": {
+    "entity": {
+      "entityType": "media",
+      "entityBundle": "image",
+      "entityId": "4058",
+      "image": {
+        "derivative": {
+          "height": 320,
+          "url": "https://prod.cms.va.gov/sites/default/files/styles/viewport_width/public/2021-05/lgbt_6.png",
+          "width": 1685
+        },
+        "targetId": 4459,
+        "alt": "LGBT Flag",
+        "title": ""
+      }
+    }
+  },
+  "fieldMedia": {
+    "entity": {
+      "entityType": "media",
+      "entityBundle": "video",
+      "entityId": "4064",
+      "fieldDescription": "Throughout much of the military's history, LGBTQ+ Veterans had to hide their identities while serving in the military. This sometimes led to stress, alcohol problems, depression, and other challenges. Hear how some of them began to live openly and regain their self-esteem with the support of their communities and VA professionals.",
+      "fieldDuration": 296,
+      "fieldMediaVideoEmbedField": "https://youtu.be/TGTKGCXw9E8",
+      "fieldPublicationDate": {
+        "date": "2018-03-12 12:00:00 UTC",
+        "value": "2018-03-12"
+      }
+    }
+  },
+  "fieldPrimaryCallToAction": {
+    "entity": {
+      "entityType": "paragraph",
+      "entityBundle": "button",
+      "entityId": "41600",
+      "fieldButtonLabel": "Sign up to get email updates",
+      "fieldButtonLink": {
+        "url": { "path": "https://www.patientcare.va.gov/LGBT/ " }
+      }
+    }
+  },
+  "fieldSecondaryCallToAction": null
+}
