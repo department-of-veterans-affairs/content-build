@@ -149,6 +149,12 @@ jobs:
       - name: pwd
         run: pwd
 
+      - name: hash string
+        run: echo ${{ hashFiles('./yarn.lock') }}
+
+      - name: cat yarn.lock
+        run: cat yarn.lock
+
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
