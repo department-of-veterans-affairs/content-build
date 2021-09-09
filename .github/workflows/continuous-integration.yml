@@ -152,7 +152,7 @@ jobs:
       - name: Get yarn cache directory path
         run: yarn cache dir
       
-      - name: pwd 
+      - name: pwd
         run: pwd
 
       - name: Install dependencies
