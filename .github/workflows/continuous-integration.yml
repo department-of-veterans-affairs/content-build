@@ -11,7 +11,7 @@ on:
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
-  NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/npm-public/
+  NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group/
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha  }}
@@ -183,7 +183,7 @@ jobs:
           npm config set always-auth true
 
       - name: Add substitute package from NEXUS
-        run: yarn add https://devops.va.gov/dots-nexus/repository/platform-npm-4988449-4988452-4988453-4988454-release/0.0.1.tar.gz
+        run: yarn add https://devops.va.gov/dots-nexus/repository/platform-npm-group/0.0.1.tar.gz
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
