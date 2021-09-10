@@ -286,9 +286,6 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: hash string
-        run: echo ${{ hashFiles('./yarn.lock') }}
-
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
