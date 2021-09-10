@@ -15,7 +15,7 @@ const processAxeCheckResults = violations => {
     ['id', id],
     ['impact', impact],
     ['description', description],
-    ['html', nodes.map(node => node.html).join('\n\n')],
+    ['target', nodes.map(node => node.target).join('\n\n')],
     ['html', nodes.map(node => node.html).join('\n\n')],
     ['nodes', nodes.length],
   ]);
