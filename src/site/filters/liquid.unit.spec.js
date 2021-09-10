@@ -1029,13 +1029,23 @@ describe('rejectBy', () => {
     { class: { abstract: { number: 4 } } },
     { class: { abstract: { number: 1 } } },
     { class: { abstract: { number: 1 } } },
+    { class: { abstract: { number: null } } },
   ];
 
-  it('returns all objects not matching the given path and value', () => {
+  it('returns all objects with the given path except those matching value', () => {
     expect(
       liquid.filters.rejectBy(testData, 'class.abstract.number', 1),
     ).to.deep.equal([
       { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: 5 } } },
+      { class: { abstract: { number: 4 } } },
+    ]);
+  });
+
+  it('returns all objects with the given path except those in value list', () => {
+    expect(
+      liquid.filters.rejectBy(testData, 'class.abstract.number', '1|3'),
+    ).to.deep.equal([
       { class: { abstract: { number: 5 } } },
       { class: { abstract: { number: 4 } } },
     ]);

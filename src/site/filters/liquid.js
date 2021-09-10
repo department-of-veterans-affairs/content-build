@@ -710,9 +710,22 @@ module.exports = function registerFilters() {
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 
+  // Returns items at filterBy path NOT matching values in valueFilter
+  // If valueFilter is a string, it may contain multiple values, separated by |
+  // Note that null items are NOT returned.
   liquid.filters.rejectBy = (data, filterBy, valueFilter) => {
     if (!data) return null;
-    return data.filter(e => _.get(e, filterBy) !== valueFilter);
+    if (typeof valueFilter === 'string' && valueFilter.includes('|')) {
+      const filterArray = valueFilter.split('|');
+      return data.filter(e => {
+        const targetValue = _.get(e, filterBy);
+        return targetValue && !filterArray.includes(targetValue.toString());
+      });
+    }
+    return data.filter(e => {
+      const targetValue = _.get(e, filterBy);
+      return targetValue && targetValue !== valueFilter;
+    });
   };
 
   liquid.filters.processDynamicContent = (entity, contentType) => {
