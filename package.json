@@ -191,6 +191,7 @@
     "sentry-testkit": "^3.3.4",
     "sinon": "^3.2.1",
     "socks-proxy-agent": "^5.0.0",
+    "substitute": "https://devops.va.gov/dots-nexus/repository/platform-npm-group/substitute/0.0.1.tgz",
     "tar": "^6.1.9",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0"
