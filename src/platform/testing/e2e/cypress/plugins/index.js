@@ -4,7 +4,10 @@ const table = require('table').table;
 
 const tableConfig = {
   columnDefault: {
-    width: 50,
+    width: 80,
+  },
+  columns: {
+    0: { width: 15 },
   },
 };
 
