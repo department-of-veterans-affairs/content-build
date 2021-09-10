@@ -21,7 +21,7 @@ const processAxeCheckResults = violations => {
   ]);
 
   cy.task('log', violationMessage);
-  cy.task('table', violationData[0]);
+  violationData.forEach(violation => cy.task('table', violation));
 };
 
 /**
