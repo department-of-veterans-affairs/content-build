@@ -34,6 +34,17 @@ function createUniqueId(headingEl, headingOptions) {
   return anchor;
 }
 
+function createTOCListItem(id, text) {
+  return `
+    <li class="vads-u-margin-bottom--2">
+      <a
+        href="#${id}"
+        onClick="recordEvent({ event: 'nav-jumplink-click', heading: '${id}' });"
+        class="vads-u-display--flex vads-u-text-decoration--none"
+      ><i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1" aria-hidden="true"></i>${text}</a>
+    </li>`;
+}
+
 module.exports = {
   modifyFile(fileName, file) {
     let idAdded = false;
@@ -76,10 +87,17 @@ module.exports = {
         const isInAccordionButton = parent.hasClass('usa-accordion-button');
         const isInAccordion = parent.hasClass('usa-accordion-content');
         const isInAlert = parent.hasClass('usa-alert-body');
+        const emptyLinkId = heading.find('a').attr('id');
 
         // skip heading if it already has an id
         // skip heading if it's in an accordion button or an alert
-        if (!heading.attr('id') && !isInAccordionButton && !isInAlert) {
+        // skip heading if it contains an empty link with an id
+        if (
+          !heading.attr('id') &&
+          !isInAccordionButton &&
+          !isInAlert &&
+          !emptyLinkId
+        ) {
           const headingID = createUniqueId(heading, headingOptions);
           heading.attr('id', headingID);
           idAdded = true;
@@ -89,21 +107,17 @@ module.exports = {
         if (
           el.tagName.toLowerCase() === 'h2' &&
           tableOfContentsList &&
-          heading.attr('id') &&
+          (heading.attr('id') || emptyLinkId) &&
           heading.text().toLowerCase() !== 'on this page' &&
           !isInAccordionButton &&
           !isInAccordion &&
           !isInAlert
         ) {
           tableOfContentsList.append(
-            `<li class="vads-u-margin-bottom--2"><a href="#${heading.attr(
-              'id',
-            )}" onClick="recordEvent({ event: 'nav-jumplink-click', heading: '${heading.attr(
-              'id',
-            )}' });"
-              class="vads-u-display--flex vads-u-text-decoration--none">
-              <i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1" aria-hidden="true">
-              </i>${heading.text()}</a></li>`,
+            createTOCListItem(
+              heading.attr('id') || emptyLinkId,
+              heading.text(),
+            ),
           );
           idAdded = true;
           hasTOCLinks = true;

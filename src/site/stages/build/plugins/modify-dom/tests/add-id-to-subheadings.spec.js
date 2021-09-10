@@ -15,7 +15,7 @@ describe('addIdToSubheadings', () => {
         expect(
           document
             .querySelector('#table-of-contents li a[href="#test-h2"]')
-            .text.replaceAll(/\W+/g, ' ')
+            .text.replaceAll(/\s+/g, ' ')
             .trim(),
         ).to.equal('Test h2');
         expect(
@@ -57,6 +57,28 @@ describe('addIdToSubheadings', () => {
       },
       document => {
         expect(document.querySelector('#table-of-contents')).to.eq(null);
+        done();
+      },
+    );
+  });
+
+  it('does not add an id to an h2 if it contains an empty link with an id', done => {
+    testMetalsmithPlugin(
+      {
+        fileName: 'testSubheadings.html',
+        fixturesPath:
+          './src/site/stages/build/plugins/modify-dom/tests/fixtures/',
+        plugins: [addSubheadingsIds],
+      },
+      document => {
+        expect(
+          document
+            .querySelector('#table-of-contents li a[href="#test-empty-link"]')
+            .text.replaceAll(/\s+/g, ' ')
+            .trim(),
+        ).to.equal('Test h2 with empty link');
+        expect(document.querySelector('h2#test-empty-link')).to.eq(null);
+
         done();
       },
     );
