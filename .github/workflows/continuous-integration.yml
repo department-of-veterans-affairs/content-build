@@ -181,6 +181,9 @@ jobs:
           npm config set email va-vsp-bot-1@va.gov
           npm config set always-auth true
 
+      - name: install substitute
+        run: yarn add substitute
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
