@@ -172,9 +172,7 @@ jobs:
       - name: Change registry in yarn.lock
         run: |
           sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-
-      - name: Install substitute package
-        run: yarn add https://devops.va.gov/dots-nexus/repository/platform-npm-group/substitute
+          sed -i -e "s#https://github.com/segmentio/substitute/archive/#${{ env.NEXUS_REGISTRY }}substitute#g" yarn.lock
 
       - name: Authenticate NEXUS
         run: |
