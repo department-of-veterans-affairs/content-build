@@ -11297,7 +11297,7 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-"substitute@https://github.com/segmentio/substitute/archive/0.0.1.tar.gz":
+"substitute@https://github.com/segmentio/substitute/archive/0.0.1.tar.gz", "substitute@https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#432866985b03c3b0d3f71ac63d1ae1a18dfaf47d":
   version "0.0.1"
   resolved "https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#432866985b03c3b0d3f71ac63d1ae1a18dfaf47d"
 
