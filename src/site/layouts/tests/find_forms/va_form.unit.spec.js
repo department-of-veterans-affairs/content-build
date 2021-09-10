@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { beforeEach } from 'mocha';
 import { parseFixture, renderHTML } from '~/site/tests/support';
 import axeCheck from '~/site/tests/support/axe';
 
@@ -10,6 +11,7 @@ describe('va_form', () => {
     'src/site/layouts/tests/find_forms/fixtures/va_form.json',
   );
   beforeEach(async () => {
+    // console.log('data => ', data);
     container = await renderHTML(layoutPath, data);
   });
 
