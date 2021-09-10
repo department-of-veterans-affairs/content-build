@@ -529,7 +529,7 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
