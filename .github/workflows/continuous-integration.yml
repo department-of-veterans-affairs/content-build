@@ -173,7 +173,6 @@ jobs:
       - name: Change registry in yarn.lock
         run: |
           sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://github.com/segmentio/substitute/archive/#platform-npm-4988449-4988452-4988453-4988454-release#g" yarn.lock
 
       - name: Authenticate NEXUS
         run: |
@@ -182,6 +181,9 @@ jobs:
           npm config set registry ${{ env.NEXUS_REGISTRY }}
           npm config set email va-vsp-bot-1@va.gov
           npm config set always-auth true
+
+      - name: Add substitute package from NEXUS
+        run: yarn add https://devops.va.gov/dots-nexus/repository/platform-npm-4988449-4988452-4988453-4988454-release/0.0.1.tar.gz
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
