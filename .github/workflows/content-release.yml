@@ -238,8 +238,8 @@ jobs:
         with:
           path: |
             .cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Install dependencies
