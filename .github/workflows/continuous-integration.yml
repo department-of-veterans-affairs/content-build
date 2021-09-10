@@ -152,12 +152,6 @@ jobs:
             ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
             ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
-      - name: Get yarn cache directory path
-        run: yarn cache dir
-      
-      - name: pwd
-        run: pwd
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
@@ -300,19 +294,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            /usr/local/share/.cache/yarn
+            .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-          # restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
-
-      - name: ls
-        run: ls -la
-
-      - name: Get yarn cache directory path
-        run: yarn cache dir
-
-      - name: pwd
-        run: pwd
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -476,7 +461,7 @@ jobs:
         with:
           path: |
             .cache/yarn
-            /root/.cache/Cypress
+            /github/home/.cache/Cypress
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
@@ -543,9 +528,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: pwd
-        run: pwd
 
       - name: Cache dependencies
         id: cache-dependencies
