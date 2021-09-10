@@ -148,8 +148,7 @@ jobs:
             .cache/yarn
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
@@ -460,8 +459,7 @@ jobs:
             /github/home/.cache/Cypress
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --production=false
@@ -531,8 +529,7 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
