@@ -191,7 +191,6 @@
     "sentry-testkit": "^3.3.4",
     "sinon": "^3.2.1",
     "socks-proxy-agent": "^5.0.0",
-    "substitute": "https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#432866985b03c3b0d3f71ac63d1ae1a18dfaf47d",
     "tar": "^6.1.9",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0"
