@@ -151,7 +151,11 @@ jobs:
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+        uses: nick-invision/retry@v2
+        with:
+          command: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 7
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
