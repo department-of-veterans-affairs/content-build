@@ -1,11 +1,18 @@
 const fs = require('fs-extra');
 const path = require('path');
+const table = require('table').table;
+
+const tableConfig = {
+  columnDefault: {
+    width: 50,
+  },
+};
 
 module.exports = on => {
   on('task', {
     /* eslint-disable no-console */
     log: message => console.log(message) || null,
-    table: message => console.table(message) || null,
+    table: message => console.log(table(message, tableConfig)) || null,
     /* eslint-enable no-console */
 
     /**

@@ -11,19 +11,17 @@ const processAxeCheckResults = violations => {
   } detected`;
 
   // Pluck specific keys to keep the table readable.
-  const violationData = violations.map(
-    ({ id, impact, description, nodes }) => ({
-      id,
-      impact,
-      description,
-      target: nodes[0].target,
-      html: nodes[0].html,
-      nodes: nodes.length,
-    }),
-  );
+  const violationData = violations.map(({ id, impact, description, nodes }) => [
+    ['id', id],
+    ['impact', impact],
+    ['description', description],
+    ['target', nodes[0].target],
+    ['html', nodes[0].html],
+    ['nodes', nodes.length],
+  ]);
 
   cy.task('log', violationMessage);
-  cy.task('table', violationData);
+  cy.task('table', violationData[0]);
 };
 
 /**
