@@ -461,13 +461,11 @@ jobs:
         with:
           path: |
             .cache/yarn
-            /github/home/.cache/Cypress
+            /root/.cache/Cypress
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
-            ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
-            ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --production=false
