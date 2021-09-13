@@ -207,10 +207,12 @@ jobs:
       run:
         working-directory: content-build
 
-    steps:
-      - name: Test
-        run: |
-          echo "$JOB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+
 
       - name: Checkout content-build
         uses: actions/checkout@v2
