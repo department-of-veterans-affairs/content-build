@@ -58,16 +58,16 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+      # - name: Notify Slack
+      #   if: ${{ always() }}
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -210,7 +210,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo ${{ needs.build.result }}
+          echo "$JOB_CONTEXT"
 
       - name: Checkout content-build
         uses: actions/checkout@v2
