@@ -4,11 +4,7 @@
       Need help after hours?
     </h3>
     <div>
-      {% if entity.fieldWysiwyg.processed %}
-      {{ entity.fieldWysiwyg.processed | drupalToVaPath | phoneLinks }}
-    {% elsif entity.fieldWysiwyg.0.processed %}
-      {{ entity.fieldWysiwyg.0.processed | drupalToVaPath | phoneLinks }}
-    {% endif %}
+      {{ entity.fieldWysiwyg.0.processed | drupalToVaPath | phoneLinks}}
     </div>
   </va-alert>
 </div>
