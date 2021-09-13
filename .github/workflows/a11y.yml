@@ -14,9 +14,9 @@ jobs:
     runs-on: [self-hosted, asg]
     timeout-minutes: 120
 
-    defaults:
-      run:
-        working-directory: content-build
+    # defaults:
+    #   run:
+    #     working-directory: content-build
 
     env:
       DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
@@ -94,16 +94,13 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 5
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
