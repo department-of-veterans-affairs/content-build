@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 10 * * 1-5'
+on: [push]
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 10 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -131,9 +131,6 @@ jobs:
       matrix:
         ci_node_total: [16]
         ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-    defaults:
-      run:
-        working-directory: content-build
 
     env:
       NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
@@ -145,12 +142,19 @@ jobs:
         with:
           path: content-build
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
         with:
-          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 5
+          path: |
+            .cache/yarn
+            /github/home/.cache/Cypress
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline --production=false
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
@@ -196,10 +200,6 @@ jobs:
     env:
       CHANNEL_ID: C01RAS1KAQK
 
-    defaults:
-      run:
-        working-directory: content-build
-
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v2
@@ -240,14 +240,15 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
         with:
-          command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 5
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
+          path: |
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Accessibility Test Failure
         uses: ./.github/actions/vsp-github-actions/slack-socket
