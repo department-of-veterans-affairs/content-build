@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on: [push]
-  # workflow_dispatch:
-  # schedule:
-  #   - cron: '0 10 * * 1-5'
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -103,7 +103,7 @@ jobs:
         with:
           command: rm -rf content-build/node_modules && cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
           max_attempts: 3
-          timeout_minutes: 1
+          timeout_minutes: 5
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
