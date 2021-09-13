@@ -141,14 +141,14 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      # - name: Cache dependencies
-      #   id: cache-dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       .cache/yarn
-      #       node_modules
-      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -491,7 +491,7 @@ jobs:
       - name: Change registry in yarn.lock
         run: |
           sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://registry.npmjs.org/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
+          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
 
       - name: Authenticate NEXUS
         run: |
@@ -502,7 +502,7 @@ jobs:
           npm config set always-auth true
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
@@ -593,7 +593,7 @@ jobs:
       - name: Change registry in yarn.lock
         run: |
           sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://github.com/#platform-npm-4988449-4988452-4988453-4988454-release#g" yarn.lock
+          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
 
       - name: Authenticate NEXUS
         run: |
