@@ -1,0 +1,10 @@
+<div class="vads-u-margin-bottom--2" id="field-cc-vet-call-center">
+  <va-alert status="info" id="va-info-alert">
+    <h3 slot="headline">
+      Need help after hours?
+    </h3>
+    <div>
+      {{ entity.fieldWysiwyg.0.processed | drupalToVaPath | phoneLinks}}
+    </div>
+  </va-alert>
+</div>
