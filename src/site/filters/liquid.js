@@ -561,8 +561,6 @@ module.exports = function registerFilters() {
   // sort a list of objects by a certain property in the object
   liquid.filters.sortObjectsBy = (entities, path) => _.sortBy(entities, path);
 
-  // get a value from a path of an object
-  // works for arrays as well
   liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
 
   // get a value from a path of an object in an array
@@ -697,14 +695,37 @@ module.exports = function registerFilters() {
     return string.replace(regex, newVal);
   };
 
-  liquid.filters.filterBy = (data, filterBy, valueFilter) => {
+  liquid.filters.filterBy = (
+    data,
+    filterBy,
+    valueFilter,
+    includeNull = false,
+  ) => {
     if (!data) return null;
+    if (includeNull) {
+      return data.filter(
+        e => _.get(e, filterBy) === valueFilter || _.get(e, filterBy) === null,
+      );
+    }
     return data.filter(e => _.get(e, filterBy) === valueFilter);
   };
 
+  // Returns items at filterBy path NOT matching values in valueFilter
+  // If valueFilter is a string, it may contain multiple values, separated by |
+  // Note that null items are NOT returned.
   liquid.filters.rejectBy = (data, filterBy, valueFilter) => {
     if (!data) return null;
-    return data.filter(e => _.get(e, filterBy) !== valueFilter);
+    if (typeof valueFilter === 'string' && valueFilter.includes('|')) {
+      const filterArray = valueFilter.split('|');
+      return data.filter(e => {
+        const targetValue = _.get(e, filterBy);
+        return targetValue && !filterArray.includes(targetValue.toString());
+      });
+    }
+    return data.filter(e => {
+      const targetValue = _.get(e, filterBy);
+      return targetValue && targetValue !== valueFilter;
+    });
   };
 
   liquid.filters.processDynamicContent = (entity, contentType) => {
@@ -973,9 +994,9 @@ module.exports = function registerFilters() {
     return parseInt(lastSection, 10) >= 2;
   };
 
-  liquid.filters.getValuesForKey = (array, key) => {
+  liquid.filters.getValuesForPath = (array, path) => {
     if (!array) return null;
-    return array.map(e => e[key]);
+    return array.map(e => _.get(e, path));
   };
 
   liquid.filters.isBannerVisible = (targetPaths, currentPath) => {

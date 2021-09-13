@@ -1,0 +1,85 @@
+{
+  "entityUrl": {
+    "breadcrumb": [
+      {
+        "url": {
+          "path": "/",
+          "routed": true
+        },
+        "text": "Home"
+      },
+      {
+        "url": {
+          "path": "/louisville-health-care",
+          "routed": true
+        },
+        "text": "VA Louisville health care"
+      },
+      {
+        "url": {
+          "path": "",
+          "routed": true
+        },
+        "text": "ABOUT VA LOUISVILLE"
+      },
+      {
+        "url": {
+          "path": "/louisville-health-care/about-us",
+          "routed": true
+        },
+        "text": "About us"
+      },
+      {
+        "url": {
+          "path": "",
+          "routed": true
+        },
+        "text": "History"
+      }
+    ],
+    "path": "/louisville-health-care/about-us/history"
+  },
+  "bannerAlert": {
+    "entities": [
+      {
+        "title": "Website coming soon - Not the official Louisville health care website",
+        "fieldBody": {
+          "processed": "<p>We hope you enjoy your look at our new website. This is NOT our official website at this time, but will be soon. To continue your health care journey in the Louisville Healthcare System, please return to our <a href=\"https://www.louisville.va.gov/\">official Louisville health care website</a>.</p>"
+        },
+        "entityId": "15641",
+        "fieldAlertType": "information",
+        "fieldAlertDismissable": false,
+        "fieldAlertFindFacilitiesCta": false,
+        "fieldAlertOperatingStatusCta": false,
+        "fieldAlertEmailUpdatesButton": false,
+        "fieldAlertInheritanceSubpages": false,
+        "fieldAdministration": {
+          "entity": {
+            "entityId": "183"
+          }
+        },
+        "fieldOperatingStatusSendemail": false,
+        "fieldBannerAlertSituationinfo": null,
+        "fieldSituationUpdates": [],
+        "fieldBannerAlertVamcs": [
+          {
+            "entity": {
+              "title": "Operating status - VA Louisville health care",
+              "entityUrl": {
+                "path": "/louisville-health-care/operating-status"
+              },
+              "fieldOffice": {
+                "entity": {
+                  "title": "VA Louisville health care",
+                  "entityUrl": {
+                    "path": "/louisville-health-care"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -147,8 +147,9 @@ jobs:
         with:
           path: |
             .cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -317,6 +318,7 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -371,6 +373,7 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -423,6 +426,7 @@ jobs:
             .cache/yarn
             node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -437,9 +441,17 @@ jobs:
     runs-on: ${{ needs.start-runner.outputs.vagovprod }}
     needs: [start-runner, build]
     timeout-minutes: 30
+    container:
+      image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome90-ff88
+      options: -u 0
+      volumes:
+        - /usr/local/share:/share
+        - /tmp:/tmp
+        - /etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
+      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
       - name: Checkout content-build
@@ -450,6 +462,10 @@ jobs:
           mkdir -p build
           cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
           du -h build/vagovprod
+
+        # Required for Docker
+      - name: Move VA cert to /etc/ssl/certs
+        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
       - name: Get Node version
         id: get-node-version
@@ -466,8 +482,11 @@ jobs:
         with:
           path: |
             .cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+            /github/home/.cache/Cypress
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -502,7 +521,7 @@ jobs:
           npm config set always-auth true
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+        run: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
@@ -568,7 +587,8 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

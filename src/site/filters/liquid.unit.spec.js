@@ -989,6 +989,7 @@ describe('filterBy', () => {
     { class: { abstract: { number: 4 } } },
     { class: { abstract: { number: 1 } } },
     { class: { abstract: { number: 1 } } },
+    { class: { abstract: { number: null } } },
   ];
 
   it('returns all objects matching the given path and value', () => {
@@ -1006,6 +1007,16 @@ describe('filterBy', () => {
     ).to.deep.equal([]);
   });
 
+  it('includes entries where target is null if includeNull is true', () => {
+    const expected = [
+      { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: null } } },
+    ];
+    expect(
+      liquid.filters.filterBy(testData, 'class.abstract.number', 3, true),
+    ).to.deep.equal(expected);
+  });
+
   it('returns null for null', () => {
     expect(liquid.filters.filterBy(null)).to.be.null;
   });
@@ -1018,13 +1029,23 @@ describe('rejectBy', () => {
     { class: { abstract: { number: 4 } } },
     { class: { abstract: { number: 1 } } },
     { class: { abstract: { number: 1 } } },
+    { class: { abstract: { number: null } } },
   ];
 
-  it('returns all objects not matching the given path and value', () => {
+  it('returns all objects with the given path except those matching value', () => {
     expect(
       liquid.filters.rejectBy(testData, 'class.abstract.number', 1),
     ).to.deep.equal([
       { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: 5 } } },
+      { class: { abstract: { number: 4 } } },
+    ]);
+  });
+
+  it('returns all objects with the given path except those in value list', () => {
+    expect(
+      liquid.filters.rejectBy(testData, 'class.abstract.number', '1|3'),
+    ).to.deep.equal([
       { class: { abstract: { number: 5 } } },
       { class: { abstract: { number: 4 } } },
     ]);
@@ -1251,16 +1272,33 @@ describe('concat', () => {
   });
 });
 
-describe('getValuesForKey', () => {
-  it('returns an array of values for the given key', () => {
+describe('getValuesForPath', () => {
+  it('returns an array of values for single-part path', () => {
     const array = [{ foo: 'bar' }, { foo: 'baz' }];
     const result = ['bar', 'baz'];
 
-    expect(liquid.filters.getValuesForKey(array, 'foo')).to.deep.equal(result);
+    expect(liquid.filters.getValuesForPath(array, 'foo')).to.deep.equal(result);
+  });
+
+  it('returns an array of values for multi-part path', () => {
+    const array = [
+      { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: 5 } } },
+      { class: { abstract: { number: 4 } } },
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: null } } },
+    ];
+
+    const result = [3, 5, 4, 1, 1, null];
+
+    expect(
+      liquid.filters.getValuesForPath(array, 'class.abstract.number'),
+    ).to.deep.equal(result);
   });
 
   it('returns null if array is null', () => {
-    expect(liquid.filters.getValuesForKey(null, 'foo')).to.be.null;
+    expect(liquid.filters.getValuesForPath(null, 'foo')).to.be.null;
   });
 });
 
@@ -1439,5 +1477,14 @@ describe('formatAlertType', () => {
         ),
       ).to.equal('Download VA Form 10-10EZ');
     });
+  });
+});
+
+describe('getValueFromObjPath', () => {
+  it('returns object item at path', () => {
+    const testData = { class: { abstract: { number: 1 } } };
+    expect(
+      liquid.filters.getValueFromObjPath(testData, 'class.abstract.number'),
+    ).to.eq(1);
   });
 });

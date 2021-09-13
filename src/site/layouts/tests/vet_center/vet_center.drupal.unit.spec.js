@@ -129,10 +129,26 @@ describe('Vet Center Main Page', () => {
     ).to.equal(1);
   });
 
-  it('renders prepare for your visit field-cc-vet-call-center', () => {
+  it('renders vet center call center informational alert', () => {
+    expect(container.getElementById('field-cc-vet-call-center')).to.exist;
+  });
+
+  it('renders vet center call center informational alert', () => {
     expect(
-      container.querySelectorAll('.field-cc-vet-call-center p').length,
-    ).to.equal(1);
+      container.querySelector('#field-cc-vet-call-center p').innerHTML.trim(),
+    ).to.equal(
+      'If you need to talk with someone after hours, on weekends, or holidays, the Vet Center call center is available 24/7: 1-877-WAR-VETS (1-<a target="_blank" href="tel:877-927-8387">877-927-8387</a>).',
+    );
+  });
+
+  it('does not render vet center call center informational alert', async () => {
+    const mockData = _.cloneDeep(data);
+    mockData.fieldCcVetCenterCallCenter = null;
+
+    const newContainer = await renderHTML(layoutPath, mockData);
+
+    expect(newContainer.getElementById('field-cc-vet-call-center')).to.not
+      .exist;
   });
 
   it('renders prepare for your visit', () => {

@@ -100,12 +100,11 @@
             %}
           </div>
 
-          <div class="field-cc-vet-call-center">
-            {% include "src/site/includes/dynamic-content.drupal.liquid" with
-                entity = fieldCcVetCenterCallCenter.fetched
-                contentType = fieldCcVetCenterCallCenter.fetchedBundle
+          {% if fieldCcVetCenterCallCenter %}
+            {% include "src/site/components/informational_alert.drupal.liquid" with
+              entity = fieldCcVetCenterCallCenter.fetched
             %}
-          </div>
+          {% endif %}
 
           {% if fieldPrepareForVisit.length > 0 %}
             <h2 id="prepare-for-your-visit" class="vads-u-margin-top--0 vads-u-font-size--lg
