@@ -1,0 +1,246 @@
+{
+  "entityBundle": "va_form",
+  "entityId": "5776",
+  "entityPublished": true,
+  "title": "About VA Form 10-10EZ",
+  "vid": 505496,
+  "entityUrl": {
+    "breadcrumb": [
+      {
+        "url": {
+          "path": "/",
+          "routed": true
+        },
+        "text": "Home"
+      },
+      {
+        "url": {
+          "path": "/find-forms",
+          "routed": true
+        },
+        "text": "Find a VA form"
+      },
+      {
+        "url": {
+          "path": "/find-forms/about-form-10-10ez",
+          "routed": true
+        },
+        "text": "About VA Form 10-10EZ"
+      }
+    ],
+    "path": "/find-forms/about-form-10-10ez"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Get VA Form 10-10EZ, Application for Health Benefits. Use this VA form when you’re a Veteran and want to apply for VA health care."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "keywords",
+      "value": "va form 10-10EZ"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "About VA Form 10-10EZ | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "About VA Form 10-10EZ | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "About VA Form 10-10EZ | Veterans Affairs"
+    }
+  ],
+  "changed": 1628525119,
+  "fieldVaFormName": "Instructions and Enrollment Application for Health Benefits",
+  "fieldVaFormTitle": "Instructions For Completing Enrollment Application For Health Benefits",
+  "fieldVaFormType": "benefit",
+  "fieldVaFormLanguage": "en",
+  "fieldVaFormUrl": {
+    "uri": "https://www.dev.va.gov/vaforms/medical/pdf/10-10EZ-fillable.pdf",
+    "title": null,
+    "options": []
+  },
+  "fieldVaFormUsage": {
+    "value": "<p>Use VA Form 10-10EZ if you’re a Veteran and want to apply for VA health care. You must be enrolled in VA health care to get care at VA health facilities or to have us cover your care at a community care provider (an approved non-VA provider). &nbsp;</p>\r\n",
+    "format": "rich_text",
+    "processed": "<html><head></head><body><p>Use VA Form 10-10EZ if you&#x2019;re a Veteran and want to apply for VA health care. You must be enrolled in VA health care to get care at VA health facilities or to have us cover your care at a community care provider (an approved non-VA provider). &#xA0;</p></body></html>"
+  },
+  "fieldVaFormNumber": "10-10EZ",
+  "fieldAlert": null,
+  "fieldVaFormAdministration": {
+    "targetId": 3,
+    "entity": {
+      "entityLabel": "Veterans Health Administration"
+    }
+  },
+  "fieldVaFormToolIntro": "You can apply online instead of filling out and sending us the paper form.",
+  "fieldVaFormToolUrl": {
+    "uri": "https://www.dev.va.gov/health-care/apply/application/introduction",
+    "title": "",
+    "options": []
+  },
+  "fieldBenefitCategories": [
+    {
+      "targetId": 67,
+      "entity": {
+        "fieldHomePageHubLabel": "Health care"
+      }
+    }
+  ],
+  "fieldVaFormRevisionDate": {
+    "value": "2021-07-30",
+    "date": "2021-07-30 12:00:00 UTC"
+  },
+  "fieldVaFormIssueDate": {
+    "value": "2016-07-10",
+    "date": "2016-07-10 12:00:00 UTC"
+  },
+  "fieldVaFormNumPages": 5,
+  "fieldVaFormRelatedForms": [
+    {
+      "targetId": 5745,
+      "entity": {
+        "entityPublished": false,
+        "entityUrl": {
+          "path": "/find-forms/about-form-10-10ez-espanol",
+          "routed": true
+        },
+        "fieldVaFormLanguage": "es",
+        "fieldVaFormNumber": "10-10EZ (esp)",
+        "fieldVaFormName": "Instrucciones y Solicitud de Beneficios Medicos",
+        "fieldVaFormUsage": {
+          "value": "<p>Para que los Veteranos soliciten su afiliación al sistema de atención médica de VA. la información proporcionada en este formulario será utilizada por VA para determinar si usted reúne los requisitos para recibir beneficios médicos.</p>\r\n",
+          "format": "rich_text",
+          "processed": "<html><head></head><body><p>Para que los Veteranos soliciten su afiliaci&#xF3;n al sistema de atenci&#xF3;n m&#xE9;dica de VA. la informaci&#xF3;n proporcionada en este formulario ser&#xE1; utilizada por VA para determinar si usted re&#xFA;ne los requisitos para recibir beneficios m&#xE9;dicos.</p></body></html>"
+        },
+        "fieldVaFormUrl": {
+          "uri": "https://www.dev.va.gov/vaforms/medical/pdf/10-10EZ_Spanish.pdf"
+        }
+      }
+    },
+    {
+      "targetId": 6107,
+      "entity": {
+        "entityPublished": true,
+        "entityUrl": {
+          "path": "/find-forms/about-form-10-10ezr",
+          "routed": true
+        },
+        "fieldVaFormLanguage": "en",
+        "fieldVaFormNumber": "10-10EZR",
+        "fieldVaFormName": "Health Benefits Update Form ",
+        "fieldVaFormUsage": {
+          "value": "<p>Use VA Form 10-10EZR if you already receive VA health care benefits, and you need to update your personal, insurance, or financial information.</p>\r\n",
+          "format": "rich_text",
+          "processed": "<html><head></head><body><p>Use VA Form 10-10EZR if you already receive VA health care benefits, and you need to update your personal, insurance, or financial information.</p></body></html>"
+        },
+        "fieldVaFormUrl": {
+          "uri": "https://www.dev.va.gov/vaforms/medical/pdf/vha-10-10EZR-fill.pdf"
+        }
+      }
+    }
+  ],
+  "fieldVaFormLinkTeasers": [
+    {
+      "entity": {
+        "entityLabel": "About VA Form 10-10EZ > Helpful links",
+        "parentFieldName": "field_va_form_link_teasers",
+        "entityId": "11012",
+        "fieldLink": {
+          "url": {
+            "path": "/health-care/eligibility"
+          },
+          "title": "Eligibility for VA health care",
+          "options": []
+        },
+        "fieldLinkSummary": "Find out if you’re eligible for VA health care."
+      }
+    },
+    {
+      "entity": {
+        "entityLabel": "About VA Form 10-10EZ > Helpful links",
+        "parentFieldName": "field_va_form_link_teasers",
+        "entityId": "11013",
+        "fieldLink": {
+          "url": {
+            "path": "/health-care/refill-track-prescriptions"
+          },
+          "title": "Refill and track your VA prescriptions",
+          "options": []
+        },
+        "fieldLinkSummary": "Order a prescription refill and track your shipment online."
+      }
+    },
+    {
+      "entity": {
+        "entityLabel": "About VA Form 10-10EZ > Helpful links",
+        "parentFieldName": "field_va_form_link_teasers",
+        "entityId": "11014",
+        "fieldLink": {
+          "url": {
+            "path": "/health-care/schedule-view-va-appointments"
+          },
+          "title": "Schedule and manage health appointments",
+          "options": []
+        },
+        "fieldLinkSummary": "Find out how to schedule an appointment by phone, online, or through Secure Messaging."
+      }
+    },
+    {
+      "entity": {
+        "entityLabel": "About VA Form 10-10EZ > Helpful links",
+        "parentFieldName": "field_va_form_link_teasers",
+        "entityId": "11219",
+        "fieldLink": {
+          "url": {
+            "path": "/health-care/order-hearing-aid-batteries-and-accessories"
+          },
+          "title": "Order hearing aid batteries and accessories",
+          "options": []
+        },
+        "fieldLinkSummary": "Order items for VA-issued hearing aids online for home delivery."
+      }
+    },
+    {
+      "entity": {
+        "entityLabel": "About VA Form 10-10EZ > Helpful links",
+        "parentFieldName": "field_va_form_link_teasers",
+        "entityId": "11220",
+        "fieldLink": {
+          "url": {
+            "path": "/health-care/order-prosthetic-socks"
+          },
+          "title": "Order prosthetic socks",
+          "options": []
+        },
+        "fieldLinkSummary": "Find out how to order prosthetic socks for Veterans with amputations. "
+      }
+    }
+  ],
+  "sidebar": {},
+  "status": true,
+  "pid": 5776,
+  "debug": null
+}
