@@ -78,7 +78,7 @@
   "fieldVaFormType": "benefit",
   "fieldVaFormLanguage": "en",
   "fieldVaFormUrl": {
-    "uri": "https://www.va.gov/vaforms/medical/pdf/10-10EZ-fillable.pdf",
+    "uri": "https://www.dev.va.gov/vaforms/medical/pdf/10-10EZ-fillable.pdf",
     "title": null,
     "options": []
   },
@@ -97,7 +97,7 @@
   },
   "fieldVaFormToolIntro": "You can apply online instead of filling out and sending us the paper form.",
   "fieldVaFormToolUrl": {
-    "uri": "https://www.va.gov/health-care/apply/application/introduction",
+    "uri": "https://www.dev.va.gov/health-care/apply/application/introduction",
     "title": "",
     "options": []
   },
@@ -136,7 +136,7 @@
           "processed": "<html><head></head><body><p>Para que los Veteranos soliciten su afiliaci&#xF3;n al sistema de atenci&#xF3;n m&#xE9;dica de VA. la informaci&#xF3;n proporcionada en este formulario ser&#xE1; utilizada por VA para determinar si usted re&#xFA;ne los requisitos para recibir beneficios m&#xE9;dicos.</p></body></html>"
         },
         "fieldVaFormUrl": {
-          "uri": "https://www.va.gov/vaforms/medical/pdf/10-10EZ_Spanish.pdf"
+          "uri": "https://www.dev.va.gov/vaforms/medical/pdf/10-10EZ_Spanish.pdf"
         }
       }
     },
@@ -157,7 +157,7 @@
           "processed": "<html><head></head><body><p>Use VA Form 10-10EZR if you already receive VA health care benefits, and you need to update your personal, insurance, or financial information.</p></body></html>"
         },
         "fieldVaFormUrl": {
-          "uri": "https://www.va.gov/vaforms/medical/pdf/vha-10-10EZR-fill.pdf"
+          "uri": "https://www.dev.va.gov/vaforms/medical/pdf/vha-10-10EZR-fill.pdf"
         }
       }
     }
@@ -239,6 +239,7 @@
       }
     }
   ],
+  "sidebar": {},
   "status": true,
   "pid": 5776,
   "debug": null
