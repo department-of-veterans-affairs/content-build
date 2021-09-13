@@ -71,9 +71,9 @@
         </dl>
 
         {% if fieldVaFormUsage %}
-          <h2 class="vads-u-margin-top--4 va_form--when-to-use-this-form-header">When to use this form</h3>
+          <h2 class="vads-u-margin-top--4" data-testid="va_form--when-to-use-this-form-header">When to use this form</h3>
           {% if fieldVaFormLanguage %}
-            <div class="va_form--when-to-use-this-form-text" lang="{{ fieldVaFormLanguage }}">
+            <div data-testid="va_form--when-to-use-this-form-text" lang="{{ fieldVaFormLanguage }}">
               {{ fieldVaFormUsage.processed }}
             </div>
           {% else %}
@@ -83,7 +83,7 @@
           {% endif %}
         {% endif %}
 
-        <h3 class="vads-u-margin-bottom--2 va_form--downloadable-pdf">Downloadable PDF</h3>
+        <h3 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h3>
         <a
           href="{{ fieldVaFormUrl.uri }}"
           target="_blank"
@@ -114,7 +114,7 @@
         {% endif %}
 
         {% if fieldVaFormToolUrl %}
-          <h3 class="va_form--online-tool">Online tool</h3>
+          <h3 data-testid="va_form--online-tool">Online tool</h3>
           <p>{{ fieldVaFormToolIntro }}</p>
             <div class="vads-u-display--inline-block">
               <a
@@ -134,7 +134,7 @@
 
         {% if fieldVaFormRelatedForms.length > 0 %}
           <section>
-            <h2 class="va_form--related-forms-and-instructions">Related forms and instructions</h2>
+            <h2 data-testid="va_form--related-forms-and-instructions">Related forms and instructions</h2>
             <ul class="usa-unstyled-list" role="list">
             {% for vaForm in fieldVaFormRelatedForms %}
               <li>

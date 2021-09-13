@@ -26,10 +26,10 @@ describe('va_form', () => {
 
   it('has "when to use this form" explanation', () => {
     const whenToUseThisFormHeader = container.querySelector(
-      'h2.va_form--when-to-use-this-form-header',
+      'h2[data-testid="va_form--when-to-use-this-form-header"]',
     );
     const whenToUseThisFormParagraph = container.querySelector(
-      '.va_form--when-to-use-this-form-text',
+      '[data-testid="va_form--when-to-use-this-form-text"]',
     );
     expect(whenToUseThisFormHeader.innerHTML.trim()).to.equal(
       'When to use this form',
@@ -38,9 +38,11 @@ describe('va_form', () => {
   });
 
   it('has the Go to Online Tool and PDF download headers', () => {
-    const onlineToolHeader = container.querySelector('h3.va_form--online-tool');
+    const onlineToolHeader = container.querySelector(
+      'h3[data-testid="va_form--online-tool"]',
+    );
     const downloadPdfLink = container.querySelector(
-      'h3.va_form--downloadable-pdf',
+      'h3[data-testid="va_form--downloadable-pdf"]',
     );
     expect(onlineToolHeader).to.not.be.null;
     expect(downloadPdfLink).to.not.be.null;
@@ -67,7 +69,7 @@ describe('va_form', () => {
 
   it('shows the related forms section and the forms links', () => {
     const relatedFormsSectionHeader = container.querySelector(
-      'h2.va_form--related-forms-and-instructions',
+      'h2[data-testid="va_form--related-forms-and-instructions"]',
     );
     expect(relatedFormsSectionHeader).to.not.be.null;
 
