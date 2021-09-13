@@ -87,7 +87,7 @@ module.exports = {
         const isInAccordionButton = parent.hasClass('usa-accordion-button');
         const isInAccordion = parent.hasClass('usa-accordion-content');
         const isInAlert = parent.hasClass('usa-alert-body');
-        const emptyLinkId = heading.find('a').attr('id');
+        const emptyLinkId = heading.find('a')?.attr('id');
 
         // skip heading if it already has an id
         // skip heading if it's in an accordion button or an alert
