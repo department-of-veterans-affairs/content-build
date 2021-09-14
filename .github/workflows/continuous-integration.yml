@@ -587,7 +587,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-${{ hashFiles('yarn.lock') }}
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-
 
       - name: Configure AWS credentials
