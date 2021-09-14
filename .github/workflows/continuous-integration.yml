@@ -176,6 +176,12 @@ jobs:
       - name: ls
         run: ls
 
+      - name: ls node_modules
+        run: ls -la node_modules
+
+      - name: cd
+        run: cd content-build
+
       # Required to change registry in yarn.lock file
       - name: Change registry in yarn.lock
         run: |
