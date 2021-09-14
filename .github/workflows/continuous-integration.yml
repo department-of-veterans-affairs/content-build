@@ -184,6 +184,9 @@ jobs:
           npm config set email va-vsp-bot-1@va.gov
           npm config set always-auth true
 
+      - name: pwd
+        run: pwd
+
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
@@ -193,8 +196,8 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
-      - name: add semver
-        run: yarn add semver
+      - name: ls
+        run: ls
 
       - name: Set Drupal address
         if: ${{ github.ref == 'refs/heads/master' }}
