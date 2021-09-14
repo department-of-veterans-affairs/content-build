@@ -60,7 +60,7 @@ describe('va_form', () => {
       if (tag.getAttribute('href') === linksNeeded.goToOnlineTool.link)
         linksNeeded.goToOnlineTool.isPresent = true;
 
-      if (index - 1 === allAnchorTags.length) {
+      if (index + 1 === allAnchorTags.length) {
         expect(linksNeeded.pdf.isPresent).to.equal(true);
         expect(linksNeeded.goToOnlineTool.isPresent).to.equal(true);
       }
@@ -75,12 +75,12 @@ describe('va_form', () => {
 
     const allAnchorTags = container.querySelectorAll('a');
     const linksNeeded = {
-      // NOTE relatedFormTwoHeader is not here because it is ES language. We wait on full translated page so the headers are not links since there is no translated page.
+      // NOTE relatedFormOneHeader is not here because it is ES language. We wait on full translated page so the headers are not links since there is no translated page.
       relatedFormOneLink: {
         link: data.fieldVaFormRelatedForms[0].entity.fieldVaFormUrl.uri,
         isPresent: false,
       },
-      relatedFormOneHeader: {
+      relatedFormTwoHeader: {
         link: data.fieldVaFormRelatedForms[1].entity.entityUrl.path,
         isPresent: false,
       },
@@ -92,14 +92,14 @@ describe('va_form', () => {
     allAnchorTags.forEach((tag, index) => {
       if (tag.getAttribute('href') === linksNeeded.relatedFormOneLink.link)
         linksNeeded.relatedFormOneLink.isPresent = true;
-      if (tag.getAttribute('href') === linksNeeded.relatedFormOneHeader.link)
-        linksNeeded.relatedFormOneHeader.isPresent = true;
+      if (tag.getAttribute('href') === linksNeeded.relatedFormTwoHeader.link)
+        linksNeeded.relatedFormTwoHeader.isPresent = true;
       if (tag.getAttribute('href') === linksNeeded.relatedFormTwoLink.link)
         linksNeeded.relatedFormTwoLink.isPresent = true;
 
-      if (index - 1 === allAnchorTags.length) {
+      if (index + 1 === allAnchorTags.length) {
         expect(linksNeeded.relatedFormOneLink.isPresent).to.equal(true);
-        expect(linksNeeded.relatedFormOneHeader.isPresent).to.equal(true);
+        expect(linksNeeded.relatedFormTwoHeader.isPresent).to.equal(true);
         expect(linksNeeded.relatedFormTwoLink.isPresent).to.equal(true);
       }
     });
