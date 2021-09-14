@@ -141,15 +141,15 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      # - name: Cache dependencies
-      #   id: cache-dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       .cache/yarn
-      #       **/node_modules
-      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -170,27 +170,6 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
           env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
 
-      # - name: pwd
-      #   run: pwd
-
-      # - name: ls
-      #   run: ls
-
-      # - name: ls node_modules
-      #   run: ls -la node_modules
-
-      # - name: cat integrity
-      #   run: cat node_modules/.yarn-integrity
-
-      # - name: cd
-      #   run: cd content-build
-
-      # - name: ls
-      #   run: ls
-
-      # - name: pwd
-      #   run: pwd
-
       # Required to change registry in yarn.lock file
       - name: Change registry in yarn.lock
         run: |
@@ -205,12 +184,6 @@ jobs:
           npm config set email va-vsp-bot-1@va.gov
           npm config set always-auth true
 
-      - name: ls
-        run: ls
-
-      - name: pwd
-        run: pwd
-
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
@@ -219,9 +192,6 @@ jobs:
           timeout_minutes: 7
         env:
           YARN_CACHE_FOLDER: .cache/yarn
-
-      - name: ls
-        run: ls
 
       - name: Set Drupal address
         if: ${{ github.ref == 'refs/heads/master' }}
