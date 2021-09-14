@@ -179,6 +179,9 @@ jobs:
       - name: ls node_modules
         run: ls -la node_modules
 
+      - name: cat integrity
+        run: cat node_modules/.yarn-integrity
+
       - name: cd
         run: cd content-build
 
