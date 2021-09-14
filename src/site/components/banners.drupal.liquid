@@ -1,23 +1,20 @@
-{% if isPreview or buildtype != 'vagovprod' %}
-  <!-- Derive visible banners. -->
-  {% assign visibleBanners = banners.entities | deriveVisibleBanners: entityUrl.path %}
+<!-- Derive visible banners. -->
+{% assign visibleBanners = banners.entities | deriveVisibleBanners: entityUrl.path %}
 
-  <!-- Banners -->
-  {% for banner in visibleBanners %}
-    <div
-      aria-label="{{ banner.title | escape }}"
-      data-template="components/banners.drupal.liquid"
-      data-content="{{ banner.body.processed | escape }}"
-      data-dismissible-status="{{ banner.fieldDismissibleOption }}"
-      data-title="{{ banner.title | escape }}"
-      data-type="{{ banner.fieldAlertType | formatAlertType }}"
-      data-visible="true"
-      data-widget-type="banner"
-      role="region"
-    ></div>
-  {% endfor %}
-  <!-- Banners END -->
-{% endif %}
+<!-- Banners -->
+{% for banner in visibleBanners %}
+  <div
+    aria-label="{{ banner.title | escape }}"
+    data-template="components/banners.drupal.liquid"
+    data-content="{{ banner.body.processed | escape }}"
+    data-dismissible-status="{{ banner.fieldDismissibleOption }}"
+    data-title="{{ banner.title | escape }}"
+    data-type="{{ banner.fieldAlertType | formatAlertType }}"
+    data-visible="true"
+    data-widget-type="banner"
+    role="region"
+  ></div>
+{% endfor %}
 
 <!-- Maintenance banner -->
 <div
