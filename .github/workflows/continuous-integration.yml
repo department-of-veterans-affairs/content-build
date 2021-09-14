@@ -11,6 +11,7 @@ on:
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
+  NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group/
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha  }}
@@ -150,6 +151,39 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-gov-west-1'
+
+      - name: Get NEXUS username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
+          env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
+
+      - name: Get NEXUS token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
+          env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
+
+      # Required to change registry in yarn.lock file
+      - name: Change registry in yarn.lock
+        run: |
+          sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
+          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
+
+      - name: Authenticate NEXUS
+        run: |
+          npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
+          npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
+          npm config set registry ${{ env.NEXUS_REGISTRY }}
+          npm config set email va-vsp-bot-1@va.gov
+          npm config set always-auth true
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
@@ -194,14 +228,6 @@ jobs:
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv build/${{ matrix.buildtype }} /tmp/${{ github.run_id }}
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
 
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
@@ -461,8 +487,41 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-gov-west-1'
+
+      - name: Get NEXUS username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
+          env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
+
+      - name: Get NEXUS token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
+          env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
+
+      # Required to change registry in yarn.lock file
+      - name: Change registry in yarn.lock
+        run: |
+          sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
+          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
+
+      - name: Authenticate NEXUS
+        run: |
+          npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
+          npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
+          npm config set registry ${{ env.NEXUS_REGISTRY }}
+          npm config set email va-vsp-bot-1@va.gov
+          npm config set always-auth true
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline --production=false
+        run: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
@@ -503,7 +562,7 @@ jobs:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
-      - name: Checkout vagov-content
+      - name: Checkout
         uses: actions/checkout@v2
 
       - name: Restore vagovprod build
@@ -528,11 +587,44 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-gov-west-1'
+
+      - name: Get NEXUS username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
+          env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
+
+      - name: Get NEXUS token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
+          env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
+
+      # Required to change registry in yarn.lock file
+      - name: Change registry in yarn.lock
+        run: |
+          sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
+          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
+
+      - name: Authenticate NEXUS
+        run: |
+          npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
+          npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
+          npm config set registry ${{ env.NEXUS_REGISTRY }}
+          npm config set email va-vsp-bot-1@va.gov
+          npm config set always-auth true
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
