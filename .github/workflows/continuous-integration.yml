@@ -99,9 +99,9 @@ jobs:
     runs-on: self-hosted
     timeout-minutes: 60
 
-    # defaults:
-    #   run:
-    #     working-directory: content-build
+    defaults:
+      run:
+        working-directory: content-build
 
     env:
       # Sandbox Drupal address is used on branches other than master.
