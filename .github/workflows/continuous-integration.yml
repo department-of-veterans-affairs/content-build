@@ -182,6 +182,12 @@ jobs:
       - name: cd
         run: cd content-build
 
+      - name: ls
+        run: ls
+
+      - name: pwd
+        run: pwd
+
       # Required to change registry in yarn.lock file
       - name: Change registry in yarn.lock
         run: |
