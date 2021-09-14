@@ -214,7 +214,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
-          command: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: yarn install --frozen-lockfile --prefer-offline
           max_attempts: 3
           timeout_minutes: 7
         env:
