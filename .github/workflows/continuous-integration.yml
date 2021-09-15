@@ -188,7 +188,7 @@ jobs:
         uses: nick-invision/retry@v2
         working-directory: content-build
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
           max_attempts: 3
           timeout_minutes: 7
         env:
