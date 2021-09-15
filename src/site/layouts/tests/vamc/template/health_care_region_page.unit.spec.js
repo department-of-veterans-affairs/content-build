@@ -2,6 +2,8 @@ import { expect } from 'chai';
 import { parseFixture, renderHTML } from '~/site/tests/support';
 import axeCheck from '~/site/tests/support/axe';
 
+const _ = require('lodash');
+
 const layoutPath = 'src/site/layouts/health_care_region_page.drupal.liquid';
 
 describe('intro', () => {
@@ -80,6 +82,22 @@ describe('intro', () => {
   });
 
   it('displays a max of 2 featured stories', () => {
-    expect(container.querySelectorAll('#featured-story').length).to.equal(2);
+    expect(container.getElementsByClassName('featured-story').length).to.equal(
+      2,
+    );
+  });
+
+  it('displays 1 featured story if there is only 1', async () => {
+    const clonedData = _.cloneDeep(data);
+
+    clonedData.newsStoryTeasersFeatured.entities[0].reverseFieldListingNode.entities.splice(
+      1,
+      2,
+    );
+
+    const newContainer = await renderHTML(layoutPath, clonedData);
+    expect(
+      newContainer.getElementsByClassName('featured-story').length,
+    ).to.equal(1);
   });
 });

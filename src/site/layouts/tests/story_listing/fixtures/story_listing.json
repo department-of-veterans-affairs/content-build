@@ -1,6 +1,4 @@
 {
-  "data": {
-    "nodeById": {
       "entityBundle": "story_listing",
       "entityId": "6821",
       "entityPublished": true,
@@ -1073,6 +1071,4 @@
           "entityLabel": "VA Salt Lake City health care"
         }
       }
-    }
-  }
 }
