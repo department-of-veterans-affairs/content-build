@@ -1,9 +1,12 @@
 <script nonce="**CSP_NONCE**" type="text/javascript">
   {% comment %}
-    TODO - remove this code after dynamic nearby vet centers is working in vets-website
+    TODO - remove nearbyVetCenters after dynamic nearby vet centers is working in vets-website
   {% endcomment %}
     window.nearbyVetCenters = {{ nearbyVetCenters | json }};
     window.mainVetCenterPhone = {{ mainVetCenterPhone | json }};
+    window.mainVetCenterAddress = {{ mainVetCenterAddress | json }};
+    window.mainVetCenterId = {{ mainVetCenterId |  json }};
+    window.satteliteVetCenters = {{ satelliteVetCenters | getValuesForPath: 'fieldFacilityLocatorApiId' | json }}
 </script>
 {% comment %}sattelite-vet-centers will be used by the nearbyVetCenter widget for deduping{% endcomment %}
-<div data-widget-type="vet-center-nearby" sattelite-vet-centers={{satelliteVetCenters | getValueFromObjPath: 'fieldFacilityLocatorApiId'}}></div>
+<div data-widget-type="vet-center-nearby"></div>
