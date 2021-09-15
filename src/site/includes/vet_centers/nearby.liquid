@@ -6,7 +6,7 @@
     window.mainVetCenterPhone = {{ mainVetCenterPhone | json }};
     window.mainVetCenterAddress = {{ mainVetCenterAddress | json }};
     window.mainVetCenterId = {{ mainVetCenterId |  json }};
-    window.satteliteVetCenters = {{ satelliteVetCenters | getValuesForPath: 'fieldFacilityLocatorApiId' | json }}
+    window.satteliteVetCenters = {{ satelliteVetCenters | getValuesForPath: 'fieldFacilityLocatorApiId' | json }};
 </script>
 {% comment %}sattelite-vet-centers will be used by the nearbyVetCenter widget for deduping{% endcomment %}
 <div data-widget-type="vet-center-nearby"></div>
