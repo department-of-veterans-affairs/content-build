@@ -124,7 +124,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.2",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "chai-dom": "^1.8.2",
+    "chai-dom": "^1.10.0",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
     "chokidar": "^3.4.0",
