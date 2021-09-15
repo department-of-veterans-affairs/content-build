@@ -81,7 +81,7 @@ describe('intro', () => {
     expect(container.querySelector('.main-phone')).to.be.null;
   });
 
-  it('displays a max of 2 featured stories', () => {
+  it('displays a max of 2 featured stories if there are 2 or more featured stories', () => {
     expect(container.getElementsByClassName('featured-story').length).to.equal(
       2,
     );
