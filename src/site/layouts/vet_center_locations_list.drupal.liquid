@@ -50,12 +50,12 @@
             {% endfor %}
           {% endif %}
 
-          {% if fieldNearbyVetCenters.length > 0 %}
-            {% include 'src/site/includes/vet_centers/nearby.liquid' with
-                nearbyVetCenters = fieldNearbyVetCenters
-                mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
-            %}
-          {% endif %}
+          {% include 'src/site/includes/vet_centers/nearby.liquid' with
+              nearbyVetCenters = fieldNearbyVetCenters
+              mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
+              mainVetCenterAddress = fieldOffice.entity.fieldAddress
+              mainVetCenterId = fieldOffice.entity.fieldFacilityLocatorApiId
+          %}
 
           <h2 class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 vads-u-margin-bottom--2p5
                         medium-screen:vads-u-margin-bottom--3" id="vet-centers-other-areas">

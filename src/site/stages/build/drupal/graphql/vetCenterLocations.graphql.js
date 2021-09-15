@@ -216,6 +216,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           addressLine2
           organization
         }
+        fieldFacilityLocatorApiId        
         fieldPhoneNumber
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
