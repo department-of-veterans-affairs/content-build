@@ -1,0 +1,51 @@
+{
+  "hasMoreThanTwoStories": {
+    "reverseFieldListingNode": {
+      "entities": [
+        {
+          "entityId": "35240",
+          "title": "Get your flu shot",
+          "fieldFeatured": true,
+          "entityUrl": {
+            "path": "/salt-lake-city-health-care/stories/get-your-flu-shot"
+          },
+          "promote": false,
+          "created": 1631219705,
+          "fieldIntroText": "It's flu season, and it’s now more important than ever to get the flu shot as we continue to battle the COVID-19 pandemic.",
+          "fieldFullStory": {
+            "processed": "<p>Starting Wednesday, Sept. 15, the VA Salt Lake City Healthcare System will offer drive-thru flu shots for all Veterans receiving care through VA. Please follow the signs once on campus.</p>\n\n<p>Flu shots flight the virus and leave you less likely to spread flu to others. Staying healthy reduces unwanted trips to the medical center and community clinics.</p>\n\n<p><strong>When:</strong>  8:00 a.m.- 4:00 p.m., Monday-Friday</p>\n\n<p><strong>Where:</strong> Building 2, George E. Wahlen VA Medical Center, Salt Lake City</p>\n\n<p><strong>Who: </strong>All Veterans enrolled in VA healthcare.</p>\n\n<p>Enter the main medical center campus in Salt Lake City at Mario Cappechi Drive, take the first right on Bennion Drive, and follow the signs.</p>\n\n<p>Flu vaccines will also be offered at our community clinics in Ogden, Logan, South Jordan, Orem, St. George, Price, Roosevelt, Elko, Nevada, and Idaho Falls and Pocatello, Idaho. Please call the clinic for details.</p>\n\n<p>If you are enrolled in VA healthcare, you can also receive the vaccine at more than 60,000 locations through our Community Care in Network retail pharmacies and urgent care partners. VA will pay for standard-dose and high-dose flu shots.</p>\n\n<p>As of Sept. 1, enrolled Veterans can <a href=\"//www.va.gov/communitycare/flushot.asp\">visit the website to find locations</a> to get a no-cost flu shot.</p>\n\n<p> </p>\n\n<hr />"
+          }
+        },
+        {
+          "entityId": "35183",
+          "title": "Upholding Valor podcast: Fisher House",
+          "fieldFeatured": true,
+          "entityUrl": {
+            "path": "/salt-lake-city-health-care/stories/upholding-valor-podcast-fisher-house"
+          },
+          "promote": false,
+          "created": 1631207494,
+          "fieldIntroText": "Fisher House is a home away from home for Veterans’ families. They experience comfort in numbers and compassion in complete strangers bound together by extraordinary circumstances. In this week’s Upholding Valor – this is the Fisher House story.",
+          "fieldFullStory": {
+            "processed": "<p><a href=\"https://youtu.be/hae2IRZj2Qg\">Listen to the Upholding Valor podcast about Fisher House</a>.</p>\n\n<p>The VA Salt Lake City Health Care System, with community partners KSL and American United Federal Credit Union, has launched a new podcast series called Upholding Valor. The series encourages Veterans of all ages and eras to seek out the resources and programs they have earned while spotlighting their spirit and courage.</p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"6589ca34-d37d-4420-9dd6-b59c5f80ebfc\" href=\"/salt-lake-city-health-care/upholding-valor\" title=\"Upholding Valor\">Listen to previous episodes of the Upholding Valor podcast</a>.</p>"
+          }
+        },
+        {
+          "entityId": "34439",
+          "title": "Upholding Valor podcast: Weight management",
+          "fieldFeatured": true,
+          "entityUrl": {
+            "path": "/salt-lake-city-health-care/stories/upholding-valor-podcast-weight-management"
+          },
+          "promote": false,
+          "created": 1629925254,
+          "fieldIntroText": "The VA Salt Lake City Healthcare System goes beyond traditional healthcare to improve the lives of Veterans. In this episode of Upholding Valor a Veteran talks about his weight loss transformation and his journey to peace of mind, body and soul. ",
+          "fieldFullStory": {
+            "processed": "<p><a href=\"https://youtu.be/nSuPYEYddTo\">Listen to the Upholding Valor podcast about weight management</a>.</p>\n\n<p>The VA Salt Lake City Health Care System, with community partners KSL and American United Federal Credit Union, has launched a new podcast series called Upholding Valor. The series encourages Veterans of all ages and eras to seek out the resources and programs they have earned while spotlighting their spirit and courage.</p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"6589ca34-d37d-4420-9dd6-b59c5f80ebfc\" href=\"/salt-lake-city-health-care/upholding-valor\" hreflang=\"en\" title=\"Upholding Valor\">Listen to previous episodes of the Upholding Valor podcast</a>.</p>"
+          }
+        },
+
+      ]
+    }
+  }
+}

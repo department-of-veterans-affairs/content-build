@@ -1,0 +1,1078 @@
+{
+  "data": {
+    "nodeById": {
+      "entityBundle": "story_listing",
+      "entityId": "6821",
+      "entityPublished": true,
+      "title": "Stories",
+      "vid": 377174,
+      "entityUrl": {
+        "breadcrumb": [
+          {
+            "url": {
+              "path": "/",
+              "routed": true
+            },
+            "text": "Home"
+          },
+          {
+            "url": {
+              "path": "/salt-lake-city-health-care",
+              "routed": true
+            },
+            "text": "VA Salt Lake City health care"
+          },
+          {
+            "url": {
+              "path": "",
+              "routed": true
+            },
+            "text": "NEWS AND EVENTS"
+          },
+          {
+            "url": {
+              "path": "",
+              "routed": true
+            },
+            "text": "Stories"
+          }
+        ],
+        "path": "/salt-lake-city-health-care/stories"
+      },
+      "entityMetatags": [
+        {
+          "__typename": "MetaValue",
+          "key": "title",
+          "value": "Stories | VA Salt Lake City health care | Veterans Affairs"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "description",
+          "value": "Read about what's happening in our VA Salt Lake City health care community."
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:site_name",
+          "value": "Veterans Affairs"
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:title",
+          "value": "Stories | VA Salt Lake City health care | Veterans Affairs"
+        },
+        {
+          "__typename": "MetaProperty",
+          "key": "og:description",
+          "value": "Read about what's happening in our VA Salt Lake City health care community."
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:card",
+          "value": "summary_large_image"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:description",
+          "value": "Read about what's happening in our VA Salt Lake City health care community."
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:site",
+          "value": "@DeptVetAffairs"
+        },
+        {
+          "__typename": "MetaValue",
+          "key": "twitter:title",
+          "value": "Stories | VA Salt Lake City health care | Veterans Affairs"
+        }
+      ],
+      "fieldIntroText": "Read about what's happening in our VA Salt Lake City health care community.",
+      "reverseFieldListingNode": {
+        "entities": [
+          {
+            "entityId": "35240",
+            "title": "Get your flu shot",
+            "fieldFeatured": true,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/get-your-flu-shot"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1631219705,
+            "fieldAuthor": null,
+            "fieldImageCaption": null,
+            "fieldIntroText": "It's flu season, and it’s now more important than ever to get the flu shot as we continue to battle the COVID-19 pandemic.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Hands holding up a sign that says Get your flu shot",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-09/get%20your%20flu%20shot_138795981.jpeg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>Starting Wednesday, Sept. 15, the VA Salt Lake City Healthcare System will offer drive-thru flu shots for all Veterans receiving care through VA. Please follow the signs once on campus.</p>\n\n<p>Flu shots flight the virus and leave you less likely to spread flu to others. Staying healthy reduces unwanted trips to the medical center and community clinics.</p>\n\n<p><strong>When:</strong>  8:00 a.m.- 4:00 p.m., Monday-Friday</p>\n\n<p><strong>Where:</strong> Building 2, George E. Wahlen VA Medical Center, Salt Lake City</p>\n\n<p><strong>Who: </strong>All Veterans enrolled in VA healthcare.</p>\n\n<p>Enter the main medical center campus in Salt Lake City at Mario Cappechi Drive, take the first right on Bennion Drive, and follow the signs.</p>\n\n<p>Flu vaccines will also be offered at our community clinics in Ogden, Logan, South Jordan, Orem, St. George, Price, Roosevelt, Elko, Nevada, and Idaho Falls and Pocatello, Idaho. Please call the clinic for details.</p>\n\n<p>If you are enrolled in VA healthcare, you can also receive the vaccine at more than 60,000 locations through our Community Care in Network retail pharmacies and urgent care partners. VA will pay for standard-dose and high-dose flu shots.</p>\n\n<p>As of Sept. 1, enrolled Veterans can <a href=\"//www.va.gov/communitycare/flushot.asp\">visit the website to find locations</a> to get a no-cost flu shot.</p>\n\n<p> </p>\n\n<hr />"
+            }
+          },
+          {
+            "entityId": "35183",
+            "title": "Upholding Valor podcast: Fisher House",
+            "fieldFeatured": true,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/upholding-valor-podcast-fisher-house"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1631207494,
+            "fieldAuthor": null,
+            "fieldImageCaption": null,
+            "fieldIntroText": "Fisher House is a home away from home for Veterans’ families. They experience comfort in numbers and compassion in complete strangers bound together by extraordinary circumstances. In this week’s Upholding Valor – this is the Fisher House story.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Fisher House",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-09/Fisher%20House.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p><a href=\"https://youtu.be/hae2IRZj2Qg\">Listen to the Upholding Valor podcast about Fisher House</a>.</p>\n\n<p>The VA Salt Lake City Health Care System, with community partners KSL and American United Federal Credit Union, has launched a new podcast series called Upholding Valor. The series encourages Veterans of all ages and eras to seek out the resources and programs they have earned while spotlighting their spirit and courage.</p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"6589ca34-d37d-4420-9dd6-b59c5f80ebfc\" href=\"/salt-lake-city-health-care/upholding-valor\" title=\"Upholding Valor\">Listen to previous episodes of the Upholding Valor podcast</a>.</p>"
+            }
+          },
+          {
+            "entityId": "34439",
+            "title": "Upholding Valor podcast: Weight management",
+            "fieldFeatured": true,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/upholding-valor-podcast-weight-management"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1629925254,
+            "fieldAuthor": null,
+            "fieldImageCaption": null,
+            "fieldIntroText": "The VA Salt Lake City Healthcare System goes beyond traditional healthcare to improve the lives of Veterans. In this episode of Upholding Valor a Veteran talks about his weight loss transformation and his journey to peace of mind, body and soul. ",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Screen grab showing scale and apple",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/Weight_mgt.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p><a href=\"https://youtu.be/nSuPYEYddTo\">Listen to the Upholding Valor podcast about weight management</a>.</p>\n\n<p>The VA Salt Lake City Health Care System, with community partners KSL and American United Federal Credit Union, has launched a new podcast series called Upholding Valor. The series encourages Veterans of all ages and eras to seek out the resources and programs they have earned while spotlighting their spirit and courage.</p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"6589ca34-d37d-4420-9dd6-b59c5f80ebfc\" href=\"/salt-lake-city-health-care/upholding-valor\" hreflang=\"en\" title=\"Upholding Valor\">Listen to previous episodes of the Upholding Valor podcast</a>.</p>"
+            }
+          },
+          {
+            "entityId": "34247",
+            "title": "Immunocompromised Veterans already receiving third dose of COVID vaccine",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/immunocompromised-veterans-already-receiving-third-dose-of-covid-vaccine"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1629755995,
+            "fieldAuthor": null,
+            "fieldImageCaption": null,
+            "fieldIntroText": "The Centers for Disease Control and Prevention recommended on Aug. 13 a third dose of the Pfizer and Moderna vaccines for immunocompromised Americans. It has now expanded that recommendation to all Americans, who received either of those vaccines.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "A Veteran receives a COVID-19 vaccination from a VA health care worker",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/SLC-vaccine4.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>The VA Salt Lake City Healthcare System  already is reaching out to our <a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/recommendations/immuno.html\">Veterans with compromised to immune systems</a> to set up a time for them to receive a third dose. In order for an immunocompromised Veteran to qualify for a third dose, 28 days must have passed since receiving the second dose. If you believe you fall into this category and do not hear from us, please call your primary care provider.</p>\n\n<p>For all other Veterans, we are laying out plans to receive a third dose of the Moderna or Pfizer vaccine.  The plan as per guidance calls for an extra dose eight months after a person received the second shot of the vaccine. The doses would begin Sept. 20. As plans are solidified, we will post updated information here.</p>\n\n<p>If you still have not received the vaccine and would like to, we are still offering walk-in vaccinations in primary care and in our community clinics.</p>\n\n<p>At this point, the CDC is not recommending an additional dose for the Johnson and Johnson vaccine, but that could change as health researchers receive more data.</p>"
+            }
+          },
+          {
+            "entityId": "34233",
+            "title": "Upholding Valor podcast: Volunteer Service",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/upholding-valor-podcast-volunteer-service"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1629737814,
+            "fieldAuthor": null,
+            "fieldImageCaption": null,
+            "fieldIntroText": "VA always needs good volunteers to better serve our Veterans. We need you!  Want to serve your country’s heroes?  Find out how in this episode of Upholding Valor. ",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Upholding Valor podcast - Volunteer Services",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/UV-Volunteers%20081121.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p><a href=\"https://youtu.be/5W1Qet_1-cI\">Listen to the Upholding Valor podcast about Volunteer Service</a>.</p>\n\n<p>The VA Salt Lake City Health Care System, with community partners KSL and American United Federal Credit Union, has launched a new podcast series called Upholding Valor. The series encourages Veterans of all ages and eras to seek out the resources and programs they have earned while spotlighting their spirit and courage.</p>\n\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"6589ca34-d37d-4420-9dd6-b59c5f80ebfc\" href=\"/salt-lake-city-health-care/upholding-valor\" title=\"Upholding Valor\">Listen to previous episodes of the Upholding Valor podcast</a>.</p>"
+            }
+          },
+          {
+            "entityId": "33723",
+            "title": "Resources for Veterans struggling with events in Afghanistan",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/resources-for-veterans-struggling-with-events-in-afghanistan"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1629150705,
+            "fieldAuthor": null,
+            "fieldImageCaption": null,
+            "fieldIntroText": "Our whole community aches as we watch the news out of Afghanistan.  ",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Afghanistan Campaign medal and ribbon",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/Afghanistan_art.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>The events unfolding there may lead Veterans to question the meaning of their service and the worth of their sacrifices. We understand this may cause stress to our Veterans and their families. <strong>It’s normal to feel this way, but know</strong> you are not alone. We are here to listen. Please reach out.</p>\n\n<h2>Resources</h2>\n\n<p><a href=\"https://www.va.gov/salt-lake-city-health-care/health-services/#mental-health-care\">Mental Health Care - VA Salt Lake City Health Care</a></p>\n\n<p><a href=\"https://www.va.gov/salt-lake-city-health-care/locations/\">Local Vet Center numbers</a></p>\n\n<p>Veterans Crisis Line: 1-800-273-8255, Press 1</p>"
+            }
+          },
+          {
+            "entityId": "33187",
+            "title": "Rocky Mountain Network leaders describe a year of COVID-19 decisions",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/rocky-mountain-network-leaders-describe-a-year-of-covid-19-decisions"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1628258564,
+            "fieldAuthor": null,
+            "fieldImageCaption": "The 14-minute video captures the lessons learned by the Rocky Mountain Network and the rest of VA. ",
+            "fieldIntroText": "A reflective mini-documentary captures the COVID-19 response by the VA Rocky Mountain Network and explores the path ahead for Veteran health care.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Screen grab from Learning from the past video - Ralph T. Gigliotti, VISN 19 network director",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/Learning%20from%20the%20past%20-%20Vid2.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<h2><strong>COVID-19 arrives</strong></h2>\n\n<p>Across VA, clinicians, directors and everyone involved in running our medical facilities worked tirelessly to care for our Veteran population as the COVID-19 pandemic arrived in the United States.</p>\n\n<p>We took unprecedented measures to reduce exposure and safeguard our health care workers, the Veterans we serve and their family members.</p>\n\n<p>We were able to quickly pivot and direct maximum effort to control the spread of the coronavirus. That played a crucial role in collaboration with the CDC and state and local health care organizations.</p>\n\n<p>Throughout 2020, we adapted, improvised and made time-sensitive adjustments at each of our facilities. Those deliberate actions limited the impact of COVID-19 on the Veterans in our care.</p>\n\n<h2><strong>Vaccines distributed</strong></h2>\n\n<p>Once VA facilities began receiving the three emergency use authorization <a href=\"https://www.va.gov/health-care/covid-19-vaccine/\">vaccinations</a>, we immediately began inoculating Veterans as well as front line health care workers. We then expanded our efforts. We offered the vaccine to any Veteran, spouse, caregiver or group identified in the SAVE LIVES Act.</p>\n\n<h2><strong>Learning from the past… positioning for the future</strong></h2>\n\n<p>The 14-minute video captures the lessons learned by the Rocky Mountain Network and the rest of VA. It shares professional and personal struggles and the ability to make adjustments to meet the threat head-on. It also shares the vision for the future of Veteran health care at each VA facility.</p>\n\n<p><a href=\"https://youtu.be/MorGAzA1h_s\">Watch the video: Learning from the past, positioning for the future</a></p>\n\n<p>To see other VAntagage Point COVID-19 blog posts, visit:<a href=\"https://blogs.va.gov/VAntage/?s=COVID-19\"> https://blogs.va.gov/VAntage/?s=COVID-19</a></p>"
+            }
+          },
+          {
+            "entityId": "27514",
+            "title": "Upholding Valor podcast: PTSD",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/upholding-valor-podcast-ptsd"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1626456033,
+            "fieldAuthor": null,
+            "fieldImageCaption": null,
+            "fieldIntroText": "PTSD is something roughly 20 percent of Veterans deal with after service or a long combat deployment. VA understands and has the experts to make a difference in Veterans lives. Don’t suffer in silence. PTSD is treatable.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Screen grab of Upholding Valor on PTSD",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-07/Valor-PTSD2.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p><a href=\"https://www.youtube.com/watch?v=irlQDKsjjpQ\">Listen to the Upholding Valor podcast on PTSD</a>.</p>\n\n<hr /><p>The VA Salt Lake City Health Care System, with community partners KSL and American United Federal Credit Union, has launched a new podcast series called <a href=\"https://www.va.gov/salt-lake-city-health-care/upholding-valor/\">Upholding Valor</a>. The series encourages Veterans of all ages and eras to seek out the resources and programs they have earned while spotlighting their spirit and courage.</p>\n\n<p><a href=\"https://www.va.gov/salt-lake-city-health-care/upholding-valor/\">Listen to previous episodes of the Upholding Valor podcast</a>.</p>"
+            }
+          },
+          {
+            "entityId": "27058",
+            "title": "The future of medicine is in your genes. We need your help.",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/the-future-of-medicine-is-in-your-genes-we-need-your-help"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1625233954,
+            "fieldAuthor": null,
+            "fieldImageCaption": "The future of medicine is in your genes. We need your help.\r\nFifteen minutes and a blood draw are all it takes to make a lasting difference. \r\n",
+            "fieldIntroText": "The Salt Lake City VA Health Care System is enrolling Veterans into the Million Veteran Program, a national research program that studies how differences in genes, lifestyle and military experiences affect Veterans' health and illnesses. ",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Woman Veteran for Million Veterans Program -  The future of medicine is in your genes",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-07/million_veterans-Pre%202-1.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>The goal is to one day give Veterans specialized care with targeted treatments and preventions based on their genetics and medical history.</p>\n\n<p>Veterans can enroll online at <a href=\"http://www.mvp.va.gov\">mvp.va.gov</a> or by scheduling an appointment at our facility by calling 866-441-6075. You do not need to receive VA health care to join VA’s Million Veteran Program or schedule an appointment at our facility.</p>\n\n<p>What is the Million Veteran Program (MVP)?</p>\n\n<p>Since launching in 2011, nearly 840,000 Veteran partners have joined MVP, helping researchers better understand the genetics of disease in Veterans.</p>\n\n<p>By collecting DNA from as many Veterans a possible, along with information on their health, lifestyle and military experiences, researchers are beginning to answer important questions like:</p>\n\n<ul><li>Why does a certain treatment work well for some Veterans but not others?</li>\n\t<li>Why are some Veterans at greater risk for developing an illness?</li>\n\t<li>How can we prevent certain illnesses in the first place?</li>\n</ul><p>If <a href=\"https://www.research.va.gov/pubs/docs/va_factsheets/MVP_womens_factsheet.pdf\">more women</a> and diverse populations enroll, MVP researchers can discover new medical breakthroughs that work for all Veterans.</p>\n\n<p>What does it mean to enroll?</p>\n\n<p>To join MVP, you’ll be asked to:</p>\n\n<ul><li>Complete a consent process online at <a href=\"http://www.mvp.va.gov\">mvp.va.gov</a> or at Salt Lake City VA by calling 1-866-441-6075 to make an appointment.</li>\n\t<li>Allow access to your health records.</li>\n\t<li>Provide a one-time blood sample for genetic analysis.</li>\n\t<li>Fill out occasional surveys about your health and lifestyle.</li>\n</ul><p>Once enrolled, you may be contacted again on a periodic basis if additional information is requested, or if there is a research opportunity you may want to consider. You will also receive newsletters about the program at least once a year with updates on research findings and other topics of interest.</p>\n\n<p>For more questions about MVP, <a href=\"https://www.mvp.va.gov/webapp/mvp-web-participant/#/public/faq\">explore their FAQs</a> or speak with a staff member at 866-441-6075.</p>"
+            }
+          },
+          {
+            "entityId": "26855",
+            "title": "Hope after PTSD",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/hope-after-ptsd"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1624641736,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Command Sgt. Maj. and Special Forces operator Chris Hird spent decades under the rule of PTSD. VA helped him see that with treatment, there’s hope.",
+            "fieldIntroText": "Everyone falls. Even heroes. \r\nChris Hird learned that the hard way. So did the woman that saved him. \r\n",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Chris Hird",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-06/Chris_Hird_3_1125_0.png",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>As a Special Forces commando, Hird was at the top of his game. He was well-respected, in a stable relationship, and had his act together.</p>\n\n<p>Nothing could rattle him.</p>\n\n<p>Until it did.</p>\n\n<p>***</p>\n\n<p>Deployed to Afghanistan in 2003, the mission was simple: remove a man from power. And by the end of it, a man was taken out.</p>\n\n<p>The wrong one.</p>\n\n<p>The mission went south, and while under direct fire, a weapons cache exploded near Hird’s position. Shrapnel tore through his jaw, shattering it in two places.</p>\n\n<p>“I woke up in the intensive care unit the next night and the doctor explained what was going on,” Hird said. “I looked and I couldn’t find anything on my face that looked familiar – until I got to my eyes.”</p>\n\n<p>For hours, a team of surgeons labored to wire his jaw shut. Excessive dental work followed.</p>\n\n<p>In pain for months, the distress wore on him.</p>\n\n<p>“Being disfigured, not being able to recognize yourself in the mirror … I would pass people in the hallways and they would look away from me.”</p>\n\n<p>Inside, he was the same Chris; the guy who liked riding bikes and playing with his dogs. But all he saw a monster.</p>\n\n<p>So he became one.</p>\n\n<p>***</p>\n\n<p>While some would’ve called it quits, Hird continued serving.</p>\n\n<p>But he wasn’t the same. While professionally, Hird kept up appearances, his personal life unraveled.</p>\n\n<p>“I thought I was maintaining, performing the same and nobody could tell,” he said. “But it was obvious to everyone but me.”</p>\n\n<p>As a Special Forces medic, Hird was trained to help people. But he didn’t know how to help himself.</p>\n\n<p>The once clean-cut soldier turned to alcohol and painkillers. Drugs followed. Then lies and cover-ups.</p>\n\n<p>“It was just a very dark period,” Hird said. “I was trying anything I could do to just kind of hide from it, numb it.”</p>\n\n<p>In denial of his problem, Hird languished for three years until a run-in with the law forced him to face reality.</p>\n\n<p>Other than a speeding ticket when he was 18, he had a stellar record. He was a guy people looked up to.</p>\n\n<p>“That night sitting there being arrested, people were looking at me like that guy everyone hates,” Hird said. “I had never been the bad guy and now, I was the bad guy.”</p>\n\n<p>The event marked a milestone for Hird. He quit drugs then and there.</p>\n\n<p>But he still was unwell. And before he could do anything about it, Hird was ordered to the Philippines for operation Enduring Freedom.</p>\n\n<p>Duty called. Treatment would have to wait.</p>\n\n<p>***</p>\n\n<p>In hindsight, the accident alone might not have brought Hird over the edge. A rough childhood in foster care had chipped his foundation.</p>\n\n<p>But he had moved past all that.</p>\n\n<p>Hird always knew he was going to serve in the military. It was just a matter of whether he’d be a SEAL or a Green Beret. That’s how put together he was.</p>\n\n<p>When the accident happened, it shook him.</p>\n\n<p>“Everyone has the stuff they deal with and they do fine,” Hird said. “Personally, the Afghanistan thing was too much, and I went off the rails a little bit.”</p>\n\n<p>Having proven his worth in the Philippines, Hird continued the facade of normalcy.</p>\n\n<p>But his family knew. So did those close to him.</p>\n\n<p>“A lot of guys think, ‘I’ll know if it’s going on,’” Hird said. “I just kind of dealt with the issues. I wish I would’ve listened a little bit more to people are around me.”</p>\n\n<p>For more than a decade, he limped on before seriously seeking help.</p>\n\n<p>“I was never suicidal, but I was unhappy, and I knew that,” Hird said. “For me, it wasn’t that I wanted to do it, it was that I had to.”</p>\n\n<p>Entering treatment in 2019, Hird was surprised to learn he had it – an acronym casually thrown around in military circles.</p>\n\n<p>PTSD. Everything made sense.</p>\n\n<p>***</p>\n\n<p>Untreated PTSD lasting more than a year doesn’t usually go away on its own.</p>\n\n<p>For Veterans trying to cope, life can be taxing. And for some, the thought of treatment can be even scarier.</p>\n\n<p>It doesn’t have to be that way, said VA clinical psychologist Dr. Erika Roberge.</p>\n\n<p>“People worry that discussing painful experiences will be overwhelming and cause them to lose control,” she said. “But it’s actually worries like this that prolong the symptoms of PTSD. Avoidance of thinking, talking about, or even feeling emotions associated with trauma is what keeps people “stuck” in PTSD – it impedes their healing process.”</p>\n\n<p>Roberge, who authored <a href=\"https://onlinelibrary.wiley.com/doi/10.1002/jts.22662\">a recent study on PTSD</a>, said evidence shows it can be conquered. More than 76 percent of Veterans who complete treatment show significant improvement in their PTSD symptoms, she said.</p>\n\n<p>For Roberge, who comes from a military family, the cause is personal. She had researched PTSD in college, but after the sudden death of her father in 2012, she lived it.</p>\n\n<p>Instead of letting it get the best of her, Roberge used that experience to help bring out the best in others. She focused her efforts on helping Veterans heal.</p>\n\n<p>But the figures were staggering: nearly 20 percent of recently-active Veterans suffer from PTSD.  </p>\n\n<p>Undaunted, Roberge vowed to change that, even if it meant one Veteran at a time. She had to: because they’re not just any Veterans, they’re <em>her</em> Veterans.</p>\n\n<p>Hird is one of <em>her Veterans</em>.</p>\n\n<p>***</p>\n\n<p>The hardest part of treatment – harder than any training he endured – was reopening old wounds and reliving memories that haunted him.</p>\n\n<p>That’s when he left the Special Forces, the career he’d known and loved for 30 years. It was time for the Command Sgt. Maj. to focus on himself for once.</p>\n\n<p>While many patients can finish PTSD treatment in as little as two weeks, Hird spent 15 months working through decades of trauma.</p>\n\n<p>Treatment was “grueling,” he said.</p>\n\n<p>But the effort was worth it.</p>\n\n<p>“He showed up every week, Roberge said. “He pushed himself far outside of his comfort zone to allow himself to be vulnerable—something that his childhood and military career taught him he should never do. Chris is a great example of someone whose hard work and devotion to treatment allowed him to go from surviving to thriving.”</p>\n\n<p>Ultimately, Hird made a full recovery. He credits that largely to, Roberge.</p>\n\n<p>“I missed an appointment and she called me almost in tears – she cares that much, Hird said. “I’ve been really lucky with all my clinicians, but Erika, she was amazing just start to finish. She went the extra mile and was completely invested in me.”</p>\n\n<p>Hird’s learned to deal with trauma and has found peace of mind. Now, back to seeing friends and doing the things he loves, he urged others to seek treatment.</p>\n\n<p>“There’s still a little stigma in the military to get treatment,” he said. “But it’s not just for you; it’s for your family and your soldiers.”</p>\n\n<p>The titanium plates in his jaw will always be there. As will the trauma he endured.</p>\n\n<p>But Hird’s a new man now and with the perspective he’s gained, a better one.</p>\n\n<p>“I will never be able to thank the VA enough for what they were able to do,” Hird said. “It’s like night and day difference.”</p>\n\n<p>Everyone falls. But heroes get back up.</p>\n\n<p><strong><em>If you would like to learn more about PTSD or treatment options, visit: </em><a href=\"https://www.ptsd.va.gov/\"><em>https://www.ptsd.va.gov/</em></a></strong></p>"
+            }
+          },
+          {
+            "entityId": "20581",
+            "title": "Housing linked to lower health care costs",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/housing-linked-to-lower-health-care-costs"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1622746933,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Richard E. Nelson, lead author of the study (photo by Charlie Ehlert)",
+            "fieldIntroText": "Scientists and social workers have long known that homeless Veterans have more adverse health conditions, visit the hospital more, and have longer, more expensive stays. But what they didn’t know was that improving a Veteran’s housing also improves their health.  ",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Richard E. Nelson",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-06/Richard_Nelson_1200.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>Veterans who received financial aid for housing spent less time in the hospital. They also spent less money on medical care – slashing costs by nearly $3,000 over two years, a <a href=\"https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2020.01796\" target=\"_blank\" title=\"new Department of Veterans Affairs study\">new Department of Veterans Affairs study</a> says.</p>\n\n<p>“Getting Veterans experiencing homelessness into stable housing is desirable for a whole host of social, health, economic, and moral reasons,” said <a href=\"https://medicine.utah.edu/faculty/mddetail.php?facultyID=u0154844\" target=\"_blank\" title=\"Richard E. Nelson\">Richard E. Nelson</a>, the study’s lead author and a research health scientist at Salt Lake City VA. “In this case, the overarching finding of our research is that providing veterans with temporary financial assistance helps them get into stable housing and reduces health care costs—particularly inpatient health care costs. This should be seen as a ‘win-win’ for the average person or taxpayer.”</p>\n\n<p>The study covered 40,000 Veterans across 49 states over two years. While the findings could the nation’s estimated 40,000 homeless Veterans, there’s no reason they couldn’t also help homeless Americans who aren’t veterans, Nelson said.</p>\n\n<p>“Historically, housing and health care have been considered separate things,” Nelson says. “By showing that they are linked––that improving somebody’s housing situation might also improve their health status––this finding could have a big impact on how we approach these challenges among veterans and other citizens in the future.”</p>\n\n<p>Next, researchers plan to examine if other types of financial aid can improve Veteran health.</p>"
+            }
+          },
+          {
+            "entityId": "18428",
+            "title": "VA program helps student Veterans",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/va-program-helps-student-veterans"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1618853353,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": null,
+            "fieldIntroText": "As a Marine infantryman, Louie Fuentes fought in some of the Iraq war’s bloodiest battles.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Louie Fuentes",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-04/Vital_Fuentes_1000_1.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>As a Marine infantryman, Louie Fuentes fought in some of the Iraq war’s bloodiest battles.</p>\n\n<p>First deployed to Iraq in 2004, Fuentes was ordered to Ramadi – an insurgent hotbed known for its dangers. It took all the young Marine had to survive.</p>\n\n<p>“In my first combat deployment, 34 marines were killed and 250 were wounded in action had to be sent home,” Fuentes said. “It was a tough deployment; one of the roughest cities in Iraq.”</p>\n\n<p>Devoted to duty, Fuentes deployed again to Iraq in 2009 and Afghanistan in 2011. But after a decade in the Marines, he found himself wanting something new.</p>\n\n<p>At 34, Fuentes went from navigating a battlefield to navigating a college campus – a transition he said wasn’t easy.</p>\n\n<p>Part of it was learning how to be a civilian again. But mostly, it was the deaths.</p>\n\n<p>There would be a call or a post on social media: another Marine dead. Suicide.</p>\n\n<p>It’s the kind of thing that Veterans don’t always want to talk about; the kind of thing that almost sidelined his education.</p>\n\n<p>VA Salt Lake City VITAL program manager Dr. Aaron Ahern (right), discusses program benefits with student Veteran Joseph Atkin. (VA file photo)..</p>\n\n<p>Now a Salt Lake City VA human resource assistant, Fuentes said Veterans face unique challenges while going to school. More than securing loans or choosing a major, Veteran students often have to deal with trauma or physical injuries. </p>\n\n<p>For Fuentes it was PTSD. So, he sought counseling at VA’s Veterans Integration to Academic Leadership (VITAL) program.</p>\n\n<p>Founded in 2010, the program’s services are designed to help student veterans be successful in school said Dr. Aaron Ahern, program manager.</p>\n\n<p>At its core, Ahern said the program has three missions:</p>\n\n<ul><li>Provide outreach to student Veterans about benefits;</li>\n\t<li>Make campuses more veteran-friendly including increased access to care – especially for mental health;</li>\n\t<li>Training school faculty and staff.</li>\n</ul><p>It was through the program that Ahern, who counsels Veterans helped Fuentes overcome the challenges he was facing.</p>\n\n<p>For Fuentes, the program was life-changing. He found the program so beneficial he decided to work for it as a peer mentor.</p>\n\n<p>Now he helps Veterans deal with what he went through.</p>\n\n<p>“We talk to them, get them to open up about the issues they might be having,” Fuentes said. “Sometimes they don’t know what issues they are having until they speak to someone who has had those issues.”</p>\n\n<p>Mentors are trained to screen Veterans for suicide and learn techniques for talking down Veterans. They also help acclimate Veterans to college, provide information on disability and education benefits, and help enroll Veterans for VA medical care, Fuentes said.</p>\n\n<p>“The VITAL program is there to help Veterans succeed in college,” Fuentes said. “One of the things with a lot of Veterans is they tend to start school and drop out. The vital program ensures Veterans finish school.”</p>\n\n<p>In continuing his tradition of serving, Fuentes joined the Salt Lake City VA in December of 2017.</p>\n\n<p>“It’s (VA) where there’s always a Veteran,” he said. “You can’t go anywhere else where the main customer is the Veteran. I wanted to be able to help.”</p>\n\n<p>Fuentes said he would like to teach resume writing and interview skills to Veterans leaving the service. He advised anyone hesitant to reach out. </p>\n\n<p>“My success story is me,” he said. “VITAL directed me in the direction I am going in now. I was going to school to be a teacher and discovered I wanted to keep helping Veterans. I’ve been given that opportunity and look forward to it.”</p>\n\n<h2>More Information</h2>\n\n<p>VITAL is offered at most area colleges and universities. To learn more about the VITAL program or other resources for student Veterans, visit the <a href=\"https://www.mentalhealth.va.gov/mentalhealth/student-veteran/index.asp\" target=\"_blank\" title=\"VA College Toolkit website\">VA College Toolkit website</a>.</p>"
+            }
+          },
+          {
+            "entityId": "17775",
+            "title": "Vaccination update: SAVE LIVES Act",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/vaccination-update-save-lives-act"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1616789903,
+            "fieldAuthor": null,
+            "fieldImageCaption": "Under the SAVE LIVES Act, VA will soon provide COVID-19 vaccines to all Veterans, regardless of enrollment or eligibility status. The new act also allows VA to vaccinate Veteran spouses and certain caregivers.",
+            "fieldIntroText": "Updated March 26, 2021 - VA is offering COVID-19 vaccines to all Veterans, their spouses, and certain, eligible caregivers. You do not need to be enrolled in VA healthcare to receive the vaccine as prescribed in the new Save Lives Act recently passed by Congress.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "A person receives a COVID vaccination",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-04/SLC-vaccine2.png",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>If you are already an eligible, enrolled Veteran and wish to schedule an appointment, please dial our COVID Vaccine Hotline right now at 801-582-1565, ext. 5657 to reserve your vaccine appointment today.</p>\n\n<p>If you meet the Save Lives Act criteria we are offering a first come, first serve, walk-in clinic based on vaccine availability from 7 a.m.-1 p.m. Monday thru Friday at our main SLC Campus. There is no need to make an appointment, simply present to the main lobby of the medical center.</p>\n\n<p>If you live close to one of our community clinics around the region please dial them directly for their Save Lives Act vaccination process.</p>\n\n<h2>SAVE LIVES Act Information</h2>\n\n<p>With President Joe Biden’s signing of the SAVE LIVES Act into law Wednesday, VA will soon provide COVID-19 vaccines to all Veterans, regardless of enrollment or eligibility status. The new act also allows VA to vaccinate Veteran spouses and certain caregivers.</p>\n\n<p>“The SAVE LIVES Act increases the number of individuals who are eligible to get lifesaving COVID-19 vaccines from VA from 9.5 million to more than 33 million,” said VA Secretary Denis McDonough. “Meeting the task of vaccinating this expanded population will be a tremendous undertaking for the VA and will require a significant increase in our allocation of vaccine supply, but I am confident that VA’s workforce is up to the task.” <a href=\"https://www.saltlakecity.va.gov/news/SAVE_LIVES_Act.asp\" target=\"_blank\" title=\"Read more about the SAVE LIVES Act\">Read more about the SAVE LIVES Act</a>.</p>\n\n<h3>More information</h3>\n\n<p><a href=\"https://blogs.va.gov/VAntage/86532/veterans-spouses-caregivers-can-get-covid-19-vaccinations-va/\" target=\"_blank\" title=\"SAVE LIVES Act allows VA to soon provide COVID-19 vaccinations to all Veterans, their spouses and caregivers\">SAVE LIVES Act allows VA to soon provide COVID-19 vaccinations to all Veterans, their spouses and caregivers</a></p>\n\n<p><a href=\"https://www.saltlakecity.va.gov/features/VA_preps_for_mass_vaccination_clinic.asp\" target=\"_blank\" title=\"Salt Lake City VA preps for mass vaccination clinic\">Salt Lake City VA preps for mass vaccination clinic</a></p>\n\n<p><a href=\"https://www.va.gov/health-care/covid-19-vaccine/\" target=\"_blank\" title=\"CDC vaccine website\">CDC vaccine website</a></p>\n\n<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/index.html\" target=\"_blank\" title=\"Veterans Health Administration vaccine website\">Veterans Health Administration vaccine website</a></p>"
+            }
+          },
+          {
+            "entityId": "17678",
+            "title": "Retiree gives back to VA",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/retiree-gives-back-to-va"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1616604048,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Retiree Maria Fruin vaccinates a Veteran at Salt Lake City VA. After three years of retirement, Fruin rejoined the workforce to help do her part during the pandemic (photo by Bert Estrada).",
+            "fieldIntroText": "A line of anxious Veterans winds down the hall at Salt Lake City VA.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Maria Fruin vaccinates a Veteran ",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-03/Maria4.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>As if in military procession, they file into the clinic, each awaiting their turn for a live-saving vaccine. There’s an unspoken tension on their faces, and when it’s over, a sigh of relief.</p>\n\n<p>History is unfolding here – as it is across a nation toiling against an invisible virus. Amid it is former VA nurse of 30 years, Maria Fruin.</p>\n\n<p>Until recently, it had been three years since Fruin last worked. Now, she finds herself back in the trenches, vaccinating Veterans part time.</p>\n\n<p>“I know that there’s a lot of need for people to give vaccines all over Utah and the country,” Fruin said. “I love the VA. I love the Veterans, and I knew that if came here it wouldn’t feel like a job. I feel like I’m coming home.”</p>\n\n<p>Other than halting travel and family visits, COVID-19 didn’t disrupt Fruin’s retirement plans much. She had a routine.</p>\n\n<p>An avid volunteer, Fruin gave her time to the Red Butte Garden, Wasatch Adaptive Sports, and Salt Lake County Arts.</p>\n\n<p>But when volunteer opportunities ceased, Fruin found herself with nothing but time. It wasn’t as much that she wanted to do something as it was that she wanted to help.</p>\n\n<p>So, after a few calls – and in true government fashion – reams of paperwork, Fruin rejoined her VA family March 16.</p>\n\n<p>There’s something that can be said about the act of giving, perhaps more so when it involves personal risks. But Fruin downplayed any heroic notions, insisting, it’s for the Veterans.</p>\n\n<p>“I feel good about it,” she said. “I just feel like I’m doing something.”</p>\n\n<p>The hardest part of rejoining the workforce was waking up to an alarm again, she said.</p>\n\n<p>But the look on their faces – the note of thanks – her Veterans, make it worth it.</p>\n\n<p>Fruin said she would help VA as long as she’s needed.</p>\n\n<p>“I wouldn’t choose to work anywhere else,” she said.</p>\n\n<h2>Coronavirus updates &amp; resources</h2>\n\n<p><a href=\"https://www.saltlakecity.va.gov/features/COVID_19_Veteran_Vaccination_Update.asp\" target=\"_blank\" title=\"Salt Lake City vaccination update: All Eligible Veterans\">Salt Lake City vaccination update: All Eligible Veterans</a></p>\n\n<p><a href=\"https://www.va.gov/health-care/covid-19-vaccine/\" target=\"_blank\" title=\"CDC vaccine website\">CDC vaccine website</a></p>\n\n<p><a href=\"https://www.cdc.gov/coronavirus/2019-ncov/vaccines/index.html\" title=\"Veterans Health Administration vaccine website\">Veterans Health Administration vaccine website</a></p>"
+            }
+          },
+          {
+            "entityId": "17058",
+            "title": "Black Soldiers Fought Two Wars",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/black-soldiers-fought-two-wars"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1614370908,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "For his exceptional heroism in World War II, Vernon Baker was awarded the Medal of Honor by President Bill Clinton on January 13, 1997. At 77, Baker was the first living African American to receive the nation’s highest honor. (photo: Public Domain)",
+            "fieldIntroText": "Of the seven men whom Salt Lake City VA’s streets are named after, only one is African American: Vernon Joseph Baker.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Vernon Baker and President Bill Clinton",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-03/Baker_Clinton_480x330_0.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>History writes Baker in its pages as a hero; and for his deeds, his name stands immortalized at our medical center. But his role in the war – the storming of a Nazi castle – the Medal of Honor he received decades later – almost didn’t happen.</p>\n\n<p>Born Dec. 17, 1919, in Cheyenne, Wyoming, Baker was among only 12 Black families there at the time. When he was 4, everything changed.</p>\n\n<p>An auto accident killed his parents. Orphaned, Baker and his sisters were sent to live with their nearby grandparents.</p>\n\n<p>Angry and intemperate, the young Baker developed a strained relationship with his grandmother. By the time he was 10, things got so bad he was sent to Father Flanagan’s Boy’s Town children’s home in Nebraska.</p>\n\n<p>“At the time Vernon came to Boy’s Town, the Midwest was going through the Great Depression and the Dust Bowl,” Boy’s Town campus historian Thomas Lynch said. “Families were breaking up due to the economic conditions. It was pretty desperate times.”</p>\n\n<p>As the Dust Bowl persisted, more crops died. Eventually, the children had to subsist on nothing but eggplant. For three years Baker held out, enduring some of the nation’s leanest times.</p>\n\n<p>“Homeless children filled the road in this part of the Midwest,” Lynch said. “Every day, five to 10 boys would wander into the village asking to stay there.”</p>\n\n<p>When the money ran out, Father Flanagan was forced to send Baker and others back home.</p>\n\n<p>Finishing high school while staying with an aunt in Iowa, Baker found the prospects for a young Black man in post-depression America, dim. Toiling a series of dead-end jobs, Baker realized that if he wanted any sort of future, he had to do something drastic.</p>\n\n<p>So, in 1941, he joined the Army. Or at least, tried to.</p>\n\n<h2>Black in Army Green</h2>\n\n<p>In a way, Baker fought two wars: one against the Nazis abroad and one against institutional racism at home. It was only by sheer persistence that he even joined the Army.</p>\n\n<p>As the story goes, Baker walked into a local Army recruiter’s office and asked about enlisting. The recruiter replied, “We ain’t got no quotas for you people.”</p>\n\n<p>For some, that would’ve been the end of it. But the 5’ 5”, 140 lb., Baker was having none of it.</p>\n\n<p>Later that year, he went back. A different recruiter was working. Asked what he wanted to do, Baker told the recruiter, “quartermaster.” Hearing this, the recruiter wrote “infantry.”</p>\n\n<p>Baker remained silent.</p>\n\n<p>“I didn’t say anything because I was going to get in,” reports say.</p>\n\n<p>Arriving at Camp Wolters, Texas, it wasn’t long before Baker experienced southern inhospitality. While boarding a bus, the driver shouted a racial slur and told Baker to, “get to the back of the bus where you belong,” reports say.</p>\n\n<p>Racism was more open at the time, and so burying his anger, Baker did his best to “fit in” as his grandfather once advised him. He trained with a segregated unit, shopped at Black stores, and kept his head down.</p>\n\n<p>After basic training, Baker landed a job as a supply sergeant, an easy gig he later recalled. For a minute, things were good. </p>\n\n<p>Then Pearl Harbor happened.</p>\n\n<p>Against his wishes, Baker was ordered to Officer Candidate School at Ft. Benning, Georgia. The war machine demanded fresh officers; “expendable” men as his OCS instructor put it, Baker later told PBS.</p>\n\n<p>Soon he was off to war.    </p>\n\n<h2>First Contact</h2>\n\n<p>In 1944, Baker was assigned to the 92nd Infantry Division’s 370th Regiment, an all-Black “Buffalo” unit where white officers held senior positions. The men were headed into a mountainous region of Nazi-occupied Italy known for its high casualties.</p>\n\n<p>Baker knew the stakes were high, as friend and former West Point professor of history Col. Cole C. Kingseed wrote in “Heroism Outlasts Prejudice: The Saga of Vernon J. Baker.”</p>\n\n<p>“In preparing for combat, Baker studied past missions and every manual he could find. For weeks, the platoon trained in an extinct volcano crater outside Naples,” Kingseed wrote. “Baker later recalled that if anything, ‘he got too close’ to the men, acting as their mother and father, reading their letters to ... develop the type of teamwork that he knew was essential for survival.”</p>\n\n<p>On paper, the men were ready. But paper doesn’t shoot back.</p>\n\n<p>While on an October night patrol raiding a hillside house, things went south. The battle left Baker shot in the arm and three Americans dead.</p>\n\n<p>Sent to a segregated hospital, it took Baker three months to recover. In December, he returned to his unit as the company’s senior-most officer until three white officers arrived a few months later.</p>\n\n<p>A big plan was in the works.</p>\n\n<p>The Buffaloes were to press into the Gothic Line – to an area Italians referred to as the “Triangle of Death.” The objective: Castle Aghinolfi, a fortified German stronghold in Italy’s northern Apennine Mountains.</p>\n\n<p>By all accounts the castle was impenetrable: the three previous attacks on the castle ended with massive casualties.</p>\n\n<p>Now, leading a company where 70 percent of the soldiers had little to no combat experience, Baker had to do what others could not.</p>\n\n<h2>The Castle</h2>\n\n<p>Before dawn on April 5, 1945, 1st Lt. Baker prepared for what could be his final mission.</p>\n\n<p>“Awakened at 3 A.M., Baker discarded his combat helmet and … donned his dress uniform and his customary wool helmet liner,” Kingseed wrote. “The day foreshadowed death, and if Baker was going to die, he “wanted to go up sharp.”</p>\n\n<p>Leading Weapons Platoon, C Company, 1st Battalion, 370th Infantry toward the castle 2 miles away, Baker closed in on the enemy.</p>\n\n<p>“Arriving before the rest of the company, Baker, an avid hunter, spied an observation post in the distance,” Baker’s Medal of Honor citation says. “Well-aware that if the Germans spotted them his men would be attacked, Baker crawled to the opening … stuck his M-1 into the slit and emptied the clip, killing the observation post's two occupants.”</p>\n\n<p>From there, Baker crept up to a machine gun nest where two Nazis were eating breakfast. Baker ensured it was their last.</p>\n\n<p>Alerted by the fighting, the enemy shelled the Americans with heavy mortars. Exposed on the mountain, the Americans proved easy targets. The German barrage killed three men and injured three others.</p>\n\n<p>His unit in tatters, Baker called for artillery support. But the crew didn't fire: they didn't believe the Buffaloes could make it so close to the castle.</p>\n\n<p>By the time American shells hit, Baker’s unit had shattered.</p>\n\n<p>During the continued German counterattack, Baker found his white commanding officer, Capt. John F. Runyon cowering in a demolished house. Runyon told Baker he was going to get reinforcements and ordered Baker to cover his retreat.</p>\n\n<p>Knowing he wouldn’t see Runyon gain, Baker replied, “We’ll be here when you get back.”</p>\n\n<h2>Leading by Example</h2>\n\n<p>His unit further deteriorating, Baker took command.</p>\n\n<p>“It made me all the more determined to accomplish our mission,” Baker told PBS. “Because at that time the army was segregated, it was thought that we weren't able to fight. That we were cowards. Because we were black.”</p>\n\n<p>But the Nazis weren’t fighting fair. Disguised as Red Cross medics, they ambushed Baker’s unit, which by then had dwindled to eight men.</p>\n\n<p>Baker had a decision to make: If he stayed, more men would die. If he left, the battle would be lost.</p>\n\n<p>He called it.</p>\n\n<p>“Down to a few clips per man and with no hope of reinforcements, Baker reluctantly ordered a withdrawal,” Kingseed wrote. “My men wanted to stay, but I wanted to ensure some of them stayed alive.”</p>\n\n<p>Covering the withdrawal and assisting the men who couldn’t walk, Baker blew up two machine-gun nests with grenades on his way out. What happened next could only be described as a miracle.</p>\n\n<blockquote>\n<p>“It made me all the more determined to accomplish our mission. Because at that time the army was segregated, it was thought that we weren't able to fight. That we were cowards. Because we were black.” - Vernon Joseph Baker, PBS interview</p>\n</blockquote>\n\n<p>During the retreat, a German soldier hurled a grenade at Baker. It should’ve blown him to bits. But of all the grenades thrown, this one didn’t explode. Seizing the opportunity, Baker shot the German twice as he tried to flee.</p>\n\n<p>With his men nearing safety, Baker crept down the mountain draw. Alone, he went to finish what he started.</p>\n\n<p>“There he blasted open the concealed entrance of another dugout with a hand grenade, shot one German soldier who emerged after the explosion, tossed another grenade into the dugout and entered firing his sub-machine gun killing two more Germans,” the citation says.</p>\n\n<p>In all, Baker took out nine enemy soldiers, three machine-gun positions, an observation post, and a dugout.</p>\n\n<p>The battle lasted 12 hours. When it was through, only six of Baker’s 25 men survived.</p>\n\n<p>Demoralized and exhausted, Baker headed back to camp. While R &amp; R should’ve been in order, leadership insisted Baker had more fighting to do.</p>\n\n<p>“When I went back to regimental headquarters to turn in the dog tags of the 19 men that I'd left up on that hill there I was chewed out by the regimental commander Colonel Sherman himself because I wasn't wearing a steel helmet,” Baker told PBS.</p>\n\n<p>Instead of encouragement, Sherman ordered an officer to give Baker a proper helmet.</p>\n\n<p>Sherman barked, “Now that you’re in uniform, lieutenant, I’ve got other news for you,” Kingseed wrote. “The 473rd Infantry Regiment is taking over the advance to the castle tomorrow. They need somebody who knows the terrain. You’re volunteering to lead them.”</p>\n\n<p>The following night, Baker led another assault through enemy minefields and heavy fire. This time, the Americans took the impenetrable castle.</p>\n\n<h2>Past Due</h2>\n\n<p>While Baker’s actions were heroic, it wouldn’t have mattered if he liberated all of Italy: Black soldiers weren’t eligible for the Medal of Honor.</p>\n\n<p>Of the 433 Medals of Honor the military awarded during World War II, not one went to the 1.2 million Blacks who served, the New York Times reported.</p>\n\n<p>Instead, Baker was awarded a Purple Heart, Bronze Star, and at the urging of Runyon, the Distinguished Service Cross. It would take more than 50 years to get Baker the medal he and the Buffaloes earned on the bloody mountain.</p>\n\n<p>After the war, Baker returned to a segregated America. He continued serving in the Army, later commanding an all-white company. He retired in 1968.</p>\n\n<p>But his life of service wasn’t done. He went on to work for the Red Cross, counseling disadvantaged families. He served there for more than 20 years.</p>\n\n<p>In 1996, he received a call. The man told Baker that the role of Black service members during the war was being reexamined. Baker and six other Black men were to receive the nation’s highest military honor.</p>\n\n<p>The news was bittersweet: at 77, Baker was the only Black service member still alive.</p>\n\n<p>At the ceremony in 1997, then-President Clinton acknowledged recognition was well-past due.</p>\n\n<p>“No African American who deserved the Medal of Honor for his service in World War II received it,” the president said. “Now and forever, the truth will be known about these African Americans who gave so much that the rest of us might be free.”</p>\n\n<p>As the president draped the medal around Baker’s neck, a tear rolled down his cheek. His thoughts were of the Buffaloes.</p>\n\n<p>“Every once in a while, I wake up in the middle of the night thinking about the guys,” Baker told reporters. “I think of 19 souls that gave their all. If not for them I probably wouldn’t be here myself.”</p>\n\n<p>Baker died in Idaho in 2010, at the age of 90. He is buried in Arlington National Cemetery.</p>"
+            }
+          },
+          {
+            "entityId": "33600",
+            "title": "A Shot of Hope",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/a-shot-of-hope"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1608739967,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Salt Lake City VA ER registered nurse Pam Makris gets a dose of the Moderna COVID-19 vaccine Tuesday. Makris was the first employee at Salt Lake City VA to receive a vaccine.",
+            "fieldIntroText": "It was a moment of hope when they needed it most. After months of waiting, health care workers at the Salt Lake City VA received an early holiday miracle Tuesday – in the form of 2,200 doses of the Moderna COVID-19 vaccine.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "A VA nurse gets a COVID-19 vaccine",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/Vaccine1_480x330.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>ER registered nurse Pamela Makris was the first employee to receive the vaccine.</p>\n\n<p>In a former library converted to a vaccine clinic, Makris sat in a chair awaiting her moment in history.</p>\n\n<p>But for Makris, it was more than just a shot.</p>\n\n<p>It means no more sorrow-filled shifts of Veterans suffering, no more changing in the garage out of fear of spreading the virus to her husband and children, and no more unneeded deaths.</p>\n\n<p>The vaccines arrived at 1:23 p.m. Calm and composed, Makris rolled up her sleeve, accepted the medicine.</p>\n\n<p>Applause erupted from the small group of coworkers who witnessed the event.</p>\n\n<p>“This is an epic moment for all our health care workers,” she said. “It has been a terrifying experience, but we’re moving forward, and it’s almost done.”</p>\n\n<h2>Special Delivery</h2>\n\n<p>As part of Operation Warp Speed, a truckload of 22 boxes with 100 doses of the vaccine arrived Tuesday. </p>\n\n<p>Within hours, employees were vaccinated.</p>\n\n<p>“Our goal is to provide the COVID-19 vaccination to all Veterans and employees who want to be vaccinated,” Salt Lake City VA director Shella Stovall said. “By vaccinating our high-risk personnel first, we can continue to care for our Veterans amid the pandemic.”</p>\n\n<p>For Bruce Bilodeau, assistant chief pharmacy, the vaccine’s arrival was a relief.</p>\n\n<p>“I’m very excited,” Bilodeau said. “It’s safe, it’s effective, and if we get enough people vaccinated, we can probably knock this thing right out.”</p>\n\n<p>Employees will need to work 12 stations, logging 12-hour shifts to vaccinate VA’s goal of 200 people a day. But Bilodeau said protecting coworkers and Veterans was more than worth the effort.</p>\n\n<p>For Makris, the vaccine means a return to normalcy.  </p>\n\n<p>“It’s a step forward to resume our life as we knew it before the vaccine,” she said. “And most importantly, to help the Veteran population.” </p>\n\n<p>Throughout the medical center, there was a renewed energy – a certain feeling that employees hadn’t felt in a long time.</p>\n\n<p>That feeling was hope.</p>\n\n<p><a href=\"https://youtu.be/LFajqNQRF3Y\">Watch the video:  Covid 19 Vaccine arrives at the George E. Wahlen Medical Center</a></p>"
+            }
+          },
+          {
+            "entityId": "33601",
+            "title": "Rare triple transplant gives Veteran new life",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/rare-triple-transplant-gives-veteran-new-life"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1607617783,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Army Veteran Keith Baker smiles while recovering from a triple organ transplant – a procedure so rare U.S. doctors had performed just 24 in the last 30 years (photo courtesy of University of Utah Health).",
+            "fieldIntroText": "Keith Baker’s heart was failing. Then his liver went. Then his kidneys. In a few years, the once-vibrant Army Veteran found himself frail and bedridden.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Army Veteran and triple transplant recipient Keith Baker",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/transplant1-900.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>Baker needed a triple organ transplant – a procedure so rare U.S. doctors had performed just 24 in the last 30 years. But with two transplant requests denied, what he really needed was a miracle.</p>\n\n<p>“The patient was critically ill,” said Dr. Joseph Stehlik medical director of the Heart Transplant Program at the Salt Lake City VA and University of Utah Health.</p>\n\n<p>Pumped with drugs and tied to life-saving machines, Baker lingered in intensive care. Doctors allowed him a moment with his family.</p>\n\n<p>“I knew that I probably didn’t have much time,” Baker said.   </p>\n\n<p>At 58, he was as good as dead.</p>\n\n<h2>The gift</h2>\n\n<p>That was eight weeks ago.</p>\n\n<p>Before then, the Yuma, Arizona, native had crisscrossed the country; bouncing from VA to VA. Despite a slew of bad news, Baker remained undeterred.  </p>\n\n<p>“I’m going to live through this thing one way or another,’ Baker recalled of those days. “I’m going to keep on living as long as my body does.”</p>\n\n<p>In October, he got his miracle.</p>\n\n<p>A second liver biopsy showed Baker had a better chance of recovery, allowing him on the transplant waiting list.</p>\n\n<p>Soon, a young man died. He was a match. Doctors rushed Baker to surgery.</p>\n\n<p>The event marked the first time the University of Utah Health attempted such a procedure.</p>\n\n<p>But Baker didn’t need assurances. He had faith.</p>\n\n<p>“I’m a fairly religious person,” Baker said. “I just knew the good lord had a miracle in store for me, which he did.”</p>\n\n<p>For hours, experts labored to replace Baker’s heart and liver. After a short recovery and while he was still unconscious, they replaced his kidney. </p>\n\n<p>Salt Lake City is one of five national VA heart transplant referral centers, Stehlik said. Granting Baker’s miracle took an army of coordination, he added.</p>\n\n<p>It’s the first time VA funded a triple organ transplant. That’s good news for Baker, given the surgeries would’ve cost him hundreds of thousands of dollars.</p>\n\n<h2>Back to new</h2>\n\n<p>Baker was recently discharged. Now staying at a VA provided hotel, he’ll continue treatment until April.</p>\n\n<p>His memory’s improved, he’s walking again, and he no longer needs to take naps to stay awake through the day.</p>\n\n<p>“It’s amazing,” he said. “I can’t believe how good I feel. I had never felt this good – ever.”</p>\n\n<p>His recovery has impressed his doctors.</p>\n\n<p>“Keith is a person with an incredibly positive attitude and a strong desire to live,” Stehlik said. “Seeing him recover so well … makes us all extremely happy.”</p>\n\n<p>Baker wrote the donor’s family thanking them for the gift of life. He said he wants to help people and donate his body to science.</p>\n\n<p>He said his care at the U was amazing and offered his thanks to VA. </p>\n\n<p>“The VA are champions,” Baker said. “Without them, I would’ve died.”</p>"
+            }
+          },
+          {
+            "entityId": "33603",
+            "title": "Veteran rediscovers life after opioids",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/veteran-rediscovers-life-after-opioids"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1605199280,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Air Force Veteran AJ Ethridge Jr talks with VA director of transitional pain service Dr. Kimberlee Bayless about the drastic improvement in his life since conquering a decade-long addiction to opioids. Ethridge, who participated in the first program of its kind at VA, said there’s hope for anyone living with pain.",
+            "fieldIntroText": "Four years ago, Air Force Veteran AJ Ethridge Jr. faced a grim choice: spend the rest of his life in pain – or die from opioids.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Air Force Veteran AJ Ethridge Jr talks with a VA doctor",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/DSC00446.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>A decade under the rule of painkillers left his outlook bleak.</p>\n\n<p>\"I didn't have any hope for the future,\" Ethridge said. \"I thought my pain was going to get worse until the day I died from it.\"</p>\n\n<p>But a new way to manage pain developed by the Salt Lake City VA Medical Center ­– and the first of its kind at VA’s nationwide – gave Ethridge another choice: reclaim his life.</p>\n\n<p>Amid the height of the opioid epidemic, VA’s pain management team began using a whole health approach to focus on what mattered most to its patients. The method revolutionized not only how pain was managed, but also prevented opioid addiction.</p>\n\n<p>“We were interested in seeing if we could improve outcomes by engaging with Veterans before surgery, rather than waiting until after surgery,” said director of transitional pain service Dr. Kimberlee Bayless. “We were also interested in addressing the problem of Veterans who developed chronic opioid use after first using opioids for their surgery.”</p>\n\n<p>Previously, about 6 percent of Salt Lake City Veterans used opioids after surgery, a figure too high for Bayless. Since the switch about two years ago, the rate has plummeted to zero – trouncing the national average of 5 to 14 percent.</p>\n\n<p>The research was named editor’s choice in the November issue of <a href=\"https://rapm.bmj.com/content/45/11/847\">Regional Anesthesia &amp; Pain Medicine journal</a>. It has led to “real, permanent improvements” because it focuses on patient interaction and education, the coordination of care, and educating providers, Bayless said.</p>\n\n<p>“No one has ever spent as much time working with a Veteran around surgery as we do,” she said. “We provide education, realistic expectation setting, pain coping tools, and close care coordination before surgery so they know exactly what we’re going to do to help them manage their pain after surgery.”</p>\n\n<p>For Ethridge, the move meant the difference between the pain of living or living with pain.</p>\n\n<h2>The throes of addiction</h2>\n\n<p>Wanting to serve his country, Ethridge joined the Air Force after 9/11. He worked as a mechanic during the war in Iraq and was medically discharged after suffering a traumatic brain injury.</p>\n\n<p>But that would not be the worst of his problems.</p>\n\n<p>A back injury introduced Ethridge to opioids. The pills numbed the pain – too well.</p>\n\n<p>Immediately, he was hooked.</p>\n\n<p>\"I started needing more, and more,\" he said. \"Nothing was ever enough. I started injuring myself to go to the emergency room so that I could get an opioid shot.\"</p>\n\n<p>The medical bills piled up. His home life crumbled. His pain worsened to where he couldn’t walk without a wheelchair.</p>\n\n<p>“I was in an opioid coma,” he said. “I hated everything. I hated everybody. My pain was so horrible you couldn’t imagine it.”</p>\n\n<p>His descent continued until about four years ago when his wife gave him an ultimatum: “Quit or I’m leaving with the kids.”</p>\n\n<p>For two years, he tried to quit, each time failing worse than before. Then, before his fourth back surgery in January, VA’s pain management team gave him another option.  </p>\n\n<p>\"We started talking about a plan to get me off,\" he said. \"I never thought I could get off of opioids because I just thought my pain would never stop.\"</p>\n\n<h2>The road to recovery</h2>\n\n<p>For Ethridge, pills were replaced with counseling, physical therapy, and chiropractic care.</p>\n\n<p>“This is why we all became health care providers and why we choose to work at the VA,” Bayless said. “The real success is at a very personal level that we get to be part of and see how our efforts can make a real difference in a Veteran’s quality of life.”</p>\n\n<p>As Ethridge’s pain lessened and his mind cleared, he discovered his love of family outweighed his fear of pain.</p>\n\n<p>“When the pain gets real bad, you just want to go numb because it’s so bad it kills you,” Ethridge said. “But what I want off opioids is stronger than what I wanted on opioids.”</p>\n\n<p>His many surgeries and the two 5-inch rods in his back will always leave Ethridge with lingering pain. But that’s not a priority anymore.</p>\n\n<p>\"It's gotten me my family back,\" he said. \"It's gotten me my life back. It's gotten me my head back.\"</p>\n\n<p>Recently, Ethridge started working as a social services assistant at VA. He plans to use his experience to help give back to Veterans.</p>\n\n<p>“Until you de-cloud your mind from opioids, you’ll never be able to see all life has to offer,” Ethridge said. “Once you see the brighter side of things, that pain will never feel the same again.”</p>"
+            }
+          },
+          {
+            "entityId": "33627",
+            "title": "VA tech forges Veteran connections",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/va-tech-forges-veteran-connections"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1598547437,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "VA Salt Lake City Health Care System TeleMental Health Program coordinator Elysia Pace instructs a provider on how to connect with Veterans using a video conferencing program. Pace and others at the medical center created VA Video Connect University, a two-day in-person training course – and VA’s first in the nation – to help get providers up to speed. (photo by Tod Peterson).",
+            "fieldIntroText": "Imagine a future where you could see a doctor while camping. No driving. No crowded waiting rooms. Just the care you need, where and when you need it. That future is now.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "A VA Salt Lake City Health Care System TeleMental Health Program Coordinator instructs a provider on how to connect with Veterans using a video conferencing program.",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/VCC-training1_480x330.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>As COVID-19 disrupted the nation’s hospitals, providers at VA Salt Lake City Health Care System ramped up use of <a href=\"https://mobile.va.gov/app/va-video-connect\" target=\"_blank\" title=\"VA Video Connect (VCC)\">VA Video Connect (VCC)</a>, a video conferencing program that allows medical professionals to remotely diagnose their patients and update medical charts.</p>\n\n<p>“This allows staff to see Veterans anytime, anywhere, and removes barriers that Veterans may face when trying to attend an appointment,” said VA TeleMental Health Program Coordinator Elysia Pace. “It allows providers to be more flexible when meeting with the Veteran and helps with facility space shortages.</p>\n\n<p>The use of Video Connect also reduced Veteran travel times to in-person appointments – in some cases by hours. But it didn’t just make life easier for Veterans; by staying at home, Veterans limit their exposure to the virus, keeping them safer.</p>\n\n<p>To get providers up to speed, Pace and others at the medical center created VA Video Connect University, a two-day in-person training course ­– and VA’s first in the nation. The former Telehealth Primary Care Room now features 18 state-of-the-art private sound-resistant booths for video conferencing.</p>\n\n<p>“The hope is to become a training model for other VA’s,” Pace said. “The intent is for staff to receive a higher level of understanding and education to integrate VVC into their everyday routines.”</p>\n\n<p>VA Nurse Practitioner Kristin McElwain just completed the course and said she learned how to troubleshoot the platform, a task she wasn’t comfortable with before. Now she can better connect with the Veterans she serves; a connection she said was limited over the phone.  </p>\n\n<p>“They’re able to see me,” McElwain said. “They're able to know that I can see them and that I can that I can relate to what they're doing and see what's happening with them, and I think that's reassuring.”</p>\n\n<p>She continued, “You can see their expression. You can see if they're in pain, grimacing. You can see how easily they're moving or how much difficulty they're having with mobility. You can't get any of that with phone visits, so I think it gives us a whole new dimension.”</p>\n\n<p>Video appointments are so convenient, some patients have even attended them from their car or while camping, McElwain said.</p>\n\n<p>But the platform isn’t without challenges. There are bandwidth issues in rural areas, a learning curve, especially for older patients who may not have as much experience with technology, and some Veterans who struggle to embrace change.  </p>\n\n<p>“It doesn't have the closeness that you have with face to face,” advanced practice registered nurse Lucy Leaver said. “When you see somebody in person, it's a lot different than on a video. You're never going to be able to replace that.”</p>\n\n<p>For Vietnam Veteran Max Rasmussen, the service is worth its weight in gold.</p>\n\n<p>Rasmussen, who lives in Roosevelt, Utah, said a one-way trip to the VA takes three hours ­– longer if there’s traffic. Factor in the appointment and commute home and you’ve lost a whole day, he said. </p>\n\n<p>“When I’m able to do everything here, it’s worth a million dollars every time,” he said. “I work seven days a week and don’t need to take a day off work.”</p>\n\n<p>About 20 providers have completed VVC University, but Pace said as technology expands, hundreds more will follow, allowing more providers to forge stronger connections with patients.</p>\n\n<p>For McElwain and others trying to reach rural Veterans amid a pandemic, it’s a move in the right direction. </p>\n\n<p>“This has been a crazy time and our patients are anxious,” McElwain said. “It's important for us to try and help them figure out what's the new normal and maintain some consistency and some calm in this crazy world we're living in.”</p>\n\n<p><a href=\"https://www.facebook.com/watch/?v=893155527874060\">Watch the video: VA Video Connect</a></p>"
+            }
+          },
+          {
+            "entityId": "6853",
+            "title": "Equine-assisted therapy helps Veterans",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/equine-assisted-therapy-helps-veterans"
+            },
+            "uid": {
+              "targetId": 1278,
+              "entity": {
+                "name": "larry.west1@va.gov",
+                "timezone": "America/New_York"
+              }
+            },
+            "promote": false,
+            "created": 1592439183,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Retired Army National Guard warrant officer Barton Jeffs bonds with his horse, “Rebel.” Jeffs who served in three combat deployments and now suffers from PTSD, said working with horses has allowed him to live again.",
+            "fieldIntroText": "Six legs trod across a sandy arena. Hooves and feet sink in the dirt as horse and Veteran move as one. It’s called a “Trust Walk,” but where the Veterans are going isn’t as important as why they’re there. ",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Retired Army National Guard warrant officer Barton Jeffs embraces his horse, Rebel.",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2020-08/Equine_therapy_1.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>They’ve traveled – some for hours – to Utah State University’s Extension Farm in Wellsville, to heal. They’ve come for the horses; or more so, because the horses give them what people couldn’t: Serenity. Security. Love. </p>\n\n<p>“Sometimes, human relationships are complicated, and that can be very discouraging for a Veteran who is struggling with emotional issues,” said Judy Smith, director of Equine and Human science at USU. “Through the relationship with the horse, which is not as threatening, it gives Veterans a chance to explore relational skills in a very relaxed environment.”</p>\n\n<p>The group of six is the first class of VA Salt Lake City Health Care System Veterans to finish the university’s Pathway to Horsemanship class. After an initial meet and greet, Veteran and horse are paired for six weeks, each week working toward strengthening their bond, Smith said. </p>\n\n<p>Among them was Barton Jeffs, a retired Army National Guard warrant officer with 30 years of service. Jeffs deployed to the Persian Gulf in 1991, Bosnia 2001, and for Operation Iraqi Freedom in 2003-04. The nature of his job left Jeffs with PTSD and a difficulty trusting people.</p>\n\n<p>His horse, Rebel, has helped with that.</p>\n\n<p>“As a counterintelligence agent, I couldn’t trust people and I was always trying to get to the truth out of people,” Jeffs said. “Whereas with a horse, there’s nothing to gain, there’s nothing to learn. I just had to learn to trust.”</p>\n\n<p>Smith began the program at the urging of her son, who was injured while deployed. When he returned home, he wanted to reconnect with his horse and told her, “Veterans need horses too.” </p>\n\n<p>She made Veteran equine therapy her mission. With USU wanting a Veteran-focused program and a Department of Veterans Affairs Adaptive Sports Grant, she found a perfect outlet. </p>\n\n<p>While studies have shown that horses can reduce anxiety, depression, and help with mood, Smith’s working on gathering more evidence.</p>\n\n<p>But Veterans, like former Army Intelligence specialist Ellen Casteel, 67, don’t need proof. They can feel it.  </p>\n\n<p>There’s no judging. No delving into the past. Just horses, comradery, and peace.</p>\n\n<p>“Her and I just clicked,” Casteel said of her cremello Paint Horse, Missy. “As soon as I walked up to her, she was just nudging me, putting her head down and kind of butting me and we just really clicked.”</p>\n\n<h3>Horses helping heroes</h3>\n\n<p>The program works because it gives Veterans a new, enjoyable activity in a safe environment that allows them to bond with other Veterans, said Dr. William Marchand, clinic director and service chief for Whole Heath at VASLCHCS. </p>\n\n<p>“We saw Veterans become more animated. They were having fun with each other, which has been a change,” Marchand said. “Also, we’ve just seen people become a lot more confident and experience joy being with the horses”</p>\n\n<p>For Jeffs, the walls he built to keep people out didn’t work with Rebel.</p>\n\n<p>“I have to be real. I need to let my emotions show. Whereas with traditional therapy, I don’t need to do that,” Jeffs said. “It allowed me to become more of who I really am versus who I want people to perceive me to be.”</p>\n\n<p>By the third week, Jeffs and Rebel had made a connection. By the sixth, the two were working as a team.</p>\n\n<p>Through Rebel, Jeffs said he has made progress otherwise impossible with traditional therapy. Jeffs who was estranged from his siblings said that the therapy has helped him reconnect with people.</p>\n\n<p>“I haven’t allowed myself to be part of the word,” Jeffs said. “It allowed me to open up and be more vulnerable with people in a way that I have not been in 30 years.”</p>\n\n<p>Casteel, too, has grown.  </p>\n\n<p>“It’s given me a lot more confidence in myself, being able to learn new skills,” Casteel said. “Being around horses anytime makes me happy, and when you’re happy, that affects the rest of your life.”</p>\n\n<p>With a little apprehension and a whole lot of smiling, the moment the Jeffs and Casteel spent the last six weeks training for arrives. They mount their horses, take a breath, and guided by a mentor, take a short jaunt across the area.</p>\n\n<p>Though the experience lasts only moments, it’s not about the ride. It’s about connecting.</p>\n\n<p>“It’s another step that can help me become a better me,” Jeffs said.</p>"
+            }
+          },
+          {
+            "entityId": "33623",
+            "title": "Utah says goodbye to hero",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/utah-says-goodbye-to-hero"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1591374200,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "World War II Veteran and legionnaire William E. Christoffersen smiles in front of the state Veterans home that bears his name. Christoffersen fought for decades to bring a facility to Utah and got his wish when the state built its first Veterans home in 1998 (photo courtesy of The American Legion/Stephen Holt)).",
+            "fieldIntroText": "Utah lost a hero this week. World War II Veteran and 75-year legionnaire William E. Christoffersen will always be remembered as a man who fought for his country and his fellow Veterans. It was his life’s mission.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "World War II Veteran and legionnaire William E. Christoffersen smiles in front of the state Veterans home that bears his name. ",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/christoffersen_legion.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>“We’ve lost one of our greatest champions,” long-time friend former Utah Department of Veterans Affairs Executive Director Terry Schow said. “We lost a guy that was a beacon to many of us in the Veterans community. He was beloved.”</p>\n\n<p>Christoffersen died Sunday at the state veterans home named in his honor. The Cache Valley native was just days shy of his 94th birthday.</p>\n\n<p>“He was a great mentor, great advisor, and just a great man,” Schow said. “We will never see his likeness again.” </p>\n\n<p>Having served as an Army infantryman who fought throughout the Philippines in WWII, Christoffersen returned home and founded a Logan-based construction business.</p>\n\n<p>But his real calling, Schow said, was serving Veterans.</p>\n\n<p>Soon after leaving the military, Christoffersen joined the American Legion. He was elected department commander in 1959.</p>\n\n<p>A born leader and tireless advocate, Christoffersen was elected to the American Legion’s National Executive Committee – the highest state post within the Legion and part of its national board of directors – just four years later.</p>\n\n<p>Soon, he made it his mission to bring a Veterans nursing home to Utah. But this mission would take decades.</p>\n\n<p>He served 10 years as a committeeman before being elected to lead again in 1975. And this time, he would get his Veterans home.</p>\n\n<p>Describing him as “an impressive man with an imposing stature,” Schow first met Christoffersen a little over 30 years ago. Given Christoffersen’s construction background, and a lack of Legion representation, Schow pressed then-governor Mike Leavitt to add Christoffersen to the home’s construction advisory committee. </p>\n\n<p> </p>\n\n<p>The governor agreed, and Christoffersen got his wish. Utah’s first Veterans nursing home was completed in 1998.</p>\n\n<p>Mission accomplished.</p>\n\n<p>But Christoffersen did more than bring a Veterans home to Utah. He brought three national conventions to the beehive state, and with them, roughly 10,000 visitors including dignitaries, senators, and in 2006, President George W. Bush.</p>\n\n<p>“Bill was in fact, a legend,” Schow said. “No elected official at the federal level did not know Bill Christoffersen.”</p>\n\n<p>Christoffersen used his clout to better Utah’s Veteran landscape. One of his initiatives even rose to the level of federal law. </p>\n\n<p>He was one of the drivers for the Transition Assistance Program, which provides service members leaving the military with a weeklong course on how to create resumes, apply for benefits, and more, Schow said.</p>\n\n<p>Christoffersen also pressed for a resolution to ban the desecration of the American flag. The bill, sponsored by Utah Sen. Orrin Hatch and supported by Bush himself, failed by one vote in the U.S. senate.</p>\n\n<p>Even in his eighties, Christofferson continued advocating for Veterans. In March of 2013, he was honored when the facility he helped create was renamed the William E. Christofferson Salt Lake Veterans Home.</p>\n\n<p>Having led the Legion for more than a half-century, Christofferson retired in August of 2013. Schow recalled how when Christoffersen departed, he apologized for not being able to do more.</p>\n\n<p>\"There are times when you ask, 'Is it worth it?'” Christoffersen then told the Legion. “I say yes, it is.\"</p>\n\n<p>In tribute for his decades of service, the flags outside the William E. Christofferson Salt Lake Veterans Home flew at half-staff June 6 – in honor of Christofferson’s 94th birthday.</p>"
+            }
+          },
+          {
+            "entityId": "33626",
+            "title": "VA respiratory therapist finds hope in New Orleans",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/va-respiratory-therapist-finds-hope-in-new-orleans"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1589215317,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "VA respiratory therapist Eduardo Cardenas (lower center) with his VA family while on a month-long volunteer assignment to help COVID-19 patients in New Orleans.",
+            "fieldIntroText": "It was late March and the grip of COVID-19 had frozen the nation. Businesses closed, residents hunkered down, and the world stopped. But for the second time in a year, Eduardo Cardenas was running toward the danger.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Eduardo Cardenas with a group of medical people",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/eduardo_07.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>“I am not the kind of person to sit to wait until I see what is going to happen next,” Cardenas said. “If I need to do something, I am always ready.” </p>\n\n<p>The VA respiratory therapist deployed to Puerto Rico in January after a series of powerful earthquake swarms tore the island apart. The swath of devastation caused more than $3 billion in damages and left over 8,000 homeless.</p>\n\n<p>But at least in Puerto Rico Cardenas could see what he was up against. His latest VA deployment, in April, to New Orleans, pitted Cardenas against an unseen enemy.</p>\n\n<p>There, amid one of the nation’s worst outbreaks of COVID-19, Cardenas would come to know fear, isolation, sadness, and death.</p>\n\n<p>Expected to last two weeks, the deployment stole Cardenas from his family for twice as long. But he volunteered to be there. Because above all things, he wanted to help. </p>\n\n<p>Long, busy days awaited him. On the worst of these, he said, two patients died. </p>\n\n<p>While working in an intensive care unit (ICU), the alarm sounded. Immediately Cardenas and a coworker rushed in and began CPR. Within moments, another alarm rang out.</p>\n\n<p>In a matter of minutes both, patients were dead.</p>\n\n<p>“We tried very hard to perform CPR, but there are times that circumstances that you never expected can happen,” Cardenas said. “For people like me that work in the healthcare industry, it can be normal to have patients die, but this situation made it a little harder.”</p>\n\n<p>But in a pandemic – patients – not feelings – come first. And Cardenas dealt with the loss by focusing on the good memories he made with other patients.</p>\n\n<p>While in ICU, Cardenas was taking care of a Veteran who was intubated, prone, and very sick. His condition was such that Cardenas didn’t think the Veteran would survive.</p>\n\n<p>Cardenas did his best to treat the Veteran and within two weeks, the patient had recovered.</p>\n\n<p>Before the patient left, Cardenas I told the man that he was glad to help and that it was his pleasure to take care of him. He then thanked the Veteran for his service.</p>\n\n<p>To his surprise, the Veteran gazed up at Cardenas and replied, “Thank you for your service.”</p>\n\n<p>“That feeling was very strong for me and made me feel very proud of what I was doing,” Cardenas recalled.<br />\nBesides bonding with patients, Cardenas’s VA “family” was there to support him.</p>\n\n<p>“People here are very special,” he said of his coworkers. “I felt appreciated which gave me more energy and satisfaction to keep going.”</p>\n\n<p>Cardenas returned home in late April. There was no parade. No fanfare. No hero’s welcome.</p>\n\n<p>But he didn’t do it for recognition. He did it for them.</p>\n\n<p>“I am not a Veteran, but I feel respectful and honored to serve those who served us,” Cardenas said. “This is my opportunity to show my respect to people that served our country.”</p>\n\n<p>Despite the hardships he endured, Cardenas has no regrets. He advised others thinking about deploying to do so.</p>\n\n<p>“Don’t just think about it, do it,” he said. “The feelings that you keep in your heart by helping Veterans and families are priceless.”</p>"
+            }
+          },
+          {
+            "entityId": "33624",
+            "title": "Ghost on the mountain",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/ghost-on-the-mountain"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1582911038,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Vietnam veteran Brian Thacker, who was awarded the Congressional Medal of Honor, talks with Utah high school ROTC cadets at Weber State University in Ogden in November 2019 (photo courtesy of Steve Griffin, Deseret News).",
+            "fieldIntroText": "Thirteen stars speckle a blue ribbon resting below his gray, neatly trimmed beard. Beneath them, an eagle’s talons clutch a gold bar engraved with “VALOR” from which hangs a five-pointed star. ",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Brian Thacker",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/Brian_Thacker_DN1.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>Beneath them, an eagle’s talons clutch a gold bar engraved with “VALOR” from which hangs a five-pointed star. Minerva, the Roman goddess of wisdom occupies the center of the star; her likeness encircled by “The United States of America.”</p>\n\n<p>The medal is large, intricate, and befitting of the nation’s highest military honor. But for Brian Miles Thacker, Utah’s only living Medal of Honor recipient – and one of only seven Utahns to have earned the distinction – the medal is heavy. For Thacker, 74, the medal carries the weight of lives changed by war and the ghosts of men who didn’t come home.</p>\n\n<h2>Medal of Honor recipient Brian Thacker’s dark days in the Vietnam War</h2>\n\n<p>After graduating from Weber State in 1969 and following in the footsteps of his father who also served, Thacker joined the Army’s 92nd Field Artillery Regiment.</p>\n\n<p>Soon the young lieutenant was offered the chance of a lifetime: Thacker would lead a small observation team at Firebase 6, a mountainous South Vietnamese artillery site known as Rocket Ridge.</p>\n\n<p>“Being put in command of the observation team was every lieutenant’s dream come true,” he said. “You talk about a dream assignment.”</p>\n\n<p>He had no way of knowing that his dream assignment would soon become a nightmare.</p>\n\n<h2><strong>Warning signs</strong></h2>\n\n<p>Thacker’s team had spotted an enemy machine-gun nest planted close to their position. Too close.</p>\n\n<p>The enemy was preparing to attack.</p>\n\n<p>But there was nothing the soldiers could do. They couldn’t fire unless the enemy fired first, Thacker said.</p>\n\n<p>“Everyone starts to get excited but there was no ability to react,” he said. “All you could do is get ready.”</p>\n\n<p>Word from intel was that the North Vietnamese would attack at dawn – and that they would come hard.  </p>\n\n<p>The plan was for the South Vietnamese to hold the outer perimeter, while Thacker’s men would secure the inner – and last – line of defense. If the line was broken, the enemy would gain access to a deadly arsenal of artillery.     </p>\n\n<p>Their defenses prepared, all the men could do was wait ­­­­– and – pray.</p>\n\n<h2><strong>Hold the line</strong></h2>\n\n<p>The first wave rushed the firebase early, jolting Thacker from his sleep.</p>\n\n<p>The bullets flew and soon, the South Vietnamese line collapsed.</p>\n\n<p>Emboldened by the crumbling defenses, the North Vietnamese closed in. Everything rested on Thacker’s men holding the line. </p>\n\n<p>The young lieutenant and his men were well-prepared. As the enemy pressed forward, Thacker’s men made them pay in blood for every inch of ground. The Americans repelled the enemy for so long that the North Vietnamese ran out of ammo.</p>\n\n<p>But the American victory came at a price: in holding the line, three of Thacker’s men were killed.</p>\n\n<p>It became clear that the battle would never be over; not until the North Vietnamese retook the base.</p>\n\n<p>Thacker knew it. Everyone did.</p>\n\n<p>Two American helicopters attempting to resupply the base were shot down and the crew joined up with Thacker’s men. Then, strangely, the fighting stopped.</p>\n\n<p>“There was a lull from their side and all of sudden it went quiet,” he said. “Air crews told us they (the enemy) were amassing for an attack.”</p>\n\n<p>Cobra helicopters fired on the ever-growing army, but the North Vietnamese were relentless: for every man that fell another took his place. And another.</p>\n\n<p>“They could see the troops, they just couldn’t stop them,” Thacker said. “If there was ever a time to leave it was now.”</p>\n\n<p>The base was lost.</p>\n\n<h2><strong>Ghost on the mountain</strong></h2>\n\n<p>The base was too hot to risk landing rescue copters. If Thacker’s men and the South Vietnamese were to leave, they would have to make a break for the extraction point; a 1.5-mile trek through enemy-infested territory.</p>\n\n<p>Thacker volunteered to stay behind to buy the others time while a South Vietnamese machine gunner covered him. Thacker would dupe the enemy into thinking the base was still occupied; then, when the enemy closed in, call artillery fire on his position and escape the barrage.</p>\n\n<p>Life and death boiled down to seconds.</p>\n\n<p>If Thacker left too soon, the enemy would overtake the base and capture the retreating forces; too long and he would be killed by the enemy or the artillery fire.</p>\n\n<p>With the enemy closing in, Thacker ordered the machine gunner to evacuate, leaving himself without cover. Then he radioed for U.S. artillery to fire on his position.</p>\n\n<p>“You’re hoping they don’t realize you abandoned the position for four to five minutes, just enough time to get some separation from the artillery fire between us,” he said.</p>\n\n<p>But the shells dropped quicker than expected, endangering Thacker. He didn’t recall if that was the first time he was injured; all he remembered was, something wasn’t right.</p>\n\n<p>“Somewhere on that trail, a little hair on the back of my head said, ‘It’s time to leave the trail.’ and that’s what I did,” Thacker said. “I understood that I wouldn’t be extracted.”</p>\n\n<p>In the darkness, Thacker stumbled upon a bamboo thicket he thought offered cover.</p>\n\n<p>“When the sun came up the next day, I realized that I was not in a good hiding position,” Thacker said. “I was actually quite visible.”</p>\n\n<p>Exposed, Thacker moved downhill and waited to see if the base would be retaken.</p>\n\n<p>The enemy was close – so close he could smell them. For eight days Thacker laid nearly motionless with no food, no water and no way of knowing if the enemy would uncover his position. </p>\n\n<p>He became a ghost on the mountain; listening and learning the enemy’s rhythms.</p>\n\n<p>On the morning of the eighth day, exhausted and dehydrated, Thacker made a break for it. Painstakingly slow, he low-crawled five meters at a time from tree to bush. It wasn’t just enemy Thacker needed to avoid. American aircraft owned the sky, and if they saw movement, they would shoot to kill.</p>\n\n<h2><strong>You can never leave</strong></h2>\n\n<p>As Thacker had hoped, the Americans had retaken the firebase.</p>\n\n<p>As he approached, throwing his hands up in surrender, Thacker prayed he wouldn’t be shot. Seeing he was dangerously ill, soldiers radioed for Thacker’s evacuation.</p>\n\n<p>But the North Vietnamese were listening. Immediately, they launched a mortar attack.</p>\n\n<p>“I needed to be medevaced, I needed to be rehydrated, I needed a whole bunch of things, but the North Vietnamese were not going to make it easy,” Thacker said.</p>\n\n<p>The next morning, U.S. pilots faked out the enemy, diverting fire until the North Vietnamese ran out of ammo. As medics rushed to evacuate Thacker, a mortar exploded nearby, tearing into his shoulder. </p>\n\n<p>It was his last wound from the war ­– and the only one he remembers.</p>\n\n<h2><strong>The scars of war</strong></h2>\n\n<p>Thacker was stabilized at Pleiku Air Base, making two more stops before landing in Japan. His recovery took months.</p>\n\n<p>“Some parts never recovered,” he said. “I never got the stamina back that I had before.”</p>\n\n<p>Back in Utah, Thacker was at graduate school when he was told that President Nixon was to award him the Medal of Honor.</p>\n\n<p>“The extraordinary courage and selflessness displayed by 1st Lt. Thacker were an inspiration to his comrades and are in the highest traditions of the military service,” the last sentence of the citation reads.</p>\n\n<p>It wasn’t the end of his service to his country. After college, Thacker worked for the U.S. Department of Veterans Affairs for 26 years, retiring as chief of management support services in D.C.</p>\n\n<p>Like so many Veterans, Thacker doesn’t think himself a hero. His belief is the medal also belongs to his brothers in arms, like those at Firebase 6, who laid down their lives in the name of freedom,</p>\n\n<p> “This is an ‘us’ award,” he said.</p>\n\n<p><a href=\"https://youtu.be/VKs9iTdvLf4\">Watch the video: Interview with Brian Thacker</a></p>"
+            }
+          },
+          {
+            "entityId": "33629",
+            "title": "VA guides Army Veteran out of darkness",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/va-guides-army-veteran-out-of-darkness"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1574273390,
+            "fieldAuthor": {
+              "entity": {
+                "title": "Jeremy M. Laird",
+                "fieldDescription": "Salt Lake City VA public affairs"
+              }
+            },
+            "fieldImageCaption": "US Army Veteran, Arthur Saenz, dreams of becoming a chef and he isn't letting his disability stop him. With the help of an army of VA professionals, he is on the path to achieve his dreams.",
+            "fieldIntroText": "Standing in front of a long stainless-steel table at the inpatient kitchen at the George E. Wahlen VA Medical Center, U.S. Army Veteran Arthur Saenz readies for the lunch rush.",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Arthur Saenz",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/Arthur%20Saenz.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>Standing in front of a long stainless-steel table at the inpatient kitchen at the George E. Wahlen VA Medical Center, U.S. Army Veteran Arthur Saenz readies for the lunch rush.</p>\n\n<p>Large bowls of salad and cherry tomatoes flank his left—while 40 smaller bowls– headed to trays for Veteran lunches – stand amassed on the baking sheet in front of him. Quickly and confidently, Saenz grabs mounds of salad with his left hand; his right silently hunting for the next bowl in the row.</p>\n\n<p>From bowl to bowl, row to row, Saenz fills each bowl with salad, then repeats the procedure, sprinkling on the cherry tomatoes. Snatching the tray with his left hand, his right feels for a cart off to his right. He snags the cart and slides the tray into a narrow open slot.</p>\n\n<p>You wouldn’t know from watching him work, but the 25-year-old Veteran is blind.</p>\n\n<p>“It basically took an army to get me to where I'm at now,” Saenz said while wrapping up his lunchtime run.</p>\n\n<p>Saenz joined the U.S. Army shortly after high school. While still at basic training</p>\n\n<p>A chance meeting in a Wal-Mart parking lot would change that.</p>\n\n<p>\"We ran into a someone from DAV (Disabled American Veterans). And they were like, ‘It can’t hurt. Let’s put in a claim for you and let’s get it figured out.’”</p>\n\n<p>With the help of DAV and the local VA, Saenz received his service-connected disability – and more importantly access to an army of VA professionals who would help him learn to live without sight. The VA lined up a three-month intensive living and mobility course for Saenz at the Hines VA Medical Center in Chicago. Leaving his wife behind in Iowa, Saenz was off to a different kind of basic training.</p>\n\n<p>At Hines, Marine Corps Veteran Nathan LaForte, began the long and arduous process of teaching Saenz to live a complete life without vision.</p>\n\n<p>“He put me through the wringer,” Saenz said. “He challenged me. We would walk miles and he would test my hearing. He would teach me how to use my hearing properly so I could listen for on-coming traffic and I learned how to get around specific obstacles with my blind cane.”</p>\n\n<p>LaForte also taught Saenz living skills, like how to safely use a knife, cook a meal, read braille, use adaptive technology to help him navigate the world. He also introduced Saenz to recreation therapy.</p>\n\n<p>“Nathan taught me how to hike,” he said. “He would take time out of his day and take me out to hike.”</p>\n\n<p>Hiking is something that Saenz still loves, and he regularly hikes along the Wasatch Front. While Saenz will take a sighted person with him the first time he is on a trail, once he has navigated a trail once or twice, he hikes alone.</p>\n\n<p>Following his three-month training at Hines, Saenz and his wife decided to move to Utah to be close to her family. His love of the outdoors attracted him to the recreation therapy program at VA Salt Lake City.</p>\n\n<p>Heather Brown, VA Salt Lake City recreation therapist, not only helped Saenz expand his love of the outdoors but introduced him to Thomas Wolf and Darren Lindsay at VA Salt Lake City’s low vision clinic.</p>\n\n<p>“His skills were really good when he came to us,” Wolf said. “He just needed to get familiar with his new neighborhood.”</p>\n\n<p>Under Wolf and Lindsay’s tutelage, both of whom have visual impairments, Saenz thrived-- learning the nuances of his new neighborhood, learning to navigate the campus of the George E. Wahlen VA Medical Center, and how to take mass transit from his home in American Fork to VA Salt Lake City.</p>\n\n<p>Still, something was missing for Saenz.</p>\n\n<p>“He wanted to seek employment,” Lindsay said, “and working with other departments here at the VA they were able to help him.”</p>\n\n<p>Mari Hanson, a Vocational Rehabilitation counselor at VA Salt Lake, started working with Saenz.</p>\n\n<p>My job “is really helping people with disabilities get employment,” she said. “There is a job out there for everyone. If you want to work and you are dedicated and motivated, we can make it happen.”</p>\n\n<p>Through the compensated work therapy (CWT) program, Hanson reached out to numerous people to find Saenz a position. VA Salt Lake City Food Service staff gave him a shot.</p>\n\n<p>“He was very excited,” recalled Hanson. “He was like, ‘I have a real job.’ He feels like he’s really working on fulfilling his goals.”</p>\n\n<p>His supervisor, Jennifer Meunier, allowed Saenz to thrive in food service and witnessed a transformation.</p>\n\n<p>“He learned to adapt and adjust to the environment around him in the kitchen,” Meunier said. “I was able to put him in different areas of the kitchen, where he could use his skills and push him in directions, he didn’t know he could go.” </p>\n\n<p>Saenz has plenty of places he wants to go. His goal is to attend culinary school and eventually open his own restaurant. He recently completed the CWT program and was hired by VA Salt Lake City food services.</p>\n\n<p>“He definitely showed other employees that he could pull his own weight and make a difference in the food service team,” Meunier said. “I’m very proud of him.”</p>\n\n<p>Those thoughts are echoed by all the staff at VA Salt Lake City who have helped him.</p>\n\n<p>“Arthur has very much shown that the visually impaired can excel in the employment sector,” Lindsay said. “He's a great advocate for the blind and visually impaired.”</p>\n\n<p>Saenz is eager to give credit to all those who helped him get to where he is today and has a message for visually-impaired people who may be struggling to find their place in the world.</p>\n\n<p>“Please don't give up because you know there is hope… get help, find someone that's willing to take the time and help you get through these obstacles.”</p>\n\n<p>If you know a Veteran who could benefit from the Low Vision Clinic, contact the low vision clinic at 801-582-1565 ext. 1574.</p>\n\n<p>If you know a Veteran with a disability wanting to re-enter the work force, give our Vocational Rehab Coordination program a call at 801-582-1565 ext. 4446, 6314, and 2729.</p>\n\n<p><a href=\"https://www.facebook.com/vasaltlakecity/videos/2570720329672298/\">Watch the video: VA guides Army Veteran out of darkness</a></p>"
+            }
+          },
+          {
+            "entityId": "33631",
+            "title": "Veteran awaiting heart transplant sings for smiles",
+            "fieldFeatured": false,
+            "entityUrl": {
+              "path": "/salt-lake-city-health-care/stories/veteran-awaiting-heart-transplant-sings-for-smiles"
+            },
+            "uid": {
+              "targetId": 1447,
+              "entity": {
+                "name": "james.hoehn2@va.gov",
+                "timezone": "America/Chicago"
+              }
+            },
+            "promote": false,
+            "created": 1568050053,
+            "fieldAuthor": {
+              "entity": {
+                "title": "T.S. Jarmusz",
+                "fieldDescription": "Salt Lake City public affairs"
+              }
+            },
+            "fieldImageCaption": "Army Veteran Karl Baylor serenades Veterans and staff outside George E. Wahlen VA Medical Center.",
+            "fieldIntroText": "For the last six months, Karl Baylor had been waiting to find out whether he’d live or die. His heart was failing. It was only a matter of time.\r\n",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Army Veteran Karl Baylor singing",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://cms-xzcrb121xmxquzas9jcd9p86dgwpkuam.demo.cms.va.gov/sites/default/files/styles/2_1_medium_thumbnail/public/2021-08/Karl%20Baylor%20singing.jpg",
+                    "width": 480,
+                    "height": 240
+                  }
+                }
+              }
+            },
+            "fieldFullStory": {
+              "processed": "<p>Since February, Baylor, 62, has been staying at the George E. Wahlen VA Medical Center – one of five VA medical centers that provides heart transplants to Veterans.<br /><br />\nBut ill health did little to slow Baylor down or dampen his enthusiasm for life. Those that have grown to know Baylor said his real heart – personified in his buoyant Texan personality – was perfect the way it was.<br /><br />\n“Karl’s a character. He’s a total character,” Baylor’s VA nurse Carolyn Redd said. “Karl’s full of life – so much so that we had to go chase him.”<br /><br />\nArmed with a contagious personality and room-filling baritone, Baylor passed much of his time at the VA by singing to anyone who listened. His showmanship lifted spirits, transforming the Vietnam-era Army combat engineer into a local celebrity.<br /><br />\nNot bad for man who should’ve been dead.</p>\n\n<h2>***</h2>\n\n<p><br />\nBaylor had been struggling with low blood pressure for some time when in 2014, doctors broke the news that he would need a new heart.<br /><br />\nHe brushed off the news.<br /><br />\n“I took it like a glass of water,” he said.<br /><br />\nBaylor arrived at the George E. Wahlen VA Medical Center in Salt Lake from Mansfield, TX, in July of 2018. He was hooked up to a machine that would keep his blood flowing until a suitable heart was found – the first time he said the VA saved his life.<br /><br />\n“If I would not have gotten this LVAD put in, I would’ve been dead by November of that year,” Baylor said. “I was barely pumping.”<br /><br />\nHe moved into the hospital permanently on Feb 10. And as he waited for his new heart, Baylor began to sing, captivating those around him.</p>\n\n<h2>***</h2>\n\n<p>While it was a small gesture, staffers said Baylor’s voice lightened the steps around campus. His shows, twice a day just outside the hospital entrance, became something Veterans and staff looked forward to.<br /><br />\n“It impacts me,” Redd said. “When I park in the morning and the sun’s coming up and I come around the corner and he’s singing, it feels good.”<br />\nBaylor’s VA nurse Micaela Brandelmayr called his songs, “the most beautiful gift.”<br /><br />\nSometimes they were soul, sometimes they were country, but always they were from the heart.<br /><br />\n“You may have gone through something through the week or the day or you just may not even feel like coming to work today,” Baylor said. “But that song has a way of touching you in some kind of way, and to me, that’s why I do it.”<br /><br />\nThe music may have done as much good for Baylor as it did for his fellow Veterans.<br /><br />\n“It is the most gratifying feeling to see smiles and uplifted spirits in just that moment,” Baylor said. “Every day that I can come out and sing, I’m happy.”<br /><br />\nSo, he kept singing.</p>\n\n<h2>***</h2>\n\n<p>As he awaited a new heart, staffers grew closer to the man behind the voice.<br /><br />\n“When people are here as long as he’s been here, you get invested,” Redd said. “You see them at their best and their worst and you want them to do well.”<br /><br />\nBrandelmayr agreed.<br /><br />\n“When somebody’s in here for a really long time … their support system may be really far away,” Brandelmayr said. “We become their support system.”<br /><br />\nFor Baylor, staffers became his second family; people who rejoiced in his triumphs and were saddened by his struggles.<br /><br />\nHe was particularly fond of Brandelmayr, “momma bear” who he said reminded him of his mother.<br /><br />\n“You touched me girl,” Baylor, his normally composed voice breaking, told her. “Ain’t too many people that can get down in there.”</p>\n\n<h2>***</h2>\n\n<p>Word that a heart was available came down in July.<br /><br />\n“You don’t have control. You want to cry. You want to laugh…,” Baylor, reflecting on the gravity of the moment said. “When you laugh, you’re reminding yourself that somebody is giving you an opportunity to live. When you cry, you’re reminded somebody had to pass. For you to live, somebody had to die.”<br /><br />\nHe got his heart – and a second chance at life – Aug. 2 at the University of Utah Medical Center.<br /><br />\nShortly after surgery, still tied to an army of tubes and machines that kept him alive; his body arrested with unspeakable pain, Baylor remained ever-positive.<br /><br />\n“I haven’t felt my heart in seven years,” Baylor said. “What I’m feeling now, it’s like, somebody is in here.”<br /><br />\nBaylor said he plans to stay in Salt Lake City for a while. He promised to visit his new VA family – and bring his voice with him.<br /><br />\nHe was thankful to have a new lease on life and grateful for the VA for all it had done.<br /><br />\n“I did not expect when I raised my hand in 1974 … that the VA would take care of me now that I’m in my 60s in a way that I would never have expected, so I am proud to be a part of this,” Baylor said. “I can keep living, I can take my grandchildren fishing, and doing things, singing, doing all the things I’ve been wanting to do, but do it with strength.”</p>\n\n<p><a href=\"https://www.facebook.com/watch/?v=2462259317337809\">Watch the video: VA Salt Lake's singing Veteran: Karl Baylor</a></p>"
+            }
+          }
+        ]
+      },
+      "fieldOffice": {
+        "targetId": 6300,
+        "entity": {
+          "title": "VA Salt Lake City health care",
+          "entityLabel": "VA Salt Lake City health care"
+        }
+      }
+    }
+  }
+}

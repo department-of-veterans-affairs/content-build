@@ -78,4 +78,8 @@ describe('intro', () => {
     // Element should not render in the DOM
     expect(container.querySelector('.main-phone')).to.be.null;
   });
+
+  it('displays a max of 2 featured stories', () => {
+    expect(container.querySelectorAll('#featured-story').length).to.equal(2);
+  });
 });
