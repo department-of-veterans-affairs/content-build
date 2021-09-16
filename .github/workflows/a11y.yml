@@ -151,6 +151,9 @@ jobs:
         with:
           path: content-build
 
+      - name: Move VA cert to /etc/ssl/certs
+        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
+
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
