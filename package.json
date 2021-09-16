@@ -81,7 +81,6 @@
       "**/*.spec.jsx"
     ]
   },
-  "sasslintConfig": "config/sass-lint.yml",
   "homepage": "https://github.com/department-of-veterans-affairs/content-build#readme",
   "browserslist": [
     "Chrome 60",
@@ -189,7 +188,6 @@
     "nyc": "^15.1.0",
     "prettier": "^1.14.3",
     "recursive-readdir": "^2.2.2",
-    "sass-lint": "^1.13.1",
     "saucelabs": "^1.4.0",
     "selenium-server": "^3.141.59",
     "semver": "^7.3.2",
