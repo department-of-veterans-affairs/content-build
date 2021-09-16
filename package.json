@@ -81,7 +81,6 @@
       "**/*.spec.jsx"
     ]
   },
-  "sasslintConfig": "config/sass-lint.yml",
   "homepage": "https://github.com/department-of-veterans-affairs/content-build#readme",
   "browserslist": [
     "Chrome 60",
@@ -123,10 +122,10 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "chai-dom": "^1.8.2",
+    "chai-dom": "^1.10.0",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
-    "chokidar": "^3.4.0",
+    "chokidar": "^3.5.2",
     "choma": "^1.1.0",
     "chromedriver": "^93.0.1",
     "cli-table": "^0.3.6",
@@ -187,7 +186,6 @@
     "nyc": "^15.1.0",
     "prettier": "^1.14.3",
     "recursive-readdir": "^2.2.2",
-    "sass-lint": "^1.13.1",
     "saucelabs": "^1.4.0",
     "selenium-server": "^3.141.59",
     "semver": "^7.3.2",
@@ -207,8 +205,8 @@
   "private": true,
   "dependencies": {
     "blob-polyfill": "^4.0.20200601",
-    "core-js": "^3.8.1",
-    "diff2html": "^3.4.4",
+    "core-js": "^3.17.3",
+    "diff2html": "^3.4.11",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",

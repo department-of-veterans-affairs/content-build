@@ -26,11 +26,13 @@
             {% endif %}
 
             <!-- Buttons -->
-            <div class="vads-u-margin-y--3">
+            <ul class="vads-u-margin-y--3 usa-unstyled-list">
               {% for fieldButton in fieldButtons %}
-                {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                <li class="vads-u-margin-bottom--2">
+                  {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                </li>
               {% endfor %}
-            </div>
+            </ul>
 
             <!-- TOC -->
             {% if fieldTableOfContentsBoolean %}
@@ -49,11 +51,13 @@
 
             <!-- Repeated buttons -->
             {% if fieldButtonsRepeat %}
-              <div class="vads-u-margin-top--3">
+              <ul class="vads-u-margin-top--3 usa-unstyled-list">
                 {% for fieldButton in fieldButtons %}
-                  {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                  <li class="vads-u-margin-bottom--2">
+                    {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                  </li>
                 {% endfor %}
-              </div>
+              </ul>
             {% endif %}
           </article>
 
