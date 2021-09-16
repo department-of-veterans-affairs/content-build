@@ -11,8 +11,8 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: [self-hosted, asg]
-    timeout-minutes: 120
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
     defaults:
       run:
         working-directory: content-build
