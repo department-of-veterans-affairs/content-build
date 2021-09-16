@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       release_wait:
-        description: "Minutes to wait before creating release"
+        description: Minutes to wait before creating release
         required: false
         default: 5
   schedule:
-    - cron: "0 18 * * 1-5"
+    - cron: 0 18 * * 1-5
 
 # TODO: Change to correct channel_id when ready
 env:
@@ -92,11 +92,11 @@ jobs:
 
       - name: Get release wait time (scheduled release)
         if: ${{ github.event.schedule != '' }}
-        run: echo "RELEASE_WAIT=60" >> $GITHUB_ENV
+        run: echo 'RELEASE_WAIT=60' >> $GITHUB_ENV
 
       - name: Get release wait time (workflow_dispatch)
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
+        run: echo 'RELEASE_WAIT=${{ github.event.inputs.release_wait }}' >> $GITHUB_ENV
 
   validate-build-status:
     name: Validate Build Status
@@ -180,7 +180,7 @@ jobs:
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{github.repository}}/compare/content-build/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{ github.repository }}/compare/content-build/${{ needs.set-env.outputs.LATEST_TAG_VERSION }}...${{ github.sha }}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
   
   build:
@@ -236,7 +236,7 @@ jobs:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
       - name: Build
-        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address="${{ env.DRUPAL_ADDRESS }}" --no-drupal-proxy
+        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address='${{ env.DRUPAL_ADDRESS }}' --no-drupal-proxy
         timeout-minutes: 30
         env:
           NODE_ENV: production
@@ -249,7 +249,7 @@ jobs:
         run: |
           cat > build/${{ env.BUILDTYPE }}/BUILD.txt << EOF
           BUILDTYPE=${{ env.BUILDTYPE }}
-          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          BRANCH_NAME=$(echo '${GITHUB_REF#refs/heads/}')
           RUN_ID=${{ github.run_id }}
           REF=${{ github.sha }}
           BUILDTIME=$(date +%s)
@@ -316,7 +316,7 @@ jobs:
     steps:
       - name: Waiting to release 
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{github.sha}}"
+          echo 'Waiting to release: https://github.com/${{ github.repository }}/compare/${{ needs.set-env.outputs.LATEST_TAG_VERSION }}...${{ github.sha }}'
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         uses: whatnick/wait-action@master
