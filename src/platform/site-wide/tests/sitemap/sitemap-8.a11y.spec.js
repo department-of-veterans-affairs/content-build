@@ -24,7 +24,7 @@ const urls = xml
   .parse(data, options)
   .urlset.url.map(url => url.loc)
   .sort();
-const divider = Math.ceil(urls.length / 16);
+const divider = Math.ceil(urls.length / 32);
 const splitURLs = urls.slice(7 * divider, 8 * divider);
 
 describe(`Accessibility tests`, () => {
@@ -35,9 +35,11 @@ describe(`Accessibility tests`, () => {
         `https://www.va.gov`,
         `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
       );
-      cy.visit(localURL).injectAxe();
+      cy.visit(localURL);
       cy.get('body').should('be.visible', { timeout: normal });
-      cy.axeCheck({
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(1000);
+      cy.injectAxe().axeCheck({
         exclude: [
           ['.loading-indicator'],
           ['div[data-widget-type="facility-map"]'],
