@@ -17,9 +17,7 @@ const options = {
   parseTrueNumberOnly: false,
 };
 
-const data = fetch(
-  `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap.xml`,
-).text();
+const data = fetch(`https://staging.va.gov/sitemap.xml`).text();
 const urls = xml
   .parse(data, options)
   .urlset.url.map(url => url.loc)
@@ -31,11 +29,7 @@ describe(`Accessibility tests`, () => {
   for (const url of splitURLs) {
     // eslint-disable-next-line no-loop-func
     it(`${url}`, () => {
-      const localURL = url.replace(
-        `https://www.va.gov`,
-        `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
-      );
-      cy.visit(localURL);
+      cy.visit(url);
       cy.get('body').should('be.visible', { timeout: normal });
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(5000);
