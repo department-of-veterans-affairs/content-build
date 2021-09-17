@@ -1,0 +1,12 @@
+$c-blue: pink;
+
+@mixin testing() {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  @include testing();
+  border: 10px solid $c-blue;
+  display: grid;
+}
