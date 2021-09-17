@@ -1,35 +1,24 @@
-const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
+
 const ENVIRONMENTS = require('../src/site/constants/environments');
 
-const { LOCALHOST } = ENVIRONMENTS;
+const { VAGOVSTAGING, VAGOVPROD, LOCALHOST } = ENVIRONMENTS;
 
-module.exports = async (env = {}) => {
+const getAbsolutePath = relativePath =>
+  path.join(__dirname, '../', relativePath);
+const apps = '';
+
+const globalEntryFiles = {
+  style: getAbsolutePath('src/platform/site-wide/sass/style.scss'),
+};
+
+module.exports = env => {
   const { buildtype = LOCALHOST } = env;
   const buildOptions = {
-    api: '',
     buildtype,
-    host: LOCALHOST,
-    port: 3002,
-    scaffold: false,
-    watch: false,
     destination: buildtype,
     ...env,
-  };
-
-  // const isOptimizedBuild = [VAGOVSTAGING, VAGOVPROD].includes(buildtype);
-  // const isOptimizedBuild = false;
-  // const enableCSSSourcemaps =
-  //   buildtype !== LOCALHOST ||
-  //   buildOptions['local-css-sourcemaps'] ||
-  //   !!buildOptions.entry;
-
-  const getAbsolutePath = relativePath =>
-    path.join(__dirname, '../', relativePath);
-
-  const globalEntryFiles = {};
-  const apps = {
-    style: getAbsolutePath('src/platform/site-wide/sass/style.scss'),
   };
 
   const buildPath = path.resolve(
@@ -40,40 +29,50 @@ module.exports = async (env = {}) => {
   );
 
   const entryFiles = Object.assign({}, apps, globalEntryFiles);
+  const isOptimizedBuild = [VAGOVSTAGING, VAGOVPROD].includes(buildtype);
 
   return {
-    devtool: 'source-map',
-    mode: 'production',
+    mode: process.env.NODE_ENV || 'development',
     entry: entryFiles,
     output: {
-      path: path.resolve(buildPath, 'generated'),
+      path: path.resolve(buildPath, 'css'),
     },
+    plugins: [new MiniCssExtractPlugin()],
     module: {
       rules: [
         {
-          test: /\.(sa|sc|c)ss$/,
+          test: /\.(s[ac]|c)ss$/i,
           use: [
             MiniCssExtractPlugin.loader,
-            'cache-loader',
-            {
-              loader: 'css-loader',
-              options: {},
-            },
+            'css-loader',
             {
               loader: 'postcss-loader',
               options: {
                 postcssOptions: {
-                  plugins: [require('autoprefixer'), require('cssnano')],
+                  plugins: ['autoprefixer'],
                 },
               },
             },
-            {
-              loader: 'sass-loader',
-            },
+            'sass-loader',
           ],
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+          },
         },
       ],
     },
-    plugins: [new MiniCssExtractPlugin()],
+    target: process.env.NODE_ENV === 'production' ? 'browserslist' : 'web',
+    devtool: isOptimizedBuild ? 'source-map' : 'eval-source-map',
+    devServer: {
+      static: {
+        directory: path.join(__dirname, `../build/${buildOptions.destination}`),
+      },
+      compress: true,
+      port: 3002,
+    },
   };
 };

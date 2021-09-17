@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Content build for vets.gov website static assets.",
   "scripts": {
-    "build": "node --max-old-space-size=5000 --expose-gc script/build-content.js",
+    "build": "concurrently -n metalsmith,webpack \"node --max-old-space-size=5000 --expose-gc script/build-content.js\" \"yarn build:webpack\"",
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
     "build:webpack": "webpack --config config/webpack.config.js",
@@ -57,7 +57,7 @@
     "watch": "concurrently \"node --max-old-space-size=5000 --expose-gc script/build-content.js --watch\" \"http-server build/localhost -s -c-1 -p 3002\"",
     "watch:css-sourcemaps": "node --max-old-space-size=5000 --expose-gc script/build-content.js --watch --local-css-sourcemaps",
     "watch:review": "node ./script/run-review-instance-api.js",
-    "watch:static": "concurrently -n metalsmith,webpack \"npm:watch:content\" \"npm run watch -- --env.entry=static-pages --progress=false\"",
+    "watch:static": "concurrently -n metalsmith,webpack \"npm:watch:content\" \"webpack serve --config config/webpack.config.js\"",
     "prepare": "husky install"
   },
   "repository": {
@@ -82,7 +82,6 @@
       "**/*.spec.jsx"
     ]
   },
-  "sasslintConfig": "config/sass-lint.yml",
   "homepage": "https://github.com/department-of-veterans-affairs/content-build#readme",
   "browserslist": [
     "Chrome 60",
@@ -130,7 +129,7 @@
     "chai-dom": "^1.10.0",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
-    "chokidar": "^3.4.0",
+    "chokidar": "^3.5.2",
     "choma": "^1.1.0",
     "chromedriver": "^93.0.1",
     "cli-table": "^0.3.6",
@@ -223,8 +222,8 @@
   "private": true,
   "dependencies": {
     "blob-polyfill": "^4.0.20200601",
-    "core-js": "^3.8.1",
-    "diff2html": "^3.4.4",
+    "core-js": "^3.17.3",
+    "diff2html": "^3.4.11",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",
