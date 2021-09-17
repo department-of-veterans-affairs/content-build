@@ -823,6 +823,7 @@ jobs:
 
       - name: Notify Slack
         uses: ./.github/actions/vsp-github-actions/slack-socket
+        continue-on-error: true
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
