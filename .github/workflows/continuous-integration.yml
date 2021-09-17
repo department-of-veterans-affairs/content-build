@@ -662,7 +662,7 @@ jobs:
       - name: Restore ${{ matrix.buildtype }} build
         run: |
           mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/build/${{ matrix.buildtype }} build/${{ matrix.buildtype }}
+          cp -R /tmp/${{ github.run_id }}/${{ matrix.buildtype }} build/${{ matrix.buildtype }}
           du -h build/${{ matrix.buildtype }}
 
       - name: Configure AWS credentials (1)
