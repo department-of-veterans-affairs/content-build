@@ -381,12 +381,12 @@ jobs:
       - name: Upload test report to s3
         run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
 
-      - name: Accessibility Test Report Slack notification
-        uses: ./.github/actions/vsp-github-actions/slack-socket
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Report Slack notification
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
