@@ -257,7 +257,7 @@ jobs:
   slack:
     name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
-    needs: [build, a11y]
+    needs: [a11y]
     if: ${{ always() }}
     defaults:
       run:
