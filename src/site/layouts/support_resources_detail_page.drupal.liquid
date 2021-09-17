@@ -29,7 +29,7 @@
             <ul class="vads-u-margin-y--3 usa-unstyled-list">
               {% for fieldButton in fieldButtons %}
                 <li class="vads-u-margin-bottom--2">
-                  {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                  {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
                 </li>
               {% endfor %}
             </ul>
@@ -54,7 +54,7 @@
               <ul class="vads-u-margin-top--3 usa-unstyled-list">
                 {% for fieldButton in fieldButtons %}
                   <li class="vads-u-margin-bottom--2">
-                    {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                    {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
                   </li>
                 {% endfor %}
               </ul>
