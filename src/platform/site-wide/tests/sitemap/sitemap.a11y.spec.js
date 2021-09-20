@@ -17,7 +17,7 @@ const options = {
   parseTrueNumberOnly: false,
 };
 
-const step = Number(process.env.STEP);
+const step = Number(Cypress.env('STEP'));
 const data = fetch(
   `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap.xml`,
 ).text();
