@@ -28,6 +28,7 @@ describe('createReactPages', () => {
         isDrupalPage: true,
         debug: null,
         layout: 'page-react.html',
+        entityUrl: { path: '/covid19screen' },
         alertItems: { alert: [] },
         bannerAlert: [],
         banners: [],

@@ -29,6 +29,7 @@ function createReactPages(files, drupalData = { data: {} }, done) {
         path: trimmedUrl,
         layout: 'page-react.html',
         contents: Buffer.from('\n<!-- Generated from manifest.json -->\n'),
+        entityUrl: { path: `/${trimmedUrl}` },
         alertItems,
         ...{ bannerAlert: bannerAlertsItem },
         ...{ banners },
