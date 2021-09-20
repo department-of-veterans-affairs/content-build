@@ -7,198 +7,123 @@ on: [push]
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group/
 
 jobs:
-  # start-runner:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     vagovprod: ${{ steps.start-ec2-runner-name.outputs.vagovprod }}
-  #     vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
-  #   env:
-  #     INSTANCE_TYPE: c5.4xlarge
+  build:
+    name: Build
+    runs-on: [self-hosted, asg]
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: content-build
 
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       buildtype: [vagovprod]
+    env:
+      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      CHANNEL_ID: C01RAS1KAQK
 
-  #   steps:
-  #     - name: Configure AWS Credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
 
-  #     - name: Get bot token from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@latest
-  #       with:
-  #         ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-  #         env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
 
-  #     - name: Get latest GHA Runner AMI ID # AMI images are rebuilt every 15 days, use the latest one
-  #       run: |
-  #         echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
-  #         --owners 008577686731 \
-  #         --filters Name=state,Values=available \
-  #         --filters Name=name,Values=packer-gha-runner-ubuntu2004* \
-  #         --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
-  #         --output text)" >> $GITHUB_ENV
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
 
-  #     - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
-  #       run: |
-  #         echo "SUBNET_ID=$(aws ec2 describe-subnets \
-  #         --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
-  #         --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
-  #         --output text)" >> $GITHUB_ENV
+      - name: Get va-vsp-bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-  #     - name: Start EC2 Runner
-  #       id: start-ec2-runner
-  #       uses: machulav/ec2-github-runner@v2
-  #       with:
-  #         mode: start
-  #         github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-  #         ec2-image-id: ${{ env.RUNNER_AMI_ID }}
-  #         ec2-instance-type: ${{ env.INSTANCE_TYPE }}
-  #         subnet-id: ${{ env.SUBNET_ID }}
-  #         security-group-id: sg-0e23b56be3798e3a1
-  #         aws-resource-tags: >
-  #           [
-  #             {"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"},
-  #             {"Key": "project", "Value": "vagov"},
-  #             {"Key": "office", "Value": "dsva"},
-  #             {"Key": "application", "Value": "on-demand-gha-runner"},
-  #             {"Key": "VAECID", "Value": "AWG20180517003"},
-  #             {"Key": "environment", "Value": "utility"}
-  #           ]
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
 
-  #     - name: EC2 Runner Name
-  #       id: start-ec2-runner-name
-  #       run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.label }}
+      # - name: Notify Slack
+      #   if: ${{ always() }}
+      #   uses: ./.github/actions/vsp-github-actions/slack-socket
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+      #     channel_id: ${{ env.CHANNEL_ID }}
 
-  #     - name: EC2 Runner ID
-  #       id: start-ec2-runner-id
-  #       run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+      - name: Checkout vagov-content
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
 
-  # build:
-  #   name: Build
-  #   needs: start-runner
-  #   runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
-  #   timeout-minutes: 60
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
 
-  #   defaults:
-  #     run:
-  #       working-directory: content-build
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
-  #   env:
-  #     # Sandbox Drupal address is used on branches other than master.
-  #     DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
-  #     NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       buildtype: [vagovprod]
-  #       include:
-  #         - buildtype: vagovprod
-  #           drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
-  #   steps:
-  #     - name: Checkout vagov-content
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: department-of-veterans-affairs/vagov-content
-  #         path: vagov-content
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
 
-  #     - name: Checkout content-build
-  #       uses: actions/checkout@v2
-  #       with:
-  #         path: content-build
+      - name: Set Drupal address
+        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
-  #     - name: Get Node version
-  #       id: get-node-version
-  #       run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - name: Build
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        env:
+          NODE_ENV: production
 
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+      - name: Compress E2E test build
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-  #     - name: Cache dependencies
-  #       id: cache-dependencies
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: |
-  #           .cache/yarn
-  #           **/node_modules
-  #         key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
-  #         restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
-
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: 'us-gov-west-1'
-
-  #     - name: Get NEXUS username
-  #       uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-  #       with:
-  #         ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
-  #         env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
-
-  #     - name: Get NEXUS token
-  #       uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-  #       with:
-  #         ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
-  #         env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
-
-  #     # Required to change registry in yarn.lock file
-  #     - name: Change registry in yarn.lock
-  #       run: |
-  #         sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-  #         sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
-
-  #     - name: Authenticate NEXUS
-  #       run: |
-  #         npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
-  #         npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
-  #         npm config set registry ${{ env.NEXUS_REGISTRY }}
-  #         npm config set email va-vsp-bot-1@va.gov
-  #         npm config set always-auth true
-
-  #     - name: Install dependencies
-  #       uses: nick-invision/retry@v2
-  #       with:
-  #         command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-  #         max_attempts: 3
-  #         timeout_minutes: 7
-  #       env:
-  #         YARN_CACHE_FOLDER: .cache/yarn
-
-  #     - name: Set Drupal address
-  #       if: ${{ github.ref == 'refs/heads/master' }}
-  #       run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
-
-  #     - name: Build
-  #       run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-  #       env:
-  #         NODE_ENV: production
-
-  #     - name: Compress E2E test build
-  #       run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
-
-  #     - name: Upload E2E test build artifact
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: test-build.tar.bz2
-  #         path: content-build/test-build.tar.bz2
-  #         retention-days: 1
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
   
   a11y:
     name: Accessibility Tests
-    # needs: build
+    needs: build
     runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
@@ -239,8 +164,25 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: Download production build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test-build.tar.bz2
+
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+
+      - name: Start content-build
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+
       - name: Run Cypress E2E Tests
-        run: CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://staging.va.gov,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.a11y.spec.js"
+        run: STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
 
       - name: Rename Mochawesome JSON file
         if: ${{ always() }}
@@ -257,7 +199,7 @@ jobs:
   slack:
     name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
-    needs: [a11y]
+    needs: [build, a11y]
     if: ${{ always() }}
     defaults:
       run:
