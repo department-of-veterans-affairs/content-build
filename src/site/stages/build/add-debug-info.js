@@ -20,6 +20,7 @@ const KEYS_TO_IGNORE = [
   'nav_path',
   'path',
   'private',
+  'next',
 ];
 
 function writeFile(fileName, fileObject, buildtype) {
@@ -32,10 +33,14 @@ function writeFile(fileName, fileObject, buildtype) {
     // We want to replace all instances of that with the debug object.
     const oldString = 'window.contentData = null;';
     const debugInfo = _.omit(fileObject, KEYS_TO_IGNORE);
-    const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
-    const newContents = contents.toString().replace(oldString, newString);
 
-    fs.writeFileSync(filePath, newContents, { overwrite: true });
+    try {
+      const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
+      const newContents = contents.toString().replace(oldString, newString);
+      fs.writeFileSync(filePath, newContents, { overwrite: true });
+    } catch (err) {
+      console.error(err);
+    }
 
     resolve();
   });

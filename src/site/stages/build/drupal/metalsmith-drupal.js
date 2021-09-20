@@ -17,6 +17,7 @@ const {
   addGetUpdatesFields,
   addPager,
 } = require('./health-care-region');
+const createReactPages = require('../plugins/create-react-pages');
 
 const { addHubIconField } = require('./benefit-hub');
 const { addHomeContent } = require('./home');
@@ -314,6 +315,7 @@ function getDrupalContent(buildOptions) {
 
       await loadCachedDrupalFiles(buildOptions, files);
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
+      await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);
       log('Successfully piped Drupal content into Metalsmith!');
       buildOptions.drupalData = drupalData;
