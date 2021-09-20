@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Content build for vets.gov website static assets.",
   "scripts": {
-    "build": "concurrently -n metalsmith,webpack \"node --max-old-space-size=5000 --expose-gc script/build-content.js\" \"webpack --config config/webpack.config.js\"",
+    "build": "node --max-old-space-size=5000 --expose-gc script/build-content.js",
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
     "build:webpack": "webpack --config config/webpack.config.js",
