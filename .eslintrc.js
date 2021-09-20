@@ -7,13 +7,14 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      node: {}, // need to add this
       'babel-module': {},
     },
   },
   plugins: [
     'cypress',
+    'deprecate',
     'fp',
-    'jest',
     'mocha',
     'react-hooks',
     'sonarjs',
@@ -30,7 +31,6 @@ module.exports = {
     commonjs: true,
     'cypress/globals': true,
     es2020: true,
-    jest: true,
     mocha: true,
   },
   globals: {
@@ -41,13 +41,26 @@ module.exports = {
   rules: {
     /* || Eslint main rules || */
     camelcase: [2, { properties: 'always' }], // Override airbnb style.
+    'deprecate/import': [
+      'warn',
+      {
+        name:
+          '@department-of-veterans-affairs/component-library/CollapsiblePanel',
+        use: '<va-accordion>',
+      },
+      {
+        name: '@department-of-veterans-affairs/component-library/AlertBox',
+        use: '<va-alert>',
+      },
+    ],
+
     // "func-names": 2,
     'no-console': 2,
     'no-unused-vars': [
       2,
       { args: 'after-used', argsIgnorePattern: '^_', vars: 'local' },
     ],
-    'no-restricted-imports': ['error', 'raven'],
+    'no-restricted-imports': ['error', 'raven', 'lodash/fp'],
     'prefer-rest-params': 2,
 
     /* || va custom plugin || */
