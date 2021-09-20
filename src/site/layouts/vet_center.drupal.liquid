@@ -84,16 +84,16 @@
           <div class="vads-u-margin-bottom--3">
             <h3 class="vads-u-font-size--lg vads-u-line-height--1 vads-u-margin-bottom--1">
               Other locations</h3>
-            <div id="vet-center-other-locations">
-              <p>Vet Centers are community based to be more
+            <div>
+              <p class="vads-u-margin-bottom--0 vads-u-line-height--4">Vet Centers are community based to be more
                 accessible in areas where you live.
               </p>
-              <p><a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
-                  locations</a></p>
+              <a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
+                  locations</a>
             </div>
           </div>
 
-          <div class="field-cc-non-traditional-hours">
+          <div class="vads-u-font-weight--bold" id="field-cc-non-traditional-hours">
             {% include "src/site/includes/dynamic-content.drupal.liquid" with
                 entity = fieldCcNonTraditionalHours.fetched
                 contentType = fieldCcNonTraditionalHours.fetchedBundle
@@ -127,7 +127,7 @@
           {% assign allFeaturedContent = fieldCcVetCenterFeaturedCon | appendCentralizedFeaturedContent: fieldVetCenterFeatureContent %}
           <h2 id="in-the-spot-light" class="vads-u-margin-top--0 vads-u-font-size--lg
           small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight at {{ entityLabel }} </h2>
-          <div class="field-vet-center-feature-content">
+          <div id="field-vet-center-feature-content">
             <ul class="usa-grid usa-grid-full vads-u-margin-top--3 vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
               {% for entity in allFeaturedContent %}
                 {% include "src/site/includes/vet_centers/featured_content.liquid" with

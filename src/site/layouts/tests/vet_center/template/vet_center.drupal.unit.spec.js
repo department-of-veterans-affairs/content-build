@@ -119,13 +119,13 @@ describe('Vet Center Main Page', () => {
 
   it('renders prepare for your field-cc-non-traditional-hours', () => {
     expect(
-      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
+      container.querySelectorAll('#field-cc-non-traditional-hours p').length,
     ).to.equal(1);
   });
 
   it('renders prepare for your field-cc-non-traditional-hours', () => {
     expect(
-      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
+      container.querySelectorAll('#field-cc-non-traditional-hours p').length,
     ).to.equal(1);
   });
 
@@ -165,7 +165,7 @@ describe('Vet Center Main Page', () => {
 
   it('renders prepare for your visit field-vet-center-feature-content', () => {
     expect(
-      container.querySelectorAll('.field-vet-center-feature-content > ul > li')
+      container.querySelectorAll('#field-vet-center-feature-content > ul > li')
         .length,
     ).to.equal(3);
   });
