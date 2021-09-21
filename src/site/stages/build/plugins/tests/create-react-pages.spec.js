@@ -25,7 +25,7 @@ describe('createReactPages', () => {
         title: 'COVID-19 screening tool',
         entryname: 'covid19screen',
         path: 'covid19screen',
-        isDrupalPage: true,
+        shouldAddDebugInfo: true,
         debug: null,
         layout: 'page-react.html',
         entityUrl: { path: '/covid19screen' },

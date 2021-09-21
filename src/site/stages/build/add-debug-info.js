@@ -14,6 +14,7 @@ const KEYS_TO_IGNORE = [
   'contents',
   'filename',
   'isDrupalPage',
+  'shouldAddDebugInfo',
   'layout',
   'modified',
   'nav_children',
@@ -53,8 +54,9 @@ async function addDebugInfo(files, buildtype) {
     console.log('\nAdding debug info to Drupal pages...\n');
     console.time(timeString);
 
-    const isDrupalPage = fileName => files[fileName].isDrupalPage;
-    const drupalFileNames = Object.keys(files).filter(isDrupalPage);
+    const shouldAddDebugInfo = fileName =>
+      files[fileName].isDrupalPage || files[fileName].shouldAddDebugInfo;
+    const drupalFileNames = Object.keys(files).filter(shouldAddDebugInfo);
 
     while (drupalFileNames.length) {
       const promises = [];

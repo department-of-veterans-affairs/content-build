@@ -24,7 +24,7 @@ function createReactPages(files, drupalData = { data: {} }, done) {
       files[filePath] = {
         title: appName,
         entryname: entryName,
-        isDrupalPage: true,
+        shouldAddDebugInfo: true,
         debug: null,
         path: trimmedUrl,
         layout: 'page-react.html',
