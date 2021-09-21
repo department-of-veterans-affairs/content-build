@@ -7,10 +7,9 @@ on:
     tags-ignore:
       - '**'
 
-# TODO: Change to correct channel_id when ready
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
+  CHANNEL_ID: C37M86Y8G #devops-deploys
   NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group-nocache/
 
 concurrency:
@@ -212,7 +211,9 @@ jobs:
           cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
           BUILDTYPE=${{ matrix.buildtype }}
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          CHANGE_TARGET=null
           RUN_ID=${{ github.run_id }}
+          RUN_NUMBER=${{ github.run_number }}
           REF=${{ github.sha }}
           BUILDTIME=$(date +%s)
           EOF
@@ -649,99 +650,103 @@ jobs:
         env:
           BUILDTYPE: vagovprod
 
-  # archive:
-  #   name: Archive
-  #   runs-on: ubuntu-latest
-  #   needs: [cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
+  archive:
+    name: Archive
+    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
+    needs: [start-runner, cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
 
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       buildtype: [vagovdev, vagovstaging, vagovprod]
+    strategy:
+      fail-fast: true
+      matrix:
+        # buildtype: [vagovdev, vagovstaging, vagovprod] # TODO: Enable when ready
+        buildtype: [vagovdev]
 
-  #   steps:
-  #     - name: Download build artifact
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: ${{ matrix.buildtype }}.tar.bz2
+    steps:
+      - name: Restore ${{ matrix.buildtype }} build
+        run: |
+          mkdir -p build
+          cp -R /tmp/${{ github.run_id }}/${{ matrix.buildtype }} build/${{ matrix.buildtype }}
+          du -h build/${{ matrix.buildtype }}
 
-  #     - name: Configure AWS credentials (1)
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
+      - name: Compress build
+        run: tar -cvf ${{ matrix.buildtype }}.tar.bz2 build/${{ matrix.buildtype }}
 
-  #     - name: Get role from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@latest
-  #       with:
-  #         ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-  #         env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+      - name: Configure AWS credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
 
-  #     - name: Configure AWS Credentials (2)
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
-  #         role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-  #         role-duration-seconds: 900
-  #         role-session-name: vsp-frontendteam-githubaction
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-  #     - name: Upload build
-  #       run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
 
-  # deploy:
-  #   name: Deploy
-  #   runs-on: ubuntu-latest
-  #   if: ${{ github.ref == 'refs/heads/master' }}
-  #   needs: archive
+      - name: Upload build
+        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/$GITHUB_SHA/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
 
-  #   strategy:
-  #     matrix:
-  #       environment: [vagovdev, vagovstaging]
-  #       include:
-  #         - environment: vagovdev
-  #           bucket: content.dev.va.gov
-  #         - environment: vagovstaging
-  #           bucket: content.staging.va.gov
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    needs: archive
 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+    strategy:
+      matrix:
+        include:
+          - environment: vagovdev
+            bucket: content.dev.va.gov
+          # - environment: vagovstaging
+          #   bucket: content.staging.va.gov
 
-  #     - name: Configure AWS credentials (1)
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Get role from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@latest
-  #       with:
-  #         ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-  #         env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+      - name: Configure AWS credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
 
-  #     - name: Configure AWS Credentials (2)
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
-  #         role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-  #         role-duration-seconds: 900
-  #         role-session-name: vsp-frontendteam-githubaction
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-  #     - name: Deploy
-  #       run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
-  #       env:
-  #         SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
-  #         DEST: s3://${{ matrix.bucket }}
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Deploy
+        run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
+        env:
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
+          DEST: s3://${{ matrix.bucket }}
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, nightwatch-tests]
+    needs: [start-runner, cypress-tests, nightwatch-tests, archive]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
@@ -780,3 +785,53 @@ jobs:
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           label: ${{ needs.start-runner.outputs[matrix.buildtype]}}
           ec2-instance-id: ${{ needs.start-runner.outputs[matrix.id]}}
+
+  notify-failure:
+    name: Notify Failure
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' && (failure() || cancelled()) }}
+    needs: deploy
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+          
+      - name: Get va-vsp-bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Checkout VSP actions
+        uses: actions/checkout@v2
+        with:
+          repository: department-of-veterans-affairs/vsp-github-actions
+          ref: refs/heads/main
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/vsp-github-actions
+
+      - name: Notify Slack
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        continue-on-error: true
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
