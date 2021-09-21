@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on: [push]
-  # workflow_dispatch:
-  # schedule:
-  #   - cron: '0 12 * * 1-5'
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 13 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -57,16 +57,16 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      # - name: Notify Slack
-      #   if: ${{ always() }}
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Notify Slack
+        if: ${{ always() }}
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -264,27 +264,27 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
-      # - name: Accessibility Test Failure
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Accessibility Test Failure
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
 
-      # - name: Accessibility Test Success
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   if: ${{ needs.a11y.result == 'success' }}
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Accessibility Test Success
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ needs.a11y.result == 'success' }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Download Mochawesome test results
         uses: actions/download-artifact@v2
@@ -324,12 +324,12 @@ jobs:
       - name: Upload test report to s3
         run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
 
-      # - name: Accessibility Test Report Slack notification
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Accessibility Test Report Slack notification
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
