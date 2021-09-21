@@ -71,8 +71,5 @@ fi
 # fi
 echo "Will fetch application assets from the content build script"
 
-# Build Weboack
-yarn build:webpack --env=buildtype=${buildtype}
-
-# Build content
+# Always build the content
 yarn build $args

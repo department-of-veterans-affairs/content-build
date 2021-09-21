@@ -1,10 +1,21 @@
+
 {
+  // Javascript settings.
   "presets": [
     [
       "@babel/env",
       {
         "forceAllTransforms": true,
         "targets": {
+          /* This is the full list of browsers we support, but we are not using it because we want babel-polyfill
+         * to include only polyfills for more modern browsers.
+         * Older browser polyfills are in preESModulesPolyfills.js
+         */
+          /* "browsers": ["Chrome 60", "Firefox 57", "iOS 9", "Edge 14", "ChromeAndroid 64", "Safari 10", "ie 11"] */
+          /*
+         * This is the list of browers we support that all also have support for the nomodule script
+         * attribute, meaning we can make them ignore a file that includes polyfills for older browsers
+         */
           "browsers": [
             "Chrome 61",
             "Firefox 60",
