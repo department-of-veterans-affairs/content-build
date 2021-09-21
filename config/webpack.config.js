@@ -65,7 +65,6 @@ module.exports = env => {
         },
       ],
     },
-    target: process.env.NODE_ENV === 'production' ? 'browserslist' : 'web',
     devtool: isOptimizedBuild ? 'source-map' : 'eval-source-map',
     devServer: {
       static: {
