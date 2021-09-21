@@ -35,13 +35,9 @@ function writeFile(fileName, fileObject, buildtype) {
     const oldString = 'window.contentData = null;';
     const debugInfo = _.omit(fileObject, KEYS_TO_IGNORE);
 
-    try {
-      const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
-      const newContents = contents.toString().replace(oldString, newString);
-      fs.writeFileSync(filePath, newContents, { overwrite: true });
-    } catch (err) {
-      console.error(err);
-    }
+    const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
+    const newContents = contents.toString().replace(oldString, newString);
+    fs.writeFileSync(filePath, newContents, { overwrite: true });
 
     resolve();
   });
