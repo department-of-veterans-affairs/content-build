@@ -1,14 +1,5 @@
 $c-blue: orange;
 
-@mixin testing() {
-  display: flex;
-  flex-direction: column;
-}
-
 body {
-  @include testing();
   border: 10px solid $c-blue;
-  display: grid;
-  grid-column: span;
-  grid-template-columns: max-content;
 }

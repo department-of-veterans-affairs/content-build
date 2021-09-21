@@ -10,7 +10,7 @@ const getAbsolutePath = relativePath =>
 const apps = '';
 
 const globalEntryFiles = {
-  content: getAbsolutePath('src/platform/site-wide/sass/style.scss'),
+  'content-build': getAbsolutePath('src/platform/site-wide/sass/style.scss'),
 };
 
 module.exports = env => {
@@ -35,7 +35,7 @@ module.exports = env => {
     mode: process.env.NODE_ENV || 'development',
     entry: entryFiles,
     output: {
-      path: path.resolve(buildPath, 'css'),
+      path: path.resolve(buildPath, 'assets'),
     },
     plugins: [new MiniCssExtractPlugin()],
     module: {
