@@ -292,6 +292,7 @@ jobs:
       - name: Notify Slack about broken links
         uses: ./.github/actions/vsp-github-actions/slack-socket
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
