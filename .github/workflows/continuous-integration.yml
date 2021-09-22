@@ -230,9 +230,6 @@ jobs:
           BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
           EOF
 
-      - name: cat
-        run: cat build/${{ matrix.buildtype }}/BUILD.txt
-
       - name: Persist E2E test build
         if: ${{ matrix.buildtype == 'vagovprod' }}
         run: |
