@@ -211,7 +211,10 @@ jobs:
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
       - name: Get buildtime
-        run: echo "${{ matrix.buildtype }}_buildtime=$(date +%s)" >> $GITHUB_ENV
+        id: buildtime
+        run: |
+          echo ::set-output name=buildtime::$(date +%s)
+          echo "${{ matrix.buildtype }}_buildtime=${{ steps.buildtime.outputs.buildtime}}" >> $GITHUB_ENV
 
       - name: Generate build details
         run: |
@@ -223,8 +226,11 @@ jobs:
           RUN_ID=${{ github.run_id }}
           RUN_NUMBER=${{ github.run_number }}
           REF=${{ github.sha }}
-          BUILDTIME=${{ env.[matrix.buildtype]_buildtime }}
+          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
           EOF
+
+      - name: cat
+        run: cat build/${{ matrix.buildtype }}/BUILD.txt
 
       - name: Persist E2E test build
         if: ${{ matrix.buildtype == 'vagovprod' }}
