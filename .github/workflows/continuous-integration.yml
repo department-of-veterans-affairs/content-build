@@ -660,7 +660,7 @@ jobs:
       fail-fast: true
       matrix:
         # buildtype: [vagovdev, vagovstaging, vagovprod] # TODO: Enable when ready
-        buildtype: [vagovdev]
+        buildtype: [vagovdev, vagovstaging]
 
     steps:
       - name: Restore ${{ matrix.buildtype }} build
