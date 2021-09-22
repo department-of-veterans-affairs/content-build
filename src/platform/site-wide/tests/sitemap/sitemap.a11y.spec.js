@@ -32,7 +32,11 @@ describe(`Accessibility tests`, () => {
   for (const url of splitURLs) {
     // eslint-disable-next-line no-loop-func
     it(`${url}`, () => {
-      cy.visit(url);
+      const localURL = url.replace(
+        `https://www.va.gov`,
+        `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
+      );
+      cy.visit(localURL);
       cy.get('body').should('be.visible', { timeout: normal });
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(3000);

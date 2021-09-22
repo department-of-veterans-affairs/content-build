@@ -4,7 +4,7 @@
 
 This repository contains scripts and templates which generate static HTML pages for the VA.gov site.
 
-There are several repositories that contain the code and content used to build VA.gov. If you're looking to get started running VA.gov locally, you should read the [Getting Started](https://department-of-veterans-affairs.github.io/veteran-facing-services-tools/getting-started) documentation.
+There are several repositories that contain the code and content used to build VA.gov. If you're looking to get started running VA.gov locally, you should read the [Setting up your local frontend environment](https://depo-platform-documentation.scrollhelp.site/developer-docs/Setting-up-your-local-frontend-environment.1844215878.html) documentation.
 
 ## Common commands
 
@@ -25,7 +25,7 @@ on VA.gov, you'll need to build these static pages using the following commands:
 
 `yarn build` (fetches the latest content cache from S3 by default when cache is empty)
 
-- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access)
+- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access). Add `--use-cached-assets` to skip asset download
 - creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
 - run once to build the static HTML files
 - need to run this again when adding new templates based on new Drupal entities
