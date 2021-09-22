@@ -11,7 +11,7 @@ import testData from './fixtures/vet_center_data.json';
 describe('Vet Center Main Page', () => {
   let container;
   const data = parseFixture(
-    'src/site/layouts/tests/vet_center/fixtures/vet_center_data.json',
+    'src/site/layouts/tests/vet_center/template/fixtures/vet_center_data.json',
   );
 
   beforeEach(async () => {

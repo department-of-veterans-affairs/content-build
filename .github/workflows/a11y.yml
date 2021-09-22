@@ -3,7 +3,7 @@ name: Accessibility Tests
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 10 * * 1-5'
+    - cron: '0 13 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -41,7 +41,7 @@ jobs:
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
-          
+
       - name: Get va-vsp-bot token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         with:
@@ -133,10 +133,10 @@ jobs:
         working-directory: content-build
     strategy:
       fail-fast: false
-      max-parallel: 16
+      max-parallel: 32
       matrix:
-        ci_node_total: [16]
-        ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        ci_node_total: [32]
+        ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
 
     env:
       NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
@@ -183,7 +183,7 @@ jobs:
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress E2E Tests
-        run: CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap-${{ matrix.ci_node_index }}.a11y.spec.js"
+        run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
 
       - name: Rename Mochawesome JSON file
         if: ${{ always() }}

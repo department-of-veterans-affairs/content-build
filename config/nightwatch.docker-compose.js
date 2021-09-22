@@ -59,9 +59,6 @@ module.exports = {
         port: selenium_server_port,
       },
     },
-    accessibility: {
-      filter: './src/platform/site-wide/tests/sitemap/*.a11y-nw.spec.js',
-    },
     wcag2a: {
       globals: {
         rules: ['section508', 'wcag2a'],

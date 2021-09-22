@@ -2,31 +2,43 @@
 const path = require('path');
 const appRegistry = require('../../../../applications/registry.json');
 
-function createReactPages() {
-  return (files, metalsmith, done) => {
-    appRegistry.forEach(({ entryName, appName, rootUrl, template }) => {
-      const trimmedUrl = path.join('.', rootUrl);
-      const filePath = path.join(trimmedUrl, 'index.html');
+function createReactPages(files, drupalData = { data: {} }, done) {
+  const {
+    data: {
+      alerts: alertsItem = {},
+      banners,
+      bannerAlerts: bannerAlertsItem = {},
+    },
+  } = drupalData;
+  const alertItems = { alert: alertsItem };
 
-      if (!files[filePath]) {
-        if (global.verbose) {
-          console.log(
-            `Generating HTML template for application ${appName} at ${rootUrl}`,
-          );
-        }
-        files[filePath] = {
-          title: appName,
-          entryname: entryName,
-          path: trimmedUrl,
-          layout: 'page-react.html',
-          contents: Buffer.from('\n<!-- Generated from manifest.json -->\n'),
-          ...template,
-        };
+  appRegistry.forEach(({ entryName, appName, rootUrl, template }) => {
+    const trimmedUrl = path.join('.', rootUrl);
+    const filePath = path.join(trimmedUrl, 'index.html');
+    if (!files[filePath]) {
+      if (global.verbose) {
+        console.log(
+          `Generating HTML template for application ${appName} at ${rootUrl}`,
+        );
       }
-    });
+      files[filePath] = {
+        title: appName,
+        entryname: entryName,
+        shouldAddDebugInfo: true,
+        debug: null,
+        path: trimmedUrl,
+        layout: 'page-react.html',
+        contents: Buffer.from('\n<!-- Generated from manifest.json -->\n'),
+        entityUrl: { path: `/${trimmedUrl}` },
+        alertItems,
+        ...{ bannerAlert: bannerAlertsItem },
+        ...{ banners },
+        ...template,
+      };
+    }
+  });
 
-    done();
-  };
+  done?.();
 }
 
 module.exports = createReactPages;

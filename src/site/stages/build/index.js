@@ -26,7 +26,6 @@ const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const createHeaderFooter = require('./plugins/create-header-footer');
 const createOutreachAssetsData = require('./plugins/create-outreach-assets-data');
-const createReactPages = require('./plugins/create-react-pages');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
@@ -79,7 +78,6 @@ function build(BUILD_OPTIONS) {
     );
   }
 
-  smith.use(createReactPages(BUILD_OPTIONS), 'Create React pages');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 
