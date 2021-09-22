@@ -703,7 +703,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    if: ${{ needs.archive.result == 'success' }}
     needs: archive
 
     strategy:
