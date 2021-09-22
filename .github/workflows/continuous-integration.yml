@@ -669,7 +669,7 @@ jobs:
           du -h build/${{ matrix.buildtype }}
 
       - name: Compress build
-        run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
+        run: tar -cvf ${{ matrix.buildtype }}.tar.bz2 build/${{ matrix.buildtype }}
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
