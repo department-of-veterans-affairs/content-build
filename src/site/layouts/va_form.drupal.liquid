@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with deriveBreadcrumbsFromUrl = true %}
 
@@ -98,7 +97,7 @@
               role="presentation"
             > </i>
           {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
-          {{ translatedDownloadText }} (PDF) 
+          {{ translatedDownloadText }} (PDF)
         </a>
 
         {% if fieldAlert.length %}
@@ -150,7 +149,7 @@
                   </p>
 
                 {{ vaForm.entity.fieldVaFormUsage.processed }}
-                
+
                 <a
                   href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
                   target="_blank"
@@ -165,7 +164,7 @@
                       role="presentation"
                     > </i>
                     {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}
-                    {{ translatedDownloadText }} (PDF) 
+                    {{ translatedDownloadText }} (PDF)
                 </a>
               </li>
             {% endfor %}
