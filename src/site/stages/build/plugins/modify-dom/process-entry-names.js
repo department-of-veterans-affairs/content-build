@@ -106,7 +106,7 @@ module.exports = {
         if (buildOptions.buildtype === environments.LOCALHOST) {
           $el.attr(attribute, `/assets/${entryContent}?t=${timestamp}`);
         } else {
-          $el.attr(attribute, `${bucketContent}/${entryContent}`);
+          $el.attr(attribute, `${bucketContent}/assets/${entryContent}`);
         }
       },
     );

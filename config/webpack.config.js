@@ -10,7 +10,7 @@ const getAbsolutePath = relativePath =>
 const apps = '';
 
 const globalEntryFiles = {
-  'content-build': getAbsolutePath('src/platform/site-wide/sass/style.scss'),
+  'content-build': getAbsolutePath('src/site/assets/sass/style.scss'),
 };
 
 module.exports = env => {
