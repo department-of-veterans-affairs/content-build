@@ -1,6 +1,6 @@
-<li class="featured-content-list-item vads-u-background-color--primary-alt-lightest vads-u-padding-x--1p5 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--0 vads-u-display--flex vads-u-flex-direction--column">
+<div class="feature featured-content-list-item vads-u-flex--fill vads-u-padding-y--1p5 vads-u-padding-x--1p5 vads-u-margin-bottom--0 medium-screen:vads-u-margin-bottom--2">
     {% if entity.fieldSectionHeader != empty %}
-        <h3 class="force-small-header">{{ entity.fieldSectionHeader }}</h3>
+        <h3 class="force-small-header vads-u-margin-bottom--2">{{ entity.fieldSectionHeader }}</h3>
         <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary">
     {% endif %}
     {% if entity.fieldDescription %}
@@ -16,4 +16,4 @@
             </a>
         {%endif%}
     {% endif %}
-</li>
+</div>
