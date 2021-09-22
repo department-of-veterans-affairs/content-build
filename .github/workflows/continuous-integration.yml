@@ -761,15 +761,13 @@ jobs:
           ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
           env_variable_name: CALLBACK_TOKEN
 
-      # TODO: timestamp is the regex function
-
       - name: CMS GovDelivery callback
         if: ${{ matrix.environment == 'vagovstaging' }}
         uses: fjogeleit/http-request-action@master
         continue-on-error: true
         with:
           url: ${{ matrix.callback_url }}/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}
-          method: 'POST'
+          method: POST
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
 
