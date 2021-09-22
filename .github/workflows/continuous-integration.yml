@@ -213,8 +213,9 @@ jobs:
       - name: Get buildtime
         id: buildtime
         run: |
-          echo ::set-output name=buildtime::$(date +%s)
-          echo "${{ matrix.buildtype }}_buildtime=${{ steps.buildtime.outputs.buildtime}}" >> $GITHUB_ENV
+          BUILDTIME=$(date +%s)
+          echo ::set-output name=buildtime::$BUILDTIME
+          echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Generate build details
         run: |
