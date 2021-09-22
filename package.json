@@ -186,7 +186,7 @@
     "recursive-readdir": "^2.2.2",
     "saucelabs": "^1.4.0",
     "selenium-server": "^3.141.59",
-    "semver": "^7.3.2",
+    "semver": "^7.3.5",
     "sentry-testkit": "^3.3.4",
     "sinon": "^3.2.1",
     "socks-proxy-agent": "^5.0.0",
