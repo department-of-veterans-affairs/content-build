@@ -5,7 +5,6 @@ const debounce = require('lodash/debounce');
 const printBuildHelp = require('./content-build-help');
 const getOptions = require('../src/site/stages/build/options');
 const build = require('../src/site/stages/build');
-// const { runCommand } = require('./utils');
 
 // If help, echo the options
 if (process.argv[2] === 'help') {
@@ -43,11 +42,7 @@ async function buildContent() {
       .on('change', rebuild)
       .on('unlink', rebuild);
   } else {
-    // Run Metalsmith
     build(buildOptions);
-
-    // Run Webpack
-    // runCommand(`yarn build:webpack --env=buildtype=${buildOptions.buildtype}`);
   }
 }
 
