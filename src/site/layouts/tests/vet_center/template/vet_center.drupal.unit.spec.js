@@ -67,7 +67,7 @@ describe('Vet Center Main Page', () => {
         .innerHTML.replace(/\s+/g, ' ')
         .trim(),
     ).to.equal(
-      '<h3 class="force-small-header" id="borne-the-battle-podcast-vet-c">Borne the Battle Podcast: Vet Centers</h3> <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary"> <div id="featured-content-descriptionBorne the Battle Podcast: Vet Centers}}"> <p>A Borne the Battle episode discusses some of the unique and generous benefits that Vet Centers offer.</p> </div>',
+      '<h3 class="force-small-header vads-u-margin-bottom--2" id="borne-the-battle-podcast-vet-c">Borne the Battle Podcast: Vet Centers</h3> <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary"> <div id="featured-content-descriptionBorne the Battle Podcast: Vet Centers}}"> <p>A Borne the Battle episode discusses some of the unique and generous benefits that Vet Centers offer.</p> </div>',
     );
   });
 
@@ -93,7 +93,7 @@ describe('Vet Center Main Page', () => {
         .innerHTML.replace(/\s+/g, ' ')
         .trim(),
     ).to.equal(
-      '<h3 class="force-small-header" id="borne-the-battle-podcast-vet-c">Borne the Battle Podcast: Vet Centers</h3> <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary"> <div id="featured-content-descriptionBorne the Battle Podcast: Vet Centers}}"> <p>A Borne the Battle episode discusses some of the unique and generous benefits that Vet Centers offer.</p> </div>',
+      '<h3 class="force-small-header vads-u-margin-bottom--2" id="borne-the-battle-podcast-vet-c">Borne the Battle Podcast: Vet Centers</h3> <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary"> <div id="featured-content-descriptionBorne the Battle Podcast: Vet Centers}}"> <p>A Borne the Battle episode discusses some of the unique and generous benefits that Vet Centers offer.</p> </div>',
     );
   });
 
@@ -119,13 +119,13 @@ describe('Vet Center Main Page', () => {
 
   it('renders prepare for your field-cc-non-traditional-hours', () => {
     expect(
-      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
+      container.querySelectorAll('#field-cc-non-traditional-hours p').length,
     ).to.equal(1);
   });
 
   it('renders prepare for your field-cc-non-traditional-hours', () => {
     expect(
-      container.querySelectorAll('.field-cc-non-traditional-hours p').length,
+      container.querySelectorAll('#field-cc-non-traditional-hours p').length,
     ).to.equal(1);
   });
 
@@ -165,8 +165,9 @@ describe('Vet Center Main Page', () => {
 
   it('renders prepare for your visit field-vet-center-feature-content', () => {
     expect(
-      container.querySelectorAll('.field-vet-center-feature-content > ul > li')
-        .length,
+      container.querySelectorAll(
+        '#field-vet-center-feature-content > div > div',
+      ).length,
     ).to.equal(3);
   });
 
