@@ -159,14 +159,14 @@ jobs:
 
       - name: Get Cypress version
         id: get-cypress-version
-        run: echo ::set-output name=CYPRESS_VERSION::$(yarn cypress -v | grep package | tr -dc '0-9')
+        run: echo ::set-output name=CYPRESS_VERSION::$(cat package.json | grep "\"cypress\"" | head -n1 | tr -dc '0-9')
 
       - name: Cache Cypress
         uses: actions/cache@v2
         with:
           path: |
             ~/.cache/Cypress
-          key: cypress-${{ hashFiles('**/yarn.lock') }}
+          key: cypress-${{ steps.get-cypress-version.outputs.CYPRESS_VERSION }}
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
