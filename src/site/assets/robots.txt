@@ -138,7 +138,6 @@ Disallow: /eastern-colorado-health-care/
 Disallow: /eastern-kansas-health-care/
 Disallow: /el-paso-health-care/
 Disallow: /fayetteville-arkansas-health-care/
-Disallow: /fayetteville-coastal-health-care/
 Disallow: /greater-los-angeles-health-care/
 Disallow: /gulf-coast-health-care/
 Disallow: /hampton-health-care/
@@ -176,7 +175,6 @@ Disallow: /northern-arizona-health-care/
 Disallow: /northern-indiana-health-care/
 Disallow: /orlando-health-care/
 Disallow: /palo-alto-health-care/
-Disallow: /philadelphia-health-care/
 Disallow: /phoenix-health-care/
 Disallow: /poplar-bluff-health-care/
 Disallow: /portland-health-care/
@@ -187,7 +185,6 @@ Disallow: /roseburg-health-care/
 Disallow: /saginaw-health-care/
 Disallow: /san-diego-health-care/
 Disallow: /san-francisco-health-care/
-Disallow: /sheridan-health-care/
 Disallow: /south-texas-health-care/
 Disallow: /southeast-louisiana-health-care/
 Disallow: /southern-arizona-health-care/
