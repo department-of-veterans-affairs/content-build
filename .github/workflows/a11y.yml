@@ -152,21 +152,17 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-          cache: 'yarn'
-          cache-dependency-path: content-build/yarn.lock
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
-      - name: Get Cypress version
-        id: get-cypress-version
-        run: echo ::set-output name=CYPRESS_VERSION::$(cat package.json | grep "\"cypress\"" | head -n1 | tr -dc '0-9')
-
-      - name: Cache Cypress
+      - name: Cache dependencies
+        id: cache-dependencies
         uses: actions/cache@v2
         with:
           path: |
+            ~/.cache/yarn
             ~/.cache/Cypress
-          key: cypress-${{ steps.get-cypress-version.outputs.CYPRESS_VERSION }}
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -174,6 +170,8 @@ jobs:
           command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
           max_attempts: 3
           timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
 
       # - name: Download production build artifact
       #   uses: actions/download-artifact@v2
