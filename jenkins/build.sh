@@ -51,7 +51,6 @@ done
 # exit code.  In this case, if the build command fails, the tee
 # command won't trick Jenkins into thinking the step passed.
 set -o pipefail
-npm run build:webpack --env=buildtype="$envName"
 npm --no-color run build -- --verbose --buildtype="$envName" --asset-source="$assetSource" --drupal-address="$drupalAddress" "$pullDrupal" --drupal-max-parallel-requests="$drupalMaxParallelRequests" "$omitdebug" "$noDrupalProxy" 2>&1 | tee "$buildLog"
 
 exit $?
