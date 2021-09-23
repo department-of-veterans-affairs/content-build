@@ -130,11 +130,7 @@ jobs:
     runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
-      options: -u 0
-      volumes:
-        - /usr/local/share:/share
-        - /tmp:/tmp
-        - /etc/ssl/certs
+      options: -u 1001:1001 -v /usr/local/share:/share
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -150,15 +146,6 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v2
-        with:
-          path: content-build
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-gov-west-1'
 
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
@@ -182,31 +169,6 @@ jobs:
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
-
-      - name: Get NEXUS username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
-          env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
-
-      - name: Get NEXUS token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
-          env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
-
-      - name: Change registry in yarn.lock
-        run: |
-          sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
-
-      - name: Authenticate NEXUS
-        run: |
-          npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
-          npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
-          npm config set registry ${{ env.NEXUS_REGISTRY }}
-          npm config set email va-vsp-bot-1@va.gov
-          npm config set always-auth true
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
