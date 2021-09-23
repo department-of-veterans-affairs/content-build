@@ -89,6 +89,8 @@ jobs:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
           cache: 'yarn'
           cache-dependency-path: content-build/yarn.lock
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -142,14 +144,6 @@ jobs:
         with:
           path: content-build
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cache/Cypress
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -160,6 +154,19 @@ jobs:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
           cache: 'yarn'
           cache-dependency-path: content-build/yarn.lock
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+
+      - name: Get Cypress version
+        id: get-cypress-version
+        run: echo ::set-output name=CYPRESS_VERSION::$(yarn cypress -v | grep package | tr -dc '0-9')
+
+      - name: Cache Cypress
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/Cypress
+          key: cypress-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -285,6 +292,8 @@ jobs:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
           cache: 'yarn'
           cache-dependency-path: content-build/yarn.lock
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
