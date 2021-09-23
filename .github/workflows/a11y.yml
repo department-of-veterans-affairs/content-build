@@ -87,10 +87,17 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-          cache: 'yarn'
-          cache-dependency-path: content-build/yarn.lock
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache/yarn
+            /github/home/.cache/Cypress
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -158,11 +165,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
-            ~/.cache/Cypress
+            .cache/yarn
+            /github/home/.cache/Cypress
             **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-self-hosted-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-self-hosted-runner-cypress
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -298,11 +305,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/yarn
-            ~/.cache/Cypress
+            .cache/yarn
+            /github/home/.cache/Cypress
             **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-gh-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-gh-runner-cypress
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
