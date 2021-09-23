@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on: [push]
-  # workflow_dispatch:
-  # schedule:
-  #   - cron: '0 13 * * 1-5'
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 13 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -57,16 +57,16 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      # - name: Notify Slack
-      #   if: ${{ always() }}
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Notify Slack
+        if: ${{ always() }}
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -106,23 +106,23 @@ jobs:
           max_attempts: 3
           timeout_minutes: 7
 
-      # - name: Set Drupal address
-      #   run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+      - name: Set Drupal address
+        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
-      # - name: Build
-      #   run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-      #   env:
-      #     NODE_ENV: production
+      - name: Build
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        env:
+          NODE_ENV: production
 
-      # - name: Compress E2E test build
-      #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+      - name: Compress E2E test build
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      # - name: Upload E2E test build artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: test-build.tar.bz2
-      #     path: content-build/test-build.tar.bz2
-      #     retention-days: 1
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
   
   a11y:
     name: Accessibility Tests
@@ -133,11 +133,10 @@ jobs:
       options: -u 1001:1001 -v /usr/local/share:/share
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 32
       matrix:
-        ci_node_total: [1]
-        # ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
-        ci_node_index: [1]
+        ci_node_total: [32]
+        ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
 
     env:
       NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
@@ -177,38 +176,38 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
 
-      # - name: Download production build artifact
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: test-build.tar.bz2
+      - name: Download production build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test-build.tar.bz2
 
-      # - name: Unpack build
-      #   run: |
-      #     mkdir -p build/vagovprod
-      #     tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
-      # - name: Install Chrome
-      #   uses: browser-actions/setup-chrome@latest
-      #   with:
-      #     chrome-version: stable
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
 
-      # - name: Start content-build
-      #   run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+      - name: Start content-build
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
-      # - name: Run Cypress E2E Tests
-      #   run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
+      - name: Run Cypress E2E Tests
+        run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
 
-      # - name: Rename Mochawesome JSON file
-      #   if: ${{ always() }}
-      #   run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json 
+      - name: Rename Mochawesome JSON file
+        if: ${{ always() }}
+        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json 
 
-      # - name: Archive Mochawesome test results
-      #   uses: actions/upload-artifact@v2
-      #   if: ${{ always() }}
-      #   with:
-      #     name: cypress-mochawesome-test-results
-      #     path: content-build/mochawesome-report
-      #     retention-days: 1
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: cypress-mochawesome-test-results
+          path: content-build/mochawesome-report
+          retention-days: 1
 
   slack:
     name: Notify Slack and upload Mochawesome report
@@ -262,27 +261,27 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      # - name: Accessibility Test Failure
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Accessibility Test Failure
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
 
-      # - name: Accessibility Test Success
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   if: ${{ needs.a11y.result == 'success' }}
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Accessibility Test Success
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        if: ${{ needs.a11y.result == 'success' }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
 
       - name: Get Node version
         id: get-node-version
@@ -317,50 +316,50 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      # - name: Download Mochawesome test results
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: cypress-mochawesome-test-results
-      #     path: content-build/cypress/results/json
+      - name: Download Mochawesome test results
+        uses: actions/download-artifact@v2
+        with:
+          name: cypress-mochawesome-test-results
+          path: content-build/cypress/results/json
 
-      # - name: Merge test results into one file
-      #   run: yarn run cy:report:merge
+      - name: Merge test results into one file
+        run: yarn run cy:report:merge
 
-      # - name: Generate HTML report
-      #   run: yarn run cy:report:generate
+      - name: Generate HTML report
+        run: yarn run cy:report:generate
 
-      # - name: Generate UUID for Mochawesome report
-      #   run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
+      - name: Generate UUID for Mochawesome report
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
 
-      # - name: Rename Mochawesome report file
-      #   run: |
-      #     cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
+      - name: Rename Mochawesome report file
+        run: |
+          cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
 
-      # - name: Get AWS IAM role
-      #   uses: marvinpinto/action-inject-ssm-secrets@latest
-      #   with:
-      #     ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-      #     env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+      - name: Get AWS IAM role
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-      # - name: Configure AWS Credentials (2)
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: us-gov-west-1
-      #     role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-      #     role-duration-seconds: 900
-      #     role-session-name: vsp-frontendteam-githubaction
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
 
-      # - name: Upload test report to s3
-      #   run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
+      - name: Upload test report to s3
+        run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
 
-      # - name: Accessibility Test Report Slack notification
-      #   uses: ./.github/actions/vsp-github-actions/slack-socket
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #   with:
-      #     slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-      #     slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-      #     attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
-      #     channel_id: ${{ env.CHANNEL_ID }}
+      - name: Accessibility Test Report Slack notification
+        uses: ./.github/actions/vsp-github-actions/slack-socket
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
