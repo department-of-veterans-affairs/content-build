@@ -175,7 +175,6 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
-
       - name: Download production build artifact
         uses: actions/download-artifact@v2
         with:
@@ -291,10 +290,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-          cache: 'yarn'
-          cache-dependency-path: content-build/yarn.lock
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Cache dependencies
         id: cache-dependencies
