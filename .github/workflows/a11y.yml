@@ -88,6 +88,7 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
           cache: 'yarn'
+          cache-dependency-path: content-build/yarn.lock
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -158,6 +159,7 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
           cache: 'yarn'
+          cache-dependency-path: content-build/yarn.lock
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -282,6 +284,7 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
           cache: 'yarn'
+          cache-dependency-path: content-build/yarn.lock
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
