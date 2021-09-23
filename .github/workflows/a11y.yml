@@ -161,8 +161,8 @@ jobs:
             ~/.cache/yarn
             ~/.cache/Cypress
             **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-self-hosted-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-self-hosted-runner-cypress
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -293,12 +293,25 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/yarn
+            ~/.cache/Cypress
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-gh-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-gh-runner-cypress
+
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
           command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
           max_attempts: 3
           timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
 
       # - name: Download Mochawesome test results
       #   uses: actions/download-artifact@v2
