@@ -18,8 +18,7 @@ describe('Accessible Modal Test', () => {
     // Trap backward traversal
     cy.get(firstModalItem)
       .should('be.focused')
-      .realPress(['Shift', 'Tab'])
-      .realPress(['Shift', 'Tab']);
+      .repeatKey(['Shift', 'Tab'], 2);
     cy.get(lastModalItem).should('be.focused');
 
     // Trap forward traversal
