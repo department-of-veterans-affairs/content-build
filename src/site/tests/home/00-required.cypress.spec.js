@@ -7,7 +7,11 @@ Cypress.Commands.add('verifyGoogleAnalytics', () => {
     `${process.env.BUILDTYPE || 'vagovdev'}.js`,
   );
   cy.readFile(filePath).then(str => {
-    cy.get('[data-e2e="analytics-script"]').should('contain', str);
+    cy.get('[data-e2e="analytics-script"]')
+      .invoke('html')
+      .then(value => {
+        expect(value.replace(/\s/g, '')).to.contain(str.replace(/\s/g, ''));
+      });
   });
 });
 
