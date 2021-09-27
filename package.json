@@ -137,6 +137,7 @@
     "cypress-axe": "^0.12.2",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-plugin-tab": "^1.0.5",
+    "cypress-real-events": "^1.5.1",
     "cypress-wait-until": "^1.7.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
@@ -205,7 +206,6 @@
   "dependencies": {
     "blob-polyfill": "^4.0.20200601",
     "core-js": "^3.17.3",
-    "cypress-real-events": "^1.5.1",
     "diff2html": "^3.4.11",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
