@@ -541,7 +541,7 @@ jobs:
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress tests
-        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec src/site/layouts/tests/**/*.cypress.spec.js
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
 
       - name: Publish test results
         if: ${{ always() }}
@@ -655,7 +655,16 @@ jobs:
   archive:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
-    needs: [start-runner, cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
+    needs:
+      [
+        start-runner,
+        cypress-tests,
+        nightwatch-tests,
+        unit-tests,
+        linting,
+        security-audit,
+        drupal-cache-test,
+      ]
 
     strategy:
       fail-fast: true
@@ -813,7 +822,7 @@ jobs:
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
-          
+
       - name: Get va-vsp-bot token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         with:
