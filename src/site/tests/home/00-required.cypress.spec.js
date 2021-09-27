@@ -4,12 +4,11 @@ Cypress.Commands.add('verifyGoogleAnalytics', () => {
   const filePath = path.join(
     __dirname,
     '../../assets/js/google-analytics/',
-    `${process.env.BUILDTYPE}.js`,
+    `${process.env.BUILDTYPE || 'vagovdev'}.js`,
   );
-  cy.get('[data-e2e="analytics-script"]').should(
-    'contain',
-    cy.readFile(filePath),
-  );
+  cy.readFile(filePath).then(str => {
+    cy.get('[data-e2e="analytics-script"]').contains(str);
+  });
 });
 
 Cypress.Commands.add('verifyElementCount', (selector, expectedLength) => {
