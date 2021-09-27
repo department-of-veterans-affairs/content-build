@@ -205,7 +205,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
-          path: content-build/mochawesome-report
+          path: mochawesome-report
           retention-days: 1
 
   slack:
