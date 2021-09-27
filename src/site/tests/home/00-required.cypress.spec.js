@@ -1,16 +1,13 @@
 const path = require('path');
 
 Cypress.Commands.add('verifyGoogleAnalytics', () => {
-  const analyticsHTML = document.querySelector('[data-e2e="analytics-script"]')
-    .innerHTML;
-  cy.log(analyticsHTML);
   const filePath = path.join(
     __dirname,
     '../../assets/js/google-analytics/',
     `${process.env.BUILDTYPE || 'vagovdev'}.js`,
   );
   cy.readFile(filePath).then(str => {
-    cy.get('[data-e2e="analytics-script"]').contains(str);
+    cy.get('[data-e2e="analytics-script"]').should('contain', str);
   });
 });
 
