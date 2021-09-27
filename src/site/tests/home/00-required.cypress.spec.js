@@ -1,6 +1,9 @@
 const path = require('path');
 
 Cypress.Commands.add('verifyGoogleAnalytics', () => {
+  const analyticsHTML = document.querySelector('[data-e2e="analytics-script"]')
+    .innerHTML;
+  cy.log(analyticsHTML);
   const filePath = path.join(
     __dirname,
     '../../assets/js/google-analytics/',
