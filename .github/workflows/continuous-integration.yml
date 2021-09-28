@@ -538,10 +538,10 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Start server
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 --env buildtype=vagovprod &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress tests
-        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
 
       - name: Publish test results
         if: ${{ always() }}
