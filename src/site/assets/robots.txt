@@ -102,7 +102,6 @@ Disallow: /health-care/health-questionnaires/questionnaires/
 # to prevent sub-directories from being indexed
 # see https://developers.google.com/search/docs/advanced/robots/create-robots-txt#useful-robots.txt-rules
 Disallow: /alaska-health-care/
-Disallow: /alexandria-health-care/
 Disallow: /amarillo-health-care/
 Disallow: /ann-arbor-health-care/
 Disallow: /atlanta-health-care/
@@ -134,12 +133,9 @@ Disallow: /connecticut-health-care/
 Disallow: /dayton-health-care/
 Disallow: /detroit-health-care/
 Disallow: /dublin-health-care/
-Disallow: /eastern-colorado-health-care/
 Disallow: /eastern-kansas-health-care/
 Disallow: /el-paso-health-care/
-Disallow: /fayetteville-arkansas-health-care/
 Disallow: /greater-los-angeles-health-care/
-Disallow: /gulf-coast-health-care/
 Disallow: /hampton-health-care/
 Disallow: /hines-health-care/
 Disallow: /huntington-health-care/
@@ -174,7 +170,6 @@ Disallow: /northeast-ohio-health-care/
 Disallow: /northern-arizona-health-care/
 Disallow: /northern-indiana-health-care/
 Disallow: /orlando-health-care/
-Disallow: /palo-alto-health-care/
 Disallow: /phoenix-health-care/
 Disallow: /poplar-bluff-health-care/
 Disallow: /portland-health-care/
@@ -186,7 +181,6 @@ Disallow: /saginaw-health-care/
 Disallow: /san-diego-health-care/
 Disallow: /san-francisco-health-care/
 Disallow: /south-texas-health-care/
-Disallow: /southeast-louisiana-health-care/
 Disallow: /southern-arizona-health-care/
 Disallow: /southern-oregon-health-care/
 Disallow: /spokane-health-care/

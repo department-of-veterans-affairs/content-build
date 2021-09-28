@@ -85,6 +85,17 @@
     src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=VA" id="_fed_an_ua_tag"></script>
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
+    function focusContent(e) {
+      e.preventDefault();
+      e.target.hidden = true;
+      const contentElement = document.querySelector('#content h1') || document.querySelector('#content');
+      contentElement.setAttribute('tabindex', '-1');
+      contentElement.addEventListener('blur', (event) => {
+        event.target.removeAttribute('tabindex');
+      }, true);
+      window.scrollTo(0, contentElement.offsetTop);
+      contentElement.focus();
+    }
     window.VetsGov = window.VetsGov || {};
     window.VetsGov.headerFooter = JSON.parse({{ headerFooterData }});
   </script>
@@ -109,7 +120,7 @@
   {% endif %}
 
   {{ google_analytics_noscript }}
-  <a class="show-on-focus" href="#content">Skip to Content</a>
+  <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
   {% if !noHeader %}
     {% include "src/site/includes/top-nav.html" %}
@@ -127,4 +138,8 @@
       {% include "src/site/assets/js/incompatible-browser.js" %};
       checkBrowserCompatibility();
     })();
+  </script>
+
+  <script nonce="**CSP_NONCE**" type="text/javascript">
+    {% include "src/site/assets/js/skip-link-focus.js" %}
   </script>
