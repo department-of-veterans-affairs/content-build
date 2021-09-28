@@ -460,7 +460,6 @@ jobs:
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
-      BUILDTYPE: 'vagovprod'
 
     steps:
       - name: Checkout content-build
@@ -539,7 +538,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Start server
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 --env buildtype=vagovprod &
 
       - name: Run Cypress tests
         run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json"

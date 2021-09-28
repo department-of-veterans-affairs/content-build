@@ -4,7 +4,7 @@ Cypress.Commands.add('verifyGoogleAnalytics', () => {
   const filePath = path.join(
     __dirname,
     '../../assets/js/google-analytics/',
-    `${process.env.BUILDTYPE || 'vagovdev'}.js`,
+    `${Cypress.env('buildtype') || 'vagovdev'}.js`,
   );
   cy.readFile(filePath).then(str => {
     cy.get('[data-e2e="analytics-script"]')
