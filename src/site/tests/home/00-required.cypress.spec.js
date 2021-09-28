@@ -22,8 +22,8 @@ Cypress.Commands.add('verifyElementCount', (selector, expectedLength) => {
 describe('Homepage Test', () => {
   it('has the right elements and analytics', () => {
     cy.visit('/');
-    expect(process.env.BUILDTYPE).to.equal('vagovprod');
-    cy.log(`The build is ${process.env.BUILDTYPE}`);
+    expect(Cypress.env('buildtype')).to.equal('vagovprod');
+    cy.log(`The build is ${Cypress.env('buildtype')}`);
     cy.verifyElementCount('[data-e2e="bucket"]', 4);
     cy.verifyElementCount('[data-e2e="hub"]', 11);
     cy.verifyElementCount('[data-e2e="news"]', 3);
