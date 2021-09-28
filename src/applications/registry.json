@@ -1133,8 +1133,8 @@
   },
   {
     "appName": "My Education Benefits",
-    "entryName": "my-education-benefits",
-    "rootUrl": "/my-education-benefits",
+    "entryName": "1990ez-edu-benefits",
+    "rootUrl": "/education/apply-for-benefits-form-22-1990",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
