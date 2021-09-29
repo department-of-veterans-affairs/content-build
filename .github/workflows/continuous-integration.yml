@@ -565,6 +565,14 @@ jobs:
           name: cypress-screenshot-artifacts
           path: cypress/screenshots
 
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: cypress-mochawesome-test-results
+          path: cypress/results
+          retention-days: 1
+
       - name: Configure AWS credentials
         if: ${{ github.ref == 'refs/heads/master' && failure() }}
         uses: aws-actions/configure-aws-credentials@v1
