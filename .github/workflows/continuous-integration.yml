@@ -823,10 +823,10 @@ jobs:
 
       - name: Upload test videos to s3
         if: ${{ needs.cypress-tests.result == 'failure' }}
-        run: aws s3 cp testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }} s3://testing-tools-testing-reports/content-build-reports/videos/${{ env.UUID }} --acl public-read --region us-gov-west-1 --recursive
+        run: aws s3 cp testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }} s3://testing-tools-testing-reports/content-build-cypress-reports/videos/${{ env.UUID }} --acl public-read --region us-gov-west-1 --recursive
 
       - name: Upload test report to s3
-        run: aws s3 cp testing-tools-team-dashboard-data/mochawesome-report s3://testing-tools-testing-reports/content-build-reports --acl public-read --region us-gov-west-1 --recursive
+        run: aws s3 cp testing-tools-team-dashboard-data/mochawesome-report s3://testing-tools-testing-reports/content-build-cypress-reports --acl public-read --region us-gov-west-1 --recursive
 
       # -------------------------
       # | Cypress Tests Summary |
