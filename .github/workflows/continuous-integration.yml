@@ -717,6 +717,7 @@ jobs:
     needs: [cypress-tests]
     if: ${{ always() }}
     continue-on-error: true
+    timeout-minutes: 30
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
