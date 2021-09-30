@@ -158,9 +158,8 @@
               <p> {{ fieldCcVetCenterFaqs.fetched.fieldSectionIntro.0.value }} </p>
             {% endif %}
             <div class="vads-u-margin-bottom--3" id="field-vet-center-faqs">
-              {% include "src/site/paragraphs/facilities/q_a.accordion_panel.drupal.liquid" with
-                  fetched = fieldCcVetCenterFaqs.fetched
-                  fetchedBundle = fieldCcVetCenterFaqs.fetchedBundle
+              {% include "src/site/paragraphs/q_a.collapsible_panel.drupal.liquid" with
+                  entity = fieldCcVetCenterFaqs.fetched
               %}
             </div>
           {% endif %}
@@ -171,7 +170,6 @@
   </main>
   <div id="vet-center-up-to-top" onclick="recordEvent({ event: 'back-to-top'});">
     {% include "src/site/components/up_to_top_button.html" %}
-  </div>
 </div>
 
 {% include "src/site/includes/footer.html" %}
