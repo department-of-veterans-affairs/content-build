@@ -762,7 +762,6 @@ jobs:
       [
         start-runner,
         cypress-tests,
-        nightwatch-tests,
         unit-tests,
         linting,
         security-audit,
@@ -860,7 +859,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, nightwatch-tests, archive]
+    needs: [start-runner, cypress-tests, archive]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
