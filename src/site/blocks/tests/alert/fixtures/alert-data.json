@@ -1,0 +1,21 @@
+{
+  "alert": {
+    "id": 41,
+    "entityPublished": true,
+    "fieldAlertDismissable": false,
+    "fieldAlertFrequency": "always",
+    "fieldNodeReference": [
+      {
+        "targetId": 5090
+      }
+    ],
+    "fieldIsThisAHeaderAlert": "in_page_alert",
+    "fieldAlertType": "information",
+    "fieldAlertTitle": "You can choose to receive improved pension benefits",
+    "fieldAlertContent": {
+      "entity": {
+        "entityRendered": "  <div class=\"paragraph paragraph--type--expandable-text paragraph--view-mode--full\">\n    <div class=\"paragraph--metadata\">\n            \n    </div>\n          <div class=\"field field--name-field-text-expander field--type-string field--label-above\">\n  <div class=\"field__label\">Text Expander</div>\n                <div class=\"field__item\">\n          <span class=\"additional-info-title\">Learn more about changing your pension benefits program</span>\n        </div>\n          </div>\n\n  <div class=\"clearfix text-formatted field field--name-field-wysiwyg field--type-text-long field--label-above\">\n    <div class=\"field__label\">Full Text</div>\n              <div class=\"field__item\"><p><strong>If you're currently receiving payments from a Section 306 or old law pension,</strong> you can elect to change your benefits to begin receiving payments through the current, improved VA pension program. If you have questions about your benefits, please call us at <a href=\"tel:+18772946380\">877-294-6380</a>.</p>\n\n<p>View the current rates for improved pension programs:<br /><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"94caf7db-5c43-45ee-a98f-b0d05831328b\" href=\"/pension/veterans-pension-rates\" title=\"2021 VA pension rates for Veterans\">Veterans Pension rates</a><br /><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"aa96d639-fcea-4cb6-b3c8-1002dbec0ac5\" href=\"/pension/survivors-pension-rates\" title=\"2021 VA Survivors Pension benefit rates\">Survivors Pension rates</a></p>\n\n<p><strong>If you've lost entitlement to your Section 306 or old law pension,</strong> you can't apply again for these benefits. But you can apply for an improved <a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"17ab63a7-1b97-4587-8e54-6fae907af781\" href=\"/pension/how-to-apply\" title=\"How to apply for a VA pension as a Veteran\">Veterans Pension</a> or <a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"ef05c64c-5825-4a68-bb8b-b42475185ce0\" href=\"/pension/survivors-pension\" title=\"VA Survivors Pension\">Survivors Pension</a>.</p></div>\n          </div>\n\n      </div>\n"
+      }
+    }
+  }
+}

@@ -1,27 +1,3 @@
-{% comment %}
-    Example data:
-    {
-        "entityBundle": "alert",
-        "fieldAlertType": "warning",
-        "fieldAlertTitle": "How do I talk to someone right now?",
-        "fieldReusability": "reusable",
-        "fieldAlertContent": {
-            "entity": {
-                "entityId": "932",
-                "entityBundle": "expandable_text"
-                "fieldWysiwyg": {
-                    "processed": "..."
-                },
-                "fieldTextExpander": "Find out how to get support anytime day or night."
-            }
-        }
-    }
-{% endcomment %}
-
-{% if alert.fieldAlertContent %}
-  {% assign expander = alert.fieldAlertContent.entity %}
-{% endif %}
-
 {% assign alertType = alert.fieldAlertType %}
 
 {% if alertType = "information" %}
@@ -35,23 +11,22 @@
         {{ alert.fieldAlertTitle }}
       </h2>
 
-      {% if expander.fieldTextExpander == empty %}
-          {{ expander.fieldWysiwyg.processed }}
+      {% if alert.fieldAlertContent.entity.fieldTextExpander == empty %}
+        {{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}
       {% endif %}
 
-      {% if expander.fieldTextExpander %}
+      {% if alert.fieldAlertContent.entity.fieldTextExpander %}
         {% comment %}
           NOTE: .additional-info-container is a class utilized by
           createAdditionalInfoWidget.js to add toggle functionality to info alerts
         {% endcomment %}
-
-        <div data-alert-box-title="{{ alert.fieldAlertTitle }}" data-label="{{ expander.fieldTextExpander }}" class="form-expanding-group borderless-alert additional-info-container">
+        <div data-alert-box-title="{{ alert.fieldAlertTitle }}" data-label="{{ alert.fieldAlertContent.entity.fieldTextExpander }}" class="form-expanding-group borderless-alert additional-info-container">
           <div class="additional-info-title">
-            {{ expander.fieldTextExpander }}
+            {{ alert.fieldAlertContent.entity.fieldTextExpander }}
           </div>
 
-          {% if expander.fieldWysiwyg %}
-            <div class="additional-info-content usa-alert-text" hidden>{{ expander.fieldWysiwyg.processed }}</div>
+          {% if alert.fieldAlertContent.entity.fieldWysiwyg %}
+            <div class="additional-info-content usa-alert-text" hidden>{{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}</div>
           {% endif %}
         </div>
       {% endif %}
