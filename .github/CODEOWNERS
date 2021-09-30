@@ -20,14 +20,11 @@ src/site/includes @department-of-veterans-affairs/vsa-public-websites-frontend @
 src/site/components @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-caregiver-frontend
 
 # Public Websites
-src/platform/site-wide @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/frontend-review-group
 src/site/includes/debug.drupal.liquid @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/layouts/campaign_landing_page.drupal.liquid @department-of-veterans-affairs/vsa-public-websites-frontend
 
 # Facility Locator and VAMC pages
 src/site/layouts @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-public-websites-frontend
-src/platform/site-wide/sass/modules/_m-side-nav.scss @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-public-websites-frontend
-src/platform/site-wide/side-nav @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-public-websites-frontend
 src/site/facilities @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/layouts/health*.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
 src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
@@ -45,6 +42,3 @@ src/site/stages/build/drupal @department-of-veterans-affairs/vsa-public-websites
 
 # Liquid template filters
 src/site/filters @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-public-websites-frontend
-
-# Metalsmith plugins
-src/site/stages/build/plugins/modify-dom @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-public-websites-frontend
