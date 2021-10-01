@@ -728,7 +728,7 @@ module.exports = function registerFilters() {
     });
   };
 
-  liquid.filters.processDynamicContent = (entity, contentType) => {
+  liquid.filters.processCentralizedContent = (entity, contentType) => {
     // TODO - add more cases as new centralized content types are added
     // eslint-disable-next-line sonarjs/no-small-switch
     switch (contentType) {
