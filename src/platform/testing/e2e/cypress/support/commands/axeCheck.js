@@ -1,3 +1,12 @@
+const table = require('table').table;
+
+const tableConfig = {
+  columns: {
+    0: { width: 15 },
+    1: { width: 85 },
+  },
+};
+
 /**
  * Callback from a11y check that logs aXe violations to console output.
  *
@@ -20,8 +29,13 @@ const processAxeCheckResults = violations => {
     ['nodes', nodes.length],
   ]);
 
-  cy.task('log', violationMessage);
-  violationData.forEach(violation => cy.task('table', violation));
+  assert.fail(
+    violations.length,
+    0,
+    `\n${violationMessage}\n${violationData.map(violation =>
+      table(violation, tableConfig),
+    )}`,
+  );
 };
 
 /**
@@ -61,5 +75,7 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
     : axeBuilder;
 
   Cypress.log();
-  cy.checkA11y(context, axeConfig, processAxeCheckResults);
+  cy.checkA11y(context, axeConfig, processAxeCheckResults, {
+    skipFailures: true,
+  });
 });

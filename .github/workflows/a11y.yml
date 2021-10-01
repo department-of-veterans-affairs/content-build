@@ -318,7 +318,8 @@ jobs:
           path: content-build/cypress/results/json
 
       - name: Merge test results into one file
-        run: yarn run cy:report:merge
+        run: |
+          yarn run cy:report:merge && sed -i -e 's/"message": "AssertionError.*$/"message": "Accessibility violations were detected.",/g' index.json
 
       - name: Generate HTML report
         run: yarn run cy:report:generate
