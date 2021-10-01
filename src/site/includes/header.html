@@ -61,7 +61,9 @@
 
   <!-- CSS -->
   <link rel="stylesheet" data-entry-name="style.css">
+  {% if buildtype != 'vagovdev' or buildtype != 'localhost' %}
   <link rel="stylesheet" data-entry-content="content-build.css">
+  {% endif %}
   <link rel="stylesheet" data-entry-name="{{ entryname | default: 'static-pages' }}.css">
 
   <!-- Old IE -->
