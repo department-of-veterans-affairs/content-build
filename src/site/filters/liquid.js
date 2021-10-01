@@ -730,7 +730,6 @@ module.exports = function registerFilters() {
 
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     // TODO - add more cases as new centralized content types are added
-    // eslint-disable-next-line sonarjs/no-small-switch
     switch (contentType) {
       case 'wysiwyg': {
         // handle normalized data format
