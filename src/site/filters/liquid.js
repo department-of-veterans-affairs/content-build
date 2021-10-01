@@ -745,6 +745,14 @@ module.exports = function registerFilters() {
           };
         }
       }
+      case 'q_a_section': {
+        return {
+          fieldSectionHeader: entity?.fieldSectionHeader[0]?.value,
+          fieldSectionIntro: entity?.fieldSectionIntro[0]?.value,
+          fieldAccordionDisplay: entity?.fieldAccordionDisplay[0]?.value,
+          fieldQuestions: entity?.fieldQuestions,
+        };
+      }
       default: {
         return entity;
       }

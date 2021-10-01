@@ -150,20 +150,13 @@
           %}
 
           {% if fieldCcVetCenterFaqs.fetched %}
-            {% if fieldCcVetCenterFaqs.fetched.fieldSectionHeader.0.value != empty %}
-              <h2 id="field-cc-content-faq-heading"
-                  class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
-                {{ fieldCcVetCenterFaqs.fetched.fieldSectionHeader.0.value }}
-              </h2>
-              <p> {{ fieldCcVetCenterFaqs.fetched.fieldSectionIntro.0.value }} </p>
-            {% endif %}
             <div class="vads-u-margin-bottom--3" id="field-vet-center-faqs">
-              {% include "src/site/paragraphs/q_a.collapsible_panel.drupal.liquid" with
-                  entity = fieldCcVetCenterFaqs.fetched
+              {% include "src/site/includes/dynamic-content.drupal.liquid" 
+                entity = fieldCcVetCenterFaqs.fetched 
+                contentType = fieldCcVetCenterFaqs.fetchedBundle
               %}
             </div>
           {% endif %}
-
         </article>
       </div>
     </div>

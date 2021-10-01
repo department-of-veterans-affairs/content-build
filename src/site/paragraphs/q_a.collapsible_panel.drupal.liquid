@@ -1,15 +1,23 @@
 <div data-template="paragraphs/q_a.collapsible_panel">
   <va-accordion bordered>
     {% assign questions = entity.fieldQuestions %}
-    {% assign sectionHeader = entity.fieldSectionHeader.0.value %}
+    {% assign sectionHeader = entity.fieldSectionHeader %}
 
     {% for accordionItem in questions %}
       {% assign item = accordionItem.entity %}
-      {% assign id = item.targetId %}
+      {% if item.entityId %}
+        {% assign id = item.entityId %}
+      {% elsif item.targetId %}
+        {% assign id = item.targetId %}
+      {% endif %}
 
       <va-accordion-item
         id="cc-question-accordion-item-{{ id }}"
-        header="{{ item.fieldQuestion.0.value }}" 
+        {% if item.fieldQuestion.0.value %}
+          header="{{ item.fieldQuestion.0.value }}"
+        {% elsif item.fieldQuestion %}
+          header="{{ item.fieldQuestion }}"
+        {% endif %}
         level="3"
       >
         <div
@@ -17,9 +25,13 @@
           data-template="paragraphs/q_a.collapsible_panel__qa"
           data-entity-id="{{ id }}"
           data-analytics-faq-section="{{ sectionHeader | escape }}"
-          data-analytics-faq-text="{{ item.fieldQuestion.0.value | escape }}"
+          {% if item.fieldQuestion.0.value %}
+            data-analytics-faq-text="{{ item.fieldQuestion.0.value | escape }}"
+          {% elsif item.fieldQuestion %}
+            data-analytics-faq-text="{{ item.fieldQuestion | escape }}"
+          {% endif %}
         >
-          <div id="{{ item.entityBundle }}-{{ item.targetId }}">
+          <div id="{{ item.entityBundle }}-{{ id }}">
             <div itemprop="acceptedAnswer" itemscope="" itemtype="http://schema.org/Answer">
               {% for answer in item.fieldAnswer %}
                 {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
