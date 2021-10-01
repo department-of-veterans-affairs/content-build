@@ -9,7 +9,8 @@ on:
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  CHANNEL_ID: C37M86Y8G #devops-deploys
+  DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
+  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-support
   NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group-nocache/
 
 concurrency:
@@ -300,7 +301,7 @@ jobs:
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: ${{ env.CHANNEL_ID}}
+          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID}}
 
   unit-tests:
     name: Unit Tests
@@ -1035,4 +1036,4 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+          channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
