@@ -141,15 +141,15 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      # - name: Cache dependencies
-      #   id: cache-dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       .cache/yarn
-      #       **/node_modules
-      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
