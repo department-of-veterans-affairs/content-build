@@ -29,13 +29,15 @@ const processAxeCheckResults = violations => {
     ['nodes', nodes.length],
   ]);
 
-  assert.fail(
-    violations.length,
-    0,
-    `\n${violationMessage}\n${violationData.map(violation =>
-      table(violation, tableConfig),
-    )}`,
-  );
+  cy.url().then(url => {
+    assert.fail(
+      violations.length,
+      0,
+      `\n\n${url}\n\n${violationMessage}\n\n${violationData.map(violation =>
+        table(violation, tableConfig),
+      )}`,
+    );
+  });
 };
 
 /**
