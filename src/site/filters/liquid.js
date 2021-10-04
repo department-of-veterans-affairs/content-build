@@ -731,7 +731,7 @@ module.exports = function registerFilters() {
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
-    function formatData(obj) {
+    function normalizeData(obj) {
       const newObj = {};
       for (const [key] of Object.entries(obj)) {
         if (Array.isArray(obj[key])) {
@@ -761,13 +761,13 @@ module.exports = function registerFilters() {
         }
       }
       case 'q_a_section': {
-        return formatData(entity);
+        return normalizeData(entity);
       }
       case 'q_a': {
         if (entity.targetId && !entity.entityId) {
           delete Object.assign(entity, { entityId: entity.targetId }).targetId;
         }
-        return formatData(entity);
+        return normalizeData(entity);
       }
       default: {
         return entity;
