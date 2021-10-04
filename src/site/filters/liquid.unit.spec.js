@@ -1520,7 +1520,7 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(testData);
   });
 
-  it('converts fieldWysiwyg.processed from snake case/array to camel case/string`, () => {
+  it('converts fieldWysiwyg.processed from snake case/array to camel case/string', () => {
     const testData = {
       // eslint-disable-next-line camelcase
       field_wysiwyg: [{ processed: 'test' }],
