@@ -566,60 +566,6 @@ jobs:
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: C026PD47Z19
 
-  nightwatch-tests:
-    name: Nightwatch E2E Tests
-    runs-on: ${{ needs.start-runner.outputs.vagovprod }}
-    needs: [start-runner, build]
-    timeout-minutes: 30
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Restore vagovprod build
-        run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
-          du -h build/vagovprod
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-
-
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
-
-      - name: Start server
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
-
-      - name: Run Nightwatch tests
-        run: yarn test:e2e
-        env:
-          BUILDTYPE: vagovprod
-
   testing-reports:
     name: Testing Reports
     runs-on: ubuntu-latest
@@ -758,7 +704,6 @@ jobs:
       [
         start-runner,
         cypress-tests,
-        nightwatch-tests,
         unit-tests,
         linting,
         security-audit,
@@ -856,7 +801,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, nightwatch-tests, archive]
+    needs: [start-runner, cypress-tests, archive]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
