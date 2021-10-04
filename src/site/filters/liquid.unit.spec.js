@@ -1488,3 +1488,97 @@ describe('getValueFromObjPath', () => {
     ).to.eq(1);
   });
 });
+
+describe('processCentralizedContent', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedContent(null, 'wysiwyg')).to.be
+      .null;
+  });
+
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedContent(null, 'test_bundle')).to.be
+      .null;
+  });
+
+  it('returns null if empty string is passed', () => {
+    expect(liquid.filters.processCentralizedContent('', 'test_bundle')).to.be
+      .null;
+  });
+
+  it('returns null for null', () => {
+    expect(liquid.filters.processCentralizedContent(null)).to.be.null;
+  });
+
+  it('returns test data when contentType = wysiwyg', () => {
+    const testData = vetCenterData.fieldCcVetCenterCallCenter.fetched;
+
+    expect(
+      liquid.filters.processCentralizedContent(
+        testData,
+        vetCenterData.fieldCcVetCenterCallCenter.fetchedBundle,
+      ),
+    ).to.deep.eq(testData);
+  });
+
+  it('returns expected if contentType = wysiwyg', () => {
+    const testData = {
+      // eslint-disable-next-line camelcase
+      field_wysiwyg: [{ processed: 'test' }],
+    };
+
+    const expected = {
+      fieldWysiwyg: { processed: 'test' },
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'wysiwyg'),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns expected if contentType = q_a_section', () => {
+    const testData = {
+      fieldAccordionDisplay: [{ value: '1' }],
+      fieldQuestions: [
+        {
+          label: 'National Vet Center content > Content > Questions',
+          fieldAnswer: [],
+          fieldQuestion: [],
+        },
+      ],
+      fieldSectionHeader: [{ value: "How we're different than a clinic" }],
+      fieldSectionIntro: [{ value: 'Click on a topic for more details.' }],
+    };
+
+    const expected = {
+      fieldAccordionDisplay: '1',
+      fieldQuestions: [
+        {
+          label: 'National Vet Center content > Content > Questions',
+          fieldAnswer: [],
+          fieldQuestion: [],
+        },
+      ],
+      fieldSectionHeader: "How we're different than a clinic",
+      fieldSectionIntro: 'Click on a topic for more details.',
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'q_a_section'),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns test data if contentType = q_a_section', () => {
+    const testData = {
+      test: 'test',
+    };
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'q_a_section'),
+    ).to.deep.eq(testData);
+  });
+
+  it('returns test data if contentType does not match any of the cases - default', () => {
+    expect(
+      liquid.filters.processCentralizedContent('test', 'test_bundle'),
+    ).to.eq('test');
+  });
+});

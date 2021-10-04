@@ -729,6 +729,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.processCentralizedContent = (entity, contentType) => {
+    if (!entity) return null;
     // TODO - add more cases as new centralized content types are added
     switch (contentType) {
       case 'wysiwyg': {
