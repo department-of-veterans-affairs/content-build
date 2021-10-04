@@ -730,6 +730,21 @@ module.exports = function registerFilters() {
 
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
+
+    function formatData(obj) {
+      const newObj = {};
+      for (const [key] of Object.entries(obj)) {
+        if (Array.isArray(obj[key])) {
+          if (obj[key][0]?.value) {
+            newObj[key] = obj[key][0]?.value;
+          } else newObj[key] = obj[key];
+        } else {
+          newObj[key] = obj[key];
+        }
+      }
+      return newObj;
+    }
+
     // TODO - add more cases as new centralized content types are added
     switch (contentType) {
       case 'wysiwyg': {
@@ -746,34 +761,13 @@ module.exports = function registerFilters() {
         }
       }
       case 'q_a_section': {
-        if (
-          entity.fieldAccordionDisplay &&
-          entity.fieldSectionHeader &&
-          entity.fieldSectionIntro &&
-          entity.fieldQuestions
-        )
-          return {
-            fieldSectionHeader: entity?.fieldSectionHeader[0]?.value,
-            fieldSectionIntro: entity?.fieldSectionIntro[0]?.value,
-            fieldAccordionDisplay: entity?.fieldAccordionDisplay[0]?.value,
-            fieldQuestions: entity?.fieldQuestions,
-          };
-        else return entity;
+        return formatData(entity);
       }
       case 'q_a': {
-        if (
-          entity.fieldQuestion &&
-          entity.fieldAnswer &&
-          entity.entityBundle &&
-          entity.targetId
-        ) {
-          return {
-            entityBundle: entity?.entityBundle,
-            fieldQuestion: entity?.fieldQuestion[0]?.value,
-            fieldAnswer: entity?.fieldAnswer,
-            entityId: entity?.targetId,
-          };
-        } else return entity;
+        if (entity.targetId && !entity.entityId) {
+          delete Object.assign(entity, { entityId: entity.targetId }).targetId;
+        }
+        return formatData(entity);
       }
       default: {
         return entity;

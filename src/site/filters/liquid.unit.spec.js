@@ -1535,7 +1535,7 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 
-  it('returns expected if contentType = q_a_section', () => {
+  it('returns expected if contentType = q_a_section. Restructuring fieldAccordionDisplay, fieldSectionHeader, and fieldSectionIntro', () => {
     const testData = {
       fieldAccordionDisplay: [{ value: '1' }],
       fieldQuestions: [
@@ -1567,13 +1567,36 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 
-  it('returns test data if contentType = q_a_section', () => {
+  it('returns expected if contentType = q_a. Restructuring fieldQuestion and if testData contains targetId and no entityId, it will rename key to entityId', () => {
     const testData = {
-      test: 'test',
+      targetId: '29909',
+      targetRevisionId: '422170',
+      entityType: 'paragraph',
+      entityBundle: 'q_a',
+      pid: '29909',
+      label: 'National Vet Center content > Content > Questions',
+      status: true,
+      langcode: 'en',
+      fieldAnswer: [{ entity: [{}] }],
+      fieldQuestion: [{ value: 'What about my privacy?' }],
     };
+
+    const expected = {
+      entityId: '29909',
+      targetRevisionId: '422170',
+      entityType: 'paragraph',
+      entityBundle: 'q_a',
+      pid: '29909',
+      label: 'National Vet Center content > Content > Questions',
+      status: true,
+      langcode: 'en',
+      fieldAnswer: [{ entity: [{}] }],
+      fieldQuestion: 'What about my privacy?',
+    };
+
     expect(
-      liquid.filters.processCentralizedContent(testData, 'q_a_section'),
-    ).to.deep.eq(testData);
+      liquid.filters.processCentralizedContent(testData, 'q_a'),
+    ).to.deep.eq(expected);
   });
 
   it('returns test data if contentType does not match any of the cases - default', () => {
