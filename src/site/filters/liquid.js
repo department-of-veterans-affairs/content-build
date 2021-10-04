@@ -760,6 +760,21 @@ module.exports = function registerFilters() {
           };
         else return entity;
       }
+      case 'q_a': {
+        if (
+          entity.fieldQuestion &&
+          entity.fieldAnswer &&
+          entity.entityBundle &&
+          entity.targetId
+        ) {
+          return {
+            entityBundle: entity?.entityBundle,
+            fieldQuestion: entity?.fieldQuestion[0]?.value,
+            fieldAnswer: entity?.fieldAnswer,
+            entityId: entity?.targetId,
+          };
+        } else return entity;
+      }
       default: {
         return entity;
       }

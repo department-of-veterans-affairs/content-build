@@ -4,20 +4,12 @@
     {% assign sectionHeader = entity.fieldSectionHeader %}
 
     {% for accordionItem in questions %}
-      {% assign item = accordionItem.entity %}
-      {% if item.entityId %}
-        {% assign id = item.entityId %}
-      {% elsif item.targetId %}
-        {% assign id = item.targetId %}
-      {% endif %}
+      {% assign item = accordionItem.entity | processCentralizedContent: accordionItem.entity.entityBundle %}
+      {% assign id = item.entityId %}
 
       <va-accordion-item
         id="cc-question-accordion-item-{{ id }}"
-        {% if item.fieldQuestion.0.value %}
-          header="{{ item.fieldQuestion.0.value }}"
-        {% elsif item.fieldQuestion %}
-          header="{{ item.fieldQuestion }}"
-        {% endif %}
+        header="{{ item.fieldQuestion }}"
         {% if level %}
           level="{{ level }}"
         {% endif %}
@@ -27,11 +19,7 @@
           data-template="paragraphs/q_a.collapsible_panel__qa"
           data-entity-id="{{ id }}"
           data-analytics-faq-section="{{ sectionHeader | escape }}"
-          {% if item.fieldQuestion.0.value %}
-            data-analytics-faq-text="{{ item.fieldQuestion.0.value | escape }}"
-          {% elsif item.fieldQuestion %}
-            data-analytics-faq-text="{{ item.fieldQuestion | escape }}"
-          {% endif %}
+          data-analytics-faq-text="{{ item.fieldQuestion | escape }}"
         >
           <div id="{{ item.entityBundle }}-{{ id }}">
             <div itemprop="acceptedAnswer" itemscope="" itemtype="http://schema.org/Answer">
