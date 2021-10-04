@@ -27,7 +27,7 @@
 
         <a class="file-download-with-icon" target="_blank"
            href="{{url}}" download="{{url}}">
-            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download"></i>
+            <i class="fas fa-download vads-u-margin--0p5" aria-hidden="true"></i>
             {{entity.fieldTitle}} ({{url | fileExt | upcase}})
         </a>
     {% endif %}
@@ -44,7 +44,7 @@
                 type="application/{{extension}}"
             {% endif %}
         >
-            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download"></i>
+            <i class="fas fa-download vads-u-margin--0p5" aria-hidden="true"></i>
             {{entity.fieldTitle}} ({{extension | upcase}})
         </a>
     {% endif %}
@@ -52,7 +52,7 @@
     {% if entity.fieldMedia.entity.entityBundle == 'video' %}
         <a class="video-link" target="_blank"
            href="{{entity.fieldMedia.entity.fieldMediaVideoEmbedField}}">
-            <i class="fas fa-play-circle vads-u-margin--0p5" aria-hidden="true" role="img"></i>Go to video
+            <i class="fas fa-play-circle vads-u-margin--0p5" aria-hidden="true"></i>Go to video
         </a>
     {% endif %}
 </div>
