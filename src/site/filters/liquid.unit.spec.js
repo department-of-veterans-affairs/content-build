@@ -1541,8 +1541,23 @@ describe('processCentralizedContent', () => {
       fieldQuestions: [
         {
           label: 'National Vet Center content > Content > Questions',
-          fieldAnswer: [],
-          fieldQuestion: [],
+          fieldAnswer: [
+            {
+              targetId: '29902',
+              label:
+                'National Vet Center content > Content > Questions > Answer',
+              fieldWysiwyg: [
+                {
+                  value:
+                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.</p>\r\n',
+                  format: 'rich_text_limited',
+                  processed:
+                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.',
+                },
+              ],
+            },
+          ],
+          fieldQuestion: [{ value: 'What are Vet Centers?' }],
         },
       ],
       fieldSectionHeader: [{ value: "How we're different than a clinic" }],
@@ -1554,8 +1569,23 @@ describe('processCentralizedContent', () => {
       fieldQuestions: [
         {
           label: 'National Vet Center content > Content > Questions',
-          fieldAnswer: [],
-          fieldQuestion: [],
+          fieldAnswer: [
+            {
+              targetId: '29902',
+              label:
+                'National Vet Center content > Content > Questions > Answer',
+              fieldWysiwyg: [
+                {
+                  value:
+                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.</p>\r\n',
+                  format: 'rich_text_limited',
+                  processed:
+                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.',
+                },
+              ],
+            },
+          ],
+          fieldQuestion: [{ value: 'What are Vet Centers?' }],
         },
       ],
       fieldSectionHeader: "How we're different than a clinic",
