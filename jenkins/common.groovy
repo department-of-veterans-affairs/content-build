@@ -157,7 +157,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
       color = 'danger'
     }
 
-    def heading = "@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
+    def heading = "@cms-helpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
     def message = "${heading}\n${brokenLinks.summary}".stripMargin()
 
     echo "${brokenLinks.brokenLinksCount} broken links found"
