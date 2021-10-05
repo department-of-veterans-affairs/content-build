@@ -39,10 +39,6 @@
           "name": "Pension benefits"
         },
         {
-          "path": "pension/how-to-apply/",
-          "name": "How to apply"
-        },
-        {
           "path": "pension/application/527EZ",
           "name": "Apply for Veterans Pension"
         }
@@ -218,10 +214,6 @@
         {
           "path": "health-care/",
           "name": "Health Care"
-        },
-        {
-          "path": "health-care/how-to-apply/",
-          "name": "How to apply"
         },
         {
           "path": "health-care/apply/application",
@@ -526,12 +518,16 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Education",
+          "name": "Education and training",
           "path": "education/"
         },
         {
-          "name": "Apply for education benefits",
-          "path": "education/how-to-apply/"
+          "name": "Change your GI Bill school or program",
+          "path": "education/change-gi-bill-benefits/"
+        },
+        {
+          "name": "Change your dependent benefits VA Form 22-5495",
+          "path": "education/apply-for-education-benefits/application/5495/"
         }
       ]
     }
@@ -750,16 +746,20 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "records/",
-          "name": "Records"
+          "name": "Records",
+          "path": "records/"
         },
         {
-          "path": "records/get-veteran-id-cards/",
-          "name": "Types of Veteran ID cards"
+          "name": "Types of Veteran ID cards",
+          "path": "records/get-veteran-id-cards/"
         },
         {
-          "path": "records/get-veteran-id-cards/apply/",
-          "name": "Apply for an ID Card"
+          "name": "How to apply for a Veteran ID Card",
+          "path": "records/get-veteran-id-cards/vic/"
+        },
+        {
+          "name": "Request a printed Veteran ID Card",
+          "path": "records/get-veteran-id-cards/apply/"
         }
       ]
     }

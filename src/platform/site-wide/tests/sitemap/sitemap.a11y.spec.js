@@ -28,7 +28,7 @@ const urls = xml
 const divider = Math.ceil(urls.length / 32);
 const splitURLs = urls.slice((step - 1) * divider, step * divider);
 
-describe(`Accessibility tests`, () => {
+describe(`Accessibility tests batch ${step} of 32`, () => {
   for (const url of splitURLs) {
     // eslint-disable-next-line no-loop-func
     it(`${url}`, () => {
