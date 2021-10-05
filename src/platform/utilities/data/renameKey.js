@@ -8,9 +8,8 @@
  */
 
 const renameKey = (obj, oldKey, newKey) => {
-  delete Object.assign(obj, { [newKey]: obj[oldKey] })[oldKey];
+  if (!obj) return null;
+  return delete Object.assign(obj, { [newKey]: obj[oldKey] })[oldKey];
 };
 
-module.exports = {
-  renameKey,
-};
+module.exports = renameKey;

@@ -7,7 +7,7 @@ const moment = require('moment-timezone');
 const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
-const renameKey = require('../../platform/utilities/data/renameKey').renameKey;
+const renameKey = require('../../platform/utilities/data/renameKey');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
