@@ -10,12 +10,14 @@ There are several repositories that contain the code and content used to build V
 
 Once you have the site set up locally, these are some common commands you might find useful:
 
-| I want to...                                  | Then you should...                                                           |
-| --------------------------------------------- | ---------------------------------------------------------------------------- |
-| fetch all dependencies                        | `yarn install`. Run this any time `package.json` changes                     |
-| build static HTML pages                       | `yarn build`                                                                 |
-| run the dev server                            | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server  |
-| watch for template changes                    | `yarn watch`. Runs the dev server while watching for changes                 |
+| I want to...                        | Then you should...                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------ |
+| fetch all dependencies              | `yarn install`. Run this any time `package.json` changes                       |
+| build static HTML pages             | `yarn build`                                                                   |
+| run the dev server                  | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server    |
+| watch for template/css changes      | `yarn watch`. Runs the dev server while watching for changes                   |
+| build CSS                           | `yarn build:webpack`. Runs the webpack                                         |
+| watch for CSS changes               | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
 
 ### Building static content
 

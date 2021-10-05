@@ -157,7 +157,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
       color = 'danger'
     }
 
-    def heading = "@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
+    def heading = "@cms-helpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
     def message = "${heading}\n${brokenLinks.summary}".stripMargin()
 
     echo "${brokenLinks.brokenLinksCount} broken links found"
@@ -240,10 +240,6 @@ def integrationTests(dockerContainer, ref) {
           if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
             parallel (
               failFast: true,
-
-              //'nightwatch-e2e': {
-              //  sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-              //},
               cypress: {
                 sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
               }
@@ -251,10 +247,6 @@ def integrationTests(dockerContainer, ref) {
           } else {
             parallel (
               failFast: true,
-
-              //'nightwatch-e2e': {
-              //  sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-              //},
               cypress: {
                 sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
               }
@@ -263,10 +255,7 @@ def integrationTests(dockerContainer, ref) {
         } catch (error) {
           // slackIntegrationNotify()
           throw error
-        } finally {
-          // sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
-          // step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-        }
+        } 
       } // end timeout
     }
 
