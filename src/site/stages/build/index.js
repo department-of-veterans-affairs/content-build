@@ -13,7 +13,7 @@ const permalinks = require('metalsmith-permalinks');
 
 const silverSmith = require('./silversmith');
 const addDebugInfo = require('./add-debug-info');
-
+const { runCommand } = require('./../../../../script/utils');
 // const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
@@ -229,6 +229,10 @@ function build(BUILD_OPTIONS) {
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
+      runCommand(
+        `yarn build:webpack --watch --env=buildtype=${BUILD_OPTIONS.buildtype}`,
+      );
+
       // Avoid saving Metalsmith files object on rebuild to prevent overwriting the object
       if (!global.rebuild) global.metalsmithFiles = files;
 
@@ -254,6 +258,10 @@ function build(BUILD_OPTIONS) {
         smith.printSummary(BUILD_OPTIONS);
         smith.printPeakMemory();
       }
+
+      runCommand(
+        `yarn build:webpack --env=buildtype=${BUILD_OPTIONS.buildtype}`,
+      );
 
       console.log('The Metalsmith build has completed.');
     }
