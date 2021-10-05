@@ -16,3 +16,7 @@ yarn --version
 # download content repo
 printf "\n\n##### Downloading content repo #####\n"
 yarn install-repos
+
+yarn install --production=false
+
+cd ../vets-website && yarn install --production=false && yarn build
