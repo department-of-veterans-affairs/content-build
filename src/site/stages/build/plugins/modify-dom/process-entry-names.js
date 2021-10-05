@@ -3,6 +3,7 @@
 const path = require('path');
 const environments = require('../../../../constants/environments');
 const buckets = require('../../../../constants/buckets');
+const bucketsContent = require('../../../../constants/buckets-content');
 
 const FILE_MANIFEST_FILENAME = 'generated/file-manifest.json';
 
@@ -80,6 +81,7 @@ module.exports = {
     if (!dom) return;
 
     const bucket = buckets[buildOptions.buildtype];
+    const bucketContent = bucketsContent[buildOptions.buildtype];
 
     // Set font preload URLs to point to apps bucket
     dom('link[rel="preload"]').each((index, el) => {
@@ -92,6 +94,22 @@ module.exports = {
 
       $el.attr('href', filePath);
     });
+
+    // CSS and JS hosted with the content-build
+    dom('script[data-entry-content],link[data-entry-content]').each(
+      (index, el) => {
+        const $el = dom(el);
+        const entryContent = $el.data('entryContent');
+        const attribute = $el.is('script') ? 'src' : 'href';
+        const timestamp = new Date().getTime();
+
+        if (buildOptions.buildtype === environments.LOCALHOST) {
+          $el.attr(attribute, `/assets/${entryContent}?t=${timestamp}`);
+        } else {
+          $el.attr(attribute, `${bucketContent}/assets/${entryContent}`);
+        }
+      },
+    );
 
     dom('script[data-entry-name],link[data-entry-name]').each((index, el) => {
       // Derive the element properties.
