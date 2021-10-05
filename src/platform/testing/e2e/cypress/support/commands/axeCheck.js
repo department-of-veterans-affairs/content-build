@@ -3,7 +3,7 @@ const table = require('table').table;
 const tableConfig = {
   columns: {
     0: { width: 15 },
-    1: { width: 85 },
+    1: { width: 100 },
   },
 };
 
@@ -30,10 +30,11 @@ const processAxeCheckResults = violations => {
   ]);
 
   cy.url().then(url => {
+    const prodURL = url.replace(Cypress.config().baseUrl, `https://www.va.gov`);
     assert.fail(
       violations.length,
       0,
-      `\n\n${url}\n\n${violationMessage}\n\n${violationData.map(violation =>
+      `\n\n${prodURL}\n\n${violationMessage}\n\n${violationData.map(violation =>
         table(violation, tableConfig),
       )}`,
     );
