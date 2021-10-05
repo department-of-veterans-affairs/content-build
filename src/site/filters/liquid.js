@@ -7,6 +7,7 @@ const moment = require('moment-timezone');
 const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
+const renameKey = require('../../platform/utilities/data/renameKey').renameKey;
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -731,19 +732,21 @@ module.exports = function registerFilters() {
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
-    function normalizeData(obj) {
+    // normalizeData takes an object with value that can often be nested and restructures it
+    // ex. testObj: [{ field: 'test value' }] => testObj: "test value"
+    const normalizeData = (obj, field) => {
       const newObj = {};
       for (const [key] of Object.entries(obj)) {
         if (Array.isArray(obj[key])) {
-          if (obj[key][0]?.value) {
-            newObj[key] = obj[key][0]?.value;
+          if (obj[key][0][field]) {
+            newObj[key] = obj[key][0][field];
           } else newObj[key] = obj[key];
         } else {
           newObj[key] = obj[key];
         }
       }
       return newObj;
-    }
+    };
 
     // TODO - add more cases as new centralized content types are added
     switch (contentType) {
@@ -761,13 +764,13 @@ module.exports = function registerFilters() {
         }
       }
       case 'q_a_section': {
-        return normalizeData(entity);
+        return normalizeData(entity, 'value');
       }
       case 'q_a': {
         if (entity.targetId && !entity.entityId) {
-          delete Object.assign(entity, { entityId: entity.targetId }).targetId;
+          renameKey(entity, 'targetId', 'entityId');
         }
-        return normalizeData(entity);
+        return normalizeData(entity, 'value');
       }
       default: {
         return entity;

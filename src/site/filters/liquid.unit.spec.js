@@ -1535,9 +1535,8 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 
-  it('returns expected if contentType = q_a_section. Restructuring fieldAccordionDisplay, fieldSectionHeader, and fieldSectionIntro', () => {
-    const testData = {
-      fieldAccordionDisplay: [{ value: '1' }],
+  it('returns expected if contentType = q_a_section. Only fieldAccordionDisplay, fieldSectionHeader, and fieldSectionIntro are restructured.', () => {
+    const unchangedFieldQuestionsData = {
       fieldQuestions: [
         {
           label: 'National Vet Center content > Content > Questions',
@@ -1560,34 +1559,17 @@ describe('processCentralizedContent', () => {
           fieldQuestion: [{ value: 'What are Vet Centers?' }],
         },
       ],
+    };
+    const testData = {
+      fieldAccordionDisplay: [{ value: '1' }],
+      unchangedFieldQuestionsData,
       fieldSectionHeader: [{ value: "How we're different than a clinic" }],
       fieldSectionIntro: [{ value: 'Click on a topic for more details.' }],
     };
 
     const expected = {
       fieldAccordionDisplay: '1',
-      fieldQuestions: [
-        {
-          label: 'National Vet Center content > Content > Questions',
-          fieldAnswer: [
-            {
-              targetId: '29902',
-              label:
-                'National Vet Center content > Content > Questions > Answer',
-              fieldWysiwyg: [
-                {
-                  value:
-                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.</p>\r\n',
-                  format: 'rich_text_limited',
-                  processed:
-                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.',
-                },
-              ],
-            },
-          ],
-          fieldQuestion: [{ value: 'What are Vet Centers?' }],
-        },
-      ],
+      unchangedFieldQuestionsData,
       fieldSectionHeader: "How we're different than a clinic",
       fieldSectionIntro: 'Click on a topic for more details.',
     };
@@ -1597,9 +1579,8 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 
-  it('returns expected if contentType = q_a. Restructuring fieldQuestion and if testData contains targetId and no entityId, it will rename key to entityId', () => {
-    const testData = {
-      targetId: '29909',
+  it('returns expected if contentType = q_a. Two things occur: 1) targetId field is renamed to entityId, as long as there is no entityId already present. 2) Only fieldQuestion is restructured.', () => {
+    const unchangedData = {
       targetRevisionId: '422170',
       entityType: 'paragraph',
       entityBundle: 'q_a',
@@ -1608,19 +1589,17 @@ describe('processCentralizedContent', () => {
       status: true,
       langcode: 'en',
       fieldAnswer: [{ entity: [{}] }],
+    };
+
+    const testData = {
+      targetId: '29909',
+      unchangedData,
       fieldQuestion: [{ value: 'What about my privacy?' }],
     };
 
     const expected = {
       entityId: '29909',
-      targetRevisionId: '422170',
-      entityType: 'paragraph',
-      entityBundle: 'q_a',
-      pid: '29909',
-      label: 'National Vet Center content > Content > Questions',
-      status: true,
-      langcode: 'en',
-      fieldAnswer: [{ entity: [{}] }],
+      unchangedData,
       fieldQuestion: 'What about my privacy?',
     };
 
@@ -1630,8 +1609,9 @@ describe('processCentralizedContent', () => {
   });
 
   it('returns test data if contentType does not match any of the cases - default', () => {
+    const testData = vetCenterData.fieldVetCenterFeatureContent;
     expect(
-      liquid.filters.processCentralizedContent('test', 'test_bundle'),
-    ).to.eq('test');
+      liquid.filters.processCentralizedContent(testData, 'test_bundle'),
+    ).to.eq(testData);
   });
 });
