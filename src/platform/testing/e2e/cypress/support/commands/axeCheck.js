@@ -1,3 +1,12 @@
+const table = require('table').table;
+
+const tableConfig = {
+  columns: {
+    0: { width: 15 },
+    1: { width: 100 },
+  },
+};
+
 /**
  * Callback from a11y check that logs aXe violations to console output.
  *
@@ -20,8 +29,16 @@ const processAxeCheckResults = violations => {
     ['nodes', nodes.length],
   ]);
 
-  cy.task('log', violationMessage);
-  violationData.forEach(violation => cy.task('table', violation));
+  cy.url().then(url => {
+    const prodURL = url.replace(Cypress.config().baseUrl, `https://www.va.gov`);
+    assert.fail(
+      violations.length,
+      0,
+      `\n\n${prodURL}\n\n${violationMessage}\n\n${violationData.map(violation =>
+        table(violation, tableConfig),
+      )}`,
+    );
+  });
 };
 
 /**
@@ -61,5 +78,7 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
     : axeBuilder;
 
   Cypress.log();
-  cy.checkA11y(context, axeConfig, processAxeCheckResults);
+  cy.checkA11y(context, axeConfig, processAxeCheckResults, {
+    skipFailures: true,
+  });
 });
