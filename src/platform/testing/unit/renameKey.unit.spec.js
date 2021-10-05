@@ -6,6 +6,7 @@ describe('renameKey', () => {
   it('returns null if null is passed', () => {
     expect(renameKey(null, 'testKey1', 'newKey')).to.be.null;
   });
+
   it('renames a particular key within an object', () => {
     const testData = {
       testKey1: 'test value 1',

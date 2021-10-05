@@ -732,7 +732,7 @@ module.exports = function registerFilters() {
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
-    // normalizeData takes an object with value that can often be nested and restructures it
+    // normalizeData takes an object and reformats it, if necessary
     // ex. testObj: [{ field: 'test value' }] => testObj: "test value"
     const normalizeData = (obj, field) => {
       const newObj = {};
