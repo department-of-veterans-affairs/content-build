@@ -999,31 +999,80 @@ module.exports = function registerFilters() {
     return array.map(e => _.get(e, path));
   };
 
+  liquid.filters.formatPath = path => {
+    // Return back what was passed to us if it's falsey.
+    if (!path) return path;
+
+    // Return back what was passed to us if it's already a valid URL.
+    if (path === '/' || path === '*' || path === '!') {
+      return path;
+    }
+
+    // Prepare to format the path.
+    let formattedPath = path;
+
+    // Replace !some/path/ with !/some/path/.
+    if (formattedPath?.startsWith('!') && !formattedPath?.startsWith('!/')) {
+      formattedPath = `!/${formattedPath.substring(1)}`;
+    }
+
+    // Replace *some/path/ with */some/path/.
+    if (formattedPath?.startsWith('*') && !formattedPath?.startsWith('*/')) {
+      formattedPath = `*/${formattedPath.substring(1)}`;
+    }
+
+    // Ensure path starts with a leading slash.
+    if (
+      !formattedPath?.startsWith('/') &&
+      !formattedPath?.startsWith('*') &&
+      !formattedPath?.startsWith('!')
+    ) {
+      formattedPath = `/${formattedPath}`;
+    }
+
+    // Ensure path ends with a trailing slash.
+    if (!formattedPath?.endsWith('/') && !formattedPath?.endsWith('*')) {
+      formattedPath = `${formattedPath}/`;
+    }
+
+    return formattedPath;
+  };
+
   liquid.filters.isBannerVisible = (targetPaths, currentPath) => {
     // The banner is not visible if the target paths or the current path are missing.
     if (!targetPaths || !currentPath) {
       return false;
     }
 
+    // Format the current path.
+    const formattedCurrentPath = liquid.filters.formatPath(currentPath);
+
     // Derive exception paths.
-    const exceptionTargetPaths = targetPaths
+    const exceptionPaths = targetPaths
       ?.filter(path => path?.startsWith('!'))
-      ?.map(path => path?.replace('!', ''));
+      ?.map(path => {
+        // Replace the first ! operator.
+        const formattedExceptionPath = path?.replace('!', '');
+
+        // Format the exception path.
+        return liquid.filters.formatPath(formattedExceptionPath);
+      });
 
     // The banner is not visible if it's an exact exception match.
-    if (exceptionTargetPaths?.includes(currentPath)) {
+    if (exceptionPaths?.includes(formattedCurrentPath)) {
       return false;
     }
 
     // Derive exception catch-all paths.
-    const exceptionCatchAllPaths = exceptionTargetPaths
+    const exceptionCatchAllPaths = exceptionPaths
       ?.filter(exceptionPath => exceptionPath?.includes('*'))
       ?.map(exceptionPath => exceptionPath.replace('*', ''));
 
     // Derive if this page is under a catch-all exception path.
     const isExceptionCatchAllPath = exceptionCatchAllPaths?.some(
       exceptionPath =>
-        currentPath?.startsWith(exceptionPath) && currentPath !== exceptionPath,
+        formattedCurrentPath?.startsWith(exceptionPath) &&
+        formattedCurrentPath !== exceptionPath,
     );
 
     // If it is an exception catch-all path, the banner is not visible.
@@ -1032,7 +1081,7 @@ module.exports = function registerFilters() {
     }
 
     // If it's an exact match and not an exception, the banner is visible.
-    if (targetPaths?.includes(currentPath)) {
+    if (targetPaths?.includes(formattedCurrentPath)) {
       return true;
     }
 
@@ -1044,7 +1093,8 @@ module.exports = function registerFilters() {
     // Derive if this page is under a catch-all target path.
     const isCatchAllPath = catchAllTargetPaths?.some(
       catchAllPath =>
-        currentPath?.startsWith(catchAllPath) && currentPath !== catchAllPath,
+        formattedCurrentPath?.startsWith(catchAllPath) &&
+        formattedCurrentPath !== catchAllPath,
     );
 
     // If it is a catch-all path and not an exception, the banner is visible.

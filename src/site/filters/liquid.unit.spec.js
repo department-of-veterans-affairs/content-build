@@ -1302,6 +1302,52 @@ describe('getValuesForPath', () => {
   });
 });
 
+describe('formatPath', () => {
+  it('adds a trailing slash correctly', () => {
+    const path = '/resources/tag/all-veterans/2';
+    const expected = '/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('does not add a trailing slash when there is a trailing *', () => {
+    const path = '/resources/tag/all-veterans/2/*';
+    const expected = '/resources/tag/all-veterans/2/*';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('adds a leading slash correctly', () => {
+    const path = 'resources/tag/all-veterans/2/';
+    const expected = '/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('formats correctly when there is a leading * or ! but misses a `/` for the second character', () => {
+    let path = '*resources/tag/all-veterans/2';
+    let expected = '*/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+
+    path = '!resources/tag/all-veterans/2';
+    expected = '!/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('formats `*` and `!` paths correctly', () => {
+    let path = '*';
+    let expected = '*';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+
+    path = '!';
+    expected = '!';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('formats the homepage correctly', () => {
+    const path = '/';
+    const expected = '/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+});
+
 describe('isBannerVisible', () => {
   it('returns false if an argument is missing', () => {
     const targetPaths = ['/'];
@@ -1403,9 +1449,16 @@ describe('deriveVisibleBanners', () => {
     const banners = [
       { fieldTargetPaths: ['/some/path/'] },
       { fieldTargetPaths: ['/some/*'] },
+      { fieldTargetPaths: ['/some/*', '!/some/*'] },
+      { fieldTargetPaths: ['/some/*', '!/some/path/'] },
+      { fieldTargetPaths: ['/some/*', '!/some/path'] },
+      { fieldTargetPaths: ['/some/*', '!some/path'] },
       { fieldTargetPaths: ['/some/'] },
+      { fieldTargetPaths: ['some'] },
+      { fieldTargetPaths: ['/some'] },
+      { fieldTargetPaths: ['some/'] },
     ];
-    const currentPath = '/some/path/';
+    const currentPath = '/some/path';
 
     expect(
       liquid.filters.deriveVisibleBanners(banners, currentPath),
