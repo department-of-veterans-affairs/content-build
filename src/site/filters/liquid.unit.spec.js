@@ -1535,12 +1535,12 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 
-  it('returns expected if contentType = q_a_section', () => {
+  it('returns expected if contentType = q_a_section.', () => {
     const oldFieldQuestionsData = {
       fieldQuestions: [
         {
           entity: {
-            targetId: '29903',
+            targetId: '29903', // targetId gets renmaed to entityId as long as there is not entityId already present
             targetRevisionId: '422164',
             entityType: 'paragraph',
             entityBundle: 'q_a',
@@ -1586,7 +1586,7 @@ describe('processCentralizedContent', () => {
       fieldQuestions: [
         {
           entity: {
-            targetId: '29903',
+            entityId: '29903',
             targetRevisionId: '422164',
             entityType: 'paragraph',
             entityBundle: 'q_a',
@@ -1639,35 +1639,6 @@ describe('processCentralizedContent', () => {
 
     expect(
       liquid.filters.processCentralizedContent(testData, 'q_a_section'),
-    ).to.deep.eq(expected);
-  });
-
-  it('returns expected if contentType = q_a. Two things occur: 1) targetId field is renamed to entityId, as long as there is no entityId already present. 2) Only fieldQuestion is restructured.', () => {
-    const unchangedData = {
-      targetRevisionId: '422170',
-      entityType: 'paragraph',
-      entityBundle: 'q_a',
-      pid: '29909',
-      label: 'National Vet Center content > Content > Questions',
-      status: true,
-      langcode: 'en',
-      fieldAnswer: [{ entity: [{}] }],
-    };
-
-    const testData = {
-      targetId: '29909',
-      unchangedData,
-      fieldQuestion: [{ value: 'What about my privacy?' }],
-    };
-
-    const expected = {
-      entityId: '29909',
-      unchangedData,
-      fieldQuestion: 'What about my privacy?',
-    };
-
-    expect(
-      liquid.filters.processCentralizedContent(testData, 'q_a'),
     ).to.deep.eq(expected);
   });
 
