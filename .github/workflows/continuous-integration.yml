@@ -720,9 +720,9 @@ jobs:
         buildtype: [vagovdev]
 
     steps:
-      - name: Restore ${{ matrix.buildtype }} compressed
+      - name: Restore ${{ matrix.buildtype }} build
         run: |
-          mv ${{ matrix.buildtype }}.tar.bz2 .
+          mv /tmp/${{ github.run_id }}/${{ matrix.buildtype }}.tar.bz2 .
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
