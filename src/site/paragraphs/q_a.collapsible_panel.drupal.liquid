@@ -1,14 +1,13 @@
 <div data-template="paragraphs/q_a.collapsible_panel">
-  <va-accordion bordered>
+  <va-accordion>
     {% assign questions = entity.fieldQuestions %}
     {% assign sectionHeader = entity.fieldSectionHeader %}
 
     {% for accordionItem in questions %}
-      {% assign item = accordionItem.entity | processCentralizedContent: accordionItem.entity.entityBundle %}
+      {% assign item = accordionItem.entity %}
       {% assign id = item.entityId %}
 
       <va-accordion-item
-        id="cc-question-accordion-item-{{ id }}"
         header="{{ item.fieldQuestion }}"
         {% if level %}
           level="{{ level }}"

@@ -1535,43 +1535,106 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 
-  it('returns expected if contentType = q_a_section. Only fieldAccordionDisplay, fieldSectionHeader, and fieldSectionIntro are restructured.', () => {
-    const unchangedFieldQuestionsData = {
+  it('returns expected if contentType = q_a_section', () => {
+    const oldFieldQuestionsData = {
       fieldQuestions: [
         {
-          label: 'National Vet Center content > Content > Questions',
-          fieldAnswer: [
-            {
-              targetId: '29902',
-              label:
-                'National Vet Center content > Content > Questions > Answer',
-              fieldWysiwyg: [
-                {
-                  value:
-                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.</p>\r\n',
-                  format: 'rich_text_limited',
-                  processed:
-                    '<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community.',
+          entity: {
+            targetId: '29903',
+            targetRevisionId: '422164',
+            entityType: 'paragraph',
+            entityBundle: 'q_a',
+            pid: '29903',
+            label: 'National Vet Center content > Content > Questions',
+            status: true,
+            langcode: 'en',
+            fieldAnswer: [
+              {
+                entity: {
+                  targetId: '29902',
+                  targetRevisionId: '422163',
+                  entityType: 'paragraph',
+                  entityBundle: 'wysiwyg',
+                  pid: '29902',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldWysiwyg: [
+                    {
+                      value:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\r\n\r\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\r\n",
+                      format: 'rich_text_limited',
+                      processed:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
                 },
-              ],
-            },
-          ],
-          fieldQuestion: [{ value: 'What are Vet Centers?' }],
+              },
+            ],
+            fieldQuestion: [
+              {
+                value: 'What are Vet Centers?',
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const newFieldQuestionsData = {
+      fieldQuestions: [
+        {
+          entity: {
+            targetId: '29903',
+            targetRevisionId: '422164',
+            entityType: 'paragraph',
+            entityBundle: 'q_a',
+            pid: '29903',
+            label: 'National Vet Center content > Content > Questions',
+            status: true,
+            langcode: 'en',
+            fieldAnswer: [
+              {
+                entity: {
+                  targetId: '29902',
+                  targetRevisionId: '422163',
+                  entityType: 'paragraph',
+                  entityBundle: 'wysiwyg',
+                  pid: '29902',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldWysiwyg: [
+                    {
+                      value:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\r\n\r\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\r\n",
+                      format: 'rich_text_limited',
+                      processed:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
+                },
+              },
+            ],
+            fieldQuestion: 'What are Vet Centers?',
+          },
         },
       ],
     };
     const testData = {
       fieldAccordionDisplay: [{ value: '1' }],
-      unchangedFieldQuestionsData,
       fieldSectionHeader: [{ value: "How we're different than a clinic" }],
       fieldSectionIntro: [{ value: 'Click on a topic for more details.' }],
+      ...oldFieldQuestionsData,
     };
 
     const expected = {
       fieldAccordionDisplay: '1',
-      unchangedFieldQuestionsData,
       fieldSectionHeader: "How we're different than a clinic",
       fieldSectionIntro: 'Click on a topic for more details.',
+      ...newFieldQuestionsData,
     };
 
     expect(

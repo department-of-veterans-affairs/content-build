@@ -764,7 +764,14 @@ module.exports = function registerFilters() {
         }
       }
       case 'q_a_section': {
-        return normalizeData(entity, 'value');
+        return {
+          ...normalizeData(entity, 'value'),
+          fieldQuestions: entity.fieldQuestions.map(q => {
+            return {
+              entity: normalizeData(q.entity, 'value'),
+            };
+          }),
+        };
       }
       case 'q_a': {
         if (entity.targetId && !entity.entityId) {
