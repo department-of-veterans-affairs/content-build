@@ -204,11 +204,14 @@ jobs:
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
+      - name: Compress build
+        run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
+
       - name: Persist prearchived build
         run: |
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
-          mv build/${{ matrix.buildtype }} /tmp/${{ github.run_id }}
+          mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
 
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
@@ -722,9 +725,6 @@ jobs:
           mkdir -p build
           cp -R /tmp/${{ github.run_id }}/${{ matrix.buildtype }} build/${{ matrix.buildtype }}
           du -h build/${{ matrix.buildtype }}
-
-      - name: Compress build
-        run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
