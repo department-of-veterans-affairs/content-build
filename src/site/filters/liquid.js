@@ -767,17 +767,14 @@ module.exports = function registerFilters() {
         return {
           ...normalizeData(entity, 'value'),
           fieldQuestions: entity.fieldQuestions?.map(q => {
+            if (q.entity.targetId && !q.entity.entityId) {
+              renameKey(q.entity, 'targetId', 'entityId');
+            }
             return {
               entity: normalizeData(q.entity, 'value'),
             };
           }),
         };
-      }
-      case 'q_a': {
-        if (entity.targetId && !entity.entityId) {
-          renameKey(entity, 'targetId', 'entityId');
-        }
-        return normalizeData(entity, 'value');
       }
       default: {
         return entity;
