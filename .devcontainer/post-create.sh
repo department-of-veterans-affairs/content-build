@@ -19,4 +19,4 @@ yarn install-repos
 
 yarn install --production=false
 
-cd ../vets-website && yarn install --production=false && yarn build
+cd ../vets-website && yarn install --production=false --prefer-offline && yarn build -- --buildtype=localhost --api=https://staging-api.va.gov --port=3002
