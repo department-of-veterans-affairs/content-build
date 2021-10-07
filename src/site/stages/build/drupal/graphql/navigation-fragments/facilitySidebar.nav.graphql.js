@@ -166,51 +166,42 @@ const FACILITY_MENU_NAMES = [
   'va-st-cloud-health-care',
 ];
 
+const menuItemQuery = `
+  fragment MenuItem on MenuLink {
+    expanded
+    description
+    label
+    url {
+      path
+    }
+    entity {
+      ... on MenuLinkContent {
+        linkedEntity(language_fallback: true, bypass_access_check: true) {
+          ... on Node {
+            entityPublished
+            moderationState
+          }
+        }
+      }
+    }
+  }
+`;
+
 const FACILITY_SIDEBAR_QUERY = `
     name
     description
     links {
-      label
-      expanded
-      description
-      url {
-        path
-      }
+      ...${menuItemQuery}
       links {
-        label
-        expanded
-        description
-        url {
-          path
-        }
+        ...${menuItemQuery}
         links {
-          label
-          expanded
-          description
-          url {
-            path
-          }
+          ...${menuItemQuery}
           links {
-            label
-            expanded
-            description
-            url {
-              path
-            }
+            ...${menuItemQuery}
             links {
-              label
-              expanded
-              description
-              url {
-                path
-              }
+              ...${menuItemQuery}
               links {
-                label
-                expanded
-                description
-                url {
-                  path
-                }
+                ...${menuItemQuery}
               }
             }
           }
@@ -218,6 +209,8 @@ const FACILITY_SIDEBAR_QUERY = `
       }
     }
 `;
+
+// console.log('facility sidebar query:', FACILITY_SIDEBAR_QUERY)
 
 const VaFacilitySidebars = {};
 let compiledQuery = '';
