@@ -737,10 +737,8 @@ module.exports = function registerFilters() {
     const normalizeData = (obj, field) => {
       const newObj = {};
       for (const [key] of Object.entries(obj)) {
-        if (Array.isArray(obj[key])) {
-          if (obj[key][0][field]) {
-            newObj[key] = obj[key][0][field];
-          } else newObj[key] = obj[key];
+        if (Array.isArray(obj[key]) && obj[key][0][field]) {
+          newObj[key] = obj[key][0][field];
         } else {
           newObj[key] = obj[key];
         }
