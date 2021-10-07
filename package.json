@@ -7,7 +7,7 @@
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
     "build:webpack": "webpack --config config/webpack.config.js",
-    "build:codespaces":"yarn build -- --buildtype=localhost --api=https://staging-api.va.gov --host=codespaces/ --port=3002 --apps-directory-name=vets-website",
+    "build:codespaces": "yarn build -- --buildtype=localhost --api=https://staging-api.va.gov --host=codespaces/ --port=3002 --apps-directory-name=vets-website",
     "cy:open": "cypress open --config-file config/cypress.json",
     "cy:report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
     "cy:report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
@@ -37,6 +37,7 @@
     "test:watch": "node script/watch-tests.js",
     "update:schema": "./script/update-json-schema.sh",
     "watch": "concurrently \"node --max-old-space-size=5000 --expose-gc script/build-content.js --watch\" \"http-server build/localhost -s -c-1 -p 3002\"",
+    "watch:codespaces": "concurrently \"yarn build:codespaces --watch\" \"http-server build/localhost -s -c-1 -p 3002\"",
     "watch:css-sourcemaps": "node --max-old-space-size=5000 --expose-gc script/build-content.js --watch --local-css-sourcemaps",
     "watch:review": "node ./script/run-review-instance-api.js",
     "prepare": "husky install"
