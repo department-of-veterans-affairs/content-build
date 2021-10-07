@@ -1,10 +1,47 @@
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 
 const renameKey = require('../../utilities/data/renameKey');
 
 describe('renameKey', () => {
+  const testObj = { testKey1: 'test value 1' };
+
   it('returns null if null is passed', () => {
     expect(renameKey(null, 'testKey1', 'newKey')).to.be.null;
+  });
+
+  it('returns null if null is passed', () => {
+    expect(renameKey(null)).to.be.null;
+  });
+
+  it('throws an error if either the oldKey or newKey is not passed', () => {
+    try {
+      renameKey(testObj, 'testKey');
+    } catch (error) {
+      assert.instanceOf(error, Error);
+    }
+  });
+
+  it('throws an error if both oldKey and newKey are not passed', () => {
+    try {
+      renameKey(testObj);
+    } catch (error) {
+      assert.instanceOf(error, Error);
+    }
+  });
+
+  it('throws an error if both oldKey and newKey null', () => {
+    try {
+      renameKey(testObj, null, null);
+    } catch (error) {
+      assert.instanceOf(error, Error);
+    }
+  });
+  it('throws an error if both oldKey and newKey are undefined', () => {
+    try {
+      renameKey(testObj, undefined, undefined);
+    } catch (error) {
+      assert.instanceOf(error, Error);
+    }
   });
 
   it('renames a particular key within an object', () => {

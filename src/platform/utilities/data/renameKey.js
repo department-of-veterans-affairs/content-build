@@ -9,6 +9,11 @@
 
 const renameKey = (obj, oldKey, newKey) => {
   if (!obj) return null;
+
+  if (typeof oldKey !== 'string' || typeof newKey !== 'string') {
+    throw new Error('oldKey and newKey are required. Must be type of string');
+  }
+
   return delete Object.assign(obj, { [newKey]: obj[oldKey] })[oldKey];
 };
 
