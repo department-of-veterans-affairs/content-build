@@ -99,9 +99,9 @@ jobs:
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
     timeout-minutes: 60
 
-    defaults:
-      run:
-        working-directory: content-build
+    # defaults:
+    #   run:
+    #     working-directory: content-build
 
     env:
       # Sandbox Drupal address is used on branches other than master.
@@ -121,16 +121,20 @@ jobs:
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
     steps:
-      - name: Checkout content-build
-        uses: actions/checkout@v2
-        with:
-          path: content-build
-
       - name: Checkout vagov-content
         uses: actions/checkout@v2
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
+
+      - name: ls
+        run: ls
+
+      - name: pwd
+        run: pwd
+
+      - name: Checkout content-build
+        uses: actions/checkout@v2
 
       - name: ls home
         run: ls $GITHUB_WORKSPACE
