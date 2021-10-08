@@ -132,25 +132,33 @@ jobs:
         with:
           path: content-build
 
-      - name: ls home
-        run: ls $GITHUB_WORKSPACE
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
-      - name: ls
-        run: ls
-
-      - name: pwd
-        run: pwd
-
-      - name: Install dependencies
-        uses: ./.github/workflows/install
-        working-directory: content-build
+      - name: Setup Node
+        uses: actions/setup-node@v2
         with:
-          keys: on-demand-runner-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: on-demand-runner-
-          yarn_cache_folder: .cache/yarn
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
           path: |
             .cache/yarn
             **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
+          max_attempts: 3
+          timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Set Drupal address
         if: ${{ github.ref == 'refs/heads/master' }}
@@ -197,15 +205,29 @@ jobs:
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
-      
-      # Only will get called if error in workflow
+
       - name: Configure AWS credentials
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
+
+      # Only will get called if error in workflow
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get role from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@latest
@@ -230,15 +252,17 @@ jobs:
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
       - name: Notify Slack about broken links
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID}}
+          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
 
   unit-tests:
     name: Unit Tests
