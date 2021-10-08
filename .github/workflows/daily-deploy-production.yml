@@ -84,6 +84,7 @@ jobs:
     outputs:
       LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
+      COMMIT_SHA: ${{ env.COMMIT_SHA }}
 
     steps:
       - name: Cancel workflow due to DSVA schedule
