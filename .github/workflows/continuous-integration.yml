@@ -147,7 +147,6 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
-        working-directory: content-build
         with:
           keys: on-demand-runner-${{ hashFiles('**/yarn.lock') }}
           restore-keys: on-demand-runner-
