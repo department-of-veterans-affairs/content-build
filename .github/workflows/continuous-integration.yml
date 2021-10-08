@@ -187,12 +187,38 @@ jobs:
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
+      
+      # Only will get called if error in workflow
+      - name: Configure AWS credentials
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload broken links file
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
-        # Only will get called if error in workflow
       - name: Notify Slack about broken links
         uses: ./.github/workflows/slack-notify
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
