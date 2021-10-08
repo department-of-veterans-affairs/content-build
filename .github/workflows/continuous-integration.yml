@@ -130,6 +130,12 @@ jobs:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
+      - name: pwd
+        run: pwd
+
+      - name: ls
+        run: ls
+
       - name: Install dependencies
         uses: ./.github/workflows/install
         with:
