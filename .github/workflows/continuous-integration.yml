@@ -99,9 +99,9 @@ jobs:
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
     timeout-minutes: 60
 
-    # defaults:
-    #   run:
-    #     working-directory: content-build
+    defaults:
+      run:
+        working-directory: content-build
 
     env:
       # Sandbox Drupal address is used on branches other than master.
@@ -125,16 +125,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: department-of-veterans-affairs/vagov-content
-          path: ../vagov-content
-
-      - name: ls
-        run: ls
-
-      - name: pwd
-        run: pwd
+          path: vagov-content
 
       - name: Checkout content-build
         uses: actions/checkout@v2
+        with:
+          path: content-build
 
       - name: ls home
         run: ls $GITHUB_WORKSPACE
@@ -147,6 +143,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        working-directory: content-build
         with:
           keys: on-demand-runner-${{ hashFiles('**/yarn.lock') }}
           restore-keys: on-demand-runner-
