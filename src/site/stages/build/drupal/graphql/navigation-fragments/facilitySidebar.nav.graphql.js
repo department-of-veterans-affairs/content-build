@@ -166,49 +166,52 @@ const FACILITY_MENU_NAMES = [
   'va-st-cloud-health-care',
 ];
 
-const menuItemQuery = `
-  fragment MenuItem on MenuLink {
+const FACILITY_SIDEBAR_QUERY = `
+  name
+  description
+  links {
+    label
     expanded
     description
-    label
     url {
       path
     }
-    entity {
-      ... on MenuLinkContent {
-        linkedEntity(language_fallback: true, bypass_access_check: true) {
-          ... on Node {
-            entityPublished
-            moderationState
-          }
-        }
-      }
-    }
-  }
-`;
-
-const FACILITY_SIDEBAR_QUERY = `
-    name
-    description
     links {
-      ...${menuItemQuery}
+      label
+      expanded
+      description
+      url {
+        path
+      }
       links {
-        ...${menuItemQuery}
+        label
+        expanded
+        description
+        url {
+          path
+        }
         links {
-          ...${menuItemQuery}
+          ...MenuItem
           links {
-            ...${menuItemQuery}
+            label
+            expanded
+            description
+            url {
+              path
+            }
             links {
-              ...${menuItemQuery}
-              links {
-                ...${menuItemQuery}
+              label
+              expanded
+              description
+              url {
+                path
               }
             }
           }
         }
       }
     }
-`;
+  }`;
 
 // console.log('facility sidebar query:', FACILITY_SIDEBAR_QUERY)
 
@@ -227,6 +230,24 @@ FACILITY_MENU_NAMES.forEach(facilityMenuName => {
   compiledQuery += nextSidebar;
 
   VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
+    fragment MenuItem on MenuLink {
+      expanded
+      description
+      label
+      url {
+        path
+      }
+      entity {
+        ... on MenuLinkContent {
+          linkedEntity(language_fallback: true, bypass_access_check: true) {
+            ... on Node {
+              entityPublished
+              moderationState
+            }
+          }
+        }
+      }
+    }
       query {
         ${nextSidebar}
       }
