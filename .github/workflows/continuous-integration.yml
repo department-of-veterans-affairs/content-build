@@ -1,6 +1,12 @@
 name: Continuous Integration
 
 on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: Deploy specific commit
+        required: false
+        default: ''
   push:
     branches:
       - '**'
@@ -131,6 +137,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: content-build
+          ref: ${{ github.event.inputs.commit_sha || github.sha }}
 
       - name: Get Node version
         id: get-node-version
@@ -190,7 +197,7 @@ jobs:
           CHANGE_TARGET=null
           RUN_ID=${{ github.run_id }}
           RUN_NUMBER=${{ github.run_number }}
-          REF=${{ github.sha }}
+          REF=${{ github.event.inputs.commit_sha || github.sha }}
           BUILDTIME=$(date +%s)
           EOF
 
@@ -286,6 +293,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.commit_sha || github.sha }}
 
       - name: Get Node version
         id: get-node-version
@@ -341,6 +350,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.commit_sha || github.sha }}
 
       - name: Get Node version
         id: get-node-version
@@ -375,6 +386,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.commit_sha || github.sha }}
 
       - name: Get Node version
         id: get-node-version
@@ -394,6 +407,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.commit_sha || github.sha }}
 
       - name: Get Node version
         id: get-node-version
@@ -442,6 +457,8 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.commit_sha || github.sha }}
 
       - name: Restore vagovprod build
         run: |
@@ -750,7 +767,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha || github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
 
   deploy:
     name: Deploy
@@ -769,6 +786,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.commit_sha || github.sha }}
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -796,7 +815,7 @@ jobs:
       - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha || github.sha }}/${{ matrix.environment }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
 
   stop-runner:
