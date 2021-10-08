@@ -123,6 +123,8 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v2
+        with:
+          path: content-build
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
