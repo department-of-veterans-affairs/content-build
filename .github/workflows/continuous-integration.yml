@@ -206,6 +206,7 @@ jobs:
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
 
+      # Only will get called if error in workflow
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
@@ -214,7 +215,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      # Only will get called if error in workflow
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
