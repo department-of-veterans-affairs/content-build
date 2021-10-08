@@ -133,6 +133,9 @@ jobs:
       - name: pwd
         run: pwd
 
+      - name: ls home
+        run: ls $GITHUB_WORKSPACE
+
       - name: ls
         run: ls
 
