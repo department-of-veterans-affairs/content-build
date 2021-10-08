@@ -723,7 +723,7 @@ jobs:
       - name: Restore ${{ matrix.buildtype }} build
         run: |
           mv /tmp/${{ github.run_id }}/${{ matrix.buildtype }}.tar.bz2 .
-          df
+          df -h
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1

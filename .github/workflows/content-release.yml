@@ -297,7 +297,7 @@ jobs:
       - name: Restore vagovprod build
         run: |
           mv /tmp/${{ github.run_id }}/vagovprod.tar.bz2 .
-          df
+          df -h
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
