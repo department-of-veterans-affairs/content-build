@@ -121,16 +121,14 @@ jobs:
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
     steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+
       - name: Checkout vagov-content
         uses: actions/checkout@v2
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
-
-      - name: Checkout content-build
-        uses: actions/checkout@v2
-        with:
-          path: content-build
 
       - name: Install dependencies
         uses: ./.github/workflows/install
