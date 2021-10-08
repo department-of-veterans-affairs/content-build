@@ -304,6 +304,7 @@ jobs:
         run: |
           mv /tmp/${{ github.run_id }}/vagovprod.tar.bz2 .
           df -h
+          du -h vagovprod.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
