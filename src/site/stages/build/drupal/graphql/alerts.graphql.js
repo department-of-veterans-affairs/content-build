@@ -10,12 +10,6 @@ const partialQuery = `
       ... on BlockContentAlert {
         id
         entityPublished
-        fieldAlertDismissable
-        fieldAlertFrequency
-        fieldNodeReference {
-          targetId
-        }
-        fieldIsThisAHeaderAlert
         fieldAlertType
         fieldAlertTitle
         fieldAlertContent {
