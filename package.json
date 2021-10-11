@@ -7,7 +7,7 @@
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
     "build:webpack": "webpack --config config/webpack.config.js",
-    "build:codespaces": "yarn build -- --buildtype=localhost --api=https://staging-api.va.gov --host=codespaces/ --port=3002 --apps-directory-name=vets-website",
+    "build:codespaces": "./.devcontainer/codespaces-build.sh",
     "cy:open": "cypress open --config-file config/cypress.json",
     "cy:report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
     "cy:report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
