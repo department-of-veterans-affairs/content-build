@@ -279,29 +279,26 @@ jobs:
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
 
+      - name: Compress build
+        run: tar -C build/${{ env.BUILDTYPE }} -cf ${{ env.BUILDTYPE }}.tar.bz2 .
+
       - name: Persist prearchived build
         run: |
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}
-          mv build/${{ env.BUILDTYPE }} /tmp/${{ github.run_id }}
+          mv ${{ env.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
 
   archive:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, build, start-runner]
 
-    env:
-      BUILDTYPE: vagovprod
-
     steps:
       - name: Restore vagovprod build
         run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }} build/${{ env.BUILDTYPE }}
-          du -h build/${{ env.BUILDTYPE }}
-
-      - name: Compress ${{ env.BUILDTYPE }} build
-        run: tar -cvf ${{ env.BUILDTYPE }}.tar.bz2 build/${{ env.BUILDTYPE }}
+          mv /tmp/${{ github.run_id }}/vagovprod.tar.bz2 .
+          df -h
+          du -h vagovprod.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -327,7 +324,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp vagovprod.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovprod.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
