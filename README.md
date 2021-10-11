@@ -18,6 +18,8 @@ Once you have the site set up locally, these are some common commands you might 
 | watch for template/css changes      | `yarn watch`. Runs the dev server while watching for changes                   |
 | build CSS                           | `yarn build:webpack`. Runs the webpack                                         |
 | watch for CSS changes               | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
+| build in codespaces                 | `yarn build:codespaces`. Build with codespace options                          |
+| watch in codespaces                 | `yarn watch:codespaces`. Watch with codespace options                          |
 
 ### Building static content
 
@@ -53,6 +55,24 @@ of the content** with the following:
 ```sh
 yarn fetch-drupal-cache
 ```
+
+## Working in GitHub CodeSpaces
+
+This repository is enabled to work with [GitHub CodeSpaces](https://github.com/features/codespaces). Please follow
+the [quickstart instructions](https://docs.github.com/en/codespaces/getting-started/quickstart) to get up and running.
+The system will execute some basic commands to build vets-website and content-build. It takes a little while,
+but you can follow the progress by viewing the creation log (`Codespaces: view creation log`) while the container
+starts up.
+
+After the environment is set up you can run `npx http-server build/localhost -s -c-1 -p 3002` to view the built site.
+It will run on port `3002`, which can be made public by [sharing the port](https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace#sharing-a-port) for design reviews or whatever you need.
+
+By default, CORS on `vets-api` will be blocked, but you can allow the request by adding the [Allow CORS: Access-Control-Allow-Origin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en) browser extension (or something similar if you're not using Chrome). Be sure to select "Access-Control-Allow-Credentials" in the settings or 
+requests will continue to be blocked.
+
+You have full access to the command line in codespaces. If you want to manually build or watch we have: `yarn build:codespaces`
+and `yarn watch:codespaces` available to help.
+
 ## Running tests
 
 ### Unit tests
