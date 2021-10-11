@@ -7,7 +7,7 @@
     "build:compare": "node script/content-build-compare.js",
     "build:validate": "node ./script/validate-content-builds.js",
     "build:webpack": "webpack --config config/webpack.config.js",
-    "build:codespaces": "./.devcontainer/codespaces-build.sh",
+    "build:codespaces": "./.devcontainer/codespaces-create.sh",
     "cy:open": "cypress open --config-file config/cypress.json",
     "cy:report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
     "cy:report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
