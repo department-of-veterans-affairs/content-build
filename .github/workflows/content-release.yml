@@ -138,7 +138,7 @@ jobs:
 
     steps:
       - name: Notify Slack
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
