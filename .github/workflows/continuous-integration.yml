@@ -274,7 +274,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/workflows/install
         with:
-          keys: ${{ hashFiles('yarn.lock') }}
+          key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
@@ -314,7 +314,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/workflows/install
         with:
-          keys: ${{ hashFiles('yarn.lock') }}
+          key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
@@ -352,7 +352,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/workflows/install
         with:
-          keys: ${{ hashFiles('yarn.lock') }}
+          key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
@@ -395,7 +395,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/workflows/install
         with:
-          keys: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: on-demand-runner-cypress-
           yarn_cache_folder: .cache/yarn
           path: |
