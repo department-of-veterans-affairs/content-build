@@ -64,12 +64,13 @@ The system will execute some basic commands to build vets-website and content-bu
 but you can follow the progress by viewing the creation log (`Codespaces: view creation log`) while the container
 starts up.
 
-After you environment is set up you can run `npx http-server build/localhost -s -c-1 -p 3002` to view the built site.
-It will run on port `3002`, which can be made public by [sharing the port](https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace#sharing-a-port).
+After the environment is set up you can run `npx http-server build/localhost -s -c-1 -p 3002` to view the built site.
+It will run on port `3002`, which can be made public by [sharing the port](https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace#sharing-a-port) for design reviews or whatever you need.
 
-By default CORS on vets-api will be blocked, but you can allow the request by adding the [Allow CORS: Access-Control-Allow-Origin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en) browser extension (if something similar if you're not using Chrome). Be sure to select "Access-Control-Allow-Credentials" in the settings.
+By default, CORS on `vets-api` will be blocked, but you can allow the request by adding the [Allow CORS: Access-Control-Allow-Origin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en) browser extension (or something similar if you're not using Chrome). Be sure to select "Access-Control-Allow-Credentials" in the settings or 
+requests will continue to be blocked.
 
-You have full access to terminal commands in codespaces. If you want to manually build or watch we have: `yarn build:codespaces`
+You have full access to the command line in codespaces. If you want to manually build or watch we have: `yarn build:codespaces`
 and `yarn watch:codespaces` available to help.
 
 ## Running tests
