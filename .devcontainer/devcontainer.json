@@ -34,6 +34,6 @@
 		3001,
 		3002
 	],
-	"postCreateCommand": "./.devcontainer/post-create.sh",
+	"postCreateCommand": "./.devcontainer/codespaces-create.sh",
 	"remoteUser": "node"
 }

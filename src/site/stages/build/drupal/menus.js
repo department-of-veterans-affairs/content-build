@@ -11,14 +11,7 @@ const { getRelatedHubByPath } = require('./utilities-drupal');
 const { getArrayDepth } = require('../../../utilities/arrayHelpers');
 
 function convertLinkToAbsolute(hostUrl, pathName) {
-  let url;
-  // Don't use absolure URLs in codespaces because the host is dynamic
-  if (hostUrl.includes('codespaces')) {
-    url = pathName;
-  } else {
-    url = new URL(pathName, hostUrl);
-  }
-
+  const url = new URL(pathName, hostUrl);
   return url.href;
 }
 
@@ -300,12 +293,7 @@ function formatHeaderData(buildOptions, contentData) {
 
     // If this top-level item has a link, add it.
     if (link.link.url.path !== '') {
-      // Don't use absolure URLs in codespaces because the host is dynamic
-      if (hostUrl.includes('codespaces')) {
-        linkObj.href = link.link.url.path;
-      } else {
-        linkObj.href = convertLinkToAbsolute(hostUrl, link.link.url.path);
-      }
+      linkObj.href = convertLinkToAbsolute(hostUrl, link.link.url.path);
     }
 
     // If we have children, add in menuSections.
