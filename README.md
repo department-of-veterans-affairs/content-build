@@ -18,8 +18,8 @@ Once you have the site set up locally, these are some common commands you might 
 | watch for template/css changes      | `yarn watch`. Runs the dev server while watching for changes                   |
 | build CSS                           | `yarn build:webpack`. Runs the webpack                                         |
 | watch for CSS changes               | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
-| build in codespaces                 | `yarn build:codespaces` -- sets a relative URL path in menus                   |
-| watch in codespaces                 | `yarn watch:codespaces` -- sets a relative URL path in menus                   |
+| build in codespaces                 | `yarn build:codespaces`. Build with codespace options                          |
+| watch in codespaces                 | `yarn watch:codespaces`. Watch with codespace options                          |
 
 ### Building static content
 
