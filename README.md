@@ -69,6 +69,9 @@ It will run on port `3002`, which can be made public by [sharing the port](https
 
 By default CORS on vets-api will be blocked, but you can allow the request by adding the [Allow CORS: Access-Control-Allow-Origin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en) browser extension (if something similar if you're not using Chrome). Be sure to select "Access-Control-Allow-Credentials" in the settings.
 
+You have full access to terminal commands in codespaces. If you want to manually build or watch we have: `yarn build:codespaces`
+and `yarn watch:codespaces` available to help.
+
 ## Running tests
 
 ### Unit tests
