@@ -167,6 +167,59 @@ const FACILITY_MENU_NAMES = [
 ];
 
 const FACILITY_SIDEBAR_QUERY = `
+name
+  description
+  links {
+    label
+    expanded
+    description
+    url {
+      path
+    }
+    links {
+      label
+      expanded
+      description
+      url {
+        path
+      }
+      links {
+        label
+        expanded
+        description
+        url {
+          path
+        }
+        links {
+          label
+          expanded
+          description
+          url {
+            path
+          }
+          links {
+            label
+            expanded
+            description
+            url {
+              path
+            }
+            links {
+              label
+              expanded
+              description
+              url {
+                path
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const NEW_FACILITY_SIDEBAR_QUERY = `
   name
   description
   links {
@@ -219,17 +272,37 @@ const VaFacilitySidebars = {};
 let compiledQuery = '';
 
 FACILITY_MENU_NAMES.forEach(facilityMenuName => {
-  const facilityMenuNameCamel = camelize(facilityMenuName);
-  const operationName = `${facilityMenuNameCamel}FacilitySidebarQuery`;
-  const nextSidebar = `
+  if (
+    facilityMenuName === 'va-central-california-health-car' ||
+    facilityMenuName === 'va-western-colorado-health-care'
+  ) {
+    const facilityMenuNameCamel = camelize(facilityMenuName);
+    const operationName = `${facilityMenuNameCamel}FacilitySidebarQuery`;
+    const nextSidebar = `
       ${operationName}: menuByName(name: "${facilityMenuName}") {
         ${FACILITY_SIDEBAR_QUERY}
       }
     `;
 
-  compiledQuery += nextSidebar;
+    compiledQuery += nextSidebar;
 
-  VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
+    VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
+      query {
+        ${nextSidebar}
+      }
+  `;
+  } else {
+    const facilityMenuNameCamel = camelize(facilityMenuName);
+    const operationName = `${facilityMenuNameCamel}FacilitySidebarQuery`;
+    const nextSidebar = `
+      ${operationName}: menuByName(name: "${facilityMenuName}") {
+        ${NEW_FACILITY_SIDEBAR_QUERY}
+      }
+    `;
+
+    compiledQuery += nextSidebar;
+
+    VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
     fragment MenuItem on MenuLink {
       expanded
       description
@@ -252,6 +325,7 @@ FACILITY_MENU_NAMES.forEach(facilityMenuName => {
         ${nextSidebar}
       }
   `;
+  }
 });
 
 module.exports = {

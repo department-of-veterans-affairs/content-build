@@ -3,7 +3,6 @@
 {% assign aboutMenu = lastMenu.links | map: 'url' %}
 {% assign deepLinksString = sidebarData.links | findCurrentPathDepthRecursive: entityUrl.path %}
 {% assign deepLinksObj = deepLinksString | jsonToObj %}
-{{ deepLinksObj | json }}
 
 {% comment %} A "depth" of 1 means that this page is the root level page. {% endcomment %}
 {% assign depth = deepLinksObj.depth  %}
