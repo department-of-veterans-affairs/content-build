@@ -262,7 +262,6 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
 
   unit-tests:

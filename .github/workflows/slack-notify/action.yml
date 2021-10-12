@@ -8,10 +8,6 @@ inputs:
   attachments:
     description: attached message
     required: true
-  blocks:
-    description: blocks
-    required: false
-    default: ''
   aws-access-key-id:
     description: aws-access-key-id
     required: true
