@@ -15,7 +15,7 @@ const url = new URL(
     'https://dev.va.gov/jenkins',
     'job/testing',
     'job/content-build',
-    `job/${encodeURIComponent(branchName)}`,
+    `job/${encodeURIComponent(branchName).replace(/%2F/g, '%252F')}`,
     'build',
   ),
 );
