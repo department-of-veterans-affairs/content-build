@@ -286,7 +286,6 @@ jobs:
 
       - name: Notify Slack about build failures
         uses: ./.github/workflows/slack-notify
-        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
