@@ -10,7 +10,7 @@
         <article aria-labelledby="article-heading" role="region" class="usa-content">
           <h1 id="article-heading">{{ title }}</h1>
           <div class="va-introtext">
-            {% include "src/site/includes/dynamic-content.drupal.liquid" with
+            {% include "src/site/includes/centralized-content.drupal.liquid" with
               entity = fieldCcIntroText.fetched
               contentType = fieldCcIntroText.fetchedBundle
             %}
@@ -21,7 +21,7 @@
             <ul class="usa-unstyled-list" role="list"></ul>
           </nav>
 
-          {% include "src/site/includes/dynamic-content.drupal.liquid" with
+          {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcTopOfPageContent.fetched
             contentType = fieldCcTopOfPageContent.fetchedBundle
           %}
@@ -30,12 +30,12 @@
 
           {{ fieldVamcOtherPolicies.processed }}
 
-          {% include "src/site/includes/dynamic-content.drupal.liquid" with
+          {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcGenVisitationPolicy.fetched
             contentType = fieldCcGenVisitationPolicy.fetchedBundle
           %}
 
-          {% include "src/site/includes/dynamic-content.drupal.liquid" with
+          {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcBottomOfPageContent.fetched
             contentType = fieldCcBottomOfPageContent.fetchedBundle
           %}
