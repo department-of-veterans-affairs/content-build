@@ -169,16 +169,16 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         const startTime = moment();
         const json = await request;
 
-        if (json.errors) {
-          const formattedErrors = JSON.stringify(json.errors, null, 2);
-          const pluralizedErrors =
-            json.errors.length > 1 ? 'errors' : 'an error';
-          throw new Error(
-            `GraphQL query ${queryName} has ${pluralizedErrors}:\n${query}\n\n${chalk.red(
-              `Error with ${queryName}. Scroll up for the GraphQL query that has ${pluralizedErrors}:\n\n${formattedErrors}`,
-            )}`,
-          );
-        }
+        // if (json.errors) {
+        //   const formattedErrors = JSON.stringify(json.errors, null, 2);
+        //   const pluralizedErrors =
+        //     json.errors.length > 1 ? 'errors' : 'an error';
+        //   throw new Error(
+        //     `GraphQL query ${queryName} has ${pluralizedErrors}:\n${query}\n\n${chalk.red(
+        //       `Error with ${queryName}. Scroll up for the GraphQL query that has ${pluralizedErrors}:\n\n${formattedErrors}`,
+        //     )}`,
+        //   );
+        // }
 
         if (json.data?.nodeQuery) {
           result.data.nodeQuery.entities.push(...json.data.nodeQuery.entities);
