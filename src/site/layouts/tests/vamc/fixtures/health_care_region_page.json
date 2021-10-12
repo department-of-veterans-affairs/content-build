@@ -4599,6 +4599,48 @@
               "entityUrl": {
                 "path": "/pittsburgh-health-care/stories/veterans-how-can-va-improve-your-health-care"
               }
+            },
+            {
+              "title": "Get Your Flu Shot",
+              "fieldFeatured": true,
+              "fieldIntroText": "It's flu season, and it’s now more important than ever to get the flu shot as we continue to battle the COVID-19 pandemic.",
+              "fieldMedia": {
+                "entity": {
+                  "image": {
+                    "alt": "Various flags",
+                    "title": "",
+                    "derivative": {
+                      "url": "/img/styles/3_2_medium_thumbnail/public/2021-03/Listening-Session-Website-Graphic-730x370.jpg",
+                      "width": 480,
+                      "height": 320
+                    }
+                  }
+                }
+              },
+              "entityUrl": {
+                "path": "/pittsburgh-health-care/stories/veterans-how-can-va-improve-your-health-care"
+              }
+            },
+            {
+              "title": "Upholding Valor podcast: Weight management",
+              "fieldFeatured": true,
+              "fieldIntroText": "The VA Salt Lake City Healthcare System goes beyond traditional healthcare to improve the lives of Veterans. In this episode of Upholding Valor a Veteran talks about his weight loss transformation and his journey to peace of mind, body and soul.",
+              "fieldMedia": {
+                "entity": {
+                  "image": {
+                    "alt": "Various flags",
+                    "title": "",
+                    "derivative": {
+                      "url": "/img/styles/3_2_medium_thumbnail/public/2021-03/Listening-Session-Website-Graphic-730x370.jpg",
+                      "width": 480,
+                      "height": 320
+                    }
+                  }
+                }
+              },
+              "entityUrl": {
+                "path": "/pittsburgh-health-care/stories/veterans-how-can-va-improve-your-health-care"
+              }
             }
           ]
         }

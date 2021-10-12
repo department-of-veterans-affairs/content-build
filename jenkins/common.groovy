@@ -134,51 +134,6 @@ def setup() {
   }
 }
 
-def accessibilityTests() {
-
-  if (shouldBail() || !VAGOV_BUILDTYPES.contains('vagovprod')) { return }
-
-  stage("Accessibility") {
-
-     slackSend(
-        message: "Starting the daily accessibility scan of content-build... ${env.RUN_DISPLAY_URL}".stripMargin(),
-        color: 'good',
-        channel: '-daily-accessibility-scan'
-      )
-
-    dir("content-build") {
-      try {
-        parallel (
-          'nightwatch-accessibility': {
-            sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility up -d && docker-compose -p accessibility run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
-          },
-        )
-
-        slackSend(
-          message: 'The daily accessibility scan has completed successfully.',
-          color: 'good',
-          channel: '-daily-accessibility-scan'
-        )
-
-      } catch (error) {
-
-        slackSend(
-            message: "@here Daily accessibility tests have failed. ${env.RUN_DISPLAY_URL}".stripMargin(),
-            color: 'danger',
-            failOnError: true,
-            channel: '-daily-accessibility-scan'
-          )
-
-        throw error
-      } finally {
-        sh "docker-compose -p accessibility down --remove-orphans"
-        step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-      }
-    }
-
-  }
-}
-
 // Upload the broken links file to S3 so Drupal can fetch it and notify editors
 def uploadBrokenLinksFile(String brokenLinksFile, String envName) {
   def s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
@@ -202,7 +157,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
       color = 'danger'
     }
 
-    def heading = "@cmshelpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
+    def heading = "@cms-helpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
     def message = "${heading}\n${brokenLinks.summary}".stripMargin()
 
     echo "${brokenLinks.brokenLinksCount} broken links found"
@@ -285,15 +240,6 @@ def integrationTests(dockerContainer, ref) {
           if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
             parallel (
               failFast: true,
-
-              'nightwatch-e2e': {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-              },
-              // PAUSED UNTIL FIXED
-              // 'nightwatch-accessibility': {
-              //   sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} up -d && docker-compose -p accessibility-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker -- --env=accessibility"
-              // },
-
               cypress: {
                 sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
               }
@@ -301,10 +247,6 @@ def integrationTests(dockerContainer, ref) {
           } else {
             parallel (
               failFast: true,
-
-              'nightwatch-e2e': {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} up -d && docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e BABEL_ENV=test -e BUILDTYPE=vagovprod content-build --no-color run nightwatch:docker"
-              },
               cypress: {
                 sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
               }
@@ -313,13 +255,7 @@ def integrationTests(dockerContainer, ref) {
         } catch (error) {
           // slackIntegrationNotify()
           throw error
-        } finally {
-          sh "docker-compose -p nightwatch-${env.EXECUTOR_NUMBER} down --remove-orphans"
-          if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-            sh "docker-compose -p accessibility-${env.EXECUTOR_NUMBER} down --remove-orphans"
-          }
-          step([$class: 'JUnitResultArchiver', testResults: 'logs/nightwatch/**/*.xml'])
-        }
+        } 
       } // end timeout
     }
 
@@ -359,8 +295,10 @@ def archive(dockerContainer, String ref, String envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                      usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-      sh "tar -C /application/build/${envName} -cf /application/build/${envName}.tar.bz2 ."
-      sh "aws s3 cp /application/build/${envName}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${ref}/${envName}.tar.bz2 --acl public-read --region us-gov-west-1 --quiet"
+      if(envName == 'vagovstaging' || envName == 'vagovprod') {
+        sh "tar -C /application/build/${envName} -cf /application/build/${envName}.tar.bz2 ."
+        sh "aws s3 cp /application/build/${envName}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${ref}/${envName}.tar.bz2 --acl public-read --region us-gov-west-1 --quiet"
+      }
     }
   }
 }

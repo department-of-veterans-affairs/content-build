@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
 
@@ -133,11 +132,13 @@
           {% assign header = "h3" %}
           <!-- Stories -->
           {% if newsStoryTeasersFeatured.entities.0.reverseFieldListingNode.entities.length %}
+          {% assign featuredStories = newsStoryTeasersFeatured.entities.0.reverseFieldListingNode.entities %}
           <section>
             <h2
               class="vads-u-margin-bottom--3 medium-screen:vads-u-margin-top--5">
               Stories</h2>
-            {% for story in newsStoryTeasersFeatured.entities.0.reverseFieldListingNode.entities %}
+
+            {% for story in featuredStories limit:2 %}
             {% assign node = story %}
             {% include "src/site/teasers/news_story.drupal.liquid" with node = story %}
             {% endfor %}

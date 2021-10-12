@@ -10,7 +10,7 @@ const FACILITY_MENU_NAMES = [
   // VISN 1
   'va-bedford-health-care',
   'va-boston-health-care',
-  'va-central-western-massachusetts-health-care',
+  'va-central-western-massachusetts',
   'va-connecticut-health-care',
   'va-maine-health-care',
   'va-manchester-health-care',
@@ -87,7 +87,7 @@ const FACILITY_MENU_NAMES = [
   'va-northern-indiana-health-care',
   'va-saginaw-health-care',
   // VISN 12
-  'lovell-fhcc-health care',
+  'va-lovell-federal-health care',
   'va-chicago-health-care',
   'va-hines-health-care',
   'va-illiana-health-care',

@@ -6,8 +6,10 @@
     {% assign alertType = "info" %}
   {% endif %}
 
-  {% assign region = entityUrl.path | regionBasePath | prepend: "/" %}
-  {% assign lastArg = entityUrl.path | split: "/" | last | prepend: "/" %}
+  {% if entityUrl.path %}
+    {% assign region = entityUrl.path | regionBasePath | prepend: "/" %}
+    {% assign lastArg = entityUrl.path | split: "/" | last | prepend: "/" %}
+  {% endif %}
 
   {% assign outputStatus = false %}
   {% assign emailUpdates = "" %}

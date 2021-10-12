@@ -13,7 +13,7 @@ services:
     expose:
       - 3001
       - 3000
-    command: ./script/run-docker-nightwatch.sh
+    command: ./script/run-docker-test-server.sh
   selenium-chrome:
     image: selenium/standalone-chrome:3.14.0-francium
     links:

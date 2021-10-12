@@ -13,7 +13,7 @@ const permalinks = require('metalsmith-permalinks');
 
 const silverSmith = require('./silversmith');
 const addDebugInfo = require('./add-debug-info');
-
+const { runCommand } = require('./../../../../script/utils');
 // const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
@@ -26,7 +26,6 @@ const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const createHeaderFooter = require('./plugins/create-header-footer');
 const createOutreachAssetsData = require('./plugins/create-outreach-assets-data');
-const createReactPages = require('./plugins/create-react-pages');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
@@ -79,7 +78,6 @@ function build(BUILD_OPTIONS) {
     );
   }
 
-  smith.use(createReactPages(BUILD_OPTIONS), 'Create React pages');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 
@@ -231,6 +229,10 @@ function build(BUILD_OPTIONS) {
 
     // If we're running a watch, let the engineer know important information
     if (BUILD_OPTIONS.watch) {
+      runCommand(
+        `yarn build:webpack --watch --env=buildtype=${BUILD_OPTIONS.buildtype}`,
+      );
+
       // Avoid saving Metalsmith files object on rebuild to prevent overwriting the object
       if (!global.rebuild) global.metalsmithFiles = files;
 
@@ -256,6 +258,10 @@ function build(BUILD_OPTIONS) {
         smith.printSummary(BUILD_OPTIONS);
         smith.printPeakMemory();
       }
+
+      runCommand(
+        `yarn build:webpack --env=buildtype=${BUILD_OPTIONS.buildtype}`,
+      );
 
       console.log('The Metalsmith build has completed.');
     }

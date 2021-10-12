@@ -14,12 +14,14 @@ const KEYS_TO_IGNORE = [
   'contents',
   'filename',
   'isDrupalPage',
+  'shouldAddDebugInfo',
   'layout',
   'modified',
   'nav_children',
   'nav_path',
   'path',
   'private',
+  'next',
 ];
 
 function writeFile(fileName, fileObject, buildtype) {
@@ -32,9 +34,9 @@ function writeFile(fileName, fileObject, buildtype) {
     // We want to replace all instances of that with the debug object.
     const oldString = 'window.contentData = null;';
     const debugInfo = _.omit(fileObject, KEYS_TO_IGNORE);
+
     const newString = `window.contentData = ${JSON.stringify(debugInfo)};`;
     const newContents = contents.toString().replace(oldString, newString);
-
     fs.writeFileSync(filePath, newContents, { overwrite: true });
 
     resolve();
@@ -48,8 +50,9 @@ async function addDebugInfo(files, buildtype) {
     console.log('\nAdding debug info to Drupal pages...\n');
     console.time(timeString);
 
-    const isDrupalPage = fileName => files[fileName].isDrupalPage;
-    const drupalFileNames = Object.keys(files).filter(isDrupalPage);
+    const shouldAddDebugInfo = fileName =>
+      files[fileName].isDrupalPage || files[fileName].shouldAddDebugInfo;
+    const drupalFileNames = Object.keys(files).filter(shouldAddDebugInfo);
 
     while (drupalFileNames.length) {
       const promises = [];
