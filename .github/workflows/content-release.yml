@@ -146,6 +146,8 @@ jobs:
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   
   build:
     name: Build
@@ -365,6 +367,8 @@ jobs:
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   stop-runner:
     name: Stop on-demand-runner

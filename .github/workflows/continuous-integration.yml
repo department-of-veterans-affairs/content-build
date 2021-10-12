@@ -261,7 +261,6 @@ jobs:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
 
   unit-tests:
@@ -439,45 +438,6 @@ jobs:
           path: cypress/results
           retention-days: 1
 
-      - name: Configure AWS credentials
-        if: ${{ github.ref == 'refs/heads/master' && failure() }}
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get va-vsp-bot token
-        if: ${{ github.ref == 'refs/heads/master' && failure() }}
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Checkout VSP actions
-        if: ${{ github.ref == 'refs/heads/master' && failure() }}
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
-
-      - name: Get Slack app token
-        if: ${{ github.ref == 'refs/heads/master' && failure() }}
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
-      - name: Get Slack bot token
-        if: ${{ github.ref == 'refs/heads/master' && failure() }}
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
-
       - name: Notify Slack about Cypress test failures
         if: ${{ github.ref == 'refs/heads/master' && failure() }}
         uses: ./.github/workflows/slack-notify
@@ -487,6 +447,8 @@ jobs:
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: C026PD47Z19
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   testing-reports:
     name: Testing Reports
@@ -768,9 +730,14 @@ jobs:
     needs: deploy
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Notify Slack
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
