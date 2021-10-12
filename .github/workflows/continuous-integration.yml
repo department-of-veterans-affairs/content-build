@@ -458,6 +458,8 @@ jobs:
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: C026PD47Z19
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   testing-reports:
     name: Testing Reports
@@ -748,3 +750,5 @@ jobs:
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
