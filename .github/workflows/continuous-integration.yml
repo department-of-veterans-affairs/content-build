@@ -282,16 +282,6 @@ jobs:
       - name: Create test results folder
         run: mkdir -p test-results
 
-      - name: Notify Slack about build failures
-        uses: ./.github/workflows/slack-notify
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Debug slack notify: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: C02AG8UF95M # gha-build-status
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
       - name: Run unit tests
         run: yarn test:unit --coverage
         env:
