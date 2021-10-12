@@ -151,13 +151,6 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-gov-west-1'
-
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
@@ -213,6 +206,15 @@ jobs:
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
 
+      # Only will get called if error in workflow
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
@@ -226,23 +228,6 @@ jobs:
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
-
-      - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
 
       - name: Get role from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@latest
@@ -266,9 +251,8 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
-        # Only will get called if error in workflow
       - name: Notify Slack about broken links
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -278,7 +262,7 @@ jobs:
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID}}
+          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
 
   unit-tests:
     name: Unit Tests
@@ -287,29 +271,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Create test results folder
         run: mkdir -p test-results
@@ -342,29 +311,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Annotate ESLint results
         run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
@@ -395,29 +349,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
@@ -453,34 +392,16 @@ jobs:
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: on-demand-runner-cypress-
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             /github/home/.cache/Cypress
             **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
-
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --production=false
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
@@ -559,13 +480,11 @@ jobs:
 
       - name: Notify Slack about Cypress test failures
         if: ${{ github.ref == 'refs/heads/master' && failure() }}
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: ./.github/workflows/slack-notify
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: C026PD47Z19
 
@@ -612,6 +531,7 @@ jobs:
         with:
           node-version: 14 # ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
+      # TODO: Potentially use install composite
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline --production=false
         env:
@@ -848,45 +768,9 @@ jobs:
     needs: deploy
 
     steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
-      - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
-
-      - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
-
       - name: Notify Slack
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
