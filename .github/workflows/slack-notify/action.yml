@@ -47,5 +47,4 @@ runs:
         slack_app_token: ${{ env.SLACK_APP_TOKEN }}
         slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
         attachments: ${{ inputs.attachments }}
-        blocks: ${{ inputs.attachments }}
         channel_id: ${{ inputs.channel_id }}
