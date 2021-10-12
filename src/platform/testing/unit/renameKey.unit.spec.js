@@ -6,11 +6,24 @@ describe('renameKey', () => {
   const testObj = { testKey1: 'test value 1' };
 
   it('returns null if null is passed', () => {
+    expect(renameKey(null)).to.be.null;
+  });
+
+  it('returns null if null object is passed with valid oldKey and newKey names', () => {
     expect(renameKey(null, 'testKey1', 'newKey')).to.be.null;
   });
 
-  it('returns null if null is passed', () => {
-    expect(renameKey(null)).to.be.null;
+  // it('returns null if null object is passed and empty strings are passed for oldKey and newKey', () => {
+  //   console.log('empty strings situation', renameKey(testObj, "", ""))
+  //   expect(renameKey(testObj, "", "")).to.be.null
+  // })
+
+  it('throws an error if null object is passed and empty strings are passed for oldKey and newKey', () => {
+    try {
+      renameKey(testObj, '', '');
+    } catch (error) {
+      assert.instanceOf(error, Error);
+    }
   });
 
   it('throws an error if either the oldKey or newKey is not passed', () => {

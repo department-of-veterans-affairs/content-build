@@ -1495,7 +1495,7 @@ describe('processCentralizedContent', () => {
       .null;
   });
 
-  it('returns null if null is passed', () => {
+  it('returns null if null is passed - default', () => {
     expect(liquid.filters.processCentralizedContent(null, 'test_bundle')).to.be
       .null;
   });
