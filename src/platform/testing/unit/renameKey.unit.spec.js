@@ -13,11 +13,6 @@ describe('renameKey', () => {
     expect(renameKey(null, 'testKey1', 'newKey')).to.be.null;
   });
 
-  // it('returns null if null object is passed and empty strings are passed for oldKey and newKey', () => {
-  //   console.log('empty strings situation', renameKey(testObj, "", ""))
-  //   expect(renameKey(testObj, "", "")).to.be.null
-  // })
-
   it('throws an error if null object is passed and empty strings are passed for oldKey and newKey', () => {
     try {
       renameKey(testObj, '', '');
