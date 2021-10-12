@@ -1,0 +1,12 @@
+{% comment %}
+  Centralized content is content that is re-used across all of VA.gov. 
+  It has more restrictive editing permissions in Drupal, and it can have any bundle type. 
+  Centralized content uses a different data format than regular content, 
+  so we use the processCentralizedContent filter function to normalize the data, 
+  allowing our standard templates to display it.
+{% endcomment %}
+
+{% assign bundleComponent = "src/site/paragraphs/" | append: contentType %}
+{% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+{% assign processedEntity = entity | processCentralizedContent: contentType %}
+{% include {{ bundleComponentWithExtension }} with entity = processedEntity %}

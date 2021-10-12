@@ -14,18 +14,18 @@
         </div>
         <div class="usa-width-five-sixths">
             {% if date_type == "start_date_only" %}
-                <span>{{ start_date_no_time }}</span><br>
-                <span>{{ start_time }}</span>
+                <span class="event-date">{{ start_date_no_time }}</span><br>
+                <span class="event-time">{{ start_time }}</span>
             {% else %}
                 {% if date_type == "same_day" %}
-                    <span>{{ start_date_no_time }}</span><br>
-                    <span>{{ start_time }} – {{ end_time }}</span>
+                    <span class="event-date">{{ start_date_no_time }}</span><br>
+                    <span class="event-time">{{ start_time }} – {{ end_time }}</span>
                 {% else %}
-                    <span>{{ start_date_full }} –</span><br>
-                    <span>{{ end_date_full }}</span>
+                    <span class="event-date event-time">{{ start_date_full }} –</span><br>
+                    <span class="event-date event-time">{{ end_date_full }}</span>
                 {% endif %}
             {% endif %}
-            <span>{{ timezone }}</span>
+            <span class="event-time-zone">{{ timezone }}</span>
         </div>
       </div>
       {% if node.fieldFacilityLocation != empty %}

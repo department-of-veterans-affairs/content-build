@@ -2,13 +2,14 @@ const phoneRegex = /\d{3}-\d{3}-\d{4}/;
 
 Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.visit(page);
-  cy.get('#modal-announcement-title').should('exist');
-  cy.get('button')
-    .contains('Continue to the website')
-    .click()
-    .then(() => {
-      cy.get('#modal-announcement-title').should('not.exist');
-    });
+  // TODO: Determine if this can be removed.
+  // cy.get('#modal-announcement-title').should('exist');
+  // cy.get('button')
+  //   .contains('Continue to the website')
+  //   .click()
+  //   .then(() => {
+  //     cy.get('#modal-announcement-title').should('not.exist');
+  //   });
   cy.get('.va-introtext').should('exist');
   cy.get('a.usa-button').contains('Make an appointment');
   cy.get('a.usa-button').contains('View all health services');

@@ -9,7 +9,8 @@ on:
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  CHANNEL_ID: C37M86Y8G #devops-deploys
+  DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
+  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-support
   NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group-nocache/
 
 concurrency:
@@ -154,43 +155,10 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-gov-west-1'
-
-      - name: Get NEXUS username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
-          env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
-
-      - name: Get NEXUS token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
-          env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
-
-      # Required to change registry in yarn.lock file
-      - name: Change registry in yarn.lock
-        run: |
-          sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
-
-      - name: Authenticate NEXUS
-        run: |
-          npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
-          npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
-          npm config set registry ${{ env.NEXUS_REGISTRY }}
-          npm config set email va-vsp-bot-1@va.gov
-          npm config set always-auth true
-
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
           max_attempts: 3
           timeout_minutes: 7
         env:
@@ -240,11 +208,23 @@ jobs:
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
+      - name: Compress build
+        run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
+
       - name: Persist prearchived build
         run: |
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
-          mv build/${{ matrix.buildtype }} /tmp/${{ github.run_id }}
+          mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
+
+      # Only will get called if error in workflow
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
 
       - name: Get Slack app token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
@@ -259,23 +239,6 @@ jobs:
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
-
-      - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
 
       - name: Get role from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@latest
@@ -299,18 +262,17 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
-        # Only will get called if error in workflow
       - name: Notify Slack about broken links
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          blocks: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel_id: ${{ env.CHANNEL_ID}}
+          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
 
   unit-tests:
     name: Unit Tests
@@ -319,29 +281,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Create test results folder
         run: mkdir -p test-results
@@ -374,29 +321,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Annotate ESLint results
         run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
@@ -427,29 +359,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
@@ -485,73 +402,22 @@ jobs:
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
+          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: on-demand-runner-cypress-
+          yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             /github/home/.cache/Cypress
             **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-gov-west-1'
-
-      - name: Get NEXUS username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
-          env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
-
-      - name: Get NEXUS token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
-          env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
-
-      # Required to change registry in yarn.lock file
-      - name: Change registry in yarn.lock
-        run: |
-          sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
-
-      - name: Authenticate NEXUS
-        run: |
-          npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
-          npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
-          npm config set registry ${{ env.NEXUS_REGISTRY }}
-          npm config set email va-vsp-bot-1@va.gov
-          npm config set always-auth true
-
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress tests
-        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --spec src/site/layouts/tests/**/*.cypress.spec.js
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
 
       - name: Publish test results
         if: ${{ always() }}
@@ -575,97 +441,170 @@ jobs:
           name: cypress-screenshot-artifacts
           path: cypress/screenshots
 
-  nightwatch-tests:
-    name: Nightwatch E2E Tests
-    runs-on: ${{ needs.start-runner.outputs.vagovprod }}
-    needs: [start-runner, build]
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: cypress-mochawesome-test-results
+          path: cypress/results
+          retention-days: 1
+
+      - name: Notify Slack about Cypress test failures
+        if: ${{ github.ref == 'refs/heads/master' && failure() }}
+        uses: ./.github/workflows/slack-notify
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: C026PD47Z19
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  testing-reports:
+    name: Testing Reports
+    runs-on: ubuntu-latest
+    needs: [cypress-tests]
+    if: ${{ needs.cypress-tests.result == 'failure' || needs.cypress-tests.result == 'success' }}
+    continue-on-error: true
     timeout-minutes: 30
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Restore vagovprod build
-        run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
-          du -h build/vagovprod
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-nightwatch-
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-gov-west-1'
+          aws-region: us-gov-west-1
 
-      - name: Get NEXUS username
+      - name: Get va-vsp-bot token
         uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
         with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_USERNAME
-          env_variable_name: VA_VSP_BOT_1_NEXUS_USERNAME
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Get NEXUS token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+      # ------------------------
+      # | Upload BigQuery Data |
+      # ------------------------
+
+      - name: Checkout Testing Tools Team Dashboard Data repo
+        uses: actions/checkout@v2
         with:
-          ssm_parameter: /devops/VA_VSP_BOT_1_NEXUS_PASSWORD
-          env_variable_name: VA_VSP_BOT_1_NEXUS_PASSWORD
+          repository: department-of-veterans-affairs/testing-tools-team-dashboard-data
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          path: testing-tools-team-dashboard-data
 
-      # Required to change registry in yarn.lock file
-      - name: Change registry in yarn.lock
-        run: |
-          sed -i -e "s#https://registry.yarnpkg.com/#${{ env.NEXUS_REGISTRY }}#g" yarn.lock
-          sed -i -e "s#https://github.com/segmentio/substitute/archive/0.0.1.tar.gz#${{ env.NEXUS_REGISTRY }}substitute/-/substitute-0.0.1.tgz#g" yarn.lock
+      # TODO: Set .nvmrc in testing-tools-team-dashboard-data.
+      # - name: Get Node version
+      #   id: get-node-version
+      #   run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      #   working-directory: testing-tools-team-dashboard-data
 
-      - name: Authenticate NEXUS
-        run: |
-          npm config set _auth $(echo -n '${{ env.VA_VSP_BOT_1_NEXUS_USERNAME }}:${{ env.VA_VSP_BOT_1_NEXUS_PASSWORD }}' | openssl base64)
-          npm config set cafile ${{ env.NODE_EXTRA_CA_CERTS }}
-          npm config set registry ${{ env.NEXUS_REGISTRY }}
-          npm config set email va-vsp-bot-1@va.gov
-          npm config set always-auth true
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14 # ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
+      # TODO: Potentially use install composite
       - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 7
+        run: yarn install --frozen-lockfile --prefer-offline --production=false
         env:
           YARN_CACHE_FOLDER: .cache/yarn
+        working-directory: testing-tools-team-dashboard-data
 
-      - name: Start server
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+      - name: Download Mochawesome test results
+        uses: actions/download-artifact@v2
+        with:
+          name: cypress-mochawesome-test-results
+          path: testing-tools-team-dashboard-data/src/mochawesome/data
 
-      - name: Run Nightwatch tests
-        run: yarn test:e2e
+      - name: Get BigQuery service credentials
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /dsva-vagov/testing-team/bigquery_service_credentials
+          env_variable_name: BIGQUERY_SERVICE_CREDENTIALS
+
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: vsp-analytics-and-insights
+          service_account_key: ${{ env.BIGQUERY_SERVICE_CREDENTIALS }}
+          export_default_credentials: true
+
+      - name: Set UUID for Mochawesome report
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
+
+      - name: Create report and post results to BigQuery
+        run: yarn cypress-mochawesome-to-bigquery
+        working-directory: testing-tools-team-dashboard-data
         env:
-          BUILDTYPE: vagovprod
+          IS_MASTER_BUILD: ${{ needs.cypress-tests-prep.outputs.is_master_build }}
+          NUM_CONTAINERS: ${{ needs.cypress-tests-prep.outputs.num_containers }}
+          TEST_EXECUTIONS_TABLE_NAME: content_build_cypress_test_suite_executions
+          TEST_RESULTS_TABLE_NAME: content_build_cypress_test_results
+          TEST_REPORTS_FOLDER_NAME: content-build-cypress-reports
+
+      # env.MOCHAWESOME_REPORT_RESULTS is set and exported during the above step when the mochawesome report is generated.  It contains the output string for the publish step at the end of the job with the numbers from the Mochawesome report.
+
+      # --------------------------
+      # | Publish Testing Report |
+      # --------------------------
+
+      - name: Download video artifacts
+        if: ${{ needs.cypress-tests.result == 'failure' }}
+        uses: actions/download-artifact@v2
+        with:
+          name: cypress-video-artifacts
+          path: testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }}
+
+      - name: Get AWS IAM role
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Upload test videos to s3
+        if: ${{ needs.cypress-tests.result == 'failure' }}
+        run: aws s3 cp testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }} s3://testing-tools-testing-reports/content-build-cypress-reports/videos/${{ env.UUID }} --acl public-read --region us-gov-west-1 --recursive
+
+      - name: Upload test report to s3
+        run: aws s3 cp testing-tools-team-dashboard-data/mochawesome-report s3://testing-tools-testing-reports/content-build-cypress-reports --acl public-read --region us-gov-west-1 --recursive
+
+      # -------------------------
+      # | Cypress Tests Summary |
+      # -------------------------
+
+      - name: Publish Cypress test results
+        if: ${{ always() }}
+        uses: LouisBrunner/checks-action@v1.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Cypress Tests Summary
+          conclusion: ${{ needs.cypress-tests.result }}
+          output: |
+            {"summary":${{ env.MOCHAWESOME_REPORT_RESULTS }}}
 
   archive:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
-    needs: [start-runner, cypress-tests, nightwatch-tests, unit-tests, linting, security-audit, drupal-cache-test]
+    needs:
+      [
+        start-runner,
+        cypress-tests,
+        unit-tests,
+        linting,
+        security-audit,
+        drupal-cache-test,
+      ]
 
     strategy:
       fail-fast: true
@@ -676,12 +615,9 @@ jobs:
     steps:
       - name: Restore ${{ matrix.buildtype }} build
         run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/${{ matrix.buildtype }} build/${{ matrix.buildtype }}
-          du -h build/${{ matrix.buildtype }}
-
-      - name: Compress build
-        run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
+          mv /tmp/${{ github.run_id }}/${{ matrix.buildtype }}.tar.bz2 .
+          df -h
+          du -h ${{ matrix.buildtype }}.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -775,7 +711,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, nightwatch-tests, archive]
+    needs: [start-runner, cypress-tests, archive]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
@@ -822,45 +758,14 @@ jobs:
     needs: deploy
 
     steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
-      - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
-          
-      - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Checkout VSP actions
+      - name: Checkout
         uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
 
       - name: Notify Slack
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
           attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+          channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
