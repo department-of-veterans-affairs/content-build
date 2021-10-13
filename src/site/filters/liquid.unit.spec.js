@@ -1541,3 +1541,164 @@ describe('getValueFromObjPath', () => {
     ).to.eq(1);
   });
 });
+
+describe('processCentralizedContent', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedContent(null, 'wysiwyg')).to.be
+      .null;
+  });
+
+  it('returns null if null is passed - default', () => {
+    expect(liquid.filters.processCentralizedContent(null, 'test_bundle')).to.be
+      .null;
+  });
+
+  it('returns null if empty string is passed', () => {
+    expect(liquid.filters.processCentralizedContent('', 'test_bundle')).to.be
+      .null;
+  });
+
+  it('returns null for null', () => {
+    expect(liquid.filters.processCentralizedContent(null)).to.be.null;
+  });
+
+  it('returns test data when contentType = wysiwyg', () => {
+    const testData = vetCenterData.fieldCcVetCenterCallCenter.fetched;
+
+    expect(
+      liquid.filters.processCentralizedContent(
+        testData,
+        vetCenterData.fieldCcVetCenterCallCenter.fetchedBundle,
+      ),
+    ).to.deep.eq(testData);
+  });
+
+  it('converts fieldWysiwyg.processed from snake case/array to camel case/string', () => {
+    const testData = {
+      // eslint-disable-next-line camelcase
+      field_wysiwyg: [{ processed: 'test' }],
+    };
+
+    const expected = {
+      fieldWysiwyg: { processed: 'test' },
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'wysiwyg'),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns expected if contentType = q_a_section.', () => {
+    const oldFieldQuestionsData = {
+      fieldQuestions: [
+        {
+          entity: {
+            targetId: '29903', // targetId gets renmaed to entityId as long as there is not entityId already present
+            targetRevisionId: '422164',
+            entityType: 'paragraph',
+            entityBundle: 'q_a',
+            pid: '29903',
+            label: 'National Vet Center content > Content > Questions',
+            status: true,
+            langcode: 'en',
+            fieldAnswer: [
+              {
+                entity: {
+                  targetId: '29902',
+                  targetRevisionId: '422163',
+                  entityType: 'paragraph',
+                  entityBundle: 'wysiwyg',
+                  pid: '29902',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldWysiwyg: [
+                    {
+                      value:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\r\n\r\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\r\n",
+                      format: 'rich_text_limited',
+                      processed:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
+                },
+              },
+            ],
+            fieldQuestion: [
+              {
+                value: 'What are Vet Centers?',
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const newFieldQuestionsData = {
+      fieldQuestions: [
+        {
+          entity: {
+            entityId: '29903',
+            targetRevisionId: '422164',
+            entityType: 'paragraph',
+            entityBundle: 'q_a',
+            pid: '29903',
+            label: 'National Vet Center content > Content > Questions',
+            status: true,
+            langcode: 'en',
+            fieldAnswer: [
+              {
+                entity: {
+                  targetId: '29902',
+                  targetRevisionId: '422163',
+                  entityType: 'paragraph',
+                  entityBundle: 'wysiwyg',
+                  pid: '29902',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldWysiwyg: [
+                    {
+                      value:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\r\n\r\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\r\n",
+                      format: 'rich_text_limited',
+                      processed:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
+                },
+              },
+            ],
+            fieldQuestion: 'What are Vet Centers?',
+          },
+        },
+      ],
+    };
+    const testData = {
+      fieldAccordionDisplay: [{ value: '1' }],
+      fieldSectionHeader: [{ value: "How we're different than a clinic" }],
+      fieldSectionIntro: [{ value: 'Click on a topic for more details.' }],
+      ...oldFieldQuestionsData,
+    };
+
+    const expected = {
+      fieldAccordionDisplay: '1',
+      fieldSectionHeader: "How we're different than a clinic",
+      fieldSectionIntro: 'Click on a topic for more details.',
+      ...newFieldQuestionsData,
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'q_a_section'),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns test data if contentType does not match any of the cases - default', () => {
+    const testData = vetCenterData.fieldVetCenterFeatureContent;
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'test_bundle'),
+    ).to.eq(testData);
+  });
+});
