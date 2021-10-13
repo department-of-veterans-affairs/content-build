@@ -38,6 +38,13 @@ const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
 
+// Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
+// attempt to open too many files simultaneously, so we need to handle it.
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
+
+gracefulFs.gracefulify(realFs);
+
 function build(BUILD_OPTIONS) {
   const smith = silverSmith();
 

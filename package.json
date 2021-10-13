@@ -151,6 +151,7 @@
     "find-root": "^1.1.0",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.7",
+    "graceful-fs": "^4.2.8",
     "http-server": "^0.12.3",
     "husky": ">=6",
     "isomorphic-fetch": "^2.2.1",
