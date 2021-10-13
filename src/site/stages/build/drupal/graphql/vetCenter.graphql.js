@@ -115,7 +115,6 @@ const vetCenterFragment = `
                   ... on TaxonomyTermHealthCareServiceTaxonomy {
                     name
                     fieldVetCenterTypeOfCare
-                    fieldServiceTypeOfCare
                     fieldVetCenterFriendlyName
                     fieldAlsoKnownAs
                     fieldVetCenterComConditions

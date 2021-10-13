@@ -1,9 +1,8 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
 
-<div id="content" class="interior">
+<div id="content" class="interior" data-template="story_listing.drupal.liquid">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
       {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
@@ -19,17 +18,16 @@
                 {% endif %}
               </div>
           {% assign stories = reverseFieldListingNode.entities %}
+          {% assign featuredStories = reverseFieldListingNode.entities | filterBy: 'fieldFeatured', true %}
           {% assign isFirstPage = isPreview or paginator | isFirstPage %}
           {% if isPreview %}
             {% assign pagingResult = debug | paginatePages: stories, 'story' %}
             {% assign pagedItems = pagingResult.pagedItems%}
             {% assign paginator = pagingResult.paginator%}
           {% endif %}
-          {% if isFirstPage %}
-            {% for storyFeature in stories %}
-              {% if storyFeature.fieldFeatured == true %}
+          {% if isFirstPage and featuredStories %}
+            {% for storyFeature in featuredStories limit:2 %}
                 {% include "src/site/teasers/news_story_page_feature.drupal.liquid" with node = storyFeature %}
-              {% endif %}
             {% endfor %}
           {% endif %}
           {% for story in pagedItems %}

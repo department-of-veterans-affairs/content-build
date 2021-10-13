@@ -17,6 +17,7 @@ const {
   addGetUpdatesFields,
   addPager,
 } = require('./health-care-region');
+const createReactPages = require('../plugins/create-react-pages');
 
 const { addHubIconField } = require('./benefit-hub');
 const { addHomeContent } = require('./home');
@@ -54,6 +55,11 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
     } = page;
 
     const pageCompiled = compilePage(page, contentData);
+
+    if (page.entityBundle === 'person_profile' && !pageCompiled) {
+      continue;
+    }
+
     const drupalPageDir = path.join('.', drupalUrl);
     const drupalFileName = path.join(drupalPageDir, 'index.html');
 
@@ -309,6 +315,7 @@ function getDrupalContent(buildOptions) {
 
       await loadCachedDrupalFiles(buildOptions, files);
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
+      await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);
       log('Successfully piped Drupal content into Metalsmith!');
       buildOptions.drupalData = drupalData;
@@ -331,4 +338,8 @@ function getDrupalContent(buildOptions) {
   };
 }
 
-module.exports = { getDrupalContent, shouldPullDrupal };
+module.exports = {
+  getDrupalContent,
+  pipeDrupalPagesIntoMetalsmith,
+  shouldPullDrupal,
+};

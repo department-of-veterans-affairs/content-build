@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with
     customHomeCrumbText = "VA.gov home" %}
@@ -42,7 +41,7 @@
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
             {% endfor %}
 
-            {% assign mobileVetCenters = fieldNearbyMobileVetCenters | getValuesForKey: 'entity' | concat: fieldOffice.entity.reverseFieldOfficeNode.entities | filterBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
+            {% assign mobileVetCenters = fieldNearbyMobileVetCenters | getValuesForPath: 'entity' | concat: fieldOffice.entity.reverseFieldOfficeNode.entities | filterBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
             {% for mobileVetCenter in mobileVetCenters %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                   vetCenter = mobileVetCenter
@@ -50,12 +49,12 @@
             {% endfor %}
           {% endif %}
 
-          {% if fieldNearbyVetCenters.length > 0 %}
-            {% include 'src/site/includes/vet_centers/nearby.liquid' with
-                nearbyVetCenters = fieldNearbyVetCenters
-                mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
-            %}
-          {% endif %}
+          {% include 'src/site/includes/vet_centers/nearby.liquid' with
+              nearbyVetCenters = fieldNearbyVetCenters
+              mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
+              mainVetCenterAddress = fieldOffice.entity.fieldAddress
+              mainVetCenterId = fieldOffice.entity.fieldFacilityLocatorApiId
+          %}
 
           <h2 class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 vads-u-margin-bottom--2p5
                         medium-screen:vads-u-margin-bottom--3" id="vet-centers-other-areas">

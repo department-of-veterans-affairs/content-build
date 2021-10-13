@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true deriveBreadcrumbsFromUrl = true %}
 
@@ -15,9 +14,9 @@
             <div class="usa-width-three-fourths">
                 <article class="usa-content">
                     <div class="usa-grid usa-grid-full vads-u-margin-bottom--2 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
-                        {% if fieldMedia.entity.image != empty %}
+                        {% if fieldMedia.thumbnail.image != empty %}
                             <div class="vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--0 vads-u-margin-right--3">
-                                {% assign image = fieldMedia.entity.image %}
+                                {% assign image = fieldMedia.thumbnail.image %}
                                 <img class="person-profile-detail-page-image" src="{{ image.derivative.url }}" alt="{{ image.alt }}" title="{{ image.title }}">
                             </div>
                         {% endif %}
@@ -82,9 +81,10 @@
                         {{ fieldBody.processed }}
                     </div>
                     {% endif %}
-                    {% if fieldPhotoAllowHiresDownload %}
-                    <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2">
-                        <i class="va-c-social-icon fas fa-download"></i> <a href="{{ image.url }}"
+
+                    {% if fieldPhotoAllowHiresDownload and fieldMedia %}
+                    <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2" id="download-full-size-photo-link">
+                        <i class="va-c-social-icon fas fa-download" aria-hidden="true"></i> <a href="{{ fieldMedia.hiRes.image.derivative.url }}"
                             download>Download full size photo</a>
                     </div>
                     {% endif %}

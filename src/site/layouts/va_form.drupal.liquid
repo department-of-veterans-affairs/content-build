@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with deriveBreadcrumbsFromUrl = true %}
 
@@ -7,7 +6,9 @@
   <main class="va-l-detail-page">
     <div class="usa-grid usa-grid-full">
 
-    {% include 'src/site/navigation/sidebar_nav.drupal.liquid' with sidebar %}
+    {% if sidebar %}
+      {% include 'src/site/navigation/sidebar_nav.drupal.liquid' with sidebar %}
+    {% endif %}
     <div class="usa-width-three-fourths">
 
       <article class="usa-content">
@@ -69,9 +70,9 @@
         </dl>
 
         {% if fieldVaFormUsage %}
-          <h2 class="vads-u-margin-top--4">When to use this form</h3>
+          <h2 class="vads-u-margin-top--4" data-testid="va_form--when-to-use-this-form-header">When to use this form</h3>
           {% if fieldVaFormLanguage %}
-            <div lang="{{ fieldVaFormLanguage }}">
+            <div data-testid="va_form--when-to-use-this-form-text" lang="{{ fieldVaFormLanguage }}">
               {{ fieldVaFormUsage.processed }}
             </div>
           {% else %}
@@ -79,37 +80,25 @@
               {{ fieldVaFormUsage.processed }}
             </div>
           {% endif %}
-
-          <h3 class="vads-u-margin-bottom--2">Downloadable PDF</h3>
-          <a
-            href="{{ fieldVaFormUrl.uri }}"
-            target="_blank"
-            download
-            data-widget-type="find-va-forms-invalid-pdf-alert"
-            data-form-number="{{ fieldVaFormNumber }}">
-              <i
-                aria-hidden="true"
-                class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                role="presentation"
-              > </i>
-            Download VA Form {{ fieldVaFormNumber }} (PDF)
-          </a>
-        {% else %}
-          <a
-            class="vads-u-margin-top--4"
-            href="{{ fieldVaFormUrl.uri }}"
-            target="_blank"
-            download
-            data-widget-type="find-va-forms-invalid-pdf-alert"
-            data-form-number="{{ fieldVaFormNumber }}">
-              <i
-                aria-hidden="true"
-                class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                role="presentation"
-              > </i>
-            Download VA Form {{ fieldVaFormNumber }} (PDF)
-          </a>
         {% endif %}
+
+        <h3 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h3>
+        <a
+          href="{{ fieldVaFormUrl.uri }}"
+          target="_blank"
+          download
+          data-widget-type="find-va-forms-pdf-download-helper"
+          data-form-number="{{ fieldVaFormNumber }}"
+          lang="{{ fieldVaFormLanguage }}"
+          >
+            <i
+              aria-hidden="true"
+              class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
+              role="presentation"
+            > </i>
+          {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
+          {{ translatedDownloadText }} (PDF)
+        </a>
 
         {% if fieldAlert.length %}
           {% for alert in fieldAlert %}
@@ -124,7 +113,7 @@
         {% endif %}
 
         {% if fieldVaFormToolUrl %}
-          <h3>Online tool</h3>
+          <h3 data-testid="va_form--online-tool">Online tool</h3>
           <p>{{ fieldVaFormToolIntro }}</p>
             <div class="vads-u-display--inline-block">
               <a
@@ -144,7 +133,7 @@
 
         {% if fieldVaFormRelatedForms.length > 0 %}
           <section>
-            <h2>Related forms and instructions</h2>
+            <h2 data-testid="va_form--related-forms-and-instructions">Related forms and instructions</h2>
             <ul class="usa-unstyled-list" role="list">
             {% for vaForm in fieldVaFormRelatedForms %}
               <li>
@@ -165,14 +154,17 @@
                   href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
                   target="_blank"
                   download
-                  data-widget-type="find-va-forms-invalid-pdf-alert"
-                  data-form-number="{{ vaForm.entity.fieldVaFormNumber }}">
+                  data-widget-type="find-va-forms-pdf-download-helper"
+                  data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
+                  lang="{{ vaForm.entity.fieldVaFormLanguage }}"
+                  >
                     <i
                       aria-hidden="true"
                       class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
                       role="presentation"
                     > </i>
-                  Download VA Form {{ vaForm.entity.fieldVaFormNumber }} (PDF)
+                    {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}
+                    {{ translatedDownloadText }} (PDF)
                 </a>
               </li>
             {% endfor %}
@@ -195,7 +187,6 @@
                   <li>
                     <h3 class="vads-u-font-size--h4">
                       <a
-                        class="vads-u-text-decoration--none"
                         href="{{ vaFormLinkTeaser.entity.fieldLink.url.path }}"
                         onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': '{{ vaFormLinkTeaser.entity.fieldLink.title | escape }}', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
                         {{ vaFormLinkTeaser.entity.fieldLink.title }}
@@ -209,7 +200,6 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <a
-                      class="vads-u-text-decoration--none"
                       href="/change-direct-deposit"
                       onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your direct deposit information', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
                       Change your direct deposit information
@@ -220,7 +210,6 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <a
-                      class="vads-u-text-decoration--none"
                       href="/change-address"
                       onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your address', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
                       Change your address
@@ -231,7 +220,6 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <a
-                      class="vads-u-text-decoration--none"
                       href="/records/get-military-service-records/"
                       onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Request your military records, including DD214', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
                       Request your military records, including DD214
@@ -242,7 +230,6 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <a
-                      class="vads-u-text-decoration--none"
                       href="/records/"
                       onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Get your VA records and documents online', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
                       Get your VA records and documents online

@@ -393,7 +393,6 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_region_page':
     case 'press_release':
-    case 'person_profile':
       pageCompiled = Object.assign(
         page,
         facilitySidebarNavItems,
@@ -403,6 +402,19 @@ function compilePage(page, contentData) {
         { banners },
         pageId,
       );
+      break;
+    case 'person_profile':
+      if (page.fieldIntroText && page.fieldBody) {
+        pageCompiled = Object.assign(
+          page,
+          facilitySidebarNavItems,
+          outreachSidebarNavItems,
+          alertItems,
+          { bannerAlert: bannerAlertsItem },
+          { banners },
+          pageId,
+        );
+      }
       break;
     case 'news_story':
       pageCompiled = Object.assign(

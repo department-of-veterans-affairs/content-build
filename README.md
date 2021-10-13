@@ -4,18 +4,22 @@
 
 This repository contains scripts and templates which generate static HTML pages for the VA.gov site.
 
-There are several repositories that contain the code and content used to build VA.gov. If you're looking to get started running VA.gov locally, you should read the [Getting Started](https://department-of-veterans-affairs.github.io/veteran-facing-services-tools/getting-started) documentation.
+There are several repositories that contain the code and content used to build VA.gov. If you're looking to get started running VA.gov locally, you should read the [Setting up your local frontend environment](https://depo-platform-documentation.scrollhelp.site/developer-docs/Setting-up-your-local-frontend-environment.1844215878.html) documentation.
 
 ## Common commands
 
 Once you have the site set up locally, these are some common commands you might find useful:
 
-| I want to...                                  | Then you should...                                                           |
-| --------------------------------------------- | ---------------------------------------------------------------------------- |
-| fetch all dependencies                        | `yarn install`. Run this any time `package.json` changes                     |
-| build static HTML pages                       | `yarn build`                                                                 |
-| run the dev server                            | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server  |
-| watch for template changes                    | `yarn watch`. Runs the dev server while watching for changes                 |
+| I want to...                        | Then you should...                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------ |
+| fetch all dependencies              | `yarn install`. Run this any time `package.json` changes                       |
+| build static HTML pages             | `yarn build`                                                                   |
+| run the dev server                  | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server    |
+| watch for template/css changes      | `yarn watch`. Runs the dev server while watching for changes                   |
+| build CSS                           | `yarn build:webpack`. Runs the webpack                                         |
+| watch for CSS changes               | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
+| build in codespaces                 | `yarn build:codespaces`. Build with codespace options                          |
+| watch in codespaces                 | `yarn watch:codespaces`. Watch with codespace options                          |
 
 ### Building static content
 
@@ -25,7 +29,7 @@ on VA.gov, you'll need to build these static pages using the following commands:
 
 `yarn build` (fetches the latest content cache from S3 by default when cache is empty)
 
-- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access)
+- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access). Add `--use-cached-assets` to skip asset download
 - creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
 - run once to build the static HTML files
 - need to run this again when adding new templates based on new Drupal entities
@@ -51,6 +55,11 @@ of the content** with the following:
 ```sh
 yarn fetch-drupal-cache
 ```
+
+## Working in GitHub Codespaces
+
+[Read the Codespaces documentation for this repository](https://depo-platform-documentation.scrollhelp.site/developer-docs/Using-GitHub-Codespaces.1909063762.html#UsingGitHubCodespaces-Codespacesinvets-websiteandcontent-buildrepositories).
+
 ## Running tests
 
 ### Unit tests
@@ -90,7 +99,6 @@ for doing very specific things.
 | run all linters                                                                                             | `yarn lint`                                                                                                                                                                                                                  |
 | run only javascript linter                                                                                  | `yarn lint:js`                                                                                                                                                                                                               |
 | run lint on JS and fix anything that changed                                                                | `yarn lint:js:changed:fix`                                                                                                                                                                                                   |
-| run automated accessibility tests                                                                           | `yarn build && yarn test:accessibility`                                                                                                                                                                                      |
 | run visual regression testing                                                                               | Start the site. Generate your baseline image set using `yarn test:visual:baseline`. Make your changes. Then run `yarn test:visual`.                                                                                          |
 | test for broken links                                                                                       | Build the site. Broken Link Checking is done via a Metalsmith plugin during build. Note that it only runs on _build_ not watch.                                                                                              |
 | add new npm modules                                                                                         | `yarn add my-module`. Use the `--dev` flag for modules that are build or test related.                                                                                                                                       |
