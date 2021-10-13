@@ -1201,4 +1201,8 @@ module.exports = function registerFilters() {
 
     return languages[language][whichNode];
   };
+
+  liquid.filters.setData = (data, path, value) => {
+    return _.set(data, path, value);
+  };
 };

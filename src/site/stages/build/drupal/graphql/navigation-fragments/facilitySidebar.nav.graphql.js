@@ -167,59 +167,6 @@ const FACILITY_MENU_NAMES = [
 ];
 
 const FACILITY_SIDEBAR_QUERY = `
-name
-  description
-  links {
-    label
-    expanded
-    description
-    url {
-      path
-    }
-    links {
-      label
-      expanded
-      description
-      url {
-        path
-      }
-      links {
-        label
-        expanded
-        description
-        url {
-          path
-        }
-        links {
-          label
-          expanded
-          description
-          url {
-            path
-          }
-          links {
-            label
-            expanded
-            description
-            url {
-              path
-            }
-            links {
-              label
-              expanded
-              description
-              url {
-                path
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const NEW_FACILITY_SIDEBAR_QUERY = `
   name
   description
   links {
@@ -266,66 +213,43 @@ const NEW_FACILITY_SIDEBAR_QUERY = `
     }
   }`;
 
-// console.log('facility sidebar query:', FACILITY_SIDEBAR_QUERY)
-
 const VaFacilitySidebars = {};
 let compiledQuery = '';
 
 FACILITY_MENU_NAMES.forEach(facilityMenuName => {
-  if (
-    facilityMenuName === 'va-central-california-health-car' ||
-    facilityMenuName === 'va-western-colorado-health-care'
-  ) {
-    const facilityMenuNameCamel = camelize(facilityMenuName);
-    const operationName = `${facilityMenuNameCamel}FacilitySidebarQuery`;
-    const nextSidebar = `
-      ${operationName}: menuByName(name: "${facilityMenuName}") {
-        ${FACILITY_SIDEBAR_QUERY}
-      }
-    `;
-
-    compiledQuery += nextSidebar;
-
-    VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
-      query {
-        ${nextSidebar}
-      }
+  const facilityMenuNameCamel = camelize(facilityMenuName);
+  const operationName = `${facilityMenuNameCamel}FacilitySidebarQuery`;
+  const nextSidebar = `
+    ${operationName}: menuByName(name: "${facilityMenuName}") {
+      ${FACILITY_SIDEBAR_QUERY}
+    }
   `;
-  } else {
-    const facilityMenuNameCamel = camelize(facilityMenuName);
-    const operationName = `${facilityMenuNameCamel}FacilitySidebarQuery`;
-    const nextSidebar = `
-      ${operationName}: menuByName(name: "${facilityMenuName}") {
-        ${NEW_FACILITY_SIDEBAR_QUERY}
-      }
-    `;
 
-    compiledQuery += nextSidebar;
+  compiledQuery += nextSidebar;
 
-    VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
-    fragment MenuItem on MenuLink {
-      expanded
-      description
-      label
-      url {
-        path
-      }
-      entity {
-        ... on MenuLinkContent {
-          linkedEntity(language_fallback: true, bypass_access_check: true) {
-            ... on Node {
-              entityPublished
-              moderationState
-            }
+  VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
+  fragment MenuItem on MenuLink {
+    expanded
+    description
+    label
+    url {
+      path
+    }
+    entity {
+      ... on MenuLinkContent {
+        linkedEntity(language_fallback: true, bypass_access_check: true) {
+          ... on Node {
+            entityPublished
+            moderationState
           }
         }
       }
     }
-      query {
-        ${nextSidebar}
-      }
-  `;
   }
+    query {
+      ${nextSidebar}
+    }
+  `;
 });
 
 module.exports = {
