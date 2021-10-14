@@ -7,7 +7,6 @@ const moment = require('moment-timezone');
 const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
-const renameKey = require('../../platform/utilities/data/renameKey');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -729,24 +728,9 @@ module.exports = function registerFilters() {
     });
   };
 
-  liquid.filters.processCentralizedContent = (entity, contentType) => {
-    if (!entity) return null;
-
-    // normalizeData takes an object and reformats it, if necessary
-    // ex. testObj: [{ field: 'test value' }] => testObj: "test value"
-    const normalizeData = (obj, field) => {
-      const newObj = {};
-      for (const [key] of Object.entries(obj)) {
-        if (Array.isArray(obj[key]) && obj[key][0][field]) {
-          newObj[key] = obj[key][0][field];
-        } else {
-          newObj[key] = obj[key];
-        }
-      }
-      return newObj;
-    };
-
+  liquid.filters.processDynamicContent = (entity, contentType) => {
     // TODO - add more cases as new centralized content types are added
+    // eslint-disable-next-line sonarjs/no-small-switch
     switch (contentType) {
       case 'wysiwyg': {
         // handle normalized data format
@@ -760,19 +744,6 @@ module.exports = function registerFilters() {
             },
           };
         }
-      }
-      case 'q_a_section': {
-        return {
-          ...normalizeData(entity, 'value'),
-          fieldQuestions: entity.fieldQuestions?.map(q => {
-            if (q.entity.targetId && !q.entity.entityId) {
-              renameKey(q.entity, 'targetId', 'entityId');
-            }
-            return {
-              entity: normalizeData(q.entity, 'value'),
-            };
-          }),
-        };
       }
       default: {
         return entity;
@@ -1200,9 +1171,5 @@ module.exports = function registerFilters() {
     };
 
     return languages[language][whichNode];
-  };
-
-  liquid.filters.setData = (data, path, value) => {
-    return _.set(data, path, value);
   };
 };
