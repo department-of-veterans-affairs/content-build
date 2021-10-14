@@ -267,6 +267,14 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
+      - name: Notify Slack
+        uses: department-of-veterans-affairs/vsp-github-actions@FE/composite-actions
+        with:
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Test new composite actions in sep repo: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          channel_id: C024DUC9S1K
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Checkout
         uses: actions/checkout@v2
 
