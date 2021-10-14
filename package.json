@@ -29,7 +29,7 @@
     "pr-check": "node script/pr-check.js",
     "security-check": "node ./script/security-check.js",
     "serve": "node script/serve.js",
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "npm run test:unit",
     "test:coverage": "./script/run-coverage.sh",
     "test:coverage-apps": "npm run test:coverage && node script/app-coverage-report.js",
     "test:puppeteer": "./script/run-puppeteer-tests.sh",
