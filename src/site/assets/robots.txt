@@ -121,12 +121,10 @@ Disallow: /central-texas-health-care/
 Disallow: /central-western-massachusetts-health-care/
 Disallow: /chicago-health-care/
 Disallow: /chillicothe-health-care/
-Disallow: /cincinnati-health-care/
 Disallow: /clarksburg-health-care/
 Disallow: /columbia-missouri-health-care/
 Disallow: /connecticut-health-care/
 Disallow: /dayton-health-care/
-Disallow: /detroit-health-care/
 Disallow: /dublin-health-care/
 Disallow: /eastern-kansas-health-care/
 Disallow: /el-paso-health-care/
