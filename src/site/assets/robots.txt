@@ -105,7 +105,6 @@ Disallow: /alaska-health-care/
 Disallow: /amarillo-health-care/
 Disallow: /ann-arbor-health-care/
 Disallow: /atlanta-health-care/
-Disallow: /battle-creek-health-care/
 Disallow: /bay-pines-health-care/
 Disallow: /beckley-health-care/
 Disallow: /bedford-health-care/
@@ -158,7 +157,6 @@ Disallow: /north-florida-health-care/
 Disallow: /north-texas-health-care/
 Disallow: /northeast-ohio-health-care/
 Disallow: /northern-arizona-health-care/
-Disallow: /northern-indiana-health-care/
 Disallow: /orlando-health-care/
 Disallow: /phoenix-health-care/
 Disallow: /poplar-bluff-health-care/
@@ -166,7 +164,6 @@ Disallow: /portland-health-care/
 Disallow: /providence-health-care/
 Disallow: /puget-sound-health-care/
 Disallow: /roseburg-health-care/
-Disallow: /saginaw-health-care/
 Disallow: /san-diego-health-care/
 Disallow: /san-francisco-health-care/
 Disallow: /south-texas-health-care/
