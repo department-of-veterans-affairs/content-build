@@ -10,9 +10,9 @@
 {% assign isInAbout = aboutMenu | isAboutItem: entityUrl.path %}
 {% assign deepLinks = deepLinksObj.link.links %}
 
-
+{% comment %} If preview mode, published and draft facilities are displayed. 
+If NOT in preview mode, only published facilities are displayed.  {% endcomment %}
 {% if isPreview and sidebarData.links.0.links.0.links.1.links %}
-  {{ "testing that this only shows on preview " | json }}
   {% assign publishedAndDraftFacilities = sidebarData.links.0.links.0.links.1.links | rejectBy: "entity.linkedEntity.moderationState", "archived"%}
   {% assign filteredSidebarData = sidebarData | setData: 'links[0]links[0]links[1]links', publishedAndDraftFacilities %}
 {% elsif sidebarData.links.0.links.0.links.1.links %}
