@@ -1,4 +1,4 @@
-name: Manual Deploy to dev/staging
+name: Manual dev/staging Deploy
 
 on:
   workflow_dispatch:
@@ -7,6 +7,9 @@ on:
         description: Deploy a specific commit
         required: false
         default: ''
+
+env:
+  DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
 
 jobs:
   deploy:
@@ -53,3 +56,22 @@ jobs:
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha || github.sha }}/${{ matrix.environment }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
+  
+  notify-failure:
+    name: Notify Failure
+    runs-on: ubuntu-latest
+    if: ${{ failure() || cancelled() }}
+    needs: deploy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Notify Slack
+        uses: ./.github/workflows/slack-notify
+        continue-on-error: true
+        with:
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build manual dev/staging deploy failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
