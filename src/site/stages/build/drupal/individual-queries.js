@@ -88,6 +88,10 @@ const {
   GetRegisterForCarePages,
 } = require('./graphql/vamcRegisterForCarePage.graphql');
 
+const {
+  GetMedicalRecordsPages,
+} = require('./graphql/vamcMedicalRecordsPage.graphql');
+
 const { getVetCenterQueries } = require('./graphql/vetCenter.graphql');
 
 const {
