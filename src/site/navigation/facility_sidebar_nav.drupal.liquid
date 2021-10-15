@@ -17,13 +17,15 @@ If NOT in preview mode, only published facilities are displayed.  {% endcomment 
   {% assign filteredSidebarData = sidebarData | setData: 'links[0]links[0]links[1]links', publishedAndDraftFacilities %}
 {% elsif sidebarData.links.0.links.0.links.1.links %}
   {% assign publishedFacilities = sidebarData.links.0.links.0.links.1.links | rejectBy: "entity.linkedEntity.entityPublished", false %}
-  {% assign filteredSidebarData = sidebarData | setData: 'links[0]links[0]links[1]links', publishedFacilities%}
+  {% assign filteredSidebarData = sidebarData | setData: 'links[0]links[0]links[1]links', publishedFacilities %}
 {% endif %}
+
+<script>console.log({{ sidebarData | json }});</script>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
     window.sideNav = {
       rootPath: "{{ entityUrl.path }}/",
-      data: {{ filteredSidebarData | json }},
+      data: {{ sidebarData | json }},
     };
 </script>
 
