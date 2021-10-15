@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD013 -->
 <!-- omit in toc -->
-# Contributing to content-builf
+# Contributing to content-build
 
 First off, thanks for taking the time to contribute! :heart:
 
