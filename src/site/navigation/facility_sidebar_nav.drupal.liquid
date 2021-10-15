@@ -1,4 +1,3 @@
-<script>console.log({{ sidebarData | json }});</script>
 {% assign isInAbout = false %}
 {% assign lastMenu = sidebarData.links | last %}
 {% assign aboutMenu = lastMenu.links | map: 'url' %}
@@ -20,8 +19,6 @@ If NOT in preview mode, only published facilities are displayed.  {% endcomment 
   {% assign publishedFacilities = sidebarData.links.0.links.0.links.1.links | rejectBy: "entity.linkedEntity.entityPublished", false %}
   {% assign filteredSidebarData = sidebarData | setData: 'links[0]links[0]links[1]links', publishedFacilities %}
 {% endif %}
-
-<script>console.log({{ sidebarData | json }});</script>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
     window.sideNav = {
