@@ -12,6 +12,7 @@
       ],
       "path": "/houston-health-care/staff-profiles/arnisha-carter"
     },
+    "fieldCompleteBiographyCreate": true,
     "fieldPhotoAllowHiresDownload": true,
     "fieldMedia": {
       "thumbnail": {
