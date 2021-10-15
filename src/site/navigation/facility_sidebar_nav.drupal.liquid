@@ -1,5 +1,3 @@
-<script>console.log({{ sidebarData | json }});</script>
-
 {% assign isInAbout = false %}
 {% assign lastMenu = sidebarData.links | last %}
 {% assign aboutMenu = lastMenu.links | map: 'url' %}
