@@ -1203,9 +1203,9 @@ module.exports = function registerFilters() {
   };
 
   // Sets the value at path of object. If a portion of path doesn't exist, it's created.
-  // const setData = (data, path, value) => {
-  //   return _.set(data, path, value);
-  // };
+  const setData = (data, path, value) => {
+    return _.set(data, path, value);
+  };
 
   // liquid.filters.find = (data, key, value) => {
   //  return _.find(data, [key, value])
@@ -1238,17 +1238,22 @@ module.exports = function registerFilters() {
         'entity.linkedEntity.moderationState',
         'archived',
       );
-      /* eslint-disable no-param-reassign */
-      sidebarData.links[0].links[0].links[1].links = publishedAndDraftFacilities;
-      return sidebarData;
+      return setData(
+        sidebarData,
+        'links[0]links[0]links[1]links',
+        publishedAndDraftFacilities,
+      );
     } else if (!isPreview && locationsArr) {
       const publishedFacilities = liquid.filters.rejectBy(
         locationsArr,
         'entity.linkedEntity.entityPublished',
         false,
       );
-      sidebarData.links[0].links[0].links[1].links = publishedFacilities;
-      return sidebarData;
+      return setData(
+        sidebarData,
+        'links[0]links[0]links[1]links',
+        publishedFacilities,
+      );
     } else {
       return sidebarData;
     }
