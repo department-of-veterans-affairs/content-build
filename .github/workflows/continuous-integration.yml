@@ -675,6 +675,14 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
+      - name: Get Drupal token from Parameter Store
+        if: ${{ matrix.environment == 'vagovstaging' }}
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        continue-on-error: true
+        with:
+          ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
+          env_variable_name: CALLBACK_TOKEN
+
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -684,14 +692,6 @@ jobs:
           role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
-
-      - name: Get Drupal token from Parameter Store
-        if: ${{ matrix.environment == 'vagovstaging' }}
-        continue-on-error: true
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
-          env_variable_name: CALLBACK_TOKEN
 
       - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
