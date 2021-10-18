@@ -1202,7 +1202,55 @@ module.exports = function registerFilters() {
     return languages[language][whichNode];
   };
 
-  liquid.filters.setData = (data, path, value) => {
-    return _.set(data, path, value);
+  // Sets the value at path of object. If a portion of path doesn't exist, it's created.
+  // const setData = (data, path, value) => {
+  //   return _.set(data, path, value);
+  // };
+
+  // liquid.filters.find = (data, key, value) => {
+  //  return _.find(data, [key, value])
+  // }
+
+  liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
+    if (!sidebarData || !sidebarData.links[0].links) return null;
+
+    const findLocationsArr = () => {
+      const servicesAndLocationsObj = _.find(sidebarData.links[0].links, [
+        'label',
+        'SERVICES AND LOCATIONS',
+      ]);
+      if (servicesAndLocationsObj && servicesAndLocationsObj.links) {
+        const locationsObj = _.find(servicesAndLocationsObj.links, [
+          'label',
+          'Locations',
+        ]);
+        if (locationsObj && locationsObj.links.length) {
+          return locationsObj.links;
+        } else return null;
+      } else return null;
+    };
+
+    const locationsArr = findLocationsArr();
+
+    if (isPreview && locationsArr) {
+      const publishedAndDraftFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.moderationState',
+        'archived',
+      );
+      /* eslint-disable no-param-reassign */
+      sidebarData.links[0].links[0].links[1].links = publishedAndDraftFacilities;
+      return sidebarData;
+    } else if (!isPreview && locationsArr) {
+      const publishedFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.entityPublished',
+        false,
+      );
+      sidebarData.links[0].links[0].links[1].links = publishedFacilities;
+      return sidebarData;
+    } else {
+      return sidebarData;
+    }
   };
 };
