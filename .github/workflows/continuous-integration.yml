@@ -11,7 +11,6 @@ env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
   PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-support
-  NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group-nocache/
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
@@ -678,7 +677,6 @@ jobs:
       - name: Get Drupal token from Parameter Store
         if: ${{ matrix.environment == 'vagovstaging' }}
         uses: marvinpinto/action-inject-ssm-secrets@latest
-        continue-on-error: true
         with:
           ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
           env_variable_name: CALLBACK_TOKEN
