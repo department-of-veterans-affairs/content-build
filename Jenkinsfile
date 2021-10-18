@@ -151,9 +151,6 @@ node('vetsgov-general-purpose') {
   // Point all URLs to the proper S3 bucket
   commonStages.prearchiveAll(dockerContainer)
 
-  // Archive the tar file for each build type
-  commonStages.archiveAll(dockerContainer, ref);
-
   envsUsingDrupalCache = envUsedCache
   commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
 
@@ -176,20 +173,6 @@ node('vetsgov-general-purpose') {
       ], wait: false
     } catch (error) {
       // commonStages.slackNotify()
-      throw error
-    }
-  }
-
-  stage('Deploy dev or staging') {
-    try {
-      if (!commonStages.isDeployable()) { return }
-
-      if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
-        commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
-      }
-
-    } catch (error) {
-      commonStages.slackNotify()
       throw error
     }
   }

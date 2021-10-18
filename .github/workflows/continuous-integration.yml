@@ -14,7 +14,7 @@ env:
   NEXUS_REGISTRY: https://devops.va.gov/dots-nexus/repository/platform-npm-group-nocache/
 
 concurrency:
-  group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha  }}
+  group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 jobs:
@@ -96,12 +96,16 @@ jobs:
   build:
     name: Build
     needs: start-runner
-    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
+    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
     timeout-minutes: 60
 
     defaults:
       run:
         working-directory: content-build
+
+    outputs:
+      vagovdev_buildtime: ${{ env.vagovdev_buildtime }}
+      vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
 
     env:
       # Sandbox Drupal address is used on branches other than master.
@@ -174,6 +178,13 @@ jobs:
         if: ${{ matrix.buildtype == 'vagovprod' }}
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
 
+      - name: Get buildtime
+        id: buildtime
+        run: |
+          BUILDTIME=$(date +%s)
+          echo ::set-output name=buildtime::$BUILDTIME
+          echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+
       - name: Generate build details
         run: |
           cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
@@ -184,7 +195,7 @@ jobs:
           RUN_ID=${{ github.run_id }}
           RUN_NUMBER=${{ github.run_number }}
           REF=${{ github.sha }}
-          BUILDTIME=$(date +%s)
+          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
           EOF
 
       - name: Persist E2E test build
@@ -598,8 +609,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        # buildtype: [vagovdev, vagovstaging, vagovprod] # TODO: Enable when ready
-        buildtype: [vagovdev]
+        buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
       - name: Restore ${{ matrix.buildtype }} build
@@ -638,15 +648,15 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
-    needs: archive
+    needs: [build, archive]
 
     strategy:
       matrix:
         include:
           - environment: vagovdev
             bucket: content.dev.va.gov
-          # - environment: vagovstaging
-          #   bucket: content.staging.va.gov
+          - environment: vagovstaging
+            bucket: content.staging.va.gov
 
     steps:
       - name: Checkout
@@ -680,6 +690,23 @@ jobs:
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
+
+      - name: Get Drupal token from Parameter Store
+        if: ${{ matrix.environment == 'vagovstaging' }}
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
+          env_variable_name: CALLBACK_TOKEN
+
+      - name: CMS GovDelivery callback
+        if: ${{ matrix.environment == 'vagovstaging' }}
+        uses: fjogeleit/http-request-action@master
+        continue-on-error: true
+        with:
+          url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}
+          method: POST
+          username: api
+          password: ${{ env.CALLBACK_TOKEN }}
 
   stop-runner:
     name: Stop on-demand-runner
