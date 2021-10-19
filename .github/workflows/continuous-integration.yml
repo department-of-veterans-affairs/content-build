@@ -651,7 +651,7 @@ jobs:
     # if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         buildtype: [vagovdev, vagovstaging, vagovprod]
 
@@ -784,7 +784,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, archive, drupal-cache-content]
+    needs: [start-runner, cypress-tests, archive, cache-drupal-content]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
