@@ -10,17 +10,17 @@
         <article aria-labelledby="article-heading" role="region" class="usa-content">
           <h1 id="article-heading">{{ title }}</h1>
           <div class="va-introtext">
+            <p>
+              Register to get care at one of our VA health care facilities.
+              Not yet enrolled in VA health care? We can help you apply in person or get started online.
+            </p>
+          </div>
+          <div class="va-introtext">
             {% include "src/site/includes/centralized-content.drupal.liquid" with
                 entity = fieldCcTopOfPageContent.fetched
                 contentType = fieldCcTopOfPageContent.fetchedBundle
             %}
           </div>
-
-          <nav id="table-of-contents" aria-labelledby="on-this-page">
-            <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-            <ul class="usa-unstyled-list" role="list"></ul>
-          </nav>
-
           {% include "src/site/includes/centralized-content.drupal.liquid" with
               entity = fieldCcBottomOfPageContent.fetched
               contentType = fieldCcBottomOfPageContent.fetchedBundle
