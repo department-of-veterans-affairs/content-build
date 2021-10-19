@@ -1,9 +1,4 @@
-import {
-  manualData,
-  automatedData,
-  manualNearbyFalseFeatureToggles,
-  automatedNearbyFeatureToggles,
-} from './fixtures/data';
+import { automatedData, automatedNearbyFeatureToggles } from './fixtures/data';
 
 Cypress.Commands.add('checkElements', (page, automateNearby) => {
   cy.visit(page);
@@ -21,27 +16,6 @@ Cypress.Commands.add('checkElements', (page, automateNearby) => {
   } else {
     cy.get('h3').contains('Green Bay Vet Center');
   }
-});
-
-describe('Vet Center Locations page - manual nearby', () => {
-  beforeEach(() => {
-    cy.intercept(
-      'GET',
-      '/v0/feature_toggles?*',
-      manualNearbyFalseFeatureToggles,
-    );
-    cy.intercept('GET', '/v1/facilities/va?*', manualData);
-    cy.intercept('GET', '/v0/maintenance_windows', []);
-  });
-
-  it('has expected elements on desktop', () => {
-    cy.checkElements('/escanaba-vet-center/locations/', false);
-  });
-
-  it('has expected elements on mobile', () => {
-    cy.viewport(481, 1000);
-    cy.checkElements('/escanaba-vet-center/locations/', false);
-  });
 });
 
 describe('Vet Center Locations page - automated nearby', () => {
