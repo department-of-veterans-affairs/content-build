@@ -17,7 +17,6 @@
       {% endif %}
     </div>
     <div class="vads-u-flex--1">
-      {% if bio.fieldCompleteBiographyCreate %}
         <p class="
             vads-u-margin-top--0
             vads-u-font-family--serif
@@ -25,17 +24,20 @@
             vads-u-display--block
             vads-u-margin-bottom--0
             vads-u-font-size--md">
+          {% if bio.fieldCompleteBiographyCreate %}
           <a class="bioLink" href="{{ bio.entityUrl.path }}">{{ bio.fieldNameFirst }}
             {{ bio.fieldLastName }} {{ bio.fieldSuffix }}</a>
+          {% else %}
+            {{ bio.fieldNameFirst }} {{ bio.fieldLastName }} {{ bio.fieldSuffix }}
+          {% endif %}
         </p>
-      {% if bio.fieldDescription %}
+      {% if bio.fieldCompleteBiographyCreate %}
         <p class="
         vads-u-font-weight--normal
         vads-u-font-size--base
         vads-u-margin--0
         vads-u-margin-bottom--0">
           {{ bio.fieldDescription }}</p>
-          {% endif %}
       {% endif %}
       {% if bio.fieldOffice.entity.entityLabel %}
         <p class="
