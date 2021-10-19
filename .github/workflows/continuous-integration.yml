@@ -648,7 +648,7 @@ jobs:
     name: Cache Drupal Content
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
     needs: [start-runner, archive]
-    # if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
@@ -680,31 +680,31 @@ jobs:
       - name: Cache drupal
         run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
 
-      # - name: Configure AWS credentials (1)
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: us-gov-west-1
+      - name: Configure AWS credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
 
-      # - name: Get role from Parameter Store
-      #   uses: marvinpinto/action-inject-ssm-secrets@latest
-      #   with:
-      #     ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-      #     env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-      # - name: Configure AWS Credentials (2)
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: us-gov-west-1
-      #     role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-      #     role-duration-seconds: 900
-      #     role-session-name: vsp-frontendteam-githubaction
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
 
-      # - name: Upload drupal cache
-      #   run: aws s3 sync /application/.cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
+      - name: Upload drupal cache
+        run: aws s3 sync /application/.cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
 
   deploy:
     name: Deploy
