@@ -210,12 +210,12 @@ jobs:
       - name: Compress build
         run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
 
-      - name: Persist prearchived and compressed build
+      - name: Persist compressed build and drupal cache
         run: |
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
-          mv build/${{ matrix.buildtype }} /tmp/${{ github.run_id }}
+          mv .cache /tmp/${{ github.run_id }}
 
       # Only will get called if error in workflow
       - name: Configure AWS credentials
@@ -661,12 +661,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Restore ${{ matrix.buildtype }} build
+      - name: Restore ${{ matrix.buildtype }} cache
         run: |
-          mkdir -p build
-          mv /tmp/${{ github.run_id }}/${{ matrix.buildtype }} build/${{ matrix.buildtype }}
+          mkdir -p .cache
+          mv /tmp/${{ github.run_id }}/.cache/${{ matrix.buildtype }} .cache/${{ matrix.buildtype }}
           df -h
-          du -h build/${{ matrix.buildtype }}
+          du -h .cache/${{ matrix.buildtype }}
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -679,20 +679,6 @@ jobs:
 
       - name: Cache drupal
         run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
-
-      - name: Read output log on error
-        id: cache-output
-        if: ${{ always() && failure() }}
-        run: echo ::set-output name=ERROR::$(cat ${{ matrix.buildtype }}-output.log)
-
-      - name: Notify slack on error
-        uses: ./.github/workflows/slack-notify
-        if: ${{ always() && failure() }}
-        with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content drupal cache failed for ${{ steps.cache-output.outputs.ERROR }}!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
-          channel_id: ${{ env.DEVOPS_CHANNEL_ID }} # TODO: Keep on this channel?
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # - name: Configure AWS credentials (1)
       #   uses: aws-actions/configure-aws-credentials@v1
