@@ -1210,7 +1210,7 @@ module.exports = function registerFilters() {
   // If preview mode, filter facilities to show published and draft facilities.
   // If NOT in preview mode, filter facilities to only show published facilities.
   liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
-    if (!sidebarData || !sidebarData.links[0].links) return null;
+    if (!sidebarData || !sidebarData.links[0]?.links) return null;
 
     const findLocationsArr = () => {
       const servicesAndLocationsObj = _.find(sidebarData.links[0].links, [
