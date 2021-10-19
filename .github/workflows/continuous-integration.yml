@@ -649,6 +649,8 @@ jobs:
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
     needs: [start-runner, archive]
     # if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
       fail-fast: false
