@@ -704,7 +704,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload drupal cache
-        run: aws s3 sync /application/.cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
+        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
 
   deploy:
     name: Deploy
