@@ -92,6 +92,10 @@ const {
   GetMedicalRecordsOfficePages,
 } = require('./graphql/vamcMedicalRecordsOfficePage.graphql');
 
+const {
+  GetBillingAndInsurancePages,
+} = require('./graphql/vamcBillingAndInsurancePage.graphql');
+
 const { getVetCenterQueries } = require('./graphql/vetCenter.graphql');
 
 const {
@@ -131,6 +135,7 @@ function getNodeQueries(entityCounts) {
     ...getVetCenterQueries(entityCounts),
     GetVetCenterLocations,
     GetPolicyPages,
+    GetBillingAndInsurancePages,
     GetRegisterForCarePages,
     GetMedicalRecordsOfficePages,
   };
