@@ -647,7 +647,7 @@ jobs:
   cache-drupal-content:
     name: Cache Drupal Content
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
-    needs: archive
+    needs: [start-runner, archive]
     # if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
 
     strategy:
