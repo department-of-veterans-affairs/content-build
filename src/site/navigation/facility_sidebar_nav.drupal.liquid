@@ -10,10 +10,6 @@
 {% assign isInAbout = aboutMenu | isAboutItem: entityUrl.path %}
 {% assign deepLinks = deepLinksObj.link.links %}
 
-
-
-{% comment %} If preview mode, published and draft facilities are displayed. 
-If NOT in preview mode, only published facilities are displayed.  {% endcomment %}
 {% assign filteredSidebarData = sidebarData | filterSidebarData: isPreview %}
 
 <script nonce="**CSP_NONCE**" type="text/javascript">

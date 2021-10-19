@@ -1207,10 +1207,8 @@ module.exports = function registerFilters() {
     return _.set(data, path, value);
   };
 
-  // liquid.filters.find = (data, key, value) => {
-  //  return _.find(data, [key, value])
-  // }
-
+  // If preview mode, filter facilities to show published and draft facilities.
+  // If NOT in preview mode, filter facilities to only show published facilities.
   liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
     if (!sidebarData || !sidebarData.links[0].links) return null;
 
@@ -1231,6 +1229,7 @@ module.exports = function registerFilters() {
     };
 
     const locationsArr = findLocationsArr();
+    const locationsPath = 'links[0]links[0]links[1]links';
 
     if (isPreview && locationsArr) {
       const publishedAndDraftFacilities = liquid.filters.rejectBy(
@@ -1238,22 +1237,14 @@ module.exports = function registerFilters() {
         'entity.linkedEntity.moderationState',
         'archived',
       );
-      return setData(
-        sidebarData,
-        'links[0]links[0]links[1]links',
-        publishedAndDraftFacilities,
-      );
+      return setData(sidebarData, locationsPath, publishedAndDraftFacilities);
     } else if (!isPreview && locationsArr) {
       const publishedFacilities = liquid.filters.rejectBy(
         locationsArr,
         'entity.linkedEntity.entityPublished',
         false,
       );
-      return setData(
-        sidebarData,
-        'links[0]links[0]links[1]links',
-        publishedFacilities,
-      );
+      return setData(sidebarData, locationsPath, publishedFacilities);
     } else {
       return sidebarData;
     }
