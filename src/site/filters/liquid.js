@@ -790,6 +790,9 @@ module.exports = function registerFilters() {
           }),
         };
       }
+      case 'react_widget': {
+        return normalizeData(entity);
+      }
       default: {
         return entity;
       }
