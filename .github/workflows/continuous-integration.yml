@@ -210,11 +210,12 @@ jobs:
       - name: Compress build
         run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
 
-      - name: Persist prearchived build
+      - name: Persist compressed build and drupal cache
         run: |
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
+          mv .cache /tmp/${{ github.run_id }}
 
       # Only will get called if error in workflow
       - name: Configure AWS credentials
@@ -643,11 +644,73 @@ jobs:
       - name: Upload build
         run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
 
+  cache-drupal-content:
+    name: Cache Drupal Content
+    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
+    needs: [start-runner, archive]
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      fail-fast: false
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore ${{ matrix.buildtype }} cache
+        run: |
+          mkdir -p .cache
+          mv /tmp/${{ github.run_id }}/.cache/${{ matrix.buildtype }} .cache/${{ matrix.buildtype }}
+          df -h
+          du -h .cache/${{ matrix.buildtype }}
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Cache drupal
+        run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
+
+      - name: Configure AWS credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Upload drupal cache
+        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
-    needs: [build, archive]
+    needs: [build, archive, cache-drupal-content]
 
     strategy:
       matrix:
@@ -709,7 +772,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, archive]
+    needs: [start-runner, cypress-tests, archive, cache-drupal-content]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
