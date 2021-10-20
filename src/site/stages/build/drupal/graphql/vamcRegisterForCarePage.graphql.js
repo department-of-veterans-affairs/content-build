@@ -11,6 +11,10 @@ const registerForCareFragment = `
       fetched
       fetchedBundle
     }
+    fieldCcRelatedLinks {
+      fetched
+      fetchedBundle
+    }
     fieldCcBottomOfPageContent {
       fetched
       fetchedBundle
