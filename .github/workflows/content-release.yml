@@ -7,6 +7,10 @@ on:
         description: "Minutes to wait before creating release"
         required: false
         default: 5
+      deploy_environment:
+        description: "The environment to deploy content to"
+        required: true
+        default: "dev"
   # schedule:
   #   - cron: "0 13-16,20-21 * * 1-5"
   #   - cron: "45 17 * * 1-5"
@@ -309,13 +313,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [set-env, create-release]
 
-    # TODO: Uncomment when ready for prod
-    env:
-      # ENVIRONMENT: vagovprod
-      # BUCKET: content.www.va.gov
-      ENVIRONMENT: vagovdev
-      BUCKET: content.dev.va.gov
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -327,12 +324,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
+      # TODO: Review this when ready for prod.
       - name: Get role from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
+      # TODO: Review this when ready for prod.
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -343,11 +342,32 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - name: Deploy
+      - name: Deploy DEV
+        if: ${{ github.event.inputs.deploy_environment == "dev" }}
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.ENVIRONMENT}}.tar.bz2
-          DEST: s3://${{ env.BUCKET }}
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovdev.tar.bz2
+          DEST: s3://content.dev.va.gov
+
+      - name: Deploy STAGING
+        if: ${{ github.event.inputs.deploy_environment == "staging" }}
+        run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
+        env:
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovstaging.tar.bz2
+          DEST: s3://content.staging.va.gov
+
+      # TODO: Delete when ready for PROD
+      - name: Deploy PROD
+        if: ${{ github.event.inputs.deploy_environment == "prod" }}
+        run: echo "PROD deploy is not supported yet." && exit 1
+
+      # TODO: Uncomment when ready for PROD
+      # - name: Deploy PROD
+      #   if: ${{ github.event.inputs.deploy_environment == "prod" }}
+      #   run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
+      #   env:
+      #     SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovprod.tar.bz2
+      #     DEST: s3://content.www.va.gov
 
   notify-failure:
     name: Notify Failure
