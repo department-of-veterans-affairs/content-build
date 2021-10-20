@@ -737,7 +737,7 @@ module.exports = function registerFilters() {
     const flattenArrayValues = obj => {
       const newObj = {};
       for (const [key] of Object.entries(obj)) {
-        if (Array.isArray(obj[key]) && obj[key][0].value) {
+        if (Array.isArray(obj[key]) && obj[key][0]?.value) {
           newObj[key] = obj[key][0].value;
         } else {
           newObj[key] = obj[key];
@@ -791,7 +791,7 @@ module.exports = function registerFilters() {
         };
       }
       case 'react_widget': {
-        const normalizedData = normalizeData(entity);
+        const normalizedData = flattenArrayValues(entity);
         if (!normalizedData.fieldErrorMessage.value) {
           return {
             ...normalizedData,
