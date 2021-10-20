@@ -7,9 +7,9 @@ on:
         description: "Minutes to wait before creating release"
         required: false
         default: 5
-  schedule:
-    - cron: "0 13-16,20-21 * * 1-5"
-    - cron: "45 17 * * 1-5"
+  # schedule:
+  #   - cron: "0 13-16,20-21 * * 1-5"
+  #   - cron: "45 17 * * 1-5"
 
 # TODO: Change to correct channel_id when ready
 env:
@@ -160,7 +160,7 @@ jobs:
     # TODO: Uncomment when ready for prod
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-      BUILDTYPE: vagovdev
+      BUILDTYPE: vagovprod
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
       # DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
       DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
@@ -244,11 +244,11 @@ jobs:
     needs: [set-env, build, start-runner]
 
     steps:
-      - name: Restore vagovdev build
+      - name: Restore vagovprod build
         run: |
-          mv /tmp/${{ github.run_id }}/vagovdev.tar.bz2 .
+          mv /tmp/${{ github.run_id }}/vagovprod.tar.bz2 .
           df -h
-          du -h vagovdev.tar.bz2
+          du -h vagovprod.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -274,7 +274,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp vagovdev.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovdev.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp vagovprod.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovprod.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
