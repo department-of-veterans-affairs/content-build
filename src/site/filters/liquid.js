@@ -791,7 +791,15 @@ module.exports = function registerFilters() {
         };
       }
       case 'react_widget': {
-        return normalizeData(entity);
+        const normalizedData = normalizeData(entity);
+        if (!normalizedData.fieldErrorMessage.value) {
+          return {
+            ...normalizedData,
+            fieldErrorMessage: {
+              value: normalizedData.fieldErrorMessage,
+            },
+          };
+        } else return normalizedData;
       }
       default: {
         return entity;
