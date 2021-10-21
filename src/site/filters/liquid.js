@@ -732,13 +732,13 @@ module.exports = function registerFilters() {
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
-    // Converts all complex key/value pairs in obj to simple strings
-    // e.g. key: [{ value: 'foo' }] => key: 'foo'
-    const flattenArrayValues = obj => {
+    // normalizeData takes an object and reformats it, if necessary
+    // ex. testObj: [{ field: 'test value' }] => testObj: "test value"
+    const normalizeData = (obj, field) => {
       const newObj = {};
       for (const [key] of Object.entries(obj)) {
-        if (Array.isArray(obj[key]) && obj[key][0].value) {
-          newObj[key] = obj[key][0].value;
+        if (Array.isArray(obj[key]) && obj[key][0][field]) {
+          newObj[key] = obj[key][0][field];
         } else {
           newObj[key] = obj[key];
         }
@@ -763,29 +763,13 @@ module.exports = function registerFilters() {
       }
       case 'q_a_section': {
         return {
-          ...flattenArrayValues(entity),
+          ...normalizeData(entity, 'value'),
           fieldQuestions: entity.fieldQuestions?.map(q => {
             if (q.entity.targetId && !q.entity.entityId) {
               renameKey(q.entity, 'targetId', 'entityId');
             }
             return {
-              entity: flattenArrayValues(q.entity),
-            };
-          }),
-        };
-      }
-      case 'list_of_link_teasers': {
-        return {
-          ...flattenArrayValues(entity),
-          fieldVaParagraphs: entity.fieldVaParagraphs.map(p => {
-            if (p.entity.targetId && !p.entity.entityId) {
-              renameKey(p.entity, 'targetId', 'entityId');
-            }
-            return {
-              entity: {
-                ...flattenArrayValues(p.entity),
-                fieldLink: p.entity.fieldLink[0],
-              },
+              entity: normalizeData(q.entity, 'value'),
             };
           }),
         };

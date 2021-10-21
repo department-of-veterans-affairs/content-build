@@ -368,7 +368,6 @@ function compilePage(page, contentData) {
     case 'health_services_listing':
     case 'vamc_system_policies_page':
     case 'health_care_region_detail_page':
-    case 'vamc_system_register_for_care':
       pageCompiled = Object.assign(
         {},
         page,
