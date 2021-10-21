@@ -1,0 +1,36 @@
+name: Content Release
+
+on:
+  schedule:
+    - cron: "0 13-16,20-21 * * 1-5"
+    - cron: "45 17 * * 1-5"
+
+jobs:
+  trigger-dev-deploy:
+    runs-on: ubuntu-latest
+    # TODO: Remove if when ready to activate schedule
+    if: ${{ false }}
+    steps:
+      - uses: department-of-veterans-affairs/vagov-content/.github/workflows/content-release.yml
+        with:
+          release_wait: 0
+          deploy_environment: dev
+
+  trigger-staging-deploy:
+    runs-on: ubuntu-latest
+    # TODO: Remove if when ready to activate schedule
+    if: ${{ false }}
+    steps:
+      - uses: department-of-veterans-affairs/vagov-content/.github/workflows/content-release.yml
+        with:
+          release_wait: 0
+          deploy_environment: staging
+
+  # TODO: Uncomment when ready for PROD
+  # trigger-prod-deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: department-of-veterans-affairs/vagov-content/.github/workflows/content-release.yml
+  #       with:
+  #         release_wait: 0
+  #         deploy_environment: prod

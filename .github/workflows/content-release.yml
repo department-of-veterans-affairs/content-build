@@ -1,16 +1,33 @@
 name: Content Release
 
 on:
+  # These inputs are used when this workflow is manually dispatched through the
+  # GitHub UI or API.
   workflow_dispatch:
     inputs:
       release_wait:
-        description: "Minutes to wait before creating release"
+        description: Minutes to wait before creating release
         required: false
         default: 5
       deploy_environment:
-        description: "The environment to deploy content to"
+        description: The environment to deploy content to
         required: true
         default: dev
+
+  # These inputs are used when this workflow is called by another workflow.
+  workflow_call:
+    inputs:
+      release_wait:
+        description: Minutes to wait before creating release
+        required: false
+        default: 5
+        type: number
+      deploy_environment:
+        description: The environment to deploy content to
+        required: true
+        default: dev
+        type: string
+
   # schedule:
   #   - cron: "0 13-16,20-21 * * 1-5"
   #   - cron: "45 17 * * 1-5"
@@ -21,6 +38,18 @@ env:
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
+  validate-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate deploy_environment
+        if: ${{ !contains(["prod", "staging", "dev"], github.event.inputs.deploy_environment) }}
+        run: echo "prod, staging, and dev are the only supported environments" && exit 1
+      
+      # TODO: Uncomment when ready for PROD
+      - name: Ensure that we don't deploy to prod yet
+        if: ${{ github.event.inputs.deploy_environment == "prod" }}
+        run: echo "PROD deploy is not supported yet." && exit 1
+
   start-runner:
     runs-on: ubuntu-latest
     outputs:
@@ -105,13 +134,30 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Get release wait time (scheduled release)
-        if: ${{ github.event.schedule != '' }}
-        run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
-
-      - name: Get release wait time (workflow_dispatch)
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+      - name: Get release wait time
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
+
+      - name: Set deploy environment
+        run: echo "DEPLOY_ENVIRONMENT=${{ github.event.inputs.deploy_environment }}" >> $GITHUB_ENV
+
+      - name: Set environment details for DEV
+        if: ${{ github.event.inputs.deploy_environment == "dev" }}
+        run: |
+          echo "DEPLOY_ARCHIVE=vagovdev" >> $GITHUB_ENV
+          echo "DEPLOY_BUCKET=content.dev.va.gov" >> $GITHUB_ENV
+
+      - name: Set environment details for STAGING
+        if: ${{ github.event.inputs.deploy_environment == "staging" }}
+        run: |
+          echo "DEPLOY_ARCHIVE=vagovstaging" >> $GITHUB_ENV
+          echo "DEPLOY_BUCKET=content.staging.va.gov" >> $GITHUB_ENV
+
+      # TODO: Uncomment when ready for PROD
+      # - name: Set environment details for PROD
+      #   if: ${{ github.event.inputs.deploy_environment == "prod" }}
+      #   run: |
+      #     echo "DEPLOY_ARCHIVE=vagovprod" >> $GITHUB_ENV
+      #     echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
 
   validate-build-status:
     name: Validate Build Status
@@ -342,32 +388,11 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - name: Deploy DEV
-        if: ${{ github.event.inputs.deploy_environment == "dev" }}
+      - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovdev.tar.bz2
-          DEST: s3://content.dev.va.gov
-
-      - name: Deploy STAGING
-        if: ${{ github.event.inputs.deploy_environment == "staging" }}
-        run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
-        env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovstaging.tar.bz2
-          DEST: s3://content.staging.va.gov
-
-      # TODO: Delete when ready for PROD
-      - name: Deploy PROD
-        if: ${{ github.event.inputs.deploy_environment == "prod" }}
-        run: echo "PROD deploy is not supported yet." && exit 1
-
-      # TODO: Uncomment when ready for PROD
-      # - name: Deploy PROD
-      #   if: ${{ github.event.inputs.deploy_environment == "prod" }}
-      #   run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
-      #   env:
-      #     SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovprod.tar.bz2
-      #     DEST: s3://content.www.va.gov
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.DEPLOY_ARCHIVE}}.tar.bz2
+          DEST: s3://${{ env.DEPLOY_BUCKET }}
 
   notify-failure:
     name: Notify Failure
