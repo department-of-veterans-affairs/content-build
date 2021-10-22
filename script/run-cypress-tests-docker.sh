@@ -3,6 +3,5 @@ if [ "$(find src -name '*.cypress.spec.js' | wc -l)" -eq 0 ]; then
   exit 0
 else
   export CYPRESS_BASE_URL=http://content-build:3001
-  export CYPRESS_CI=$CI
   yarn cy:run --env buildtype=vagovprod
 fi
