@@ -1593,7 +1593,7 @@ describe('processCentralizedContent', () => {
       fieldQuestions: [
         {
           entity: {
-            targetId: '29903', // targetId gets renmaed to entityId as long as there is not entityId already present
+            targetId: '29903', // targetId gets renamed to entityId as long as there is not entityId already present
             targetRevisionId: '422164',
             entityType: 'paragraph',
             entityBundle: 'q_a',
@@ -1692,6 +1692,73 @@ describe('processCentralizedContent', () => {
 
     expect(
       liquid.filters.processCentralizedContent(testData, 'q_a_section'),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns expected if contentType = list_of_link_teasers', () => {
+    const centralizedContent = {
+      fieldTitle: [
+        {
+          value: 'More information',
+        },
+      ],
+      fieldVaParagraphs: [
+        {
+          entity: {
+            targetId: '77155',
+            targetRevisionId: '393053',
+            entityType: 'paragraph',
+            entityBundle: 'link_teaser',
+            fieldLink: [
+              {
+                uri: 'entity:node/703',
+                url: {
+                  path: '/health-care/copay-rates',
+                },
+                title: 'VA health care copay rates',
+                options: [],
+              },
+            ],
+            fieldLinkSummary: [
+              {
+                value:
+                  'Review copay rates for outpatient care, hospital stays, medications, and other health services.',
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const expected = {
+      fieldTitle: 'More information',
+      fieldVaParagraphs: [
+        {
+          entity: {
+            entityId: '77155',
+            targetRevisionId: '393053',
+            entityType: 'paragraph',
+            entityBundle: 'link_teaser',
+            fieldLink: {
+              uri: 'entity:node/703',
+              url: {
+                path: '/health-care/copay-rates',
+              },
+              title: 'VA health care copay rates',
+              options: [],
+            },
+            fieldLinkSummary:
+              'Review copay rates for outpatient care, hospital stays, medications, and other health services.',
+          },
+        },
+      ],
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(
+        centralizedContent,
+        'list_of_link_teasers',
+      ),
     ).to.deep.eq(expected);
   });
 
