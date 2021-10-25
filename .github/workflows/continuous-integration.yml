@@ -606,11 +606,10 @@ jobs:
         drupal-cache-test,
       ]
 
-    # TODO: Add vagovprod when ready
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging]
+        buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
       - name: Restore ${{ matrix.buildtype }} build
