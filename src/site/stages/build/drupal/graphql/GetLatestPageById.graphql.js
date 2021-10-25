@@ -27,6 +27,8 @@ const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.gra
 const vetCenters = require('./vetCenter.graphql');
 const vetCenterLocations = require('./vetCenterLocations.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
+const vamcRegisterForCarePages = require('./vamcRegisterForCarePage.graphql');
+const vamcMedicalRecordsOfficePages = require('./vamcMedicalRecordsOfficePage.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
 const locationsListingPage = require('./locationsListingPage.graphql');
 
@@ -71,6 +73,8 @@ module.exports = `
   ${vetCenters.fragment}
   ${vetCenterLocations.fragment}
   ${vamcPolicyPages.fragment}
+  ${vamcRegisterForCarePages.fragment}
+  ${vamcMedicalRecordsOfficePages.fragment}
   ${leadershipListingPage.fragment}
   ${locationsListingPage.fragment}
 
@@ -108,6 +112,8 @@ module.exports = `
         ... vetCenterFragment
         ... vetCenterLocationsFragment
         ... policiesPageFragment
+        ... registerForCareFragment
+        ... medicalRecordsOfficeFragment
         ... leadershipListingPage
         ... locationListingPage
       }

@@ -165,7 +165,7 @@ jobs:
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-      BUILDTYPE: vagovprod
+      BUILDTYPE: vagovdev
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
       DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
@@ -247,11 +247,11 @@ jobs:
     needs: [set-env, build, start-runner]
 
     steps:
-      - name: Restore vagovprod build
+      - name: Restore vagovdev build
         run: |
-          mv /tmp/${{ github.run_id }}/vagovprod.tar.bz2 .
+          mv /tmp/${{ github.run_id }}/vagovdev.tar.bz2 .
           df -h
-          du -h vagovprod.tar.bz2
+          du -h vagovdev.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -277,7 +277,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp vagovprod.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ needs.set-env.outputs.COMMIT_SHA }}/vagovprod.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp vagovdev.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ needs.set-env.outputs.COMMIT_SHA }}/vagovdev.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
