@@ -230,8 +230,8 @@ jobs:
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
           CHANGE_TARGET=null
           RUN_ID=${{ github.run_id }}
-          RUN_NUMBER=${{ needs.set-env.outputs.COMMIT_SHA }}
-          REF=${{ github.sha }}
+          RUN_NUMBER=${{ github.run_number }}
+          REF=${{ needs.set-env.outputs.COMMIT_SHA }}
           BUILDTIME=$(date +%s)
           EOF
 
