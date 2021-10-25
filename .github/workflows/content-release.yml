@@ -121,8 +121,13 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Get release wait time
+      - name: Get release wait time for manual dispatch
+        if: ${{ github.event_name == "workflow_dispatch" }}
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
+
+      - name: Get release wait time for scheduled dispatch
+        if: ${{ github.event_name == "schedule" }}
+        run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Set deploy environment for manual dispatch
         if: ${{ github.event_name == "workflow_dispatch" }}
