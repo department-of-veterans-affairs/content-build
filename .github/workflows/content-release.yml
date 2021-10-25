@@ -105,12 +105,12 @@ jobs:
         uses: andymckay/cancel-action@0.2
 
       - name: Validate deploy_environment
-        if: ${{ github.event_name == "workflow_dispatch" && !contains(["prod", "staging", "dev"], github.event.inputs.deploy_environment) }}
+        if: ${{ github.event_name == 'workflow_dispatch' && !contains(['prod', 'staging', 'dev'], github.event.inputs.deploy_environment) }}
         run: echo "prod, staging, and dev are the only supported environments" && exit 1
 
       # TODO: Remove this when ready for PROD
       - name: Ensure that we don't deploy to prod yet
-        if: ${{ github.event.inputs.deploy_environment == "prod" }}
+        if: ${{ github.event.inputs.deploy_environment == 'prod' }}
         run: echo "PROD deploy is not supported yet." && exit 1
 
       - name: Checkout
@@ -127,31 +127,31 @@ jobs:
         uses: thebritican/fetch-latest-release@v2.0.0
 
       - name: Get release wait time for manual dispatch
-        if: ${{ github.event_name == "workflow_dispatch" }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
       - name: Get release wait time for scheduled dispatch
-        if: ${{ github.event_name == "schedule" }}
+        if: ${{ github.event_name == 'schedule' }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Get release wait time for push-initiated dispatch
-        if: ${{ github.event_name == "push" }}
+        if: ${{ github.event_name == 'push' }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Set deploy environment for manual dispatch
-        if: ${{ github.event_name == "workflow_dispatch" }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "DEPLOY_ENVIRONMENT=${{ github.event.inputs.deploy_environment }}" >> $GITHUB_ENV
 
       - name: Set deploy environment for scheduled dispatch
-        if: ${{ github.event_name == "schedule" }}
+        if: ${{ github.event_name == 'schedule' }}
         run: echo "DEPLOY_ENVIRONMENT=prod" >> $GITHUB_ENV
 
       - name: Set deploy environment for push-initiated dispatch
-        if: ${{ github.event_name == "push" }}
+        if: ${{ github.event_name == 'push' }}
         run: echo "DEPLOY_ENVIRONMENT=dev" >> $GITHUB_ENV
 
       - name: Set environment details for DEV
-        if: ${{ env.DEPLOY_ENVIRONMENT == "dev" }}
+        if: ${{ env.DEPLOY_ENVIRONMENT == 'dev' }}
         run: |
           echo "DEPLOY_ARCHIVE=vagovdev" >> $GITHUB_ENV
           echo "BUILDTYPE=vagovdev" >> $GITHUB_ENV
@@ -159,7 +159,7 @@ jobs:
           echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
 
       - name: Set environment details for STAGING
-        if: ${{ env.DEPLOY_ENVIRONMENT == "staging" }}
+        if: ${{ env.DEPLOY_ENVIRONMENT == 'staging' }}
         run: |
           echo "DEPLOY_ARCHIVE=vagovstaging" >> $GITHUB_ENV
           echo "BUILDTYPE=vagovstaging" >> $GITHUB_ENV
@@ -168,7 +168,7 @@ jobs:
 
       # TODO: Uncomment when ready for PROD
       # - name: Set environment details for PROD
-      #   if: ${{ env.DEPLOY_ENVIRONMENT = "prod" }}
+      #   if: ${{ env.DEPLOY_ENVIRONMENT = 'prod' }}
       #   run: |
       #     echo "DEPLOY_ARCHIVE=vagovprod" >> $GITHUB_ENV
       #     echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
