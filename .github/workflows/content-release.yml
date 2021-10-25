@@ -14,20 +14,6 @@ on:
         required: true
         default: prod
 
-  # These inputs are used when this workflow is called by another workflow.
-  workflow_call:
-    inputs:
-      release_wait:
-        description: Minutes to wait before creating release
-        required: false
-        default: 5
-        type: number
-      deploy_environment:
-        description: The environment to deploy content to
-        required: true
-        default: prod
-        type: string
-
   # schedule:
   #   - cron: "0 13-16,20-21 * * 1-5"
   #   - cron: "45 17 * * 1-5"
@@ -38,18 +24,6 @@ env:
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
-  validate-inputs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Validate deploy_environment
-        if: ${{ !contains(["prod", "staging", "dev"], github.event.inputs.deploy_environment) }}
-        run: echo "prod, staging, and dev are the only supported environments" && exit 1
-      
-      # TODO: Uncomment when ready for PROD
-      - name: Ensure that we don't deploy to prod yet
-        if: ${{ github.event.inputs.deploy_environment == "prod" }}
-        run: echo "PROD deploy is not supported yet." && exit 1
-
   start-runner:
     runs-on: ubuntu-latest
     outputs:
@@ -125,6 +99,15 @@ jobs:
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
 
+      - name: Validate deploy_environment
+        if: ${{ github.event_name == "workflow_dispatch" && !contains(["prod", "staging", "dev"], github.event.inputs.deploy_environment) }}
+        run: echo "PROD, STAGING, and DEV are the only supported environments" && exit 1
+
+      # TODO: Remove this when ready for PROD
+      - name: Ensure that we don't deploy to prod yet
+        if: ${{ github.event.inputs.deploy_environment == "prod" }}
+        run: echo "PROD deploy is not supported yet." && exit 1
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -141,11 +124,16 @@ jobs:
       - name: Get release wait time
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
-      - name: Set deploy environment
+      - name: Set deploy environment for manual dispatch
+        if: ${{ github.event_name == "workflow_dispatch" }}
         run: echo "DEPLOY_ENVIRONMENT=${{ github.event.inputs.deploy_environment }}" >> $GITHUB_ENV
 
+      - name: Set deploy environment for scheduled dispatch
+        if: ${{ github.event_name == "schedule" }}
+        run: echo "DEPLOY_ENVIRONMENT=prod" >> $GITHUB_ENV
+
       - name: Set environment details for DEV
-        if: ${{ github.event.inputs.deploy_environment == "dev" }}
+        if: ${{ env.DEPLOY_ENVIRONMENT == "dev" }}
         run: |
           echo "DEPLOY_ARCHIVE=vagovdev" >> $GITHUB_ENV
           echo "BUILDTYPE=vagovdev" >> $GITHUB_ENV
@@ -153,7 +141,7 @@ jobs:
           echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
 
       - name: Set environment details for STAGING
-        if: ${{ github.event.inputs.deploy_environment == "staging" }}
+        if: ${{ env.DEPLOY_ENVIRONMENT == "staging" }}
         run: |
           echo "DEPLOY_ARCHIVE=vagovstaging" >> $GITHUB_ENV
           echo "BUILDTYPE=vagovstaging" >> $GITHUB_ENV
@@ -162,7 +150,7 @@ jobs:
 
       # TODO: Uncomment when ready for PROD
       # - name: Set environment details for PROD
-      #   if: ${{ github.event.inputs.deploy_environment == "prod" || github.event_name == "schedule" }}
+      #   if: ${{ env.DEPLOY_ENVIRONMENT = "prod" }}
       #   run: |
       #     echo "DEPLOY_ARCHIVE=vagovprod" >> $GITHUB_ENV
       #     echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
@@ -217,7 +205,6 @@ jobs:
       run:
         working-directory: content-build
 
-    # TODO: Uncomment when ready for prod
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -359,11 +346,11 @@ jobs:
 
       # TODO: Uncomment when ready for prod (See https://github.com/department-of-veterans-affairs/devops/blob/67bb3bcc3ade75ffb311c47774f492b7f9ff7c65/ansible/Jenkinsfiles/releases/content-build#L28-L60 for current behavior)
       # - name: Tag release
-      #   if: ${{ github.event.inputs.deploy_environment == "prod" || github.event_name == "schedule" }}
+      #   if: ${{ needs.set-env.outputs.DEPLOY_ENVIRONMENT == "prod" }}
       #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
 
       # - name: Tag the content-build tag
-      #   if: ${{ github.event.inputs.deploy_environment == "prod" || github.event_name == "schedule" }}
+      #   if: ${{ needs.set-env.outputs.DEPLOY_ENVIRONMENT == "prod" }}
       #   run: git tag content-build/v${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin content-build/v${{ steps.bump-tag-version.outputs.v_patch }} 
 
   deploy:
@@ -408,7 +395,7 @@ jobs:
     name: Notify Failure
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
-    needs: deploy
+    needs: [set-env, deploy]
 
     steps:
       - name: Checkout
