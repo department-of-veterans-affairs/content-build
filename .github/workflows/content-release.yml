@@ -13,6 +13,10 @@ on:
         description: The environment to deploy content to
         required: true
         default: prod
+  
+  push:
+    branches:
+      - master
 
   # schedule:
   #   - cron: "0 13-16,20-21 * * 1-5"
@@ -129,6 +133,10 @@ jobs:
         if: ${{ github.event_name == "schedule" }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
+      - name: Get release wait time for push-initiated dispatch
+        if: ${{ github.event_name == "push" }}
+        run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
+
       - name: Set deploy environment for manual dispatch
         if: ${{ github.event_name == "workflow_dispatch" }}
         run: echo "DEPLOY_ENVIRONMENT=${{ github.event.inputs.deploy_environment }}" >> $GITHUB_ENV
@@ -136,6 +144,10 @@ jobs:
       - name: Set deploy environment for scheduled dispatch
         if: ${{ github.event_name == "schedule" }}
         run: echo "DEPLOY_ENVIRONMENT=prod" >> $GITHUB_ENV
+
+      - name: Set deploy environment for push-initiated dispatch
+        if: ${{ github.event_name == "push" }}
+        run: echo "DEPLOY_ENVIRONMENT=dev" >> $GITHUB_ENV
 
       - name: Set environment details for DEV
         if: ${{ env.DEPLOY_ENVIRONMENT == "dev" }}
