@@ -282,8 +282,11 @@ jobs:
         run: |
           cat > build/${{ needs.set-env.outputs.BUILDTYPE }}/BUILD.txt << EOF
           BUILDTYPE=${{ needs.set-env.outputs.BUILDTYPE }}
+          NODE_ENV=production
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          CHANGE_TARGET=null
           RUN_ID=${{ github.run_id }}
+          RUN_NUMBER=${{ github.run_number }}
           REF=${{ needs.set-env.outputs.REF }}
           BUILDTIME=$(date +%s)
           EOF
