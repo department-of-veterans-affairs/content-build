@@ -103,7 +103,7 @@ jobs:
         uses: andymckay/cancel-action@0.2
 
       - name: Validate deploy_environment
-        if: ${{ !contains(fromJson('["prod", "staging", "dev", ""]'), github.event.inputs.deploy_environment) }}
+        if: ${{ contains(fromJson('["prod", "staging", "dev", ""]'), github.event.inputs.deploy_environment) }}
         run: echo "prod, staging, and dev are the only supported environments" && exit 1
 
       # TODO: Remove this when ready for PROD
