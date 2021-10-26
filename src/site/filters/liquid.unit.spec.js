@@ -1768,4 +1768,41 @@ describe('processCentralizedContent', () => {
       liquid.filters.processCentralizedContent(testData, 'test_bundle'),
     ).to.eq(testData);
   });
+
+  it('returns expected if contentType = react_widget', () => {
+    const testData = {
+      fieldButtonFormat: [{ value: '0' }],
+      fieldCtaWidget: [{ value: '1' }],
+      fieldDefaultLink: [],
+      fieldErrorMessage: [
+        {
+          value:
+            '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br/>Please try refreshing your browser in a few minutes.',
+          format: 'rich_text',
+          processed:
+            '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br />Please try refreshing your browser in a few minutes.',
+        },
+      ],
+      fieldLoadingMessage: [],
+      fieldTimeout: [{ value: '20' }],
+      fieldWidgetType: [{ value: 'health-records' }],
+    };
+
+    const expected = {
+      fieldButtonFormat: '0',
+      fieldCtaWidget: '1',
+      fieldDefaultLink: [],
+      fieldErrorMessage: {
+        value:
+          '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br/>Please try refreshing your browser in a few minutes.',
+      },
+      fieldLoadingMessage: [],
+      fieldTimeout: '20',
+      fieldWidgetType: 'health-records',
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'react_widget'),
+    ).to.deep.eq(expected);
+  });
 });
