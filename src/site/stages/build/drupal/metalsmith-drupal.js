@@ -69,7 +69,7 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
         break;
       case 'health_care_region_detail_page':
       case 'vamc_system_policies_page':
-      case 'vamc_system_billing_and_insurance':
+      case 'vamc_system_billing_insurance':
       case 'vamc_system_register_for_care':
       case 'vamc_system_medical_records_offi':
         addGetUpdatesFields(pageCompiled, pages);
