@@ -23,6 +23,9 @@ describe('intro', () => {
 
   it('renders elements with expected values', () => {
     expect(container.querySelector('h1').innerHTML).to.equal(data.title);
+    expect(container.querySelector('p').innerHTML).to.equal(
+      'An official website of the United States government',
+    );
     expect(container.querySelector('i.icon-large.white.hub-icon-foo')).to.equal(
       null,
     );
