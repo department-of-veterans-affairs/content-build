@@ -8,9 +8,10 @@ const lastModalItem = 'a[href="https://www.veteranscrisisline.net/"]';
 
 describe('Accessible Modal Test', () => {
   it('Modal behaves appropriately in line with key presses', () => {
+    // Visit the homepage.
     cy.visit('/');
 
-    // Open modal
+    // Open the VCL modal.
     cy.get(firstOpenControl)
       .focus()
       .realPress('Enter');
