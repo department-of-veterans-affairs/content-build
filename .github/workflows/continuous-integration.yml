@@ -294,7 +294,7 @@ jobs:
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "warning", "text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
           channel_id: C02AG8UF95M # gha-build-status
           slack_app_token: ${{ env.SLACK_APP_TOKEN }}
           slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
