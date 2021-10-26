@@ -80,7 +80,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.get('h2').contains('Get updates');
 });
 
-describe.skip('VAMC location detail page', () => {
+describe('VAMC location detail page', () => {
   before(function() {
     cy.syncFixtures({
       fixtures: path.join(__dirname, '../fixtures'),

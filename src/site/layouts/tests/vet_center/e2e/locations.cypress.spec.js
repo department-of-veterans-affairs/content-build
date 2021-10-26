@@ -13,7 +13,7 @@ Cypress.Commands.add('checkElements', page => {
   cy.get('h3').contains('Traverse City Vet Center');
 });
 
-describe.skip('Vet Center Locations page - automated nearby', () => {
+describe('Vet Center Locations page - automated nearby', () => {
   beforeEach(() => {
     // Note: we can't remove this feature toggle stub
     // until we update vets-website to use automated nearby vet centers by default.
