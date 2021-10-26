@@ -1,60 +1,3 @@
-export const manualData = {
-  data: [
-    {
-      id: 'vc_0441V',
-      type: 'facility',
-      attributes: {
-        access: {},
-        activeStatus: 'A',
-        address: {
-          mailing: {},
-          physical: {
-            zip: '54304',
-            city: 'Green Bay',
-            state: 'WI',
-            address1: '1600 South Ashland Avenue',
-            address2: null,
-            address3: null,
-          },
-        },
-        classification: null,
-        detailedServices: null,
-        facilityType: 'vet_center',
-        feedback: {},
-        hours: {
-          friday: '800AM-430PM',
-          monday: '800AM-430PM',
-          sunday: 'Closed',
-          tuesday: '800AM-430PM',
-          saturday: 'Closed',
-          thursday: '800AM-430PM',
-          wednesday: '800AM-430PM',
-        },
-        id: 'vc_0441V',
-        lat: 44.500671,
-        long: -88.039521,
-        mobile: false,
-        name: 'Green Bay Vet Center',
-        operatingStatus: {
-          code: 'LIMITED',
-          additionalInfo:
-            "We're currently open for limited in-person service, and screening all visitors for symptoms, due to the coronavirus COVID-19. For individual and group counseling, we recommend using our telehealth services. If you need to talk with someone confidentially, please call us anytime 24/7 at 877-927-8387.",
-        },
-        operationalHoursSpecialInstructions:
-          'If you need to talk to someone or get advice right away, call the Vet Center anytime at 1-877-WAR-VETS (1-877-927-8387).',
-        phone: {
-          fax: '920-435-5086',
-          main: '920-435-5650',
-        },
-        services: {},
-        uniqueId: '0441V',
-        visn: '12',
-        website: null,
-      },
-    },
-  ],
-};
-
 export const automatedData = {
   data: [
     {
@@ -158,18 +101,6 @@ export const automatedData = {
       },
     },
   ],
-};
-
-export const manualNearbyFalseFeatureToggles = {
-  data: {
-    type: 'feature_toggles',
-    features: [
-      {
-        name: 'facilities_vet_center_automate_nearby',
-        value: false,
-      },
-    ],
-  },
 };
 
 export const automatedNearbyFeatureToggles = {

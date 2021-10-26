@@ -606,10 +606,11 @@ jobs:
         drupal-cache-test,
       ]
 
+    # TODO: Add vagovprod when ready
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovdev, vagovstaging]
 
     steps:
       - name: Restore ${{ matrix.buildtype }} build
@@ -706,11 +707,47 @@ jobs:
       - name: Upload drupal cache
         run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
 
+  get-latest-run-number:
+    name: Get Latest Workflow Run Number
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.cache-drupal-content.result == 'success' }}
+    needs: cache-drupal-content
+    outputs:
+      latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: yarn install --frozen-lockfile --prefer-offline --production=false
+          max_attempts: 3
+          timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+
+      - name: Set output of latest_run_number
+        id: latest-run-number
+        run: echo ::set-output name=latest_run_number::$(node ./script/github-actions/get-latest-run-number.js)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
-    needs: [build, archive, cache-drupal-content]
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
+    needs: [build, archive, cache-drupal-content, get-latest-run-number]
 
     strategy:
       matrix:
