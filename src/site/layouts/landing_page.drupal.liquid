@@ -104,6 +104,11 @@
                       >
                         <span>{{ service.title }}</span><br>
                       </a>
+                    {% elsif service.fieldLink.url.path %}
+                      <a href="{{ service.fieldLink.url.path }}"
+                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
+                        <span>{{ service.title }}</span><br>
+                      </a>
                     {% else %}
                       {{ service.title }}
                     {% endif %}
