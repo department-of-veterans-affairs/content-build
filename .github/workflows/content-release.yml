@@ -329,7 +329,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{ needs.set-env.outputs.DEPLOY_ARCHIVE }}.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
