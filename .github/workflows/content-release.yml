@@ -1,8 +1,6 @@
 name: Content Release
 
 on:
-  # These inputs are used when this workflow is manually dispatched through the
-  # GitHub UI or API.
   workflow_dispatch:
     inputs:
       release_wait:
