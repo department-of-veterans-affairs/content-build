@@ -340,10 +340,6 @@ jobs:
       #   if: ${{ needs.set-env.outputs.BUILDTYPE == "vagovprod" }}
       #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
 
-      # - name: Tag the content-build tag
-      #   if: ${{ needs.set-env.outputs.BUILDTYPE == "vagovprod" }}
-      #   run: git tag content-build/v${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin content-build/v${{ steps.bump-tag-version.outputs.v_patch }} 
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
