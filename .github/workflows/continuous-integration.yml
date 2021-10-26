@@ -262,6 +262,26 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
+      # ----------------------------
+      # | Notify Slack of failures |
+      # ---------------------------
+
+      - name: Notify Slack about build failures
+        if: ${{ failure() }}
+        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: C02AG8UF95M # gha-build-status
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+
+      # ----------------
+      # | End Notify Slack |
+      # ----------------
+
       - name: Notify Slack about broken links
         uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
