@@ -123,13 +123,12 @@
   <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
   <!-- Header -->
-  <header
-    class="header"
+  <div
     data-widget-type="header"
     data-show="{{ !noHeader }}"
     data-show-nav-login="{{ !noNavOrLogin }}"
     data-show-mega-menu="{{ !noMegamenu }}"
-  ></header>
+  ></div>
 
   <!-- Fullwidth banner alerts -->
   {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
