@@ -6,7 +6,7 @@ const secondOpenControl = '.homepage-button.vcl.va-overlay-trigger';
 const thirdOpenControl = 'footer .va-button-link.va-overlay-trigger';
 const lastModalItem = 'a[href="https://www.veteranscrisisline.net/"]';
 
-describe.skip('Accessible Modal Test', () => {
+describe('Accessible Modal Test', () => {
   it('Modal behaves appropriately in line with key presses', () => {
     cy.visit('/');
 

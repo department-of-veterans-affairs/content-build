@@ -27,7 +27,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   );
 });
 
-describe.skip('VAMC location home page', () => {
+describe('VAMC location home page', () => {
   before(function() {
     cy.syncFixtures({
       fixtures: path.join(__dirname, '../fixtures'),

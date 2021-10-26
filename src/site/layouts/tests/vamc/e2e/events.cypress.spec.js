@@ -43,7 +43,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.get('#sidenav-menu').should('not.exist');
 });
 
-describe.skip('VAMC Events page', () => {
+describe('VAMC Events page', () => {
   beforeEach(() => {
     cy.intercept('GET', '/v0/feature_toggles?*', { data: { features: [] } });
     cy.intercept('GET', '/v0/maintenance_windows', []);
