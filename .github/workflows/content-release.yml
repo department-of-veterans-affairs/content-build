@@ -16,7 +16,6 @@ on:
   # schedule:
   #   - cron: "0 13-16,20-21 * * 1-5"
   #   - cron: "45 17 * * 1-5"
-  push:
 
 # TODO: Change to correct channel_id when ready
 env:
@@ -116,13 +115,13 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Get release wait time for manual dispatch
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
-
-      - name: Get release wait time for scheduled dispatch
+      - name: Get release wait time (scheduled release)
         if: ${{ github.event_name == 'schedule' }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
+
+      - name: Get release wait time (workflow_dispatch)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
       - name: Set environment details for vagovdev
         if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'dev') || github.event_name == 'push' }}
