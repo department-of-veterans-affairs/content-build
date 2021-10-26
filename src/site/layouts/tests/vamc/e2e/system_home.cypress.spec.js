@@ -85,7 +85,7 @@ Cypress.Commands.add('checkElements', (page, isMobile) => {
   });
 });
 
-describe('VAMC system home page', () => {
+describe.skip('VAMC system home page', () => {
   it('has expected elements on desktop', () => {
     cy.checkElements('/pittsburgh-health-care', false);
   });
