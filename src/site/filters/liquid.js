@@ -873,7 +873,9 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return event.fieldDatetimeRangeTimezone.value * 1000 < currentTimestamp;
+      return (
+        event.fieldDatetimeRangeTimezone.endValue * 1000 < currentTimestamp
+      );
     });
   };
 
@@ -881,7 +883,9 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return event.fieldDatetimeRangeTimezone.value * 1000 >= currentTimestamp;
+      return (
+        event.fieldDatetimeRangeTimezone.endValue * 1000 >= currentTimestamp
+      );
     });
   };
 
