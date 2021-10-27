@@ -1,4 +1,4 @@
-import { automatedData, automatedNearbyFeatureToggles } from './fixtures/data';
+import { automatedData } from './fixtures/data';
 
 Cypress.Commands.add('checkElements', page => {
   cy.visit(page);
@@ -15,9 +15,7 @@ Cypress.Commands.add('checkElements', page => {
 
 describe('Vet Center Locations page - automated nearby', () => {
   beforeEach(() => {
-    // Note: we can't remove this feature toggle stub
-    // until we update vets-website to use automated nearby vet centers by default.
-    cy.intercept('GET', '/v0/feature_toggles?*', automatedNearbyFeatureToggles);
+    cy.intercept('GET', '/v0/feature_toggles?*', { data: { features: [] } });
     cy.intercept('GET', '/v1/facilities/va/*', automatedData);
     cy.intercept('GET', '/v0/maintenance_windows', []);
   });
