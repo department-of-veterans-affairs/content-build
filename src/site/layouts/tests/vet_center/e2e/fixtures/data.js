@@ -102,15 +102,3 @@ export const automatedData = {
     },
   ],
 };
-
-export const automatedNearbyFeatureToggles = {
-  data: {
-    type: 'feature_toggles',
-    features: [
-      {
-        name: 'facilities_vet_center_automate_nearby',
-        value: true,
-      },
-    ],
-  },
-};
