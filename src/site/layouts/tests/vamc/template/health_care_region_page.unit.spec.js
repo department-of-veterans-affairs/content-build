@@ -123,7 +123,6 @@ describe('intro', () => {
       '/health-care/schedule-view-va-appointments/',
       '/health-care/get-medical-records/',
       '/health-care/view-test-and-lab-results/',
-      '/health-care/order-hearing-aid-batteries-and-accessories/',
     ]);
   });
 });
