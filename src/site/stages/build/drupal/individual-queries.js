@@ -102,6 +102,10 @@ const {
   GetVetCenterLocations,
 } = require('./graphql/vetCenterLocations.graphql');
 
+const {
+  GetLocationsOperatingStatus,
+} = require('./graphql/locationsOperatingStatus.graphql');
+
 function getNodeQueries(entityCounts) {
   return {
     ...getNodePageQueries(entityCounts),
@@ -185,6 +189,7 @@ function nonNodeQueries() {
     GetHomepage,
     GetMenuLinks,
     GetTaxonomies,
+    GetLocationsOperatingStatus,
   };
 
   if (cmsFeatureFlags.FEATURE_ALL_HUB_SIDE_NAVS) {

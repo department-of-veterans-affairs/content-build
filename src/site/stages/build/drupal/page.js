@@ -384,6 +384,18 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
+      // need to add this by looking up the locations based on the fieldOffice.entity.targetId
+      //   fieldFacilityOperatingStatus {
+      //   entity {
+      //       title
+      //       entityUrl {
+      //         path
+      //       }
+      //       fieldOperatingStatusFacility
+      //       fieldOperatingStatusMoreInfo
+      //     }
+      //   }
+      // }
       pageCompiled = Object.assign(
         {},
         page,
