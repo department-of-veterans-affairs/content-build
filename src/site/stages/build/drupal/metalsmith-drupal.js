@@ -313,7 +313,6 @@ function getDrupalContent(buildOptions) {
   return async (files, metalsmith, done) => {
     let drupalData = null;
     try {
-      console.log('loading drupal data');
       drupalData = await loadDrupal(buildOptions);
       drupalData = convertDrupalFilesToLocal(drupalData, files, buildOptions);
 
