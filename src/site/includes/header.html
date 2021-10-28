@@ -122,6 +122,16 @@
   {{ google_analytics_noscript }}
   <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
+  <!-- Header -->
+  <div
+    data-widget-type="header"
+    data-show="{{ !noHeader }}"
+    data-show-nav-login="{{ !noNavOrLogin }}"
+    data-show-mega-menu="{{ !noMegamenu }}"
+    id="header-v2"
+  ></div>
+
+  <!-- Legacy Header -->
   {% if !noHeader %}
     {% include "src/site/includes/top-nav.html" %}
   {% endif %}

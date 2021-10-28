@@ -1,8 +1,6 @@
 name: Content Release
 
 on:
-  # These inputs are used when this workflow is manually dispatched through the
-  # GitHub UI or API.
   workflow_dispatch:
     inputs:
       release_wait:
@@ -88,7 +86,6 @@ jobs:
       LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
-      DEPLOY_ENVIRONMENT: ${{ env.DEPLOY_ENVIRONMENT }}
       BUILDTYPE: ${{ env.BUILDTYPE }}
       DEPLOY_BUCKET: ${{ env.DEPLOY_BUCKET }}
       DRUPAL_ADDRESS: ${{ env.DRUPAL_ADDRESS }}
@@ -98,14 +95,10 @@ jobs:
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
 
-      - name: Validate deploy_environment
-        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["prod", "staging", "dev"]'), github.event.inputs.deploy_environment) }}
-        run: echo "prod, staging, and dev are the only supported environments" && exit 1
-
-      # TODO: Remove this when ready for PROD
-      - name: Ensure that we don't deploy to prod yet
-        if: ${{ github.event.inputs.deploy_environment == 'prod' }}
-        run: echo "PROD deploy is not supported yet." && exit 1
+      # TODO: add prod when ready
+      - name: Validate workflow_dispatch deploy_environment
+        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["dev", "staging"]'), github.event.inputs.deploy_environment) }}
+        run: echo "dev and staging are the only supported environments" && exit 1
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -120,47 +113,32 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Get release wait time for manual dispatch
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
-
-      - name: Get release wait time for scheduled dispatch
+      - name: Get release wait time (scheduled release)
         if: ${{ github.event_name == 'schedule' }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
-      - name: Set deploy environment for manual dispatch
+      - name: Get release wait time (workflow_dispatch)
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "DEPLOY_ENVIRONMENT=${{ github.event.inputs.deploy_environment }}" >> $GITHUB_ENV
+        run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
-      - name: Set deploy environment for scheduled dispatch
-        if: ${{ github.event_name == 'schedule' }}
-        run: echo "DEPLOY_ENVIRONMENT=prod" >> $GITHUB_ENV
-
-      - name: Set deploy environment for push-initiated dispatch
-        if: ${{ github.event_name == 'push' }}
-        run: echo "DEPLOY_ENVIRONMENT=dev" >> $GITHUB_ENV
-
-      - name: Set environment details for DEV
-        if: ${{ env.DEPLOY_ENVIRONMENT == 'dev' }}
+      - name: Set environment details for vagovdev
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'dev' }}
         run: |
-          echo "DEPLOY_ARCHIVE=vagovdev" >> $GITHUB_ENV
           echo "BUILDTYPE=vagovdev" >> $GITHUB_ENV
           echo "DEPLOY_BUCKET=content.dev.va.gov" >> $GITHUB_ENV
           echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
 
-      - name: Set environment details for STAGING
-        if: ${{ env.DEPLOY_ENVIRONMENT == 'staging' }}
+      - name: Set environment details for vagovstaging
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'staging' }}
         run: |
-          echo "DEPLOY_ARCHIVE=vagovstaging" >> $GITHUB_ENV
           echo "BUILDTYPE=vagovstaging" >> $GITHUB_ENV
           echo "DEPLOY_BUCKET=content.staging.va.gov" >> $GITHUB_ENV
           echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
 
       # TODO: Uncomment when ready for PROD
       # - name: Set environment details for PROD
-      #   if: ${{ env.DEPLOY_ENVIRONMENT = 'prod' }}
+      #   if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
       #   run: |
-      #     echo "DEPLOY_ARCHIVE=vagovprod" >> $GITHUB_ENV
       #     echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
       #     echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
       #     echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
@@ -200,7 +178,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for ${{ needs.set-env.outputs.DEPLOY_ENVIRONMENT }} content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for ${{ needs.set-env.outputs.BUILDTYPE }} content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -357,12 +335,8 @@ jobs:
 
       # TODO: Uncomment when ready for prod (See https://github.com/department-of-veterans-affairs/devops/blob/67bb3bcc3ade75ffb311c47774f492b7f9ff7c65/ansible/Jenkinsfiles/releases/content-build#L28-L60 for current behavior)
       # - name: Tag release
-      #   if: ${{ needs.set-env.outputs.DEPLOY_ENVIRONMENT == "prod" }}
+      #   if: ${{ needs.set-env.outputs.BUILDTYPE == "vagovprod" }}
       #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
-
-      # - name: Tag the content-build tag
-      #   if: ${{ needs.set-env.outputs.DEPLOY_ENVIRONMENT == "prod" }}
-      #   run: git tag content-build/v${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin content-build/v${{ steps.bump-tag-version.outputs.v_patch }} 
 
   deploy:
     name: Deploy
@@ -392,14 +366,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
-          role-to-assume: ${{ needs.set-env.outputs.AWS_FRONTEND_NONPROD_ROLE }}
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{needs.set-env.outputs.DEPLOY_ARCHIVE}}.tar.bz2
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{needs.set-env.outputs.BUILDTYPE}}.tar.bz2
           DEST: s3://${{ needs.set-env.outputs.DEPLOY_BUCKET }}
 
   notify-failure:
@@ -418,7 +392,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content release for ${{ needs.set-env.outputs.DEPLOY_ENVIRONMENT }} content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content release for ${{ needs.set-env.outputs.BUILDTYPE }} content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

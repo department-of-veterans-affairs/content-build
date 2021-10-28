@@ -215,6 +215,15 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
      noDrupalProxy = ''
   }
 
+  if (useCache) {
+    slackSend(
+      message: "(Jenkins) -- Try to build again using cached drupal content |${env.RUN_DISPLAY_URL}".stripMargin(),
+      color: 'warning',
+      failOnError: true,
+      channel: 'gha-build-status'
+    )
+  }
+
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
