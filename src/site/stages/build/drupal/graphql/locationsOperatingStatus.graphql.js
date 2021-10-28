@@ -1,34 +1,34 @@
 const locationsOperatingStatus = `
-  fragment locationsOperatingStatus on NodeHealthCareLocalFacility {
-    entityId
-    title
-    fieldOperatingStatusFacility
-    fieldOperatingStatusMoreInfo
-    fieldRegionPage {
-      targetId
-    }
-  }
-`;
-
-const GetLocationsOperatingStatus = `
-
-  ${locationsOperatingStatus}
-
-  query GetLocationsOperatingStatus($onlyPublishedContent: Boolean!) {
-    nodeQuery(limit: 100000, filter: {
-      conditions: [
-        { field: "status", value: ["1"], enabled: $onlyPublishedContent },
-        { field: "type", value: ["health_care_local_facility"] }
-      ]
+  locationsOperatingStatus: nodeQuery(limit: 100000, filter: 
+    {conditions: [
+      {field: "status", value: ["1"]}, 
+      {field: "type", value: ["health_care_local_facility"]}]
     }) {
-      entities {
-        ... locationOperatingStatus
+    entities {
+      ... on NodeHealthCareLocalFacility {
+        entityId
+        nid
+        title
+        entityUrl {
+          path
+        }        
+        fieldOperatingStatusFacility
+        fieldOperatingStatusMoreInfo
+        fieldRegionPage {
+          targetId
+        }
       }
     }
   }
 `;
 
+const GetLocationsOperatingStatus = `
+ query {
+   ${locationsOperatingStatus}
+ }
+ `;
+
 module.exports = {
-  fragment: locationsOperatingStatus,
   GetLocationsOperatingStatus,
+  partialQuery: locationsOperatingStatus,
 };

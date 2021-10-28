@@ -316,6 +316,7 @@ function compilePage(page, contentData) {
       outreachSidebarQuery: outreachSidebarNav = {},
       pensionBenefitsHubQuery: pensionHubSidebarNav = {},
       recordsBenefitsHubQuery: recordsHubSidebarNav = {},
+      locationsOperatingStatus,
     },
   } = contentData;
 
@@ -356,6 +357,8 @@ function compilePage(page, contentData) {
   }
 
   let pageCompiled;
+  let operatingStatusEntities;
+  let fieldFacilityOperatingStatus;
 
   switch (entityBundle) {
     case 'office':
@@ -384,18 +387,21 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
-      // need to add this by looking up the locations based on the fieldOffice.entity.targetId
-      //   fieldFacilityOperatingStatus {
-      //   entity {
-      //       title
-      //       entityUrl {
-      //         path
-      //       }
-      //       fieldOperatingStatusFacility
-      //       fieldOperatingStatusMoreInfo
-      //     }
-      //   }
-      // }
+      operatingStatusEntities = locationsOperatingStatus.entities.filter(
+        e => e.fieldRegionPage.targetId === page.fieldOffice.targetId,
+      );
+      fieldFacilityOperatingStatus = operatingStatusEntities
+        .map(e => ({
+          entity: e,
+        }))
+        .sort((e1, e2) => {
+          if (e1.entity.title === e2.entity.title) return 0;
+          return e1.entity.title > e2.entity.title ? 1 : -1;
+        });
+      page = {
+        ...page,
+        fieldFacilityOperatingStatus,
+      };
       pageCompiled = Object.assign(
         {},
         page,

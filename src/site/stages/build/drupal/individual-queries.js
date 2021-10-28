@@ -178,6 +178,7 @@ function nonNodeQueries() {
   } = require('./graphql/taxonomy-fragments/GetTaxonomies.graphql');
 
   const componentQueries = {
+    GetLocationsOperatingStatus,
     GetIcsFiles,
     GetSidebars,
     ...VaFacilitySidebars,
@@ -189,7 +190,6 @@ function nonNodeQueries() {
     GetHomepage,
     GetMenuLinks,
     GetTaxonomies,
-    GetLocationsOperatingStatus,
   };
 
   if (cmsFeatureFlags.FEATURE_ALL_HUB_SIDE_NAVS) {

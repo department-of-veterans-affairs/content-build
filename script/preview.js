@@ -152,6 +152,7 @@ const nonNodeContent = {
       const json = await drupalClient.query({ query });
       if (json.errors) {
         console.error('Error executing', queryName, json);
+        console.error('query:', query);
       } else {
         Object.assign(freshNonNodeContent.data, json.data);
       }
