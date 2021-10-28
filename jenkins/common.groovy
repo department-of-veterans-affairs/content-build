@@ -215,6 +215,15 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
      noDrupalProxy = ''
   }
 
+  if (useCache) {
+    slackSend(
+      message: "(Jenkins) -- Try to build again using cached drupal content |${env.RUN_DISPLAY_URL}".stripMargin(),
+      color: 'warning',
+      failOnError: true,
+      channel: 'gha-build-status'
+    )
+  }
+
   withCredentials([usernamePassword(credentialsId:  "${drupalCred}", usernameVariable: 'DRUPAL_USERNAME', passwordVariable: 'DRUPAL_PASSWORD')]) {
     dockerContainer.inside(DOCKER_ARGS) {
       def buildLogPath = "${buildPath}/${envName}-build.log"
@@ -241,14 +250,14 @@ def integrationTests(dockerContainer, ref) {
             parallel (
               failFast: true,
               cypress: {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e NO_COLOR=1 content-build --no-color run cy:test:docker"
               }
             )
           } else {
             parallel (
               failFast: true,
               cypress: {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e CI=true -e NO_COLOR=1 content-build --no-color run cy:test:docker"
+                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e NO_COLOR=1 content-build --no-color run cy:test:docker"
               }
             )
           }
@@ -295,7 +304,7 @@ def archive(dockerContainer, String ref, String envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                      usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-      if(envName == 'vagovstaging' || envName == 'vagovprod') {
+      if(envName == 'vagovprod') {
         sh "tar -C /application/build/${envName} -cf /application/build/${envName}.tar.bz2 ."
         sh "aws s3 cp /application/build/${envName}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${ref}/${envName}.tar.bz2 --acl public-read --region us-gov-west-1 --quiet"
       }

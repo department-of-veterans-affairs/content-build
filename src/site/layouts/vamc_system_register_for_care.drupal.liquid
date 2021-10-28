@@ -1,0 +1,41 @@
+{% include "src/site/includes/header.html" %}
+{% include "src/site/includes/preview-edit.drupal.liquid" %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
+
+<div class="interior" id="content" data-template="vamc_system_policies_page.drupal.liquid">
+  <main class="va-l-detail-page va-facility-page">
+    <div class="usa-grid usa-grid-full">
+      {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
+      <div class="usa-width-three-fourths">
+        <article aria-labelledby="article-heading" role="region" class="usa-content">
+          <h1 id="article-heading">{{ title }}</h1>
+          <div class="va-introtext">
+            <p>
+              Register to get care at one of our VA health care facilities.
+              Not yet enrolled in VA health care? We can help you apply in person or get started online.
+            </p>
+          </div>
+          <div class="usa-content">
+            {% include "src/site/includes/centralized-content.drupal.liquid" with
+                entity = fieldCcTopOfPageContent.fetched
+                contentType = fieldCcTopOfPageContent.fetchedBundle
+            %}
+          </div>
+          {% include "src/site/includes/centralized-content.drupal.liquid" with
+              entity = fieldCcBottomOfPageContent.fetched
+              contentType = fieldCcBottomOfPageContent.fetchedBundle
+          %}
+          <div class="va-nav-linkslist va-nav-linkslist--related">
+            {% include "src/site/includes/centralized-content.drupal.liquid" with
+                entity = fieldCcRelatedLinks.fetched
+                contentType = fieldCcRelatedLinks.fetchedBundle
+            %}
+          </div>
+        </article>
+        {% include "src/site/includes/last-updated.drupal.liquid" %}
+      </div>
+    </div>
+  </main>
+</div>
+{% include "src/site/includes/footer.html" %}
+{% include "src/site/includes/debug.drupal.liquid" %}
