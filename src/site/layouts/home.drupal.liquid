@@ -6,13 +6,15 @@
 
     <div class="homepage-hub-container">
 
-      <h1 class="heading-level-2 homepage-heading">Access and manage your VA benefits and health care</h1>
+      <h1 class="heading-level-2 homepage-heading">Welcome to VA.gov</h1>
+
+      <h2 class="heading-level-3 homepage-heading">Popular on VA.gov</h2>
 
       <!-- top row -->
       <div class="hub-links-row">
       {% for card in cards %}
         <div class="hub-links-container" data-e2e="bucket">
-          <h2 class="heading-level-3 hub-links-title"><i class="icon-large-baseline icon-heading hub-icon-{{ card.label | downcase | replace: ' ', '-' }} hub-color-{{ card.label | downcase | replace: ' ', '-' }}"></i>{{ card.label }}</h2>
+          <h3 class="heading-level-3 hub-links-title"><i class="icon-large-baseline icon-heading hub-icon-{{ card.label | downcase | replace: ' ', '-' }} hub-color-{{ card.label | downcase | replace: ' ', '-' }}"></i>{{ card.label }}</h3>
           <ul class="hub-links-list">
             {% assign card_label = card.label %}
             {% for link in card.links %}
@@ -46,11 +48,14 @@
   <!-- /the hub -->
 
   <section>
+
+    <h2 class="heading-level-2 homepage-heading vads-u-color--primary-darkest" style='margin:1em 0 0 0'>Services and Information</h2>
     <section id="homepage-benefits">
+
       <div class="usa-grid usa-grid-full homepage-benefits-row">
       {% for hub in hubs %}
         <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
-          <h2 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h2>
+          <h2 class="heading-level-3"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h2>
           <p class="homepage-benefits-description">{{ hub.entity.fieldTeaserText }}</p>
         </div>
         {% comment %} Close this row and open a new one when needed. {% endcomment %}
@@ -63,6 +68,10 @@
     </section>
 
     <section id="homepage-popular">
+
+
+      <h2 class="heading-level-2 homepage-heading vads-u-color--primary-darkest">Tools and Resources</h2>
+
       <div class="usa-grid usa-grid-full">
         <div class="usa-width-one-third">
           <a href="/find-locations/" onclick="recordEvent({ event: 'nav-main-health' });" class="homepage-button">
@@ -105,7 +114,10 @@
     <div class="va-h-ruled--stars"></div>
   </section>
 
+  <h2 class="heading-level-2 homepage-heading vads-u-color--primary-darkest" style='margin:1em 0 0 0'>Latest News</h2>
+
   <section id="homepage-news">
+
     <div class="usa-grid usa-grid-full">
     {% comment %} Promos is an array of Drupal promo block entities. See /src/site/stages/build/drupal/home.js. {% endcomment %}
     {% for promo in promos %}
