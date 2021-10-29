@@ -388,7 +388,7 @@ function compilePage(page, contentData) {
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
       operatingStatusEntities = locationsOperatingStatus.entities.filter(
-        e => e.fieldRegionPage.targetId === page.fieldOffice.targetId,
+        e => e.fieldRegionPage?.targetId === page.fieldOffice?.targetId,
       );
       fieldFacilityOperatingStatus = operatingStatusEntities
         .map(e => ({
