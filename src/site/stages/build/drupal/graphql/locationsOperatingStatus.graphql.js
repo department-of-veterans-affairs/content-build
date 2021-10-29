@@ -1,5 +1,5 @@
 const locationsOperatingStatus = `
-  locationsOperatingStatus: nodeQuery(limit: 100000, filter: 
+  locationsOperatingStatus: nodeQuery(limit: 3000, filter: 
     {conditions: [
       {field: "status", value: ["1"]}, 
       {field: "type", value: ["health_care_local_facility"]}]
