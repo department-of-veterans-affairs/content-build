@@ -9,6 +9,7 @@ const locationsOperatingStatus = `
         entityId
         nid
         title
+        fieldMainLocation
         entityUrl {
           path
         }        
