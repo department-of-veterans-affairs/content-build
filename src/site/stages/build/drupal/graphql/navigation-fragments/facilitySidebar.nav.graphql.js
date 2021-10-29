@@ -87,7 +87,7 @@ const FACILITY_MENU_NAMES = [
   'va-northern-indiana-health-care',
   'va-saginaw-health-care',
   // VISN 12
-  'va-lovell-federal-health care',
+  'va-lovell-federal-health-care',
   'va-chicago-health-care',
   'va-hines-health-care',
   'va-illiana-health-care',

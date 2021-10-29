@@ -100,4 +100,29 @@ describe('intro', () => {
       newContainer.getElementsByClassName('featured-story').length,
     ).to.equal(1);
   });
+
+  it('should have the correct urls for top tasks (manage your health online section) if the facility is cutover to using Cerner', () => {
+    Array.from(container.querySelectorAll('.top-task-link')).forEach(link =>
+      expect(link.href).to.eq('https://patientportal.myhealth.va.gov/'),
+    );
+  });
+
+  it('should have the correct urls for top tasks (manage your health online section) if the facility is NOT cutover to using Cerner', async () => {
+    const clonedData = _.cloneDeep(data);
+
+    clonedData.fieldVamcEhrSystem = 'vista';
+
+    const newContainer = await renderHTML(layoutPath, clonedData);
+    expect(
+      Array.from(newContainer.querySelectorAll('.top-task-link')).map(
+        link => link.href,
+      ),
+    ).to.deep.equal([
+      '/health-care/refill-track-prescriptions/',
+      '/health-care/secure-messaging/',
+      '/health-care/schedule-view-va-appointments/',
+      '/health-care/get-medical-records/',
+      '/health-care/view-test-and-lab-results/',
+    ]);
+  });
 });

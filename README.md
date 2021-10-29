@@ -1,4 +1,4 @@
-# VA.gov Content Build [![Build Status](https://dev.vets.gov/jenkins/buildStatus/icon?job=testing/content-build/master)](http://jenkins.vetsgov-internal/job/testing/job/content-build/job/master/)
+# VA.gov Content Build ![Build Status](https://github.com/department-of-veterans-affairs/content-build/actions/workflows/continuous-integration.yml/badge.svg?branch=master)
 
 ## What is this?
 

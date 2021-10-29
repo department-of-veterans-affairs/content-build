@@ -151,8 +151,11 @@ node('vetsgov-general-purpose') {
   // Point all URLs to the proper S3 bucket
   commonStages.prearchiveAll(dockerContainer)
 
-  envsUsingDrupalCache = envUsedCache
-  commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
+  // Archive the tar file for each build type
+  commonStages.archiveAll(dockerContainer, ref);
+
+  // envsUsingDrupalCache = envUsedCache
+  // commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
 
   stage('Review') {
     if (commonStages.shouldBail()) {

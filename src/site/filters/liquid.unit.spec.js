@@ -1594,7 +1594,7 @@ describe('processCentralizedContent', () => {
       fieldQuestions: [
         {
           entity: {
-            targetId: '29903', // targetId gets renmaed to entityId as long as there is not entityId already present
+            targetId: '29903', // targetId gets renamed to entityId as long as there is not entityId already present
             targetRevisionId: '422164',
             entityType: 'paragraph',
             entityBundle: 'q_a',
@@ -1696,11 +1696,115 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 
+  it('returns expected if contentType = list_of_link_teasers', () => {
+    const centralizedContent = {
+      fieldTitle: [
+        {
+          value: 'More information',
+        },
+      ],
+      fieldVaParagraphs: [
+        {
+          entity: {
+            targetId: '77155',
+            targetRevisionId: '393053',
+            entityType: 'paragraph',
+            entityBundle: 'link_teaser',
+            fieldLink: [
+              {
+                uri: 'entity:node/703',
+                url: {
+                  path: '/health-care/copay-rates',
+                },
+                title: 'VA health care copay rates',
+                options: [],
+              },
+            ],
+            fieldLinkSummary: [
+              {
+                value:
+                  'Review copay rates for outpatient care, hospital stays, medications, and other health services.',
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const expected = {
+      fieldTitle: 'More information',
+      fieldVaParagraphs: [
+        {
+          entity: {
+            entityId: '77155',
+            targetRevisionId: '393053',
+            entityType: 'paragraph',
+            entityBundle: 'link_teaser',
+            fieldLink: {
+              uri: 'entity:node/703',
+              url: {
+                path: '/health-care/copay-rates',
+              },
+              title: 'VA health care copay rates',
+              options: [],
+            },
+            fieldLinkSummary:
+              'Review copay rates for outpatient care, hospital stays, medications, and other health services.',
+          },
+        },
+      ],
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(
+        centralizedContent,
+        'list_of_link_teasers',
+      ),
+    ).to.deep.eq(expected);
+  });
+
   it('returns test data if contentType does not match any of the cases - default', () => {
     const testData = vetCenterData.fieldVetCenterFeatureContent;
     expect(
       liquid.filters.processCentralizedContent(testData, 'test_bundle'),
     ).to.eq(testData);
+  });
+
+  it('returns expected if contentType = react_widget', () => {
+    const testData = {
+      fieldButtonFormat: [{ value: '0' }],
+      fieldCtaWidget: [{ value: '1' }],
+      fieldDefaultLink: [],
+      fieldErrorMessage: [
+        {
+          value:
+            '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br/>Please try refreshing your browser in a few minutes.',
+          format: 'rich_text',
+          processed:
+            '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br />Please try refreshing your browser in a few minutes.',
+        },
+      ],
+      fieldLoadingMessage: [],
+      fieldTimeout: [{ value: '20' }],
+      fieldWidgetType: [{ value: 'health-records' }],
+    };
+
+    const expected = {
+      fieldButtonFormat: '0',
+      fieldCtaWidget: '1',
+      fieldDefaultLink: [],
+      fieldErrorMessage: {
+        value:
+          '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br/>Please try refreshing your browser in a few minutes.',
+      },
+      fieldLoadingMessage: [],
+      fieldTimeout: '20',
+      fieldWidgetType: 'health-records',
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'react_widget'),
+    ).to.deep.eq(expected);
   });
 });
 

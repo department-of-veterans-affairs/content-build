@@ -36,6 +36,7 @@ describe('VAMC location home page', () => {
 
   beforeEach(() => {
     cy.intercept('GET', '/v1/facilities/va/*', mockFacilityData);
+    cy.intercept('GET', '/v0/feature_toggles?*', { data: { features: [] } });
   });
 
   it('has expected elements on desktop', () => {

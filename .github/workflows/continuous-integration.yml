@@ -43,7 +43,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
@@ -210,11 +210,12 @@ jobs:
       - name: Compress build
         run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
 
-      - name: Persist prearchived build
+      - name: Persist compressed build and drupal cache
         run: |
           mkdir -p /tmp/${{ github.run_id }}
           rm -rf /tmp/${{ github.run_id }}/${{ matrix.buildtype }}
           mv ${{ matrix.buildtype }}.tar.bz2 /tmp/${{ github.run_id }}
+          mv .cache /tmp/${{ github.run_id }}
 
       # Only will get called if error in workflow
       - name: Configure AWS credentials
@@ -226,21 +227,21 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_socket_token
           env_variable_name: SLACK_APP_TOKEN
 
       - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
@@ -260,6 +261,48 @@ jobs:
       - name: Upload broken links file
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
+
+      # ----------------------------
+      # | Notify Slack of failures |
+      # ---------------------------
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ failure() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        if: ${{ failure() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        if: ${{ failure() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+
+      - name: Notify Slack about build failures
+        if: ${{ failure() }}
+        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+        with:
+          attachments: '[{"mrkdwn_in": ["text"], "color": "warning", "text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          channel_id: C02AG8UF95M # gha-build-status
+          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+
+      # ----------------
+      # | End Notify Slack |
+      # ----------------
 
       - name: Notify Slack about broken links
         uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
@@ -306,7 +349,7 @@ jobs:
 
       - name: Publish test results
         if: ${{ always() }}
-        uses: mikepenz/action-junit-report@v2.4.0
+        uses: mikepenz/action-junit-report@v2.6.0
         with:
           check_name: 'Unit Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -476,7 +519,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
@@ -517,7 +560,7 @@ jobs:
           path: testing-tools-team-dashboard-data/src/mochawesome/data
 
       - name: Get BigQuery service credentials
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/testing-team/bigquery_service_credentials
           env_variable_name: BIGQUERY_SERVICE_CREDENTIALS
@@ -556,7 +599,7 @@ jobs:
           path: testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }}
 
       - name: Get AWS IAM role
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -605,10 +648,11 @@ jobs:
         drupal-cache-test,
       ]
 
+    # TODO: Add vagovprod when ready
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovdev, vagovstaging]
 
     steps:
       - name: Restore ${{ matrix.buildtype }} build
@@ -625,7 +669,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -643,11 +687,109 @@ jobs:
       - name: Upload build
         run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
 
+  cache-drupal-content:
+    name: Cache Drupal Content
+    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
+    needs: [start-runner, archive]
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      fail-fast: false
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore ${{ matrix.buildtype }} cache
+        run: |
+          mkdir -p .cache
+          mv /tmp/${{ github.run_id }}/.cache/${{ matrix.buildtype }} .cache/${{ matrix.buildtype }}
+          df -h
+          du -h .cache/${{ matrix.buildtype }}
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Cache drupal
+        run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
+
+      - name: Configure AWS credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Upload drupal cache
+        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
+
+  get-latest-run-number:
+    name: Get Latest Workflow Run Number
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.cache-drupal-content.result == 'success' }}
+    needs: cache-drupal-content
+    outputs:
+      latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: yarn install --frozen-lockfile --prefer-offline --production=false
+          max_attempts: 3
+          timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+
+      - name: Set output of latest_run_number
+        id: latest-run-number
+        run: echo ::set-output name=latest_run_number::$(node ./script/github-actions/get-latest-run-number.js)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
-    needs: [build, archive]
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
+    needs: [build, archive, cache-drupal-content, get-latest-run-number]
 
     strategy:
       matrix:
@@ -669,14 +811,14 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Get Drupal token from Parameter Store
         if: ${{ matrix.environment == 'vagovstaging' }}
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
           env_variable_name: CALLBACK_TOKEN
@@ -709,7 +851,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, archive]
+    needs: [start-runner, cypress-tests, archive, cache-drupal-content]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
@@ -736,7 +878,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
