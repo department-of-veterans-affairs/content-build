@@ -35,7 +35,7 @@
         {% for accordionItem in entity.fieldVaParagraphs %}
             {% assign item = accordionItem.entity %}
             {% assign id = item.entityId %}
-            <va-accordion-item header="{{ item.fieldTitle }}">
+            <va-accordion-item header="{{ item.fieldTitle | sanitizeHtml }}">
                 <div
                     id={{id}}
                     data-template="paragraphs/collapsible_panel__panel"

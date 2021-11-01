@@ -5,6 +5,8 @@ const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
 const set = require('lodash/fp/set');
+const sanitizeHtml = require('sanitize-html');
+
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
@@ -1235,5 +1237,17 @@ module.exports = function registerFilters() {
     } else {
       return `/health-care/${path}`;
     }
+  };
+
+  /**
+   * Removes potentially dangerous HTML tags and characters from the input.
+   * Uses https://www.npmjs.com/package/sanitize-html
+   * @param string dangerous HTML
+   * @returns string safe HTML
+   */
+  liquid.filters.sanitizeHtml = html => {
+    if (!html) return null;
+    const sanitized = sanitizeHtml(html);
+    return sanitized.replace(/'/g, '&apos;').replace(/"/g, '&quot;');
   };
 };
