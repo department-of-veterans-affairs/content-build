@@ -13,7 +13,6 @@ on:
         default: ''
   schedule:
     - cron: 0 18 * * 1-5
-  push:
 
 concurrency:
   group: prod
