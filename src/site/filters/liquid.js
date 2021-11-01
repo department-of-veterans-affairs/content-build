@@ -817,11 +817,8 @@ module.exports = function registerFilters() {
       return '';
     }
 
-    // Replace single quotes.
-    const stringWithoutSingleQuotes = string.replace("'", '&apos;');
-
     // Encode the string.
-    return he.encode(stringWithoutSingleQuotes, { useNamedReferences: true });
+    return he.encode(string, { useNamedReferences: true });
   };
 
   // fieldCcVetCenterFeaturedCon data structure is different
