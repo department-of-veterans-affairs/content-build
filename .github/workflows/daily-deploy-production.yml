@@ -14,6 +14,10 @@ on:
   schedule:
     - cron: 0 18 * * 1-5
 
+concurrency:
+  group: prod
+  cancel-in-progress: false
+
 env:
   CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
   DSVA_SCHEDULE_ENABLED: true
