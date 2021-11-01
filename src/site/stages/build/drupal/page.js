@@ -388,12 +388,12 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
-      mainOperatingStatusEntities = locationsOperatingStatus?.entities.filter(
+      mainOperatingStatusEntities = locationsOperatingStatus?.entities?.filter(
         e =>
           e.fieldRegionPage?.targetId === page.fieldOffice?.targetId &&
           e.fieldMainLocation === true,
       );
-      otherOperatingStatusEntities = locationsOperatingStatus?.entities.filter(
+      otherOperatingStatusEntities = locationsOperatingStatus?.entities?.filter(
         e =>
           e.fieldRegionPage?.targetId === page.fieldOffice?.targetId &&
           e.fieldMainLocation === false,
