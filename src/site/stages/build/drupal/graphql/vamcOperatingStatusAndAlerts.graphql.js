@@ -6,6 +6,7 @@ const vamcOperatingStatusAndAlerts = `
     title
     nid
     fieldOffice {
+      targetId
       entity {
         ... on NodeHealthCareRegionPage {
           entityLabel
@@ -18,19 +19,6 @@ const vamcOperatingStatusAndAlerts = `
     }
     fieldOperatingStatusEmergInf {
       value
-    }
-    fieldFacilityOperatingStatus {
-      entity {
-        ... on NodeHealthCareLocalFacility {
-          title
-          entityUrl {
-            path
-            routed
-          }
-          fieldOperatingStatusFacility
-          fieldOperatingStatusMoreInfo
-        }
-      }
     }
     fieldBannerAlert {
       entity {
