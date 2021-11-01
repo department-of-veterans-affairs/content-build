@@ -14,14 +14,3 @@ services:
       - 3001
       - 3000
     command: ./script/run-docker-test-server.sh
-  selenium-chrome:
-    image: selenium/standalone-chrome:3.14.0-francium
-    links:
-      - content-build
-    shm_size: 2g
-    expose:
-      - 4444
-    environment:
-      GRID_BROWSER_TIMEOUT: 10000
-      GRID_TIMEOUT: 12000
-      DBUS_SESSION_BUS_ADDRESS: /dev/null

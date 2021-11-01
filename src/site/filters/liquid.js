@@ -1228,4 +1228,12 @@ module.exports = function registerFilters() {
 
     return languages[language][whichNode];
   };
+
+  liquid.filters.topTaskUrl = (flag, path) => {
+    if (flag === 'cerner') {
+      return 'https://patientportal.myhealth.va.gov';
+    } else {
+      return `/health-care/${path}`;
+    }
+  };
 };

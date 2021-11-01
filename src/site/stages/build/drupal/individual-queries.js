@@ -92,11 +92,19 @@ const {
   GetMedicalRecordsOfficePages,
 } = require('./graphql/vamcMedicalRecordsOfficePage.graphql');
 
+const {
+  GetBillingAndInsurancePages,
+} = require('./graphql/vamcBillingAndInsurancePage.graphql');
+
 const { getVetCenterQueries } = require('./graphql/vetCenter.graphql');
 
 const {
   GetVetCenterLocations,
 } = require('./graphql/vetCenterLocations.graphql');
+
+const {
+  GetLocationsOperatingStatus,
+} = require('./graphql/locationsOperatingStatus.graphql');
 
 function getNodeQueries(entityCounts) {
   return {
@@ -131,6 +139,7 @@ function getNodeQueries(entityCounts) {
     ...getVetCenterQueries(entityCounts),
     GetVetCenterLocations,
     GetPolicyPages,
+    GetBillingAndInsurancePages,
     GetRegisterForCarePages,
     GetMedicalRecordsOfficePages,
   };
@@ -169,6 +178,7 @@ function nonNodeQueries() {
   } = require('./graphql/taxonomy-fragments/GetTaxonomies.graphql');
 
   const componentQueries = {
+    GetLocationsOperatingStatus,
     GetIcsFiles,
     GetSidebars,
     ...VaFacilitySidebars,
