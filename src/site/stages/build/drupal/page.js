@@ -388,22 +388,29 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
-      mainOperatingStatusEntities = locationsOperatingStatus.entities.filter(
+      mainOperatingStatusEntities = locationsOperatingStatus?.entities.filter(
         e =>
           e.fieldRegionPage?.targetId === page.fieldOffice?.targetId &&
           e.fieldMainLocation === true,
       );
-      otherOperatingStatusEntities = locationsOperatingStatus.entities.filter(
+      otherOperatingStatusEntities = locationsOperatingStatus?.entities.filter(
         e =>
           e.fieldRegionPage?.targetId === page.fieldOffice?.targetId &&
           e.fieldMainLocation === false,
       );
+
+      if (Array.isArray(mainOperatingStatusEntities)) {
+        fieldFacilityOperatingStatus = [
+          ...mainOperatingStatusEntities.map(e => ({
+            entity: e,
+          })),
+        ];
+      }
+
       fieldFacilityOperatingStatus = [
-        ...mainOperatingStatusEntities.map(e => ({
-          entity: e,
-        })),
+        ...fieldFacilityOperatingStatus,
         ...otherOperatingStatusEntities
-          .map(e => ({
+          ?.map(e => ({
             entity: e,
           }))
           .sort((e1, e2) => {
@@ -411,6 +418,7 @@ function compilePage(page, contentData) {
             return e1.entity.title > e2.entity.title ? 1 : -1;
           }),
       ];
+
       page = {
         ...page,
         fieldFacilityOperatingStatus,
