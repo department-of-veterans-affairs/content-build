@@ -17,7 +17,7 @@ on:
 
 concurrency:
   group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' && true || false }}
 
 # TODO: Change to correct channel_id when ready
 env:
