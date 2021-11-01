@@ -1806,23 +1806,3 @@ describe('processCentralizedContent', () => {
     ).to.deep.eq(expected);
   });
 });
-
-describe('sanitizeHtml', () => {
-  it('escapes special characters', () => {
-    expect(liquid.filters.sanitizeHtml('&<>"\'')).to.equal(
-      '&amp;&lt;&gt;&quot;&apos;',
-    );
-  });
-
-  it('returns string without special characters', () => {
-    expect(liquid.filters.sanitizeHtml('test')).to.equal('test');
-  });
-
-  it('allows tags', () => {
-    expect(liquid.filters.sanitizeHtml('<p>test</p>')).to.equal('<p>test</p>');
-  });
-
-  it('handles null', () => {
-    expect(liquid.filters.sanitizeHtml(null)).to.be.null;
-  });
-});

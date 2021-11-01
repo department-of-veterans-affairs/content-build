@@ -5,7 +5,6 @@ const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
 const set = require('lodash/fp/set');
-const sanitizeHtml = require('sanitize-html');
 
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
@@ -1247,7 +1246,6 @@ module.exports = function registerFilters() {
    */
   liquid.filters.sanitizeHtml = html => {
     if (!html) return null;
-    const sanitized = sanitizeHtml(html);
-    return sanitized.replace(/'/g, '&apos;').replace(/"/g, '&quot;');
+    return he.encode(html);
   };
 };
