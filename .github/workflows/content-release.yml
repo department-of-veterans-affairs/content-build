@@ -11,17 +11,16 @@ on:
         description: The environment to deploy content to (dev, staging, prod)
         required: true
         default: prod
-  # schedule:
-  #   - cron: "0 13-16,20-21 * * 1-5"
-  #   - cron: "45 17 * * 1-5"
+  schedule:
+    - cron: "0 13-16,20-21 * * 1-5"
+    - cron: "45 17 * * 1-5"
 
 concurrency:
   group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
   cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' && true || false }}
 
-# TODO: Change to correct channel_id when ready
 env:
-  CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
+  CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
@@ -99,10 +98,9 @@ jobs:
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
 
-      # TODO: add prod when ready
       - name: Validate workflow_dispatch deploy_environment
         if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["dev", "staging"]'), github.event.inputs.deploy_environment) }}
-        run: echo "dev and staging are the only supported environments" && exit 1
+        run: echo "dev, staging, prod are the only supported environments" && exit 1
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -139,13 +137,12 @@ jobs:
           echo "DEPLOY_BUCKET=content.staging.va.gov" >> $GITHUB_ENV
           echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
 
-      # TODO: Uncomment when ready for PROD
-      # - name: Set environment details for PROD
-      #   if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
-      #   run: |
-      #     echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
-      #     echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
-      #     echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+      - name: Set environment details for PROD
+        if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
+        run: |
+          echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
+          echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
+          echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
   validate-build-status:
     name: Validate Build Status
@@ -334,13 +331,9 @@ jobs:
         with:
           version: ${{ needs.set-env.outputs.LATEST_TAG_VERSION }}
 
-      - name: Echo next version
-        run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
-
-      # TODO: Uncomment when ready for prod (See https://github.com/department-of-veterans-affairs/devops/blob/67bb3bcc3ade75ffb311c47774f492b7f9ff7c65/ansible/Jenkinsfiles/releases/content-build#L28-L60 for current behavior)
-      # - name: Tag release
-      #   if: ${{ needs.set-env.outputs.BUILDTYPE == "vagovprod" }}
-      #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
+      - name: Tag release
+        if: ${{ needs.set-env.outputs.BUILDTYPE == "vagovprod" }}
+        run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
 
   deploy:
     name: Deploy
