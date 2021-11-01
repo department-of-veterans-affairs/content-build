@@ -13,6 +13,11 @@ on:
         default: ''
   schedule:
     - cron: 0 18 * * 1-5
+  push:
+
+concurrency:
+  group: prod
+  cancel-in-progress: false
 
 # TODO: Change to correct channel_id when ready
 env:
