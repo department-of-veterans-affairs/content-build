@@ -347,9 +347,6 @@ jobs:
         id: code-coverage
         run: echo ::set-output name=MARKDOWN::$(node ./script/github-actions/code-coverage-format-report.js)
 
-      - name: Force failure
-        run: rm -f test-results/unit-tests.xml
-
       - name: Publish test results
         if: ${{ always() }}
         continue-on-error: true
@@ -359,7 +356,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_paths: 'test-results/unit-tests.xml'
           summary: ${{ steps.code-coverage.outputs.MARKDOWN }}
-          fail_on_failure: true
+          fail_on_failure: 'true'
 
   linting:
     name: Linting
