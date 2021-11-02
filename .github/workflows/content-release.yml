@@ -15,6 +15,10 @@ on:
   #   - cron: "0 13-16,20-21 * * 1-5"
   #   - cron: "45 17 * * 1-5"
 
+concurrency:
+  group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
+  cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' && true || false }}
+
 # TODO: Change to correct channel_id when ready
 env:
   CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha

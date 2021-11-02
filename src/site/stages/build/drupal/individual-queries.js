@@ -102,6 +102,10 @@ const {
   GetVetCenterLocations,
 } = require('./graphql/vetCenterLocations.graphql');
 
+const {
+  GetLocationsOperatingStatus,
+} = require('./graphql/locationsOperatingStatus.graphql');
+
 function getNodeQueries(entityCounts) {
   return {
     ...getNodePageQueries(entityCounts),
@@ -174,6 +178,7 @@ function nonNodeQueries() {
   } = require('./graphql/taxonomy-fragments/GetTaxonomies.graphql');
 
   const componentQueries = {
+    GetLocationsOperatingStatus,
     GetIcsFiles,
     GetSidebars,
     ...VaFacilitySidebars,
