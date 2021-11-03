@@ -1226,8 +1226,12 @@ module.exports = function registerFilters() {
     return languages[language][whichNode];
   };
 
-  liquid.filters.topTaskUrl = (flag, path) => {
-    if (flag === 'cerner') {
+  liquid.filters.topTaskUrl = (flag, path, systemName) => {
+    if (
+      flag === 'cerner' ||
+      (systemName === 'VA Central Ohio health care' &&
+        path === 'schedule-view-va-appointments/')
+    ) {
       return 'https://patientportal.myhealth.va.gov';
     } else {
       return `/health-care/${path}`;
