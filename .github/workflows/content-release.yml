@@ -316,6 +316,9 @@ jobs:
     needs: [set-env, archive]
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Waiting to release 
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
