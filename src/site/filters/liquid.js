@@ -1226,6 +1226,54 @@ module.exports = function registerFilters() {
     return languages[language][whichNode];
   };
 
+  // Sets the value at path of object. If a portion of path doesn't exist, it's created.
+  const setData = (data, path, value) => {
+    return _.set(data, path, value);
+  };
+
+  // If preview mode, filter facilities to show published and draft facilities.
+  // If NOT in preview mode, filter facilities to only show published facilities.
+  liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
+    if (!sidebarData || !sidebarData.links[0]?.links) return null;
+
+    const findLocationsArr = () => {
+      const servicesAndLocationsObj = _.find(sidebarData.links[0].links, [
+        'label',
+        'SERVICES AND LOCATIONS',
+      ]);
+      if (servicesAndLocationsObj && servicesAndLocationsObj.links) {
+        const locationsObj = _.find(servicesAndLocationsObj.links, [
+          'label',
+          'Locations',
+        ]);
+        if (locationsObj && locationsObj.links.length) {
+          return locationsObj.links;
+        } else return null;
+      } else return null;
+    };
+
+    const locationsArr = findLocationsArr();
+    const locationsPath = 'links[0]links[0]links[1]links';
+
+    if (isPreview && locationsArr) {
+      const publishedAndDraftFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.moderationState',
+        'archived',
+      );
+      return setData(sidebarData, locationsPath, publishedAndDraftFacilities);
+    } else if (!isPreview && locationsArr) {
+      const publishedFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.entityPublished',
+        false,
+      );
+      return setData(sidebarData, locationsPath, publishedFacilities);
+    } else {
+      return sidebarData;
+    }
+  };
+
   liquid.filters.topTaskUrl = (flag, path, systemName) => {
     if (
       flag === 'cerner' ||

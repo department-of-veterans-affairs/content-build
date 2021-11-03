@@ -167,8 +167,15 @@ const FACILITY_MENU_NAMES = [
 ];
 
 const FACILITY_SIDEBAR_QUERY = `
-    name
+  name
+  description
+  links {
+    label
+    expanded
     description
+    url {
+      path
+    }
     links {
       label
       expanded
@@ -184,12 +191,7 @@ const FACILITY_SIDEBAR_QUERY = `
           path
         }
         links {
-          label
-          expanded
-          description
-          url {
-            path
-          }
+          ...MenuItem
           links {
             label
             expanded
@@ -204,20 +206,12 @@ const FACILITY_SIDEBAR_QUERY = `
               url {
                 path
               }
-              links {
-                label
-                expanded
-                description
-                url {
-                  path
-                }
-              }
             }
           }
         }
       }
     }
-`;
+  }`;
 
 const VaFacilitySidebars = {};
 let compiledQuery = '';
@@ -226,17 +220,35 @@ FACILITY_MENU_NAMES.forEach(facilityMenuName => {
   const facilityMenuNameCamel = camelize(facilityMenuName);
   const operationName = `${facilityMenuNameCamel}FacilitySidebarQuery`;
   const nextSidebar = `
-      ${operationName}: menuByName(name: "${facilityMenuName}") {
-        ${FACILITY_SIDEBAR_QUERY}
-      }
-    `;
+    ${operationName}: menuByName(name: "${facilityMenuName}") {
+      ${FACILITY_SIDEBAR_QUERY}
+    }
+  `;
 
   compiledQuery += nextSidebar;
 
   VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
-      query {
-        ${nextSidebar}
+  fragment MenuItem on MenuLink {
+    expanded
+    description
+    label
+    url {
+      path
+    }
+    entity {
+      ... on MenuLinkContent {
+        linkedEntity(language_fallback: true, bypass_access_check: true) {
+          ... on Node {
+            entityPublished
+            moderationState
+          }
+        }
       }
+    }
+  }
+    query {
+      ${nextSidebar}
+    }
   `;
 });
 
