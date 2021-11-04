@@ -30,12 +30,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
       - name: Get Slack bot token
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
@@ -48,15 +42,6 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
-
       - name: Notify Slack
         if: ${{ always() }}
         uses: slackapi/slack-github-action@v1.14.0
@@ -65,8 +50,8 @@ jobs:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack-message: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Testing, please ignore this run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          # slack-message: 'Testing, please ignore this run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+          payload: "{\"text\":\"Testing, please ignore this run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>\",\"foo\":\"bar\"}"
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
