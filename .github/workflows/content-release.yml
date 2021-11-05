@@ -8,7 +8,7 @@ on:
         required: false
         default: 5
       deploy_environment:
-        description: The environment to deploy content to (dev, staging, prod)
+        description: The environment to deploy content to prod
         required: true
         default: prod
   schedule:
@@ -99,8 +99,8 @@ jobs:
         uses: andymckay/cancel-action@0.2
 
       - name: Validate workflow_dispatch deploy_environment
-        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["dev", "staging", "prod"]'), github.event.inputs.deploy_environment) }}
-        run: echo "dev, staging, and prod are the only supported environments" && exit 1
+        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["prod"]'), github.event.inputs.deploy_environment) }}
+        run: echo "prod is the only supported environments" && exit 1
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -123,21 +123,7 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
-      - name: Set environment details for vagovdev
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'dev' }}
-        run: |
-          echo "BUILDTYPE=vagovdev" >> $GITHUB_ENV
-          echo "DEPLOY_BUCKET=content.dev.va.gov" >> $GITHUB_ENV
-          echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
-
-      - name: Set environment details for vagovstaging
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'staging' }}
-        run: |
-          echo "BUILDTYPE=vagovstaging" >> $GITHUB_ENV
-          echo "DEPLOY_BUCKET=content.staging.va.gov" >> $GITHUB_ENV
-          echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
-
-      - name: Set environment details for PROD
+      - name: Set environment details for vagovprod
         if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
         run: |
           echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
