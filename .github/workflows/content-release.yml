@@ -100,7 +100,7 @@ jobs:
 
       - name: Validate workflow_dispatch deploy_environment
         if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["prod"]'), github.event.inputs.deploy_environment) }}
-        run: echo "prod is the only supported environments" && exit 1
+        run: echo "prod is the only supported environment" && exit 1
 
       - name: Checkout
         uses: actions/checkout@v2
