@@ -13,18 +13,26 @@
 
     <div class="va-c-list-link-teasers">
       <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+        {% assign linkTeasers = paragraph.fieldVaParagraphs %}
+        {% comment %}
+            Max number of links allowed = 8
+        {% endcomment %}
+        {% if linkTeasers.length > 8 %}
+          {% assign linkTeasers = linkTeasers | sliceArray: 0, 8 %}
+        {% endif %}
+        
         {% comment %}
             If there are less than or exactly 6 links, 3 items per column
             If there are more than 6 links, 4 items per column
         {% endcomment %}
-        {% if paragraph.fieldVaParagraphs.length > 6 %}
+        {% if linkTeasers.length > 6 %}
           {% assign linkWrapperStartIndex = 5 %}
           {% assign linkWrapperEndIndex = 4 %}
         {%  else %}
           {% assign linkWrapperStartIndex = 4 %}
           {% assign linkWrapperEndIndex = 3 %}
         {% endif %}
-        {% for linkTeaser in paragraph.fieldVaParagraphs %}
+        {% for linkTeaser in linkTeasers %}
           {% assign link = linkTeaser.entity.fieldLink %}
 
           {% assign everyStartItem = forloop.index | genericModulo: linkWrapperStartIndex %}
