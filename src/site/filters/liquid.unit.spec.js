@@ -1933,3 +1933,23 @@ describe('filterSidebarData', () => {
     expect(filteredData.links[0].links[0].links[1].links).to.deep.equal([]);
   });
 });
+
+describe('sliceArray', () => {
+  it('returns null if array is null', () => {
+    expect(liquid.filters.sliceArray(null, 0, 5)).to.be.null;
+  });
+
+  it('returns first 5 elements - startIndex = 0, endIndex = 5', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [1, 2, 3, 4, 5];
+
+    expect(liquid.filters.sliceArray(testArray, 0, 5)).to.deep.eq(expected);
+  });
+
+  it('returns elements from startIndex = 2 and on, if an endIndex is not passed in', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [3, 4, 5, 6];
+
+    expect(liquid.filters.sliceArray(testArray, 2)).to.deep.eq(expected);
+  });
+});
