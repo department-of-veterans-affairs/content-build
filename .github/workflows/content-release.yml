@@ -1,6 +1,7 @@
 name: Content Release
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       release_wait:
@@ -124,7 +125,7 @@ jobs:
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
       - name: Set environment details for vagovdev
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'dev' }}
+        if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'dev') || github.event_name == 'push' }}
         run: |
           echo "BUILDTYPE=vagovdev" >> $GITHUB_ENV
           echo "DEPLOY_BUCKET=content.dev.va.gov" >> $GITHUB_ENV
