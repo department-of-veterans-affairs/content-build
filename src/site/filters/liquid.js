@@ -1286,8 +1286,4 @@ module.exports = function registerFilters() {
       return `/health-care/${path}`;
     }
   };
-
-  // liquid.filters.sliceArray = (arr, startIndex, endIndex) => {
-  //   return _.slice(arr, startIndex, endIndex);
-  // };
 };
