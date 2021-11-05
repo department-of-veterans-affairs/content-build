@@ -170,11 +170,6 @@ jobs:
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
-      - name: Install Chrome
-        uses: browser-actions/setup-chrome@latest
-        with:
-          chrome-version: stable
-
       - name: Start content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
