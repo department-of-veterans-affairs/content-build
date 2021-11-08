@@ -249,8 +249,9 @@ module.exports = function registerFilters() {
   };
 
   //  liquid slice filter only works on strings
-  liquid.filters.sliceArrayFromStart = (arr, startIndex) => {
-    return _.slice(arr, startIndex);
+  liquid.filters.sliceArray = (arr, startIndex, endIndex) => {
+    if (!arr) return null;
+    return _.slice(arr, startIndex, endIndex);
   };
 
   liquid.filters.benefitTerms = data => {

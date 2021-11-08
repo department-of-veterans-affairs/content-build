@@ -21,7 +21,7 @@
       <div class="form-expanding-group additional-info-container vads-u-margin-y--2p5">
         <div class="additional-info-title">Show more</div>
 
-        {% assign remainingAudienceTags = audienceTags | sliceArrayFromStart: pageSize %}
+        {% assign remainingAudienceTags = audienceTags | sliceArray: pageSize %}
 
         <span>
           <div class="additional-info-content">
