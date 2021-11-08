@@ -6,6 +6,7 @@ import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_cen
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
+import sidebarData from './fixtures/sidebarData.json';
 
 const _ = require('lodash');
 
@@ -1059,7 +1060,7 @@ describe('rejectBy', () => {
 describe('encode', () => {
   it('encodes strings', () => {
     expect(liquid.filters.encode("foo © bar ≠ baz 𝌆 qux''")).to.equal(
-      'foo &copy; bar &ne; baz &#x1D306; qux&amp;apos;&apos;',
+      'foo &copy; bar &ne; baz &#x1D306; qux&apos;&apos;',
     );
   });
 
@@ -1804,5 +1805,151 @@ describe('processCentralizedContent', () => {
     expect(
       liquid.filters.processCentralizedContent(testData, 'react_widget'),
     ).to.deep.eq(expected);
+  });
+});
+
+describe('filterSidebarData', () => {
+  it('returns null if sidebar data is null', () => {
+    expect(liquid.filters.filterSidebarData(null)).to.be.null;
+  });
+
+  it('returns null if arguments are not passed', () => {
+    expect(liquid.filters.filterSidebarData()).to.be.null;
+  });
+
+  it('returns sidebarData with published facilities only', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      false,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns sidebarData with published facilities if second argument is not passed - isPreview defaults to false', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(clonedSidebarData);
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns sidebarData with published and draft facilities IF in preview mode', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Fayetteville VA Medical Center',
+        entity: {
+          linkedEntity: {
+            entityPublished: false,
+            moderationState: 'draft',
+          },
+        },
+      },
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns empty array if array of facilities is empty', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+    clonedSidebarData.links[0].links[0].links[1].links = [];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal([]);
+  });
+});
+
+describe('sliceArray', () => {
+  it('returns null if array is null', () => {
+    expect(liquid.filters.sliceArray(null, 0, 5)).to.be.null;
+  });
+
+  it('returns first 5 elements - startIndex = 0, endIndex = 5', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [1, 2, 3, 4, 5];
+
+    expect(liquid.filters.sliceArray(testArray, 0, 5)).to.deep.eq(expected);
+  });
+
+  it('returns elements from startIndex = 2 and on, if an endIndex is not passed in', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [3, 4, 5, 6];
+
+    expect(liquid.filters.sliceArray(testArray, 2)).to.deep.eq(expected);
   });
 });
