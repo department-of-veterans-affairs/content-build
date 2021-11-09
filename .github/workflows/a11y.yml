@@ -18,7 +18,7 @@ jobs:
         working-directory: content-build
 
     env:
-      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       CHANNEL_ID: C01RAS1KAQK
 
@@ -95,7 +95,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
@@ -108,7 +108,7 @@ jobs:
           name: test-build.tar.bz2
           path: content-build/test-build.tar.bz2
           retention-days: 1
-  
+
   a11y:
     name: Accessibility Tests
     needs: build
@@ -178,7 +178,7 @@ jobs:
 
       - name: Rename Mochawesome JSON file
         if: ${{ always() }}
-        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json 
+        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
 
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v2
