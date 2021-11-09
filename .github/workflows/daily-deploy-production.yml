@@ -317,6 +317,8 @@ jobs:
 
       - name: Create release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.bump-tag-version.outputs.v_patch }}
           release_name: content-build/${{ steps.bump-tag-version.outputs.v_patch }}
