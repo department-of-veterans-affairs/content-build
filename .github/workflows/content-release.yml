@@ -40,11 +40,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get bot token from Parameter Store 
+      - name: Get bot token from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with: 
+        with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN  
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Get latest GHA Runner AMI ID # AMI images are rebuilt every 15 days, use the latest one
         run: |
@@ -171,7 +171,7 @@ jobs:
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  
+
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
@@ -309,7 +309,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Waiting to release 
+      - name: Waiting to release
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
 
@@ -409,11 +409,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get bot token from Parameter Store 
+      - name: Get bot token from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with: 
+        with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN 
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Stop Runner
         uses: machulav/ec2-github-runner@v2
