@@ -309,7 +309,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch: 20
+          fetch-depth: 20
 
       - name: Waiting to release
         run: |
