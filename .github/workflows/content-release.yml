@@ -8,20 +8,19 @@ on:
         required: false
         default: 5
       deploy_environment:
-        description: The environment to deploy content to (dev, staging, prod)
+        description: The environment to deploy content to prod
         required: true
         default: prod
-  # schedule:
-  #   - cron: "0 13-16,20-21 * * 1-5"
-  #   - cron: "45 17 * * 1-5"
+  schedule:
+    - cron: "0 14-17,21-22 * * 1-5"
+    - cron: "45 18 * * 1-5"
 
 concurrency:
   group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
   cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' && true || false }}
 
-# TODO: Change to correct channel_id when ready
 env:
-  CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
+  CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
@@ -99,10 +98,9 @@ jobs:
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
 
-      # TODO: add prod when ready
       - name: Validate workflow_dispatch deploy_environment
-        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["dev", "staging"]'), github.event.inputs.deploy_environment) }}
-        run: echo "dev and staging are the only supported environments" && exit 1
+        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["prod"]'), github.event.inputs.deploy_environment) }}
+        run: echo "prod is the only supported environment" && exit 1
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -125,27 +123,12 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
-      - name: Set environment details for vagovdev
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'dev' }}
+      - name: Set environment details for vagovprod
+        if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
         run: |
-          echo "BUILDTYPE=vagovdev" >> $GITHUB_ENV
-          echo "DEPLOY_BUCKET=content.dev.va.gov" >> $GITHUB_ENV
-          echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
-
-      - name: Set environment details for vagovstaging
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'staging' }}
-        run: |
-          echo "BUILDTYPE=vagovstaging" >> $GITHUB_ENV
-          echo "DEPLOY_BUCKET=content.staging.va.gov" >> $GITHUB_ENV
-          echo "DRUPAL_ADDRESS=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov" >> $GITHUB_ENV
-
-      # TODO: Uncomment when ready for PROD
-      # - name: Set environment details for PROD
-      #   if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
-      #   run: |
-      #     echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
-      #     echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
-      #     echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+          echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
+          echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
+          echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
   validate-build-status:
     name: Validate Build Status
@@ -173,6 +156,8 @@ jobs:
   notify-start:
     name: Notify Start
     runs-on: ubuntu-latest
+    needs: set-env
+    if: ${{ needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
 
     steps:
       - name: Checkout
@@ -182,7 +167,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for ${{ needs.set-env.outputs.BUILDTYPE }} content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for vagovprod content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -190,7 +175,7 @@ jobs:
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: [set-env, notify-start, validate-build-status, start-runner]
+    needs: [set-env, validate-build-status, start-runner]
     defaults:
       run:
         working-directory: content-build
@@ -279,6 +264,7 @@ jobs:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, build, start-runner]
+    if: ${{ always() && needs.build.result == 'success' }}
 
     steps:
       - name: Restore ${{ needs.set-env.outputs.BUILDTYPE }} build
@@ -317,8 +303,12 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     needs: [set-env, archive]
+    if: ${{ always() && needs.archive.result == 'success' }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Waiting to release 
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
@@ -334,18 +324,20 @@ jobs:
         with:
           version: ${{ needs.set-env.outputs.LATEST_TAG_VERSION }}
 
-      - name: Echo next version
-        run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
+      - name: Create tag
+        run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }}
 
-      # TODO: Uncomment when ready for prod (See https://github.com/department-of-veterans-affairs/devops/blob/67bb3bcc3ade75ffb311c47774f492b7f9ff7c65/ansible/Jenkinsfiles/releases/content-build#L28-L60 for current behavior)
-      # - name: Tag release
-      #   if: ${{ needs.set-env.outputs.BUILDTYPE == "vagovprod" }}
-      #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
+      - name: Create release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.bump-tag-version.outputs.v_patch }}
+          release_name: content-build/${{ steps.bump-tag-version.outputs.v_patch }}
 
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     needs: [set-env, create-release]
+    if: ${{ always() && needs.create-release.result == 'success' }}
 
     steps:
       - name: Checkout
@@ -361,8 +353,8 @@ jobs:
       - name: Get role from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
+          env_variable_name: AWS_FRONTEND_PROD_ROLE
 
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
@@ -370,7 +362,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-to-assume: ${{ env.AWS_FRONTEND_PROD_ROLE }}
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
@@ -383,7 +375,7 @@ jobs:
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ failure() || cancelled() }}
+    if: ${{ (failure() || cancelled()) && needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
     needs: [set-env, deploy]
 
     steps:
@@ -396,7 +388,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content release for ${{ needs.set-env.outputs.BUILDTYPE }} content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Content release for vagovprod content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
