@@ -1286,4 +1286,12 @@ module.exports = function registerFilters() {
       return `/health-care/${path}`;
     }
   };
+
+  liquid.filters.isVisn8 = visn => {
+    return visn.split('|')[0].trim() === 'VISN 8';
+  };
+
+  liquid.filters.featureAddVaHealthConnectNumber = () => {
+    return cmsFeatureFlags.FEATURE_HEALTH_CONNECT_NUMBER;
+  };
 };
