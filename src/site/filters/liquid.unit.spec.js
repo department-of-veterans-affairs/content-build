@@ -1953,3 +1953,33 @@ describe('sliceArray', () => {
     expect(liquid.filters.sliceArray(testArray, 2)).to.deep.eq(expected);
   });
 });
+
+describe('isVisn8', () => {
+  it('returns null if data is null', () => {
+    expect(liquid.filters.isVisn8(null)).to.be.null;
+  });
+
+  it('returns true if string = "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 | more text')).to.be.true;
+  });
+
+  it('returns true if string = "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 |')).to.be.true;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 9 | more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 9 more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('| VISN 8 |')).to.be.false;
+  });
+});

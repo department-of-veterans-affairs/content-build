@@ -1288,6 +1288,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.isVisn8 = visn => {
+    if (!visn) return null;
     return visn.split('|')[0].trim() === 'VISN 8';
   };
 
