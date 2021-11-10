@@ -48,18 +48,21 @@ function createPastEventListPages(page, drupalPagePath, files) {
     ['desc'],
   );
 
-  // Past Events listing page
-  const pastEventsEntityUrl = createEntityUrlObj(drupalPagePath);
+  // Derive the path + breadcrumbs for past events.
+  const pastEventsEntityURL = createEntityUrlObj(drupalPagePath);
 
+  // Derive the data that the event_listing template receives.
   const pastEventsObj = {
-    allEventTeasers: pastEventTeasers,
-    eventTeasers: pastEventTeasers,
-    fieldIntroText: page.fieldIntroText,
-    facilitySidebar: sidebar,
-    entityUrl: pastEventsEntityUrl,
-    title: page.title,
     alert: page.alert,
+    allEventTeasers: pastEventTeasers,
+    entityUrl: pastEventsEntityURL,
+    eventTeasers: pastEventTeasers,
+    facilitySidebar: sidebar,
+    fieldIntroText: page.fieldIntroText,
+    outreachSidebar: page.outreachSidebar,
+    title: page.title,
   };
+
   const pastEventsPage = updateEntityUrlObj(
     pastEventsObj,
     drupalPagePath,

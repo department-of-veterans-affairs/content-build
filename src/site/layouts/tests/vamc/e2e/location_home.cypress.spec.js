@@ -4,13 +4,14 @@ import './commands.cypress';
 
 Cypress.Commands.add('checkElements', (page, isMobile) => {
   cy.visit(page);
-  cy.get('#modal-announcement-title').should('exist');
-  cy.get('button')
-    .contains('Continue to the website')
-    .click()
-    .then(() => {
-      cy.get('#modal-announcement-title').should('not.exist');
-    });
+  // TODO: Determine if this can be removed.
+  // cy.get('#modal-announcement-title').should('exist');
+  // cy.get('button')
+  //   .contains('Continue to the website')
+  //   .click()
+  //   .then(() => {
+  //     cy.get('#modal-announcement-title').should('not.exist');
+  //   });
   cy.get('a.usa-button').contains('Make an appointment');
   cy.get('a.usa-button').contains('View all health services');
   cy.get('a.usa-button').contains('Register for care');
@@ -35,6 +36,7 @@ describe('VAMC location home page', () => {
 
   beforeEach(() => {
     cy.intercept('GET', '/v1/facilities/va/*', mockFacilityData);
+    cy.intercept('GET', '/v0/feature_toggles?*', { data: { features: [] } });
   });
 
   it('has expected elements on desktop', () => {

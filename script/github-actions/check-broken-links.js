@@ -18,19 +18,16 @@ if (fs.existsSync(reportPath)) {
   const shouldFail =
     brokenLinks.isHomepageBroken ||
     brokenLinks.brokenLinksCount > maxBrokenLinks;
-  const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
+  const color = shouldFail ? 'danger' : 'warning';
   const summary = brokenLinks.summary;
-  const heading = `${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}>`; // TODO: Add @cmshelpdesk when prod ready
-  const slackBlocks = `[{"type": "section","text": {"type": "mrkdwn","text": "${heading}"}}]`;
-  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${summary
+  const heading = `<!cms-helpdesk> ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}> \\n`;
+  const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${heading}\\n${summary
     .replace(/\n/g, '\\n')
     .replace(/"/g, '\\"')}" }]`; // format summary according to slack api
 
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
-
-  console.log(`::set-output name=SLACK_BLOCKS::${slackBlocks}`);
   console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {

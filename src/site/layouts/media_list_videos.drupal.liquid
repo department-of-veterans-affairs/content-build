@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with constructLcBreadcrumbs = true titleInclude = true %}
 
@@ -26,11 +25,13 @@
             {% endif %}
 
             <!-- Buttons -->
-            <div class="vads-u-margin-y--3">
+            <ul class="vads-u-margin-y--3 usa-unstyled-list">
               {% for fieldButton in fieldButtons %}
-                {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                <li class="vads-u-margin-bottom--2">
+                  {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
+                </li>
               {% endfor %}
-            </div>
+            </ul>
 
             <!-- Videos List -->
             <h2>{{ fieldMediaListVideos.entity.fieldSectionHeader | default: 'Videos' }}</h2>
@@ -76,11 +77,13 @@
 
             <!-- Repeated buttons -->
             {% if fieldButtonsRepeat %}
-              <div class="vads-u-margin-top--3">
+              <ul class="vads-u-margin-top--3 usa-unstyled-list">
                 {% for fieldButton in fieldButtons %}
-                  {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                  <li class="vads-u-margin-bottom--2">
+                    {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
+                  </li>
                 {% endfor %}
-              </div>
+              </ul>
             {% endif %}
           </article>
 

@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with
     customHomeCrumbText = "VA.gov home"
@@ -9,8 +8,8 @@
     <div class="usa-grid usa-grid-full">
       <div class="usa-width-three-fourths">
         <article class="usa-content va-l-facility-detail">
-          {% if entityLabel != empty %}
-            <h1>{{ entityLabel }}</h1>
+          {% if fieldOfficialName != empty %}
+            <h1>{{ fieldOfficialName }}</h1>
           {% endif %}
 
           {% if fieldIntroText != empty %}
@@ -84,28 +83,27 @@
           <div class="vads-u-margin-bottom--3">
             <h3 class="vads-u-font-size--lg vads-u-line-height--1 vads-u-margin-bottom--1">
               Other locations</h3>
-            <div id="vet-center-other-locations">
-              <p>Vet Centers are community based to be more
+            <div>
+              <p class="vads-u-margin-bottom--0 vads-u-line-height--4">Vet Centers are community based to be more
                 accessible in areas where you live.
               </p>
-              <p><a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
-                  locations</a></p>
+              <a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
+                  locations</a>
             </div>
           </div>
 
-          <div class="field-cc-non-traditional-hours">
-            {% include "src/site/includes/dynamic-content.drupal.liquid" with
+          <div class="vads-u-font-weight--bold" id="field-cc-non-traditional-hours">
+            {% include "src/site/includes/centralized-content.drupal.liquid" with
                 entity = fieldCcNonTraditionalHours.fetched
                 contentType = fieldCcNonTraditionalHours.fetchedBundle
             %}
           </div>
 
-          <div class="field-cc-vet-call-center">
-            {% include "src/site/includes/dynamic-content.drupal.liquid" with
-                entity = fieldCcVetCenterCallCenter.fetched
-                contentType = fieldCcVetCenterCallCenter.fetchedBundle
+          {% if fieldCcVetCenterCallCenter %}
+            {% include "src/site/components/informational_alert.drupal.liquid" with
+              entity = fieldCcVetCenterCallCenter.fetched
             %}
-          </div>
+          {% endif %}
 
           {% if fieldPrepareForVisit.length > 0 %}
             <h2 id="prepare-for-your-visit" class="vads-u-margin-top--0 vads-u-font-size--lg
@@ -128,15 +126,13 @@
           {% assign allFeaturedContent = fieldCcVetCenterFeaturedCon | appendCentralizedFeaturedContent: fieldVetCenterFeatureContent %}
           <h2 id="in-the-spot-light" class="vads-u-margin-top--0 vads-u-font-size--lg
           small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight at {{ entityLabel }} </h2>
-          <div class="field-vet-center-feature-content">
-            <ul class="usa-grid usa-grid-full vads-u-margin-top--3 vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+            <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
               {% for entity in allFeaturedContent %}
                 {% include "src/site/includes/vet_centers/featured_content.liquid" with
                     entity = entity.entity
                 %}
               {% endfor %}
-            </ul>
-          </div>
+            </div>
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
               fieldHealthServices
@@ -154,28 +150,20 @@
           %}
 
           {% if fieldCcVetCenterFaqs.fetched %}
-            {% if fieldCcVetCenterFaqs.fetched.fieldSectionHeader.0.value != empty %}
-              <h2 id="field-cc-content-faq-heading"
-                  class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
-                {{ fieldCcVetCenterFaqs.fetched.fieldSectionHeader.0.value }}
-              </h2>
-              <p> {{ fieldCcVetCenterFaqs.fetched.fieldSectionIntro.0.value }} </p>
-            {% endif %}
             <div class="vads-u-margin-bottom--3" id="field-vet-center-faqs">
-              {% include "src/site/paragraphs/facilities/q_a.accordion_panel.drupal.liquid" with
-                  fetched = fieldCcVetCenterFaqs.fetched
-                  fetchedBundle = fieldCcVetCenterFaqs.fetchedBundle
+              {% include "src/site/includes/centralized-content.drupal.liquid" 
+                entity = fieldCcVetCenterFaqs.fetched 
+                contentType = fieldCcVetCenterFaqs.fetchedBundle
+                level = 3
               %}
             </div>
           {% endif %}
-
         </article>
       </div>
     </div>
   </main>
   <div id="vet-center-up-to-top" onclick="recordEvent({ event: 'back-to-top'});">
     {% include "src/site/components/up_to_top_button.html" %}
-  </div>
 </div>
 
 {% include "src/site/includes/footer.html" %}

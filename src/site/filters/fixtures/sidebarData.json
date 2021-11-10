@@ -1,0 +1,104 @@
+{
+  "name": "VA Fayetteville Coastal health care",
+  "description": "VISN 6 | va.gov/fayetteville-coastal-health-care",
+  "links": [
+    {
+      "label": "VA Fayetteville Coastal health care",
+      "expanded": false,
+      "description": null,
+      "url": {
+        "path": "/fayetteville-coastal-health-care"
+      },
+      "links": [
+        {
+          "label": "SERVICES AND LOCATIONS",
+          "expanded": false,
+          "description": null,
+          "url": {
+            "path": ""
+          },
+          "links": [
+            {
+              "label": "Health services",
+              "expanded": false,
+              "description": null,
+              "url": {
+                "path": "/fayetteville-coastal-health-care/health-services"
+              },
+              "links": []
+            },
+            {
+              "label": "Locations",
+              "expanded": false,
+              "description": null,
+              "url": {
+                "path": "/fayetteville-coastal-health-care/locations"
+              },
+              "links": [
+                {
+                  "label": "Fayetteville VA Medical Center",
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    }
+                  }
+                },
+                {
+                  "label": "Brunswick County VA Clinic",
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": true,
+                      "moderationState": "published"
+                    }
+                  }
+                },
+                {
+                  "label": "Fayetteville 2 VA Mobile Clinic",
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "archived"
+                    }
+                  }
+                },
+                {
+                  "label": "Fayetteville VA Mobile Clinic",
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "archived"
+                    }
+                  }
+                },
+                {
+                  "label": "Jacksonville 2 VA Clinic",
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": true,
+                      "moderationState": "published"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "NEWS AND EVENTS",
+          "url": {
+            "path": ""
+          },
+          "links": []
+        },
+        {
+          "label": "ABOUT VA FAYETTEVILLE COASTAL",
+          "url": {
+            "path": ""
+          },
+          "links": []
+        }
+      ]
+    }
+  ]
+}

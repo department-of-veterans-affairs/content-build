@@ -19,6 +19,7 @@ const vetCenterFragment = `
         }
         entityBundle
         entityLabel
+        fieldOfficialName
         fieldIntroText
         fieldFacilityLocatorApiId
         fieldOperatingStatusFacility
@@ -115,7 +116,6 @@ const vetCenterFragment = `
                   ... on TaxonomyTermHealthCareServiceTaxonomy {
                     name
                     fieldVetCenterTypeOfCare
-                    fieldServiceTypeOfCare
                     fieldVetCenterFriendlyName
                     fieldAlsoKnownAs
                     fieldVetCenterComConditions

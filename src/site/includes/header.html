@@ -61,6 +61,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" data-entry-name="style.css">
+  <link rel="stylesheet" data-entry-content="content-build.css">
   <link rel="stylesheet" data-entry-name="{{ entryname | default: 'static-pages' }}.css">
 
   <!-- Old IE -->
@@ -84,6 +85,17 @@
     src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=VA" id="_fed_an_ua_tag"></script>
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
+    function focusContent(e) {
+      e.preventDefault();
+      e.target.hidden = true;
+      const contentElement = document.querySelector('#content h1') || document.querySelector('#content');
+      contentElement.setAttribute('tabindex', '-1');
+      contentElement.addEventListener('blur', function(event) {
+        event.target.removeAttribute('tabindex');
+      }, true);
+      window.scrollTo(0, contentElement.offsetTop);
+      contentElement.focus();
+    }
     window.VetsGov = window.VetsGov || {};
     window.VetsGov.headerFooter = JSON.parse({{ headerFooterData }});
   </script>
@@ -108,8 +120,18 @@
   {% endif %}
 
   {{ google_analytics_noscript }}
-  <a class="show-on-focus" href="#content">Skip to Content</a>
+  <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
+  <!-- Header -->
+  <div
+    data-widget-type="header"
+    data-show="{{ !noHeader }}"
+    data-show-nav-login="{{ !noNavOrLogin }}"
+    data-show-mega-menu="{{ !noMegamenu }}"
+    id="header-v2"
+  ></div>
+
+  <!-- Legacy Header -->
   {% if !noHeader %}
     {% include "src/site/includes/top-nav.html" %}
   {% endif %}
@@ -120,23 +142,14 @@
   <!-- Banners -->
   {% include "src/site/components/banners.drupal.liquid" %}
 
-  <!-- Legacy homepage banner -->
-  <div
-    aria-label="{{ legacy_homepage_banner.title | escape }}"
-    data-content="{{ legacy_homepage_banner.content | escape }}"
-    data-dismissible-status="dismiss"
-    data-title="{{ legacy_homepage_banner.title | escape }}"
-    data-type="{{ legacy_homepage_banner.type }}"
-    data-visible="{{ legacy_homepage_banner.visible }}"
-    data-widget-type="banner"
-    role="region"
-  >
-  </div>
-
   <script nonce="**CSP_NONCE**" type="text/javascript">
     (function () {
       var module = {};
       {% include "src/site/assets/js/incompatible-browser.js" %};
       checkBrowserCompatibility();
     })();
+  </script>
+
+  <script nonce="**CSP_NONCE**" type="text/javascript">
+    {% include "src/site/assets/js/skip-link-focus.js" %}
   </script>

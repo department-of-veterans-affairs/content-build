@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with constructLcBreadcrumbs = true titleInclude = true %}
 
@@ -26,11 +25,13 @@
             {% endif %}
 
             <!-- Buttons -->
-            <div class="vads-u-margin-y--3">
+            <ul class="vads-u-margin-y--3 usa-unstyled-list">
               {% for fieldButton in fieldButtons %}
-                {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                <li class="vads-u-margin-bottom--2">
+                  {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
+                </li>
               {% endfor %}
-            </div>
+            </ul>
 
             <!-- Section Header -->
             {% if fieldMediaListImages.entity.fieldSectionHeader %}
@@ -47,7 +48,7 @@
             <dl class="media-list-images usa-unstyled-list" role="list">
               {% if fieldMediaListImages.entity.fieldImages.size != 0 %}
                 {% assign pageSize = 10 %}
-                {% assign remainingImages = fieldMediaListImages.entity.fieldImages | sliceArrayFromStart: pageSize, fieldMediaListImages.entity.fieldImages.size %}
+                {% assign remainingImages = fieldMediaListImages.entity.fieldImages | sliceArray: pageSize, fieldMediaListImages.entity.fieldImages.size %}
 
                 {% for mediaImage in fieldMediaListImages.entity.fieldImages %}
                   {% assign recordsCount = recordsCount | plus: 1 %}
@@ -158,11 +159,13 @@
 
             <!-- Repeated buttons -->
             {% if fieldButtonsRepeat %}
-              <div class="vads-u-margin-top--3">
+              <ul class="vads-u-margin-top--3 usa-unstyled-list">
                 {% for fieldButton in fieldButtons %}
-                  {% include "src/site/paragraphs/button.drupal.liquid" with entity = fieldButton.entity %}
+                  <li class="vads-u-margin-bottom--2">
+                    {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
+                  </li>
                 {% endfor %}
-              </div>
+              </ul>
             {% endif %}
           </article>
           <!-- ================ -->
