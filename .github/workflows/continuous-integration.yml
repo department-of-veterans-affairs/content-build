@@ -323,15 +323,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
-        continue-on-error: true
-        with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "warning", "text": "<!subteam^S010U41C30V|cms-helpdesk> testing slack notification. Disregard!"}]'
-          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
       - name: Install dependencies
         uses: ./.github/workflows/install
         with:
