@@ -52,8 +52,8 @@
                 class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="/health-care/refill-track-prescriptions/"
-                    class="vads-u-height--full vads-u-width--full">
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/" }}"
+                    class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class=" fa fa-prescription-bottle vads-facility-hub-cta-circle">&nbsp;</i>
                     <span class="vads-facility-hub-cta-label">Refill and track
@@ -63,8 +63,8 @@
                 </div>
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="/health-care/secure-messaging/"
-                    class="vads-u-height--full vads-u-width--full">
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/" }}"
+                    class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="far fa-comments vads-facility-hub-cta-circle">&nbsp;</i>
                     <span class="vads-facility-hub-cta-label">Send a secure
@@ -74,10 +74,9 @@
                 </div>
                 <div
                   class="vads-facility-hub-cta vads-u-border-color--primary-alt-light medium-screen:vads-u-border-bottom--1px">
-
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="/health-care/schedule-view-va-appointments/"
-                    class="vads-u-height--full vads-u-width--full">
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", title }}"
+                    class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="far fa-calendar-check vads-facility-hub-cta-circle">&nbsp;</i>
                     <span class="vads-facility-hub-cta-label">Schedule and manage
@@ -89,8 +88,8 @@
               <div>
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="/health-care/get-medical-records/"
-                    class="vads-u-height--full vads-u-width--full">
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/" }}"
+                    class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="fa fa-file-medical vads-facility-hub-cta-circle">&nbsp;</i>
                     <span class="vads-facility-hub-cta-label">Download your VA
@@ -100,8 +99,8 @@
                 </div>
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="/health-care/view-test-and-lab-results/"
-                    class="vads-u-height--full vads-u-width--full">
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/" }}"
+                    class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="fa fa-clipboard-list vads-facility-hub-cta-circle">&nbsp;</i>
                     <span class="vads-facility-hub-cta-label">View your lab and

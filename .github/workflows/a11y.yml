@@ -3,7 +3,7 @@ name: Accessibility Tests
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 13 * * 1-5'
+    - cron: '0 14 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -18,7 +18,7 @@ jobs:
         working-directory: content-build
 
     env:
-      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       CHANNEL_ID: C01RAS1KAQK
 
@@ -30,43 +30,28 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
       - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Checkout VSP actions
-        uses: actions/checkout@v2
-        with:
-          repository: department-of-veterans-affairs/vsp-github-actions
-          ref: refs/heads/main
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/vsp-github-actions
-
       - name: Notify Slack
         if: ${{ always() }}
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: slackapi/slack-github-action@v1.15.0
+        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Starting the daily Cypress accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+          slack-message: 'Starting the daily accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+          channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -110,7 +95,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
@@ -123,7 +108,7 @@ jobs:
           name: test-build.tar.bz2
           path: content-build/test-build.tar.bz2
           retention-days: 1
-  
+
   a11y:
     name: Accessibility Tests
     needs: build
@@ -185,11 +170,6 @@ jobs:
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
-      - name: Install Chrome
-        uses: browser-actions/setup-chrome@latest
-        with:
-          chrome-version: stable
-
       - name: Start content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
@@ -198,7 +178,7 @@ jobs:
 
       - name: Rename Mochawesome JSON file
         if: ${{ always() }}
-        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json 
+        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
 
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v2
@@ -234,7 +214,7 @@ jobs:
           aws-region: 'us-gov-west-1'
 
       - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
@@ -248,39 +228,33 @@ jobs:
           persist-credentials: false
           path: ./.github/actions/vsp-github-actions
 
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
       - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Accessibility Test Failure
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: slackapi/slack-github-action@v1.15.0
         if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
+        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Daily Cypress accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+          slack-message: '<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+          channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: slackapi/slack-github-action@v1.15.0
         if: ${{ needs.a11y.result == 'success' }}
+        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+          slack-message: 'Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+          channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Get Node version
         id: get-node-version
@@ -332,7 +306,7 @@ jobs:
           cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
 
       - name: Get AWS IAM role
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -351,11 +325,11 @@ jobs:
         run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
 
       - name: Accessibility Test Report Slack notification
-        uses: ./.github/actions/vsp-github-actions/slack-socket
+        uses: slackapi/slack-github-action@v1.15.0
+        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Daily Cypress accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}]'
-          channel_id: ${{ env.CHANNEL_ID }}
+          slack-message: 'Daily accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>'
+          channel-id: ${{ env.CHANNEL_ID }}

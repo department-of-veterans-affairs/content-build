@@ -4,16 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       release_wait:
-        description: "Minutes to wait before creating release"
+        description: Minutes to wait before creating release
         required: false
         default: 5
-  # schedule:
-  #   - cron: "0 13-16,20-21 * * 1-5"
-  #   - cron: "45 17 * * 1-5"
+      deploy_environment:
+        description: The environment to deploy content to prod
+        required: true
+        default: prod
+  schedule:
+    - cron: "0 14-17,21-22 * * 1-5"
+    - cron: "45 18 * * 1-5"
 
-# TODO: Change to correct channel_id when ready
+concurrency:
+  group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
+  cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' }}
+
 env:
-  CHANNEL_ID: C024DUC9S1K # -test-tim-accessibility-gha
+  CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
@@ -33,11 +40,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get bot token from Parameter Store 
-        uses: marvinpinto/action-inject-ssm-secrets@latest 
-        with: 
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN  
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Get latest GHA Runner AMI ID # AMI images are rebuilt every 15 days, use the latest one
         run: |
@@ -82,11 +89,18 @@ jobs:
       LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
+      BUILDTYPE: ${{ env.BUILDTYPE }}
+      DEPLOY_BUCKET: ${{ env.DEPLOY_BUCKET }}
+      DRUPAL_ADDRESS: ${{ env.DRUPAL_ADDRESS }}
 
     steps:
       - name: Cancel workflow due to DSVA schedule
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
+
+      - name: Validate workflow_dispatch deploy_environment
+        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["prod"]'), github.event.inputs.deploy_environment) }}
+        run: echo "prod is the only supported environment" && exit 1
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -102,12 +116,19 @@ jobs:
         uses: thebritican/fetch-latest-release@v2.0.0
 
       - name: Get release wait time (scheduled release)
-        if: ${{ github.event.schedule != '' }}
+        if: ${{ github.event_name == 'schedule' }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Get release wait time (workflow_dispatch)
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
+
+      - name: Set environment details for vagovprod
+        if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
+        run: |
+          echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
+          echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
+          echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
   validate-build-status:
     name: Validate Build Status
@@ -135,6 +156,8 @@ jobs:
   notify-start:
     name: Notify Start
     runs-on: ubuntu-latest
+    needs: set-env
+    if: ${{ needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
 
     steps:
       - name: Checkout
@@ -148,22 +171,18 @@ jobs:
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  
+
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: [set-env, notify-start, validate-build-status, start-runner]
+    needs: [set-env, validate-build-status, start-runner]
     defaults:
       run:
         working-directory: content-build
 
-    # TODO: Uncomment when ready for prod
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-      BUILDTYPE: vagovprod
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-      # DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
-      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
 
     steps:
       - name: Checkout vagov-content
@@ -207,48 +226,52 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Build
-        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address="${{ env.DRUPAL_ADDRESS }}" --no-drupal-proxy
+        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         timeout-minutes: 30
         env:
           NODE_ENV: production
 
       - name: Check broken links
         id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links.js ${{ env.BUILDTYPE }}
+        run: node ./script/github-actions/check-broken-links.js ${{ needs.set-env.outputs.BUILDTYPE }}
 
       - name: Generate build details
         run: |
-          cat > build/${{ env.BUILDTYPE }}/BUILD.txt << EOF
-          BUILDTYPE=${{ env.BUILDTYPE }}
+          cat > build/${{ needs.set-env.outputs.BUILDTYPE }}/BUILD.txt << EOF
+          BUILDTYPE=${{ needs.set-env.outputs.BUILDTYPE }}
+          NODE_ENV=production
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          CHANGE_TARGET=null
           RUN_ID=${{ github.run_id }}
+          RUN_NUMBER=${{ github.run_number }}
           REF=${{ needs.set-env.outputs.REF }}
           BUILDTIME=$(date +%s)
           EOF
 
       - name: Prearchive
-        run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
+        run: node ./script/prearchive.js --buildtype=${{ needs.set-env.outputs.BUILDTYPE }}
 
       - name: Compress build
-        run: tar -C build/${{ env.BUILDTYPE }} -cf ${{ env.BUILDTYPE }}.tar.bz2 .
+        run: tar -C build/${{ needs.set-env.outputs.BUILDTYPE }} -cf ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 .
 
       - name: Persist prearchived build
         run: |
           mkdir -p /tmp/${{ github.run_id }}
-          rm -rf /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}
-          mv ${{ env.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
+          rm -rf /tmp/${{ github.run_id }}/${{ needs.set-env.outputs.BUILDTYPE }}
+          mv ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
 
   archive:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, build, start-runner]
+    if: ${{ always() && needs.build.result == 'success' }}
 
     steps:
-      - name: Restore vagovprod build
+      - name: Restore ${{ needs.set-env.outputs.BUILDTYPE }} build
         run: |
-          mv /tmp/${{ github.run_id }}/vagovprod.tar.bz2 .
+          mv /tmp/${{ github.run_id }}/${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 .
           df -h
-          du -h vagovprod.tar.bz2
+          du -h ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -258,7 +281,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -274,15 +297,21 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp vagovprod.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/vagovprod.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1
 
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
     needs: [set-env, archive]
+    if: ${{ always() && needs.archive.result == 'success' }}
 
     steps:
-      - name: Waiting to release 
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Waiting to release
         run: |
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
 
@@ -297,24 +326,22 @@ jobs:
         with:
           version: ${{ needs.set-env.outputs.LATEST_TAG_VERSION }}
 
-      - name: Echo next version
-        run: echo "${{ steps.bump-tag-version.outputs.v_patch }}"
+      - name: Create tag
+        run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }}
 
-      # TODO: Uncomment when ready for prod
-      # - name: Tag release
-      #   run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }} 
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.bump-tag-version.outputs.v_patch }}
+          release_name: content-build/${{ steps.bump-tag-version.outputs.v_patch }}
 
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     needs: [set-env, create-release]
-
-    # TODO: Uncomment when ready for prod
-    env:
-      # ENVIRONMENT: vagovprod
-      # BUCKET: content.www.va.gov
-      ENVIRONMENT: vagovdev
-      BUCKET: content.dev.va.gov
+    if: ${{ always() && needs.create-release.result == 'success' }}
 
     steps:
       - name: Checkout
@@ -328,10 +355,10 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
+          env_variable_name: AWS_FRONTEND_PROD_ROLE
 
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
@@ -339,21 +366,21 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-to-assume: ${{ env.AWS_FRONTEND_PROD_ROLE }}
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{env.ENVIRONMENT}}.tar.bz2
-          DEST: s3://${{ env.BUCKET }}
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{needs.set-env.outputs.BUILDTYPE}}.tar.bz2
+          DEST: s3://${{ needs.set-env.outputs.DEPLOY_BUCKET }}
 
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ failure() || cancelled() }}
-    needs: deploy
+    if: ${{ (failure() || cancelled()) && needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
+    needs: [set-env, deploy]
 
     steps:
       - name: Checkout
@@ -365,7 +392,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -386,11 +413,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get bot token from Parameter Store 
-        uses: marvinpinto/action-inject-ssm-secrets@latest 
-        with: 
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN 
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Stop Runner
         uses: machulav/ec2-github-runner@v2

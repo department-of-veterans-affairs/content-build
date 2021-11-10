@@ -3511,7 +3511,7 @@ cypress-wait-until@^1.7.1:
   resolved "https://registry.yarnpkg.com/cypress-wait-until/-/cypress-wait-until-1.7.1.tgz#3789cd18affdbb848e3cfc1f918353c7ba1de6f8"
   integrity sha512-8DL5IsBTbAxBjfYgCzdbohPq/bY+IKc63fxtso1C8RWhLnQkZbVESyaclNr76jyxfId6uyzX8+Xnt0ZwaXNtkA==
 
-cypress@^7.6.0, cypress@^7.7.0:
+cypress@^7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/cypress/-/cypress-7.7.0.tgz#0839ae28e5520536f9667d6c9ae81496b3836e64"
   integrity sha512-uYBYXNoI5ym0UxROwhQXWTi8JbUEjpC6l/bzoGZNxoKGsLrC1SDPgIDJMgLX/MeEdPL0UInXLDUWN/rSyZUCjQ==
@@ -7694,10 +7694,10 @@ mochawesome-report-generator@^5.2.0:
     validator "^10.11.0"
     yargs "^13.2.2"
 
-mochawesome@^6.2.2:
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/mochawesome/-/mochawesome-6.2.2.tgz#2847b4cccb254201e8dad89384f760fe9cdbae15"
-  integrity sha512-NuIxYo8zczmL5XWLNFiud21OsAJHXrflt2lcRY2u8a3TilGwglhzTPjUHZCLqJvbqj2CnIHX2ueqOh1ViUNDPw==
+mochawesome@^6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/mochawesome/-/mochawesome-6.3.1.tgz#9dc1e73165f4686a6f29c382d36b8cf3cd6a6e9c"
+  integrity sha512-G2J7Le8ap+0222otJQEUVFs7RYzphiIk21NzaBZE2dbyHJ2+9aai+V2cV7lreEKigDpwQ+SXeiiBH9KQlrkaAQ==
   dependencies:
     chalk "^4.1.0"
     diff "^5.0.0"
