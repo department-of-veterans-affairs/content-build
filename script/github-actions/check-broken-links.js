@@ -20,7 +20,7 @@ if (fs.existsSync(reportPath)) {
     brokenLinks.brokenLinksCount > maxBrokenLinks;
   const color = shouldFail ? 'danger' : 'warning';
   const summary = brokenLinks.summary;
-  const heading = `<@cms-helpdesk> ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}> \\n`;
+  const heading = `<@CMS Helpdesk> ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}> \\n`;
   const slackAttachments = `[{"mrkdwn_in": ["text"], "color": "${color}", "text": "${heading}\\n${summary
     .replace(/\n/g, '\\n')
     .replace(/"/g, '\\"')}" }]`; // format summary according to slack api
