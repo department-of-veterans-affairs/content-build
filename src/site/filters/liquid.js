@@ -1292,6 +1292,6 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.featureAddVaHealthConnectNumber = () => {
-    return cmsFeatureFlags.FEATURE_HEALTH_CONNECT_NUMBER;
+    return cmsFeatureFlags?.FEATURE_HEALTH_CONNECT_NUMBER;
   };
 };
