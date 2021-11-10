@@ -1123,6 +1123,15 @@
     }
   },
   {
+    "appName": "Pre-check-in",
+    "entryName": "pre-check-in",
+    "rootUrl": "/health-care/appointment-pre-check-in",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
     "rootUrl": "/education/apply-for-benefits-form-22-1990",
