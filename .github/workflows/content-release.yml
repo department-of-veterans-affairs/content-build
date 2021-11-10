@@ -17,7 +17,7 @@ on:
 
 concurrency:
   group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
-  cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' && true || false }}
+  cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' }}
 
 env:
   CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
