@@ -106,6 +106,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          ref: ${{ needs.set-env.outputs.REF }}
 
       - name: Get latest tag
         id: get-latest-tag
@@ -310,6 +311,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          ref: ${{ needs.set-env.outputs.REF }}
 
       - name: Waiting to release
         run: |
