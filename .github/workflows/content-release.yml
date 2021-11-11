@@ -312,6 +312,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ needs.set-env.outputs.REF }}
+          token: ${{ secrets.FE_GITHUB_ACTION_PAT }}
 
       - name: Waiting to release
         run: |
