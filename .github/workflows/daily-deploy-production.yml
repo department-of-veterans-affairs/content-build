@@ -20,7 +20,7 @@ concurrency:
 
 env:
   CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
-  DSVA_SCHEDULE_ENABLED: true
+  DSVA_SCHEDULE_ENABLED: false
 
 jobs:
   start-runner:
