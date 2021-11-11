@@ -11,9 +11,9 @@ on:
         description: The environment to deploy content to prod
         required: true
         default: prod
-  schedule:
-    - cron: "0 14-17,21-22 * * 1-5"
-    - cron: "45 18 * * 1-5"
+  # schedule:
+  #   - cron: "0 14-17,21-22 * * 1-5"
+  #   - cron: "45 18 * * 1-5"
 
 concurrency:
   group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
