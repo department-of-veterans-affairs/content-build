@@ -8,6 +8,7 @@ on:
         required: false
         default: 0
       deploy_environment:
+        type: choice
         description: The environment to deploy content to
         required: true
         options:
