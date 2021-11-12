@@ -85,8 +85,8 @@ jobs:
                 {"Key": "VAECID", "Value": "AWG20180517003"},
                 {"Key": "environment", "Value": "utility"}
               ]
-            attempt_limit: 3
-            attempt_delay: 10000
+          attempt_limit: 3
+          attempt_delay: 10000
 
       - name: EC2 Runner Name
         id: start-ec2-runner-name
