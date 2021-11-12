@@ -6,11 +6,12 @@ on:
       release_wait:
         description: Minutes to wait before creating release
         required: false
-        default: 5
+        default: 0
       deploy_environment:
-        description: The environment to deploy content to prod
+        description: The environment to deploy content
         required: true
-        default: prod
+        options:
+          - prod
   schedule:
     - cron: "0 14-17,21-22 * * 1-5"
     - cron: "45 18 * * 1-5"
