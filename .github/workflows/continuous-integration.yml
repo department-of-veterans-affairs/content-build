@@ -70,13 +70,12 @@ jobs:
         with:
           action: machulav/ec2-github-runner@v2
           with: |
-            mode: start
+            mode: 'start'
             github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
             ec2-image-id: ${{ env.RUNNER_AMI_ID }}
             ec2-instance-type: ${{ env.INSTANCE_TYPE }}
             subnet-id: ${{ env.SUBNET_ID }}
-            security-group-id: sg-0e23b56be3798e3a1
-            aws-resource-tags: [{"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"}, {"Key": "project", "Value": "vagov"}, {"Key": "office", "Value": "dsva"}, {"Key": "application", "Value": "on-demand-gha-runner"}, {"Key": "VAECID", "Value": "AWG20180517003"}, {"Key": "environment", "Value": "utility"}]
+            security-group-id: 'sg-0e23b56be3798e3a1'
           attempt_limit: 3
           attempt_delay: 10000
 
