@@ -69,7 +69,7 @@ jobs:
         uses: Wandalen/wretry.action@v1.0.11
         with:
           action: machulav/ec2-github-runner@v2
-          with:
+          with: |
             mode: start
             github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
             ec2-image-id: ${{ env.RUNNER_AMI_ID }}
