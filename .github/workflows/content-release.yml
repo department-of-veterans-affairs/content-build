@@ -8,7 +8,7 @@ on:
         required: false
         default: 0
       deploy_environment:
-        description: The environment to deploy content
+        description: The environment to deploy content to
         required: true
         options:
           - prod
