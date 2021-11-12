@@ -1,16 +1,26 @@
-name: test
+name: Mixed inputs
 
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Who to greet
+        options: 
+        - monalisa
+        - cschleiden
+      message:
+        required: true
+      use-emoji:
+        type: boolean
+        description: Include 🎉🤣 emojis
+      environment:
+        type: environment
 
 jobs:
-  test:
-    - name: Checkout
-      uses: actions/checkout@v2
+  greet:
+    runs-on: ubuntu-latest
 
-    - name: Get latest release
-      id: get-latest-release
-      with:
-        action: thebritican/fetch-latest-release@v2.0.0
-
-    - name: Test output
-      run: 
+    steps:
+    - name: Send greeting
+      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
