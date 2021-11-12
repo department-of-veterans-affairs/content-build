@@ -10,7 +10,6 @@ on:
       commit_sha:
         description: Deploy specific commit
         required: false
-        default: ''
   schedule:
     - cron: 0 19 * * 1-5
 
