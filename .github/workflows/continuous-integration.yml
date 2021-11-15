@@ -64,18 +64,31 @@ jobs:
           --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
           --output text)" >> $GITHUB_ENV
 
+      - name: Get latest release
+        id: get-latest-release
+        uses: Wandalen/wretry.action@v1.0.11
+        with:
+          action: thebritican/fetch-latest-release@v2.0.0
+          with: |
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+          attempt_limit: 3
+          attempt_delay: 2000
+
+      - name: output
+        run: echo ${{ steps.get-latest-release.outputs.target_commitish }}
+
       - name: Start EC2 Runner
         id: start-ec2-runner
         uses: Wandalen/wretry.action@v1.0.11
         with:
           action: machulav/ec2-github-runner@v2
           with: |
-            mode: 'start'
             github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+            mode: start
             ec2-image-id: ${{ env.RUNNER_AMI_ID }}
             ec2-instance-type: ${{ env.INSTANCE_TYPE }}
             subnet-id: ${{ env.SUBNET_ID }}
-            security-group-id: 'sg-0e23b56be3798e3a1'
+            security-group-id: sg-0e23b56be3798e3a1
           attempt_limit: 3
           attempt_delay: 10000
 
