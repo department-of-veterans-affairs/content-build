@@ -83,14 +83,9 @@ jobs:
         with:
           action: machulav/ec2-github-runner@v2
           with: |
-            github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-            mode: start
-            ec2-image-id: ${{ env.RUNNER_AMI_ID }}
-            ec2-instance-type: ${{ env.INSTANCE_TYPE }}
-            subnet-id: ${{ env.SUBNET_ID }}
-            security-group-id: sg-0e23b56be3798e3a1
+            "mode": "start"
           attempt_limit: 3
-          attempt_delay: 10000
+          attempt_delay: 2000
 
       - name: EC2 Runner Name
         id: start-ec2-runner-name
