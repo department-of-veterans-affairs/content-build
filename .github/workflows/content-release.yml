@@ -66,7 +66,7 @@ jobs:
 
       - name: Start EC2 Runner
         id: start-ec2-runner
-        uses: machulav/ec2-github-runner@v2
+        uses: oseasmoran73/ec2-github-runner@feat/retries
         with:
           mode: start
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
