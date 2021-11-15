@@ -83,7 +83,7 @@ jobs:
         with:
           action: machulav/ec2-github-runner@v2
           with: |
-            "mode": "start"
+            mode: "start"
           attempt_limit: 3
           attempt_delay: 2000
 
