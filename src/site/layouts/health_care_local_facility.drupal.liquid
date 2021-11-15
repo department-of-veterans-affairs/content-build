@@ -72,6 +72,16 @@
                               href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
                         </div>
                       {% endif %}
+                      {% if facilitySidebar.description %}
+                        {% assign shouldAddVaHealthConnectNumber = ''| featureAddVaHealthConnectNumber %}
+                        {% assign isVisn8 = facilitySidebar.description | isVisn8 %}
+                        {% if shouldAddVaHealthConnectNumber == true and isVisn8 == true %}
+                          <div class="vads-u-margin-bottom--1">
+                            <strong>VA health connect:</strong>
+                            <a href="tel:877-741-3400">877-741-3400</a>
+                          </div>
+                        {% endif %}
+                      {% endif %}
                       {% if fieldMentalHealthPhone %}
                         <div class="mental-health-clinic-phone"><strong>Mental
                             health clinic:
