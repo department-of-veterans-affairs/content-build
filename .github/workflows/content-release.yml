@@ -398,7 +398,9 @@ jobs:
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ (failure() || cancelled()) && needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
+    if: |
+      needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
+      ((failure() || cancelled()) && needs.deploy.result != 'success')
     needs: [set-env, deploy]
 
     steps:
