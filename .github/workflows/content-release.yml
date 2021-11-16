@@ -179,6 +179,11 @@ jobs:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, validate-build-status, start-runner]
+    if: |
+      always() &&
+      needs.set-env.result == 'success' &&
+      needs.validate-build-status.result == 'success' &&
+      needs.start-runner.result == 'success'
     defaults:
       run:
         working-directory: content-build
