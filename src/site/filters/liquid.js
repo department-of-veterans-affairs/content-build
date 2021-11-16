@@ -303,13 +303,16 @@ module.exports = function registerFilters() {
     return output;
   };
 
-  liquid.filters.hashReference = str => {
+  liquid.filters.hashReference = (str, length = 100) => {
     if (!str) return null;
     return str
       .toString()
       .toLowerCase()
+      .normalize('NFD') // normalize diacritics
+      .replace(/[^-a-zA-Z0-9 ]/g, '')
       .trim()
-      .replace(/\s+/g, '-');
+      .replace(/\s+/g, '-')
+      .substring(0, length);
   };
 
   // We might not need this filter, refactor

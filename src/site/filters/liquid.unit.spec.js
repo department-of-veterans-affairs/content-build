@@ -531,6 +531,32 @@ describe('hashReference', () => {
       'testing-one-two-three',
     );
   });
+
+  it('returns hyphenated string in all lowercase', () => {
+    expect(liquid.filters.hashReference('Lorem IPSUM dolor SIT amet')).to.eq(
+      'lorem-ipsum-dolor-sit-amet',
+    );
+  });
+  it('returns hyphenated string without punctuation', () => {
+    expect(liquid.filters.hashReference('lorem, ipsum. dolor; sit amet')).to.eq(
+      'lorem-ipsum-dolor-sit-amet',
+    );
+  });
+  it('returns hyphenated string at a set length', () => {
+    expect(
+      liquid.filters.hashReference('lorem ipsum dolor sit amet', 20),
+    ).to.eq('lorem-ipsum-dolor-si');
+  });
+  it('returns hyphenated string with normalized & stripped out diacritics', () => {
+    // normalize diacritics:
+    // \u00e9 = é (single character e with acute accent)
+    // e\u0301 = é (e + combining acute accent)
+    // \u00f1 = ñ (single character n with tilde)
+    // n\u0303 = ñ (n + combining tilde)
+    expect(
+      liquid.filters.hashReference('a \u00e9 e\u0301 \u00f1 n\u0303'),
+    ).to.eq('a-e-e-n-n');
+  });
 });
 
 describe('fileSize', () => {
