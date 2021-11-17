@@ -24,7 +24,7 @@ const contentReleaseParams = {
   status: 'in_progress',
 };
 
-function getLatestWorkflow(params) {
+function getLatestInProgressWorkflow(params) {
   return octokit.rest.actions
     .listWorkflowRuns(params)
     .then(response => {
@@ -40,13 +40,13 @@ function getLatestWorkflow(params) {
     });
 }
 
-function queueWorkflows(dailyDeployWorkflow, contentReleaseWorkflow) {
-  if (dailyDeployWorkflow === null) return 'content-release';
-  if (contentReleaseWorkflow === null) return 'daily-deploy';
+function getPriorityWorkflow(ddWorkflow, crWorkflow) {
+  if (ddWorkflow === null) return 'content-release';
+  if (crWorkflow === null) return 'daily-deploy';
 
   const [dailyDeployTimestamp, contentReleaseTimestamp] = [
-    Date.parse(dailyDeployWorkflow.created_at),
-    Date.parse(contentReleaseWorkflow.created_at),
+    Date.parse(ddWorkflow.created_at),
+    Date.parse(crWorkflow.created_at),
   ];
 
   if (dailyDeployTimestamp < contentReleaseTimestamp) {
@@ -65,13 +65,20 @@ function queueWorkflows(dailyDeployWorkflow, contentReleaseWorkflow) {
  */
 async function main() {
   try {
-    const ddWorkflow = await getLatestWorkflow(dailyDeployParams);
-    const crWorkflow = await getLatestWorkflow(contentReleaseParams);
-    const flow = await queueWorkflows(ddWorkflow, crWorkflow);
+    const dailyDeployWorkflow = await getLatestInProgressWorkflow(
+      dailyDeployParams,
+    );
+    const contentReleaseWorkflow = await getLatestInProgressWorkflow(
+      contentReleaseParams,
+    );
+    const priorityWorkflow = await getPriorityWorkflow(
+      dailyDeployWorkflow,
+      contentReleaseWorkflow,
+    );
 
-    if (currentWorkflow !== flow) {
+    if (currentWorkflow !== priorityWorkflow) {
       console.log(
-        `${flow} is currently running. Sleeping ${currentWorkflow} for ${timeout} minutes`,
+        `${priorityWorkflow} is currently running. Sleeping ${currentWorkflow} for ${timeout} minutes`,
       );
       await sleep(timeout * 60 * 1000);
       await main();
