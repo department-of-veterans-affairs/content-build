@@ -3,12 +3,13 @@
 const { Octokit } = require('@octokit/rest');
 const { sleep } = require('../../script/utils');
 
-const { GITHUB_TOKEN: auth } = process.env; // GITHUB_REPOSITORY
+const { GITHUB_TOKEN: auth, GITHUB_REPOSITORY } = process.env;
+const args = process.argv.slice(2);
 const timeout = 2; // minutes
-const [owner, repo] = 'department-of-veterans-affairs/content-build'.split('/'); // GITHUB_REPOSITORY.split('/');
+const [owner, repo] = GITHUB_REPOSITORY.split('/');
 
 const octokit = new Octokit({ auth });
-const currentWorkflow = 'content-release';
+const currentWorkflow = args[0];
 
 const dailyDeployParams = {
   owner,
