@@ -25,6 +25,10 @@ const contentReleaseParams = {
   status: 'in_progress',
 };
 
+/**
+ * uses octokit request for github action to get workflow with status in_progress
+ * @param {object} params
+ */
 function getLatestInProgressWorkflow(params) {
   return octokit.rest.actions
     .listWorkflowRuns(params)
@@ -41,6 +45,11 @@ function getLatestInProgressWorkflow(params) {
     });
 }
 
+/**
+ * Returns workflow that has priority
+ * @param {object} ddWorkflow
+ * @param {object} crWorkflow
+ */
 function getPriorityWorkflow(ddWorkflow, crWorkflow) {
   if (ddWorkflow === null) return 'content-release';
   if (crWorkflow === null) return 'daily-deploy';
