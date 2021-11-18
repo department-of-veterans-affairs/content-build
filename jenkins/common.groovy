@@ -10,7 +10,7 @@ DRUPAL_ADDRESSES = [
   'vagovprod'   : 'http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com',
    // This is a Tugboat URL, rebuilt frequently from PROD CMS. See https://tugboat.vfs.va.gov/6042f35d6a89945fd6399dc3.
    // If there are issues with this endpoint, please post in #cms-support Slack and tag @CMS DevOps Engineers.
-   'sandbox'     : 'https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov',
+   'sandbox'     : 'https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov',
 ]
 
 DRUPAL_CREDENTIALS = [
@@ -264,7 +264,7 @@ def integrationTests(dockerContainer, ref) {
         } catch (error) {
           // slackIntegrationNotify()
           throw error
-        } 
+        }
       } // end timeout
     }
 
@@ -294,7 +294,7 @@ def prearchiveAll(dockerContainer) {
 
       parallel builds
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }
@@ -330,7 +330,7 @@ def archiveAll(dockerContainer, String ref) {
       parallel archives
 
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }
@@ -363,7 +363,7 @@ def cacheDrupalContent(dockerContainer, envUsedCache) {
         }
       }
     } catch (error) {
-      slackNotify()
+      // slackNotify()
       throw error
     }
   }

@@ -249,8 +249,9 @@ module.exports = function registerFilters() {
   };
 
   //  liquid slice filter only works on strings
-  liquid.filters.sliceArrayFromStart = (arr, startIndex) => {
-    return _.slice(arr, startIndex);
+  liquid.filters.sliceArray = (arr, startIndex, endIndex) => {
+    if (!arr) return null;
+    return _.slice(arr, startIndex, endIndex);
   };
 
   liquid.filters.benefitTerms = data => {
@@ -302,13 +303,16 @@ module.exports = function registerFilters() {
     return output;
   };
 
-  liquid.filters.hashReference = str => {
+  liquid.filters.hashReference = (str, length = 100) => {
     if (!str) return null;
     return str
       .toString()
       .toLowerCase()
+      .normalize('NFD') // normalize diacritics
+      .replace(/[^-a-zA-Z0-9 ]/g, '')
       .trim()
-      .replace(/\s+/g, '-');
+      .replace(/\s+/g, '-')
+      .substring(0, length);
   };
 
   // We might not need this filter, refactor
@@ -817,11 +821,8 @@ module.exports = function registerFilters() {
       return '';
     }
 
-    // Replace single quotes.
-    const stringWithoutSingleQuotes = string.replace("'", '&apos;');
-
     // Encode the string.
-    return he.encode(stringWithoutSingleQuotes, { useNamedReferences: true });
+    return he.encode(string, { useNamedReferences: true });
   };
 
   // fieldCcVetCenterFeaturedCon data structure is different
@@ -1227,5 +1228,74 @@ module.exports = function registerFilters() {
     };
 
     return languages[language][whichNode];
+  };
+
+  // Sets the value at path of object. If a portion of path doesn't exist, it's created.
+  const setData = (data, path, value) => {
+    return _.set(data, path, value);
+  };
+
+  // If preview mode, filter facilities to show published and draft facilities.
+  // If NOT in preview mode, filter facilities to only show published facilities.
+  liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
+    if (!sidebarData || !sidebarData.links[0]?.links) return null;
+
+    const findLocationsArr = () => {
+      const servicesAndLocationsObj = _.find(sidebarData.links[0].links, [
+        'label',
+        'SERVICES AND LOCATIONS',
+      ]);
+      if (servicesAndLocationsObj && servicesAndLocationsObj.links) {
+        const locationsObj = _.find(servicesAndLocationsObj.links, [
+          'label',
+          'Locations',
+        ]);
+        if (locationsObj && locationsObj.links.length) {
+          return locationsObj.links;
+        } else return null;
+      } else return null;
+    };
+
+    const locationsArr = findLocationsArr();
+    const locationsPath = 'links[0]links[0]links[1]links';
+
+    if (isPreview && locationsArr) {
+      const publishedAndDraftFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.moderationState',
+        'archived',
+      );
+      return setData(sidebarData, locationsPath, publishedAndDraftFacilities);
+    } else if (!isPreview && locationsArr) {
+      const publishedFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.entityPublished',
+        false,
+      );
+      return setData(sidebarData, locationsPath, publishedFacilities);
+    } else {
+      return sidebarData;
+    }
+  };
+
+  liquid.filters.topTaskUrl = (flag, path, systemName) => {
+    if (
+      flag === 'cerner' ||
+      (systemName === 'VA Central Ohio health care' &&
+        path === 'schedule-view-va-appointments/')
+    ) {
+      return 'https://patientportal.myhealth.va.gov';
+    } else {
+      return `/health-care/${path}`;
+    }
+  };
+
+  liquid.filters.isVisn8 = visn => {
+    if (!visn) return null;
+    return visn.split('|')[0].trim() === 'VISN 8';
+  };
+
+  liquid.filters.featureAddVaHealthConnectNumber = () => {
+    return cmsFeatureFlags?.FEATURE_HEALTH_CONNECT_NUMBER;
   };
 };

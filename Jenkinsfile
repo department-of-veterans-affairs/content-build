@@ -136,7 +136,7 @@ node('vetsgov-general-purpose') {
 
       )
     } catch (error) {
-      commonStages.slackNotify()
+      // commonStages.slackNotify()
       throw error
     } finally {
       dir("content-build") {
@@ -152,7 +152,7 @@ node('vetsgov-general-purpose') {
   commonStages.prearchiveAll(dockerContainer)
 
   // Archive the tar file for each build type
-  commonStages.archiveAll(dockerContainer, ref);
+  // commonStages.archiveAll(dockerContainer, ref);
 
   // envsUsingDrupalCache = envUsedCache
   // commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);

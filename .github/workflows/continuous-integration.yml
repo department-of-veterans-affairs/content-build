@@ -10,7 +10,7 @@ on:
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
-  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-support
+  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
@@ -43,7 +43,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
@@ -108,7 +108,7 @@ jobs:
 
     env:
       # Sandbox Drupal address is used on branches other than master.
-      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
@@ -117,9 +117,9 @@ jobs:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
           - buildtype: vagovdev
-            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+            drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovstaging
-            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+            drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
@@ -227,21 +227,21 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_socket_token
           env_variable_name: SLACK_APP_TOKEN
 
       - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
@@ -275,14 +275,14 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ failure() }}
         with:
           ssm_parameter: /devops/github_actions_slack_socket_token
           env_variable_name: SLACK_APP_TOKEN
 
       - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ failure() }}
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
@@ -349,12 +349,14 @@ jobs:
 
       - name: Publish test results
         if: ${{ always() }}
-        uses: mikepenz/action-junit-report@v2.4.0
+        continue-on-error: true
+        uses: mikepenz/action-junit-report@v2.6.0
         with:
           check_name: 'Unit Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_paths: 'test-results/unit-tests.xml'
           summary: ${{ steps.code-coverage.outputs.MARKDOWN }}
+          fail_on_failure: 'true'
 
   linting:
     name: Linting
@@ -463,7 +465,7 @@ jobs:
 
       - name: Publish test results
         if: ${{ always() }}
-        uses: mikepenz/action-junit-report@v2.4.2
+        uses: mikepenz/action-junit-report@v2.6.0
         with:
           check_name: 'Cypress Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -519,7 +521,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get va-vsp-bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.1.1
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
@@ -557,10 +559,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: cypress-mochawesome-test-results
-          path: testing-tools-team-dashboard-data/src/mochawesome/data
+          path: testing-tools-team-dashboard-data/src/testing-reports/data
 
       - name: Get BigQuery service credentials
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/testing-team/bigquery_service_credentials
           env_variable_name: BIGQUERY_SERVICE_CREDENTIALS
@@ -596,10 +598,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: cypress-video-artifacts
-          path: testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }}
+          path: testing-tools-team-dashboard-data/testing-reports/videos/${{ env.UUID }}
 
       - name: Get AWS IAM role
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -648,11 +650,10 @@ jobs:
         drupal-cache-test,
       ]
 
-    # TODO: Add vagovprod when ready
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging]
+        buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
       - name: Restore ${{ matrix.buildtype }} build
@@ -669,7 +670,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -731,7 +732,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -811,14 +812,14 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Get Drupal token from Parameter Store
         if: ${{ matrix.environment == 'vagovstaging' }}
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
           env_variable_name: CALLBACK_TOKEN
@@ -878,7 +879,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN

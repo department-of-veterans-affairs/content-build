@@ -33,6 +33,7 @@ const healthCareRegionPageFragment = `
           }
       }
     }
+    fieldVamcEhrSystem
     fieldGovdeliveryIdEmerg
     fieldGovdeliveryIdNews
     ${socialMediaFields}   

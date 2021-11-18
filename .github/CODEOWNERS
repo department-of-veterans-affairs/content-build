@@ -12,6 +12,7 @@
 # Testing
 src/platform/testing/e2e/ @department-of-veterans-affairs/vsp-testing
 config/cypress.json @department-of-veterans-affairs/vsp-testing
+.github/workflows/a11y.yml @department-of-veterans-affairs/vsp-testing
 
 # Shared templates
 src/site/includes @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-caregiver-frontend

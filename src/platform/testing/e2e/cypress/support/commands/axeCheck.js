@@ -19,15 +19,19 @@ const processAxeCheckResults = violations => {
     violations.length === 1 ? ' was' : 's were'
   } detected`;
 
-  // Pluck specific keys to keep the table readable.
-  const violationData = violations.map(({ id, impact, description, nodes }) => [
-    ['id', id],
-    ['impact', impact],
-    ['description', description],
-    ['target', nodes.map(node => node.target).join('\n\n')],
-    ['html', nodes.map(node => node.html).join('\n\n')],
-    ['nodes', nodes.length],
-  ]);
+  const violationData = violations.map(
+    ({ id, impact, description, nodes, help, helpUrl }) => [
+      ['id', id],
+      ['impact', impact],
+      ['description', description],
+      ['help', help],
+      ['help URL', helpUrl],
+      ['target', nodes.map(node => node.target).join('\n\n')],
+      ['html', nodes.map(node => node.html).join('\n\n')],
+      ['failure summary', nodes.map(node => node.failureSummary).join('\n\n')],
+      ['nodes', nodes.length],
+    ],
+  );
 
   cy.url().then(url => {
     const prodURL = url.replace(Cypress.config().baseUrl, `https://www.va.gov`);

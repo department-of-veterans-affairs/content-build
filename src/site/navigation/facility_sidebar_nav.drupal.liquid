@@ -10,12 +10,15 @@
 {% assign isInAbout = aboutMenu | isAboutItem: entityUrl.path %}
 {% assign deepLinks = deepLinksObj.link.links %}
 
+{% assign filteredSidebarData = sidebarData | filterSidebarData: isPreview %}
+
 <script nonce="**CSP_NONCE**" type="text/javascript">
     window.sideNav = {
       rootPath: "{{ entityUrl.path }}/",
-      data: {{ sidebarData | json }},
+      data: {{ filteredSidebarData | json }},
     };
 </script>
 
 {% comment %} React Widget located in `src/platform/site-wide/side-nav` {% endcomment %}
 <nav data-template="navigation/facility_sidebar_nav" aria-label="secondary" data-widget-type="side-nav"></nav>
+
