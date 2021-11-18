@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 const { Octokit } = require('@octokit/rest');
-const { sleep } = require('../../script/utils');
+const { sleep } = require('../utils');
 
 const { GITHUB_TOKEN: auth, GITHUB_REPOSITORY } = process.env;
 const args = process.argv.slice(2);
