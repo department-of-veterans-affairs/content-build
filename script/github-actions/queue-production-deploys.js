@@ -3,10 +3,10 @@
 const { Octokit } = require('@octokit/rest');
 const { sleep } = require('../utils');
 
-const { GITHUB_TOKEN: auth } = process.env;
+const { GITHUB_TOKEN: auth, GITHUB_REPOSITORY } = process.env;
 const args = process.argv.slice(2);
 const timeout = 2; // minutes
-const [owner, repo] = 'department-of-veterans-affairs/content-build'.split('/');
+const [owner, repo] = GITHUB_REPOSITORY.split('/');
 
 const octokit = new Octokit({ auth });
 const currentWorkflow = args[0];
