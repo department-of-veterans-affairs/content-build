@@ -14,7 +14,7 @@ on:
     - cron: 0 19 * * 1-5
 
 concurrency:
-  group: prod
+  group: daily-deploy-prod
   cancel-in-progress: false
 
 env:
@@ -118,6 +118,29 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.commit_sha != '' }}
         run: echo 'COMMIT_SHA=${{ github.event.inputs.commit_sha }}' >> $GITHUB_ENV
 
+  wait-for-current-workflow:
+    name: Wait For Current Workflow
+    runs-on: ubuntu-latest
+    needs: set-env
+    if: always() && needs.set-env.result == 'success'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: ~/.cache/yarn
+          path: |
+            ~/.cache/yarn
+            node_modules
+
+      - name: Wait for current workflow
+        run: node ./script/github-actions/wait-for-current-workflow-to-complete.js daily-deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   validate-build-status:
     name: Validate Build Status
     runs-on: ubuntu-latest
@@ -161,7 +184,7 @@ jobs:
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: [set-env, notify-start, validate-build-status, start-runner]
+    needs: [set-env, notify-start, validate-build-status, start-runner, wait-for-current-workflow]
     defaults:
       run:
         working-directory: content-build
