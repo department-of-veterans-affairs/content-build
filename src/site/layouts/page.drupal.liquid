@@ -66,14 +66,14 @@
               </div>
             </div>
           {%  endif %}
+          {% if lang != "en" %}
+            <va-back-to-top></va-back-to-top>
+          {%  endif %}
         </article>
 
         <div class="last-updated usa-content">
             Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
         </div>
-        {% if lang != "en" %}
-          <va-back-to-top></va-back-to-top>
-        {%  endif %}
       </div>
     </main>
   </div>
