@@ -88,7 +88,6 @@ jobs:
     name: Set Env Variables
     runs-on: ubuntu-latest
     outputs:
-      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
       BUILDTYPE: ${{ env.BUILDTYPE }}
@@ -109,10 +108,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ needs.set-env.outputs.REF }}
-
-      - name: Get latest tag
-        id: get-latest-tag
-        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
       - name: Get latest release
         id: get-latest-release
@@ -416,9 +411,13 @@ jobs:
           ref: ${{ needs.set-env.outputs.REF }}
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
 
+      - name: Get latest tag
+        id: get-latest-tag
+        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+
       - name: Waiting to release
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         uses: whatnick/wait-action@master
@@ -429,7 +428,7 @@ jobs:
         id: bump-tag-version
         uses: WyriHaximus/github-action-next-semvers@v1
         with:
-          version: ${{ needs.set-env.outputs.LATEST_TAG_VERSION }}
+          version: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
 
       - name: Create tag
         run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }}
