@@ -574,7 +574,7 @@ jobs:
       - deploy
     if: ${{ !cancelled() }}
     env:
-      METRIC_NAMESPACE: 'dsva_vagov.content_build_test'
+      METRIC_NAMESPACE: dsva_vagov.content_build_test
     steps:
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
