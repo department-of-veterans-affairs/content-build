@@ -118,8 +118,8 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.commit_sha != '' }}
         run: echo 'COMMIT_SHA=${{ github.event.inputs.commit_sha }}' >> $GITHUB_ENV
 
-  wait-for-current-workflow:
-    name: Wait For Current Workflow
+  wait-for-current-workflow-to-complete:
+    name: Wait for current workflow to complete
     runs-on: ubuntu-latest
     needs: set-env
     if: always() && needs.set-env.result == 'success'
@@ -136,7 +136,7 @@ jobs:
             ~/.cache/yarn
             node_modules
 
-      - name: Wait for current workflow
+      - name: Wait for current workflow to complete
         run: node ./script/github-actions/wait-for-current-workflow-to-complete.js daily-deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -184,7 +184,7 @@ jobs:
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: [set-env, notify-start, validate-build-status, start-runner, wait-for-current-workflow]
+    needs: [set-env, notify-start, validate-build-status, start-runner, wait-for-current-workflow-to-complete]
     defaults:
       run:
         working-directory: content-build
