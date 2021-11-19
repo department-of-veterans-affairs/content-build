@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true deriveBreadcrumbsFromUrl = true %}
 
@@ -72,6 +71,16 @@
                           </strong><a
                               href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
                         </div>
+                      {% endif %}
+                      {% if facilitySidebar.description %}
+                        {% assign shouldAddVaHealthConnectNumber = ''| featureAddVaHealthConnectNumber %}
+                        {% assign isVisn8 = facilitySidebar.description | isVisn8 %}
+                        {% if shouldAddVaHealthConnectNumber == true and isVisn8 == true %}
+                          <div class="vads-u-margin-bottom--1">
+                            <strong>VA health connect:</strong>
+                            <a href="tel:877-741-3400">877-741-3400</a>
+                          </div>
+                        {% endif %}
                       {% endif %}
                       {% if fieldMentalHealthPhone %}
                         <div class="mental-health-clinic-phone"><strong>Mental

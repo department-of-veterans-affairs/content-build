@@ -39,10 +39,6 @@
           "name": "Pension benefits"
         },
         {
-          "path": "pension/how-to-apply/",
-          "name": "How to apply"
-        },
-        {
           "path": "pension/application/527EZ",
           "name": "Apply for Veterans Pension"
         }
@@ -129,15 +125,6 @@
     }
   },
   {
-    "appName": "My Health Account Validation",
-    "entryName": "my-health-account-validation",
-    "rootUrl": "/health-care/my-health-account-validation",
-    "template": {
-      "title": "My Health Account Validation",
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "10-10CG",
     "entryName": "1010cg-application-caregiver-assistance",
     "rootUrl": "/family-member-benefits/apply-for-caregiver-assistance-form-10-10cg",
@@ -218,10 +205,6 @@
         {
           "path": "health-care/",
           "name": "Health Care"
-        },
-        {
-          "path": "health-care/how-to-apply/",
-          "name": "How to apply"
         },
         {
           "path": "health-care/apply/application",
@@ -526,12 +509,16 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Education",
+          "name": "Education and training",
           "path": "education/"
         },
         {
-          "name": "Apply for education benefits",
-          "path": "education/how-to-apply/"
+          "name": "Change your GI Bill school or program",
+          "path": "education/change-gi-bill-benefits/"
+        },
+        {
+          "name": "Change your dependent benefits VA Form 22-5495",
+          "path": "education/apply-for-education-benefits/application/5495/"
         }
       ]
     }
@@ -750,16 +737,20 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "records/",
-          "name": "Records"
+          "name": "Records",
+          "path": "records/"
         },
         {
-          "path": "records/get-veteran-id-cards/",
-          "name": "Types of Veteran ID cards"
+          "name": "Types of Veteran ID cards",
+          "path": "records/get-veteran-id-cards/"
         },
         {
-          "path": "records/get-veteran-id-cards/apply/",
-          "name": "Apply for an ID Card"
+          "name": "How to apply for a Veteran ID Card",
+          "path": "records/get-veteran-id-cards/vic/"
+        },
+        {
+          "name": "Request a printed Veteran ID Card",
+          "path": "records/get-veteran-id-cards/apply/"
         }
       ]
     }
@@ -1132,9 +1123,28 @@
     }
   },
   {
+    "appName": "Pre-check-in",
+    "entryName": "pre-check-in",
+    "rootUrl": "/health-care/appointment-pre-check-in",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "My Education Benefits",
-    "entryName": "my-education-benefits",
-    "rootUrl": "/my-education-benefits",
+    "entryName": "1990ez-edu-benefits",
+    "rootUrl": "/education/apply-for-benefits-form-22-1990",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Search Representative",
+    "entryFile": "./app-entry.jsx",
+    "entryName": "search-representative",
+    "rootUrl": "/view-change-representative/search",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

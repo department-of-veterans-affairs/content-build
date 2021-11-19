@@ -2,10 +2,11 @@ import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
 
 import registerFilters from './liquid';
-import vetCenterData from '../layouts/tests/vet_center/fixtures/vet_center_data.json';
-import featuredContentData from '../layouts/tests/vet_center/fixtures/featuredContentData.json';
+import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
+import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
+import sidebarData from './fixtures/sidebarData.json';
 
 const _ = require('lodash');
 
@@ -530,6 +531,32 @@ describe('hashReference', () => {
       'testing-one-two-three',
     );
   });
+
+  it('returns hyphenated string in all lowercase', () => {
+    expect(liquid.filters.hashReference('Lorem IPSUM dolor SIT amet')).to.eq(
+      'lorem-ipsum-dolor-sit-amet',
+    );
+  });
+  it('returns hyphenated string without punctuation', () => {
+    expect(liquid.filters.hashReference('lorem, ipsum. dolor; sit amet')).to.eq(
+      'lorem-ipsum-dolor-sit-amet',
+    );
+  });
+  it('returns hyphenated string at a set length', () => {
+    expect(
+      liquid.filters.hashReference('lorem ipsum dolor sit amet', 20),
+    ).to.eq('lorem-ipsum-dolor-si');
+  });
+  it('returns hyphenated string with normalized & stripped out diacritics', () => {
+    // normalize diacritics:
+    // \u00e9 = é (single character e with acute accent)
+    // e\u0301 = é (e + combining acute accent)
+    // \u00f1 = ñ (single character n with tilde)
+    // n\u0303 = ñ (n + combining tilde)
+    expect(
+      liquid.filters.hashReference('a \u00e9 e\u0301 \u00f1 n\u0303'),
+    ).to.eq('a-e-e-n-n');
+  });
 });
 
 describe('fileSize', () => {
@@ -1029,13 +1056,23 @@ describe('rejectBy', () => {
     { class: { abstract: { number: 4 } } },
     { class: { abstract: { number: 1 } } },
     { class: { abstract: { number: 1 } } },
+    { class: { abstract: { number: null } } },
   ];
 
-  it('returns all objects not matching the given path and value', () => {
+  it('returns all objects with the given path except those matching value', () => {
     expect(
       liquid.filters.rejectBy(testData, 'class.abstract.number', 1),
     ).to.deep.equal([
       { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: 5 } } },
+      { class: { abstract: { number: 4 } } },
+    ]);
+  });
+
+  it('returns all objects with the given path except those in value list', () => {
+    expect(
+      liquid.filters.rejectBy(testData, 'class.abstract.number', '1|3'),
+    ).to.deep.equal([
       { class: { abstract: { number: 5 } } },
       { class: { abstract: { number: 4 } } },
     ]);
@@ -1049,7 +1086,7 @@ describe('rejectBy', () => {
 describe('encode', () => {
   it('encodes strings', () => {
     expect(liquid.filters.encode("foo © bar ≠ baz 𝌆 qux''")).to.equal(
-      'foo &copy; bar &ne; baz &#x1D306; qux&amp;apos;&apos;',
+      'foo &copy; bar &ne; baz &#x1D306; qux&apos;&apos;',
     );
   });
 
@@ -1262,16 +1299,79 @@ describe('concat', () => {
   });
 });
 
-describe('getValuesForKey', () => {
-  it('returns an array of values for the given key', () => {
+describe('getValuesForPath', () => {
+  it('returns an array of values for single-part path', () => {
     const array = [{ foo: 'bar' }, { foo: 'baz' }];
     const result = ['bar', 'baz'];
 
-    expect(liquid.filters.getValuesForKey(array, 'foo')).to.deep.equal(result);
+    expect(liquid.filters.getValuesForPath(array, 'foo')).to.deep.equal(result);
+  });
+
+  it('returns an array of values for multi-part path', () => {
+    const array = [
+      { class: { abstract: { number: 3 } } },
+      { class: { abstract: { number: 5 } } },
+      { class: { abstract: { number: 4 } } },
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: 1 } } },
+      { class: { abstract: { number: null } } },
+    ];
+
+    const result = [3, 5, 4, 1, 1, null];
+
+    expect(
+      liquid.filters.getValuesForPath(array, 'class.abstract.number'),
+    ).to.deep.equal(result);
   });
 
   it('returns null if array is null', () => {
-    expect(liquid.filters.getValuesForKey(null, 'foo')).to.be.null;
+    expect(liquid.filters.getValuesForPath(null, 'foo')).to.be.null;
+  });
+});
+
+describe('formatPath', () => {
+  it('adds a trailing slash correctly', () => {
+    const path = '/resources/tag/all-veterans/2';
+    const expected = '/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('does not add a trailing slash when there is a trailing *', () => {
+    const path = '/resources/tag/all-veterans/2/*';
+    const expected = '/resources/tag/all-veterans/2/*';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('adds a leading slash correctly', () => {
+    const path = 'resources/tag/all-veterans/2/';
+    const expected = '/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('formats correctly when there is a leading * or ! but misses a `/` for the second character', () => {
+    let path = '*resources/tag/all-veterans/2';
+    let expected = '*/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+
+    path = '!resources/tag/all-veterans/2';
+    expected = '!/resources/tag/all-veterans/2/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('formats `*` and `!` paths correctly', () => {
+    let path = '*';
+    let expected = '*';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+
+    path = '!';
+    expected = '!';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
+  });
+
+  it('formats the homepage correctly', () => {
+    const path = '/';
+    const expected = '/';
+    expect(liquid.filters.formatPath(path)).to.equal(expected);
   });
 });
 
@@ -1376,9 +1476,16 @@ describe('deriveVisibleBanners', () => {
     const banners = [
       { fieldTargetPaths: ['/some/path/'] },
       { fieldTargetPaths: ['/some/*'] },
+      { fieldTargetPaths: ['/some/*', '!/some/*'] },
+      { fieldTargetPaths: ['/some/*', '!/some/path/'] },
+      { fieldTargetPaths: ['/some/*', '!/some/path'] },
+      { fieldTargetPaths: ['/some/*', '!some/path'] },
       { fieldTargetPaths: ['/some/'] },
+      { fieldTargetPaths: ['some'] },
+      { fieldTargetPaths: ['/some'] },
+      { fieldTargetPaths: ['some/'] },
     ];
-    const currentPath = '/some/path/';
+    const currentPath = '/some/path';
 
     expect(
       liquid.filters.deriveVisibleBanners(banners, currentPath),
@@ -1450,5 +1557,455 @@ describe('formatAlertType', () => {
         ),
       ).to.equal('Download VA Form 10-10EZ');
     });
+  });
+});
+
+describe('getValueFromObjPath', () => {
+  it('returns object item at path', () => {
+    const testData = { class: { abstract: { number: 1 } } };
+    expect(
+      liquid.filters.getValueFromObjPath(testData, 'class.abstract.number'),
+    ).to.eq(1);
+  });
+});
+
+describe('processCentralizedContent', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedContent(null, 'wysiwyg')).to.be
+      .null;
+  });
+
+  it('returns null if null is passed - default', () => {
+    expect(liquid.filters.processCentralizedContent(null, 'test_bundle')).to.be
+      .null;
+  });
+
+  it('returns null if empty string is passed', () => {
+    expect(liquid.filters.processCentralizedContent('', 'test_bundle')).to.be
+      .null;
+  });
+
+  it('returns null for null', () => {
+    expect(liquid.filters.processCentralizedContent(null)).to.be.null;
+  });
+
+  it('returns test data when contentType = wysiwyg', () => {
+    const testData = vetCenterData.fieldCcVetCenterCallCenter.fetched;
+
+    expect(
+      liquid.filters.processCentralizedContent(
+        testData,
+        vetCenterData.fieldCcVetCenterCallCenter.fetchedBundle,
+      ),
+    ).to.deep.eq(testData);
+  });
+
+  it('converts fieldWysiwyg.processed from snake case/array to camel case/string', () => {
+    const testData = {
+      // eslint-disable-next-line camelcase
+      field_wysiwyg: [{ processed: 'test' }],
+    };
+
+    const expected = {
+      fieldWysiwyg: { processed: 'test' },
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'wysiwyg'),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns expected if contentType = q_a_section.', () => {
+    const oldFieldQuestionsData = {
+      fieldQuestions: [
+        {
+          entity: {
+            targetId: '29903', // targetId gets renamed to entityId as long as there is not entityId already present
+            targetRevisionId: '422164',
+            entityType: 'paragraph',
+            entityBundle: 'q_a',
+            pid: '29903',
+            label: 'National Vet Center content > Content > Questions',
+            status: true,
+            langcode: 'en',
+            fieldAnswer: [
+              {
+                entity: {
+                  targetId: '29902',
+                  targetRevisionId: '422163',
+                  entityType: 'paragraph',
+                  entityBundle: 'wysiwyg',
+                  pid: '29902',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldWysiwyg: [
+                    {
+                      value:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\r\n\r\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\r\n",
+                      format: 'rich_text_limited',
+                      processed:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
+                },
+              },
+            ],
+            fieldQuestion: [
+              {
+                value: 'What are Vet Centers?',
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const newFieldQuestionsData = {
+      fieldQuestions: [
+        {
+          entity: {
+            entityId: '29903',
+            targetRevisionId: '422164',
+            entityType: 'paragraph',
+            entityBundle: 'q_a',
+            pid: '29903',
+            label: 'National Vet Center content > Content > Questions',
+            status: true,
+            langcode: 'en',
+            fieldAnswer: [
+              {
+                entity: {
+                  targetId: '29902',
+                  targetRevisionId: '422163',
+                  entityType: 'paragraph',
+                  entityBundle: 'wysiwyg',
+                  pid: '29902',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldWysiwyg: [
+                    {
+                      value:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\r\n\r\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\r\n",
+                      format: 'rich_text_limited',
+                      processed:
+                        "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
+                },
+              },
+            ],
+            fieldQuestion: 'What are Vet Centers?',
+          },
+        },
+      ],
+    };
+    const testData = {
+      fieldAccordionDisplay: [{ value: '1' }],
+      fieldSectionHeader: [{ value: "How we're different than a clinic" }],
+      fieldSectionIntro: [{ value: 'Click on a topic for more details.' }],
+      ...oldFieldQuestionsData,
+    };
+
+    const expected = {
+      fieldAccordionDisplay: '1',
+      fieldSectionHeader: "How we're different than a clinic",
+      fieldSectionIntro: 'Click on a topic for more details.',
+      ...newFieldQuestionsData,
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'q_a_section'),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns expected if contentType = list_of_link_teasers', () => {
+    const centralizedContent = {
+      fieldTitle: [
+        {
+          value: 'More information',
+        },
+      ],
+      fieldVaParagraphs: [
+        {
+          entity: {
+            targetId: '77155',
+            targetRevisionId: '393053',
+            entityType: 'paragraph',
+            entityBundle: 'link_teaser',
+            fieldLink: [
+              {
+                uri: 'entity:node/703',
+                url: {
+                  path: '/health-care/copay-rates',
+                },
+                title: 'VA health care copay rates',
+                options: [],
+              },
+            ],
+            fieldLinkSummary: [
+              {
+                value:
+                  'Review copay rates for outpatient care, hospital stays, medications, and other health services.',
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const expected = {
+      fieldTitle: 'More information',
+      fieldVaParagraphs: [
+        {
+          entity: {
+            entityId: '77155',
+            targetRevisionId: '393053',
+            entityType: 'paragraph',
+            entityBundle: 'link_teaser',
+            fieldLink: {
+              uri: 'entity:node/703',
+              url: {
+                path: '/health-care/copay-rates',
+              },
+              title: 'VA health care copay rates',
+              options: [],
+            },
+            fieldLinkSummary:
+              'Review copay rates for outpatient care, hospital stays, medications, and other health services.',
+          },
+        },
+      ],
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(
+        centralizedContent,
+        'list_of_link_teasers',
+      ),
+    ).to.deep.eq(expected);
+  });
+
+  it('returns test data if contentType does not match any of the cases - default', () => {
+    const testData = vetCenterData.fieldVetCenterFeatureContent;
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'test_bundle'),
+    ).to.eq(testData);
+  });
+
+  it('returns expected if contentType = react_widget', () => {
+    const testData = {
+      fieldButtonFormat: [{ value: '0' }],
+      fieldCtaWidget: [{ value: '1' }],
+      fieldDefaultLink: [],
+      fieldErrorMessage: [
+        {
+          value:
+            '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br/>Please try refreshing your browser in a few minutes.',
+          format: 'rich_text',
+          processed:
+            '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br />Please try refreshing your browser in a few minutes.',
+        },
+      ],
+      fieldLoadingMessage: [],
+      fieldTimeout: [{ value: '20' }],
+      fieldWidgetType: [{ value: 'health-records' }],
+    };
+
+    const expected = {
+      fieldButtonFormat: '0',
+      fieldCtaWidget: '1',
+      fieldDefaultLink: [],
+      fieldErrorMessage: {
+        value:
+          '<strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br/>Please try refreshing your browser in a few minutes.',
+      },
+      fieldLoadingMessage: [],
+      fieldTimeout: '20',
+      fieldWidgetType: 'health-records',
+    };
+
+    expect(
+      liquid.filters.processCentralizedContent(testData, 'react_widget'),
+    ).to.deep.eq(expected);
+  });
+});
+
+describe('filterSidebarData', () => {
+  it('returns null if sidebar data is null', () => {
+    expect(liquid.filters.filterSidebarData(null)).to.be.null;
+  });
+
+  it('returns null if arguments are not passed', () => {
+    expect(liquid.filters.filterSidebarData()).to.be.null;
+  });
+
+  it('returns sidebarData with published facilities only', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      false,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns sidebarData with published facilities if second argument is not passed - isPreview defaults to false', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(clonedSidebarData);
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns sidebarData with published and draft facilities IF in preview mode', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Fayetteville VA Medical Center',
+        entity: {
+          linkedEntity: {
+            entityPublished: false,
+            moderationState: 'draft',
+          },
+        },
+      },
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns empty array if array of facilities is empty', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+    clonedSidebarData.links[0].links[0].links[1].links = [];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal([]);
+  });
+});
+
+describe('sliceArray', () => {
+  it('returns null if array is null', () => {
+    expect(liquid.filters.sliceArray(null, 0, 5)).to.be.null;
+  });
+
+  it('returns first 5 elements - startIndex = 0, endIndex = 5', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [1, 2, 3, 4, 5];
+
+    expect(liquid.filters.sliceArray(testArray, 0, 5)).to.deep.eq(expected);
+  });
+
+  it('returns elements from startIndex = 2 and on, if an endIndex is not passed in', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [3, 4, 5, 6];
+
+    expect(liquid.filters.sliceArray(testArray, 2)).to.deep.eq(expected);
+  });
+});
+
+describe('isVisn8', () => {
+  it('returns null if data is null', () => {
+    expect(liquid.filters.isVisn8(null)).to.be.null;
+  });
+
+  it('returns true if string = "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 | more text')).to.be.true;
+  });
+
+  it('returns true if string = "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 |')).to.be.true;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 9 | more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 9 more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('| VISN 8 |')).to.be.false;
   });
 });

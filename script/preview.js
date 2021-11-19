@@ -150,7 +150,12 @@ const nonNodeContent = {
 
       // eslint-disable-next-line no-await-in-loop
       const json = await drupalClient.query({ query });
-      Object.assign(freshNonNodeContent.data, json.data);
+      if (json.errors) {
+        console.error('Error executing', queryName, json);
+        console.error('query:', query);
+      } else {
+        Object.assign(freshNonNodeContent.data, json.data);
+      }
       console.timeEnd(queryName);
 
       this.refreshProgress += 1 / queries.length;

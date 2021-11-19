@@ -27,7 +27,7 @@
 
         <a class="file-download-with-icon" target="_blank"
            href="{{url}}" download="{{url}}">
-            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download"></i>
+            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download" role="img"></i>
             {{entity.fieldTitle}} ({{url | fileExt | upcase}})
         </a>
     {% endif %}
@@ -44,7 +44,7 @@
                 type="application/{{extension}}"
             {% endif %}
         >
-            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download"></i>
+            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download" role="img"></i>
             {{entity.fieldTitle}} ({{extension | upcase}})
         </a>
     {% endif %}

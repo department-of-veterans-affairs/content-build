@@ -136,7 +136,7 @@ node('vetsgov-general-purpose') {
 
       )
     } catch (error) {
-      commonStages.slackNotify()
+      // commonStages.slackNotify()
       throw error
     } finally {
       dir("content-build") {
@@ -152,10 +152,10 @@ node('vetsgov-general-purpose') {
   commonStages.prearchiveAll(dockerContainer)
 
   // Archive the tar file for each build type
-  commonStages.archiveAll(dockerContainer, ref);
+  // commonStages.archiveAll(dockerContainer, ref);
 
-  envsUsingDrupalCache = envUsedCache
-  commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
+  // envsUsingDrupalCache = envUsedCache
+  // commonStages.cacheDrupalContent(dockerContainer, envsUsingDrupalCache);
 
   stage('Review') {
     if (commonStages.shouldBail()) {
@@ -176,24 +176,6 @@ node('vetsgov-general-purpose') {
       ], wait: false
     } catch (error) {
       // commonStages.slackNotify()
-      throw error
-    }
-  }
-
-  stage('Deploy dev or staging') {
-    try {
-      if (!commonStages.isDeployable()) { return }
-
-      if (commonStages.IS_DEV_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovdev')) {
-        commonStages.runDeploy('deploys/content-build-vagovdev', ref, false)
-      }
-
-      if (commonStages.IS_STAGING_BRANCH && commonStages.VAGOV_BUILDTYPES.contains('vagovstaging')) {
-        commonStages.runDeploy('deploys/content-build-vagovstaging', ref, false)
-      }
-
-    } catch (error) {
-      commonStages.slackNotify()
       throw error
     }
   }

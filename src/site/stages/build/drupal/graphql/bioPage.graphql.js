@@ -14,6 +14,7 @@ const personProfileFragment = `
   fieldDescription
   fieldEmailAddress
   fieldPhoneNumber
+  fieldCompleteBiographyCreate
   fieldCompleteBiography { entity { url } }
   fieldOffice {
       entity {
@@ -53,7 +54,7 @@ const personProfileFragment = `
           }
         }
       }
-    }    
+    }
   }
   fieldBody {
     processed

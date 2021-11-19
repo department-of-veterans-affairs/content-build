@@ -17,20 +17,20 @@
       {% endif %}
     </div>
     <div class="vads-u-flex--1">
-      <p class="
+        <p class="
             vads-u-margin-top--0
             vads-u-font-family--serif
             vads-u-font-weight--bold
             vads-u-display--block
             vads-u-margin-bottom--0
             vads-u-font-size--md">
-        {% if bio.entityUrl.path == empty or !bio.fieldIntroText or !bio.fieldBody.processed %}
-          {{ bio.fieldNameFirst }}
-          {{ bio.fieldLastName }} {{ bio.fieldSuffix }}
-        {% else %}
+          {% if bio.fieldCompleteBiographyCreate %}
           <a class="bioLink" href="{{ bio.entityUrl.path }}">{{ bio.fieldNameFirst }}
             {{ bio.fieldLastName }} {{ bio.fieldSuffix }}</a>
-        {% endif %}</p>
+          {% else %}
+            {{ bio.fieldNameFirst }} {{ bio.fieldLastName }} {{ bio.fieldSuffix }}
+          {% endif %}
+        </p>
       {% if bio.fieldDescription %}
         <p class="
         vads-u-font-weight--normal

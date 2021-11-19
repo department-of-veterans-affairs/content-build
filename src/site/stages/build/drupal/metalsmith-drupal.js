@@ -17,6 +17,7 @@ const {
   addGetUpdatesFields,
   addPager,
 } = require('./health-care-region');
+const createReactPages = require('../plugins/create-react-pages');
 
 const { addHubIconField } = require('./benefit-hub');
 const { addHomeContent } = require('./home');
@@ -68,6 +69,9 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
         break;
       case 'health_care_region_detail_page':
       case 'vamc_system_policies_page':
+      case 'vamc_system_billing_insurance':
+      case 'vamc_system_register_for_care':
+      case 'vamc_system_medical_records_offi':
         addGetUpdatesFields(pageCompiled, pages);
         break;
       case 'event_listing':
@@ -314,6 +318,7 @@ function getDrupalContent(buildOptions) {
 
       await loadCachedDrupalFiles(buildOptions, files);
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
+      await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);
       log('Successfully piped Drupal content into Metalsmith!');
       buildOptions.drupalData = drupalData;

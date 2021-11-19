@@ -1,3 +1,12 @@
+const table = require('table').table;
+
+const tableConfig = {
+  columns: {
+    0: { width: 15 },
+    1: { width: 100 },
+  },
+};
+
 /**
  * Callback from a11y check that logs aXe violations to console output.
  *
@@ -10,20 +19,30 @@ const processAxeCheckResults = violations => {
     violations.length === 1 ? ' was' : 's were'
   } detected`;
 
-  // Pluck specific keys to keep the table readable.
   const violationData = violations.map(
-    ({ id, impact, description, nodes }) => ({
-      id,
-      impact,
-      description,
-      target: nodes[0].target,
-      html: nodes[0].html,
-      nodes: nodes.length,
-    }),
+    ({ id, impact, description, nodes, help, helpUrl }) => [
+      ['id', id],
+      ['impact', impact],
+      ['description', description],
+      ['help', help],
+      ['help URL', helpUrl],
+      ['target', nodes.map(node => node.target).join('\n\n')],
+      ['html', nodes.map(node => node.html).join('\n\n')],
+      ['failure summary', nodes.map(node => node.failureSummary).join('\n\n')],
+      ['nodes', nodes.length],
+    ],
   );
 
-  cy.task('log', violationMessage);
-  cy.task('table', violationData);
+  cy.url().then(url => {
+    const prodURL = url.replace(Cypress.config().baseUrl, `https://www.va.gov`);
+    assert.fail(
+      violations.length,
+      0,
+      `\n\n${prodURL}\n\n${violationMessage}\n\n${violationData.map(violation =>
+        table(violation, tableConfig),
+      )}`,
+    );
+  });
 };
 
 /**
@@ -63,5 +82,7 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
     : axeBuilder;
 
   Cypress.log();
-  cy.checkA11y(context, axeConfig, processAxeCheckResults);
+  cy.checkA11y(context, axeConfig, processAxeCheckResults, {
+    skipFailures: true,
+  });
 });

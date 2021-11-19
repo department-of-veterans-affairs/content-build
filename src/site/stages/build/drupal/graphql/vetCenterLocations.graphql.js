@@ -20,76 +20,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
   entityBundle
   entityLabel
   fieldIntroText
-  fieldNearbyVetCenters {
-    entity {
-      ... on NodeVetCenter {
-        fieldFacilityLocatorApiId
-        entityPublished
-        title
-        entityBundle
-        fieldOperatingStatusFacility
-        fieldOperatingStatusMoreInfo
-        fieldAddress {
-          locality
-          administrativeArea
-          postalCode
-          addressLine1
-          organization
-        }        
-        fieldPhoneNumber
-        ${derivativeImage('_32MEDIUMTHUMBNAIL')}                           
-      }          
-      ... on NodeVetCenterOutstation {
-        fieldFacilityLocatorApiId
-        entityPublished
-        title
-        entityBundle
-        fieldOperatingStatusFacility
-        fieldOperatingStatusMoreInfo
-        fieldAddress {
-          locality
-          administrativeArea
-          postalCode
-          addressLine1
-          organization
-        }
-        fieldPhoneNumber
-        ${derivativeImage('_32MEDIUMTHUMBNAIL')}             
-      }
-      ... on NodeVetCenterCap {
-        fieldFacilityLocatorApiId
-        entityPublished
-        title
-        entityBundle
-        fieldOperatingStatusFacility
-        fieldOperatingStatusMoreInfo
-        fieldAddress {
-          locality
-          administrativeArea
-          postalCode
-          addressLine1
-          organization
-        }        
-        ${derivativeImage('_32MEDIUMTHUMBNAIL')}                           
-      }
-      ... on NodeVetCenterMobileVetCenter {
-        fieldFacilityLocatorApiId
-        entityPublished
-        title
-        entityBundle              
-        fieldAddress {
-          locality
-          administrativeArea
-          postalCode
-          addressLine1
-          addressLine2          
-          organization
-        }      
-        fieldPhoneNumber
-        ${derivativeImage('_32MEDIUMTHUMBNAIL')}                            
-      }              
-    } 
-  }
   fieldNearbyMobileVetCenters {
     entity {
       ... on NodeVetCenter {
@@ -159,6 +89,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
             ... on NodeVetCenterCap {
               title
               entityBundle
+              fieldFacilityLocatorApiId
               fieldOperatingStatusFacility
               fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
@@ -174,6 +105,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
             ... on NodeVetCenterOutstation {
               title
               entityBundle
+              fieldFacilityLocatorApiId
               fieldOperatingStatusFacility
               fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
@@ -182,24 +114,25 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 administrativeArea
                 postalCode
                 addressLine1
-                addressLine2                
+                addressLine2
                 organization
               }
-              fieldPhoneNumber              
+              fieldPhoneNumber
             }
             ... on NodeVetCenterMobileVetCenter {
               title
               entityBundle
+              fieldFacilityLocatorApiId
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
               fieldAddress {
                 locality
                 administrativeArea
                 postalCode
                 addressLine1
-                addressLine2                
+                addressLine2
                 organization
               }
-              fieldPhoneNumber              
+              fieldPhoneNumber
             }
           }
         }
@@ -213,6 +146,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           addressLine2
           organization
         }
+        fieldFacilityLocatorApiId
         fieldPhoneNumber
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
@@ -224,7 +158,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
 
 const GetVetCenterLocations = `
   ${vetCenterLocationsFragment}
-  
+
   query GetVetCenterLocations${
     !draftContentOverride ? '($onlyPublishedContent: Boolean!)' : ''
   } {

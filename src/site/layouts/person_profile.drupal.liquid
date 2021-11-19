@@ -1,5 +1,4 @@
 {% include "src/site/includes/header.html" %}
-{% include "src/site/includes/alerts.drupal.liquid" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true deriveBreadcrumbsFromUrl = true %}
 
@@ -71,29 +70,28 @@
                         </div>
                     </div>
 
-                    {% if fieldIntroText %}
+
+                    {% if fieldCompleteBiographyCreate %}
                         <div class="va-introtext vads-u-margin-bottom--2">
                             <p class="va-introtext vads-u-margin-bottom--0">{{ fieldIntroText }}</p>
                         </div>
-                    {% endif %}
 
-                    {% if fieldBody %}
-                    <div class="vads-u-margin-bottom--2">
-                        {{ fieldBody.processed }}
-                    </div>
-                    {% endif %}
+                        <div class="vads-u-margin-bottom--2">
+                            {{ fieldBody.processed }}
+                        </div>
 
-                    {% if fieldPhotoAllowHiresDownload and fieldMedia %}
-                    <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2" id="download-full-size-photo-link">
-                        <i class="va-c-social-icon fas fa-download" aria-hidden="true"></i> <a href="{{ fieldMedia.hiRes.image.derivative.url }}"
-                            download>Download full size photo</a>
-                    </div>
-                    {% endif %}
-                    {% if fieldCompleteBiography %}
-                    <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2">
-                        <i class="va-c-social-icon fas fa-download"></i> <a href="{{ fieldCompleteBiography.entity.url }}"
-                            download>Download full bio (PDF)</a>
-                    </div>
+                        {% if fieldPhotoAllowHiresDownload and fieldMedia %}
+                            <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2" id="download-full-size-photo-link">
+                                <i class="va-c-social-icon fas fa-download" aria-hidden="true"></i> <a href="{{ fieldMedia.hiRes.image.derivative.url }}"
+                                    download>Download full size photo</a>
+                            </div>
+                        {% endif %}
+                        {% if fieldCompleteBiography %}
+                            <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2">
+                                <i class="va-c-social-icon fas fa-download"></i> <a href="{{ fieldCompleteBiography.entity.url }}"
+                                    download>Download full bio (PDF)</a>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </article>
 
