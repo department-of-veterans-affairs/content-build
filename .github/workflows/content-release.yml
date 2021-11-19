@@ -206,7 +206,7 @@ jobs:
       always() &&
       needs.set-env.result == 'success' &&
       needs.validate-build-status.result == 'success' &&
-      needs.start-runner.result == 'success'
+      needs.start-runner.result == 'success' &&
       needs.wait-for-current-workflow-to-complete.result == 'success'
 
     defaults:
