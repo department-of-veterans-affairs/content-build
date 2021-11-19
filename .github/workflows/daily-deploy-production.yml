@@ -407,7 +407,7 @@ jobs:
 
       - name: Waiting to release
         run: |
-          echo 'Waiting to release: https://github.com/${{ github.repository }}/compare/${{steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}...${{ needs.set-env.outputs.COMMIT_SHA }}'
+          echo 'Waiting to release: https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...${{ needs.set-env.outputs.COMMIT_SHA }}'
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         uses: whatnick/wait-action@master
