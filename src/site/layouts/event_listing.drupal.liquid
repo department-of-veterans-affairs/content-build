@@ -92,5 +92,11 @@
     </div>
   </main>
 </div>
+
+<script nonce="**CSP_NONCE**" type="text/javascript">
+  window.allEventTeasers = {{ allEventTeasers | json }};
+  window.pastEvents = {{ pastEvents | json }};
+</script>
+
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
