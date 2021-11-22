@@ -62,7 +62,7 @@ jobs:
 
       - name: Start EC2 Runner
         id: start-ec2-runner
-        uses: machulav/ec2-github-runner@v2
+        uses: oseasmoran73/ec2-github-runner@v2
         with:
           mode: start
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
@@ -516,7 +516,7 @@ jobs:
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Stop Runner
-        uses: machulav/ec2-github-runner@v2
+        uses: oseasmoran73/ec2-github-runner@v2
         with:
           mode: stop
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
