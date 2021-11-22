@@ -66,9 +66,6 @@
               </div>
             </div>
           {%  endif %}
-          {% if lang != "en" %}
-            <va-back-to-top></va-back-to-top>
-          {%  endif %}
         </article>
 
         <div class="last-updated usa-content">
@@ -76,6 +73,9 @@
         </div>
       </div>
     </main>
+    {% if lang != "en" %}
+      {% include "src/site/components/up_to_top_button.html" %}
+    {%  endif %}
   </div>
 </div>
 
