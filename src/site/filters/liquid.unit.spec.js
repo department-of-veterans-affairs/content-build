@@ -6,6 +6,7 @@ import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_cen
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
+import sidebarData from './fixtures/sidebarData.json';
 
 const _ = require('lodash');
 
@@ -529,6 +530,32 @@ describe('hashReference', () => {
     expect(liquid.filters.hashReference('  Testing one two three   ')).to.eq(
       'testing-one-two-three',
     );
+  });
+
+  it('returns hyphenated string in all lowercase', () => {
+    expect(liquid.filters.hashReference('Lorem IPSUM dolor SIT amet')).to.eq(
+      'lorem-ipsum-dolor-sit-amet',
+    );
+  });
+  it('returns hyphenated string without punctuation', () => {
+    expect(liquid.filters.hashReference('lorem, ipsum. dolor; sit amet')).to.eq(
+      'lorem-ipsum-dolor-sit-amet',
+    );
+  });
+  it('returns hyphenated string at a set length', () => {
+    expect(
+      liquid.filters.hashReference('lorem ipsum dolor sit amet', 20),
+    ).to.eq('lorem-ipsum-dolor-si');
+  });
+  it('returns hyphenated string with normalized & stripped out diacritics', () => {
+    // normalize diacritics:
+    // \u00e9 = é (single character e with acute accent)
+    // e\u0301 = é (e + combining acute accent)
+    // \u00f1 = ñ (single character n with tilde)
+    // n\u0303 = ñ (n + combining tilde)
+    expect(
+      liquid.filters.hashReference('a \u00e9 e\u0301 \u00f1 n\u0303'),
+    ).to.eq('a-e-e-n-n');
   });
 });
 
@@ -1059,7 +1086,7 @@ describe('rejectBy', () => {
 describe('encode', () => {
   it('encodes strings', () => {
     expect(liquid.filters.encode("foo © bar ≠ baz 𝌆 qux''")).to.equal(
-      'foo &copy; bar &ne; baz &#x1D306; qux&amp;apos;&apos;',
+      'foo &copy; bar &ne; baz &#x1D306; qux&apos;&apos;',
     );
   });
 
@@ -1804,5 +1831,181 @@ describe('processCentralizedContent', () => {
     expect(
       liquid.filters.processCentralizedContent(testData, 'react_widget'),
     ).to.deep.eq(expected);
+  });
+});
+
+describe('filterSidebarData', () => {
+  it('returns null if sidebar data is null', () => {
+    expect(liquid.filters.filterSidebarData(null)).to.be.null;
+  });
+
+  it('returns null if arguments are not passed', () => {
+    expect(liquid.filters.filterSidebarData()).to.be.null;
+  });
+
+  it('returns sidebarData with published facilities only', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      false,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns sidebarData with published facilities if second argument is not passed - isPreview defaults to false', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(clonedSidebarData);
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns sidebarData with published and draft facilities IF in preview mode', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
+      {
+        label: 'Fayetteville VA Medical Center',
+        entity: {
+          linkedEntity: {
+            entityPublished: false,
+            moderationState: 'draft',
+          },
+        },
+      },
+      {
+        label: 'Brunswick County VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+      {
+        label: 'Jacksonville 2 VA Clinic',
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+      },
+    ];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns empty array if array of facilities is empty', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+    clonedSidebarData.links[0].links[0].links[1].links = [];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal([]);
+  });
+});
+
+describe('sliceArray', () => {
+  it('returns null if array is null', () => {
+    expect(liquid.filters.sliceArray(null, 0, 5)).to.be.null;
+  });
+
+  it('returns first 5 elements - startIndex = 0, endIndex = 5', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [1, 2, 3, 4, 5];
+
+    expect(liquid.filters.sliceArray(testArray, 0, 5)).to.deep.eq(expected);
+  });
+
+  it('returns elements from startIndex = 2 and on, if an endIndex is not passed in', () => {
+    const testArray = [1, 2, 3, 4, 5, 6];
+    const expected = [3, 4, 5, 6];
+
+    expect(liquid.filters.sliceArray(testArray, 2)).to.deep.eq(expected);
+  });
+});
+
+describe('isVisn8', () => {
+  it('returns null if data is null', () => {
+    expect(liquid.filters.isVisn8(null)).to.be.null;
+  });
+
+  it('returns true if string = "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 | more text')).to.be.true;
+  });
+
+  it('returns true if string = "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 |')).to.be.true;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 9 | more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 9 more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('VISN 8 more text')).to.be.false;
+  });
+
+  it('returns false if string does NOT equal "VISN 8"', () => {
+    expect(liquid.filters.isVisn8('| VISN 8 |')).to.be.false;
   });
 });

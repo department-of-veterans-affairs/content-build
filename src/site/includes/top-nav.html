@@ -11,8 +11,12 @@
     <div class="va-notice--banner-inner">
       {% include "src/site/includes/usa-website-header.html" %}
     </div>
-    <div class="va-crisis-line-container">
-      <button onclick="recordEvent({ event: 'nav-crisis-header' })" data-show="#modal-crisisline" class="va-crisis-line va-overlay-trigger">
+    <div class="va-crisis-line-container vads-u-background-color--secondary-darkest">
+      <button
+        class="va-crisis-line va-overlay-trigger vads-u-background-color--secondary-darkest"
+        data-show="#modal-crisisline"
+        onclick="recordEvent({ event: 'nav-crisis-header' })"
+      >
         <div class="va-crisis-line-inner">
           <span class="va-crisis-line-icon" aria-hidden="true"></span>
           <span class="va-crisis-line-text" onClick="recordEvent({ event: 'nav-jumplink-click' });">Talk to the <strong>Veterans Crisis Line</strong> now</span>

@@ -99,7 +99,7 @@ describe('Vet Center Main Page', () => {
 
   it('renders header and intro text', () => {
     expect(container.querySelector('h1').innerHTML).to.equal(
-      testData.entityLabel,
+      testData.fieldOfficialName,
     );
     expect(container.querySelector('div.va-introtext > p').innerHTML).to.equal(
       testData.fieldIntroText,

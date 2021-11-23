@@ -125,4 +125,8 @@ describe('intro', () => {
       '/health-care/view-test-and-lab-results/',
     ]);
   });
+
+  it('Should display at most 8 link teasers', async () => {
+    expect(container.querySelectorAll('.link-teaser').length).to.eq(8);
+  });
 });

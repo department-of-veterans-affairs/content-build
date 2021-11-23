@@ -72,6 +72,16 @@
                               href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
                         </div>
                       {% endif %}
+                      {% if facilitySidebar.description %}
+                        {% assign shouldAddVaHealthConnectNumber = ''| featureAddVaHealthConnectNumber %}
+                        {% assign isVisn8 = facilitySidebar.description | isVisn8 %}
+                        {% if shouldAddVaHealthConnectNumber == true and isVisn8 == true %}
+                          <div class="vads-u-margin-bottom--1">
+                            <strong>VA health connect:</strong>
+                            <a href="tel:877-741-3400">877-741-3400</a>
+                          </div>
+                        {% endif %}
+                      {% endif %}
                       {% if fieldMentalHealthPhone %}
                         <div class="mental-health-clinic-phone"><strong>Mental
                             health clinic:
@@ -129,7 +139,7 @@
                   class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
               <p>Click on a topic for more details.</p>
-              <va-accordion bordered>
+              <va-accordion section-heading="Prepare for your visit" bordered>
                 {% for accordionItem in fieldLocationServices %}
                   {% assign item = accordionItem.entity %}
                   {% comment %}

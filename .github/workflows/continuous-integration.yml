@@ -10,7 +10,7 @@ on:
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
-  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-support
+  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
@@ -108,7 +108,7 @@ jobs:
 
     env:
       # Sandbox Drupal address is used on branches other than master.
-      DRUPAL_ADDRESS: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+      DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
@@ -117,9 +117,9 @@ jobs:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
           - buildtype: vagovdev
-            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+            drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovstaging
-            drupal-address: https://cms-vets-website-branch-builds-lo9uhqj18nwixunsjadvjsynuni7kk1u.ci.cms.va.gov
+            drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
@@ -344,17 +344,20 @@ jobs:
         run: node script/app-coverage-report.js > test-results/coverage_report.txt
 
       - name: Get code coverage
+        if: ${{ always() }}
         id: code-coverage
         run: echo ::set-output name=MARKDOWN::$(node ./script/github-actions/code-coverage-format-report.js)
 
       - name: Publish test results
         if: ${{ always() }}
+        continue-on-error: true
         uses: mikepenz/action-junit-report@v2.6.0
         with:
           check_name: 'Unit Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_paths: 'test-results/unit-tests.xml'
           summary: ${{ steps.code-coverage.outputs.MARKDOWN }}
+          fail_on_failure: 'true'
 
   linting:
     name: Linting
@@ -557,7 +560,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: cypress-mochawesome-test-results
-          path: testing-tools-team-dashboard-data/src/mochawesome/data
+          path: testing-tools-team-dashboard-data/src/testing-reports/data
 
       - name: Get BigQuery service credentials
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
@@ -596,7 +599,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: cypress-video-artifacts
-          path: testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }}
+          path: testing-tools-team-dashboard-data/testing-reports/videos/${{ env.UUID }}
 
       - name: Get AWS IAM role
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
@@ -648,11 +651,10 @@ jobs:
         drupal-cache-test,
       ]
 
-    # TODO: Add vagovprod when ready
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging]
+        buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
       - name: Restore ${{ matrix.buildtype }} build
