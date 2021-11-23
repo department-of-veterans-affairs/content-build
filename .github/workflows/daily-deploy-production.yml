@@ -62,7 +62,7 @@ jobs:
 
       - name: Start EC2 Runner
         id: start-ec2-runner
-        uses: machulav/ec2-github-runner@v2
+        uses: oseasmoran73/ec2-github-runner@main
         with:
           mode: start
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
@@ -70,6 +70,7 @@ jobs:
           ec2-instance-type: ${{ env.INSTANCE_TYPE }}
           subnet-id: ${{ env.SUBNET_ID }}
           security-group-id: sg-0e23b56be3798e3a1
+          max_attempts: 3
           aws-resource-tags: >
             [
               {"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"},
@@ -516,7 +517,7 @@ jobs:
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Stop Runner
-        uses: machulav/ec2-github-runner@v2
+        uses: oseasmoran73/ec2-github-runner@main
         with:
           mode: stop
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
