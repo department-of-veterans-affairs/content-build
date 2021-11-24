@@ -199,6 +199,9 @@ jobs:
       run:
         working-directory: content-build
 
+    outputs:
+      vagovprod_buildtime: ${{ env.vagovprod_buildtime }}
+
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       BUILDTYPE: vagovprod
@@ -257,6 +260,13 @@ jobs:
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links.js {{ env.BUILDTYPE }}
 
+      - name: Get buildtime
+        id: buildtime
+        run: |
+          BUILDTIME=$(date +%s)
+          echo ::set-output name=buildtime::$BUILDTIME
+          echo "{{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+
       - name: Generate build details
         run: |
           cat > build/${{ env.BUILDTYPE }}/BUILD.txt << EOF
@@ -267,7 +277,7 @@ jobs:
           RUN_ID=${{ github.run_id }}
           RUN_NUMBER=${{ github.run_number }}
           REF=${{ needs.set-env.outputs.COMMIT_SHA }}
-          BUILDTIME=$(date +%s)
+          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
           EOF
 
       - name: Prearchive
@@ -436,7 +446,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: [set-env, create-release]
+    needs: [set-env, build, create-release]
 
     env:
       ENVIRONMENT: vagovprod
@@ -459,6 +469,12 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
+      - name: Get Drupal token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/vets-website/prod/drupal-password
+          env_variable_name: CALLBACK_TOKEN
+
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -474,6 +490,15 @@ jobs:
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ needs.set-env.outputs.COMMIT_SHA }}/${{ env.ENVIRONMENT }}.tar.bz2
           DEST: s3://${{ env.BUCKET }}
+
+      - name: CMS GovDelivery callback
+        uses: fjogeleit/http-request-action@master
+        continue-on-error: true
+        with:
+          url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}
+          method: POST
+          username: api
+          password: ${{ env.CALLBACK_TOKEN }}
 
   notify-failure:
     name: Notify Failure
