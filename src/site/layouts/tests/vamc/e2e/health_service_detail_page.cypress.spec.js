@@ -7,7 +7,7 @@ Cypress.Commands.add('checkElements', page => {
     .should('be.gte', 1);
 });
 
-describe('VAMC health services detail page', () => {
+describe.skip('VAMC health services detail page', () => {
   const pagesToTest = [
     '/pittsburgh-health-care/health-services/caregiver-support',
     '/pittsburgh-health-care/health-services/homeless-veteran-care',
