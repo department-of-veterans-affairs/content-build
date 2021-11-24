@@ -50,28 +50,6 @@ const nodeCampaignLandingPage = `
         }
       }
     }
-    fieldClpConnectWithUs {
-      entity {
-        entityType
-        entityBundle
-        entityId
-        ... on TaxonomyTermAdministration {
-          name
-          fieldDescription
-          fieldEmailUpdatesLinkText
-          fieldEmailUpdatesUrl
-          fieldLink {
-            uri
-            title
-          }
-          fieldSocialMediaLinks {
-            platform
-            value
-            platformValues
-          }
-        }
-      }
-    }
     fieldClpEventsHeader
     fieldClpEventsPanel
     fieldClpEventsReferences {
