@@ -172,7 +172,7 @@
                       {% if socialPlatform = "youtube_channel" %}
                         <li>
                           <a href="http://youtube.com/channel/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
-                            <i class="fab fa-youtube vads-u-padding-right--1"></i>
+                            <i class="fab fa-youtube vads-u-padding-right--1" aria-hidden="true"></i>
                             {{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | remove: '_' | capitalize }}
                           </a>
                         </li>
