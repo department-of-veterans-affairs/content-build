@@ -627,9 +627,15 @@ jobs:
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
           jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
+      - name: Get datadog token from ssm
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/common/datadog/api_key
+          env_variable_name: VAGOV_CMS_DATADOG_API_KEY
+
       - name: Send metrics to Datadog
         run: |
           curl -X POST "https://api.datadoghq.com/api/v1/series" \
           -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ secrets.VAGOV_CMS_DATADOG_API_KEY }}" \
+          -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
           -d @- << metrics.json
