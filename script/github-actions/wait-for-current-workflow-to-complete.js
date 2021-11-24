@@ -21,7 +21,7 @@ const dailyDeployParams = {
 const contentReleaseParams = {
   owner,
   repo,
-  workflow_id: 'content-release.yml',
+  workflow_id: 'content-release-v2.yml',
   status: 'in_progress',
 };
 
