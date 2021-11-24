@@ -186,6 +186,7 @@ jobs:
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
+    timeout-minutes: 30
     needs:
       [
         set-env,

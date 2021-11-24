@@ -198,6 +198,7 @@ jobs:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, validate-build-status, start-runner, wait-for-current-workflow-to-complete]
+    timeout-minutes: 30
     if: |
       always() &&
       needs.set-env.result == 'success' &&
