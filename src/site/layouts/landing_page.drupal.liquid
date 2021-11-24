@@ -1,7 +1,8 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" %}
-<div id="content" class="interior">
+
+<div id="content" class="interior" data-template="layouts/landing_page">
   <main>
     <div class="usa-grid usa-grid-full">
       <article class="usa-width-two-thirds">
@@ -13,25 +14,25 @@
           <div class="inline hub-main-title">
             <h1>{{ title }}</h1>
           </div>
-
         {% else %}
-        <h1>{{ title }}</h1>
+          <h1>{{ title }}</h1>
         {% endif %}
+
         <div class="va-introtext">
           <p>{{ fieldIntroText }}</p>
         </div>
+
         {% if fieldSpokes != empty and fieldSpokes.length > 1 %}
-        <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg" aria-labelledby="on-this-page">On this page</h2>
-        <ul>
-          {% for spoke in fieldSpokes %}
-          <li>
-            <a
-              href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: title }}{% endif %}">
-              {{ spoke.entity.fieldTitle }}
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
+          <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg" aria-labelledby="on-this-page">On this page</h2>
+          <ul>
+            {% for spoke in fieldSpokes %}
+              <li>
+                <a href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: title }}{% endif %}">
+                  {{ spoke.entity.fieldTitle }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
         {% endif %}
 
         {% if fieldAlert.length %}
@@ -47,105 +48,161 @@
         {% endif %}
 
         {% if fieldSpokes != empty %}
-        {% for spoke in fieldSpokes %}
-        <section class="usa-grid">
-          <div class="va-h-ruled--stars"></div>
-        </section>
-        {% include "src/site/paragraphs/list_of_link_teasers.drupal.liquid" with entity = spoke.entity parentFieldName = 'field_spokes' %}
-        {% endfor %}
-        {%  endif %}
+          {% for spoke in fieldSpokes %}
+            <section class="usa-grid">
+              <div class="va-h-ruled--stars"></div>
+            </section>
+
+            {% include "src/site/paragraphs/list_of_link_teasers.drupal.liquid" with entity = spoke.entity parentFieldName = 'field_spokes' %}
+          {% endfor %}
+        {% endif %}
         {% if fieldRelatedLinks != empty %}
-        <section
-          class="merger-majorlinks va-nav-linkslist va-nav-linkslist--related">
-          {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' entity = fieldRelatedLinks.entity boldTitle = true %}
-        </section>
-        {%  endif %}
+          <section class="merger-majorlinks va-nav-linkslist va-nav-linkslist--related">
+            {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' entity = fieldRelatedLinks.entity boldTitle = true %}
+          </section>
+        {% endif %}
 
         <div class="last-updated usa-content">
-          Last updated: <time
-            datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
+          Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
         </div>
       </article>
 
       <div class="usa-width-one-third" id="hub-rail">
         {% if fieldPromo != empty %}
-        {% include "src/site/blocks/promo.drupal.liquid" with entity = fieldPromo.entity %}
+          {% include "src/site/blocks/promo.drupal.liquid" with entity = fieldPromo.entity %}
         {% endif %}
 
         <va-accordion bordered multi>
           <va-accordion-item level="3" open="true" header="Ask questions">
-              <section>
-                <h4>Message us</h4>
-                <ul class="va-nav-linkslist-list social">
-                  <li data-widget-type="ask-va"></li>
-                </ul>
-              </section>
+            <section>
+              <h4>Message us</h4>
+              <ul class="va-nav-linkslist-list social">
+                <li data-widget-type="ask-va"></li>
+              </ul>
+            </section>
 
-              {% if fieldSupportServices != empty %}
+            {% if fieldSupportServices != empty %}
               <section>
                 <h4>Call us</h4>
                 <ul class="va-nav-linkslist-list social">
                   {% for supportService in fieldSupportServices %}
-                  {% assign service = supportService.entity %}
-                  <li>
-                    {% if service.fieldPhoneNumber %}
-                      <a href="{{ service.fieldLink.url.path }}"
-                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
-                        <span>{{ service.title }}</span><br>
-                        <span>{{ service.fieldPhoneNumber }}</span>
-                      </a>
-                    <!-- It was requested that we hardcode in the aria-label and href for the TTY service -->
-                    <!-- see: https://github.com/department-of-veterans-affairs/va.gov-team/issues/18151#issuecomment-879993959 -->
-                    {% elsif service.title contains "TTY: 711" %}
-                      <a
-                        href="tel:+1711"
-                        aria-label="TTY: 7 1 1."
-                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
-                      >
-                        <span>{{ service.title }}</span><br>
-                      </a>
-                    {% elsif service.fieldLink.url.path %}
-                      <a href="{{ service.fieldLink.url.path }}"
-                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
-                        <span>{{ service.title }}</span><br>
-                      </a>
-                    {% else %}
-                      {{ service.title }}
-                    {% endif %}
-                  </li>
+                    {% assign service = supportService.entity %}
+
+                    <li>
+                      {% if service.fieldPhoneNumber %}
+                        <a href="{{ service.fieldLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
+                          <span>{{ service.title }}</span><br>
+                          <span>{{ service.fieldPhoneNumber }}</span>
+                        </a>
+                      <!-- It was requested that we hardcode in the aria-label and href for the TTY service -->
+                      <!-- see: https://github.com/department-of-veterans-affairs/va.gov-team/issues/18151#issuecomment-879993959 -->
+                      {% elsif service.title contains "TTY: 711" %}
+                        <a
+                          aria-label="TTY: 7 1 1."
+                          href="tel:+1711"
+                          onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
+                        >
+                          <span>{{ service.title }}</span><br>
+                        </a>
+                      {% elsif service.fieldLink.url.path %}
+                        <a href="{{ service.fieldLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
+                          <span>{{ service.title }}</span><br>
+                        </a>
+                      {% else %}
+                        {{ service.title }}
+                      {% endif %}
+                    </li>
                   {% endfor %}
                 </ul>
               </section>
-              {% endif %}
+            {% endif %}
           </va-accordion-item>
 
-        {% if fieldLinks != empty and fieldLinks.length > 0 %}
-          <va-accordion-item level="3" open="true" header="Not a Veteran?">
-            <section>
-              <h4>Get information for:</h4>
-              <ul class="va-nav-linkslist-list links">
-                {% for link in fieldLinks %}
-                <li>
-                  <a href="{{ link.url.path }}"
-                    onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Not a Veteran?' });">
-                    <span>{{ link.title }}</span>
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
-            </section>
-          </va-accordion-item>
-        {% endif %}
+          {% if fieldLinks != empty and fieldLinks.length > 0 %}
+            <va-accordion-item level="3" open="true" header="Not a Veteran?">
+              <section>
+                <h4>Get information for:</h4>
+                <ul class="va-nav-linkslist-list links">
+                  {% for link in fieldLinks %}
+                    <li>
+                      <a href="{{ link.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Not a Veteran?' });">
+                        <span>{{ link.title }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+            </va-accordion-item>
+          {% endif %}
         </va-accordion>
 
-        {% if fieldAdministration != empty and fieldAdministration.entity.name != "Records benefits hub" %}
-          {% include "src/site/components/administration-hub-rail.drupal.liquid" administration = fieldAdministration.entity %}
+        <!-- Connect with us -->
+        {% if fieldRelatedOffice != empty and fieldRelatedOffice.entity.fieldExternalLink.title != "Records benefits hub" %}
+          <va-accordion bordered class="social">
+            <va-accordion-item level="3" header="Connect with us" open="true">
+              {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
+                <h4 class="va-nav-linkslist-list">
+                  <a href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                    {{ fieldRelatedOffice.entity.fieldExternalLink.title }}
+                  </a>
+                </h4>
+              {% endif %}
+
+              <section>
+                <h4>Get updates</h4>
+                  <ul class="va-nav-linkslist-list social">
+                    <li>
+                      <a href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                        <i class="fas fa-envelope vads-u-padding-right--1"></i>
+                        {{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}
+                      </a>
+                    </li>
+                </ul>
+              </section>
+
+              <section>
+                <h4>Follow us</h4>
+                <ul class="va-nav-linkslist-list social">
+                  {% assign socialLinks =  fieldRelatedOffice.entity.fieldSocialMediaLinks.platformValues | jsonToObj %}
+                  {% assign socialPlatforms = socialLinks | keys %}
+
+                  {% for socialPlatform in socialPlatforms %}
+                    {% assign socialLink = socialLinks | get: socialPlatform  %}
+                    {% if socialLink.value %}
+                      {% if socialPlatform = "youtube_channel" %}
+                        <li>
+                          <a href="http://youtube.com/channel/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                            <i class="fab fa-youtube vads-u-padding-right--1"></i>
+                            {{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | remove: '_' | capitalize }}
+                          </a>
+                        </li>
+                      {% elsif socialPlatform == "youtube" %}
+                        <li>
+                          <a href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                            <i class="fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
+                            {{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube
+                          </a>
+                        </li>
+                      {% else %}
+                        <li>
+                          <a href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                            <i class="fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
+                            {{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | capitalize }}
+                          </a>
+                        </li>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </section>
+            </va-accordion-item>
+          </va-accordion>
         {% endif %}
       </div>
     </div>
-
   </main>
 </div>
+
 {% include "src/site/includes/veteran-banner.html" %}
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

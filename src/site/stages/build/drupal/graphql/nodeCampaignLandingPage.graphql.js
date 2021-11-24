@@ -518,6 +518,27 @@ const nodeCampaignLandingPage = `
         ... button
       }
     }
+    fieldRelatedOffice {
+      entity {
+        ... on NodeOffice {
+          fieldExternalLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldEmailUpdatesLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldSocialMediaLinks {
+            platformValues
+          }
+        }
+      }
+    }
     fieldSecondaryCallToAction {
       entity {
         entityType
