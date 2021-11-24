@@ -208,6 +208,7 @@ jobs:
         start-runner,
         wait-for-current-workflow-to-complete,
       ]
+    timeout-minutes: 30
     if: |
       always() &&
       needs.set-env.result == 'success' &&
