@@ -423,7 +423,7 @@ jobs:
     needs: [start-runner, build]
     timeout-minutes: 30
     container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome90-ff88
+      image: public.ecr.aws/cypress-io/cypress/included:8.3.0
       options: -u 0
       volumes:
         - /usr/local/share:/share
