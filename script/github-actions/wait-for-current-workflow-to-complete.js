@@ -18,6 +18,7 @@ const dailyDeployParams = {
   status: 'in_progress',
 };
 
+// TODO: Rename back to content-release when resolved
 const contentReleaseParams = {
   owner,
   repo,
