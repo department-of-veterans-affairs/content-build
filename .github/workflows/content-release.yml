@@ -14,11 +14,11 @@ on:
         options:
           - prod
   schedule:
-    - cron: "0 14-17,21-22 * * 1-5"
-    - cron: "45 18 * * 1-5"
+    - cron: '0 14-17,21-22 * * 1-5'
+    - cron: '45 18 * * 1-5'
 
 concurrency:
-  group: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
+  group: content-release-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
   cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' }}
 
 env:
@@ -66,7 +66,7 @@ jobs:
 
       - name: Start EC2 Runner
         id: start-ec2-runner
-        uses: machulav/ec2-github-runner@v2
+        uses: oseasmoran73/ec2-github-runner@main
         with:
           mode: start
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
@@ -74,6 +74,7 @@ jobs:
           ec2-instance-type: ${{ env.INSTANCE_TYPE }}
           subnet-id: ${{ env.SUBNET_ID }}
           security-group-id: sg-0e23b56be3798e3a1
+          max_attempts: 3
           aws-resource-tags: >
             [
               {"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"},
@@ -87,8 +88,9 @@ jobs:
   set-env:
     name: Set Env Variables
     runs-on: ubuntu-latest
+    if: always() && needs.wait-for-current-workflow-to-complete.result == 'success'
+    needs: wait-for-current-workflow-to-complete
     outputs:
-      LATEST_TAG_VERSION: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
       RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
       BUILDTYPE: ${{ env.BUILDTYPE }}
@@ -115,10 +117,6 @@ jobs:
           fetch-depth: 0
           ref: ${{ needs.set-env.outputs.REF }}
 
-      - name: Get latest tag
-        id: get-latest-tag
-        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
-
       - name: Get latest release
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
@@ -138,9 +136,34 @@ jobs:
           echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
           echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
+  wait-for-current-workflow-to-complete:
+    name: Wait for current workflow to complete
+    runs-on: ubuntu-latest
+    if: |
+      always() &&
+      ((github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: ~/.cache/yarn
+          path: |
+            ~/.cache/yarn
+            node_modules
+
+      - name: Wait for current workflow to complete
+        run: node ./script/github-actions/wait-for-current-workflow-to-complete.js content-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   validate-build-status:
     name: Validate Build Status
     runs-on: ubuntu-latest
+    if: always() && needs.set-env.result == 'success'
     needs: set-env
 
     steps:
@@ -165,7 +188,7 @@ jobs:
     name: Notify Start
     runs-on: ubuntu-latest
     needs: set-env
-    if: ${{ needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
+    if: ${{ always() && needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
 
     steps:
       - name: Checkout
@@ -183,22 +206,33 @@ jobs:
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: [set-env, validate-build-status, start-runner]
+    needs:
+      [
+        set-env,
+        validate-build-status,
+        start-runner,
+        wait-for-current-workflow-to-complete,
+      ]
+    timeout-minutes: 30
     if: |
       always() &&
       needs.set-env.result == 'success' &&
       needs.validate-build-status.result == 'success' &&
-      needs.start-runner.result == 'success'
+      needs.start-runner.result == 'success' &&
+      needs.wait-for-current-workflow-to-complete.result == 'success'
+
     defaults:
       run:
         working-directory: content-build
     outputs:
+      vagovprod_buildtime: ${{ env.vagovprod_buildtime }}
       BUILD_START_TIME: ${{ steps.export-build-start-time.outputs.BUILD_START_TIME }}
       BUILD_END_TIME: ${{ steps.export-build-end-time.outputs.BUILD_END_TIME }}
       CONTENT_BUILD_START_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_START_TIME }}
       CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_END_TIME }}
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
+
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -252,6 +286,13 @@ jobs:
         id: export-content-build-start-time
         run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
 
+      - name: Get buildtime
+        id: buildtime
+        run: |
+          BUILDTIME=$(date +%s)
+          echo ::set-output name=buildtime::$BUILDTIME
+          echo "${{ needs.set-env.outputs.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+
       - name: Build
         run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
@@ -284,7 +325,7 @@ jobs:
           RUN_ID=${{ github.run_id }}
           RUN_NUMBER=${{ github.run_number }}
           REF=${{ needs.set-env.outputs.REF }}
-          BUILDTIME=$(date +%s)
+          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
           EOF
 
       - name: Prearchive
@@ -434,9 +475,13 @@ jobs:
           ref: ${{ needs.set-env.outputs.REF }}
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
 
+      - name: Get latest tag
+        id: get-latest-tag
+        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+
       - name: Waiting to release
         run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{needs.set-env.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
+          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         uses: whatnick/wait-action@master
@@ -447,7 +492,7 @@ jobs:
         id: bump-tag-version
         uses: WyriHaximus/github-action-next-semvers@v1
         with:
-          version: ${{ needs.set-env.outputs.LATEST_TAG_VERSION }}
+          version: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
 
       - name: Create tag
         run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.REF }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }}
@@ -468,8 +513,11 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: [set-env, create-release]
-    if: ${{ always() && needs.create-release.result == 'success' }}
+    needs: [set-env, build, create-release]
+    if: |
+      always() &&
+      needs.build.result == 'success' &&
+      needs.create-release.result == 'success'
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-create-release-end-time.outputs.DEPLOY_END_TIME }}
 
@@ -490,6 +538,12 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
+      - name: Get Drupal token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/vets-website/prod/drupal-password
+          env_variable_name: CALLBACK_TOKEN
+
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -505,6 +559,15 @@ jobs:
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{needs.set-env.outputs.BUILDTYPE}}.tar.bz2
           DEST: s3://${{ needs.set-env.outputs.DEPLOY_BUCKET }}
+
+      - name: CMS GovDelivery callback
+        uses: fjogeleit/http-request-action@master
+        continue-on-error: true
+        with:
+          url: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}
+          method: POST
+          username: api
+          password: ${{ env.CALLBACK_TOKEN }}
 
       - name: Export deploy end time
         id: export-deploy-end-time
@@ -556,7 +619,7 @@ jobs:
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Stop Runner
-        uses: machulav/ec2-github-runner@v2
+        uses: oseasmoran73/ec2-github-runner@main
         with:
           mode: stop
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
