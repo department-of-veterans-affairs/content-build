@@ -470,7 +470,7 @@ jobs:
     needs: [set-env, build, create-release]
     if: |
       always() &&
-      needs.build.result == 'success'
+      needs.build.result == 'success' &&
       needs.create-release.result == 'success'
 
     steps:
