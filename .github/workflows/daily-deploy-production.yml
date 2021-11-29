@@ -250,6 +250,13 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: Get buildtime
+        id: buildtime
+        run: |
+          BUILDTIME=$(date +%s)
+          echo ::set-output name=buildtime::$BUILDTIME
+          echo "{{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address='${{ env.DRUPAL_ADDRESS }}' --no-drupal-proxy
         timeout-minutes: 30
@@ -259,13 +266,6 @@ jobs:
       - name: Check broken links
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links.js {{ env.BUILDTYPE }}
-
-      - name: Get buildtime
-        id: buildtime
-        run: |
-          BUILDTIME=$(date +%s)
-          echo ::set-output name=buildtime::$BUILDTIME
-          echo "{{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Generate build details
         run: |
