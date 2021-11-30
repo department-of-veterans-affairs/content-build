@@ -241,6 +241,7 @@ jobs:
       - name: Export build start time
         id: export-build-start-time
         run: echo ::set-output name=BUILD_START_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
