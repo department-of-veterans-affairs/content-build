@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Export approximate workflow start time
         id: export-approx-workflow-start-time
-        run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
+        run: echo "::set-output name=APPROX_WORKFLOW_START_TIME::$(date +'%s')"
 
       - name: Cancel workflow due to DSVA schedule
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
@@ -240,7 +240,7 @@ jobs:
     steps:
       - name: Export build start time
         id: export-build-start-time
-        run: echo ::set-output name=BUILD_START_TIME::$(date +"%s")
+        run: echo "::set-output name=BUILD_START_TIME::$(date +'%s')"
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -284,7 +284,7 @@ jobs:
 
       - name: Export content build start time
         id: export-content-build-start-time
-        run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
+        run: echo "::set-output name=CONTENT_BUILD_START_TIME::$(date +'%s')"
 
       - name: Get buildtime
         id: buildtime
@@ -301,15 +301,15 @@ jobs:
 
       - name: Export content build end time
         id: export-content-build-end-time
-        run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
+        run: echo "::set-output name=CONTENT_BUILD_END_TIME::$(date +'%s')"
 
       - name: Export gql query duration
         id: export-gql-query-duration
-        run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
+        run: echo "::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')"
 
       - name: Export gql page count
         id: export-gql-page-count
-        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | | grep -oP 'with \d+ pages' | grep -oP '\d+')
+        run: echo "::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | | grep -oP 'with \d+ pages' | grep -oP '\d+')"
 
       - name: Check broken links
         id: get-broken-link-info
@@ -399,7 +399,7 @@ jobs:
 
       - name: Export build end time
         id: export-build-end-time
-        run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
+        run: echo "::set-output name=BUILD_END_TIME::$(date +'%s')"
 
   archive:
     name: Archive
@@ -444,7 +444,7 @@ jobs:
 
       - name: Export archive end time
         id: export-archive-end-time
-        run: echo ::set-output name=ARCHIVE_END_TIME::$(date +"%s")
+        run: echo "::set-output name=ARCHIVE_END_TIME::$(date +'%s')"
 
   create-release:
     name: Create Release
@@ -508,7 +508,7 @@ jobs:
 
       - name: Export create-release end time
         id: export-create-release-end-time
-        run: echo ::set-output name=CREATE_RELEASE_END_TIME::$(date +"%s")
+        run: echo "::set-output name=CREATE_RELEASE_END_TIME::$(date +'%s')"
 
   deploy:
     name: Deploy
@@ -571,7 +571,7 @@ jobs:
 
       - name: Export deploy end time
         id: export-deploy-end-time
-        run: echo ::set-output name=DEPLOY_END_TIME::$(date +"%s")
+        run: echo "::set-output name=DEPLOY_END_TIME::$(date +'%s')"
 
   notify-failure:
     name: Notify Failure
@@ -640,7 +640,7 @@ jobs:
       METRIC_NAMESPACE: dsva_vagov.content_build_test
     steps:
       - name: Get current timestamp
-        run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
+        run: echo "NOW=$(date +'%s')" >> $GITHUB_ENV
 
       - name: Set vars for scheduled runs
         if: ${{ github.event_name == 'schedule' }}
