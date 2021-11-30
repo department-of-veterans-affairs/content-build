@@ -67,6 +67,9 @@ jobs:
     needs:
         - start-runner
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: content-build
     steps:
       - run: pwd
       - run: echo ::set-output name=BUILD_START_TIME::$(date +%s)
