@@ -71,9 +71,9 @@ jobs:
       run:
         working-directory: content-build
     steps:
-      - name: Export build start time
-        id: export-build-start-time
-        run: echo "::set-output name=BUILD_START_TIME::$(date +'%s')"
+      - name: debug
+        run: ls -ltr /actions-runner/_work/_temp
+      - run: echo "::set-output name=BUILD_START_TIME::$(date +'%s')"
 
   stop-runner:
     name: Stop on-demand-runner
