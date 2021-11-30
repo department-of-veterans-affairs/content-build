@@ -19,3 +19,4 @@ jobs:
         with:
           path: content-build
           ref: ${{ needs.set-env.outputs.REF }}
+      - run: pwd && ls
