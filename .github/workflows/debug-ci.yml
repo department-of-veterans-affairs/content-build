@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: debug
         run: ls -ltr /actions-runner/_work/_temp
-      - run: echo "::set-output name=BUILD_START_TIME::$(date +'%s')"
+      - run: echo ::set-output name=BUILD_START_TIME::$(date +%s)
 
   stop-runner:
     name: Stop on-demand-runner
