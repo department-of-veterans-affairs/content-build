@@ -71,7 +71,7 @@ jobs:
       run:
         working-directory: content-build
     steps:
-      - run: ls -ltr /actions-runner/_work
+      - run: whoami && ls -ltr /actions-runner/_work
       - run: echo ::set-output name=BUILD_START_TIME::$(date +%s)
 
   stop-runner:
