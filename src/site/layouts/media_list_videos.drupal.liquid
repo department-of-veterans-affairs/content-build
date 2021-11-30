@@ -109,12 +109,13 @@
       <div class="usa-width-three-fourths">
         <div class="usa-content">
           <va-back-to-top></va-back-to-top>
+          <div class="last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0 vads-u-margin-top--0">
+            Last updated: <time
+              datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Last updated -->
-    {% include "src/site/includes/last-updated.drupal.liquid" %}
   </main>
 </div>
 
