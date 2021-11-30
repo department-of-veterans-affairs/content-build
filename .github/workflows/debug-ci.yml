@@ -71,9 +71,7 @@ jobs:
       run:
         working-directory: content-build
     steps:
-      - run: echo ${{ runner.temp }}
-      - run: ls -ltr /actions-runner/_work/_temp
-      - run: ls -ltr ${{ runner.temp }}
+      - run: ls -ltr /actions-runner/_work
       - run: echo ::set-output name=BUILD_START_TIME::$(date +%s)
 
   stop-runner:
