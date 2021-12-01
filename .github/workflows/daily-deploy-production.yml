@@ -445,12 +445,13 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [set-env, build, create-release]
 
     env:
       ENVIRONMENT: vagovprod
       BUCKET: content.www.va.gov
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout
@@ -493,12 +494,12 @@ jobs:
 
       - name: CMS GovDelivery callback
         uses: fjogeleit/http-request-action@master
-        continue-on-error: true
         with:
-          url: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
-          method: POST
+          url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          method: GET
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
+          timeout: 10000
 
   notify-failure:
     name: Notify Failure
