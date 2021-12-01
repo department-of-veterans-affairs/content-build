@@ -790,9 +790,12 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, archive, cache-drupal-content, get-latest-run-number]
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
       matrix:
@@ -845,12 +848,12 @@ jobs:
       - name: CMS GovDelivery callback
         if: ${{ matrix.environment == 'vagovstaging' }}
         uses: fjogeleit/http-request-action@master
-        continue-on-error: true
         with:
           url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
-          method: POST
+          method: GET
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
+          timeout: 10000
 
   stop-runner:
     name: Stop on-demand-runner
