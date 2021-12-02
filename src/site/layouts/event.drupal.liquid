@@ -7,11 +7,9 @@
 <div class="interior" id="content" data-template="event.drupal.liquid">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
-      {% if entityUrl.path contains "/outreach-and-events" %}
-        {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = outreachSidebar %}
-      {% else %}
+      {% unless entityUrl.path contains "/outreach-and-events" %}
         {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
-      {% endif %}
+      {% endunless %}
 
       <div class="usa-width-three-fourths">
         <article aria-labelledby="article-heading" class="usa-content" role="region">
