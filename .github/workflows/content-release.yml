@@ -310,7 +310,7 @@ jobs:
 
       - name: Export gql page count
         id: export-gql-page-count
-        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | | grep -oP 'with \d+ pages' | grep -oP '\d+')
+        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
 
       - name: Check broken links
         id: get-broken-link-info
@@ -693,6 +693,13 @@ jobs:
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
           jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
 
       - name: Get datadog token from ssm
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
