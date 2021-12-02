@@ -96,8 +96,13 @@ jobs:
       BUILDTYPE: ${{ env.BUILDTYPE }}
       DEPLOY_BUCKET: ${{ env.DEPLOY_BUCKET }}
       DRUPAL_ADDRESS: ${{ env.DRUPAL_ADDRESS }}
+      APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
 
     steps:
+      - name: Export approximate workflow start time
+        id: export-approx-workflow-start-time
+        run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
+
       - name: Cancel workflow due to DSVA schedule
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
@@ -219,15 +224,25 @@ jobs:
     defaults:
       run:
         working-directory: content-build
-
     outputs:
       vagovprod_buildtime: ${{ env.vagovprod_buildtime }}
+      BUILD_START_TIME: ${{ steps.export-build-start-time.outputs.BUILD_START_TIME }}
+      BUILD_END_TIME: ${{ steps.export-build-end-time.outputs.BUILD_END_TIME }}
+      CONTENT_BUILD_START_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_START_TIME }}
+      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_END_TIME }}
+      GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
+      GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
 
     steps:
+      - name: Export build start time
+        id: export-build-start-time
+        run: echo ::set-output name=BUILD_START_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
+
       - name: Checkout vagov-content
         uses: actions/checkout@v2
         with:
@@ -268,6 +283,10 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: Export content build start time
+        id: export-content-build-start-time
+        run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
+
       - name: Get buildtime
         id: buildtime
         run: |
@@ -276,10 +295,22 @@ jobs:
           echo "${{ needs.set-env.outputs.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
         env:
           NODE_ENV: production
+
+      - name: Export content build end time
+        id: export-content-build-end-time
+        run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
+
+      - name: Export gql query duration
+        id: export-gql-query-duration
+        run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
+
+      - name: Export gql page count
+        id: export-gql-page-count
+        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | | grep -oP 'with \d+ pages' | grep -oP '\d+')
 
       - name: Check broken links
         id: get-broken-link-info
@@ -367,11 +398,17 @@ jobs:
           attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           channel_id: ${{ env.CHANNEL_ID }}
 
+      - name: Export build end time
+        id: export-build-end-time
+        run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
+
   archive:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs: [set-env, build, start-runner]
     if: ${{ always() && needs.build.result == 'success' }}
+    outputs:
+      ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
 
     steps:
       - name: Restore ${{ needs.set-env.outputs.BUILDTYPE }} build
@@ -406,11 +443,17 @@ jobs:
       - name: Upload build
         run: aws s3 cp ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1
 
+      - name: Export archive end time
+        id: export-archive-end-time
+        run: echo ::set-output name=ARCHIVE_END_TIME::$(date +"%s")
+
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
     needs: [set-env, archive]
     if: ${{ always() && needs.archive.result == 'success' }}
+    outputs:
+      CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.ARCHIVE_END_TIME }}
 
     steps:
       - name: Configure AWS Credentials
@@ -464,6 +507,10 @@ jobs:
           release_name: content-build/${{ steps.bump-tag-version.outputs.v_patch }}
           commitish: ${{ needs.set-env.outputs.REF }}
 
+      - name: Export create-release end time
+        id: export-create-release-end-time
+        run: echo ::set-output name=CREATE_RELEASE_END_TIME::$(date +"%s")
+
   deploy:
     name: Deploy
     runs-on: self-hosted
@@ -472,6 +519,8 @@ jobs:
       always() &&
       needs.build.result == 'success' &&
       needs.create-release.result == 'success'
+    outputs:
+      DEPLOY_END_TIME: ${{ steps.export-create-release-end-time.outputs.DEPLOY_END_TIME }}
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
@@ -523,6 +572,10 @@ jobs:
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
           timeout: 10000
+
+      - name: Export deploy end time
+        id: export-deploy-end-time
+        run: echo ::set-output name=DEPLOY_END_TIME::$(date +"%s")
 
   notify-failure:
     name: Notify Failure
@@ -576,3 +629,80 @@ jobs:
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           label: ${{ needs.start-runner.outputs.label }}
           ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+
+  record-metrics:
+    name: Record metrics in Datadog
+    runs-on: ubuntu-latest
+    needs:
+      - set-env
+      - build
+      - archive
+      - create-release
+      - deploy
+    if: ${{ !cancelled() }}
+    env:
+      METRIC_NAMESPACE: dsva_vagov.content_build_test
+    steps:
+      - name: Get current timestamp
+        run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
+
+      - name: Set vars for scheduled runs
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
+
+      - name: Set vars for manual runs
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "DEPLOY_ENV=${{ github.event.inputs.deploy_environment }}" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
+
+      - name: Calculate durations
+        run: |
+          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.set-env.output.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.output.BUILD_START_TIME}})" >> $GITHUB_ENV
+          echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.output.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
+          echo "ARCHIVE_DURATION=$(expr ${{needs.build.outputs.ARCHIVE_END_TIME}} - ${{needs.build.output.BUILD_END_TIME}})" >> $GITHUB_ENV
+          echo "CREATE_RELEASE_DURATION=$(expr ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}} - ${{needs.build.output.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
+          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}})" >> $GITHUB_ENV
+          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.set-env.output.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+
+      - name: Build JSON object
+        run: |
+          jq --null-input '{}' | \
+          jq '.series[0].metric = ${{env.METRIC_NAMESPACE}}.setup.duration' | \
+          jq '.series[0].points[0] = [${{env.NOW}}, ${{env.SETUP_DURATION}}]' | \
+          jq '.series[1].metric = ${{env.METRIC_NAMESPACE}}.build.duration' | \
+          jq '.series[1].points[0] = [${{env.NOW}}, ${{env.BUILD_DURATION}}]' | \
+          jq '.series[2].metric = ${{env.METRIC_NAMESPACE}}.build.gql.pages' | \
+          jq '.series[2].points[0] = [${{env.NOW}}, ${{needs.build.outputs.GQL_PAGE_COUNT}}]' | \
+          jq '.series[3].metric = ${{env.METRIC_NAMESPACE}}.build.gql.duration' | \
+          jq '.series[3].points[0] = [${{env.NOW}}, ${{needs.build.outputs.GQL_QUERY_DURATION}}]' | \
+          jq '.series[4].metric = ${{env.METRIC_NAMESPACE}}.build.content-build.duration' | \
+          jq '.series[4].points[0] = [${{env.NOW}}, ${{env.CONTENT_BUILD_DURATION}}]' | \
+          jq '.series[5].metric = ${{env.METRIC_NAMESPACE}}.archive.duration' | \
+          jq '.series[5].points[0] = [${{env.NOW}}, ${{env.ARCHIVE_DURATION}}]' | \
+          jq '.series[6].metric = ${{env.METRIC_NAMESPACE}}.create-release.duration' | \
+          jq '.series[6].points[0] = [${{env.NOW}}, ${{env.CREATE_RELEASE_DURATION}}]' | \
+          jq '.series[7].metric = ${{env.METRIC_NAMESPACE}}.deploy.duration' | \
+          jq '.series[7].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
+          jq '.series[8].metric = ${{env.METRIC_NAMESPACE}}.overall.duration' | \
+          jq '.series[8].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
+          jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
+          jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
+          jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+
+      - name: Get datadog token from ssm
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/common/datadog/api_key
+          env_variable_name: VAGOV_CMS_DATADOG_API_KEY
+
+      - name: Send metrics to Datadog
+        run: |
+          curl -X POST "https://api.datadoghq.com/api/v1/series" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
+          -d @- << metrics.json
