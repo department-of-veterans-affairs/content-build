@@ -310,7 +310,7 @@ jobs:
 
       - name: Export gql page count
         id: export-gql-page-count
-        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | | grep -oP 'with \d+ pages' | grep -oP '\d+')
+        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
 
       - name: Check broken links
         id: get-broken-link-info
