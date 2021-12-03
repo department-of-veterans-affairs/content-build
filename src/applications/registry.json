@@ -911,7 +911,7 @@
     "template": {
       "title": "Medical Copays",
       "layout": "page-react.html",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {

@@ -50,28 +50,6 @@ const nodeCampaignLandingPage = `
         }
       }
     }
-    fieldClpConnectWithUs {
-      entity {
-        entityType
-        entityBundle
-        entityId
-        ... on TaxonomyTermAdministration {
-          name
-          fieldDescription
-          fieldEmailUpdatesLinkText
-          fieldEmailUpdatesUrl
-          fieldLink {
-            uri
-            title
-          }
-          fieldSocialMediaLinks {
-            platform
-            value
-            platformValues
-          }
-        }
-      }
-    }
     fieldClpEventsHeader
     fieldClpEventsPanel
     fieldClpEventsReferences {
@@ -516,6 +494,27 @@ const nodeCampaignLandingPage = `
         entityBundle
         entityId
         ... button
+      }
+    }
+    fieldRelatedOffice {
+      entity {
+        ... on NodeOffice {
+          fieldExternalLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldEmailUpdatesLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldSocialMediaLinks {
+            platformValues
+          }
+        }
       }
     }
     fieldSecondaryCallToAction {
