@@ -29,7 +29,7 @@ node('vetsgov-general-purpose') {
   def commonStages = load "content-build/jenkins/common.groovy"
   def envUsedCache = [:]
 
-  // // setupStage
+  // setupStage
   dockerContainer = commonStages.setup()
 
   stage('Review') {

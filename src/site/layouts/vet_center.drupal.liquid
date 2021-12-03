@@ -7,7 +7,7 @@
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
       <div class="usa-width-three-fourths">
-        <article class="usa-content va-l-facility-detail">
+        <article class="usa-content va-l-facility-detail vads-u-padding-bottom--0">
           {% if fieldOfficialName != empty %}
             <h1>{{ fieldOfficialName }}</h1>
           {% endif %}
@@ -158,12 +158,11 @@
               %}
             </div>
           {% endif %}
+          <va-back-to-top></va-back-to-top>
         </article>
       </div>
     </div>
   </main>
-  <div id="vet-center-up-to-top" onclick="recordEvent({ event: 'back-to-top'});">
-    {% include "src/site/components/up_to_top_button.html" %}
 </div>
 
 {% include "src/site/includes/footer.html" %}

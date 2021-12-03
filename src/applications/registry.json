@@ -911,7 +911,7 @@
     "template": {
       "title": "Medical Copays",
       "layout": "page-react.html",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
@@ -1119,6 +1119,15 @@
     "rootUrl": "/health-care/appointment-check-in",
     "template": {
       "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Pre-check-in",
+    "entryName": "pre-check-in",
+    "rootUrl": "/health-care/appointment-pre-check-in",
+    "template": {
+      "vagovprod": false,
       "layout": "page-react.html"
     }
   },
