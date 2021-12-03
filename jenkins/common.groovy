@@ -178,7 +178,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // cannot be serialized by default.
     brokenLinks = null
 
-    uploadBrokenLinksFile(brokenLinksFile, envName)
+    // uploadBrokenLinksFile(brokenLinksFile, envName)
 
     // slackSend(
     //   message: message,
