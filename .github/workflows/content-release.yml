@@ -565,13 +565,25 @@ jobs:
           DEST: s3://${{ needs.set-env.outputs.DEPLOY_BUCKET }}
 
       - name: CMS GovDelivery callback
+        id: govdelivery-callback
         uses: fjogeleit/http-request-action@master
+        continue-on-error: true
         with:
           url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
           timeout: 10000
+
+      - name: Notify GovDelivery callback failure
+        uses: ./.github/workflows/slack-notify
+        if: ${{ steps.govdelivery-callback.status == 'failure' }}
+        continue-on-error: true
+        with:
+          attachments: '[{"mrkdwn_in": ["text"], "color": "warning", "text": "Content release for content-build govdelivery callback failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          channel_id: ${{ env.CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Export deploy end time
         id: export-deploy-end-time

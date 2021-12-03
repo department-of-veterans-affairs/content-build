@@ -846,7 +846,9 @@ jobs:
           DEST: s3://${{ matrix.bucket }}
 
       - name: CMS GovDelivery callback
+        id: govdelivery-callback
         if: ${{ matrix.environment == 'vagovstaging' }}
+        continue-on-error: true
         uses: fjogeleit/http-request-action@master
         with:
           url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
@@ -854,6 +856,16 @@ jobs:
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
           timeout: 10000
+
+      - name: Notify GovDelivery callback failure
+        uses: ./.github/workflows/slack-notify
+        if: ${{ steps.govdelivery-callback.status == 'failure' }}
+        continue-on-error: true
+        with:
+          attachments: '[{"mrkdwn_in": ["text"], "color": "warning", "text": "content-build govdelivery callback failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   stop-runner:
     name: Stop on-demand-runner
