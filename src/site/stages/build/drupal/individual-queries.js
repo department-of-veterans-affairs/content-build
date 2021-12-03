@@ -67,7 +67,6 @@ const {
   GetNodeMediaListImages,
 } = require('./graphql/nodeMediaListImages.graphql');
 const { GetNodeChecklist } = require('./graphql/nodeChecklist.graphql');
-const { GetNodePromoBanner } = require('./graphql/nodePromoBanner.graphql');
 const {
   GetNodeMediaListVideos,
 } = require('./graphql/nodeMediaListVideos.graphql');
@@ -137,7 +136,6 @@ function getNodeQueries(entityCounts) {
     GetNodeSupportResourcesDetailPage,
     GetNodeBasicLandingPage,
     GetCampaignLandingPages,
-    GetNodePromoBanner,
     ...getVetCenterQueries(entityCounts),
     GetVetCenterLocations,
     GetPolicyPages,
@@ -167,6 +165,7 @@ function nonNodeQueries() {
 
   const { GetAlerts } = require('./graphql/alerts.graphql');
   const { GetBanners } = require('./graphql/banners.graphql');
+  const { GetPromoBanner } = require('./graphql/promoBanners.graphql');
   const { GetBannnerAlerts } = require('./graphql/bannerAlerts.graphql');
   const {
     GetOutreachAssets,
@@ -187,6 +186,7 @@ function nonNodeQueries() {
     GetOutreachSidebar,
     GetAlerts,
     GetBanners,
+    GetPromoBanner,
     GetBannnerAlerts,
     GetOutreachAssets,
     GetHomepage,
