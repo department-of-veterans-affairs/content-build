@@ -15,6 +15,7 @@ const newsStoryPage = require('./newStoryPage.graphql');
 const nodeBasicLandingPage = require('./nodeBasicLandingPage.graphql');
 const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
 const nodeChecklist = require('./nodeChecklist.graphql');
+const nodePromoBanner = require('./nodePromoBanner.graphql');
 const nodeMediaListImages = require('./nodeMediaListImages.graphql');
 const nodeMediaListVideos = require('./nodeMediaListVideos.graphql');
 const nodeQa = require('./nodeQa.graphql');
@@ -67,6 +68,7 @@ module.exports = `
   ${nodeStepByStep.fragment}
   ${nodeMediaListImages.fragment}
   ${nodeChecklist.fragment}
+  ${nodePromoBanner.fragment}
   ${nodeMediaListVideos.fragment}
   ${nodeSupportResourcesDetailPage.fragment}
   ${nodeBasicLandingPage.fragment}
@@ -107,6 +109,7 @@ module.exports = `
         ... nodeStepByStep
         ... nodeMediaListImages
         ... nodeChecklist
+        ... nodePromoBanner
         ... nodeMediaListVideos
         ... nodeSupportResourcesDetailPage
         ... nodeBasicLandingPage

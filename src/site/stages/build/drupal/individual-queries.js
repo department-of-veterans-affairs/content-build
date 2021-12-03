@@ -67,6 +67,7 @@ const {
   GetNodeMediaListImages,
 } = require('./graphql/nodeMediaListImages.graphql');
 const { GetNodeChecklist } = require('./graphql/nodeChecklist.graphql');
+const { GetNodePromoBanner } = require('./graphql/nodePromoBanner.graphql');
 const {
   GetNodeMediaListVideos,
 } = require('./graphql/nodeMediaListVideos.graphql');
@@ -136,6 +137,7 @@ function getNodeQueries(entityCounts) {
     GetNodeSupportResourcesDetailPage,
     GetNodeBasicLandingPage,
     GetCampaignLandingPages,
+    GetNodePromoBanner,
     ...getVetCenterQueries(entityCounts),
     GetVetCenterLocations,
     GetPolicyPages,
