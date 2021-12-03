@@ -11,6 +11,7 @@ const benefitListingPage = require('./benefitListingPage.graphql');
 const bioPage = require('./bioPage.graphql');
 const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
 const checklistPage = require('./nodeChecklist.graphql');
+const nodePromoBanner = require('./nodePromoBanner.graphql');
 const eventListingPage = require('./eventListingPage.graphql');
 const eventPage = require('./eventPage.graphql');
 const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav.graphql');
@@ -86,6 +87,7 @@ const buildQuery = () => {
   ${stepByStepPage.fragment}
   ${mediaListImages.fragment}
   ${checklistPage.fragment}
+  ${nodePromoBanner.fragment}
   ${mediaListVideos.fragment}
   ${supportResourcesDetailPage.fragment}
   ${basicLandingPage.fragment}
