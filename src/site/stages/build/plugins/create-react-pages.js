@@ -8,6 +8,7 @@ function createReactPages(files, drupalData = { data: {} }, done) {
       alerts: alertsItem = {},
       banners,
       bannerAlerts: bannerAlertsItem = {},
+      promoBanners,
     },
   } = drupalData;
   const alertItems = { alert: alertsItem };
@@ -33,6 +34,7 @@ function createReactPages(files, drupalData = { data: {} }, done) {
         alertItems,
         ...{ bannerAlert: bannerAlertsItem },
         ...{ banners },
+        ...{ promoBanners },
         ...template,
       };
     }
