@@ -30,11 +30,11 @@
 {% for promoBanner in visiblePromoBanners %}
   <div
     aria-label="{{ promoBanner.title | escape }}"
+    data-id="{{ promoBanner.entityId }}"
+    data-link="{{ promoBanner.fieldLink.url.path }}"
     data-template="components/banners.drupal.liquid"
-    data-content="{{ promoBanner.body.processed | escape }}"
-    data-dismissible-status="{{ promoBanner.fieldDismissibleOption }}"
     data-title="{{ promoBanner.title | escape }}"
-    data-type="{{ promoBanner.fieldAlertType | formatAlertType }}"
+    data-type="{{ promoBanner.fieldPromoType }}"
     data-visible="true"
     data-widget-type="promo-banner"
     role="region"
