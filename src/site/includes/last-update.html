@@ -1,20 +1,42 @@
 
 {% if lastupdate != empty %}
+  <div class="vads-u-flex--1 site-grid-example">vads-u-flex--1</div>
+  <div class="vads-u-flex--1 site-grid-example">vads-u-flex--1</div>
+  <div class="vads-u-flex--1 site-grid-example">vads-u-flex--1</div>
+  <div class="vads-u-flex--1 site-grid-example">vads-u-flex--1</div>
+</div>
   <div class="last-updated usa-content">
-    <p>
-      Last updated:
-      <time datetime="{{lastupdate| date: '%Y-%m-%d'}}">{{ lastupdate | humanizeDate }}</time>
-    </p>
+    <div class="vads-u-display--flex vads-u-flex-direction--column">
+      <div class="vads-u-flex--1 site-grid-example">
+        <p>
+          Last updated hello:
+          <time datetime="{{lastupdate| date: '%Y-%m-%d'}}">{{ lastupdate | humanizeDate }}</time>
+        </p>
+      </div>
+      <div class="vads-u-flex--1 site-grid-example">
+
+        {% if feedbackButton %}
+          <button type="button" className="usa-button" id="mdFormButton" class="display: none;"
+            onclick="KAMPYLE_ONSITE_SDK.showForm(281);">Feedback</button>
+      </div>
+        {% endif %}
   </div>
+
 {% endif %}
 
 {% if show_git_lastupdate == true %}
   {% if git_lastupdate != empty %}
     <div class="last-updated usa-content">
       <p>
-        Last updated:
+        Last updated hello:
         <time datetime="{{git_lastupdate| date: '%Y-%m-%d'}}">{{ git_lastupdate | humanizeDate }}</time>
       </p>
+          {% if feedbackButton %}
+          <div>
+            <button type="button" className="usa-button">Feedback</button>
+          </div>
+          {% endif %}
     </div>
+
   {% endif %}
 {% endif %}

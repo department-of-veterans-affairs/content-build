@@ -1,0 +1,22 @@
+<div class="usa-grid usa-grid-full">
+  <div class="usa-width-three-fourths">
+    <div class="usa-content">
+    <div class="last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0"></div>
+      <div class="vads-u-display--flex">
+        <div class="vads-u-flex--auto">
+
+             Last updated: <time
+                datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
+        </div>
+        <div class="vads-u-flex--1 vads-u-text-align--right
+">
+          {% if feedbackButton %}
+            <button onClick="KAMPYLE_ONSITE_SDK.showForm(4)" type="button" className="usa-button" id="mdFormButton" class="display: none;"
+              ;">Feedback</button>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -120,6 +120,8 @@
     <!-- Need more help -->
     {% include "src/site/paragraphs/contact_information.drupal.liquid" with entity = fieldContactInformation.entity %}
 
+    <!-- Back to top -->
+
     <div class="usa-grid usa-grid-full">
       <div class="usa-width-three-fourths">
         <div class="usa-content">
@@ -128,8 +130,12 @@
       </div>
     </div>
 
+
     <!-- Last updated -->
-    {% include "src/site/includes/last-updated.drupal.liquid" %}
+    {% include "src/site/includes/bottom-elements.drupal.liquid" %}
+
+    {% comment %} {% include "src/site/includes/last-updated.drupal.liquid" %} {% endcomment %}
+
   </main>
 </div>
 
