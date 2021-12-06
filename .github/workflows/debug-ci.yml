@@ -44,27 +44,33 @@ jobs:
       - name: Export content build start time
         id: export-content-build-start-time
         run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
 
       - name: Build
         run: |
           echo "queries in 30s" > build-output.txt
           echo "with 100 pages" >> build-output.txt
+        working-directory: ${{ github.workspace }}
 
       - name: Export content build end time
         id: export-content-build-end-time
         run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
 
       - name: Export gql query duration
         id: export-gql-query-duration
         run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
+        working-directory: ${{ github.workspace }}
 
       - name: Export gql page count
         id: export-gql-page-count
         run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
+        working-directory: ${{ github.workspace }}
 
       - name: Export build end time
         id: export-build-end-time
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
 
   archive:
     name: Archive
