@@ -149,23 +149,23 @@ jobs:
       - name: Build JSON object
         run: |
           jq --null-input '{}' | \
-          jq '.series[0].metric = ${{env.METRIC_NAMESPACE}}.setup.duration' | \
+          jq '.series[0].metric = "${{env.METRIC_NAMESPACE}}.setup.duration"' | \
           jq '.series[0].points[0] = [${{env.NOW}}, ${{env.SETUP_DURATION}}]' | \
-          jq '.series[1].metric = ${{env.METRIC_NAMESPACE}}.build.duration' | \
+          jq '.series[1].metric = "${{env.METRIC_NAMESPACE}}.build.duration"' | \
           jq '.series[1].points[0] = [${{env.NOW}}, ${{env.BUILD_DURATION}}]' | \
-          jq '.series[2].metric = ${{env.METRIC_NAMESPACE}}.build.gql.pages' | \
+          jq '.series[2].metric = "${{env.METRIC_NAMESPACE}}.build.gql.pages"' | \
           jq '.series[2].points[0] = [${{env.NOW}}, ${{needs.build.outputs.GQL_PAGE_COUNT}}]' | \
-          jq '.series[3].metric = ${{env.METRIC_NAMESPACE}}.build.gql.duration' | \
+          jq '.series[3].metric = "${{env.METRIC_NAMESPACE}}.build.gql.duration"' | \
           jq '.series[3].points[0] = [${{env.NOW}}, ${{needs.build.outputs.GQL_QUERY_DURATION}}]' | \
-          jq '.series[4].metric = ${{env.METRIC_NAMESPACE}}.build.content-build.duration' | \
+          jq '.series[4].metric = "${{env.METRIC_NAMESPACE}}.build.content-build.duration"' | \
           jq '.series[4].points[0] = [${{env.NOW}}, ${{env.CONTENT_BUILD_DURATION}}]' | \
-          jq '.series[5].metric = ${{env.METRIC_NAMESPACE}}.archive.duration' | \
+          jq '.series[5].metric = "${{env.METRIC_NAMESPACE}}.archive.duration"' | \
           jq '.series[5].points[0] = [${{env.NOW}}, ${{env.ARCHIVE_DURATION}}]' | \
-          jq '.series[6].metric = ${{env.METRIC_NAMESPACE}}.create-release.duration' | \
+          jq '.series[6].metric = "${{env.METRIC_NAMESPACE}}.create-release.duration"' | \
           jq '.series[6].points[0] = [${{env.NOW}}, ${{env.CREATE_RELEASE_DURATION}}]' | \
-          jq '.series[7].metric = ${{env.METRIC_NAMESPACE}}.deploy.duration' | \
+          jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.deploy.duration"' | \
           jq '.series[7].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
-          jq '.series[8].metric = ${{env.METRIC_NAMESPACE}}.overall.duration' | \
+          jq '.series[8].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
           jq '.series[8].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
