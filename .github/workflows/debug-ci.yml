@@ -8,11 +8,6 @@ jobs:
     name: Set Env Variables
     runs-on: ubuntu-latest
     outputs:
-      RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
-      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
-      BUILDTYPE: ${{ env.BUILDTYPE }}
-      DEPLOY_BUCKET: ${{ env.DEPLOY_BUCKET }}
-      DRUPAL_ADDRESS: ${{ env.DRUPAL_ADDRESS }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
 
     steps:
@@ -23,10 +18,7 @@ jobs:
   build:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs:
-      [
-        set-env,
-      ]
+    needs: [set-env]
     timeout-minutes: 30
     if: |
       always() &&
@@ -36,7 +28,6 @@ jobs:
       run:
         working-directory: content-build
     outputs:
-      vagovprod_buildtime: ${{ env.vagovprod_buildtime }}
       BUILD_START_TIME: ${{ steps.export-build-start-time.outputs.BUILD_START_TIME }}
       BUILD_END_TIME: ${{ steps.export-build-end-time.outputs.BUILD_END_TIME }}
       CONTENT_BUILD_START_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_START_TIME }}
@@ -110,10 +101,6 @@ jobs:
       needs.create-release.result == 'success'
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-create-release-end-time.outputs.DEPLOY_END_TIME }}
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
