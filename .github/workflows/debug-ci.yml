@@ -31,7 +31,7 @@ jobs:
       BUILD_START_TIME: ${{ steps.export-build-start-time.outputs.BUILD_START_TIME }}
       BUILD_END_TIME: ${{ steps.export-build-end-time.outputs.BUILD_END_TIME }}
       CONTENT_BUILD_START_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_START_TIME }}
-      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_END_TIME }}
+      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end-time.outputs.CONTENT_BUILD_END_TIME }}
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
 
@@ -90,7 +90,7 @@ jobs:
     needs: [set-env, archive]
     if: ${{ always() && needs.archive.result == 'success' }}
     outputs:
-      CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.ARCHIVE_END_TIME }}
+      CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.CREATE_RELEASE_END_TIME }}
 
     steps:
       - name: Export create-release end time
@@ -141,8 +141,8 @@ jobs:
           echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.set-env.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
           echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.outputs.BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.outputs.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
-          echo "ARCHIVE_DURATION=$(expr ${{needs.build.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
-          echo "CREATE_RELEASE_DURATION=$(expr ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}} - ${{needs.build.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
+          echo "ARCHIVE_DURATION=$(expr ${{needs.archive.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
+          echo "CREATE_RELEASE_DURATION=$(expr ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
           echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}})" >> $GITHUB_ENV
           echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.set-env.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
 
