@@ -106,7 +106,7 @@ jobs:
       needs.build.result == 'success' &&
       needs.create-release.result == 'success'
     outputs:
-      DEPLOY_END_TIME: ${{ steps.export-create-release-end-time.outputs.DEPLOY_END_TIME }}
+      DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
