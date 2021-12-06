@@ -31,7 +31,7 @@ jobs:
       BUILD_START_TIME: ${{ steps.export-build-start-time.outputs.BUILD_START_TIME }}
       BUILD_END_TIME: ${{ steps.export-build-end-time.outputs.BUILD_END_TIME }}
       CONTENT_BUILD_START_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_START_TIME }}
-      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end-time.outputs.CONTENT_BUILD_END_TIME }}
+      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end.outputs.CONTENT_BUILD_END_TIME }}
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
 
@@ -53,7 +53,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Export content build end time
-        id: export-content-build-end-time
+        id: export-content-build-end
         run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
         working-directory: ${{ github.workspace }}
 
