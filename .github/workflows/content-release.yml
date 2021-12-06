@@ -229,7 +229,7 @@ jobs:
       BUILD_START_TIME: ${{ steps.export-build-start-time.outputs.BUILD_START_TIME }}
       BUILD_END_TIME: ${{ steps.export-build-end-time.outputs.BUILD_END_TIME }}
       CONTENT_BUILD_START_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_START_TIME }}
-      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_END_TIME }}
+      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end.outputs.CONTENT_BUILD_END_TIME }}
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
 
@@ -286,6 +286,7 @@ jobs:
       - name: Export content build start time
         id: export-content-build-start-time
         run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
 
       - name: Get buildtime
         id: buildtime
@@ -301,16 +302,19 @@ jobs:
           NODE_ENV: production
 
       - name: Export content build end time
-        id: export-content-build-end-time
+        id: export-content-build-end
         run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
 
       - name: Export gql query duration
         id: export-gql-query-duration
         run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
+        working-directory: ${{ github.workspace }}
 
       - name: Export gql page count
         id: export-gql-page-count
         run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
+        working-directory: ${{ github.workspace }}
 
       - name: Check broken links
         id: get-broken-link-info
@@ -401,6 +405,7 @@ jobs:
       - name: Export build end time
         id: export-build-end-time
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
+        working-directory: ${{ github.workspace }}
 
   archive:
     name: Archive
@@ -453,7 +458,7 @@ jobs:
     needs: [set-env, archive]
     if: ${{ always() && needs.archive.result == 'success' }}
     outputs:
-      CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.ARCHIVE_END_TIME }}
+      CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.CREATE_RELEASE_END_TIME }}
 
     steps:
       - name: Configure AWS Credentials
@@ -520,7 +525,7 @@ jobs:
       needs.build.result == 'success' &&
       needs.create-release.result == 'success'
     outputs:
-      DEPLOY_END_TIME: ${{ steps.export-create-release-end-time.outputs.DEPLOY_END_TIME }}
+      DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
@@ -641,7 +646,7 @@ jobs:
       - deploy
     if: ${{ !cancelled() }}
     env:
-      METRIC_NAMESPACE: dsva_vagov.content_build_test
+      METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
@@ -660,34 +665,34 @@ jobs:
 
       - name: Calculate durations
         run: |
-          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.set-env.output.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
-          echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.output.BUILD_START_TIME}})" >> $GITHUB_ENV
-          echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.output.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
-          echo "ARCHIVE_DURATION=$(expr ${{needs.build.outputs.ARCHIVE_END_TIME}} - ${{needs.build.output.BUILD_END_TIME}})" >> $GITHUB_ENV
-          echo "CREATE_RELEASE_DURATION=$(expr ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}} - ${{needs.build.output.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
+          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.set-env.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.outputs.BUILD_START_TIME}})" >> $GITHUB_ENV
+          echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.outputs.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
+          echo "ARCHIVE_DURATION=$(expr ${{needs.archive.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
+          echo "CREATE_RELEASE_DURATION=$(expr ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
           echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}})" >> $GITHUB_ENV
-          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.set-env.output.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.set-env.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
 
       - name: Build JSON object
         run: |
           jq --null-input '{}' | \
-          jq '.series[0].metric = ${{env.METRIC_NAMESPACE}}.setup.duration' | \
+          jq '.series[0].metric = "${{env.METRIC_NAMESPACE}}.setup.duration"' | \
           jq '.series[0].points[0] = [${{env.NOW}}, ${{env.SETUP_DURATION}}]' | \
-          jq '.series[1].metric = ${{env.METRIC_NAMESPACE}}.build.duration' | \
+          jq '.series[1].metric = "${{env.METRIC_NAMESPACE}}.build.duration"' | \
           jq '.series[1].points[0] = [${{env.NOW}}, ${{env.BUILD_DURATION}}]' | \
-          jq '.series[2].metric = ${{env.METRIC_NAMESPACE}}.build.gql.pages' | \
+          jq '.series[2].metric = "${{env.METRIC_NAMESPACE}}.build.gql.pages"' | \
           jq '.series[2].points[0] = [${{env.NOW}}, ${{needs.build.outputs.GQL_PAGE_COUNT}}]' | \
-          jq '.series[3].metric = ${{env.METRIC_NAMESPACE}}.build.gql.duration' | \
+          jq '.series[3].metric = "${{env.METRIC_NAMESPACE}}.build.gql.duration"' | \
           jq '.series[3].points[0] = [${{env.NOW}}, ${{needs.build.outputs.GQL_QUERY_DURATION}}]' | \
-          jq '.series[4].metric = ${{env.METRIC_NAMESPACE}}.build.content-build.duration' | \
+          jq '.series[4].metric = "${{env.METRIC_NAMESPACE}}.build.content-build.duration"' | \
           jq '.series[4].points[0] = [${{env.NOW}}, ${{env.CONTENT_BUILD_DURATION}}]' | \
-          jq '.series[5].metric = ${{env.METRIC_NAMESPACE}}.archive.duration' | \
+          jq '.series[5].metric = "${{env.METRIC_NAMESPACE}}.archive.duration"' | \
           jq '.series[5].points[0] = [${{env.NOW}}, ${{env.ARCHIVE_DURATION}}]' | \
-          jq '.series[6].metric = ${{env.METRIC_NAMESPACE}}.create-release.duration' | \
+          jq '.series[6].metric = "${{env.METRIC_NAMESPACE}}.create-release.duration"' | \
           jq '.series[6].points[0] = [${{env.NOW}}, ${{env.CREATE_RELEASE_DURATION}}]' | \
-          jq '.series[7].metric = ${{env.METRIC_NAMESPACE}}.deploy.duration' | \
+          jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.deploy.duration"' | \
           jq '.series[7].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
-          jq '.series[8].metric = ${{env.METRIC_NAMESPACE}}.overall.duration' | \
+          jq '.series[8].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
           jq '.series[8].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
@@ -712,4 +717,4 @@ jobs:
           curl -X POST "https://api.datadoghq.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
-          -d @- << metrics.json
+          -d @- < metrics.json
