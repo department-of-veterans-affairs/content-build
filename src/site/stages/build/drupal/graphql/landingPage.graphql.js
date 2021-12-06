@@ -58,9 +58,6 @@ const landingPageFragment = `
       value
       date
     }
-    fieldPageLastBuilt {
-      date
-    }
     fieldTeaserText
     fieldRelatedOffice {
       entity {
