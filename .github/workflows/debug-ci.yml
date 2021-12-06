@@ -190,4 +190,4 @@ jobs:
           curl -X POST "https://api.datadoghq.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
-          -d @- << metrics.json
+          -d @- < metrics.json
