@@ -8,10 +8,18 @@
     <div class="usa-grid usa-grid-full">
       <div class="usa-width-three-fourths">
         <article class="usa-content va-l-facility-detail vads-u-padding-bottom--0">
-          {% if fieldOfficialName != empty %}
-            <h1>{{ fieldOfficialName }}</h1>
+          {% if title != empty %}
+            <h1>{{ title }}</h1>
+            {% if fieldOfficialName and title != fieldOfficialName %}
+              <p class="field-official-name vads-u-line-height--4 vads-u-font-family--sans vads-u-font-size--lg 
+              vads-u-font-weight--bold vads-u-padding-bottom--0p5">
+                Also called the {{fieldOfficialName}}
+              </p>
+            {% endif %}
+          {% elsif fieldOfficialName != empty %}
+            <h1>{{ fieldOfficialName}}</h1>
           {% endif %}
-
+          
           {% if fieldIntroText != empty %}
             <div class="va-introtext">
               <p>{{ fieldIntroText }}</p>

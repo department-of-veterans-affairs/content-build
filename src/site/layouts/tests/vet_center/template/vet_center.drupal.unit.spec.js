@@ -97,10 +97,42 @@ describe('Vet Center Main Page', () => {
     );
   });
 
-  it('renders header and intro text', () => {
-    expect(container.querySelector('h1').innerHTML).to.equal(
+  it('renders header but no field official name text if title and fieldOfficialName are equal to each other', () => {
+    expect(container.querySelector('h1').innerHTML).to.equal(testData.title);
+
+    expect(container.querySelector('.field-official-name')).to.not.exist;
+  });
+
+  it('renders header AND field official name text if title and fieldOfficialName are NOT equal to each other', async () => {
+    const mockData = _.cloneDeep(data);
+    const newOfficialNameText = 'Testing Field Official Name Vet Center';
+
+    mockData.fieldOfficialName = newOfficialNameText;
+
+    const newContainer = await renderHTML(layoutPath, mockData);
+    expect(container.querySelector('h1').innerHTML).to.equal(testData.title);
+
+    expect(
+      newContainer
+        .querySelector('.field-official-name')
+        .innerHTML.replace(/\s+/g, ' ')
+        .trim(),
+    ).to.equal('Also called the Testing Field Official Name Vet Center');
+  });
+
+  it('uses fieldOfficialName to render vet center title if title = null', async () => {
+    const mockData = _.cloneDeep(data);
+    mockData.title = null;
+
+    const newContainer = await renderHTML(layoutPath, mockData);
+    expect(newContainer.querySelector('h1').innerHTML).to.equal(
       testData.fieldOfficialName,
     );
+
+    expect(newContainer.querySelector('.field-official-name')).to.not.exist;
+  });
+
+  it('renders intro text', () => {
     expect(container.querySelector('div.va-introtext > p').innerHTML).to.equal(
       testData.fieldIntroText,
     );
