@@ -101,16 +101,8 @@ Disallow: /health-care/health-questionnaires/questionnaires/
 # make sure to add a trailing slash at the end of the path
 # to prevent sub-directories from being indexed
 # see https://developers.google.com/search/docs/advanced/robots/create-robots-txt#useful-robots.txt-rules
-Disallow: /birmingham-health-care/
-Disallow: /boston-health-care/
-Disallow: /caribbean-health-care/
-Disallow: /central-alabama-health-care/
-Disallow: /clarksburg-health-care/
-Disallow: /indiana-health-care/
+
 Disallow: /lovell-fhcc-health-care/
-Disallow: /puget-sound-health-care/
-Disallow: /san-francisco-health-care/
-Disallow: /wallawalla-health-care/
 
 # sitemap index
 Sitemap: https://www.va.gov/sitemap.xml

@@ -255,7 +255,7 @@ jobs:
         run: |
           BUILDTIME=$(date +%s)
           echo ::set-output name=buildtime::$BUILDTIME
-          echo "{{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+          echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address='${{ env.DRUPAL_ADDRESS }}' --no-drupal-proxy
