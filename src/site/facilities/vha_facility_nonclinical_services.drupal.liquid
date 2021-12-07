@@ -1,0 +1,6 @@
+{% for facility in facilities %}
+<h3>{{ facility.entityLabel }}</h3>
+{% include "src/site/facilities/vha_facility_nonclinical_service.drupal.liquid" with
+  facility = facility
+%}
+{% endfor %}
