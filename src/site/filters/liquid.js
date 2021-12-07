@@ -1298,4 +1298,36 @@ module.exports = function registerFilters() {
   liquid.filters.featureAddVaHealthConnectNumber = () => {
     return cmsFeatureFlags?.FEATURE_HEALTH_CONNECT_NUMBER;
   };
+
+  liquid.filters.serviceLocationsAtFacilityByServiceType = (
+    allServicesAtFacility,
+    serviceType,
+  ) => {
+    return allServicesAtFacility.reduce((acc, service) => {
+      if (
+        serviceType === service?.fieldServiceNameAndDescripti?.entity?.name &&
+        service?.fieldServiceLocation
+      ) {
+        return [...acc, ...service.fieldServiceLocation];
+      }
+
+      return acc;
+    }, []);
+  };
+
+  liquid.filters.healthcareSystemNonClinicalServiceLocationsByType = (
+    facilitiesInSystem,
+    serviceType,
+  ) => {
+    return facilitiesInSystem
+      .map(facility => ({
+        entityLabel: facility.entityLabel,
+        fieldAddress: facility.fieldAddress,
+        locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
+          facility.reverseFieldFacilityLocationNode.entities,
+          serviceType,
+        ),
+      }))
+      .filter(facility => facility.locations.length > 0);
+  };
 };
