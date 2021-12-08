@@ -7,7 +7,7 @@
 const headerQuery = require('./header.nav.graphql');
 
 const menuLinkContentQuery = `
-  menuLinkContentQuery(limit: 5000, filter: {conditions: [{field: "enabled", value: "1"}]}) {
+  menuLinkContentQuery(limit: 5000, filter: {conditions: [{field: "enabled", value: "1"}, {field: "menu_name", value: "header-megamenu"}]}) {
     entities {
       entityId
       entityLabel
