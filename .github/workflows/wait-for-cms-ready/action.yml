@@ -11,9 +11,9 @@ inputs:
     required: false
     default: '15'
   timeout:
-    description: how long should we wait for the cms to be ready (in minutes)
+    description: how long should we wait for the cms to be ready (in seconds)
     required: false
-    default: '30'
+    default: '1800'
 
 runs:
   using: composite
