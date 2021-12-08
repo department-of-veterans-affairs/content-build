@@ -1,0 +1,15 @@
+name: Debug CI issues
+
+on:
+  pull_request:
+
+jobs:
+  test-cms-wait:
+    name: Test cms wait action
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Try waiting for a URL that will never work
+        uses: ./.github/workflows/wait-for-cms-ready
+        with:
+          base_url: https://www.va.govvvvvvvv/
