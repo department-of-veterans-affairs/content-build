@@ -309,12 +309,10 @@ jobs:
       - name: Export gql query duration
         id: export-gql-query-duration
         run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
-        working-directory: ${{ github.workspace }}
 
       - name: Export gql page count
         id: export-gql-page-count
         run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
-        working-directory: ${{ github.workspace }}
 
       - name: Check broken links
         id: get-broken-link-info
