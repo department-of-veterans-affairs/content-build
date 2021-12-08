@@ -322,10 +322,10 @@ function compilePage(page, contentData) {
   } = contentData;
 
   // Get page owner
-  let owner;
-  if (page.fieldAdministration && page.fieldAdministration.entity) {
-    owner = _.toLower(page.fieldAdministration.entity.name);
-  }
+  const owner =
+    _.toLower(page?.fieldRelatedOffice?.entity?.fieldExternalLink?.title) ||
+    undefined;
+
   // Benefits hub side navs in an array to loop through later
   const sideNavs = [
     burialsHubSidebarNav,
