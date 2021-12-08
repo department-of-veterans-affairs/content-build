@@ -73,7 +73,6 @@ jobs:
         with:
           path: |
             .cache/yarn
-            /github/home/.cache/Cypress
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
@@ -106,6 +105,7 @@ jobs:
   a11y:
     name: Accessibility Tests
     needs: build
+    timeout-minutes: 120
     runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
@@ -264,7 +264,6 @@ jobs:
         with:
           path: |
             .cache/yarn
-            /github/home/.cache/Cypress
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-

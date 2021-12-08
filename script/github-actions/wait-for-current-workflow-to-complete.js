@@ -5,7 +5,7 @@ const { sleep } = require('../utils');
 
 const { GITHUB_TOKEN: auth, GITHUB_REPOSITORY } = process.env;
 const args = process.argv.slice(2);
-const timeout = 2; // minutes
+const timeout = 3; // minutes
 const [owner, repo] = GITHUB_REPOSITORY.split('/');
 
 const octokit = new Octokit({ auth });

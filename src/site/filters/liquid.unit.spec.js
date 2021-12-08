@@ -887,17 +887,22 @@ describe('createEmbedYouTubeVideoURL', () => {
     expect(liquid.filters.createEmbedYouTubeVideoURL('')).to.eq('');
     expect(liquid.filters.createEmbedYouTubeVideoURL('asdf')).to.eq('asdf');
     expect(
-      liquid.filters.createEmbedYouTubeVideoURL('youtube.com/embed/asdf'),
-    ).to.eq('youtube.com/embed/asdf');
+      liquid.filters.createEmbedYouTubeVideoURL(
+        'https://www.youtube.com/embed/HlkZeAYmw94',
+      ),
+    ).to.eq('https://www.youtube.com/embed/HlkZeAYmw94');
   });
 
   it('returns the modified URL if it needs it', () => {
     expect(
-      liquid.filters.createEmbedYouTubeVideoURL('https://youtu.be/asdf'),
-    ).to.eq('https://www.youtube.com/embed/asdf');
+      liquid.filters.createEmbedYouTubeVideoURL('https://youtu.be/HlkZeAYmw94'),
+    ).to.eq('https://www.youtube.com/embed/HlkZeAYmw94');
+
     expect(
-      liquid.filters.createEmbedYouTubeVideoURL('https://www.youtu.be/asdf'),
-    ).to.eq('https://www.youtube.com/embed/asdf');
+      liquid.filters.createEmbedYouTubeVideoURL(
+        'https://www.youtube.com/watch?v=HlkZeAYmw94',
+      ),
+    ).to.eq('https://www.youtube.com/embed/HlkZeAYmw94');
   });
 });
 

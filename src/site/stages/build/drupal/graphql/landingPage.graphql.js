@@ -58,10 +58,28 @@ const landingPageFragment = `
       value
       date
     }
-    fieldPageLastBuilt {
-      date
-    }
     fieldTeaserText
+    fieldRelatedOffice {
+      entity {
+        ... on NodeOffice {
+          fieldExternalLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldEmailUpdatesLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldSocialMediaLinks {
+            platformValues
+          }
+        }
+      }
+    }
     changed
     ${ADMIN}
   }
