@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Try waiting for a URL that will never work
         uses: ./.github/workflows/wait-for-cms-ready
         with:
