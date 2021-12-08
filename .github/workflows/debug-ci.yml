@@ -15,4 +15,4 @@ jobs:
       - name: Try waiting for a URL that will never work
         uses: ./.github/workflows/wait-for-cms-ready
         with:
-          base_url: https://www.va.govvvvvvvv/
+          base_url: https://www.va.gov/
