@@ -18,6 +18,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         homePageMenuQuery,
         homePageHubListQuery,
         homePagePromoBlockQuery,
+        promoBanners,
       },
     } = contentData;
 
@@ -50,6 +51,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       hubs,
       // eslint-disable-next-line camelcase
       legacy_homepage_banner: banner,
+      promoBanners,
       promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
       title: 'VA.gov Home',
     };

@@ -54,9 +54,6 @@ const pageFragment = `
         }
       }
     }
-    fieldPageLastBuilt {
-      date
-    }
     changed
   }
 `;

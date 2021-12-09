@@ -19,6 +19,7 @@ const vetCenterFragment = `
         }
         entityBundle
         entityLabel
+        title
         fieldOfficialName
         fieldIntroText
         fieldFacilityLocatorApiId

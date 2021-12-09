@@ -121,7 +121,7 @@
     "css-loader": "^6.2.0",
     "cssnano": "^5.0.8",
     "cy-mobile-commands": "^0.3.0",
-    "cypress": "^9.1.0",
+    "cypress": "^9.1.1",
     "cypress-axe": "^0.13.0",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-plugin-tab": "^1.0.5",
