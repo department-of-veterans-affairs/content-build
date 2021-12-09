@@ -3,7 +3,7 @@ description: Pause until we know that the CMS is online and ready to go
 
 inputs:
   base_url:
-    description: base url for the cms environment to wait for
+    description: Base url for the cms environment to wait for
     required: false
     default: 'https://prod.cms.va.gov'
   interval:
