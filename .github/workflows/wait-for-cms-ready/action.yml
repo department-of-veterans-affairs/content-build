@@ -7,7 +7,7 @@ inputs:
     required: false
     default: 'https://prod.cms.va.gov'
   interval:
-    description: how often to poll the environment for status (in seconds)
+    description: How often to poll the environment for status (in seconds)
     required: false
     default: '15'
   timeout:
