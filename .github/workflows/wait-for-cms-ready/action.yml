@@ -11,7 +11,7 @@ inputs:
     required: false
     default: '15'
   timeout:
-    description: how long should we wait for the cms to be ready (in seconds)
+    description: How long should we wait for the cms to be ready (in seconds)
     required: false
     default: '1800'
 
