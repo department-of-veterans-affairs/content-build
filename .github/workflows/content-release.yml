@@ -567,6 +567,9 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{needs.set-env.outputs.BUILDTYPE}}.tar.bz2
           DEST: s3://${{ needs.set-env.outputs.DEPLOY_BUCKET }}
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+
       - name: CMS GovDelivery callback
         uses: fjogeleit/http-request-action@master
         with:
