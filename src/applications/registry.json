@@ -792,7 +792,7 @@
   {
     "appName": "Apply for Personalized Career Planning and Guidance with VA Form 28-8832",
     "entryName": "28-8832-planning-and-career-guidance",
-    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832/",
+    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832",
     "template": {
       "title": "Personalized Career Planning and Guidance Chapter 36 Form 28-8832",
       "vagovprod": true,
@@ -1009,7 +1009,7 @@
   {
     "appName": "covid-vaccine-expansion",
     "entryName": "covid-vaccine",
-    "rootUrl": "/health-care/covid-19-vaccine/sign-up/",
+    "rootUrl": "/health-care/covid-19-vaccine/sign-up",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
