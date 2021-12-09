@@ -1,0 +1,122 @@
+{
+  "bioWithoutLink": {
+    "node": {
+      "title": "Joe No’link",
+      "status": false,
+      "fieldPhoneNumber": "650-493-5000",
+      "entityPublished": true,
+      "fieldNameFirst": "Joe",
+      "fieldLastName": "No’link",
+      "fieldSuffix": null,
+      "fieldDescription": "Interim Deputy Director",
+      "fieldOffice": {
+        "entity": {
+          "entityLabel": "VA Palo Alto health care",
+          "entityType": "node"
+        }
+      },
+      "fieldIntroText": "Joe No’link was appointed Interim Deputy Director at VA Palo Alto Health Care System (VAPAHCS) on January 3, 2021. She was the Interim Associate Director from October 11, 2020 to January 2, 2021. ",
+      "fieldPhotoAllowHiresDownload": false,
+      "fieldBody": {
+        "processed": "<p>Ms. O’Connor has served as the Director for Clinical Support under the Office of the Chief of Staff since October 2018, where she oversees the operation, coordination, and administrative management of Chief of Staff services. Under her leadership, Ms. O’Connor has supported the Group Practice Management structure, improved call wait times, and first call resolution at VAPAHCS. Previously, Ms. O’Connor served as the Assistant Chief, Ambulatory Care Service, from November 2013 – October 2018. Prior to her administrative work she provided direct patient care as a physical therapist for seven years.</p>\n\n<p>Ms. O’Connor obtained a Bachelor of Science degree in Health Studies in 2001, and a Master’s degree in Physical Therapy in 2003 from Boston University.</p>"
+      },
+      "changed": 1621371180,
+      "entityUrl": {
+        "path": null
+      },
+      "fieldMedia": {
+        "entity": {
+          "image": {
+            "alt": "Megan_ O’Connor",
+            "title": "",
+            "derivative": {
+              "url": "http://cms-7gb5iotuvt47rpo6jcdienuwvjyblpan.demo.cms.va.gov/sites/default/files/styles/2_3_medium_thumbnail/public/2020-12/Megan_%20O%E2%80%99Connor.jpg",
+              "width": 320,
+              "height": 480
+            }
+          }
+        }
+      }
+    }
+  },
+  "bioWithLink": {
+    "node": {
+      "title": "Mary Link",
+      "status": false,
+      "fieldPhoneNumber": "650-493-5000",
+      "entityPublished": true,
+      "fieldNameFirst": "Mary",
+      "fieldLastName": "Link",
+      "fieldSuffix": null,
+      "fieldDescription": "Interim Deputy Director",
+      "fieldOffice": {
+        "entity": {
+          "entityLabel": "VA Palo Alto health care",
+          "entityType": "node"
+        }
+      },
+      "fieldIntroText": "Mary Link was appointed Interim Deputy Director at VA Palo Alto Health Care System (VAPAHCS) on January 3, 2021. She was the Interim Associate Director from October 11, 2020 to January 2, 2021. ",
+      "fieldPhotoAllowHiresDownload": false,
+      "fieldBody": {
+        "processed": "<p>Mary Linkhas served as the Director for Clinical Support under the Office of the Chief of Staff since October 2018, where she oversees the operation, coordination, and administrative management of Chief of Staff services. Under her leadership, Ms. O’Connor has supported the Group Practice Management structure, improved call wait times, and first call resolution at VAPAHCS. Previously, Ms. O’Connor served as the Assistant Chief, Ambulatory Care Service, from November 2013 – October 2018. Prior to her administrative work she provided direct patient care as a physical therapist for seven years.</p>\n\n<p>Ms. O’Connor obtained a Bachelor of Science degree in Health Studies in 2001, and a Master’s degree in Physical Therapy in 2003 from Boston University.</p>"
+      },
+      "changed": 1621371180,
+      "entityUrl": {
+        "path": "/palo-alto-health-care/staff-profiles/mary-link"
+      },
+      "fieldMedia": {
+        "entity": {
+          "image": {
+            "alt": "Mary Link",
+            "title": "",
+            "derivative": {
+              "url": "http://cms-7gb5iotuvt47rpo6jcdienuwvjyblpan.demo.cms.va.gov/sites/default/files/styles/2_3_medium_thumbnail/public/2020-12/Megan_%20O%E2%80%99Connor.jpg",
+              "width": 320,
+              "height": 480
+            }
+          }
+        }
+      }
+    }
+  },
+  "bioWithoutContent": {
+    "node": {
+      "title": "Mary No Link",
+      "status": false,
+      "fieldPhoneNumber": "650-493-5000",
+      "entityPublished": true,
+      "fieldNameFirst": "Mary",
+      "fieldLastName": "No Link",
+      "fieldSuffix": null,
+      "fieldDescription": "Interim Deputy Director",
+      "fieldOffice": {
+        "entity": {
+          "entityLabel": "VA Palo Alto health care",
+          "entityType": "node"
+        }
+      },
+      "fieldIntroText": "",
+      "fieldPhotoAllowHiresDownload": false,
+      "fieldBody": {
+        "processed": ""
+      },
+      "changed": 1621371180,
+      "entityUrl": {
+        "path": "/palo-alto-health-care/staff-profiles/mary-link"
+      },
+      "fieldMedia": {
+        "entity": {
+          "image": {
+            "alt": "Mary Link",
+            "title": "",
+            "derivative": {
+              "url": "http://cms-7gb5iotuvt47rpo6jcdienuwvjyblpan.demo.cms.va.gov/sites/default/files/styles/2_3_medium_thumbnail/public/2020-12/Megan_%20O%E2%80%99Connor.jpg",
+              "width": 320,
+              "height": 480
+            }
+          }
+        }
+      }
+    }
+  }
+}

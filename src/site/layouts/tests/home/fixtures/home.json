@@ -1,0 +1,19 @@
+{
+  "entityBundle": "home",
+  "entityId": "42",
+  "entityPublished": true,
+  "title": "Veterans Affair",
+  "entityUrl": {
+    "breadcrumb": [
+      {
+        "url": {
+          "path": "/",
+          "routed": true
+        },
+        "text": "Home"
+      }
+    ],
+    "path": "/"
+  },
+  "fieldIntroText": "Access and manage your VA benefits and health care"
+}
