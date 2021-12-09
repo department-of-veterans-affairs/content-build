@@ -1,0 +1,24 @@
+{
+  "entityId": 42,
+  "outreachAssetsDataArray": {
+    "entities": [
+      {
+        "title": "Dharma Initiative Annual Report - 1974",
+        "fieldListing": {
+          "targetId": 42
+        },
+        "fieldMedia": {
+          "entity": {
+            "entityBundle": "document",
+            "fieldDocument": {
+              "entity": {
+                "url": "files/file.pdf",
+                "filesize": 481516
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

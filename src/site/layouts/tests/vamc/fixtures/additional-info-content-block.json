@@ -1,0 +1,20 @@
+{
+  "hasFieldTextExpander": {
+    "entity": {
+      "entityId": "79970",
+      "entityBundle": "spanish_translation_summary",
+      "fieldWysiwyg": {
+        "processed": "Test body text"
+      },
+      "fieldTextExpander": "Test trigger text",
+      "entityType": "paragraph"
+    }
+  },
+
+  "noFieldTextExpander": {
+    "entity": {
+      "entityBundle": "spanish_translation_summary",
+      "entityType": "paragraph"
+    }
+  }
+}

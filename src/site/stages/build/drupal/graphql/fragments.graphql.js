@@ -1,3 +1,4 @@
+const administration = require('./taxonomy-fragments/administration.taxonomy.graphql');
 const alertParagraph = require('./paragraph-fragments/alert.paragraph.graphql');
 const alertParagraphSingle = require('./paragraph-fragments/alertSingle.paragraph.graphql');
 const audienceBeneficiaries = require('./taxonomy-fragments/audienceBeneficiaries.taxonomy.graphql');
@@ -32,6 +33,7 @@ const {
 const { promo } = require('./block-fragments/promo.block.graphql');
 
 const ALL_FRAGMENTS = `
+  ${administration}
   ${alertParagraphSingle}
   ${alertParagraph}
   ${alert}
@@ -66,6 +68,7 @@ const ALL_FRAGMENTS = `
 
 module.exports = {
   ALL_FRAGMENTS,
+  administration,
   alertParagraphSingle,
   alertParagraph,
   alert,

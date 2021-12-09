@@ -45,6 +45,15 @@ const pageFragment = `
     }
     ${FIELD_ALERT}
     ${FIELD_RELATED_LINKS}
+    fieldAdministration {
+      ... on FieldNodePageFieldAdministration {
+        entity {
+          ... on TaxonomyTermAdministration {
+            name
+          }
+        }
+      }
+    }
     changed
   }
 `;

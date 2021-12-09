@@ -1,0 +1,26 @@
+{
+  "typeOfCare": "other",
+  "fieldHealthServices": [
+    {
+      "entity": {
+        "fieldBody": {
+          "processed": "<p>Escanaba Vet Center offers resiliency classes. </p>\n"
+        },
+        "fieldServiceNameAndDescripti": {
+          "entity": {
+            "name": "Workshops and classes",
+            "fieldVetCenterTypeOfCare": null,
+            "fieldVetCenterFriendlyName": null,
+            "fieldAlsoKnownAs": null,
+            "fieldVetCenterComConditions": null,
+            "fieldCommonlyTreatedCondition": null,
+            "fieldVetCenterServiceDescrip": "We offer workshops and classes if you want to connect with other Veterans but don't want a group counseling setting.",
+            "description": {
+              "processed": "We offer workshops and classes if you want to connect with other Veterans but don't want a group counseling setting."
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -11,6 +11,24 @@ const nodeCampaignLandingPage = `
     entityId
     entityBundle
     title
+    fieldAdministration {
+      entity {
+        ... on TaxonomyTermAdministration {
+          fieldDescription
+          fieldEmailUpdatesLinkText
+          fieldEmailUpdatesUrl
+          fieldLink {
+            uri
+            title
+          }
+          fieldSocialMediaLinks {
+            platform
+            value
+            platformValues
+          }
+        }
+      }
+    }
     fieldBenefitCategories {
       entity {
         entityType
@@ -64,6 +82,24 @@ const nodeCampaignLandingPage = `
             additionalName
             familyName
           }
+          fieldAdministration {
+            entity {
+              ... on TaxonomyTermAdministration {
+                fieldDescription
+                fieldEmailUpdatesLinkText
+                fieldEmailUpdatesUrl
+                fieldLink {
+                  uri
+                  title
+                }
+                fieldSocialMediaLinks {
+                  platform
+                  value
+                  platformValues
+                }
+              }
+            }
+          }
           fieldBody {
             value
             format
@@ -107,6 +143,24 @@ const nodeCampaignLandingPage = `
               entityBundle
               entityId
               ... on NodeEventListing {
+                fieldAdministration {
+                  entity {
+                    ... on TaxonomyTermAdministration {
+                      fieldDescription
+                      fieldEmailUpdatesLinkText
+                      fieldEmailUpdatesUrl
+                      fieldLink {
+                        uri
+                        title
+                      }
+                      fieldSocialMediaLinks {
+                        platform
+                        value
+                        platformValues
+                      }
+                    }
+                  }
+                }
                 fieldDescription
                 fieldIntroText
                 fieldOffice {
@@ -115,6 +169,27 @@ const nodeCampaignLandingPage = `
                     entityBundle
                     entityId
                     ... on NodeOffice {
+                      fieldAdministration {
+                        entity {
+                          entityType
+                          entityBundle
+                          entityId
+                          ... on TaxonomyTermAdministration {
+                            fieldDescription
+                            fieldEmailUpdatesLinkText
+                            fieldEmailUpdatesUrl
+                            fieldLink {
+                              uri
+                              title
+                            }
+                            fieldSocialMediaLinks {
+                              platform
+                              value
+                              platformValues
+                            }
+                          }
+                        }
+                      }
                       fieldBody {
                         value
                         format
@@ -459,6 +534,7 @@ const GetCampaignLandingPages = `
   ${fragments.listOfLinkTeasers}
   ${fragments.linkTeaser}
   ${fragments.alert}
+  ${fragments.administration}
   ${landingPageFragment}
   ${nodeCampaignLandingPage}
 
