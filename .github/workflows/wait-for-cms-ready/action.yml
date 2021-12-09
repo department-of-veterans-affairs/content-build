@@ -1,3 +1,5 @@
+# TODO: Consider moving the govdelivery callback into this action.
+# See https://github.com/department-of-veterans-affairs/content-build/pull/832#pullrequestreview-827896343
 name: Wait for CMS to be ready
 description: Pause until we know that the CMS is online and ready to go
 
