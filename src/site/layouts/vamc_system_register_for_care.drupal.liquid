@@ -21,6 +21,13 @@
                 contentType = fieldCcTopOfPageContent.fetchedBundle
             %}
           </div>
+
+          <!-- Details for facilities offering this non-clinical service -->
+          {% assign medicalRecordsFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthcareSystemNonClinicalServiceLocationsByType: 'Register for care' %}
+          {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
+            facilities = medicalRecordsFacilities
+          %}
+
           {% include "src/site/includes/centralized-content.drupal.liquid" with
               entity = fieldCcBottomOfPageContent.fetched
               contentType = fieldCcBottomOfPageContent.fetchedBundle

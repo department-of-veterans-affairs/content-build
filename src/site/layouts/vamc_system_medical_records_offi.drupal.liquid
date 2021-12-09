@@ -36,6 +36,12 @@
             contentType = fieldCcGetRecordsInPerson.fetchedBundle
           %}
 
+          <!-- Details for facilities offering this non-clinical service -->
+          {% assign medicalRecordsFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthcareSystemNonClinicalServiceLocationsByType: 'Medical records' %}
+          {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
+            facilities = medicalRecordsFacilities
+          %}
+
           {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcGetRecordsMailOrFax.fetched
             contentType = fieldCcGetRecordsMailOrFax.fetchedBundle

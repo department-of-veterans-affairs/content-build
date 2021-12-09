@@ -1,3 +1,5 @@
+const healthCareRegionNonClinicialServices = require('./facilities-fragments/healthCareRegionNonClinicialServices.node.graphql');
+
 const medicalRecordsOfficeFragment = `
   fragment medicalRecordsOfficeFragment on NodeVamcSystemMedicalRecordsOffi {
     title
@@ -36,12 +38,7 @@ const medicalRecordsOfficeFragment = `
       fetchedBundle
     }
     fieldOffice {
-      entity {
-        ... on NodeHealthCareRegionPage {
-          entityLabel
-          title
-        }
-      }
+      ${healthCareRegionNonClinicialServices}
     }
   }
 `;

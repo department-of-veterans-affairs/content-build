@@ -22,18 +22,25 @@
 
           <div class="usa-content">
             {% include "src/site/includes/centralized-content.drupal.liquid" with
-                entity = fieldCcTopOfPageContent.fetched
-                contentType = fieldCcTopOfPageContent.fetchedBundle
+              entity = fieldCcTopOfPageContent.fetched
+              contentType = fieldCcTopOfPageContent.fetchedBundle
             %}
           </div>
+
+          <!-- Details for facilities offering this non-clinical service -->
+          {% assign billingAndInsuranceFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthcareSystemNonClinicalServiceLocationsByType: 'Billing and insurance' %}
+          {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
+            facilities = billingAndInsuranceFacilities
+          %}
+
           {% include "src/site/includes/centralized-content.drupal.liquid" with
-              entity = fieldCcBottomOfPageContent.fetched
-              contentType = fieldCcBottomOfPageContent.fetchedBundle
+            entity = fieldCcBottomOfPageContent.fetched
+            contentType = fieldCcBottomOfPageContent.fetchedBundle
           %}
           <div class="va-nav-linkslist va-nav-linkslist--related">
             {% include "src/site/includes/centralized-content.drupal.liquid" with
-                entity = fieldCcRelatedLinks.fetched
-                contentType = fieldCcRelatedLinks.fetchedBundle
+              entity = fieldCcRelatedLinks.fetched
+              contentType = fieldCcRelatedLinks.fetchedBundle
             %}
           </div>
         </article>
