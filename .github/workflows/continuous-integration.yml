@@ -845,6 +845,11 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+        with:
+          base_url: https://staging.cms.va.gov
+
       - name: CMS GovDelivery callback
         if: ${{ matrix.environment == 'vagovstaging' }}
         uses: fjogeleit/http-request-action@master
