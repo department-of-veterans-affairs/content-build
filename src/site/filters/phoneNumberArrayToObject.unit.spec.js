@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-const phoneNumberArrayToObject = require('../phoneNumberArrayToObject');
+const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 
 describe('phoneNumberArrayToObject', () => {
   it('returns empty object if data is null', () => {
