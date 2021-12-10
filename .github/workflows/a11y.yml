@@ -1,9 +1,6 @@
 name: Accessibility Tests
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 14 * * 1-5'
+on: [push]
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -232,7 +229,7 @@ jobs:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack-message: '<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+          slack-message: 'Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
