@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 /*
- * Add unique ID to H2s and H3s that aren't in WYSIWYG or accordion buttons
+ * Add unique ID to H2s and H3s that aren't in WYSIWYG or accordion buttons.
  */
 const { ENTITY_BUNDLES } = require('../../../../constants/content-modeling');
 
