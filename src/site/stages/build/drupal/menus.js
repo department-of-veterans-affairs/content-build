@@ -1,4 +1,3 @@
-const sortBy = require('lodash/sortBy');
 /* eslint-disable no-param-reassign */
 
 /**
