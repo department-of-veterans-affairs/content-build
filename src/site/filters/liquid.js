@@ -882,7 +882,10 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return event.fieldDatetimeRangeTimezone.value * 1000 < currentTimestamp;
+      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
+        event.fieldDatetimeRangeTimezone,
+      );
+      return mostRecentEvent.value * 1000 < currentTimestamp;
     });
   };
 
@@ -906,8 +909,12 @@ module.exports = function registerFilters() {
   ) => {
     if (!dates) return null;
     return dates.sort((a, b) => {
-      const start1 = moment(a[dateKey].value);
-      const start2 = moment(b[dateKey].value);
+      const start1 = moment(
+        liquid.filters.deriveMostRecentDate(a[dateKey]).value,
+      );
+      const start2 = moment(
+        liquid.filters.deriveMostRecentDate(b[dateKey]).value,
+      );
 
       return reverse ? start2 - start1 : start1 - start2;
     });
