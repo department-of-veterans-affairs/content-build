@@ -19,6 +19,9 @@ module.exports = `
       entities {
         ... on NodeHealthCareLocalFacility {
           entityLabel
+          fieldFacilityHours {
+            value
+          }
           ${FIELD_ADDRESS}
           reverseFieldFacilityLocationNode(limit: 50, filter: {
             conditions: [
@@ -52,7 +55,6 @@ module.exports = `
                       }
                     }
                     fieldFacilityServiceHours {
-                      tableValue
                       value
                     }
                     fieldHours

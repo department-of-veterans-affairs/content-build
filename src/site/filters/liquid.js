@@ -610,6 +610,14 @@ module.exports = function registerFilters() {
       // Recreate the embedded youtube.com URL so we know it's formatted correctly.
       const urlInstance = new URL(url);
       const pathname = urlInstance?.pathname?.replace('/embed', '');
+
+      // Edge case for https://www.youtube.com/watch?v=HlkZeAYmw94.
+      if (urlInstance.searchParams?.get?.('v')) {
+        return `https://www.youtube.com/embed/${urlInstance.searchParams?.get?.(
+          'v',
+        )}`;
+      }
+
       return `https://www.youtube.com/embed${pathname}`;
     } catch (error) {
       return url;
@@ -1323,6 +1331,7 @@ module.exports = function registerFilters() {
       .map(facility => ({
         entityLabel: facility.entityLabel,
         fieldAddress: facility.fieldAddress,
+        fieldFacilityHours: facility.fieldFacilityHours,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
           facility.reverseFieldFacilityLocationNode.entities,
           serviceType,
