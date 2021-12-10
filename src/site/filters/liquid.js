@@ -890,7 +890,10 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return event.fieldDatetimeRangeTimezone.value * 1000 >= currentTimestamp;
+      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
+        event.fieldDatetimeRangeTimezone,
+      );
+      return mostRecentEvent.value * 1000 >= currentTimestamp;
     });
   };
 
