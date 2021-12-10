@@ -1152,7 +1152,7 @@
   },
   {
     "appName": "Apply for Specially Adapted Housing Grant",
-    "entryName": "specially-adapted-housing-grant",
+    "entryName": "sahg",
     "rootUrl": "/specially-adapted-housing-grant",
     "template": {
       "vagovprod": false,
