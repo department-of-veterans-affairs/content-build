@@ -1,11 +1,6 @@
 {% assign isVamcPage = entityUrl.path | pathContainsSubstring: 'health-care' %}
 
 {% if buildtype == 'vagovprod' %}
-  {% if isVamcPage == true %}
-    <script type="text/javascript" nonce="**CSP_NONCE**">
-      var vaSurvey = 'mcenter';
-    </script>
-  {% endif %}
 <script defer nonce="**CSP_NONCE**">
   {% include "src/site/assets/js/foresee/vagovprod.js" %}
 </script>
