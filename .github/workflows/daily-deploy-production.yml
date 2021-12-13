@@ -178,7 +178,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{ github.repository }}/compare/content-build/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...${{ needs.set-env.outputs.COMMIT_SHA }}>"}]'
+          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, production deploy for content-build coming up in ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...${{ needs.set-env.outputs.COMMIT_SHA }}>"}]'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -255,7 +255,7 @@ jobs:
         run: |
           BUILDTIME=$(date +%s)
           echo ::set-output name=buildtime::$BUILDTIME
-          echo "{{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+          echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address='${{ env.DRUPAL_ADDRESS }}' --no-drupal-proxy
@@ -445,12 +445,13 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [set-env, build, create-release]
 
     env:
       ENVIRONMENT: vagovprod
       BUCKET: content.www.va.gov
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout
@@ -491,14 +492,17 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ needs.set-env.outputs.COMMIT_SHA }}/${{ env.ENVIRONMENT }}.tar.bz2
           DEST: s3://${{ env.BUCKET }}
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+
       - name: CMS GovDelivery callback
         uses: fjogeleit/http-request-action@master
-        continue-on-error: true
         with:
-          url: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}
-          method: POST
+          url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          method: GET
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
+          timeout: 10000
 
   notify-failure:
     name: Notify Failure

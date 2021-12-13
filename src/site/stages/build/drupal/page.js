@@ -302,8 +302,8 @@ function compilePage(page, contentData) {
       allTaxonomies = {
         entities: [],
       },
-      banners,
       bannerAlerts: bannerAlertsItem = {},
+      banners,
       burialsAndMemorialsBenefQuery: burialsHubSidebarNav = {},
       careersEmploymentBenefitsQuery: careersHubSidebarNav = {},
       decisionReviewsBenefitsHQuery: decisionHubSidebarNav = {},
@@ -313,10 +313,11 @@ function compilePage(page, contentData) {
       healthCareBenefitsHubQuery: healthcareHubSidebarNav = {},
       housingAssistanceBenefitsQuery: housingHubSidebarNav = {},
       lifeInsuranceBenefitsHubQuery: lifeInsuranceHubSidebarNav = {},
+      locationsOperatingStatus,
       outreachSidebarQuery: outreachSidebarNav = {},
       pensionBenefitsHubQuery: pensionHubSidebarNav = {},
+      promoBanners,
       recordsBenefitsHubQuery: recordsHubSidebarNav = {},
-      locationsOperatingStatus,
     },
   } = contentData;
 
@@ -383,6 +384,7 @@ function compilePage(page, contentData) {
         alertItems,
         { bannerAlert: bannerAlertsItem },
         { banners },
+        { promoBanners },
         pageId,
       );
       break;
@@ -430,6 +432,7 @@ function compilePage(page, contentData) {
         alertItems,
         { bannerAlert: bannerAlertsItem },
         { banners },
+        { promoBanners },
         pageId,
       );
       break;
@@ -442,6 +445,7 @@ function compilePage(page, contentData) {
         alertItems,
         { bannerAlert: bannerAlertsItem },
         { banners },
+        { promoBanners },
         pageId,
       );
       break;
@@ -454,6 +458,7 @@ function compilePage(page, contentData) {
           alertItems,
           { bannerAlert: bannerAlertsItem },
           { banners },
+          { promoBanners },
           pageId,
         );
       }
@@ -465,6 +470,7 @@ function compilePage(page, contentData) {
         outreachSidebarNavItems,
         alertItems,
         { banners },
+        { promoBanners },
         pageId,
       );
       break;
@@ -478,6 +484,7 @@ function compilePage(page, contentData) {
         alertItems,
         { bannerAlert: bannerAlertsItem },
         { banners },
+        { promoBanners },
         pageId,
       );
       break;
@@ -494,6 +501,7 @@ function compilePage(page, contentData) {
         alertItems,
         { bannerAlert: bannerAlertsItem },
         { banners },
+        { promoBanners },
         pageId,
       );
       break;

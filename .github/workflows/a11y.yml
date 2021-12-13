@@ -38,7 +38,7 @@ jobs:
 
       - name: Notify Slack
         if: ${{ always() }}
-        uses: slackapi/slack-github-action@v1.15.0
+        uses: slackapi/slack-github-action@v1.16.0
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -73,7 +73,6 @@ jobs:
         with:
           path: |
             .cache/yarn
-            /github/home/.cache/Cypress
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
@@ -106,6 +105,7 @@ jobs:
   a11y:
     name: Accessibility Tests
     needs: build
+    timeout-minutes: 120
     runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
@@ -214,7 +214,7 @@ jobs:
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Accessibility Test Cancellation
-        uses: slackapi/slack-github-action@v1.15.0
+        uses: slackapi/slack-github-action@v1.16.0
         if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
         continue-on-error: true
         env:
@@ -225,7 +225,7 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Failure
-        uses: slackapi/slack-github-action@v1.15.0
+        uses: slackapi/slack-github-action@v1.16.0
         if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
         continue-on-error: true
         env:
@@ -236,7 +236,7 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
-        uses: slackapi/slack-github-action@v1.15.0
+        uses: slackapi/slack-github-action@v1.16.0
         if: ${{ needs.a11y.result == 'success' }}
         continue-on-error: true
         env:
@@ -264,7 +264,6 @@ jobs:
         with:
           path: |
             .cache/yarn
-            /github/home/.cache/Cypress
             **/node_modules
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
@@ -328,7 +327,7 @@ jobs:
 
       - name: Accessibility Test Report Slack notification
         if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        uses: slackapi/slack-github-action@v1.15.0
+        uses: slackapi/slack-github-action@v1.16.0
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs

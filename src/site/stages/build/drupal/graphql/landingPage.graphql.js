@@ -17,7 +17,6 @@ const { FIELD_ALERT } = require('./block-fragments/alert.block.graphql');
  * The top-level page for a section of the website.
  * Examples include /health-care/, /disability/, etc.
  */
-const ADMIN = '...administration';
 
 const landingPageFragment = `
   fragment landingPage on NodeLandingPage {
@@ -58,9 +57,6 @@ const landingPageFragment = `
       value
       date
     }
-    fieldPageLastBuilt {
-      date
-    }
     fieldTeaserText
     fieldRelatedOffice {
       entity {
@@ -84,7 +80,6 @@ const landingPageFragment = `
       }
     }
     changed
-    ${ADMIN}
   }
 `;
 
@@ -100,7 +95,6 @@ const landingPageFragmentModified = landingPageFragment.replace(
 );
 
 const GetNodeLandingPages = `
-  ${fragments.administration}
   ${fragments.alert}
   ${fragments.promo}
   ${fragments.listOfLinkTeasers}

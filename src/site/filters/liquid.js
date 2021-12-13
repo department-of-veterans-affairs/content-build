@@ -610,6 +610,14 @@ module.exports = function registerFilters() {
       // Recreate the embedded youtube.com URL so we know it's formatted correctly.
       const urlInstance = new URL(url);
       const pathname = urlInstance?.pathname?.replace('/embed', '');
+
+      // Edge case for https://www.youtube.com/watch?v=HlkZeAYmw94.
+      if (urlInstance.searchParams?.get?.('v')) {
+        return `https://www.youtube.com/embed/${urlInstance.searchParams?.get?.(
+          'v',
+        )}`;
+      }
+
       return `https://www.youtube.com/embed${pathname}`;
     } catch (error) {
       return url;
@@ -1297,5 +1305,11 @@ module.exports = function registerFilters() {
 
   liquid.filters.featureAddVaHealthConnectNumber = () => {
     return cmsFeatureFlags?.FEATURE_HEALTH_CONNECT_NUMBER;
+  };
+
+  liquid.filters.pathContainsSubstring = (path, searchValue) => {
+    if (!path) return null;
+    const basePath = liquid.filters.regionBasePath(path);
+    return basePath.includes(searchValue);
   };
 };

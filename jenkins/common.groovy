@@ -178,14 +178,14 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // cannot be serialized by default.
     brokenLinks = null
 
-    uploadBrokenLinksFile(brokenLinksFile, envName)
+    // uploadBrokenLinksFile(brokenLinksFile, envName)
 
-    slackSend(
-      message: message,
-      color: color,
-      failOnError: true,
-      channel: 'vfs-platform-builds'
-    )
+    // slackSend(
+    //   message: message,
+    //   color: color,
+    //   failOnError: true,
+    //   channel: 'vfs-platform-builds'
+    // )
 
     if (color == 'danger') {
       throw new Exception('Broken links found')
