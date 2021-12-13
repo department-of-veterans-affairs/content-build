@@ -2014,3 +2014,32 @@ describe('isVisn8', () => {
     expect(liquid.filters.isVisn8('| VISN 8 |')).to.be.false;
   });
 });
+
+describe('pathContainsSubstring', () => {
+  it('returns null if path is null', () => {
+    expect(liquid.filters.pathContainsSubstring(null, 'health-care')).to.be
+      .null;
+  });
+
+  it('returns true if path includes the search value - "health-care"', () => {
+    const path = '/butler-health-care';
+    expect(liquid.filters.pathContainsSubstring(path, 'health-care')).to.be
+      .true;
+  });
+
+  it('returns false if path does not include the search value - "health-care"', () => {
+    const path = '/escanaba-vet-center';
+    expect(liquid.filters.pathContainsSubstring(path, 'health-care')).to.be
+      .false;
+  });
+
+  it('returns true if path includes the search value - "vet-center"', () => {
+    const path = '/escanaba-vet-center/locations';
+    expect(liquid.filters.pathContainsSubstring(path, 'vet-center')).to.be.true;
+  });
+
+  it('returns false if no search value is passed', () => {
+    const path = '/escanaba-vet-center/locations';
+    expect(liquid.filters.pathContainsSubstring(path)).to.be.false;
+  });
+});

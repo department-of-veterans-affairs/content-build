@@ -1090,6 +1090,34 @@
     }
   },
   {
+    "appName": "Your VA home loan COE",
+    "entryName": "coe-status",
+    "rootUrl": "/housing-assistance/home-loans/check-coe-status/your-coe",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": ""
+        },
+        {
+          "name": "Housing assistance",
+          "path": "housing-assistance"
+        },
+        {
+          "name": "VA-backed home loans",
+          "path": "housing-assistance/home-loans"
+        },
+        {
+          "name": "Your VA home loan COE",
+          "path": "housing-assistance/home-loans/check-coe-status"
+        }
+      ]
+    }
+  },
+  {
     "appName": "Apply for Certificate of Eligibility",
     "entryName": "coe",
     "rootUrl": "/housing-assistance/home-loans/request-coe-form-26-1880",
@@ -1152,39 +1180,11 @@
   },
   {
     "appName": "Apply for Specially Adapted Housing Grant",
-    "entryName": "specially-adapted-housing",
+    "entryName": "sahg",
     "rootUrl": "/specially-adapted-housing-grant",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "Your VA home loan COE",
-    "entryName": "coe-status",
-    "rootUrl": "/housing-assistance/home-loans/check-coe-status/your-coe",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Home",
-          "path": ""
-        },
-        {
-          "name": "Housing assistance",
-          "path": "housing-assistance"
-        },
-        {
-          "name": "VA-backed home loans",
-          "path": "housing-assistance/home-loans"
-        },
-        {
-          "name": "Your VA home loan COE",
-          "path": "housing-assistance/home-loans/check-coe-status"
-        }
-      ]
     }
   }
 ]
