@@ -1149,5 +1149,14 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Apply for Specially Adapted Housing Grant",
+    "entryName": "sahg",
+    "rootUrl": "/specially-adapted-housing-grant",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]

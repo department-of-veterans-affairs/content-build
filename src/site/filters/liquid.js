@@ -1306,4 +1306,10 @@ module.exports = function registerFilters() {
   liquid.filters.featureAddVaHealthConnectNumber = () => {
     return cmsFeatureFlags?.FEATURE_HEALTH_CONNECT_NUMBER;
   };
+
+  liquid.filters.pathContainsSubstring = (path, searchValue) => {
+    if (!path) return null;
+    const basePath = liquid.filters.regionBasePath(path);
+    return basePath.includes(searchValue);
+  };
 };
