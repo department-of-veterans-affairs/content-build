@@ -13,3 +13,20 @@
 <script defer type="text/javascript" nonce="**CSP_NONCE**"
   src="https://resource.digital.voice.va.gov/wdcvoice/5/onsite/embed.js" async></script>
 {% endif %}
+
+{% if buildtype == 'localhost' %}
+<script>console.log({{ entityUrl | json }});</script>
+{% assign isVamcPage = entityUrl.path | pathContainsSubstring: 'health-care' %}
+<script>console.log({{ isVamcPage | json }});</script>
+{% if isVamcPage == true %}
+<script>console.log({{'this is a vamc page' | json }});</script>
+  <script type="text/javascript" nonce="**CSP_NONCE**">
+    var vaSurvey = 'mcenter';
+  </script>
+{% endif %}
+<script defer nonce="**CSP_NONCE**">
+  {% include "src/site/assets/js/foresee/vagovstaging.js" %}
+</script>
+<script defer type="text/javascript" nonce="**CSP_NONCE**"
+  src="https://resource.digital.voice.va.gov/wdcvoice/5/onsite/embed.js" async></script>
+{% endif %}
