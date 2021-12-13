@@ -1309,7 +1309,7 @@ module.exports = function registerFilters() {
 
   liquid.filters.pathContainsSubstring = (path, searchValue) => {
     if (!path) return null;
-    const str = liquid.filters.regionBasePath(path);
-    return str.includes(searchValue);
+    const basePath = liquid.filters.regionBasePath(path);
+    return basePath.includes(searchValue);
   };
 };
