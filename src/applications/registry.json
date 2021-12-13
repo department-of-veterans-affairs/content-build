@@ -1092,7 +1092,7 @@
   {
     "appName": "Apply for Certificate of Eligibility",
     "entryName": "coe",
-    "rootUrl": "/housing-assistance/home-loans/apply-for-coe-form-26-1880",
+    "rootUrl": "/housing-assistance/home-loans/request-coe-form-26-1880",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
@@ -1107,8 +1107,8 @@
           "path": "housing-assistance/home-loans"
         },
         {
-          "name": "Apply for Certificate of Eligibility Form 26-1880",
-          "path": "housing-assistance/home-loans/apply-for-coe-form-26-1880"
+          "name": "Request a VA home loan Certificate of Eligibility",
+          "path": "housing-assistance/home-loans/request-coe-form-26-1880"
         }
       ]
     }
@@ -1148,6 +1148,43 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Apply for Specially Adapted Housing Grant",
+    "entryName": "specially-adapted-housing",
+    "rootUrl": "/specially-adapted-housing-grant",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Your VA home loan COE",
+    "entryName": "coe-status",
+    "rootUrl": "/housing-assistance/home-loans/check-coe-status/your-coe",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": ""
+        },
+        {
+          "name": "Housing assistance",
+          "path": "housing-assistance"
+        },
+        {
+          "name": "VA-backed home loans",
+          "path": "housing-assistance/home-loans"
+        },
+        {
+          "name": "Your VA home loan COE",
+          "path": "housing-assistance/home-loans/check-coe-status"
+        }
+      ]
     }
   }
 ]
