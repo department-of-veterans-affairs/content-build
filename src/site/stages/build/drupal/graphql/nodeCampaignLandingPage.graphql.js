@@ -202,27 +202,6 @@ const nodeCampaignLandingPage = `
           }
           fieldMediaInLibrary
           fieldMimeType
-          fieldOwner {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
-                }
-              }
-            }
-          }
         }
       }
     }
@@ -337,24 +316,6 @@ const nodeCampaignLandingPage = `
                   targetId
                   alt
                   title
-                }
-              }
-            }
-          }
-          fieldOwner {
-            entity {
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
                 }
               }
             }
