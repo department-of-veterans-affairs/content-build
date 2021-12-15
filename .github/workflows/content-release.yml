@@ -283,6 +283,9 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+
       - name: Export content build start time
         id: export-content-build-start-time
         run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")

@@ -175,6 +175,11 @@ jobs:
           echo ::set-output name=buildtime::$BUILDTIME
           echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+        with:
+          base_url: ${{ matrix.drupal-address }}
+
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:

@@ -257,6 +257,9 @@ jobs:
           echo ::set-output name=buildtime::$BUILDTIME
           echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address='${{ env.DRUPAL_ADDRESS }}' --no-drupal-proxy
         timeout-minutes: 30
