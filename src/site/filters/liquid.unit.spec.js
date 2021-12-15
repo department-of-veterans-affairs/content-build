@@ -7,6 +7,7 @@ import featuredContentData from '../layouts/tests/vet_center/template/fixtures/f
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import sidebarData from './fixtures/sidebarData.json';
+import hcSysNonClinicalSvcLocByType from '../layouts/tests/vamc/fixtures/healthcareSystemNonClinicalServiceLocationsByTypeMockData.json';
 
 const _ = require('lodash');
 
@@ -2007,5 +2008,158 @@ describe('isVisn8', () => {
 
   it('returns false if string does NOT equal "VISN 8"', () => {
     expect(liquid.filters.isVisn8('| VISN 8 |')).to.be.false;
+  });
+});
+
+describe('serviceLocationsAtFacilityByServiceType', () => {
+  const allServicesAtFacility =
+    hcSysNonClinicalSvcLocByType.entities[0].fieldOffice.entity
+      .reverseFieldRegionPageNode.entities[0].reverseFieldFacilityLocationNode
+      .entities;
+
+  const expected = {
+    entityId: '41817',
+    fieldServiceNameAndDescripti: {
+      entity: {
+        entityId: '1027',
+        entityLabel: 'Billing and insurance',
+        name: 'Billing and insurance',
+      },
+      targetId: 1027,
+    },
+    fieldServiceLocation: [
+      {
+        entity: {
+          status: true,
+          fieldAdditionalHoursInfo: null,
+          fieldEmailContacts: [],
+          fieldFacilityServiceHours: {
+            value: [
+              ['Mon', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Tue', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Wed', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Thu', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Fri', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Sat', 'Closed'],
+              ['Sun', 'Closed'],
+            ],
+          },
+          fieldHours: '2',
+          fieldPhone: [],
+          fieldUseMainFacilityPhone: true,
+          fieldServiceLocationAddress: {
+            entity: {
+              fieldUseFacilityAddress: true,
+              fieldBuildingNameNumber: 'Building 1',
+              fieldClinicName: 'Anchorage A',
+              fieldWingFloorOrRoomNumber: 'Floor 3',
+              fieldAddress: {
+                addressLine1: '',
+                addressLine2: '',
+                postalCode: '',
+                locality: '',
+                administrativeArea: '',
+              },
+            },
+          },
+        },
+      },
+    ],
+  };
+  it('does not return facilities data for the "Billing and insurance" service type', () => {
+    const serviceType = 'Medical Records';
+    const facilityLocationsByType = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+      serviceType,
+    );
+    expect(facilityLocationsByType[0]).to.not.equal(
+      expected.fieldServiceLocation[0],
+    );
+  });
+
+  it('returns facilities data for the "Billing and insurance" service type only', () => {
+    const serviceType = 'Billing and insurance';
+    const facilityLocationsByType = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+      serviceType,
+    );
+    expect(facilityLocationsByType[0]).to.deep.equal(
+      expected.fieldServiceLocation[0],
+    );
+  });
+  it('returns and empty array if serviceType argument is not passed', () => {
+    const facilityLocationsByType = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+    );
+    expect(facilityLocationsByType).to.eql([]);
+  });
+});
+
+describe('healthcareSystemNonClinicalServiceLocationsByType', () => {
+  const billingAndInsuraceServicesFacilities = [
+    {
+      entityLabel: 'Anchorage VA Medical Center',
+      fieldAddress: {
+        addressLine1: '1201 North Muldoon Road',
+        addressLine2: null,
+        postalCode: '99504-6104',
+        locality: 'Anchorage',
+        administrativeArea: 'AK',
+      },
+    },
+    {
+      entityLabel: 'Fairbanks VA Clinic',
+      fieldAddress: {
+        addressLine1: '4076 Neeley Road, Room 1J-101',
+        addressLine2: null,
+        postalCode: '99703-1110',
+        locality: 'Fort Wainwright',
+        administrativeArea: 'AK',
+      },
+    },
+  ];
+
+  const facilitiesInSystem =
+    hcSysNonClinicalSvcLocByType.entities[0].fieldOffice.entity
+      .reverseFieldRegionPageNode.entities;
+
+  const serviceType = 'Billing and insurance';
+  it('returns count of facility locations which provide "Billing and insurance" service', () => {
+    const serviceLocations = liquid.filters.healthcareSystemNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      serviceType,
+    );
+    expect(serviceLocations.length).to.eql(2);
+  });
+
+  it('returns facility entityLabel information', () => {
+    const serviceLocations = liquid.filters.healthcareSystemNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      serviceType,
+    );
+    expect(serviceLocations[0].entityLabel).to.eql(
+      billingAndInsuraceServicesFacilities[0].entityLabel,
+    );
+  });
+
+  it('returns facility fieldAddress addressLine1  information', () => {
+    const serviceLocations = liquid.filters.healthcareSystemNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      serviceType,
+    );
+    expect(serviceLocations[0].fieldAddress.addressLine1).to.eql(
+      billingAndInsuraceServicesFacilities[0].fieldAddress.addressLine1,
+    );
+  });
+
+  it('does not return facilities data for the "Billing and insurance" service type', () => {
+    const serviceTypeMedical = 'Medical Records';
+    const facilityLocationsByType = liquid.filters.healthcareSystemNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      serviceTypeMedical,
+    );
+    expect(facilityLocationsByType[0]).to.not.equal(
+      billingAndInsuraceServicesFacilities[0].entityLabel,
+    );
   });
 });

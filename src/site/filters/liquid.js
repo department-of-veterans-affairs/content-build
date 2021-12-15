@@ -1318,7 +1318,6 @@ module.exports = function registerFilters() {
       ) {
         return [...acc, ...service.fieldServiceLocation];
       }
-
       return acc;
     }, []);
   };
