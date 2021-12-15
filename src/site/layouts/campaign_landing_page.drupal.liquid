@@ -376,13 +376,17 @@
                 <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
                   <p class="vads-u-font-weight--bold vads-u-margin--0 vads-u-margin-right--2">When</p>
                   <p class="vads-u-margin--0">
-                    {% if eventReference.entity.fieldDatetimeRangeTimezone.value != empty %}
-                      {{eventReference.entity.fieldDatetimeRangeTimezone.value | dateFromUnix: "dddd, MMM D, h:mm A" }} -
+                    <!-- Derive most recent date -->
+                    {% assign mostRecentDate = eventReference.entity.fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+
+                    {% if mostRecentDate.value != empty %}
+                      {{ mostRecentDate.value | dateFromUnix: "dddd, MMM D, h:mm A" }} -
                       <br />
-                      {{eventReference.entity.fieldDatetimeRangeTimezone.endValue | dateFromUnix: "dddd, MMM D, h:mm A" }}
+                      {{ mostRecentDate.endValue | dateFromUnix: "dddd, MMM D, h:mm A" }}
                     {% endif %}
-                    {% if eventReference.entity.fieldDatetimeRangeTimezone.timezone != empty %}
-                      {{ eventReference.entity.fieldDatetimeRangeTimezone.timezone | timezoneAbbrev: fieldDatetimeRangeTimezone.value }}
+
+                    {% if mostRecentDate.timezone != empty %}
+                      {{ mostRecentDate.timezone | timezoneAbbrev: mostRecentDate.value }}
                     {% endif %}
                   </p>
                 </div>
