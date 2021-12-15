@@ -284,7 +284,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Wait for the CMS to be ready
-        uses: ./.github/workflows/wait-for-cms-ready
+        uses: ./content-build/.github/workflows/wait-for-cms-ready
 
       - name: Export content build start time
         id: export-content-build-start-time

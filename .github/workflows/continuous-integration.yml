@@ -176,7 +176,7 @@ jobs:
           echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Wait for the CMS to be ready
-        uses: ./.github/workflows/wait-for-cms-ready
+        uses: ./content-build/.github/workflows/wait-for-cms-ready
         with:
           base_url: ${{ matrix.drupal-address }}
 
