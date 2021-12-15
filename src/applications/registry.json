@@ -1119,10 +1119,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": ""
-        },
-        {
           "name": "Housing assistance",
           "path": "housing-assistance"
         },
