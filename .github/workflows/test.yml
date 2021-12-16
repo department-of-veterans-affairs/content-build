@@ -38,7 +38,8 @@ jobs:
 
       - name: bump
         run: |
-          echo "new_patch=$(echo $(( ${{ env.new_patch }} + 1 )))" >> $GITHUB_ENV
+          current_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
+          echo "new_patch=$current_patch" >> $GITHUB_ENV
           echo ${{ env.new_patch }}
 
       # - name: Create tag
