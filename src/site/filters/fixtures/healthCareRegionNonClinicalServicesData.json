@@ -1,0 +1,844 @@
+{
+  "entityId": "15032",
+  "entityLabel": "VA Alaska health care",
+  "reverseFieldRegionPageNode": {
+    "entities": [
+      {
+        "entityLabel": "Anchorage VA Medical Center",
+        "fieldFacilityHours": {
+          "value": [
+            [
+              "Mon",
+              "730AM-430PM"
+            ],
+            [
+              "Tue",
+              "730AM-430PM"
+            ],
+            [
+              "Wed",
+              "730AM-430PM"
+            ],
+            [
+              "Thu",
+              "730AM-430PM"
+            ],
+            [
+              "Fri",
+              "730AM-430PM"
+            ],
+            [
+              "Sat",
+              "Closed"
+            ],
+            [
+              "Sun",
+              "Closed"
+            ]
+          ]
+        },
+        "fieldAddress": {
+          "addressLine1": "1201 North Muldoon Road",
+          "addressLine2": null,
+          "postalCode": "99504-6104",
+          "locality": "Anchorage",
+          "administrativeArea": "AK"
+        },
+        "reverseFieldFacilityLocationNode": {
+          "entities": [
+            {
+              "entityId": "41814",
+              "fieldServiceNameAndDescripti": {
+                "entity": {
+                  "entityId": "1026",
+                  "entityLabel": "Medical records",
+                  "name": "Medical records"
+                },
+                "targetId": 1026
+              },
+              "fieldServiceLocation": [
+                {
+                  "entity": {
+                    "status": true,
+                    "fieldAdditionalHoursInfo": null,
+                    "fieldEmailContacts": [],
+                    "fieldFacilityServiceHours": {
+                      "value": [
+                        [
+                          "Mon",
+                          ""
+                        ],
+                        [
+                          "Tue",
+                          ""
+                        ],
+                        [
+                          "Wed",
+                          ""
+                        ],
+                        [
+                          "Thu",
+                          ""
+                        ],
+                        [
+                          "Fri",
+                          ""
+                        ],
+                        [
+                          "Sat",
+                          ""
+                        ],
+                        [
+                          "Sun",
+                          ""
+                        ]
+                      ]
+                    },
+                    "fieldHours": "0",
+                    "fieldPhone": [],
+                    "fieldUseMainFacilityPhone": true,
+                    "fieldServiceLocationAddress": {
+                      "entity": {
+                        "fieldUseFacilityAddress": true,
+                        "fieldBuildingNameNumber": null,
+                        "fieldClinicName": null,
+                        "fieldWingFloorOrRoomNumber": null,
+                        "fieldAddress": {
+                          "addressLine1": "",
+                          "addressLine2": "",
+                          "postalCode": "",
+                          "locality": "",
+                          "administrativeArea": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "entityId": "41817",
+              "fieldServiceNameAndDescripti": {
+                "entity": {
+                  "entityId": "1027",
+                  "entityLabel": "Billing and insurance",
+                  "name": "Billing and insurance"
+                },
+                "targetId": 1027
+              },
+              "fieldServiceLocation": [
+                {
+                  "entity": {
+                    "status": true,
+                    "fieldAdditionalHoursInfo": null,
+                    "fieldEmailContacts": [],
+                    "fieldFacilityServiceHours": {
+                      "value": [
+                        [
+                          "Mon",
+                          "9:00 a.m. to 5:00 p.m. ET"
+                        ],
+                        [
+                          "Tue",
+                          "9:00 a.m. to 5:00 p.m. ET"
+                        ],
+                        [
+                          "Wed",
+                          "9:00 a.m. to 5:00 p.m. ET"
+                        ],
+                        [
+                          "Thu",
+                          "9:00 a.m. to 5:00 p.m. ET"
+                        ],
+                        [
+                          "Fri",
+                          "9:00 a.m. to 5:00 p.m. ET"
+                        ],
+                        [
+                          "Sat",
+                          "Closed"
+                        ],
+                        [
+                          "Sun",
+                          "Closed"
+                        ]
+                      ]
+                    },
+                    "fieldHours": "2",
+                    "fieldPhone": [],
+                    "fieldUseMainFacilityPhone": true,
+                    "fieldServiceLocationAddress": {
+                      "entity": {
+                        "fieldUseFacilityAddress": true,
+                        "fieldBuildingNameNumber": "Building 1",
+                        "fieldClinicName": "Anchorage A",
+                        "fieldWingFloorOrRoomNumber": "Floor 3",
+                        "fieldAddress": {
+                          "addressLine1": "",
+                          "addressLine2": "",
+                          "postalCode": "",
+                          "locality": "",
+                          "administrativeArea": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "entityId": "41820",
+              "fieldServiceNameAndDescripti": {
+                "entity": {
+                  "entityId": "1025",
+                  "entityLabel": "Register for care",
+                  "name": "Register for care"
+                },
+                "targetId": 1025
+              },
+              "fieldServiceLocation": [
+                {
+                  "entity": {
+                    "status": true,
+                    "fieldAdditionalHoursInfo": "Appointments may be available outside these hours, please call",
+                    "fieldEmailContacts": [
+                      {
+                        "entity": {
+                          "fieldEmailLabel": "Register for care test Aman",
+                          "fieldEmailAddress": "amantest@registerforcare.com"
+                        }
+                      }
+                    ],
+                    "fieldFacilityServiceHours": {
+                      "value": [
+                        [
+                          "Mon",
+                          "24/7"
+                        ],
+                        [
+                          "Tue",
+                          "24/7"
+                        ],
+                        [
+                          "Wed",
+                          "24/7"
+                        ],
+                        [
+                          "Thu",
+                          "24/7"
+                        ],
+                        [
+                          "Fri",
+                          "24/7"
+                        ],
+                        [
+                          "Sat",
+                          ""
+                        ],
+                        [
+                          "Sun",
+                          ""
+                        ]
+                      ]
+                    },
+                    "fieldHours": "2",
+                    "fieldPhone": [
+                      {
+                        "entity": {
+                          "fieldPhoneLabel": "Homer Office Number",
+                          "fieldPhoneNumber": "123-456-7890",
+                          "fieldPhoneExtension": null,
+                          "fieldPhoneNumberType": "tel"
+                        }
+                      },
+                      {
+                        "entity": {
+                          "fieldPhoneLabel": "Home office number 2",
+                          "fieldPhoneNumber": "123-456-7777",
+                          "fieldPhoneExtension": null,
+                          "fieldPhoneNumberType": "tel"
+                        }
+                      }
+                    ],
+                    "fieldUseMainFacilityPhone": false,
+                    "fieldServiceLocationAddress": {
+                      "entity": {
+                        "fieldUseFacilityAddress": true,
+                        "fieldBuildingNameNumber": null,
+                        "fieldClinicName": null,
+                        "fieldWingFloorOrRoomNumber": null,
+                        "fieldAddress": {
+                          "addressLine1": "",
+                          "addressLine2": "",
+                          "postalCode": "",
+                          "locality": "",
+                          "administrativeArea": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "entityLabel": "Fairbanks VA Clinic",
+        "fieldFacilityHours": {
+          "value": [
+            [
+              "Mon",
+              "730AM-400PM"
+            ],
+            [
+              "Tue",
+              "730AM-400PM"
+            ],
+            [
+              "Wed",
+              "730AM-400PM"
+            ],
+            [
+              "Thu",
+              "730AM-400PM"
+            ],
+            [
+              "Fri",
+              "730AM-400PM"
+            ],
+            [
+              "Sat",
+              "Closed"
+            ],
+            [
+              "Sun",
+              "Closed"
+            ]
+          ]
+        },
+        "fieldAddress": {
+          "addressLine1": "4076 Neeley Road, Room 1J-101",
+          "addressLine2": null,
+          "postalCode": "99703-1110",
+          "locality": "Fort Wainwright",
+          "administrativeArea": "AK"
+        },
+        "reverseFieldFacilityLocationNode": {
+          "entities": [
+            {
+              "entityId": "41815",
+              "fieldServiceNameAndDescripti": {
+                "entity": {
+                  "entityId": "1026",
+                  "entityLabel": "Medical records",
+                  "name": "Medical records"
+                },
+                "targetId": 1026
+              },
+              "fieldServiceLocation": [
+                {
+                  "entity": {
+                    "status": true,
+                    "fieldAdditionalHoursInfo": "Aman test:Appointments may be available outside these hours, please call",
+                    "fieldEmailContacts": [
+                      {
+                        "entity": {
+                          "fieldEmailLabel": "Email for Anchorage office",
+                          "fieldEmailAddress": "test@test.com"
+                        }
+                      }
+                    ],
+                    "fieldFacilityServiceHours": {
+                      "value": [
+                        [
+                          "Mon",
+                          "24/7"
+                        ],
+                        [
+                          "Tue",
+                          "24/7"
+                        ],
+                        [
+                          "Wed",
+                          "8:00 a.m. to 5:30 p.m. ET"
+                        ],
+                        [
+                          "Thu",
+                          "9:00 a.m. to 5:30 p.m. ET"
+                        ],
+                        [
+                          "Fri",
+                          "24/7"
+                        ],
+                        [
+                          "Sat",
+                          ""
+                        ],
+                        [
+                          "Sun",
+                          ""
+                        ]
+                      ]
+                    },
+                    "fieldHours": "2",
+                    "fieldPhone": [
+                      {
+                        "entity": {
+                          "fieldPhoneLabel": "Anchorage Office",
+                          "fieldPhoneNumber": "111-111-1111",
+                          "fieldPhoneExtension": null,
+                          "fieldPhoneNumberType": "tel"
+                        }
+                      },
+                      {
+                        "entity": {
+                          "fieldPhoneLabel": "Anchorage Office",
+                          "fieldPhoneNumber": "222-222-2222",
+                          "fieldPhoneExtension": null,
+                          "fieldPhoneNumberType": "tel"
+                        }
+                      }
+                    ],
+                    "fieldUseMainFacilityPhone": false,
+                    "fieldServiceLocationAddress": {
+                      "entity": {
+                        "fieldUseFacilityAddress": false,
+                        "fieldBuildingNameNumber": "Building 11",
+                        "fieldClinicName": "Fraibank VA (Aman) A",
+                        "fieldWingFloorOrRoomNumber": "Floor 12, Room Number 1002",
+                        "fieldAddress": {
+                          "addressLine1": "1234 Main St",
+                          "addressLine2": "Aman test",
+                          "postalCode": "99501",
+                          "locality": "Anchorage",
+                          "administrativeArea": "AK"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "entity": {
+                    "status": true,
+                    "fieldAdditionalHoursInfo": "Testing using facility hours",
+                    "fieldEmailContacts": [
+                      {
+                        "entity": {
+                          "fieldEmailLabel": "testing ",
+                          "fieldEmailAddress": "amantest@test.com"
+                        }
+                      }
+                    ],
+                    "fieldFacilityServiceHours": {
+                      "value": [
+                        [
+                          "Mon",
+                          ""
+                        ],
+                        [
+                          "Tue",
+                          ""
+                        ],
+                        [
+                          "Wed",
+                          ""
+                        ],
+                        [
+                          "Thu",
+                          ""
+                        ],
+                        [
+                          "Fri",
+                          ""
+                        ],
+                        [
+                          "Sat",
+                          ""
+                        ],
+                        [
+                          "Sun",
+                          ""
+                        ]
+                      ]
+                    },
+                    "fieldHours": "0",
+                    "fieldPhone": [],
+                    "fieldUseMainFacilityPhone": true,
+                    "fieldServiceLocationAddress": {
+                      "entity": {
+                        "fieldUseFacilityAddress": true,
+                        "fieldBuildingNameNumber": null,
+                        "fieldClinicName": null,
+                        "fieldWingFloorOrRoomNumber": null,
+                        "fieldAddress": {
+                          "addressLine1": "",
+                          "addressLine2": "",
+                          "postalCode": "",
+                          "locality": "",
+                          "administrativeArea": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "entityId": "41818",
+              "fieldServiceNameAndDescripti": {
+                "entity": {
+                  "entityId": "1027",
+                  "entityLabel": "Billing and insurance",
+                  "name": "Billing and insurance"
+                },
+                "targetId": 1027
+              },
+              "fieldServiceLocation": [
+                {
+                  "entity": {
+                    "status": true,
+                    "fieldAdditionalHoursInfo": null,
+                    "fieldEmailContacts": [],
+                    "fieldFacilityServiceHours": {
+                      "value": [
+                        [
+                          "Mon",
+                          "24/7"
+                        ],
+                        [
+                          "Tue",
+                          "8:00 a.m. to 5:30 p.m. ET"
+                        ],
+                        [
+                          "Wed",
+                          "24/7"
+                        ],
+                        [
+                          "Thu",
+                          "8:00 a.m. to 5:30 p.m. ET"
+                        ],
+                        [
+                          "Fri",
+                          "24/7"
+                        ],
+                        [
+                          "Sat",
+                          ""
+                        ],
+                        [
+                          "Sun",
+                          ""
+                        ]
+                      ]
+                    },
+                    "fieldHours": "2",
+                    "fieldPhone": [],
+                    "fieldUseMainFacilityPhone": false,
+                    "fieldServiceLocationAddress": {
+                      "entity": {
+                        "fieldUseFacilityAddress": false,
+                        "fieldBuildingNameNumber": "Building 100",
+                        "fieldClinicName": "Fairbanks A",
+                        "fieldWingFloorOrRoomNumber": "Room 301",
+                        "fieldAddress": {
+                          "addressLine1": "1234 Street A",
+                          "addressLine2": "",
+                          "postalCode": "99703",
+                          "locality": "Fairbanks",
+                          "administrativeArea": "AK"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "entity": {
+                    "status": true,
+                    "fieldAdditionalHoursInfo": null,
+                    "fieldEmailContacts": [],
+                    "fieldFacilityServiceHours": {
+                      "value": [
+                        [
+                          "Mon",
+                          ""
+                        ],
+                        [
+                          "Tue",
+                          ""
+                        ],
+                        [
+                          "Wed",
+                          ""
+                        ],
+                        [
+                          "Thu",
+                          ""
+                        ],
+                        [
+                          "Fri",
+                          ""
+                        ],
+                        [
+                          "Sat",
+                          ""
+                        ],
+                        [
+                          "Sun",
+                          ""
+                        ]
+                      ]
+                    },
+                    "fieldHours": "0",
+                    "fieldPhone": [],
+                    "fieldUseMainFacilityPhone": true,
+                    "fieldServiceLocationAddress": {
+                      "entity": {
+                        "fieldUseFacilityAddress": true,
+                        "fieldBuildingNameNumber": "Building 200",
+                        "fieldClinicName": "Fairbanks B",
+                        "fieldWingFloorOrRoomNumber": "Room 402",
+                        "fieldAddress": {
+                          "addressLine1": "",
+                          "addressLine2": "",
+                          "postalCode": "",
+                          "locality": "",
+                          "administrativeArea": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "entityLabel": "Kenai VA Clinic",
+        "fieldFacilityHours": {
+          "value": [
+            [
+              "Mon",
+              "730AM-400PM"
+            ],
+            [
+              "Tue",
+              "730AM-400PM"
+            ],
+            [
+              "Wed",
+              "730AM-400PM"
+            ],
+            [
+              "Thu",
+              "730AM-400PM"
+            ],
+            [
+              "Fri",
+              "730AM-400PM"
+            ],
+            [
+              "Sat",
+              "Closed"
+            ],
+            [
+              "Sun",
+              "Closed"
+            ]
+          ]
+        },
+        "fieldAddress": {
+          "addressLine1": "240 Hospital Place, Central Peninsula Hospital, Suite 105",
+          "addressLine2": null,
+          "postalCode": "99669-7559",
+          "locality": "Soldotna",
+          "administrativeArea": "AK"
+        },
+        "reverseFieldFacilityLocationNode": {
+          "entities": []
+        }
+      },
+      {
+        "entityLabel": "Homer VA Clinic",
+        "fieldFacilityHours": {
+          "value": [
+            [
+              "Mon",
+              "800AM-400PM"
+            ],
+            [
+              "Tue",
+              "800AM-400PM"
+            ],
+            [
+              "Wed",
+              "800AM-400PM"
+            ],
+            [
+              "Thu",
+              "Closed"
+            ],
+            [
+              "Fri",
+              "Closed"
+            ],
+            [
+              "Sat",
+              "Closed"
+            ],
+            [
+              "Sun",
+              "Closed"
+            ]
+          ]
+        },
+        "fieldAddress": {
+          "addressLine1": "4141 Pennock Street",
+          "addressLine2": null,
+          "postalCode": "99603-7223",
+          "locality": "Homer",
+          "administrativeArea": "AK"
+        },
+        "reverseFieldFacilityLocationNode": {
+          "entities": []
+        }
+      },
+      {
+        "entityLabel": "Juneau VA Clinic",
+        "fieldFacilityHours": {
+          "value": [
+            [
+              "Mon",
+              "730AM-400PM"
+            ],
+            [
+              "Tue",
+              "730AM-400PM"
+            ],
+            [
+              "Wed",
+              "730AM-400PM"
+            ],
+            [
+              "Thu",
+              "730AM-400PM"
+            ],
+            [
+              "Fri",
+              "730AM-400PM"
+            ],
+            [
+              "Sat",
+              "Closed"
+            ],
+            [
+              "Sun",
+              "Closed"
+            ]
+          ]
+        },
+        "fieldAddress": {
+          "addressLine1": "709 West 9th Street, Federal Building, Suite 150",
+          "addressLine2": null,
+          "postalCode": "99801-1807",
+          "locality": "Juneau",
+          "administrativeArea": "AK"
+        },
+        "reverseFieldFacilityLocationNode": {
+          "entities": []
+        }
+      },
+      {
+        "entityLabel": "Mat-Su VA Clinic",
+        "fieldFacilityHours": {
+          "value": [
+            [
+              "Mon",
+              "730AM-400PM"
+            ],
+            [
+              "Tue",
+              "730AM-400PM"
+            ],
+            [
+              "Wed",
+              "730AM-400PM"
+            ],
+            [
+              "Thu",
+              "730AM-400PM"
+            ],
+            [
+              "Fri",
+              "730AM-400PM"
+            ],
+            [
+              "Sat",
+              "Closed"
+            ],
+            [
+              "Sun",
+              "Closed"
+            ]
+          ]
+        },
+        "fieldAddress": {
+          "addressLine1": "865 North Seward Meridian Parkway, Suite 105",
+          "addressLine2": null,
+          "postalCode": "99654-7241",
+          "locality": "Wasilla",
+          "administrativeArea": "AK"
+        },
+        "reverseFieldFacilityLocationNode": {
+          "entities": []
+        }
+      },
+      {
+        "entityLabel": "Elmendorf-Richardson VA Clinic",
+        "fieldFacilityHours": {
+          "value": [
+            [
+              "Mon",
+              "800AM-430PM"
+            ],
+            [
+              "Tue",
+              "800AM-430PM"
+            ],
+            [
+              "Wed",
+              "800AM-430PM"
+            ],
+            [
+              "Thu",
+              "800AM-430PM"
+            ],
+            [
+              "Fri",
+              "800AM-430PM"
+            ],
+            [
+              "Sat",
+              "Closed"
+            ],
+            [
+              "Sun",
+              "Closed"
+            ]
+          ]
+        },
+        "fieldAddress": {
+          "addressLine1": "5955 Zeamer Avenue, 673rd Medical Group, Building 673",
+          "addressLine2": null,
+          "postalCode": "99506-3702",
+          "locality": "Joint Base Elmendorf-Richardson",
+          "administrativeArea": "AK"
+        },
+        "reverseFieldFacilityLocationNode": {
+          "entities": []
+        }
+      }
+    ]
+  }
+}
