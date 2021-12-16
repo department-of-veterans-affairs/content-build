@@ -1,15 +1,16 @@
+// Node modules.
+import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-
-import registerFilters from './liquid';
-import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
-import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
+// Relative imports.
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
+import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
+import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
+import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 
-const _ = require('lodash');
-
+// Register filters.
 registerFilters();
 
 const getTomorrow = () => {
@@ -887,17 +888,22 @@ describe('createEmbedYouTubeVideoURL', () => {
     expect(liquid.filters.createEmbedYouTubeVideoURL('')).to.eq('');
     expect(liquid.filters.createEmbedYouTubeVideoURL('asdf')).to.eq('asdf');
     expect(
-      liquid.filters.createEmbedYouTubeVideoURL('youtube.com/embed/asdf'),
-    ).to.eq('youtube.com/embed/asdf');
+      liquid.filters.createEmbedYouTubeVideoURL(
+        'https://www.youtube.com/embed/HlkZeAYmw94',
+      ),
+    ).to.eq('https://www.youtube.com/embed/HlkZeAYmw94');
   });
 
   it('returns the modified URL if it needs it', () => {
     expect(
-      liquid.filters.createEmbedYouTubeVideoURL('https://youtu.be/asdf'),
-    ).to.eq('https://www.youtube.com/embed/asdf');
+      liquid.filters.createEmbedYouTubeVideoURL('https://youtu.be/HlkZeAYmw94'),
+    ).to.eq('https://www.youtube.com/embed/HlkZeAYmw94');
+
     expect(
-      liquid.filters.createEmbedYouTubeVideoURL('https://www.youtu.be/asdf'),
-    ).to.eq('https://www.youtube.com/embed/asdf');
+      liquid.filters.createEmbedYouTubeVideoURL(
+        'https://www.youtube.com/watch?v=HlkZeAYmw94',
+      ),
+    ).to.eq('https://www.youtube.com/embed/HlkZeAYmw94');
   });
 });
 
@@ -2007,5 +2013,116 @@ describe('isVisn8', () => {
 
   it('returns false if string does NOT equal "VISN 8"', () => {
     expect(liquid.filters.isVisn8('| VISN 8 |')).to.be.false;
+  });
+});
+
+describe('pathContainsSubstring', () => {
+  it('returns null if path is null', () => {
+    expect(liquid.filters.pathContainsSubstring(null, 'health-care')).to.be
+      .null;
+  });
+
+  it('returns true if path includes the search value - "health-care"', () => {
+    const path = '/butler-health-care';
+    expect(liquid.filters.pathContainsSubstring(path, 'health-care')).to.be
+      .true;
+  });
+
+  it('returns false if path does not include the search value - "health-care"', () => {
+    const path = '/escanaba-vet-center';
+    expect(liquid.filters.pathContainsSubstring(path, 'health-care')).to.be
+      .false;
+  });
+
+  it('returns true if path includes the search value - "vet-center"', () => {
+    const path = '/escanaba-vet-center/locations';
+    expect(liquid.filters.pathContainsSubstring(path, 'vet-center')).to.be.true;
+  });
+
+  it('returns false if no search value is passed', () => {
+    const path = '/escanaba-vet-center/locations';
+    expect(liquid.filters.pathContainsSubstring(path)).to.be.false;
+  });
+});
+
+describe('deriveMostRecentDate', () => {
+  it('returns the argument fieldDatetimeRangeTimezone when it is falsey', () => {
+    // Setup.
+    const fieldDatetimeRangeTimezone = undefined;
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
+    ).to.eq(fieldDatetimeRangeTimezone);
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an object', () => {
+    // Setup.
+    const fieldDatetimeRangeTimezone = {
+      value: 1642014000,
+      endValue: 1642017600,
+    };
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
+    ).to.deep.eq(fieldDatetimeRangeTimezone);
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 1', () => {
+    // Setup.
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
+    ).to.deep.eq(fieldDatetimeRangeTimezone[0]);
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only past dates', () => {
+    // Setup.
+    const now = 1642030600;
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+      { value: 1642017000, endValue: 1642020600 },
+      { value: 1642025600, endValue: 1642029600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
+    ).to.deep.eq({ value: 1642025600, endValue: 1642029600 });
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are past and future dates', () => {
+    // Setup.
+    const now = 1642019600;
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+      { value: 1642017000, endValue: 1642020600 },
+      { value: 1642025600, endValue: 1642029600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
+    ).to.deep.eq({ value: 1642017000, endValue: 1642020600 });
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only future dates', () => {
+    // Setup.
+    const now = 1642014000;
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+      { value: 1642017000, endValue: 1642020600 },
+      { value: 1642025600, endValue: 1642029600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
+    ).to.deep.eq({ value: 1642014000, endValue: 1642017600 });
   });
 });

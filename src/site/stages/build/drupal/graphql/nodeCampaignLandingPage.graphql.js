@@ -11,24 +11,6 @@ const nodeCampaignLandingPage = `
     entityId
     entityBundle
     title
-    fieldAdministration {
-      entity {
-        ... on TaxonomyTermAdministration {
-          fieldDescription
-          fieldEmailUpdatesLinkText
-          fieldEmailUpdatesUrl
-          fieldLink {
-            uri
-            title
-          }
-          fieldSocialMediaLinks {
-            platform
-            value
-            platformValues
-          }
-        }
-      }
-    }
     fieldBenefitCategories {
       entity {
         entityType
@@ -47,28 +29,6 @@ const nodeCampaignLandingPage = `
         }
         ... on TaxonomyTermAudienceNonBeneficiaries {
           name
-        }
-      }
-    }
-    fieldClpConnectWithUs {
-      entity {
-        entityType
-        entityBundle
-        entityId
-        ... on TaxonomyTermAdministration {
-          name
-          fieldDescription
-          fieldEmailUpdatesLinkText
-          fieldEmailUpdatesUrl
-          fieldLink {
-            uri
-            title
-          }
-          fieldSocialMediaLinks {
-            platform
-            value
-            platformValues
-          }
         }
       }
     }
@@ -103,24 +63,6 @@ const nodeCampaignLandingPage = `
             givenName
             additionalName
             familyName
-          }
-          fieldAdministration {
-            entity {
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
-                }
-              }
-            }
           }
           fieldBody {
             value
@@ -165,24 +107,6 @@ const nodeCampaignLandingPage = `
               entityBundle
               entityId
               ... on NodeEventListing {
-                fieldAdministration {
-                  entity {
-                    ... on TaxonomyTermAdministration {
-                      fieldDescription
-                      fieldEmailUpdatesLinkText
-                      fieldEmailUpdatesUrl
-                      fieldLink {
-                        uri
-                        title
-                      }
-                      fieldSocialMediaLinks {
-                        platform
-                        value
-                        platformValues
-                      }
-                    }
-                  }
-                }
                 fieldDescription
                 fieldIntroText
                 fieldOffice {
@@ -191,27 +115,6 @@ const nodeCampaignLandingPage = `
                     entityBundle
                     entityId
                     ... on NodeOffice {
-                      fieldAdministration {
-                        entity {
-                          entityType
-                          entityBundle
-                          entityId
-                          ... on TaxonomyTermAdministration {
-                            fieldDescription
-                            fieldEmailUpdatesLinkText
-                            fieldEmailUpdatesUrl
-                            fieldLink {
-                              uri
-                              title
-                            }
-                            fieldSocialMediaLinks {
-                              platform
-                              value
-                              platformValues
-                            }
-                          }
-                        }
-                      }
                       fieldBody {
                         value
                         format
@@ -299,27 +202,6 @@ const nodeCampaignLandingPage = `
           }
           fieldMediaInLibrary
           fieldMimeType
-          fieldOwner {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
-                }
-              }
-            }
-          }
         }
       }
     }
@@ -438,24 +320,6 @@ const nodeCampaignLandingPage = `
               }
             }
           }
-          fieldOwner {
-            entity {
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
-                }
-              }
-            }
-          }
           fieldPromoLink {
             entity {
               entityType
@@ -518,6 +382,27 @@ const nodeCampaignLandingPage = `
         ... button
       }
     }
+    fieldRelatedOffice {
+      entity {
+        ... on NodeOffice {
+          fieldExternalLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldEmailUpdatesLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldSocialMediaLinks {
+            platformValues
+          }
+        }
+      }
+    }
     fieldSecondaryCallToAction {
       entity {
         entityType
@@ -535,7 +420,6 @@ const GetCampaignLandingPages = `
   ${fragments.listOfLinkTeasers}
   ${fragments.linkTeaser}
   ${fragments.alert}
-  ${fragments.administration}
   ${landingPageFragment}
   ${nodeCampaignLandingPage}
 

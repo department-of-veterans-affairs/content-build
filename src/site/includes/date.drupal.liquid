@@ -1,31 +1,34 @@
 {% assign timezone = "ET" %}
 {% assign defaultTZ = "America/New_York" %}
 
-{% if fieldDatetimeRangeTimezone.timezone != empty %}
-    {% assign timezone = fieldDatetimeRangeTimezone.timezone |  timezoneAbbrev: fieldDatetimeRangeTimezone.value %}
+<!-- Derive most recent date -->
+{% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+
+{% if mostRecentDate.timezone != empty %}
+  {% assign timezone = mostRecentDate.timezone |  timezoneAbbrev: mostRecentDate.value %}
 {% endif %}
 
-{% if fieldDatetimeRangeTimezone.value != empty %}
-    {% assign start_date_no_time = fieldDatetimeRangeTimezone.value | dateFromUnix: 'dddd, MMM D, YYYY', fieldDatetimeRangeTimezone.timezone %}
-    {% assign start_time = fieldDatetimeRangeTimezone.value | dateFromUnix: "h:mm A", fieldDatetimeRangeTimezone.timezone %}
-    {% assign start_date_full = fieldDatetimeRangeTimezone.value | dateFromUnix: "dddd, MMM D, YYYY h:mm A", fieldDatetimeRangeTimezone.timezone %}
-    {% assign start_timestamp = fieldDatetimeRangeTimezone.value %}
+{% if mostRecentDate.value != empty %}
+  {% assign start_date_no_time = mostRecentDate.value | dateFromUnix: 'dddd, MMM D, YYYY', mostRecentDate.timezone %}
+  {% assign start_time = mostRecentDate.value | dateFromUnix: "h:mm A", mostRecentDate.timezone %}
+  {% assign start_date_full = mostRecentDate.value | dateFromUnix: "dddd, MMM D, YYYY h:mm A", mostRecentDate.timezone %}
+  {% assign start_timestamp = mostRecentDate.value %}
 {% endif %}
 
-{% if fieldDatetimeRangeTimezone.endValue != empty %}
-    {% assign end_date_no_time = fieldDatetimeRangeTimezone.endValue | dateFromUnix: 'dddd, MMM D, YYYY', fieldDatetimeRangeTimezone.timezone %}
-    {% assign end_time = fieldDatetimeRangeTimezone.endValue | dateFromUnix: "h:mm A", fieldDatetimeRangeTimezone.timezone %}
-    {% assign end_date_full = fieldDatetimeRangeTimezone.endValue | dateFromUnix: "dddd, MMM D, h:mm A", fieldDatetimeRangeTimezone.timezone %}
+{% if mostRecentDate.endValue != empty %}
+  {% assign end_date_no_time = mostRecentDate.endValue | dateFromUnix: 'dddd, MMM D, YYYY', mostRecentDate.timezone %}
+  {% assign end_time = mostRecentDate.endValue | dateFromUnix: "h:mm A", mostRecentDate.timezone %}
+  {% assign end_date_full = mostRecentDate.endValue | dateFromUnix: "dddd, MMM D, h:mm A", mostRecentDate.timezone %}
 {% endif %}
 
 {% assign current_timestamp = ''| currentTimeInSeconds %}
 
 {% if start_date_no_time != empty and end_date_no_time == empty %}
-    {% assign date_type = "start_date_only" %}
+  {% assign date_type = "start_date_only" %}
 {% else %}
-    {% if start_date_no_time == end_date_no_time %}
-        {% assign date_type = "same_day" %}
-    {% else %}
-        {% assign date_type = "all_dates" %}
-    {% endif %}
+  {% if start_date_no_time == end_date_no_time %}
+    {% assign date_type = "same_day" %}
+  {% else %}
+    {% assign date_type = "all_dates" %}
+  {% endif %}
 {% endif %}

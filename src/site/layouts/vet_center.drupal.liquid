@@ -7,11 +7,19 @@
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
       <div class="usa-width-three-fourths">
-        <article class="usa-content va-l-facility-detail">
-          {% if fieldOfficialName != empty %}
-            <h1>{{ fieldOfficialName }}</h1>
+        <article class="usa-content va-l-facility-detail vads-u-padding-bottom--0">
+          {% if title != empty %}
+            <h1 aria-describedby="vet-center-title">{{ title }}</h1>
+            {% if fieldOfficialName and title != fieldOfficialName %}
+              <p id="vet-center-title" class="field-official-name vads-u-line-height--4 vads-u-font-family--sans vads-u-font-size--lg 
+              vads-u-font-weight--bold vads-u-padding-bottom--0p5">
+                Also called the {{fieldOfficialName}}
+              </p>
+            {% endif %}
+          {% elsif fieldOfficialName != empty %}
+            <h1>{{ fieldOfficialName}}</h1>
           {% endif %}
-
+          
           {% if fieldIntroText != empty %}
             <div class="va-introtext">
               <p>{{ fieldIntroText }}</p>
@@ -158,12 +166,11 @@
               %}
             </div>
           {% endif %}
+          <va-back-to-top></va-back-to-top>
         </article>
       </div>
     </div>
   </main>
-  <div id="vet-center-up-to-top" onclick="recordEvent({ event: 'back-to-top'});">
-    {% include "src/site/components/up_to_top_button.html" %}
 </div>
 
 {% include "src/site/includes/footer.html" %}

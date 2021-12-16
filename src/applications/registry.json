@@ -792,7 +792,7 @@
   {
     "appName": "Apply for Personalized Career Planning and Guidance with VA Form 28-8832",
     "entryName": "28-8832-planning-and-career-guidance",
-    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832/",
+    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832",
     "template": {
       "title": "Personalized Career Planning and Guidance Chapter 36 Form 28-8832",
       "vagovprod": true,
@@ -847,6 +847,26 @@
         {
           "path": "coronavirus-research/volunteer/",
           "name": "Sign up to volunteer"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Coronavirus Research - Update",
+    "entryName": "coronavirus-research-update",
+    "rootUrl": "/coronavirus-research/volunteer/update",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "coronavirus-research/",
+          "name": "Participating in coronavirus research at VA"
+        },
+        {
+          "path": "coronavirus-research/update/",
+          "name": "Update your information"
         }
       ]
     }
@@ -911,7 +931,7 @@
     "template": {
       "title": "Medical Copays",
       "layout": "page-react.html",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
@@ -1009,7 +1029,7 @@
   {
     "appName": "covid-vaccine-expansion",
     "entryName": "covid-vaccine",
-    "rootUrl": "/health-care/covid-19-vaccine/sign-up/",
+    "rootUrl": "/health-care/covid-19-vaccine/sign-up",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
@@ -1145,6 +1165,15 @@
     "entryFile": "./app-entry.jsx",
     "entryName": "search-representative",
     "rootUrl": "/view-change-representative/search",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Apply for Specially Adapted Housing Grant",
+    "entryName": "sahg",
+    "rootUrl": "/specially-adapted-housing-grant",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
