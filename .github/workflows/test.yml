@@ -31,6 +31,9 @@ jobs:
       - name: Ver
         run: echo ${{ env.new_patch }}
 
+      - name: echo bump
+        run: echo $(( ${{ env.new_patch }} + 1 ))
+
       - name: bump
         run: |
           echo "new_patch=$(echo $(( ${{ env.new_patch }} + 1 )))" >> $GITHUB_ENV
