@@ -42,6 +42,9 @@ jobs:
           echo "new_patch=$current_patch" >> $GITHUB_ENV
           echo ${{ env.new_patch }}
 
+      - name: test
+        run: echo ${{ env.new_patch }}
+
       # - name: Create tag
       #   uses: nick-invision/retry@v2
       #   with:
