@@ -1,0 +1,20 @@
+name: Manual Review
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get-latest-tag
+        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+
+      - name: Ver
+        run: echo $LATEST_TAG_VERSION
