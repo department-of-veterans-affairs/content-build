@@ -21,6 +21,7 @@ jobs:
         uses: WyriHaximus/github-action-next-semvers@v1
         with:
           version: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
+          strict: false
 
       - name: Ver
         run: echo $((${{ steps.bump-tag-version.outputs.patch }}))
