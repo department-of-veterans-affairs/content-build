@@ -16,5 +16,11 @@ jobs:
         id: get-latest-tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
+      - name: Get next tag version
+        id: bump-tag-version
+        uses: WyriHaximus/github-action-next-semvers@v1
+        with:
+          version: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
+
       - name: Ver
-        run: echo ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION + 1 }}
+        run: echo ${{ steps.bump-tag-version.outputs.patch }}
