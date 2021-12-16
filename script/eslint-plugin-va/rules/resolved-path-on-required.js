@@ -44,7 +44,7 @@ module.exports = {
       CallExpression(node) {
         const callee = node.callee.name || node.callee.type;
         if (callee === 'require') {
-          const { value } = node.arguments[0];
+          const value = node.arguments[0].value;
           if (isIncluded(value, aliases)) {
             context.report({
               node,
