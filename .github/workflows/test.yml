@@ -34,7 +34,7 @@ jobs:
       - name: bump
         run: |
           echo "new_patch=$(echo $(( ${{ env.new_patch }} + 1 )))" >> $GITHUB_ENV
-          git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
+          echo ${{ env.new_patch }}
 
       # - name: Create tag
       #   uses: nick-invision/retry@v2
