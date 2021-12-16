@@ -32,7 +32,9 @@ jobs:
         run: echo ${{ env.new_patch }}
 
       - name: echo bump
-        run: echo $(( ${{ env.new_patch }} + 1 ))
+        run: |
+          current_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
+          echo $current_patch
 
       - name: bump
         run: |
