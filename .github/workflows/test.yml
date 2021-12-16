@@ -23,4 +23,4 @@ jobs:
           version: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
 
       - name: Ver
-        run: echo ${{ steps.bump-tag-version.outputs.patch }}
+        run: echo $((${{ steps.bump-tag-version.outputs.patch }}))
