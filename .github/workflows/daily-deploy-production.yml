@@ -427,21 +427,28 @@ jobs:
           time: ${{ needs.set-env.outputs.RELEASE_WAIT }}m
 
       - name: Get next tag version
-        id: bump-tag-version
-        uses: WyriHaximus/github-action-next-semvers@v1
-        with:
-          version: ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}
+        run: |
+          current_patch=$(echo ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }} | cut -d'.' -f3)
+          echo "new_patch=$(echo $(( $current_patch + 1 )))" >> $GITHUB_ENV
 
       - name: Create tag
-        run: git tag ${{ steps.bump-tag-version.outputs.v_patch }} ${{ needs.set-env.outputs.COMMIT_SHA }} && git push origin ${{ steps.bump-tag-version.outputs.v_patch }}
+        uses: nick-invision/retry@v2
+        with:
+          timeout_seconds: 30
+          max_attempts: 3
+          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
+          new_command_on_retry: |
+            next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
+            echo "new_patch=$next_patch" >> $GITHUB_ENV
+            git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push origin v0.0.$next_patch
 
       - name: Create release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.bump-tag-version.outputs.v_patch }}
-          release_name: content-build/${{ steps.bump-tag-version.outputs.v_patch }}
+          tag_name: v0.0.${{ env.new_patch }}
+          release_name: content-build/v0.0.${{ env.new_patch }}
 
   deploy:
     name: Deploy
