@@ -436,11 +436,11 @@ jobs:
         with:
           timeout_seconds: 30
           max_attempts: 3
-          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
+          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.COMMIT_SHA }} && git push origin v0.0.${{ env.new_patch }}
           new_command_on_retry: |
             next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
             echo "new_patch=$next_patch" >> $GITHUB_ENV
-            git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push origin v0.0.$next_patch
+            git tag v0.0.$next_patch ${{ needs.set-env.outputs.COMMIT_SHA }} && git push origin v0.0.$next_patch
 
       - name: Create release
         uses: actions/create-release@v1
