@@ -31,7 +31,7 @@ jobs:
       - name: Ver
         run: echo ${{ env.new_patch }}
 
-      - name: echo bump
+      - name: Expected
         run: |
           current_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
           echo $current_patch
@@ -53,7 +53,7 @@ jobs:
             echo "new_patch=$next_patch" >> $GITHUB_ENV
             echo $next_patch
 
-      - name: test
+      - name: Actual
         run: echo ${{ env.new_patch }}
 
 
