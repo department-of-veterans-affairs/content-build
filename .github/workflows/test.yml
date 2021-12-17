@@ -46,7 +46,7 @@ jobs:
         uses: nick-invision/retry@v2
         with:
           timeout_seconds: 15
-          max_attempts: 1
+          max_attempts: 3
           command: exit 1
           new_command_on_retry: |
             next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
