@@ -36,14 +36,26 @@ jobs:
           current_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
           echo $current_patch
 
-      - name: bump
-        run: |
-          current_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
-          echo "new_patch=$current_patch" >> $GITHUB_ENV
-          echo ${{ env.new_patch }}
+      # - name: bump
+      #   run: |
+      #     next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
+      #     echo "new_patch=$next_patch" >> $GITHUB_ENV
+      #     echo ${{ env.new_patch }}
+
+      - name: Create tag
+        uses: nick-invision/retry@v2
+        with:
+          timeout_seconds: 15
+          max_attempts: 1
+          command: exit 1
+          new_command_on_retry: |
+            next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
+            echo "new_patch=$next_patch" >> $GITHUB_ENV
+            echo $next_patch
 
       - name: test
         run: echo ${{ env.new_patch }}
+
 
       # - name: Create tag
       #   uses: nick-invision/retry@v2
@@ -52,5 +64,15 @@ jobs:
       #     max_attempts: 1
       #     command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
       #     new_command_on_retry: |
-      #       echo "new_patch=$(echo $(( ${{ env.new_patch }} + 1 )))" >> $GITHUB_ENV
-      #       git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
+      #       next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
+      #       echo "new_patch=$next_patch" >> $GITHUB_ENV
+      #       git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push origin v0.0.$next_patch
+
+      # - name: Create release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: v0.0.${{ env.new_patch }}
+      #     release_name: content-build/v0.0.${{ env.new_patch }}
+      #     commitish: ${{ needs.set-env.outputs.REF }}
