@@ -4,9 +4,10 @@
     <div class="last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0"></div>
       <div class="vads-u-display--flex">
         <div class="vads-u-flex--auto">
-
+          <span class="vads-u-text-align--justify">
              Last updated: <time
                 datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
+          </span>
         </div>
         <div class="vads-u-flex--1 vads-u-text-align--right">
           <span class="vads-u-text-align--right">

@@ -9,15 +9,22 @@
     {% include "src/site/components/react-loader.html" %}
   </main>
 </div>
-<div class="vads-l-row vads-u-justify-content--flex-end">
-  <div class="vads-l-col--2 site-grid-example">
-    <button onClick="KAMPYLE_ONSITE_SDK.showForm(4)" type="button" className="usa-button" id="mdFormButton"
-      class="display: none;">
-      Feedback
-    </button>
 
+<!--Medallia button-->
+
+{% if feedbackButton === true %}
+<div class="usa-grid usa-grid-full">
+  <div class="usa-width-two-thirds medium-8 columns">
+    <div class="usa-content">
+      <div class="vads-l-row vads-u-justify-content--flex-end">
+        <div class="vads-l-col--2 site-grid-example">
+          {% include "src/site/includes/medallia-feedback-button.drupal.liquid" %}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+{% endif %}
 
 
 
