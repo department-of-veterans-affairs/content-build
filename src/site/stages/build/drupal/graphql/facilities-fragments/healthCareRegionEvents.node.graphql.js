@@ -53,7 +53,7 @@ function queryFilter(isAll) {
         : '{ field: "field_featured" value: "1"}, { field: "field_datetime_range_timezone", value: [$today], operator: GREATER_THAN}'
     }
   ]} sort: [{field: "field_order", direction: ASC }, {field: "field_datetime_range_timezone", direction: ASC }] limit: ${
-    isAll ? '500' : '2'
+    isAll ? '5000' : '2'
   })
   `;
 }

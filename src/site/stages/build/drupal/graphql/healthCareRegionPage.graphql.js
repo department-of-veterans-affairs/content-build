@@ -36,7 +36,7 @@ const healthCareRegionPageFragment = `
     fieldVamcEhrSystem
     fieldGovdeliveryIdEmerg
     fieldGovdeliveryIdNews
-    ${socialMediaFields}   
+    ${socialMediaFields}
     fieldIntroText
 	  fieldRelatedLinks {
       entity {
@@ -124,7 +124,7 @@ const healthCareRegionPageFragment = `
     eventTeasersFeatured: reverseFieldOfficeNode(limit: 1000, filter: {conditions: [{field: "type", value: "event_listing"}]}) {
       entities {
         ... on NodeEventListing {
-          reverseFieldListingNode(limit: 1000, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}, {field: "field_featured", value: "1"}, { field: "field_datetime_range_timezone", value: [$today], operator: GREATER_THAN}]}) {
+          reverseFieldListingNode(limit: 5000, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}, {field: "field_featured", value: "1"}, { field: "field_datetime_range_timezone", value: [$today], operator: GREATER_THAN}]}) {
             entities {
               ... on NodeEvent {
                 title
