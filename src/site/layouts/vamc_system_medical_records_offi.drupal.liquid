@@ -11,7 +11,7 @@
           <h1 id="article-heading">{{ title }}</h1>
           <div class="va-introtext">
             <p>
-              Get copies of your VA medical records online, by mail or fax, or in person 
+              Get copies of your VA medical records online, by mail or fax, or in person
               at our VA health care Release of Information office.
             </p>
           </div>
@@ -25,7 +25,7 @@
             entity = fieldCcTopOfPageContent.fetched
             contentType = fieldCcTopOfPageContent.fetchedBundle
           %}
-          
+
           {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcReactWidget.fetched
             contentType = fieldCcReactWidget.fetchedBundle
@@ -35,6 +35,14 @@
             entity = fieldCcGetRecordsInPerson.fetched
             contentType = fieldCcGetRecordsInPerson.fetchedBundle
           %}
+
+          <!-- Details for facilities offering this non-clinical service -->
+          {% if fieldOffice.entity.reverseFieldRegionPageNode.entities %}
+            {% assign medicalRecordsFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Medical records' %}
+            {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
+              facilities = medicalRecordsFacilities
+            %}
+          {% endif %}
 
           {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcGetRecordsMailOrFax.fetched
@@ -47,8 +55,8 @@
           %}
 
           {% if fieldCcFaqs.fetched %}
-            {% include "src/site/includes/centralized-content.drupal.liquid" 
-              entity = fieldCcFaqs.fetched 
+            {% include "src/site/includes/centralized-content.drupal.liquid"
+              entity = fieldCcFaqs.fetched
               contentType = fieldCcFaqs.fetchedBundle
             %}
           {% endif %}

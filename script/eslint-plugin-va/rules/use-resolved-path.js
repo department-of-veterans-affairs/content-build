@@ -47,7 +47,7 @@ module.exports = {
 
     return {
       ImportDeclaration(node) {
-        const { value } = node.source;
+        const value = node.source.value;
         if (isIncluded(value, aliases)) {
           const message = `Import from '${ALIASPATH}' directly, relative to 'src' instead of relative to current working directory.`;
           context.report({
@@ -59,7 +59,7 @@ module.exports = {
       CallExpression(node) {
         const callee = node.callee.name || node.callee.type;
         if (callee === 'Import') {
-          const { value } = node.arguments[0];
+          const value = node.arguments[0].value;
           if (isIncluded(value, aliases)) {
             const message = `Import from '${ALIASPATH}' directly, relative to 'src' instead of relative to current working directory.`;
             context.report({

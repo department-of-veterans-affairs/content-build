@@ -1,0 +1,32 @@
+{% for facility in facilities %}
+  <h3>{{ facility.entityLabel }}</h3>
+
+  {% comment %}
+    Facility Address
+    Note: this is temporary; service_address.liquid.js should be refactored to be more reusable.
+  {% endcomment %}
+  {% if facility.fieldAddress %}
+    {% assign facilityAddress = facility.fieldAddress %}
+    <div class="vads-u-display--flex vads-u-flex-direction--column">
+      {% if facilityAddress.addressLine1 %}
+        <span class="vads-u-margin-bottom--0">
+          {{ facilityAddress.addressLine1 }}
+        </span>
+      {% endif %}
+      {% if facilityAddress.addressLine2 %}
+        <span class="vads-u-margin-bottom--0">
+          {{ facilityAddress.addressLine2 }}
+        </span>
+      {% endif %}
+      {% if facilityAddress.locality and facilityAddress.administrativeArea and facilityAddress.postalCode %}
+        <span class="vads-u-margin-bottom--0">
+          {{ facilityAddress.locality }}, {{ facilityAddress.administrativeArea}} {{ facilityAddress.postalCode }}
+        </span>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% include "src/site/facilities/vha_facility_nonclinical_service.drupal.liquid" with
+    facility = facility
+  %}
+{% endfor %}

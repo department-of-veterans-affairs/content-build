@@ -1352,4 +1352,43 @@ module.exports = function registerFilters() {
     // Return the most recent future date if there are future dates.
     return futureDates[0];
   };
+
+  // Given an array of services provided at a facility,
+  // return a flattened array of service locations that
+  // offer service of type `serviceType`
+  liquid.filters.serviceLocationsAtFacilityByServiceType = (
+    allServicesAtFacility,
+    serviceType,
+  ) => {
+    return allServicesAtFacility.reduce((acc, service) => {
+      if (
+        serviceType === service?.fieldServiceNameAndDescripti?.entity?.name &&
+        service?.fieldServiceLocation
+      ) {
+        return [...acc, ...service.fieldServiceLocation];
+      }
+      return acc;
+    }, []);
+  };
+
+  // Given an array of facilities in a region, with each facility array
+  // containing an array of services provided at that facility,
+  // return an array of normalized facility objects representing
+  // only facilities that offer service of type `serviceType`
+  liquid.filters.healthCareRegionNonClinicalServiceLocationsByType = (
+    facilitiesInRegion,
+    serviceType,
+  ) => {
+    return facilitiesInRegion
+      .map(facility => ({
+        entityLabel: facility?.entityLabel,
+        fieldAddress: facility?.fieldAddress,
+        fieldFacilityHours: facility?.fieldFacilityHours,
+        locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
+          facility?.reverseFieldFacilityLocationNode?.entities || [],
+          serviceType,
+        ),
+      }))
+      .filter(facility => facility.locations.length > 0);
+  };
 };

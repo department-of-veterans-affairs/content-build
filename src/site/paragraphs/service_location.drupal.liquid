@@ -1,0 +1,57 @@
+{% if single.fieldServiceLocationAddress.entity.fieldClinicName %}
+  {% assign haveLocationName = true %}
+{% else %}
+  {% assign haveLocationName = false %}
+{% endif %}
+
+{% include "src/site/facilities/service_address.drupal.liquid" %}
+
+{% comment %}
+    single.fieldHours values:
+    - 0 = Use facility hours
+    - 1 = Do not specify hours
+    - 2 = Display specific hours
+{% endcomment %}
+
+{% if single.fieldHours != "1" %}
+  {% if haveLocationName %}
+    <h5 data-template="paragraphs/service_location">Hours</h5>
+  {% else %}
+    <h4 class="force-small-header" data-template="paragraphs/service_location">Hours</h4>
+  {% endif %}
+{% endif %}
+
+{% case single.fieldHours %}
+  {% when '2' %}
+    {% if single.fieldFacilityServiceHours.value %}
+      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = single.fieldFacilityServiceHours.value %}
+    {% endif %}
+  {% when '0' %}
+    {% if fieldFacilityHours.value %}
+      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = fieldFacilityHours.value %}
+    {% endif %}
+{% endcase %}
+
+
+{% if single.fieldAdditionalHoursInfo %}
+  <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
+{% endif %}
+
+{% include "src/site/components/phone.drupal.liquid" with numbers = single.fieldPhone haveLocationName = haveLocationName %}
+
+{% if single.fieldEmailContacts %}
+  {% for email in single.fieldEmailContacts %}
+    <p class="vads-u-margin-y--1" data-template="paragraphs/service_location">
+    {% if email.entity.fieldEmailLabel %}
+      {% if haveLocationName %}
+        <h5>{{ email.entity.fieldEmailLabel }} </h5>
+      {% else %}
+        <h4 class="force-small-header">{{ email.entity.fieldEmailLabel }} </h4>
+      {% endif %}
+    {% endif %}
+    <a aria-label="{{ email.entity.fieldEmailAddress }}"
+        data-template="paragraphs/service_location"
+        href="mailto:{{ email.entity.fieldEmailAddress }}">{{ email.entity.fieldEmailAddress }}
+    </a>
+  {% endfor %}
+{% endif %}
