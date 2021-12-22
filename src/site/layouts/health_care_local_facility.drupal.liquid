@@ -161,7 +161,10 @@
 
           <!-- List of links section -->
           {% if fieldRegionPage.entity.fieldRelatedLinks != empty %}
-            {% include "src/site/paragraphs/facilities/list_of_link_teasers_facility.drupal.liquid" with paragraph = fieldRegionPage.entity.fieldRelatedLinks.entity %}
+            {% include "src/site/paragraphs/facilities/list_of_link_teasers_facility.drupal.liquid"
+               with paragraph = fieldRegionPage.entity.fieldRelatedLinks.entity
+                    regionNickname = fieldRegionPage.entity.title
+            %}
           {% endif %}
 
           <!-- Local Health Services -->
