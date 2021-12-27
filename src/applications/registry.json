@@ -691,7 +691,7 @@
   {
     "appName": "GI Bill Comparison Tool",
     "entryName": "gi",
-    "rootUrl": "/education/gi-bill-comparison-tool",
+    "rootUrl": "/gi-bill-comparison-tool",
     "template": {
       "title": "GI Bill Comparison Tool",
       "display_title": "GI Bill school comparison",
@@ -705,7 +705,7 @@
   {
     "appName": "CT Redesign Sandbox",
     "entryName": "gi-sandbox",
-    "rootUrl": "/education/gi-bill-comparison-tool-sandbox",
+    "rootUrl": "/gi-bill-comparison-tool-sandbox",
     "template": {
       "vagovprod": false,
       "title": "CT Redesign Sandbox",
