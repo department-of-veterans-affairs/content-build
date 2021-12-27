@@ -691,7 +691,7 @@
   {
     "appName": "GI Bill Comparison Tool",
     "entryName": "gi",
-    "rootUrl": "/education/gi-bill-comparison-tool",
+    "rootUrl": "/gi-bill-comparison-tool",
     "template": {
       "title": "GI Bill Comparison Tool",
       "display_title": "GI Bill school comparison",
