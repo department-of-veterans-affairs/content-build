@@ -1,11 +1,10 @@
-/**
- * An event detail page
- * Example: /pittsburgh-health-care/events/example-event
- */
+// Relative imports.
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
+const nodeEvent = require('./nodeEvent.graphql');
 
-const eventListingPage = `
- fragment eventListingPage on NodeEventListing {
+// Create NodeEventListing fragment.
+const nodeEventListing = `
+ fragment nodeEventListing on NodeEventListing {
     ${entityElementsFromPages}
     changed
     title
@@ -18,31 +17,10 @@ const eventListingPage = `
         {field: "type", value: "event"},
         {field: "field_datetime_range_timezone", value: [$today], operator: SMALLER_THAN}]},
       sort: {field: "changed", direction: DESC}) {
-          entities {
-            ... on NodeEvent {
-              title
-              entityUrl {
-                path
-              }
-              fieldFeatured
-              fieldDatetimeRangeTimezone {
-                value
-                endValue
-                timezone
-              }
-              fieldDescription
-              fieldLocationHumanreadable
-              fieldFacilityLocation {
-                entity {
-                  title
-                  entityUrl {
-                    path
-                  }
-                }
-              }
-            }
-          }
+        entities {
+          ... nodeEvent
         }
+      }
     reverseFieldListingNode(limit: 5000,
       filter: {
           conditions: [
@@ -52,27 +30,7 @@ const eventListingPage = `
           ]},
       sort: {field: "changed", direction: DESC}) {
         entities {
-          ... on NodeEvent {
-            title
-            entityUrl {
-              path
-            }
-            fieldFeatured
-            fieldDatetimeRangeTimezone {
-              value
-              endValue
-              timezone
-            }
-            fieldDescription
-            fieldLocationHumanreadable
-            fieldFacilityLocation {
-              entity {
-                title
-                entityUrl {
-                  path
-                }
-              }
-            }
+          ... nodeEvent
         }
       }
     }
@@ -87,8 +45,8 @@ const eventListingPage = `
 `;
 
 const GetNodeEventListingPage = `
-
-  ${eventListingPage}
+  ${nodeEvent.fragment}
+  ${nodeEventListing}
 
   query GetNodeEventListingPage($today: String!,$onlyPublishedContent: Boolean!) {
     nodeQuery(limit: 5000, filter: {
@@ -98,15 +56,13 @@ const GetNodeEventListingPage = `
       ]
     }) {
       entities {
-        ... eventListingPage
+        ... nodeEventListing
       }
     }
   }
 `;
 
 module.exports = {
-  fragment: eventListingPage,
+  fragment: nodeEventListing,
   GetNodeEventListingPage,
 };
-
-// console.log(eventListingPage);

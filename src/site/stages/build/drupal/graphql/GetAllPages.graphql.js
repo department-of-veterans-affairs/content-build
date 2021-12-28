@@ -10,8 +10,8 @@ const basicLandingPage = require('./nodeBasicLandingPage.graphql');
 const benefitListingPage = require('./benefitListingPage.graphql');
 const bioPage = require('./bioPage.graphql');
 const checklistPage = require('./nodeChecklist.graphql');
-const eventListingPage = require('./eventListingPage.graphql');
-const eventPage = require('./eventPage.graphql');
+const nodeEventListing = require('./nodeEventListing.graphql');
+const nodeEvent = require('./nodeEvent.graphql');
 const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav.graphql');
 const faqMultipleQaPage = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
@@ -71,12 +71,12 @@ const buildQuery = () => {
   ${pressReleasePage.fragment}
   ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
-  ${eventPage.fragment}
+  ${nodeEvent.fragment}
   ${officePage.fragment}
   ${bioPage.fragment}
   ${vaFormPage.fragment}
   ${benefitListingPage.fragment}
-  ${eventListingPage.fragment}
+  ${nodeEventListing.fragment}
   ${storyListingPage.fragment}
   ${leadershipListingPage.fragment}
   ${healthServicesListingPage.fragment}
@@ -109,11 +109,11 @@ const buildQuery = () => {
         ... pressReleasePage
         ... vamcOperatingStatusAndAlerts
         ... newsStoryPage
-        ... eventPage
         ... officePage
         ... bioPage
         ... benefitListingPage
-        ... eventListingPage
+        ... nodeEventListing
+        ... nodeEvent
         ... storyListingPage
         ... leadershipListingPage
         ... pressReleasesListingPage

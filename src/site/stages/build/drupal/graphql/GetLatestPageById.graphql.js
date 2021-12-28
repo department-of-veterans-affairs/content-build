@@ -1,37 +1,37 @@
-const landingPage = require('./landingPage.graphql');
-const page = require('./page.graphql');
-const { ALL_FRAGMENTS } = require('./fragments.graphql');
-const healthCareRegionPage = require('./healthCareRegionPage.graphql');
-
+// Relative imports.
 const bioPage = require('./bioPage.graphql');
-const eventPage = require('./eventPage.graphql');
-const eventListingPage = require('./eventListingPage.graphql');
 const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
+const healthCareRegionPage = require('./healthCareRegionPage.graphql');
 const healthServicesListingPage = require('./healthServicesListingPage.graphql');
-const storyListingPage = require('./storyListingPage.graphql');
+const landingPage = require('./landingPage.graphql');
+const leadershipListingPage = require('./leadershipListingPage.graphql');
+const locationsListingPage = require('./locationsListingPage.graphql');
 const newsStoryPage = require('./newStoryPage.graphql');
 const nodeBasicLandingPage = require('./nodeBasicLandingPage.graphql');
 const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
 const nodeChecklist = require('./nodeChecklist.graphql');
+const nodeEvent = require('./nodeEvent.graphql');
+const nodeEventListing = require('./nodeEventListing.graphql');
 const nodeMediaListImages = require('./nodeMediaListImages.graphql');
 const nodeMediaListVideos = require('./nodeMediaListVideos.graphql');
 const nodeQa = require('./nodeQa.graphql');
 const nodeStepByStep = require('./nodeStepByStep.graphql');
 const nodeSupportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.graphql');
+const page = require('./page.graphql');
 const pressReleasePage = require('./pressReleasePage.graphql');
 const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
+const storyListingPage = require('./storyListingPage.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
-const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
-const vetCenters = require('./vetCenter.graphql');
-const vetCenterLocations = require('./vetCenterLocations.graphql');
-const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const vamcBillingAndInsurancePages = require('./vamcBillingAndInsurancePage.graphql');
-const vamcRegisterForCarePages = require('./vamcRegisterForCarePage.graphql');
 const vamcMedicalRecordsOfficePages = require('./vamcMedicalRecordsOfficePage.graphql');
-const leadershipListingPage = require('./leadershipListingPage.graphql');
-const locationsListingPage = require('./locationsListingPage.graphql');
+const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
+const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
+const vamcRegisterForCarePages = require('./vamcRegisterForCarePage.graphql');
+const vetCenterLocations = require('./vetCenterLocations.graphql');
+const vetCenters = require('./vetCenter.graphql');
+const { ALL_FRAGMENTS } = require('./fragments.graphql');
 
 // String Helpers
 const {
@@ -45,7 +45,6 @@ const {
  */
 
 module.exports = `
-
   ${ALL_FRAGMENTS}
   ${landingPage.fragment}
   ${page.fragment}
@@ -58,8 +57,8 @@ module.exports = `
   ${vamcOperatingStatusAndAlerts.fragment}
   ${storyListingPage.fragment}
   ${newsStoryPage.fragment}
-  ${eventPage.fragment}
-  ${eventListingPage.fragment}
+  ${nodeEvent.fragment}
+  ${nodeEventListing.fragment}
   ${bioPage.fragment}
   ${vaFormPage.fragment}
   ${nodeQa.fragment}
@@ -98,8 +97,8 @@ module.exports = `
         ... pressReleasePage
         ... pressReleasesListingPage
         ... vamcOperatingStatusAndAlerts
-        ... eventPage
-        ... eventListingPage
+        ... nodeEvent
+        ... nodeEventListing
         ... bioPage
         ... vaFormPage
         ... nodeQa
