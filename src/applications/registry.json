@@ -703,9 +703,23 @@
     }
   },
   {
+    "appName": "GI Bill Comparison Tool",
+    "entryName": "gi",
+    "rootUrl": "/education/gi-bill-comparison-tool",
+    "template": {
+      "title": "GI Bill Comparison Tool",
+      "display_title": "GI Bill school comparison",
+      "description": "Use our GI Bill Comparison Tool to help you decide which education program and school is best for you. Find out which benefits you’ll get at your chosen school.",
+      "layout": "page-react.html",
+      "collection": "education",
+      "spoke": "More resources",
+      "order": 1
+    }
+  },
+  {
     "appName": "CT Redesign Sandbox",
     "entryName": "gi-sandbox",
-    "rootUrl": "/gi-bill-comparison-tool-sandbox",
+    "rootUrl": "/education/gi-bill-comparison-tool-sandbox",
     "template": {
       "vagovprod": false,
       "title": "CT Redesign Sandbox",
