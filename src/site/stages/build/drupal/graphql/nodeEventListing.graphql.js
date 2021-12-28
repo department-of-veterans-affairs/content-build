@@ -1,6 +1,7 @@
 // Relative imports.
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const nodeEvent = require('./nodeEvent.graphql');
+const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 // Create NodeEventListing fragment.
 const nodeEventListing = `
@@ -30,12 +31,13 @@ const nodeEventListing = `
   }
 `;
 
-const GetNodeEventListingPage = `
+function getNodeEventListingPageSlice(operationName, offset, limit) {
+  return `
   ${nodeEvent.fragment}
   ${nodeEventListing}
 
-  query GetNodeEventListingPage($today: String!,$onlyPublishedContent: Boolean!) {
-    nodeQuery(limit: 5000, filter: {
+  query ${operationName}($today: String!,$onlyPublishedContent: Boolean!) {
+    nodeQuery(limit: ${limit}, offset: ${offset}, filter: {
       conditions: [
         { field: "status", value: ["1"], enabled: $onlyPublishedContent },
         { field: "type", value: ["event_listing"] }
@@ -47,8 +49,18 @@ const GetNodeEventListingPage = `
     }
   }
 `;
+}
+
+function getNodeEventListingQueries(entityCounts) {
+  return generatePaginatedQueries({
+    operationNamePrefix: 'GetNodeEventListings',
+    entitiesPerSlice: 20,
+    totalEntities: entityCounts.data.eventListing.count,
+    getSlice: getNodeEventListingPageSlice,
+  });
+}
 
 module.exports = {
   fragment: nodeEventListing,
-  GetNodeEventListingPage,
+  getNodeEventListingQueries,
 };
