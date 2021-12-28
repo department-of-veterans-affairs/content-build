@@ -9,9 +9,9 @@
 <div class="interior vads-u-padding-bottom--3" id="content" data-template="event_listing.drupal.liquid">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
-      {% if entityUrl.breadcrumb.1.text != "Outreach and events" %}
-        {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar%}
-      {% endif %}
+      {% unless entityUrl.path contains "/outreach-and-events" %}
+        {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
+      {% endunless %}
 
       <div class="usa-width-three-fourths">
         <article aria-labelledby="article-heading" class="vads-l-grid-container--full" role="region">
@@ -94,6 +94,7 @@
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
   window.allEventTeasers = {{ allEventTeasers | json }};
+  window.facilitySidebar = {{ facilitySidebar | json }};
   window.pastEvents = {{ pastEvents | json }};
 </script>
 
