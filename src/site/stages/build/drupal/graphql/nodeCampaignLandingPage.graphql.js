@@ -1,9 +1,12 @@
+// Relative imports.
+const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const fragments = require('./fragments.graphql');
+const nodeEvent = require('./nodeEvent.graphql');
 const {
   modifiedFragment: landingPageFragment,
 } = require('./landingPage.graphql');
-const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
+// Create NodeCampaignLandingPage fragment.
 const nodeCampaignLandingPage = `
   fragment nodeCampaignLandingPage on NodeCampaignLandingPage {
     ${entityElementsFromPages}
@@ -36,124 +39,7 @@ const nodeCampaignLandingPage = `
     fieldClpEventsPanel
     fieldClpEventsReferences {
       entity {
-        entityType
-        entityBundle
-        entityId
-        ... on NodeEvent {
-          entityUrl {
-            path
-          }
-          title
-          fieldAdditionalInformationAbo {
-            value
-            format
-            processed
-          }
-          fieldAddress {
-            langcode
-            countryCode
-            administrativeArea
-            locality
-            dependentLocality
-            postalCode
-            sortingCode
-            addressLine1
-            addressLine2
-            organization
-            givenName
-            additionalName
-            familyName
-          }
-          fieldBody {
-            value
-            format
-            processed
-          }
-          fieldDatetimeRangeTimezone {
-            value
-            startTime
-            endValue
-            endTime
-            duration
-            rrule
-            rruleIndex
-            timezone
-          }
-          fieldDescription
-          fieldEventCost
-          fieldEventCta
-          fieldEventRegistrationrequired
-          fieldFacilityLocation {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on NodeHealthCareLocalFacility {
-                entityUrl {
-                  path
-                }
-                title
-              }
-            }
-          }
-          fieldFeatured
-          fieldLink {
-            uri
-            title
-          }
-          fieldListing {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on NodeEventListing {
-                fieldDescription
-                fieldIntroText
-                fieldOffice {
-                  entity {
-                    entityType
-                    entityBundle
-                    entityId
-                    ... on NodeOffice {
-                      fieldBody {
-                        value
-                        format
-                        processed
-                      }
-                      fieldDescription
-                      fieldMetaTags
-                    }
-                  }
-                }
-              }
-            }
-          }
-          fieldLocationHumanreadable
-          fieldLocationType
-          fieldMedia {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on Media {
-                thumbnail {
-                  height
-                  width
-                  url
-                  targetId
-                  alt
-                  title
-                }
-              }
-            }
-          }
-          fieldMetaTags
-          fieldOrder
-          fieldUrlOfAnOnlineEvent {
-            uri
-            title
-          }
-        }
+        ... nodeEvent
       }
     }
     fieldClpFaqCta {
@@ -420,6 +306,7 @@ const GetCampaignLandingPages = `
   ${fragments.listOfLinkTeasers}
   ${fragments.linkTeaser}
   ${fragments.alert}
+  ${nodeEvent.fragment}
   ${landingPageFragment}
   ${nodeCampaignLandingPage}
 
@@ -436,6 +323,7 @@ const GetCampaignLandingPages = `
     }
   }
 `;
+
 module.exports = {
   fragment: nodeCampaignLandingPage,
   GetCampaignLandingPages,
