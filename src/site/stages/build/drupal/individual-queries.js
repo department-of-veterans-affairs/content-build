@@ -32,9 +32,9 @@ const {
 
 const {
   GetNodeEventListingPage,
-} = require('./graphql/eventListingPage.graphql');
+} = require('./graphql/nodeEventListing.graphql');
 
-const { getNodeEventQueries } = require('./graphql/eventPage.graphql');
+const { getNodeEventQueries } = require('./graphql/nodeEvent.graphql');
 
 const {
   GetNodeStoryListingPages,
