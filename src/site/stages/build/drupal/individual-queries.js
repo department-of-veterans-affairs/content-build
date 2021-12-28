@@ -10,7 +10,7 @@ const {
   getNodeHealthCareRegionPageQueries,
 } = require('./graphql/healthCareRegionPage.graphql');
 
-const { GetNodeOffices } = require('./graphql/officePage.graphql');
+const { GetNodeOffices } = require('./graphql/nodeOffice.graphql');
 
 const {
   getNodeHealthCareLocalFacilityPageQueries,

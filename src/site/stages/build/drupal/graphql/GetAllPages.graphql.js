@@ -51,7 +51,7 @@ const {
   queryParamToBeChanged,
 } = require('./../../../../utilities/stringHelpers');
 
-const officePage = require('./officePage.graphql');
+const nodeOffice = require('./nodeOffice.graphql');
 
 let regString = '';
 queryParamToBeChanged.forEach(param => {
@@ -72,7 +72,7 @@ const buildQuery = () => {
   ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
   ${nodeEvent.fragment}
-  ${officePage.fragment}
+  ${nodeOffice.fragment}
   ${bioPage.fragment}
   ${vaFormPage.fragment}
   ${benefitListingPage.fragment}
@@ -109,7 +109,7 @@ const buildQuery = () => {
         ... pressReleasePage
         ... vamcOperatingStatusAndAlerts
         ... newsStoryPage
-        ... officePage
+        ... nodeOffice
         ... bioPage
         ... benefitListingPage
         ... nodeEventListing
