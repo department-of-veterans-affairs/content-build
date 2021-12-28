@@ -186,7 +186,138 @@ jobs:
     name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
     needs: [build, a11y]
-    if: ${{ always() }}
+    if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure') }}
+    defaults:
+      run:
+        working-directory: content-build
+
+    env:
+      CHANNEL_ID: C01RAS1KAQK
+
+    steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v2
+        with:
+          path: content-build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-gov-west-1'
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+
+
+      - name: Accessibility Test Failure
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ needs.a11y.result == 'failure' }}
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          slack-message: '<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+          channel-id: ${{ env.CHANNEL_ID }}
+
+      - name: Accessibility Test Success
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ needs.a11y.result == 'success' }}
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          slack-message: 'Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+          channel-id: ${{ env.CHANNEL_ID }}
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Download Mochawesome test results
+        uses: actions/download-artifact@v2
+        with:
+          name: cypress-mochawesome-test-results
+          path: content-build/cypress/results/json
+
+      - name: Merge test results into one file
+        run: |
+          yarn run cy:report:merge && sed -i -e 's/"message": "AssertionError.*$/"message": "Accessibility violations were detected.",/g' index.json
+
+      - name: Generate HTML report
+        run: yarn run cy:report:generate
+
+      - name: Generate UUID for Mochawesome report
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
+
+      - name: Rename Mochawesome report file
+        run: |
+          cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
+
+      - name: Get AWS IAM role
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Upload test report to s3
+        run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
+
+      - name: Accessibility Test Report Slack notification
+        uses: slackapi/slack-github-action@v1.16.0
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          slack-message: 'Daily accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>'
+          channel-id: ${{ env.CHANNEL_ID }}
+
+  slack-failure:
+    name: Notify Slack - workflow failure
+    runs-on: ubuntu-latest
+    needs: [build, a11y]
+    if: ${{ always() && (needs.a11y.result == 'cancelled' || needs.build.result == 'failure' || needs.build.result == 'cancelled') }}
     defaults:
       run:
         working-directory: content-build
@@ -224,114 +355,13 @@ jobs:
           slack-message: 'Daily accessibility scan has been canceled on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
           channel-id: ${{ env.CHANNEL_ID }}
 
-      - name: Accessibility Test Failure
+      - name: Accessibility Test Build Failure
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
+        if: ${{ needs.build.result == 'failure' }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack-message: '<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
-          channel-id: ${{ env.CHANNEL_ID }}
-
-      - name: Accessibility Test Success
-        uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ needs.a11y.result == 'success' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          slack-message: 'Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
-          channel-id: ${{ env.CHANNEL_ID }}
-
-      - name: Get Node version
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Cache dependencies
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
-
-      - name: Install dependencies
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        uses: nick-invision/retry@v2
-        with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
-
-      - name: Download Mochawesome test results
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results
-          path: content-build/cypress/results/json
-
-      - name: Merge test results into one file
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        run: |
-          yarn run cy:report:merge && sed -i -e 's/"message": "AssertionError.*$/"message": "Accessibility violations were detected.",/g' index.json
-
-      - name: Generate HTML report
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        run: yarn run cy:report:generate
-
-      - name: Generate UUID for Mochawesome report
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
-
-      - name: Rename Mochawesome report file
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        run: |
-          cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
-
-      - name: Get AWS IAM role
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Configure AWS Credentials (2)
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
-
-      - name: Upload test report to s3
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
-
-      - name: Accessibility Test Report Slack notification
-        if: ${{ needs.a11y.result == 'success' || needs.a11y.result == 'failure' }}
-        uses: slackapi/slack-github-action@v1.16.0
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          slack-message: 'Daily accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>'
+          slack-message: '<!here> Daily accessibility scan build has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
           channel-id: ${{ env.CHANNEL_ID }}
