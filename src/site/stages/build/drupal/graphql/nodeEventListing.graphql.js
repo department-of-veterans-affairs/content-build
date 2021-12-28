@@ -54,7 +54,7 @@ function getNodeEventListingPageSlice(operationName, offset, limit) {
 function getNodeEventListingQueries(entityCounts) {
   return generatePaginatedQueries({
     operationNamePrefix: 'GetNodeEventListings',
-    entitiesPerSlice: 20,
+    entitiesPerSlice: 5,
     totalEntities: entityCounts.data.eventListing.count,
     getSlice: getNodeEventListingPageSlice,
   });
