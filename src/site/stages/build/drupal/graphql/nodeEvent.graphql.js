@@ -1,16 +1,23 @@
 // Relative imports.
-const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 // Create NodeEvent fragment.
 const nodeEvent = `
   fragment nodeEvent on NodeEvent {
-    ${entityElementsFromPages}
     changed
+    entityBundle
+    entityId
+    entityPublished
+    entityMetatags {
+      __typename
+      key
+      value
+    }
     entityUrl {
       path
     }
     title
+    vid
     fieldAdditionalInformationAbo {
       value
       format
