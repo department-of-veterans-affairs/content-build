@@ -103,17 +103,6 @@
     }
   },
   {
-    "appName": "21-22 Appoint Veteran Service Officer as Representative",
-    "entryName": "veteran-representative",
-    "rootUrl": "/veteran-representative",
-    "template": {
-      "title": "Appoint VSO as representative",
-      "layout": "page-react.html",
-      "description": "Appoint a Veterans Service Officer to represent you.",
-      "vagovprod": false
-    }
-  },
-  {
     "appName": "Facility Locator",
     "entryName": "facilities",
     "rootUrl": "/find-locations",
