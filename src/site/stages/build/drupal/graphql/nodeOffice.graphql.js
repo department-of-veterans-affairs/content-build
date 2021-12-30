@@ -12,14 +12,14 @@ const nodeOffice = `
     fieldBody { processed }
     reverseFieldOfficeNode {
       entities {
-        ... nodeEvent
+        ... nodeEventWithoutBreadcrumbs
       }
     }
   }
 `;
 
 const GetNodeOffices = `
-  ${nodeEvent.fragment}
+  ${nodeEvent.fragmentWithoutBreadcrumbs}
   ${nodeOffice}
 
   query GetNodeOffices($onlyPublishedContent: Boolean!) {
