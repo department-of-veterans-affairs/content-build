@@ -39,7 +39,7 @@ const nodeCampaignLandingPage = `
     fieldClpEventsPanel
     fieldClpEventsReferences {
       entity {
-        ... nodeEvent
+        ... nodeEventWithoutBreadcrumbs
       }
     }
     fieldClpFaqCta {
@@ -306,7 +306,7 @@ const GetCampaignLandingPages = `
   ${fragments.listOfLinkTeasers}
   ${fragments.linkTeaser}
   ${fragments.alert}
-  ${nodeEvent.fragment}
+  ${nodeEvent.fragmentWithoutBreadcrumbs}
   ${landingPageFragment}
   ${nodeCampaignLandingPage}
 

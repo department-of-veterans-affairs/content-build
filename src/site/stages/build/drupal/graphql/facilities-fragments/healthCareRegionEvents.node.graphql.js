@@ -4,7 +4,7 @@
 
 const EVENTS_RESULTS = `
   entities {
-    ... nodeEvent
+    ... nodeEventWithoutBreadcrumbs
   }
 `;
 
