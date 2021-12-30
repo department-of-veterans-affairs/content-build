@@ -74,6 +74,9 @@ const nodeEvent = `
     fieldFeatured
     fieldLink {
       uri
+      url {
+        path
+      }
       title
     }
     fieldListing {
