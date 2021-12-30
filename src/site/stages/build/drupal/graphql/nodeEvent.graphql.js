@@ -161,6 +161,156 @@ const nodeEvent = `
   }
 `;
 
+const nodeEventWithoutBreadcrumbs = `
+  fragment nodeEventWithoutBreadcrumbs on NodeEvent {
+    changed
+    entityBundle
+    entityId
+    entityPublished
+    entityMetatags {
+      __typename
+      key
+      value
+    }
+    entityUrl {
+      path
+    }
+    title
+    vid
+    fieldAdditionalInformationAbo {
+      value
+      format
+      processed
+    }
+    fieldAddress {
+      additionalName
+      addressLine1
+      addressLine2
+      administrativeArea
+      countryCode
+      dependentLocality
+      familyName
+      givenName
+      langcode
+      locality
+      organization
+      postalCode
+      sortingCode
+    }
+    fieldBody {
+      format
+      processed
+      value
+    }
+    fieldDatetimeRangeTimezone {
+      duration
+      endTime
+      endValue
+      rrule
+      rruleIndex
+      startTime
+      timezone
+      value
+    }
+    fieldDescription
+    fieldEventCost
+    fieldEventCta
+    fieldEventRegistrationrequired
+    fieldFacilityLocation {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeHealthCareLocalFacility {
+          entityUrl {
+            path
+          }
+          fieldFacilityLocatorApiId
+          title
+        }
+      }
+    }
+    fieldFeatured
+    fieldLink {
+      uri
+      url {
+        path
+      }
+      title
+    }
+    fieldListing {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeEventListing {
+          fieldDescription
+          fieldIntroText
+          fieldOffice {
+            entity {
+              entityType
+              entityBundle
+              entityId
+              ... on NodeOffice {
+                fieldBody {
+                  value
+                  format
+                  processed
+                }
+                fieldDescription
+                fieldMetaTags
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldLocationHumanreadable
+    fieldLocationType
+    fieldMedia {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on MediaImage {
+          image {
+            alt
+            title
+            derivative(style: _72MEDIUMTHUMBNAIL) {
+              height
+              url
+              width
+            }
+          }
+          thumbnail {
+            alt
+            height
+            targetId
+            title
+            url
+            width
+          }
+        }
+      }
+    }
+    fieldMetaTags
+    fieldOrder
+    fieldUrlOfAnOnlineEvent {
+      uri
+      title
+    }
+    uid {
+      targetId
+      ... on FieldNodeUid {
+        entity {
+          name
+          timezone
+        }
+      }
+    }
+  }
+`;
+
 function getNodeEventSlice(operationName, offset, limit = 100) {
   return `
     ${nodeEvent}
@@ -195,5 +345,6 @@ function getNodeEventQueries(entityCounts) {
 
 module.exports = {
   fragment: nodeEvent,
+  fragmentWithoutBreadcrumbs: nodeEventWithoutBreadcrumbs,
   getNodeEventQueries,
 };

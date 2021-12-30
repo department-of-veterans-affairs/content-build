@@ -13,12 +13,12 @@ const nodeEventListing = `
     entityId
     pastEvents: reverseFieldListingNode(limit: 5000, filter: { conditions: [{ field: "status", value: "1", operator: EQUAL, enabled: $onlyPublishedContent }, { field: "moderation_state", value: "archived", operator: NOT_EQUAL }, { field: "type", value: "event" }, { field: "field_datetime_range_timezone", value: [$today], operator: SMALLER_THAN }]}, sort: {field: "changed", direction: DESC}) {
       entities {
-        ... nodeEvent
+        ... nodeEventWithoutBreadcrumbs
       }
     }
     reverseFieldListingNode(limit: 5000, filter: { conditions: [{ field: "status", value: "1", operator: EQUAL, enabled: $onlyPublishedContent }, { field: "moderation_state", value: "archived", operator: NOT_EQUAL }, { field: "type", value: "event" }]}, sort: {field: "changed", direction: DESC}) {
       entities {
-        ... nodeEvent
+        ... nodeEventWithoutBreadcrumbs
       }
     }
     fieldOffice {
@@ -33,7 +33,7 @@ const nodeEventListing = `
 
 function getNodeEventListingPageSlice(operationName, offset, limit) {
   return `
-  ${nodeEvent.fragment}
+  ${nodeEvent.fragmentWithoutBreadcrumbs}
   ${nodeEventListing}
 
   query ${operationName}($today: String!,$onlyPublishedContent: Boolean!) {
