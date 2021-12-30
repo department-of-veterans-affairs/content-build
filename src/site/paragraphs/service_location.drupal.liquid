@@ -1,4 +1,5 @@
-{% if single.fieldServiceLocationAddress.entity.fieldClinicName %}
+{% assign serviceLocationAddress = single.fieldServiceLocationAddress.entity %}
+{% if serviceLocationAddress.fieldClinicName %}
   {% assign haveLocationName = true %}
 {% else %}
   {% assign haveLocationName = false %}
@@ -7,10 +8,10 @@
 {% include "src/site/facilities/service_address.drupal.liquid" %}
 
 {% comment %}
-    single.fieldHours values:
-    - 0 = Use facility hours
-    - 1 = Do not specify hours
-    - 2 = Display specific hours
+  single.fieldHours values:
+  - 0 = Use facility hours
+  - 1 = Do not specify hours
+  - 2 = Display specific hours
 {% endcomment %}
 
 {% if single.fieldHours != "1" %}
