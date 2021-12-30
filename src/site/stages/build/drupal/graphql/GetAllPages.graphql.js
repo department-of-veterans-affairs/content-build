@@ -72,6 +72,7 @@ const buildQuery = () => {
   ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
   ${nodeEvent.fragment}
+  ${nodeEvent.fragmentWithoutBreadcrumbs}
   ${nodeOffice.fragment}
   ${bioPage.fragment}
   ${vaFormPage.fragment}

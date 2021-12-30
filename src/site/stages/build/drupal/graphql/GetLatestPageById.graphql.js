@@ -58,6 +58,7 @@ module.exports = `
   ${storyListingPage.fragment}
   ${newsStoryPage.fragment}
   ${nodeEvent.fragment}
+  ${nodeEvent.fragmentWithoutBreadcrumbs}
   ${nodeEventListing.fragment}
   ${bioPage.fragment}
   ${vaFormPage.fragment}
