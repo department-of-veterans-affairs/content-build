@@ -1297,7 +1297,17 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.topTaskUrl = (flag, path, systemName) => {
-    if (
+    if (flag === 'cerner' && path === 'refill-track-prescriptions/') {
+      return 'https://patientportal.myhealth.va.gov/pages/medications/current';
+    } else if (flag === 'cerner' && path === 'secure-messaging/') {
+      return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
+    } else if (flag === 'cerner' && path === 'schedule-view-va-appointments/') {
+      return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
+    } else if (flag === 'cerner' && path === 'get-medical-records/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
+    } else if (flag === 'cerner' && path === 'view-test-and-lab-results/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
+    } else if (
       flag === 'cerner' ||
       (systemName === 'VA Central Ohio health care' &&
         path === 'schedule-view-va-appointments/')
@@ -1351,5 +1361,44 @@ module.exports = function registerFilters() {
 
     // Return the most recent future date if there are future dates.
     return futureDates[0];
+  };
+
+  // Given an array of services provided at a facility,
+  // return a flattened array of service locations that
+  // offer service of type `serviceType`
+  liquid.filters.serviceLocationsAtFacilityByServiceType = (
+    allServicesAtFacility,
+    serviceType,
+  ) => {
+    return allServicesAtFacility.reduce((acc, service) => {
+      if (
+        serviceType === service?.fieldServiceNameAndDescripti?.entity?.name &&
+        service?.fieldServiceLocation
+      ) {
+        return [...acc, ...service.fieldServiceLocation];
+      }
+      return acc;
+    }, []);
+  };
+
+  // Given an array of facilities in a region, with each facility array
+  // containing an array of services provided at that facility,
+  // return an array of normalized facility objects representing
+  // only facilities that offer service of type `serviceType`
+  liquid.filters.healthCareRegionNonClinicalServiceLocationsByType = (
+    facilitiesInRegion,
+    serviceType,
+  ) => {
+    return facilitiesInRegion
+      .map(facility => ({
+        entityLabel: facility?.entityLabel,
+        fieldAddress: facility?.fieldAddress,
+        fieldFacilityHours: facility?.fieldFacilityHours,
+        locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
+          facility?.reverseFieldFacilityLocationNode?.entities || [],
+          serviceType,
+        ),
+      }))
+      .filter(facility => facility.locations.length > 0);
   };
 };

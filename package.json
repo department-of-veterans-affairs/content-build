@@ -144,7 +144,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sonarjs": "^0.10.0",
     "eslint-plugin-unicorn": "^36.0.0",
-    "eslint-plugin-va": "./script/eslint-plugin-va",
+    "eslint-plugin-va": "file:./script/eslint-plugin-va",
     "express-history-api-fallback": "^2.0.0",
     "fast-xml-parser": "^3.19.0",
     "find": "^0.3.0",
