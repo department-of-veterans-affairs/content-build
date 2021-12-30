@@ -14,7 +14,16 @@ const nodeEvent = `
       value
     }
     entityUrl {
-      path
+      ... on EntityCanonicalUrl {
+        breadcrumb {
+          url {
+            path
+            routed
+          }
+          text
+        }
+        path
+      }
     }
     title
     vid
