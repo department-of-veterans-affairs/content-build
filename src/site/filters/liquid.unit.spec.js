@@ -2343,24 +2343,3 @@ describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
     expect(facilitiesOfferingDummy.length).to.equal(0);
   });
 });
-
-describe('deriveFormattedTimestamp', () => {
-  it('returns what we expect when passed fieldDatetimeRangeTimezone', () => {
-    // Setup.
-    const fieldDatetimeRangeTimezone = {
-      duration: 60,
-      endTime: null,
-      endValue: 1641409200,
-      rrule: null,
-      rruleIndex: null,
-      startTime: null,
-      timezone: 'America/New_York',
-      value: 1641405600,
-    };
-
-    // Assertions.
-    expect(
-      liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
-    ).to.equal('Wed Jan. 5, 2022, 11:00 a.m. - 12:00 p.m. EST');
-  });
-});
