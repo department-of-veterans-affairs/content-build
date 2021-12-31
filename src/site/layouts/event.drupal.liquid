@@ -9,7 +9,9 @@
         {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       {% endunless %}
 
+      <!-- ======== -->
       <!-- Event v1 -->
+      <!-- ======== -->
       {% if buildtype == 'vagovprod' %}
         {% include "src/site/includes/date.drupal.liquid" %}
 
@@ -157,13 +159,30 @@
           </div>
         </div>
 
+      <!-- ======== -->
       <!-- Event v2 -->
+      <!-- ======== -->
       {% else %}
-        <div class="usa-width-three-fourths vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 medium-screen:vads-u-padding-x--0 vads-u-padding-bottom--2">
+        <div class="usa-width-three-fourths vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 large-screen:vads-u-padding-x--0 vads-u-padding-bottom--2">
+          <!-- Title -->
           <h1>{{ title }}</h1>
 
+          <!-- Event image -->
+          {% if fieldMedia %}
+            <img
+              alt="{{ fieldMedia.entity.image.alt }}"
+              class="event-detail-img vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4"
+              src="{{ fieldMedia.entity.image.derivative.url }}"
+            />
+          {% endif %}
+
+          <!-- Intro text -->
+          <p class="va-introtext vads-u-margin-top--0">
+            {{ fieldDescription }}
+          </p>
+
           <!-- When -->
-          <div class="vads-u-display--flex vads-u-flex-direction--row">
+          <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
             <p class="vads-u-margin--0 vads-u-margin-right--0p5">
               <strong>When:</strong>
             </p>
@@ -171,7 +190,7 @@
             <div class="vads-u-display--flex vads-u-flex-direction--column">
               <!-- Starts at + ends at -->
               <p class="vads-u-margin--0">
-                {formattedStartsAt} - {formattedEndsAt} {endsAtTimezone}
+                {{ fieldDatetimeRangeTimezone | deriveFormattedTimestamp }}
               </p>
 
               {% if fieldDatetimeRangeTimezone?.length > 1 %}
@@ -184,28 +203,61 @@
           </div>
 
           <!-- Repeating event instances -->
-          <button
-            class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full"
-            id="expand-recurring-events"
-            type="button"
-          >
-            Find other times for this event <i aria-hidden="true" class="fa fa-plus"></i>
-          </button>
+          {% if fieldDatetimeRangeTimezone?.length > 1 %}
+            <button
+              class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0"
+              id="expand-recurring-events"
+              type="button"
+            >
+              Find other times for this event <i aria-hidden="true" class="fa fa-plus"></i>
+            </button>
+            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-background-color--gray-lightest vads-u-border--2px vads-u-border-color--gray-lightest">
+              {% for datetimeRangeTimezone in fieldDatetimeRangeTimezone %}
+                <a href="">
+                  {{ datetimeRangeTimezone | deriveFormattedTimestamp }}
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
 
           <!-- Where -->
-          <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
-            <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-              <strong>Where:</strong>
-            </p>
-
-            <p class="vads-u-margin--0">
-              This is an online event.
-            </p>
-          </div>
-
-          {% if fieldEventCost %}
-            <!-- Cost -->
+          {% if fieldFacilityLocation or fieldAddress.addressLine1 %}
             <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
+              <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                <strong>Where:</strong>
+              </p>
+
+              {% if facility %}
+                <p class="vads-u-margin--0">
+                  <a href="{{ facility.entityUrl.path }}">{{ facility.title }}</a>
+                </p>
+
+                <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+              {% else %}
+                {% if fieldAddress.addressLine1 %}
+                  <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
+                {% endif %}
+
+                {% if fieldAddress.addressLine2 %}
+                  <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
+                {% endif %}
+
+                <p class="vads-u-margin--0">
+                  {% if fieldAddress.locality %}
+                    {{ fieldAddress.locality }}
+                  {% endif %}
+
+                  {% if fieldAddress.administrativeArea %}
+                    , {{ fieldAddress.administrativeArea }}
+                  {% endif %}
+                </p>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <!-- Cost -->
+          {% if fieldEventCost %}
+            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
               <p class="vads-u-margin--0 vads-u-margin-right--0p5">
                 <strong>Cost:</strong>
               </p>
@@ -219,11 +271,9 @@
           <!-- Social links -->
           {% include "src/site/includes/social-share.drupal.liquid" %}
 
+          <!-- CTA -->
           {% if fieldLink or fieldEventCta or fieldAdditionalInformationAbo %}
-            <!-- CTA -->
-            <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--1">
-              <p class="vads-u-font-weight--bold vads-u-margin-top--0 vads-u-margin-bottom--1">Registration</p>
-
+            <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--1">
               {% if start_timestamp < current_timestamp %}
                 <p class="vads-u-margin--0 vads-u-color--secondary vads-u-font-weight--bold">This event already happened.</p>
               {% else %}
@@ -248,15 +298,18 @@
             </div>
           {% endif %}
 
-          {% if fieldDescription %}
-            <!-- Description -->
-            <p class="va-introtext">
-              {{ fieldDescription }}
-            </p>
+          <!-- Description -->
+          {% if fieldBody.processed %}
+            {{ fieldBody.processed }}
           {% endif %}
 
           <!-- See more events -->
-          <a class="vads-c-action-link--blue" href="/outreach-and-events/events/">
+          {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
+          <a
+            class="vads-c-action-link--blue vads-u-margin-bottom--2"
+            onclick="recordEvent({ event: 'nav-secondary-button-click' });"
+            href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
+          >
             See more events
           </a>
         </div>

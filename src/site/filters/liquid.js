@@ -1401,4 +1401,19 @@ module.exports = function registerFilters() {
       }))
       .filter(facility => facility.locations.length > 0);
   };
+
+  liquid.filters.deriveFormattedTimestamp = fieldDatetimeRangeTimezone => {
+    const startsAtUnix = fieldDatetimeRangeTimezone?.value;
+    const endsAtUnix = fieldDatetimeRangeTimezone?.endValue;
+    const timezone = fieldDatetimeRangeTimezone?.timezone;
+
+    // Derive starts at and ends at.
+    const formattedStartsAt = moment(startsAtUnix * 1000).format(
+      'ddd MMM D, YYYY, h:mm a',
+    );
+    const formattedEndsAt = moment(endsAtUnix * 1000).format('h:mm a');
+    const endsAtTimezone = moment.tz(endsAtUnix * 1000, timezone).format('z');
+
+    return `${formattedStartsAt} - ${formattedEndsAt} ${endsAtTimezone}`;
+  };
 };
