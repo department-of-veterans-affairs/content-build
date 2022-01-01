@@ -2251,7 +2251,7 @@ describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
   const facilitiesInSystem =
     healthCareRegionNonClinicalServicesData.reverseFieldRegionPageNode.entities;
 
-  const billingAndInsuraceServicesFacilities = [
+  const billingAndInsuranceServicesFacilities = [
     {
       entityLabel: 'Anchorage VA Medical Center',
       fieldAddress: {
@@ -2308,20 +2308,20 @@ describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
     // dig into this one to ensure labels and addresses match
     expect(facilitiesOfferingBillingAndInsurance.length).to.equal(2);
     expect(facilitiesOfferingBillingAndInsurance[0].entityLabel).to.equal(
-      billingAndInsuraceServicesFacilities[0].entityLabel,
+      billingAndInsuranceServicesFacilities[0].entityLabel,
     );
     expect(
       facilitiesOfferingBillingAndInsurance[0].fieldAddress.addressLine1,
     ).to.equal(
-      billingAndInsuraceServicesFacilities[0].fieldAddress.addressLine1,
+      billingAndInsuranceServicesFacilities[0].fieldAddress.addressLine1,
     );
     expect(facilitiesOfferingBillingAndInsurance[1].entityLabel).to.equal(
-      billingAndInsuraceServicesFacilities[1].entityLabel,
+      billingAndInsuranceServicesFacilities[1].entityLabel,
     );
     expect(
       facilitiesOfferingBillingAndInsurance[1].fieldAddress.addressLine1,
     ).to.equal(
-      billingAndInsuraceServicesFacilities[1].fieldAddress.addressLine1,
+      billingAndInsuranceServicesFacilities[1].fieldAddress.addressLine1,
     );
 
     const facilitiesOfferingMedicalRecords = liquid.filters.healthCareRegionNonClinicalServiceLocationsByType(
@@ -2341,5 +2341,26 @@ describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
       'Dummy',
     );
     expect(facilitiesOfferingDummy.length).to.equal(0);
+  });
+});
+
+describe('deriveFormattedTimestamp', () => {
+  it('returns what we expect', () => {
+    // Set up.
+    const fieldDatetimeRangeTimezone = {
+      duration: 60,
+      endTime: null,
+      endValue: 1641409200,
+      rrule: null,
+      rruleIndex: null,
+      startTime: null,
+      timezone: 'America/New_York',
+      value: 1641405600,
+    };
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
+    ).to.equal('Wed Jan. 5, 2022, 1:00 p.m. - 2:00 p.m. EST');
   });
 });
