@@ -7,3 +7,4 @@ coverage/*
 temp/*
 .nyc_output/*
 script/mocha.js
+script/eslint-plugin-va/*

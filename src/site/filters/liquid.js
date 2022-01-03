@@ -882,7 +882,10 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return event.fieldDatetimeRangeTimezone.value * 1000 < currentTimestamp;
+      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
+        event.fieldDatetimeRangeTimezone,
+      );
+      return mostRecentEvent.value * 1000 < currentTimestamp;
     });
   };
 
@@ -890,7 +893,10 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      return event.fieldDatetimeRangeTimezone.value * 1000 >= currentTimestamp;
+      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
+        event.fieldDatetimeRangeTimezone,
+      );
+      return mostRecentEvent.value * 1000 >= currentTimestamp;
     });
   };
 
@@ -903,8 +909,12 @@ module.exports = function registerFilters() {
   ) => {
     if (!dates) return null;
     return dates.sort((a, b) => {
-      const start1 = moment(a[dateKey].value);
-      const start2 = moment(b[dateKey].value);
+      const start1 = moment(
+        liquid.filters.deriveMostRecentDate(a[dateKey]).value,
+      );
+      const start2 = moment(
+        liquid.filters.deriveMostRecentDate(b[dateKey]).value,
+      );
 
       return reverse ? start2 - start1 : start1 - start2;
     });
@@ -1287,7 +1297,17 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.topTaskUrl = (flag, path, systemName) => {
-    if (
+    if (flag === 'cerner' && path === 'refill-track-prescriptions/') {
+      return 'https://patientportal.myhealth.va.gov/pages/medications/current';
+    } else if (flag === 'cerner' && path === 'secure-messaging/') {
+      return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
+    } else if (flag === 'cerner' && path === 'schedule-view-va-appointments/') {
+      return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
+    } else if (flag === 'cerner' && path === 'get-medical-records/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
+    } else if (flag === 'cerner' && path === 'view-test-and-lab-results/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
+    } else if (
       flag === 'cerner' ||
       (systemName === 'VA Central Ohio health care' &&
         path === 'schedule-view-va-appointments/')
@@ -1305,5 +1325,97 @@ module.exports = function registerFilters() {
 
   liquid.filters.featureAddVaHealthConnectNumber = () => {
     return cmsFeatureFlags?.FEATURE_HEALTH_CONNECT_NUMBER;
+  };
+
+  liquid.filters.pathContainsSubstring = (path, searchValue) => {
+    if (!path) return null;
+    const basePath = liquid.filters.regionBasePath(path);
+    return basePath.includes(searchValue);
+  };
+
+  liquid.filters.deriveMostRecentDate = (
+    fieldDatetimeRangeTimezone,
+    now = moment().unix(), // This is done so that we can mock the current time in tests.
+  ) => {
+    // Escape early if no fieldDatetimeRangeTimezone was passed.
+    if (!fieldDatetimeRangeTimezone) return fieldDatetimeRangeTimezone;
+
+    // Return back fieldDatetimeRangeTimezone if it is already a singular most recent date.
+    if (!_.isArray(fieldDatetimeRangeTimezone)) {
+      return fieldDatetimeRangeTimezone;
+    }
+
+    // Return back fieldDatetimeRangeTimezone's first item if it only has 1 item.
+    if (fieldDatetimeRangeTimezone?.length === 1) {
+      return fieldDatetimeRangeTimezone[0];
+    }
+
+    // Derive date times relative to now.
+    const dates = _.sortBy(fieldDatetimeRangeTimezone, 'endValue');
+    const futureDates = _.filter(dates, date => date?.endValue - now > 0);
+
+    // Return the most recent past date if there are no future dates.
+    if (_.isEmpty(futureDates)) {
+      return dates[dates?.length - 1];
+    }
+
+    // Return the most recent future date if there are future dates.
+    return futureDates[0];
+  };
+
+  // Given an array of services provided at a facility,
+  // return a flattened array of service locations that
+  // offer service of type `serviceType`
+  liquid.filters.serviceLocationsAtFacilityByServiceType = (
+    allServicesAtFacility,
+    serviceType,
+  ) => {
+    return allServicesAtFacility.reduce((acc, service) => {
+      if (
+        serviceType === service?.fieldServiceNameAndDescripti?.entity?.name &&
+        service?.fieldServiceLocation
+      ) {
+        return [...acc, ...service.fieldServiceLocation];
+      }
+      return acc;
+    }, []);
+  };
+
+  // Given an array of facilities in a region, with each facility array
+  // containing an array of services provided at that facility,
+  // return an array of normalized facility objects representing
+  // only facilities that offer service of type `serviceType`
+  liquid.filters.healthCareRegionNonClinicalServiceLocationsByType = (
+    facilitiesInRegion,
+    serviceType,
+  ) => {
+    return facilitiesInRegion
+      .map(facility => ({
+        entityLabel: facility?.entityLabel,
+        fieldAddress: facility?.fieldAddress,
+        fieldFacilityHours: facility?.fieldFacilityHours,
+        locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
+          facility?.reverseFieldFacilityLocationNode?.entities || [],
+          serviceType,
+        ),
+      }))
+      .filter(facility => facility.locations.length > 0);
+  };
+
+  liquid.filters.deriveFormattedTimestamp = fieldDatetimeRangeTimezone => {
+    const startsAtUnix = fieldDatetimeRangeTimezone?.value;
+    const endsAtUnix = fieldDatetimeRangeTimezone?.endValue;
+    const timezone = fieldDatetimeRangeTimezone?.timezone;
+
+    // Derive starts at and ends at.
+    const formattedStartsAt = moment
+      .tz(startsAtUnix * 1000, timezone)
+      .format('ddd MMM D, YYYY, h:mm a');
+    const formattedEndsAt = moment
+      .tz(endsAtUnix * 1000, timezone)
+      .format('h:mm a');
+    const endsAtTimezone = moment.tz(endsAtUnix * 1000, timezone).format('z');
+
+    return `${formattedStartsAt} - ${formattedEndsAt} ${endsAtTimezone}`;
   };
 };

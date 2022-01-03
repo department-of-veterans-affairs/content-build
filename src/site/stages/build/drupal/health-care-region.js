@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const moment = require('moment');
+const liquid = require('tinyliquid');
 const {
   createEntityUrlObj,
   createFileObj,
@@ -30,7 +31,9 @@ function createPastEventListPages(page, drupalPagePath, files) {
 
   // separate current events from past events;
   allEvents.entities.forEach(eventTeaser => {
-    const startDate = eventTeaser.fieldDatetimeRangeTimezone.value;
+    const startDate = liquid.filters.deriveMostRecentDate(
+      eventTeaser.fieldDatetimeRangeTimezone,
+    ).value;
 
     // Check if the date is in the past
     const startDateUTC = startDate;
@@ -44,7 +47,9 @@ function createPastEventListPages(page, drupalPagePath, files) {
   // sort past events into reverse chronological order by start date
   pastEventTeasers.entities = _.orderBy(
     pastEventTeasers.entities,
-    ['fieldDatetimeRangeTimezone.value'],
+    event =>
+      liquid.filters.deriveMostRecentDate(event.fieldDatetimeRangeTimezone)
+        .value,
     ['desc'],
   );
 
@@ -218,8 +223,12 @@ function releaseDateSorter(legacyDates = [], reverse = false, stale = true) {
  */
 function eventDateSorter(dates = [], reverse = false, stale = true) {
   let sorted = dates.entities.sort((a, b) => {
-    const start1 = a.fieldDatetimeRangeTimezone.value;
-    const start2 = b.fieldDatetimeRangeTimezone.value;
+    const start1 = liquid.filters.deriveMostRecentDate(
+      a.fieldDatetimeRangeTimezone,
+    ).value;
+    const start2 = liquid.filters.deriveMostRecentDate(
+      b.fieldDatetimeRangeTimezone,
+    ).value;
     return reverse ? start2 - start1 : start1 - start2;
   });
 
@@ -227,7 +236,9 @@ function eventDateSorter(dates = [], reverse = false, stale = true) {
 
   if (stale) {
     sorted = sorted.filter(
-      item => item.fieldDatetimeRangeTimezone.value > currentDateUTC,
+      item =>
+        liquid.filters.deriveMostRecentDate(item.fieldDatetimeRangeTimezone)
+          .value > currentDateUTC,
     );
   }
 

@@ -1,15 +1,17 @@
+// Node modules.
+import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-
-import registerFilters from './liquid';
-import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
-import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
+// Relative imports.
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
+import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
+import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
+import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
+import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
 
-const _ = require('lodash');
-
+// Register filters.
 registerFilters();
 
 const getTomorrow = () => {
@@ -2012,5 +2014,353 @@ describe('isVisn8', () => {
 
   it('returns false if string does NOT equal "VISN 8"', () => {
     expect(liquid.filters.isVisn8('| VISN 8 |')).to.be.false;
+  });
+});
+
+describe('pathContainsSubstring', () => {
+  it('returns null if path is null', () => {
+    expect(liquid.filters.pathContainsSubstring(null, 'health-care')).to.be
+      .null;
+  });
+
+  it('returns true if path includes the search value - "health-care"', () => {
+    const path = '/butler-health-care';
+    expect(liquid.filters.pathContainsSubstring(path, 'health-care')).to.be
+      .true;
+  });
+
+  it('returns false if path does not include the search value - "health-care"', () => {
+    const path = '/escanaba-vet-center';
+    expect(liquid.filters.pathContainsSubstring(path, 'health-care')).to.be
+      .false;
+  });
+
+  it('returns true if path includes the search value - "vet-center"', () => {
+    const path = '/escanaba-vet-center/locations';
+    expect(liquid.filters.pathContainsSubstring(path, 'vet-center')).to.be.true;
+  });
+
+  it('returns false if no search value is passed', () => {
+    const path = '/escanaba-vet-center/locations';
+    expect(liquid.filters.pathContainsSubstring(path)).to.be.false;
+  });
+});
+
+describe('deriveMostRecentDate', () => {
+  it('returns the argument fieldDatetimeRangeTimezone when it is falsey', () => {
+    // Setup.
+    const fieldDatetimeRangeTimezone = undefined;
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
+    ).to.eq(fieldDatetimeRangeTimezone);
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an object', () => {
+    // Setup.
+    const fieldDatetimeRangeTimezone = {
+      value: 1642014000,
+      endValue: 1642017600,
+    };
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
+    ).to.deep.eq(fieldDatetimeRangeTimezone);
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 1', () => {
+    // Setup.
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
+    ).to.deep.eq(fieldDatetimeRangeTimezone[0]);
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only past dates', () => {
+    // Setup.
+    const now = 1642030600;
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+      { value: 1642017000, endValue: 1642020600 },
+      { value: 1642025600, endValue: 1642029600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
+    ).to.deep.eq({ value: 1642025600, endValue: 1642029600 });
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are past and future dates', () => {
+    // Setup.
+    const now = 1642019600;
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+      { value: 1642017000, endValue: 1642020600 },
+      { value: 1642025600, endValue: 1642029600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
+    ).to.deep.eq({ value: 1642017000, endValue: 1642020600 });
+  });
+
+  it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only future dates', () => {
+    // Setup.
+    const now = 1642014000;
+    const fieldDatetimeRangeTimezone = [
+      { value: 1642014000, endValue: 1642017600 },
+      { value: 1642017000, endValue: 1642020600 },
+      { value: 1642025600, endValue: 1642029600 },
+    ];
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
+    ).to.deep.eq({ value: 1642014000, endValue: 1642017600 });
+  });
+});
+
+describe('serviceLocationsAtFacilityByServiceType', () => {
+  const allServicesAtFacility =
+    healthCareRegionNonClinicalServicesData.reverseFieldRegionPageNode
+      .entities[0].reverseFieldFacilityLocationNode.entities;
+
+  const expected = {
+    entityId: '41817',
+    fieldServiceNameAndDescripti: {
+      entity: {
+        entityId: '1027',
+        entityLabel: 'Billing and insurance',
+        name: 'Billing and insurance',
+      },
+      targetId: 1027,
+    },
+    fieldServiceLocation: [
+      {
+        entity: {
+          status: true,
+          fieldAdditionalHoursInfo: null,
+          fieldEmailContacts: [],
+          fieldFacilityServiceHours: {
+            value: [
+              ['Mon', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Tue', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Wed', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Thu', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Fri', '9:00 a.m. to 5:00 p.m. ET'],
+              ['Sat', 'Closed'],
+              ['Sun', 'Closed'],
+            ],
+          },
+          fieldHours: '2',
+          fieldPhone: [],
+          fieldUseMainFacilityPhone: true,
+          fieldServiceLocationAddress: {
+            entity: {
+              fieldUseFacilityAddress: true,
+              fieldBuildingNameNumber: 'Building 1',
+              fieldClinicName: 'Anchorage A',
+              fieldWingFloorOrRoomNumber: 'Floor 3',
+              fieldAddress: {
+                addressLine1: '',
+                addressLine2: '',
+                postalCode: '',
+                locality: '',
+                administrativeArea: '',
+              },
+            },
+          },
+        },
+      },
+    ],
+  };
+
+  it('returns an empty array if serviceType argument is not passed', () => {
+    const serviceLocations = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+    );
+    expect(serviceLocations).to.eql([]);
+  });
+
+  it('returns an empty array if passed data array contains malformed objects', () => {
+    const malformedLocationsArray = [
+      {
+        badProperty1: 'badValue1a',
+        badProperty2: 'badValue2a',
+      },
+      {
+        badProperty1: 'badValue1b',
+        badProperty2: 'badValue2b',
+      },
+    ];
+    const serviceLocations = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      malformedLocationsArray,
+      'Billing and insurance',
+    );
+    expect(serviceLocations).to.eql([]);
+  });
+
+  it('returns service location data only for service locations of type serviceType', () => {
+    const serviceLocationsBillingAndInsurance = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+      'Billing and insurance',
+    );
+    expect(serviceLocationsBillingAndInsurance.length).to.equal(1);
+    expect(serviceLocationsBillingAndInsurance[0]).to.deep.equal(
+      expected.fieldServiceLocation[0],
+    );
+
+    const serviceLocationsMedicalRecords = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+      'Medical records',
+    );
+    expect(serviceLocationsMedicalRecords.length).to.equal(1);
+    expect(serviceLocationsMedicalRecords).to.deep.not.equal(
+      expected.fieldServiceLocation[0],
+    );
+
+    const serviceLocationsRegisterForCare = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+      'Register for care',
+    );
+    expect(serviceLocationsRegisterForCare.length).to.equal(1);
+    expect(serviceLocationsRegisterForCare).to.deep.not.equal(
+      expected.fieldServiceLocation[0],
+    );
+
+    const serviceLocationsDummy = liquid.filters.serviceLocationsAtFacilityByServiceType(
+      allServicesAtFacility,
+      'Dummy',
+    );
+    expect(serviceLocationsDummy.length).to.equal(0);
+    expect(serviceLocationsDummy).to.deep.not.equal(
+      expected.fieldServiceLocation[0],
+    );
+  });
+});
+
+describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
+  const facilitiesInSystem =
+    healthCareRegionNonClinicalServicesData.reverseFieldRegionPageNode.entities;
+
+  const billingAndInsuranceServicesFacilities = [
+    {
+      entityLabel: 'Anchorage VA Medical Center',
+      fieldAddress: {
+        addressLine1: '1201 North Muldoon Road',
+        addressLine2: null,
+        postalCode: '99504-6104',
+        locality: 'Anchorage',
+        administrativeArea: 'AK',
+      },
+    },
+    {
+      entityLabel: 'Fairbanks VA Clinic',
+      fieldAddress: {
+        addressLine1: '4076 Neeley Road, Room 1J-101',
+        addressLine2: null,
+        postalCode: '99703-1110',
+        locality: 'Fort Wainwright',
+        administrativeArea: 'AK',
+      },
+    },
+  ];
+
+  it('returns an empty array if serviceType argument is not passed', () => {
+    const facilitiesOfferingService = liquid.filters.healthCareRegionNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+    );
+    expect(facilitiesOfferingService).to.eql([]);
+  });
+
+  it('returns an empty array if passed data array contains malformed objects', () => {
+    const malformedFacilitiesArray = [
+      {
+        badProperty1: 'badValue1a',
+        badProperty2: 'badValue2a',
+      },
+      {
+        badProperty1: 'badValue1b',
+        badProperty2: 'badValue2b',
+      },
+    ];
+    const facilitiesOfferingService = liquid.filters.healthCareRegionNonClinicalServiceLocationsByType(
+      malformedFacilitiesArray,
+      'Billing and insurance',
+    );
+    expect(facilitiesOfferingService).to.eql([]);
+  });
+
+  it('returns facility data only for facilities offering service of type serviceType', () => {
+    const facilitiesOfferingBillingAndInsurance = liquid.filters.healthCareRegionNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      'Billing and insurance',
+    );
+    // Two facilities offer billing and insurance service
+    // dig into this one to ensure labels and addresses match
+    expect(facilitiesOfferingBillingAndInsurance.length).to.equal(2);
+    expect(facilitiesOfferingBillingAndInsurance[0].entityLabel).to.equal(
+      billingAndInsuranceServicesFacilities[0].entityLabel,
+    );
+    expect(
+      facilitiesOfferingBillingAndInsurance[0].fieldAddress.addressLine1,
+    ).to.equal(
+      billingAndInsuranceServicesFacilities[0].fieldAddress.addressLine1,
+    );
+    expect(facilitiesOfferingBillingAndInsurance[1].entityLabel).to.equal(
+      billingAndInsuranceServicesFacilities[1].entityLabel,
+    );
+    expect(
+      facilitiesOfferingBillingAndInsurance[1].fieldAddress.addressLine1,
+    ).to.equal(
+      billingAndInsuranceServicesFacilities[1].fieldAddress.addressLine1,
+    );
+
+    const facilitiesOfferingMedicalRecords = liquid.filters.healthCareRegionNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      'Medical records',
+    );
+    expect(facilitiesOfferingMedicalRecords.length).to.equal(2);
+
+    const facilitiesOfferingRegisterForCare = liquid.filters.healthCareRegionNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      'Register for care',
+    );
+    expect(facilitiesOfferingRegisterForCare.length).to.equal(1);
+
+    const facilitiesOfferingDummy = liquid.filters.healthCareRegionNonClinicalServiceLocationsByType(
+      facilitiesInSystem,
+      'Dummy',
+    );
+    expect(facilitiesOfferingDummy.length).to.equal(0);
+  });
+});
+
+describe('deriveFormattedTimestamp', () => {
+  it('returns what we expect', () => {
+    // Set up.
+    const fieldDatetimeRangeTimezone = {
+      duration: 60,
+      endTime: null,
+      endValue: 1641409200,
+      rrule: null,
+      rruleIndex: null,
+      startTime: null,
+      timezone: 'America/New_York',
+      value: 1641405600,
+    };
+
+    // Assertions.
+    expect(
+      liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
+    ).to.equal('Wed Jan. 5, 2022, 1:00 p.m. - 2:00 p.m. EST');
   });
 });

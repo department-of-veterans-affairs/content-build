@@ -17,11 +17,6 @@ const bannerAlerts = `
         fieldAlertOperatingStatusCta
         fieldAlertEmailUpdatesButton
         fieldAlertInheritanceSubpages
-        fieldAdministration {
-          entity {
-            entityId
-          }
-        }
         fieldOperatingStatusSendemail
         fieldBannerAlertSituationinfo {
           processed

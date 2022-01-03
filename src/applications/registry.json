@@ -703,9 +703,23 @@
     }
   },
   {
+    "appName": "GI Bill Comparison Tool",
+    "entryName": "gi",
+    "rootUrl": "/education/gi-bill-comparison-tool",
+    "template": {
+      "title": "GI Bill Comparison Tool",
+      "display_title": "GI Bill school comparison",
+      "description": "Use our GI Bill Comparison Tool to help you decide which education program and school is best for you. Find out which benefits you’ll get at your chosen school.",
+      "layout": "page-react.html",
+      "collection": "education",
+      "spoke": "More resources",
+      "order": 1
+    }
+  },
+  {
     "appName": "CT Redesign Sandbox",
     "entryName": "gi-sandbox",
-    "rootUrl": "/gi-bill-comparison-tool-sandbox",
+    "rootUrl": "/education/gi-bill-comparison-tool-sandbox",
     "template": {
       "vagovprod": false,
       "title": "CT Redesign Sandbox",
@@ -792,7 +806,7 @@
   {
     "appName": "Apply for Personalized Career Planning and Guidance with VA Form 28-8832",
     "entryName": "28-8832-planning-and-career-guidance",
-    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832/",
+    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832",
     "template": {
       "title": "Personalized Career Planning and Guidance Chapter 36 Form 28-8832",
       "vagovprod": true,
@@ -847,6 +861,26 @@
         {
           "path": "coronavirus-research/volunteer/",
           "name": "Sign up to volunteer"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Coronavirus Research - Update",
+    "entryName": "coronavirus-research-update",
+    "rootUrl": "/coronavirus-research/volunteer/update",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "coronavirus-research/",
+          "name": "Participating in coronavirus research at VA"
+        },
+        {
+          "path": "coronavirus-research/update/",
+          "name": "Update your information"
         }
       ]
     }
@@ -1009,7 +1043,7 @@
   {
     "appName": "covid-vaccine-expansion",
     "entryName": "covid-vaccine",
-    "rootUrl": "/health-care/covid-19-vaccine/sign-up/",
+    "rootUrl": "/health-care/covid-19-vaccine/sign-up",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
@@ -1145,6 +1179,15 @@
     "entryFile": "./app-entry.jsx",
     "entryName": "search-representative",
     "rootUrl": "/view-change-representative/search",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Apply for Specially Adapted Housing Grant",
+    "entryName": "sahg",
+    "rootUrl": "/specially-adapted-housing-grant",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
