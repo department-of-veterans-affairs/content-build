@@ -27,7 +27,7 @@
           <ul>
             {% for spoke in fieldSpokes %}
               <li>
-                <a href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: title }}{% endif %}">
+                <a href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: 30 }}{% endif %}">
                   {{ spoke.entity.fieldTitle }}
                 </a>
               </li>
