@@ -366,15 +366,15 @@
 <script nonce="**CSP_NONCE**" type="text/javascript">
   function onShowAllRecurringEventsClick() {
     // Derive recurring event items.
-    const recurringEventItems = document.querySelectorAll('.recurring-event');
+    var recurringEventItems = document.querySelectorAll('.recurring-event');
 
     // Show all recurring events.
-    for (let index = 0; index < recurringEventItems.length; index++) {
+    for (var index = 0; index < recurringEventItems.length; index++) {
       recurringEventItems[index].classList.remove('vads-u-display--none');
     }
 
     // Hide the show all recurring events button.
-    const showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
 
     // Hide the button if we find it.
     if (showAllRecurringEventsButton) {
