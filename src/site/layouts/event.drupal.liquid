@@ -177,9 +177,11 @@
           {% endif %}
 
           <!-- Intro text -->
-          <p class="va-introtext vads-u-margin-top--0">
-            {{ fieldDescription }}
-          </p>
+          {% if fieldDescription %}
+            <p class="va-introtext vads-u-margin-top--0">
+              {{ fieldDescription }}
+            </p>
+          {% endif %}
 
           <!-- When -->
           <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
@@ -188,9 +190,12 @@
             </p>
 
             <div class="vads-u-display--flex vads-u-flex-direction--column">
+              <!-- Derive most recent date -->
+              {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+
               <!-- Starts at + ends at -->
               <p class="vads-u-margin--0">
-                {{ fieldDatetimeRangeTimezone | deriveFormattedTimestamp }}
+                {{ mostRecentDate | deriveFormattedTimestamp }}
               </p>
 
               {% if fieldDatetimeRangeTimezone?.length > 1 %}
@@ -201,24 +206,6 @@
               {% endif %}
             </div>
           </div>
-
-          <!-- Repeating event instances -->
-          {% if fieldDatetimeRangeTimezone?.length > 1 %}
-            <button
-              class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0"
-              id="expand-recurring-events"
-              type="button"
-            >
-              Find other times for this event <i aria-hidden="true" class="fa fa-plus"></i>
-            </button>
-            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-background-color--gray-lightest vads-u-border--2px vads-u-border-color--gray-lightest">
-              {% for datetimeRangeTimezone in fieldDatetimeRangeTimezone %}
-                <a href="">
-                  {{ datetimeRangeTimezone | deriveFormattedTimestamp }}
-                </a>
-              {% endfor %}
-            </div>
-          {% endif %}
 
           <!-- Where -->
           {% if fieldFacilityLocation or fieldAddress.addressLine1 %}
@@ -303,6 +290,43 @@
             {{ fieldBody.processed }}
           {% endif %}
 
+          <!-- Repeating event instances -->
+          {% if fieldDatetimeRangeTimezone.length > 1 %}
+            <button
+              class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0"
+              id="expand-recurring-events"
+              onclick="onExpandRecurringEventsClick()"
+              style="z-index: 1;"
+              type="button"
+            >
+              View other times for this event <i aria-hidden="true" class="fa fa-plus" id="expand-recurring-events-icon"></i>
+            </button>
+            <div
+              class="vads-u-display--none vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2"
+              id="recurring-events"
+            >
+              {% for datetimeRangeTimezone in fieldDatetimeRangeTimezone %}
+                <p class="vads-u-margin--0">
+                  {{ datetimeRangeTimezone | deriveFormattedTimestamp }}
+                </p>
+                <a
+                  class="vads-u-margin-bottom--2"
+                  data-description="{{ fieldDescription }}"
+                  data-end="{{ datetimeRangeTimezone.endValue }}"
+                  data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
+                  data-start="{{ datetimeRangeTimezone.value }}"
+                  data-subject="{{ title }}"
+                  href="{{ entityUrl.path }}"
+                  rel="noreferrer noopener"
+                  style="max-width: 140px;"
+                >
+                  <i aria-hidden="true" class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" role="presentation"></i>
+                  Add to Calendar
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
+
           <!-- See more events -->
           {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
           <a
@@ -317,6 +341,36 @@
     </div>
   </main>
 </div>
+
+<script nonce="**CSP_NONCE**" type="text/javascript">
+  function onExpandRecurringEventsClick() {
+    var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
+    var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
+    var recurringEvents = document.getElementById('recurring-events');
+
+    // Escape early if we are not able to find the elements.
+    if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
+      return;
+    }
+
+    // Toggle the bottom borders of the button.
+    if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
+      expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
+      expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
+    } else {
+      expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
+      expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
+    }
+
+    // Toggle the visibility of the recurring events.
+    recurringEvents.classList.toggle('vads-u-display--none');
+    recurringEvents.classList.toggle('vads-u-display--flex');
+
+    // Toggle the icon.
+    expandRecurringEventsIcon.classList.toggle('fa-plus');
+    expandRecurringEventsIcon.classList.toggle('fa-minus');
+  }
+</script>
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
