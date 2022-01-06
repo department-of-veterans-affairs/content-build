@@ -1,0 +1,97 @@
+# This workflow runs once per hour and kicks off a content build if all of the
+# following conditions are true:
+#
+# * Scheduled builds are disabled
+# * Continuous builds are enabled
+# * There are no WIP content builds
+# * There are no content builds that have completed successfully in the last 30 min
+#
+# This is needed for continuous mode so that a) the continuous builds will start
+# at 9am and b) if anything happens that would prevent the content build from
+# re-queueing itself (a runner crashes or something), it can be re-started without
+# manual intervention.
+
+name: Continuous Content Release Supervisor
+
+on:
+  schedule:
+    - cron: 0 14-22 * * 1-5
+
+jobs:
+  check-content-release:
+    runs-on: ubuntu-latest
+    outputs:
+      needs-kicked: ${{ steps.decision.outputs.needs-kicked }}
+    steps:
+      - name: Check schedule enabled
+        run: |
+          curl https://raw.githubusercontent.com/department-of-veterans-affairs/content-build/master/.github/workflows/content-release.yml | grep 'DSVA_SCHEDULE_ENABLED: true' > /dev/null
+          if [ $? -eq 0 ]; then
+            echo "SCHEDULE_ENABLED=true" >> $GITHUB_ENV
+          else
+            echo "SCHEDULE_ENABLED=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check continuous enabled
+        run: |
+          curl https://raw.githubusercontent.com/department-of-veterans-affairs/content-build/master/.github/workflows/content-release.yml | grep 'RUN_CONTINOUSLY_ENABLED: true' > /dev/null
+          if [ $? -eq 0 ]; then
+            echo "CONTINUOUS_ENABLED=true" >> $GITHUB_ENV
+          else
+            echo "CONTINUOUS_ENABLED=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check for requested, queued, or in progress builds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/department-of-veterans-affairs/content-build/actions/runs?branch=master" | jq 'isempty(.workflow_runs[] | select(.name == "Content Release" and (.status == "in_progress" or .status == "waiting" or .status == "requested")) | {"name": .name, "status": .status, "conclusion": .conclusion, "created_at": .created_at, "updated_at": .updated_at}) == false or halt_error(1)' 2> /dev/null
+          if [ $? -eq 0 ]; then
+            echo "HAS_WIP_BUILDS=true" >> $GITHUB_ENV
+          else
+            echo "HAS_WIP_BUILDS=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check for recently completed builds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/department-of-veterans-affairs/content-build/actions/runs?branch=master" | jq '[.workflow_runs[] | select(.name == "Content Release" and .status == "completed" and .conclusion == "success") | {"name": .name, "status": .status, "conclusion": .conclusion, "created_at": .created_at, "updated_at": .updated_at}]' | jq 'isempty(.[] | select(.updated_at | fromdate > (now - 1800))) == false or halt_error(1)' 2> /dev/null
+          if [ $? -eq 0 ]; then
+            echo "HAS_RECENT_BUILDS=true" >> $GITHUB_ENV
+          else
+            echo "HAS_RECENT_BUILDS=false" >> $GITHUB_ENV
+          fi
+
+      - name: Decide whether or not to restart the job
+        id: decision
+        run: |
+          if [[ "$SCHEDULE_ENABLED" == "true" ]]; then
+            echo ::set-output name=needs-kicked::false
+          fi
+
+          if [[ "$CONTINUOUS_ENABLED" == "true" ]] && [[ "$HAS_WIP_BUILDS" == "false" ]] && [[ "$HAS_RECENT_BUILDS" == "false" ]]; then
+            echo ::set-output name=needs-kicked::true
+          fi
+
+  kick-content-release:
+    runs-on: ubuntu-latest
+    needs: check-content-release
+    if: ${{ needs.check-content-release.outputs.needs-kicked == 'true' }}
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Run another content build
+        run: |
+          curl -X POST -H "Authorization: Bearer ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/department-of-veterans-affairs/content-build/dispatches -d '{"event_type": "Content Release"}'

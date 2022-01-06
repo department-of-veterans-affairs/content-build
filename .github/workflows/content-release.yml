@@ -13,6 +13,11 @@ on:
         required: true
         options:
           - prod
+
+  repository_dispatch:
+    types:
+      - "Content Release"
+
   schedule:
     - cron: '0 14-17,21-22 * * 1-5'
     - cron: '45 18 * * 1-5'
@@ -24,6 +29,7 @@ concurrency:
 env:
   CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
   DSVA_SCHEDULE_ENABLED: true
+  RUN_CONTINUOUSLY_ENABLED: false
 
 jobs:
   start-runner:
@@ -103,8 +109,21 @@ jobs:
         id: export-approx-workflow-start-time
         run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
 
+      - name: Determine if we're within scheduled hours
+        id: scheduled-hours
+        run: |
+          if [ $(date +%H) -gt 13 ] && [ $(date +%H) -lt 23 ]; then
+            echo ::set-output name=WITHIN_SCHEDULED_HOURS::true
+          else
+            echo ::set-output name=WITHIN_SCHEDULED_HOURS::false
+          fi
+
       - name: Cancel workflow due to DSVA schedule
-        if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
+        if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' && env.RUN_CONTINUOUSLY_ENABLED != 'true' }}
+        uses: andymckay/cancel-action@0.2
+
+      - name: Cancel manual workflows during scheduled hours if continuous mode is enabled
+        if: ${{ env.RUN_CONTINUOUSLY_ENABLED == 'true' && github.event_name == 'workflow_dispatch' && steps.scheduled-hours.outputs.WITHIN_SCHEDULED_HOURS == 'true' }}
         uses: andymckay/cancel-action@0.2
 
       - name: Validate workflow_dispatch deploy_environment
@@ -121,8 +140,8 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Get release wait time (scheduled release)
-        if: ${{ github.event_name == 'schedule' }}
+      - name: Get release wait time (automatic release)
+        if: ${{ github.event_name == 'schedule' || github.event_name == "repository_dispatch" }}
         run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
 
       - name: Get release wait time (workflow_dispatch)
@@ -130,7 +149,7 @@ jobs:
         run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
 
       - name: Set environment details for vagovprod
-        if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
+        if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' || github.event_name == "repository_dispatch" }}
         run: |
           echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
           echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
@@ -141,7 +160,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       always() &&
-      ((github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule')
+      ((github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' || github.event_name == "repository_dispatch")
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -603,11 +622,9 @@ jobs:
 
     steps:
       - name: Checkout
-        if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
         uses: actions/checkout@v2
 
       - name: Notify Slack
-        if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
@@ -663,7 +680,7 @@ jobs:
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
 
       - name: Set vars for scheduled runs
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == "repository_dispatch" }}
         run: |
           echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
           echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
@@ -729,3 +746,31 @@ jobs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
           -d @- < metrics.json
+
+  run-again:
+    name: Run the workflow again
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    if: ${{ env.RUN_CONTINUOUSLY == 'true' && DSVA_SCHEDULE_ENABLED == 'false' }}
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Run another content build
+        run: |
+          curl -X POST -H "Authorization: Bearer ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/department-of-veterans-affairs/content-build/dispatches -d '{"event_type": "Content Release"}'
+
