@@ -183,80 +183,86 @@
             </p>
           {% endif %}
 
-          <!-- When -->
-          <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
-            <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-              <strong>When:</strong>
-            </p>
-
-            <div class="vads-u-display--flex vads-u-flex-direction--column">
-              <!-- Derive most recent date -->
-              {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
-
-              <!-- Starts at + ends at -->
-              <p class="vads-u-margin--0">
-                {{ mostRecentDate | deriveFormattedTimestamp }}
-              </p>
-
-              {% if fieldDatetimeRangeTimezone?.length > 1 %}
-                <!-- Repeats -->
-                <p class="vads-u-margin--0">
-                  <i aria-hidden="true" class="fa fa-sync vads-u-font-size--sm vads-u-margin-right--0p5"></i> Repeats
+          <div class="vads-u-display--flex vads-u-flex-direction--row">
+            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
+              <!-- When -->
+              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
+                <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                  <strong>When:</strong>
                 </p>
+
+                <div class="vads-u-display--flex vads-u-flex-direction--column">
+                  <!-- Derive most recent date -->
+                  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+
+                  <!-- Starts at + ends at -->
+                  <p class="vads-u-margin--0">
+                    {{ mostRecentDate | deriveFormattedTimestamp }}
+                  </p>
+
+                  {% if fieldDatetimeRangeTimezone?.length > 1 %}
+                    <!-- Repeats -->
+                    <p class="vads-u-margin--0">
+                      <i aria-hidden="true" class="fa fa-sync vads-u-font-size--sm vads-u-margin-right--0p5"></i> Repeats
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Where -->
+              {% if fieldFacilityLocation or fieldAddress.addressLine1 %}
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
+                  <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                    <strong>Where:</strong>
+                  </p>
+
+                  {% if facility %}
+                    <p class="vads-u-margin--0">
+                      <a href="{{ facility.entityUrl.path }}">{{ facility.title }}</a>
+                    </p>
+
+                    <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+                  {% else %}
+                    {% if fieldAddress.addressLine1 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
+                    {% endif %}
+
+                    {% if fieldAddress.addressLine2 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
+                    {% endif %}
+
+                    <p class="vads-u-margin--0">
+                      {% if fieldAddress.locality %}
+                        {{ fieldAddress.locality }}
+                      {% endif %}
+
+                      {% if fieldAddress.administrativeArea %}
+                        , {{ fieldAddress.administrativeArea }}
+                      {% endif %}
+                    </p>
+                  {% endif %}
+                </div>
               {% endif %}
+
+              <!-- Cost -->
+              {% if fieldEventCost %}
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
+                  <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                    <strong>Cost:</strong>
+                  </p>
+
+                  <p class="vads-u-margin--0">
+                    {{ fieldEventCost }}
+                  </p>
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Social links -->
+            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
+              {% include "src/site/includes/social-share.drupal.liquid" %}
             </div>
           </div>
-
-          <!-- Where -->
-          {% if fieldFacilityLocation or fieldAddress.addressLine1 %}
-            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
-              <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-                <strong>Where:</strong>
-              </p>
-
-              {% if facility %}
-                <p class="vads-u-margin--0">
-                  <a href="{{ facility.entityUrl.path }}">{{ facility.title }}</a>
-                </p>
-
-                <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
-              {% else %}
-                {% if fieldAddress.addressLine1 %}
-                  <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
-                {% endif %}
-
-                {% if fieldAddress.addressLine2 %}
-                  <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
-                {% endif %}
-
-                <p class="vads-u-margin--0">
-                  {% if fieldAddress.locality %}
-                    {{ fieldAddress.locality }}
-                  {% endif %}
-
-                  {% if fieldAddress.administrativeArea %}
-                    , {{ fieldAddress.administrativeArea }}
-                  {% endif %}
-                </p>
-              {% endif %}
-            </div>
-          {% endif %}
-
-          <!-- Cost -->
-          {% if fieldEventCost %}
-            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
-              <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-                <strong>Cost:</strong>
-              </p>
-
-              <p class="vads-u-margin--0">
-                {{ fieldEventCost }}
-              </p>
-            </div>
-          {% endif %}
-
-          <!-- Social links -->
-          {% include "src/site/includes/social-share.drupal.liquid" %}
 
           <!-- CTA -->
           {% if fieldLink or fieldEventCta or fieldAdditionalInformationAbo %}
@@ -291,9 +297,9 @@
           {% endif %}
 
           <!-- Repeating event instances -->
-          {% if fieldDatetimeRangeTimezone.length > 1 %}
+          {% if fieldDatetimeRangeTimezone?.length > 1 %}
             <button
-              class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0"
+              class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0 vads-u-margin-top--1"
               id="expand-recurring-events"
               onclick="onExpandRecurringEventsClick()"
               style="z-index: 1;"
@@ -305,16 +311,17 @@
               class="vads-u-display--none vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2"
               id="recurring-events"
             >
-              {% for datetimeRangeTimezone in fieldDatetimeRangeTimezone %}
+              <!-- Recurring events list. -->
+              {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
                 <p class="vads-u-margin--0">
-                  {{ datetimeRangeTimezone | deriveFormattedTimestamp }}
+                  {{ fieldDatetimeRangeTimezone | deriveFormattedTimestamp }}
                 </p>
                 <a
-                  class="vads-u-margin-bottom--2"
+                  class="recurring-event vads-u-margin-bottom--2 {% if forloop.index > 6 %}vads-u-display--none{% endif %}"
                   data-description="{{ fieldDescription }}"
-                  data-end="{{ datetimeRangeTimezone.endValue }}"
+                  data-end="{{ fieldDatetimeRangeTimezone.endValue }}"
                   data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
-                  data-start="{{ datetimeRangeTimezone.value }}"
+                  data-start="{{ fieldDatetimeRangeTimezone.value }}"
                   data-subject="{{ title }}"
                   href="{{ entityUrl.path }}"
                   rel="noreferrer noopener"
@@ -324,13 +331,20 @@
                   Add to Calendar
                 </a>
               {% endfor %}
+
+              <!-- Show all recurring events. -->
+              {% if fieldDatetimeRangeTimezone.length > 6 %}
+                <button class="usa-button-secondary" onclick="onShowAllRecurringEventsClick()" type="button">
+                  Show all times
+                </button>
+              {% endif %}
             </div>
           {% endif %}
 
-          <!-- See more events -->
+          <!-- See more events. -->
           {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
           <a
-            class="vads-c-action-link--blue vads-u-margin-bottom--2"
+            class="vads-c-action-link--blue vads-u-padding-bottom--3 vads-u-margin-top--1"
             onclick="recordEvent({ event: 'nav-secondary-button-click' });"
             href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
           >
@@ -343,6 +357,16 @@
 </div>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
+  function onShowAllRecurringEventsClick() {
+    // Derive recurring event items.
+    const recurringEventItems = document.querySelectorAll('.recurring-event');
+
+    // Show all recurring events.
+    for (let i = 0; i < recurringEventItems.length; i++) {
+      recurringEventItems[i].classList.remove('vads-u-display--none');
+    }
+  }
+
   function onExpandRecurringEventsClick() {
     var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
     var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
