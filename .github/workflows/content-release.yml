@@ -595,7 +595,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
-      ((failure() || cancelled()) && needs.deploy.result != 'success')
+      (failure() && needs.deploy.result != 'success')
     needs: [set-env, deploy]
 
     steps:
