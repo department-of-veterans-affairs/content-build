@@ -314,14 +314,14 @@
               <!-- Recurring events list. -->
               {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
                 <p class="vads-u-margin--0">
-                  {{ fieldDatetimeRangeTimezone | deriveFormattedTimestamp }}
+                  {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
                 </p>
                 <a
                   class="recurring-event vads-u-margin-bottom--2 {% if forloop.index > 6 %}vads-u-display--none{% endif %}"
                   data-description="{{ fieldDescription }}"
-                  data-end="{{ fieldDatetimeRangeTimezone.endValue }}"
+                  data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
                   data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
-                  data-start="{{ fieldDatetimeRangeTimezone.value }}"
+                  data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
                   data-subject="{{ title }}"
                   href="{{ entityUrl.path }}"
                   rel="noreferrer noopener"
