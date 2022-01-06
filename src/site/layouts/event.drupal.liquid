@@ -334,9 +334,16 @@
 
               <!-- Show all recurring events. -->
               {% if fieldDatetimeRangeTimezone.length > 6 %}
-                <button class="usa-button-secondary" onclick="onShowAllRecurringEventsClick()" type="button">
-                  Show all times
-                </button>
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-justify-content--flex-end">
+                  <button
+                    class="usa-button-secondary"
+                    id="show-all-recurring-events"
+                    onclick="onShowAllRecurringEventsClick()"
+                    type="button"
+                  >
+                    Show all times
+                  </button>
+                </div>
               {% endif %}
             </div>
           {% endif %}
@@ -345,8 +352,8 @@
           {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
           <a
             class="vads-c-action-link--blue vads-u-padding-bottom--3 vads-u-margin-top--1"
-            onclick="recordEvent({ event: 'nav-secondary-button-click' });"
             href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
+            onclick="recordEvent({ event: 'nav-secondary-button-click' });"
           >
             See more events
           </a>
@@ -362,8 +369,16 @@
     const recurringEventItems = document.querySelectorAll('.recurring-event');
 
     // Show all recurring events.
-    for (let i = 0; i < recurringEventItems.length; i++) {
-      recurringEventItems[i].classList.remove('vads-u-display--none');
+    for (let index = 0; index < recurringEventItems.length; index++) {
+      recurringEventItems[index].classList.remove('vads-u-display--none');
+    }
+
+    // Hide the show all recurring events button.
+    const showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+
+    // Hide the button if we find it.
+    if (showAllRecurringEventsButton) {
+      showAllRecurringEventsButton.classList.add('vads-u-display--none');
     }
   }
 
