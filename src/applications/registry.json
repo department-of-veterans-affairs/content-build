@@ -103,17 +103,6 @@
     }
   },
   {
-    "appName": "21-22 Appoint Veteran Service Officer as Representative",
-    "entryName": "veteran-representative",
-    "rootUrl": "/veteran-representative",
-    "template": {
-      "title": "Appoint VSO as representative",
-      "layout": "page-react.html",
-      "description": "Appoint a Veterans Service Officer to represent you.",
-      "vagovprod": false
-    }
-  },
-  {
     "appName": "Facility Locator",
     "entryName": "facilities",
     "rootUrl": "/find-locations",
@@ -1124,9 +1113,9 @@
     }
   },
   {
-    "appName": "Apply for Certificate of Eligibility",
-    "entryName": "coe",
-    "rootUrl": "/housing-assistance/home-loans/apply-for-coe-form-26-1880",
+    "appName": "Your VA home loan COE",
+    "entryName": "coe-status",
+    "rootUrl": "/housing-assistance/home-loans/check-coe-status/your-coe",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
@@ -1141,8 +1130,32 @@
           "path": "housing-assistance/home-loans"
         },
         {
-          "name": "Apply for Certificate of Eligibility Form 26-1880",
-          "path": "housing-assistance/home-loans/apply-for-coe-form-26-1880"
+          "name": "Your VA home loan COE",
+          "path": "housing-assistance/home-loans/check-coe-status"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Apply for Certificate of Eligibility",
+    "entryName": "coe",
+    "rootUrl": "/housing-assistance/home-loans/request-coe-form-26-1880",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Housing assistance",
+          "path": "housing-assistance"
+        },
+        {
+          "name": "VA-backed home loans",
+          "path": "housing-assistance/home-loans"
+        },
+        {
+          "name": "Request a VA home loan Certificate of Eligibility",
+          "path": "housing-assistance/home-loans/request-coe-form-26-1880"
         }
       ]
     }
@@ -1161,7 +1174,7 @@
     "entryName": "pre-check-in",
     "rootUrl": "/health-care/appointment-pre-check-in",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
