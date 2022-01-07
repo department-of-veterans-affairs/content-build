@@ -333,7 +333,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '{"attachments": [{"color": "#000", "blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"}}]}]}'
+          attachments: '{"attachments": [{"color": "#f2c744", "blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "Hello, Assistant to the Regional Manager Dwight! *Michael Scott* wants to know where you'd like to take the Paper Company investors to dinner tonight.\n\n *Please select a restaurant:*"}}]}]}'
           channel_id: C02AG8UF95M
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
