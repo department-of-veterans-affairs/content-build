@@ -333,7 +333,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          attachments: '{"attachments": [{"color": "#000", "blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"}}]}]}'
           channel_id: C02AG8UF95M
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
