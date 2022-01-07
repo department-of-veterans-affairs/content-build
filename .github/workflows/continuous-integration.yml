@@ -304,7 +304,6 @@ jobs:
         with:
           payload: '{"attachments": [{"color": "warning","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel-id: C02AG8UF95M # gha-build-status
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
 
       # ----------------
       # | End Notify Slack |
