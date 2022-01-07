@@ -1,57 +1,51 @@
 <div class="vads-u-display--flex vads-u-flex-direction--column">
-  {% if address.fieldUseFacilityAddress == false %}
-    {% assign address = single.fieldServiceLocationAddress.entity %}
-    {% assign useParent = false %}
-  {% else %}
-    {% assign address = fieldAddress %}
-    {% assign useParent = true %}
-  {% endif %}
-
-  {% if single.fieldServiceLocationAddress.entity.fieldClinicName %}
+  {% if serviceLocationAddress.fieldClinicName %}
     <h4>
-      {{ single.fieldServiceLocationAddress.entity.fieldClinicName }}
+      {{ serviceLocationAddress.fieldClinicName }}
     </h4>
   {% endif %}
 
-  {% if address.fieldAddress.addressLine1 and useParent == false %}
+  {% comment %}
+    Include street address only if fieldUseFacilityAddress is false
+  {% endcomment %}
+  {% if serviceLocationAddress.fieldUseFacilityAddress == false %}
+    {% if serviceLocationAddress.fieldAddress.addressLine1 %}
+      <span class="vads-u-margin-bottom--0">
+        {{ serviceLocationAddress.fieldAddress.addressLine1 }}
+      </span>
+    {% endif %}
+
+    {% if serviceLocationAddress.fieldAddress.addressLine2 %}
+      <span class="vads-u-margin-bottom--0">
+        {{ serviceLocationAddress.fieldAddress.addressLine2 }}
+      </span>
+    {% endif %}
+
+    {% if serviceLocationAddress.fieldAddress.locality %}
+      {% if serviceLocationAddress.fieldAddress.administrativeArea%}
+        {% if serviceLocationAddress.fieldAddress.postalCode %}
+          <span class="vads-u-margin-bottom--0">
+            {{ serviceLocationAddress.fieldAddress.locality }},
+            {{ serviceLocationAddress.fieldAddress.administrativeArea }}
+            {{ serviceLocationAddress.fieldAddress.postalCode }}
+          </span>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% comment %}
+    Always include building, wing, floor, etc.
+  {% endcomment %}
+  {% if serviceLocationAddress.fieldBuildingNameNumber %}
     <span class="vads-u-margin-bottom--0">
-      {{ address.fieldAddress.addressLine1 }}
-    </span>
-  {% else %}
-    <span class="vads-u-margin-bottom--0">
-      {{ fieldAddress.addressLine1 }}
+      {{ serviceLocationAddress.fieldBuildingNameNumber }}
     </span>
   {% endif %}
 
-  {% if address.fieldAddress.addressLine2 and useParent == false %}
+  {% if serviceLocationAddress.fieldWingFloorOrRoomNumber %}
     <span class="vads-u-margin-bottom--0">
-      {{ address.fieldAddress.addressLine2 }}
-    </span>
-  {% else %}
-    <span class="vads-u-margin-bottom--0">
-      {{ fieldAddress.addressLine2 }}
-    </span>
-  {% endif %}
-
-  {% if address.fieldAddress.organization and useParent == false %}
-    <span class="vads-u-margin-bottom--0">
-      {{ address.fieldAddress.organization }}
-    </span>
-  {% else %}
-    <span class="vads-u-margin-bottom--0">
-      {{ fieldAddress.organization }}
-    </span>
-  {% endif %}
-
-  {% if single.fieldServiceLocationAddress.entity.fieldBuildingNameNumber %}
-    <span class="vads-u-margin-bottom--0">
-      {{ single.fieldServiceLocationAddress.entity.fieldBuildingNameNumber }}
-    </span>
-  {% endif %}
-
-  {% if single.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
-    <span class="vads-u-margin-bottom--0">
-      {{ single.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber }}
+      {{ serviceLocationAddress.fieldWingFloorOrRoomNumber }}
     </span>
   {% endif %}
 </div>

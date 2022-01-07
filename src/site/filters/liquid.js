@@ -1297,7 +1297,17 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.topTaskUrl = (flag, path, systemName) => {
-    if (
+    if (flag === 'cerner' && path === 'refill-track-prescriptions/') {
+      return 'https://patientportal.myhealth.va.gov/pages/medications/current';
+    } else if (flag === 'cerner' && path === 'secure-messaging/') {
+      return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
+    } else if (flag === 'cerner' && path === 'schedule-view-va-appointments/') {
+      return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
+    } else if (flag === 'cerner' && path === 'get-medical-records/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
+    } else if (flag === 'cerner' && path === 'view-test-and-lab-results/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
+    } else if (
       flag === 'cerner' ||
       (systemName === 'VA Central Ohio health care' &&
         path === 'schedule-view-va-appointments/')
@@ -1390,5 +1400,22 @@ module.exports = function registerFilters() {
         ),
       }))
       .filter(facility => facility.locations.length > 0);
+  };
+
+  liquid.filters.deriveFormattedTimestamp = fieldDatetimeRangeTimezone => {
+    const startsAtUnix = fieldDatetimeRangeTimezone?.value;
+    const endsAtUnix = fieldDatetimeRangeTimezone?.endValue;
+    const timezone = fieldDatetimeRangeTimezone?.timezone;
+
+    // Derive starts at and ends at.
+    const formattedStartsAt = moment
+      .tz(startsAtUnix * 1000, timezone)
+      .format('ddd MMM D, YYYY, h:mm a');
+    const formattedEndsAt = moment
+      .tz(endsAtUnix * 1000, timezone)
+      .format('h:mm a');
+    const endsAtTimezone = moment.tz(endsAtUnix * 1000, timezone).format('z');
+
+    return `${formattedStartsAt} - ${formattedEndsAt} ${endsAtTimezone}`;
   };
 };

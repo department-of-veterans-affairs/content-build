@@ -20,7 +20,7 @@ const CountEntityTypes = `
   	) {
     count
   }
-  
+
   vetCenters: nodeQuery(
     filter: {
       conditions: [
@@ -30,7 +30,7 @@ const CountEntityTypes = `
   	) {
     count
   }
-  
+
   newsStories: nodeQuery(
     filter: {
       conditions: [
@@ -40,7 +40,7 @@ const CountEntityTypes = `
   	) {
     count
   }
-  
+
   pressReleases: nodeQuery(
     filter: {
       conditions: [
@@ -49,7 +49,7 @@ const CountEntityTypes = `
       ]}
   	) {
     count
-  }  
+  }
 
   healthCareLocalFacility: nodeQuery(
     filter: {
@@ -66,6 +66,16 @@ const CountEntityTypes = `
       conditions: [
         {field: "status", value: ["1"]},
         {field: "type", value: ["health_services_listing"]}
+      ]}
+  	) {
+    count
+  }
+
+  eventListing: nodeQuery(
+    filter: {
+      conditions: [
+        {field: "status", value: ["1"]},
+        {field: "type", value: ["event_listing"]}
       ]}
   	) {
     count
