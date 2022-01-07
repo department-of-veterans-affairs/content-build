@@ -370,7 +370,9 @@
 
     // Show all recurring events.
     for (var index = 0; index < recurringEventItems.length; index++) {
-      recurringEventItems[index].classList.remove('vads-u-display--none');
+      if (recurringEventItems[index]) {
+        recurringEventItems[index].classList.remove('vads-u-display--none');
+      }
     }
 
     // Hide the show all recurring events button.
