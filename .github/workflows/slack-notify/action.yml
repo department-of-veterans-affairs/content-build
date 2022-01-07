@@ -43,4 +43,4 @@ runs:
         SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
       with:
         payload: ${{ inputs.attachments }}
-        channel_id: ${{ inputs.channel_id }}
+        channel-id: ${{ inputs.channel_id }}
