@@ -315,11 +315,10 @@ jobs:
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          channel-id: ${{ env.CHANNEL_ID }}
 
   unit-tests:
     name: Unit Tests
