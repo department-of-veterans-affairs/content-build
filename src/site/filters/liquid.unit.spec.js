@@ -2361,6 +2361,6 @@ describe('deriveFormattedTimestamp', () => {
     // Assertions.
     expect(
       liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
-    ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. - 2:00 p.m. ET');
+    ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. - 2:00 p.m. EST');
   });
 });
