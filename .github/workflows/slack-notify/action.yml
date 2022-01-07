@@ -38,7 +38,7 @@ runs:
         env_variable_name: SLACK_BOT_TOKEN
 
     - name: Notify Slack
-      uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+      uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@5e1b52f76a13b9e79ecbc94e4fc05a395a0b79c4
       with:
         slack_app_token: ${{ env.SLACK_APP_TOKEN }}
         slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
