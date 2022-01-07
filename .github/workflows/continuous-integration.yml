@@ -310,7 +310,7 @@ jobs:
       # ----------------
 
       - name: Notify Slack about broken links
-        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        uses: slackapi/slack-github-action@v1.16.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
