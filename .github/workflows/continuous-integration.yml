@@ -296,31 +296,29 @@ jobs:
 
       - name: Notify Slack about build failures
         if: ${{ failure() }}
-        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        uses: slackapi/slack-github-action@v1.16.0
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "warning", "text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: C02AG8UF95M # gha-build-status
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          payload: '{"attachments": [{"color": "warning","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          channel-id: C02AG8UF95M # gha-build-status
 
       # ----------------
       # | End Notify Slack |
       # ----------------
 
       - name: Notify Slack about broken links
-        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        uses: slackapi/slack-github-action@v1.16.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          channel-id: ${{ env.CHANNEL_ID }}
 
   unit-tests:
     name: Unit Tests
@@ -507,7 +505,7 @@ jobs:
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          payload: '{"attachments": [{"color": "danger","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel_id: C026PD47Z19
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -953,7 +951,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          payload: '{"attachments": [{"color": "danger","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
           channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
