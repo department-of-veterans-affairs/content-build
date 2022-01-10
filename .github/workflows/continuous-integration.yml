@@ -355,7 +355,7 @@ jobs:
       - name: Publish test results
         if: ${{ always() }}
         continue-on-error: true
-        uses: mikepenz/action-junit-report@v2.8.1
+        uses: mikepenz/action-junit-report@v2.8.4
         with:
           check_name: 'Unit Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -470,7 +470,7 @@ jobs:
 
       - name: Publish test results
         if: ${{ always() }}
-        uses: mikepenz/action-junit-report@v2.8.1
+        uses: mikepenz/action-junit-report@v2.8.4
         with:
           check_name: 'Cypress Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -634,7 +634,7 @@ jobs:
 
       - name: Publish Cypress test results
         if: ${{ always() }}
-        uses: LouisBrunner/checks-action@v1.1.1
+        uses: LouisBrunner/checks-action@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Cypress Tests Summary
