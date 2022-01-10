@@ -1410,7 +1410,7 @@ module.exports = function registerFilters() {
     // Derive starts at and ends at.
     const formattedStartsAt = moment
       .tz(startsAtUnix * 1000, timezone)
-      .format('ddd MMM D, YYYY, h:mm a');
+      .format('ddd. MMM D, YYYY, h:mm a');
     const formattedEndsAt = moment
       .tz(endsAtUnix * 1000, timezone)
       .format('h:mm a');
