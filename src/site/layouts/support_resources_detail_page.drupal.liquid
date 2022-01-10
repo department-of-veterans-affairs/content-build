@@ -66,9 +66,9 @@
           <!-- How do you rate -->
           {% if buildtype == 'vagovprod' and !isPreview %}
             {% include "src/site/includes/how-do-you-rate.drupal.liquid" %}
-          {% endif %}
 
-          {% if buildtype == 'vagovstaging' or buildtype == 'localhost'%}
+          {% else %}
+
             <div data-widget-type="how-do-you-rate"></div>
           {% endif %}
 
