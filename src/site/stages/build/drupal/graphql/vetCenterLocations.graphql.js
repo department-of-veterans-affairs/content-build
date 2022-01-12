@@ -101,6 +101,12 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 addressLine2
                 organization
               }
+              fieldOfficeHours {
+                day
+                starthours
+                endhours
+                comment
+              }
             }
             ... on NodeVetCenterOutstation {
               title
