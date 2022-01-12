@@ -34,6 +34,11 @@
             {{ vetCenter.fieldAddress.administrativeArea }}
             {{ vetCenter.fieldAddress.postalCode }}
           </div>
+          <div>
+            {% include 'src/site/includes/vet_centers/hours.liquid' with
+                    vetCenterHours = vetCenter.fieldOfficeHours
+            %}
+          </div>
         </address>
         <div>
           <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"

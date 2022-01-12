@@ -47,7 +47,6 @@
                   vetCenter = mobileVetCenter
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
             {% endfor %}
-              {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = fieldOffice.entity.reverseFieldOfficeNode.entities.fieldOfficeHours %}
           {% endif %}
 
           {% include 'src/site/includes/vet_centers/nearby.liquid' with
