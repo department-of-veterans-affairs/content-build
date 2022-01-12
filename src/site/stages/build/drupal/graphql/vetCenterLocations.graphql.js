@@ -157,6 +157,12 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}
+        fieldOfficeHours {
+          starthours
+          endhours
+          day
+          comment
+        }
       }
     }
   }
