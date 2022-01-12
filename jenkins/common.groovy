@@ -45,13 +45,6 @@ def isReviewable() {
   return !IS_DEV_BRANCH && !IS_STAGING_BRANCH && !IS_PROD_BRANCH
 }
 
-def isDeployable() {
-  return (IS_DEV_BRANCH ||
-          IS_STAGING_BRANCH) &&
-    !env.CHANGE_TARGET &&
-    !currentBuild.nextBuild // if there's a later build on this job (branch), don't deploy
-}
-
 def shouldBail() {
   // abort the job if we're not on deployable branch (usually master) and there's a newer build going now
   return !IS_DEV_BRANCH &&
@@ -79,29 +72,6 @@ BUILD_NUMBER=${env.BUILD_NUMBER}
 REF=${ref}
 BUILDTIME=${buildtime}
 """
-}
-
-def slackNotify() {
-  if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH) {
-    message = "content-build ${env.BRANCH_NAME} branch CI failed. |${env.RUN_DISPLAY_URL}".stripMargin()
-    slackSend message: message,
-      color: 'danger',
-      failOnError: true
-  }
-}
-
-def slackIntegrationNotify() {
-  message = "(Testing): integration tests failed. |${env.RUN_DISPLAY_URL}".stripMargin()
-  slackSend message: message,
-    color: 'danger',
-    failOnError: true
-}
-
-def slackCachedContent(envName) {
-  message = "content-build built with cached Drupal data for ${envName}. |${env.RUN_DISPLAY_URL}".stripMargin()
-  slackSend message: message,
-    color: 'warning',
-    failOnError: true
 }
 
 def setup() {
@@ -178,14 +148,14 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // cannot be serialized by default.
     brokenLinks = null
 
-    // uploadBrokenLinksFile(brokenLinksFile, envName)
+    uploadBrokenLinksFile(brokenLinksFile, envName)
 
-    // slackSend(
-    //   message: message,
-    //   color: color,
-    //   failOnError: true,
-    //   channel: 'vfs-platform-builds'
-    // )
+    slackSend(
+      message: message,
+      color: color,
+      failOnError: true,
+      channel: 'vfs-platform-builds'
+    )
 
     if (color == 'danger') {
       throw new Exception('Broken links found')
@@ -239,64 +209,9 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   }
 }
 
-def integrationTests(dockerContainer, ref) {
-  stage("Integration") {
-    if (shouldBail()) { return }
-
-    dir("content-build") {
-      timeout(60) {
-        try {
-          if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-            parallel (
-              failFast: true,
-              cypress: {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-              }
-            )
-          } else {
-            parallel (
-              failFast: true,
-              cypress: {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-              }
-            )
-          }
-        } catch (error) {
-          // slackIntegrationNotify()
-          throw error
-        }
-      } // end timeout
-    }
-
-  }
-}
-
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node script/prearchive.js --buildtype=${envName}"
-  }
-}
-
-def prearchiveAll(dockerContainer) {
-  stage("Prearchive Optimizations") {
-    if (shouldBail()) { return }
-
-    try {
-      def builds = [:]
-
-      for (int i=0; i<VAGOV_BUILDTYPES.size(); i++) {
-        def envName = VAGOV_BUILDTYPES.get(i)
-
-        builds[envName] = {
-          prearchive(dockerContainer, envName)
-        }
-      }
-
-      parallel builds
-    } catch (error) {
-      // slackNotify()
-      throw error
-    }
   }
 }
 
@@ -308,63 +223,6 @@ def archive(dockerContainer, String ref, String envName) {
         sh "tar -C /application/build/${envName} -cf /application/build/${envName}.tar.bz2 ."
         sh "aws s3 cp /application/build/${envName}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${ref}/${envName}.tar.bz2 --acl public-read --region us-gov-west-1 --quiet"
       }
-    }
-  }
-}
-
-def archiveAll(dockerContainer, String ref) {
-  stage("Archive") {
-    if (shouldBail()) { return }
-
-    try {
-      def archives = [:]
-
-      for (int i=0; i<VAGOV_BUILDTYPES.size(); i++) {
-        def envName = VAGOV_BUILDTYPES.get(i)
-
-        archives[envName] = {
-          archive(dockerContainer, ref, envName)
-        }
-      }
-
-      parallel archives
-
-    } catch (error) {
-      // slackNotify()
-      throw error
-    }
-  }
-}
-
-def cacheDrupalContent(dockerContainer, envUsedCache) {
-  stage("Cache Drupal Content") {
-    if (!isDeployable()) { return }
-
-    try {
-      def archives = [:]
-
-      for (int i=0; i<VAGOV_BUILDTYPES.size(); i++) {
-        def envName = VAGOV_BUILDTYPES.get(i)
-
-        if (!envUsedCache[envName]) {
-          dockerContainer.inside(DOCKER_ARGS) {
-            sh "cd /application && node script/drupal-aws-cache.js --buildtype=${envName}"
-          }
-        } else {
-          slackCachedContent(envName)
-          // TODO: Read the envName-output.log and send that into the Slack message
-        }
-      }
-
-      dockerContainer.inside(DOCKER_ARGS) {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-                         usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-          sh "aws s3 sync /application/.cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet"
-        }
-      }
-    } catch (error) {
-      // slackNotify()
-      throw error
     }
   }
 }
