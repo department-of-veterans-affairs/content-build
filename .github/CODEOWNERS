@@ -11,6 +11,7 @@
 
 # Content release
 .github/workflows/content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
+.github/workflows/wait-for-cms-ready @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
 script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
 
 # Testing
