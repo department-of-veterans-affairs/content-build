@@ -217,17 +217,17 @@ jobs:
           env_variable_name: SLACK_BOT_TOKEN
 
 
-      - name: Accessibility Test Failure
-        uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ always() }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          # payload: '<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
-          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Failure
+      #   uses: slackapi/slack-github-action@v1.16.0
+      #   if: ${{ always() }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     # payload: '<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>'
+      #     payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
         uses: slackapi/slack-github-action@v1.16.0
@@ -353,7 +353,7 @@ jobs:
 
       - name: Accessibility Test Cancellation
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
+        if: ${{ always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -365,7 +365,7 @@ jobs:
 
       - name: Accessibility Test Build Failure
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ needs.build.result == 'failure' }}
+        if: ${{ always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
