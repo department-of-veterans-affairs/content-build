@@ -1205,5 +1205,14 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Mock SIP Form",
+    "entryName": "mock-sip-form",
+    "rootUrl": "/mock-sip-form",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
