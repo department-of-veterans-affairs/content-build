@@ -71,13 +71,16 @@
           {% endif %}
         </article>
 
-        <div class="last-updated usa-content">
+        {% comment %} <div class="last-updated usa-content">
             Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-        </div>
+        </div> {% endcomment %}
       </div>
+          {% include "src/site/includes/bottom-elements.drupal.liquid" %}
+
     </main>
   </div>
 </div>
+
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

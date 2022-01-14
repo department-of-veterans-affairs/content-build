@@ -117,6 +117,7 @@
     "appName": "Facility Locator",
     "entryName": "facilities",
     "rootUrl": "/find-locations",
+    "feedbackButton" : "true",
     "template": {
       "title": "Find VA Locations",
       "layout": "page-react.html",
