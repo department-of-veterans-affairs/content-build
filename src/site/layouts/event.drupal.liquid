@@ -177,99 +177,92 @@
           {% endif %}
 
           <!-- Intro text -->
-          <p class="va-introtext vads-u-margin-top--0">
-            {{ fieldDescription }}
-          </p>
-
-          <!-- When -->
-          <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
-            <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-              <strong>When:</strong>
+          {% if fieldDescription %}
+            <p class="va-introtext vads-u-margin-top--0">
+              {{ fieldDescription }}
             </p>
+          {% endif %}
 
-            <div class="vads-u-display--flex vads-u-flex-direction--column">
-              <!-- Starts at + ends at -->
-              <p class="vads-u-margin--0">
-                {{ fieldDatetimeRangeTimezone | deriveFormattedTimestamp }}
-              </p>
-
-              {% if fieldDatetimeRangeTimezone?.length > 1 %}
-                <!-- Repeats -->
-                <p class="vads-u-margin--0">
-                  <i aria-hidden="true" class="fa fa-sync vads-u-font-size--sm vads-u-margin-right--0p5"></i> Repeats
+          <div class="vads-u-display--flex vads-u-flex-direction--row">
+            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
+              <!-- When -->
+              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
+                <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                  <strong>When:</strong>
                 </p>
+
+                <div class="vads-u-display--flex vads-u-flex-direction--column">
+                  <!-- Derive most recent date -->
+                  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+
+                  <!-- Starts at + ends at -->
+                  <p class="vads-u-margin--0">
+                    {{ mostRecentDate | deriveFormattedTimestamp }}
+                  </p>
+
+                  {% if fieldDatetimeRangeTimezone.length > 1 %}
+                    <!-- Repeats -->
+                    <p class="vads-u-margin--0">
+                      <i aria-hidden="true" class="fa fa-sync vads-u-font-size--sm vads-u-margin-right--0p5"></i> Repeats
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Where -->
+              {% if fieldFacilityLocation or fieldAddress.addressLine1 %}
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
+                  <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                    <strong>Where:</strong>
+                  </p>
+
+                  {% if facility %}
+                    <p class="vads-u-margin--0">
+                      <a href="{{ facility.entityUrl.path }}">{{ facility.title }}</a>
+                    </p>
+
+                    <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+                  {% else %}
+                    {% if fieldAddress.addressLine1 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
+                    {% endif %}
+
+                    {% if fieldAddress.addressLine2 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
+                    {% endif %}
+
+                    <p class="vads-u-margin--0">
+                      {% if fieldAddress.locality %}
+                        {{ fieldAddress.locality }}
+                      {% endif %}
+
+                      {% if fieldAddress.administrativeArea %}
+                        , {{ fieldAddress.administrativeArea }}
+                      {% endif %}
+                    </p>
+                  {% endif %}
+                </div>
               {% endif %}
+
+              <!-- Cost -->
+              {% if fieldEventCost %}
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
+                  <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                    <strong>Cost:</strong>
+                  </p>
+
+                  <p class="vads-u-margin--0">
+                    {{ fieldEventCost }}
+                  </p>
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Social links -->
+            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
+              {% include "src/site/includes/social-share.drupal.liquid" %}
             </div>
           </div>
-
-          <!-- Repeating event instances -->
-          {% if fieldDatetimeRangeTimezone?.length > 1 %}
-            <button
-              class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0"
-              id="expand-recurring-events"
-              type="button"
-            >
-              Find other times for this event <i aria-hidden="true" class="fa fa-plus"></i>
-            </button>
-            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-background-color--gray-lightest vads-u-border--2px vads-u-border-color--gray-lightest">
-              {% for datetimeRangeTimezone in fieldDatetimeRangeTimezone %}
-                <a href="">
-                  {{ datetimeRangeTimezone | deriveFormattedTimestamp }}
-                </a>
-              {% endfor %}
-            </div>
-          {% endif %}
-
-          <!-- Where -->
-          {% if fieldFacilityLocation or fieldAddress.addressLine1 %}
-            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
-              <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-                <strong>Where:</strong>
-              </p>
-
-              {% if facility %}
-                <p class="vads-u-margin--0">
-                  <a href="{{ facility.entityUrl.path }}">{{ facility.title }}</a>
-                </p>
-
-                <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
-              {% else %}
-                {% if fieldAddress.addressLine1 %}
-                  <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
-                {% endif %}
-
-                {% if fieldAddress.addressLine2 %}
-                  <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
-                {% endif %}
-
-                <p class="vads-u-margin--0">
-                  {% if fieldAddress.locality %}
-                    {{ fieldAddress.locality }}
-                  {% endif %}
-
-                  {% if fieldAddress.administrativeArea %}
-                    , {{ fieldAddress.administrativeArea }}
-                  {% endif %}
-                </p>
-              {% endif %}
-            </div>
-          {% endif %}
-
-          <!-- Cost -->
-          {% if fieldEventCost %}
-            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
-              <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-                <strong>Cost:</strong>
-              </p>
-
-              <p class="vads-u-margin--0">
-                {{ fieldEventCost }}
-              </p>
-            </div>
-          {% endif %}
-
-          <!-- Social links -->
-          {% include "src/site/includes/social-share.drupal.liquid" %}
 
           <!-- CTA -->
           {% if fieldLink or fieldEventCta or fieldAdditionalInformationAbo %}
@@ -303,12 +296,64 @@
             {{ fieldBody.processed }}
           {% endif %}
 
-          <!-- See more events -->
+          <!-- Repeating event instances -->
+          {% if fieldDatetimeRangeTimezone.length > 1 %}
+            <button
+              class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0 vads-u-margin-top--1"
+              id="expand-recurring-events"
+              onclick="onExpandRecurringEventsClick()"
+              style="z-index: 1;"
+              type="button"
+            >
+              View other times for this event <i aria-hidden="true" class="fa fa-plus" id="expand-recurring-events-icon"></i>
+            </button>
+            <div
+              class="vads-u-display--none vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2"
+              id="recurring-events"
+            >
+              <!-- Recurring events list. -->
+              {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
+                <p class="vads-u-margin--0">
+                  {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
+                </p>
+                <a
+                  class="recurring-event vads-u-margin-bottom--2 {% if forloop.index > 6 %}vads-u-display--none{% endif %}"
+                  data-description="{{ fieldDescription }}"
+                  data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
+                  data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
+                  data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
+                  data-subject="{{ title }}"
+                  href="{{ entityUrl.path }}"
+                  rel="noreferrer noopener"
+                  style="max-width: 140px;"
+                >
+                  <i aria-hidden="true" class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" role="presentation"></i>
+                  Add to Calendar
+                </a>
+              {% endfor %}
+
+              <!-- Show all recurring events. -->
+              {% if fieldDatetimeRangeTimezone.length > 6 %}
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-justify-content--flex-end">
+                  <button
+                    class="usa-button-secondary"
+                    id="show-all-recurring-events"
+                    onclick="onShowAllRecurringEventsClick()"
+                    type="button"
+                  >
+                    Show all times
+                  </button>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <!-- See more events. -->
           {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
           <a
-            class="vads-c-action-link--blue vads-u-margin-bottom--2"
-            onclick="recordEvent({ event: 'nav-secondary-button-click' });"
+            class="vads-c-action-link--blue vads-u-padding-bottom--3 vads-u-margin-top--1"
             href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
+            onclick="recordEvent({ event: 'nav-secondary-button-click' });"
           >
             See more events
           </a>
@@ -317,6 +362,56 @@
     </div>
   </main>
 </div>
+
+<script nonce="**CSP_NONCE**" type="text/javascript">
+  function onShowAllRecurringEventsClick() {
+    // Derive recurring event items.
+    var recurringEventItems = document.querySelectorAll('.recurring-event');
+
+    // Show all recurring events.
+    for (var index = 0; index < recurringEventItems.length; index++) {
+      if (recurringEventItems[index]) {
+        recurringEventItems[index].classList.remove('vads-u-display--none');
+      }
+    }
+
+    // Hide the show all recurring events button.
+    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+
+    // Hide the button if we find it.
+    if (showAllRecurringEventsButton) {
+      showAllRecurringEventsButton.classList.add('vads-u-display--none');
+    }
+  }
+
+  function onExpandRecurringEventsClick() {
+    var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
+    var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
+    var recurringEvents = document.getElementById('recurring-events');
+
+    // Escape early if we are not able to find the elements.
+    if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
+      return;
+    }
+
+    // Toggle the bottom borders of the button.
+    if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
+      expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
+      expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
+    } else {
+      expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
+      expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
+    }
+
+    // Toggle the visibility of the recurring events.
+    recurringEvents.classList.toggle('vads-u-display--none');
+    recurringEvents.classList.toggle('vads-u-display--flex');
+
+    // Toggle the icon.
+    expandRecurringEventsIcon.classList.toggle('fa-plus');
+    expandRecurringEventsIcon.classList.toggle('fa-minus');
+  }
+</script>
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
