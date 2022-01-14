@@ -185,8 +185,8 @@ jobs:
   slack:
     name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
-    needs: [build]
-    if: ${{ always() }}
+    needs: [build, a11y]
+    if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure') }}
     defaults:
       run:
         working-directory: content-build
@@ -215,7 +215,7 @@ jobs:
 
       - name: Accessibility Test Failure
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ always() }}
+        if: ${{ needs.a11y.result == 'failure' }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -226,7 +226,7 @@ jobs:
 
       - name: Accessibility Test Success
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ always() }}
+        if: ${{ needs.a11y.result == 'success' }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -304,7 +304,6 @@ jobs:
 
       - name: Accessibility Test Report Slack notification
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -316,8 +315,8 @@ jobs:
   slack-failure:
     name: Notify Slack - workflow failure
     runs-on: ubuntu-latest
-    needs: [slack]
-    if: ${{ always() }}
+    needs: [build, a11y]
+    if: ${{ always() && (needs.a11y.result == 'cancelled' || needs.build.result == 'failure' || needs.build.result == 'cancelled') }}
     defaults:
       run:
         working-directory: content-build
@@ -346,7 +345,7 @@ jobs:
 
       - name: Accessibility Test Cancellation
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ always() }}
+        if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -357,7 +356,7 @@ jobs:
 
       - name: Accessibility Test Build Failure
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ always() }}
+        if: ${{ needs.build.result == 'failure' }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
