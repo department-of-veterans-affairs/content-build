@@ -198,7 +198,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "good", "text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -282,6 +282,9 @@ jobs:
           timeout_minutes: 7
         env:
           YARN_CACHE_FOLDER: .cache/yarn
+
+      - name: Wait for the CMS to be ready
+        uses: ./content-build/.github/workflows/wait-for-cms-ready
 
       - name: Export content build start time
         id: export-content-build-start-time
@@ -389,16 +392,15 @@ jobs:
         run: aws s3 cp ./logs/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
       - name: Notify Slack about broken links
-        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        uses: slackapi/slack-github-action@v1.16.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel_id: ${{ env.CHANNEL_ID }}
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Export build end time
         id: export-build-end-time
@@ -595,7 +597,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
-      ((failure() || cancelled()) && needs.deploy.result != 'success')
+      (failure() && needs.deploy.result != 'success')
     needs: [set-env, deploy]
 
     steps:
@@ -608,7 +610,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
           channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
