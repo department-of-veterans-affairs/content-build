@@ -16,7 +16,6 @@ function copyAssetsToTeamSitePaths(buildOptions, files, entryNamesDictionary) {
     'vendor.js': 'generated/vendor.entry.js',
     'polyfills.js': 'generated/polyfills.entry.js',
     'styleConsolidated.css': 'generated/styleConsolidated.css',
-    'static-pages.css': 'generated/static-pages.css',
   };
 
   for (const [fileManifestKey, teamSitePath] of Object.entries(

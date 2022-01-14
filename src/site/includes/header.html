@@ -62,7 +62,9 @@
   <!-- CSS -->
   <link rel="stylesheet" data-entry-name="style.css">
   <link rel="stylesheet" data-entry-content="content-build.css">
-  <link rel="stylesheet" data-entry-name="{{ entryname | default: 'static-pages' }}.css">
+  {% if entryname %}
+  <link rel="stylesheet" data-entry-name="{{ entryname }}.css">
+  {% endif %}
 
   <!-- Old IE -->
 
@@ -75,7 +77,9 @@
   {% endif %}
 
   <script nonce="**CSP_NONCE**" defer data-entry-name="vendor.js"></script>
-  <script nonce="**CSP_NONCE**" defer data-entry-name="{{ entryname | default: 'static-pages' }}.js"></script>
+  {% if entryname %}
+  <script nonce="**CSP_NONCE**" defer data-entry-name="{{ entryname }}.js"></script>
+  {% endif %}
 
   <!--
   We participate in the US government’s analytics program. See the data at analytics.usa.gov.
