@@ -250,6 +250,7 @@
     "**/url-parse": "^1.5.0",
     "**/path-parse": "1.0.7",
     "**/markdown-it": "^12.3.2",
+    "**/shelljs": "^0.8.5",
     "tar-fs/tar-stream/bl": "^4.0.3"
   }
 }
