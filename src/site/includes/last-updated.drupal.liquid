@@ -1,10 +1,13 @@
-<div class="usa-grid usa-grid-full">
-  <div class="usa-width-three-fourths">
-    <div class="usa-content">
-      <div class="last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
-        Last updated: <time
-          datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-      </div>
-    </div>
-  </div>
-</div>
+{% if lastupdate != empty %}
+  Last updated (not empty): <time 
+    datetime="{{lastupdate| date: '%Y-%m-%d'}}">{{ lastupdate | humanizeDate }}</time>
+{% elseif show_git_lastupdate == true %}
+  {% if git_lastupdate != empty %}
+    Last updated (showgit): <time datetime="{{git_lastupdate| date: '%Y-%m-%d'}}">{{ git_lastupdate | humanizeDate }}</time>
+  {% endif %}  
+{% elseif changed != empty %}
+  Last updated (newer): <time
+    datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>            
+{% else %}
+  No Date
+{% endif %} 
