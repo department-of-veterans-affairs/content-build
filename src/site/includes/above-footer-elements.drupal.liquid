@@ -8,7 +8,9 @@
     </div>
     <div class="vads-u-flex--1 vads-u-text-align--right">
       <span class="vads-u-text-align--right">
-        {% include "src/site/includes/medallia-feedback-button.drupal.liquid" %}
+        {% if feedbackButton != false %}
+          {% include "src/site/includes/medallia-feedback-button.drupal.liquid" %}
+        {% endif %}
       </span> 
     </div>
   </div>
