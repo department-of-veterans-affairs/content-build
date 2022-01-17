@@ -77,9 +77,7 @@
   {% endif %}
 
   <script nonce="**CSP_NONCE**" defer data-entry-name="vendor.js"></script>
-  {% if entryname %}
-  <script nonce="**CSP_NONCE**" defer data-entry-name="{{ entryname }}.js"></script>
-  {% endif %}
+  <script nonce="**CSP_NONCE**" defer data-entry-name="{{ entryname | default: 'static-pages' }}.js"></script>
 
   <!--
   We participate in the US government’s analytics program. See the data at analytics.usa.gov.
