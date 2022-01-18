@@ -71,11 +71,18 @@
         {% endif %}
       </div>
 
-      <!-- Last Updated -->
-      <div class="last-updated usa-content">
+      <div class="usa-grid usa-grid-full">
+        <div class="usa-width-three-fourths">
+          <div class="usa-content">
+  <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}   
+         </div>
+        </div>
+      </div>
+      {% comment %} <div class="last-updated usa-content">
         Last updated: <time
           datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-      </div>
+      </div> {% endcomment %}
     </div>
   </main>
 </div>
