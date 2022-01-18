@@ -208,13 +208,10 @@
                     fieldInstagram = fieldRegionPage.entity.fieldInstagram
                     fieldFlickr = fieldRegionPage.entity.fieldFlickr
           %}
-
+  <!-- Last updated & feedback button-->
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}    
         </article>
-        <div class="last-updated usa-content">
-          Last updated:
-          <time
-              datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD' }}">{{ changed | humanizeTimestamp }}</time>
-        </div>
+
       </div>
     </div>
   </main>
