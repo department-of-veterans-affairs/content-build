@@ -1205,5 +1205,14 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Enrollment Verification",
+    "entryName": "enrollment-verification",
+    "rootUrl": "/enrollment-history",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
