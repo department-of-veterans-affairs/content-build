@@ -8,7 +8,5 @@
   <script nonce="**CSP_NONCE**" data-template="includes/debug">
     window.contentData = {{ debug | json }};
     console.info('Metalsmith template generated from content:', window.contentData);
-    console.info('entityBundle: ', window.contentData.entityBundle)
-    console.info('feedbackButton: ', feedbackButton)
   </script>
 {% endif %}

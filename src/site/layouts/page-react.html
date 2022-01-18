@@ -7,6 +7,17 @@
 <div id="content">
   <main id="main" class="main">
     {% include "src/site/components/react-loader.html" %}
+      <div class="usa-grid usa-grid-full">
+        <div class="usa-width-three-fourths">
+          <div class="usa-content">
+  <!-- Last updated & feedback button-->
+    {% if window.contentData.feedbackButton != false %}
+      {% include "src/site/includes/above-footer-elements.drupal.liquid" %}   
+    {% endif %}
+      
+         </div>
+        </div>
+      </div>
   </main>
 </div>
 
