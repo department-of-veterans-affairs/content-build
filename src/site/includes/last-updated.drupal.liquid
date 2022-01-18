@@ -1,13 +1,13 @@
 {% if lastupdate != empty %}
-  Last updated (not empty): <time 
-    datetime="{{lastupdate| date: '%Y-%m-%d'}}">{{ lastupdate | humanizeDate }}</time>
+  <p>Last updated: <time datetime="{{lastupdate| date: '%Y-%m-%d'}}">{{ lastupdate | humanizeDate }}</time></p>
+    
 {% elseif show_git_lastupdate == true %}
   {% if git_lastupdate != empty %}
-    Last updated (showgit): <time datetime="{{git_lastupdate| date: '%Y-%m-%d'}}">{{ git_lastupdate | humanizeDate }}</time>
+    <p>Last updated: <time datetime="{{git_lastupdate| date: '%Y-%m-%d'}}">{{ git_lastupdate | humanizeDate }}</time></p>
+
   {% endif %}  
 {% elseif changed != empty %}
-  Last updated (newer): <time
-    datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>            
+  <p>Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time></p>            
 {% else %}
-  No Date
+  
 {% endif %} 
