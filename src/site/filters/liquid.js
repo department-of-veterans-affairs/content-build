@@ -1418,4 +1418,42 @@ module.exports = function registerFilters() {
 
     return `${formattedStartsAt} - ${formattedEndsAt} ${endsAtTimezone}`;
   };
+
+  liquid.filters.deriveVetCenterHoursKey = forloopindex => {
+    let name = '';
+    switch (forloopindex) {
+      case 0:
+        name = 'vetCenterHoursKey_01';
+        break;
+      case 1:
+        name = 'vetCenterHoursKey_02';
+        break;
+      case 2:
+        name = 'vetCenterHoursKey_03';
+        break;
+      default:
+        name = 'vetCenterHours';
+        break;
+    }
+    return name;
+  };
+
+  liquid.filters.deriveVetCenterDataWidgetTypeName = forloopindex => {
+    let name = '';
+    switch (forloopindex) {
+      case 0:
+        name = 'vet-center-hours-one';
+        break;
+      case 1:
+        name = 'vet-center-hours-two';
+        break;
+      case 2:
+        name = 'vet-center-hours-three';
+        break;
+      default:
+        name = 'vet-center-hours';
+        break;
+    }
+    return name;
+  };
 };
