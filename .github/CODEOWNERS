@@ -13,12 +13,12 @@
 .github/workflows/content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
 .github/workflows/wait-for-cms-ready @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
 script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
-
-# Testing
-src/platform/testing/e2e/ @department-of-veterans-affairs/vsp-testing
-config/cypress.json @department-of-veterans-affairs/vsp-testing
-.github/workflows/a11y.yml @department-of-veterans-affairs/vsp-testing
-
+ 
+# VSP QA Standards
+src/platform/testing/e2e/ @department-of-veterans-affairs/qa-standards
+config/cypress.json @department-of-veterans-affairs/qa-standards
+.github/workflows/a11y.yml @department-of-veterans-affairs/qa-standards
+ 
 # Shared templates
 src/site/includes @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-caregiver-frontend
 src/site/components @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/vsa-caregiver-frontend
