@@ -19,6 +19,7 @@ concurrency:
 
 env:
   CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
+  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
@@ -180,7 +181,7 @@ jobs:
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, production deploy for content-build coming up in ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes. View what coming here: <https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...${{ needs.set-env.outputs.COMMIT_SHA }}>"}}]}]}'
-          channel_id: ${{ env.CHANNEL_ID }}
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -530,7 +531,7 @@ jobs:
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Production deploy for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CHANNEL_ID }}
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
