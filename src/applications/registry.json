@@ -855,6 +855,26 @@
     }
   },
   {
+    "appName": "Coronavirus Research - Volunteer - V2",
+    "entryName": "coronavirus-research-v2",
+    "rootUrl": "/coronavirus-research/volunteer/v2",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "coronavirus-research/",
+          "name": "Participating in coronavirus research at VA"
+        },
+        {
+          "path": "coronavirus-research/volunteer/v2",
+          "name": "Sign up to volunteer"
+        }
+      ]
+    }
+  },
+  {
     "appName": "Coronavirus Research - Update",
     "entryName": "coronavirus-research-update",
     "rootUrl": "/coronavirus-research/volunteer/update",
