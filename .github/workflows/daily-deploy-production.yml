@@ -515,6 +515,15 @@ jobs:
           password: ${{ env.CALLBACK_TOKEN }}
           timeout: 10000
 
+  notify-success:
+    name: Notify Success
+    runs-on: ubuntu-latest
+    needs: deploy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Notify Slack
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
