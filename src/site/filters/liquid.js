@@ -1456,4 +1456,8 @@ module.exports = function registerFilters() {
     }
     return name;
   };
+
+  liquid.filters.featureCareWeProvide = () => {
+    return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
+  };
 };
