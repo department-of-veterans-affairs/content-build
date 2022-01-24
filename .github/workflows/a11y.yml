@@ -58,6 +58,17 @@ jobs:
         with:
           path: content-build
 
+      - name: Checkout vets-website
+        uses: actions/checkout@v2
+        with:
+          path: vets-website
+
+      - name: Get latest commit hash from vets-website
+        id: get-vets-website-hash
+        run: |
+          cd vets-website
+          echo ::set-output name=COMMIT_HASH::$(git log -n 1 --pretty=format:"%H")
+
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -88,7 +99,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=vagovprod --asset-source=${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }} --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
