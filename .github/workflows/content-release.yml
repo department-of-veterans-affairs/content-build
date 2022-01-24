@@ -14,7 +14,7 @@ on:
         options:
           - prod
   schedule:
-    - cron: '0 14-17,21-22 * * 1-5'
+    - cron: '54 13-16,20-21 * * 1-5'
     - cron: '45 18 * * 1-5'
 
 concurrency:
