@@ -1,0 +1,47 @@
+name: Content Release Test
+
+on:
+  pull_request:
+
+env:
+  CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
+  DSVA_SCHEDULE_ENABLED: true
+
+jobs:
+
+  notify-failure:
+    name: Notify Failure
+    runs-on: ubuntu-latest
+    # if: |
+    #   needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
+    #   (failure() && needs.deploy.result != 'success')
+    # needs: [set-env, deploy]
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get datadog token from ssm
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/common/datadog/api_key
+          env_variable_name: VAGOV_CMS_DATADOG_API_KEY
+
+      - name: Build JSON object
+        run: |
+          jq --null-input '{}' | \
+          jq '.title = "testing event posting"' | \
+          jq '.text = "we are testing event propagation from Github Actions to datadog' | \
+          jq '.source = "github"' | \
+          jq '.alert_type = "warning"' > event.json
+
+      - name: Send event to Datadog
+        run: |
+          curl -X POST "https://api.datadoghq.com/api/v1/events" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
+          -d @- < event.json
