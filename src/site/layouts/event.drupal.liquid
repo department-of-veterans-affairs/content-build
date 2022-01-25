@@ -148,14 +148,14 @@
             <button
               class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0 vads-u-margin-top--1"
               id="expand-recurring-events"
-              onclick="onExpandRecurringEventsClick()"
+              onclick="onExpandRecurringEventsClick();"
               style="z-index: 1;"
               type="button"
             >
               View other times for this event <i aria-hidden="true" class="fa fa-plus" id="expand-recurring-events-icon"></i>
             </button>
             <div
-              class="vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2"
+              class="vads-u-display--none vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2"
               id="recurring-events"
             >
               <!-- Recurring events list. -->
@@ -185,7 +185,7 @@
                   <button
                     class="usa-button-secondary"
                     id="show-all-recurring-events"
-                    onclick="onShowAllRecurringEventsClick()"
+                    onclick="onShowAllRecurringEventsClick();"
                     type="button"
                   >
                     Show all times
