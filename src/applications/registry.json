@@ -1205,5 +1205,14 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "All VA offices",
+    "entryName": "office-directory",
+    "rootUrl": "/office-directory",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
