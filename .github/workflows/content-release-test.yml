@@ -35,7 +35,7 @@ jobs:
         run: |
           jq --null-input '{}' | \
           jq '.title = "testing event posting"' | \
-          jq '.text = "we are testing event propagation from Github Actions to datadog' | \
+          jq '.text = "we are testing event propagation from Github Actions to datadog"' | \
           jq '.source = "github"' | \
           jq '.alert_type = "warning"' > event.json
 
