@@ -30,7 +30,7 @@
         <i class="fas fa-expand-arrows-alt"></i>
       </a>
     {% endif %}
-    {% if entity.fieldMedia.entity.image.url != empty or entity.fieldMedia.entity.image.url.length %}
+    {% if entity.fieldMedia.entity.image.url != empty %}
       <img src="{{ entity.fieldMedia.entity.image.url }}" alt="{{ entity.fieldMedia.entity.image.alt }}"/>
     {% endif %}
   </div>
