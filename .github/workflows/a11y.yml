@@ -67,7 +67,8 @@ jobs:
       - name: Get latest commit hash from vets-website
         id: get-vets-website-hash
         run: |
-          cd vets-website
+          pwd
+          ls
           echo ::set-output name=COMMIT_HASH::$(git log -n 1 --pretty=format:"%H")
 
       - name: Get Node version
