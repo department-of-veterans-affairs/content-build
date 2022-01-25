@@ -1,8 +1,9 @@
 name: Manual Review
 
-on:
-  pull_request:
-    types: [ready_for_review, synchronize, reopened, opened]
+# DO NOT MERGE
+# on:
+#   pull_request:
+#     types: [ready_for_review, synchronize, reopened, opened]
 
 env:
   BOT_NAME: va-vfs-bot
