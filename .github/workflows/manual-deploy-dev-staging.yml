@@ -17,6 +17,7 @@ on:
 
 env:
   DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
+  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
 
 jobs:
   deploy:
@@ -79,6 +80,6 @@ jobs:
         continue-on-error: true
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "#D33834", "text": "content-build manual dev/staging deploy failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
-          channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -1416,7 +1416,7 @@ module.exports = function registerFilters() {
       .format('h:mm a');
     const endsAtTimezone = moment.tz(endsAtUnix * 1000, timezone).format('z');
 
-    return `${formattedStartsAt} - ${formattedEndsAt} ${endsAtTimezone}`;
+    return `${formattedStartsAt} – ${formattedEndsAt} ${endsAtTimezone}`;
   };
 
   liquid.filters.deriveVetCenterHoursKey = forloopindex => {
@@ -1455,5 +1455,9 @@ module.exports = function registerFilters() {
         break;
     }
     return name;
+  };
+
+  liquid.filters.featureCareWeProvide = () => {
+    return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
   };
 };
