@@ -35,9 +35,16 @@ jobs:
         run: |
           jq --null-input '{}' | \
           jq '.title = "CMS content release has failed"' | \
-          jq '.text = "Content release ${{github.run_id}} failed at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.text = "Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
           jq '.date_happened = now' | \
           jq '.aggregation_key = "content release ${{github.run_id}}"' | \
+          jq '.tags[0] = "project:vagov"' | \
+          jq '.tags[1] = "repo:content-build"' | \
+          jq '.tags[2] = "workflow:content-release"' | \
+          jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.tags[4] = "build_number:${{github.run_number}}"' | \
+          jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
+          jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"'
           jq '.alert_type = "error"' > event.json
 
       - name: Send event to Datadog
