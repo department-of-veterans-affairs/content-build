@@ -159,23 +159,25 @@
             >
               <!-- Recurring events list. -->
               {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
-                <p class="vads-u-margin--0">
-                  {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
-                </p>
-                <a
-                  class="recurring-event vads-u-margin-bottom--2 {% if forloop.index > 6 %}vads-u-display--none{% endif %}"
-                  data-description="{{ fieldDescription }}"
-                  data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
-                  data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
-                  data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
-                  data-subject="{{ title }}"
-                  href="{{ entityUrl.path }}"
-                  rel="noreferrer noopener"
-                  style="max-width: 140px;"
-                >
-                  <i aria-hidden="true" class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" role="presentation"></i>
-                  Add to Calendar
-                </a>
+              <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %}">
+                  <p class="vads-u-margin--0">
+                    {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
+                  </p>
+                  <a
+                    class="recurring-event vads-u-margin-bottom--2"
+                    data-description="{{ fieldDescription }}"
+                    data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
+                    data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
+                    data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
+                    data-subject="{{ title }}"
+                    href="{{ entityUrl.path }}"
+                    rel="noreferrer noopener"
+                    style="max-width: 140px;"
+                  >
+                    <i aria-hidden="true" class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" role="presentation"></i>
+                    Add to Calendar
+                  </a>
+                </div>
               {% endfor %}
 
               <!-- Show all recurring events. -->
@@ -209,26 +211,6 @@
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
 
-function onShowAllRecurringEventsClick() {
-    // Derive recurring event items.
-    var recurringEventItems = document.querySelectorAll('.recurring-event');
-
-    // Show all recurring events.
-    for (var index = 0; index < recurringEventItems.length; index++) {
-      if (recurringEventItems[index]) {
-        recurringEventItems[index].classList.remove('vads-u-display--none');
-      }
-    }
-
-    // Hide the show all recurring events button.
-    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-
-    // Hide the button if we find it.
-    if (showAllRecurringEventsButton) {
-      showAllRecurringEventsButton.classList.add('vads-u-display--none');
-    }
-  }
-
   function onExpandRecurringEventsClick() {
     var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
     var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
@@ -256,6 +238,28 @@ function onShowAllRecurringEventsClick() {
     expandRecurringEventsIcon.classList.toggle('fa-plus');
     expandRecurringEventsIcon.classList.toggle('fa-minus');
   }
+
+  function onShowAllRecurringEventsClick() {
+    // Derive recurring event items.
+    var recurringEventItems = document.querySelectorAll('.recurring-event');
+
+    // Show all recurring events.
+    for (var index = 0; index < recurringEventItems.length; index++) {
+      if (recurringEventItems[index]) {
+        recurringEventItems[index].classList.remove('vads-u-display--none');
+      }
+    }
+
+    // Hide the show all recurring events button.
+    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+
+    // Hide the button if we find it.
+    if (showAllRecurringEventsButton) {
+      showAllRecurringEventsButton.classList.add('vads-u-display--none');
+    }
+  }
+
+
   var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
   if (expandRecurringEventsButton) {
     expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
