@@ -72,18 +72,13 @@
 
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                   {% else %}
+                  <div class="vads-u-display--flex vads-u-flex-direction--column">
                     {% if fieldAddress.addressLine1 %}
                       <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
-                      {% if fieldAddress.addressLine2 %}
-                      <p class="vads-u-margin--0">", "</p>
-                      {% endif %}
                     {% endif %}
 
                     {% if fieldAddress.addressLine2 %}
                       <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
-                      {% if fieldAddress.locality %}
-                      <p class="vads-u-margin--0">", "</p>
-                      {% endif %}
                     {% endif %}
 
                     <p class="vads-u-margin--0">
@@ -95,6 +90,7 @@
                         , {{ fieldAddress.administrativeArea }}
                       {% endif %}
                     </p>
+                  </div>
                   {% endif %}
                 </div>
               {% endif %}
