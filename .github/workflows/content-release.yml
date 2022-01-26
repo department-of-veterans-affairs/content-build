@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' }}
 
 env:
-  CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
+  CHANNEL_ID: CJT90C0UT # cms-notifications
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
@@ -601,19 +601,40 @@ jobs:
     needs: [set-env, deploy]
 
     steps:
-      - name: Checkout
-        if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
-        uses: actions/checkout@v2
-
-      - name: Notify Slack
-        if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
-        uses: ./.github/workflows/slack-notify
-        continue-on-error: true
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get datadog token from ssm
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/common/datadog/api_key
+          env_variable_name: VAGOV_CMS_DATADOG_API_KEY
+
+      - name: Build JSON object
+        run: |
+          jq --null-input '{}' | \
+          jq '.title = "VA.gov CMS content release has failed"' | \
+          jq '.text = "VA.gov Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.date_happened = now' | \
+          jq '.aggregation_key = "content release ${{github.run_id}}"' | \
+          jq '.tags[0] = "project:vagov"' | \
+          jq '.tags[1] = "repo:content-build"' | \
+          jq '.tags[2] = "workflow:content-release"' | \
+          jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
+          jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
+          jq '.alert_type = "error"' > event.json
+
+      - name: Send event to Datadog
+        run: |
+          curl -X POST "https://api.datadoghq.com/api/v1/events" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
+          -d @- < event.json
 
   stop-runner:
     name: Stop on-demand-runner
