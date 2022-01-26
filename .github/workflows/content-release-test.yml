@@ -36,7 +36,6 @@ jobs:
           jq --null-input '{}' | \
           jq '.title = "CMS content release has failed"' | \
           jq '.text = "Content release ${{github.run_id}} failed at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
-          jq '.source_type_name = "github"' | \
           jq '.date_happened = now' | \
           jq '.aggregation_key = "content release ${{github.run_id}}"' | \
           jq '.alert_type = "error"' > event.json
