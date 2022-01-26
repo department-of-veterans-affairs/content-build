@@ -159,12 +159,12 @@
             >
               <!-- Recurring events list. -->
               {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
-              <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %}">
+              <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %} vads-u-margin-bottom--2">
                   <p class="vads-u-margin--0">
                     {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
                   </p>
                   <a
-                    class="recurring-event vads-u-margin-bottom--2"
+                    class="recurring-event "
                     data-description="{{ fieldDescription }}"
                     data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
                     data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
