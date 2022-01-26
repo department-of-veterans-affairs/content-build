@@ -223,6 +223,7 @@
 
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                   {% else %}
+                  <div class="vads-u-display--flex vads-u-flex-direction--column">
                     {% if fieldAddress.addressLine1 %}
                       <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
                     {% endif %}
@@ -240,6 +241,7 @@
                         , {{ fieldAddress.administrativeArea }}
                       {% endif %}
                     </p>
+                  </div>
                   {% endif %}
                 </div>
               {% endif %}
@@ -299,7 +301,6 @@
             <button
               class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0 vads-u-margin-top--1"
               id="expand-recurring-events"
-              onclick="onExpandRecurringEventsClick()"
               style="z-index: 1;"
               type="button"
             >
@@ -311,32 +312,33 @@
             >
               <!-- Recurring events list. -->
               {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
-                <p class="vads-u-margin--0">
-                  {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
-                </p>
-                <a
-                  class="recurring-event vads-u-margin-bottom--2 {% if forloop.index > 6 %}vads-u-display--none{% endif %}"
-                  data-description="{{ fieldDescription }}"
-                  data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
-                  data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
-                  data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
-                  data-subject="{{ title }}"
-                  href="{{ entityUrl.path }}"
-                  rel="noreferrer noopener"
-                  style="max-width: 140px;"
-                >
-                  <i aria-hidden="true" class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" role="presentation"></i>
-                  Add to Calendar
-                </a>
+              <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %} vads-u-margin-bottom--2">
+                  <p class="vads-u-margin--0">
+                    {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
+                  </p>
+                  <a
+                    class="recurring-event "
+                    data-description="{{ fieldDescription }}"
+                    data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
+                    data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
+                    data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
+                    data-subject="{{ title }}"
+                    href="{{ entityUrl.path }}"
+                    rel="noreferrer noopener"
+                    style="max-width: 140px;"
+                  >
+                    <i aria-hidden="true" class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" role="presentation"></i>
+                    Add to Calendar
+                  </a>
+                </div>
               {% endfor %}
 
               <!-- Show all recurring events. -->
               {% if fieldDatetimeRangeTimezone.length > 6 %}
-                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-justify-content--flex-end">
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-justify-content--flex-end vads-u-width--full medium-screen:vads-u-width--auto">
                   <button
-                    class="usa-button-secondary"
+                    class="usa-button-secondary vads-u-width--full medium-screen:vads-u-width--auto"
                     id="show-all-recurring-events"
-                    onclick="onShowAllRecurringEventsClick()"
                     type="button"
                   >
                     Show all times
@@ -362,25 +364,6 @@
 </div>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
-  function onShowAllRecurringEventsClick() {
-    // Derive recurring event items.
-    var recurringEventItems = document.querySelectorAll('.recurring-event');
-
-    // Show all recurring events.
-    for (var index = 0; index < recurringEventItems.length; index++) {
-      if (recurringEventItems[index]) {
-        recurringEventItems[index].classList.remove('vads-u-display--none');
-      }
-    }
-
-    // Hide the show all recurring events button.
-    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-
-    // Hide the button if we find it.
-    if (showAllRecurringEventsButton) {
-      showAllRecurringEventsButton.classList.add('vads-u-display--none');
-    }
-  }
 
   function onExpandRecurringEventsClick() {
     var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
@@ -409,6 +392,40 @@
     expandRecurringEventsIcon.classList.toggle('fa-plus');
     expandRecurringEventsIcon.classList.toggle('fa-minus');
   }
+
+  function onShowAllRecurringEventsClick() {
+    // Derive recurring event items.
+    var recurringEventItems = document.querySelectorAll('.recurring-event');
+
+    // Show all recurring events.
+    for (var index = 0; index < recurringEventItems.length; index++) {
+      if (recurringEventItems[index]) {
+        recurringEventItems[index].classList.remove('vads-u-display--none');
+      }
+    }
+
+    // Hide the show all recurring events button.
+    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+
+    // Hide the button if we find it.
+    if (showAllRecurringEventsButton) {
+      showAllRecurringEventsButton.classList.add('vads-u-display--none');
+    }
+  }
+
+
+  var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
+  if (expandRecurringEventsButton) {
+    expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
+  }
+
+  var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+  if (showAllRecurringEventsButton) {
+    showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
+  }
+
+
+
 </script>
 
 {% include "src/site/includes/footer.html" %}
