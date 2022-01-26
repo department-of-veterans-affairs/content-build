@@ -34,10 +34,12 @@ jobs:
       - name: Build JSON object
         run: |
           jq --null-input '{}' | \
-          jq '.title = "testing event posting"' | \
-          jq '.text = "we are testing event propagation from Github Actions to datadog"' | \
-          jq '.source = "github"' | \
-          jq '.alert_type = "warning"' > event.json
+          jq '.title = "CMS content release has failed"' | \
+          jq '.text = "Content release ${{github.run_id}} failed at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.source_type_name = "github"' | \
+          jq '.date_happened = ${{env.NOW}}' | \
+          jq '.aggregation_key = "content release ${{github.run_id}}"' | \
+          jq '.alert_type = "error"' > event.json
 
       - name: Send event to Datadog
         run: |
