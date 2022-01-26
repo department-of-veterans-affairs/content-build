@@ -148,7 +148,6 @@
             <button
               class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0 vads-u-margin-top--1"
               id="expand-recurring-events"
-              onclick="onExpandRecurringEventsClick();"
               style="z-index: 1;"
               type="button"
             >
@@ -185,7 +184,6 @@
                   <button
                     class="usa-button-secondary"
                     id="show-all-recurring-events"
-                    onclick="onShowAllRecurringEventsClick();"
                     type="button"
                   >
                     Show all times
@@ -210,7 +208,8 @@
 </div>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
-  function onShowAllRecurringEventsClick() {
+
+function onShowAllRecurringEventsClick() {
     // Derive recurring event items.
     var recurringEventItems = document.querySelectorAll('.recurring-event');
 
@@ -257,6 +256,18 @@
     expandRecurringEventsIcon.classList.toggle('fa-plus');
     expandRecurringEventsIcon.classList.toggle('fa-minus');
   }
+  var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
+  if (expandRecurringEventsButton) {
+    expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
+  }
+
+  var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+  if (showAllRecurringEventsButton) {
+    showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
+  }
+
+
+
 </script>
 
 {% include "src/site/includes/footer.html" %}
