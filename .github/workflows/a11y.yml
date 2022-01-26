@@ -67,12 +67,6 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Modify asset download script to use dev environment
-        run: sed -i -e 's/buildOptions.buildtype/"vagovdev"/' src/site/stages/build/plugins/download-assets.js
-
-      - name: WIP
-        run: cat src/site/stages/build/plugins/download-assets.js
-
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
@@ -93,10 +87,13 @@ jobs:
       - name: Set Drupal address
         run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
-      # - name: Build
-      #   run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-      #   env:
-      #     NODE_ENV: production
+      - name: Modify asset download script to use dev environment
+        run: sed -i -e 's/buildOptions.buildtype/"vagovdev"/' src/site/stages/build/plugins/download-assets.js
+
+      - name: Build
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        env:
+          NODE_ENV: production
 
       # - name: Compress E2E test build
       #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
