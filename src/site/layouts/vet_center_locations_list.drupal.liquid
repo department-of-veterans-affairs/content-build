@@ -25,6 +25,12 @@
                 vetCenterHours = fieldOffice.entity.fieldOfficeHours
             %}
           </div>
+          {% comment %}
+          {% include "src/site/includes/image_and_static_map.liquid" with
+                  facilityMedia = fieldOffice.entity.fieldMedia
+                  facilityId = fieldOffice.entity.fieldFacilityLocatorApiId
+          %}
+          {% endcomment %}
 
           {% if fieldOffice.entity.reverseFieldOfficeNode.entities.length > 0 or fieldNearbyMobileVetCenters.length > 0 %}
             <h2 class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 vads-u-margin-bottom--2p5
