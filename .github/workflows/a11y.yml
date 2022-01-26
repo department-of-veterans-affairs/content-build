@@ -68,7 +68,7 @@ jobs:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
       - name: Modify asset download script to use dev environment
-        run: sed -ie "s/buckets[buildOptions.buildtype]/buckets['vagovdev']/g" src/site/stages/build/plugins/download-assets.js
+        run: sed -i -e "s/buckets[buildOptions.buildtype]/buckets['vagovdev']/g" src/site/stages/build/plugins/download-assets.js
 
       - name: WIP
         run: cat src/site/stages/build/plugins/download-assets.js
