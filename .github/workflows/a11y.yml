@@ -138,7 +138,7 @@ jobs:
 
       - name: Unpack build
         run: |
-          cd build
+          cd build/vagovprod
           ls
 
       # - name: Download latest vets-website master branch production deploy
