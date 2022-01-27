@@ -22,7 +22,9 @@ concurrency:
   cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' }}
 
 env:
-  CHANNEL_ID: CJT90C0UT # cms-notifications
+  CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
+  VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
+  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
@@ -199,7 +201,7 @@ jobs:
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CHANNEL_ID }}
+          channel_id: ${{ env.CMS_NOTIFICATIONS_SLACK }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -391,7 +393,7 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      - name: Notify Slack about broken links
+      - name: Notify VFS Platform Builds channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
@@ -400,7 +402,18 @@ jobs:
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel-id: ${{ env.CHANNEL_ID }}
+          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
+
+      - name: Notify content broken links channel about broken links
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
       - name: Export build end time
         id: export-build-end-time
