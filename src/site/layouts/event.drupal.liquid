@@ -180,7 +180,7 @@
             </p>
           {% endif %}
 
-          <div class="vads-u-display--flex vads-u-flex-direction--row">
+          <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
             <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
               <!-- When -->
               <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
@@ -269,14 +269,12 @@
               {% else %}
                 {% if fieldLink %}
                   <p class="vads-u-margin--0">
-                    <a href="{{ fieldLink.url.path }}">
-                      <button class="vads-u-margin--0">
-                        {% if fieldEventCta %}
-                          {{ fieldEventCta | removeUnderscores | capitalize }}
-                        {% else %}
-                          More details
-                        {% endif %}
-                      </button>
+                    <a class="vads-c-action-link--green" href="{{ fieldLink.url.path }}">
+                      {% if fieldEventCta %}
+                        {{ fieldEventCta | removeUnderscores | capitalize }}
+                      {% else %}
+                        More details
+                      {% endif %}
                     </a>
                   </p>
                 {% endif %}
@@ -348,7 +346,7 @@
           <!-- See more events. -->
           {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
           <a
-            class="vads-c-action-link--blue vads-u-padding-bottom--3 vads-u-margin-top--1"
+            class="vads-u-padding-bottom--3 vads-u-margin-top--1"
             href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
             onclick="recordEvent({ event: 'nav-secondary-button-click' });"
           >
