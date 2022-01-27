@@ -138,8 +138,8 @@ jobs:
 
       - name: Unpack build
         run: |
+          cd build
           ls
-          ls -d */
 
       # - name: Download latest vets-website master branch production deploy
       #   run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
