@@ -61,12 +61,13 @@ jobs:
       - name: Checkout vets-website
         uses: actions/checkout@v2
         with:
+          repository: department-of-veterans-affairs/vets-website
           path: vets-website
 
       - name: Get latest commit hash from vets-website
         id: get-vets-website-hash
         run: |
-          cd vets-website
+          cd ../vets-website
           echo ::set-output name=COMMIT_HASH::$(git log -n 1 --pretty=format:"%H")
 
       - name: Download latest vets-website master branch production deploy
