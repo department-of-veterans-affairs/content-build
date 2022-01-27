@@ -89,6 +89,12 @@ jobs:
       - name: Download latest vets-website master branch production deploy
         run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
+      - name: Unpack build
+        run: |
+          ls
+          tar -C . -xjf vagovprod.tar.bz2
+          ls
+
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
