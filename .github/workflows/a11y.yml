@@ -89,62 +89,69 @@ jobs:
       - name: Download latest vets-website master branch production deploy
         run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
-      - name: Unpack build
-        run: |
-          ls
-          tar -C . -xjf vagovprod.tar.bz2
-          ls
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
         with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+          name: vagovprod.tar.bz2
+          path: content-build/vagovprod.tar.bz2
+          retention-days: 1
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+      # - name: Unpack build
+      #   run: |
+      #     ls
+      #     tar -C . -xjf vagovprod.tar.bz2
+      #     ls
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 7
+      # - name: Get Node version
+      #   id: get-node-version
+      #   run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
-      - name: Set Drupal address
-        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+      # - name: Setup Node
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-        env:
-          NODE_ENV: production
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
+      # - name: Install dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+      #     max_attempts: 3
+      #     timeout_minutes: 7
+
+      # - name: Set Drupal address
+      #   run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+
+      # - name: Build
+      #   run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+      #   env:
+      #     NODE_ENV: production
 
       # - name: Download latest vets-website master branch production deploy
       #   run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
-      - name: Unpack vets-website
-        run: |
-          tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+      # - name: Unpack vets-website
+      #   run: |
+      #     tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
-      - name: Compress E2E test build
-        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+      # - name: Compress E2E test build
+      #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-build.tar.bz2
-          path: content-build/test-build.tar.bz2
-          retention-days: 1
+      # - name: Upload E2E test build artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: test-build.tar.bz2
+      #     path: content-build/test-build.tar.bz2
+      #     retention-days: 1
 
   # a11y:
   #   name: Accessibility Tests
