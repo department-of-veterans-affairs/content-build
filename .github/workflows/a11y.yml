@@ -153,11 +153,12 @@ jobs:
 
       - name: Unpack vets-website
         run: |
-          tar -C . -xjf /__w/content-build/content-build/vagovprod.tar.bz2
+          tar -C . -xjf vagovprod.tar.bz2
 
       - name: Unpack build
         run: |
-          cd build/vagovprod
+          ls
+          cd vagovprod
           ls
 
       # - name: Compress E2E test build
