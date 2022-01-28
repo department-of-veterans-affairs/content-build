@@ -22,7 +22,9 @@ concurrency:
   cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' }}
 
 env:
-  CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
+  CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
+  VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
+  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
@@ -199,7 +201,7 @@ jobs:
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CHANNEL_ID }}
+          channel_id: ${{ env.CMS_NOTIFICATIONS_SLACK }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -391,7 +393,7 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      - name: Notify Slack about broken links
+      - name: Notify VFS Platform Builds channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
@@ -400,7 +402,18 @@ jobs:
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel-id: ${{ env.CHANNEL_ID }}
+          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
+
+      - name: Notify content broken links channel about broken links
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
       - name: Export build end time
         id: export-build-end-time
@@ -461,7 +474,7 @@ jobs:
       CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.CREATE_RELEASE_END_TIME }}
 
     steps:
-      - name: Configure AWS Credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -601,19 +614,40 @@ jobs:
     needs: [set-env, deploy]
 
     steps:
-      - name: Checkout
-        if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
-        uses: actions/checkout@v2
-
-      - name: Notify Slack
-        if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
-        uses: ./.github/workflows/slack-notify
-        continue-on-error: true
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Content release for content-build has failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Datadog token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Build JSON object
+        run: |
+          jq --null-input '{}' | \
+          jq '.title = "VA.gov CMS content release has failed"' | \
+          jq '.text = "VA.gov Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.date_happened = now' | \
+          jq '.aggregation_key = "content release ${{github.run_id}}"' | \
+          jq '.tags[0] = "project:vagov"' | \
+          jq '.tags[1] = "repo:content-build"' | \
+          jq '.tags[2] = "workflow:content-release"' | \
+          jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
+          jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
+          jq '.alert_type = "error"' > event.json
+
+      - name: Send event to Datadog
+        run: |
+          curl -X POST "https://api.datadoghq.com/api/v1/events" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
+          -d @- < event.json
 
   stop-runner:
     name: Stop on-demand-runner
@@ -709,22 +743,22 @@ jobs:
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
           jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get datadog token from ssm
+      - name: Get Datadog token from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /cms/common/datadog/api_key
-          env_variable_name: VAGOV_CMS_DATADOG_API_KEY
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
       - name: Send metrics to Datadog
         run: |
           curl -X POST "https://api.datadoghq.com/api/v1/series" \
           -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
