@@ -141,12 +141,17 @@ jobs:
       #     cd build/vagovprod
       #     ls
 
-      # - name: Download latest vets-website master branch production deploy
-      #   run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
+      - name: Download latest vets-website master branch production deploy
+        run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
-      # - name: Unpack vets-website
-      #   run: |
-      #     tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+      - name: Unpack vets-website
+        run: |
+          tar -C . -xjf /__w/content-build/content-build/vagovprod.tar.bz2
+
+      - name: Unpack build
+        run: |
+          cd build/vagovprod
+          ls
 
       # - name: Compress E2E test build
       #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
