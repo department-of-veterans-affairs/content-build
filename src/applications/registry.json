@@ -1183,18 +1183,18 @@
     }
   },
   {
-    "appName": "BJ-10-10CG-Test",
-    "entryName": "bj-10-10CG-test",
-    "rootUrl": "/bj-10-10CG-test",
+    "appName": "bj-test-form",
+    "entryName": "bj-test-form",
+    "rootUrl": "/bj-test-form",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
   },
   {
-    "appName": "bj-test-form",
-    "entryName": "bj-test-form",
-    "rootUrl": "/bj-test-form",
+    "appName": "bj-custom-form",
+    "entryName": "bj-custom-form",
+    "rootUrl": "/bj-custom-form",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
