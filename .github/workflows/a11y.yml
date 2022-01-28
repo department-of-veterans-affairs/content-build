@@ -144,6 +144,13 @@ jobs:
       - name: Download latest vets-website master branch production deploy
         run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
+      # - name:  Download latest vets-website master branch production deploy
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
+      #     max_attempts: 3
+      #     retry_wait_seconds: 800
+
       - name: Unpack vets-website
         run: |
           tar -C . -xjf /__w/content-build/content-build/vagovprod.tar.bz2
