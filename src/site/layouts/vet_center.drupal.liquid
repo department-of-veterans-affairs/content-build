@@ -75,7 +75,10 @@
                       </div>
                     </div>
 
-                    {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = fieldOfficeHours %}
+                    {% include 'src/site/includes/vet_centers/hours.liquid' with
+                            vetCenterHours = fieldOfficeHours
+                            isSatelliteLocation = false
+                    %}
                   </section>
                 </div>
               </div>

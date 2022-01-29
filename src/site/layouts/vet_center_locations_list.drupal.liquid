@@ -23,6 +23,7 @@
           <div class="vads-u-margin-bottom--3">
             {% include 'src/site/includes/vet_centers/hours.liquid' with
                 vetCenterHours = fieldOffice.entity.fieldOfficeHours
+                isSatelliteLocation = true
             %}
           </div>
 
@@ -47,11 +48,9 @@
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
               %}
               <div class="vads-u-margin-bottom--3">
-                {% assign myVetCenterHoursKeys = forloop.index | deriveVetCenterHoursKey %}
-                {% assign vetCenterDataWidgetTypeName = forloop.index | deriveVetCenterDataWidgetTypeName %}
+                {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
                 {% include 'src/site/includes/vet_centers/hours_dynamic.liquid' with
                         vetCenterHoursKey = myVetCenterHoursKeys
-                        vetCenterDataWidgetTypeName = vetCenterDataWidgetTypeName
                         vetCenterHours = entityVetCenter.fieldOfficeHours
                 %}
               </div>
