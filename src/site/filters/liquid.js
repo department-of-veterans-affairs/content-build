@@ -1423,6 +1423,10 @@ module.exports = function registerFilters() {
     return `vetCenterHoursKey_${forloopindex}`;
   };
 
+  liquid.filters.isNotProd = buildtype => {
+    return buildtype !== 'vagovprod';
+  };
+
   liquid.filters.featureCareWeProvide = () => {
     return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
   };
