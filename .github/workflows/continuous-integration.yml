@@ -10,7 +10,8 @@ on:
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
-  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-support
+  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
+  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
@@ -66,7 +67,7 @@ jobs:
 
       - name: Start EC2 Runner
         id: start-ec2-runner
-        uses: machulav/ec2-github-runner@v2
+        uses: department-of-veterans-affairs/ec2-github-runner@main
         with:
           mode: start
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
@@ -74,6 +75,7 @@ jobs:
           ec2-instance-type: ${{ env.INSTANCE_TYPE }}
           subnet-id: ${{ env.SUBNET_ID }}
           security-group-id: sg-0e23b56be3798e3a1
+          max_attempts: 3
           aws-resource-tags: >
             [
               {"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"},
@@ -167,6 +169,18 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
+      - name: Get buildtime
+        id: buildtime
+        run: |
+          BUILDTIME=$(date +%s)
+          echo ::set-output name=buildtime::$BUILDTIME
+          echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+
+      - name: Wait for the CMS to be ready
+        uses: ./content-build/.github/workflows/wait-for-cms-ready
+        with:
+          base_url: ${{ matrix.drupal-address }}
+
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
@@ -176,13 +190,6 @@ jobs:
         id: get-broken-link-info
         if: ${{ matrix.buildtype == 'vagovprod' }}
         run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
-
-      - name: Get buildtime
-        id: buildtime
-        run: |
-          BUILDTIME=$(date +%s)
-          echo ::set-output name=buildtime::$BUILDTIME
-          echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Generate build details
         run: |
@@ -290,31 +297,29 @@ jobs:
 
       - name: Notify Slack about build failures
         if: ${{ failure() }}
-        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        uses: slackapi/slack-github-action@v1.16.0
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "warning", "text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
-          channel_id: C02AG8UF95M # gha-build-status
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          payload: '{"attachments": [{"color": "#FFCC00","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          channel-id: C02AG8UF95M # gha-build-status
 
       # ----------------
       # | End Notify Slack |
       # ----------------
 
       - name: Notify Slack about broken links
-        uses: department-of-veterans-affairs/vsp-github-actions/slack-socket@v1.1.0
+        uses: slackapi/slack-github-action@v1.16.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          slack_app_token: ${{ env.SLACK_APP_TOKEN }}
-          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
-          attachments: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel_id: ${{ env.PLATFORM_BUILD_CHANNEL_ID }}
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          channel-id: ${{ env.CHANNEL_ID }}
 
   unit-tests:
     name: Unit Tests
@@ -344,13 +349,14 @@ jobs:
         run: node script/app-coverage-report.js > test-results/coverage_report.txt
 
       - name: Get code coverage
+        if: ${{ always() }}
         id: code-coverage
         run: echo ::set-output name=MARKDOWN::$(node ./script/github-actions/code-coverage-format-report.js)
 
       - name: Publish test results
         if: ${{ always() }}
         continue-on-error: true
-        uses: mikepenz/action-junit-report@v2.6.0
+        uses: mikepenz/action-junit-report@v2.8.4
         with:
           check_name: 'Unit Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -465,7 +471,7 @@ jobs:
 
       - name: Publish test results
         if: ${{ always() }}
-        uses: mikepenz/action-junit-report@v2.6.0
+        uses: mikepenz/action-junit-report@v2.8.4
         with:
           check_name: 'Cypress Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -500,7 +506,7 @@ jobs:
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}]'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel_id: C026PD47Z19
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -629,7 +635,7 @@ jobs:
 
       - name: Publish Cypress test results
         if: ${{ always() }}
-        uses: LouisBrunner/checks-action@v1.1.1
+        uses: LouisBrunner/checks-action@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Cypress Tests Summary
@@ -788,9 +794,12 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, archive, cache-drupal-content, get-latest-run-number]
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
       matrix:
@@ -840,15 +849,52 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+        with:
+          base_url: https://staging.cms.va.gov
+
       - name: CMS GovDelivery callback
         if: ${{ matrix.environment == 'vagovstaging' }}
         uses: fjogeleit/http-request-action@master
-        continue-on-error: true
         with:
-          url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}
-          method: POST
+          url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          method: GET
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
+          timeout: 10000
+
+  jenkins:
+    name: Run Jenkins CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Jenkins token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/JENKINS_API_TOKEN
+          env_variable_name: JENKINS_API_TOKEN
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: ~/.cache/yarn
+          path: |
+            ~/.cache/yarn
+            node_modules
+
+      - name: Trigger Jenkins pipeline
+        run: node script/github-actions/trigger-jenkins.js
 
   stop-runner:
     name: Stop on-demand-runner
@@ -885,7 +931,7 @@ jobs:
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Stop Runner
-        uses: machulav/ec2-github-runner@v2
+        uses: department-of-veterans-affairs/ec2-github-runner@main
         with:
           mode: stop
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
@@ -906,7 +952,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          attachments: '[{"mrkdwn_in": ["text"], "color": "danger", "text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'
-          channel_id: ${{ env.DEVOPS_CHANNEL_ID }}
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

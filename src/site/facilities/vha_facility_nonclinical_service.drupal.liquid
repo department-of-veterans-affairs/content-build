@@ -1,0 +1,6 @@
+{% for location in facility.locations %}
+  {% include "src/site/paragraphs/service_location.drupal.liquid" with
+    single = location.entity
+    fieldFacilityHours = facility.fieldFacilityHours
+  %}
+{% endfor %}

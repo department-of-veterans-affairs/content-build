@@ -16,7 +16,7 @@
           {% include "src/site/components/navigation-sidebar-trigger.html" with menuId = "va-detailpage-sidebar" %}
         {% endif %}
 
-        <article class="usa-content">
+        <article class="usa-content vads-u-padding-bottom--0">
           <div data-widget-type="i18-select"></div>
           <h1>{{ title }}</h1>
           <div class="va-introtext">
@@ -66,6 +66,9 @@
               </div>
             </div>
           {%  endif %}
+          {% if lang != "en" %}
+            <va-back-to-top></va-back-to-top>
+          {% endif %}
         </article>
 
         <div class="last-updated usa-content">
@@ -73,9 +76,6 @@
         </div>
       </div>
     </main>
-    {% if lang != "en" %}
-      {% include "src/site/components/up_to_top_button.html" %}
-    {%  endif %}
   </div>
 </div>
 

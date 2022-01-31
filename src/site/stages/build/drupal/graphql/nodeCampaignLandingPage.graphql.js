@@ -1,9 +1,12 @@
+// Relative imports.
+const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const fragments = require('./fragments.graphql');
+const nodeEvent = require('./nodeEvent.graphql');
 const {
   modifiedFragment: landingPageFragment,
 } = require('./landingPage.graphql');
-const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
+// Create NodeCampaignLandingPage fragment.
 const nodeCampaignLandingPage = `
   fragment nodeCampaignLandingPage on NodeCampaignLandingPage {
     ${entityElementsFromPages}
@@ -11,24 +14,6 @@ const nodeCampaignLandingPage = `
     entityId
     entityBundle
     title
-    fieldAdministration {
-      entity {
-        ... on TaxonomyTermAdministration {
-          fieldDescription
-          fieldEmailUpdatesLinkText
-          fieldEmailUpdatesUrl
-          fieldLink {
-            uri
-            title
-          }
-          fieldSocialMediaLinks {
-            platform
-            value
-            platformValues
-          }
-        }
-      }
-    }
     fieldBenefitCategories {
       entity {
         entityType
@@ -50,207 +35,11 @@ const nodeCampaignLandingPage = `
         }
       }
     }
-    fieldClpConnectWithUs {
-      entity {
-        entityType
-        entityBundle
-        entityId
-        ... on TaxonomyTermAdministration {
-          name
-          fieldDescription
-          fieldEmailUpdatesLinkText
-          fieldEmailUpdatesUrl
-          fieldLink {
-            uri
-            title
-          }
-          fieldSocialMediaLinks {
-            platform
-            value
-            platformValues
-          }
-        }
-      }
-    }
     fieldClpEventsHeader
     fieldClpEventsPanel
     fieldClpEventsReferences {
       entity {
-        entityType
-        entityBundle
-        entityId
-        ... on NodeEvent {
-          entityUrl {
-            path
-          }
-          title
-          fieldAdditionalInformationAbo {
-            value
-            format
-            processed
-          }
-          fieldAddress {
-            langcode
-            countryCode
-            administrativeArea
-            locality
-            dependentLocality
-            postalCode
-            sortingCode
-            addressLine1
-            addressLine2
-            organization
-            givenName
-            additionalName
-            familyName
-          }
-          fieldAdministration {
-            entity {
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
-                }
-              }
-            }
-          }
-          fieldBody {
-            value
-            format
-            processed
-          }
-          fieldDatetimeRangeTimezone {
-            value
-            startTime
-            endValue
-            endTime
-            duration
-            rrule
-            rruleIndex
-            timezone
-          }
-          fieldDescription
-          fieldEventCost
-          fieldEventCta
-          fieldEventRegistrationrequired
-          fieldFacilityLocation {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on NodeHealthCareLocalFacility {
-                entityUrl {
-                  path
-                }
-                title
-              }
-            }
-          }
-          fieldFeatured
-          fieldLink {
-            uri
-            title
-          }
-          fieldListing {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on NodeEventListing {
-                fieldAdministration {
-                  entity {
-                    ... on TaxonomyTermAdministration {
-                      fieldDescription
-                      fieldEmailUpdatesLinkText
-                      fieldEmailUpdatesUrl
-                      fieldLink {
-                        uri
-                        title
-                      }
-                      fieldSocialMediaLinks {
-                        platform
-                        value
-                        platformValues
-                      }
-                    }
-                  }
-                }
-                fieldDescription
-                fieldIntroText
-                fieldOffice {
-                  entity {
-                    entityType
-                    entityBundle
-                    entityId
-                    ... on NodeOffice {
-                      fieldAdministration {
-                        entity {
-                          entityType
-                          entityBundle
-                          entityId
-                          ... on TaxonomyTermAdministration {
-                            fieldDescription
-                            fieldEmailUpdatesLinkText
-                            fieldEmailUpdatesUrl
-                            fieldLink {
-                              uri
-                              title
-                            }
-                            fieldSocialMediaLinks {
-                              platform
-                              value
-                              platformValues
-                            }
-                          }
-                        }
-                      }
-                      fieldBody {
-                        value
-                        format
-                        processed
-                      }
-                      fieldDescription
-                      fieldMetaTags
-                    }
-                  }
-                }
-              }
-            }
-          }
-          fieldLocationHumanreadable
-          fieldLocationType
-          fieldMedia {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on Media {
-                thumbnail {
-                  height
-                  width
-                  url
-                  targetId
-                  alt
-                  title
-                }
-              }
-            }
-          }
-          fieldMetaTags
-          fieldOrder
-          fieldUrlOfAnOnlineEvent {
-            uri
-            title
-          }
-        }
+        ... nodeEventWithoutBreadcrumbs
       }
     }
     fieldClpFaqCta {
@@ -299,27 +88,6 @@ const nodeCampaignLandingPage = `
           }
           fieldMediaInLibrary
           fieldMimeType
-          fieldOwner {
-            entity {
-              entityType
-              entityBundle
-              entityId
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
-                }
-              }
-            }
-          }
         }
       }
     }
@@ -438,24 +206,6 @@ const nodeCampaignLandingPage = `
               }
             }
           }
-          fieldOwner {
-            entity {
-              ... on TaxonomyTermAdministration {
-                fieldDescription
-                fieldEmailUpdatesLinkText
-                fieldEmailUpdatesUrl
-                fieldLink {
-                  uri
-                  title
-                }
-                fieldSocialMediaLinks {
-                  platform
-                  value
-                  platformValues
-                }
-              }
-            }
-          }
           fieldPromoLink {
             entity {
               entityType
@@ -518,6 +268,27 @@ const nodeCampaignLandingPage = `
         ... button
       }
     }
+    fieldRelatedOffice {
+      entity {
+        ... on NodeOffice {
+          fieldExternalLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldEmailUpdatesLink {
+            url {
+              path
+            }
+            title
+          }
+          fieldSocialMediaLinks {
+            platformValues
+          }
+        }
+      }
+    }
     fieldSecondaryCallToAction {
       entity {
         entityType
@@ -535,7 +306,7 @@ const GetCampaignLandingPages = `
   ${fragments.listOfLinkTeasers}
   ${fragments.linkTeaser}
   ${fragments.alert}
-  ${fragments.administration}
+  ${nodeEvent.fragmentWithoutBreadcrumbs}
   ${landingPageFragment}
   ${nodeCampaignLandingPage}
 
@@ -552,6 +323,7 @@ const GetCampaignLandingPages = `
     }
   }
 `;
+
 module.exports = {
   fragment: nodeCampaignLandingPage,
   GetCampaignLandingPages,

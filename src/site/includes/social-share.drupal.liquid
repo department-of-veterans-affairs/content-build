@@ -1,33 +1,32 @@
-{% comment %}
-    @TODO:
-    click analytics
-{% endcomment %}
-
 <div data-template="includes/social-share" id="va-c-social-share">
   <ul class="usa-unstyled-list" role="list">
     <li class="vads-u-margin-bottom--2p5">
+      <!-- Derive most recent date -->
+      {% assign mostRecentDate = mostRecentDate | deriveMostRecentDate %}
+
       <a
         data-description="{{ fieldDescription }}"
-        data-end="{{ fieldDatetimeRangeTimezone.endValue }}"
+        data-end="{{ mostRecentDate.endValue }}"
         data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
+        data-start="{{ mostRecentDate.value }}"
         data-subject="{{ title }}"
         href="{{ entityUrl.path }}"
-        id="add-to-calendar-link" data-start="{{fieldDatetimeRangeTimezone.value }}"
+        id="add-to-calendar-link"
       >
-        <i class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" aria-hidden="true" role="presentation" aria-hidden="true"></i>
+        <i class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" aria-hidden="true" role="presentation"></i>
         Add to Calendar
       </a>
     </li>
 
     <li class="vads-u-margin-bottom--2p5">
       <a class="va-js-share-link" href="https://www.facebook.com/sharer/sharer.php?href={{ hostUrl }}{{ entityUrl.path }}">
-        <i class="va-c-social-icon fab fa-facebook vads-u-margin-right--0p5" role="presentation" aria-hidden="true"></i>Share on Facebook
+        <i aria-hidden="true" class="va-c-social-icon fab fa-facebook vads-u-margin-right--0p5" role="presentation"></i>Share on Facebook
       </a>
     </li>
 
     <li>
       <a class="va-js-share-link" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ hostUrl }}{{ entityUrl.path }}">
-        <i class="va-c-social-icon fab fa-twitter vads-u-margin-right--0p5" role="presentation" aria-hidden="true"></i>Share on Twitter
+        <i aria-hidden="true" class="va-c-social-icon fab fa-twitter vads-u-margin-right--0p5" role="presentation"></i>Share on Twitter
       </a>
     </li>
   </ul>

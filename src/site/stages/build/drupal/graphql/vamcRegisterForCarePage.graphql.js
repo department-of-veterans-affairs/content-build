@@ -1,3 +1,5 @@
+const healthCareRegionNonClinicialServices = require('./facilities-fragments/healthCareRegionNonClinicialServices.node.graphql');
+
 const registerForCareFragment = `
   fragment registerForCareFragment on NodeVamcSystemRegisterForCare {
     title
@@ -20,23 +22,18 @@ const registerForCareFragment = `
       fetchedBundle
     }
     fieldOffice {
-      entity {
-        ... on NodeHealthCareRegionPage {
-          entityLabel
-          title
-        }
-      }
+      ${healthCareRegionNonClinicialServices}
     }
   }
 `;
 
 const GetRegisterForCarePages = `
   ${registerForCareFragment}
-  
+
 query GetRegisterForCarePages($onlyPublishedContent: Boolean!) {
     nodeQuery(limit: 500, filter: {
       conditions: [
-        { field: "status", value: ["1"], enabled: $onlyPublishedContent },      
+        { field: "status", value: ["1"], enabled: $onlyPublishedContent },
         { field: "type", value: ["vamc_system_register_for_care"] }
       ]
     }) {

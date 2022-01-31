@@ -22,3 +22,21 @@
   data-widget-type="maintenance-banner"
   role="region"
 ></div>
+
+<!-- Derive visible promo banners. -->
+{% assign visiblePromoBanners = promoBanners.entities | deriveVisibleBanners: entityUrl.path %}
+
+<!-- Promo Banners -->
+{% for promoBanner in visiblePromoBanners %}
+  <div
+    aria-label="{{ promoBanner.title | escape }}"
+    data-id="{{ promoBanner.entityId }}"
+    data-link="{{ promoBanner.fieldLink.url.path }}"
+    data-template="components/banners.drupal.liquid"
+    data-title="{{ promoBanner.title | escape }}"
+    data-type="{{ promoBanner.fieldPromoType }}"
+    data-visible="true"
+    data-widget-type="promo-banner"
+    role="region"
+  ></div>
+{% endfor %}

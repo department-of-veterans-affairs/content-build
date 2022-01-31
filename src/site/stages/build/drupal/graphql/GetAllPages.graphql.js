@@ -4,18 +4,16 @@ const healthCareRegionPage = require('./healthCareRegionPage.graphql');
 
 const alertsQuery = require('./alerts.graphql');
 const allSideNavMachineNamesQuery = require('./navigation-fragments/allSideNavMachineNames.nav.graphql');
-const bannersQuery = require('./banners.graphql');
 const bannerAlertsQuery = require('./bannerAlerts.graphql');
+const bannersQuery = require('./banners.graphql');
 const basicLandingPage = require('./nodeBasicLandingPage.graphql');
 const benefitListingPage = require('./benefitListingPage.graphql');
 const bioPage = require('./bioPage.graphql');
-const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
 const checklistPage = require('./nodeChecklist.graphql');
-const eventListingPage = require('./eventListingPage.graphql');
-const eventPage = require('./eventPage.graphql');
+const nodeEventListing = require('./nodeEventListing.graphql');
+const nodeEvent = require('./nodeEvent.graphql');
 const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav.graphql');
 const faqMultipleQaPage = require('./faqMultipleQa.graphql');
-const { ALL_FRAGMENTS } = require('./fragments.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const healthServicesListingPage = require('./healthServicesListingPage.graphql');
@@ -27,19 +25,22 @@ const mediaListImages = require('./nodeMediaListImages.graphql');
 const mediaListVideos = require('./nodeMediaListVideos.graphql');
 const menuLinksQuery = require('./navigation-fragments/menuLinks.nav.graphql');
 const newsStoryPage = require('./newStoryPage.graphql');
+const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
 const outreachAssetsQuery = require('./file-fragments/outreachAssets.graphql');
 const outreachSidebarQuery = require('./navigation-fragments/outreachSidebar.nav.graphql');
 const pressReleasePage = require('./pressReleasePage.graphql');
 const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
+const promoBannersQuery = require('./promoBanners.graphql');
 const qaPage = require('./nodeQa.graphql');
 const sidebarQuery = require('./navigation-fragments/sidebar.nav.graphql');
 const stepByStepPage = require('./nodeStepByStep.graphql');
 const storyListingPage = require('./storyListingPage.graphql');
-const taxonomiesQuery = require('./taxonomy-fragments/GetTaxonomies.graphql');
 const supportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.graphql');
+const taxonomiesQuery = require('./taxonomy-fragments/GetTaxonomies.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
 const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
+const { ALL_FRAGMENTS } = require('./fragments.graphql');
 
 // Get current feature flags
 const { cmsFeatureFlags } = global;
@@ -50,7 +51,7 @@ const {
   queryParamToBeChanged,
 } = require('./../../../../utilities/stringHelpers');
 
-const officePage = require('./officePage.graphql');
+const nodeOffice = require('./nodeOffice.graphql');
 
 let regString = '';
 queryParamToBeChanged.forEach(param => {
@@ -70,12 +71,13 @@ const buildQuery = () => {
   ${pressReleasePage.fragment}
   ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
-  ${eventPage.fragment}
-  ${officePage.fragment}
+  ${nodeEvent.fragment}
+  ${nodeEvent.fragmentWithoutBreadcrumbs}
+  ${nodeOffice.fragment}
   ${bioPage.fragment}
   ${vaFormPage.fragment}
   ${benefitListingPage.fragment}
-  ${eventListingPage.fragment}
+  ${nodeEventListing.fragment}
   ${storyListingPage.fragment}
   ${leadershipListingPage.fragment}
   ${healthServicesListingPage.fragment}
@@ -108,11 +110,11 @@ const buildQuery = () => {
         ... pressReleasePage
         ... vamcOperatingStatusAndAlerts
         ... newsStoryPage
-        ... eventPage
-        ... officePage
+        ... nodeOffice
         ... bioPage
         ... benefitListingPage
-        ... eventListingPage
+        ... nodeEventListing
+        ... nodeEvent
         ... storyListingPage
         ... leadershipListingPage
         ... pressReleasesListingPage
@@ -148,6 +150,7 @@ const buildQuery = () => {
     ${outreachSidebarQuery.partialQuery}
     ${alertsQuery.partialQuery}
     ${bannersQuery.partialQuery}
+    ${promoBannersQuery.partialQuery}
     ${bannerAlertsQuery.partialQuery}
     ${outreachAssetsQuery.partialQuery}
     ${homePageQuery.partialQuery}
