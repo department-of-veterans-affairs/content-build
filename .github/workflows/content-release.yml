@@ -474,7 +474,7 @@ jobs:
       CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.CREATE_RELEASE_END_TIME }}
 
     steps:
-      - name: Configure AWS Credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -624,8 +624,8 @@ jobs:
       - name: Get Datadog token from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /cms/common/datadog/api_key
-          env_variable_name: VAGOV_CMS_DATADOG_API_KEY
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
       - name: Build JSON object
         run: |
@@ -646,7 +646,7 @@ jobs:
         run: |
           curl -X POST "https://api.datadoghq.com/api/v1/events" \
           -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < event.json
 
   stop-runner:
@@ -743,7 +743,7 @@ jobs:
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
           jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -753,12 +753,12 @@ jobs:
       - name: Get Datadog token from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /cms/common/datadog/api_key
-          env_variable_name: VAGOV_CMS_DATADOG_API_KEY
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
       - name: Send metrics to Datadog
         run: |
           curl -X POST "https://api.datadoghq.com/api/v1/series" \
           -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ env.VAGOV_CMS_DATADOG_API_KEY }}" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json

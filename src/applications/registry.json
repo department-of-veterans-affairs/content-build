@@ -1245,5 +1245,14 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Education Inbox",
+    "entryName": "education-inbox",
+    "rootUrl": "/education-inbox",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
