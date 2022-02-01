@@ -20,7 +20,7 @@
             vetCenter = fieldOffice.entity
             vetCenterUrl = entityUrl.breadcrumb.1.url.path
           %}
-          {% if  isNotProd(buildtype) %}
+          {% if buildtype != 'vagovprod' %}
           <div class="vads-u-margin-bottom--3">
             {% include 'src/site/includes/vet_centers/hours.liquid' with
                 vetCenterHours = fieldOffice.entity.fieldOfficeHours
@@ -49,7 +49,7 @@
                   vetCenter = entityVetCenter
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
               %}
-              {% if  isNotProd(buildtype) %}
+              {% if buildtype != 'vagovprod' %}
               <div class="vads-u-margin-bottom--3">
                 {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
                 {% include 'src/site/includes/vet_centers/hours_dynamic.liquid' with
