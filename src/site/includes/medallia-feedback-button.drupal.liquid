@@ -1,5 +1,44 @@
+
+
+
+{% assign environment = buildtype %}
+  {% if environment == 'localhost' %}
+    {% assign environment = 'vagovdev' %}
+  {% endif %}
+
+{% assign surveyNumber = 0 %}
+
+{% case environment %}
+
+  {% when 'vagovprod' %}
+    {% assign surveyNumber = 17 %}
+    {% if entityUrl.path = '/search' %}
+      {% assign surveyNumber = 21 %}
+    {% endif %}
+
+  {% when 'vagovstaging' %}
+    {% assign surveyNumber = 11 %}
+    {% if entityUrl.path = '/search' %}
+      {% assign surveyNumber = 20 %}
+    {% endif %}
+    
+  {% when 'vagovdev' %}
+    {% assign surveyNumber = 11 %}
+    {% if entityUrl.path = '/search' %}
+      {% assign surveyNumber = 20 %}
+    {% endif %}
+{% endcase %}
+
+<script type="text/javascript" nonce="**CSP_NONCE**">
+console.info('surveyNumber: ', {{ surveyNumber }})
+console.info('environment:', {{ environment }})
+console.info('environment:', {{ buildtype }})
+console.info('entityUrl.path: ', {{ entityUrl.path }})
+
+</script>
+
 <button 
-  onClick="KAMPYLE_ONSITE_SDK.showForm(4)" 
+  onClick="KAMPYLE_ONSITE_SDK.showForm({{ surveyNumber }})" 
   type="button"
   class="feedback-button usa-button" 
   id="mdFormButton";>
