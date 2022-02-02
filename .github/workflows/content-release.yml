@@ -29,7 +29,7 @@ env:
 
 jobs:
   start-runner:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
@@ -89,7 +89,7 @@ jobs:
 
   set-env:
     name: Set Env Variables
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: always() && needs.wait-for-current-workflow-to-complete.result == 'success'
     needs: wait-for-current-workflow-to-complete
     outputs:
@@ -140,7 +140,7 @@ jobs:
 
   wait-for-current-workflow-to-complete:
     name: Wait for current workflow to complete
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: |
       always() &&
       ((github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule')
@@ -164,7 +164,7 @@ jobs:
 
   validate-build-status:
     name: Validate Build Status
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: always() && needs.set-env.result == 'success'
     needs: set-env
 
@@ -188,7 +188,7 @@ jobs:
 
   notify-start:
     name: Notify Start
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: set-env
     if: ${{ always() && needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
 
@@ -467,7 +467,7 @@ jobs:
 
   create-release:
     name: Create Release
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [set-env, archive]
     if: ${{ always() && needs.archive.result == 'success' }}
     outputs:
@@ -607,7 +607,7 @@ jobs:
 
   notify-failure:
     name: Notify Failure
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: |
       needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
       (failure() && needs.deploy.result != 'success')
@@ -652,7 +652,7 @@ jobs:
   stop-runner:
     name: Stop on-demand-runner
     needs: [archive, start-runner]
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
@@ -681,7 +681,7 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs:
       - set-env
       - build
