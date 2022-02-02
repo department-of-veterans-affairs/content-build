@@ -19,7 +19,7 @@ function getSurveyNumber(url) {
     let pathurl = trimSlash(url)
 
     if (vagovstagingsurveys[pathurl]) {
-        console.log('returning in getSurveyNumberhelper: ', stagingsurveys[pathurl]);
+        console.log('returning in getSurveyNumberhelper: ', vagovstagingsurveys[pathurl]);
         return vagovstagingsurveys[pathurl];
     } else {
         console.log('not on /search. pathurl is: ', pathurl);
@@ -31,7 +31,6 @@ const vagovstagingsurveys = {
     "/search": 20
 }
 
-// const pathname = trimEnd(window.location.pathname, '/')
 function trimSlash(url) {
     if (url.charAt(url.length - 1) === '/') {
       console.log('trimmed slash')  
@@ -41,18 +40,3 @@ function trimSlash(url) {
         return url;
     }
 }
-
-// console.log('this is the vagovstaging js file:', window.location.pathname)
-  
-// function getSurveyNumber() {
-//   var pathname = window.location.pathname;
-//     if (pathname === '/search/') {
-//       console.log('returning survey: 20')
-//     return 20
-//     } else {
-//         console.log('returning survey: 11')
-//     return 11
-//   }
-// }
-
-// console.log('getSurveyNumber():', getSurveyNumber())
