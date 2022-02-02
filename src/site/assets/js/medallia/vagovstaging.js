@@ -16,15 +16,16 @@
   }
 
 function getSurveyNumber(url) {
-    let pathurl = trimSlash(url)
+    // let pathurl = trimSlash(url)
 
-    if (vagovstagingsurveys[pathurl]) {
-        console.log('returning in getSurveyNumberhelper: ', vagovstagingsurveys[pathurl]);
-        return vagovstagingsurveys[pathurl];
-    } else {
-        console.log('not on /search. pathurl is: ', pathurl);
-        return 11;
-    }
+    // if (vagovstagingsurveys[pathurl]) {
+    //     console.log('returning in getSurveyNumberhelper: ', vagovstagingsurveys[pathurl]);
+    //     return vagovstagingsurveys[pathurl];
+    // } else {
+    //     console.log('not on /search. pathurl is: ', pathurl);
+    //     return 11;
+    // }
+    return 20
 }
 
 const vagovstagingsurveys = {
