@@ -29,10 +29,10 @@
     {% endif %}
 {% endcase %}
 
-<script type="text/javascript" nonce="**CSP_NONCE**">
+<script type="text/javascript" nonce="**CSP_NONCE**" data-template="includes/debug">
 console.info('surveyNumber: ', {{ surveyNumber }})
 console.info('environment:', {{ environment }})
-console.info('environment:', {{ buildtype }})
+console.info('buildtype:', {{ buildtype }})
 console.info('entityUrl.path: ', {{ entityUrl.path }})
 
 </script>
@@ -42,5 +42,5 @@ console.info('entityUrl.path: ', {{ entityUrl.path }})
   type="button"
   class="feedback-button usa-button" 
   id="mdFormButton";>
-  Feedback
+  Feedback {{ surveyNumber }}
 </button>

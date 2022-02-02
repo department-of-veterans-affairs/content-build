@@ -7,9 +7,12 @@
 
   function onsiteLoaded() {
     // load the form and store status (true/false) in neb_status
-    var neb_status = KAMPYLE_ONSITE_SDK.loadForm(getSurveyNumber(window.location.pathname));
+    var neb_status = KAMPYLE_ONSITE_SDK.loadForm(20);
+
+    // var neb_status = KAMPYLE_ONSITE_SDK.loadForm(getSurveyNumber(window.location.pathname));
       if (neb_status === true) {
-        console.log(`the form has loaded ${getSurveyNumber(window.location.pathname)} form`)
+        // console.log(`the form has loaded ${getSurveyNumber(window.location.pathname)} form`)
+          console.log(the form has loaded form 20)
       // if form is loaded then decide what to do  
       // your code goes here
     }
