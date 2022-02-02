@@ -688,7 +688,10 @@ jobs:
       - archive
       - create-release
       - deploy
-    if: ${{ !cancelled() }}
+    if: |
+      always() &&
+      needs.build.result == 'success' &&
+      needs.create-release.result == 'success'
     env:
       METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
