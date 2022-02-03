@@ -6,7 +6,7 @@ on:
 jobs:
   sh-runner-test:
     name: selfhosted
-    runs-on: [self-hosted,linux,x64]
+    runs-on: [self-hosted, linux, x64]
     steps:
       - name: testing
         run: echo "hello"
