@@ -22,18 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       vagovdev: ${{ steps.start-ec2-runner-name.outputs.vagovdev }}
-      vagovstaging: ${{ steps.start-ec2-runner-name.outputs.vagovstaging }}
-      vagovprod: ${{ steps.start-ec2-runner-name.outputs.vagovprod }}
       vagovdev-id: ${{ steps.start-ec2-runner-id.outputs.vagovdev }}
-      vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
-      vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
       INSTANCE_TYPE: c5.4xlarge
 
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovdev]
 
     steps:
       - name: Configure AWS Credentials
@@ -116,14 +112,10 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovdev]
         include:
           - buildtype: vagovdev
             drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-          - buildtype: vagovstaging
-            drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-          - buildtype: vagovprod
-            drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
     steps:
       - name: Checkout vagov-content
