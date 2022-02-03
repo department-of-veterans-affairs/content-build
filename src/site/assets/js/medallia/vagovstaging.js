@@ -1,46 +1,30 @@
   
-  if (window.KAMPYLE_ONSITE_SDK) {
-    onsiteLoaded();
-  } else {
-    window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
-  }
-
-  function onsiteLoaded() {
-    // load the form and store status (true/false) in neb_status
-    var neb_status = KAMPYLE_ONSITE_SDK.loadForm(20);
-
-    // var neb_status = KAMPYLE_ONSITE_SDK.loadForm(getSurveyNumber(window.location.pathname));
-      if (neb_status === true) {
-        // console.log(`the form has loaded ${getSurveyNumber(window.location.pathname)} form`)
-          console.log(the form has loaded form 20)
-      // if form is loaded then decide what to do  
-      // your code goes here
+(function() {
+    if (window.KAMPYLE_ONSITE_SDK) {
+        onsiteLoaded();
+    } else {
+        window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
     }
+})()
+
+function onsiteLoaded() {
+  const surveyNumber = getSurveyNumber(window.location.pathname);
+  // load the form and store status (true/false) in neb_status
+  var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
+    if (neb_status === true) {
+      console.log(`the form has loaded ${getSurveyNumber(surveyNumber)} form`)
   }
-
-function getSurveyNumber(url) {
-    // let pathurl = trimSlash(url)
-
-    // if (vagovstagingsurveys[pathurl]) {
-    //     console.log('returning in getSurveyNumberhelper: ', vagovstagingsurveys[pathurl]);
-    //     return vagovstagingsurveys[pathurl];
-    // } else {
-    //     console.log('not on /search. pathurl is: ', pathurl);
-    //     return 11;
-    // }
-    return 20
 }
-
+  
 const vagovstagingsurveys = {
     "/search": 20
 }
 
+function getSurveyNumber (url) {
+    let pathurl = trimSlash(url)
+    return vagovstagingsurveys[pathurl] ? vagovstagingsurveys[pathurl] : 11;
+}
+
 function trimSlash(url) {
-    if (url.charAt(url.length - 1) === '/') {
-      console.log('trimmed slash')  
-      return url.slice(0,url.length-1);
-    } else {
-        console.log('did not trim slash')
-        return url;
-    }
+    return url.charAt(url.length - 1) === '/' ? url.slice(0, url.length - 1) : url;
 }
