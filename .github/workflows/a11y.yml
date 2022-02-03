@@ -38,7 +38,7 @@ jobs:
 
       - name: Notify Slack
         if: ${{ always() }}
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -237,7 +237,7 @@ jobs:
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Accessibility Test Failure
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         if: ${{ needs.a11y.result == 'failure' }}
         continue-on-error: true
         env:
@@ -248,7 +248,7 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Success
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         if: ${{ needs.a11y.result == 'success' }}
         continue-on-error: true
         env:
@@ -326,7 +326,7 @@ jobs:
         run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
 
       - name: Accessibility Test Report Slack notification
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -367,7 +367,7 @@ jobs:
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Accessibility Test Cancellation
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
         continue-on-error: true
         env:
@@ -378,7 +378,7 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Build Failure
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         if: ${{ needs.build.result == 'failure' }}
         continue-on-error: true
         env:
