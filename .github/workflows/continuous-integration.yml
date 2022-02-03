@@ -28,7 +28,7 @@ jobs:
       vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
       vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
-      INSTANCE_TYPE: c5.9xlarge
+      INSTANCE_TYPE: c5.4xlarge
 
     strategy:
       fail-fast: true
@@ -145,6 +145,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Install tar
+        run: sudo apt install tar
 
       - name: Cache dependencies
         id: cache-dependencies
