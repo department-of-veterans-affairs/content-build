@@ -482,6 +482,8 @@ jobs:
     if: ${{ always() && needs.archive.result == 'success' }}
     outputs:
       CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.CREATE_RELEASE_END_TIME }}
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Configure AWS credentials
@@ -527,11 +529,11 @@ jobs:
         with:
           timeout_seconds: 30
           max_attempts: 3
-          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
+          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push --no-verify origin v0.0.${{ env.new_patch }}
           new_command_on_retry: |
             next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
             echo "new_patch=$next_patch" >> $GITHUB_ENV
-            git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push origin v0.0.$next_patch
+            git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push --no-verify origin v0.0.$next_patch
 
       - name: Create release
         uses: actions/create-release@v1
@@ -622,6 +624,8 @@ jobs:
       needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
       (failure() && needs.deploy.result != 'success')
     needs: [set-env, deploy]
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Configure AWS Credentials
@@ -666,6 +670,7 @@ jobs:
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Configure AWS Credentials
@@ -703,6 +708,7 @@ jobs:
       needs.deploy.result == 'success'
     env:
       METRIC_NAMESPACE: dsva_vagov.content_build
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
     steps:
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
