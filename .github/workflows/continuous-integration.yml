@@ -28,7 +28,7 @@ jobs:
       vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
       vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
-      INSTANCE_TYPE: c5.4xlarge
+      INSTANCE_TYPE: c5.9xlarge
 
     strategy:
       fail-fast: true
