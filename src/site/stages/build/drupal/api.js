@@ -96,7 +96,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         body: JSON.stringify(args),
       });
 
-      if (response.okqq) {
+      if (response.ok) {
         return response.text().then(data => {
           try {
             return JSON.parse(data);
