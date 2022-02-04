@@ -1,18 +1,17 @@
   
-(function() {
-    if (window.KAMPYLE_ONSITE_SDK) {
-        onsiteLoaded();
-    } else {
-        window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
-    }
+(function () {
+  if (window.KAMPYLE_ONSITE_SDK) {
+      onsiteLoaded();
+  } else {
+      window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
+  }
 })()
 
 function onsiteLoaded() {
   const surveyNumber = getSurveyNumber(window.location.pathname);
-  // load the form and store status (true/false) in neb_status
   var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
     if (neb_status === true) {
-      console.log(`the form has loaded ${getSurveyNumber(surveyNumber)} form`)
+      console.log(`the form has loaded survey ${getSurveyNumber(surveyNumber)} `)
   }
 }
   
@@ -21,8 +20,8 @@ const vagovstagingsurveys = {
 }
 
 function getSurveyNumber (url) {
-    let pathurl = trimSlash(url)
-    return vagovstagingsurveys[pathurl] ? vagovstagingsurveys[pathurl] : 11;
+    let pathUrl = trimSlash(url)
+    return vagovstagingsurveys[pathUrl] ? vagovstagingsurveys[pathUrl] : 11;
 }
 
 function trimSlash(url) {

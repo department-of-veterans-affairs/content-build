@@ -1,6 +1,3 @@
-
-
-
 {% assign environment = buildtype %}
   {% if environment == 'localhost' %}
     {% assign environment = 'vagovdev' %}
@@ -9,7 +6,6 @@
 {% assign surveyNumber = 0 %}
 
 {% case environment %}
-
   {% when 'vagovprod' %}
     {% assign surveyNumber = 17 %}
     {% if entityUrl.path = '/search' %}
@@ -29,18 +25,10 @@
     {% endif %}
 {% endcase %}
 
-<script type="text/javascript" nonce="**CSP_NONCE**" data-template="includes/debug">
-console.info('surveyNumber: ', {{ surveyNumber }})
-console.info('environment:', {{ environment }})
-console.info('buildtype:', {{ buildtype }})
-console.info('entityUrl.path: ', {{ entityUrl.path }})
-
-</script>
-
 <button 
   onClick="KAMPYLE_ONSITE_SDK.showForm({{ surveyNumber }})" 
   type="button"
   class="feedback-button usa-button" 
-  id="mdFormButton";>
-  Feedback {{ surveyNumber }}
+  id="mdFormButton">
+  Feedback
 </button>

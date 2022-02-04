@@ -47,47 +47,31 @@
 })(window);
 
 
-if (window.KAMPYLE_ONSITE_SDK) {
-  //Check Medallia code has been loaded 
-  onsiteLoaded();
-  //your custom function
-} else {
-  // On the neb_OnsiteLoaded event call onsiteLoaded function 
-  window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
-}
-
-function onsiteLoaded() {
-  // load the form and store status (true/false) in neb_status
-  var neb_status = KAMPYLE_ONSITE_SDK.loadForm(getSurveyNumber());
-  // if (neb_status === true) {
-    // if form is loaded then decide what to do  
-    // your code goes here
-  // }
-}
-//  show medallia
-if (window.KAMPYLE_ONSITE_SDK) {
-  //If Medallia code has been loaded z
-  onsiteLoaded(); //your custom function
-} else {
-  // On the neb_OnsiteLoaded event, call onsiteLoaded function
-  window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
-}
-
-function onsiteLoaded() {
-  // load the form and store status (true/false) in neb_status
-  var neb_status = KAMPYLE_ONSITE_SDK.loadForm(getSurveyNumber());
-  // If form is loaded
-  if (neb_status === true) {
-    // set CSS attribute display to inherit so button can be seen
-    document.getElementById("mdFormButton").style.display = "inherit"
-  }
-}
-
-function getSurveyNumber() {
-  var pathname = window.location.pathname;
-  if (pathname === '/search/' || pathname === '/search/') {
-    return 21
+(function () {
+  if (window.KAMPYLE_ONSITE_SDK) {
+      onsiteLoaded();
   } else {
-    return 17
+      window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
   }
+})()
+
+function onsiteLoaded() {
+  const surveyNumber = getSurveyNumber(window.location.pathname);
+  var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
+    if (neb_status === true) {
+      console.log(`the form has loaded ${getSurveyNumber(surveyNumber)} form`)
+  }
+}
+
+const vagovprodsurveys = {
+    "/search": 21
+}
+
+function getSurveyNumber (url) {
+    let pathUrl = trimSlash(url)
+    return vagovprodsurveys[pathUrl] ? vagovprodsurveys[pathUrl] : 17;
+}
+
+function trimSlash(url) {
+    return url.charAt(url.length - 1) === '/' ? url.slice(0, url.length - 1) : url;
 }
