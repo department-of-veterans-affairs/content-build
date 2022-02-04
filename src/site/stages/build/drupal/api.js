@@ -161,6 +161,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         const [queryName, query] = individualQueries.pop();
 
         const startTime = moment();
+        const allowedRetries = 3;
         const json = await pRetry(
           () =>
             this.query({
@@ -170,7 +171,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
                 onlyPublishedContent,
               },
             }),
-          3,
+          allowedRetries,
         );
 
         if (json.errors) {
