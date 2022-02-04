@@ -1,0 +1,14 @@
+<div class="usa-width-one-third inline-table-helper vads-u-order--first small-screen:vads-u-order--initial
+                vads-u-margin-bottom--2 vads-u-margin-left--auto facility">
+  {% capture onclick %}
+    recordEvent({ event: 'image-click', 'facility-name': '{{ entityLabel }}'});
+  {% endcapture %}
+  {% include src/site/components/image.drupal.liquid with
+      class = "facility-img"
+      image = fieldMedia.entity.image
+      onclick = onclick
+  %}
+  <div data-widget-type="facility-map-satellite-main-office"
+       data-facility="{{ facilityId }}">
+  </div>
+</div>
