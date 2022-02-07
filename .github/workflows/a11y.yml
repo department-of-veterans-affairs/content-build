@@ -158,9 +158,13 @@ jobs:
 
       - name: Unpack build
         run: |
+
+          mkdir -p build/vagovprod/generated
           ls
-          cd vatest
+          cp -a /vatest/. /build/vagovprod/generated
+          cd build/vagovprod/generated
           ls
+
 
       # - name: Compress E2E test build
       #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
