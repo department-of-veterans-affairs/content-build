@@ -161,7 +161,7 @@ jobs:
 
           mkdir -p build/vagovprod/generated
           ls
-          cp -a /vatest/. /build/vagovprod/generated
+          cp -a vatest/. build/vagovprod/generated
           cd build/vagovprod/generated
           ls
 
