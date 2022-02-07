@@ -30,6 +30,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+
       - name: Get AWS IAM role
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
@@ -45,12 +51,6 @@ jobs:
           role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
-
-      - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
 
       # - name: Notify Slack
       #   if: ${{ always() }}
@@ -89,19 +89,6 @@ jobs:
       - name: Download latest vets-website master branch production deploy
         run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
-      - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: vagovprod.tar.bz2
-          path: content-build/vagovprod.tar.bz2
-          retention-days: 1
-
-      - name: Unpack build
-        run: |
-          ls
-          tar -C . -xjf vagovprod.tar.bz2
-          ls
-
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -135,14 +122,6 @@ jobs:
         run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
-
-      - name: Unpack build
-        run: |
-          cd build/vagovprod
-          ls
-
-      - name: Download latest vets-website master branch production deploy
-        run: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
       - name:  Download latest vets-website master branch production deploy
         uses: nick-invision/retry@v2
