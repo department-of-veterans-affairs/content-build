@@ -1,12 +1,10 @@
 
 {% if lastupdate != empty %}
   <div class="last-updated usa-content">
-      <div class="vads-u-flex--1 site-grid-example">
-        <p>
-          Last updated:
-          <time datetime="{{lastupdate| date: '%Y-%m-%d'}}">{{ lastupdate | humanizeDate }}</time>
-        </p>
-      </div>
+    <p>
+      Last updated:
+      <time datetime="{{lastupdate| date: '%Y-%m-%d'}}">{{ lastupdate | humanizeDate }}</time>
+    </p>
   </div>
 {% endif %}
 
