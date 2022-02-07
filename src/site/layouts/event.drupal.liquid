@@ -148,8 +148,8 @@
 
             {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
 
-            {% if fieldUrlOfAnOnlineEvent %}
-            <a onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ fieldUrlOfAnOnlineEvent }}">
+            {% if fieldUrlOfAnOnlineEvent.uri %}
+            <a onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ fieldUrlOfAnOnlineEvent.uri }}">
               Link to event
             </a>
             {% endif %}
