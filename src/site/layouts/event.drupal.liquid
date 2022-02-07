@@ -1,6 +1,6 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true deriveBreadcrumbsFromUrl = true replaceLastItem = true %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" with deriveBreadcrumbsFromUrl = true replaceLastItem = true %}
 
 <div class="interior" id="content" data-template="layouts/event.drupal.liquid">
   <main class="va-l-detail-page va-facility-page">
@@ -147,6 +147,12 @@
             </div>
 
             {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
+
+            {% if fieldUrlOfAnOnlineEvent %}
+            <a onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ fieldUrlOfAnOnlineEvent }}">
+              Link to event
+            </a>
+            {% endif %}
 
             <a onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}">
               See all events
