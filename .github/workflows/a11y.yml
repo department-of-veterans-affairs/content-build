@@ -154,7 +154,7 @@ jobs:
       - name: Unpack vets-website
         run: |
           mkdir -p vatest
-          tar -C /vatest -xjf vagovprod.tar.bz2
+          tar -C vatest -xjf vagovprod.tar.bz2
 
       - name: Unpack build
         run: |
