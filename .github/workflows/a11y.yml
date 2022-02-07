@@ -121,12 +121,8 @@ jobs:
           NODE_ENV: production
 
       - name:  Download latest vets-website master branch production deploy
-        uses: nick-invision/retry@v2
-        with:
-          command: aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
-          max_attempts: 3
-          retry_wait_seconds: 800
-          timeout_minutes: 3
+        run: |
+          aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
       - name: Unpack vets-website
         run: |
@@ -137,7 +133,7 @@ jobs:
         run: |
           rm -rf build/vagovprod/generated
           mkdir -p build/vagovprod/generated
-          cp -a vatest/generated/. build/vagovprod/generated
+          yes | cp -arf vatest/* build/vagovprod
 
       - name: Compress E2E test build
         run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
