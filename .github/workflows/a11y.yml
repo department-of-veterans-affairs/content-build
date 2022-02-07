@@ -159,7 +159,7 @@ jobs:
       - name: Unpack build
         run: |
           ls
-          cd vagovprod
+          cd vatest
           ls
 
       # - name: Compress E2E test build
