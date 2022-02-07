@@ -169,12 +169,12 @@ jobs:
       # - name: Compress E2E test build
       #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      # - name: Upload E2E test build artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: test-build.tar.bz2
-      #     path: content-build/test-build.tar.bz2
-      #     retention-days: 1
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vagovprod.tar.bz2
+          path: content-build/vagovprod.tar.bz2
+          retention-days: 1
 
   # a11y:
   #   name: Accessibility Tests
