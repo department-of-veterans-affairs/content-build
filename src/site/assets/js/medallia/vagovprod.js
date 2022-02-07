@@ -59,7 +59,7 @@ function onsiteLoaded() {
   const surveyNumber = getSurveyNumber(window.location.pathname);
   var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
     if (neb_status === true) {
-      console.log(`the form has loaded ${getSurveyNumber(surveyNumber)} form`)
+      console.log(`survey number ${surveyNumber} has loaded`)
   }
 }
 

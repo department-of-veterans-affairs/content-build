@@ -1,13 +1,13 @@
 // Add CSS and imports here.
 .feedback-button {
-  height: 44px;
-  width: 133px;
+  background-color: var(color-primary);
   font-size: 1.6rem;
   font-weight: 700;
   line-height: 1;
   margin-right: 0;
   margin-top: 0.5rem;
-  background-color: var(color-primary);
+  height: 44px;
+  width: 133px;
 }
 
 .above-footer-elements-container {

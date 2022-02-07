@@ -11,7 +11,7 @@ function onsiteLoaded() {
   const surveyNumber = getSurveyNumber(window.location.pathname);
   var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
     if (neb_status === true) {
-      console.log(`the form has loaded survey ${getSurveyNumber(surveyNumber)} `)
+      console.log(`survey number ${surveyNumber} has loaded`)
   }
 }
   
@@ -20,10 +20,11 @@ const vagovstagingsurveys = {
 }
 
 function getSurveyNumber (url) {
-    let pathUrl = trimSlash(url)
+    let pathUrl = trimSlash(url.toString())
     return vagovstagingsurveys[pathUrl] ? vagovstagingsurveys[pathUrl] : 11;
 }
 
 function trimSlash(url) {
+    if (url.length === 0) return 
     return url.charAt(url.length - 1) === '/' ? url.slice(0, url.length - 1) : url;
 }
