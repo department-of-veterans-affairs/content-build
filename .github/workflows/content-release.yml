@@ -29,7 +29,7 @@ env:
 
 jobs:
   start-runner:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
@@ -89,7 +89,7 @@ jobs:
 
   set-env:
     name: Set Env Variables
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: always() && needs.wait-for-current-workflow-to-complete.result == 'success'
     needs: wait-for-current-workflow-to-complete
     outputs:
@@ -140,10 +140,14 @@ jobs:
 
   wait-for-current-workflow-to-complete:
     name: Wait for current workflow to complete
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: |
       always() &&
       ((github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule')
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -164,9 +168,12 @@ jobs:
 
   validate-build-status:
     name: Validate Build Status
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: always() && needs.set-env.result == 'success'
     needs: set-env
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout
@@ -188,9 +195,12 @@ jobs:
 
   notify-start:
     name: Notify Start
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: set-env
     if: ${{ always() && needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout
@@ -467,11 +477,13 @@ jobs:
 
   create-release:
     name: Create Release
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [set-env, archive]
     if: ${{ always() && needs.archive.result == 'success' }}
     outputs:
       CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.CREATE_RELEASE_END_TIME }}
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Configure AWS credentials
@@ -517,11 +529,11 @@ jobs:
         with:
           timeout_seconds: 30
           max_attempts: 3
-          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
+          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push --no-verify origin v0.0.${{ env.new_patch }}
           new_command_on_retry: |
             next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
             echo "new_patch=$next_patch" >> $GITHUB_ENV
-            git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push origin v0.0.$next_patch
+            git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push --no-verify origin v0.0.$next_patch
 
       - name: Create release
         uses: actions/create-release@v1
@@ -607,11 +619,13 @@ jobs:
 
   notify-failure:
     name: Notify Failure
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: |
       needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
       (failure() && needs.deploy.result != 'success')
     needs: [set-env, deploy]
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Configure AWS Credentials
@@ -652,10 +666,11 @@ jobs:
   stop-runner:
     name: Stop on-demand-runner
     needs: [archive, start-runner]
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Configure AWS Credentials
@@ -681,16 +696,19 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs:
       - set-env
       - build
       - archive
       - create-release
       - deploy
-    if: ${{ !cancelled() }}
+    if: |
+      always() &&
+      needs.deploy.result == 'success'
     env:
       METRIC_NAMESPACE: dsva_vagov.content_build
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
     steps:
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
