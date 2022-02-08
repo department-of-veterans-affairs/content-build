@@ -96,7 +96,7 @@ jobs:
       - name: Install vets-website dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd ../vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
           max_attempts: 3
           timeout_minutes: 10
 
