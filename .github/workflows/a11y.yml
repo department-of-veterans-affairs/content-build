@@ -121,7 +121,7 @@ jobs:
 
       - name: Copy vets-website assets to content-build
         run: |
-          mkdir -p build/vagovprod
+          mkdir -p /build/vagovprod
           cd ..
           yes | cp -arf vets-website/build/vagovprod/* build/vagovprod
           pwd
