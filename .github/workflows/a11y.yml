@@ -113,7 +113,7 @@ jobs:
           CHANGED_FILE_PATHS: ${{ steps.changed-files.outputs.all_changed_files }}
 
       - name: Build vets-website
-        run: yarn build --verbose --buildtype=${{ matrix.buildtype }} ${ENTRY:+"--entry=$ENTRY"}
+        run: yarn build --verbose --buildtype=vagovprod ${ENTRY:+"--entry=$ENTRY"}
         working-directory: vets-website
         timeout-minutes: 30
         env:
