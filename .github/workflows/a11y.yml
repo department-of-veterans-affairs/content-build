@@ -119,6 +119,13 @@ jobs:
         env:
           ENTRY: ${{ steps.get-changed-apps.outputs.app_entries }}
 
+      - name: Copy vets-website assets to content-build
+        run: |
+          pwd
+          ls
+          yes | cp -arf vets-website/build/vagovprod/* build/vagovprod
+          ls
+
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
