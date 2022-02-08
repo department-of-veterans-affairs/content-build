@@ -86,9 +86,9 @@ jobs:
           cd ../vets-website
           echo ::set-output name=COMMIT_HASH::$(git log -n 1 --pretty=format:"%H")
 
-      - name:  Download latest vets-website master branch production deploy
-        run: |
-          aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
+      # - name:  Download latest vets-website master branch production deploy
+      #   run: |
+      #     aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
       - name: Get Node version
         id: get-node-version
@@ -99,45 +99,95 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
-
-      - name: Install dependencies
+      - name: Install vets-website dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: cd vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
           max_attempts: 3
-          timeout_minutes: 7
+          timeout_minutes: 10
 
-      - name: Set Drupal address
-        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+      - name: List changed files
+        id: changed-files
+        run: cd vets-website && echo ::set-output name=all_changed_files::$(git diff --name-only origin/master...)
 
-      - name: Build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+      - name: Get app entries for changed files
+        id: get-changed-apps
+        if: ${{ github.ref != 'refs/heads/master' }}
+        run: cd vets-website && echo ::set-output name=app_entries::$(node script/github-actions/get-changed-apps.js)
         env:
-          NODE_ENV: production
+          CHANGED_FILE_PATHS: ${{ steps.changed-files.outputs.all_changed_files }}
+
+      - name: Build vets-website
+        run: cd vets-website && yarn build --verbose --buildtype=${{ matrix.buildtype }} ${ENTRY:+"--entry=$ENTRY"}
+        timeout-minutes: 30
+        env:
+          ENTRY: ${{ steps.get-changed-apps.outputs.app_entries }}
+
+      - name: Copy vets-website assets to content-build
+        run: |
+          yes | cp -arf vets-website/build/vagovprod/* build/vagovprod
+
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
+      # - name: Install content-build dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+      #     max_attempts: 3
+      #     timeout_minutes: 7
+
+      # - name: Set Drupal address
+      #   run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+
+      # - name: Build content-build
+      #   run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+      #   env:
+      #     NODE_ENV: production
 
       # - name:  Download latest vets-website master branch production deploy
       #   run: |
       #     aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
 
-      - name: Unpack vets-website
-        run: |
-          mkdir -p vatest
-          tar -C vatest -xjf vagovprod.tar.bz2
+      # - name: Unpack vets-website
+      #   run: |
+      #     mkdir -p vatest
+      #     tar -C vatest -xjf vagovprod.tar.bz2
 
-      - name: Copy vets-website assets to content-build
-        run: |
-          rm -rf build/vagovprod/generated
-          mkdir -p build/vagovprod/generated
-          yes | cp -arf vatest/* build/vagovprod
+      # - name: Install vets-website dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: cd vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+      #     max_attempts: 3
+      #     timeout_minutes: 10
+
+      # - name: List changed files
+      #   id: changed-files
+      #   run: cd vets-website && echo ::set-output name=all_changed_files::$(git diff --name-only origin/master...)
+
+      # - name: Get app entries for changed files
+      #   id: get-changed-apps
+      #   if: ${{ github.ref != 'refs/heads/master' }}
+      #   run: cd vets-website && echo ::set-output name=app_entries::$(node script/github-actions/get-changed-apps.js)
+      #   env:
+      #     CHANGED_FILE_PATHS: ${{ steps.changed-files.outputs.all_changed_files }}
+
+      # - name: Build vets-website
+      #   run: cd vets-website && yarn build --verbose --buildtype=${{ matrix.buildtype }} ${ENTRY:+"--entry=$ENTRY"}
+      #   timeout-minutes: 30
+      #   env:
+      #     ENTRY: ${{ steps.get-changed-apps.outputs.app_entries }}
+
+      # - name: Copy vets-website assets to content-build
+      #   run: |
+      #     yes | cp -arf vets-website/build/vagovprod/* build/vagovprod
 
       - name: Compress E2E test build
         run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
