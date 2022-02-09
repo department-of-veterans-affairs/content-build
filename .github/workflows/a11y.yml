@@ -80,10 +80,6 @@ jobs:
           repository: department-of-veterans-affairs/vets-website
           path: vets-website
 
-      # - name:  Download latest vets-website master branch production deploy
-      #   run: |
-      #     aws s3 cp s3://vetsgov-website-builds-s3-upload/${{ steps.get-vets-website-hash.outputs.COMMIT_HASH }}/vagovprod.tar.bz2 . --acl public-read --region us-gov-west-1
-
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -93,85 +89,72 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
+      - name: Install vets-website dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: cd vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 10
+
+      - name: List changed files
+        id: changed-files
+        working-directory: vets-website
+        run: echo ::set-output name=all_changed_files::$(git diff --name-only origin/master...)
+
+      - name: Get app entries for changed files
+        id: get-changed-apps
+        working-directory: vets-website
+        run: echo ::set-output name=app_entries::$(node script/github-actions/get-changed-apps.js)
+        env:
+          CHANGED_FILE_PATHS: ${{ steps.changed-files.outputs.all_changed_files }}
+
+      - name: Build vets-website
+        run: yarn build --verbose --buildtype=vagovprod ${ENTRY:+"--entry=$ENTRY"}
+        working-directory: vets-website
+        timeout-minutes: 30
+        env:
+          ENTRY: ${{ steps.get-changed-apps.outputs.app_entries }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
+      - name: Install content-build dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 7
+
+      - name: Set Drupal address
+        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+
+      - name: Build content-build
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        env:
+          NODE_ENV: production
+
       - name: Copy vets-website assets to content-build
         run: |
-          pwd
-          ls
           cd ..
-          pwd
-          ls
-          mkdir -p content-build/build/vagovprod
-          mkdir -p vets-website/build/vagovprod
-          touch vets-website/build/vagovprod/a.txt
           cp -arf vets-website/build/vagovprod/* content-build/build/vagovprod
           cd content-build/build/vagovprod
-          pwd
-          ls
 
-      # - name: Install vets-website dependencies
-      #   uses: nick-invision/retry@v2
-      #   with:
-      #     command: cd vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-      #     max_attempts: 3
-      #     timeout_minutes: 10
+      - name: Compress E2E test build
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      # - name: List changed files
-      #   id: changed-files
-      #   working-directory: vets-website
-      #   run: echo ::set-output name=all_changed_files::$(git diff --name-only origin/master...)
-
-      # - name: Get app entries for changed files
-      #   id: get-changed-apps
-      #   working-directory: vets-website
-      #   run: echo ::set-output name=app_entries::$(node script/github-actions/get-changed-apps.js)
-      #   env:
-      #     CHANGED_FILE_PATHS: ${{ steps.changed-files.outputs.all_changed_files }}
-
-      # - name: Build vets-website
-      #   run: yarn build --verbose --buildtype=vagovprod ${ENTRY:+"--entry=$ENTRY"}
-      #   working-directory: vets-website
-      #   timeout-minutes: 30
-      #   env:
-      #     ENTRY: ${{ steps.get-changed-apps.outputs.app_entries }}
-
-      # - name: Cache dependencies
-      #   id: cache-dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       .cache/yarn
-      #       **/node_modules
-      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
-
-      # - name: Install content-build dependencies
-      #   uses: nick-invision/retry@v2
-      #   with:
-      #     command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-      #     max_attempts: 3
-      #     timeout_minutes: 7
-
-      # - name: Set Drupal address
-      #   run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
-
-      # - name: Build content-build
-      #   run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-      #   env:
-      #     NODE_ENV: production
-
-      # - name: Copy vets-website assets to content-build
-      #   run: |
-      #     yes | cp -arf vets-website/build/vagovprod/* build/vagovprod
-
-      # - name: Compress E2E test build
-      #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
-
-      # - name: Upload E2E test build artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: test-build.tar.bz2
-      #     path: content-build/test-build.tar.bz2
-      #     retention-days: 1
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
 
   a11y:
     name: Accessibility Tests
