@@ -68,16 +68,15 @@
           {%  endif %}
           {% if lang != "en" %}
             <va-back-to-top></va-back-to-top>
+        <!-- Last updated & feedback button-->
+            {% include "src/site/includes/above-footer-elements.drupal.liquid" %}            
           {% endif %}
         </article>
-
-        <div class="last-updated usa-content">
-            Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-        </div>
       </div>
     </main>
   </div>
 </div>
+
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

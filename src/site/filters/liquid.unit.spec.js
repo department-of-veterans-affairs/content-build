@@ -10,6 +10,8 @@ import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
+import stagingSurveys from './medalliaStagingSurveys.json';
+import prodSurveys from './medalliaProdSurveys.json';
 
 // Register filters.
 registerFilters();
@@ -2362,5 +2364,28 @@ describe('deriveFormattedTimestamp', () => {
     expect(
       liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
     ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. – 2:00 p.m. EST');
+  });
+});
+
+describe('getSurvey', () => {
+  it('returns the survey number if url is listed in the survey object', () => {
+    const testUrls = ['/resources', '/find-locations', '/search'];
+    const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
+    ).to.equal(20);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[1], stagingSurveys),
+    ).to.equal(11);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
+    ).to.equal(21);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[1], prodSurveys),
+    ).to.equal(17);
   });
 });
