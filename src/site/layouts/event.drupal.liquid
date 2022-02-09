@@ -157,12 +157,9 @@
             <a onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}">
               See all events
             </a>
+      <!-- Last updated & feedback button-->
+           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}   
           </article>
-
-          <div class="last-updated usa-content">
-            Last updated:
-            <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-          </div>
         </div>
 
       <!-- ======== -->
@@ -365,6 +362,8 @@
           </a>
         </div>
       {% endif %}
+      <!-- Last updated & feedback button-->
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
     </div>
   </main>
 </div>
