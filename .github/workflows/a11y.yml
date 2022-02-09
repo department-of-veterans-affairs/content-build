@@ -97,7 +97,7 @@ jobs:
         run: |
           pwd
           ls
-          cd ..
+          cd ../..
           pwd
           ls
           mkdir -p content-build/build/vagovprod
