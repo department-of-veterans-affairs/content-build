@@ -104,6 +104,9 @@ jobs:
           mkdir -p vets-website/build/vagovprod
           touch vets-website/build/vagovprod/a.txt
           cp -arf vets-website/build/vagovprod/* content-build/build/vagovprod
+          cd content-build/build/vagovprod
+          pwd
+          ls
 
       # - name: Install vets-website dependencies
       #   uses: nick-invision/retry@v2
