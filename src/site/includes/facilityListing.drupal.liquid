@@ -40,7 +40,11 @@
         {% if shouldAddVaHealthConnectNumber == true and isVisn8 == true %}
           <div class="vads-u-margin-bottom--1">
             <strong>VA health connect:</strong>
-            <a href="tel:877-741-3400">877-741-3400</a>
+            {% if entity.fieldVaHealthConnectPhone %}
+              <a href="tel:{{ entity.fieldVaHealthConnectPhone }}">{{ entity.fieldVaHealthConnectPhone }}</a>
+            {% else %}
+              <a href="tel:877-741-3400">877-741-3400</a>
+            {% endif %}
           </div>
         {% endif %}  
       {% endif %}

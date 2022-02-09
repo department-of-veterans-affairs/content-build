@@ -39,6 +39,7 @@ const FACILITIES_RESULTS = `
     }
     fieldPhoneNumber
     fieldMentalHealthPhone
+    fieldVaHealthConnectPhone
     fieldFacilityHours {
       value
     }
