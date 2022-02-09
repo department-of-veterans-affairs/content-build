@@ -97,6 +97,9 @@ jobs:
         run: |
           pwd
           ls
+          cd ..
+          pwd
+          ls
 
       # - name: Install vets-website dependencies
       #   uses: nick-invision/retry@v2
