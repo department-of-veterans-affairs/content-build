@@ -289,6 +289,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -332,6 +333,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -370,6 +372,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -413,6 +416,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: on-demand-runner-cypress-
@@ -679,6 +683,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -729,6 +734,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -845,6 +851,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: ~/.cache/yarn
