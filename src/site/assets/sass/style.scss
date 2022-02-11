@@ -1,1 +1,20 @@
 // Add CSS and imports here.
+.feedback-button {
+  background-color: var(color-primary);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-right: 0;
+  margin-top: 0.5rem;
+  height: 44px;
+  width: 133px;
+}
+
+.above-footer-elements-container {
+  margin-bottom: 2.5rem;
+}
+
+.last-updated {
+  margin-top: 0;
+  padding-top: 1.25rem;
+}
