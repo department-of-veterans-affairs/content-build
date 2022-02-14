@@ -106,7 +106,7 @@ jobs:
         run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
 
       - name: Build content-build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
