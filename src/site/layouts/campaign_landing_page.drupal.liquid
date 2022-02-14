@@ -649,21 +649,10 @@
           {% endfor %}
         </div>
         <va-back-to-top></va-back-to-top>
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}          
       </div>
     {% endif %}
     <!--/  VA Benefits -->
-
-    <!-- Last Updated -->
-    <div class="vads-l-grid-container vads-u-background-color--white vads-u-padding-bottom--6 vads-u-padding-x--4 large-screen:vads-u-padding-x--0">
-      <div class="vads-l-row">
-        <div class="vads-l-col--12 medium-screen:vads-l-col--9">
-          <div class="last-updated">
-            Last updated: <time
-              datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-          </div>
-        </div>
-      </div>
-    </div>
   </main>
 </div>
 
