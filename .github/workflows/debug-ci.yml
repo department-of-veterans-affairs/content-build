@@ -11,7 +11,7 @@ jobs:
       RELEASE_WAIT: ${{ steps.release_wait.outputs.release_wait }}
     steps:
       - id: release_wait
-        run: echo "::set-output name=release_wait::60"
+        run: echo "::set-output name=release_wait::2"
 
   sh-runner-test:
     name: selfhosted
