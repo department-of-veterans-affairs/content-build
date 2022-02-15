@@ -1,0 +1,24 @@
+name: testing
+
+on:
+  pull_request:
+
+jobs:
+  sh-runner-test:
+    name: selfhosted
+    runs-on: [self-hosted,linux,x64]
+    steps:
+      - name: testing sleep
+        run: |
+          echo "Waiting for $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))m"
+          sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
+
+  gh-runner-test:
+    name: gh
+    runs-on: ubuntu-latest
+    needs: sh-runner-test
+    steps:
+      - name: testing sleep
+        run: |
+          echo "Waiting for $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))m"
+          sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
