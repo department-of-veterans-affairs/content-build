@@ -428,9 +428,10 @@ jobs:
           echo 'Waiting to release: https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...${{ needs.set-env.outputs.COMMIT_SHA }}'
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
-        uses: whatnick/wait-action@master
-        with:
-          time: ${{ needs.set-env.outputs.RELEASE_WAIT }}m
+      - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
+        run: |
+          echo "Waiting for $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))m"
+          sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
 
       - name: Get next tag version
         run: |
