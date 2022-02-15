@@ -515,7 +515,7 @@ jobs:
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
         run: |
-          echo "Waiting for $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))m"
+          echo "Waiting for ${{ needs.set-env.outputs.RELEASE_WAIT }}m"
           sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
 
       - name: Get next tag version
