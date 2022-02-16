@@ -43,8 +43,8 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   const say = clientOptions.verbose ? console.log : () => {};
 
   // Instead of using Drupal Constants for API Connections
-  // hardcode the address and throw an error if username and password
-  // aren't defined from CLI or ENV.
+  // simplify the default connection information by pointing
+  // to the Tugboat content-build preview.
   if (buildOptions.buildtype !== 'vagovprod') {
     // eslint-disable-next-line no-unused-vars
     const envConfig = {
@@ -65,10 +65,13 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
 
   const { address, user, password } = drupalConfig;
 
-  // Effort to deprecate drupal constants, must now check if
-  // drupal-user and drupal-passowrd are set in CLI or ENV.
-  // Throw an error if not.
-  if (!(user && password)) {
+  // Need to cover 2 cases for building content from prod.
+  // 1. Specified buildtype as vagovprod but didn't supply credentials.
+  // 2. Specified --drupal-address as prod.cms.va.gov but didn't supply credentials.
+  if (
+    !(user && password) ||
+    (address.includes('prod') && !(buildArgs.user && buildArgs.password))
+  ) {
     throw new Error(
       'Missing --drupal-user or --drupal-password command line arguments.\n Also check that DRUPAL_USERNAME and DRUPAL_PASSWORD environment variables are set if not using CLI arguments.\n If you do not have Drupal API credentials please request them from:\n #cms-support https://dsva.slack.com/archives/CDHBKAL9W ',
     );
