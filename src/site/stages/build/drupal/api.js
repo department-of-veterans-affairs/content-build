@@ -45,11 +45,22 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   // Instead of using Drupal Constants for API Connections
   // hardcode the address and throw an error if username and password
   // aren't defined from CLI or ENV.
-  const envConfig = {
-    address:
-      'https://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov',
-  };
-  // eslint-disable-next-line prefer-object-spread
+  if (buildOptions.buildtype !== 'vagovprod') {
+    // eslint-disable-next-line no-unused-vars
+    const envConfig = {
+      address:
+        'https://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov',
+      user: 'content_build_api',
+      password: 'drupal8',
+    };
+  } else {
+    // eslint-disable-next-line no-unused-vars
+    const envConfig = {
+      address: 'https://prod.cms.va.gov',
+    };
+  }
+
+  // eslint-disable-next-line prefer-object-spread, no-undef
   const drupalConfig = Object.assign({}, envConfig, buildArgs);
 
   const { address, user, password } = drupalConfig;
