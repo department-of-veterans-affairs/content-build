@@ -1247,10 +1247,11 @@
   {
     "appName": "Education Inbox",
     "entryName": "education-inbox",
-    "rootUrl": "/education-inbox",
+    "rootUrl": "/education/education-inbox",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "Check your VA education inbox"
     }
   }
 ]

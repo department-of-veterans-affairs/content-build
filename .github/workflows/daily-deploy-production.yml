@@ -345,7 +345,7 @@ jobs:
         run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
       - name: Notify Slack about broken links
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -428,9 +428,9 @@ jobs:
           echo 'Waiting to release: https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...${{ needs.set-env.outputs.COMMIT_SHA }}'
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
-        uses: whatnick/wait-action@master
-        with:
-          time: ${{ needs.set-env.outputs.RELEASE_WAIT }}m
+        run: |
+          echo "Waiting for ${{ needs.set-env.outputs.RELEASE_WAIT }}m"
+          sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
 
       - name: Get next tag version
         run: |
