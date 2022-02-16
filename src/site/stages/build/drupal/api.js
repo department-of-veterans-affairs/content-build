@@ -46,7 +46,8 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   // hardcode the address and throw an error if username and password
   // aren't defined from CLI or ENV.
   const envConfig = {
-    address: 'https://prod.cms.va.gov',
+    address:
+      'https://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov',
   };
   // eslint-disable-next-line prefer-object-spread
   const drupalConfig = Object.assign({}, envConfig, buildArgs);
