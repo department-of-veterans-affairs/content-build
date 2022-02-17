@@ -13,7 +13,7 @@ const storyListingPage = `
         ... on NodeNewsStory {
           entityId
           title
-          fieldFeatured
+          fieldOrder
           entityUrl {
             path
           }

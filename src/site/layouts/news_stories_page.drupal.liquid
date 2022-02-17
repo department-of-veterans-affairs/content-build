@@ -72,7 +72,7 @@ Example data:
           {% endfor %}
           {% endif %}
           {% for story in pagedItems %}
-            {% if story.fieldFeatured == false %}
+            {% if story.fieldOrder == null %}
               {% include "src/site/teasers/news_story_page.drupal.liquid" with node = story %}
             {% endif %}
           {% endfor %}
