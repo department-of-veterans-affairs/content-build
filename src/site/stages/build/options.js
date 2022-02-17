@@ -208,6 +208,43 @@ function fetchDrupalCache(options) {
   }
 }
 
+function checkDrupalConnectionOptions(options) {
+  const pullDrupalArg = 'pull-drupal';
+  const drupalAddressArg = 'drupal-address';
+  const drupalUserArg = 'drupal-user';
+  const drupalPasswordArg = 'drupal-password';
+
+  const errorMessageCollection = [];
+  let throwError = false;
+
+  if (options[pullDrupalArg] || options[drupalAddressArg]) {
+    if (!options[drupalUserArg]) {
+      errorMessageCollection.push(
+        '\nMissing --drupal-user CLI argument or DRUPAL_USERNAME environment variable not set.\nIf you do not have Drupal API credentials please request them from:\n#cms-support https://dsva.slack.com/archives/CDHBKAL9W\n',
+      );
+      throwError = true;
+    }
+
+    if (!options[drupalPasswordArg]) {
+      errorMessageCollection.push(
+        '\nMissing --drupal-password CLI argument or DRUPAL_PASSWORD environment variable not set.\nIf you do not have Drupal API credentials please request them from:\n#cms-support https://dsva.slack.com/archives/CDHBKAL9W\n',
+      );
+      throwError = true;
+    }
+
+    if (!options[drupalAddressArg]) {
+      errorMessageCollection.push(
+        '\nMissing --drupal-address CLI argument or DRUPAL_ADDRESS environment variable not set.\n',
+      );
+      throwError = true;
+    }
+
+    if (throwError) {
+      throw new Error(errorMessageCollection.join(''));
+    }
+  }
+}
+
 /**
  * Sets up the CMS feature flags by either querying the CMS for them
  * or using ../../utilities/featureFlags. If we pull from Drupal, it'll
@@ -283,6 +320,7 @@ async function getOptions(commandLineOptions) {
   applyEnvironmentOverrides(options);
   deriveHostUrl(options);
   fetchDrupalCache(options);
+  checkDrupalConnectionOptions(options);
   await setUpFeatureFlags(options);
   clearDrupalCacheDirectory(options);
 
