@@ -42,36 +42,9 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   // eslint-disable-next-line no-console
   const say = clientOptions.verbose ? console.log : () => {};
 
-  // Instead of using Drupal Constants for API Connections
-  // simplify the connection information by pointing
-  // to the Tugboat content-build preview by default.
-  // eslint-disable-next-line no-undef
-  envConfig = {
-    address:
-      'https://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov',
-    user: 'content_build_api',
-    password: 'drupal8',
-  };
-
-  if (buildOptions.buildtype === 'vagovprod') {
-    // eslint-disable-next-line no-undef
-    envConfig = {
-      address: 'https://prod.cms.va.gov',
-    };
-  }
-
   // eslint-disable-next-line prefer-object-spread, no-undef
-  const drupalConfig = Object.assign({}, envConfig, buildArgs);
+  const drupalConfig = Object.assign({}, buildArgs);
   const { address, user, password } = drupalConfig;
-
-  // Need to cover 2 cases for building content from prod.
-  // 1. Specified buildtype as vagovprod but didn't supply credentials.
-  // 2. Specified --drupal-address as prod.cms.va.gov but didn't supply credentials.
-  if (address.includes('prod') && !(buildArgs.user && buildArgs.password)) {
-    throw new Error(
-      '\nMissing --drupal-user or --drupal-password command line arguments.\nAre DRUPAL_USERNAME and DRUPAL_PASSWORD environment variables set if not using CLI arguments?\nIf you do not have Drupal API credentials please request them from:\n#cms-support https://dsva.slack.com/archives/CDHBKAL9W\n ',
-    );
-  }
 
   const drupalUri = `${address}/graphql`;
   const encodedCredentials = encodeCredentials({ user, password });
