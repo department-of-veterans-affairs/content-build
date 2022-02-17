@@ -211,7 +211,6 @@ jobs:
       BUILDTYPE: vagovprod
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
       DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
-      DRUPAL_USERNAME: content_build_api
 
     steps:
       - name: Checkout vagov-content
@@ -277,6 +276,12 @@ jobs:
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
           env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username 
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
 
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password=${{ env.DRUPAL_PASSWORD }}  --no-drupal-proxy
