@@ -240,6 +240,10 @@ function checkDrupalConnectionOptions(options) {
     }
 
     if (throwError) {
+      errorMessageCollection.push(
+        '\nDoes the .env file exist? Run this command to create default environment variables file:\ncp .env.example .env\n',
+      );
+
       throw new Error(errorMessageCollection.join(''));
     }
   }
