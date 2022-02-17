@@ -1,5 +1,6 @@
 const moment = require('moment');
 const fetch = require('node-fetch');
+const pRetry = require('p-retry');
 const chalk = require('chalk');
 const SocksProxyAgent = require('socks-proxy-agent');
 
@@ -158,16 +159,20 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         }
 
         const [queryName, query] = individualQueries.pop();
-        const request = this.query({
-          query,
-          variables: {
-            today: getCurrentDayAsUnixTimestamp().toString(),
-            onlyPublishedContent,
-          },
-        });
 
         const startTime = moment();
-        const json = await request;
+        const allowedRetries = 3;
+        const json = await pRetry(
+          () =>
+            this.query({
+              query,
+              variables: {
+                today: getCurrentDayAsUnixTimestamp().toString(),
+                onlyPublishedContent,
+              },
+            }),
+          allowedRetries,
+        );
 
         if (json.errors) {
           const formattedErrors = JSON.stringify(json.errors, null, 2);
