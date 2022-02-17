@@ -182,7 +182,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: set Drupal password
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ matrix.buildtype == 'vagovprod' }}
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
