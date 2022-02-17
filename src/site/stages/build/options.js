@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-
+require('dotenv').config();
 const path = require('path');
 const fs = require('fs-extra');
 const commandLineArgs = require('command-line-args');
