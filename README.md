@@ -25,7 +25,39 @@ Once you have the site set up locally, these are some common commands you might 
 
 VA.gov contains many pages that include content generated from a Drupal-based content model.
 When testing changes to static pages, or to see what your application looks like
-on VA.gov, you'll need to build these static pages using the following commands:
+on VA.gov, follow the below sections to build these static pages.
+
+#### Prepare Your Environment Settings
+
+The Content-Build can pull fresh content directly from Drupal endpoints. To do this the request for content must be authenticated. 
+If pulling fresh content you must ensure that these command line arguments or environmnet variables are set:
+
+| Command Line Argument | Environment Variables | Purpose |
+| ---- | ----------- | ----------- |
+| `--drupal-user` | DRUPAL_USERNAME | Name of Drupal user that can read content. |
+| `--drupal-password` | DRUPAL_PASSWORD | Password of Drupal user that can read content.  |
+| `--drupal-address` | DRUPAL_ADDDRESS | Drupal Endpoint to pull content from. |
+
+The below command provides defaults for the above environment variables:
+
+`cp .env.example .env` 
+
+- copies example environment variables that will be auto-loaded by when the build runs.
+- edit `.env` file to pull content from different endpoints 
+- edit `.env` file to provide credentials with read rights on Production Drupal.
+- example file content:
+```
+#.env file
+DRUPAL_ADDRESS=https://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+DRUPAL_USERNAME=content_build_api
+DRUPAL_PASSWORD=drupal8
+```
+In most cases the default environment variables in `.env` will be all that's necessary. 
+If you do however require Production credentials to pull content from https://prod.cms.va.gov please contact 
+[#cms-support](https://dsva.slack.com/archives/CDHBKAL9W) and request user creation with permissions to read the Drupal Content API.
+
+
+#### Build static pages using the following commands:
 
 `yarn build` (fetches the latest content cache from S3 by default when cache is empty)
 
