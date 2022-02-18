@@ -38,8 +38,7 @@ const FACILITIES_RESULTS = `
       postalCode
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
-    fieldVaHealthConnectPhone    
+    fieldMentalHealthPhone    
     fieldFacilityHours {
       value
     }

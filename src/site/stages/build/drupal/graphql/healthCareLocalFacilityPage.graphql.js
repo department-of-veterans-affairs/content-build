@@ -34,6 +34,7 @@ const healthCareLocalFacilityPageFragment = `
     }
     fieldPhoneNumber
     fieldMentalHealthPhone
+    fieldVaHealthConnectPhone
     fieldFacilityHours {
       value
     }
