@@ -664,7 +664,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [archive, start-runner]
+    needs: [archive, start-runner, create-release, deploy]
     runs-on: [self-hosted, linux, x64]
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
