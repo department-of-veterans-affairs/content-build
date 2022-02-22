@@ -158,7 +158,6 @@ jobs:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
 
-
   wait-for-current-workflow-to-complete:
     name: Wait for current workflow to complete
     runs-on: [self-hosted, linux, x64]
