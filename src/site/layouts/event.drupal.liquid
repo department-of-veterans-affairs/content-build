@@ -354,7 +354,7 @@
           <!-- See more events. -->
           {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
           <a
-            class="vads-u-padding-bottom--3 vads-u-margin-top--1"
+            class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold"
             href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
             onclick="recordEvent({ event: 'nav-secondary-button-click' });"
           >
