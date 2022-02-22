@@ -757,7 +757,7 @@ jobs:
       - create-release
       - deploy
       - record-metrics
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
