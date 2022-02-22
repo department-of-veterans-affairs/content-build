@@ -125,7 +125,7 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build content-build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password=${{ env.DRUPAL_PASSWORD }}  --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
