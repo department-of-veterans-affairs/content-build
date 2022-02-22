@@ -1419,7 +1419,7 @@ module.exports = function registerFilters() {
     const endsAtTimezone = moment
       .tz(endsAtUnix * 1000, timezone)
       .format('z')
-      .replace('S', '');
+      .replace(/S|D/i, '');
 
     return `${formattedStartsAt} – ${formattedEndsAt} ${endsAtTimezone}`;
   };
