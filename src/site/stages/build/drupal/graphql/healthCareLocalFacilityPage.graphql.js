@@ -167,16 +167,3 @@ module.exports = {
   fragment: healthCareLocalFacilityPageFragment,
   getNodeHealthCareLocalFacilityPageQueries,
 };
-
-// eslint-disable-next-line no-console
-console.log(
-  `---------healthCareLocalFacilityPageFragment =${JSON.stringify(
-    healthCareLocalFacilityPageFragment,
-  )}`,
-);
-// eslint-disable-next-line no-console
-console.log(
-  `---------getNodeHealthCareLocalFacilityPageQueries =${JSON.stringify(
-    getNodeHealthCareLocalFacilityPageQueries,
-  )}`,
-);
