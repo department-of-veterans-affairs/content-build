@@ -331,7 +331,7 @@ jobs:
           echo "${{ needs.set-env.outputs.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --drupal-user=${{ needs.set-env.outputs.DRUPAL_USERNAME }} --drupal-password=${{ needs.set-env.outputs.DRUPAL_PASSWORD }}  --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
+        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --drupal-user=${{ needs.set-env.outputs.DRUPAL_USERNAME }} --drupal-password="${{ needs.set-env.outputs.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
         env:
           NODE_ENV: production
