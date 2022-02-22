@@ -36,6 +36,7 @@ const nodeHealthCareRegionPage = `
       }
     }
     fieldVamcEhrSystem
+    fieldVaHealthConnectPhone
     fieldGovdeliveryIdEmerg
     fieldGovdeliveryIdNews
     ${socialMediaFields}
@@ -178,3 +179,16 @@ module.exports = {
   fragment: nodeHealthCareRegionPage,
   getNodeHealthCareRegionPageQueries,
 };
+
+// eslint-disable-next-line no-console
+console.log(
+  `----------nodeHealthCareRegionPage=${JSON.stringify(
+    nodeHealthCareRegionPage,
+  )}`,
+);
+// eslint-disable-next-line no-console
+console.log(
+  `----------getNodeHealthCareRegionPageQueries=${JSON.stringify(
+    getNodeHealthCareRegionPageQueries,
+  )}`,
+);
