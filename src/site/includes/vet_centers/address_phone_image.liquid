@@ -59,14 +59,12 @@
         </div>
     </div>
     {% if isMainOffice == true %}
-        {% if buildtype != 'vagovprod' %}
-            <div class="vads-u-margin-bottom--3">
-                {% include 'src/site/includes/vet_centers/hours.liquid' with
-                        vetCenterHours = vetCenter.fieldOfficeHours
-                        isSatelliteLocation = isSatelliteLocation
-                %}
-            </div>
-        {% endif %}
+        <div class="vads-u-margin-bottom--3">
+            {% include 'src/site/includes/vet_centers/hours.liquid' with
+                    vetCenterHours = vetCenter.fieldOfficeHours
+                    isSatelliteLocation = isSatelliteLocation
+            %}
+        </div>
       {% elsif vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" %}
         <div class="vads-u-margin-bottom--3">
             {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
