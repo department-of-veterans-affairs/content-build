@@ -264,8 +264,27 @@ jobs:
       - name: Wait for the CMS to be ready
         uses: ./content-build/.github/workflows/wait-for-cms-ready
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod password
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username 
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
+
       - name: Build
-        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address='${{ env.DRUPAL_ADDRESS }}' --no-drupal-proxy
+        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --no-drupal-proxy
         timeout-minutes: 30
         env:
           NODE_ENV: production
