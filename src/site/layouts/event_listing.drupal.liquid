@@ -31,16 +31,14 @@
               {% endif %}
 
               {% assign featuredEventUrl = null %}
-              {% assign featuredItemSet = false %}
-              {% assign upcomingEvents = reverseFieldListingNode.entities | filterUpcomingEvents  %}
+              {% assign upcomingEvents = reverseFieldListingNode.entities | filterUpcomingEvents | sort: "fieldOrder" %}
 
               {% for featuredEvent in upcomingEvents %}
-                {% if featuredEvent.fieldFeatured == true %}
+                {% if featuredEvent.fieldOrder != null %}
                   {% unless entityUrl.path contains 'past-events' %}
-                    {% if featuredItemSet == false %}
                       {% assign featuredEventUrl = featuredEvent.entityUrl.path %}
                       <div class="usa-width-two-thirds">
-                        <div class="usa-grid usa-grid-full vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-border-left--7px vads-u-border-color--primary-alt-lightest" id="featured-content">
+                        <div class="usa-grid usa-grid-full vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-border-left--7px vads-u-border-color--primary-alt-lightest featured-content">
                           <div class="usa-width-full vads-u-padding-left--2">
                             <div class="vads-u-margin-bottom--2">
                               <strong>In the spotlight at
@@ -50,9 +48,7 @@
                           </div>
                         </div>
                       </div>
-                    {% endif %}
                   {% endunless %}
-                  {% assign featuredItemSet = true %}
                 {% endif %}
               {% endfor %}
 
@@ -70,7 +66,7 @@
 
               {% for event in pagedItems %}
                 {% comment %} Don't render the featured event again {% endcomment %}
-                {% if featuredEventUrl != event.entityUrl.path %}
+                {% if event.fieldOrder == null %}
                   <div class="clearfix-text">
                     {% include "src/site/teasers/event.drupal.liquid" with node = event %}
                   </div>
@@ -87,7 +83,7 @@
             </div>
           </div>
               <!-- Last updated & feedback button-->
-          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}  
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
       </div>
     </div>

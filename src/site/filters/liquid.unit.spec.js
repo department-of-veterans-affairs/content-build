@@ -2363,13 +2363,18 @@ describe('deriveFormattedTimestamp', () => {
     // Assertions.
     expect(
       liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
-    ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. – 2:00 p.m. EST');
+    ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. – 2:00 p.m. ET');
   });
 });
 
 describe('getSurvey', () => {
   it('returns the survey number if url is listed in the survey object', () => {
-    const testUrls = ['/resources', '/find-locations', '/search'];
+    const testUrls = [
+      '/resources',
+      '/find-locations',
+      '/search',
+      '/virtual-agent-study',
+    ];
     const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
 
     expect(
@@ -2379,6 +2384,10 @@ describe('getSurvey', () => {
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[1], stagingSurveys),
     ).to.equal(11);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
+    ).to.equal(24);
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),

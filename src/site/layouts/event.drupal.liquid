@@ -158,7 +158,7 @@
               See all events
             </a>
       <!-- Last updated & feedback button-->
-           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}   
+           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
           </article>
         </div>
 
@@ -354,11 +354,12 @@
           <!-- See more events. -->
           {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
           <a
-            class="vads-u-padding-bottom--3 vads-u-margin-top--1"
+            class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold"
             href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
             onclick="recordEvent({ event: 'nav-secondary-button-click' });"
           >
             See more events
+            <i aria-hidden="true" class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right' role="presentation"></i>
           </a>
           <!-- Last updated & feedback button-->
           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}

@@ -97,6 +97,8 @@ jobs:
       BUILDTYPE: ${{ env.BUILDTYPE }}
       DEPLOY_BUCKET: ${{ env.DEPLOY_BUCKET }}
       DRUPAL_ADDRESS: ${{ env.DRUPAL_ADDRESS }}
+      DRUPAL_USERNAME: ${{env.DRUPAL_USERNAME}}
+      DRUPAL_PASSWORD: ${{env.DRUPAL_PASSWORD}}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
 
     steps:
@@ -136,6 +138,25 @@ jobs:
           echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
           echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
           echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod password
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
 
   wait-for-current-workflow-to-complete:
     name: Wait for current workflow to complete
@@ -310,7 +331,7 @@ jobs:
           echo "${{ needs.set-env.outputs.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Build
-        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
+        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --drupal-user=${{ needs.set-env.outputs.DRUPAL_USERNAME }} --drupal-password="${{ needs.set-env.outputs.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
         env:
           NODE_ENV: production
@@ -514,9 +535,9 @@ jobs:
           echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
-        uses: whatnick/wait-action@master
-        with:
-          time: ${{ needs.set-env.outputs.RELEASE_WAIT }}m
+        run: |
+          echo "Waiting for ${{ needs.set-env.outputs.RELEASE_WAIT }}m"
+          sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
 
       - name: Get next tag version
         run: |
@@ -662,37 +683,6 @@ jobs:
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < event.json
 
-  stop-runner:
-    name: Stop on-demand-runner
-    needs: [archive, start-runner]
-    runs-on: [self-hosted, linux, x64]
-    if: ${{ always() }} # Even if an error happened, let's stop the runner
-    env:
-      INSTANCE_TYPE: c5.4xlarge
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Stop Runner
-        uses: department-of-veterans-affairs/ec2-github-runner@main
-        with:
-          mode: stop
-          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          label: ${{ needs.start-runner.outputs.label }}
-          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
-
   record-metrics:
     name: Record metrics in Datadog
     runs-on: [self-hosted, linux, x64]
@@ -779,3 +769,39 @@ jobs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
+
+  stop-runner:
+    name: Stop on-demand-runner
+    needs:
+      - archive
+      - start-runner
+      - create-release
+      - deploy
+      - record-metrics
+    runs-on: ubuntu-latest
+    if: ${{ always() }} # Even if an error happened, let's stop the runner
+    env:
+      INSTANCE_TYPE: c5.4xlarge
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Stop Runner
+        uses: department-of-veterans-affairs/ec2-github-runner@main
+        with:
+          mode: stop
+          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}

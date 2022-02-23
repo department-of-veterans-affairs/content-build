@@ -109,8 +109,9 @@ jobs:
       vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
 
     env:
-      # Sandbox Drupal address is used on branches other than master.
+      # Sandbox Drupal address, username, and password is used on branches other than master.
       DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+      DRUPAL_PASSWORD: drupal8
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
@@ -172,6 +173,26 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod password
+        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/master' }}
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
+
       - name: Get buildtime
         id: buildtime
         run: |
@@ -185,7 +206,7 @@ jobs:
           base_url: ${{ matrix.drupal-address }}
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
