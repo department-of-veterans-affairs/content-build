@@ -1,0 +1,29 @@
+name: Record release interval
+description: Record events and timing between deployment events in Datadog
+
+inputs:
+  datadog_api_key:
+    description: Key for Datadog API access
+    required: true
+  environment:
+    description: Environment that content was deployed to
+    required: false
+    default: "prod"
+
+runs:
+  using: composite
+  steps:
+    - name: Record deployment event in Datadog
+      shell: bash
+      working-directory: ${{ github.workspace }}
+      run: |
+        # Send the event to datadog.
+        jq --null-input '{}' | \
+        jq '.title = "Content release (${{ inputs.environment }})"' | \
+        jq '.text = "Content was released to ${{ inputs.environment }}"' | \
+        jq '.tags[0] = "env:${{ inputs.environment }}"' > event.json
+
+        curl -X POST "https://api.datadog.com/api/v1/events" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
+          -d @- < event.json

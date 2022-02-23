@@ -770,6 +770,11 @@ jobs:
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
 
+      - name: Record deployment event
+        uses: ./.github/workflows/record-release-interval
+        with:
+          datadog_api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
+
   stop-runner:
     name: Stop on-demand-runner
     needs:
