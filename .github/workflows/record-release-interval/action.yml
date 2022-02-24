@@ -23,7 +23,7 @@ runs:
         jq '.text = "Content was released to ${{ inputs.environment }}"' | \
         jq '.tags[0] = "env:${{ inputs.environment }}"' > event.json
 
-        curl -X POST "https://api.datadog.com/api/v1/events" \
+        curl -X POST "https://api.datadoghq.com/api/v1/events" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
           -d @- < event.json
