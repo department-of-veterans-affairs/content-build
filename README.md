@@ -38,23 +38,24 @@ If pulling fresh content you must ensure that these command line arguments or en
 | `--drupal-password` | DRUPAL_PASSWORD | Password of Drupal user that can read content.  |
 | `--drupal-address` | DRUPAL_ADDDRESS | Drupal Endpoint to pull content from. |
 
-The below command provides defaults for the above environment variables:
+Authentication credentials are stored in a local .gitignore'd file `.env`. An example file is provided to get you started:
 
-`cp .env.example .env` 
+`cp .env.example .env`
 
-- copies example environment variables that will be auto-loaded by when the build runs.
-- edit `.env` file to pull content from different endpoints 
-- edit `.env` file to provide credentials with read rights on Production Drupal.
-- example file content:
+File contents:
 ```
-#.env file
+# .env file contents
 DRUPAL_ADDRESS=https://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
 DRUPAL_USERNAME=content_build_api
 DRUPAL_PASSWORD=drupal8
 ```
-In most cases the default environment variables in `.env` will be all that's necessary. 
-If you do however require Production credentials to pull content from https://prod.cms.va.gov please contact 
-[#cms-support](https://dsva.slack.com/archives/CDHBKAL9W) and request user creation with permissions to read the Drupal Content API.
+
+In most cases, these values will be all you need to run a content build with fresh CMS content. However, if you need to connect to a different CMS endpoint, you can either override the values in the `.env` file, or else override specific values at the command line. For example:
+
+`yarn build --pull-drupal --drupal-address=https://some-other-endpoint.cms.va.gov`
+
+If you do need to pull content from https://prod.cms.va.gov please contact
+[#cms-support](https://dsva.slack.com/archives/CDHBKAL9W) and request a user with permissions to read the Drupal Content API. You will need to use your assigned credentials to access Production.
 
 
 #### Build static pages using the following commands:
