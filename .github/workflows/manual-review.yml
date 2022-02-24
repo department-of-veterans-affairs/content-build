@@ -48,7 +48,7 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
@@ -108,7 +108,7 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
@@ -168,7 +168,7 @@ jobs:
           key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 

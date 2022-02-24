@@ -193,7 +193,6 @@
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1"
   },
-  "optionalDependencies": {},
   "engines": {
     "node": ">=14.15.0",
     "yarn": ">=1.21.1"
@@ -231,28 +230,5 @@
     "tar-fs": "^2.0.1",
     "tinyliquid": "^0.2.33"
   },
-  "resolutions": {
-    "**/lodash": "4.17.21",
-    "**/node-fetch": "^2.6.7",
-    "**/js-yaml": "^3.13.1",
-    "**/jpeg-js": "^0.4.0",
-    "**/dot-prop": "^5.1.1",
-    "**/handlebars": "^4.7.7",
-    "**/http-proxy": "^1.18.1",
-    "**/hosted-git-info": "^3.0.8",
-    "**/node-forge": "^0.10.0",
-    "**/axios": "^0.21.1",
-    "**/netmask": "^2.0.1",
-    "**/is-svg": "^4.2.2",
-    "**/y18n": "^4.0.1",
-    "**/merge": "^2.1.1",
-    "**/shelljs": "^0.8.5",
-    "**/ssri": "^8.0.1",
-    "**/ua-parser-js": "^0.7.24",
-    "**/underscore": "^1.12.1",
-    "**/url-parse": "^1.5.0",
-    "**/path-parse": "1.0.7",
-    "**/markdown-it": "^12.3.2",
-    "tar-fs/tar-stream/bl": "^4.0.3"
-  }
+  "packageManager": "yarn@3.2.0"
 }

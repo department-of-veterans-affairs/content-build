@@ -76,7 +76,7 @@ jobs:
       - name: Install vets-website dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: cd vets-website && yarn install --immutable
           max_attempts: 3
           timeout_minutes: 10
 
@@ -98,7 +98,7 @@ jobs:
       - name: Install content-build dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: cd content-build && yarn install --immutable
           max_attempts: 3
           timeout_minutes: 7
 
@@ -190,7 +190,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
-          command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          command: yarn install --frozen-lockfile --immutable
           max_attempts: 3
           timeout_minutes: 7
         env:
@@ -299,7 +299,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          command: cd content-build && yarn install --immutable
           max_attempts: 3
           timeout_minutes: 7
         env:

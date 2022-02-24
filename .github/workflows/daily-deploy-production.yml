@@ -248,7 +248,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
+          command: cd content-build && yarn install --immutable
           max_attempts: 3
           timeout_minutes: 7
         env:
