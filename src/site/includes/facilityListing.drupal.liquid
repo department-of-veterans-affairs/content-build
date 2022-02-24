@@ -37,7 +37,7 @@
       {% if facilitySidebar.description %}
         {% assign shouldAddVaHealthConnectNumber = ''| featureAddVaHealthConnectNumber %}
         {% assign isVisn8 = facilitySidebar.description | isVisn8 %}
-        {% if shouldAddVaHealthConnectNumber == true and isVisn8 == true %}
+        {% if shouldAddVaHealthConnectNumber == true %}
           <div class="vads-u-margin-bottom--1">
             <strong>VA health connect:</strong>
             {% if fieldVaHealthConnectPhone %}
