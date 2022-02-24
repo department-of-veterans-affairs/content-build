@@ -755,11 +755,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get Datadog token from Parameter Store
+      - name: Get Datadog api key from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Get Datadog app key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
 
       - name: Send metrics to Datadog
         run: |
@@ -772,6 +778,8 @@ jobs:
         uses: ./.github/workflows/record-release-interval
         with:
           datadog_api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
+          datadog_app_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_APP_KEY }}
+          metric_namespace: ${{ env.METRIC_NAMESPACE }}
 
   stop-runner:
     name: Stop on-demand-runner

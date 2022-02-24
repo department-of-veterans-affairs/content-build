@@ -5,6 +5,13 @@ inputs:
   datadog_api_key:
     description: Key for Datadog API access
     required: true
+  datadog_app_key:
+    description: App key for Datadog API access (for reading events)
+    required: true
+  metric_namespace:
+    description: Namespace to record deploy time metric to
+    required: false
+    default: "dsva_vagov.content_build"
   environment:
     description: Environment that content was deployed to
     required: false
@@ -13,6 +20,29 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Get information for Datadog metrics
+      run: |
+        now="$(date +"%s")"
+        starttime="$(expr ${now} - 86400)"
+
+        # This is all one pipeline. Edit with care.
+        # [
+            # Get the last 1000 events from datadog
+            curl "https://api.datadoghq.com/api/v1/events?start=${starttime}&end=${now}&tags=env:prod&unaggregated=true" \
+                -H "Content-Type: text/json" \
+                -H "DD-APPLICATION-KEY: ${{ inputs.datadog_app_key }}" \
+                -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" | \
+
+            # Filter the events down to just content releases and put the most recent timestamp into last_deploy.txt
+            jq '[.events[] | select(.title=="Content release (prod)")] | first | .date_happened' > last_deploy.txt
+        # ]
+
+        time_since_last_deploy="$(expr ${now} - $(cat last_deploy.txt))"
+
+        echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
+        echo "LAST_DEPLOY=$(cat last_deploy.txt)" >> $GITHUB_ENV
+        echo "TIME_SINCE_LAST_DEPLOY=$(expr ${now} - $(cat last_deploy.txt))" >> $GITHUB_ENV
+
     - name: Record deployment event in Datadog
       shell: bash
       working-directory: ${{ github.workspace }}
@@ -27,3 +57,15 @@ runs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
           -d @- < event.json
+
+        # Send the metric to datadog
+        jq --null-input '{}' | \
+        jq '.series[0].metric = "dsva_vagov.content_build.time_since_last_deploy"' | \
+        jq '.series[0].points[0] = [${{ env.CURRENT_TIME }}, ${{ env.TIME_SINCE_LAST_DEPLOY }}]' | \
+        jq '.series[].tags[0] = "env:${{ inputs.environment }}"' | \
+        jq '.series[].tags[1] = "build_number:${{ github.run_number }}"' > metrics.json
+
+        curl -X POST "https://api.datadoghq.com/api/v1/series" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
+          -d @- < metrics.json
