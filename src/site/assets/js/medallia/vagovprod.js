@@ -65,7 +65,7 @@ function onsiteLoaded() {
 
 const vagovprodsurveys = {
   "/search": 21,
-  "/contact-us/virtual-agent/": 25
+  "/contact-us/virtual-agent": 25
 }
 
 function getSurveyNumber (url) {

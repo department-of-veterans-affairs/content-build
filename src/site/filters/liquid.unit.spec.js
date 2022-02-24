@@ -2374,7 +2374,7 @@ describe('getSurvey', () => {
       '/find-locations',
       '/search',
       '/virtual-agent-study',
-      '/contact-us/virtual-agent/',
+      '/contact-us/virtual-agent',
     ];
     const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
 
