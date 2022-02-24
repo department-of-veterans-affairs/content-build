@@ -2374,6 +2374,7 @@ describe('getSurvey', () => {
       '/find-locations',
       '/search',
       '/virtual-agent-study',
+      '/contact-us/virtual-agent',
     ];
     const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
 
@@ -2392,6 +2393,10 @@ describe('getSurvey', () => {
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
     ).to.equal(21);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[4], prodSurveys),
+    ).to.equal(25);
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[1], prodSurveys),
