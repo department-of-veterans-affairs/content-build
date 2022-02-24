@@ -25,7 +25,7 @@ Once you have the site set up locally, these are some common commands you might 
 
 VA.gov contains many pages that include content generated from a Drupal-based content model.
 When testing changes to static pages, or to see what your application looks like
-on VA.gov, follow the below sections to build these static pages.
+on VA.gov, follow the sections below to build these static pages.
 
 #### Prepare Your Environment Settings
 
