@@ -65,7 +65,13 @@ Security advisory:
 }
 
 function runAudit() {
-  const child = spawn('yarn', ['audit', '--json']);
+  const child = spawn('yarn', [
+    'npm',
+    'audit',
+    '--json',
+    '--environment',
+    'production',
+  ]);
   let auditOutput = '';
 
   child.stdout.setEncoding('utf8');
