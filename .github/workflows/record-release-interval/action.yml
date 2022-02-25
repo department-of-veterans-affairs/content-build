@@ -21,6 +21,8 @@ runs:
   using: composite
   steps:
     - name: Get information for Datadog metrics
+      shell: bash
+      working-directory: ${{ github.workspace }}
       run: |
         now="$(date +"%s")"
         starttime="$(expr ${now} - 86400)"
