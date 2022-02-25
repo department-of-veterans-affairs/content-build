@@ -56,7 +56,7 @@ COPY --chown=vets-website:vets-website . /application/content-build
 
 WORKDIR /application/content-build
 
-RUN yarn install --production=false
+RUN yarn install --immutable
 
 FROM installer as builder
 
