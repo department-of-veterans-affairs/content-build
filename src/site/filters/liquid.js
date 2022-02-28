@@ -1416,7 +1416,10 @@ module.exports = function registerFilters() {
     const formattedEndsAt = moment
       .tz(endsAtUnix * 1000, timezone)
       .format('h:mm a');
-    const endsAtTimezone = moment.tz(endsAtUnix * 1000, timezone).format('z');
+    const endsAtTimezone = moment
+      .tz(endsAtUnix * 1000, timezone)
+      .format('z')
+      .replace(/S|D/i, '');
 
     return `${formattedStartsAt} – ${formattedEndsAt} ${endsAtTimezone}`;
   };
