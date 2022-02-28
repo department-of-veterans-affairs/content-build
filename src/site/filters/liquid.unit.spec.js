@@ -2373,7 +2373,6 @@ describe('getSurvey', () => {
       '/resources',
       '/find-locations',
       '/search',
-      '/virtual-agent-study',
       '/contact-us/virtual-agent',
     ];
     const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
@@ -2395,7 +2394,7 @@ describe('getSurvey', () => {
     ).to.equal(21);
 
     expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[4], prodSurveys),
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
     ).to.equal(25);
 
     expect(
