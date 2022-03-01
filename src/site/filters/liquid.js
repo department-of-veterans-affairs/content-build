@@ -1365,6 +1365,17 @@ module.exports = function registerFilters() {
     return futureDates[0];
   };
 
+  liquid.filters.deriveMostRecentDateOnEventsListingPage = fieldDatetimeRangeTimezone => {
+    const dates = [];
+    fieldDatetimeRangeTimezone.forEach(element => {
+      if (element?.endValue > moment().unix()) {
+        dates.push(element);
+      }
+    });
+    const sortedDates = _.sortBy(dates, 'endValue');
+    return sortedDates[0];
+  };
+
   // Given an array of services provided at a facility,
   // return a flattened array of service locations that
   // offer service of type `serviceType`
