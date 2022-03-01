@@ -697,6 +697,9 @@ jobs:
       METRIC_NAMESPACE: dsva_vagov.content_build
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
 

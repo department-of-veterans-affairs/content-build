@@ -25,12 +25,13 @@ runs:
       working-directory: ${{ github.workspace }}
       run: |
         now="$(date +"%s")"
-        starttime="$(expr ${now} - 86400)"
+        # Start time is three days so that we can find Friday's events on Monday mornings.
+        starttime="$(expr ${now} - 259200)"
 
         # This is all one pipeline. Edit with care.
         # [
             # Get the last 1000 events from datadog
-            curl "https://api.datadoghq.com/api/v1/events?start=${starttime}&end=${now}&tags=env:prod&unaggregated=true" \
+            curl "https://api.datadoghq.com/api/v1/events?start=${starttime}&end=${now}&tags=env:prod,deploy:true&unaggregated=true" \
                 -H "Content-Type: text/json" \
                 -H "DD-APPLICATION-KEY: ${{ inputs.datadog_app_key }}" \
                 -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" | \
@@ -41,19 +42,24 @@ runs:
 
         time_since_last_deploy="$(expr ${now} - $(cat last_deploy.txt))"
 
+        # There's probably a better way to handle missing event timestamps, but
+        # this is relatively simple and will work for now.
         echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
-        echo "LAST_DEPLOY=$(cat last_deploy.txt)" >> $GITHUB_ENV
-        echo "TIME_SINCE_LAST_DEPLOY=$(expr ${now} - $(cat last_deploy.txt))" >> $GITHUB_ENV
+        echo "LAST_DEPLOY=$(cat last_deploy.txt || echo $CURRENT_TIME)" >> $GITHUB_ENV
+        echo "TIME_SINCE_LAST_DEPLOY=$(expr ${now} - ${LAST_DEPLOY})" >> $GITHUB_ENV
 
     - name: Record deployment event in Datadog
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
         # Send the event to datadog.
+        # The deploy:true tag here is so that the API query above can filter to
+        # just these events.
         jq --null-input '{}' | \
         jq '.title = "Content release (${{ inputs.environment }})"' | \
         jq '.text = "Content was released to ${{ inputs.environment }}"' | \
-        jq '.tags[0] = "env:${{ inputs.environment }}"' > event.json
+        jq '.tags[0] = "env:${{ inputs.environment }}"' | \
+        jq '.tags[1] = "deploy:true"' > event.json
 
         curl -X POST "https://api.datadoghq.com/api/v1/events" \
           -H "Content-Type: text/json" \
