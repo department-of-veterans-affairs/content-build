@@ -1,6 +1,7 @@
 // Relative imports.
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const nodeEvent = require('./nodeEvent.graphql');
+const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 // Create NodeOffice fragment.
 const nodeOffice = `
@@ -18,25 +19,40 @@ const nodeOffice = `
   }
 `;
 
-const GetNodeOffices = `
-  ${nodeEvent.fragmentWithoutBreadcrumbs}
-  ${nodeOffice}
+function getNodeOfficeSlice(operationName, offset, limit) {
+  return `
+    ${nodeEvent.fragmentWithoutBreadcrumbs}
+    ${nodeOffice}
 
-  query GetNodeOffices($onlyPublishedContent: Boolean!) {
-    nodeQuery(limit: 1000, filter: {
-      conditions: [
-        { field: "status", value: ["1"], enabled: $onlyPublishedContent },
-        { field: "type", value: ["office"] }
-      ]
-    }) {
-      entities {
-        ... nodeOffice
+    query ${operationName}($onlyPublishedContent: Boolean!) {
+      nodeQuery(
+        limit: ${limit}
+        offset: ${offset}
+        sort: { field: "nid", direction:  ASC }
+        filter: {
+          conditions: [
+            { field: "status", value: ["1"], enabled: $onlyPublishedContent },
+            { field: "type", value: ["office"] }
+          ]
+      }) {
+        entities {
+          ... nodeOffice
+        }
       }
     }
-  }
 `;
+}
+
+function getNodeOfficeQueries(entityCounts) {
+  return generatePaginatedQueries({
+    operationNamePrefix: 'GetNodeOffice',
+    entitiesPerSlice: 25,
+    totalEntities: entityCounts.data.office.count,
+    getSlice: getNodeOfficeSlice,
+  });
+}
 
 module.exports = {
   fragment: nodeOffice,
-  GetNodeOffices,
+  getNodeOfficeQueries,
 };
