@@ -12,6 +12,7 @@
 # Content release
 .github/workflows/content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
 .github/workflows/wait-for-cms-ready @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
+.github/workflows/record-release-interval @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
 script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/frontend-review-group
  
 # VSP QA Standards
@@ -35,4 +36,3 @@ src/site/paragraphs/facilities @department-of-veterans-affairs/vsa-facilities-fr
 
 # GraphQL Queries
 src/site/stages/build/drupal @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/cms-infrastructure
-

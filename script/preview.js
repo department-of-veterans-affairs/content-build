@@ -149,7 +149,12 @@ const nonNodeContent = {
       console.time(queryName);
 
       // eslint-disable-next-line no-await-in-loop
-      const json = await drupalClient.query({ query });
+      const json = await drupalClient.query({
+        query,
+        variables: {
+          onlyPublishedContent: false,
+        },
+      });
       if (json.errors) {
         console.error('Error executing', queryName, json);
         console.error('query:', query);
@@ -358,7 +363,7 @@ async function start() {
     nonNodeContent.refresh();
   }
 
-  // Refresh the non-node data every 10 minutes...
+  // Refresh the non-node data every 15 minutes...
   const fifteenMinutes = 15 * 60 * 1000;
   setInterval(() => nonNodeContent.refresh(), fifteenMinutes);
 

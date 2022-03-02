@@ -6,7 +6,6 @@ const SocksProxyAgent = require('socks-proxy-agent');
 
 const { PUBLIC_URLS } = require('../../../constants/drupals');
 const syswidecas = require('syswide-cas');
-const DRUPALS = require('../../../constants/drupals');
 const { queries, getQuery } = require('./queries');
 const {
   getIndividualizedQueries,
@@ -43,11 +42,10 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   // eslint-disable-next-line no-console
   const say = clientOptions.verbose ? console.log : () => {};
 
-  const envConfig = DRUPALS[buildOptions.buildtype];
-  // eslint-disable-next-line prefer-object-spread
-  const drupalConfig = Object.assign({}, envConfig, buildArgs);
-
+  // eslint-disable-next-line prefer-object-spread, no-undef
+  const drupalConfig = Object.assign({}, buildArgs);
   const { address, user, password } = drupalConfig;
+
   const drupalUri = `${address}/graphql`;
   const encodedCredentials = encodeCredentials({ user, password });
   const headers = {

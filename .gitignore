@@ -12,6 +12,7 @@ src/site/tests/html/
 .env
 npm-debug.log
 *.log
+*.swp
 
 config/config.proxy.js
 
