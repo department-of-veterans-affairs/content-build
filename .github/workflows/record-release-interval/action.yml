@@ -40,8 +40,6 @@ runs:
             jq '[.events[] | select(.title=="Content release (prod)")] | first | .date_happened' > last_deploy.txt
         # ]
 
-        time_since_last_deploy="$(expr ${now} - $(cat last_deploy.txt))"
-
         # There's probably a better way to handle missing event timestamps, but
         # this is relatively simple and will work for now.
         echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
