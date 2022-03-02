@@ -80,6 +80,7 @@ const nodeEvent = `
         }
       }
     }
+    fieldFeatured
     fieldLink {
       uri
       url {
@@ -229,6 +230,7 @@ const nodeEventWithoutBreadcrumbs = `
         }
       }
     }
+    fieldFeatured
     fieldLink {
       uri
       url {

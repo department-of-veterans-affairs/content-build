@@ -5,6 +5,13 @@ inputs:
   datadog_api_key:
     description: Key for Datadog API access
     required: true
+  datadog_app_key:
+    description: App key for Datadog API access (for reading events)
+    required: true
+  metric_namespace:
+    description: Namespace to record deploy time metric to
+    required: false
+    default: "dsva_vagov.content_build"
   environment:
     description: Environment that content was deployed to
     required: false
@@ -13,17 +20,58 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Get information for Datadog metrics
+      shell: bash
+      working-directory: ${{ github.workspace }}
+      run: |
+        now="$(date +"%s")"
+        # Start time is three days so that we can find Friday's events on Monday mornings.
+        starttime="$(expr ${now} - 259200)"
+
+        # This is all one pipeline. Edit with care.
+        # [
+            # Get the last 1000 events from datadog
+            curl "https://api.datadoghq.com/api/v1/events?start=${starttime}&end=${now}&tags=env:prod,deploy:true&unaggregated=true" \
+                -H "Content-Type: text/json" \
+                -H "DD-APPLICATION-KEY: ${{ inputs.datadog_app_key }}" \
+                -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" | \
+
+            # Filter the events down to just content releases and put the most recent timestamp into last_deploy.txt
+            jq '[.events[] | select(.title=="Content release (prod)")] | first | .date_happened' > last_deploy.txt
+        # ]
+
+        # There's probably a better way to handle missing event timestamps, but
+        # this is relatively simple and will work for now.
+        echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
+        echo "LAST_DEPLOY=$(cat last_deploy.txt || echo $CURRENT_TIME)" >> $GITHUB_ENV
+        echo "TIME_SINCE_LAST_DEPLOY=$(expr ${now} - ${LAST_DEPLOY})" >> $GITHUB_ENV
+
     - name: Record deployment event in Datadog
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
         # Send the event to datadog.
+        # The deploy:true tag here is so that the API query above can filter to
+        # just these events.
         jq --null-input '{}' | \
         jq '.title = "Content release (${{ inputs.environment }})"' | \
         jq '.text = "Content was released to ${{ inputs.environment }}"' | \
-        jq '.tags[0] = "env:${{ inputs.environment }}"' > event.json
+        jq '.tags[0] = "env:${{ inputs.environment }}"' | \
+        jq '.tags[1] = "deploy:true"' > event.json
 
         curl -X POST "https://api.datadoghq.com/api/v1/events" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
           -d @- < event.json
+
+        # Send the metric to datadog
+        jq --null-input '{}' | \
+        jq '.series[0].metric = "dsva_vagov.content_build.time_since_last_deploy"' | \
+        jq '.series[0].points[0] = [${{ env.CURRENT_TIME }}, ${{ env.TIME_SINCE_LAST_DEPLOY }}]' | \
+        jq '.series[].tags[0] = "env:${{ inputs.environment }}"' | \
+        jq '.series[].tags[1] = "build_number:${{ github.run_number }}"' > metrics.json
+
+        curl -X POST "https://api.datadoghq.com/api/v1/series" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
+          -d @- < metrics.json

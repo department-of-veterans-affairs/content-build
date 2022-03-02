@@ -1023,9 +1023,9 @@
   {
     "appName": "Virtual Agent",
     "entryName": "virtual-agent",
-    "rootUrl": "/virtual-agent-study",
+    "rootUrl": "contact-us/virtual-agent",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
