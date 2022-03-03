@@ -1,7 +1,7 @@
 name: Debug CI
 
 on:
-  pr:
+  pull_request:
 
 jobs:
   record-metrics:
