@@ -48,8 +48,9 @@ runs:
 
         # There's probably a better way to handle missing event timestamps, but
         # this is relatively simple and will work for now.
-        echo "LAST_DEPLOY=$(cat last_deploy.txt || echo $CURRENT_TIME)" >> $GITHUB_ENV
-        echo "TIME_SINCE_LAST_DEPLOY=$(expr ${now} - ${{ env.LAST_DEPLOY }})" >> $GITHUB_ENV
+        last_deploy=$(cat last_deploy.txt || echo $CURRENT_TIME)
+        echo "LAST_DEPLOY=${last_deploy})" >> $GITHUB_ENV
+        echo "TIME_SINCE_LAST_DEPLOY=$(expr ${now} - ${last_deploy})" >> $GITHUB_ENV
 
     - name: Record deployment event in Datadog
       shell: bash
