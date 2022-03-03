@@ -2,6 +2,9 @@ name: Debug CI
 
 on:
   pull_request:
+  push:
+    branches:
+      - "content-release-build-time-8"
 
 jobs:
   record-metrics:
