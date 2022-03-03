@@ -24,8 +24,12 @@ runs:
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
+        set -x
+
         now="$(date +"%s")"
-        # Start time is three days so that we can find Friday's events on Monday mornings.
+        echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
+
+        # Start time is three days ago so that we can find Friday's events on Monday mornings.
         starttime="$(expr ${now} - 259200)"
 
         # This is all one pipeline. Edit with care.
@@ -44,7 +48,6 @@ runs:
 
         # There's probably a better way to handle missing event timestamps, but
         # this is relatively simple and will work for now.
-        echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
         echo "LAST_DEPLOY=$(cat last_deploy.txt || echo $CURRENT_TIME)" >> $GITHUB_ENV
         echo "TIME_SINCE_LAST_DEPLOY=$(expr ${now} - ${LAST_DEPLOY})" >> $GITHUB_ENV
 
@@ -52,6 +55,8 @@ runs:
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
+        set -x
+
         # Send the event to datadog.
         # The deploy:true tag here is so that the API query above can filter to
         # just these events.
