@@ -26,6 +26,7 @@ runs:
       run: |
         set -x
 
+
         now="$(date +"%s")"
         echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
 
