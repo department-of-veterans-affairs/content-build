@@ -623,7 +623,7 @@ jobs:
 
   stop-runner:
     name: Stop on-demand-runner
-    needs: [archive, start-runner, deploy, record-metrics]
+    needs: [start-runner, deploy, notify-failure, record-metrics]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
