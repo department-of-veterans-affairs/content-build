@@ -1,4 +1,13 @@
+/* eslint-disable no-console */
 import { run } from 'axe-core';
+
+let scanType;
+if (process.env.A11Y_HEADER_CHECK === true) {
+  scanType = ['best-practice'];
+  console.log('THIS IS THE BEST PRACTICE SCAN!!!');
+} else {
+  scanType = ['section508', 'wcag2a', 'wcag2aa'];
+}
 
 const logViolations = violations => {
   /* eslint-disable no-console */
@@ -27,7 +36,7 @@ const axeCheck = container => {
   const options = {
     runOnly: {
       type: 'tag',
-      values: ['section508', 'wcag2a', 'wcag2aa'],
+      values: scanType,
     },
     rules: {
       // the 'bypass' check is disabled because it may give a false-positive
