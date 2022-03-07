@@ -1199,5 +1199,14 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "tutorial-test",
+    "entryName": "tutorial-test",
+    "rootUrl": "/tutorial-test",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
