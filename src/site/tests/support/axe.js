@@ -1,12 +1,18 @@
 /* eslint-disable no-console */
 import { run } from 'axe-core';
 
-let scanType;
+let scanRuleset;
+
 if (process.env.A11Y_HEADER_CHECK === true) {
-  scanType = ['best-practice'];
-  console.log('THIS IS THE BEST PRACTICE SCAN!!!');
+  scanRuleset = {
+    type: 'rule',
+    values: ['heading-order'],
+  };
 } else {
-  scanType = ['section508', 'wcag2a', 'wcag2aa'];
+  scanRuleset = {
+    type: 'tag',
+    values: ['section508', 'wcag2a', 'wcag2aa'],
+  };
 }
 
 const logViolations = violations => {
@@ -34,10 +40,7 @@ const logViolations = violations => {
 
 const axeCheck = container => {
   const options = {
-    runOnly: {
-      type: 'tag',
-      values: scanType,
-    },
+    runOnly: scanRuleset,
     rules: {
       // the 'bypass' check is disabled because it may give a false-positive
       // for lists of 4-5 links
