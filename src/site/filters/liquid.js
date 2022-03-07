@@ -895,7 +895,7 @@ module.exports = function registerFilters() {
     if (!data) return null;
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
-      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
+      const mostRecentEvent = liquid.filters.deriveMostRecentEventDate(
         event.fieldDatetimeRangeTimezone,
       );
       return mostRecentEvent.value * 1000 >= currentTimestamp;
@@ -1335,6 +1335,34 @@ module.exports = function registerFilters() {
     return basePath.includes(searchValue);
   };
 
+  liquid.filters.deriveMostRecentEventDate = fieldDatetimeRangeTimezone => {
+    const now = moment().unix();
+    if (!fieldDatetimeRangeTimezone) return fieldDatetimeRangeTimezone;
+
+    // Return back fieldDatetimeRangeTimezone if it is already a singular most recent date.
+    if (!_.isArray(fieldDatetimeRangeTimezone)) {
+      return fieldDatetimeRangeTimezone;
+    }
+
+    // Return back fieldDatetimeRangeTimezone's first item if it only has 1 item.
+    if (fieldDatetimeRangeTimezone?.length === 1) {
+      return fieldDatetimeRangeTimezone[0];
+    }
+    // Derive date times relative to now.
+    const dates = [];
+    fieldDatetimeRangeTimezone.forEach(element => {
+      if (element?.endValue > now) {
+        dates.push(element);
+      }
+    });
+    // Return the soonest upcoming date.
+    if (dates) {
+      return dates[0];
+    }
+
+    return [];
+  };
+
   liquid.filters.deriveMostRecentDate = (
     fieldDatetimeRangeTimezone,
     now = moment().unix(), // This is done so that we can mock the current time in tests.
@@ -1363,17 +1391,6 @@ module.exports = function registerFilters() {
 
     // Return the most recent future date if there are future dates.
     return futureDates[0];
-  };
-
-  liquid.filters.deriveMostRecentDateOnEventsListingPage = fieldDatetimeRangeTimezone => {
-    const dates = [];
-    fieldDatetimeRangeTimezone.forEach(element => {
-      if (element?.endValue > moment().unix()) {
-        dates.push(element);
-      }
-    });
-    const sortedDates = _.sortBy(dates, 'endValue');
-    return sortedDates[0];
   };
 
   // Given an array of services provided at a facility,

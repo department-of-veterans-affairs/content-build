@@ -1,13 +1,7 @@
 {% assign timezone = "ET" %}
 {% assign defaultTZ = "America/New_York" %}
 
-{% assign lastPathArg = entityUrl.path | split: "/" | last %}
-<!-- Derive most recent date -->
-{% if fieldDatetimeRangeTimezone.length > 1 and lastPathArg == 'events' %}
-  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDateOnEventsListingPage %}
-{% else %}
-  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
-{% endif %}
+{% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentEventDate %}
 
 {% if mostRecentDate.timezone != empty %}
   {% assign timezone = mostRecentDate.timezone |  timezoneAbbrev: mostRecentDate.value %}
