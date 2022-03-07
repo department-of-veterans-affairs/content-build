@@ -27,7 +27,7 @@
           <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
           <ul class="usa-unstyled-list" role="list">
             {% for spoke in fieldSpokes %}
-              <li>
+              <li class="vads-u-margin-bottom--2">
                 <a 
                   href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: 30 }}{% endif %}"
                   class="vads-u-display--flex vads-u-text-decoration--none"
