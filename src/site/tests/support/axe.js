@@ -3,22 +3,21 @@ import { run } from 'axe-core';
 
 let scanRuleset;
 
-if (process.env.A11Y_HEADER_CHECK === true) {
-  scanRuleset = {
-    type: 'rule',
-    values: ['heading-order'],
-  };
-  console.log('A11Y_HEADER_CHECK TRUE');
-} else {
-  scanRuleset = {
-    type: 'tag',
-    values: ['section508', 'wcag2a', 'wcag2aa'],
-  };
-  console.log('A11Y_HEADER_CHECK FALSE');
-}
+// if (process.env.A11Y_HEADER_CHECK === true) {
+//   scanRuleset = {
+//     type: 'rule',
+//     values: ['heading-order'],
+//   };
+//   console.log('A11Y_HEADER_CHECK TRUE');
+// } else {
+//   scanRuleset = {
+//     type: 'tag',
+//     values: ['section508', 'wcag2a', 'wcag2aa'],
+//   };
+//   console.log('A11Y_HEADER_CHECK FALSE');
+// }
 
 const logViolations = violations => {
-  /* eslint-disable no-console */
   console.log(
     'Please Note: An axe-core smoke test is expected to report 6 violations.',
   );
@@ -36,11 +35,23 @@ const logViolations = violations => {
       console.log(`\nNode ${nodeIdx + 1}:\n`, node);
     });
   });
-
-  /* eslint-enable no-console */
 };
 
 const axeCheck = container => {
+  if (process.env.A11Y_HEADER_CHECK === true) {
+    scanRuleset = {
+      type: 'rule',
+      values: ['heading-order'],
+    };
+    console.log('A11Y_HEADER_CHECK TRUE');
+  } else {
+    scanRuleset = {
+      type: 'tag',
+      values: ['section508', 'wcag2a', 'wcag2aa'],
+    };
+    console.log('A11Y_HEADER_CHECK FALSE');
+  }
+
   const options = {
     runOnly: scanRuleset,
     rules: {
