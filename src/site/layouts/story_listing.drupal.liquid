@@ -27,7 +27,7 @@
           {% endif %}
           {% if isFirstPage and featuredStories %}
             {% for storyFeature in featuredStories limit:2 %}
-                {% include "src/site/teasers/news_story_page_feature.drupal.liquid" with node = storyFeature %}
+                {% include "src/site/teasers/news_story_page.drupal.liquid" with node = storyFeature %}
             {% endfor %}
           {% endif %}
           {% for story in pagedItems %}
