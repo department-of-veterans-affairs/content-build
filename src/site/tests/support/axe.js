@@ -3,20 +3,6 @@ import { run } from 'axe-core';
 
 let scanRuleset;
 
-// if (process.env.A11Y_HEADER_CHECK === true) {
-//   scanRuleset = {
-//     type: 'rule',
-//     values: ['heading-order'],
-//   };
-//   console.log('A11Y_HEADER_CHECK TRUE');
-// } else {
-//   scanRuleset = {
-//     type: 'tag',
-//     values: ['section508', 'wcag2a', 'wcag2aa'],
-//   };
-//   console.log('A11Y_HEADER_CHECK FALSE');
-// }
-
 const logViolations = violations => {
   console.log(
     'Please Note: An axe-core smoke test is expected to report 6 violations.',

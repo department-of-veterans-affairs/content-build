@@ -272,16 +272,16 @@ jobs:
           payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "ATTN: Accessibility Scan for Heading Levels has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel-id: ${{ env.CHANNEL_ID }}
 
-      - name: Accessibility Test Success
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'success' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Success
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ needs.a11y.result == 'success' }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Get Node version
         id: get-node-version
@@ -370,7 +370,7 @@ jobs:
         working-directory: content-build
 
     env:
-      CHANNEL_ID: C01RAS1KAQK
+      CHANNEL_ID: C0369AZS7L4
 
     steps:
       - name: Checkout content-build
