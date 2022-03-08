@@ -38,7 +38,7 @@ const logViolations = violations => {
 };
 
 const axeCheck = container => {
-  if (process.env.A11Y_HEADER_CHECK === true) {
+  if (process.env.A11Y_HEADER_CHECK) {
     scanRuleset = {
       type: 'rule',
       values: ['heading-order'],
