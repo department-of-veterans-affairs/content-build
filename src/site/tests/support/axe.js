@@ -46,8 +46,8 @@ const axeCheck = container => {
     console.log('A11Y_HEADER_CHECK TRUE');
   } else {
     scanRuleset = {
-      type: 'tag',
-      values: ['section508', 'wcag2a', 'wcag2aa'],
+      type: 'rule',
+      values: ['heading-order'],
     };
     console.log('A11Y_HEADER_CHECK FALSE');
   }
