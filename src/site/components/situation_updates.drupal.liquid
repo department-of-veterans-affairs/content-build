@@ -15,7 +15,8 @@
           <div class="vads-u-margin-bottom--0 no-p-bottom-margin">
             <h4 class="vads-u-margin-top--1 vads-u-margin-bottom--2">
               <!-- Derive most recent date -->
-              {% assign mostRecentDate = update.entity.fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+              {% assign now = '' | currentTime %}
+              {% assign mostRecentDate = update.entity.fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}
 
               {% if mostRecentDate.value != empty %}
                 {{ mostRecentDate.value | dateFromUnix: "dddd, MMM D, h:mm A"}}

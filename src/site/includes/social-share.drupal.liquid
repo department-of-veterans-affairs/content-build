@@ -2,7 +2,8 @@
   <ul class="usa-unstyled-list" role="list">
     <li class="vads-u-margin-bottom--2p5">
       <!-- Derive most recent date -->
-      {% assign mostRecentDate = mostRecentDate | deriveMostRecentDate %}
+      {% assign now = '' | currentTime %}
+      {% assign mostRecentDate = mostRecentDate | deriveMostRecentDate: now %}
 
       <a
         data-description="{{ fieldDescription }}"
