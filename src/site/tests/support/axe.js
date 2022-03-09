@@ -39,7 +39,7 @@ const axeCheck = container => {
   const options = {
     runOnly: {
       type: 'tag',
-      values: ['section508', 'wcag2a', 'wcag2aa'],
+      values: ['section508', 'wcag2a', 'wcag2aa', 'best-practice'],
     },
     rules: {
       // the 'bypass' check is disabled because it may give a false-positive
