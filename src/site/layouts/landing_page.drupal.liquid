@@ -23,16 +23,22 @@
         </div>
 
         {% if fieldSpokes != empty and fieldSpokes.length > 1 %}
-          <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg" aria-labelledby="on-this-page">On this page</h2>
-          <ul>
+        <nav id="table-of-contents" aria-labelledby="on-this-page">
+          <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
+          <ul class="usa-unstyled-list" role="list">
             {% for spoke in fieldSpokes %}
-              <li>
-                <a href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: 30 }}{% endif %}">
+              <li class="vads-u-margin-bottom--2">
+                <a 
+                  href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: 30 }}{% endif %}"
+                  class="vads-u-display--flex vads-u-text-decoration--none"
+                >
+                  <i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1" aria-hidden="true"></i>
                   {{ spoke.entity.fieldTitle }}
                 </a>
               </li>
             {% endfor %}
           </ul>
+        </nav>
         {% endif %}
 
         {% if fieldAlert.length %}
