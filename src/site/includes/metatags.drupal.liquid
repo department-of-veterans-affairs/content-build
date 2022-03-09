@@ -53,7 +53,7 @@
         {% endif %}
       {% when "MetaProperty" %}
         {% if tag.key == "og:image" %}
-          <meta property="og:image" content="{{ hostUrl }}{{ tag.value }}">
+          <meta property="og:image" content="{{ tag.value }}">
         {% else %}
           <meta property="{{ tag.key }}" content="{{ tag.value }}">
         {% endif %}
