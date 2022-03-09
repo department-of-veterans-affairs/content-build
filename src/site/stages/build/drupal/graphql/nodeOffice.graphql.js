@@ -16,6 +16,23 @@ const nodeOffice = `
         ... nodeEventWithoutBreadcrumbs
       }
     }
+    fieldOfficeId
+    fieldParentOffice {
+      entity {
+        ...on NodeOffice {
+          entityId
+          title
+        }
+      }
+    }
+    reverseFieldParentOfficeNode {
+      entities {
+        ... on NodeOffice {
+          entityId
+          title
+        }
+      }
+    }
   }
 `;
 
