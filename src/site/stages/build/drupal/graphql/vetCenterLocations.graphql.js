@@ -109,6 +109,12 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
               }
             }
             ... on NodeVetCenterOutstation {
+              fieldOfficeHours {
+                day
+                starthours
+                endhours
+                comment
+              }
               title
               entityBundle
               fieldFacilityLocatorApiId

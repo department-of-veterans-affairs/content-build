@@ -61,10 +61,8 @@
             {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' entity = fieldRelatedLinks.entity boldTitle = true %}
           </section>
         {% endif %}
-
-        <div class="last-updated usa-content">
-          Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-        </div>
+    <!-- Last updated & feedback button -->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </article>
 
       <div class="usa-width-one-third" id="hub-rail">

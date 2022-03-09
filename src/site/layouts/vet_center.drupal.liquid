@@ -75,7 +75,10 @@
                       </div>
                     </div>
 
-                    {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = fieldOfficeHours %}
+                    {% include 'src/site/includes/vet_centers/hours.liquid' with
+                            vetCenterHours = fieldOfficeHours
+                            isSatelliteLocation = false
+                    %}
                   </section>
                 </div>
               </div>
@@ -167,6 +170,8 @@
             </div>
           {% endif %}
           <va-back-to-top></va-back-to-top>
+    <!-- Last updated & feedback button -->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}          
         </article>
       </div>
     </div>

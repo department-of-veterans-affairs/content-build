@@ -127,6 +127,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: ~/.cache/yarn
@@ -149,6 +150,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: ~/.cache/yarn
@@ -262,8 +264,27 @@ jobs:
       - name: Wait for the CMS to be ready
         uses: ./content-build/.github/workflows/wait-for-cms-ready
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod password
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username 
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
+
       - name: Build
-        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address='${{ env.DRUPAL_ADDRESS }}' --no-drupal-proxy
+        run: yarn build --buildtype=${{ env.BUILDTYPE }} --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --no-drupal-proxy
         timeout-minutes: 30
         env:
           NODE_ENV: production
@@ -343,7 +364,7 @@ jobs:
         run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
       - name: Notify Slack about broken links
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -426,9 +447,9 @@ jobs:
           echo 'Waiting to release: https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...${{ needs.set-env.outputs.COMMIT_SHA }}'
 
       - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
-        uses: whatnick/wait-action@master
-        with:
-          time: ${{ needs.set-env.outputs.RELEASE_WAIT }}m
+        run: |
+          echo "Waiting for ${{ needs.set-env.outputs.RELEASE_WAIT }}m"
+          sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
 
       - name: Get next tag version
         run: |
@@ -481,11 +502,17 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
-      - name: Get Drupal token from Parameter Store
+      - name: Get Drupal prod password
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /dsva-vagov/vets-website/prod/drupal-password
-          env_variable_name: CALLBACK_TOKEN
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: Get Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
 
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
@@ -511,8 +538,8 @@ jobs:
         with:
           url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
-          username: api
-          password: ${{ env.CALLBACK_TOKEN }}
+          username: ${{ env.DRUPAL_USERNAME }}
+          password: ${{ env.DRUPAL_PASSWORD }}
           timeout: 10000
 
   notify-success:
@@ -553,9 +580,50 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+  record-metrics:
+    name: Record metrics in Datadog
+    runs-on: ubuntu-latest
+    needs:
+      - deploy
+    if: |
+      always() &&
+      needs.deploy.result == 'success'
+    env:
+      METRIC_NAMESPACE: dsva_vagov.content_build
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Datadog api key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Get Datadog app key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
+
+      - name: Record deployment event
+        uses: ./.github/workflows/record-release-interval
+        with:
+          datadog_api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
+          datadog_app_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_APP_KEY }}
+          metric_namespace: ${{ env.METRIC_NAMESPACE }}
+
   stop-runner:
     name: Stop on-demand-runner
-    needs: [archive, start-runner]
+    needs: [start-runner, deploy, notify-failure, record-metrics]
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:

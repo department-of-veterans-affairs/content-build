@@ -1,6 +1,6 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" %}
 
 <div class="interior vads-u-padding-bottom--3" id="content" data-template="event_listing.drupal.liquid">
   <main class="va-l-detail-page va-facility-page">
@@ -86,6 +86,8 @@
 
             </div>
           </div>
+              <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}  
         </article>
       </div>
     </div>

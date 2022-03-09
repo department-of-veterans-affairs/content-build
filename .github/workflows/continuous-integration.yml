@@ -109,8 +109,9 @@ jobs:
       vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
 
     env:
-      # Sandbox Drupal address is used on branches other than master.
+      # Sandbox Drupal address, username, and password is used on branches other than master.
       DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+      DRUPAL_PASSWORD: drupal8
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     strategy:
@@ -142,9 +143,12 @@ jobs:
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Install tar
+        run: sudo apt install tar
 
       - name: Cache dependencies
         id: cache-dependencies
@@ -169,6 +173,26 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod password
+        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/master' }}
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
+
       - name: Get buildtime
         id: buildtime
         run: |
@@ -182,7 +206,7 @@ jobs:
           base_url: ${{ matrix.drupal-address }}
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
@@ -215,7 +239,7 @@ jobs:
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Compress build
-        run: tar -C build/${{ matrix.buildtype }} -cf ${{ matrix.buildtype }}.tar.bz2 .
+        run: tar -C build/${{ matrix.buildtype }} -cvf ${{ matrix.buildtype }}.tar.bz2 .
 
       - name: Persist compressed build and drupal cache
         run: |
@@ -269,49 +293,8 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      # ----------------------------
-      # | Notify Slack of failures |
-      # ---------------------------
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        if: ${{ failure() }}
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        if: ${{ failure() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
-      - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        if: ${{ failure() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
-
-      - name: Notify Slack about build failures
-        if: ${{ failure() }}
-        uses: slackapi/slack-github-action@v1.16.0
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#FFCC00","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "At least one build step in `content-build` has failed, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: C02AG8UF95M # gha-build-status
-
-      # ----------------
-      # | End Notify Slack |
-      # ----------------
-
       - name: Notify Slack about broken links
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.18.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -330,6 +313,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -373,6 +357,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -395,7 +380,7 @@ jobs:
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
@@ -411,6 +396,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -454,6 +440,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: on-demand-runner-cypress-
@@ -550,7 +537,7 @@ jobs:
       #   working-directory: testing-tools-team-dashboard-data
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14 # ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
@@ -720,6 +707,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -770,6 +758,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
@@ -886,6 +875,7 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/workflows/install
+        timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: ~/.cache/yarn

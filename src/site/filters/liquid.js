@@ -8,6 +8,8 @@ const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
+const stagingSurveys = require('./medalliaStagingSurveys.json');
+const prodSurveys = require('./medalliaProdSurveys.json');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -1414,50 +1416,32 @@ module.exports = function registerFilters() {
     const formattedEndsAt = moment
       .tz(endsAtUnix * 1000, timezone)
       .format('h:mm a');
-    const endsAtTimezone = moment.tz(endsAtUnix * 1000, timezone).format('z');
+    const endsAtTimezone = moment
+      .tz(endsAtUnix * 1000, timezone)
+      .format('z')
+      .replace(/S|D/i, '');
 
     return `${formattedStartsAt} – ${formattedEndsAt} ${endsAtTimezone}`;
   };
 
-  liquid.filters.deriveVetCenterHoursKey = forloopindex => {
-    let name = '';
-    switch (forloopindex) {
-      case 0:
-        name = 'vetCenterHoursKey_01';
-        break;
-      case 1:
-        name = 'vetCenterHoursKey_02';
-        break;
-      case 2:
-        name = 'vetCenterHoursKey_03';
-        break;
-      default:
-        name = 'vetCenterHours';
-        break;
-    }
-    return name;
-  };
-
-  liquid.filters.deriveVetCenterDataWidgetTypeName = forloopindex => {
-    let name = '';
-    switch (forloopindex) {
-      case 0:
-        name = 'vet-center-hours-one';
-        break;
-      case 1:
-        name = 'vet-center-hours-two';
-        break;
-      case 2:
-        name = 'vet-center-hours-three';
-        break;
-      default:
-        name = 'vet-center-hours';
-        break;
-    }
-    return name;
+  liquid.filters.dynamicVetCenterHoursKey = forloopindex => {
+    return `vetCenterHoursKey_${forloopindex}`;
   };
 
   liquid.filters.featureCareWeProvide = () => {
     return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
+  };
+
+  liquid.filters.getSurvey = (buildtype, url) => {
+    if (
+      buildtype === 'localhost' ||
+      buildtype === 'vagovstaging' ||
+      buildtype === 'vagovdev'
+    ) {
+      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    } else if (buildtype === 'vagovprod') {
+      return prodSurveys[url] ? prodSurveys[url] : 17;
+    }
+    return null;
   };
 };

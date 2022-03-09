@@ -680,40 +680,11 @@
   {
     "appName": "GI Bill Comparison Tool",
     "entryName": "gi",
-    "rootUrl": "/gi-bill-comparison-tool",
-    "template": {
-      "title": "GI Bill Comparison Tool",
-      "display_title": "GI Bill school comparison",
-      "description": "Use our GI Bill Comparison Tool to help you decide which education program and school is best for you. Find out which benefits you’ll get at your chosen school.",
-      "layout": "page-react.html",
-      "collection": "education",
-      "spoke": "More resources",
-      "order": 1
-    }
-  },
-  {
-    "appName": "GI Bill Comparison Tool",
-    "entryName": "gi",
     "rootUrl": "/education/gi-bill-comparison-tool",
     "template": {
       "title": "GI Bill Comparison Tool",
       "display_title": "GI Bill school comparison",
       "description": "Use our GI Bill Comparison Tool to help you decide which education program and school is best for you. Find out which benefits you’ll get at your chosen school.",
-      "layout": "page-react.html",
-      "collection": "education",
-      "spoke": "More resources",
-      "order": 1
-    }
-  },
-  {
-    "appName": "CT Redesign Sandbox",
-    "entryName": "gi-sandbox",
-    "rootUrl": "/education/gi-bill-comparison-tool-sandbox",
-    "template": {
-      "vagovprod": false,
-      "title": "CT Redesign Sandbox",
-      "display_title": "CT Redesign Sandbox",
-      "description": "Sandbox for testing the CT redesign features so that the original Comparison Tool codebase is not filled with throw away code",
       "layout": "page-react.html",
       "collection": "education",
       "spoke": "More resources",
@@ -835,26 +806,6 @@
     }
   },
   {
-    "appName": "Coronavirus Research - Volunteer - V2",
-    "entryName": "coronavirus-research-v2",
-    "rootUrl": "/coronavirus-research/volunteer/v2",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "coronavirus-research/",
-          "name": "Participating in coronavirus research at VA"
-        },
-        {
-          "path": "coronavirus-research/volunteer/v2",
-          "name": "Sign up to volunteer"
-        }
-      ]
-    }
-  },
-  {
     "appName": "Coronavirus Research - Volunteer",
     "entryName": "coronavirus-research",
     "rootUrl": "/coronavirus-research/volunteer",
@@ -879,7 +830,7 @@
     "entryName": "coronavirus-research-update",
     "rootUrl": "/coronavirus-research/volunteer/update",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -888,7 +839,7 @@
           "name": "Participating in coronavirus research at VA"
         },
         {
-          "path": "coronavirus-research/update/",
+          "path": "coronavirus-research/volunteer/update/",
           "name": "Update your information"
         }
       ]
@@ -1043,9 +994,9 @@
   {
     "appName": "Virtual Agent",
     "entryName": "virtual-agent",
-    "rootUrl": "/virtual-agent-study",
+    "rootUrl": "contact-us/virtual-agent",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1242,6 +1193,16 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Education Inbox",
+    "entryName": "education-inbox",
+    "rootUrl": "/education/education-inbox",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "title": "Check your VA education inbox"
     }
   }
 ]
