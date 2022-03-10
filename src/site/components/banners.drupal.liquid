@@ -29,15 +29,12 @@
 
 <!-- Promo Banners -->
 {% for promoBanner in visiblePromoBanners %}
-  <div
-    aria-label="{{ promoBanner.title | escape }}"
-    data-id="{{ promoBanner.entityId }}"
-    data-link="{{ promoBanner.fieldLink.url.path }}"
-    data-template="components/banners.drupal.liquid"
-    data-title="{{ promoBanner.title | escape }}"
-    data-type="{{ promoBanner.fieldPromoType }}"
-    data-visible="true"
-    data-widget-type="promo-banner"
+  <va-promo-banner
+    aria-label="{{ promoBanner.title }}"
     role="region"
-  ></div>
+    data-template="components/banners.drupal.liquid"
+    id="{{ promoBanner.entityId }}"
+    href="{{ promoBanner.fieldLink.url.path }}"
+    type="{{ promoBanner.fieldPromoType }}"
+  >{{ promoBanner.title }}</va-promo-banner>
 {% endfor %}
