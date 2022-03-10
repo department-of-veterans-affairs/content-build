@@ -22,24 +22,10 @@ const logViolations = violations => {
 };
 
 const axeCheck = container => {
-  // if (process.env.A11Y_HEADER_CHECK) {
-  //   scanRuleset = {
-  //     type: 'rule',
-  //     values: ['heading-order'],
-  //   };
-  //   console.log('A11Y_HEADER_CHECK TRUE');
-  // } else {
-  //   scanRuleset = {
-  //     type: 'tag',
-  //     values: ['section508', 'wcag2a', 'wcag2aa'],
-  //   };
-  //   console.log('A11Y_HEADER_CHECK FALSE');
-  // }
-
   const options = {
     runOnly: {
       type: 'tag',
-      values: ['section508', 'wcag2a', 'wcag2aa', 'best-practice'],
+      values: ['section508', 'wcag2a', 'wcag2aa'],
     },
     rules: {
       // the 'bypass' check is disabled because it may give a false-positive
@@ -56,9 +42,6 @@ const axeCheck = container => {
       // be present in the html document so the 'document-title' check is disabled
       'document-title': {
         enabled: false,
-      },
-      'heading-order': {
-        enabled: true,
       },
     },
   };
