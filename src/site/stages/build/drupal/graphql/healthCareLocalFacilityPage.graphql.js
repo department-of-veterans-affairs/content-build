@@ -26,6 +26,13 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
+    reverseFieldOfficeNode {
+          entities {
+            ...on NodeHealthCareRegionPage {
+              fieldVaHealthConnectPhone
+            }
+          }
+      }
     fieldAddress {
       addressLine1
       locality

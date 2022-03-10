@@ -11,13 +11,6 @@ const FACILITIES_RESULTS = `
       }
     }
       entityBundle
-      reverseFieldOfficeNode {
-          entities {
-            ...on NodeHealthCareRegionPage {
-              fieldVaHealthConnectPhone
-            }
-          }
-      }
       title
       entityId
       entityBundle
