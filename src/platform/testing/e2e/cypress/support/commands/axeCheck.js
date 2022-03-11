@@ -82,6 +82,12 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
     },
   };
 
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(typeof process.env.A11Y_HEADER_CHECK);
+
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
    */
