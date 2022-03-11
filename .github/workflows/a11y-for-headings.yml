@@ -19,26 +19,16 @@ env:
 jobs:
   build:
     name: Build
-    timeout-minutes: 120
     runs-on: [self-hosted, asg]
-    container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome89-ff77
-      options: -u 1001:1001 -v /usr/local/share:/share
-    strategy:
-      fail-fast: false
-      max-parallel: 32
-      matrix:
-        ci_node_total: [32]
-        ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+    timeout-minutes: 120
     defaults:
       run:
         working-directory: content-build
 
     env:
       DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-      NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
-      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
-
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -140,12 +130,6 @@ jobs:
           cd ..
           cp -arf vets-website/build/${{ env.BUILD_TYPE }}/* content-build/build/${{ env.BUILD_TYPE }}
 
-      - name: Start content-build
-        run: node src/platform/testing/e2e/test-server.js --buildtype ${{ env.BUILD_TYPE }} --port=3002 &
-
-      - name: Run Cypress E2E Tests
-        run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 A11Y_HEADER_CHECK=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
-
       # - name: Compress E2E test build
       #   run: tar -C build/${{ env.BUILD_TYPE }} -cjf test-build.tar.bz2 .
 
@@ -199,14 +183,14 @@ jobs:
       #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
       #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
-      # - name: Install dependencies
-      #   uses: nick-invision/retry@v2
-      #   with:
-      #     command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-      #     max_attempts: 3
-      #     timeout_minutes: 7
-      #   env:
-      #     YARN_CACHE_FOLDER: .cache/yarn
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
 
       # - name: Download production build artifact
       #   uses: actions/download-artifact@v2
@@ -218,11 +202,11 @@ jobs:
       #     mkdir -p build/${{ env.BUILD_TYPE }}
       #     tar -C build/${{ env.BUILD_TYPE }} -xjf /__w/content-build/content-build/test-build.tar.bz2
 
-      # - name: Start content-build
-      #   run: node src/platform/testing/e2e/test-server.js --buildtype ${{ env.BUILD_TYPE }} --port=3002 &
+      - name: Start content-build
+        run: node src/platform/testing/e2e/test-server.js --buildtype ${{ env.BUILD_TYPE }} --port=3002 &
 
-      # - name: Run Cypress E2E Tests
-      #   run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 A11Y_HEADER_CHECK=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
+      - name: Run Cypress E2E Tests
+        run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 A11Y_HEADER_CHECK=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
 
       # - name: Rename Mochawesome JSON file
       #   if: ${{ always() }}
@@ -240,10 +224,13 @@ jobs:
     name: Notify Slack
     runs-on: ubuntu-latest
     needs: [build, a11y]
-    if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure') }}
+    if: ${{ always() && (needs.a11y.result == 'failure') }}
     defaults:
       run:
         working-directory: content-build
+
+    env:
+      CHANNEL_ID: C0369AZS7L4
 
     steps:
       - name: Checkout content-build
