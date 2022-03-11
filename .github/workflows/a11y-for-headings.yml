@@ -129,15 +129,15 @@ jobs:
           cd ..
           cp -arf vets-website/build/vagovprod/* content-build/build/vagovprod
 
-      - name: Compress E2E test build
-        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+      # - name: Compress E2E test build
+      #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
-      - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-build.tar.bz2
-          path: content-build/test-build.tar.bz2
-          retention-days: 1
+      # - name: Upload E2E test build artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: test-build.tar.bz2
+      #     path: content-build/test-build.tar.bz2
+      #     retention-days: 1
 
   a11y:
     name: Accessibility Tests
@@ -171,35 +171,35 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            /github/home/.cache/Cypress
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       /github/home/.cache/Cypress
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
+      # - name: Install dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+      #     max_attempts: 3
+      #     timeout_minutes: 7
+      #   env:
+      #     YARN_CACHE_FOLDER: .cache/yarn
 
-      - name: Download production build artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: test-build.tar.bz2
+      # - name: Download production build artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: test-build.tar.bz2
 
-      - name: Unpack build
-        run: |
-          mkdir -p build/vagovprod
-          tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+      # - name: Unpack build
+      #   run: |
+      #     mkdir -p build/vagovprod
+      #     tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
       - name: Start content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
@@ -207,20 +207,20 @@ jobs:
       - name: Run Cypress E2E Tests
         run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 A11Y_HEADER_CHECK=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
 
-      - name: Rename Mochawesome JSON file
-        if: ${{ always() }}
-        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
+      # - name: Rename Mochawesome JSON file
+      #   if: ${{ always() }}
+      #   run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
 
-      - name: Archive Mochawesome test results
-        uses: actions/upload-artifact@v2
-        if: ${{ always() }}
-        with:
-          name: cypress-mochawesome-test-results
-          path: mochawesome-report
-          retention-days: 1
+      # - name: Archive Mochawesome test results
+      #   uses: actions/upload-artifact@v2
+      #   if: ${{ always() }}
+      #   with:
+      #     name: cypress-mochawesome-test-results
+      #     path: mochawesome-report
+      #     retention-days: 1
 
   slack:
-    name: Notify Slack and upload Mochawesome report
+    name: Notify Slack
     runs-on: ubuntu-latest
     needs: [build, a11y]
     if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure') }}
@@ -261,69 +261,69 @@ jobs:
           payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "ATTN: Accessibility Scan for Heading Levels has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel-id: ${{ env.CHANNEL_ID }}
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      # - name: Get Node version
+      #   id: get-node-version
+      #   run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+      # - name: Setup Node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+      # - name: Install dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+      #     max_attempts: 3
+      #     timeout_minutes: 7
+      #   env:
+      #     YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results
+      #     path: content-build/cypress/results/json
 
-      - name: Merge test results into one file
-        run: |
-          yarn run cy:report:merge && sed -i -e 's/"message": "AssertionError.*$/"message": "Accessibility violations were detected.",/g' index.json
+      # - name: Merge test results into one file
+      #   run: |
+      #     yarn run cy:report:merge && sed -i -e 's/"message": "AssertionError.*$/"message": "Accessibility violations were detected.",/g' index.json
 
-      - name: Generate HTML report
-        run: yarn run cy:report:generate
+      # - name: Generate HTML report
+      #   run: yarn run cy:report:generate
 
-      - name: Generate UUID for Mochawesome report
-        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
+      # - name: Generate UUID for Mochawesome report
+      #   run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
 
-      - name: Rename Mochawesome report file
-        run: |
-          cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
+      # - name: Rename Mochawesome report file
+      #   run: |
+      #     cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
 
-      - name: Get AWS IAM role
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+      # - name: Get AWS IAM role
+      #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+      #   with:
+      #     ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+      #     env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-      - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
+      # - name: Configure AWS Credentials (2)
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-gov-west-1
+      #     role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+      #     role-duration-seconds: 900
+      #     role-session-name: vsp-frontendteam-githubaction
 
-      - name: Upload test report to s3
-        run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
+      # - name: Upload test report to s3
+      #   run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
