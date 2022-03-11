@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
 import { run } from 'axe-core';
 
 const logViolations = violations => {
+  /* eslint-disable no-console */
   console.log(
     'Please Note: An axe-core smoke test is expected to report 6 violations.',
   );
@@ -19,6 +19,8 @@ const logViolations = violations => {
       console.log(`\nNode ${nodeIdx + 1}:\n`, node);
     });
   });
+
+  /* eslint-enable no-console */
 };
 
 const axeCheck = container => {

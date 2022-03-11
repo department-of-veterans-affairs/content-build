@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const { normal } = require('../../../testing/e2e/timeouts');
 const xml = require('fast-xml-parser');
 const fetch = require('sync-fetch');
@@ -41,12 +40,6 @@ describe(`Accessibility tests batch ${step} of 32`, () => {
       cy.get('body').should('be.visible', { timeout: normal });
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(3000);
-
-      if (process.env.A11Y_HEADER_CHECK === true) {
-        console.log('HERE:: A11Y_HEADER_CHECK TRUE');
-      } else {
-        console.log('HERE:: A11Y_HEADER_CHECK FALSE');
-      }
 
       cy.injectAxe().axeCheck({
         exclude: [

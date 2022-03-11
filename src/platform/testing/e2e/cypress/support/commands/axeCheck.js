@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const table = require('table').table;
 
 const tableConfig = {
@@ -52,6 +53,12 @@ const processAxeCheckResults = violations => {
  */
 Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
   const { _13647Exception } = tempOptions;
+
+  if (process.env.A11Y_HEADER_CHECK === true) {
+    console.log('HERE:: A11Y_HEADER_CHECK TRUE');
+  } else {
+    console.log('HERE:: A11Y_HEADER_CHECK FALSE');
+  }
 
   /**
    * Default required ruleset to meet Section 508 compliance.
