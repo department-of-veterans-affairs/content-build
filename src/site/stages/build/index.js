@@ -38,6 +38,8 @@ const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
+const addDirectoryFiles = require('./plugins/add-directory-files');
+const runGatsbyBuild = require('./plugins/run-gatsby-build');
 
 // Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
 // attempt to open too many files simultaneously, so we need to handle it.
@@ -86,6 +88,10 @@ function build(BUILD_OPTIONS) {
     );
   }
 
+  smith.use(
+    runGatsbyBuild(`${BUILD_OPTIONS.gatsbyDirectory}`),
+    'Initiate Gatsby build',
+  );
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 
@@ -209,6 +215,11 @@ function build(BUILD_OPTIONS) {
       `Apply layouts ${pattern.length === 2 ? pattern[0] : pattern}`,
     );
   });
+
+  smith.use(
+    addDirectoryFiles(`${BUILD_OPTIONS.gatsbyDirectory}public/`, true),
+    'Adding files from Gatsby directory',
+  );
 
   /*
    * This will replace links in static pages with a staging domain,
