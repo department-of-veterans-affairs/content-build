@@ -121,17 +121,17 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build content-build
-        run: yarn build --buildtype=${{ BUILD_TYPE }} --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ env.BUILD_TYPE }} --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
       - name: Copy vets-website assets to content-build
         run: |
           cd ..
-          cp -arf vets-website/build/${{ BUILD_TYPE }}/* content-build/build/${{ BUILD_TYPE }}
+          cp -arf vets-website/build/${{ env.BUILD_TYPE }}/* content-build/build/${{ env.BUILD_TYPE }}
 
       # - name: Compress E2E test build
-      #   run: tar -C build/${{ BUILD_TYPE }} -cjf test-build.tar.bz2 .
+      #   run: tar -C build/${{ env.BUILD_TYPE }} -cjf test-build.tar.bz2 .
 
       # - name: Upload E2E test build artifact
       #   uses: actions/upload-artifact@v2
@@ -199,11 +199,11 @@ jobs:
 
       # - name: Unpack build
       #   run: |
-      #     mkdir -p build/${{ BUILD_TYPE }}
-      #     tar -C build/${{ BUILD_TYPE }} -xjf /__w/content-build/content-build/test-build.tar.bz2
+      #     mkdir -p build/${{ env.BUILD_TYPE }}
+      #     tar -C build/${{ env.BUILD_TYPE }} -xjf /__w/content-build/content-build/test-build.tar.bz2
 
       - name: Start content-build
-        run: node src/platform/testing/e2e/test-server.js --buildtype ${{ BUILD_TYPE }} --port=3002 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype ${{ env.BUILD_TYPE }} --port=3002 &
 
       - name: Run Cypress E2E Tests
         run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 A11Y_HEADER_CHECK=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
