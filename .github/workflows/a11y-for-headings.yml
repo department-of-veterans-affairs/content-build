@@ -13,7 +13,7 @@ on:
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  BUILD_TYPYE: vagovdev
+  BUILD_TYPE: vagovdev
 
 jobs:
   build:
@@ -77,7 +77,7 @@ jobs:
           timeout_minutes: 10
 
       - name: Build vets-website
-        run: yarn build --verbose --buildtype=${{ env.BUILD_TYPYE }}
+        run: yarn build --verbose --buildtype=${{ env.BUILD_TYPE }}
         working-directory: vets-website
         timeout-minutes: 30
 
@@ -128,7 +128,7 @@ jobs:
       - name: Copy vets-website assets to content-build
         run: |
           cd ..
-          cp -arf vets-website/build/${{ BUILD_TYPE }}/* content-build/build/${{ BUILD_TYPYE }}
+          cp -arf vets-website/build/${{ BUILD_TYPE }}/* content-build/build/${{ BUILD_TYPE }}
 
       # - name: Compress E2E test build
       #   run: tar -C build/${{ BUILD_TYPE }} -cjf test-build.tar.bz2 .
