@@ -13,6 +13,7 @@ on:
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  BUILD_TYPYE: vagovdev
 
 jobs:
   build:
@@ -76,19 +77,19 @@ jobs:
           timeout_minutes: 10
 
       - name: Build vets-website
-        run: yarn build --verbose --buildtype=vagovprod
+        run: yarn build --verbose --buildtype=${{ env.BUILD_TYPYE }}
         working-directory: vets-website
         timeout-minutes: 30
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install content-build dependencies
         uses: nick-invision/retry@v2
@@ -120,17 +121,17 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build content-build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ BUILD_TYPE }} --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
       - name: Copy vets-website assets to content-build
         run: |
           cd ..
-          cp -arf vets-website/build/vagovprod/* content-build/build/vagovprod
+          cp -arf vets-website/build/${{ BUILD_TYPE }}/* content-build/build/${{ BUILD_TYPYE }}
 
       # - name: Compress E2E test build
-      #   run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+      #   run: tar -C build/${{ BUILD_TYPE }} -cjf test-build.tar.bz2 .
 
       # - name: Upload E2E test build artifact
       #   uses: actions/upload-artifact@v2
@@ -182,14 +183,14 @@ jobs:
       #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
       #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
-      # - name: Install dependencies
-      #   uses: nick-invision/retry@v2
-      #   with:
-      #     command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
-      #     max_attempts: 3
-      #     timeout_minutes: 7
-      #   env:
-      #     YARN_CACHE_FOLDER: .cache/yarn
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
 
       # - name: Download production build artifact
       #   uses: actions/download-artifact@v2
@@ -198,11 +199,11 @@ jobs:
 
       # - name: Unpack build
       #   run: |
-      #     mkdir -p build/vagovprod
-      #     tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+      #     mkdir -p build/${{ BUILD_TYPE }}
+      #     tar -C build/${{ BUILD_TYPE }} -xjf /__w/content-build/content-build/test-build.tar.bz2
 
       - name: Start content-build
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype ${{ BUILD_TYPE }} --port=3002 &
 
       - name: Run Cypress E2E Tests
         run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 A11Y_HEADER_CHECK=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
