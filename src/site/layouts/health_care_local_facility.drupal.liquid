@@ -72,10 +72,12 @@
                               href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
                         </div>
                       {% endif %}
-                      {% if fieldVaHealthConnectPhone %}
+                      {% if fieldRegionPage.entity.fieldVaHealthConnectPhone %}
                         <div class="vads-u-margin-bottom--1">
                           <strong>VA health connect:</strong>
-                          <a href="tel:{{ fieldVaHealthConnectPhone }}">{{ fieldVaHealthConnectPhone }}</a>
+                          <a href="tel:{{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}">
+                              {{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}
+                          </a>
                         </div>
                       {% endif %}
                       {% if fieldMentalHealthPhone %}
