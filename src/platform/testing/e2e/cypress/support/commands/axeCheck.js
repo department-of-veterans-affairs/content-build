@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const table = require('table').table;
 
 const tableConfig = {
@@ -53,6 +54,12 @@ const processAxeCheckResults = violations => {
 Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
   const { _13647Exception } = tempOptions;
 
+  if (process.env.A11Y_HEADER_CHECK === true) {
+    console.log('HERE:: A11Y_HEADER_CHECK TRUE');
+  } else {
+    console.log('HERE:: A11Y_HEADER_CHECK FALSE');
+  }
+
   /**
    * Default required ruleset to meet Section 508 compliance.
    * Do not remove values[] entries. Only add new rulesets like 'best-practices'.
@@ -69,8 +76,17 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
       'color-contrast': {
         enabled: false,
       },
+      'heading-order': {
+        enabled: true,
+      },
     },
   };
+
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  console.log(typeof process.env.A11Y_HEADER_CHECK);
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
