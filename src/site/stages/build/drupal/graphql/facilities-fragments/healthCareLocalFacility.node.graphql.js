@@ -38,7 +38,7 @@ const FACILITIES_RESULTS = `
       postalCode
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
+    fieldMentalHealthPhone    
     fieldFacilityHours {
       value
     }
