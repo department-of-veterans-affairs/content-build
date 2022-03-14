@@ -64,15 +64,15 @@ jobs:
         working-directory: vets-website
         timeout-minutes: 30
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install content-build dependencies
         uses: nick-invision/retry@v2
@@ -155,16 +155,16 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            /github/home/.cache/Cypress
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       /github/home/.cache/Cypress
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
       - name: Install dependencies
         uses: nick-invision/retry@v2
@@ -242,93 +242,93 @@ jobs:
           payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "ATTN: Accessibility heading-order tests have failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel-id: ${{ env.CHANNEL_ID }}
 
-      - name: Accessibility Test Success
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'success' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Accessibility heading-order tests have succeeded on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Success
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ needs.a11y.result == 'success' }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Accessibility heading-order tests have succeeded on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      # - name: Get Node version
+      #   id: get-node-version
+      #   run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+      # - name: Setup Node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+      # - name: Cache dependencies
+      #   id: cache-dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       .cache/yarn
+      #       **/node_modules
+      #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: ~/.cache/yarn
+      # - name: Install dependencies
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+      #     max_attempts: 3
+      #     timeout_minutes: 7
+      #   env:
+      #     YARN_CACHE_FOLDER: ~/.cache/yarn
 
-      - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
-        with:
-          name: cypress-mochawesome-test-results
-          path: content-build/cypress/results/json
+      # - name: Download Mochawesome test results
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: cypress-mochawesome-test-results
+      #     path: content-build/cypress/results/json
 
-      - name: Merge test results into one file
-        run: |
-          yarn run cy:report:merge && sed -i -e 's/"message": "AssertionError.*$/"message": "Accessibility violations were detected.",/g' index.json
+      # - name: Merge test results into one file
+      #   run: |
+      #     yarn run cy:report:merge && sed -i -e 's/"message": "AssertionError.*$/"message": "Accessibility violations were detected.",/g' index.json
 
-      - name: Generate HTML report
-        run: yarn run cy:report:generate
+      # - name: Generate HTML report
+      #   run: yarn run cy:report:generate
 
-      - name: Generate UUID for Mochawesome report
-        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
+      # - name: Generate UUID for Mochawesome report
+      #   run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
 
-      - name: Rename Mochawesome report file
-        run: |
-          cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
+      # - name: Rename Mochawesome report file
+      #   run: |
+      #     cp -r /home/runner/work/content-build/content-build/content-build/public/index.html /home/runner/work/content-build/content-build/content-build/public/${{ env.UUID }}.html
 
-      - name: Get AWS IAM role
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+      # - name: Get AWS IAM role
+      #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+      #   with:
+      #     ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+      #     env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
-      - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
+      # - name: Configure AWS Credentials (2)
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-gov-west-1
+      #     role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+      #     role-duration-seconds: 900
+      #     role-session-name: vsp-frontendteam-githubaction
 
-      - name: Upload test report to s3
-        run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
+      # - name: Upload test report to s3
+      #   run: aws s3 cp /home/runner/work/content-build/content-build/content-build/public/ s3://testing-tools-testing-reports/a11y-reports --acl public-read --region us-gov-west-1 --recursive
 
-      - name: Accessibility Test Report Slack notification
-        uses: slackapi/slack-github-action@v1.18.0
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Report Slack notification
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility report: <https://testing-tools-testing-reports.s3-us-gov-west-1.amazonaws.com/a11y-reports/${{ env.UUID }}.html|${{ github.run_id }}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
   slack-failure:
     name: Notify Slack - workflow failure
@@ -358,16 +358,16 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      - name: Accessibility Test Cancellation
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has been canceled on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Cancellation
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has been canceled on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Accessibility Test Build Failure
         uses: slackapi/slack-github-action@v1.18.0
