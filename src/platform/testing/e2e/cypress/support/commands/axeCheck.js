@@ -54,10 +54,10 @@ const processAxeCheckResults = violations => {
 Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
   const { _13647Exception } = tempOptions;
 
-  if (process.env.A11Y_HEADER_CHECK === true) {
-    console.log('HERE:: A11Y_HEADER_CHECK TRUE');
+  if (Cypress.env('RUN_HEADINGS') === true) {
+    cy.task('log', 'HERE:: CYPRESS_RUN_HEADINGS TRUE');
   } else {
-    console.log('HERE:: A11Y_HEADER_CHECK FALSE');
+    cy.task('log', 'HERE:: CYPRESS_RUN_HEADINGS FALSE');
   }
 
   /**
@@ -82,11 +82,8 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
     },
   };
 
-  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
-  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
-  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
-  console.log(`THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
-  console.log(typeof process.env.A11Y_HEADER_CHECK);
+  cy.task('log', `THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
+  cy.task('log', typeof process.env.A11Y_HEADER_CHECK);
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
