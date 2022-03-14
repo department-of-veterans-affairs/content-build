@@ -7,7 +7,7 @@ const runGatsbyBuild = directory => (files, metalsmith, done) => {
     'Gatsby build: starting build in child process. Metalsmith will continue.',
   );
   const runGatsby = new Promise(resolve => {
-    const cmd = `yarn clean && yarn build`;
+    const cmd = `yarn clean && DRUPAL_ADDRESS=${process.env.DRUPAL_ADDRESS} yarn build`;
     const child = spawn(cmd, [], {
       shell: true,
       cwd: `${directory}`,
