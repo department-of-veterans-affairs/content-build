@@ -14,7 +14,7 @@ on:
         options:
           - prod
   schedule:
-    - cron: '54 13-16,20-21 * * 1-5'
+    - cron: '54 13-17,20-21 * * 1-5'
     - cron: '45 18 * * 1-5'
 
 concurrency:
@@ -597,11 +597,17 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
-      - name: Get Drupal token from Parameter Store
+      - name: Get Drupal prod password
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /dsva-vagov/vets-website/prod/drupal-password
-          env_variable_name: CALLBACK_TOKEN
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: Get Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
 
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
@@ -627,8 +633,8 @@ jobs:
         with:
           url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
-          username: api
-          password: ${{ env.CALLBACK_TOKEN }}
+          username: ${{ env.DRUPAL_USERNAME }}
+          password: ${{ env.DRUPAL_PASSWORD }}
           timeout: 10000
 
       - name: Export deploy end time
@@ -697,6 +703,9 @@ jobs:
       METRIC_NAMESPACE: dsva_vagov.content_build
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
 
