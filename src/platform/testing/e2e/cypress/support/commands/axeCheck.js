@@ -54,12 +54,6 @@ const processAxeCheckResults = violations => {
 Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
   const { _13647Exception } = tempOptions;
 
-  if (Cypress.env('RUN_HEADINGS') === true) {
-    cy.task('log', 'HERE:: CYPRESS_RUN_HEADINGS TRUE');
-  } else {
-    cy.task('log', 'HERE:: CYPRESS_RUN_HEADINGS FALSE');
-  }
-
   /**
    * Default required ruleset to meet Section 508 compliance.
    * Do not remove values[] entries. Only add new rulesets like 'best-practices'.
@@ -67,23 +61,37 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
    * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags
    * for available rulesets.
    */
-  let axeBuilder = {
-    runOnly: {
-      type: 'tag',
-      values: ['section508', 'wcag2a', 'wcag2aa'],
-    },
-    rules: {
-      'color-contrast': {
-        enabled: false,
-      },
-      'heading-order': {
-        enabled: true,
-      },
-    },
-  };
 
-  cy.task('log', `THIS IS WHERE THIS IS: ${process.env.A11Y_HEADER_CHECK}`);
-  cy.task('log', typeof process.env.A11Y_HEADER_CHECK);
+  let axeBuilder;
+
+  if (Cypress.env('RUN_HEADINGS') === true) {
+    axeBuilder = {
+      runOnly: {
+        type: 'tag',
+        values: ['section508', 'wcag2a', 'wcag2aa'],
+      },
+      rules: {
+        'color-contrast': {
+          enabled: false,
+        },
+        'heading-order': {
+          enabled: true,
+        },
+      },
+    };
+  } else {
+    axeBuilder = {
+      runOnly: {
+        type: 'tag',
+        values: ['section508', 'wcag2a', 'wcag2aa'],
+      },
+      rules: {
+        'color-contrast': {
+          enabled: false,
+        },
+      },
+    };
+  }
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
