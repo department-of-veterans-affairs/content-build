@@ -23,6 +23,19 @@ env:
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
+  get-workflow-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      environment_name: ${{ steps.check-environment.outputs.env_name }}
+    steps:
+      - name: Check environment
+        id: check-environment
+        run: |
+          if [[ ${{ github.event_name }} == 'workflow_dispatch' ]]; then
+            echo ::set-output name=env_name::'dev-test'
+          else
+            echo ::set-output name=env_name::''
+          fi
   start-runner:
     runs-on: ubuntu-latest
     outputs:
@@ -478,7 +491,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: self-hosted
-    needs: [set-env, build, create-release]
+    needs: [set-env, build, create-release, get-workflow-environment]
+    environment: ${{ needs.get-workflow-environment.outputs.environment_name }}
 
     env:
       ENVIRONMENT: vagovprod
