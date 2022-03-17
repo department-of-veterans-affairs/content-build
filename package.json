@@ -250,7 +250,7 @@
     "**/ssri": "^8.0.1",
     "**/ua-parser-js": "^0.7.24",
     "**/underscore": "^1.12.1",
-    "**/url-parse": "^1.5.0",
+    "**/url-parse": "^1.5.10",
     "**/path-parse": "1.0.7",
     "**/markdown-it": "^12.3.2",
     "tar-fs/tar-stream/bl": "^4.0.3"
