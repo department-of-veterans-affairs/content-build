@@ -55,7 +55,6 @@ Example data:
           <h1>Events</h1>
 
           {% include "src/site/facilities/facilities_events_toggle.drupal.liquid" with url = entityUrl.path %}
-
           {% assign featuredUrl = null %}
           {% if paginator.prev == null %}
             {% for featuredEvent in eventTeasers.entities %}
