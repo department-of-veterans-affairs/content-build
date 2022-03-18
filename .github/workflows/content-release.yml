@@ -14,7 +14,7 @@ on:
         options:
           - prod
   schedule:
-    - cron: '54 13-16,20-21 * * 1-5'
+    - cron: '54 13-17,20-21 * * 1-5'
     - cron: '45 18 * * 1-5'
 
 concurrency:
@@ -97,8 +97,6 @@ jobs:
       BUILDTYPE: ${{ env.BUILDTYPE }}
       DEPLOY_BUCKET: ${{ env.DEPLOY_BUCKET }}
       DRUPAL_ADDRESS: ${{ env.DRUPAL_ADDRESS }}
-      DRUPAL_USERNAME: ${{env.DRUPAL_USERNAME}}
-      DRUPAL_PASSWORD: ${{env.DRUPAL_PASSWORD}}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
 
     steps:
@@ -138,25 +136,6 @@ jobs:
           echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
           echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
           echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: set Drupal prod password
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
-          env_variable_name: DRUPAL_PASSWORD
-
-      - name: set Drupal prod username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
-          env_variable_name: DRUPAL_USERNAME
 
   wait-for-current-workflow-to-complete:
     name: Wait for current workflow to complete
@@ -330,8 +309,27 @@ jobs:
           echo ::set-output name=buildtime::$BUILDTIME
           echo "${{ needs.set-env.outputs.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod password
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
+
       - name: Build
-        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --drupal-user=${{ needs.set-env.outputs.DRUPAL_USERNAME }} --drupal-password="${{ needs.set-env.outputs.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
+        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
         env:
           NODE_ENV: production
@@ -599,11 +597,17 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
-      - name: Get Drupal token from Parameter Store
+      - name: Get Drupal prod password
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /dsva-vagov/vets-website/prod/drupal-password
-          env_variable_name: CALLBACK_TOKEN
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: Get Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
 
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
@@ -629,8 +633,8 @@ jobs:
         with:
           url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
-          username: api
-          password: ${{ env.CALLBACK_TOKEN }}
+          username: ${{ env.DRUPAL_USERNAME }}
+          password: ${{ env.DRUPAL_PASSWORD }}
           timeout: 10000
 
       - name: Export deploy end time
@@ -699,6 +703,9 @@ jobs:
       METRIC_NAMESPACE: dsva_vagov.content_build
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
 
@@ -757,11 +764,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: Get Datadog token from Parameter Store
+      - name: Get Datadog api key from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Get Datadog app key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
 
       - name: Send metrics to Datadog
         run: |
@@ -774,6 +787,8 @@ jobs:
         uses: ./.github/workflows/record-release-interval
         with:
           datadog_api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
+          datadog_app_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_APP_KEY }}
+          metric_namespace: ${{ env.METRIC_NAMESPACE }}
 
   stop-runner:
     name: Stop on-demand-runner

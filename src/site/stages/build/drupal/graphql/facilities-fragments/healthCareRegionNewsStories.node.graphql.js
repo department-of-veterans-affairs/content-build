@@ -7,7 +7,7 @@ const NEWS_STORIES_RESULTS = `
     entityId
     ... on NodeNewsStory {
       title
-      fieldOrder
+      fieldFeatured
       fieldIntroText
       fieldMedia {
         entity {
@@ -37,7 +37,7 @@ function queryFilter(isAll) {
       conditions: [
         { field: "type", value: "news_story"}
         { field: "status", value: "1"}
-        ${isAll ? '' : '{ field: "field_order" value: ["0", "1"]}'}
+        ${isAll ? '' : '{ field: "field_featured" value: "1"}'}
       ]} sort: {field: "created", direction: DESC }, limit:${
         isAll ? '500' : '2'
       })

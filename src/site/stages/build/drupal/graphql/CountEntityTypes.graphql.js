@@ -121,6 +121,16 @@ const CountEntityTypes = `
     count
   }
 
+  office: nodeQuery(
+    filter: {
+      conditions: [
+        {field: "status", value: ["1"]},
+        {field: "type", value: ["office"]}
+      ]}
+  	) {
+    count
+  }
+
   nodeQa: nodeQuery(
     filter: {
       conditions: [

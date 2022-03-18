@@ -16,6 +16,7 @@ const locationListingPage = `
       targetId
       entity {
         ...on NodeHealthCareRegionPage {
+          fieldVaHealthConnectPhone
           ${healthCareLocalFacilities}
           fieldOtherVaLocations
           entityLabel

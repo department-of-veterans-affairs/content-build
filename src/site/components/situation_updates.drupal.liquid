@@ -24,7 +24,7 @@
               {% if mostRecentDate.timezone != empty %}
                 {{ mostRecentDate.timezone | timezoneAbbrev: mostRecentDate.value }}
               {% else %}
-                {{ timezone }}
+                {{ timezone | replace: "D", ""| replace: "S", ""}}
               {% endif %}
             </h4>
 
