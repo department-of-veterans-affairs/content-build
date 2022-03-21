@@ -25,7 +25,7 @@
                     <span class="event-date event-time">{{ end_date_full }}</span>
                 {% endif %}
             {% endif %}
-            <span class="event-time-zone">{{ timezone }}</span>
+            <span class="event-time-zone">{{ timezone | replace: "D", ""| replace: "S", ""}}</span>
         </div>
       </div>
       {% if node.fieldFacilityLocation != empty %}

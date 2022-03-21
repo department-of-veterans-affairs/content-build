@@ -27,7 +27,10 @@
             {% assign mainFacility = mainFacilities.entities | sortMainFacility %}
 
             {% for main in mainFacility %}
-              {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = main %}
+              {% include 'src/site/includes/facilityListing.drupal.liquid' with
+                      entity = main
+                      fieldVaHealthConnectPhone = fieldOffice.entity.fieldVaHealthConnectPhone
+              %}
             {% endfor %}
 
             {% if otherFacilities.entities.length %}
@@ -36,7 +39,10 @@
                 Health clinic locations
               </h2>
               {% for other in sortedOtherFacilities %}
-                {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = other %}
+                {% include 'src/site/includes/facilityListing.drupal.liquid' with
+                        entity = other
+                        fieldVaHealthConnectPhone = fieldOffice.entity.fieldVaHealthConnectPhone
+                %}
               {% endfor %}
             {% endif %}
 

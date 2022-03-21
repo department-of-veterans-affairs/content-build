@@ -63,7 +63,7 @@
                         <span>{{ end_date_full }}</span>
                       {% endif %}
                     {% endif %}
-                    <span>{{ timezone }}</span>
+                    <span>{{ timezone | replace: "D", ""| replace: "S", ""}}</span>
                   </dd>
                 </dl>
 
@@ -198,7 +198,8 @@
 
                 <div class="vads-u-display--flex vads-u-flex-direction--column">
                   <!-- Derive most recent date -->
-                  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+                  {% assign now = '' | currentTime %}
+                  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}
 
                   <!-- Starts at + ends at -->
                   <p class="vads-u-margin--0">
