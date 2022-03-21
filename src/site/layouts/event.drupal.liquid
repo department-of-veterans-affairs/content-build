@@ -63,7 +63,7 @@
                         <span>{{ end_date_full }}</span>
                       {% endif %}
                     {% endif %}
-                    <span>{{ timezone }}</span>
+                    <span>{{ timezone | replace: "D", ""| replace: "S", ""}}</span>
                   </dd>
                 </dl>
 
