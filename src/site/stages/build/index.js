@@ -88,10 +88,7 @@ function build(BUILD_OPTIONS) {
     );
   }
 
-  smith.use(
-    runGatsbyBuild(`${BUILD_OPTIONS.gatsbyDirectory}`),
-    'Initiate Gatsby build',
-  );
+  smith.use(runGatsbyBuild(BUILD_OPTIONS), 'Initiate Gatsby build');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 

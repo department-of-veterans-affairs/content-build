@@ -2,12 +2,14 @@
 /* eslint-disable no-console */
 const { spawn } = require('child_process');
 
-const runGatsbyBuild = directory => (files, metalsmith, done) => {
+const runGatsbyBuild = options => (files, metalsmith, done) => {
   console.log(
     'Gatsby build: starting build in child process. Metalsmith will continue.',
   );
+  const directory = options['gatsby-directory'];
+  const drupalAddress = options['drupal-address'];
   const runGatsby = new Promise(resolve => {
-    const cmd = `npx gatsby clean && DRUPAL_ADDRESS=${process.env.DRUPAL_ADDRESS} yarn build`;
+    const cmd = `npx gatsby clean && DRUPAL_ADDRESS=${drupalAddress} yarn build`;
     const child = spawn(cmd, [], {
       shell: true,
       cwd: `${directory}`,
