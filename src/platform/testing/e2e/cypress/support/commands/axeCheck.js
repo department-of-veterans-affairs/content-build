@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const table = require('table').table;
 
 const tableConfig = {
