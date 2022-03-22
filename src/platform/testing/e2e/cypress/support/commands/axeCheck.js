@@ -60,17 +60,37 @@ Cypress.Commands.add('axeCheck', (context = 'main', tempOptions = {}) => {
    * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags
    * for available rulesets.
    */
-  let axeBuilder = {
-    runOnly: {
-      type: 'tag',
-      values: ['section508', 'wcag2a', 'wcag2aa'],
-    },
-    rules: {
-      'color-contrast': {
-        enabled: false,
+
+  let axeBuilder;
+
+  if (Cypress.env('RUN_HEADINGS') === true) {
+    axeBuilder = {
+      runOnly: {
+        type: 'tag',
+        values: ['section508', 'wcag2a', 'wcag2aa'],
       },
-    },
-  };
+      rules: {
+        'color-contrast': {
+          enabled: false,
+        },
+        'heading-order': {
+          enabled: true,
+        },
+      },
+    };
+  } else {
+    axeBuilder = {
+      runOnly: {
+        type: 'tag',
+        values: ['section508', 'wcag2a', 'wcag2aa'],
+      },
+      rules: {
+        'color-contrast': {
+          enabled: false,
+        },
+      },
+    };
+  }
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
