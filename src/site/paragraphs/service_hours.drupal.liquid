@@ -7,8 +7,12 @@
   {% for hours in serviceHours %}
     {% if hours %}
       <tr>
-        <td>{{ hours.0 }}.</td>
-        <td>{{ hours.1 }}</td>
+        <td>{{ hours.0 }}:</td>
+        {% if hours.1 %}
+          <td>{{ hours.1 }}</td>
+        {% else %}
+          <td>Closed</td>
+        {% endif %}
       </tr>
     {% endif %}
   {% endfor %}

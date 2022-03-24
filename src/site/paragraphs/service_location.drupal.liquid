@@ -5,7 +5,42 @@
   {% assign haveLocationName = false %}
 {% endif %}
 
-{% include "src/site/facilities/service_address.drupal.liquid" %}
+<div class="vads-u-display--flex vads-u-flex-direction--column">
+  {% if serviceLocationAddress.fieldClinicName %}
+    <span class="vads-u-margin-bottom--0">
+        {{ serviceLocationAddress.fieldClinicName }}
+    </span>
+  {% endif %}
+  {% comment %}
+      Always include building, wing, floor, etc.
+    {% endcomment %}
+  {% if serviceLocationAddress.fieldBuildingNameNumber %}
+    <span class="vads-u-margin-bottom--0">
+        {{ serviceLocationAddress.fieldBuildingNameNumber }}
+      </span>
+  {% endif %}
+</div>
+
+{% if facility.fieldAddress %}
+  {% assign facilityAddress = facility.fieldAddress %}
+  <div class="vads-u-display--flex vads-u-flex-direction--column">
+    {% if facilityAddress.addressLine1 %}
+      <span class="vads-u-margin-bottom--0">
+          {{ facilityAddress.addressLine1 }}
+        </span>
+    {% endif %}
+    {% if facilityAddress.addressLine2 %}
+      <span class="vads-u-margin-bottom--0">
+          {{ facilityAddress.addressLine2 }}
+        </span>
+    {% endif %}
+    {% if facilityAddress.locality and facilityAddress.administrativeArea and facilityAddress.postalCode %}
+      <span class="vads-u-margin-bottom--0">
+          {{ facilityAddress.locality }}, {{ facilityAddress.administrativeArea}} {{ facilityAddress.postalCode }}
+        </span>
+    {% endif %}
+  </div>
+{% endif %}
 
 {% comment %}
   single.fieldHours values:
@@ -13,6 +48,10 @@
   - 1 = Do not specify hours
   - 2 = Display specific hours
 {% endcomment %}
+{% include "src/site/components/phone.drupal.liquid" with
+        numbers = single.fieldPhone
+        haveLocationName = haveLocationName
+%}
 
 {% if single.fieldHours != "1" %}
   {% if haveLocationName %}
@@ -37,8 +76,6 @@
 {% if single.fieldAdditionalHoursInfo %}
   <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
 {% endif %}
-
-{% include "src/site/components/phone.drupal.liquid" with numbers = single.fieldPhone haveLocationName = haveLocationName %}
 
 {% if single.fieldEmailContacts %}
   {% for email in single.fieldEmailContacts %}
