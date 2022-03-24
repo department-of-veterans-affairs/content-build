@@ -1,5 +1,10 @@
 {% for facility in facilities %}
-  <h3>{{ facility.entityLabel }}</h3>
+  <h3
+    class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md medium-screen:vads-u-font-size--lg">
+    <a href="{{ facility.entityUrl.path }}">
+      {{ facility.entityLabel }}
+    </a>
+  </h3>
   {% include "src/site/facilities/vha_facility_nonclinical_service.drupal.liquid" with
     facility = facility
   %}

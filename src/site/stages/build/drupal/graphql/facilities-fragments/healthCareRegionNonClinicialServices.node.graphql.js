@@ -19,6 +19,9 @@ module.exports = `
       entities {
         ... on NodeHealthCareLocalFacility {
           entityLabel
+          entityUrl {
+            path
+          }
           fieldFacilityHours {
             value
           }
