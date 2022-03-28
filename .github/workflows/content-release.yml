@@ -100,7 +100,7 @@ jobs:
       TAG: ${{ steps.get-latest-release.outputs.tag_name }}
     steps:
       - name: Cancel workflow due to DSVA schedule
-        if: ${{ github.event_name == "schedule" && env.DSVA_SCHEDULE_ENABLED != 'true' }}
+        if: ${{ github.event_name == 'schedule' && env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
 
       - name: Checkout
@@ -118,7 +118,6 @@ jobs:
       - name: Get latest release
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
-        working-directory: ${{ github.workspace }}
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
@@ -420,6 +419,7 @@ jobs:
     needs:
       - validate-build-status
       - build
+      - archive
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
 
