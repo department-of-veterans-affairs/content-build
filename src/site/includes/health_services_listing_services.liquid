@@ -4,13 +4,15 @@
 {% if servicesListOrderedByName.length > 0 %}
   <section data-label="{{typeOfCare}}">
     <h2>{{typeOfCare}}</h2>
-    <va-accordion bordered>
-    {% for service in servicesListOrderedByName %}
-      {% include "src/site/facilities/health_service.drupal.liquid" with
-        healthService = service
-        sectionName = typeOfCare
-      %}
-    {% endfor%}
-    </va-accordion>
+    <div data-template="facilities/health_service" class="service-accordion-output">
+      <va-accordion bordered>
+      {% for service in servicesListOrderedByName %}
+        {% include "src/site/facilities/health_service.drupal.liquid" with
+          healthService = service
+          sectionName = typeOfCare
+        %}
+      {% endfor%}
+      </va-accordion>
+    </div>
   </section>
 {% endif %}
