@@ -419,6 +419,7 @@ jobs:
     needs:
       - validate-build-status
       - build
+      - archive
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
 
