@@ -66,7 +66,7 @@ jobs:
         id: get-latest-tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
-      - name: Get next version
+      - name: Get next tag version
         run: |
           current_patch=$(echo ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }} | cut -d'.' -f3)
           echo "new_patch=$(echo $(( $current_patch + 1 )))" >> $GITHUB_ENV
