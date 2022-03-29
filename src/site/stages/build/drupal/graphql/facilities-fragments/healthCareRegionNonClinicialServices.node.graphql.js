@@ -60,6 +60,12 @@ module.exports = `
                     fieldFacilityServiceHours {
                       value
                     }
+                    fieldOfficeHours {
+                      day
+                      starthours
+                      endhours
+                      comment
+                    }
                     fieldHours
                     fieldPhone {
                       entity {
