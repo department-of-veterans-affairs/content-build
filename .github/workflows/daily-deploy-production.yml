@@ -66,21 +66,21 @@ jobs:
         id: get-latest-tag
         run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
 
+      - name: Get next version
+        run: |
+          current_patch=$(echo ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }} | cut -d'.' -f3)
+          echo "new_patch=$(echo $(( $current_patch + 1 )))" >> $GITHUB_ENV
+
       - name: Create next tag
         uses: nick-invision/retry@v2
         with:
           timeout_seconds: 30
           max_attempts: 3
-          command: |
-            current_patch=$(echo ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }} | cut -d'.' -f3)
-            echo "new_patch=$(echo $(( $current_patch + 1 )))" >> $GITHUB_ENV
-            export new_patch=$(echo $(( $current_patch + 1 )))
-            git tag v0.0.${{ env.new_patch }} ${{ steps.get-current-ref.outputs.REF }} && git push origin v0.0.${{ env.new_patch }}
+          command: git tag v0.0.${{ env.new_patch }} ${{ steps.get-current-ref.outputs.REF }} && git push --no-verify origin v0.0.${{ env.new_patch }}
           new_command_on_retry: |
             next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
             echo "new_patch=$next_patch" >> $GITHUB_ENV
-            export new_patch=$next_patch
-            git tag v0.0.$next_patch ${{ steps.get-current-ref.outputs.REF }} && git push origin v0.0.$next_patch
+            git tag v0.0.$next_patch ${{ steps.get-current-ref.outputs.REF }} && git push --no-verify origin v0.0.$next_patch
 
       - name: Create release
         uses: actions/create-release@v1
