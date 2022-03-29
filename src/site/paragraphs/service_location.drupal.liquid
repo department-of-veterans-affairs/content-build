@@ -39,6 +39,13 @@
           {{ facilityAddress.locality }}, {{ facilityAddress.administrativeArea}} {{ facilityAddress.postalCode }}
         </span>
     {% endif %}
+    <div>
+      <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ facilityAddress.title }}'})"
+         href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ facilityAddress.addressLine1 }}, {{ facilityAddress.locality }}, {{ facilityAddress.administrativeArea }} {{ facilityAddress.postalCode }}"
+         aria-label="Directions to {{ facilityAddress.title }} on Google Maps">
+        Directions on Google Maps
+      </a>
+    </div>
   </div>
 {% endif %}
 
