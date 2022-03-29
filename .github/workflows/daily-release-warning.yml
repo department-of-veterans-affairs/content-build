@@ -1,11 +1,11 @@
-name: Daily Deploy Warning
+name: Daily Release Warning
 
 on:
   schedule:
     - cron: 0 17 * * 1-5
 
 concurrency:
-  group: daily-deploy-warning
+  group: daily-release-warning
   cancel-in-progress: true
 
 env:
@@ -36,7 +36,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, production deploy for content-build coming up in 60 minutes. Please review staging before then. View what coming here: <https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...master>"}}]}]}'
+          payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, production release for content-build coming up in 60 minutes. Please review staging before then. View what coming here: <https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...master>"}}]}]}'
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
