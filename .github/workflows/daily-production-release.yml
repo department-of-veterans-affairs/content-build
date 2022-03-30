@@ -1,4 +1,4 @@
-name: Daily Production Deploy
+name: Daily Production Release
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: 0 18 * * 1-5
 
 concurrency:
-  group: daily-deploy-prod
+  group: daily-prod-release
   cancel-in-progress: true
 
 env:
@@ -93,7 +93,7 @@ jobs:
       - name: Export new release name
         id: export-release-name
         run: |
-          echo ::set-output name=RELEASE_NAME:v0.0.${{ env.new_patch }}
+          echo ::set-output name=RELEASE_NAME::v0.0.${{ env.new_patch }}
 
   notify-success:
     name: Notify Success
