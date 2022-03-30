@@ -5,7 +5,9 @@
   {% assign phoneLabel = 'Phone' %}
 {% endif %}
 {% if haveLocationName != empty %}
-  <h5>{{ phoneLabel }}</h5>
+  <h4 class="force-small-header vads-u-margin-top--2 vads-u-line-height--1 vads-u-margin-bottom--1">
+    {{ phoneLabel }}
+  </h4>
 {% else %}
   <h4 class="force-small-header">{{ phoneLabel }}</h4>
 {% endif %}
