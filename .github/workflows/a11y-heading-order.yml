@@ -3,7 +3,7 @@ name: Accessibility Tests - Heading Order
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 7 * * 1-5' # 3am ET, M-F
+    - cron: '0 7 * * 1' # 3am ET, Monday
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
