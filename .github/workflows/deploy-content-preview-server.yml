@@ -12,9 +12,6 @@ on:
       - el-trigger-preview-jenkins-after-content-deploy
       - el-trigger-preview-jenkins-after-content-deploy-2
 
-concurrency:
-  group: content-release-prod
-
 jobs:
   deploy-preview-server:
     name: Deploy Preview Server
