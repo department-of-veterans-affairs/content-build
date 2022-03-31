@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy-preview-server:
-    name: Deploy Preview Server(s) (PROD, STAGING, DEV)
+    name: Deploy Preview Servers (PROD, STAGING, DEV)
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on:
       - self-hosted
