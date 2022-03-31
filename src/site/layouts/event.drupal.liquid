@@ -12,7 +12,7 @@
       <!-- ======== -->
       <!-- Event v1 -->
       <!-- ======== -->
-      {% if buildtype != 'vagovprod' %}
+      {% if buildtype == 'vagovprod' %}
         {% include "src/site/includes/date.drupal.liquid" %}
 
         <div class="usa-width-three-fourths">
@@ -149,12 +149,10 @@
             {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
 
             {% if fieldUrlOfAnOnlineEvent.uri %}
-            <p>
-              <a class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold" onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ fieldUrlOfAnOnlineEvent.uri }}">
-                Link to event
-                <i aria-hidden="true" class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right' role="presentation"></i>
-              </a>
-            </p>
+            <a class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold" onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ fieldUrlOfAnOnlineEvent.uri }}">
+              Link to event
+              <i aria-hidden="true" class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right' role="presentation"></i>
+            </a>
             {% endif %}
 
             <a class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold" onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}">
