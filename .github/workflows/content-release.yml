@@ -210,6 +210,17 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: Get Datadog api key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Start datadog agent
+        uses: datadog/agent-github-action@v1.2
+        with:
+            api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
+
       - name: Wait for the CMS to be ready
         uses: ./content-build/.github/workflows/wait-for-cms-ready
 
@@ -245,8 +256,12 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build
-        run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
+        run: yarn build:traced --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
+        env:
+          DD_VERSION: ${{ needs.validate-build-status.outputs.REF }}
+          DD_ENV: prod
+          DD_PROFILING_ENABLED: "true"
 
       - name: Export content build end time
         id: export-content-build-end
