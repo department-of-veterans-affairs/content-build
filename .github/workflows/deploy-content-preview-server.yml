@@ -4,13 +4,8 @@ on:
   workflow_run:
     workflows:
       - Content Release
-      - content-release
     types:
       - completed
-    branches:
-      # Temp: Remove after testing & before merge
-      - el-trigger-preview-jenkins-after-content-deploy
-      - el-trigger-preview-jenkins-after-content-deploy-2
 
 jobs:
   deploy-preview-server:
@@ -20,7 +15,6 @@ jobs:
       - self-hosted
       - linux
       - x64
-    needs: deploy
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
