@@ -1,0 +1,48 @@
+name: Deploy Content Preview Server
+
+on:
+  workflow_run:
+    workflows:
+      - Content Release
+      - content-release
+    types:
+      - completed
+    branches:
+      # Temp: Remove after testing & before merge
+      - el-trigger-preview-jenkins-after-content-deploy
+      - el-trigger-preview-jenkins-after-content-deploy-2
+
+concurrency:
+  group: content-release-prod
+
+jobs:
+  deploy-preview-server:
+    name: Deploy Preview Server
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    needs: deploy
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Jenkins CMS bot user token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          # TODO: Temporary path to token because the svc-gha-frontendteam-user has access to this path, fix before merge.
+          ssm_parameter: /dsva-vagov/content-build/VA_CMS_BOT_JENKINS_TOKEN
+          env_variable_name: VA_CMS_BOT_JENKINS_API_TOKEN
+
+      - name: Trigger Preview server deployment job in Jenkins
+        id: trigger-preview-request
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'http://jenkins.vfs.va.gov/job/deploys/job/content-preview-auto-deploy/build'
+          method: 'POST'
+          username: va-cms-bot
+          password: ${{ env.VA_CMS_BOT_JENKINS_API_TOKEN }}
