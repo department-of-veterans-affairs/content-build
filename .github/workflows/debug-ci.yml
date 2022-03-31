@@ -143,26 +143,15 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+      - name: Wait for the CMS to be ready
+        uses: ./content-build/.github/workflows/wait-for-cms-ready
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
-
-      - name: Get Datadog api key from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
-
-      - name: Start datadog agent
-        uses: datadog/agent-github-action@v1.2
-        with:
-            api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
-
-      - name: Wait for the CMS to be ready
-        uses: ./content-build/.github/workflows/wait-for-cms-ready
 
       - name: set Drupal prod password
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
