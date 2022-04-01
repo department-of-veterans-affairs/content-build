@@ -1,7 +1,6 @@
 name: Deploy Content Preview Server
 
 on:
-  workflow_dispatch:
   workflow_run:
     workflows:
       - Content Release
