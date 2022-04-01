@@ -179,8 +179,9 @@ jobs:
         run: yarn build:traced --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 40
         env:
+          DD_SERVICE: content-release
           DD_VERSION: ${{ needs.validate-build-status.outputs.REF }}
-          DD_ENV: prod
+          DD_ENV: production
           DD_TRACE_AGENT_URL: "http://localhost:9126"
           DD_TRACE_AGENT_PORT: 9126
           DD_DOGSTATSD_PORT: 9125
@@ -188,12 +189,9 @@ jobs:
           DD_RUNTIME_METRICS_ENABLED: "true"
           DD_DOGSTATSD_NON_LOCAL_TRAFFIC: "true"
 
-      - name: Wait for DD agent to send trace and profile data
-        run: sleep 10
-
-      - name: Stop dd agent
+      - name: Stop dd agent gracefully
         run: |
-          docker stop dd-agent-content-release
+          docker exec -t dd-agent-content-release agent stop
 
   stop-runner:
     name: Stop on-demand-runner
