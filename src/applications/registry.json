@@ -1214,5 +1214,15 @@
       "layout": "page-react.html",
       "title": "Connected Devices"
     }
+  },
+  {
+    "appName": "Platform Status",
+    "entryName": "status",
+    "rootUrl": "/status",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "title": "Platform Status"
+    }
   }
 ]
