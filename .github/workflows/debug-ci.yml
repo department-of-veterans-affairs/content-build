@@ -153,14 +153,12 @@ jobs:
       - name: Get Datadog app key from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
       - name: Start datadog agent
-        uses: datadog/agent-github-action@v1.2
-        with:
-            api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_APP_KEY }}
-            extra_env: "DD_APM_ENABLED=true,DD_DOGSTATSD_PORT=9125,DD_APM_RECEIVER_PORT=9126"
+        run: |
+          docker run -d --name dd-agent-content-release -e DD_API_KEY=${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY}} -e DD_APM_ENABLED=true -e DD_DOGSTATSD_PORT=9125 -e DD_APM_RECEIVER_PORT=9126 -p 127.0.0.1:9125:9125/udp -p 127.0.0.1:9126:9126/tcp public.ecr.aws/datadog/agent:7
 
       - name: Wait for the CMS to be ready
         uses: ./content-build/.github/workflows/wait-for-cms-ready
@@ -189,6 +187,13 @@ jobs:
           DD_TRACE_SAMPLE_RATE: 1
           DD_RUNTIME_METRICS_ENABLED: "true"
           DD_DOGSTATSD_NON_LOCAL_TRAFFIC: "true"
+
+      - name: Wait for DD agent to send trace and profile data
+        run: sleep 10
+
+      - name: Stop dd agent
+        run: |
+          docker stop dd-agent-content-release
 
   stop-runner:
     name: Stop on-demand-runner
