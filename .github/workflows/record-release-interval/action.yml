@@ -55,11 +55,7 @@ runs:
         # Subtract time in 60 minute intervals until we're under 60 minutes.
         # This should get us pretty close to actual business hours (removes
         # nights, weekends, and other long hiatuses).
-        while [ $time_since_last_deploy -ge 3600 ]; do
-            time_since_last_deploy=$(expr ${time_since_last_deploy} - 3600)
-        done
-
-        echo "BIZTIME_SINCE_LAST_DEPLOY=${time_since_last_deploy}" >> $GITHUB_ENV
+        echo "BIZTIME_SINCE_LAST_DEPLOY=$(expr ${time_since_last_deploy} % 3600)" >> $GITHUB_ENV
 
     - name: Record deployment event in Datadog
       shell: bash
