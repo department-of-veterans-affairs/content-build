@@ -60,11 +60,22 @@
         haveLocationName = haveLocationName
 %}
 
-{% include 'src/site/includes/vet_centers/hours.liquid' with
-        vetCenterHours = single.fieldOfficeHours
-        isSatelliteLocation = true
-%}
-
+{% case single.fieldHours %}
+  {% when '2' %}
+    {% if single.fieldOfficeHours %}
+      {% include 'src/site/includes/vet_centers/hours.liquid' with
+              vetCenterHours = single.fieldOfficeHours
+              isSatelliteLocation = true
+      %}
+    {% endif %}
+  {% when '0' %}
+    {% if fieldFacilityHours.value %}
+      <h5 data-template="paragraphs/service_location">Hours</h5>
+      {% include "src/site/paragraphs/service_hours.drupal.liquid" with
+              serviceHours = fieldFacilityHours.value
+      %}
+    {% endif %}
+{% endcase %}
 
 {% if single.fieldAdditionalHoursInfo %}
   <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
