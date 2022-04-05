@@ -358,7 +358,7 @@ jobs:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
+          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
           slack-message: "@cms-helpdesk Broken links found in vagovprod, but there are too many to post to Slack. See <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}> for details."
 
       - name: Generate build details
