@@ -22,7 +22,7 @@ env:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
@@ -67,7 +67,7 @@ jobs:
   
   notify-failure:
     name: Notify Failure
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
     needs: deploy
 
