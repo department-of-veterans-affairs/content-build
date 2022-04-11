@@ -433,7 +433,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
 
       - name: Export archive end time
         id: export-archive-end-time
