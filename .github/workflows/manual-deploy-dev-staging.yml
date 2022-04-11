@@ -67,7 +67,7 @@ jobs:
   
   notify-failure:
     name: Notify Failure
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: ${{ failure() || cancelled() }}
     needs: deploy
 
