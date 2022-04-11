@@ -1204,5 +1204,15 @@
       "layout": "page-react.html",
       "title": "Check your VA education inbox"
     }
+  },
+  {
+    "appName": "Connect Your Device",
+    "entryName": "dhp-consent-flow",
+    "rootUrl": "/health-care/connected-devices",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "title": "Connected Devices"
+    }
   }
 ]

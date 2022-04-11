@@ -1335,6 +1335,10 @@ module.exports = function registerFilters() {
     return basePath.includes(searchValue);
   };
 
+  liquid.filters.currentTime = () => {
+    return moment().unix();
+  };
+
   liquid.filters.deriveMostRecentDate = (
     fieldDatetimeRangeTimezone,
     now = moment().unix(), // This is done so that we can mock the current time in tests.

@@ -1,5 +1,3 @@
-<div data-template="facilities/health_service" class="service-accordion-output">
-    <va-accordion bordered>
         {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
         <va-accordion-item
             header="{{ serviceTaxonomy.name }}"
@@ -8,6 +6,7 @@
                 data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
             {% endif %}
             data-label="{{ serviceTaxonomy.name }}"
+            data-template="facilities/health_service"
         >
             <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
                 {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
@@ -54,5 +53,3 @@
                 {% endif %}
             </div>
         </va-accordion-item>
-    </va-accordion>
-</div>

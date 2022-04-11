@@ -413,7 +413,7 @@ jobs:
     needs: [start-runner, build]
     timeout-minutes: 30
     container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node14.16.0-chrome90-ff88
+      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
       options: -u 0
       volumes:
         - /usr/local/share:/share
@@ -561,7 +561,7 @@ jobs:
           env_variable_name: BIGQUERY_SERVICE_CREDENTIALS
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0
         with:
           project_id: vsp-analytics-and-insights
           service_account_key: ${{ env.BIGQUERY_SERVICE_CREDENTIALS }}

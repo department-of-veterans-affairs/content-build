@@ -2,7 +2,8 @@
 {% assign defaultTZ = "America/New_York" %}
 
 <!-- Derive most recent date -->
-{% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+{% assign now = '' | currentTime %}
+{% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}
 
 {% if mostRecentDate.timezone != empty %}
   {% assign timezone = mostRecentDate.timezone |  timezoneAbbrev: mostRecentDate.value %}
