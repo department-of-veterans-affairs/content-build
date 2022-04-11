@@ -11,8 +11,8 @@ on:
         description: The environment to deploy to
         required: true
         options:
-          - dev
-          - staging
+          - vagovdev
+          - vagovstaging
           - both
 
 env:
@@ -23,6 +23,16 @@ jobs:
   deploy:
     name: Deploy
     runs-on: self-hosted
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      matrix:
+        include:
+          - environment: vagovdev
+            bucket: content.dev.va.gov
+          - environment: vagovstaging
+            bucket: content.staging.va.gov
 
     steps:
       - name: Checkout
@@ -51,19 +61,12 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - name: Deploy Dev
-        if: ${{ github.event.inputs.deploy_environment == 'dev' || github.event.inputs.deploy_environment == 'both' }}
+      - name: Deploy
+        if: ${{ github.event.inputs.deploy_environment == matrix.environment || github.event.inputs.deploy_environment == 'both' }}
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/vagovdev.tar.bz2
-          DEST: s3://content.dev.va.gov
-        
-      - name: Deploy Staging
-        if: ${{ github.event.inputs.deploy_environment == 'staging' || github.event.inputs.deploy_environment == 'both' }}
-        run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
-        env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/vagovstaging.tar.bz2
-          DEST: s3://content.staging.va.gov
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
+          DEST: s3://${{ matrix.bucket }}
   
   notify-failure:
     name: Notify Failure
