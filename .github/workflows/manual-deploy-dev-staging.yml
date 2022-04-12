@@ -29,13 +29,12 @@ jobs:
 
     strategy:
       matrix:
-        include:
-          - environment: vagovdev
-            bucket: content.dev.va.gov
-          - environment: vagovstaging
-            bucket: content.staging.va.gov
+        builds: [
+          {environment: vagovdev, bucket: content.dev.va.gov},
+          {environment: vagovstaging, bucket: content.staging.va.gov}
+        ]
         exclude:
-          - environment: vagovdev
+          - builds: {environment: vagovdev}
 
     steps:
       - name: Checkout
