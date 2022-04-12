@@ -25,6 +25,7 @@ jobs:
     runs-on: self-hosted
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      RUN_DEPLOY: ${{ github.event.inputs.deploy_environment == matrix.environment || github.event.inputs.deploy_environment == 'both' }}
 
     strategy:
       matrix:
@@ -36,9 +37,11 @@ jobs:
 
     steps:
       - name: Checkout
+        if: env.RUN_DEPLOY
         uses: actions/checkout@v2
 
       - name: Configure AWS credentials (1)
+        if: env.RUN_DEPLOY
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -46,12 +49,14 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
+        if: env.RUN_DEPLOY
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Configure AWS Credentials (2)
+        if: env.RUN_DEPLOY
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -62,7 +67,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Deploy
-        if: ${{ github.event.inputs.deploy_environment == matrix.environment || github.event.inputs.deploy_environment == 'both' }}
+        if: env.RUN_DEPLOY
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
