@@ -34,6 +34,8 @@ jobs:
             bucket: content.dev.va.gov
           - environment: vagovstaging
             bucket: content.staging.va.gov
+        exclude:
+          - environment: vagovdev
 
     steps:
       - name: Checkout
@@ -68,7 +70,7 @@ jobs:
 
       - name: Deploy
         if: env.RUN_DEPLOY == 'true'
-        run: echo "SUCCESS" 
+        run: echo "SUCCESS ${{ matrix.environment }}" 
         # run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
