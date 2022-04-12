@@ -31,9 +31,9 @@ jobs:
         id: set-output
         run: |
           if [[ ${{ github.event.inputs.deploy_environment }} == 'vagovdev' ]]; then
-            echo ::set-output name=exclude::{name:vagovstaging}
+            echo ::set-output name=exclude::{\"name\":\"vagovstaging\"}
           elif [[ ${{ github.event.inputs.deploy_environment }} == 'vagovstaging' ]]; then
-            echo ::set-output name=exclude::{name:vagovdev}
+            echo ::set-output name=exclude::{\"name\":\"vagovdev\"}
           fi
 
   deploy:
