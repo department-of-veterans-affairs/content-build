@@ -34,6 +34,8 @@ jobs:
             echo ::set-output name=exclude::{\"name\":\"vagovstaging\"}
           elif [[ ${{ github.event.inputs.deploy_environment }} == 'vagovstaging' ]]; then
             echo ::set-output name=exclude::{\"name\":\"vagovdev\"}
+          else
+            echo ::set-output name=exclude::{}
           fi
 
   deploy:
@@ -46,12 +48,12 @@ jobs:
 
     strategy:
       matrix:
-        environments: [
+        environment: [
           {name: vagovdev, bucket: content.dev.va.gov},
           {name: vagovstaging, bucket: content.staging.va.gov}
         ]
         exclude:
-          - environments: ${{ fromJson(needs.set-environment-to-exclude.outputs.environment) }}
+          - environment: ${{ fromJson(needs.set-environment-to-exclude.outputs.environment) }}
 
     steps:
       - name: Checkout
@@ -81,7 +83,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Deploy
-        run: echo "SUCCESS ${{ matrix.environment }}" 
+        run: echo "SUCCESS ${{ matrix.environment.name }}" 
         # run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
