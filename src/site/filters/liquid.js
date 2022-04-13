@@ -1448,4 +1448,38 @@ module.exports = function registerFilters() {
     }
     return null;
   };
+
+  liquid.filters.officeHoursDayFormatter = day => {
+    let formattedDay = '';
+    switch (day) {
+      case 1:
+        formattedDay = `Mon`;
+        break;
+      case 2:
+        formattedDay = `Tue`;
+        break;
+      case 3:
+        formattedDay = `Wed`;
+        break;
+      case 4:
+        formattedDay = `Thu`;
+        break;
+      case 5:
+        formattedDay = `Fri`;
+        break;
+      case 6:
+        formattedDay = `Sat`;
+        break;
+      case 7:
+        formattedDay = `Sun`;
+        break;
+
+      default:
+        break;
+    }
+    return formattedDay;
+  };
+
+  liquid.filters.officeHoursTimeFormatter = time =>
+    moment(time, 'Hmm').format('h:mm a');
 };

@@ -24,8 +24,8 @@
 
 {% case single.fieldHours %}
   {% when '2' %}
-    {% if single.fieldFacilityServiceHours.value %}
-      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = single.fieldFacilityServiceHours.value %}
+    {% if single.fieldOfficeHours %}
+      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = single.fieldOfficeHours %}
     {% endif %}
   {% when '0' %}
     {% if fieldFacilityHours.value %}

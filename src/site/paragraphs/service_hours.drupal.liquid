@@ -5,7 +5,15 @@
   </colgroup>
   <thead class="vads-u-visibility--screen-reader"><th>day</th><th>hours</th></thead>
   {% for hours in serviceHours %}
-    {% if hours %}
+    {% if hours.day %}
+      <tr>
+        <td>{{ hours.day | officeHoursDayFormatter }}.</td>
+        <td>{% if hours.starthours %}{{ hours.starthours | officeHoursTimeFormatter}}
+          to {% endif %}{% if hours.endhours %}{{ hours.endhours | officeHoursTimeFormatter}}{% endif %}
+          {{ hours.comment }}
+        </td>
+      </tr>
+    {% elseif hours.0 and not hours.day %}
       <tr>
         <td>{{ hours.0 }}.</td>
         <td>{{ hours.1 }}</td>
