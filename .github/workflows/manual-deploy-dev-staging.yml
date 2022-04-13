@@ -35,22 +35,22 @@ jobs:
         id: set-output
         run: |
           if [[ ${{ github.event.inputs.deploy_environment }} == 'dev' ]]; then
-            echo ::set-output name=environment::{\"include\": [${{env.dev}}]}
+            echo ::set-output name=environment::{\"include\":[${{env.dev}}]}
           elif [[ ${{ github.event.inputs.deploy_environment }} == 'staging' ]]; then
-            echo ::set-output name=environment::{\"include\": [${{env.staging}}]}
+            echo ::set-output name=environment::{\"include\":[${{env.staging}}]}
           else
-            echo ::set-output name=environment::{\"include\": [${{env.dev}},${{env.staging}}]}
+            echo ::set-output name=environment::{\"include\":[${{env.dev}},${{env.staging}}]}
           fi
 
   deploy:
     name: Deploy
     runs-on: self-hosted
     needs: set-environment
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
     strategy:
       matrix: ${{ fromJson(needs.set-environment.outputs.environment) }}
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout
