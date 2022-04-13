@@ -2,20 +2,21 @@
   Hero banner
 
   As seen on the Home page and some campaign initiative pages
-
 -->
-  <div class="va-u-background--image">
-    <!-- Hero Content -->
-    <div class="vads-l-grid-container vads-u-padding-x--0">
+  <!-- Hero Content -->
+  <div class="homepage-hero__wrapper">
+    <div class="vads-l-grid-container vads-u-padding-x--0 homepage-hero">
       <div class="vads-l-row">
 
         <!-- start first column-->
         <div class="vads-l-col--12 medium-screen:vads-l-col--5">
-          <div class="vads-u-background-color--primary vads-u-padding-x--4 vads-u-padding-bottom--6 vads-u-padding-top--4">
+          <div class="vads-u-padding-x--7">
             <h2 class="vads-u-color--white">Access and manage your VA benefits and health care</h2>
 
-            <div>
-              <button type="button" class="usa-button-secondary va-button-secondary">Sign in or create an account</button>
+            <div id="myva-login">
+              <button onclick="recordEvent({ event: 'nav-main-sign-in' });" class="usa-button homepage-hero__button signin-signup-modal-trigger">
+                Sign in or create an account
+              </button>
             </div>
 
           </div>
@@ -23,35 +24,9 @@
         <!-- end first column -->
 
         <!-- start second column for images -->
-        <div class="vads-l-col--12 medium-screen:vads-l-col--7">
-          <div class="vads-l-row">
-          
-            <div class="vads-l-col">
-              <div class="vads-u-background-color--primary-alt-darkest">
-
-                <img src="/img/portraits/babu.png" alt="Portrait of Babu" />
-                
-              </div>
-            </div>
-            
-            <div class="vads-l-col">
-              <div class="vads-u-background-color--primary-darker">
-
-                <img src="/img/portraits/britton.png" alt="Portrait of Babu" />
-                
-              </div>
-            </div>
-
-            <div class="vads-l-col">
-              <div class="vads-u-background-color--primary-darkest">
-
-                <img src="/img/portraits/clark.png" alt="Portrait of Babu" />
-                
-              </div>
-            </div>
-  
-          </div>
-        </div>
+        <div class="vads-l-col--12 medium-screen:vads-l-col--7 homepage-hero__container">
+          <div data-widget-type="homepage-hero-randomizer" class="vads-l-row" ></div>
+        </div>           
         <!-- end second column -->
 
       </div>
