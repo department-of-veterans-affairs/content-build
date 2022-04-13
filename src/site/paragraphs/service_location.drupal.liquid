@@ -28,8 +28,8 @@
       {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = single.fieldOfficeHours %}
     {% endif %}
   {% when '0' %}
-    {% if fieldFacilityHours.value %}
-      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = fieldFacilityHours.value %}
+    {% if fieldOfficeHours %}
+      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = fieldOfficeHours %}
     {% endif %}
 {% endcase %}
 

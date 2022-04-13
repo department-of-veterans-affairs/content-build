@@ -98,17 +98,23 @@
                             class="vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row vads-u-margin-bottom--0">
                           <ul
                               class="vads-u-flex--1 va-c-facility-hours-list vads-u-margin-top--0 vads-u-margin-bottom--1 small-screen:vads-u-margin-bottom--0 vads-u-margin-right--3">
-                            {% for hours in fieldFacilityHours.value limit: 5 %}
-                              <li><b class="abbrv-day">{{ hours.0 }}:</b>
-                                {{ hours.1 }}
+                            {% for hours in fieldOfficeHours limit: 5 %}
+                              <li><b class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
+                                {% if hours.starthours %}{{ hours.starthours | officeHoursTimeFormatter}}
+                                to
+                                {% endif %}{% if hours.endhours %}{{ hours.endhours | officeHoursTimeFormatter}}{% endif %}
+                                {{ hours.comment }}
                               </li>
                             {% endfor %}
                           </ul>
                           <ul
                               class="vads-u-flex--1 va-c-facility-hours-list vads-u-margin-top--0 'vads-u-margin-bottom--0">
-                            {% for hours in fieldFacilityHours.value offset: 5 limit: 2 %}
-                              <li><b class="abbrv-day">{{ hours.0 }}:</b>
-                                {{ hours.1 }}
+                            {% for hours in fieldOfficeHours offset: 5 limit: 2 %}
+                              <li><b class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
+                                {% if hours.starthours %}{{ hours.starthours | officeHoursTimeFormatter}}
+                                to
+                                {% endif %}{% if hours.endhours %}{{ hours.endhours | officeHoursTimeFormatter}}{% endif %}
+                                {{ hours.comment }}
                               </li>
                             {% endfor %} </ul>
                         </div>
@@ -210,7 +216,7 @@
                     fieldFlickr = fieldRegionPage.entity.fieldFlickr
           %}
   <!-- Last updated & feedback button-->
-        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}    
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
 
       </div>

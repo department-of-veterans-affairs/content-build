@@ -38,9 +38,12 @@ const FACILITIES_RESULTS = `
       postalCode
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone    
-    fieldFacilityHours {
-      value
+    fieldMentalHealthPhone
+    fieldOfficeHours {
+      day
+      starthours
+      endhours
+      comment
     }
       fieldMainLocation
       fieldMedia {

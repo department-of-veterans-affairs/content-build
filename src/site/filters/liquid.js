@@ -1399,7 +1399,7 @@ module.exports = function registerFilters() {
       .map(facility => ({
         entityLabel: facility?.entityLabel,
         fieldAddress: facility?.fieldAddress,
-        fieldFacilityHours: facility?.fieldFacilityHours,
+        fieldOfficeHours: facility?.fieldOfficeHours,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
           facility?.reverseFieldFacilityLocationNode?.entities || [],
           serviceType,
@@ -1452,6 +1452,9 @@ module.exports = function registerFilters() {
   liquid.filters.officeHoursDayFormatter = day => {
     let formattedDay = '';
     switch (day) {
+      case 0:
+        formattedDay = `Sun`;
+        break;
       case 1:
         formattedDay = `Mon`;
         break;
@@ -1469,9 +1472,6 @@ module.exports = function registerFilters() {
         break;
       case 6:
         formattedDay = `Sat`;
-        break;
-      case 7:
-        formattedDay = `Sun`;
         break;
 
       default:
