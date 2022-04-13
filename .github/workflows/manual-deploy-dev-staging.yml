@@ -27,19 +27,19 @@ jobs:
       environment: ${{ steps.set-output.outputs.environment }}
 
     env:
-      dev: "{\"name\": \"vagovdev\", \"bucket\": \"content.dev.va.gov\"}"
-      staging: "{\"name\": \"vagovstaging\", \"bucket\": \"content.staging.va.gov\"}"
+      dev: "{\\\"name\\\": \\\"vagovdev\\\", \\\"bucket\\\": \\\"content.dev.va.gov\\\"}"
+      staging: "{\\\"name\\\": \\\"vagovstaging\\\", \\\"bucket\\\": \\\"content.staging.va.gov\\\"}"
 
     steps:
       - name: Set output
         id: set-output
         run: |
           if [[ ${{ github.event.inputs.deploy_environment }} == 'dev' ]]; then
-            echo ::set-output name=environment::{include: [${{env.dev}}]}
+            echo ::set-output name=environment::{\"include\": [${{env.dev}}]}
           elif [[ ${{ github.event.inputs.deploy_environment }} == 'staging' ]]; then
-            echo ::set-output name=environment::{include: [${{env.staging}}]}
+            echo ::set-output name=environment::{\"include\": [${{env.staging}}]}
           else
-            echo ::set-output name=environment::{include: [${{env.dev}},${{env.staging}}]}
+            echo ::set-output name=environment::{\"include\": [${{env.dev}},${{env.staging}}]}
           fi
 
   deploy:
