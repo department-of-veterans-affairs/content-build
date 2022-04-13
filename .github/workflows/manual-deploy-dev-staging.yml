@@ -11,8 +11,8 @@ on:
         description: The environment to deploy to
         required: true
         options:
-          - vagovdev
-          - vagovstaging
+          - dev
+          - staging
           - both
 
 env:
@@ -20,40 +20,37 @@ env:
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
 
 jobs:
-  set-environment-to-exclude:
-    name: Set environment to exclude
+  set-environment:
+    name: Set environment to deploy
     runs-on: ubuntu-latest
     outputs:
-      environment: ${{ steps.set-output.outputs.exclude }}
+      environment: ${{ steps.set-output.outputs.environment }}
+
+    env:
+      dev: "{\"name\": \"vagovdev\", \"bucket\": \"content.dev.va.gov\"}"
+      staging: "{\"name\": \"vagovstaging\", \"bucket\": \"content.staging.va.gov\"}"
 
     steps:
       - name: Set output
         id: set-output
         run: |
-          if [[ ${{ github.event.inputs.deploy_environment }} == 'vagovdev' ]]; then
-            echo ::set-output name=exclude::{\"name\":\"vagovstaging\"}
-          elif [[ ${{ github.event.inputs.deploy_environment }} == 'vagovstaging' ]]; then
-            echo ::set-output name=exclude::{\"name\":\"vagovdev\"}
+          if [[ ${{ github.event.inputs.deploy_environment }} == 'dev' ]]; then
+            echo ::set-output name=environment::{\"include\": [${{env.dev}}]}
+          elif [[ ${{ github.event.inputs.deploy_environment }} == 'staging' ]]; then
+            echo ::set-output name=environment::{\"include\": [${{env.staging}}]}
           else
-            echo ::set-output name=exclude::[]
+            echo ::set-output name=environment::{\"include\": [${{env.dev}},${{env.staging}}]}
           fi
 
   deploy:
     name: Deploy
     runs-on: self-hosted
-    needs: set-environment-to-exclude
+    needs: set-environment
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-      RUN_DEPLOY: ${{ github.event.inputs.deploy_environment == matrix.environment || github.event.inputs.deploy_environment == 'both' }}
 
     strategy:
-      matrix:
-        environment: [
-          {name: vagovdev, bucket: content.dev.va.gov},
-          {name: vagovstaging, bucket: content.staging.va.gov}
-        ]
-        exclude:
-          - environment: ${{ fromJson(needs.set-environment-to-exclude.outputs.environment) }}
+      matrix: ${{ fromJson(needs.set-environment.outputs.environment) }}
 
     steps:
       - name: Checkout
@@ -83,7 +80,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Deploy
-        run: echo "SUCCESS ${{ matrix.environment.name }}" 
+        run: echo "SUCCESS ${{ matrix.name }}" 
         # run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
