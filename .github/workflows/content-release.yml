@@ -2,41 +2,42 @@ name: Content Release
 
 on:
   workflow_dispatch:
-    inputs:
-      release_wait:
-        description: Minutes to wait before creating release
-        required: false
-        default: 0
-      deploy_environment:
-        type: choice
-        description: The environment to deploy content to
-        required: true
-        options:
-          - prod
   schedule:
-    - cron: '54 13-17,20-21 * * 1-5'
-    - cron: '45 18 * * 1-5'
+    - cron: '54 13-21 * * 1-5'
 
 concurrency:
-  group: content-release-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment || 'prod' }}
-  cancel-in-progress: ${{ github.event.inputs.deploy_environment != 'prod' }}
+  group: content-release-prod
 
 env:
   CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
   VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
+  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   DSVA_SCHEDULE_ENABLED: true
+  NODE_ENV: production
+  NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+  BUILDTYPE: vagovprod
+  DEPLOY_BUCKET: content.www.va.gov
+  DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
 
 jobs:
   start-runner:
-    runs-on: [self-hosted, linux, x64]
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+      APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
     env:
       INSTANCE_TYPE: c5.4xlarge
 
     steps:
+      - name: Export approximate workflow start time
+        id: export-approx-workflow-start-time
+        run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -86,121 +87,49 @@ jobs:
               {"Key": "environment", "Value": "utility"}
             ]
 
-  set-env:
-    name: Set Env Variables
-    runs-on: [self-hosted, linux, x64]
-    if: always() && needs.wait-for-current-workflow-to-complete.result == 'success'
-    needs: wait-for-current-workflow-to-complete
+  validate-build-status:
+    name: Validate Build Status
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    needs: start-runner
     outputs:
-      RELEASE_WAIT: ${{ env.RELEASE_WAIT }}
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
-      BUILDTYPE: ${{ env.BUILDTYPE }}
-      DEPLOY_BUCKET: ${{ env.DEPLOY_BUCKET }}
-      DRUPAL_ADDRESS: ${{ env.DRUPAL_ADDRESS }}
-      APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
-
+      TAG: ${{ steps.get-latest-release.outputs.tag_name }}
     steps:
-      - name: Export approximate workflow start time
-        id: export-approx-workflow-start-time
-        run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
-
       - name: Cancel workflow due to DSVA schedule
-        if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
+        if: ${{ github.event_name == 'schedule' && env.DSVA_SCHEDULE_ENABLED != 'true' }}
         uses: andymckay/cancel-action@0.2
-
-      - name: Validate workflow_dispatch deploy_environment
-        if: ${{ github.event_name == 'workflow_dispatch' && !contains(fromJson('["prod"]'), github.event.inputs.deploy_environment) }}
-        run: echo "prod is the only supported environment" && exit 1
 
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
         with:
-          fetch-depth: 0
-          ref: ${{ needs.set-env.outputs.REF }}
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: ~/.cache/yarn
+          path: |
+            ~/.cache/yarn
+            node_modules
 
       - name: Get latest release
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Get release wait time (scheduled release)
-        if: ${{ github.event_name == 'schedule' }}
-        run: echo "RELEASE_WAIT=0" >> $GITHUB_ENV
-
-      - name: Get release wait time (workflow_dispatch)
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "RELEASE_WAIT=${{ github.event.inputs.release_wait }}" >> $GITHUB_ENV
-
-      - name: Set environment details for vagovprod
-        if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule' }}
-        run: |
-          echo "BUILDTYPE=vagovprod" >> $GITHUB_ENV
-          echo "DEPLOY_BUCKET=content.www.va.gov" >> $GITHUB_ENV
-          echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
-
-  wait-for-current-workflow-to-complete:
-    name: Wait for current workflow to complete
-    runs-on: [self-hosted, linux, x64]
-    if: |
-      always() &&
-      ((github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'prod') || github.event_name == 'schedule')
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        uses: ./.github/workflows/install
-        with:
-          key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: ~/.cache/yarn
-          path: |
-            ~/.cache/yarn
-            node_modules
-
-      - name: Wait for current workflow to complete
-        run: node ./script/github-actions/wait-for-current-workflow-to-complete.js content-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  validate-build-status:
-    name: Validate Build Status
-    runs-on: [self-hosted, linux, x64]
-    if: always() && needs.set-env.result == 'success'
-    needs: set-env
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        uses: ./.github/workflows/install
-        with:
-          key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: ~/.cache/yarn
-          path: |
-            ~/.cache/yarn
-            node_modules
-
-      - name: Validate build status
-        run: node ./script/github-actions/validate-build-status.js ${{ needs.set-env.outputs.REF }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Validate build status
+      #   run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   notify-start:
     name: Notify Start
-    runs-on: [self-hosted, linux, x64]
-    needs: set-env
-    if: ${{ always() && needs.set-env.outputs.BUILDTYPE == 'vagovprod' }}
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    needs: validate-build-status
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -209,7 +138,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up. <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
           channel_id: ${{ env.CMS_NOTIFICATIONS_SLACK }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -218,20 +147,9 @@ jobs:
     name: Build
     runs-on: ${{ needs.start-runner.outputs.label }}
     needs:
-      [
-        set-env,
-        validate-build-status,
-        start-runner,
-        wait-for-current-workflow-to-complete,
-      ]
+      - start-runner
+      - validate-build-status
     timeout-minutes: 30
-    if: |
-      always() &&
-      needs.set-env.result == 'success' &&
-      needs.validate-build-status.result == 'success' &&
-      needs.start-runner.result == 'success' &&
-      needs.wait-for-current-workflow-to-complete.result == 'success'
-
     defaults:
       run:
         working-directory: content-build
@@ -243,9 +161,7 @@ jobs:
       CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end.outputs.CONTENT_BUILD_END_TIME }}
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
-
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
 
     steps:
@@ -264,7 +180,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: content-build
-          ref: ${{ needs.set-env.outputs.REF }}
+          ref: ${{ needs.validate-build-status.outputs.REF }}
 
       - name: Get Node version
         id: get-node-version
@@ -307,7 +223,7 @@ jobs:
         run: |
           BUILDTIME=$(date +%s)
           echo ::set-output name=buildtime::$BUILDTIME
-          echo "${{ needs.set-env.outputs.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+          echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -329,10 +245,8 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build
-        run: yarn build --buildtype=${{ needs.set-env.outputs.BUILDTYPE }} --asset-source=local --drupal-address=${{ needs.set-env.outputs.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
+        run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
-        env:
-          NODE_ENV: production
 
       - name: Export content build end time
         id: export-content-build-end
@@ -349,34 +263,8 @@ jobs:
 
       - name: Check broken links
         id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links.js ${{ needs.set-env.outputs.BUILDTYPE }}
+        run: node ./script/github-actions/check-broken-links.js ${{ env.BUILDTYPE }}
 
-      - name: Generate build details
-        run: |
-          cat > build/${{ needs.set-env.outputs.BUILDTYPE }}/BUILD.txt << EOF
-          BUILDTYPE=${{ needs.set-env.outputs.BUILDTYPE }}
-          NODE_ENV=production
-          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
-          CHANGE_TARGET=null
-          RUN_ID=${{ github.run_id }}
-          RUN_NUMBER=${{ github.run_number }}
-          REF=${{ needs.set-env.outputs.REF }}
-          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
-          EOF
-
-      - name: Prearchive
-        run: node ./script/prearchive.js --buildtype=${{ needs.set-env.outputs.BUILDTYPE }}
-
-      - name: Compress build
-        run: tar -C build/${{ needs.set-env.outputs.BUILDTYPE }} -cf ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 .
-
-      - name: Persist prearchived build
-        run: |
-          mkdir -p /tmp/${{ github.run_id }}
-          rm -rf /tmp/${{ github.run_id }}/${{ needs.set-env.outputs.BUILDTYPE }}
-          mv ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
-
-      # Only will get called if error in workflow
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
@@ -419,10 +307,11 @@ jobs:
 
       - name: Upload broken links file
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        run: aws s3 cp ./logs/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ needs.set-env.outputs.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
+        run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
       - name: Notify VFS Platform Builds channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
+        id: notify-vfs-platform-builds-broken-links
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -432,8 +321,23 @@ jobs:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
 
+      - name: Output broken links info (fallback)
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-vfs-platform-builds-broken-links.outcome == 'failure' && always() }}
+        run: cat ./logs/${{ env.BUILDTYPE }}-broken-links.json | jq
+
+      - name: Notify VFS Platform Builds channel about broken links (fallback)
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-vfs-platform-builds-broken-links.outcome == 'failure' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
+          slack-message: "@cms-helpdesk Broken links found in vagovprod, but there are too many to post to Slack. See <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}> for details."
+
       - name: Notify content broken links channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
+        id: notify-content-broken-links
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -443,6 +347,46 @@ jobs:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
+      - name: Output broken links info (fallback)
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-content-broken-links.outcome == 'failure' && always() }}
+        run: cat ./logs/${{ env.BUILDTYPE }}-broken-links.json | jq
+
+      - name: Notify VFS Platform Builds channel about broken links (fallback)
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-content-broken-links.outcome == 'failure' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
+          slack-message: "@cms-helpdesk Broken links found in vagovprod, but there are too many to post to Slack. See <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}> for details."
+
+      - name: Generate build details
+        run: |
+          cat > build/${{ env.BUILDTYPE }}/BUILD.txt << EOF
+          BUILDTYPE=${{ env.BUILDTYPE }}
+          NODE_ENV=production
+          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          CHANGE_TARGET=null
+          RUN_ID=${{ github.run_id }}
+          RUN_NUMBER=${{ github.run_number }}
+          REF=${{ needs.validate-build-status.outputs.REF }}
+          TAG=${{ needs.validate-build-status.outputs.TAG }}
+          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
+          EOF
+
+      - name: Prearchive
+        run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
+
+      - name: Compress build
+        run: tar -C build/${{ env.BUILDTYPE }} -cf ${{ env.BUILDTYPE }}.tar.bz2 .
+
+      - name: Persist prearchived build
+        run: |
+          mkdir -p /tmp/${{ github.run_id }}
+          rm -rf /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}
+          mv ${{ env.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
+
       - name: Export build end time
         id: export-build-end-time
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
@@ -451,17 +395,19 @@ jobs:
   archive:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: [set-env, build, start-runner]
-    if: ${{ always() && needs.build.result == 'success' }}
+    needs:
+      - start-runner
+      - validate-build-status
+      - build
     outputs:
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
 
     steps:
-      - name: Restore ${{ needs.set-env.outputs.BUILDTYPE }} build
+      - name: Restore ${{ env.BUILDTYPE }} build
         run: |
-          mv /tmp/${{ github.run_id }}/${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 .
+          mv /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}.tar.bz2 .
           df -h
-          du -h ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2
+          du -h ${{ env.BUILDTYPE }}.tar.bz2
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -487,98 +433,24 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{ needs.set-env.outputs.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
 
       - name: Export archive end time
         id: export-archive-end-time
         run: echo ::set-output name=ARCHIVE_END_TIME::$(date +"%s")
 
-  create-release:
-    name: Create Release
-    runs-on: [self-hosted, linux, x64]
-    needs: [set-env, archive]
-    if: ${{ always() && needs.archive.result == 'success' }}
-    outputs:
-      CREATE_RELEASE_END_TIME: ${{ steps.export-create-release-end-time.outputs.CREATE_RELEASE_END_TIME }}
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{ needs.set-env.outputs.REF }}
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-
-      - name: Get latest tag
-        id: get-latest-tag
-        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
-
-      - name: Waiting to release
-        run: |
-          echo "Waiting to release: https://github.com/${{github.repository}}/compare/${{steps.get-latest-tag.outputs.LATEST_TAG_VERSION}}...${{needs.set-env.outputs.REF}}"
-
-      - name: Sleep for ${{ needs.set-env.outputs.RELEASE_WAIT }} minutes
-        run: |
-          echo "Waiting for ${{ needs.set-env.outputs.RELEASE_WAIT }}m"
-          sleep $(( ${{ needs.set-env.outputs.RELEASE_WAIT }} * 60 ))
-
-      - name: Get next tag version
-        run: |
-          current_patch=$(echo ${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }} | cut -d'.' -f3)
-          echo "new_patch=$(echo $(( $current_patch + 1 )))" >> $GITHUB_ENV
-
-      - name: Create tag
-        uses: nick-invision/retry@v2
-        with:
-          timeout_seconds: 30
-          max_attempts: 3
-          command: git tag v0.0.${{ env.new_patch }} ${{ needs.set-env.outputs.REF }} && git push --no-verify origin v0.0.${{ env.new_patch }}
-          new_command_on_retry: |
-            next_patch=$(echo $(( ${{ env.new_patch }} + 1 )))
-            echo "new_patch=$next_patch" >> $GITHUB_ENV
-            git tag v0.0.$next_patch ${{ needs.set-env.outputs.REF }} && git push --no-verify origin v0.0.$next_patch
-
-      - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-        with:
-          tag_name: v0.0.${{ env.new_patch }}
-          release_name: content-build/v0.0.${{ env.new_patch }}
-          commitish: ${{ needs.set-env.outputs.REF }}
-
-      - name: Export create-release end time
-        id: export-create-release-end-time
-        run: echo ::set-output name=CREATE_RELEASE_END_TIME::$(date +"%s")
-
   deploy:
     name: Deploy
-    runs-on: self-hosted
-    needs: [set-env, build, create-release]
-    if: |
-      always() &&
-      needs.build.result == 'success' &&
-      needs.create-release.result == 'success'
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    needs:
+      - validate-build-status
+      - build
+      - archive
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
     steps:
       - name: Checkout
@@ -622,8 +494,8 @@ jobs:
       - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.set-env.outputs.REF}}/${{needs.set-env.outputs.BUILDTYPE}}.tar.bz2
-          DEST: s3://${{ needs.set-env.outputs.DEPLOY_BUCKET }}
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2
+          DEST: s3://${{ env.DEPLOY_BUCKET }}
 
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
@@ -641,15 +513,38 @@ jobs:
         id: export-deploy-end-time
         run: echo ::set-output name=DEPLOY_END_TIME::$(date +"%s")
 
+  notify-success:
+    name: Notify Success
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    needs:
+      - validate-build-status
+      - deploy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Notify Slack
+        uses: ./.github/workflows/slack-notify
+        continue-on-error: true
+        with:
+          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
   notify-failure:
     name: Notify Failure
-    runs-on: [self-hosted, linux, x64]
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     if: |
-      needs.set-env.outputs.BUILDTYPE == 'vagovprod' &&
       (failure() && needs.deploy.result != 'success')
-    needs: [set-env, deploy]
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+    needs: deploy
 
     steps:
       - name: Configure AWS Credentials
@@ -689,19 +584,17 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on: [self-hosted, linux, x64]
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
-      - set-env
+      - start-runner
       - build
       - archive
-      - create-release
       - deploy
-    if: |
-      always() &&
-      needs.deploy.result == 'success'
     env:
       METRIC_NAMESPACE: dsva_vagov.content_build
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -718,18 +611,17 @@ jobs:
       - name: Set vars for manual runs
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
-          echo "DEPLOY_ENV=${{ github.event.inputs.deploy_environment }}" >> $GITHUB_ENV
+          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
           echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
 
       - name: Calculate durations
         run: |
-          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.set-env.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.start-runner.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
           echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.outputs.BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.outputs.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "ARCHIVE_DURATION=$(expr ${{needs.archive.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
-          echo "CREATE_RELEASE_DURATION=$(expr ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
-          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.create-release.outputs.CREATE_RELEASE_END_TIME}})" >> $GITHUB_ENV
-          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.set-env.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
+          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.start-runner.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
 
       - name: Build JSON object
         run: |
@@ -746,12 +638,10 @@ jobs:
           jq '.series[4].points[0] = [${{env.NOW}}, ${{env.CONTENT_BUILD_DURATION}}]' | \
           jq '.series[5].metric = "${{env.METRIC_NAMESPACE}}.archive.duration"' | \
           jq '.series[5].points[0] = [${{env.NOW}}, ${{env.ARCHIVE_DURATION}}]' | \
-          jq '.series[6].metric = "${{env.METRIC_NAMESPACE}}.create-release.duration"' | \
-          jq '.series[6].points[0] = [${{env.NOW}}, ${{env.CREATE_RELEASE_DURATION}}]' | \
-          jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.deploy.duration"' | \
-          jq '.series[7].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
-          jq '.series[8].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
-          jq '.series[8].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
+          jq '.series[6].metric = "${{env.METRIC_NAMESPACE}}.deploy.duration"' | \
+          jq '.series[6].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
+          jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
+          jq '.series[7].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
@@ -793,17 +683,13 @@ jobs:
   stop-runner:
     name: Stop on-demand-runner
     needs:
-      - archive
       - start-runner
-      - create-release
       - deploy
       - record-metrics
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

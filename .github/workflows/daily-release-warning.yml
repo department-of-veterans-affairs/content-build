@@ -1,0 +1,42 @@
+name: Daily Release Warning
+
+on:
+  schedule:
+    - cron: 0 17 * * 1-5
+
+concurrency:
+  group: daily-release-warning
+  cancel-in-progress: true
+
+env:
+  CHANNEL_ID: C0MQ281DJ # vfs-platform-builds
+  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
+  DSVA_SCHEDULE_ENABLED: true
+
+jobs:
+  notify:
+    name: Notify Start
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cancel workflow due to DSVA schedule
+        if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
+        uses: andymckay/cancel-action@0.2
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get-latest-tag
+        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+
+      - name: Notify Slack
+        uses: ./.github/workflows/slack-notify
+        continue-on-error: true
+        with:
+          payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, production release for content-build coming up in 60 minutes. Please review staging before then. View what coming here: <https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...master>"}}]}]}'
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -63,7 +63,7 @@
                         <span>{{ end_date_full }}</span>
                       {% endif %}
                     {% endif %}
-                    <span>{{ timezone }}</span>
+                    <span>{{ timezone | replace: "D", ""| replace: "S", ""}}</span>
                   </dd>
                 </dl>
 
@@ -149,10 +149,12 @@
             {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
 
             {% if fieldUrlOfAnOnlineEvent.uri %}
-            <a class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold" onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ fieldUrlOfAnOnlineEvent.uri }}">
-              Link to event
-              <i aria-hidden="true" class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right' role="presentation"></i>
-            </a>
+            <p>
+              <a class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold" onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ fieldUrlOfAnOnlineEvent.uri }}">
+                Link to event
+                <i aria-hidden="true" class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right' role="presentation"></i>
+              </a>
+            </p>
             {% endif %}
 
             <a class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold" onclick="recordEvent({ event: 'nav-secondary-button-click' });" href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}">
@@ -198,7 +200,8 @@
 
                 <div class="vads-u-display--flex vads-u-flex-direction--column">
                   <!-- Derive most recent date -->
-                  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate %}
+                  {% assign now = '' | currentTime %}
+                  {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}
 
                   <!-- Starts at + ends at -->
                   <p class="vads-u-margin--0">
