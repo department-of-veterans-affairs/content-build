@@ -83,7 +83,7 @@ jobs:
         run: echo "SUCCESS ${{ matrix.name }}" 
         # run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.name }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
   
   # notify-failure:
