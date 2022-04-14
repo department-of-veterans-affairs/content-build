@@ -118,10 +118,10 @@ jobs:
         id: get-latest-release
         uses: thebritican/fetch-latest-release@v2.0.0
 
-      - name: Validate build status
-        run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Validate build status
+      #   run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   notify-start:
     name: Notify Start
@@ -311,6 +311,7 @@ jobs:
 
       - name: Notify VFS Platform Builds channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
+        id: notify-vfs-platform-builds-broken-links
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -320,8 +321,23 @@ jobs:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
 
+      - name: Output broken links info (fallback)
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-vfs-platform-builds-broken-links.outcome == 'failure' && always() }}
+        run: cat ./logs/${{ env.BUILDTYPE }}-broken-links.json | jq
+
+      - name: Notify VFS Platform Builds channel about broken links (fallback)
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-vfs-platform-builds-broken-links.outcome == 'failure' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
+          slack-message: "@cms-helpdesk Broken links found in vagovprod, but there are too many to post to Slack. See <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}> for details."
+
       - name: Notify content broken links channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
+        id: notify-content-broken-links
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
@@ -330,6 +346,20 @@ jobs:
         with:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
+
+      - name: Output broken links info (fallback)
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-content-broken-links.outcome == 'failure' && always() }}
+        run: cat ./logs/${{ env.BUILDTYPE }}-broken-links.json | jq
+
+      - name: Notify VFS Platform Builds channel about broken links (fallback)
+        uses: slackapi/slack-github-action@v1.16.0
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-content-broken-links.outcome == 'failure' && always() }}
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
+          slack-message: "@cms-helpdesk Broken links found in vagovprod, but there are too many to post to Slack. See <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}> for details."
 
       - name: Generate build details
         run: |
@@ -403,7 +433,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
 
       - name: Export archive end time
         id: export-archive-end-time
