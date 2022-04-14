@@ -1,5 +1,33 @@
-<script nonce="**CSP_NONCE**" type="text/javascript">
-    window.vetCenterHours = {{ vetCenterHours | json }};
-    window.isSatelliteLocation = {{ isSatelliteLocation }};
-</script>
-<div data-widget-type="vet-center-hours"></div>
+{% if vetCenterHours %}
+    <table class="service-hours" data-template="vet_centers/hours">
+        {% if cap %}
+        <h4
+            class="force-small-header vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+            Hours</h4>
+        {% else %}
+        <h4
+            class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+            Hours</h4>
+        {% endif %}
+        <colgroup>
+            <col class="day" />
+            <col class="hours" />
+        </colgroup>
+        <thead class="vads-u-visibility--screen-reader">
+            <th>day</th>
+            <th>hours</th>
+        </thead>
+        {% for hours in vetCenterHours %}
+            {% if hours %}
+                <tr>
+                    <td>{{ hours.day | officeHoursDayFormatter }}.</td>
+                    <td>{% if hours.starthours %}{{ hours.starthours | officeHoursTimeFormatter}}
+                        to
+                        {% endif %}{% if hours.endhours %}{{ hours.endhours | officeHoursTimeFormatter}}{% endif %}
+                        {{ hours.comment }}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}

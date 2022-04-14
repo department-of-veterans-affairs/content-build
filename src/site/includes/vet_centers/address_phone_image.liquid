@@ -60,18 +60,11 @@
     </div>
     {% if isMainOffice == true %}
         <div class="vads-u-margin-bottom--3">
-            {% include 'src/site/includes/vet_centers/hours.liquid' with
-                    vetCenterHours = vetCenter.fieldOfficeHours
-                    isSatelliteLocation = isSatelliteLocation
-            %}
+            {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = vetCenter.fieldOfficeHours cap = false %}
         </div>
       {% elsif vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" %}
         <div class="vads-u-margin-bottom--3">
-            {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
-            {% include 'src/site/includes/vet_centers/hours_dynamic.liquid' with
-                    vetCenterHoursKey = vetCenterHoursKey
-                    vetCenterHours = vetCenterHours
-            %}
+            {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = vetCenterHours cap = true %}
         </div>
     {% endif %}
   </section>
