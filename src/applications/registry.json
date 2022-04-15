@@ -1214,5 +1214,16 @@
       "layout": "page-react.html",
       "title": "Connected Devices"
     }
+  },
+  {
+    "appName": "Mock Form",
+    "entryFile": "./app-entry.jsx",
+    "entryName": "mock-form",
+    "rootUrl": "/mock-form",
+    "template": {
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "layout": "page-react.html"
+    }
   }
 ]
