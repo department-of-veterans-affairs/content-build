@@ -1196,16 +1196,6 @@
     }
   },
   {
-    "appName": "Education Inbox",
-    "entryName": "education-inbox",
-    "rootUrl": "/education/education-inbox",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html",
-      "title": "Check your VA education inbox"
-    }
-  },
-  {
     "appName": "Connect Your Device",
     "entryName": "dhp-consent-flow",
     "rootUrl": "/health-care/connected-devices",
