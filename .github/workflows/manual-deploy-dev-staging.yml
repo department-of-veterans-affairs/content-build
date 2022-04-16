@@ -27,8 +27,8 @@ jobs:
       environment: ${{ steps.set-output.outputs.environment }}
 
     env:
-      dev: "{\\\"name\\\": \\\"vagovdev\\\", \\\"bucket\\\": \\\"content.dev.va.gov\\\"}"
-      staging: "{\\\"name\\\": \\\"vagovstaging\\\", \\\"bucket\\\": \\\"content.staging.va.gov\\\"}"
+      dev: "{\\\"environment\\\": \\\"vagovdev\\\", \\\"bucket\\\": \\\"content.dev.va.gov\\\"}"
+      staging: "{\\\"environment\\\": \\\"vagovstaging\\\", \\\"bucket\\\": \\\"content.staging.va.gov\\\"}"
 
     steps:
       - name: Set output
@@ -82,7 +82,7 @@ jobs:
       - name: Deploy 
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.name }}.tar.bz2
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
   
   notify-failure:
