@@ -1225,5 +1225,15 @@
       "includeBreadcrumbs": true,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Transfer Account",
+    "entryName": "mhv-inherited-proofing",
+    "rootUrl": "/transfer-account",
+    "template": {
+      "vagovprod": false,
+      "title": "Transfer Account",
+      "layout": "page-react.html"
+    }
   }
 ]
