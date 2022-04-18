@@ -771,7 +771,7 @@ jobs:
       - name: Set output of latest_commit_sha
         id: latest-run-number
         # run: echo ::set-output name=latest_run_number::$(node ./script/github-actions/get-latest-run-number.js)
-        run: echo ::set-output name=latest_commit_sha::$(git log -n 1 --pretty=format:"%H")
+        run: echo ::set-output name=latest_commit_sha::$(git log -n 1 master --pretty=format:"%H")
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
