@@ -1481,5 +1481,8 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.officeHoursTimeFormatter = time =>
-    moment(time, 'Hmm').format('h:mm a');
+    moment(time, 'Hmm')
+      .format('h:mm a')
+      .replace(`am`, `a.m.`)
+      .replace(`pm`, `p.m.`);
 };

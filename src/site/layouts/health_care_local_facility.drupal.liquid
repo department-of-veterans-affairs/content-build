@@ -88,49 +88,15 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="vads-u-margin-bottom--0">
-                      <div class="clinicalhours">
-                        <h3
-                            class="vads-u-margin-top--2p5 vads-u-margin-bottom--1">
-                          Clinical hours
-                        </h3>
-                        <div
-                            class="vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row vads-u-margin-bottom--0">
-                          <ul
-                              class="vads-u-flex--1 va-c-facility-hours-list vads-u-margin-top--0 vads-u-margin-bottom--1 small-screen:vads-u-margin-bottom--0 vads-u-margin-right--3">
-                            {% for hours in fieldOfficeHours limit: 5 %}
-                              <li><b class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
-                                {% if hours.starthours %}{{ hours.starthours | officeHoursTimeFormatter}}
-                                to
-                                {% endif %}{% if hours.endhours %}{{ hours.endhours | officeHoursTimeFormatter}}{% endif %}
-                                {{ hours.comment }}
-                              </li>
-                            {% endfor %}
-                          </ul>
-                          <ul
-                              class="vads-u-flex--1 va-c-facility-hours-list vads-u-margin-top--0 'vads-u-margin-bottom--0">
-                            {% for hours in fieldOfficeHours offset: 5 limit: 2 %}
-                              <li><b class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
-                                {% if hours.starthours %}{{ hours.starthours | officeHoursTimeFormatter}}
-                                to
-                                {% endif %}{% if hours.endhours %}{{ hours.endhours | officeHoursTimeFormatter}}{% endif %}
-                                {{ hours.comment }}
-                              </li>
-                            {% endfor %} </ul>
-                        </div>
-                      </div>
-                    </div>
+                    {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'clinical' %}
                   </section>
                 </div>
               </div>
             </div>
-
-
             {% include "src/site/includes/image_and_static_map.liquid" with
                 facilityMedia = fieldMedia
                 facilityId = fieldFacilityLocatorApiId
             %}
-
           </div>
 
           <!-- Location services section -->

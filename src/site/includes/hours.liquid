@@ -1,0 +1,60 @@
+{% if allHours %}
+<div class="vads-u-margin-bottom--0" data-template="hours">
+    <div class="clinicalhours">
+        {% if headerType == 'small' %}
+        <h4
+            class="force-small-header vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+            Hours</h4>
+        {% elsif headerType == 'standard' %}
+        <h4
+            class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+            Hours</h4>
+        {% elsif headerType == 'clinical' %}
+        <h3 class="vads-u-margin-top--2p5 vads-u-margin-bottom--1">
+            Clinical hours
+        </h3>
+        {% endif %}
+
+        <div
+            class="vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row vads-u-margin-bottom--0">
+            <ul
+                class="vads-u-flex--1 va-c-facility-hours-list vads-u-margin-top--0 vads-u-margin-bottom--1 small-screen:vads-u-margin-bottom--0 vads-u-margin-right--3">
+
+                {% for hours in allHours %}
+                {% if hours.day == 0 %}
+                {% assign sunday = hours %}
+                {% endif %}
+                {% if hours.day != 0 %}
+                <li>
+                    {% if headerType == 'clinical' %}
+                    <b
+                        class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
+                    {% else %}
+                    <span
+                        class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}.</span>
+                    {% endif %}
+                    {% if hours.starthours %}{{ hours.starthours | officeHoursTimeFormatter}}
+                    to
+                    {% endif %}{% if hours.endhours %}{{ hours.endhours | officeHoursTimeFormatter}}{% endif %}
+                    {{ hours.comment }}
+                </li>
+                {% endif %}
+                {% endfor %}
+                <li>
+                    {% if headerType == 'clinical' %}
+                    <b
+                        class="abbrv-day">{{ sunday.day | officeHoursDayFormatter }}:</b>
+                    {% else %}
+                    <span
+                        class="abbrv-day">{{ sunday.day | officeHoursDayFormatter }}.</span>
+                    {% endif %}
+                    {% if sunday.starthours %}{{ sunday.starthours | officeHoursTimeFormatter}}
+                    to
+                    {% endif %}{% if sunday.endhours %}{{ sunday.endhours | officeHoursTimeFormatter}}{% endif %}
+                    {{ sunday.comment }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}

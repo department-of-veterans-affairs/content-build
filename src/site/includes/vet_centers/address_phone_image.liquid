@@ -60,11 +60,11 @@
     </div>
     {% if isMainOffice == true %}
         <div class="vads-u-margin-bottom--3">
-            {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = vetCenter.fieldOfficeHours cap = false %}
+            {% include 'src/site/includes/hours.liquid' with allHours = vetCenter.fieldOfficeHours headerType = 'small' %}
         </div>
       {% elsif vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" %}
         <div class="vads-u-margin-bottom--3">
-            {% include 'src/site/includes/vet_centers/hours.liquid' with vetCenterHours = vetCenterHours cap = true %}
+            {% include 'src/site/includes/hours.liquid' with allHours = vetCenterHours headerType = 'small' %}
         </div>
     {% endif %}
   </section>
