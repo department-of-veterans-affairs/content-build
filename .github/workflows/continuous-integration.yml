@@ -750,13 +750,11 @@ jobs:
     if: ${{ always() && github.ref == 'refs/heads/master' && needs.cache-drupal-content.result == 'success' }}
     needs: cache-drupal-content
     outputs:
-      latest_commit_sha: ${{ steps.latest-run-number.outputs.latest_commit_sha }}
+      latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -768,17 +766,16 @@ jobs:
             .cache/yarn
             node_modules
 
-      - name: Set output of latest_commit_sha
+      - name: Set output of latest_run_number
         id: latest-run-number
-        # run: echo ::set-output name=latest_run_number::$(node ./script/github-actions/get-latest-run-number.js)
-        run: echo ::set-output name=latest_commit_sha::$(git log -n 1 master --pretty=format:"%H")
+        run: echo ::set-output name=latest_run_number::$(node ./script/github-actions/get-latest-run-number.js)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     name: Deploy
     runs-on: self-hosted
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_commit_sha == github.sha }}
+    if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, archive, cache-drupal-content, get-latest-run-number]
 
     env:
