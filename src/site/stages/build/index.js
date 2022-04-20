@@ -91,7 +91,7 @@ function build(BUILD_OPTIONS) {
   // For CMS testing, we only need to ensure that the graphql queries run. We
   // don't need any actual HTML output, so we can just stop here.
   if (BUILD_OPTIONS.gqlQueriesOnly) {
-    smith.process(async (err, files) => {
+    smith.process(async err => {
       if (err) {
         smith.endGarbageCollection();
         throw err;
