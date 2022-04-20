@@ -87,6 +87,24 @@ function build(BUILD_OPTIONS) {
   }
 
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
+
+  // For CMS testing, we only need to ensure that the graphql queries run. We
+  // don't need any actual HTML output, so we can just stop here.
+  if (BUILD_OPTIONS.gqlQueriesOnly) {
+    smith.process(async (err, files) => {
+      if (err) {
+        smith.endGarbageCollection();
+        throw err;
+      }
+
+      smith.printSummary(BUILD_OPTIONS);
+      smith.printPeakMemory();
+      console.log('GraphQL queries have been run');
+      smith.endGarbageCollection();
+    });
+    return;
+  }
+
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 
   smith.use(
