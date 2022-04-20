@@ -8,6 +8,8 @@ const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
+const stagingSurveys = require('./medalliaStagingSurveys.json');
+const prodSurveys = require('./medalliaProdSurveys.json');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -1333,6 +1335,10 @@ module.exports = function registerFilters() {
     return basePath.includes(searchValue);
   };
 
+  liquid.filters.currentTime = () => {
+    return moment().unix();
+  };
+
   liquid.filters.deriveMostRecentDate = (
     fieldDatetimeRangeTimezone,
     now = moment().unix(), // This is done so that we can mock the current time in tests.
@@ -1414,7 +1420,10 @@ module.exports = function registerFilters() {
     const formattedEndsAt = moment
       .tz(endsAtUnix * 1000, timezone)
       .format('h:mm a');
-    const endsAtTimezone = moment.tz(endsAtUnix * 1000, timezone).format('z');
+    const endsAtTimezone = moment
+      .tz(endsAtUnix * 1000, timezone)
+      .format('z')
+      .replace(/S|D/i, '');
 
     return `${formattedStartsAt} – ${formattedEndsAt} ${endsAtTimezone}`;
   };
@@ -1425,5 +1434,18 @@ module.exports = function registerFilters() {
 
   liquid.filters.featureCareWeProvide = () => {
     return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
+  };
+
+  liquid.filters.getSurvey = (buildtype, url) => {
+    if (
+      buildtype === 'localhost' ||
+      buildtype === 'vagovstaging' ||
+      buildtype === 'vagovdev'
+    ) {
+      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    } else if (buildtype === 'vagovprod') {
+      return prodSurveys[url] ? prodSurveys[url] : 17;
+    }
+    return null;
   };
 };

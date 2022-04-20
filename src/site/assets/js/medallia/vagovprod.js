@@ -1,4 +1,4 @@
-// Medallia Embed Script
+// Medallia intercept survey for Teamsite pages on va.gov/ORMDI/*.*
 (function(g) {
   var isStaging = window.location.host.includes('staging');
   if (!isStaging) return;
@@ -45,3 +45,34 @@
       g[aT].push(arguments);
     });
 })(window);
+
+
+(function () {
+  if (window.KAMPYLE_ONSITE_SDK) {
+      onsiteLoaded();
+  } else {
+      window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
+  }
+})()
+
+function onsiteLoaded() {
+  const surveyNumber = getSurveyNumber(window.location.pathname);
+  var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
+    if (neb_status === true) {
+      console.log(`survey number ${surveyNumber} has loaded`)
+  }
+}
+
+const vagovprodsurveys = {
+  "/search": 21,
+  "/contact-us/virtual-agent": 25
+}
+
+function getSurveyNumber (url) {
+    let pathUrl = trimSlash(url)
+    return vagovprodsurveys[pathUrl] ? vagovprodsurveys[pathUrl] : 17;
+}
+
+function trimSlash(url) {
+    return url.charAt(url.length - 1) === '/' ? url.slice(0, url.length - 1) : url;
+}

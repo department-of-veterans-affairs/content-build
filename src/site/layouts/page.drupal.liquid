@@ -36,7 +36,7 @@
 
           {% comment %} {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %} {% endcomment %}
           {% comment %}   <nav id="table-of-contents" aria-labelledby="on-this-page"> {% endcomment %}
-          {% comment %}     <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2> {% endcomment %}
+          {% comment %}     <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2> {% endcomment %}
           {% comment %}     <ul class="usa-unstyled-list" role="list"></ul> {% endcomment %}
           {% comment %}   </nav> {% endcomment %}
           {% comment %} {% endif %} {% endcomment %}
@@ -68,16 +68,15 @@
           {%  endif %}
           {% if lang != "en" %}
             <va-back-to-top></va-back-to-top>
+        <!-- Last updated & feedback button-->
+            {% include "src/site/includes/above-footer-elements.drupal.liquid" %}            
           {% endif %}
         </article>
-
-        <div class="last-updated usa-content">
-            Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-        </div>
       </div>
     </main>
   </div>
 </div>
+
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

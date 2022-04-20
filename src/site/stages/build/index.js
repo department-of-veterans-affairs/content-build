@@ -25,6 +25,7 @@ const downloadAssets = require('./plugins/download-assets');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const createHeaderFooter = require('./plugins/create-header-footer');
+const createOfficeDirectoryData = require('./plugins/create-office-directory-data');
 const createOutreachAssetsData = require('./plugins/create-outreach-assets-data');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
@@ -86,7 +87,30 @@ function build(BUILD_OPTIONS) {
   }
 
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
+
+  // For CMS testing, we only need to ensure that the graphql queries run. We
+  // don't need any actual HTML output, so we can just stop here.
+  if (BUILD_OPTIONS.gqlQueriesOnly) {
+    smith.process(async err => {
+      if (err) {
+        smith.endGarbageCollection();
+        throw err;
+      }
+
+      smith.printSummary(BUILD_OPTIONS);
+      smith.printPeakMemory();
+      console.log('GraphQL queries have been run');
+      smith.endGarbageCollection();
+    });
+    return;
+  }
+
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
+
+  smith.use(
+    createOfficeDirectoryData(BUILD_OPTIONS),
+    'Create office-directory data',
+  );
 
   smith.use(
     createOutreachAssetsData(BUILD_OPTIONS),

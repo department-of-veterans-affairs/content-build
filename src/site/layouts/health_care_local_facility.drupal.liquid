@@ -25,7 +25,7 @@
           </div>
 
           <nav id="table-of-contents" class="vads-u-margin-bottom--5" aria-labelledby="on-this-page">
-            <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
+            <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
             <ul class="usa-unstyled-list" role="list"></ul>
           </nav>
 
@@ -72,15 +72,13 @@
                               href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
                         </div>
                       {% endif %}
-                      {% if facilitySidebar.description %}
-                        {% assign shouldAddVaHealthConnectNumber = ''| featureAddVaHealthConnectNumber %}
-                        {% assign isVisn8 = facilitySidebar.description | isVisn8 %}
-                        {% if shouldAddVaHealthConnectNumber == true and isVisn8 == true %}
-                          <div class="vads-u-margin-bottom--1">
-                            <strong>VA health connect:</strong>
-                            <a href="tel:877-741-3400">877-741-3400</a>
-                          </div>
-                        {% endif %}
+                      {% if fieldRegionPage.entity.fieldVaHealthConnectPhone %}
+                        <div class="vads-u-margin-bottom--1">
+                          <strong>VA health connect:</strong>
+                          <a href="tel:{{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}">
+                              {{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}
+                          </a>
+                        </div>
                       {% endif %}
                       {% if fieldMentalHealthPhone %}
                         <div class="mental-health-clinic-phone"><strong>Mental
@@ -176,6 +174,8 @@
             <section class="local-health-services" id="local-health-services" data-label="Health services">
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
+
+              <va-accordion bordered>
               {% for localService in localHealthServices %}
                 {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}
                 {% if localHealthService != empty and localService.entity.status == true %}
@@ -190,6 +190,7 @@
 
                 {% endif %}
               {% endfor %}
+              </va-accordion>
             </section>
           {% endif %}
 
@@ -208,13 +209,10 @@
                     fieldInstagram = fieldRegionPage.entity.fieldInstagram
                     fieldFlickr = fieldRegionPage.entity.fieldFlickr
           %}
-
+  <!-- Last updated & feedback button-->
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}    
         </article>
-        <div class="last-updated usa-content">
-          Last updated:
-          <time
-              datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD' }}">{{ changed | humanizeTimestamp }}</time>
-        </div>
+
       </div>
     </div>
   </main>

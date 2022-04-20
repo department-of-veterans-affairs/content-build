@@ -58,6 +58,22 @@
           {% endif %}
         </div>
     </div>
+    {% if isMainOffice == true %}
+        <div class="vads-u-margin-bottom--3">
+            {% include 'src/site/includes/vet_centers/hours.liquid' with
+                    vetCenterHours = vetCenter.fieldOfficeHours
+                    isSatelliteLocation = isSatelliteLocation
+            %}
+        </div>
+      {% elsif vetCenter.entityBundle == "vet_center_cap" or vetCenter.entityBundle == "vet_center" or vetCenter.entityBundle == "vet_center_outstation" %}
+        <div class="vads-u-margin-bottom--3">
+            {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
+            {% include 'src/site/includes/vet_centers/hours_dynamic.liquid' with
+                    vetCenterHoursKey = vetCenterHoursKey
+                    vetCenterHours = vetCenterHours
+            %}
+        </div>
+    {% endif %}
   </section>
 
   <section
@@ -70,5 +86,17 @@
         image = vetCenter.fieldMedia.entity.image
         onclick = onclick
     %}
+    {% if isMainOffice == true %}
+        {% include "src/site/includes/image_and_static_map_satellite_main.liquid" with
+            facilityMedia = facilityMedia
+            facilityId = facilityId
+        %}
+    {% else %}
+        {% include "src/site/includes/image_and_static_map_dynamic.liquid" with
+                facilityMedia = facilityMedia
+                facilityId = facilityId
+        %}
+    {% endif %}
   </section>
+
 </div>

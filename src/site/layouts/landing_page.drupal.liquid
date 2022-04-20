@@ -23,16 +23,22 @@
         </div>
 
         {% if fieldSpokes != empty and fieldSpokes.length > 1 %}
-          <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg" aria-labelledby="on-this-page">On this page</h2>
-          <ul>
+        <nav id="table-of-spoke-contents" aria-labelledby="on-this-page">
+          <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
+          <ul class="usa-unstyled-list" role="list">
             {% for spoke in fieldSpokes %}
-              <li>
-                <a href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: 30 }}{% endif %}">
+              <li class="vads-u-margin-bottom--2">
+                <a 
+                  href="#{% if spoke.entity.fieldTitle != empty %}{{ spoke.entity.fieldTitle | hashReference: 30 }}{% endif %}"
+                  class="vads-u-display--flex vads-u-text-decoration--none"
+                >
+                  <i class="fas fa-arrow-down va-c-font-size--xs vads-u-margin-top--1 vads-u-margin-right--1" aria-hidden="true"></i>
                   {{ spoke.entity.fieldTitle }}
                 </a>
               </li>
             {% endfor %}
           </ul>
+        </nav>
         {% endif %}
 
         {% if fieldAlert.length %}
@@ -61,10 +67,8 @@
             {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' entity = fieldRelatedLinks.entity boldTitle = true %}
           </section>
         {% endif %}
-
-        <div class="last-updated usa-content">
-          Last updated: <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-        </div>
+    <!-- Last updated & feedback button -->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </article>
 
       <div class="usa-width-one-third" id="hub-rail">
@@ -134,15 +138,13 @@
               </section>
             </va-accordion-item>
           {% endif %}
-        </va-accordion>
 
         <!-- Connect with us -->
         {% if fieldRelatedOffice != empty and fieldRelatedOffice.entity.fieldExternalLink.title != "Records benefits hub" %}
-          <va-accordion bordered class="social">
             <va-accordion-item level="3" header="Connect with us" open="true">
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h4 class="va-nav-linkslist-list">
-                  <a href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                  <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
                     {{ fieldRelatedOffice.entity.fieldExternalLink.title }}
                   </a>
                 </h4>
@@ -152,7 +154,7 @@
                 <h4>Get updates</h4>
                   <ul class="va-nav-linkslist-list social">
                     <li>
-                      <a href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                      <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
                         <i aria-hidden="true" class="fas fa-envelope vads-u-padding-right--1"></i>
                         {{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}
                       </a>
@@ -171,21 +173,21 @@
                     {% if socialLink.value %}
                       {% if socialPlatform = "youtube_channel" %}
                         <li>
-                          <a href="http://youtube.com/channel/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                          <a class="vads-u-text-decoration--underline" href="http://youtube.com/channel/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
                             <i aria-hidden="true" class="fab fa-youtube vads-u-padding-right--1"></i>
                             {{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | remove: '_' | capitalize }}
                           </a>
                         </li>
                       {% elsif socialPlatform == "youtube" %}
                         <li>
-                          <a href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                          <a class="vads-u-text-decoration--underline" href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
                             <i aria-hidden="true" class="fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
                             {{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube
                           </a>
                         </li>
                       {% else %}
                         <li>
-                          <a href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
+                          <a class="vads-u-text-decoration--underline" href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
                             <i aria-hidden="true" class="fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
                             {{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | capitalize }}
                           </a>

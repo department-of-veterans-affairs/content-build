@@ -36,6 +36,7 @@ const nodeHealthCareRegionPage = `
       }
     }
     fieldVamcEhrSystem
+    fieldVaHealthConnectPhone
     fieldGovdeliveryIdEmerg
     fieldGovdeliveryIdNews
     ${socialMediaFields}

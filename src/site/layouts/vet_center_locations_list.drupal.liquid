@@ -19,13 +19,12 @@
           {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
             vetCenter = fieldOffice.entity
             vetCenterUrl = entityUrl.breadcrumb.1.url.path
+            vetCenterHours = fieldOffice.entity.vetCenterHours
+            isSatelliteLocation = true
+            isMainOffice = true
+            facilityMedia = fieldOffice.entity.fieldMedia
+            facilityId = fieldOffice.entity.fieldFacilityLocatorApiId
           %}
-          <div class="vads-u-margin-bottom--3">
-            {% include 'src/site/includes/vet_centers/hours.liquid' with
-                vetCenterHours = fieldOffice.entity.fieldOfficeHours
-                isSatelliteLocation = true
-            %}
-          </div>
 
           {% if fieldOffice.entity.reverseFieldOfficeNode.entities.length > 0 or fieldNearbyMobileVetCenters.length > 0 %}
             <h2 class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 vads-u-margin-bottom--2p5
@@ -43,17 +42,17 @@
             </p>
             {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | rejectBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
             {% for entityVetCenter in satelliteVetCenters %}
+              {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                   vetCenter = entityVetCenter
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber
+                  vetCenterHoursKey = myVetCenterHoursKeys
+                  vetCenterHours = entityVetCenter.fieldOfficeHours
+                  isSatelliteLocation = true
+                  isMainOffice = false
+                  facilityMedia = entityVetCenter.fieldMedia
+                  facilityId = entityVetCenter.fieldFacilityLocatorApiId
               %}
-              <div class="vads-u-margin-bottom--3">
-                {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
-                {% include 'src/site/includes/vet_centers/hours_dynamic.liquid' with
-                        vetCenterHoursKey = myVetCenterHoursKeys
-                        vetCenterHours = entityVetCenter.fieldOfficeHours
-                %}
-              </div>
             {% endfor %}
 
             {% assign mobileVetCenters = fieldNearbyMobileVetCenters | getValuesForPath: 'entity' | concat: fieldOffice.entity.reverseFieldOfficeNode.entities | filterBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
@@ -81,6 +80,8 @@
             </a>
           </p>
           <va-back-to-top></va-back-to-top>
+    <!-- Last updated & feedback button -->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}        
         </article>
       </div>
     </div>

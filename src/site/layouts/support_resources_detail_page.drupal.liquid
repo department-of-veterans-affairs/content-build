@@ -36,7 +36,7 @@
             <!-- TOC -->
             {% comment %} {% if fieldTableOfContentsBoolean %} {% endcomment %}
             {% comment %}   <nav id="table-of-contents" aria-labelledby="on-this-page"> {% endcomment %}
-            {% comment %}     <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2> {% endcomment %}
+            {% comment %}     <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2> {% endcomment %}
             {% comment %}     <ul class="usa-unstyled-list" role="list"></ul> {% endcomment %}
             {% comment %}   </nav> {% endcomment %}
             {% comment %} {% endif %} {% endcomment %}
@@ -82,12 +82,11 @@
       <div class="usa-width-three-fourths">
         <div class="usa-content">
           <va-back-to-top></va-back-to-top>
+        <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}          
         </div>
       </div>
     </div>
-
-    <!-- Last updated -->
-    {% include "src/site/includes/last-updated.drupal.liquid" %}
   </main>
 </div>
 
