@@ -24,12 +24,12 @@
 
 {% case single.fieldHours %}
   {% when '2' %}
-    {% if single.fieldFacilityServiceHours.value %}
-      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = single.fieldFacilityServiceHours.value %}
+    {% if single.fieldOfficeHours %}
+      {% include "src/site/includes/hours.liquid" with allHours = facility.fieldOfficeHours headerType = 'included' %}
     {% endif %}
   {% when '0' %}
-    {% if fieldFacilityHours.value %}
-      {% include "src/site/paragraphs/service_hours.drupal.liquid" with serviceHours = fieldFacilityHours.value %}
+    {% if fieldOfficeHours %}
+      {% include "src/site/includes/hours.liquid" with allHours = fieldOfficeHours headerType = 'included' %}
     {% endif %}
 {% endcase %}
 

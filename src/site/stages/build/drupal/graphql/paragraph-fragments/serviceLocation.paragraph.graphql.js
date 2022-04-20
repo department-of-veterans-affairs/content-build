@@ -38,10 +38,11 @@ module.exports = `
             }
           }
         }
-        fieldFacilityServiceHours {
-          value
-          caption
-          format
+        fieldOfficeHours {
+          day
+          starthours
+          endhours
+          comment
         }
         fieldHours
         fieldAdditionalHoursInfo

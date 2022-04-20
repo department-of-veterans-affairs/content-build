@@ -26,7 +26,7 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
-    
+
     fieldAddress {
       addressLine1
       locality
@@ -35,8 +35,11 @@ const healthCareLocalFacilityPageFragment = `
     }
     fieldPhoneNumber
     fieldMentalHealthPhone
-    fieldFacilityHours {
-      value
+    fieldOfficeHours {
+      day
+      starthours
+      endhours
+      comment
     }
     fieldMainLocation
     fieldMedia {
