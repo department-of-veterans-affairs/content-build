@@ -206,6 +206,9 @@ jobs:
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
+      - name: Create a11y failures CSV file
+        run: touch a11y_failures.csv
+
       - name: Start content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
@@ -216,6 +219,10 @@ jobs:
         if: ${{ always() }}
         run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
 
+      - name: Rename failures CSV file
+        if: ${{ always() }}
+        run: mva11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
+
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
@@ -223,6 +230,14 @@ jobs:
           name: cypress-mochawesome-test-results
           path: mochawesome-report
           retention-days: 1
+
+      - name: Archive failures CSV
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: a11y_failures
+          path: a11y_failures-${{ matrix.ci_node_index }}.csv
+          retention-days: 30
 
   slack:
     name: Notify Slack and upload Mochawesome report
@@ -301,6 +316,25 @@ jobs:
           timeout_minutes: 7
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
+
+      - name: Download failures CSV
+        if: ${{ needs.a11y.result == 'failure' }}
+        uses: actions/download-artifact@v2
+        with:
+          name: a11y_failures
+          path: /
+
+      - name: Merge failure CSV files
+        if: ${{ needs.a11y.result == 'failure' }}
+        run: cat *csv > a11y_failures.csv
+
+      - name: Archive merged failures CSV file
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: a11y_failures
+          path: a11y_failures.csv
+          retention-days: 30
 
       - name: Download Mochawesome test results
         uses: actions/download-artifact@v2
