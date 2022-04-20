@@ -77,6 +77,9 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
 
   // use the --use-cached-assets flag with a build to bypass re-downloading asset files
   { name: 'use-cached-assets', type: Boolean, defaultValue: false },
+
+  // use the --gql-queries-only flag to only run graphql queries
+  { name: 'gql-queries-only', type: Boolean, defaultValue: false },
 ];
 
 function gatherFromCommandLine() {
@@ -130,6 +133,7 @@ function applyDefaultOptions(options) {
     ],
     cacheDirectory: path.join(projectRoot, '.cache', options.buildtype),
     paramsDirectory: path.join(utilities, 'query-params'),
+    gqlQueriesOnly: !!options['gql-queries-only'],
   });
 }
 
