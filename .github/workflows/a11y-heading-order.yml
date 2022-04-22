@@ -216,6 +216,9 @@ jobs:
         with:
           name: a11y_failures
 
+      - name: Test directory
+        run: ls
+
       - name: Merge failure CSV files
         if: ${{ needs.a11y.result == 'failure' }}
         run: cat *csv > a11y_failures.csv
