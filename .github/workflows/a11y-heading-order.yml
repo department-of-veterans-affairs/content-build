@@ -229,7 +229,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: a11y_failures
-          path: a11y_failures.csv
+          path: content-build/a11y_failures.csv
           retention-days: 30
 
       - name: Configure AWS credentials
