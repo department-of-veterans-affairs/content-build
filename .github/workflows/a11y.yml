@@ -322,6 +322,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: a11y_failures
+          path: content-build
 
       - name: Merge failure CSV files
         if: ${{ needs.a11y.result == 'failure' }}
