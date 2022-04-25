@@ -221,7 +221,7 @@ jobs:
 
       - name: Rename failures CSV file
         if: ${{ always() }}
-        run: mva11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
+        run: mv a11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
 
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v2
