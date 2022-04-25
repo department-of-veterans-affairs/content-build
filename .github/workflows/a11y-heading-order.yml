@@ -1,9 +1,9 @@
 name: Accessibility Tests - Heading Order
 
-on: [push]
-  # workflow_dispatch:
-  # schedule:
-  #   - cron: '0 7 * * 1' # 3am ET, Monday
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 7 * * 1' # 3am ET, Monday
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -217,9 +217,6 @@ jobs:
           name: a11y_failures
           path: content-build
 
-      - name: Test directory
-        run: ls
-
       - name: Merge failure CSV files
         if: ${{ needs.a11y.result == 'failure' }}
         run: cat *csv > a11y_failures.csv
@@ -245,13 +242,13 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      # - name: Accessibility Test Failure
-      #   uses: slackapi/slack-github-action@v1.18.0
-      #   if: ${{ needs.a11y.result == 'failure' }}
-      #   continue-on-error: true
-      #   env:
-      #     SSL_CERT_DIR: /etc/ssl/certs
-      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-      #   with:
-      #     payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "ATTN: Accessibility heading-order tests have failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-      #     channel-id: ${{ env.CHANNEL_ID }}
+      - name: Accessibility Test Failure
+        uses: slackapi/slack-github-action@v1.18.0
+        if: ${{ needs.a11y.result == 'failure' }}
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "ATTN: Accessibility heading-order tests have failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          channel-id: ${{ env.CHANNEL_ID }}
