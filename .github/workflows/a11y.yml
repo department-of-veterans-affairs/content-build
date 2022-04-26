@@ -36,16 +36,16 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        uses: slackapi/slack-github-action@v1.18.0
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Starting the daily accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Notify Slack
+      #   if: ${{ always() }}
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Starting the daily accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
         uses: actions/checkout@v2
@@ -267,27 +267,27 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      - name: Accessibility Test Failure
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'failure' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Failure
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ needs.a11y.result == 'failure' }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Daily accessibility scan has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
-      - name: Accessibility Test Success
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'success' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Success
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ needs.a11y.result == 'success' }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has completed successfully on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Get Node version
         id: get-node-version
@@ -413,24 +413,24 @@ jobs:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
-      - name: Accessibility Test Cancellation
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has been canceled on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Cancellation
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ needs.a11y.result == 'cancelled' || needs.build.result == 'cancelled' }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Daily accessibility scan has been canceled on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
 
-      - name: Accessibility Test Build Failure
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.build.result == 'failure' }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Daily accessibility scan build has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel-id: ${{ env.CHANNEL_ID }}
+      # - name: Accessibility Test Build Failure
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ needs.build.result == 'failure' }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> Daily accessibility scan build has failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel-id: ${{ env.CHANNEL_ID }}
