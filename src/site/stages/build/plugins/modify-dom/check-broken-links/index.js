@@ -91,6 +91,7 @@ module.exports = {
       summary: markdownSummary,
       isHomepageBroken,
       brokenLinksCount,
+      brokenPages,
     };
 
     console.log(`${brokenLinksCount} broken links were found.`);

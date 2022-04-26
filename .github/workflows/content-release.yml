@@ -265,6 +265,10 @@ jobs:
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links.js ${{ env.BUILDTYPE }}
 
+      - name: Check broken links (new)
+        id: get-broken-link-info-new
+        run: node ./script/github-actions/check-broken-links-blocks.js ${{ env.BUILDTYPE }}
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
@@ -309,32 +313,6 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      - name: Notify VFS Platform Builds channel about broken links
-        uses: slackapi/slack-github-action@v1.16.0
-        id: notify-vfs-platform-builds-broken-links
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
-
-      - name: Output broken links info (fallback)
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-vfs-platform-builds-broken-links.outcome == 'failure' && always() }}
-        run: cat ./logs/${{ env.BUILDTYPE }}-broken-links.json | jq
-
-      - name: Notify VFS Platform Builds channel about broken links (fallback)
-        uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-vfs-platform-builds-broken-links.outcome == 'failure' && always() }}
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
-          slack-message: "@cms-helpdesk Broken links found in vagovprod, but there are too many to post to Slack. See <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}> for details."
-
       - name: Notify content broken links channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
         id: notify-content-broken-links
@@ -347,19 +325,17 @@ jobs:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
-      - name: Output broken links info (fallback)
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-content-broken-links.outcome == 'failure' && always() }}
-        run: cat ./logs/${{ env.BUILDTYPE }}-broken-links.json | jq
-
-      - name: Notify VFS Platform Builds channel about broken links (fallback)
+      - name: Notify content broken links channel about broken links (new)
         uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && steps.notify-content-broken-links.outcome == 'failure' && always() }}
+        id: notify-content-broken-links-new
+        if: ${{ steps.get-broken-link-info-new.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
+          payload: ${{ steps.get-broken-link-info-new.outputs.SLACK_BLOCKS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
-          slack-message: "@cms-helpdesk Broken links found in vagovprod, but there are too many to post to Slack. See <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}> for details."
 
       - name: Generate build details
         run: |
