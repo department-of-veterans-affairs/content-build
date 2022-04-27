@@ -3,7 +3,7 @@ name: Deploy Content Preview Server
 on:
   workflow_run:
     workflows:
-      - Content Release
+      - Daily Production Release
     types:
       - completed
 
