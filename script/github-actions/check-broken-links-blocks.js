@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-// https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov -- Tugboat CMS with 2 broken links
 const fs = require('fs');
 
 const args = process.argv.slice(2);
@@ -57,6 +56,20 @@ if (fs.existsSync(reportPath)) {
   }
 
   payload.blocks = [...payload.blocks, ...blocksWithDividers];
+  // Slack's API has a limit of 50 blocks, so limit the number of blocks and
+  // splice in a message directing the user to the workflow.
+  if (payload.blocks.length > 50) {
+    payload.blocks = payload.blocks.slice(0, 49);
+    const truncateWarning = {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          'The list is too long to display in its entirety. Please visit the workflow run link above to see the full list.',
+      },
+    };
+    payload.blocks.splice(1, 0, truncateWarning);
+  }
 
   console.log(`::set-output name=SLACK_BLOCKS::${JSON.stringify(payload)}`);
 
