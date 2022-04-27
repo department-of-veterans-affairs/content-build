@@ -25,6 +25,9 @@ module.exports = `
             endhours
             comment
           }
+          entityUrl {
+            path
+          }
           ${FIELD_ADDRESS}
           reverseFieldFacilityLocationNode(limit: 50, filter: {
             conditions: [

@@ -1,3 +1,4 @@
+{% if facilities %}
 {% for facility in facilities %}
   <h4><a href="{{ facility.entityUrl.path }}">{{ facility.entityLabel }}</a></h4>
 
@@ -30,3 +31,4 @@
     facility = facility
   %}
 {% endfor %}
+{% endif %}

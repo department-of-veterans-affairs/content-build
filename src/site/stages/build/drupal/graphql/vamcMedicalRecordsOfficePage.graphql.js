@@ -9,6 +9,19 @@ const medicalRecordsOfficeFragment = `
     entityUrl {
       path
     }
+    fieldVamcMedRecordsMailing {
+      givenName
+      familyName
+      additionalName
+      organization
+      addressLine1
+      addressLine2
+      administrativeArea
+      locality
+      dependentLocality
+      postalCode
+    }
+    fieldFaxNumber
     fieldCcTopOfPageContent {
       fetched
       fetchedBundle

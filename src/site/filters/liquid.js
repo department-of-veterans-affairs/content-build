@@ -1398,6 +1398,7 @@ module.exports = function registerFilters() {
     return facilitiesInRegion
       .map(facility => ({
         entityLabel: facility?.entityLabel,
+        entityUrl: facility?.entityUrl,
         fieldAddress: facility?.fieldAddress,
         fieldOfficeHours: facility?.fieldOfficeHours,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
