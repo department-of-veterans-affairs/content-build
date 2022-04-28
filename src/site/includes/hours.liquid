@@ -39,11 +39,13 @@
 					{% if sunday %}
 						{% include "src/site/includes/hours-item.liquid" with hours = sunday %}
 					{% else %}
-						{% if headerType == 'clinical' %}
-							<b class="abbrv-day">Sun:</b>
-						{% else %}
-							<span class="abbrv-day">Sun.</span>
-						{% endif %}
+						<li>
+							{% if headerType == 'clinical' %}
+								<b class="abbrv-day">Sun:</b>
+							{% else %}
+								<span class="abbrv-day">Sun.</span>
+							{% endif %}
+						</li>
 					{% endif %}
 				</ul>
 			</div>
