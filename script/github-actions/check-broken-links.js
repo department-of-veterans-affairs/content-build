@@ -17,8 +17,7 @@ if (fs.existsSync(reportPath)) {
   const brokenLinks = JSON.parse(brokenLinksReport);
   const shouldFail =
     brokenLinks.isHomepageBroken ||
-    brokenLinks.brokenLinksCount >
-      (brokenLinks.maxBrokenLinks ?? maxBrokenLinks);
+    brokenLinks.brokenLinksCount > maxBrokenLinks;
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
   const summary = brokenLinks.summary;
   const heading = `<!subteam^S010U41C30V|cms-helpdesk> ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}> \\n`;
