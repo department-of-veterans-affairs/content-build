@@ -25,7 +25,7 @@
 {% case single.fieldHours %}
   {% when '2' %}
     {% if single.fieldOfficeHours %}
-      {% include "src/site/includes/hours.liquid" with allHours = facility.fieldOfficeHours headerType = 'included' %}
+      {% include "src/site/includes/hours.liquid" with allHours = single.fieldOfficeHours headerType = 'included' %}
     {% endif %}
   {% when '0' %}
     {% if fieldOfficeHours %}
