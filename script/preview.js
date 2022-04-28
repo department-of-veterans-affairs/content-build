@@ -94,16 +94,6 @@ const cacheDir = path.join(
 const app = express();
 const drupalClient = getDrupalClient(options);
 
-const urls = {
-  [ENVIRONMENTS.LOCALHOST]: 'http://localhost:3002',
-  [ENVIRONMENTS.VAGOVDEV]:
-    'http://dev.va.gov.s3-website-us-gov-west-1.amazonaws.com',
-  [ENVIRONMENTS.VAGOVSTAGING]:
-    'http://staging.va.gov.s3-website-us-gov-west-1.amazonaws.com',
-  [ENVIRONMENTS.VAGOVPROD]:
-    'http://www.va.gov.s3-website-us-gov-west-1.amazonaws.com',
-};
-
 const getContentUrl = env => {
   return env === ENVIRONMENTS.LOCALHOST
     ? 'http://localhost:3002'
@@ -200,18 +190,18 @@ function fetchAllPageData(nodeId) {
 
   const requests = [
     nodeQuery,
-    fetch(`${urls[options.buildtype]}/generated/file-manifest.json`).then(
-      resp => {
-        if (resp.ok) {
-          return resp.json();
-        }
-        throw new Error(
-          options.buildtype !== ENVIRONMENTS.LOCALHOST
-            ? `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`
-            : 'file-manifest.json is missing. Try running "yarn build" in vets-website.',
-        );
-      },
-    ),
+    fetch(
+      `${getContentUrl(options.buildtype)}/generated/file-manifest.json`,
+    ).then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      }
+      throw new Error(
+        options.buildtype !== ENVIRONMENTS.LOCALHOST
+          ? `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`
+          : 'file-manifest.json is missing. Try running "yarn build" in vets-website.',
+      );
+    }),
   ];
 
   return Promise.all(requests);
@@ -334,7 +324,7 @@ app.get(
 );
 
 if (options.buildtype !== ENVIRONMENTS.LOCALHOST) {
-  app.use(proxy(urls[options.buildtype]));
+  app.use(proxy(getContentUrl(options.buildtype)));
 } else {
   app.use(express.static(path.join(__dirname, '..', options.buildpath)));
 }
