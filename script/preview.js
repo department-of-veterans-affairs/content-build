@@ -97,11 +97,11 @@ const drupalClient = getDrupalClient(options);
 const urls = {
   [ENVIRONMENTS.LOCALHOST]: 'http://localhost:3002',
   [ENVIRONMENTS.VAGOVDEV]:
-    'http://dev.va.gov.s3-website-us-gov-west-1.amazonaws.com',
+    'http://content.dev.va.gov.s3-website-us-gov-west-1.amazonaws.com',
   [ENVIRONMENTS.VAGOVSTAGING]:
-    'http://staging.va.gov.s3-website-us-gov-west-1.amazonaws.com',
+    'http://content.staging.va.gov.s3-website-us-gov-west-1.amazonaws.com',
   [ENVIRONMENTS.VAGOVPROD]:
-    'http://www.va.gov.s3-website-us-gov-west-1.amazonaws.com',
+    'http://content.www.va.gov.s3-website-us-gov-west-1.amazonaws.com',
 };
 
 const getContentUrl = env => {
