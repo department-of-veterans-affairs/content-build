@@ -256,6 +256,7 @@
     "**/async": "^3.2.2",
     "tar-fs/tar-stream/bl": "^4.0.3",
     "**/minimist": "^1.2.6",
-    "**/uglify-js": "^2.2.24"
+    "**/uglify-js": "^2.2.24",
+    "**/ansi-regex": "^4.1.1"
   }
 }
