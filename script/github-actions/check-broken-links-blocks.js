@@ -16,7 +16,8 @@ if (fs.existsSync(reportPath)) {
   const brokenLinks = JSON.parse(brokenLinksReport);
   const shouldFail =
     brokenLinks.isHomepageBroken ||
-    brokenLinks.brokenLinksCount > maxBrokenLinks;
+    brokenLinks.brokenLinksCount >
+      (brokenLinks.maxBrokenLinks ?? maxBrokenLinks);
   const payload = {
     blocks: [],
   };
