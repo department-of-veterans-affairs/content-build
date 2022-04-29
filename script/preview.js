@@ -22,6 +22,7 @@ const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
+const buckets = require('../src/site/constants/buckets');
 const singlePageDiff = require('./preview-routes/single-page-diff');
 const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
 
@@ -94,10 +95,15 @@ const cacheDir = path.join(
 const app = express();
 const drupalClient = getDrupalClient(options);
 
-const getContentUrl = env => {
+const getContentBucketUrl = env => {
   return env === ENVIRONMENTS.LOCALHOST
     ? 'http://localhost:3002'
     : bucketsContent[options.buildtype];
+};
+const getBucketUrl = env => {
+  return env === ENVIRONMENTS.LOCALHOST
+    ? 'http://localhost:3002'
+    : buckets[options.buildtype];
 };
 
 if (process.env.SENTRY_DSN) {
@@ -191,7 +197,7 @@ function fetchAllPageData(nodeId) {
   const requests = [
     nodeQuery,
     fetch(
-      `${getContentUrl(options.buildtype)}/generated/file-manifest.json`,
+      `${getBucketUrl(options.buildtype)}/generated/file-manifest.json`,
     ).then(resp => {
       if (resp.ok) {
         return resp.json();
@@ -320,11 +326,16 @@ app.get('/preview', async (req, res, next) => {
 
 app.get(
   '/diff',
-  singlePageDiff(nonNodeContent, options, fetchAllPageData, getContentUrl),
+  singlePageDiff(
+    nonNodeContent,
+    options,
+    fetchAllPageData,
+    getContentBucketUrl,
+  ),
 );
 
 if (options.buildtype !== ENVIRONMENTS.LOCALHOST) {
-  app.use(proxy(getContentUrl(options.buildtype)));
+  app.use(proxy(getContentBucketUrl(options.buildtype)));
 } else {
   app.use(express.static(path.join(__dirname, '..', options.buildpath)));
 }
