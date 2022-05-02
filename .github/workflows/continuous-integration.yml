@@ -14,8 +14,8 @@ env:
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
 
 concurrency:
-  group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   start-runner:
@@ -109,7 +109,7 @@ jobs:
       vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
 
     env:
-      # Sandbox Drupal address, username, and password is used on branches other than master.
+      # Sandbox Drupal address, username, and password is used on branches other than main.
       DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
       DRUPAL_PASSWORD: drupal8
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
@@ -170,7 +170,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Set Drupal address
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
@@ -181,7 +181,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: set Drupal prod password
-        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/master' }}
+        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/main' }}
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
@@ -487,13 +487,13 @@ jobs:
           retention-days: 1
 
       - name: Notify Slack about Cypress test failures
-        if: ${{ github.ref == 'refs/heads/master' && failure() }}
+        if: ${{ github.ref == 'refs/heads/main' && failure() }}
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `main` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel_id: C026PD47Z19
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -685,7 +685,7 @@ jobs:
     name: Cache Drupal Content
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
     needs: [start-runner, archive]
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.archive.result == 'success' }}
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
@@ -747,7 +747,7 @@ jobs:
   get-latest-run-number:
     name: Get Latest Workflow Run Number
     runs-on: ubuntu-latest
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.cache-drupal-content.result == 'success' }}
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.cache-drupal-content.result == 'success' }}
     needs: cache-drupal-content
     outputs:
       latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
@@ -775,7 +775,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: self-hosted
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, archive, cache-drupal-content, get-latest-run-number]
 
     env:
@@ -922,7 +922,7 @@ jobs:
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' && (failure() || cancelled()) }}
+    if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
     needs: deploy
 
     steps:
@@ -933,7 +933,7 @@ jobs:
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
