@@ -22,7 +22,6 @@ const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
 const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
-const buckets = require('../src/site/constants/buckets');
 const singlePageDiff = require('./preview-routes/single-page-diff');
 const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
 
@@ -95,15 +94,20 @@ const cacheDir = path.join(
 const app = express();
 const drupalClient = getDrupalClient(options);
 
-const getContentBucketUrl = env => {
+const urls = {
+  [ENVIRONMENTS.LOCALHOST]: 'http://localhost:3002',
+  [ENVIRONMENTS.VAGOVDEV]:
+    'http://dev.va.gov.s3-website-us-gov-west-1.amazonaws.com',
+  [ENVIRONMENTS.VAGOVSTAGING]:
+    'http://staging.va.gov.s3-website-us-gov-west-1.amazonaws.com',
+  [ENVIRONMENTS.VAGOVPROD]:
+    'http://www.va.gov.s3-website-us-gov-west-1.amazonaws.com',
+};
+
+const getContentUrl = env => {
   return env === ENVIRONMENTS.LOCALHOST
     ? 'http://localhost:3002'
     : bucketsContent[options.buildtype];
-};
-const getBucketUrl = env => {
-  return env === ENVIRONMENTS.LOCALHOST
-    ? 'http://localhost:3002'
-    : buckets[options.buildtype];
 };
 
 if (process.env.SENTRY_DSN) {
@@ -196,18 +200,18 @@ function fetchAllPageData(nodeId) {
 
   const requests = [
     nodeQuery,
-    fetch(
-      `${getBucketUrl(options.buildtype)}/generated/file-manifest.json`,
-    ).then(resp => {
-      if (resp.ok) {
-        return resp.json();
-      }
-      throw new Error(
-        options.buildtype !== ENVIRONMENTS.LOCALHOST
-          ? `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`
-          : 'file-manifest.json is missing. Try running "yarn build" in vets-website.',
-      );
-    }),
+    fetch(`${urls[options.buildtype]}/generated/file-manifest.json`).then(
+      resp => {
+        if (resp.ok) {
+          return resp.json();
+        }
+        throw new Error(
+          options.buildtype !== ENVIRONMENTS.LOCALHOST
+            ? `HTTP error when fetching manifest: ${resp.status} ${resp.statusText}`
+            : 'file-manifest.json is missing. Try running "yarn build" in vets-website.',
+        );
+      },
+    ),
   ];
 
   return Promise.all(requests);
@@ -326,16 +330,11 @@ app.get('/preview', async (req, res, next) => {
 
 app.get(
   '/diff',
-  singlePageDiff(
-    nonNodeContent,
-    options,
-    fetchAllPageData,
-    getContentBucketUrl,
-  ),
+  singlePageDiff(nonNodeContent, options, fetchAllPageData, getContentUrl),
 );
 
 if (options.buildtype !== ENVIRONMENTS.LOCALHOST) {
-  app.use(proxy(getContentBucketUrl(options.buildtype)));
+  app.use(proxy(urls[options.buildtype]));
 } else {
   app.use(express.static(path.join(__dirname, '..', options.buildpath)));
 }
