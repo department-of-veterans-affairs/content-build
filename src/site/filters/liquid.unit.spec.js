@@ -2151,7 +2151,7 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
           status: true,
           fieldAdditionalHoursInfo: null,
           fieldEmailContacts: [],
-          fieldFacilityServiceHours: {
+          fieldOfficeHours: {
             value: [
               ['Mon', '9:00 a.m. to 5:00 p.m. ET'],
               ['Tue', '9:00 a.m. to 5:00 p.m. ET'],

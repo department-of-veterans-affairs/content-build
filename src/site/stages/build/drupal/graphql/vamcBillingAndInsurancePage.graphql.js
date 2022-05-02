@@ -9,6 +9,13 @@ const billingAndInsuranceFragment = `
     entityUrl {
       path
     }
+    fieldPhoneNumber
+    fieldHoursForCopayInquiries {
+      day
+      starthours
+      endhours
+      comment
+    }
     fieldCcTopOfPageContent {
       fetched
       fetchedBundle

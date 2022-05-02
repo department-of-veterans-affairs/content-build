@@ -12,6 +12,7 @@ env:
   DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
   PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
+  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
@@ -213,7 +214,7 @@ jobs:
       - name: Check broken links
         id: get-broken-link-info
         if: ${{ matrix.buildtype == 'vagovprod' }}
-        run: node ./script/github-actions/check-broken-links.js ${{ matrix.buildtype }}
+        run: node ./script/github-actions/check-broken-links-blocks.js ${{ matrix.buildtype }}
 
       - name: Generate build details
         run: |
@@ -301,8 +302,8 @@ jobs:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel-id: ${{ env.CHANNEL_ID }}
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
   unit-tests:
     name: Unit Tests
@@ -765,15 +766,6 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-
-      - name: Install dependencies
-        uses: nick-invision/retry@v2
-        with:
-          command: yarn install --frozen-lockfile --prefer-offline --production=false
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Set output of latest_run_number
         id: latest-run-number

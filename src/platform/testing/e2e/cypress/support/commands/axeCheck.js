@@ -33,6 +33,27 @@ const processAxeCheckResults = violations => {
     ],
   );
 
+  if (Cypress.env('STEP')) {
+    cy.url().then(url => {
+      const prodURL = url.replace(
+        Cypress.config().baseUrl,
+        `https://www.va.gov`,
+      );
+      cy.readFile('a11y_failures.csv').then(str => {
+        if (!str.includes(prodURL)) {
+          let formattedStr = '';
+          for (const violation of violationData) {
+            formattedStr += `${prodURL},${violation[0][1]}\n`;
+          }
+          cy.writeFile('a11y_failures.csv', formattedStr, {
+            encoding: 'utf8',
+            flag: 'a',
+          });
+        }
+      });
+    });
+  }
+
   cy.url().then(url => {
     const prodURL = url.replace(Cypress.config().baseUrl, `https://www.va.gov`);
     assert.fail(
