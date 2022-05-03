@@ -27,7 +27,7 @@
     "lint:js:changed": "LIST=`git diff-index --diff-filter=d --name-only --cached HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --quiet --config changed.eslintrc.js $LIST; fi",
     "lint:js:changed:fix": "LIST=`git diff-index --name-only HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --fix --quiet $LIST; fi",
     "pr-check": "node script/pr-check.js",
-    "security-check": "node ./script/security-check.js",
+    "security-check": "yarn vagov-dependency-check",
     "serve": "node script/serve.js",
     "test": "npm run test:unit",
     "test:coverage": "./script/run-coverage.sh",
@@ -200,6 +200,7 @@
   },
   "private": true,
   "dependencies": {
+    "@department-of-veterans-affairs/vagov-platform": "^0.0.1",
     "blob-polyfill": "^4.0.20200601",
     "core-js": "^3.17.3",
     "diff2html": "^3.4.11",
