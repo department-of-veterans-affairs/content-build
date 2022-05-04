@@ -155,10 +155,10 @@ const nonNodeContent = {
           onlyPublishedContent: false,
         },
       });
-      if (json.errors) {
+      if (json && json.errors) {
         console.error('Error executing', queryName, json);
         console.error('query:', query);
-      } else {
+      } else if (freshNonNodeContent && json) {
         Object.assign(freshNonNodeContent.data, json.data);
       }
       console.timeEnd(queryName);
