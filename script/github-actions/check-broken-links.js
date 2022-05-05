@@ -9,7 +9,7 @@ const reportPath = `./logs/${envName}-broken-links.json`;
 const SERVER_URL = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
-const maxBrokenLinks = 10;
+const maxBrokenLinks = 5000;
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
