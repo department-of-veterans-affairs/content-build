@@ -75,7 +75,9 @@ if (fs.existsSync(reportPath)) {
     };
     payload.blocks.splice(1, 0, truncateWarning);
   }
-
+  console.log(
+    `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
+  );
   console.log(`::set-output name=SLACK_BLOCKS::${JSON.stringify(payload)}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
