@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const getBrokenLinks = require('./helpers/getBrokenLinks');
 const applyIgnoredRoutes = require('./helpers/applyIgnoredRoutes');
 
-const maxBrokenLinks = 10;
+const maxBrokenLinks = 5000;
 
 /**
  * Metalsmith middleware for verifying HREF/SRC values in HTML files are valid file references.
