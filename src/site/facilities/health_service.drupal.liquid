@@ -45,10 +45,7 @@
                 {% endif %}
 
                 {% if healthService.fieldBody.processed %}
-                    {% assign isSetFeatureCareWeProvide = '' | featureCareWeProvide %}
-                    {% if isSetFeatureCareWeProvide %}
-                        <h3>Care we provide at {{ fieldOffice.entity.entityLabel }}</h3>
-                    {% endif %}
+                    <h3>Care we provide at {{ fieldOffice.entity.entityLabel }}</h3>
                     <description>{{ healthService.fieldBody.processed | phoneLinks }}</description>
                 {% endif %}
             </div>
