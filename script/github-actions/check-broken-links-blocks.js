@@ -8,7 +8,8 @@ const reportPath = `./logs/${envName}-broken-links.json`;
 const SERVER_URL = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'main';
-const maxBrokenLinks = 10;
+const GITHUB_WORKFLOW = process.env.GITHUB_WORKFLOW;
+const maxBrokenLinks = 5000;
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
@@ -22,11 +23,14 @@ if (fs.existsSync(reportPath)) {
     blocks: [],
   };
   const icon = shouldFail ? ':bangbang:' : ':warning:';
+  const failMessage = shouldFail
+    ? `*${GITHUB_WORKFLOW} has failed. Please fix this ASAP.*\n\n`
+    : '';
   payload.blocks.push({
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `${icon} *<!subteam^S010U41C30V|cms-helpdesk> ${brokenLinks.brokenLinksCount} broken links found in ${envName}*\n\n Workflow run: <${SERVER_URL}>`,
+      text: `${icon} *<!subteam^S010U41C30V|cms-helpdesk> ${brokenLinks.brokenLinksCount} broken links found during ${envName} ${GITHUB_WORKFLOW}*\n\n${failMessage}Workflow run: <${SERVER_URL}>`,
     },
   });
   const linkBlocks = brokenLinks.brokenPages.map((page, idx) => {
@@ -35,7 +39,7 @@ if (fs.existsSync(reportPath)) {
         error.target.substring(0, 1) === '/'
           ? `https://va.gov${error.target}`
           : error.target;
-      return `*  Broken link:* ${destination} \`\`\`${error.html}\`\`\``;
+      return `*Broken link:* ${destination} \`\`\`${error.html}\`\`\``;
     });
     const destination = `https://prod.cms.va.gov/${page.path}`;
     return {
@@ -71,7 +75,9 @@ if (fs.existsSync(reportPath)) {
     };
     payload.blocks.splice(1, 0, truncateWarning);
   }
-
+  console.log(
+    `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
+  );
   console.log(`::set-output name=SLACK_BLOCKS::${JSON.stringify(payload)}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
