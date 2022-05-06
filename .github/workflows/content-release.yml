@@ -149,7 +149,7 @@ jobs:
     needs:
       - start-runner
       - validate-build-status
-    timeout-minutes: 30
+    timeout-minutes: 45 
     defaults:
       run:
         working-directory: content-build
