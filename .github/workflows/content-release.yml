@@ -3,9 +3,6 @@ name: Content Release
 on:
   repository_dispatch:
     types: [content-release]
-  workflow_dispatch:
-  schedule:
-    - cron: '54 13-21 * * 1-5'
 
 concurrency:
   group: content-release-prod
@@ -15,7 +12,6 @@ env:
   VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
-  DSVA_SCHEDULE_ENABLED: true
   NODE_ENV: production
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
   BUILDTYPE: vagovprod
@@ -100,10 +96,6 @@ jobs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
       TAG: ${{ steps.get-latest-release.outputs.tag_name }}
     steps:
-      - name: Cancel workflow due to DSVA schedule
-        if: ${{ github.event_name == 'schedule' && env.DSVA_SCHEDULE_ENABLED != 'true' }}
-        uses: andymckay/cancel-action@0.2
-
       - name: Checkout
         uses: actions/checkout@v2
 
