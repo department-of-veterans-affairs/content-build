@@ -1,6 +1,8 @@
 name: Content Release
 
 on:
+  repository_dispatch:
+    types: [content-release]
   workflow_dispatch:
   schedule:
     - cron: '54 13-21 * * 1-5'
