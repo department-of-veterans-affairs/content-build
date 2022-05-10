@@ -57,10 +57,10 @@ jobs:
         id: get-current-ref
         run: echo ::set-output name=REF::$(git rev-parse HEAD)
 
-      # - name: Validate build status
-      #   run: node ./script/github-actions/validate-build-status.js ${{ steps.get-current-ref.outputs.REF }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate build status
+        run: node ./script/github-actions/validate-build-status.js ${{ steps.get-current-ref.outputs.REF }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get latest tag
         id: get-latest-tag

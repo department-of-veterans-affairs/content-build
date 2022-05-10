@@ -6,6 +6,8 @@ const fs = require('fs-extra');
 const getBrokenLinks = require('./helpers/getBrokenLinks');
 const applyIgnoredRoutes = require('./helpers/applyIgnoredRoutes');
 
+const maxBrokenLinks = 10;
+
 /**
  * Metalsmith middleware for verifying HREF/SRC values in HTML files are valid file references.
  */
@@ -88,9 +90,12 @@ module.exports = {
     const markdownSummary = this.getMarkdownSummary(brokenPages);
 
     const brokenLinksJson = {
-      summary: markdownSummary,
+      generated: Date.now(),
+      brokenPages,
       isHomepageBroken,
+      maxBrokenLinks,
       brokenLinksCount,
+      summary: markdownSummary,
     };
 
     console.log(`${brokenLinksCount} broken links were found.`);

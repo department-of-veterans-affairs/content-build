@@ -1,0 +1,15 @@
+<li>
+	{% if headerType == 'clinical' %}
+		<b class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
+	{% else %}
+		<span class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}.</span>
+	{% endif %}
+	{% if hours.starthours %}
+		{{ hours.starthours | officeHoursTimeFormatter}}
+		to
+	{% endif %}
+	{% if hours.endhours %}
+		{{ hours.endhours | officeHoursTimeFormatter}}
+	{% endif %}
+	{{ hours.comment }}
+</li>

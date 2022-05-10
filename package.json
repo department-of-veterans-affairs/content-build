@@ -27,7 +27,7 @@
     "lint:js:changed": "LIST=`git diff-index --diff-filter=d --name-only --cached HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --quiet --config changed.eslintrc.js $LIST; fi",
     "lint:js:changed:fix": "LIST=`git diff-index --name-only HEAD | grep \"\\.js[x]\\{0,1\\}$\"`; if [ \"$LIST\" ]; then eslint --fix --quiet $LIST; fi",
     "pr-check": "node script/pr-check.js",
-    "security-check": "node ./script/security-check.js",
+    "security-check": "yarn vagov-dependency-check",
     "serve": "node script/serve.js",
     "test": "npm run test:unit",
     "test:coverage": "./script/run-coverage.sh",
@@ -121,7 +121,7 @@
     "css-loader": "^6.2.0",
     "cssnano": "^5.0.8",
     "cy-mobile-commands": "^0.3.0",
-    "cypress": "^9.5.4",
+    "cypress": "^9.6.0",
     "cypress-axe": "^0.14.0",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-plugin-tab": "^1.0.5",
@@ -200,6 +200,7 @@
   },
   "private": true,
   "dependencies": {
+    "@department-of-veterans-affairs/vagov-platform": "^0.0.1",
     "blob-polyfill": "^4.0.20200601",
     "core-js": "^3.17.3",
     "diff2html": "^3.4.11",
@@ -254,6 +255,9 @@
     "**/path-parse": "1.0.7",
     "**/markdown-it": "^12.3.2",
     "**/async": "^3.2.2",
-    "tar-fs/tar-stream/bl": "^4.0.3"
+    "tar-fs/tar-stream/bl": "^4.0.3",
+    "**/minimist": "^1.2.6",
+    "**/uglify-js": "^2.2.24",
+    "**/ansi-regex": "^4.1.1"
   }
 }
