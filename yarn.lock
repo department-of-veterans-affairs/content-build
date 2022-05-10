@@ -1076,6 +1076,11 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@department-of-veterans-affairs/eslint-config-vagov@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/eslint-config-vagov/-/eslint-config-vagov-0.0.1.tgz#236e65df5e24ef1750b4b6e44a0fb6bfe3d1c400"
+  integrity sha512-5XUVH67KO8AXWAxo9eZQbXpxtglQjG2AvrXtzt3e0rfCBcfNNkqQQaWeRZFshiK8sOD+b4rRLf+sbQ7CEoSkIw==
+
 "@department-of-veterans-affairs/vagov-platform@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/vagov-platform/-/vagov-platform-0.0.1.tgz#a971b3398feb0627297917a9df1fd7d07262412e"
