@@ -1,9 +1,17 @@
 <div data-template="includes/facilityListing"
      class="region-list usa-width-one-whole vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--4 medium-screen:vads-u-margin-bottom--5">
   <section class="region-grid vads-u-margin-right--2">
+
     <h3
         class="vads-u-margin-bottom--1 vads-u-margin-top--0 vads-u-font-size--md medium-screen:vads-u-font-size--lg">
       <a href="{{ entity.entityUrl.path }}">{{ entity.title }}</a></h3>
+
+    {% for covidStatus in fieldOffice.entity.reverseFieldRegionPageNode.entities %}
+      {% if covidStatus.entityId == entity.entityId %}
+        {% include "src/site/includes/covid-status.drupal.liquid" with covidStatus %}
+      {% endif %}
+    {% endfor %}
+
     {% if entity.fieldOperatingStatusFacility and entity.fieldOperatingStatusFacility != 'normal' %}
       <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
         {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" with entity %}
