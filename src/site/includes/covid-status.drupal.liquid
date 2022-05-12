@@ -13,7 +13,11 @@
 		{% assign covidLevel = 'info' %}
 	{% endif %}
 
-	<div data-widget-type="expandable-supplemental-status-node-{{ entityId}}" facilityid="node-{{ entityId}}" statuslabel="{{ fieldSupplementalStatus.entity.name }}" status="warning" {% if fieldSupplementalStatus.entity.description.processed %} info="{{ fieldSupplementalStatus.entity.description.processed }}" {% endif %}></div>
+	<div
+  {% if addBottomMargin %}
+    class="vads-u-margin-bottom--3"
+  {% endif %}
+  data-widget-type="expandable-supplemental-status-node-{{ entityId}}" facilityid="node-{{ entityId}}" statuslabel="{{ fieldSupplementalStatus.entity.name }}" status="warning" {% if fieldSupplementalStatus.entity.description.processed %} info="{{ fieldSupplementalStatus.entity.description.processed }}" {% endif %}></div>
 
 	<style>
 		.expandable-supplemental-status {
