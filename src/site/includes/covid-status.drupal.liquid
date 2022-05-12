@@ -1,34 +1,15 @@
 {% if fieldSupplementalStatus.entity.name %}
-	{% assign covidLevel = 'default' %}
-
-	{% if fieldSupplementalStatus.entity.fieldStatusId == 'COVID_HIGH' %}
-		{% assign covidLevel = 'error' %}
-	{% endif %}
-
-	{% if fieldSupplementalStatus.entity.fieldStatusId == 'COVID_MEDIUM' %}
-		{% assign covidLevel = 'warning' %}
-	{% endif %}
-
-	{% if fieldSupplementalStatus.entity.fieldStatusId == 'COVID_LOW' %}
-		{% assign covidLevel = 'info' %}
-	{% endif %}
-
-	<div
-  {% if addBottomMargin %}
-    class="vads-u-margin-bottom--3"
-  {% endif %}
-  data-widget-type="expandable-supplemental-status-node-{{ entityId}}" facilityid="node-{{ entityId}}" statuslabel="{{ fieldSupplementalStatus.entity.name }}" status="warning" {% if fieldSupplementalStatus.entity.description.processed %} info="{{ fieldSupplementalStatus.entity.description.processed }}" {% endif %}></div>
-
-	<style>
-		.expandable-supplemental-status {
-			width: 350px;
-		}
-		.expandable-supplemental-status .content {
-			padding: 0 15px;
-			width: inherit;
-		}
-		.expandable-supplemental-status button.collapsible {
-			width: inherit;
-		}
-	</style>
+	<va-alert-expandable
+		data-template="components/covid-status.drupal.liquid"
+		class="{% if addBottomMargin %}vads-u-margin-bottom--3{% endif %}"
+		status="info"
+		trigger="{{ fieldSupplementalStatus.entity.name }}"
+		onclick="recordEvent({
+			'event': 'covid-status',
+			'covid-status-entity-id': '{{ entityId }}'
+			'covid-status-heading':  '{{ fieldSupplementalStatus.entity.fieldStatusId }}',
+		});"
+	>
+		{{ fieldSupplementalStatus.entity.description.processed }}
+	</va-alert-expandable>
 {% endif %}
