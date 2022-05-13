@@ -25,18 +25,18 @@ jobs:
 
     steps:
       - name: Checkout vagov-content
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 
       - name: Checkout vets-website
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vets-website
           path: vets-website
@@ -105,7 +105,7 @@ jobs:
         run: tar -C build/${{ env.BUILD_TYPE }} -cjf test-build.tar.bz2 .
 
       - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-build.tar.bz2
           path: content-build/test-build.tar.bz2
@@ -132,7 +132,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Node version
         id: get-node-version
@@ -153,7 +153,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Download production build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: test-build.tar.bz2
 
@@ -180,7 +180,7 @@ jobs:
         run: mv a11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
 
       - name: Archive Mochawesome test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
@@ -188,7 +188,7 @@ jobs:
           retention-days: 1
 
       - name: Archive failures CSV
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: a11y_failures
@@ -199,20 +199,20 @@ jobs:
     name: Notify Slack
     runs-on: ubuntu-latest
     needs: [build, a11y]
-    if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure') }}
+    if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure' || needs.build.result == 'success' || needs.build.result == 'failure') }}
     defaults:
       run:
         working-directory: content-build
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 
       - name: Download failures CSV
         if: ${{ needs.a11y.result == 'failure' }}
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: a11y_failures
           path: content-build
@@ -222,7 +222,7 @@ jobs:
         run: cat *csv > a11y_failures.csv
 
       - name: Archive merged failures CSV file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: a11y_failures
@@ -244,7 +244,7 @@ jobs:
 
       - name: Accessibility Test Failure
         uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'failure' }}
+        if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs

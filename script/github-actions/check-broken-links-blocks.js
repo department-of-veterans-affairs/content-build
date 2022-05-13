@@ -9,7 +9,7 @@ const SERVER_URL = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSI
 const BRANCH_NAME = process.env.GITHUB_REF;
 const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
 const GITHUB_WORKFLOW = process.env.GITHUB_WORKFLOW;
-const maxBrokenLinks = 10;
+const maxBrokenLinks = 5000;
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
@@ -75,7 +75,9 @@ if (fs.existsSync(reportPath)) {
     };
     payload.blocks.splice(1, 0, truncateWarning);
   }
-
+  console.log(
+    `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
+  );
   console.log(`::set-output name=SLACK_BLOCKS::${JSON.stringify(payload)}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {

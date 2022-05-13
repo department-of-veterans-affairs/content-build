@@ -1433,10 +1433,6 @@ module.exports = function registerFilters() {
     return `vetCenterHoursKey_${forloopindex}`;
   };
 
-  liquid.filters.featureCareWeProvide = () => {
-    return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
-  };
-
   liquid.filters.getSurvey = (buildtype, url) => {
     if (
       buildtype === 'localhost' ||
