@@ -109,7 +109,8 @@
                             Facility Closed
                           </span>
                         {% endif %}
-                        {% if status.entity.fieldOperatingStatusMoreInfo %}
+
+                        {% if status.entity.fieldOperatingStatusMoreInfo  and status.entity.fieldOperatingStatusFacility != 'normal' %}
                           <div class="vads-u-margin-top--1p5">
                             {{ status.entity.fieldOperatingStatusMoreInfo }}
                           </div>
