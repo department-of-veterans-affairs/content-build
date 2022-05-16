@@ -1,7 +1,8 @@
 {% if fieldSupplementalStatus.entity.name %}
 	<va-alert-expandable
 		data-template="components/covid-status.drupal.liquid"
-		class="{% if addBottomMargin %}vads-u-margin-bottom--3{% endif %}"
+		class="{% if addBottomMargin %}vads-u-margin-bottom--3{% endif %}
+		vamc-facility-expandable-alert"
 		status="info"
 		trigger="{{ fieldSupplementalStatus.entity.name }}"
 		onclick="recordEvent({
