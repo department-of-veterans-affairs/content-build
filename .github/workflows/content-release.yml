@@ -1,6 +1,8 @@
 name: Content Release
 
 on:
+  repository_dispatch:
+    types: [content-release]
   workflow_dispatch:
   schedule:
     - cron: '54 13-21 * * 1-5'
@@ -104,6 +106,14 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Notify CMS - starting
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: https://prod.cms.va.gov/api/content_release/starting
+          method: GET
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -243,6 +253,14 @@ jobs:
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
+
+      - name: Notify CMS - In Progress
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: https://prod.cms.va.gov/api/content_release/inprogress
+          method: GET
 
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
@@ -429,18 +447,6 @@ jobs:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
-      - name: Get Drupal prod password
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
-          env_variable_name: DRUPAL_PASSWORD
-
-      - name: Get Drupal prod username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
-          env_variable_name: DRUPAL_USERNAME
-
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -457,17 +463,24 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2
           DEST: s3://${{ env.DEPLOY_BUCKET }}
 
+      - name: Notify CMS - Complete
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: https://prod.cms.va.gov/api/content_release/complete
+          method: GET
+
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
 
       - name: CMS GovDelivery callback
-        uses: fjogeleit/http-request-action@master
+        uses: ./.github/workflows/authenticated-cms-request
         with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
-          username: ${{ env.DRUPAL_USERNAME }}
-          password: ${{ env.DRUPAL_PASSWORD }}
-          timeout: 10000
 
       - name: Export deploy end time
         id: export-deploy-end-time
@@ -495,6 +508,14 @@ jobs:
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+      - name: Notify CMS - Ready
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: https://prod.cms.va.gov/api/content_release/ready
+          method: GET
 
   notify-failure:
     name: Notify Failure
