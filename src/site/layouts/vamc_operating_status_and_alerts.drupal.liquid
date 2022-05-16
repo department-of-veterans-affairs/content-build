@@ -116,10 +116,13 @@
                           </div>
                         {% endif %}
 
+                        {% assign bottomMargin = '1' %}
+                        {% assign topMargin = '2' %}
                         {% for covidStatus in fieldOffice.entity.reverseFieldRegionPageNode.entities %}
                           {% if statusId == covidStatus.entityId %}
                           {{facilityId}}
-                            {% include "src/site/includes/covid-status.drupal.liquid" with covidStatus %}
+                          {% include "src/site/includes/covid-status.drupal.liquid" with covidStatus %}
+
                           {% endif %}
                         {% endfor %}
 
