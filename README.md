@@ -1,4 +1,4 @@
-# VA.gov Content Build ![Build Status](https://github.com/department-of-veterans-affairs/content-build/actions/workflows/continuous-integration.yml/badge.svg?branch=master)
+# VA.gov Content Build ![Build Status](https://github.com/department-of-veterans-affairs/content-build/actions/workflows/continuous-integration.yml/badge.svg?branch=main)
 
 ## What is this?
 

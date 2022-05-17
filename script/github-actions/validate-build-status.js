@@ -54,7 +54,7 @@ function getLatestWorkflow(page) {
     owner,
     repo,
     workflow_id: 'continuous-integration.yml',
-    branch: 'master',
+    branch: 'main',
     per_page: '50',
     page,
   };

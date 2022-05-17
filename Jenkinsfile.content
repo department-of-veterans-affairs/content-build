@@ -11,7 +11,7 @@
 // 2. This job will be triggered by the CMS (va-cms-bot) in order to
 // run a content build and deploy to dev or staging. In this context
 // the ref parameter will not be provided and this job will retrieve
-// the latest commit SHA from the master branch and wait for a valid
+// the latest commit SHA from the main branch and wait for a valid
 // commit status indicated that it has been deployed and can therefore
 // be rebuilt and deployed by this job.
 //
@@ -23,7 +23,7 @@ node('vetsgov-general-purpose') {
   refStatusState = ""
   ref = params.ref
   if (ref == "") {
-    ref = getLatestGitRef("content-build", branch: "master")
+    ref = getLatestGitRef("content-build", branch: "main")
   }
 
   def jobFailed = false
