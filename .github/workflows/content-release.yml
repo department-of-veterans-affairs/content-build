@@ -16,7 +16,6 @@ env:
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   DSVA_SCHEDULE_ENABLED: true
-  NODE_ENV: production
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
@@ -151,7 +150,7 @@ jobs:
     needs:
       - start-runner
       - validate-build-status
-    timeout-minutes: 45 
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: content-build
@@ -249,6 +248,8 @@ jobs:
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
+        env:
+          NODE_ENV: production
 
       - name: Export content build end time
         id: export-content-build-end
