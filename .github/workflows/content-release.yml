@@ -11,7 +11,7 @@ concurrency:
   group: content-release-prod
 
 env:
-  CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
+  CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications 
   VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
