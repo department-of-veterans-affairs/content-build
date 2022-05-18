@@ -9,7 +9,7 @@ describe('Accessible Modal Test', () => {
     cy.visit('/');
     cy.injectAxeThenAxeCheck();
 
-    // Open modal
+    // Open modal!
     cy.get(secondOpenControl)
       .focus()
       .realPress('Enter');
