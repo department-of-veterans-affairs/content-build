@@ -1,0 +1,23 @@
+name: Debug CI
+
+on:
+  pull_request:
+
+env:
+  DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+
+jobs:
+  testing:
+    name: Testing new action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Notify CMS - Starting
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
+          method: GET
