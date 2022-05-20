@@ -6,6 +6,9 @@ on:
       - '**'
     tags-ignore:
       - '**'
+  workflow_dispatch:
+  schedule:
+    - cron: '17 10 * * *'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
