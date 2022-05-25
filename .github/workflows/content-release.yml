@@ -254,7 +254,7 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Notify CMS - In Progress
-        uses: ./.github/workflows/authenticated-cms-request
+        uses: ./content-build/.github/workflows/authenticated-cms-request
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
