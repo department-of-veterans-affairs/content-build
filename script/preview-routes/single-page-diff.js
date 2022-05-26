@@ -9,8 +9,6 @@ const {
   createFileObj,
 } = require('../../src/site/stages/build/drupal/page');
 
-const DRUPALS = require('../../src/site/constants/drupals');
-
 const convertDrupalFilesToLocal = require('../../src/site/stages/build/drupal/assets');
 const updateAssetLinkElements = require('../../src/site/stages/prearchive/helpers');
 

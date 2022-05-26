@@ -1,6 +1,4 @@
 const cheerio = require('cheerio');
-const chalk = require('chalk');
-const getDrupalClient = require('./api');
 
 function replacePathInData(data, replacer, ancestors = new Set()) {
   // Circular references happen when an entity in the CMS has a child entity
@@ -80,9 +78,7 @@ function updateAttr(attr, doc) {
   return assetsToDownload;
 }
 
-function convertDrupalFilesToLocal(drupalData, files, options) {
-  const client = getDrupalClient(options);
-
+function convertDrupalFilesToLocal(drupalData, files, _options) {
   return replacePathInData(drupalData, (data, key) => {
     if (data.match(/^.*\/sites\/.*\/files\//)) {
       const newPath = convertAssetPath(data);
