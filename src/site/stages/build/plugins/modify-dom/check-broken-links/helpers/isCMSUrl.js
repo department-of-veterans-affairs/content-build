@@ -16,12 +16,7 @@ function isCMSUrl(link, file, buildOptions) {
   const parsed = url.parse(link);
   if (!parsed.hostname) return false;
 
-  // If asset paths are not being replaced then do not do
-  // asset checks since all asset urls will include cms.va.gov
   const api = getApiClient(buildOptions);
-  if (api.shouldReplaceAssetPath()) {
-    return false;
-  }
 
   return !!(file.isDrupalPage && parsed.hostname.includes('cms.va.gov'));
 }

@@ -132,9 +132,7 @@ function singlePageDiff(
           ...fullPage,
           isPreview: false,
           isSinglePagePublish: true,
-          drupalSite:
-            DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
-            options['drupal-address'],
+          drupalSite: options['drupal-address'],
         },
       };
 

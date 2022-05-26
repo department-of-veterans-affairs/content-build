@@ -300,8 +300,7 @@ app.get('/preview', async (req, res, next) => {
       `${compiledPage.entityBundle}.drupal.liquid`,
     );
 
-    const drupalAddressUrl = DRUPALS.PUBLIC_URLS[options['drupal-address']];
-    const drupalSite = drupalAddressUrl || 'prod.cms.va.gov';
+    const drupalSite = options['drupal-address'] || 'prod.cms.va.gov';
 
     const files = {
       'generated/file-manifest.json': {
