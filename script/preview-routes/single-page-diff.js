@@ -94,7 +94,6 @@ function singlePageDiff(
       const drupalDataWithUpdatedAssetRefs = convertDrupalFilesToLocal(
         drupalData,
         [],
-        buildOptions,
       );
       const drupalPage = drupalDataWithUpdatedAssetRefs.data.nodes.entities[0];
       const drupalPath = `${req.path.substring(1)}/index.html`;

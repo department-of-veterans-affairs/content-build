@@ -314,7 +314,7 @@ function getDrupalContent(buildOptions) {
     let drupalData = null;
     try {
       drupalData = await loadDrupal(buildOptions);
-      drupalData = convertDrupalFilesToLocal(drupalData, files, buildOptions);
+      drupalData = convertDrupalFilesToLocal(drupalData, files);
 
       await loadCachedDrupalFiles(buildOptions, files);
       pipeDrupalPagesIntoMetalsmith(drupalData, files);

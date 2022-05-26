@@ -78,7 +78,7 @@ function updateAttr(attr, doc) {
   return assetsToDownload;
 }
 
-function convertDrupalFilesToLocal(drupalData, files, _options) {
+function convertDrupalFilesToLocal(drupalData, files) {
   return replacePathInData(drupalData, (data, key) => {
     if (data.match(/^.*\/sites\/.*\/files\//)) {
       const newPath = convertAssetPath(data);
