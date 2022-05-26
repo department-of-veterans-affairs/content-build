@@ -43,7 +43,7 @@ module.exports = {
     const isHtml = path.extname(fileName) === '.html';
     if (!isHtml) return;
 
-    const linkErrors = getBrokenLinks(file, this.allPaths, this.buildOptions);
+    const linkErrors = getBrokenLinks(file, this.allPaths);
 
     if (linkErrors.length > 0) {
       this.brokenPages.push({

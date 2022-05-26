@@ -5,10 +5,9 @@ const url = require('url');
  *
  * @param {*} link The HREF/SRC value to be validated.
  * @param {*} file The HTML file from the Metalsmith pipeline.
- * @param {*} _buildOptions The build options.
  * @returns {boolean} Does this URL point to the CMS.
  */
-function isCMSUrl(link, file, _buildOptions) {
+function isCMSUrl(link, file) {
   if (!link) return false;
 
   const parsed = url.parse(link);
