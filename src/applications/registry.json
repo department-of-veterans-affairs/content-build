@@ -1240,7 +1240,6 @@
     "appName": "Combined Debt Portal",
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-debt-and-bills/summary",
-    "productId": "5ad6a5ea-1103-4cb6-a191-6f4367ea9070",
     "template": {
       "vagovprod": false,
       "vagovstaging": true,
