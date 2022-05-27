@@ -1235,5 +1235,15 @@
       "title": "Transfer Account",
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Combined Debt Portal",
+    "entryName": "combined-debt-portal",
+    "rootUrl": "/manage-debt-and-bills/summary",
+    "template": {
+      "vagovprod": false,
+      "vagovstaging": true,
+      "layout": "page-react.html"
+    }
   }
 ]
