@@ -18,6 +18,10 @@ const billingAndInsuranceFragment = `
       endhours
       comment
     }
+    fieldCcAboveTopOfPage {
+      fetched
+      fetchedBundle
+    }
     fieldCcTopOfPageContent {
       fetched
       fetchedBundle
