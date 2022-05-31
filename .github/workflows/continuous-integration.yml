@@ -15,8 +15,8 @@ env:
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
 
 concurrency:
-  group: ${{ github.ref != 'refs/heads/master' && github.ref || github.sha }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   start-runner:
@@ -110,7 +110,7 @@ jobs:
       vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
 
     env:
-      # Sandbox Drupal address, username, and password is used on branches other than master.
+      # Sandbox Drupal address, username, and password is used on branches other than main.
       DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
       DRUPAL_PASSWORD: drupal8
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
@@ -125,17 +125,17 @@ jobs:
           - buildtype: vagovstaging
             drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovprod
-            drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+            drupal-address: https://prod.cms.va.gov
 
     steps:
       - name: Checkout vagov-content
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 
@@ -153,7 +153,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             .cache/yarn
@@ -171,7 +171,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Set Drupal address
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
@@ -182,7 +182,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: set Drupal prod password
-        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/master' }}
+        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/main' }}
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
@@ -310,7 +310,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -354,7 +354,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -365,6 +365,9 @@ jobs:
           path: |
             .cache/yarn
             node_modules
+
+      - name: Update browserslist
+        run: npx browserslist@latest --update-db
 
       - name: Annotate ESLint results
         run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
@@ -374,9 +377,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -388,23 +389,7 @@ jobs:
             .cache/yarn
             node_modules
 
-      - name: List changed files
-        id: changed-files
-        run: |
-          if [[ ${{ github.ref }} == 'refs/heads/master' ]]; then
-            echo ::set-output name=all_changed_files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
-          else
-            echo ::set-output name=all_changed_files::$(git diff --name-only origin/master...)
-          fi
-
-      - name: Get app entries for changed files
-        id: get-changed-apps
-        run: echo ::set-output name=app_entries::$(node script/github-actions/get-changed-apps.js)
-        env:
-          CHANGED_FILE_PATHS: ${{ steps.changed-files.outputs.all_changed_files }}
-
       - name: Audit dependencies
-        if: steps.get-changed-apps.outputs.app_entries == ''
         run: yarn security-check
 
   drupal-cache-test:
@@ -412,7 +397,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -446,7 +431,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Restore vagovprod build
         run: |
@@ -485,21 +470,21 @@ jobs:
           report_paths: 'test-results/e2e-test-output-*.xml'
 
       - name: Archive Cypress test videos
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ failure() }}
         with:
           name: cypress-video-artifacts
           path: cypress/videos
 
       - name: Archive Cypress test screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ failure() }}
         with:
           name: cypress-screenshot-artifacts
           path: cypress/screenshots
 
       - name: Archive Mochawesome test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
@@ -507,13 +492,13 @@ jobs:
           retention-days: 1
 
       - name: Notify Slack about Cypress test failures
-        if: ${{ github.ref == 'refs/heads/master' && failure() }}
+        if: ${{ github.ref == 'refs/heads/main' && failure() }}
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `master` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `main` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel_id: C026PD47Z19
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -544,7 +529,7 @@ jobs:
       # ------------------------
 
       - name: Checkout Testing Tools Team Dashboard Data repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/testing-tools-team-dashboard-data
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
@@ -569,7 +554,7 @@ jobs:
         working-directory: testing-tools-team-dashboard-data
 
       - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: cypress-mochawesome-test-results
           path: testing-tools-team-dashboard-data/src/testing-reports/data
@@ -608,7 +593,7 @@ jobs:
 
       - name: Download video artifacts
         if: ${{ needs.cypress-tests.result == 'failure' }}
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: cypress-video-artifacts
           path: testing-tools-team-dashboard-data/testing-reports/videos/${{ env.UUID }}
@@ -705,7 +690,7 @@ jobs:
     name: Cache Drupal Content
     runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
     needs: [start-runner, archive]
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.archive.result == 'success' }}
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.archive.result == 'success' }}
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
 
@@ -716,7 +701,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Restore ${{ matrix.buildtype }} cache
         run: |
@@ -767,14 +752,14 @@ jobs:
   get-latest-run-number:
     name: Get Latest Workflow Run Number
     runs-on: ubuntu-latest
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.cache-drupal-content.result == 'success' }}
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.cache-drupal-content.result == 'success' }}
     needs: cache-drupal-content
     outputs:
       latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -795,7 +780,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: self-hosted
-    if: ${{ always() && github.ref == 'refs/heads/master' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, archive, cache-drupal-content, get-latest-run-number]
 
     env:
@@ -811,7 +796,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -882,7 +867,7 @@ jobs:
           env_variable_name: JENKINS_API_TOKEN
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -942,18 +927,18 @@ jobs:
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' && (failure() || cancelled()) }}
+    if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
     needs: deploy
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Notify Slack
         uses: ./.github/workflows/slack-notify
         continue-on-error: true
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build master branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

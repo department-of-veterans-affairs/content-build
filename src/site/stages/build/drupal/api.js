@@ -4,7 +4,6 @@ const pRetry = require('p-retry');
 const chalk = require('chalk');
 const SocksProxyAgent = require('socks-proxy-agent');
 
-const { PUBLIC_URLS } = require('../../../constants/drupals');
 const syswidecas = require('syswide-cas');
 const { queries, getQuery } = require('./queries');
 const {
@@ -63,10 +62,6 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
 
     getSiteUri() {
       return address;
-    },
-
-    shouldReplaceAssetPath() {
-      return !!PUBLIC_URLS[this.getSiteUri()];
     },
 
     async proxyFetch(url, options = {}) {

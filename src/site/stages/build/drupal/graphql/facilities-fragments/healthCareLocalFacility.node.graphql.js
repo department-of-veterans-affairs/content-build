@@ -16,6 +16,20 @@ const FACILITIES_RESULTS = `
       entityBundle
       changed
       fieldMobile
+      fieldSupplementalStatus {
+        entity {
+          ... on TaxonomyTermFacilitySupplementalStatus {
+            name
+            fieldStatusId
+            description {
+              processed
+            }
+            fieldGuidance {
+              processed
+            }
+          }
+        }
+      }
       fieldOperatingStatusFacility
       fieldFacilityLocatorApiId
       fieldIntroText

@@ -13,6 +13,20 @@ const healthCareLocalFacilityPageFragment = `
     fieldFacilityLocatorApiId
     title
     fieldIntroText
+    fieldSupplementalStatus {
+      entity {
+        ... on TaxonomyTermFacilitySupplementalStatus {
+          name
+          fieldStatusId
+          description {
+            processed
+          }
+          fieldGuidance {
+            processed
+          }
+        }
+      }
+    }
     fieldOperatingStatusFacility
     fieldLocationServices {
       entity {

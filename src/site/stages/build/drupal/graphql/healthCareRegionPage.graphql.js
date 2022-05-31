@@ -57,6 +57,21 @@ const nodeHealthCareRegionPage = `
         ... on NodeHealthCareLocalFacility {
           title
           fieldOperatingStatusFacility
+          fieldFacilityLocatorApiId
+          fieldSupplementalStatus {
+            entity {
+              ... on TaxonomyTermFacilitySupplementalStatus {
+                name
+                fieldStatusId
+                description {
+                  processed
+                }
+                fieldGuidance {
+                  processed
+                }
+              }
+            }
+          }
         }
       }
     }

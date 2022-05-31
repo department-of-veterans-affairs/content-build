@@ -25,18 +25,27 @@
           </nav>
 
           <div class="usa-content">
-            <h2>Questions about copay balance</h2>
-            <p>
-              For questions about the copay balance of your
-              {{ fieldOffice.entity.entityLabel }}
-              bill, call us toll free at the number below. You won't need to pay
-              any copays for X-rays, lab tests,
-              preventitive tests, and services like health screenings or
-              immunizations.
-            </p>
-            <b>Phone</b>
-            <p><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
-            </p>
+            {% if fieldCcAboveTopOfPage.fetched.fieldWysiwyg.0.processed %}
+              {% include "src/site/includes/centralized-content.drupal.liquid" with
+              entity = fieldCcAboveTopOfPage.fetched
+              contentType = fieldCcAboveTopOfPage.fetchedBundle
+              %}
+            {% else %}
+              <h2>Questions about copay balance</h2>
+              <p>
+                For questions about the copay balance of your
+                {{ fieldOffice.entity.entityLabel }}
+                bill, call us toll free at the number below. You won't need to pay
+                any copays for X-rays, lab tests,
+                preventative tests, and services like health screenings or
+                immunizations.
+              </p>
+            {% endif %}
+            {% if fieldPhoneNumber %}
+              <b>Phone</b>
+              <p><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+              </p>
+            {% endif %}
             <div class="vads-u-margin-bottom--3">
               {% include 'src/site/includes/hours.liquid' with allHours = fieldHoursForCopayInquiries headerType = 'small' %}
             </div>

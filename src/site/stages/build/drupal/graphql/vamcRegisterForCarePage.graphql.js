@@ -1,7 +1,9 @@
 const healthCareRegionNonClinicialServices = require('./facilities-fragments/healthCareRegionNonClinicialServices.node.graphql');
+const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const registerForCareFragment = `
   fragment registerForCareFragment on NodeVamcSystemRegisterForCare {
+    ${entityElementsFromPages}
     title
     status
     changed
