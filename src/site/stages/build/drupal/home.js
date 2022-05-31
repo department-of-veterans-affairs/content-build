@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
+const ENVIRONMENTS = require('../../../../site/constants/environments');
 
 // Processes the data received from the home page query.
 function addHomeContent(contentData, files, metalsmith, buildOptions) {
@@ -56,8 +57,24 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       title: 'VA.gov Home',
     };
 
+    const homePreviewPath = '/dy9td';
+    const homePreviewEntityObj = {
+      ...homeEntityObj,
+      path: homePreviewPath,
+      entityUrl: {
+        path: homePreviewPath,
+      },
+    };
+
     // Let Metalsmith know we're here.
     files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
+
+    if (buildOptions.buildType !== ENVIRONMENTS.VAGOVPROD) {
+      files[`./dy9td.html`] = createFileObj(
+        homePreviewEntityObj,
+        'home-preview.drupal.liquid',
+      );
+    }
   }
 }
 
