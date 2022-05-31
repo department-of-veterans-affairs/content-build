@@ -11,9 +11,11 @@ const markdown = require('metalsmith-markdownit');
 const navigation = require('metalsmith-navigation');
 const permalinks = require('metalsmith-permalinks');
 
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
 const silverSmith = require('./silversmith');
 const addDebugInfo = require('./add-debug-info');
-const { runCommand } = require('./../../../../script/utils');
+const { runCommand } = require('../../../../script/utils');
 // const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
@@ -42,8 +44,6 @@ const updateRobots = require('./plugins/update-robots');
 
 // Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
 // attempt to open too many files simultaneously, so we need to handle it.
-const realFs = require('fs');
-const gracefulFs = require('graceful-fs');
 
 gracefulFs.gracefulify(realFs);
 

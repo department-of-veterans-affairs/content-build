@@ -3,6 +3,7 @@ const { ENABLED_ENVIRONMENTS } = require('../../../../constants/drupals');
 const getApiClient = require('../api');
 const { logDrupal } = require('../utilities-drupal');
 const { DATA_FILE_PATH, DATA_FILES } = require('./config');
+const { PULL_DRUPAL_BUILD_ARG } = require('../metalsmith-drupal');
 
 function generateStaticDataFilesFromDrupal(
   files,
@@ -12,6 +13,13 @@ function generateStaticDataFilesFromDrupal(
   if (!ENABLED_ENVIRONMENTS.has(buildOptions.buildtype)) {
     logDrupal(
       `Drupal integration disabled for buildtype ${buildOptions.buildtype}`,
+    );
+    return () => {};
+  }
+
+  if (!buildOptions[PULL_DRUPAL_BUILD_ARG]) {
+    logDrupal(
+      `Missing --${PULL_DRUPAL_BUILD_ARG} flag. Skipping static file generation from Drupal.`,
     );
     return () => {};
   }
