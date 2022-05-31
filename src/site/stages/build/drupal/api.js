@@ -5,7 +5,6 @@ const chalk = require('chalk');
 const SocksProxyAgent = require('socks-proxy-agent');
 
 const syswidecas = require('syswide-cas');
-const { PUBLIC_URLS } = require('../../../constants/drupals');
 const { queries, getQuery } = require('./queries');
 const {
   getIndividualizedQueries,
