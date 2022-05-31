@@ -125,7 +125,7 @@ jobs:
           - buildtype: vagovstaging
             drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovprod
-            drupal-address: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+            drupal-address: https://prod.cms.va.gov
 
     steps:
       - name: Checkout vagov-content
