@@ -345,4 +345,5 @@ module.exports = {
   getDrupalContent,
   pipeDrupalPagesIntoMetalsmith,
   shouldPullDrupal,
+  PULL_DRUPAL_BUILD_ARG,
 };

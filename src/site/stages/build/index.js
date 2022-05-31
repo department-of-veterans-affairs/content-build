@@ -11,9 +11,11 @@ const markdown = require('metalsmith-markdownit');
 const navigation = require('metalsmith-navigation');
 const permalinks = require('metalsmith-permalinks');
 
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
 const silverSmith = require('./silversmith');
 const addDebugInfo = require('./add-debug-info');
-const { runCommand } = require('./../../../../script/utils');
+const { runCommand } = require('../../../../script/utils');
 // const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
@@ -31,6 +33,7 @@ const createResourcesAndSupportWebsiteSection = require('./plugins/create-resour
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+const generateStaticDataFiles = require('./plugins/generate-static-data-files');
 const getFilesToUpdate = require('./plugins/get-files-to-update');
 const ignoreAssets = require('./plugins/ignore-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
@@ -41,8 +44,6 @@ const updateRobots = require('./plugins/update-robots');
 
 // Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
 // attempt to open too many files simultaneously, so we need to handle it.
-const realFs = require('fs');
-const gracefulFs = require('graceful-fs');
 
 gracefulFs.gracefulify(realFs);
 
@@ -85,6 +86,8 @@ function build(BUILD_OPTIONS) {
       'Create symlink into vets-website for local development.',
     );
   }
+
+  smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
 
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
 
