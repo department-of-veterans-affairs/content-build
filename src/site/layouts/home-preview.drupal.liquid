@@ -1,6 +1,11 @@
 {% include "src/site/includes/header.html" %}
 <main data-template="layouts/home" id="content">
 
+  {% include "src/site/includes/hero.html" %}
+
+  {% include "src/site/includes/common-tasks.html" %}
+  {% include "src/site/includes/blog-promo.html" %}
+
   <!-- the hub -->
   <section class="homepage-hub">
 
@@ -39,8 +44,6 @@
       {% endfor %}
       </div>
     </div>
-
-    {% include "src/site/includes/veteran-banner.html" %}
 
   </section>
   <!-- /the hub -->
@@ -136,5 +139,7 @@
 
 </main> <!-- end #content -->
 
+
+{% include "src/site/includes/veteran-banner.html" %}
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
