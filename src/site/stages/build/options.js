@@ -58,7 +58,11 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
     type: Number,
     defaultValue: process.env.DRUPAL_MAX_PARALLEL_REQUESTS,
   },
-  { name: 'no-drupal-proxy', type: Boolean, defaultValue: false },
+  {
+    name: 'no-drupal-proxy',
+    type: Boolean,
+    defaultValue: ((process.env.NO_DRUPAL_PROXY === 'true') ? true : false)
+  },
   { name: 'local-proxy-rewrite', type: Boolean, defaultValue: false },
   { name: 'local-css-sourcemaps', type: Boolean, defaultValue: false },
   { name: 'accessibility', type: Boolean, defaultValue: false },
