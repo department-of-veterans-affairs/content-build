@@ -3,6 +3,11 @@ const {
   postProcess: postProcessVamcEhrSystem,
 } = require('./vamcEhrSystem');
 
+const {
+  query: queryVamcFacilitySupplementalStatus,
+  postProcess: postProcessVamcFacilitySupplementalStatus,
+} = require('./vamcFacilitySupplementalStatus');
+
 const DATA_FILE_PATH = 'data/cms';
 
 /**
@@ -20,6 +25,12 @@ const DATA_FILES = [
     filename: 'vamc-ehr.json',
     query: queryVamcEhrSystem,
     postProcess: postProcessVamcEhrSystem,
+  },
+  {
+    description: 'VAMC Facility Supplemental Status',
+    filename: 'vamc-facility-supplemental-status.json',
+    query: queryVamcFacilitySupplementalStatus,
+    postProcess: postProcessVamcFacilitySupplementalStatus,
   },
 ];
 
