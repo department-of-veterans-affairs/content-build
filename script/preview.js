@@ -63,7 +63,7 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   {
     name: 'no-drupal-proxy',
     type: Boolean,
-    defaultValue: ((process.env.NO_DRUPAL_PROXY === 'true') ? true : false)
+    defaultValue: process.env.NO_DRUPAL_PROXY === 'true',
   },
 ];
 

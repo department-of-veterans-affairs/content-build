@@ -61,7 +61,7 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   {
     name: 'no-drupal-proxy',
     type: Boolean,
-    defaultValue: ((process.env.NO_DRUPAL_PROXY === 'true') ? true : false)
+    defaultValue: process.env.NO_DRUPAL_PROXY === 'true',
   },
   { name: 'local-proxy-rewrite', type: Boolean, defaultValue: false },
   { name: 'local-css-sourcemaps', type: Boolean, defaultValue: false },
