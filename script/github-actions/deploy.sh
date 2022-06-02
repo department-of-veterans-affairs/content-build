@@ -122,7 +122,6 @@ aws s3 sync --only-show-errors \
     --include '*.jpg' \
     --include '*.svg' \
     --include generated/headerFooter.json \
-    --include data/cms/*.json \
     . "$DEST"
 
 # Sync content to s3
