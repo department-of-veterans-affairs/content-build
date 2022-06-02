@@ -59,6 +59,11 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
     type: String,
     defaultValue: process.env.DRUPAL_PASSWORD,
   },
+  {
+    name: 'no-drupal-proxy',
+    type: Boolean,
+    defaultValue: process.env.NO_DRUPAL_PROXY === 'true',
+  },
 ];
 
 global.cmsFeatureFlags = {};
