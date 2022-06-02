@@ -1398,8 +1398,9 @@ module.exports = function registerFilters() {
     return facilitiesInRegion
       .map(facility => ({
         entityLabel: facility?.entityLabel,
+        entityUrl: facility?.entityUrl,
         fieldAddress: facility?.fieldAddress,
-        fieldFacilityHours: facility?.fieldFacilityHours,
+        fieldOfficeHours: facility?.fieldOfficeHours,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
           facility?.reverseFieldFacilityLocationNode?.entities || [],
           serviceType,
@@ -1432,10 +1433,6 @@ module.exports = function registerFilters() {
     return `vetCenterHoursKey_${forloopindex}`;
   };
 
-  liquid.filters.featureCareWeProvide = () => {
-    return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
-  };
-
   liquid.filters.getSurvey = (buildtype, url) => {
     if (
       buildtype === 'localhost' ||
@@ -1448,4 +1445,41 @@ module.exports = function registerFilters() {
     }
     return null;
   };
+
+  liquid.filters.officeHoursDayFormatter = day => {
+    let formattedDay = '';
+    switch (day) {
+      case 0:
+        formattedDay = `Sun`;
+        break;
+      case 1:
+        formattedDay = `Mon`;
+        break;
+      case 2:
+        formattedDay = `Tue`;
+        break;
+      case 3:
+        formattedDay = `Wed`;
+        break;
+      case 4:
+        formattedDay = `Thu`;
+        break;
+      case 5:
+        formattedDay = `Fri`;
+        break;
+      case 6:
+        formattedDay = `Sat`;
+        break;
+
+      default:
+        break;
+    }
+    return formattedDay;
+  };
+
+  liquid.filters.officeHoursTimeFormatter = time =>
+    moment(time, 'Hmm')
+      .format('h:mm a')
+      .replace(`am`, `a.m.`)
+      .replace(`pm`, `p.m.`);
 };

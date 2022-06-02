@@ -20,7 +20,6 @@ const {
 } = require('../src/site/stages/build/drupal/page');
 const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
-const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
 const singlePageDiff = require('./preview-routes/single-page-diff');
 const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
@@ -305,8 +304,7 @@ app.get('/preview', async (req, res, next) => {
       `${compiledPage.entityBundle}.drupal.liquid`,
     );
 
-    const drupalAddressUrl = DRUPALS.PUBLIC_URLS[options['drupal-address']];
-    const drupalSite = drupalAddressUrl || 'prod.cms.va.gov';
+    const drupalSite = options['drupal-address'] || 'prod.cms.va.gov';
 
     const files = {
       'generated/file-manifest.json': {

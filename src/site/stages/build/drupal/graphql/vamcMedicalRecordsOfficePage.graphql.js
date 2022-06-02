@@ -1,7 +1,9 @@
 const healthCareRegionNonClinicialServices = require('./facilities-fragments/healthCareRegionNonClinicialServices.node.graphql');
+const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const medicalRecordsOfficeFragment = `
   fragment medicalRecordsOfficeFragment on NodeVamcSystemMedicalRecordsOffi {
+    ${entityElementsFromPages}
     title
     status
     changed
@@ -9,6 +11,19 @@ const medicalRecordsOfficeFragment = `
     entityUrl {
       path
     }
+    fieldVamcMedRecordsMailing {
+      givenName
+      familyName
+      additionalName
+      organization
+      addressLine1
+      addressLine2
+      administrativeArea
+      locality
+      dependentLocality
+      postalCode
+    }
+    fieldFaxNumber
     fieldCcTopOfPageContent {
       fetched
       fetchedBundle

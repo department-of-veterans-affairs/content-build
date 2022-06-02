@@ -8,8 +8,8 @@ const contentOnlyBuild = !!args[1];
 const reportPath = `./logs/${envName}-broken-links.json`;
 const SERVER_URL = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 const BRANCH_NAME = process.env.GITHUB_REF;
-const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'master';
-const maxBrokenLinks = 10;
+const IS_PROD_BRANCH = BRANCH_NAME.replace('refs/heads/', '') === 'main';
+const maxBrokenLinks = 5000;
 
 // broken links detected
 if (fs.existsSync(reportPath)) {
@@ -17,7 +17,8 @@ if (fs.existsSync(reportPath)) {
   const brokenLinks = JSON.parse(brokenLinksReport);
   const shouldFail =
     brokenLinks.isHomepageBroken ||
-    brokenLinks.brokenLinksCount > maxBrokenLinks;
+    brokenLinks.brokenLinksCount >
+      (brokenLinks.maxBrokenLinks ?? maxBrokenLinks);
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
   const summary = brokenLinks.summary;
   const heading = `<!subteam^S010U41C30V|cms-helpdesk> ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}> \\n`;
@@ -31,7 +32,7 @@ if (fs.existsSync(reportPath)) {
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
-    // we are running either on the master branch or during
+    // we are running either on the main branch or during
     // a Content Release. This way, if there is a broken link,
     // feature branches aren't affected, so VFS teams can
     // continue merging.
@@ -39,7 +40,7 @@ if (fs.existsSync(reportPath)) {
   }
 
   /*
-   * Only emit this variable if ran against master branch or during Content Release.
+   * Only emit this variable if ran against main branch or during Content Release.
    * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
    */
   console.log(`::set-output name=UPLOAD_AND_NOTIFY::1`);

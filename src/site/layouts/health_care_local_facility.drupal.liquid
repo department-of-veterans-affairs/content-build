@@ -31,6 +31,7 @@
 
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">Location and
             contact information</h2>
+
           <div
               class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
 
@@ -39,11 +40,17 @@
                 class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
               <div>
                 <div class="vads-c-facility-detail">
+
                   {% if fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
-                    <div class="vads-u-display--inline-block vads-u-margin-bottom--2p5">
+                    <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
                       {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" %}
                     </div>
                   {% endif %}
+
+                  {% assign bottomMargin = '2' %}
+                  {% assign topMargin = '0p5' %}
+                  {% include "src/site/includes/covid-status.drupal.liquid" %}
+
                   <section class="vads-facility-detail">
                     <h3
                         class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
@@ -88,43 +95,15 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="vads-u-margin-bottom--0">
-                      <div class="clinicalhours">
-                        <h3
-                            class="vads-u-margin-top--2p5 vads-u-margin-bottom--1">
-                          Clinical hours
-                        </h3>
-                        <div
-                            class="vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row vads-u-margin-bottom--0">
-                          <ul
-                              class="vads-u-flex--1 va-c-facility-hours-list vads-u-margin-top--0 vads-u-margin-bottom--1 small-screen:vads-u-margin-bottom--0 vads-u-margin-right--3">
-                            {% for hours in fieldFacilityHours.value limit: 5 %}
-                              <li><b class="abbrv-day">{{ hours.0 }}:</b>
-                                {{ hours.1 }}
-                              </li>
-                            {% endfor %}
-                          </ul>
-                          <ul
-                              class="vads-u-flex--1 va-c-facility-hours-list vads-u-margin-top--0 'vads-u-margin-bottom--0">
-                            {% for hours in fieldFacilityHours.value offset: 5 limit: 2 %}
-                              <li><b class="abbrv-day">{{ hours.0 }}:</b>
-                                {{ hours.1 }}
-                              </li>
-                            {% endfor %} </ul>
-                        </div>
-                      </div>
-                    </div>
+                    {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'clinical' %}
                   </section>
                 </div>
               </div>
             </div>
-
-
             {% include "src/site/includes/image_and_static_map.liquid" with
                 facilityMedia = fieldMedia
                 facilityId = fieldFacilityLocatorApiId
             %}
-
           </div>
 
           <!-- Location services section -->
@@ -174,6 +153,8 @@
             <section class="local-health-services" id="local-health-services" data-label="Health services">
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
+
+              <va-accordion bordered>
               {% for localService in localHealthServices %}
                 {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}
                 {% if localHealthService != empty and localService.entity.status == true %}
@@ -188,6 +169,7 @@
 
                 {% endif %}
               {% endfor %}
+              </va-accordion>
             </section>
           {% endif %}
 
@@ -207,7 +189,7 @@
                     fieldFlickr = fieldRegionPage.entity.fieldFlickr
           %}
   <!-- Last updated & feedback button-->
-        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}    
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
 
       </div>

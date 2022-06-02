@@ -1,13 +1,22 @@
 const healthCareRegionNonClinicialServices = require('./facilities-fragments/healthCareRegionNonClinicialServices.node.graphql');
+const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const billingAndInsuranceFragment = `
   fragment billingAndInsuranceFragment on NodeVamcSystemBillingInsurance {
+    ${entityElementsFromPages}
     title
     status
     changed
     entityBundle
     entityUrl {
       path
+    }
+    fieldPhoneNumber
+    fieldHoursForCopayInquiries {
+      day
+      starthours
+      endhours
+      comment
     }
     fieldCcTopOfPageContent {
       fetched

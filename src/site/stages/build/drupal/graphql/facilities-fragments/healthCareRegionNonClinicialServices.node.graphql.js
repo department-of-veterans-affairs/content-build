@@ -19,8 +19,14 @@ module.exports = `
       entities {
         ... on NodeHealthCareLocalFacility {
           entityLabel
-          fieldFacilityHours {
-            value
+          fieldOfficeHours {
+            day
+            starthours
+            endhours
+            comment
+          }
+          entityUrl {
+            path
           }
           ${FIELD_ADDRESS}
           reverseFieldFacilityLocationNode(limit: 50, filter: {
@@ -54,8 +60,11 @@ module.exports = `
                         }
                       }
                     }
-                    fieldFacilityServiceHours {
-                      value
+                    fieldOfficeHours {
+                      day
+                      starthours
+                      endhours
+                      comment
                     }
                     fieldHours
                     fieldPhone {

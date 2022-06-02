@@ -1,6 +1,8 @@
 name: Content Release
 
 on:
+  repository_dispatch:
+    types: [content-release]
   workflow_dispatch:
   schedule:
     - cron: '54 13-21 * * 1-5'
@@ -14,11 +16,10 @@ env:
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   DSVA_SCHEDULE_ENABLED: true
-  NODE_ENV: production
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
-  DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+  DRUPAL_ADDRESS: https://prod.cms.va.gov
 
 jobs:
   start-runner:
@@ -103,7 +104,15 @@ jobs:
         uses: andymckay/cancel-action@0.2
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Notify CMS - Starting
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
+          method: GET
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -132,7 +141,7 @@ jobs:
     needs: validate-build-status
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Notify Slack
         uses: ./.github/workflows/slack-notify
@@ -149,7 +158,7 @@ jobs:
     needs:
       - start-runner
       - validate-build-status
-    timeout-minutes: 30
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: content-build
@@ -171,13 +180,13 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Checkout vagov-content
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
           ref: ${{ needs.validate-build-status.outputs.REF }}
@@ -187,13 +196,13 @@ jobs:
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             .cache/yarn
@@ -244,9 +253,19 @@ jobs:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
 
+      - name: Notify CMS - In Progress
+        uses: ./content-build/.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/inprogress
+          method: GET
+
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
+        env:
+          NODE_ENV: production
 
       - name: Export content build end time
         id: export-content-build-end
@@ -263,7 +282,7 @@ jobs:
 
       - name: Check broken links
         id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links.js ${{ env.BUILDTYPE }}
+        run: node ./script/github-actions/check-broken-links-blocks.js ${{ env.BUILDTYPE }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -309,26 +328,16 @@ jobs:
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      - name: Notify VFS Platform Builds channel about broken links
-        uses: slackapi/slack-github-action@v1.16.0
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
-          channel-id: ${{ env.VFS_PLATFORM_BUILDS_SLACK }}
-
       - name: Notify content broken links channel about broken links
         uses: slackapi/slack-github-action@v1.16.0
+        id: notify-content-broken-links
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          payload: ${{ steps.get-broken-link-info.outputs.SLACK_ATTACHMENTS }}
+          payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
       - name: Generate build details
@@ -403,7 +412,7 @@ jobs:
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Upload build
-        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1
+        run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
 
       - name: Export archive end time
         id: export-archive-end-time
@@ -424,7 +433,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -438,18 +447,6 @@ jobs:
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
-
-      - name: Get Drupal prod password
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
-          env_variable_name: DRUPAL_PASSWORD
-
-      - name: Get Drupal prod username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
-          env_variable_name: DRUPAL_USERNAME
 
       - name: Configure AWS Credentials (2)
         uses: aws-actions/configure-aws-credentials@v1
@@ -470,14 +467,29 @@ jobs:
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
 
-      - name: CMS GovDelivery callback
-        uses: fjogeleit/http-request-action@master
+      - name: Notify CMS - Complete
+        uses: ./.github/workflows/authenticated-cms-request
         with:
-          url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/complete
           method: GET
-          username: ${{ env.DRUPAL_USERNAME }}
-          password: ${{ env.DRUPAL_PASSWORD }}
-          timeout: 10000
+
+      - name: Notify CMS - Complete
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/complete
+          method: GET
+
+      - name: CMS GovDelivery callback
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          method: GET
 
       - name: Export deploy end time
         id: export-deploy-end-time
@@ -495,7 +507,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Notify Slack
         uses: ./.github/workflows/slack-notify
@@ -505,6 +517,14 @@ jobs:
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Notify CMS - Ready
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/ready
+          method: GET
 
   notify-failure:
     name: Notify Failure
@@ -567,7 +587,7 @@ jobs:
       METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
@@ -590,7 +610,7 @@ jobs:
           echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.outputs.BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.outputs.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "ARCHIVE_DURATION=$(expr ${{needs.archive.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
-          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.create-release.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
+          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
           echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.start-runner.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
 
       - name: Build JSON object

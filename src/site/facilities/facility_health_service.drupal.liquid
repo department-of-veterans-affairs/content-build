@@ -1,12 +1,12 @@
-<div data-template="facilities/facilities_health_service" class="facilities_health_service">
-  <va-accordion bordered>
     {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
     <va-accordion-item
       {% if serviceTaxonomy.fieldAlsoKnownAs %}
         subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
       {% endif %}
+      class="facilities_health_service"
       data-label="{{ serviceTaxonomy.name }}"
       data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
+      data-template="facilities/facilities_health_service"
     >
       <h3 slot="headline">
         {{ serviceTaxonomy.name }}
@@ -41,5 +41,3 @@
         {% endif %}
       </div>
     </va-accordion-item>
-  </va-accordion>
-</div>
