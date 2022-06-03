@@ -4575,9 +4575,6 @@ eslint-plugin-unicorn@^36.0.0:
     safe-regex "^2.1.1"
     semver "^7.3.5"
 
-"eslint-plugin-va@file:./script/eslint-plugin-va":
-  version "1.0.4"
-
 eslint-scope@5.1.1, eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-5.1.1.tgz#e786e59a66cb92b3f6c1fb0d508aab174848f48c"
