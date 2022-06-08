@@ -1,4 +1,4 @@
-const table = require('table').table;
+const { table } = require('table');
 
 const tableConfig = {
   columns: {
@@ -21,15 +21,34 @@ const processAxeCheckResults = violations => {
 
   const violationData = violations.map(
     ({ id, impact, description, nodes, help, helpUrl }) => [
-      ['id', id],
-      ['impact', impact],
-      ['description', description],
-      ['help', help],
-      ['help URL', helpUrl],
-      ['target', nodes.map(node => node.target).join('\n\n')],
-      ['html', nodes.map(node => node.html).join('\n\n')],
-      ['failure summary', nodes.map(node => node.failureSummary).join('\n\n')],
+      /* eslint-disable no-control-regex */
+      ['id', id.replace(/[\x01-\x1A]+/g, ' ')],
+      ['impact', impact.replace(/[\x01-\x1A]+/g, ' ')],
+      ['description', description.replace(/[\x01-\x1A]+/g, ' ')],
+      ['help', help.replace(/[\x01-\x1A]+/g, ' ')],
+      ['help URL', helpUrl.replace(/[\x01-\x1A]+/g, ' ')],
+      [
+        'target',
+        nodes
+          .map(node => node.target)
+          .join('\n\n')
+          .replace(/[\x01-\x1A]+/g, ' '),
+      ],
+      [
+        'html',
+        nodes
+          .map(node => node.html)
+          .join('\n\n')
+          .replace(/[\x01-\x1A]+/g, ' '),
+      ],
+      [
+        'failure summary',
+        nodes
+          .map(node => node.failureSummary.replace(/[\x01-\x1A]+/g, ' '))
+          .join('\n\n'),
+      ],
       ['nodes', nodes.length],
+      /* eslint-enable no-control-regex */
     ],
   );
 
@@ -60,6 +79,7 @@ const processAxeCheckResults = violations => {
       violations.length,
       0,
       `\n\n${prodURL}\n\n${violationMessage}\n\n${violationData.map(violation =>
+        // eslint-disable-next-line no-control-regex
         table(violation, tableConfig),
       )}`,
     );
