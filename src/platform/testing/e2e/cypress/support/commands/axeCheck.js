@@ -79,7 +79,6 @@ const processAxeCheckResults = violations => {
       violations.length,
       0,
       `\n\n${prodURL}\n\n${violationMessage}\n\n${violationData.map(violation =>
-        // eslint-disable-next-line no-control-regex
         table(violation, tableConfig),
       )}`,
     );
