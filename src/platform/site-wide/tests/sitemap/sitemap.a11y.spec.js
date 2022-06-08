@@ -1,6 +1,6 @@
+const { normal } = require('../../../testing/e2e/timeouts');
 const xml = require('fast-xml-parser');
 const fetch = require('sync-fetch');
-const { normal } = require('../../../testing/e2e/timeouts');
 
 const options = {
   attributeNamePrefix: '@_',
