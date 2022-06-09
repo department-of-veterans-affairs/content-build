@@ -33,6 +33,10 @@ async function downloadFile(
   let retries = 3;
   while (retries--) {
     try {
+      // Add log before attempting to download for diagnostics.
+      if (global.verbose) {
+        log(`Attempting to download ${asset.src}`);
+      }
       // eslint-disable-next-line no-await-in-loop
       response = await client.proxyFetch(asset.src);
       break;
