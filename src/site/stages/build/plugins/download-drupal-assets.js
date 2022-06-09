@@ -35,7 +35,7 @@ async function downloadFile(
     try {
       // Add log before attempting to download for diagnostics.
       if (global.verbose) {
-        log(`Attempting to download ${asset.src}`);
+        log(`Downloading ${asset.src}...`);
       }
       // eslint-disable-next-line no-await-in-loop
       response = await client.proxyFetch(asset.src);
@@ -69,9 +69,7 @@ async function downloadFile(
 
     downloadResults.downloadCount++;
 
-    if (global.verbose) {
-      log(`Finished downloading ${asset.src}`);
-    } else {
+    if (!global.verbose) {
       process.stdout.write('.');
       if (!assetsToDownload.length) process.stdout.write('\n');
     }
