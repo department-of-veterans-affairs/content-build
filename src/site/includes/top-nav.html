@@ -50,4 +50,30 @@
       <div class="mega-menu" id="mega-menu"></div>
     </div>
   {% endunless %}
+  <va-alert
+    class="ie-deprecation-warning"
+    close-btn-aria-label="Close notification"
+    full-width
+    status="warning"
+    style="display: none;"
+    visible
+  >
+    <h3 slot="headline">
+      Internet Explorer 13 will soon be unsupported
+    </h3>
+    <div>
+      <p className="vads-u-margin-bottom--0 vads-u-padding--0">
+        You will need to switch to use Chrome, Firefox, or Safari.
+      </p>
+    </div>
+  </va-alert>
+  <!-- Solutioned for: https://github.com/department-of-veterans-affairs/va.gov-cms/issues/9075 -->
+  <script type="text/javascript">
+    const isIE = /Trident\/[0-7]\.[0-9]/i.test(window.navigator.userAgent);
+
+    if (isIE) {
+      const ieMessageEl = document.body.querySelector('.ie-deprecation-warning');
+      ieMessageEl.style.display = 'block';
+    }
+  </script>
 </div>
