@@ -73,7 +73,7 @@ jobs:
         with:
           mode: start
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          ec2-image-id: ${{ env.RUNNER_AMI_ID }}
+          ec2-image-id: ami-036668e0b11e4bf99
           ec2-instance-type: ${{ env.INSTANCE_TYPE }}
           subnet-id: ${{ env.SUBNET_ID }}
           security-group-id: sg-0e23b56be3798e3a1
