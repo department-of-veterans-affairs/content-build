@@ -12,7 +12,7 @@ const billingAndInsuranceFragment = `
       path
     }
     fieldPhoneNumber
-    fieldHoursForCopayInquiries {
+    fieldOfficeHours {
       day
       starthours
       endhours
