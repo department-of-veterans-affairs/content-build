@@ -39,9 +39,19 @@ function replacePathInData(data, replacer, ancestors = new Set()) {
 function convertAssetPath(url) {
   // After this path are other folders in the image paths,
   // but it's hard to tell if we can strip them, so I'm leaving them alone
-  const withoutHost = url.replace(/^.*\/sites\/.*\/files\//, '');
-  const path = withoutHost.split('?', 2)[0];
+  // Check that this item is on a VA domain.
+  // @todo Allow specified domains not of form *.cms.va.gov.
+  // @todo alternately, check against DRUPAL_ADDRESS, accounting for protocol.
+  const assetPath = url.replace(
+    /^https?:\/\/([a-z0-9]+(-[a-z0-9]+)*\.)+cms\.va\.gov\/sites\/.*\/files\//,
+    '',
+  );
+  // If we still have a fully-qualified absolute URL, just pass it through.
+  if (assetPath.match(/^http/)) {
+    return assetPath;
+  }
 
+  const path = assetPath.split('?', 2)[0];
   // This is sort of naive, but we'd like to have images in the img folder
   if (
     ['png', 'jpg', 'jpeg', 'gif', 'svg'].some(ext =>
@@ -61,7 +71,6 @@ function updateAttr(attr, doc) {
   doc(`[${attr}*="cms.va.gov/sites"]`).each((i, el) => {
     const item = doc(el);
     const srcAttr = item.attr(attr);
-
     // *.ci.cms.va.gov ENVs don't have AWS URLs.
     const newAssetPath = convertAssetPath(srcAttr);
 
