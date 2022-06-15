@@ -11,5 +11,10 @@
 	{% if hours.endhours %}
 		{{ hours.endhours | officeHoursTimeFormatter}}
 	{% endif %}
+
 	{{ hours.comment }}
+
+	{% if !hours.starthours && !hours.endhours && !hours.comment %}
+		Closed
+	{% endif %}
 </li>
