@@ -4,17 +4,17 @@
     {% else %}
         <span class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}.</span>
     {% endif %}
-    {% if hours.starthours %}
-        {{ hours.starthours | officeHoursTimeFormatter}}
-        to
-    {% endif %}
-    {% if hours.endhours %}
-        {{ hours.endhours | officeHoursTimeFormatter}}
-    {% endif %}
 
-    {{ hours.comment }}
-
-    {% if !hours.starthours && !hours.endhours && !hours.comment %}
+	{% if !hours.starthours && !hours.endhours && !hours.comment %}
         Closed
+	{% else %}
+		{% if hours.starthours %}
+			{{ hours.starthours | officeHoursTimeFormatter}}
+			to
+		{% endif %}
+		{% if hours.endhours %}
+			{{ hours.endhours | officeHoursTimeFormatter}}
+		{% endif %}
     {% endif %}
+	{{ hours.comment }}
 </li>
