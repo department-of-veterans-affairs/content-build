@@ -115,19 +115,13 @@
         {% if fieldVaFormToolUrl %}
           <h3 data-testid="va_form--online-tool">Online tool</h3>
           <p>{{ fieldVaFormToolIntro }}</p>
-            <div class="vads-u-display--inline-block">
-              <a
-                class="vads-u-text-decoration--none vads-u-display--flex vads-u-align-items--center"
-                href="{{ fieldVaFormToolUrl.uri }}"
-                onclick="recordEvent({ event: 'cta-primary-button-click' });">
-                <i
-                  aria-hidden="true"
-                  class="fas fa-chevron-circle-right fa-2x vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                  role="presentation"
-                ></i>
-                <span class="vads-u-text-decoration--underline vads-u-font-weight--bold">Go to the online tool</span>
-              </a>
-            </div>
+          <a 
+            class="vads-c-action-link--blue" 
+            href="{{ fieldVaFormToolUrl.uri }}" 
+            onclick="recordEvent({ event: 'cta-primary-button-click' });"
+          >
+            Go to the online tool
+          </a>
         {% endif %}
 
 
