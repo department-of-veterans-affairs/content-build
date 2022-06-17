@@ -69,7 +69,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     // Let Metalsmith know we're here.
     files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
 
-    if (buildOptions.buildType !== ENVIRONMENTS.VAGOVPROD) {
+    if (buildOptions.buildtype !== ENVIRONMENTS.VAGOVPROD) {
       files[`./homepage-test.html`] = createFileObj(
         homePreviewEntityObj,
         'home-preview.drupal.liquid',
