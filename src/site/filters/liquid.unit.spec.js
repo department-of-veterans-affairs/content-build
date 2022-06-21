@@ -10,6 +10,8 @@ import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
+import stagingSurveys from './medalliaStagingSurveys.json';
+import prodSurveys from './medalliaProdSurveys.json';
 
 // Register filters.
 registerFilters();
@@ -2149,7 +2151,7 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
           status: true,
           fieldAdditionalHoursInfo: null,
           fieldEmailContacts: [],
-          fieldFacilityServiceHours: {
+          fieldOfficeHours: {
             value: [
               ['Mon', '9:00 a.m. to 5:00 p.m. ET'],
               ['Tue', '9:00 a.m. to 5:00 p.m. ET'],
@@ -2361,6 +2363,43 @@ describe('deriveFormattedTimestamp', () => {
     // Assertions.
     expect(
       liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
-    ).to.equal('Wed Jan. 5, 2022, 1:00 p.m. - 2:00 p.m. EST');
+    ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. – 2:00 p.m. ET');
+  });
+});
+
+describe('getSurvey', () => {
+  it('returns the survey number if url is listed in the survey object', () => {
+    const testUrls = [
+      '/resources',
+      '/find-locations',
+      '/search',
+      '/virtual-agent-study',
+      '/contact-us/virtual-agent',
+    ];
+    const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
+    ).to.equal(20);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[1], stagingSurveys),
+    ).to.equal(11);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
+    ).to.equal(24);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
+    ).to.equal(21);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[4], prodSurveys),
+    ).to.equal(25);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[1], prodSurveys),
+    ).to.equal(17);
   });
 });

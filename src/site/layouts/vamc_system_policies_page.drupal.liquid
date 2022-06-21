@@ -16,10 +16,7 @@
             %}
           </div>
 
-          <nav id="table-of-contents" aria-labelledby="on-this-page">
-            <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-            <ul class="usa-unstyled-list" role="list"></ul>
-          </nav>
+          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
 
           {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcTopOfPageContent.fetched
@@ -40,7 +37,8 @@
             contentType = fieldCcBottomOfPageContent.fetchedBundle
           %}
         </article>
-        {% include "src/site/includes/last-updated.drupal.liquid" %}
+    <!-- Last updated & feedback button-->
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
     </div>
   </main>

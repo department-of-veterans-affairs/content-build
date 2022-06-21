@@ -11,9 +11,11 @@ const markdown = require('metalsmith-markdownit');
 const navigation = require('metalsmith-navigation');
 const permalinks = require('metalsmith-permalinks');
 
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
 const silverSmith = require('./silversmith');
 const addDebugInfo = require('./add-debug-info');
-const { runCommand } = require('./../../../../script/utils');
+const { runCommand } = require('../../../../script/utils');
 // const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
@@ -25,11 +27,13 @@ const downloadAssets = require('./plugins/download-assets');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const createHeaderFooter = require('./plugins/create-header-footer');
+const createOfficeDirectoryData = require('./plugins/create-office-directory-data');
 const createOutreachAssetsData = require('./plugins/create-outreach-assets-data');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+const generateStaticDataFiles = require('./plugins/generate-static-data-files');
 const getFilesToUpdate = require('./plugins/get-files-to-update');
 const ignoreAssets = require('./plugins/ignore-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
@@ -40,8 +44,6 @@ const updateRobots = require('./plugins/update-robots');
 
 // Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
 // attempt to open too many files simultaneously, so we need to handle it.
-const realFs = require('fs');
-const gracefulFs = require('graceful-fs');
 
 gracefulFs.gracefulify(realFs);
 
@@ -85,8 +87,33 @@ function build(BUILD_OPTIONS) {
     );
   }
 
+  smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
+
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
+
+  // For CMS testing, we only need to ensure that the graphql queries run. We
+  // don't need any actual HTML output, so we can just stop here.
+  if (BUILD_OPTIONS.gqlQueriesOnly) {
+    smith.process(async err => {
+      if (err) {
+        smith.endGarbageCollection();
+        throw err;
+      }
+
+      smith.printSummary(BUILD_OPTIONS);
+      smith.printPeakMemory();
+      console.log('GraphQL queries have been run');
+      smith.endGarbageCollection();
+    });
+    return;
+  }
+
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
+
+  smith.use(
+    createOfficeDirectoryData(BUILD_OPTIONS),
+    'Create office-directory data',
+  );
 
   smith.use(
     createOutreachAssetsData(BUILD_OPTIONS),

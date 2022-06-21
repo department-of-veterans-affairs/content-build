@@ -35,11 +35,9 @@
 
             <!-- TOC -->
             {% if fieldTableOfContentsBoolean %}
-              <nav id="table-of-contents" aria-labelledby="on-this-page">
-                <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-                <ul class="usa-unstyled-list" role="list"></ul>
-              </nav>
+              <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
             {% endif %}
+
 
             <!-- Content blocks -->
             {% for block in fieldContentBlock %}
@@ -82,12 +80,11 @@
       <div class="usa-width-three-fourths">
         <div class="usa-content">
           <va-back-to-top></va-back-to-top>
+        <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </div>
       </div>
     </div>
-
-    <!-- Last updated -->
-    {% include "src/site/includes/last-updated.drupal.liquid" %}
   </main>
 </div>
 

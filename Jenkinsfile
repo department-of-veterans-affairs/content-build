@@ -27,7 +27,6 @@ node('vetsgov-general-purpose') {
   }
 
   def commonStages = load "content-build/jenkins/common.groovy"
-  def envUsedCache = [:]
 
   // setupStage
   dockerContainer = commonStages.setup()
@@ -50,7 +49,6 @@ node('vetsgov-general-purpose') {
         stringParam(name: 'source_repo', value: 'content-build'),
       ], wait: false
     } catch (error) {
-      // commonStages.slackNotify()
       throw error
     }
   }

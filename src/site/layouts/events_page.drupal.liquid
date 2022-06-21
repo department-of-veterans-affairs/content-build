@@ -45,7 +45,7 @@ Example data:
 {% endcomment %}
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" %}
 <div id="content" class="interior">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
@@ -55,7 +55,6 @@ Example data:
           <h1>Events</h1>
 
           {% include "src/site/facilities/facilities_events_toggle.drupal.liquid" with url = entityUrl.path %}
-
           {% assign featuredUrl = null %}
           {% if paginator.prev == null %}
             {% for featuredEvent in eventTeasers.entities %}

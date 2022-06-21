@@ -1,11 +1,10 @@
 const moment = require('moment');
 const fetch = require('node-fetch');
+const pRetry = require('p-retry');
 const chalk = require('chalk');
 const SocksProxyAgent = require('socks-proxy-agent');
 
-const { PUBLIC_URLS } = require('../../../constants/drupals');
 const syswidecas = require('syswide-cas');
-const DRUPALS = require('../../../constants/drupals');
 const { queries, getQuery } = require('./queries');
 const {
   getIndividualizedQueries,
@@ -42,11 +41,10 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
   // eslint-disable-next-line no-console
   const say = clientOptions.verbose ? console.log : () => {};
 
-  const envConfig = DRUPALS[buildOptions.buildtype];
-  // eslint-disable-next-line prefer-object-spread
-  const drupalConfig = Object.assign({}, envConfig, buildArgs);
-
+  // eslint-disable-next-line prefer-object-spread, no-undef
+  const drupalConfig = Object.assign({}, buildArgs);
   const { address, user, password } = drupalConfig;
+
   const drupalUri = `${address}/graphql`;
   const encodedCredentials = encodeCredentials({ user, password });
   const headers = {
@@ -64,10 +62,6 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
 
     getSiteUri() {
       return address;
-    },
-
-    shouldReplaceAssetPath() {
-      return !!PUBLIC_URLS[this.getSiteUri()];
     },
 
     async proxyFetch(url, options = {}) {
@@ -158,16 +152,20 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
         }
 
         const [queryName, query] = individualQueries.pop();
-        const request = this.query({
-          query,
-          variables: {
-            today: getCurrentDayAsUnixTimestamp().toString(),
-            onlyPublishedContent,
-          },
-        });
 
         const startTime = moment();
-        const json = await request;
+        const allowedRetries = 3;
+        const json = await pRetry(
+          () =>
+            this.query({
+              query,
+              variables: {
+                today: getCurrentDayAsUnixTimestamp().toString(),
+                onlyPublishedContent,
+              },
+            }),
+          allowedRetries,
+        );
 
         if (json.errors) {
           const formattedErrors = JSON.stringify(json.errors, null, 2);

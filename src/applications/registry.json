@@ -93,7 +93,7 @@
       "breadcrumbs_override": [
         {
           "path": "view-change-dependents",
-          "name": "View or change your dependents"
+          "name": "View or change dependents on your VA disability benefits"
         },
         {
           "path": "view-change-dependents/view",
@@ -213,11 +213,11 @@
       "breadcrumbs_override": [
         {
           "path": "view-change-dependents/",
-          "name": "View or change your dependents"
+          "name": "View or change dependents on your VA disability benefits"
         },
         {
           "path": "view-change-dependents/add-remove-form-21-686c/",
-          "name": "Add or remove dependents form 21‑686c"
+          "name": "Add or remove dependents with VA Form 21-686C"
         }
       ]
     }
@@ -830,7 +830,7 @@
     "entryName": "coronavirus-research-update",
     "rootUrl": "/coronavirus-research/volunteer/update",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -839,7 +839,7 @@
           "name": "Participating in coronavirus research at VA"
         },
         {
-          "path": "coronavirus-research/update/",
+          "path": "coronavirus-research/volunteer/update/",
           "name": "Update your information"
         }
       ]
@@ -994,9 +994,9 @@
   {
     "appName": "Virtual Agent",
     "entryName": "virtual-agent",
-    "rootUrl": "/virtual-agent-study",
+    "rootUrl": "contact-us/virtual-agent",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1084,9 +1084,9 @@
     }
   },
   {
-    "appName": "Apply for Certificate of Eligibility",
-    "entryName": "coe",
-    "rootUrl": "/housing-assistance/home-loans/apply-for-coe-form-26-1880",
+    "appName": "Your VA home loan COE",
+    "entryName": "coe-status",
+    "rootUrl": "/housing-assistance/home-loans/check-coe-status/your-coe",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
@@ -1101,8 +1101,32 @@
           "path": "housing-assistance/home-loans"
         },
         {
-          "name": "Apply for Certificate of Eligibility Form 26-1880",
-          "path": "housing-assistance/home-loans/apply-for-coe-form-26-1880"
+          "name": "Your VA home loan COE",
+          "path": "housing-assistance/home-loans/check-coe-status"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Apply for Certificate of Eligibility",
+    "entryName": "coe",
+    "rootUrl": "/housing-assistance/home-loans/request-coe-form-26-1880",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Housing assistance",
+          "path": "housing-assistance"
+        },
+        {
+          "name": "VA-backed home loans",
+          "path": "housing-assistance/home-loans"
+        },
+        {
+          "name": "Request a VA home loan Certificate of Eligibility",
+          "path": "housing-assistance/home-loans/request-coe-form-26-1880"
         }
       ]
     }
@@ -1121,7 +1145,7 @@
     "entryName": "pre-check-in",
     "rootUrl": "/health-care/appointment-pre-check-in",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1150,6 +1174,75 @@
     "rootUrl": "/specially-adapted-housing-grant",
     "template": {
       "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "'Enrollment Verification'",
+    "entryName": "enrollment-verification",
+    "rootUrl": "/enrollment-history",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "All VA offices",
+    "entryName": "office-directory",
+    "rootUrl": "/office-directory",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Education Letters",
+    "entryName": "education-letters",
+    "rootUrl": "/education/education-letters",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "title": "Check your VA education letters"
+    }
+  },
+  {
+    "appName": "Connect Your Device",
+    "entryName": "dhp-consent-flow",
+    "rootUrl": "/health-care/connected-devices",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "title": "Connected Devices"
+    }
+  },
+  {
+    "appName": "Mock Form",
+    "entryFile": "./app-entry.jsx",
+    "entryName": "mock-form",
+    "rootUrl": "/mock-form",
+    "template": {
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Transfer Account",
+    "entryName": "mhv-inherited-proofing",
+    "rootUrl": "/transfer-account",
+    "template": {
+      "vagovprod": false,
+      "title": "Transfer Account",
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Combined Debt Portal",
+    "entryName": "combined-debt-portal",
+    "rootUrl": "/manage-debt-and-bills/summary",
+    "template": {
+      "vagovprod": false,
+      "vagovstaging": true,
       "layout": "page-react.html"
     }
   }

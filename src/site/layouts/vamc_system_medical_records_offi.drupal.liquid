@@ -3,76 +3,120 @@
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
 
 <div class="interior" id="content" data-template="vamc_system_medical_records_offi.drupal.liquid">
-  <main class="va-l-detail-page va-facility-page">
-    <div class="usa-grid usa-grid-full">
-      {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
-      <div class="usa-width-three-fourths">
-        <article aria-labelledby="article-heading" role="region" class="usa-content">
-          <h1 id="article-heading">{{ title }}</h1>
-          <div class="va-introtext">
-            <p>
-              Get copies of your VA medical records online, by mail or fax, or in person
-              at our VA health care Release of Information office.
-            </p>
-          </div>
+	<main class="va-l-detail-page va-facility-page">
+		<div class="usa-grid usa-grid-full">
+			{% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
+			<div class="usa-width-three-fourths">
+				<article aria-labelledby="article-heading" role="region" class="usa-content">
+					<h1 id="article-heading">{{ title }}</h1>
+					<div class="va-introtext">
+						<p>
+							Get copies of your VA medical records online, by mail or fax, or
+														              in person
+														              at our
+							{{ fieldOffice.entity.entityLabel }}
+							Release of Information
+														              office.
+						</p>
+					</div>
 
-          <nav id="table-of-contents" aria-labelledby="on-this-page">
-            <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-            <ul class="usa-unstyled-list" role="list"></ul>
-          </nav>
+					<va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
 
-          {% include "src/site/includes/centralized-content.drupal.liquid" with
+					{% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcTopOfPageContent.fetched
             contentType = fieldCcTopOfPageContent.fetchedBundle
           %}
 
-          {% include "src/site/includes/centralized-content.drupal.liquid" with
+					{% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcReactWidget.fetched
             contentType = fieldCcReactWidget.fetchedBundle
           %}
 
-          {% include "src/site/includes/centralized-content.drupal.liquid" with
+					{% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcGetRecordsInPerson.fetched
             contentType = fieldCcGetRecordsInPerson.fetchedBundle
           %}
 
-          <!-- Details for facilities offering this non-clinical service -->
-          {% if fieldOffice.entity.reverseFieldRegionPageNode.entities %}
-            {% assign medicalRecordsFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Medical records' %}
-            {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
+					<!-- Details for facilities offering this non-clinical service -->
+					{% if fieldOffice.entity.reverseFieldRegionPageNode.entities %}
+						{% assign medicalRecordsFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Medical records' %}
+						<h3>Release of Information office locations</h3>
+						{% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
               facilities = medicalRecordsFacilities
             %}
-          {% endif %}
+					{% endif %}
 
-          {% include "src/site/includes/centralized-content.drupal.liquid" with
+					{% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcGetRecordsMailOrFax.fetched
             contentType = fieldCcGetRecordsMailOrFax.fetchedBundle
           %}
 
-          {% include "src/site/includes/centralized-content.drupal.liquid" with
+					{% if fieldVamcMedRecordsMailing %}
+						<p>
+							<b>Mail your signed form to</b>
+						</p>
+						<address class="vads-u-margin-bottom--0">
+							{% if fieldVamcMedRecordsMailing.givenName or fieldVamcMedRecordsMailing.familyName or fieldVamcMedRecordsMailing.additionalName %}
+								<div>{{ fieldVamcMedRecordsMailing.givenName }}
+									{{ fieldVamcMedRecordsMailing.familyName }}
+									{{ fieldVamcMedRecordsMailing.additionalName }}
+								</div>
+							{% endif %}
+							{% if fieldVamcMedRecordsMailing.organization %}
+								<div>{{ fieldVamcMedRecordsMailing.organization }}</div>
+							{% endif %}
+							{% if fieldVamcMedRecordsMailing.addressLine1 %}
+								<div>{{ fieldVamcMedRecordsMailing.addressLine1 }}</div>
+							{% endif %}
+							{% if fieldVamcMedRecordsMailing.addressLine2 %}
+								<div>{{ fieldVamcMedRecordsMailing.addressLine2 }}</div>
+							{% endif %}
+							{% if fieldVamcMedRecordsMailing.locality or fieldVamcMedRecordsMailing.administrativeArea or fieldVamcMedRecordsMailing.postalCode %}
+								<div>
+									{% if fieldVamcMedRecordsMailing.locality %}
+										{{ fieldVamcMedRecordsMailing.locality }},
+									{% endif %}
+									{{ fieldVamcMedRecordsMailing.administrativeArea }}
+									{{ fieldVamcMedRecordsMailing.postalCode }}
+								</div>
+							{% endif %}
+						</address>
+					{% endif %}
+
+					{% if fieldFaxNumber %}
+						<p>
+							<b>Fax your signed form to</b>
+						</p>
+						<p>
+							<a href="tel:{{fieldFaxNumber}}">{{fieldFaxNumber}}</a>
+						</p>
+					{% endif %}
+
+					{% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcHowWeShareRecords.fetched
             contentType = fieldCcHowWeShareRecords.fetchedBundle
           %}
 
-          {% if fieldCcFaqs.fetched %}
-            {% include "src/site/includes/centralized-content.drupal.liquid"
+					{% if fieldCcFaqs.fetched %}
+						{% include "src/site/includes/centralized-content.drupal.liquid"
               entity = fieldCcFaqs.fetched
               contentType = fieldCcFaqs.fetchedBundle
             %}
-          {% endif %}
+					{% endif %}
 
-          <div class="va-nav-linkslist va-nav-linkslist--related">
-            {% include "src/site/includes/centralized-content.drupal.liquid" with
+					<div class="va-nav-linkslist va-nav-linkslist--related">
+						{% include "src/site/includes/centralized-content.drupal.liquid" with
                 entity = fieldCcRelatedLinks.fetched
                 contentType = fieldCcRelatedLinks.fetchedBundle
             %}
-          </div>
+					</div>
 
-        </article>
-        {% include "src/site/includes/last-updated.drupal.liquid" %}
-      </div>
-    </div>
-  </main>
+				</article>
+				<!-- Last updated & feedback button-->
+				{% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+			</div>
+		</div>
+	</main>
 </div>
 
 {% include "src/site/includes/footer.html" %}

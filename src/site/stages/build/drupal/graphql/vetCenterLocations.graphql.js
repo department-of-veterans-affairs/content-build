@@ -90,6 +90,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
               title
               entityBundle
               fieldFacilityLocatorApiId
+              fieldVetcenterCapHoursOptIn
               fieldOperatingStatusFacility
               fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
@@ -101,8 +102,20 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 addressLine2
                 organization
               }
+              fieldOfficeHours {
+                day
+                starthours
+                endhours
+                comment
+              }
             }
             ... on NodeVetCenterOutstation {
+              fieldOfficeHours {
+                day
+                starthours
+                endhours
+                comment
+              }
               title
               entityBundle
               fieldFacilityLocatorApiId
@@ -151,6 +164,12 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}
+        fieldOfficeHours {
+          starthours
+          endhours
+          day
+          comment
+        }
       }
     }
   }

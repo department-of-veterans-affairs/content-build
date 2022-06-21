@@ -3,17 +3,18 @@
 
 <!-- Banners -->
 {% for banner in visibleBanners %}
-  <div
-    aria-label="{{ banner.title | escape }}"
+  <va-banner
     data-template="components/banners.drupal.liquid"
-    data-content="{{ banner.body.processed | escape }}"
-    data-dismissible-status="{{ banner.fieldDismissibleOption }}"
-    data-title="{{ banner.title | escape }}"
-    data-type="{{ banner.fieldAlertType | formatAlertType }}"
-    data-visible="true"
-    data-widget-type="banner"
-    role="region"
-  ></div>
+    {% if banner.fieldDismissibleOption != 'perm' %}
+    show-close="true"
+    {% endif %}
+    {% if banner.fieldDismissibleOption == 'dismiss-session' %}
+    window-session="true"
+    {% endif %}
+    headline="{{ banner.title }}"
+    type="{{ banner.fieldAlertType | formatAlertType }}"
+    visible="true"
+  >{{ banner.body.processed }}</va-banner>
 {% endfor %}
 
 <!-- Maintenance banner -->
@@ -28,15 +29,12 @@
 
 <!-- Promo Banners -->
 {% for promoBanner in visiblePromoBanners %}
-  <div
-    aria-label="{{ promoBanner.title | escape }}"
-    data-id="{{ promoBanner.entityId }}"
-    data-link="{{ promoBanner.fieldLink.url.path }}"
-    data-template="components/banners.drupal.liquid"
-    data-title="{{ promoBanner.title | escape }}"
-    data-type="{{ promoBanner.fieldPromoType }}"
-    data-visible="true"
-    data-widget-type="promo-banner"
+  <va-promo-banner
+    aria-label="{{ promoBanner.title }}"
     role="region"
-  ></div>
+    data-template="components/banners.drupal.liquid"
+    id="{{ promoBanner.entityId }}"
+    href="{{ promoBanner.fieldLink.url.path }}"
+    type="{{ promoBanner.fieldPromoType }}"
+  >{{ promoBanner.title }}</va-promo-banner>
 {% endfor %}

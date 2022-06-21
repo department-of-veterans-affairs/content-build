@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-
+require('dotenv').config();
 const path = require('path');
 const fs = require('fs-extra');
 const commandLineArgs = require('command-line-args');
@@ -58,7 +58,11 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
     type: Number,
     defaultValue: process.env.DRUPAL_MAX_PARALLEL_REQUESTS,
   },
-  { name: 'no-drupal-proxy', type: Boolean, defaultValue: false },
+  {
+    name: 'no-drupal-proxy',
+    type: Boolean,
+    defaultValue: process.env.NO_DRUPAL_PROXY === 'true',
+  },
   { name: 'local-proxy-rewrite', type: Boolean, defaultValue: false },
   { name: 'local-css-sourcemaps', type: Boolean, defaultValue: false },
   { name: 'accessibility', type: Boolean, defaultValue: false },
@@ -77,6 +81,9 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
 
   // use the --use-cached-assets flag with a build to bypass re-downloading asset files
   { name: 'use-cached-assets', type: Boolean, defaultValue: false },
+
+  // use the --gql-queries-only flag to only run graphql queries
+  { name: 'gql-queries-only', type: Boolean, defaultValue: false },
 ];
 
 function gatherFromCommandLine() {
@@ -130,6 +137,7 @@ function applyDefaultOptions(options) {
     ],
     cacheDirectory: path.join(projectRoot, '.cache', options.buildtype),
     paramsDirectory: path.join(utilities, 'query-params'),
+    gqlQueriesOnly: !!options['gql-queries-only'],
   });
 }
 
@@ -208,6 +216,47 @@ function fetchDrupalCache(options) {
   }
 }
 
+function checkDrupalConnectionOptions(options) {
+  const pullDrupalArg = 'pull-drupal';
+  const drupalAddressArg = 'drupal-address';
+  const drupalUserArg = 'drupal-user';
+  const drupalPasswordArg = 'drupal-password';
+
+  const errorMessageCollection = [];
+  let throwError = false;
+
+  if (options[pullDrupalArg] || options[drupalAddressArg]) {
+    if (!options[drupalUserArg]) {
+      errorMessageCollection.push(
+        '\nMissing --drupal-user CLI argument or DRUPAL_USERNAME environment variable not set.\nIf you do not have Drupal API credentials please request them from:\n#cms-support https://dsva.slack.com/archives/CDHBKAL9W\n',
+      );
+      throwError = true;
+    }
+
+    if (!options[drupalPasswordArg]) {
+      errorMessageCollection.push(
+        '\nMissing --drupal-password CLI argument or DRUPAL_PASSWORD environment variable not set.\nIf you do not have Drupal API credentials please request them from:\n#cms-support https://dsva.slack.com/archives/CDHBKAL9W\n',
+      );
+      throwError = true;
+    }
+
+    if (!options[drupalAddressArg]) {
+      errorMessageCollection.push(
+        '\nMissing --drupal-address CLI argument or DRUPAL_ADDRESS environment variable not set.\n',
+      );
+      throwError = true;
+    }
+
+    if (throwError) {
+      errorMessageCollection.push(
+        '\nDoes the .env file exist? Run this command to create default environment variables file:\ncp .env.example .env\n',
+      );
+
+      throw new Error(errorMessageCollection.join(''));
+    }
+  }
+}
+
 /**
  * Sets up the CMS feature flags by either querying the CMS for them
  * or using ../../utilities/featureFlags. If we pull from Drupal, it'll
@@ -283,6 +332,7 @@ async function getOptions(commandLineOptions) {
   applyEnvironmentOverrides(options);
   deriveHostUrl(options);
   fetchDrupalCache(options);
+  checkDrupalConnectionOptions(options);
   await setUpFeatureFlags(options);
   clearDrupalCacheDirectory(options);
 

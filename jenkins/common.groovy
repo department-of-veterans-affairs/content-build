@@ -5,9 +5,9 @@ DRUPAL_MAPPING = [
 ]
 
 DRUPAL_ADDRESSES = [
-  'vagovdev'    : 'http://internal-dsva-vagov-dev-cms-812329399.us-gov-west-1.elb.amazonaws.com',
-  'vagovstaging': 'http://internal-dsva-vagov-staging-cms-1188006.us-gov-west-1.elb.amazonaws.com',
-  'vagovprod'   : 'http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com',
+  'vagovdev'    : 'https://dev.cms.va.gov',
+  'vagovstaging': 'https://staging.cms.va.gov',
+  'vagovprod'   : 'https://prod.cms.va.gov',
    // This is a Tugboat URL, rebuilt frequently from PROD CMS. See https://tugboat.vfs.va.gov/6042f35d6a89945fd6399dc3.
    // If there are issues with this endpoint, please post in #cms-support Slack and tag @CMS DevOps Engineers.
    'sandbox'     : 'https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov',
@@ -29,9 +29,9 @@ BUILD_TYPE_OVERRIDE = DRUPAL_MAPPING.get(params.cmsEnvBuildOverride, null)
 
 VAGOV_BUILDTYPES = BUILD_TYPE_OVERRIDE ? [BUILD_TYPE_OVERRIDE] : ALL_VAGOV_BUILDTYPES
 
-DEV_BRANCH = 'master'
-STAGING_BRANCH = 'master'
-PROD_BRANCH = 'master'
+DEV_BRANCH = 'main'
+STAGING_BRANCH = 'main'
+PROD_BRANCH = 'main'
 
 IS_DEV_BRANCH = env.BRANCH_NAME == DEV_BRANCH
 IS_STAGING_BRANCH = env.BRANCH_NAME == STAGING_BRANCH
@@ -45,15 +45,8 @@ def isReviewable() {
   return !IS_DEV_BRANCH && !IS_STAGING_BRANCH && !IS_PROD_BRANCH
 }
 
-def isDeployable() {
-  return (IS_DEV_BRANCH ||
-          IS_STAGING_BRANCH) &&
-    !env.CHANGE_TARGET &&
-    !currentBuild.nextBuild // if there's a later build on this job (branch), don't deploy
-}
-
 def shouldBail() {
-  // abort the job if we're not on deployable branch (usually master) and there's a newer build going now
+  // abort the job if we're not on deployable branch (usually main) and there's a newer build going now
   return !IS_DEV_BRANCH &&
     !IS_STAGING_BRANCH &&
     !IS_PROD_BRANCH &&
@@ -81,38 +74,15 @@ BUILDTIME=${buildtime}
 """
 }
 
-def slackNotify() {
-  if (IS_DEV_BRANCH || IS_STAGING_BRANCH || IS_PROD_BRANCH) {
-    message = "content-build ${env.BRANCH_NAME} branch CI failed. |${env.RUN_DISPLAY_URL}".stripMargin()
-    slackSend message: message,
-      color: 'danger',
-      failOnError: true
-  }
-}
-
-def slackIntegrationNotify() {
-  message = "(Testing): integration tests failed. |${env.RUN_DISPLAY_URL}".stripMargin()
-  slackSend message: message,
-    color: 'danger',
-    failOnError: true
-}
-
-def slackCachedContent(envName) {
-  message = "content-build built with cached Drupal data for ${envName}. |${env.RUN_DISPLAY_URL}".stripMargin()
-  slackSend message: message,
-    color: 'warning',
-    failOnError: true
-}
-
 def setup() {
   stage("Setup") {
 
     dir("vagov-content") {
-      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
+      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
     }
 
     dir("vets-website") {
-      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
+      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
     }
 
     dir("content-build") {
@@ -165,7 +135,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless
-      // we are running either on the master branch or during
+      // we are running either on the main branch or during
       // a Content Release. This way, if there is a broken link,
       // feature branches aren't affected, so VFS teams can
       // continue merging.
@@ -178,14 +148,14 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
     // cannot be serialized by default.
     brokenLinks = null
 
-    // uploadBrokenLinksFile(brokenLinksFile, envName)
+    uploadBrokenLinksFile(brokenLinksFile, envName)
 
-    // slackSend(
-    //   message: message,
-    //   color: color,
-    //   failOnError: true,
-    //   channel: 'vfs-platform-builds'
-    // )
+    slackSend(
+      message: message,
+      color: color,
+      failOnError: true,
+      channel: 'vfs-platform-builds'
+    )
 
     if (color == 'danger') {
       throw new Exception('Broken links found')
@@ -206,7 +176,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
    // Build using the CMS Production instance only if we are doing
   // a content-only build (as part of a Content Release) OR if
-  // we are building the master branch's production environment.
+  // we are building the main branch's production environment.
   if (
     contentOnlyBuild ||
     (IS_PROD_BRANCH && envName == 'vagovprod')
@@ -239,64 +209,9 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
   }
 }
 
-def integrationTests(dockerContainer, ref) {
-  stage("Integration") {
-    if (shouldBail()) { return }
-
-    dir("content-build") {
-      timeout(60) {
-        try {
-          if (IS_PROD_BRANCH && VAGOV_BUILDTYPES.contains('vagovprod')) {
-            parallel (
-              failFast: true,
-              cypress: {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-              }
-            )
-          } else {
-            parallel (
-              failFast: true,
-              cypress: {
-                sh "export IMAGE_TAG=${IMAGE_TAG} && docker-compose -p cypress-${env.EXECUTOR_NUMBER} up -d && docker-compose -p cypress-${env.EXECUTOR_NUMBER} run --rm --entrypoint=npm -e NO_COLOR=1 content-build --no-color run cy:test:docker"
-              }
-            )
-          }
-        } catch (error) {
-          // slackIntegrationNotify()
-          throw error
-        }
-      } // end timeout
-    }
-
-  }
-}
-
 def prearchive(dockerContainer, envName) {
   dockerContainer.inside(DOCKER_ARGS) {
     sh "cd /application && node script/prearchive.js --buildtype=${envName}"
-  }
-}
-
-def prearchiveAll(dockerContainer) {
-  stage("Prearchive Optimizations") {
-    if (shouldBail()) { return }
-
-    try {
-      def builds = [:]
-
-      for (int i=0; i<VAGOV_BUILDTYPES.size(); i++) {
-        def envName = VAGOV_BUILDTYPES.get(i)
-
-        builds[envName] = {
-          prearchive(dockerContainer, envName)
-        }
-      }
-
-      parallel builds
-    } catch (error) {
-      // slackNotify()
-      throw error
-    }
   }
 }
 
@@ -308,63 +223,6 @@ def archive(dockerContainer, String ref, String envName) {
         sh "tar -C /application/build/${envName} -cf /application/build/${envName}.tar.bz2 ."
         sh "aws s3 cp /application/build/${envName}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${ref}/${envName}.tar.bz2 --acl public-read --region us-gov-west-1 --quiet"
       }
-    }
-  }
-}
-
-def archiveAll(dockerContainer, String ref) {
-  stage("Archive") {
-    if (shouldBail()) { return }
-
-    try {
-      def archives = [:]
-
-      for (int i=0; i<VAGOV_BUILDTYPES.size(); i++) {
-        def envName = VAGOV_BUILDTYPES.get(i)
-
-        archives[envName] = {
-          archive(dockerContainer, ref, envName)
-        }
-      }
-
-      parallel archives
-
-    } catch (error) {
-      // slackNotify()
-      throw error
-    }
-  }
-}
-
-def cacheDrupalContent(dockerContainer, envUsedCache) {
-  stage("Cache Drupal Content") {
-    if (!isDeployable()) { return }
-
-    try {
-      def archives = [:]
-
-      for (int i=0; i<VAGOV_BUILDTYPES.size(); i++) {
-        def envName = VAGOV_BUILDTYPES.get(i)
-
-        if (!envUsedCache[envName]) {
-          dockerContainer.inside(DOCKER_ARGS) {
-            sh "cd /application && node script/drupal-aws-cache.js --buildtype=${envName}"
-          }
-        } else {
-          slackCachedContent(envName)
-          // TODO: Read the envName-output.log and send that into the Slack message
-        }
-      }
-
-      dockerContainer.inside(DOCKER_ARGS) {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-                         usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-          sh "aws s3 sync /application/.cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet"
-        }
-      }
-    } catch (error) {
-      // slackNotify()
-      throw error
     }
   }
 }

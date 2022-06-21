@@ -20,7 +20,6 @@ const {
 } = require('../src/site/stages/build/drupal/page');
 const ENVIRONMENTS = require('../src/site/constants/environments');
 const HOSTNAMES = require('../src/site/constants/hostnames');
-const DRUPALS = require('../src/site/constants/drupals');
 const bucketsContent = require('../src/site/constants/buckets-content');
 const singlePageDiff = require('./preview-routes/single-page-diff');
 const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
@@ -59,6 +58,11 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
     name: 'drupal-password',
     type: String,
     defaultValue: process.env.DRUPAL_PASSWORD,
+  },
+  {
+    name: 'no-drupal-proxy',
+    type: Boolean,
+    defaultValue: process.env.NO_DRUPAL_PROXY === 'true',
   },
 ];
 
@@ -149,11 +153,16 @@ const nonNodeContent = {
       console.time(queryName);
 
       // eslint-disable-next-line no-await-in-loop
-      const json = await drupalClient.query({ query });
-      if (json.errors) {
+      const json = await drupalClient.query({
+        query,
+        variables: {
+          onlyPublishedContent: false,
+        },
+      });
+      if (json && json.errors) {
         console.error('Error executing', queryName, json);
         console.error('query:', query);
-      } else {
+      } else if (freshNonNodeContent && json) {
         Object.assign(freshNonNodeContent.data, json.data);
       }
       console.timeEnd(queryName);
@@ -295,8 +304,7 @@ app.get('/preview', async (req, res, next) => {
       `${compiledPage.entityBundle}.drupal.liquid`,
     );
 
-    const drupalAddressUrl = DRUPALS.PUBLIC_URLS[options['drupal-address']];
-    const drupalSite = drupalAddressUrl || 'prod.cms.va.gov';
+    const drupalSite = options['drupal-address'] || 'prod.cms.va.gov';
 
     const files = {
       'generated/file-manifest.json': {
@@ -358,7 +366,7 @@ async function start() {
     nonNodeContent.refresh();
   }
 
-  // Refresh the non-node data every 10 minutes...
+  // Refresh the non-node data every 15 minutes...
   const fifteenMinutes = 15 * 60 * 1000;
   setInterval(() => nonNodeContent.refresh(), fifteenMinutes);
 

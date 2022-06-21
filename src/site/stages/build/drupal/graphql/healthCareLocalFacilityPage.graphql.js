@@ -13,6 +13,20 @@ const healthCareLocalFacilityPageFragment = `
     fieldFacilityLocatorApiId
     title
     fieldIntroText
+    fieldSupplementalStatus {
+      entity {
+        ... on TaxonomyTermFacilitySupplementalStatus {
+          name
+          fieldStatusId
+          description {
+            processed
+          }
+          fieldGuidance {
+            processed
+          }
+        }
+      }
+    }
     fieldOperatingStatusFacility
     fieldLocationServices {
       entity {
@@ -26,6 +40,7 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
+
     fieldAddress {
       addressLine1
       locality
@@ -34,8 +49,11 @@ const healthCareLocalFacilityPageFragment = `
     }
     fieldPhoneNumber
     fieldMentalHealthPhone
-    fieldFacilityHours {
-      value
+    fieldOfficeHours {
+      day
+      starthours
+      endhours
+      comment
     }
     fieldMainLocation
     fieldMedia {
@@ -60,12 +78,13 @@ const healthCareLocalFacilityPageFragment = `
           entityId
           entityPublished
           title
+          fieldVaHealthConnectPhone
           fieldRelatedLinks {
             entity {
               ... listOfLinkTeasers
             }
           }
-          ${socialMediaFields}          
+          ${socialMediaFields}
           fieldGovdeliveryIdEmerg
           fieldGovdeliveryIdNews
           fieldOperatingStatus {
@@ -79,17 +98,14 @@ const healthCareLocalFacilityPageFragment = `
     fieldLocalHealthCareService {
       entity {
         ... on NodeHealthCareLocalHealthService {
-          status        
-          fieldBody {
-            processed
-          }
+          status
           ${serviceLocation}
           ${appointmentItems}
           fieldRegionalHealthService
           {
             entity {
               ... on NodeRegionalHealthCareServiceDes {
-                status              
+                status
                 entityBundle
                 fieldBody {
                   processed

@@ -19,10 +19,7 @@
 
 
   {% if fieldTableOfContentsBoolean != empty and fieldTableOfContentsBoolean %}
-    <nav id="table-of-contents" aria-labelledby="on-this-page">
-      <h2 class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-      <ul class="usa-unstyled-list" role="list"></ul>
-    </nav>
+    <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
   {% endif %}
 
   {% if fieldFeaturedContent != empty and fieldFeaturedContent.length > 0 %}
@@ -53,9 +50,6 @@
       {% include "src/site/facilities/facility_social_links.drupal.liquid" with regionNickname = fieldOffice.entity.title %}
     {% endif %}
   {% endif %}
+  <!-- Last updated & feedback button-->
+  {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
 </article>
-
-<div class="last-updated usa-content">
-  Last updated:
-  <time datetime="{{ changed | dateFromUnix: 'YYYY-MM-DD'}}">{{ changed | humanizeTimestamp }}</time>
-</div>

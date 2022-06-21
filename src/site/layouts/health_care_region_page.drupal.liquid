@@ -33,7 +33,10 @@
               class="vads-u-font-size--xl vads-u-margin-top--3 medium-screen:vads-u-margin-top--5 medium-screen:vads-u-margin-bottom--2p5">
               Locations</h2>
             {% for main in mainFacilities.entities %}
-            {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = main %}
+            {% include 'src/site/includes/facilityListing.drupal.liquid' with
+                    entity = main
+                    fieldVaHealthConnectPhone = fieldVaHealthConnectPhone
+            %}
             {% endfor %} <a
               onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md"
@@ -186,6 +189,8 @@
           {% include "src/site/facilities/facility_social_links.drupal.liquid" with regionNickname = title %}
 
         </article>
+            <!-- Last updated & feedback button-->
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}           
       </div>
     </div>
   </main>

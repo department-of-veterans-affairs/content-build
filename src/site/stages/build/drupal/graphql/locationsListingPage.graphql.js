@@ -16,6 +16,31 @@ const locationListingPage = `
       targetId
       entity {
         ...on NodeHealthCareRegionPage {
+          reverseFieldRegionPageNode(limit: 100000, filter:{conditions:[{field: "status", value: ["1"]},{field: "type", value: "health_care_local_facility"}]}) {
+            entities {
+              ... on NodeHealthCareLocalFacility {
+                title
+                entityId
+                fieldFacilityLocatorApiId
+                fieldOperatingStatusFacility
+                fieldSupplementalStatus {
+                  entity {
+                    ... on TaxonomyTermFacilitySupplementalStatus {
+                      name
+                      fieldStatusId
+                      description {
+                        processed
+                      }
+                      fieldGuidance {
+                        processed
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          fieldVaHealthConnectPhone
           ${healthCareLocalFacilities}
           fieldOtherVaLocations
           entityLabel
