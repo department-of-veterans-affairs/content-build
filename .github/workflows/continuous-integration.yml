@@ -29,7 +29,7 @@ jobs:
       vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
       vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
-      INSTANCE_TYPE: m5.4xlarge
+      INSTANCE_TYPE: c5.4xlarge
 
     strategy:
       fail-fast: true
@@ -79,10 +79,10 @@ jobs:
           max_attempts: 3
           aws-resource-tags: >
             [
-              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
+              {"Key": "Name", "Value": "dsva-vagov-content-build-on-demand-runner"},
               {"Key": "project", "Value": "vagov"},
               {"Key": "office", "Value": "dsva"},
-              {"Key": "application", "Value": "gha-runner"},
+              {"Key": "application", "Value": "on-demand-gha-runner"},
               {"Key": "VAECID", "Value": "AWG20180517003"},
               {"Key": "environment", "Value": "utility"}
             ]
