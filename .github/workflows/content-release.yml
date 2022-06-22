@@ -32,7 +32,7 @@ jobs:
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
     env:
-      INSTANCE_TYPE: c5.4xlarge
+      INSTANCE_TYPE: m5.4xlarge
 
     steps:
       - name: Export approximate workflow start time
@@ -80,10 +80,10 @@ jobs:
           max_attempts: 3
           aws-resource-tags: >
             [
-              {"Key": "Name", "Value": "dsva-vagov-content-build-on-demand-runner"},
+              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
               {"Key": "project", "Value": "vagov"},
               {"Key": "office", "Value": "dsva"},
-              {"Key": "application", "Value": "on-demand-gha-runner"},
+              {"Key": "application", "Value": "gha-runner"},
               {"Key": "VAECID", "Value": "AWG20180517003"},
               {"Key": "environment", "Value": "utility"}
             ]
