@@ -79,7 +79,7 @@ jobs:
           max_attempts: 3
           aws-resource-tags: >
             [
-              {"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"},
+              {"Key": "Name", "Value": "dsva-vagov-content-build-on-demand-runner"},
               {"Key": "project", "Value": "vagov"},
               {"Key": "office", "Value": "dsva"},
               {"Key": "application", "Value": "on-demand-gha-runner"},
@@ -493,7 +493,7 @@ jobs:
 
       - name: Notify Slack about Cypress test failures
         if: ${{ github.ref == 'refs/heads/main' && failure() }}
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -935,7 +935,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
