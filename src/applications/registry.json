@@ -1241,7 +1241,7 @@
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-debt-and-bills/summary",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "vagovstaging": true,
       "layout": "page-react.html"
     }
