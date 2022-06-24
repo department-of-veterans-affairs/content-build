@@ -75,58 +75,55 @@
               <dl class="vads-l-grid-container vads-u-padding-x--0 vads-l-row vads-u-border-bottom--1px vads-u-border-color--gray-light">
                 {% for status in fieldFacilityOperatingStatus %}
                   {% assign statusId = status.entity.entityId %}
+                  <dt class="vads-l-col--12 medium-screen:vads-l-col--5 vads-u-margin--0 vads-u-padding-y--3 vads-u-display--flex operating-status-title vads-u-border-top--1px vads-u-border-color--gray-light">
+                    <a class="facility-title-width vads-u-font-weight--bold" onclick="recordEvent({
+                                                              'event':'nav-health-care-facility-status-click'});"
+                        href="{{ status.entity.entityUrl.path }}">{{ status.entity.title }}</a>
+                  </dt>
+                  <dd class="vads-l-col--12 medium-screen:vads-l-col--7 medium-screen:vads-u-border-top--1px vads-u-border-color--gray-light">
+                    <div class="operating-status-info vads-u-padding-y--1p5 vads-u-padding-x--0">
+                      {% if status.entity.fieldOperatingStatusFacility == 'notice' %}
+                        <span
+                            class="operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
+                          <i aria-hidden="true" class="fa fa-info-circle"></i>
+                          Facility notice
+                        </span>
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'normal' %}
+                        <span class="operating-status normal-hours vads-u-margin-top--1p5 vads-u-display--block">
+                          Normal services and hours
+                        </span>
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'limited' %}
+                        <span
+                            class="operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
+                          <i aria-hidden="true" class="fa fa-info-circle"></i>
+                          Limited services and hours
+                        </span>
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'closed' %}
+                        <span
+                            class="operating-status usa-alert usa-alert-error background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
+                          <i aria-hidden="true" class="fa fa-exclamation-circle"></i>
+                          Facility Closed
+                        </span>
+                      {% endif %}
 
-                  <div class="vads-l-row vads-u-border-top--1px vads-u-border-color--gray-light">
-                    <dt class="vads-l-col--12 medium-screen:vads-l-col--6 vads-u-margin-y--3 vads-u-display--flex operating-status-title">
-                      <a class="facility-title-width vads-u-font-weight--bold" onclick="recordEvent({
-                                                                'event':'nav-health-care-facility-status-click'});"
-                         href="{{ status.entity.entityUrl.path }}">{{ status.entity.title }}</a>
-                    </dt>
-                    <dd class="vads-l-col--12 medium-screen:vads-l-col--6">
-                      <div class="operating-status-info vads-u-padding-y--1p5 vads-u-padding-x--0">
-                        {% if status.entity.fieldOperatingStatusFacility == 'notice' %}
-                          <span
-                              class="operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
-                            <i aria-hidden="true" class="fa fa-info-circle"></i>
-                            Facility notice
-                          </span>
-                        {% elsif status.entity.fieldOperatingStatusFacility == 'normal' %}
-                          <span class="operating-status normal-hours vads-u-margin-top--1p5 vads-u-display--block">
-                            Normal services and hours
-                          </span>
-                        {% elsif status.entity.fieldOperatingStatusFacility == 'limited' %}
-                          <span
-                              class="operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
-                            <i aria-hidden="true" class="fa fa-info-circle"></i>
-                            Limited services and hours
-                          </span>
-                        {% elsif status.entity.fieldOperatingStatusFacility == 'closed' %}
-                          <span
-                              class="operating-status usa-alert usa-alert-error background-color-only vads-u-margin-top--0 vads-u-padding--1p5">
-                            <i aria-hidden="true" class="fa fa-exclamation-circle"></i>
-                            Facility Closed
-                          </span>
+                      {% if status.entity.fieldOperatingStatusMoreInfo  and status.entity.fieldOperatingStatusFacility != 'normal' %}
+                        <div class="vads-u-margin-top--1p5">
+                          {{ status.entity.fieldOperatingStatusMoreInfo }}
+                        </div>
+                      {% endif %}
+
+                      {% assign bottomMargin = '1' %}
+                      {% assign topMargin = '2' %}
+                      {% for covidStatus in fieldOffice.entity.reverseFieldRegionPageNode.entities %}
+                        {% if statusId == covidStatus.entityId %}
+                        {{facilityId}}
+                        {% include "src/site/includes/covid-status.drupal.liquid" with covidStatus %}
+
                         {% endif %}
+                      {% endfor %}
 
-                        {% if status.entity.fieldOperatingStatusMoreInfo  and status.entity.fieldOperatingStatusFacility != 'normal' %}
-                          <div class="vads-u-margin-top--1p5">
-                            {{ status.entity.fieldOperatingStatusMoreInfo }}
-                          </div>
-                        {% endif %}
-
-                        {% assign bottomMargin = '1' %}
-                        {% assign topMargin = '2' %}
-                        {% for covidStatus in fieldOffice.entity.reverseFieldRegionPageNode.entities %}
-                          {% if statusId == covidStatus.entityId %}
-                          {{facilityId}}
-                          {% include "src/site/includes/covid-status.drupal.liquid" with covidStatus %}
-
-                          {% endif %}
-                        {% endfor %}
-
-                      </div>
-                    </dd>
-                  </div>
+                    </div>
+                  </dd>
                 {% endfor %}
               </dl>
             </section>
