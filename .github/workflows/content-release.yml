@@ -144,7 +144,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
@@ -510,7 +510,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
