@@ -9,7 +9,7 @@ env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
   CHANNEL_ID: C01RAS1KAQK
 
-# jobs:
+jobs:
 #   build:
 #     name: Build
 #     runs-on: [self-hosted, asg]
