@@ -13,7 +13,7 @@ jobs:
   build:
     name: Build
     runs-on: [self-hosted, asg]
-    timeout-minutes: 120
+    timeout-minutes: 180
     defaults:
       run:
         working-directory: content-build
@@ -48,18 +48,18 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 
       - name: Checkout vets-website
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vets-website
           path: vets-website
@@ -87,7 +87,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             .cache/yarn
@@ -103,7 +103,7 @@ jobs:
           timeout_minutes: 7
 
       - name: Set Drupal address
-        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+        run: echo "DRUPAL_ADDRESS=https://prod.cms.va.gov" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -125,7 +125,7 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build content-build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://prod.cms.va.gov --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
@@ -138,7 +138,7 @@ jobs:
         run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
 
       - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-build.tar.bz2
           path: content-build/test-build.tar.bz2
@@ -165,7 +165,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Node version
         id: get-node-version
@@ -178,7 +178,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             .cache/yarn
@@ -197,7 +197,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Download production build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: test-build.tar.bz2
 
@@ -205,6 +205,9 @@ jobs:
         run: |
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+
+      - name: Create a11y failures CSV file
+        run: touch a11y_failures.csv
 
       - name: Start content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
@@ -216,13 +219,25 @@ jobs:
         if: ${{ always() }}
         run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
 
+      - name: Rename failures CSV file
+        if: ${{ always() }}
+        run: mv a11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
+
       - name: Archive Mochawesome test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
           path: mochawesome-report
           retention-days: 1
+
+      - name: Archive failures CSV
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: a11y_failures
+          path: a11y_failures-${{ matrix.ci_node_index }}.csv
+          retention-days: 30
 
   slack:
     name: Notify Slack and upload Mochawesome report
@@ -235,7 +250,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 
@@ -285,7 +300,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             .cache/yarn
@@ -302,8 +317,27 @@ jobs:
         env:
           YARN_CACHE_FOLDER: ~/.cache/yarn
 
+      - name: Download failures CSV
+        if: ${{ needs.a11y.result == 'failure' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: a11y_failures
+          path: content-build
+
+      - name: Merge failure CSV files
+        if: ${{ needs.a11y.result == 'failure' }}
+        run: cat *csv > a11y_failures.csv
+
+      - name: Archive merged failures CSV file
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: a11y_failures
+          path: content-build/a11y_failures.csv
+          retention-days: 30
+
       - name: Download Mochawesome test results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: cypress-mochawesome-test-results
           path: content-build/cypress/results/json
@@ -362,7 +396,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 

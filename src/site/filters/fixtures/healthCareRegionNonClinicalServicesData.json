@@ -62,7 +62,7 @@
                     "status": true,
                     "fieldAdditionalHoursInfo": null,
                     "fieldEmailContacts": [],
-                    "fieldFacilityServiceHours": {
+                    "fieldOfficeHours": {
                       "value": [
                         [
                           "Mon",
@@ -132,7 +132,7 @@
                     "status": true,
                     "fieldAdditionalHoursInfo": null,
                     "fieldEmailContacts": [],
-                    "fieldFacilityServiceHours": {
+                    "fieldOfficeHours": {
                       "value": [
                         [
                           "Mon",
@@ -209,7 +209,7 @@
                         }
                       }
                     ],
-                    "fieldFacilityServiceHours": {
+                    "fieldOfficeHours": {
                       "value": [
                         [
                           "Mon",
@@ -349,7 +349,7 @@
                         }
                       }
                     ],
-                    "fieldFacilityServiceHours": {
+                    "fieldOfficeHours": {
                       "value": [
                         [
                           "Mon",
@@ -430,7 +430,7 @@
                         }
                       }
                     ],
-                    "fieldFacilityServiceHours": {
+                    "fieldOfficeHours": {
                       "value": [
                         [
                           "Mon",
@@ -500,7 +500,7 @@
                     "status": true,
                     "fieldAdditionalHoursInfo": null,
                     "fieldEmailContacts": [],
-                    "fieldFacilityServiceHours": {
+                    "fieldOfficeHours": {
                       "value": [
                         [
                           "Mon",
@@ -557,7 +557,7 @@
                     "status": true,
                     "fieldAdditionalHoursInfo": null,
                     "fieldEmailContacts": [],
-                    "fieldFacilityServiceHours": {
+                    "fieldOfficeHours": {
                       "value": [
                         [
                           "Mon",

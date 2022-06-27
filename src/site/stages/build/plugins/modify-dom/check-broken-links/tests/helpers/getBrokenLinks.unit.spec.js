@@ -21,42 +21,20 @@ const getFile = tag => {
 describe('getBrokenLinks', () => {
   const detectAllLinksBroken = sinon.stub().returns(true);
   const detectAllLinksOkay = sinon.stub().returns(false);
-  const buildOptions = {
-    'drupal-address': '',
-    'drupal-user': '',
-    'drupal-password': '',
-    'drupal-max-parallel-requests': 15,
-    buildtype: 'localhost',
-  };
 
   it('finds broken links', () => {
-    const linkErrors = getBrokenLinks(
-      getFile(img),
-      [],
-      buildOptions,
-      detectAllLinksBroken,
-    );
+    const linkErrors = getBrokenLinks(getFile(img), [], detectAllLinksBroken);
     expect(linkErrors).to.have.lengthOf(2);
   });
 
   it('does not detect non-links as a link', () => {
-    const linkErrors = getBrokenLinks(
-      getFile(span),
-      [],
-      buildOptions,
-      detectAllLinksBroken,
-    );
+    const linkErrors = getBrokenLinks(getFile(span), [], detectAllLinksBroken);
     expect(linkErrors).to.have.lengthOf(1);
     expect(linkErrors[0].html).to.be.equal(anchor);
   });
 
   it('does not detect valid links as broken', () => {
-    const linkErrors = getBrokenLinks(
-      getFile(img),
-      [],
-      buildOptions,
-      detectAllLinksOkay,
-    );
+    const linkErrors = getBrokenLinks(getFile(img), [], detectAllLinksOkay);
     expect(linkErrors).to.have.lengthOf(0);
   });
 
@@ -64,7 +42,6 @@ describe('getBrokenLinks', () => {
     const linkErrors = getBrokenLinks(
       getFile(anchorWithoutHref),
       [],
-      buildOptions,
       detectAllLinksBroken,
     );
     expect(linkErrors).to.have.lengthOf(1);

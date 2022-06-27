@@ -2,23 +2,49 @@
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
 
-<div class="interior" id="content" data-template="vamc_system_billing_insurance_page.drupal.liquid">
+<div class="interior" id="content"
+  data-template="vamc_system_billing_insurance_page.drupal.liquid">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
       {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       <div class="usa-width-three-fourths">
-        <article aria-labelledby="article-heading" role="region" class="usa-content">
+        <article aria-labelledby="article-heading" role="region"
+          class="usa-content">
           <h1 id="article-heading">{{ title }}</h1>
           <div class="va-introtext">
             <p>
-              You can pay your bill online by phone, mail, or in person.
+              You can pay your {{ fieldOffice.entity.entityLabel }} bill online, by phone, mail, or in person.
             </p>
           </div>
 
-          <nav id="table-of-contents" aria-labelledby="on-this-page">
-            <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-            <ul class="usa-unstyled-list" role="list"></ul>
-          </nav>
+          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+
+          <div class="usa-content">
+            {% if fieldCcAboveTopOfPage.fetched.fieldWysiwyg.0.processed %}
+              {% include "src/site/includes/centralized-content.drupal.liquid" with
+              entity = fieldCcAboveTopOfPage.fetched
+              contentType = fieldCcAboveTopOfPage.fetchedBundle
+              %}
+            {% else %}
+              <h2>Questions about copay balance</h2>
+              <p>
+                For questions about the copay balance of your
+                {{ fieldOffice.entity.entityLabel }}
+                bill, call us toll free at the number below. You won't need to pay
+                any copays for X-rays, lab tests,
+                preventative tests, and services like health screenings or
+                immunizations.
+              </p>
+            {% endif %}
+            {% if fieldPhoneNumber %}
+              <b>Phone</b>
+              <p><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+              </p>
+            {% endif %}
+            <div class="vads-u-margin-bottom--3">
+              {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'small' %}
+            </div>
+          </div>
 
           <div class="usa-content">
             {% include "src/site/includes/centralized-content.drupal.liquid" with
@@ -29,8 +55,8 @@
 
           <!-- Details for facilities offering this non-clinical service -->
           {% if fieldOffice.entity.reverseFieldRegionPageNode.entities %}
-            {% assign billingAndInsuranceFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Billing and insurance' %}
-            {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
+          {% assign billingAndInsuranceFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Billing and insurance' %}
+          {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
               facilities = billingAndInsuranceFacilities
             %}
           {% endif %}

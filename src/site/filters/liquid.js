@@ -92,11 +92,10 @@ module.exports = function registerFilters() {
     }
     if (moment.tz.zone(timezone)) {
       return moment.tz.zone(timezone).abbr(timestamp);
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('Invalid time zone: ', timezone);
-      return 'ET';
     }
+    // eslint-disable-next-line no-console
+    console.log('Invalid time zone: ', timezone);
+    return 'ET';
   };
 
   liquid.filters.toTitleCase = phrase => {
@@ -766,14 +765,13 @@ module.exports = function registerFilters() {
         // handle normalized data format
         if (entity.fieldWysiwyg) {
           return entity;
-        } else {
-          return {
-            fieldWysiwyg: {
-              // eslint-disable-next-line camelcase
-              processed: entity?.field_wysiwyg[0]?.processed,
-            },
-          };
         }
+        return {
+          fieldWysiwyg: {
+            // eslint-disable-next-line camelcase
+            processed: entity?.field_wysiwyg[0]?.processed,
+          },
+        };
       }
       case 'q_a_section': {
         return {
@@ -813,7 +811,8 @@ module.exports = function registerFilters() {
               value: normalizedData.fieldErrorMessage,
             },
           };
-        } else return normalizedData;
+        }
+        return normalizedData;
       }
       default: {
         return entity;
@@ -885,7 +884,9 @@ module.exports = function registerFilters() {
     const currentTimestamp = new Date().getTime();
     return data.filter(event => {
       const mostRecentEvent = liquid.filters.deriveMostRecentDate(
-        event.fieldDatetimeRangeTimezone,
+        event.fieldDatetimeRangeTimezone[0]
+          ? event.fieldDatetimeRangeTimezone[0]
+          : event.fieldDatetimeRangeTimezone,
       );
       return mostRecentEvent.value * 1000 < currentTimestamp;
     });
@@ -898,7 +899,7 @@ module.exports = function registerFilters() {
       const mostRecentEvent = liquid.filters.deriveMostRecentDate(
         event.fieldDatetimeRangeTimezone,
       );
-      return mostRecentEvent.value * 1000 >= currentTimestamp;
+      return mostRecentEvent?.value * 1000 >= currentTimestamp;
     });
   };
 
@@ -938,7 +939,7 @@ module.exports = function registerFilters() {
       const pagedEntities = _.chunk(items, perPage);
 
       for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-        let pagedPage = Object.assign({}, page);
+        let pagedPage = { ...page };
         if (pageNum > 0) {
           pagedPage = set(
             'entityUrl.path',
@@ -1023,7 +1024,8 @@ module.exports = function registerFilters() {
     if (str.includes(substring)) {
       newStr = str.replace(substring, '');
       return /\S/.test(newStr);
-    } else return /\S/.test(str);
+    }
+    return /\S/.test(str);
   };
 
   liquid.filters.formatTitleTag = title => {
@@ -1272,8 +1274,10 @@ module.exports = function registerFilters() {
         ]);
         if (locationsObj && locationsObj.links.length) {
           return locationsObj.links;
-        } else return null;
-      } else return null;
+        }
+        return null;
+      }
+      return null;
     };
 
     const locationsArr = findLocationsArr();
@@ -1286,38 +1290,40 @@ module.exports = function registerFilters() {
         'archived',
       );
       return setData(sidebarData, locationsPath, publishedAndDraftFacilities);
-    } else if (!isPreview && locationsArr) {
+    }
+    if (!isPreview && locationsArr) {
       const publishedFacilities = liquid.filters.rejectBy(
         locationsArr,
         'entity.linkedEntity.entityPublished',
         false,
       );
       return setData(sidebarData, locationsPath, publishedFacilities);
-    } else {
-      return sidebarData;
     }
+    return sidebarData;
   };
 
-  liquid.filters.topTaskUrl = (flag, path, systemName) => {
+  liquid.filters.topTaskUrl = (flag, path) => {
     if (flag === 'cerner' && path === 'refill-track-prescriptions/') {
       return 'https://patientportal.myhealth.va.gov/pages/medications/current';
-    } else if (flag === 'cerner' && path === 'secure-messaging/') {
-      return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
-    } else if (flag === 'cerner' && path === 'schedule-view-va-appointments/') {
-      return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
-    } else if (flag === 'cerner' && path === 'get-medical-records/') {
-      return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
-    } else if (flag === 'cerner' && path === 'view-test-and-lab-results/') {
-      return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
-    } else if (
-      flag === 'cerner' ||
-      (systemName === 'VA Central Ohio health care' &&
-        path === 'schedule-view-va-appointments/')
-    ) {
-      return 'https://patientportal.myhealth.va.gov';
-    } else {
-      return `/health-care/${path}`;
     }
+
+    if (flag === 'cerner' && path === 'secure-messaging/') {
+      return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
+    }
+
+    if (flag === 'cerner' && path === 'schedule-view-va-appointments/') {
+      return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
+    }
+
+    if (flag === 'cerner' && path === 'get-medical-records/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
+    }
+
+    if (flag === 'cerner' && path === 'view-test-and-lab-results/') {
+      return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
+    }
+
+    return `/health-care/${path}`;
   };
 
   liquid.filters.isVisn8 = visn => {
@@ -1398,8 +1404,9 @@ module.exports = function registerFilters() {
     return facilitiesInRegion
       .map(facility => ({
         entityLabel: facility?.entityLabel,
+        entityUrl: facility?.entityUrl,
         fieldAddress: facility?.fieldAddress,
-        fieldFacilityHours: facility?.fieldFacilityHours,
+        fieldOfficeHours: facility?.fieldOfficeHours,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
           facility?.reverseFieldFacilityLocationNode?.entities || [],
           serviceType,
@@ -1432,10 +1439,6 @@ module.exports = function registerFilters() {
     return `vetCenterHoursKey_${forloopindex}`;
   };
 
-  liquid.filters.featureCareWeProvide = () => {
-    return cmsFeatureFlags?.FEATURE_CARE_WE_PROVIDE;
-  };
-
   liquid.filters.getSurvey = (buildtype, url) => {
     if (
       buildtype === 'localhost' ||
@@ -1443,9 +1446,47 @@ module.exports = function registerFilters() {
       buildtype === 'vagovdev'
     ) {
       return stagingSurveys[url] ? stagingSurveys[url] : 11;
-    } else if (buildtype === 'vagovprod') {
+    }
+    if (buildtype === 'vagovprod') {
       return prodSurveys[url] ? prodSurveys[url] : 17;
     }
     return null;
   };
+
+  liquid.filters.officeHoursDayFormatter = day => {
+    let formattedDay = '';
+    switch (day) {
+      case 0:
+        formattedDay = `Sun`;
+        break;
+      case 1:
+        formattedDay = `Mon`;
+        break;
+      case 2:
+        formattedDay = `Tue`;
+        break;
+      case 3:
+        formattedDay = `Wed`;
+        break;
+      case 4:
+        formattedDay = `Thu`;
+        break;
+      case 5:
+        formattedDay = `Fri`;
+        break;
+      case 6:
+        formattedDay = `Sat`;
+        break;
+
+      default:
+        break;
+    }
+    return formattedDay;
+  };
+
+  liquid.filters.officeHoursTimeFormatter = time =>
+    moment(time, 'Hmm')
+      .format('h:mm a')
+      .replace(`am`, `a.m.`)
+      .replace(`pm`, `p.m.`);
 };

@@ -36,13 +36,10 @@
             </ul>
 
             <!-- TOC -->
-            {% comment %} {% if fieldTableOfContentsBoolean %} {% endcomment %}
-            {% comment %}   <nav id="table-of-contents" aria-labelledby="on-this-page"> {% endcomment %}
-            {% comment %}     <button type="button" class="vads-u-visibility--screen-reader">Back to top</button> {% endcomment %}
-            {% comment %}     <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2> {% endcomment %}
-            {% comment %}     <ul class="usa-unstyled-list" role="list"></ul> {% endcomment %}
-            {% comment %}   </nav> {% endcomment %}
-            {% comment %} {% endif %} {% endcomment %}
+            {% if fieldTableOfContentsBoolean %}
+              <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
+              <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+            {% endif %}
 
             <!-- QAs -->
             {% for fieldQAGroup in fieldQAGroups %}
@@ -127,7 +124,7 @@
         <div class="usa-content">
           <va-back-to-top></va-back-to-top>
     <!-- Last updated & feedback button-->
-          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}          
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </div>
       </div>
     </div>

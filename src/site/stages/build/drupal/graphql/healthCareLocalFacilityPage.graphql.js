@@ -13,6 +13,20 @@ const healthCareLocalFacilityPageFragment = `
     fieldFacilityLocatorApiId
     title
     fieldIntroText
+    fieldSupplementalStatus {
+      entity {
+        ... on TaxonomyTermFacilitySupplementalStatus {
+          name
+          fieldStatusId
+          description {
+            processed
+          }
+          fieldGuidance {
+            processed
+          }
+        }
+      }
+    }
     fieldOperatingStatusFacility
     fieldLocationServices {
       entity {
@@ -26,7 +40,7 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
-    
+
     fieldAddress {
       addressLine1
       locality
@@ -35,8 +49,11 @@ const healthCareLocalFacilityPageFragment = `
     }
     fieldPhoneNumber
     fieldMentalHealthPhone
-    fieldFacilityHours {
-      value
+    fieldOfficeHours {
+      day
+      starthours
+      endhours
+      comment
     }
     fieldMainLocation
     fieldMedia {
