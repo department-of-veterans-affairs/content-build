@@ -243,8 +243,9 @@ jobs:
           retention-days: 30
 
       - name: Runner clean up
-        run: rm -rf ../content-build
-
+        run: |
+          rm -rf build
+          rm /__w/content-build/content-build/test-build.tar.bz2
   slack:
     name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
