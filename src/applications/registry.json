@@ -1241,10 +1241,34 @@
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-debt-and-bills/summary",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "vagovstaging": true,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Request a Supplemental Claim",
+    "entryName": "995-supplemental-claim",
+    "rootUrl": "/decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995",
+    "productId": "05712241-0f46-4e84-8d3e-70a6cf412a5e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    },
+    "breadcrumbs_override": [
+      {
+        "name": "Decision reviews and appeals",
+        "path": "decision-reviews"
+      },
+      {
+        "name": "Supplemental Claims",
+        "path": "decision-reviews/supplemental-claim"
+      },
+      {
+        "name": "Request a Supplemental Claim",
+        "path": "decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995"
+      }
+    ]
   },
   {
     "appName": "'Fry/DEA — VA Education Benefits For Survivors And Dependents'",

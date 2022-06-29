@@ -346,8 +346,7 @@ if (process.env.SENTRY_DSN) {
   app.use(Raven.errorHandler());
 }
 
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
+app.use((err, _req, res) => {
   console.error(err);
   res.send(`
     <p>We're sorry, something went wrong when trying to preview that page.</p>

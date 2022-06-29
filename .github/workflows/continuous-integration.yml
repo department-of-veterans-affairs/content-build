@@ -29,7 +29,7 @@ jobs:
       vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
       vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
     env:
-      INSTANCE_TYPE: c5.4xlarge
+      INSTANCE_TYPE: m5.4xlarge
 
     strategy:
       fail-fast: true
@@ -79,10 +79,10 @@ jobs:
           max_attempts: 3
           aws-resource-tags: >
             [
-              {"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"},
+              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
               {"Key": "project", "Value": "vagov"},
               {"Key": "office", "Value": "dsva"},
-              {"Key": "application", "Value": "on-demand-gha-runner"},
+              {"Key": "application", "Value": "gha-runner"},
               {"Key": "VAECID", "Value": "AWG20180517003"},
               {"Key": "environment", "Value": "utility"}
             ]
@@ -493,7 +493,7 @@ jobs:
 
       - name: Notify Slack about Cypress test failures
         if: ${{ github.ref == 'refs/heads/main' && failure() }}
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
@@ -935,7 +935,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
