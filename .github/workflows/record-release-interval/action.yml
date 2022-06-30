@@ -77,16 +77,16 @@ runs:
           -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
           -d @- < event.json
 
-        # Send the metric to datadog
-        jq --null-input '{}' | \
-        jq '.series[0].metric = "dsva_vagov.content_build.time_since_last_deploy"' | \
-        jq '.series[0].points[0] = [${{ env.CURRENT_TIME }}, ${{ env.TIME_SINCE_LAST_DEPLOY }}]' | \
-        jq '.series[1].metric = "dsva_vagov.content_build.business_hours_time_since_last_deploy"' | \
-        jq '.series[1].points[0] = [${{ env.CURRENT_TIME }}, ${{ env.BIZTIME_SINCE_LAST_DEPLOY }}]' | \
-        jq '.series[].tags[0] = "env:${{ inputs.environment }}"' | \
-        jq '.series[].tags[1] = "build_number:${{ github.run_number }}"' > metrics.json
-
-        curl -X POST "https://api.ddog-gov.com/api/v1/series" \
-          -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
-          -d @- < metrics.json
+      #        # Send the metric to datadog
+      #        jq --null-input '{}' | \
+      #        jq '.series[0].metric = "dsva_vagov.content_build.time_since_last_deploy"' | \
+      #        jq '.series[0].points[0] = [${{ env.CURRENT_TIME }}, ${{ env.TIME_SINCE_LAST_DEPLOY }}]' | \
+      #        jq '.series[1].metric = "dsva_vagov.content_build.business_hours_time_since_last_deploy"' | \
+      #        jq '.series[1].points[0] = [${{ env.CURRENT_TIME }}, ${{ env.BIZTIME_SINCE_LAST_DEPLOY }}]' | \
+      #        jq '.series[].tags[0] = "env:${{ inputs.environment }}"' | \
+      #        jq '.series[].tags[1] = "build_number:${{ github.run_number }}"' > metrics.json
+      #
+      #        curl -X POST "https://api.ddog-gov.com/api/v1/series" \
+      #          -H "Content-Type: text/json" \
+      #          -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
+      #          -d @- < metrics.json
