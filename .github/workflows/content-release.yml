@@ -567,7 +567,7 @@ jobs:
 
       - name: Send event to Datadog
         run: |
-          curl -X POST "https://api.datadoghq.com/api/v1/events" \
+          curl -X POST "https://api.ddog-gov.com/api/v1/events" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < event.json
@@ -658,7 +658,7 @@ jobs:
 
       - name: Send metrics to Datadog
         run: |
-          curl -X POST "https://api.datadoghq.com/api/v1/series" \
+          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
