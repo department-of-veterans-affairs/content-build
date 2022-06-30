@@ -28,24 +28,26 @@
 					{% if saturday %}
 						{% include "src/site/includes/hours-item.liquid" with hours = saturday %}
 					{% else %}
-						<li>
-							{% if headerType == 'clinical' %}
-								<b class="abbrv-day">Sat:</b>
-							{% else %}
-								<span class="abbrv-day">Sat.</span>
-							{% endif %}
-						</li>
-					{% endif %}
-					{% if sunday %}
-						{% include "src/site/includes/hours-item.liquid" with hours = sunday %}
-					{% else %}
-						<li>
-							{% if headerType == 'clinical' %}
-								<b class="abbrv-day">Sun:</b>
-							{% else %}
-								<span class="abbrv-day">Sun.</span>
-							{% endif %}
-						</li>
+                        <li>
+                            {% if headerType == 'clinical' %}
+                                <b class="abbrv-day">Sat:</b>
+                            {% else %}
+                                <span class="abbrv-day">Sat.</span>
+                            {% endif %}
+							Closed
+                        </li>
+                    {% endif %}
+                    {% if sunday %}
+                        {% include "src/site/includes/hours-item.liquid" with hours = sunday %}
+                    {% else %}
+                        <li>
+                            {% if headerType == 'clinical' %}
+                                <b class="abbrv-day">Sun:</b>
+                            {% else %}
+                                <span class="abbrv-day">Sun.</span>
+                            {% endif %}
+                            Closed
+                        </li>
 					{% endif %}
 				</ul>
 			</div>
