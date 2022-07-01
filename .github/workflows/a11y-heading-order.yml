@@ -14,7 +14,7 @@ jobs:
   build:
     name: Build
     runs-on: [self-hosted, asg]
-    timeout-minutes: 120
+    timeout-minutes: 180
     defaults:
       run:
         working-directory: content-build
@@ -25,18 +25,18 @@ jobs:
 
     steps:
       - name: Checkout vagov-content
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 
       - name: Checkout vets-website
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vets-website
           path: vets-website
@@ -70,7 +70,7 @@ jobs:
           timeout_minutes: 7
 
       - name: Set Drupal address
-        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+        run: echo "DRUPAL_ADDRESS=https://prod.cms.va.gov" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -92,7 +92,7 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build content-build
-        run: yarn build --buildtype=${{ env.BUILD_TYPE }} --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ env.BUILD_TYPE }} --asset-source=local --drupal-address=https://prod.cms.va.gov --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
@@ -105,11 +105,14 @@ jobs:
         run: tar -C build/${{ env.BUILD_TYPE }} -cjf test-build.tar.bz2 .
 
       - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-build.tar.bz2
           path: content-build/test-build.tar.bz2
           retention-days: 1
+
+      - name: Runner clean up
+        run: rm -rf ../content-build
 
   a11y:
     name: Accessibility Tests
@@ -132,7 +135,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Node version
         id: get-node-version
@@ -153,7 +156,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Download production build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: test-build.tar.bz2
 
@@ -180,7 +183,7 @@ jobs:
         run: mv a11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
 
       - name: Archive Mochawesome test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
@@ -188,31 +191,36 @@ jobs:
           retention-days: 1
 
       - name: Archive failures CSV
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: a11y_failures
           path: a11y_failures-${{ matrix.ci_node_index }}.csv
           retention-days: 30
 
+      - name: Runner clean up
+        run: |
+          rm -rf build
+          rm /__w/content-build/content-build/test-build.tar.bz2
+
   slack:
     name: Notify Slack
     runs-on: ubuntu-latest
     needs: [build, a11y]
-    if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure') }}
+    if: ${{ always() && (needs.a11y.result == 'success' || needs.a11y.result == 'failure' || needs.build.result == 'success' || needs.build.result == 'failure') }}
     defaults:
       run:
         working-directory: content-build
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: content-build
 
       - name: Download failures CSV
         if: ${{ needs.a11y.result == 'failure' }}
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: a11y_failures
           path: content-build
@@ -222,7 +230,7 @@ jobs:
         run: cat *csv > a11y_failures.csv
 
       - name: Archive merged failures CSV file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: a11y_failures
@@ -244,11 +252,11 @@ jobs:
 
       - name: Accessibility Test Failure
         uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ needs.a11y.result == 'failure' }}
+        if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
         continue-on-error: true
         env:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "ATTN: Accessibility heading-order tests have failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> ATTN: Accessibility heading-order tests have failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel-id: ${{ env.CHANNEL_ID }}

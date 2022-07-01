@@ -5,8 +5,7 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module',
   },
-  plugins: ['va'],
-  extends: ['@department-of-veterans-affairs/eslint-config-vagov'],
+  extends: ['plugin:@department-of-veterans-affairs/recommended'],
   globals: {
     __BUILDTYPE__: true,
     __API__: true,
@@ -70,8 +69,8 @@ module.exports = {
     {
       files: ['**/*.cypress.spec.js'],
       rules: {
-        'va/axe-check-required': 1,
-        'va/cypress-viewport-deprecated': 1,
+        '@department-of-veterans-affairs/axe-check-required': 1,
+        '@department-of-veterans-affairs/cypress-viewport-deprecated': 1,
       },
     },
   ],

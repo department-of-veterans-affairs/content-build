@@ -141,7 +141,7 @@ const renderHTML = (layoutPath, data, dataName) => {
 };
 
 // This is a simplified version of the function used in the metalsmith pipeline:
-// https://github.com/department-of-veterans-affairs/content-build/blob/master/src/site/stages/build/plugins/modify-dom/index.js
+// https://github.com/department-of-veterans-affairs/content-build/blob/main/src/site/stages/build/plugins/modify-dom/index.js
 const modifyDomPlugin = (domModifiers, BUILD_OPTIONS = {}) => async files => {
   for (const modifier of domModifiers) {
     if (modifier.initialize) {

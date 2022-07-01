@@ -12,11 +12,15 @@ const billingAndInsuranceFragment = `
       path
     }
     fieldPhoneNumber
-    fieldHoursForCopayInquiries {
+    fieldOfficeHours {
       day
       starthours
       endhours
       comment
+    }
+    fieldCcAboveTopOfPage {
+      fetched
+      fetchedBundle
     }
     fieldCcTopOfPageContent {
       fetched
