@@ -35,7 +35,7 @@ runs:
         # This is all one pipeline. Edit with care.
         # [
             # Get the last 1000 events from datadog
-            curl "https://api.datadoghq.com/api/v1/events?start=${starttime}&end=${now}&tags=env:${{ inputs.environment }},deploy:true&unaggregated=true" \
+            curl "https://api.ddog-gov.com/api/v1/events?start=${starttime}&end=${now}&tags=env:${{ inputs.environment }},deploy:true&unaggregated=true" \
                 -H "Content-Type: text/json" \
                 -H "DD-APPLICATION-KEY: ${{ inputs.datadog_app_key }}" \
                 -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" | \
