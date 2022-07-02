@@ -16,7 +16,6 @@
 .github/workflows/wait-for-cms-ready @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
 .github/workflows/record-release-interval @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
 script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
-@department-of-veterans-affairs/platform-release-tools
 
 # VSP QA Standards
 src/platform/testing/e2e/ @department-of-veterans-affairs/qa-standards
