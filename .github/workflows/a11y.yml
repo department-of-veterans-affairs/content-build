@@ -144,6 +144,9 @@ jobs:
           path: content-build/test-build.tar.bz2
           retention-days: 1
 
+      - name: Runner clean up
+        run: rm -rf ../content-build
+
   a11y:
     name: Accessibility Tests
     needs: build
@@ -239,6 +242,10 @@ jobs:
           path: a11y_failures-${{ matrix.ci_node_index }}.csv
           retention-days: 30
 
+      - name: Runner clean up
+        run: |
+          rm -rf build
+          rm /__w/content-build/content-build/test-build.tar.bz2
   slack:
     name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest

@@ -35,7 +35,7 @@ runs:
         # This is all one pipeline. Edit with care.
         # [
             # Get the last 1000 events from datadog
-            curl "https://api.datadoghq.com/api/v1/events?start=${starttime}&end=${now}&tags=env:${{ inputs.environment }},deploy:true&unaggregated=true" \
+            curl "https://api.ddog-gov.com/api/v1/events?start=${starttime}&end=${now}&tags=env:${{ inputs.environment }},deploy:true&unaggregated=true" \
                 -H "Content-Type: text/json" \
                 -H "DD-APPLICATION-KEY: ${{ inputs.datadog_app_key }}" \
                 -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" | \
@@ -72,7 +72,7 @@ runs:
         jq '.tags[0] = "env:${{ inputs.environment }}"' | \
         jq '.tags[1] = "deploy:true"' > event.json
 
-        curl -X POST "https://api.datadoghq.com/api/v1/events" \
+        curl -X POST "https://api.ddog-gov.com/api/v1/events" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
           -d @- < event.json
@@ -86,7 +86,7 @@ runs:
         jq '.series[].tags[0] = "env:${{ inputs.environment }}"' | \
         jq '.series[].tags[1] = "build_number:${{ github.run_number }}"' > metrics.json
 
-        curl -X POST "https://api.datadoghq.com/api/v1/series" \
+        curl -X POST "https://api.ddog-gov.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ inputs.datadog_api_key }}" \
           -d @- < metrics.json

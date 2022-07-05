@@ -63,32 +63,36 @@
                   <strong>Where:</strong>
                 </p>
 
-                {% if facility %}
-                  <p class="vads-u-margin--0">
-                    <a href="{{ facility.entityUrl.path }}">{{ facility.title }}</a>
-                  </p>
+                {% if fieldFacilityLocation %}
+                  <div class="vads-u-display--flex vads-u-flex-direction--column">
+                    <p class="vads-u-margin--0">
+                      <a href="{{ fieldFacilityLocation.entity.entityUrl.path }}">
+                        {{ fieldFacilityLocation.entity.title }}
+                      </a>
+                    </p>
 
-                  <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+                    <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+                  </div>
                 {% else %}
-                <div class="vads-u-display--flex vads-u-flex-direction--column">
-                  {% if fieldAddress.addressLine1 %}
-                    <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
-                  {% endif %}
-
-                  {% if fieldAddress.addressLine2 %}
-                    <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
-                  {% endif %}
-
-                  <p class="vads-u-margin--0">
-                    {% if fieldAddress.locality %}
-                      {{ fieldAddress.locality }}
+                  <div class="vads-u-display--flex vads-u-flex-direction--column">
+                    {% if fieldAddress.addressLine1 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
                     {% endif %}
 
-                    {% if fieldAddress.administrativeArea %}
-                      , {{ fieldAddress.administrativeArea }}
+                    {% if fieldAddress.addressLine2 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
                     {% endif %}
-                  </p>
-                </div>
+
+                    <p class="vads-u-margin--0">
+                      {% if fieldAddress.locality %}
+                        {{ fieldAddress.locality }}
+                      {% endif %}
+
+                      {% if fieldAddress.administrativeArea %}
+                        , {{ fieldAddress.administrativeArea }}
+                      {% endif %}
+                    </p>
+                  </div>
                 {% endif %}
               </div>
             {% endif %}

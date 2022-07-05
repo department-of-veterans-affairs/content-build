@@ -4,8 +4,6 @@ on:
   repository_dispatch:
     types: [content-release]
   workflow_dispatch:
-  schedule:
-    - cron: '54 13-21 * * 1-5'
 
 concurrency:
   group: content-release-prod
@@ -15,7 +13,6 @@ env:
   VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
-  DSVA_SCHEDULE_ENABLED: true
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
@@ -99,10 +96,6 @@ jobs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
       TAG: ${{ steps.get-latest-release.outputs.tag_name }}
     steps:
-      - name: Cancel workflow due to DSVA schedule
-        if: ${{ github.event_name == 'schedule' && env.DSVA_SCHEDULE_ENABLED != 'true' }}
-        uses: andymckay/cancel-action@0.2
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -112,6 +105,14 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
+          method: GET
+
+      - name: Notify CMS - starting
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: https://prod.cms.va.gov/api/content_release/starting
           method: GET
 
       - name: Install dependencies
@@ -144,7 +145,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
@@ -464,6 +465,14 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2
           DEST: s3://${{ env.DEPLOY_BUCKET }}
 
+      - name: Notify CMS - Complete
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: https://prod.cms.va.gov/api/content_release/complete
+          method: GET
+
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
 
@@ -510,13 +519,21 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+      - name: Notify CMS - Ready
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: https://prod.cms.va.gov/api/content_release/ready
+          method: GET
 
       - name: Notify CMS - Ready
         uses: ./.github/workflows/authenticated-cms-request
@@ -567,7 +584,7 @@ jobs:
 
       - name: Send event to Datadog
         run: |
-          curl -X POST "https://api.datadoghq.com/api/v1/events" \
+          curl -X POST "https://api.ddog-gov.com/api/v1/events" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < event.json
@@ -658,7 +675,7 @@ jobs:
 
       - name: Send metrics to Datadog
         run: |
-          curl -X POST "https://api.datadoghq.com/api/v1/series" \
+          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
