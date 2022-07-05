@@ -25,9 +25,9 @@ jobs:
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/request_build
+          url: https://prod.cms.va.gov/api/content_release/request_build?reason=A%20content%20release%20was%20requested%20via%20the%20Request%20Content%20Release%20workflow.
           method: GET
-      
+
       - name: Print status
         shell: bash
         run: |
