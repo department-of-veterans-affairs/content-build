@@ -35,12 +35,16 @@ dump.rdb
 test-results/
 
 # Ignore user's editor/IDE prefs
+.vscode/
 .idea/
 .swp
 .swo
 all-links.csv
 .tern-port
 *.iml
+
+# Track shared IDE config
+!.vscode/extensions.json
 
 # Ignore the hashed build files for comparison
 standaloneContentBuildHash.txt
