@@ -1253,22 +1253,23 @@
     "productId": "05712241-0f46-4e84-8d3e-70a6cf412a5e",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
-    },
-    "breadcrumbs_override": [
-      {
-        "name": "Decision reviews and appeals",
-        "path": "decision-reviews"
-      },
-      {
-        "name": "Supplemental Claims",
-        "path": "decision-reviews/supplemental-claim"
-      },
-      {
-        "name": "Request a Supplemental Claim",
-        "path": "decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995"
-      }
-    ]
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Decision reviews and appeals",
+          "path": "decision-reviews"
+        },
+        {
+          "name": "Supplemental Claims",
+          "path": "decision-reviews/supplemental-claim"
+        },
+        {
+          "name": "Request a Supplemental Claim",
+          "path": "decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995"
+        }
+      ]
+    }
   },
   {
     "appName": "'Fry/DEA — VA Education Benefits For Survivors And Dependents'",
