@@ -48,7 +48,7 @@ runs:
         # ]
 
         last_deploy=$(cat last_deploy.txt)
-        echo "LAST_DEPLOY=${last_deploy})" >> $GITHUB_ENV
+        echo "LAST_DEPLOY=${last_deploy}" >> $GITHUB_ENV
 
         time_since_last_deploy=$(expr ${now} - ${last_deploy})
         echo "TIME_SINCE_LAST_DEPLOY=${time_since_last_deploy}" >> $GITHUB_ENV
