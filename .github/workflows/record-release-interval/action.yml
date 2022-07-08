@@ -24,7 +24,7 @@ runs:
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
-        set -x
+        set -xv
 
         now="$(date +"%s")"
         echo "CURRENT_TIME=${now}" >> $GITHUB_ENV
@@ -62,7 +62,7 @@ runs:
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
-        set -x
+        set -xv
 
         # Send the event to datadog.
         # The deploy:true tag here is so that the API query above can filter to
