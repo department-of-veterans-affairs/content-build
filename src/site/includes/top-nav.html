@@ -62,7 +62,7 @@
   </va-banner>
   <!-- Solutioned for: https://github.com/department-of-veterans-affairs/va.gov-cms/issues/9075 -->
   <script type="text/javascript">
-    const isIE = /Trident\/[0-7]\.[0-9]/i.test(window.navigator.userAgent);
+    const isIE = /(?:MSIE)|(?:Trident\/[0-7]\.[0-9])/i.test(window.navigator.userAgent);
 
     if (isIE) {
       const ieMessageEl = document.body.querySelector('.ie-deprecation-warning');
