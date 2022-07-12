@@ -1239,7 +1239,7 @@
   {
     "appName": "Combined Debt Portal",
     "entryName": "combined-debt-portal",
-    "rootUrl": "/manage-debt-and-bills/summary",
+    "rootUrl": "/manage-va-debt/summary",
     "template": {
       "vagovprod": true,
       "vagovstaging": true,
