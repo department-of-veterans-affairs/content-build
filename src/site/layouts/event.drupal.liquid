@@ -57,7 +57,7 @@
             </div>
 
             <!-- Where -->
-            {% if fieldFacilityLocation or fieldAddress.addressLine1 %}
+            {% if fieldFacilityLocation or fieldAddress.addressLine1 or fieldLocationType == "online" %}
               <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
                 <p class="vads-u-margin--0 vads-u-margin-right--0p5">
                   <strong>Where:</strong>
@@ -73,6 +73,10 @@
 
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                   </div>
+
+                {% elsif fieldLocationType == "online" %}
+                  <p class="vads-u-margin--0 vads-u-margin-bottom--2">This is an online event.</p>
+
                 {% else %}
                   <div class="vads-u-display--flex vads-u-flex-direction--column">
                     {% if fieldAddress.addressLine1 %}
@@ -95,15 +99,6 @@
                   </div>
                 {% endif %}
               </div>
-            {% endif %}
-
-            {% if fieldLocationType == "online" %}
-              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
-                <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-                  <strong>Where:</strong>
-                </p>
-                <p class="vads-u-margin--0">This is an online event.</p>
-                </div>
             {% endif %}
 
             <!-- Cost -->
