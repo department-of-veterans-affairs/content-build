@@ -82,7 +82,7 @@ jobs:
           max_attempts: 3
           aws-resource-tags: >
             [
-              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
+              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner-on-demand"},
               {"Key": "project", "Value": "vagov"},
               {"Key": "office", "Value": "dsva"},
               {"Key": "application", "Value": "gha-runner"},
