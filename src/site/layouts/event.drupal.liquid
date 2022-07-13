@@ -74,7 +74,11 @@
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                   </div>
                 {% else %}
+
                   <div class="vads-u-display--flex vads-u-flex-direction--column">
+                    {% if fieldLocationHumanreadable != empty %}
+                      <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+                    {% endif %} 
                     {% if fieldAddress.addressLine1 %}
                       <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
                     {% endif %}
