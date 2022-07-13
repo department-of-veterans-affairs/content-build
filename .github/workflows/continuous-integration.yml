@@ -151,6 +151,9 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
+
       - name: Install tar
         run: sudo apt install tar
 
@@ -446,6 +449,18 @@ jobs:
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
+
       - name: Install dependencies
         uses: ./.github/workflows/install
         timeout-minutes: 30
@@ -657,6 +672,18 @@ jobs:
         buildtype: [vagovdev, vagovstaging, vagovprod]
 
     steps:
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
+
       - name: Restore ${{ matrix.buildtype }} build
         run: |
           mv /tmp/${{ github.run_id }}/${{ matrix.buildtype }}.tar.bz2 .
@@ -712,6 +739,18 @@ jobs:
           mv /tmp/${{ github.run_id }}/.cache/${{ matrix.buildtype }} .cache/${{ matrix.buildtype }}
           df -h
           du -h .cache/${{ matrix.buildtype }}
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
 
       - name: Install dependencies
         uses: ./.github/workflows/install
