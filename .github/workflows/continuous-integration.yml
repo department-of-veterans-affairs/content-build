@@ -71,7 +71,7 @@ jobs:
 
       - name: Start EC2 Runner
         id: start-ec2-runner
-        uses: department-of-veterans-affairs/ec2-github-runner@chore/gha/update-data-entry
+        uses: department-of-veterans-affairs/ec2-github-runner@main
         with:
           mode: start
           github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
