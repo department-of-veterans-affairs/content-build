@@ -60,7 +60,7 @@ jobs:
       #     --output text)" >> $GITHUB_ENV
 
       - name: Get latest minimal GHA Runner AMI ID
-        run: echo "RUNNER_AMI_ID=ami-0cdb267412f53fa0d" >> $GITHUB_ENV
+        run: echo "RUNNER_AMI_ID=ami-09fd474f82eb98ac9" >> $GITHUB_ENV
 
       - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
         run: |
