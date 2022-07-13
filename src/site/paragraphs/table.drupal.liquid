@@ -27,35 +27,26 @@
     }
 {% endcomment %}
 
-<table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" class="va-table va-table--responsive" role="table">
-        {% if entity.fieldTable.caption %}
-            <caption>{{ entity.fieldTable.caption }}</caption>
-        {% endif %}
-        {% assign colLabels = entity.fieldTable.value.0  %}
+<va-table sort-column="0"
+{% if entity.fieldTable.caption %}
+  table-title="{{ entity.fieldTable.caption }}
+{% endif %}
+  data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}">
         {% for value in entity.fieldTable.value %}
             {% if forloop.first == true %}
-                <thead>
-                    <tr role="row">
+                <va-table-row slot="headers">
                         {% for column in value %}
-                            <th role="columnheader" scope="col">{{ column }}</th>
+                            <span>{{ column }}</span>
                         {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
+                </va-table-row>
             {% else %}
-                    <tr class="vads-u-padding-top--5" role="row">
+                    <va-table-row>
                         {% for column in value %}
-                                <td class="vads-u-padding-bottom--0 column-label vads-u-font-weight--bold medium-screen:vads-u-display--none" role="cell">
-                                    <dfn> {{colLabels | getValueFromObjPath: forloop.index0}}      </dfn>
-                                </td>
-                                <td class="column-value"  role="cell">
-                                    <dfn class="vads-u-display--block"> {{ column }}  </dfn>
-                                </td>
+                                <span>
+                                    {{ column }}
+                                </span>
                         {% endfor %}
-                    </tr>
-            {% endif %}
-            {% if forloop.last %}
-                </tbody>
+                    </va-table-row>
             {% endif %}
         {% endfor %}
-</table>
+</va-table>
