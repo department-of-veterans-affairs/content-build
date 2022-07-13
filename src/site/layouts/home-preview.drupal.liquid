@@ -17,7 +17,7 @@
     <h2 class="vads-u-color--gray-dark vads-u-font-family--sans usa-width-two-thirds">Learn about and apply for VA benefits and health care</h2>
     {% for hub in hubs %}
       <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
-        <h2 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white vads-u-margin-right--0p5"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h2>
+        <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white vads-u-margin-right--0p5"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h3>
         <p class="vads-u-margin-top--0">{{ hub.entity.fieldTeaserText }}</p>
       </div>
       {% comment %} Close this row and open a new one when needed. {% endcomment %}
