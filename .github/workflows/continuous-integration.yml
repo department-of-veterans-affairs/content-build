@@ -50,17 +50,14 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      # - name: Get latest GHA Runner AMI ID # AMI images are rebuilt every 15 days, use the latest one
-      #   run: |
-      #     echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
-      #     --owners 008577686731 \
-      #     --filters Name=state,Values=available \
-      #     --filters Name=name,Values=packer-gha-runner-ubuntu2004* \
-      #     --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
-      #     --output text)" >> $GITHUB_ENV
-
-      - name: Get latest minimal GHA Runner AMI ID
-        run: echo "RUNNER_AMI_ID=ami-09fd474f82eb98ac9" >> $GITHUB_ENV
+      - name: Get latest GHA Runner AMI ID
+        run: |
+          echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
+          --owners 008577686731 \
+          --filters Name=state,Values=available \
+          --filters Name=name,Values=platform-gha-runner-ubuntu* \
+          --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
+          --output text)" >> $GITHUB_ENV
 
       - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
         run: |
