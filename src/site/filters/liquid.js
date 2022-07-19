@@ -1302,27 +1302,33 @@ module.exports = function registerFilters() {
     return sidebarData;
   };
 
-  liquid.filters.topTaskUrl = (flag, path) => {
-    if (flag === 'cerner' && path === 'refill-track-prescriptions/') {
-      return 'https://patientportal.myhealth.va.gov/pages/medications/current';
+  liquid.filters.topTaskUrl = (flag, path, buildtype) => {
+    const isNotProd = buildtype !== 'vagovprod';
+
+    // If cerner, or if cerner-staged in a non-prod environment
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (path === 'refill-track-prescriptions/') {
+        return 'https://patientportal.myhealth.va.gov/pages/medications/current';
+      }
+
+      if (path === 'secure-messaging/') {
+        return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
+      }
+
+      if (path === 'schedule-view-va-appointments/') {
+        return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
+      }
+
+      if (path === 'get-medical-records/') {
+        return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
+      }
+
+      if (path === 'view-test-and-lab-results/') {
+        return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
+      }
     }
 
-    if (flag === 'cerner' && path === 'secure-messaging/') {
-      return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
-    }
-
-    if (flag === 'cerner' && path === 'schedule-view-va-appointments/') {
-      return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
-    }
-
-    if (flag === 'cerner' && path === 'get-medical-records/') {
-      return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
-    }
-
-    if (flag === 'cerner' && path === 'view-test-and-lab-results/') {
-      return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
-    }
-
+    // Vista equivalent
     return `/health-care/${path}`;
   };
 
