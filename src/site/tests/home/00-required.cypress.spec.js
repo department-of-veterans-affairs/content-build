@@ -2,7 +2,10 @@ const path = require('path');
 
 Cypress.Commands.add('verifyGoogleAnalytics', () => {
   const filePath = path.join(
-    // __dirname,
+    'content-build',
+    __dirname,
+    '..',
+    '..',
     'assets/js/google-analytics/',
     `${Cypress.env('buildtype') || 'vagovdev'}.js`,
   );
