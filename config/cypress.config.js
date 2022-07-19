@@ -20,7 +20,7 @@ module.exports = defineConfig({
         config,
       );
     },
-    baseUrl: 'http://staging.va.gov',
+    baseUrl: 'http://localhost:3002',
     specPattern: './src/**/tests/**/*.cypress.spec.js?(x)',
     supportFile: 'src/platform/testing/e2e/cypress/support/index.js',
   },

@@ -8,7 +8,7 @@
     "build:validate": "node ./script/validate-content-builds.js",
     "build:webpack": "webpack --config config/webpack.config.js",
     "build:codespaces": "./.devcontainer/codespaces-create.sh",
-    "cy:open": "cypress open --config-file config/cypress.config.js --browser chrome",
+    "cy:open": "cypress open --config-file config/cypress.config.js --e2e --browser chrome",
     "cy:report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
     "cy:report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
     "cy:run": "cypress run --config-file config/cypress.config.js --browser chrome",
