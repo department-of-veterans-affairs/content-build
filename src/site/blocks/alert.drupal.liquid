@@ -10,7 +10,7 @@
         {{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}
       </va-alert-expandable>
     {% elsif alert.fieldAlertContent.entity.fieldTextExpander == empty %}
-      <va-alert data-template="blocks/alert" data-entity-id="{{ alert.entityId }}" status="{{ alertType }}" class="vads-u-margin-top--3" role="alert">
+      <va-alert status="{{ alertType }}" data-template="blocks/alert" data-entity-id="{{ alert.entityId }}" class="vads-u-margin-top--3" role="alert">
         <h2 slot="headline" class="vads-u-font-size--h3">
           {{ alert.fieldAlertTitle }}
         </h2>
