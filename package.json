@@ -1,5 +1,5 @@
 {
-  "name": "content-build",
+  "name": "content-build-test",
   "version": "1.0.0",
   "description": "Content build for vets.gov website static assets.",
   "scripts": {
