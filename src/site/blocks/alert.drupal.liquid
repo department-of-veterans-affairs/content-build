@@ -5,29 +5,16 @@
 {% endif %}
 
 {% if isPreview or alert.entityPublished %}
-  <va-alert data-template="blocks/alert" data-entity-id="{{ alert.entityId }}" status="{{ alertType }}" class="vads-u-margin-top--3" role="alert">
-    <h2 slot="headline" class="vads-u-font-size--h3">
-      {{ alert.fieldAlertTitle }}
-    </h2>
-
-    {% if alert.fieldAlertContent.entity.fieldTextExpander == empty %}
-      {{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}
-    {% endif %}
-
     {% if alert.fieldAlertContent.entity.fieldTextExpander %}
-      {% comment %}
-        NOTE: .additional-info-container is a class utilized by
-        createAdditionalInfoWidget.js to add toggle functionality to info alerts
-      {% endcomment %}
-      <div data-alert-box-title="{{ alert.fieldAlertTitle }}" data-label="{{ alert.fieldAlertContent.entity.fieldTextExpander }}" class="form-expanding-group borderless-alert additional-info-container">
-        <div class="additional-info-title">
-          {{ alert.fieldAlertContent.entity.fieldTextExpander }}
-        </div>
-
-        {% if alert.fieldAlertContent.entity.fieldWysiwyg %}
-          <div class="additional-info-content usa-alert-text" hidden>{{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}</div>
-        {% endif %}
-      </div>
+      <va-alert-expandable status="{{ alertType }}" trigger="{{alert.fieldAlertTitle }}" data-template="blocks/alert" data-entity-id="{{ alert.entityId }}" class="vads-u-margin-top--3" role="alert">
+        {{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}
+      </va-alert-expandable>
+    {% elsif alert.fieldAlertContent.entity.fieldTextExpander == empty %}
+      <va-alert data-template="blocks/alert" data-entity-id="{{ alert.entityId }}" status="{{ alertType }}" class="vads-u-margin-top--3" role="alert">
+        <h2 slot="headline" class="vads-u-font-size--h3">
+          {{ alert.fieldAlertTitle }}
+        </h2>
+        {{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}
+      </va-alert>
     {% endif %}
-  </va-alert>
 {% endif %}
