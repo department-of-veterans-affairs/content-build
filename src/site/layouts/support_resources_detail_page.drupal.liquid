@@ -46,6 +46,54 @@
               {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
             {% endfor %}
 
+            <!-- QAs -->
+          {% if fieldQAGroup %}
+            {% for fieldQAGroup in fieldQAGroups %}
+              <!-- Optional section header -->
+              {% if fieldQAGroup.entity.fieldSectionHeader %}
+                <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
+                <h2>{{ fieldQAGroup.entity.fieldSectionHeader }}</h2>
+              {% endif %}
+
+              {% if fieldQAGroup.entity.fieldAccordionDisplay %}
+                <va-accordion bordered>
+                  {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
+                    {% if fieldQA.entity %}
+                      <va-accordion-item
+                        header="{{ fieldQA.entity.title }}"
+                        data-faq-entity-id="{{ fieldQA.entity.entityId }}"
+                      >
+                        <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}">
+                          {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
+                          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                          {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                          {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                        </div>
+                      </va-accordion-item>
+                    {% endif %}
+                  {% endfor %}
+                </va-accordion>
+              {% else %}
+                  {% assign fieldSectionHeaderTag = 'h2' %}
+                  {% if fieldQAGroup.entity.fieldSectionHeader %}
+                    {% assign fieldSectionHeaderTag = 'h3' %}
+                  {% endif %}
+
+                  {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
+                    <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
+                    <{{ fieldSectionHeaderTag }}>{{ fieldQA.entity.title }}</{{ fieldSectionHeaderTag }}>
+                    {% if fieldQA.entity %}
+                      {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
+                      {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                      {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                      {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
             <!-- Repeated buttons -->
             {% if fieldButtonsRepeat %}
               <ul class="vads-u-margin-top--3 usa-unstyled-list">
