@@ -1,7 +1,7 @@
 const locationsOperatingStatus = `
-  locationsOperatingStatus: nodeQuery(limit: 3000, filter: 
+  locationsOperatingStatus: nodeQuery(limit: 3000, filter:
     {conditions: [
-      {field: "status", value: ["1"]}, 
+      {field: "status", value: ["1"]},
       {field: "type", value: ["health_care_local_facility"]}]
     }) {
     entities {
@@ -12,7 +12,22 @@ const locationsOperatingStatus = `
         fieldMainLocation
         entityUrl {
           path
-        }        
+        }
+        fieldFacilityLocatorApiId
+        fieldSupplementalStatus {
+          entity {
+            ... on TaxonomyTermFacilitySupplementalStatus {
+              name
+              fieldStatusId
+              description {
+                processed
+              }
+              fieldGuidance {
+                processed
+              }
+            }
+          }
+        }
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
         fieldRegionPage {

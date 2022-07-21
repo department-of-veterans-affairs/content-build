@@ -93,7 +93,7 @@
       "breadcrumbs_override": [
         {
           "path": "view-change-dependents",
-          "name": "View or change your dependents"
+          "name": "View or change dependents on your VA disability benefits"
         },
         {
           "path": "view-change-dependents/view",
@@ -213,11 +213,11 @@
       "breadcrumbs_override": [
         {
           "path": "view-change-dependents/",
-          "name": "View or change your dependents"
+          "name": "View or change dependents on your VA disability benefits"
         },
         {
           "path": "view-change-dependents/add-remove-form-21-686c/",
-          "name": "Add or remove dependents form 21‑686c"
+          "name": "Add or remove dependents with VA Form 21-686C"
         }
       ]
     }
@@ -1196,13 +1196,13 @@
     }
   },
   {
-    "appName": "Education Inbox",
-    "entryName": "education-inbox",
-    "rootUrl": "/education/education-inbox",
+    "appName": "Education Letters",
+    "entryName": "education-letters",
+    "rootUrl": "/education/education-letters",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "title": "Check your VA education inbox"
+      "title": "Check your VA education letters"
     }
   },
   {
@@ -1213,6 +1213,72 @@
       "vagovprod": false,
       "layout": "page-react.html",
       "title": "Connected Devices"
+    }
+  },
+  {
+    "appName": "Mock Form",
+    "entryFile": "./app-entry.jsx",
+    "entryName": "mock-form",
+    "rootUrl": "/mock-form",
+    "template": {
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Transfer Account",
+    "entryName": "mhv-inherited-proofing",
+    "rootUrl": "/transfer-account",
+    "template": {
+      "vagovprod": false,
+      "title": "Transfer Account",
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Combined Debt Portal",
+    "entryName": "combined-debt-portal",
+    "rootUrl": "/manage-va-debt/summary",
+    "template": {
+      "vagovprod": true,
+      "vagovstaging": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Request a Supplemental Claim",
+    "entryName": "995-supplemental-claim",
+    "rootUrl": "/decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995",
+    "productId": "05712241-0f46-4e84-8d3e-70a6cf412a5e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Decision reviews and appeals",
+          "path": "decision-reviews"
+        },
+        {
+          "name": "Supplemental Claims",
+          "path": "decision-reviews/supplemental-claim"
+        },
+        {
+          "name": "Request a Supplemental Claim",
+          "path": "decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "'Fry/DEA — VA Education Benefits For Survivors And Dependents'",
+    "entryName": "fry-dea",
+    "rootUrl": "/fry-dea",
+    "productId": "bafad5fa-0b44-4377-b183-affb8d16ca55",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
     }
   }
 ]

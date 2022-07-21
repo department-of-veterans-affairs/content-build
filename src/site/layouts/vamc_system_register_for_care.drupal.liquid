@@ -11,10 +11,12 @@
           <h1 id="article-heading">{{ title }}</h1>
           <div class="va-introtext">
             <p>
-              Register to get care at one of our VA health care facilities.
+              Register to get care at one of our {{ fieldOffice.entity.entityLabel }} facilities.
               Not yet enrolled in VA health care? We can help you apply in person or get started online.
             </p>
           </div>
+          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+
           <div class="usa-content">
             {% include "src/site/includes/centralized-content.drupal.liquid" with
                 entity = fieldCcTopOfPageContent.fetched

@@ -1,4 +1,4 @@
-const table = require('table').table;
+const { table } = require('table');
 
 const tableConfig = {
   columns: {
@@ -21,17 +21,57 @@ const processAxeCheckResults = violations => {
 
   const violationData = violations.map(
     ({ id, impact, description, nodes, help, helpUrl }) => [
-      ['id', id],
-      ['impact', impact],
-      ['description', description],
-      ['help', help],
-      ['help URL', helpUrl],
-      ['target', nodes.map(node => node.target).join('\n\n')],
-      ['html', nodes.map(node => node.html).join('\n\n')],
-      ['failure summary', nodes.map(node => node.failureSummary).join('\n\n')],
+      /* eslint-disable no-control-regex */
+      ['id', id.replace(/[\x01-\x1A]+/g, ' ')],
+      ['impact', impact.replace(/[\x01-\x1A]+/g, ' ')],
+      ['description', description.replace(/[\x01-\x1A]+/g, ' ')],
+      ['help', help.replace(/[\x01-\x1A]+/g, ' ')],
+      ['help URL', helpUrl.replace(/[\x01-\x1A]+/g, ' ')],
+      [
+        'target',
+        nodes
+          .map(node => node.target)
+          .join('\n\n')
+          .replace(/[\x01-\x1A]+/g, ' '),
+      ],
+      [
+        'html',
+        nodes
+          .map(node => node.html)
+          .join('\n\n')
+          .replace(/[\x01-\x1A]+/g, ' '),
+      ],
+      [
+        'failure summary',
+        nodes
+          .map(node => node.failureSummary.replace(/[\x01-\x1A]+/g, ' '))
+          .join('\n\n'),
+      ],
       ['nodes', nodes.length],
+      /* eslint-enable no-control-regex */
     ],
   );
+
+  if (Cypress.env('STEP')) {
+    cy.url().then(url => {
+      const prodURL = url.replace(
+        Cypress.config().baseUrl,
+        `https://www.va.gov`,
+      );
+      cy.readFile('a11y_failures.csv').then(str => {
+        if (!str.includes(prodURL)) {
+          let formattedStr = '';
+          for (const violation of violationData) {
+            formattedStr += `${prodURL},${violation[0][1]}\n`;
+          }
+          cy.writeFile('a11y_failures.csv', formattedStr, {
+            encoding: 'utf8',
+            flag: 'a',
+          });
+        }
+      });
+    });
+  }
 
   cy.url().then(url => {
     const prodURL = url.replace(Cypress.config().baseUrl, `https://www.va.gov`);
