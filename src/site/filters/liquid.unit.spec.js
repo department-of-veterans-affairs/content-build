@@ -2403,3 +2403,15 @@ describe('getSurvey', () => {
     ).to.equal(17);
   });
 });
+
+describe('deriveTimeForJSONLD', () => {
+  it('when given a time returns the time in the correct format', () => {
+    const timetype = 'starthours';
+    const time = '0830';
+    const comment = '';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('08:30:00');
+  });
+});
