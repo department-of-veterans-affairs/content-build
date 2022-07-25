@@ -50,6 +50,10 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
+      - name: Install Yarn
+        shell: bash
+        run: npm i -g yarn@1.21.1
+
       - name: Install vets-website dependencies
         uses: nick-invision/retry@v2
         with:
