@@ -73,7 +73,8 @@
                           {% endfor %}
                         ],
                         "hasMap": "https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}",
-                        "image": ["{{ fieldMedia.entity.image.derivative.url }}"]
+                        "image": ["{{ fieldMedia.entity.image.derivative.url }}"],
+                        "branchCode": "{{ fieldFacilityLocatorApiId }}"
                       }
                     </script>
                     <h3
