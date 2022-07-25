@@ -68,7 +68,7 @@
                               "@type": "OpeningHoursSpecification",
                               "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}",
                               "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
-                              "opens": "{{ hours.endhours | deriveTimeForJSONLD: 'starthours', hours.comment }}"
+                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}"
                             }{% if !forloop.last %},{% endif %}
                           {% endfor %}
                         ],

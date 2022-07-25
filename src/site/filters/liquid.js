@@ -1499,11 +1499,14 @@ module.exports = function registerFilters() {
   liquid.filters.deriveTimeForJSONLD = (time, timetype, comment) => {
     if (comment === '24/7') {
       if (timetype === 'endhours') {
-        return '12:59:59';
+        return '23:59:59';
       }
       if (timetype === 'starthours') {
         return '00:00:00';
       }
+    }
+    if (time === null) {
+      return '';
     }
     return moment(time, 'Hmm').format('HH:mm:ss');
   };

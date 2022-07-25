@@ -2414,4 +2414,34 @@ describe('deriveTimeForJSONLD', () => {
       liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
     ).to.equal('08:30:00');
   });
+
+  it('when given a time of null returns the time as an empty string', () => {
+    const timetype = 'starthours';
+    const time = null;
+    const comment = 'Closed';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('');
+  });
+
+  it('when given a comment of 24/7 returns the starthours time in the correct format', () => {
+    const timetype = 'starthours';
+    const time = null;
+    const comment = '24/7';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('00:00:00');
+  });
+
+  it('when given a comment of 24/7 returns the endhours time in the correct format', () => {
+    const timetype = 'endhours';
+    const time = null;
+    const comment = '24/7';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('23:59:59');
+  });
 });
