@@ -1,0 +1,18 @@
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {% for faq in FAQs.fetched.fieldQuestions %}
+        {
+          "@type": "Question",
+          "name": "{% for question in faq.entity.fieldQuestion %}{{ question.value }}{% endfor %}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{% for answer in faq.entity.fieldAnswer %}{% for answerContent in answer.entity.fieldWysiwyg %}{{ answerContent.value | strip_newlines | replace: "\"", "'" | replace: "&nbsp;", " " }}{% endfor %}{% endfor %}"
+          }
+        }{% if forloop.last != true %},{% endif %}
+      {% endfor %}
+    ]
+  }
+</script>
