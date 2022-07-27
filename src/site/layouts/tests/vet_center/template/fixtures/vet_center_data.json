@@ -586,9 +586,9 @@
             "fieldAlsoKnownAs": "Veterans Crisis Line",
             "fieldVetCenterComConditions": null,
             "fieldCommonlyTreatedCondition": null,
-            "fieldVetCenterServiceDescrip": "Call our Veterans Crisis Line at 800-273-8255 (select 1) to get support anytime day or night. This service is private, free, and available 24/7. Our Vet Center can also connect you with ongoing counseling and services.",
+            "fieldVetCenterServiceDescrip": "Call our Veterans Crisis Line at 988 (select 1) to get support anytime day or night. This service is private, free, and available 24/7. Our Vet Center can also connect you with ongoing counseling and services.",
             "description": {
-              "processed": "<p>Call our Veterans Crisis Line at 800-273-8255 (select 1) for free, private help anytime 24/7. Our local suicide prevention coordinators can also connect you with ongoing counseling and services.</p>"
+              "processed": "<p>Call our Veterans Crisis Line at 988 (select 1) for free, private help anytime 24/7. Our local suicide prevention coordinators can also connect you with ongoing counseling and services.</p>"
             }
           }
         }
