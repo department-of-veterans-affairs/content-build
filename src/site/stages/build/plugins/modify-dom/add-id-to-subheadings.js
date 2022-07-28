@@ -3,17 +3,6 @@
 /*
  * Add unique ID to H2s and H3s that aren't in WYSIWYG or accordion buttons
  */
-const { ENTITY_BUNDLES } = require('../../../../constants/content-modeling');
-
-const entityBundlesForResourcesAndSupport = new Set([
-  ENTITY_BUNDLES.STEP_BY_STEP,
-  ENTITY_BUNDLES.FAQ_MULTIPLE_Q_A,
-  ENTITY_BUNDLES.Q_A,
-  ENTITY_BUNDLES.CHECKLIST,
-  ENTITY_BUNDLES.MEDIA_LIST_IMAGES,
-  ENTITY_BUNDLES.MEDIA_LIST_VIDEOS,
-  ENTITY_BUNDLES.SUPPORT_RESOURCES_DETAIL_PAGE,
-]);
 
 function createUniqueId(headingEl, headingOptions) {
   const headingString = headingEl.text();
@@ -49,17 +38,7 @@ module.exports = {
         },
       };
 
-      let nodes = null;
-
-      if (entityBundlesForResourcesAndSupport.has(file.entityBundle)) {
-        nodes = dom('article h2');
-
-        if (nodes.length < 2) {
-          return;
-        }
-      } else {
-        nodes = dom('h2, h3');
-      }
+      const nodes = dom('h2, h3');
 
       nodes.each((index, el) => {
         const heading = dom(el);
