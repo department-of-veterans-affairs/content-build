@@ -1178,7 +1178,7 @@
     }
   },
   {
-    "appName": "'Enrollment Verification'",
+    "appName": "Enrollment Verification",
     "entryName": "enrollment-verification",
     "rootUrl": "/enrollment-history",
     "template": {
@@ -1276,6 +1276,16 @@
     "entryName": "fry-dea",
     "rootUrl": "/fry-dea",
     "productId": "bafad5fa-0b44-4377-b183-affb8d16ca55",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Apply to use transferred education benefits",
+    "entryName": "toe",
+    "rootUrl": "/education/survivor-dependent-benefits/apply-for-transferred-benefits-form-22-1990e",
+    "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

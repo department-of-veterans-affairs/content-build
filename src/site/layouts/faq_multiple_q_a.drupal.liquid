@@ -1,3 +1,23 @@
+{% for faqGroup in fieldQAGroups %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {% for fieldQA in faqGroup.entity.fieldQAs %}
+          {
+            "@type": "Question",
+            "name": "{{ fieldQA.entity.title }}",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "{{ fieldQA.entity.fieldAnswer.entity.fieldWysiwyg.processed | strip_newlines | replace: "\"", "'" | replace: "&nbsp;", " " }}"
+          }{% if forloop.last != true %},{% endif %}
+        {% endfor %}
+      ]
+    }
+  </script>
+{% endfor %}
+
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with constructLcBreadcrumbs = true titleInclude = true %}
