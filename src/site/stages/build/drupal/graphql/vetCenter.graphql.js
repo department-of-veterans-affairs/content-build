@@ -83,10 +83,6 @@ const vetCenterFragment = `
           endhours
           comment
         }
-        fieldGeolocation {
-          lat
-          lon
-        }
         # Other locations link:
         reverseFieldOfficeNode(limit: 500, filter:{conditions: [{field: "type", value: ["vet_center_locations_list"]}]}) {
           entities {

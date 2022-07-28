@@ -34,10 +34,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           addressLine1
           organization
         }
-        fieldGeolocation {
-          lat
-          lon
-        }
         fieldPhoneNumber
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}
       }
@@ -53,10 +49,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           addressLine1
           organization
         }
-        fieldGeolocation {
-          lat
-          lon
-        }
         fieldPhoneNumber
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}
       }
@@ -71,10 +63,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           postalCode
           addressLine1
           organization
-        }
-        fieldGeolocation {
-          lat
-          lon
         }
         ${derivativeImage('_32MEDIUMTHUMBNAIL')}
       }
@@ -120,10 +108,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 endhours
                 comment
               }
-              fieldGeolocation {
-                lat
-                lon
-              }
             }
             ... on NodeVetCenterOutstation {
               fieldOfficeHours {
@@ -147,10 +131,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
                 organization
               }
               fieldPhoneNumber
-              fieldGeolocation {
-                lat
-                lon
-              }
             }
             ... on NodeVetCenterMobileVetCenter {
               title
@@ -178,10 +158,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
           addressLine1
           addressLine2
           organization
-        }
-        fieldGeolocation {
-          lat
-          lon
         }
         fieldFacilityLocatorApiId
         fieldPhoneNumber
