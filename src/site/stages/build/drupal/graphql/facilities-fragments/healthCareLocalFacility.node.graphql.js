@@ -51,6 +51,10 @@ const FACILITIES_RESULTS = `
       administrativeArea
       postalCode
     }
+    fieldGeolocation {
+      lat
+      lon
+    }
     fieldPhoneNumber
     fieldMentalHealthPhone
     fieldOfficeHours {
