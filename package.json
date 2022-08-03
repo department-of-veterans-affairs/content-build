@@ -97,7 +97,7 @@
     "ajv": "^6.12.2",
     "ascii-table": "^0.0.9",
     "autoprefixer": "^10.3.4",
-    "axe-core": "^4.4.2",
+    "axe-core": "^4.4.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
