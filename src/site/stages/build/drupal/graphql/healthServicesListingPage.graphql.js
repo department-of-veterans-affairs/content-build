@@ -48,7 +48,7 @@ const healthServicesListingPage = `
               fieldLocalHealthCareService {
                 entity {
                   ... on NodeHealthCareLocalHealthService {
-                    status                  
+                    status        
                     entityUrl {
                       path
                     }
@@ -61,6 +61,13 @@ const healthServicesListingPage = `
                             }
                           }
                           title
+                        }
+                      }
+                    }
+                    fieldAdministration {
+                      entity{
+                        ... on TaxonomyTermAdministration {
+                          entityId
                         }
                       }
                     }

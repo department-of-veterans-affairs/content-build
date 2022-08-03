@@ -26,6 +26,13 @@ const HEALTH_SERVICES_RESULTS = `
                 }
               }
             }
+            fieldAdministration {
+              entity{
+                ... on TaxonomyTermAdministration {
+                  entityId
+                }
+              }
+            }
           }
         }
       }
