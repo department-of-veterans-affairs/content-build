@@ -6,7 +6,7 @@ const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const healthCareLocalFacilities = require('./facilities-fragments/healthCareLocalFacility.node.graphql');
 
 const locationListingPage = `
- fragment locationListingPage on NodeLocationsListing {
+  fragment locationListingPage on NodeLocationsListing {
     ${entityElementsFromPages}
     title
     entityId
@@ -48,7 +48,14 @@ const locationListingPage = `
         }
       }
     }
- }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
+  }
 `;
 
 const GetNodeLocationsListingPages = `
