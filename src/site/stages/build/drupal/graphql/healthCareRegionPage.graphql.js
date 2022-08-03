@@ -152,6 +152,13 @@ const nodeHealthCareRegionPage = `
         }
       }
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 
