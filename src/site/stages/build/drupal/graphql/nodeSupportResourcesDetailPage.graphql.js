@@ -125,7 +125,43 @@ const GetNodeSupportResourcesDetailPage = `
       ]
     }) {
       entities {
-        ... nodeSupportResourcesDetailPage
+				... on NodeSupportResourcesDetailPage {
+					fieldContentBlock {
+					  targetId
+					  targetRevisionId
+            entity {
+              entityId
+              ... on ParagraphQAGroup {
+                fieldSectionHeader
+                fieldRichWysiwyg {
+                  value
+                  format
+                  processed
+                }
+                queryFieldQAs {
+                	entities {
+                    entityId
+                    entityLabel
+                    moderationState
+                    ... on NodeQA {
+                      fieldAnswer {
+                        targetId
+                        targetRevisionId
+                        ... on FieldNodeQAFieldAnswer {
+                          entity {
+                            entityId
+                            entityLabel
+                            
+                          }
+                        }
+                      }
+                    }
+                  } 
+                }
+              }
+            }
+	        }
+        }
       }
     }
   }
