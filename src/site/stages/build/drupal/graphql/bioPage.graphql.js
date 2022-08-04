@@ -6,61 +6,68 @@ const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 const personProfileFragment = `
- fragment bioPage on NodePersonProfile {
-  ${entityElementsFromPages}
-  fieldNameFirst
-  fieldLastName
-  fieldSuffix
-  fieldDescription
-  fieldEmailAddress
-  fieldPhoneNumber
-  fieldCompleteBiographyCreate
-  fieldCompleteBiography { entity { url } }
-  fieldOffice {
-      entity {
-        entityLabel
-        entityType
-        ...on NodeHealthCareRegionPage {
-          ${entityElementsFromPages}
-          title
+  fragment bioPage on NodePersonProfile {
+    ${entityElementsFromPages}
+    fieldNameFirst
+    fieldLastName
+    fieldSuffix
+    fieldDescription
+    fieldEmailAddress
+    fieldPhoneNumber
+    fieldCompleteBiographyCreate
+    fieldCompleteBiography { entity { url } }
+    fieldOffice {
+        entity {
+          entityLabel
+          entityType
+          ...on NodeHealthCareRegionPage {
+            ${entityElementsFromPages}
+            title
+          }
         }
       }
-    }
-  fieldIntroText
-  fieldPhotoAllowHiresDownload
-  fieldMedia {
-    thumbnail: entity {
-      ... on MediaImage {
-        image {
-          alt
-          title
-          derivative(style: _23MEDIUMTHUMBNAIL) {
-            url
-            width
-            height
+    fieldIntroText
+    fieldPhotoAllowHiresDownload
+    fieldMedia {
+      thumbnail: entity {
+        ... on MediaImage {
+          image {
+            alt
+            title
+            derivative(style: _23MEDIUMTHUMBNAIL) {
+              url
+              width
+              height
+            }
+          }
+        }
+      }
+      hiRes: entity {
+        ... on MediaImage {
+          image {
+            alt
+            title
+            derivative(style: ORIGINAL) {
+              url
+              width
+              height
+            }
           }
         }
       }
     }
-    hiRes: entity {
-      ... on MediaImage {
-        image {
-          alt
-          title
-          derivative(style: ORIGINAL) {
-            url
-            width
-            height
-          }
+    fieldBody {
+      processed
+    }
+    changed
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
         }
       }
     }
   }
-  fieldBody {
-    processed
-  }
-  changed
- }
 `;
 
 function getNodePersonProfilesSlice(operationName, offset, limit) {
