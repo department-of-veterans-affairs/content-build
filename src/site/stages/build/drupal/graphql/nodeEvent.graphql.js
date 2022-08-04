@@ -158,6 +158,13 @@ const nodeEvent = `
         }
       }
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 
@@ -305,6 +312,13 @@ const nodeEventWithoutBreadcrumbs = `
         entity {
           name
           timezone
+        }
+      }
+    }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
         }
       }
     }
