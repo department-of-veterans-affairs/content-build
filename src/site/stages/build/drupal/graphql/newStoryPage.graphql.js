@@ -41,6 +41,13 @@ const newsStoryFragment = `
     fieldFullStory {
       processed
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 
