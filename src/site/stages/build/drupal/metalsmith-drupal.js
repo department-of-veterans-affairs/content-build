@@ -310,6 +310,29 @@ function getDrupalContent(buildOptions) {
     return () => {};
   }
 
+  const drupalDataWithBifurcatedLovellPages = drupalData => {
+    // Adjust this if needed to get the fieldAdministration field
+    const lovellPages = drupalData.data.nodeQuery.entities.filter(
+      page => page.fieldOffice.fieldAdministration === 347,
+    );
+    const clonedLovellPages = lovellPages.map(page => {
+      // Change the URL for the tricare pages
+      page.entityUrl.path.replace(
+        '/lovell-federal-health-care/',
+        '/lovell-tricare-health-care/',
+      );
+
+      return page;
+    });
+
+    drupalData.data.nodeQuery.entities = [
+      ...drupalData.data.nodeQuery.entities,
+      ...clonedLovellPages,
+    ];
+
+    return drupalData;
+  };
+
   return async (files, metalsmith, done) => {
     let drupalData = null;
     try {
@@ -317,6 +340,7 @@ function getDrupalContent(buildOptions) {
       drupalData = convertDrupalFilesToLocal(drupalData, files);
 
       await loadCachedDrupalFiles(buildOptions, files);
+      drupalData = drupalDataWithBifurcatedLovellPages(drupalData);
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);
