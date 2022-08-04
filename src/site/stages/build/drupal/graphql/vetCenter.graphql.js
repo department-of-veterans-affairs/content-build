@@ -76,7 +76,11 @@ const vetCenterFragment = `
          administrativeArea
          addressLine1
          addressLine2
-        }   
+        }
+        fieldGeolocation {
+          lat
+          lon
+        }
         fieldOfficeHours {
           day
           starthours

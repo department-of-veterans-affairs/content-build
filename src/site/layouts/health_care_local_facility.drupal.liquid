@@ -62,13 +62,13 @@
                         },
                         "name": "{{ title }}",
                         "telephone": "{{ fieldPhoneNumber }}",
-                        "openingHours": [
+                        "openingHoursSpecification": [
                           {% for hours in fieldOfficeHours %}
                             {
                               "@type": "OpeningHoursSpecification",
-                              "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}",
                               "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
-                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}"
+                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}",
+                              "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}"
                             }{% if !forloop.last %},{% endif %}
                           {% endfor %}
                         ],
