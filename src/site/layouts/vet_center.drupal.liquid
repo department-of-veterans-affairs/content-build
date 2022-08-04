@@ -172,6 +172,48 @@
                 %}
               {% endfor %}
             </div>
+            {% for healthService in fieldHealthServices %}
+              <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "GovernmentService",
+                  "name": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.name }}",
+                  "serviceType": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare }}",
+                  "serviceOperator": {
+                    "@type": "GovernmentOrganization",
+                    "name": "US Department of Veterans Affairs"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "{{ fieldAddress.administrativeArea }}"
+                  },
+                  "audience": {
+                    "@type": "Audience",
+                    "name": "Veterans"
+                  },
+                  "availableChannel": {
+                    "@type": "ServiceChannel",
+                    "name": "Vet Center",
+                    "availableLanguage": {
+                      "@type": "Language",
+                      "name": "Spanish",
+                      "alternateName": "es"
+                    },
+                    "serviceLocation": {
+                      "@type": "Hospital",
+                      "name": "{{ title }}",
+                      "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "{{ fieldAddress.addressLine1 }}",
+                        "addressLocality": "{{ fieldAddress.locality }}",
+                        "addressRegion": "{{ fieldAddress.administrativeArea }}",
+                        "postalCode": "{{ fieldAddress.postalCode }}"
+                      }
+                    }
+                  }
+                }
+              </script>
+            {% endfor %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
               fieldHealthServices
