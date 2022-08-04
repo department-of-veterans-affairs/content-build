@@ -11,7 +11,10 @@ function isBrokenLink(link, pagePath, allPaths) {
   if (!link) return true;
 
   const parsed = url.parse(link);
-  const isExternal = !!parsed.protocol;
+  const isExternal = !(
+    !parsed.protocol ||
+    (parsed.hostname && parsed.hostname.slice(-6) === 'va.gov')
+  );
 
   if (isExternal) return false;
 
