@@ -50,12 +50,12 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Get latest GHA Runner AMI ID # AMI images are rebuilt every 15 days, use the latest one
+      - name: Get latest GHA Runner AMI ID
         run: |
           echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
           --owners 008577686731 \
           --filters Name=state,Values=available \
-          --filters Name=name,Values=packer-gha-runner-ubuntu2004* \
+          --filters Name=name,Values=platform-gha-runner-ubuntu* \
           --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
           --output text)" >> $GITHUB_ENV
 
@@ -79,7 +79,7 @@ jobs:
           max_attempts: 3
           aws-resource-tags: >
             [
-              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
+              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner-on-demand"},
               {"Key": "project", "Value": "vagov"},
               {"Key": "office", "Value": "dsva"},
               {"Key": "application", "Value": "gha-runner"},
@@ -147,6 +147,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
 
       - name: Install tar
         run: sudo apt install tar
@@ -443,6 +446,18 @@ jobs:
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
+
       - name: Install dependencies
         uses: ./.github/workflows/install
         timeout-minutes: 30
@@ -709,6 +724,18 @@ jobs:
           mv /tmp/${{ github.run_id }}/.cache/${{ matrix.buildtype }} .cache/${{ matrix.buildtype }}
           df -h
           du -h .cache/${{ matrix.buildtype }}
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
 
       - name: Install dependencies
         uses: ./.github/workflows/install

@@ -1,3 +1,4 @@
+{% include "src/site/includes/faq-schema.liquid" with FAQs = fieldCcVetCenterFaqs %}
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with
@@ -38,6 +39,39 @@
               <div>
                 <div class="vads-c-facility-detail">
                   <section class="vads-facility-detail">
+                    <script type="application/ld+json">
+                      {
+                        "@context": "https://schema.org",
+                        "@type": "Place",
+                        "address": {
+                          "@type": "PostalAddress",
+                          "streetAddress": "{{ fieldAddress.addressLine1 }}",
+                          "addressLocality": "{{ fieldAddress.locality }}",
+                          "addressRegion": "{{ fieldAddress.administrativeArea }}",
+                          "postalCode": "{{ fieldAddress.postalCode }}"
+                        },
+                        "name": "{{ title }}",
+                        "telephone": "{{ fieldPhoneNumber }}",
+                        "openingHoursSpecification": [
+                          {% for hours in fieldOfficeHours %}
+                            {
+                              "@type": "OpeningHoursSpecification",
+                              "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
+                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}",
+                              "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}"
+                            }{% if !forloop.last %},{% endif %}
+                          {% endfor %}
+                        ],
+                        "hasMap": "https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}",
+                        "image": ["{{ fieldMedia.entity.image.derivative.url }}"],
+                        "branchCode": "{{ fieldFacilityLocatorApiId }}",
+                        "geo": {
+                          "@type": "GeoCoordinates",
+                          "latitude": "{{ fieldGeolocation.lat }}",
+                          "longitude": "{{ fieldGeolocation.lon }}"
+                        }
+                      }
+                    </script>
                     <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
                       Main Location</h3>
                     <div data-widget-type="expandable-operating-status-{{ fieldFacilityLocatorApiId }}"
