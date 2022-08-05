@@ -2,27 +2,12 @@ const xml = require('fast-xml-parser');
 const fetch = require('sync-fetch');
 const { normal } = require('../../../testing/e2e/timeouts');
 
-const options = {
-  attributeNamePrefix: '@_',
-  attrNodeName: 'attr',
-  textNodeName: '#text',
-  ignoreAttributes: true,
-  ignoreNameSpace: true,
-  allowBooleanAttributes: false,
-  parseNodeValue: true,
-  parseAttributeValue: false,
-  trimValues: true,
-  cdataTagName: '__cdata',
-  cdataPositionChar: '\\c',
-  parseTrueNumberOnly: false,
-};
-
 const step = Number(Cypress.env('STEP'));
 const data = fetch(
   `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap.xml`,
 ).text();
 const urls = xml
-  .parse(data, options)
+  .parse(data)
   .urlset.url.map(url => url.loc)
   .sort();
 const divider = Math.ceil(urls.length / 32);
