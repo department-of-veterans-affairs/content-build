@@ -178,6 +178,7 @@
                   "@context": "https://schema.org",
                   "@type": "GovernmentService",
                   "name": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.name }}",
+                  "alternateName": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterFriendlyName }}"
                   "serviceType": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare }}",
                   "serviceOperator": {
                     "@type": "GovernmentOrganization",
@@ -196,11 +197,11 @@
                     "name": "Vet Center",
                     "availableLanguage": {
                       "@type": "Language",
-                      "name": "Spanish",
-                      "alternateName": "es"
+                      "name": "English",
+                      "alternateName": "en"
                     },
                     "serviceLocation": {
-                      "@type": "Hospital",
+                      "@type": "Place",
                       "name": "{{ title }}",
                       "address": {
                         "@type": "PostalAddress",
