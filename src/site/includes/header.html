@@ -106,6 +106,7 @@
 
   {% include "src/site/includes/survey-tools.html" %}
 
+  {% comment %} TODO: Remove this block once the focus styling changes have been tested {% endcomment %}
   {% if entityId == 11463 and buildtype != "vagovprod" %}
     <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-0/dist/formation.min.css">
     <script type="module">
