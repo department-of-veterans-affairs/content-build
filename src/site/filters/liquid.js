@@ -1459,29 +1459,29 @@ module.exports = function registerFilters() {
     return null;
   };
 
-  liquid.filters.officeHoursDayFormatter = day => {
+  liquid.filters.officeHoursDayFormatter = (day, short = true) => {
     let formattedDay = '';
     switch (day) {
       case 0:
-        formattedDay = `Sun`;
+        formattedDay = short ? `Sun` : `Sunday`;
         break;
       case 1:
-        formattedDay = `Mon`;
+        formattedDay = short ? `Mon` : 'Monday';
         break;
       case 2:
-        formattedDay = `Tue`;
+        formattedDay = short ? `Tue` : 'Tuesday';
         break;
       case 3:
-        formattedDay = `Wed`;
+        formattedDay = short ? `Wed` : 'Wednesday';
         break;
       case 4:
-        formattedDay = `Thu`;
+        formattedDay = short ? `Thu` : 'Thursday';
         break;
       case 5:
-        formattedDay = `Fri`;
+        formattedDay = short ? `Fri` : 'Friday';
         break;
       case 6:
-        formattedDay = `Sat`;
+        formattedDay = short ? `Sat` : 'Saturday';
         break;
 
       default:
@@ -1495,4 +1495,19 @@ module.exports = function registerFilters() {
       .format('h:mm a')
       .replace(`am`, `a.m.`)
       .replace(`pm`, `p.m.`);
+
+  liquid.filters.deriveTimeForJSONLD = (time, timetype, comment) => {
+    if (comment === '24/7') {
+      if (timetype === 'endhours') {
+        return '23:59:59';
+      }
+      if (timetype === 'starthours') {
+        return '00:00:00';
+      }
+    }
+    if (time === null) {
+      return '';
+    }
+    return moment(time, 'Hmm').format('HH:mm:ss');
+  };
 };
