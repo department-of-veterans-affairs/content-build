@@ -106,6 +106,19 @@
 
   {% include "src/site/includes/survey-tools.html" %}
 
+  {% if entityId == 11463 and buildtype != "vagovprod" %}
+    <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-0/dist/formation.min.css">
+    <script type="module">
+      import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-0/loader/index.es2017.js";
+      defineCustomElements();
+    </script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@department-of-veterans-affairs/component-library/dist/main.css"
+    />
+  {% endif %}
+
 </head>
 
 <body class="{{ body_class }} merger">
