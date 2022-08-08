@@ -1290,5 +1290,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "burial-poc-v6",
+    "entryName": "burial-poc-v6",
+    "rootUrl": "/burial-poc-v6",
+    "productId": "3f7db617-af4b-4d7f-b30f-f288d5756668",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]

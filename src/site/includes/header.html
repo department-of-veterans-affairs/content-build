@@ -20,6 +20,10 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Preconnecting required origins: https://web.dev/uses-rel-preconnect/ -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://gateway.foresee.com" />
+
   <!-- Index only pages on production. -->
   {% if buildtype != 'vagovprod' %}
     <meta name="robots" content="noindex">

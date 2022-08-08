@@ -47,6 +47,10 @@ const healthCareLocalFacilityPageFragment = `
       administrativeArea
       postalCode
     }
+    fieldGeolocation {
+      lat
+      lon
+    }
     fieldPhoneNumber
     fieldMentalHealthPhone
     fieldOfficeHours {
