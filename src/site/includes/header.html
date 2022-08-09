@@ -41,8 +41,10 @@
   </script>
 
   <!-- Add web components. -->
-  <link rel="stylesheet" data-entry-name="web-components.css">
-  <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
+  {% if !(entityId == 11463 and buildtype != "vagovprod") %}
+    <link rel="stylesheet" data-entry-name="web-components.css">
+    <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
+  {% endif %}
 
   <!-- Render GA template. -->
   {% include 'src/site/includes/google-analytics.liquid' %}
@@ -110,7 +112,7 @@
   {% if entityId == 11463 and buildtype != "vagovprod" %}
     <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-0/dist/formation.min.css">
     <script type="module">
-      import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-0/loader/index.es2017.js";
+      import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-1/loader/index.es2017.js";
       defineCustomElements();
     </script>
     <link
