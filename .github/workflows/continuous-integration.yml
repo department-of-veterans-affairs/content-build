@@ -19,86 +19,9 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  start-runner:
-    runs-on: ubuntu-latest
-    outputs:
-      vagovdev: ${{ steps.start-ec2-runner-name.outputs.vagovdev }}
-      vagovstaging: ${{ steps.start-ec2-runner-name.outputs.vagovstaging }}
-      vagovprod: ${{ steps.start-ec2-runner-name.outputs.vagovprod }}
-      vagovdev-id: ${{ steps.start-ec2-runner-id.outputs.vagovdev }}
-      vagovstaging-id: ${{ steps.start-ec2-runner-id.outputs.vagovstaging }}
-      vagovprod-id: ${{ steps.start-ec2-runner-id.outputs.vagovprod }}
-    env:
-      INSTANCE_TYPE: m5.4xlarge
-
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
-    steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Get latest GHA Runner AMI ID
-        run: |
-          echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
-          --owners 008577686731 \
-          --filters Name=state,Values=available \
-          --filters Name=name,Values=platform-gha-runner-ubuntu* \
-          --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
-          --output text)" >> $GITHUB_ENV
-
-      - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
-        run: |
-          echo "SUBNET_ID=$(aws ec2 describe-subnets \
-          --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
-          --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
-          --output text)" >> $GITHUB_ENV
-
-      - name: Start EC2 Runner
-        id: start-ec2-runner
-        uses: department-of-veterans-affairs/ec2-github-runner@main
-        with:
-          mode: start
-          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          ec2-image-id: ${{ env.RUNNER_AMI_ID }}
-          ec2-instance-type: ${{ env.INSTANCE_TYPE }}
-          subnet-id: ${{ env.SUBNET_ID }}
-          security-group-id: sg-0e23b56be3798e3a1
-          max_attempts: 3
-          aws-resource-tags: >
-            [
-              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner-on-demand"},
-              {"Key": "project", "Value": "vagov"},
-              {"Key": "office", "Value": "dsva"},
-              {"Key": "application", "Value": "gha-runner"},
-              {"Key": "VAECID", "Value": "AWG20180517003"},
-              {"Key": "environment", "Value": "utility"}
-            ]
-
-      - name: EC2 Runner Name
-        id: start-ec2-runner-name
-        run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.label }}
-
-      - name: EC2 Runner ID
-        id: start-ec2-runner-id
-        run: echo ::set-output name=${{ matrix.buildtype }}::${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
-
   build:
     name: Build
-    needs: start-runner
-    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
+    runs-on: [self-hosted, asg]
     timeout-minutes: 60
 
     defaults:
@@ -417,8 +340,8 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: ${{ needs.start-runner.outputs.vagovprod }}
-    needs: [start-runner, build]
+    runs-on: [self-hosted, asg]
+    needs: [build]
     timeout-minutes: 30
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
@@ -652,10 +575,9 @@ jobs:
 
   archive:
     name: Archive
-    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype]}}
+    runs-on: [self-hosted, asg]
     needs:
       [
-        start-runner,
         cypress-tests,
         unit-tests,
         linting,
@@ -703,8 +625,8 @@ jobs:
 
   cache-drupal-content:
     name: Cache Drupal Content
-    runs-on: ${{ needs.start-runner.outputs[matrix.buildtype] }}
-    needs: [start-runner, archive]
+    runs-on: [self-hosted, asg]
+    needs: [archive]
     if: ${{ always() && github.ref == 'refs/heads/main' && needs.archive.result == 'success' }}
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
@@ -806,7 +728,7 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, archive, cache-drupal-content, get-latest-run-number]
 
@@ -908,48 +830,6 @@ jobs:
 
       - name: Trigger Jenkins pipeline
         run: node script/github-actions/trigger-jenkins.js
-
-  stop-runner:
-    name: Stop on-demand-runner
-    needs: [start-runner, cypress-tests, archive, cache-drupal-content]
-    runs-on: ubuntu-latest
-    if: ${{ always() }} # Even if an error happened, let's stop the runner
-    env:
-      INSTANCE_TYPE: c5.4xlarge
-
-    strategy:
-      fail-fast: false
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-        include:
-          - buildtype: vagovdev
-            id: vagovdev-id
-          - buildtype: vagovstaging
-            id: vagovstaging-id
-          - buildtype: vagovprod
-            id: vagovprod-id
-
-    steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Stop Runner
-        uses: department-of-veterans-affairs/ec2-github-runner@main
-        with:
-          mode: stop
-          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          label: ${{ needs.start-runner.outputs[matrix.buildtype]}}
-          ec2-instance-id: ${{ needs.start-runner.outputs[matrix.id]}}
 
   notify-failure:
     name: Notify Failure
