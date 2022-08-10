@@ -139,6 +139,20 @@ const healthCareLocalFacilityPageFragment = `
               }
             }
           }
+          fieldAdministration {
+            entity{
+              ... on TaxonomyTermAdministration {
+                entityId
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
         }
       }
     }
