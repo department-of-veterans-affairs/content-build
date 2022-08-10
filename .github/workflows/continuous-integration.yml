@@ -154,7 +154,8 @@ jobs:
           REF=${{ github.sha }}
           BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
           EOF
-
+      
+      
       - name: Persist E2E test build
         if: ${{ matrix.buildtype == 'vagovprod' }}
         run: |
@@ -167,6 +168,13 @@ jobs:
 
       - name: Compress build
         run: tar -C build/${{ matrix.buildtype }} -cvf ${{ matrix.buildtype }}.tar.bz2 .
+        
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.buildtype }}.tar.bz2
+          path: ${{ matrix.buildtype }}.tar.bz2
+          retention-days: 1
 
       - name: Persist compressed build and drupal cache
         run: |
@@ -359,13 +367,21 @@ jobs:
       - name: Checkout content-build
         uses: actions/checkout@v3
 
+      - name: Download production build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: vagovprod.tar.bz2
+
       - name: Restore vagovprod build
         run: |
-          mkdir -p build
-          cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+          #mkdir -p build
+          #cp -R /tmp/${{ github.run_id }}/test-build/vagovprod build/vagovprod
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf vagovprod.tar.bz2
           du -h build/vagovprod
 
         # Required for Docker
+
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
