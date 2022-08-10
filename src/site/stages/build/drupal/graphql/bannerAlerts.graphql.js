@@ -50,6 +50,13 @@ const bannerAlerts = `
             }
           }
         }
+        fieldAdministration {
+          entity{
+            ... on TaxonomyTermAdministration {
+              entityId
+            }
+          }
+        }
       }
     }
   }
