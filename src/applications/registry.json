@@ -1180,7 +1180,7 @@
   {
     "appName": "Enrollment Verification",
     "entryName": "enrollment-verification",
-    "rootUrl": "/enrollment-history",
+    "rootUrl": "/education/verify-school-enrollment",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
