@@ -366,6 +366,9 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
+        
+      - name: Move VA cert to /etc/ssl/certs
+        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
       - name: Download production build artifact
         uses: actions/download-artifact@v3
@@ -379,12 +382,7 @@ jobs:
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf vagovprod.tar.bz2
           du -h build/vagovprod
-
-        # Required for Docker
-
-      - name: Move VA cert to /etc/ssl/certs
-        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
-
+      
       - name: Get Node version
         id: get-node-version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
