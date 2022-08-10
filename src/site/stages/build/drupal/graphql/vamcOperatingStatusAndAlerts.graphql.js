@@ -73,6 +73,13 @@ const vamcOperatingStatusAndAlerts = `
         }
       }
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 

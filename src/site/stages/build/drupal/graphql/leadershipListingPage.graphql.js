@@ -5,7 +5,7 @@
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const leadershipListingPage = `
- fragment leadershipListingPage on NodeLeadershipListing {
+  fragment leadershipListingPage on NodeLeadershipListing {
     ${entityElementsFromPages}
     title
     fieldIntroText
@@ -113,7 +113,14 @@ const leadershipListingPage = `
         }
       }
     }
- }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
+  }
 `;
 
 const GetNodeLeadershipListingPages = `

@@ -7,7 +7,7 @@ const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 const healthServicesListingPage = `
- fragment healthServicesListingPage on NodeHealthServicesListing {
+  fragment healthServicesListingPage on NodeHealthServicesListing {
     ${entityElementsFromPages}
     title
     fieldIntroText
@@ -48,7 +48,7 @@ const healthServicesListingPage = `
               fieldLocalHealthCareService {
                 entity {
                   ... on NodeHealthCareLocalHealthService {
-                    status                  
+                    status        
                     entityUrl {
                       path
                     }
@@ -61,6 +61,13 @@ const healthServicesListingPage = `
                             }
                           }
                           title
+                        }
+                      }
+                    }
+                    fieldAdministration {
+                      entity{
+                        ... on TaxonomyTermAdministration {
+                          entityId
                         }
                       }
                     }
@@ -97,7 +104,14 @@ const healthServicesListingPage = `
         }
       }
     }
- }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
+  }
 `;
 
 function getNodeHealthServicesListingPages(operationName, offset, limit) {

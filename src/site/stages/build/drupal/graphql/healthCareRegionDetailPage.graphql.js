@@ -74,6 +74,13 @@ const healthCareRegionDetailPage = `
         }
       }
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 
