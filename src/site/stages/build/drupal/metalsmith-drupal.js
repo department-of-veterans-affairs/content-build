@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const recursiveRead = require('recursive-readdir');
 const JSONStream = require('JSONStream');
+const cloneDeep = require('lodash/cloneDeep');
 
 const ENVIRONMENTS = require('../../../constants/environments');
 const { ENABLED_ENVIRONMENTS } = require('../../../constants/drupals');
@@ -337,6 +338,38 @@ async function loadCachedDrupalFiles(buildOptions, files) {
   }
 }
 
+function appendDrupalDataWithLovellTricarePages(drupalData) {
+  const isLovellPage = page => {
+    if (page.fieldAdministration) {
+      return page.fieldAdministration.entity.entityId === '347';
+    }
+    return false;
+  };
+
+  // Adjust this if needed to get the fieldAdministration field
+  const lovellPages = drupalData.data.nodeQuery.entities.filter(isLovellPage);
+
+  // Deep clone with lodash
+  const clonedPages = cloneDeep(lovellPages);
+
+  const modifiedLovellPages = clonedPages.map(lovellPage => {
+    // Change the URL for the tricare pages
+    lovellPage.entityUrl.path = lovellPage.entityUrl.path.replace(
+      '/lovell-federal-health-care',
+      '/lovell-federal-tricare-health-care',
+    );
+
+    // Modify the title
+    lovellPage.title = lovellPage.title.replace('Federal', 'Federal TRICARE');
+
+    return lovellPage;
+  });
+
+  drupalData.data.nodeQuery.entities.push(...modifiedLovellPages);
+
+  return drupalData;
+}
+
 function getDrupalContent(buildOptions) {
   if (!ENABLED_ENVIRONMENTS.has(buildOptions.buildtype)) {
     log(`Drupal integration disabled for buildtype ${buildOptions.buildtype}`);
@@ -350,6 +383,10 @@ function getDrupalContent(buildOptions) {
       drupalData = convertDrupalFilesToLocal(drupalData, files);
 
       await loadCachedDrupalFiles(buildOptions, files);
+
+      // clone and modify for lovell tricare pages
+      drupalData = appendDrupalDataWithLovellTricarePages(drupalData);
+
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);
