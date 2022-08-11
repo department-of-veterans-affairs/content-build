@@ -74,9 +74,6 @@ jobs:
       - name: Setup Yarn
         run: npm i -g yarn@1.21.1
 
-      - name: Install tar
-        run: sudo apt install tar
-
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v3
