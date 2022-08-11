@@ -167,9 +167,11 @@ jobs:
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
 
       - name: Compress build
+        if: ${{ matrix.buildtype == 'vagovprod' }}
         run: tar -C build/${{ matrix.buildtype }} -cjf ${{ matrix.buildtype }}.tar.bz2 .
         
       - name: Upload build artifact
+        if: ${{ matrix.buildtype == 'vagovprod' }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.buildtype }}.tar.bz2
