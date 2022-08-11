@@ -327,7 +327,7 @@ function appendDrupalDataWithLovellTricarePages(drupalData) {
     );
 
     // Modify the title
-    lovellPage.title = lovellPage.title.replace('Federal', 'Tricare');
+    lovellPage.title = lovellPage.title.replace('Federal', 'Federal TRICARE');
 
     return lovellPage;
   });
