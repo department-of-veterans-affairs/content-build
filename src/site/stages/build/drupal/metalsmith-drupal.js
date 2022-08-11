@@ -323,7 +323,7 @@ function appendDrupalDataWithLovellTricarePages(drupalData) {
     // Change the URL for the tricare pages
     lovellPage.entityUrl.path = lovellPage.entityUrl.path.replace(
       '/lovell-federal-health-care',
-      '/lovell-tricare-health-care',
+      '/lovell-federal-tricare-health-care',
     );
 
     // Modify the title
