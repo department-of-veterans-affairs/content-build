@@ -373,7 +373,7 @@ jobs:
 
       -   name: Install AWS CLI v2
           run:  |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
+            curl -kL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
             unzip -q /tmp/awscliv2.zip -d /tmp
             rm /tmp/awscliv2.zip
             /tmp/aws/install --update
