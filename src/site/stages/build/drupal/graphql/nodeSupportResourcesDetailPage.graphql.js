@@ -48,37 +48,27 @@ fragment nodeSupportResourcesDetailPage on NodeSupportResourcesDetailPage {
       ... contactInformation
     }
   }
-  fieldContentBlock {
-    targetId
-    targetRevisionId
+  fieldQAGroups {
     entity {
-      entityId
       ... on ParagraphQAGroup {
         fieldSectionHeader
-        fieldRichWysiwyg {
-          value
-          format
-          processed
-        }
-        queryFieldQAs {
-          entities {
-            entityId
-            entityLabel
-            moderationState
+        fieldAccordionDisplay
+        fieldQAs {
+          entity {
             ... on NodeQA {
+              title
+              entityId
+              entityBundle
               fieldAnswer {
-                targetId
-                targetRevisionId
-                ... on FieldNodeQAFieldAnswer {
-                  entity {
-                    entityId
-                    entityLabel
-                    
-                  }
+                entity {
+                  entityType
+                  entityBundle
+                  ... richTextCharLimit1000
+                  ... reactWidget
                 }
               }
             }
-          } 
+          }
         }
       }
     }
