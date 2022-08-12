@@ -93,10 +93,6 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
-      - name: Set Drupal address
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
-
       - name: Configure AWS Credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -104,14 +100,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      - name: set Drupal prod password
+      - name: Set Drupal address
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+
+      - name: Set Drupal prod password
         if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/main' }}
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
           env_variable_name: DRUPAL_PASSWORD
 
-      - name: set Drupal prod username
+      - name: Set Drupal prod username
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
@@ -151,13 +151,6 @@ jobs:
           REF=${{ github.sha }}
           BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
           EOF
-
-      - name: Persist E2E test build
-        if: ${{ matrix.buildtype == 'vagovprod' }}
-        run: |
-          mkdir -p /tmp/${{ github.run_id }}/test-build
-          rm -rf /tmp/${{ github.run_id }}/test-build/vagovprod
-          cp -R build/vagovprod /tmp/${{ github.run_id }}/test-build
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
