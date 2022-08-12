@@ -25,6 +25,31 @@ fragment nodeSupportResourcesDetailPage on NodeSupportResourcesDetailPage {
       ... downloadableFile
       ... embeddedImage
       ... numberCallout
+      fieldQAGroups {
+        entity {
+          ... on ParagraphQAGroup {
+            fieldSectionHeader
+            fieldAccordionDisplay
+            fieldQAs {
+              entity {
+                ... on NodeQA {
+                  title
+                  entityId
+                  entityBundle
+                  fieldAnswer {
+                    entity {
+                      entityType
+                      entityBundle
+                      ... richTextCharLimit1000
+                      ... reactWidget
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   fieldTableOfContentsBoolean
@@ -48,31 +73,7 @@ fragment nodeSupportResourcesDetailPage on NodeSupportResourcesDetailPage {
       ... contactInformation
     }
   }
-  fieldQAGroups {
-    entity {
-      ... on ParagraphQAGroup {
-        fieldSectionHeader
-        fieldAccordionDisplay
-        fieldQAs {
-          entity {
-            ... on NodeQA {
-              title
-              entityId
-              entityBundle
-              fieldAnswer {
-                entity {
-                  entityType
-                  entityBundle
-                  ... richTextCharLimit1000
-                  ... reactWidget
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+
   fieldRelatedBenefitHubs {
     entity {
       ... on NodeLandingPage {
