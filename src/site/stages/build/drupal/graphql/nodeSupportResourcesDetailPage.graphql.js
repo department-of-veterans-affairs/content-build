@@ -150,8 +150,7 @@ const GetNodeSupportResourcesDetailPage = `
       ]
     }) {
       entities {
-				... NodeSupportResourcesDetailPage 
-        
+				... nodeSupportResourcesDetailPage 
       }
     }
   }
