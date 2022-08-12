@@ -403,7 +403,7 @@ jobs:
       - name: Unpack build
         run: |
           mkdir -p build/vagovprod
-          tar -C build/vagovprod -xjf /tmp/vagovprod.tar.bz2
+          tar -C build/vagovprod -xjf vagovprod.tar.bz2
 
         # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
