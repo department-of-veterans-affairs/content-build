@@ -36,6 +36,7 @@ test-results/
 
 # Ignore user's editor/IDE prefs
 .vscode/
+*.code-workspace
 .idea/
 .swp
 .swo
