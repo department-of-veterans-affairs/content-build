@@ -165,6 +165,10 @@ jobs:
       - name: Compress build
         run: tar -C build/${{ matrix.buildtype }} -cvf ${{ matrix.buildtype }}.tar.bz2 .
 
+      - name: Cache Drupal content
+        if: github.ref == 'refs/heads/main'
+        run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
+
       - name: Get role from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
@@ -183,6 +187,10 @@ jobs:
 
       - name: Upload build
         run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
+
+      - name: Upload Drupal cache
+        if: github.ref == 'refs/heads/main'
+        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
 
       # Only will get called if error in workflow
       - name: Configure AWS credentials
@@ -367,7 +375,8 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
-
+      
+        # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
@@ -410,10 +419,6 @@ jobs:
         run: |
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xf vagovprod.tar.bz2
-
-        # Required for Docker
-      - name: Move VA cert to /etc/ssl/certs
-        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
       - name: Get Node version
         id: get-node-version
@@ -619,138 +624,11 @@ jobs:
           output: |
             {"summary":${{ env.MOCHAWESOME_REPORT_RESULTS }}}
 
-  archive:
-    name: Archive
-    runs-on: [self-hosted, asg]
-    needs:
-      [
-        cypress-tests,
-        unit-tests,
-        linting,
-        security-audit,
-        drupal-cache-test,
-      ]
-
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
-    steps:
-      - name: Testing
-        run: echo "Success"
-      # - name: Restore ${{ matrix.buildtype }} build
-      #   run: |
-      #     mv /tmp/${{ github.run_id }}/${{ matrix.buildtype }}.tar.bz2 .
-      #     df -h
-      #     du -h ${{ matrix.buildtype }}.tar.bz2
-
-      # - name: Configure AWS credentials (1)
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: us-gov-west-1
-
-      # - name: Get role from Parameter Store
-      #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-      #   with:
-      #     ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-      #     env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      # - name: Configure AWS Credentials (2)
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: us-gov-west-1
-      #     role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-      #     role-duration-seconds: 900
-      #     role-session-name: vsp-frontendteam-githubaction
-
-      # - name: Upload build
-      #   run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
-
-  cache-drupal-content:
-    name: Cache Drupal Content
-    runs-on: [self-hosted, asg]
-    needs: archive
-    if: ${{ always() && github.ref == 'refs/heads/main' && needs.archive.result == 'success' }}
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-
-    strategy:
-      fail-fast: false
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Restore ${{ matrix.buildtype }} cache
-        run: |
-          mkdir -p .cache
-          mv /tmp/${{ github.run_id }}/.cache/${{ matrix.buildtype }} .cache/${{ matrix.buildtype }}
-          df -h
-          du -h .cache/${{ matrix.buildtype }}
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Setup Yarn
-        run: npm i -g yarn@1.21.1
-
-      - name: Install dependencies
-        uses: ./.github/workflows/install
-        timeout-minutes: 30
-        with:
-          key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-
-      - name: Cache drupal
-        run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
-
-      - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
-
-      - name: Upload drupal cache
-        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
-
   get-latest-run-number:
     name: Get Latest Workflow Run Number
     runs-on: ubuntu-latest
-    if: ${{ always() && github.ref == 'refs/heads/main' && needs.cache-drupal-content.result == 'success' }}
-    needs: cache-drupal-content
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.cypress-tests.result == 'success' }}
+    needs: cypress-tests
     outputs:
       latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
 
@@ -778,7 +656,7 @@ jobs:
     name: Deploy
     runs-on: self-hosted
     if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
-    needs: [build, archive, cache-drupal-content, get-latest-run-number]
+    needs: [build, cypress-tests, get-latest-run-number]
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
