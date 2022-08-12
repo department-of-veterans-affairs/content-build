@@ -394,8 +394,14 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - name: Restore vagovprod build
-        run: aws s3 --only-show-errors cp s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2 .
+      - name: Download production build
+        run: |
+          aws s3 --only-show-errors cp s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2 /tmp/
+
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf /tmp/vagovprod.tar.bz2
 
         # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
