@@ -398,7 +398,7 @@ jobs:
 
       - name: Download production build
         run: |
-          aws s3 --only-show-errors cp s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2 /tmp/
+          aws s3 --only-show-errors cp s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2 .
 
       - name: Unpack build
         run: |
