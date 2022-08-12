@@ -25,29 +25,32 @@ fragment nodeSupportResourcesDetailPage on NodeSupportResourcesDetailPage {
       ... downloadableFile
       ... embeddedImage
       ... numberCallout
-      fieldQAGroups {
-        entity {
-          ... on ParagraphQAGroup {
-            fieldSectionHeader
-            fieldAccordionDisplay
-            fieldQAs {
-              entity {
-                ... on NodeQA {
-                  title
-                  entityId
-                  entityBundle
-                  fieldAnswer {
-                    entity {
-                      entityType
-                      entityBundle
-                      ... richTextCharLimit1000
-                      ... reactWidget
-                    }
+      ... on ParagraphQAGroup {
+        fieldSectionHeader
+        fieldRichWysiwyg {
+          value
+          format
+          processed
+        }
+        queryFieldQAs {
+          entities {
+            entityId
+            entityLabel
+            moderationState
+            ... on NodeQA {
+              fieldAnswer {
+                targetId
+                targetRevisionId
+                ... on FieldNodeQAFieldAnswer {
+                  entity {
+                    entityId
+                    entityLabel
+                    
                   }
                 }
               }
             }
-          }
+          } 
         }
       }
     }
