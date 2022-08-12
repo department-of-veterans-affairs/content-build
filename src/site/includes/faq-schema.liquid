@@ -3,10 +3,10 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      {% for faq in FAQs.fetched.fieldQuestions %}
+      {% for faq in faqs %}
         {
           "@type": "Question",
-          "name": "{% for question in faq.entity.fieldQuestion %}{{ question.value }}{% endfor %}",
+          "name": "{{ faq.entity.fieldQuestion }}",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "{% for answer in faq.entity.fieldAnswer %}{% for answerContent in answer.entity.fieldWysiwyg %}{{ answerContent.value | strip_newlines | replace: "\"", "'" | replace: "&nbsp;", " " }}{% endfor %}{% endfor %}"
