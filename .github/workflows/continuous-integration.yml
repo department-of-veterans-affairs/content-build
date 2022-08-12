@@ -371,13 +371,13 @@ jobs:
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
-      -   name: Install AWS CLI v2
-          run:  |
-            curl -kL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
-            unzip -q /tmp/awscliv2.zip -d /tmp
-            rm /tmp/awscliv2.zip
-            /tmp/aws/install --update
-            rm -rf /tmp/aws/
+      - name: Install AWS CLI
+        run:  |
+          curl -kL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscli.zip
+          unzip -q /tmp/awscli.zip -d /tmp
+          rm /tmp/awscli.zip
+          /tmp/aws/install --update
+          rm -rf /tmp/aws/
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
@@ -409,7 +409,7 @@ jobs:
       - name: Unpack build
         run: |
           mkdir -p build/vagovprod
-          tar -C build/vagovprod -xjf vagovprod.tar.bz2
+          tar -C build/vagovprod -xf vagovprod.tar.bz2
 
         # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
