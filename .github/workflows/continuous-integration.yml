@@ -371,8 +371,8 @@ jobs:
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
-      - uses: chrislennon/action-aws-cli@v1.1
-      
+      - uses: unfor19/install-aws-cli-action@v1.0.3
+
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
         with:
