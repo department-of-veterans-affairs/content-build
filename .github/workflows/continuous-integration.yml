@@ -369,10 +369,11 @@ jobs:
       - name: Checkout content-build
         uses: actions/checkout@v3
       
-        # Required for Docker
+      # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
+      # Required for Docker
       - name: Install AWS CLI
         run:  |
           curl -kL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscli.zip
