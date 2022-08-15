@@ -353,8 +353,7 @@ jobs:
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
       - name: Download production build
-        run: |
-          curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
+        run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
 
       - name: Unpack build
         run: |
