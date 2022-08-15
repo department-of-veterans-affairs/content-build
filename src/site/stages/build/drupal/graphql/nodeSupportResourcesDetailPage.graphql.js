@@ -25,34 +25,7 @@ fragment nodeSupportResourcesDetailPage on NodeSupportResourcesDetailPage {
       ... downloadableFile
       ... embeddedImage
       ... numberCallout
-      ... on ParagraphQAGroup {
-        fieldSectionHeader
-        fieldRichWysiwyg {
-          value
-          format
-          processed
-        }
-        queryFieldQAs {
-          entities {
-            entityId
-            entityLabel
-            moderationState
-            ... on NodeQA {
-              fieldAnswer {
-                targetId
-                targetRevisionId
-                ... on FieldNodeQAFieldAnswer {
-                  entity {
-                    entityId
-                    entityLabel
-                    
-                  }
-                }
-              }
-            }
-          } 
-        }
-      }
+      ... qaGroup 
     }
   }
   fieldTableOfContentsBoolean
@@ -154,7 +127,7 @@ const GetNodeSupportResourcesDetailPage = `
       ]
     }) {
       entities {
-				... nodeSupportResourcesDetailPage 
+        ... nodeSupportResourcesDetailPage 
       }
     }
   }
