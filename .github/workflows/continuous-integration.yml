@@ -350,37 +350,16 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     needs: build
     timeout-minutes: 30
-    container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
-      options: -u 0
-      volumes:
-        - /usr/local/share:/share
-        - /tmp:/tmp
-        - /etc/ssl/certs
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
-      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
-      
-      # Required for Docker
-      - name: Move VA cert to /etc/ssl/certs
-        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
-
-      # Required for Docker
-      - name: Install AWS CLI
-        run:  |
-          curl -kL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscli.zip
-          unzip -q /tmp/awscli.zip -d /tmp
-          rm /tmp/awscli.zip
-          /tmp/aws/install --update
-          rm -rf /tmp/aws/
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@v1
