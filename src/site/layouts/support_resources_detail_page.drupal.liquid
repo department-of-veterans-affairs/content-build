@@ -47,7 +47,8 @@
             {% endfor %}
 
             <!-- QAs -->
-          {% if fieldQAGroups %}
+          {% if fieldContentBlock.entity.queryFieldQAs %}
+          {% assign fieldQAGroups = fieldContentBlock.entity.queryFieldQAs %}
             {% for fieldQAGroup in fieldQAGroups %}
               <!-- Optional section header -->
               {% if fieldQAGroup.entity.fieldSectionHeader %}
