@@ -1154,7 +1154,7 @@
     "entryName": "1990ez-edu-benefits",
     "rootUrl": "/education/apply-for-benefits-form-22-1990",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
