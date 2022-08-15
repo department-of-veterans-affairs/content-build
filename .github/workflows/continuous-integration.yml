@@ -333,40 +333,28 @@ jobs:
     runs-on: [self-hosted, asg]
     needs: build
     timeout-minutes: 30
+    container:
+      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
+      options: -u 0
+      volumes:
+        - /usr/local/share:/share
+        - /etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
+      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
-
-      - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
+      
+      # Required for Docker
+      - name: Move VA cert to /etc/ssl/certs
+        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
 
       - name: Download production build
         run: |
-          aws s3 --only-show-errors cp s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2 .
+          curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
 
       - name: Unpack build
         run: |
@@ -384,10 +372,6 @@ jobs:
             .cache/yarn
             /github/home/.cache/Cypress
             **/node_modules
-
-      - name: Install Cypress dependencies
-        # From https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
-        run: apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
