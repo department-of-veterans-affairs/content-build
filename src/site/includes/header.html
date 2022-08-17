@@ -41,7 +41,24 @@
   </script>
 
   <!-- Add web components. -->
-  {% if entityId != 11463 or buildtype != "vagovdev") %}
+  {% comment %} TODO: Remove this block once the focus styling changes have been tested {% endcomment %}
+  {% if entityId == 11463 and buildtype == "vagovdev" %}
+    <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-0/dist/formation.min.css">
+    <script type="module">
+      import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-1/loader/index.es2017.js";
+      defineCustomElements();
+    </script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@department-of-veterans-affairs/component-library@11.3.2-1/dist/main.css"
+    />
+    <style>
+      .usa-accordion-button:focus {
+        border: none !important;
+      }
+    </style>
+  {% else %}
     <link rel="stylesheet" data-entry-name="web-components.css">
     <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
   {% endif %}
@@ -107,25 +124,6 @@
   </script>
 
   {% include "src/site/includes/survey-tools.html" %}
-
-  {% comment %} TODO: Remove this block once the focus styling changes have been tested {% endcomment %}
-  {% if entityId == 11463 and buildtype == "vagovdev" %}
-    <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-0/dist/formation.min.css">
-    <script type="module">
-      import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-1/loader/index.es2017.js";
-      defineCustomElements();
-    </script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/@department-of-veterans-affairs/component-library@11.3.2-1/dist/main.css"
-    />
-    <style>
-      .usa-accordion-button:focus {
-        border: none !important;
-      }
-    </style>
-  {% endif %}
 
 </head>
 
