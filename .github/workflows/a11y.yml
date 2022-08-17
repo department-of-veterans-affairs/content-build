@@ -176,7 +176,8 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
-        ref: 'main'
+        with:
+          ref: 'main'
 
       - name: Get Node version
         id: get-node-version
