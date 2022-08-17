@@ -49,7 +49,6 @@ fragment nodeSupportResourcesDetailPage on NodeSupportResourcesDetailPage {
       ... contactInformation
     }
   }
-
   fieldRelatedBenefitHubs {
     entity {
       ... on NodeLandingPage {
