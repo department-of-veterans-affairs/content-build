@@ -160,7 +160,7 @@ jobs:
     timeout-minutes: 120
     runs-on: [self-hosted, asg]
     container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
+      image: public.ecr.aws/cypress-io/cypress/browsers:node16.14.2-slim-chrome103-ff102
       options: -u 1001:1001 -v /usr/local/share:/share
     strategy:
       fail-fast: false
