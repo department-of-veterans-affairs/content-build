@@ -174,7 +174,7 @@ env:
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
-      - name: Clean up test:
+      - name: Clean up test
         run: |
           rm -rf node_modules
           rm -rf .cache
