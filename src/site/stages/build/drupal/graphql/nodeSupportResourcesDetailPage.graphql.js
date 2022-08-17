@@ -108,6 +108,7 @@ const GetNodeSupportResourcesDetailPage = `
   ${fragments.process}
   ${fragments.qaSection}
   ${fragments.qa}
+  ${fragments.qaGroup}
   ${fragments.listOfLinkTeasers}
   ${fragments.reactWidget}
   ${fragments.spanishSummary}
