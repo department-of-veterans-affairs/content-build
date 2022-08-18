@@ -7,7 +7,10 @@ describe('Web Components', () => {
     cy.visit('/');
     cy.window().then(window => {
       webComponentTags.forEach(tag => {
+        // This will be the constructor the browser uses when it sees a
+        // Design System web component in the document.
         const customElement = window.customElements.get(tag);
+
         assert.isFunction(customElement);
       });
     });
