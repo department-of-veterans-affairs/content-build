@@ -619,7 +619,11 @@ jobs:
 
     steps:
       - name: Runner cleanup
-        run: find ! -name '.' ! -name '..' -delete
+        run: |
+          ls -la ./
+          rm -rf ./* || true
+          rm -rf ./.??* || true
+          ls -la ./
 
       - name: Checkout
         uses: actions/checkout@v3
