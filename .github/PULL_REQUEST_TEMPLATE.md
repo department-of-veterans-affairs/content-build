@@ -1,7 +1,7 @@
 ## Description
 
 closes __   
-relates to __
+relates to __  
 
 ## Testing done & Screenshots
 
@@ -21,6 +21,7 @@ What variations of circumstances (users, actions, values) need to be checked?
 
 
 ## Acceptance criteria
+
 - [ ]
 
 ## Definition of done
