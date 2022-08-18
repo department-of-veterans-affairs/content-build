@@ -618,6 +618,9 @@ jobs:
             bucket: content.staging.va.gov
 
     steps:
+      - name: Runner cleanup
+        run: find ! -name '.' ! -name '..' -delete
+
       - name: Checkout
         uses: actions/checkout@v3
 
