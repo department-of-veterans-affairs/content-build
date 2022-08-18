@@ -621,8 +621,8 @@ jobs:
       - name: Runner cleanup
         run: |
           ls -la ./
-          sudo rm -rf ./* || true
-          sudo rm -rf ./.??* || true
+          rm -rf ./* || true
+          rm -rf ./.??* || true
           ls -la ./
 
       - name: Checkout
