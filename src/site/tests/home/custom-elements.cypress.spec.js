@@ -11,7 +11,7 @@ describe('Web Components', () => {
         // Design System web component in the document.
         const customElement = window.customElements.get(tag);
 
-        assert.isFunction(customElement);
+        assert.isFunction(customElement, `${tag} is defined`);
       });
     });
   });
