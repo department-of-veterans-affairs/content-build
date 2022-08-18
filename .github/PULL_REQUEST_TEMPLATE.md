@@ -1,10 +1,23 @@
 ## Description
 
+closes __
+relates to __
 
-## Testing done
+## Testing done & Screenshots
 
 
-## Screenshots
+
+## QA steps
+
+What needs to be checked to prove this works?  
+What needs to be checked to prove it didn't break any related things?  
+What variations of circumstances (users, actions, values) need to be checked?  
+
+1. Do this
+   - [ ] Validate that
+2. Then
+   - [ ] Validate that
+3. Then validate Acceptance Criteria from issue
 
 
 ## Acceptance criteria
