@@ -1088,10 +1088,10 @@
   dependencies:
     minimist "^1.2.6"
 
-"@department-of-veterans-affairs/web-components@^4.11.0":
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-4.11.0.tgz#94486e70e3ac7640820c0ddda4dce6c055710ab3"
-  integrity sha512-6egB77pWbf3FIMnirIrWfm/QqoKblgYWsiYxEq3UNDlYWMzCpA/82+5614gguXq58kLXLWHdDVY/BOINACiuqw==
+"@department-of-veterans-affairs/web-components@~4.9.6":
+  version "4.9.6"
+  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-4.9.6.tgz#16e9f057c0dbef33aa4342fc4d6ea94cdfd07c41"
+  integrity sha512-VJQq4VY8OQ0ZD32BacCjnnBeHyrJ9OoRmlBKZ7bR4LTLQwUWBDNYgSnLh8LQMO1h2gLnXdeeuMOz8xKEqT/Jig==
   dependencies:
     "@stencil/core" "^2.10.0"
     aria-hidden "^1.1.3"
