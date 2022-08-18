@@ -1198,7 +1198,7 @@
   {
     "appName": "Education Letters",
     "entryName": "education-letters",
-    "rootUrl": "/education/education-letters",
+    "rootUrl": "/education/download-letters",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
