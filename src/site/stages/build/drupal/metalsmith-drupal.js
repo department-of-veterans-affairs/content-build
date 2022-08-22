@@ -315,45 +315,54 @@ function isLovellClonePage(page) {
   return false;
 }
 
+function lovellPageModify(page, variant) {
+  const linkMod = variant;
+  const fieldOfficeMod = variant === 'tricare' ? 'Tricare' : 'VA';
+
+  // Modify the path
+  page.entityUrl.path = page.entityUrl.path.replace(
+    '/lovell-federal-health-care',
+    `/lovell-federal-${linkMod}-health-care`,
+  );
+
+  // Modify the title used for querying the menus
+  if (page.fieldOffice) {
+    page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
+      'Federal',
+      `Federal ${fieldOfficeMod}`,
+    );
+  }
+  if (page.fieldRegionPage) {
+    page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
+      'Federal',
+      `Federal ${fieldOfficeMod}`,
+    );
+  }
+
+  // Modify the title this will become more complex to handle specific cases
+  if (variant === 'tricare') {
+    page.title = page.title.replace('Federal', 'Federal Tricare');
+  }
+  if (variant === 'va') {
+    page.title = page.title.replace('Federal', 'Federal VA');
+  }
+
+  return page;
+}
+
 function appendDrupalDataWithLovellTricarePages(drupalData, lovellClonePages) {
   // Deep clone with lodash
   const clonedPages = cloneDeep(lovellClonePages);
 
   // Modify the clones
   const modifiedLovellPages = clonedPages.map(page => {
-    page.entityUrl.path = page.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      '/lovell-federal-tricare-health-care',
-    );
-
-    page.title = page.title.replace('Federal', 'Federal Tricare');
-
-    //! !! Need to modify the value that is used to get the menu !!!
-    if (page.fieldOffice) {
-      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-        'Federal',
-        'Federal Tricare',
-      );
-    }
-
+    page = lovellPageModify(page, 'tricare');
     return page;
   });
 
   // Modify the original pages
   lovellClonePages.forEach(page => {
-    page.entityUrl.path = page.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      '/lovell-federal-va-health-care',
-    );
-
-    page.title = page.title.replace('Federal', 'Federal VA');
-
-    if (page.fieldOffice) {
-      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-        'Federal',
-        'Federal VA',
-      );
-    }
+    lovellPageModify(page, 'va');
   });
 
   // Add the cloned pages to the drupal data
@@ -362,13 +371,8 @@ function appendDrupalDataWithLovellTricarePages(drupalData, lovellClonePages) {
   return drupalData;
 }
 
-function lovellMenusReplacePaths(links, variation) {
+function lovellMenusModifyLinks(links, variation) {
   links.forEach(link => {
-    // if link are not these return to next iteration
-    // if (link.label === "NEWS AND EVENTS"){
-    //   return;
-    // }
-
     const titleVar = variation === 'va' ? 'VA' : 'Tricare';
     const linkVar = variation === 'va' ? 'va' : 'tricare';
 
@@ -380,7 +384,7 @@ function lovellMenusReplacePaths(links, variation) {
     );
 
     if (link.links.length > 0) {
-      lovellMenusReplacePaths(link.links, variation);
+      lovellMenusModifyLinks(link.links, variation);
     }
   });
 }
@@ -401,8 +405,8 @@ function appendDrupalDataWithLovellTricareMenus(drupalData) {
   lovellVaMenu.name = lovellVaMenu.name.replace('Federal', 'Federal VA');
 
   // Mutate menu labels and paths of the cloned menus
-  lovellMenusReplacePaths(lovellTricareMenu.links, 'tricare');
-  lovellMenusReplacePaths(lovellVaMenu.links, 'va');
+  lovellMenusModifyLinks(lovellTricareMenu.links, 'tricare');
+  lovellMenusModifyLinks(lovellVaMenu.links, 'va');
 
   // create a key to store the new menus
   const lovellTricareMenuKey = camelize(
