@@ -20,6 +20,10 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Preconnecting required origins: https://web.dev/uses-rel-preconnect/ -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://gateway.foresee.com" />
+
   <!-- Index only pages on production. -->
   {% if buildtype != 'vagovprod' %}
     <meta name="robots" content="noindex">
@@ -37,8 +41,10 @@
   </script>
 
   <!-- Add web components. -->
-  <link rel="stylesheet" data-entry-name="web-components.css">
-  <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
+  {% if entityId != 11463 or buildtype != "vagovdev") %}
+    <link rel="stylesheet" data-entry-name="web-components.css">
+    <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
+  {% endif %}
 
   <!-- Render GA template. -->
   {% include 'src/site/includes/google-analytics.liquid' %}
@@ -102,6 +108,25 @@
 
   {% include "src/site/includes/survey-tools.html" %}
 
+  {% comment %} TODO: Remove this block once the focus styling changes have been tested {% endcomment %}
+  {% if entityId == 11463 and buildtype == "vagovdev" %}
+    <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-0/dist/formation.min.css">
+    <script type="module">
+      import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-1/loader/index.es2017.js";
+      defineCustomElements();
+    </script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@department-of-veterans-affairs/component-library@11.3.2-1/dist/main.css"
+    />
+    <style>
+      .usa-accordion-button:focus {
+        border: none !important;
+      }
+    </style>
+  {% endif %}
+
 </head>
 
 <body class="{{ body_class }} merger">
@@ -144,14 +169,6 @@
 
   <!-- Banners -->
   {% include "src/site/components/banners.drupal.liquid" %}
-
-  <script nonce="**CSP_NONCE**" type="text/javascript">
-    (function () {
-      var module = {};
-      {% include "src/site/assets/js/incompatible-browser.js" %};
-      checkBrowserCompatibility();
-    })();
-  </script>
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
     {% include "src/site/assets/js/skip-link-focus.js" %}

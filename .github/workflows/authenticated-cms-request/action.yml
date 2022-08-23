@@ -1,0 +1,55 @@
+name: Authenticated CMS request
+description: Make an authenticated HTTP request to a specified CMS URL.
+
+inputs:
+  aws_access_key_id:
+    description: AWS access key ID
+    required: true
+  aws_secret_access_key:
+    description: AWS secret access key
+    required: true
+  aws_region:
+    description: AWS region
+    required: false
+    default: "us-gov-west-1"
+  url:
+    description: URL
+    required: true
+  method:
+    description: HTTP method
+    required: true
+  timeout:
+    description: Request timeout
+    required: false
+    default: 10000
+
+runs:
+  using: composite
+  steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ inputs.aws_access_key_id }}
+        aws-secret-access-key: ${{ inputs.aws_secret_access_key }}
+        aws-region: ${{ inputs.aws_region }}
+
+    - name: Get Drupal prod password
+      uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+      with:
+        ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+        env_variable_name: DRUPAL_PASSWORD
+
+    - name: Get Drupal prod username
+      uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+      with:
+        ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+        env_variable_name: DRUPAL_USERNAME
+
+    - name: HTTP request
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: ${{ inputs.url}}
+        method: ${{ inputs.method }}
+        username: ${{ env.DRUPAL_USERNAME }}
+        password: ${{ env.DRUPAL_PASSWORD }}
+        timeout: ${{ inputs.timeout }}

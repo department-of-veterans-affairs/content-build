@@ -55,7 +55,7 @@
                 class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/" }}"
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/", buildtype }}"
                     class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class=" fa fa-prescription-bottle vads-facility-hub-cta-circle">&nbsp;</i>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/" }}"
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/", buildtype }}"
                     class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="far fa-comments vads-facility-hub-cta-circle">&nbsp;</i>
@@ -78,7 +78,7 @@
                 <div
                   class="vads-facility-hub-cta vads-u-border-color--primary-alt-light medium-screen:vads-u-border-bottom--1px">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", title }}"
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", buildtype }}"
                     class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="far fa-calendar-check vads-facility-hub-cta-circle">&nbsp;</i>
@@ -91,7 +91,7 @@
               <div>
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/" }}"
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/", buildtype }}"
                     class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="fa fa-file-medical vads-facility-hub-cta-circle">&nbsp;</i>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="vads-facility-hub-cta">
                   <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/" }}"
+                    href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/", buildtype }}"
                     class="top-task-link vads-u-height--full vads-u-width--full">
                     <i
                       class="fa fa-clipboard-list vads-facility-hub-cta-circle">&nbsp;</i>
@@ -171,13 +171,15 @@
             </a>
           </section>
           {% elsif eventTeasersAll.entities.0.reverseFieldListingNode.entities.length %}
+          {% assign upcomingEvents = eventTeasersAll.entities.0.reverseFieldListingNode.entities %}
+          {% assign sortedEvents = upcomingEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
           <section>
             <h2
               class="vads-u-margin-top--4 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--2p5">
               Events</h2>
-            {% for event in eventTeasersAll.entities.0.reverseFieldListingNode.entities %}
-            {% assign node = event %}
-            {% include "src/site/teasers/event.drupal.liquid" %}
+            {% for event in sortedEvents limit:1 %}
+              {% assign node = event %}
+              {% include "src/site/teasers/event.drupal.liquid" %}
             {% endfor %}
             <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md vads-u-margin--0"
@@ -190,7 +192,7 @@
 
         </article>
             <!-- Last updated & feedback button-->
-        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}           
+        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
     </div>
   </main>

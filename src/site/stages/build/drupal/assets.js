@@ -1,15 +1,4 @@
 const cheerio = require('cheerio');
-const chalk = require('chalk');
-const getDrupalClient = require('./api');
-const { PUBLIC_URLS } = require('../../../constants/drupals');
-
-const PUBLIC_URLS_NO_SCHEME = Object.entries(PUBLIC_URLS).reduce(
-  (returnValue, item) => ({
-    ...returnValue,
-    [item[0]]: item[1].replace('http:', ':'),
-  }),
-  {},
-);
 
 function replacePathInData(data, replacer, ancestors = new Set()) {
   // Circular references happen when an entity in the CMS has a child entity
@@ -50,9 +39,19 @@ function replacePathInData(data, replacer, ancestors = new Set()) {
 function convertAssetPath(url) {
   // After this path are other folders in the image paths,
   // but it's hard to tell if we can strip them, so I'm leaving them alone
-  const withoutHost = url.replace(/^.*\/sites\/.*\/files\//, '');
-  const path = withoutHost.split('?', 2)[0];
+  // Check that this item is on a VA domain.
+  // @todo Allow specified domains not of form *.cms.va.gov.
+  // @todo alternately, check against DRUPAL_ADDRESS, accounting for protocol.
+  const assetPath = url.replace(
+    /^https?:\/\/([a-z0-9]+(-[a-z0-9]+)*\.)+cms\.va\.gov\/sites\/.*\/files\//,
+    '',
+  );
+  // If we still have a fully-qualified absolute URL, just pass it through.
+  if (assetPath.match(/^http/)) {
+    return assetPath;
+  }
 
+  const path = assetPath.split('?', 2)[0];
   // This is sort of naive, but we'd like to have images in the img folder
   if (
     ['png', 'jpg', 'jpeg', 'gif', 'svg'].some(ext =>
@@ -65,51 +64,20 @@ function convertAssetPath(url) {
   return `/files/${path}`;
 }
 
-function getAwsURI(siteURI, usingAWS) {
-  if (!usingAWS) return null;
-
-  const matchingEntries = Object.entries(PUBLIC_URLS_NO_SCHEME).find(entry =>
-    siteURI.match(entry[1]),
-  );
-
-  if (!matchingEntries) {
-    // eslint-disable-next-line no-console
-    console.warn(chalk.red(`Could not find AWS bucket for: ${siteURI}`));
-
-    return null;
-  }
-
-  return matchingEntries[0];
-}
-
-function replaceHostIfUsingAWS(originalSrc, usingAWS) {
-  const cmsURLExpression = /https?:\/\/([a-zA-Z0-9-]+[.])*cms[.]va[.]gov/;
-  const siteURIMatches = originalSrc.match(cmsURLExpression);
-
-  if (siteURIMatches && usingAWS) {
-    const siteURI = siteURIMatches[0];
-    const awsURI = getAwsURI(siteURI, usingAWS);
-    return originalSrc.replace(siteURI, awsURI);
-  } else {
-    return originalSrc;
-  }
-}
-
 // Update WYSIWYG asset URLs based on environment (local vs CI)
-function updateAttr(attr, doc, usingAWS) {
+function updateAttr(attr, doc) {
   const assetsToDownload = [];
 
   doc(`[${attr}*="cms.va.gov/sites"]`).each((i, el) => {
     const item = doc(el);
     const srcAttr = item.attr(attr);
-
     // *.ci.cms.va.gov ENVs don't have AWS URLs.
     const newAssetPath = convertAssetPath(srcAttr);
 
     assetsToDownload.push({
       // URLs in WYSIWYG content won't be the AWS URLs, they'll be CMS URLs.
       // This means we need to replace them with the AWS URLs if we're on Jenkins.
-      src: replaceHostIfUsingAWS(srcAttr, usingAWS),
+      src: srcAttr,
       dest: newAssetPath,
     });
 
@@ -119,22 +87,25 @@ function updateAttr(attr, doc, usingAWS) {
   return assetsToDownload;
 }
 
-function convertDrupalFilesToLocal(drupalData, files, options) {
-  const client = getDrupalClient(options);
-  const usingAWS = client.shouldReplaceAssetPath();
-
+function convertDrupalFilesToLocal(drupalData, files) {
   return replacePathInData(drupalData, (data, key) => {
     if (data.match(/^.*\/sites\/.*\/files\//)) {
       const newPath = convertAssetPath(data);
       const decodedFileName = decodeURIComponent(newPath).substring(1);
       const htmlRegex = new RegExp(/<\/?[a-z][\s\S]*>/i);
+      const vaDomainRegex = new RegExp(
+        /^https?:\/\/([a-z0-9]+(-[a-z0-9]+)*\.)+cms\.va\.gov/i,
+      );
 
+      // Check that this item is on a VA domain.
+      // @todo Allow specified domains not of form *.cms.va.gov.
+      // @todo alternately, check against DRUPAL_ADDRESS, accounting for protocol.
       // If this item contains HTML, don't queue it for download
-      if (!htmlRegex.test(decodedFileName)) {
+      if (vaDomainRegex.test(data) && !htmlRegex.test(decodedFileName)) {
         // eslint-disable-next-line no-param-reassign
         files[decodedFileName] = {
           path: decodedFileName,
-          source: replaceHostIfUsingAWS(data, usingAWS),
+          source: data,
           isDrupalAsset: true,
           contents: '',
         };
@@ -146,8 +117,8 @@ function convertDrupalFilesToLocal(drupalData, files, options) {
     if (key === 'processed') {
       const doc = cheerio.load(data);
       const assetsToDownload = [
-        ...updateAttr('href', doc, usingAWS),
-        ...updateAttr('src', doc, usingAWS),
+        ...updateAttr('href', doc),
+        ...updateAttr('src', doc),
       ];
 
       if (assetsToDownload.length) {

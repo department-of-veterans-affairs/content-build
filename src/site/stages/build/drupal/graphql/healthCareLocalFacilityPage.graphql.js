@@ -13,6 +13,20 @@ const healthCareLocalFacilityPageFragment = `
     fieldFacilityLocatorApiId
     title
     fieldIntroText
+    fieldSupplementalStatus {
+      entity {
+        ... on TaxonomyTermFacilitySupplementalStatus {
+          name
+          fieldStatusId
+          description {
+            processed
+          }
+          fieldGuidance {
+            processed
+          }
+        }
+      }
+    }
     fieldOperatingStatusFacility
     fieldLocationServices {
       entity {
@@ -26,17 +40,24 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
-    
+
     fieldAddress {
       addressLine1
       locality
       administrativeArea
       postalCode
     }
+    fieldGeolocation {
+      lat
+      lon
+    }
     fieldPhoneNumber
     fieldMentalHealthPhone
-    fieldFacilityHours {
-      value
+    fieldOfficeHours {
+      day
+      starthours
+      endhours
+      comment
     }
     fieldMainLocation
     fieldMedia {
@@ -67,7 +88,7 @@ const healthCareLocalFacilityPageFragment = `
               ... listOfLinkTeasers
             }
           }
-          ${socialMediaFields}          
+          ${socialMediaFields}
           fieldGovdeliveryIdEmerg
           fieldGovdeliveryIdNews
           fieldOperatingStatus {
@@ -81,17 +102,14 @@ const healthCareLocalFacilityPageFragment = `
     fieldLocalHealthCareService {
       entity {
         ... on NodeHealthCareLocalHealthService {
-          status        
-          fieldBody {
-            processed
-          }
+          status
           ${serviceLocation}
           ${appointmentItems}
           fieldRegionalHealthService
           {
             entity {
               ... on NodeRegionalHealthCareServiceDes {
-                status              
+                status
                 entityBundle
                 fieldBody {
                   processed

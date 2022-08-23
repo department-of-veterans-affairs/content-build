@@ -64,7 +64,11 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
     type: Number,
     defaultValue: process.env.DRUPAL_MAX_PARALLEL_REQUESTS,
   },
-  { name: 'no-drupal-proxy', type: Boolean, defaultValue: false },
+  {
+    name: 'no-drupal-proxy',
+    type: Boolean,
+    defaultValue: process.env.NO_DRUPAL_PROXY === 'true',
+  },
   { name: 'local-proxy-rewrite', type: Boolean, defaultValue: false },
   { name: 'local-css-sourcemaps', type: Boolean, defaultValue: false },
   { name: 'accessibility', type: Boolean, defaultValue: false },
@@ -83,6 +87,9 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
 
   // use the --use-cached-assets flag with a build to bypass re-downloading asset files
   { name: 'use-cached-assets', type: Boolean, defaultValue: false },
+
+  // use the --gql-queries-only flag to only run graphql queries
+  { name: 'gql-queries-only', type: Boolean, defaultValue: false },
 ];
 
 function gatherFromCommandLine() {
@@ -138,6 +145,7 @@ function applyDefaultOptions(options) {
     ],
     cacheDirectory: path.join(projectRoot, '.cache', options.buildtype),
     paramsDirectory: path.join(utilities, 'query-params'),
+    gqlQueriesOnly: !!options['gql-queries-only'],
   });
 }
 

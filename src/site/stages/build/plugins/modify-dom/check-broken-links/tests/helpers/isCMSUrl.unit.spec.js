@@ -19,20 +19,12 @@ describe('isCMSUrl', () => {
     'https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/styles/2_3_medium_thumbnail/public/2021-07/Jonathan-Atkinson_low-res-TEAMS.jpg',
   ];
 
-  const buildOptions = {
-    'drupal-address': 'https://prod.cms.va.gov',
-    'drupal-user': '',
-    'drupal-password': '',
-    'drupal-max-parallel-requests': 15,
-    buildtype: 'localhost',
-  };
-
   for (const cmsLink of cmsLinks) {
     it(`returns true if link points to CMS - ${cmsLink}`, () => {
       const file = {
         isDrupalPage: true,
       };
-      const result = isCMSUrl(cmsLink, file, buildOptions);
+      const result = isCMSUrl(cmsLink, file);
       expect(result).to.be.true;
     });
   }
@@ -42,7 +34,7 @@ describe('isCMSUrl', () => {
       const file = {
         isDrupalPage: true,
       };
-      const result = isCMSUrl(nonCMSLink, file, buildOptions);
+      const result = isCMSUrl(nonCMSLink, file);
       expect(result).to.be.false;
     });
   }
@@ -51,7 +43,7 @@ describe('isCMSUrl', () => {
     const file = {
       isDrupalPage: false,
     };
-    const result = isCMSUrl(cmsLinks[0], file, buildOptions);
+    const result = isCMSUrl(cmsLinks[0], file);
     expect(result).to.be.false;
   });
 });
