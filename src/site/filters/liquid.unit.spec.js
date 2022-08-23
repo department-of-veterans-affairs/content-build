@@ -2373,7 +2373,6 @@ describe('getSurvey', () => {
       '/resources',
       '/find-locations',
       '/search',
-      '/virtual-agent-study',
       '/contact-us/virtual-agent',
     ];
     const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
@@ -2395,11 +2394,53 @@ describe('getSurvey', () => {
     ).to.equal(21);
 
     expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[4], prodSurveys),
+      liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
     ).to.equal(25);
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[1], prodSurveys),
     ).to.equal(17);
+  });
+});
+
+describe('deriveTimeForJSONLD', () => {
+  it('when given a time returns the time in the correct format', () => {
+    const timetype = 'starthours';
+    const time = '0830';
+    const comment = '';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('08:30:00');
+  });
+
+  it('when given a time of null returns the time as an empty string', () => {
+    const timetype = 'starthours';
+    const time = null;
+    const comment = 'Closed';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('');
+  });
+
+  it('when given a comment of 24/7 returns the starthours time in the correct format', () => {
+    const timetype = 'starthours';
+    const time = null;
+    const comment = '24/7';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('00:00:00');
+  });
+
+  it('when given a comment of 24/7 returns the endhours time in the correct format', () => {
+    const timetype = 'endhours';
+    const time = null;
+    const comment = '24/7';
+
+    expect(
+      liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
+    ).to.equal('23:59:59');
   });
 });

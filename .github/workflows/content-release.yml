@@ -49,11 +49,11 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Get latest GHA Runner AMI ID # AMI images are rebuilt every 15 days, use the latest one
+      - name: Get latest GHA Runner AMI ID
         run: |
           echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
           --owners 008577686731 \
-          --filters "Name=state,Values=available" "Name=name,Values=packer-gha-runner-ubuntu2004*" \
+          --filters "Name=state,Values=available" "Name=name,Values=platform-gha-runner-ubuntu*" \
           --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
           --output text)" >> $GITHUB_ENV
 
@@ -105,14 +105,6 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
-          method: GET
-
-      - name: Notify CMS - starting
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/starting
           method: GET
 
       - name: Install dependencies
@@ -200,6 +192,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.21.1
 
       - name: Cache dependencies
         id: cache-dependencies
@@ -465,24 +460,8 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2
           DEST: s3://${{ env.DEPLOY_BUCKET }}
 
-      - name: Notify CMS - Complete
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/complete
-          method: GET
-
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
-
-      - name: Notify CMS - Complete
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/complete
-          method: GET
 
       - name: Notify CMS - Complete
         uses: ./.github/workflows/authenticated-cms-request
@@ -526,14 +505,6 @@ jobs:
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
-      - name: Notify CMS - Ready
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/ready
-          method: GET
 
       - name: Notify CMS - Ready
         uses: ./.github/workflows/authenticated-cms-request
@@ -560,6 +531,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
+
+      - name: Notify CMS - Error
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/error
+          method: GET
 
       - name: Get Datadog token from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
@@ -679,13 +658,6 @@ jobs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
-
-      - name: Record deployment event
-        uses: ./.github/workflows/record-release-interval
-        with:
-          datadog_api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
-          datadog_app_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_APP_KEY }}
-          metric_namespace: ${{ env.METRIC_NAMESPACE }}
 
   stop-runner:
     name: Stop on-demand-runner

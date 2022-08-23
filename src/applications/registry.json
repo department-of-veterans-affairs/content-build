@@ -1154,7 +1154,7 @@
     "entryName": "1990ez-edu-benefits",
     "rootUrl": "/education/apply-for-benefits-form-22-1990",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1178,9 +1178,9 @@
     }
   },
   {
-    "appName": "'Enrollment Verification'",
+    "appName": "Enrollment Verification",
     "entryName": "enrollment-verification",
-    "rootUrl": "/enrollment-history",
+    "rootUrl": "/education/verify-school-enrollment",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -1198,7 +1198,7 @@
   {
     "appName": "Education Letters",
     "entryName": "education-letters",
-    "rootUrl": "/education/education-letters",
+    "rootUrl": "/education/download-letters",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
@@ -1276,6 +1276,26 @@
     "entryName": "fry-dea",
     "rootUrl": "/fry-dea",
     "productId": "bafad5fa-0b44-4377-b183-affb8d16ca55",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Apply to use transferred education benefits",
+    "entryName": "toe",
+    "rootUrl": "/education/survivor-dependent-benefits/apply-for-transferred-benefits-form-22-1990e",
+    "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "burial-poc-v6",
+    "entryName": "burial-poc-v6",
+    "rootUrl": "/burial-poc-v6",
+    "productId": "3f7db617-af4b-4d7f-b30f-f288d5756668",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
