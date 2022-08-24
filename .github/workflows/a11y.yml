@@ -155,7 +155,7 @@ jobs:
     name: Accessibility Tests
     # needs: build
     timeout-minutes: 120
-    runs-on: [self-hosted, asg]
+    runs-on: self-hosted
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
       options: -u 1001:1001 -v /usr/local/share:/share
@@ -173,12 +173,9 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
-        with:
-          path: content-build
 
       - name: Get Node version
         id: get-node-version
-        working-directory: content-build
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
 
       - name: Setup Node
@@ -200,7 +197,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
           max_attempts: 3
           timeout_minutes: 7
         env:
@@ -208,41 +205,33 @@ jobs:
 
       - name: Download production build artifact
         uses: actions/download-artifact@v3
-        working-directory: content-build
         with:
           name: test-build.tar.bz2
 
       - name: Unpack build
         run: |
-          cd content-build
           mkdir -p build/vagovprod
           tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
 
       - name: Create a11y failures CSV file
-        working-directory: content-build
         run: touch a11y_failures.csv
 
       - name: Start content-build
-        working-directory: content-build
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Run Cypress E2E Tests
-        working-directory: content-build
         run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,specPattern=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
 
       - name: Rename Mochawesome JSON file
         if: ${{ always() }}
-        working-directory: content-build
         run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
 
       - name: Rename failures CSV file
         if: ${{ always() }}
-        working-directory: content-build
         run: mv a11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
 
       - name: Archive Mochawesome test results
         uses: actions/upload-artifact@v3
-        working-directory: content-build
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
@@ -251,7 +240,6 @@ jobs:
 
       - name: Archive failures CSV
         uses: actions/upload-artifact@v3
-        working-directory: content-build
         if: ${{ always() }}
         with:
           name: a11y_failures
@@ -260,7 +248,6 @@ jobs:
 
       - name: Runner clean up
         run: |
-          cd content-build
           rm -rf build
           rm /__w/content-build/content-build/test-build.tar.bz2
   # slack:
