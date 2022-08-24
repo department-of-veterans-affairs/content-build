@@ -618,13 +618,13 @@ jobs:
             bucket: content.staging.va.gov
 
     steps:
-      - name: Runner cleanup
-        run: |
-          ls -la ./
-          rm -rf ./* || true
-          rm -rf ./.??* || true
-          ls -la ./
-
+      # - name: Runner cleanup
+      #   run: |
+      #     ls -la ./
+      #     rm -rf ./* || true
+      #     rm -rf ./.??* || true
+      #     ls -la ./
+      - uses: AutoModality/action-clean@v1
       - name: Checkout
         uses: actions/checkout@v3
 
