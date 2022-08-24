@@ -372,32 +372,52 @@ function appendDrupalDataWithLovellTricarePages(drupalData, lovellClonePages) {
 }
 
 function lovellMenusModifyLinks(links, variation) {
+  const titleVar = variation === 'va' ? 'VA' : 'Tricare';
+  const linkVar = variation === 'va' ? 'va' : 'tricare';
+
   links.forEach(link => {
-    const titleVar = variation === 'va' ? 'VA' : 'Tricare';
-    const linkVar = variation === 'va' ? 'va' : 'tricare';
+    // If items are in both menus modify labels and links
+    if (link.entity.fieldMenuSection === 'both') {
+      link.label = link.label.replace('Federal', `Federal ${titleVar}`);
 
-    link.label = link.label.replace('Federal', `Federal ${titleVar}`);
+      link.url.path = link.url.path.replace(
+        '/lovell-federal-health-care',
+        `/lovell-federal-${linkVar}-health-care`,
+      );
+    }
 
-    link.url.path = link.url.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-${linkVar}-health-care`,
-    );
-
-    if (link.links.length > 0) {
+    // Use recursion to modify nested links
+    if (link && link.links.length > 0) {
+      // Remove the links that don't belong in either the va or tricare menus
+      link.links = link.links.filter(menuItem => {
+        if (
+          menuItem.entity.fieldMenuSection === 'va' &&
+          variation === 'tricare'
+        ) {
+          return false;
+        }
+        if (
+          menuItem.entity.fieldMenuSection === 'tricare' &&
+          variation === 'va'
+        ) {
+          return false;
+        }
+        return true;
+      });
       lovellMenusModifyLinks(link.links, variation);
     }
   });
 }
 
 function appendDrupalDataWithLovellTricareMenus(drupalData) {
-  // Get the lovell menu
-  const lovellMenu = 'lovellFederalHealthCareFacilitySidebarQuery';
+  // Get the lovell menu key name
+  const lovellMenuKey = 'lovellFederalHealthCareFacilitySidebarQuery';
 
-  // Since all the menus are the same in the section I'm just cloning one for both new menus.
-  const lovellTricareMenu = cloneDeep(drupalData.data[lovellMenu]);
-  const lovellVaMenu = cloneDeep(drupalData.data[lovellMenu]);
+  // Clone the original menu
+  const lovellTricareMenu = cloneDeep(drupalData.data[lovellMenuKey]);
+  const lovellVaMenu = cloneDeep(drupalData.data[lovellMenuKey]);
 
-  // Rename the name so our new clones can find the cloned menus
+  // Rename the name so our new cloned pages can find the cloned menus
   lovellTricareMenu.name = lovellTricareMenu.name.replace(
     'Federal',
     'Federal Tricare',
@@ -408,7 +428,7 @@ function appendDrupalDataWithLovellTricareMenus(drupalData) {
   lovellMenusModifyLinks(lovellTricareMenu.links, 'tricare');
   lovellMenusModifyLinks(lovellVaMenu.links, 'va');
 
-  // create a key to store the new menus
+  // create a key for the new menus
   const lovellTricareMenuKey = camelize(
     `va${lovellTricareMenu.name}FacilitySidebarQuery`,
   );
@@ -422,6 +442,9 @@ function appendDrupalDataWithLovellTricareMenus(drupalData) {
     [lovellTricareMenuKey]: lovellTricareMenu,
     [lovellVaMenuKey]: lovellVaMenu,
   };
+
+  // Remove the original menu
+  delete drupalData.data[lovellMenuKey];
 
   return drupalData;
 }
