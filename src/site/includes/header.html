@@ -110,7 +110,7 @@
 
   {% comment %} TODO: Remove this block once the focus styling changes have been tested {% endcomment %}
   {% if entityId == 11463 and buildtype == "vagovdev" %}
-    <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-0/dist/formation.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-1/dist/formation.min.css">
     <script type="module">
       import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-1/loader/index.es2017.js";
       defineCustomElements();
@@ -123,6 +123,9 @@
     <style>
       .usa-accordion-button:focus {
         border: none !important;
+      }
+      .va-sidebarnav .usa-sidenav-sub_list a:focus {
+        outline: 2px solid #936f38;
       }
     </style>
   {% endif %}
