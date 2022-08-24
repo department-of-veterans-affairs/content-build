@@ -173,7 +173,8 @@ jobs:
     steps:
       - name: WIP
         run: |
-          rm -rf *
+          rm -rf .git
+          ls
           git init
           git remote add origin https://github.com/department-of-veterans-affairs/content-build.git
           git fetch origin
