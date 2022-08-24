@@ -67,7 +67,7 @@
                   <{{ fieldSectionHeaderTag }}>{{ fieldQA.entityLabel }}</{{ fieldSectionHeaderTag }}>
                   {% if fieldQA.fieldAnswer %}
                     {% assign fieldAnswer = fieldQA.fieldAnswer %}
-                    {% assign bundleComponent = "src/site/paragraphs/" | append: "q_a_group" %}
+                    {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
                     {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
                     {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
                   {% endif %}
