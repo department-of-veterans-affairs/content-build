@@ -42,7 +42,7 @@ const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
 const addDirectoryFiles = require('./plugins/add-directory-files');
-const runGatsbyBuild = require('./plugins/run-gatsby-build');
+const runNextBuild = require('./plugins/run-next-build');
 
 // Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
 // attempt to open too many files simultaneously, so we need to handle it.
@@ -89,7 +89,7 @@ function build(BUILD_OPTIONS) {
     );
   }
 
-  smith.use(runGatsbyBuild(BUILD_OPTIONS), 'Initiate Gatsby build');
+  smith.use(runNextBuild(BUILD_OPTIONS), 'Initiate Next build');
   smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
 
@@ -234,8 +234,8 @@ function build(BUILD_OPTIONS) {
   });
 
   smith.use(
-    addDirectoryFiles(`${BUILD_OPTIONS.gatsbyDirectory}public/`, true),
-    'Adding files from Gatsby directory',
+    addDirectoryFiles(`${BUILD_OPTIONS.nextBuildDirectory}out/`, true),
+    'Adding files from next-build directory',
   );
 
   /*

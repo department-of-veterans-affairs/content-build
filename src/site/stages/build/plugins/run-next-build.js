@@ -2,14 +2,13 @@
 /* eslint-disable no-console */
 const { spawn } = require('child_process');
 
-const runGatsbyBuild = options => (files, metalsmith, done) => {
+const runNextBuild = options => (files, metalsmith, done) => {
   console.log(
-    'Gatsby build: starting build in child process. Metalsmith will continue.',
+    'Next build: starting build in child process. Metalsmith will continue.',
   );
-  const directory = options['gatsby-directory'];
-  const drupalAddress = options['drupal-address'];
-  const runGatsby = new Promise(resolve => {
-    const cmd = `npx gatsby clean && DRUPAL_ADDRESS=${drupalAddress} yarn build`;
+  const directory = options['next-build-directory'];
+  const runNextExport = new Promise(resolve => {
+    const cmd = `yarn export`;
     const child = spawn(cmd, [], {
       shell: true,
       cwd: `${directory}`,
@@ -17,12 +16,12 @@ const runGatsbyBuild = options => (files, metalsmith, done) => {
 
     let scriptOutput;
     child.stdout.setEncoding('utf8');
-    child.stdout.on('data', function(data) {
+    child.stdout.on('data', data => {
       data = data.toString();
       scriptOutput += data;
     });
     child.stderr.setEncoding('utf8');
-    child.stderr.on('data', function(data) {
+    child.stderr.on('data', data => {
       data = data.toString();
       scriptOutput += data;
     });
@@ -37,14 +36,14 @@ const runGatsbyBuild = options => (files, metalsmith, done) => {
 
     child.on('close', code => {
       metalsmith.metadata({
-        gatsbyBuildSuccess: true,
-        gatsbyBuildLog: scriptOutput,
-        gatsbyBuildCode: code,
+        nextBuildSuccess: true,
+        nextBuildLog: scriptOutput,
+        nextBuildCode: code,
         ...metalsmith.metadata(),
       });
       const exitCodeText = code ? `with code ${code}` : 'successfully';
       console.log(
-        `Gatsby build: build completed ${exitCodeText}. Log output is available in metalsmith.metadata().gatsbyBuildLog.`,
+        `Next build: build completed ${exitCodeText}. Log output is available in metalsmith.metadata().nextBuildLog.`,
       );
       resolve();
     });
@@ -55,10 +54,10 @@ const runGatsbyBuild = options => (files, metalsmith, done) => {
     });
   });
   metalsmith.metadata({
-    gatsbyBuild: runGatsby,
+    nextBuild: runNextExport,
     ...metalsmith.metadata(),
   });
   done();
 };
 
-module.exports = runGatsbyBuild;
+module.exports = runNextBuild;
