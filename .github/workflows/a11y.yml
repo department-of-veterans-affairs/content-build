@@ -173,7 +173,7 @@ jobs:
     steps:
       - name: WIP
         run: |
-          rm -rf .
+          rm -rf .git
           git init
           git add * 
           git stash
