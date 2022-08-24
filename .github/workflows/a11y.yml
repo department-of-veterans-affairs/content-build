@@ -175,7 +175,7 @@ jobs:
         run: |
           rm -rf .git
           git init
-          git remote add origin git@github.com:department-of-veterans-affairs/content-build.git
+          git remote add origin https://github.com/department-of-veterans-affairs/content-build.git
           git fetch origin
           git checkout -b main --track origin/main # origin/master is clone's default
           git reset origin/main
