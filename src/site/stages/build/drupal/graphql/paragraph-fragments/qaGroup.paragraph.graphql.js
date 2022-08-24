@@ -17,7 +17,6 @@ fragment qaGroup on ParagraphQAGroup {
                 entityBundle
               ... on ParagraphRichTextCharLimit1000 {
                 fieldWysiwyg {
-                  value
                   processed
                   format
                 }
