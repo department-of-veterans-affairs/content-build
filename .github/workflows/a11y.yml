@@ -183,7 +183,6 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v3
-        working-directory: content-build
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
