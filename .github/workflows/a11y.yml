@@ -173,8 +173,10 @@ jobs:
     steps:
       - name: WIP
         run: |
-          rm -rf .git
+          rm -rf .
           git init
+          git add * 
+          git stash
           git remote add origin https://github.com/department-of-veterans-affairs/content-build.git
           git fetch origin
           git checkout -b main --track origin/main # origin/master is clone's default
