@@ -17,10 +17,9 @@ else
   echo "Repo vets-api already cloned."
 fi
 
-# Added here to demonstrate Gatsby/Metalsmith integration.
-if [ ! -d ../cms-content-gatsby-poc ]; then
-  git clone --single-branch --depth 1 "https://va-cms-bot:${GITHUB_TOKEN}@github.com/department-of-veterans-affairs/cms-content-gatsby-poc.git" ../cms-content-gatsby-poc
-  cd .. && npm cache clean --force && npm install
+if [ ! -d ../next-build ]; then
+  git clone --single-branch --depth 1 "https://va-cms-bot:${GITHUB_TOKEN}@github.com/department-of-veterans-affairs/next-build.git" ../next-build
+  cd .. && npm cache clean --force && npm install # @todo Need to move this to yarn.
 else
-  echo "Repo cms-content-gatsby-poc already cloned."
+  echo "Repo next-build already cloned."
 fi

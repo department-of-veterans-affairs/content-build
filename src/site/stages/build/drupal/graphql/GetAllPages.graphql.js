@@ -31,6 +31,7 @@ const outreachSidebarQuery = require('./navigation-fragments/outreachSidebar.nav
 const pressReleasePage = require('./pressReleasePage.graphql');
 const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
 const promoBannersQuery = require('./promoBanners.graphql');
+const qaPage = require('./nodeQa.graphql');
 const sidebarQuery = require('./navigation-fragments/sidebar.nav.graphql');
 const stepByStepPage = require('./nodeStepByStep.graphql');
 const storyListingPage = require('./storyListingPage.graphql');
@@ -48,7 +49,7 @@ const { cmsFeatureFlags } = global;
 const {
   updateQueryString,
   queryParamToBeChanged,
-} = require('./../../../../utilities/stringHelpers');
+} = require('../../../../utilities/stringHelpers');
 
 const nodeOffice = require('./nodeOffice.graphql');
 
@@ -82,6 +83,7 @@ const buildQuery = () => {
   ${healthServicesListingPage.fragment}
   ${pressReleasesListingPage.fragment}
   ${locationListingPage.fragment}
+  ${qaPage.fragment}
   ${faqMultipleQaPage.fragment}
   ${stepByStepPage.fragment}
   ${mediaListImages.fragment}
