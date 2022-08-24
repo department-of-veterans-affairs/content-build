@@ -172,7 +172,7 @@ jobs:
 
     steps:
       - name: Set permissions
-        run: sudo chmod -R ugo+rwX .
+        run: chmod -R ugo+rwX .
 
       - name: Checkout content-build
         uses: actions/checkout@v3
