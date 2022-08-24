@@ -1,0 +1,10 @@
+<div data-template="paragraphs/q_a_group" data-entity-id="{{ entity.entityId }}" data-analytics-faq-text="{{ entity.entityLabel | escape }}">
+  <div id="{{ entity.entityId }}">
+
+    <div data-entity-id="{{ entity.entityId }}">
+
+        {% assign bundleComponent = "src/site/paragraphs/" | append: "rich_text_char_limit_1000" | append: ".drupal.liquid" %}
+        {% include {{ bundleComponent }} with entity = entity %}
+    </div>
+  </div>
+</div>
