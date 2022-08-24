@@ -171,6 +171,9 @@ jobs:
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
+      - name: Set permissions
+        run: sudo chmod -R ugo+rwX .
+
       - name: Checkout content-build
         uses: actions/checkout@v3
         with:
