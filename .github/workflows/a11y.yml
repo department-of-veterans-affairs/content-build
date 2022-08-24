@@ -189,7 +189,6 @@ jobs:
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v3
-        working-directory: content-build
         with:
           path: |
             .cache/yarn
