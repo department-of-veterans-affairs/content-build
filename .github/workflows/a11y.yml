@@ -173,6 +173,7 @@ jobs:
     steps:
       - name: WIP
         run: |
+          git init
           git fetch origin
           git checkout -b main --track origin/main # origin/master is clone's default
           git reset origin/main
