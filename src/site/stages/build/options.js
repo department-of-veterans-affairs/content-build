@@ -39,9 +39,10 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'pull-drupal', type: Boolean, defaultValue: false },
   { name: 'drupal-fail-fast', type: Boolean, defaultValue: false },
   { name: 'setPublicPath', type: Boolean, defaultValue: false },
+  { name: 'run-next-build', type: Boolean, defaultValue: false },
   {
     name: 'next-build-directory',
-    type: Boolean,
+    type: String,
     defaultValue: nextBuildDir,
   },
   {
@@ -99,6 +100,7 @@ function gatherFromCommandLine() {
 function applyDefaultOptions(options) {
   const contentPagesRoot = options['content-directory'];
   const nextBuildDirectory = options['next-build-directory'];
+  const runNextBuild = options['run-next-build'];
   const contentRoot = path.join(contentPagesRoot, '../');
 
   const siteRoot = path.join(__dirname, '../../');
@@ -116,6 +118,7 @@ function applyDefaultOptions(options) {
     contentRoot,
     contentPagesRoot,
     nextBuildDirectory,
+    runNextBuild,
     contentFragments: path.join(contentRoot, 'fragments'),
     contentAssets: {
       source: path.join(contentRoot, 'assets'),

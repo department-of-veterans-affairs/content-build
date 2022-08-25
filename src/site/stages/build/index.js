@@ -89,7 +89,10 @@ function build(BUILD_OPTIONS) {
     );
   }
 
-  smith.use(runNextBuild(BUILD_OPTIONS), 'Initiate Next build');
+  if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
+    smith.use(runNextBuild(BUILD_OPTIONS), 'Initiate Next build');
+  }
+
   smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
 
@@ -232,11 +235,12 @@ function build(BUILD_OPTIONS) {
       `Apply layouts ${pattern.length === 2 ? pattern[0] : pattern}`,
     );
   });
-
-  smith.use(
-    addDirectoryFiles(`${BUILD_OPTIONS.nextBuildDirectory}out/`, true),
-    'Adding files from next-build directory',
-  );
+  if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
+    smith.use(
+      addDirectoryFiles(`${BUILD_OPTIONS.nextBuildDirectory}out/`, true),
+      'Adding files from next-build directory',
+    );
+  }
 
   /*
    * This will replace links in static pages with a staging domain,

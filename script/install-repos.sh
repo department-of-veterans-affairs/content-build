@@ -17,9 +17,11 @@ else
   echo "Repo vets-api already cloned."
 fi
 
-if [ ! -d ../next-build ]; then
-  git clone --single-branch --depth 1 "https://va-cms-bot:${GITHUB_TOKEN}@github.com/department-of-veterans-affairs/next-build.git" ../next-build
-  cd ../next-build && yarn install # @todo Need to move this to yarn.
-else
-  echo "Repo next-build already cloned."
+if [ $RUN_NEXT_BUILD eq 1 ]; then
+  if [ ! -d ../next-build ]; then
+    git clone --single-branch --depth 1 "https://va-cms-bot:${GITHUB_TOKEN}@github.com/department-of-veterans-affairs/next-build.git" ../next-build
+    cd ../next-build && yarn install
+  else
+    echo "Repo next-build already cloned."
+  fi
 fi
