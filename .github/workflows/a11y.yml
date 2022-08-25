@@ -1,9 +1,9 @@
 name: Accessibility Tests
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 12 * * 1-5'
+on: [push]
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 12 * * 1-5'
 
 env:
   CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
@@ -12,7 +12,7 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: [self-hosted, asg]
+    runs-on: self-hosted
     timeout-minutes: 180
     defaults:
       run:
@@ -155,10 +155,10 @@ jobs:
     name: Accessibility Tests
     needs: build
     timeout-minutes: 120
-    runs-on: [self-hosted, asg]
+    runs-on: self-hosted
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
-      options: -u 1001:1001 -v /usr/local/share:/share
+      options: -u 1001:1001 -v /usr/local/share:/share --user root
     strategy:
       fail-fast: false
       max-parallel: 32
@@ -250,6 +250,7 @@ jobs:
         run: |
           rm -rf build
           rm /__w/content-build/content-build/test-build.tar.bz2
+
   slack:
     name: Notify Slack and upload Mochawesome report
     runs-on: ubuntu-latest
