@@ -19,7 +19,7 @@ fi
 
 if [ ! -d ../next-build ]; then
   git clone --single-branch --depth 1 "https://va-cms-bot:${GITHUB_TOKEN}@github.com/department-of-veterans-affairs/next-build.git" ../next-build
-  cd .. && npm cache clean --force && npm install # @todo Need to move this to yarn.
+  cd ../next-build && yarn install # @todo Need to move this to yarn.
 else
   echo "Repo next-build already cloned."
 fi

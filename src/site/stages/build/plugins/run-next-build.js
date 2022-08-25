@@ -8,7 +8,7 @@ const runNextBuild = options => (files, metalsmith, done) => {
   );
   const directory = options['next-build-directory'];
   const runNextExport = new Promise(resolve => {
-    const cmd = `yarn export`;
+    const cmd = `pwd && yarn export`;
     const child = spawn(cmd, [], {
       shell: true,
       cwd: `${directory}`,
