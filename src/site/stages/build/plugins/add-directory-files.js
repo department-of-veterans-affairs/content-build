@@ -3,6 +3,12 @@
 const fs = require('fs-extra');
 const recursiveRead = require('recursive-readdir');
 
+/*
+  This plugin allows Metalsmith to read an arbitrary directory of files and
+  add them to the build. The file naming and contents are intact. Overwrites of
+  existing files already in the Metalsmith build are possible.
+*/
+
 const addDirectoryFiles = (directory, overwrite = false) => (
   files,
   metalsmith,
