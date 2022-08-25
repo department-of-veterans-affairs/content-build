@@ -54,7 +54,6 @@
 
               <!-- Optional section header -->
               {% if contentBlock.entity.fieldSectionHeader %}
-                <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
                 <h2>{{ contentBlock.entity.fieldSectionHeader }}</h2>
               {% endif %}
               
@@ -62,7 +61,6 @@
               {% if contentBlock.entity.fieldSectionHeader %}
                 {% assign fieldSectionHeaderTag = 'h3' %}
               {% endif %}
-              <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
               {% for fieldQA in fieldQAs %}
                   <{{ fieldSectionHeaderTag }}>{{ fieldQA.entityLabel }}</{{ fieldSectionHeaderTag }}>
                   {% if fieldQA.fieldAnswer %}
