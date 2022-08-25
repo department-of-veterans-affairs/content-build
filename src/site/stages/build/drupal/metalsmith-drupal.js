@@ -307,22 +307,18 @@ async function loadCachedDrupalFiles(buildOptions, files) {
   }
 }
 
-function isLovellClonePage(page) {
-  // Pages that should be cloned have the value of 347
-  if (page.fieldAdministration) {
-    return page.fieldAdministration.entity.entityId === '347';
-  }
-  return false;
-}
+// Pages that should be cloned have the value of 347
+const isLovellClonePage = page =>
+  page.fieldAdministration &&
+  page.fieldAdministration.entity.entityId === '347';
 
 function lovellPageModify(page, variant) {
-  const linkMod = variant;
   const fieldOfficeMod = variant === 'tricare' ? 'Tricare' : 'VA';
 
   // Modify the path
   page.entityUrl.path = page.entityUrl.path.replace(
     '/lovell-federal-health-care',
-    `/lovell-federal-${linkMod}-health-care`,
+    `/lovell-federal-${variant}-health-care`,
   );
 
   // Modify the title used for querying the menus
@@ -350,7 +346,12 @@ function lovellPageModify(page, variant) {
   return page;
 }
 
-function appendDrupalDataWithLovellTricarePages(drupalData, lovellClonePages) {
+function appendDrupalDataWithLovellTricarePages(drupalData) {
+  // Get lovell 'clone' pages
+  const lovellClonePages = drupalData.data.nodeQuery.entities.filter(
+    isLovellClonePage,
+  );
+
   // Deep clone with lodash
   const clonedPages = cloneDeep(lovellClonePages);
 
@@ -463,16 +464,8 @@ function getDrupalContent(buildOptions) {
 
       await loadCachedDrupalFiles(buildOptions, files);
 
-      // Get lovell 'clone' pages
-      const lovellClonePages = drupalData.data.nodeQuery.entities.filter(
-        isLovellClonePage,
-      );
-
       // clone and modify pages
-      drupalData = appendDrupalDataWithLovellTricarePages(
-        drupalData,
-        lovellClonePages,
-      );
+      drupalData = appendDrupalDataWithLovellTricarePages(drupalData);
 
       // clone and modify menu
       drupalData = appendDrupalDataWithLovellTricareMenus(drupalData);
