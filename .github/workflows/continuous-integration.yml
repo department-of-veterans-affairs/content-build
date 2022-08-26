@@ -350,7 +350,7 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: [self-hosted, asg]
+    runs-on: self-hosted
     needs: build
     timeout-minutes: 30
     container:
