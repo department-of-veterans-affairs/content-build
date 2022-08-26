@@ -21,7 +21,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: [self-hosted, asg]
+    runs-on: self-hosted
     timeout-minutes: 60
 
     defaults:
