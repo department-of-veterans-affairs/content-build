@@ -41,19 +41,27 @@ if (fs.existsSync(reportPath)) {
           : error.target;
       return `*Broken link:* ${destination} \`\`\`${error.html}\`\`\``;
     });
+    // If there are more than 5, print 5 and a generic message.
     if (problemMarkup.length > 5) {
       problemMarkup = problemMarkup.slice(0, 5);
       problemMarkup[5] =
         'There are too many broken links to display. Please view the source page.';
     }
     const destination = `https://prod.cms.va.gov/${page.path}`;
+    let message = `*Source ${idx + 1}: ${destination} *\n${problemMarkup.join(
+      '\n',
+    )}\n\n`;
+    // If the message is still too long to safely pass, replace the message with a generic.
+    // Truncating may break HTML structures or Markdown blocks.
+    if (message.length > 2950) {
+      message = `*Source ${idx +
+        1}: ${destination} *\nThere are too many broken links to display. Please correct the source page.`;
+    }
     return {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*Source ${idx + 1}: ${destination} *\n${problemMarkup.join(
-          '\n',
-        )}\n\n`,
+        text: message,
       },
     };
   });
