@@ -41,6 +41,8 @@ const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
+const addDirectoryFiles = require('./plugins/add-directory-files');
+const runNextBuild = require('./plugins/run-next-build');
 
 // Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
 // attempt to open too many files simultaneously, so we need to handle it.
@@ -87,8 +89,11 @@ function build(BUILD_OPTIONS) {
     );
   }
 
-  smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
+  if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
+    smith.use(runNextBuild(BUILD_OPTIONS), 'Initiate Next build');
+  }
 
+  smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
 
   // For CMS testing, we only need to ensure that the graphql queries run. We
@@ -230,6 +235,12 @@ function build(BUILD_OPTIONS) {
       `Apply layouts ${pattern.length === 2 ? pattern[0] : pattern}`,
     );
   });
+  if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
+    smith.use(
+      addDirectoryFiles(`${BUILD_OPTIONS.nextBuildDirectory}out/`, true),
+      'Adding files from next-build directory',
+    );
+  }
 
   /*
    * This will replace links in static pages with a staging domain,

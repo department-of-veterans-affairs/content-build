@@ -4,14 +4,14 @@ import path from 'path';
 import cheerio from 'cheerio';
 import { JSDOM } from 'jsdom';
 import liquid from 'tinyliquid';
+import ENVIRONMENT_CONFIGURATIONS from 'site/constants/environments-configs';
+import Metalsmith from 'metalsmith';
 import registerFilters from '../../filters/liquid.js';
 import createRedirects from '../../stages/build/plugins/rewrite-va-domains.js';
 import rewriteAWSUrls from '../../stages/build/plugins/rewrite-cms-aws-urls.js';
 import modifyDom from '../../stages/build/plugins/modify-dom';
-import ENVIRONMENT_CONFIGURATIONS from 'site/constants/environments-configs';
-import Metalsmith from 'metalsmith';
 
-const BUILDTYPE = ENVIRONMENT_CONFIGURATIONS[__BUILDTYPE__].BUILDTYPE;
+const { BUILDTYPE } = ENVIRONMENT_CONFIGURATIONS[__BUILDTYPE__];
 
 registerFilters();
 
