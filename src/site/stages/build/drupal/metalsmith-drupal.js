@@ -356,24 +356,15 @@ function lovellPageModify(page, variant) {
   return page;
 }
 
-function appendDrupalDataWithLovellPages(
-  drupalData,
-  lovellClonePages,
-  variant,
-) {
+function cloneLovellPages(lovellClonePages, variant) {
   // Deep clone with lodash
   const clonedPages = cloneDeep(lovellClonePages);
 
   // Modify the clones
-  const modifiedLovellPages = clonedPages.map(page => {
+  return clonedPages.map(page => {
     page = lovellPageModify(page, variant);
     return page;
   });
-
-  // Add the cloned pages to the drupal data
-  drupalData.data.nodeQuery.entities.push(...modifiedLovellPages);
-
-  return drupalData;
 }
 
 function lovellMenusModifyLinks(links, variation) {
@@ -493,19 +484,18 @@ function getDrupalContent(buildOptions) {
         },
       );
 
-      // Deep clone the lovell pages to create tricare
-      drupalData = appendDrupalDataWithLovellPages(
-        drupalData,
-        lovellVaClonePages,
-        'va',
-      );
-
       // Deep clone the lovell pages to create va pages
-      drupalData = appendDrupalDataWithLovellPages(
-        drupalData,
+      const vaClones = cloneLovellPages(lovellVaClonePages, 'va');
+      // Add the cloned pages to the drupal data
+      drupalData.data.nodeQuery.entities.push(...vaClones);
+
+      // Deep clone the lovell pages to create tricare pages
+      const tricareClones = cloneLovellPages(
         lovellTricareClonePages,
         'tricare',
       );
+      // Add the cloned pages to the drupal data
+      drupalData.data.nodeQuery.entities.push(...tricareClones);
 
       // Delete originals
       lovellClonePageIndexes.forEach(index => {
