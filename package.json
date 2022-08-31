@@ -222,7 +222,7 @@
     "metalsmith-permalinks": "^0.5.0",
     "metalsmith-sitemap": "^1.0.0",
     "moment": "^2.29.2",
-    "moment-timezone": "^0.5.33",
+    "moment-timezone": "^0.5.35",
     "number-to-words": "^1.2.4",
     "raven": "^2.6.4",
     "react": "^16.13.1",
