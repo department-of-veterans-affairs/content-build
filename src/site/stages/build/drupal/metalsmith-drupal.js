@@ -4,7 +4,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const recursiveRead = require('recursive-readdir');
 const JSONStream = require('JSONStream');
-const cloneDeep = require('lodash/cloneDeep');
 
 const ENVIRONMENTS = require('../../../constants/environments');
 const { ENABLED_ENVIRONMENTS } = require('../../../constants/drupals');
@@ -23,9 +22,7 @@ const createReactPages = require('../plugins/create-react-pages');
 const { addHubIconField } = require('./benefit-hub');
 const { addHomeContent } = require('./home');
 
-const { camelize } = require('../../../utilities/stringHelpers');
-
-const LOVELL_TITLE_STRING = 'Lovell Federal';
+const { processLovellPages } = require('./process-lovell-pages');
 
 const DRUPAL_CACHE_FILENAME = 'drupal/pages.json';
 const DRUPAL_HUB_NAV_FILENAME = 'hubNavNames.json';
@@ -309,168 +306,6 @@ async function loadCachedDrupalFiles(buildOptions, files) {
   }
 }
 
-// Pages that should be cloned have the value of 347
-function isLovellTricarePage(page) {
-  return (
-    page?.fieldAdministration?.entity?.entityId === '347' ||
-    page?.fieldAdministration?.entity?.entityId === '1039'
-  );
-}
-
-function isLovellVaPage(page) {
-  return (
-    page?.fieldAdministration?.entity?.entityId === '347' ||
-    page?.fieldAdministration?.entity?.entityId === '1040'
-  );
-}
-
-function getLovellClonePageIndexes(drupalData) {
-  return drupalData.data.nodeQuery.entities.map((page, index) => {
-    if (
-      page?.fieldAdministration?.entity?.entityId === '347' ||
-      page?.fieldAdministration?.entity?.entityId === '1039' ||
-      page?.fieldAdministration?.entity?.entityId === '1040'
-    ) {
-      return index;
-    }
-    return false;
-  });
-}
-
-function lovellPageModify(page, variant) {
-  const fieldOfficeMod = variant === 'tricare' ? 'Tricare' : 'VA';
-
-  // Modify the path
-  page.entityUrl.path = page.entityUrl.path.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${variant}-health-care`,
-  );
-
-  // Modify the title used for querying the menus
-  if (page.fieldOffice) {
-    page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-      LOVELL_TITLE_STRING,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
-  }
-  if (page.fieldRegionPage) {
-    page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
-      LOVELL_TITLE_STRING,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
-  }
-
-  // Modify the title this will become more complex to handle specific cases
-  page.title = page.title.replace(
-    LOVELL_TITLE_STRING,
-    `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-  );
-
-  return page;
-}
-
-function cloneLovellPages(lovellClonePages, variant) {
-  // Deep clone with lodash
-  const clonedPages = cloneDeep(lovellClonePages);
-
-  // Modify the clones
-  return clonedPages.map(page => {
-    page = lovellPageModify(page, variant);
-    return page;
-  });
-}
-
-function getLovellClonePages(drupalData) {
-  // Get lovell 'clone' pages
-  const lovellTricareClonePages = drupalData.data.nodeQuery.entities.filter(
-    isLovellTricarePage,
-  );
-  const lovellVaClonePages = drupalData.data.nodeQuery.entities.filter(
-    isLovellVaPage,
-  );
-
-  // Deep clone the lovell pages to create va pages
-  const vaClones = cloneLovellPages(lovellVaClonePages, 'va');
-
-  // Deep clone the lovell pages to create tricare pages
-  const tricareClones = cloneLovellPages(lovellTricareClonePages, 'tricare');
-
-  return [...vaClones, ...tricareClones];
-}
-
-function lovellMenusModifyLinks(links, variation) {
-  const titleVar = variation === 'va' ? 'VA' : 'Tricare';
-  const linkVar = variation === 'va' ? 'va' : 'tricare';
-
-  links.forEach(link => {
-    // Modify labels and links
-    link.label = link.label.replace(
-      LOVELL_TITLE_STRING,
-      `${LOVELL_TITLE_STRING} ${titleVar}`,
-    );
-
-    link.url.path = link.url.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-${linkVar}-health-care`,
-    );
-
-    // Use recursion to modify nested links
-    if (link && link.links.length > 0) {
-      // Remove the links that don't belong in either the va or tricare menus
-      link.links = link.links.filter(menuItem => {
-        if (
-          menuItem.entity.fieldMenuSection === 'va' &&
-          variation === 'tricare'
-        ) {
-          return false;
-        }
-        if (
-          menuItem.entity.fieldMenuSection === 'tricare' &&
-          variation === 'va'
-        ) {
-          return false;
-        }
-        return true;
-      });
-      lovellMenusModifyLinks(link.links, variation);
-    }
-  });
-}
-
-function getLovellCloneMenus(drupalData, lovellMenuKey) {
-  // Clone the original menu
-  const lovellTricareMenu = cloneDeep(drupalData.data[lovellMenuKey]);
-  const lovellVaMenu = cloneDeep(drupalData.data[lovellMenuKey]);
-
-  // Rename the name so our new cloned pages can find the cloned menus
-  lovellTricareMenu.name = lovellTricareMenu.name.replace(
-    LOVELL_TITLE_STRING,
-    `${LOVELL_TITLE_STRING} Tricare`,
-  );
-  lovellVaMenu.name = lovellVaMenu.name.replace(
-    LOVELL_TITLE_STRING,
-    `${LOVELL_TITLE_STRING} VA`,
-  );
-
-  // Mutate menu labels and paths of the cloned menus
-  lovellMenusModifyLinks(lovellTricareMenu.links, 'tricare');
-  lovellMenusModifyLinks(lovellVaMenu.links, 'va');
-
-  // create a key for the new menus
-  const lovellTricareMenuKey = camelize(
-    `va${lovellTricareMenu.name}FacilitySidebarQuery`,
-  );
-  const lovellVaMenuKey = camelize(
-    `va${lovellVaMenu.name}FacilitySidebarQuery`,
-  );
-
-  // Add the cloned menus to the drupal data
-  return {
-    [lovellTricareMenuKey]: lovellTricareMenu,
-    [lovellVaMenuKey]: lovellVaMenu,
-  };
-}
-
 function getDrupalContent(buildOptions) {
   if (!ENABLED_ENVIRONMENTS.has(buildOptions.buildtype)) {
     log(`Drupal integration disabled for buildtype ${buildOptions.buildtype}`);
@@ -485,25 +320,8 @@ function getDrupalContent(buildOptions) {
 
       await loadCachedDrupalFiles(buildOptions, files);
 
-      // clone and modify pages for Lovell
-      const lovellClonePageIndexes = getLovellClonePageIndexes(drupalData);
-      drupalData.data.nodeQuery.entities = [
-        ...drupalData.data.nodeQuery.entities,
-        ...getLovellClonePages(drupalData),
-      ];
-      // Delete original pages for lovell
-      lovellClonePageIndexes.forEach(index => {
-        delete drupalData.data.nodeQuery.entities[index];
-      });
-
-      // clone and modify menus for Lovell
-      const lovellMenuKey = 'lovellFederalHealthCareFacilitySidebarQuery';
-      drupalData.data = {
-        ...drupalData.data,
-        ...getLovellCloneMenus(drupalData, lovellMenuKey),
-      };
-      // Remove the original menu
-      delete drupalData.data[lovellMenuKey];
+      // Lovell specific data bifurcation
+      processLovellPages(drupalData);
 
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
