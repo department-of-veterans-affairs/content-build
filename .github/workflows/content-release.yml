@@ -30,6 +30,7 @@ jobs:
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
     env:
       INSTANCE_TYPE: m5.4xlarge
+    timeout-minutes: 15
 
     steps:
       - name: Export approximate workflow start time
@@ -95,6 +96,8 @@ jobs:
     outputs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
       TAG: ${{ steps.get-latest-release.outputs.tag_name }}
+    timeout-minutes: 15
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -151,7 +154,7 @@ jobs:
     needs:
       - start-runner
       - validate-build-status
-    timeout-minutes: 45
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: content-build
@@ -376,6 +379,7 @@ jobs:
       - build
     outputs:
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
+    timeout-minutes: 15
 
     steps:
       - name: Restore ${{ env.BUILDTYPE }} build
@@ -426,6 +430,7 @@ jobs:
       - archive
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -669,6 +674,8 @@ jobs:
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
+    timeout-minutes: 15
+
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
