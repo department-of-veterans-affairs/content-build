@@ -8,6 +8,10 @@ const LOVELL_FEDERAL_ENTITY_ID = '347';
 const LOVELL_TRICARE_ENTITY_ID = '1039';
 const LOVELL_VA_ENTITY_ID = '1040';
 const LOVELL_MENU_KEY = 'lovellFederalHealthCareFacilitySidebarQuery';
+const LOVELL_VA_TITLE_VARIATION = 'VA';
+const LOVELL_TRICARE_TITLE_VARIATION = 'TRICARE';
+const LOVELL_VA_LINK_VARIAION = 'va';
+const LOVELL_TRICARE_LINK_VARIATION = 'tricare';
 
 function isLovellFederalPage(page) {
   return (
@@ -26,12 +30,17 @@ function isLovellVaPage(page) {
 }
 
 function getModifiedLovellPage(page, variant) {
-  const fieldOfficeMod = variant === 'tricare' ? 'Tricare' : 'VA';
+  const fieldOfficeMod =
+    variant === 'va'
+      ? LOVELL_VA_TITLE_VARIATION
+      : LOVELL_TRICARE_TITLE_VARIATION;
+  const linkVar =
+    variant === 'va' ? LOVELL_VA_LINK_VARIAION : LOVELL_TRICARE_LINK_VARIATION;
 
   // Modify the path
   page.entityUrl.path = page.entityUrl.path.replace(
     '/lovell-federal-health-care',
-    `/lovell-federal-${variant}-health-care`,
+    `/lovell-federal-${linkVar}-health-care`,
   );
 
   // Modify the title used for querying the menus
@@ -59,8 +68,12 @@ function getModifiedLovellPage(page, variant) {
 
 function lovellMenusModifyLinks(link) {
   const { variant } = this;
-  const titleVar = variant === 'va' ? 'VA' : 'Tricare';
-  const linkVar = variant === 'va' ? 'va' : 'tricare';
+  const titleVar =
+    variant === 'va'
+      ? LOVELL_VA_TITLE_VARIATION
+      : LOVELL_TRICARE_TITLE_VARIATION;
+  const linkVar =
+    variant === 'va' ? LOVELL_VA_LINK_VARIAION : LOVELL_TRICARE_LINK_VARIATION;
 
   link.label = link.label.replace(
     LOVELL_TITLE_STRING,
@@ -91,7 +104,10 @@ function lovellMenusModifyLinks(link) {
 }
 
 function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
-  const titleVar = variant === 'va' ? 'VA' : 'Tricare';
+  const titleVar =
+    variant === 'va'
+      ? LOVELL_VA_TITLE_VARIATION
+      : LOVELL_TRICARE_TITLE_VARIATION;
 
   // Clone the original menu
   const lovellCloneMenu = cloneDeep(drupalData.data[lovellMenuKey]);
