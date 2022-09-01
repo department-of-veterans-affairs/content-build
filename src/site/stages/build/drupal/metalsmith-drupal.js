@@ -4,7 +4,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const recursiveRead = require('recursive-readdir');
 const JSONStream = require('JSONStream');
-const cloneDeep = require('lodash/cloneDeep');
 
 const ENVIRONMENTS = require('../../../constants/environments');
 const { ENABLED_ENVIRONMENTS } = require('../../../constants/drupals');
@@ -22,6 +21,8 @@ const createReactPages = require('../plugins/create-react-pages');
 
 const { addHubIconField } = require('./benefit-hub');
 const { addHomeContent } = require('./home');
+
+const { processLovellPages } = require('./process-lovell-pages');
 
 const DRUPAL_CACHE_FILENAME = 'drupal/pages.json';
 const DRUPAL_HUB_NAV_FILENAME = 'hubNavNames.json';
@@ -305,38 +306,6 @@ async function loadCachedDrupalFiles(buildOptions, files) {
   }
 }
 
-function appendDrupalDataWithLovellTricarePages(drupalData) {
-  const isLovellPage = page => {
-    if (page.fieldAdministration) {
-      return page.fieldAdministration.entity.entityId === '347';
-    }
-    return false;
-  };
-
-  // Adjust this if needed to get the fieldAdministration field
-  const lovellPages = drupalData.data.nodeQuery.entities.filter(isLovellPage);
-
-  // Deep clone with lodash
-  const clonedPages = cloneDeep(lovellPages);
-
-  const modifiedLovellPages = clonedPages.map(lovellPage => {
-    // Change the URL for the tricare pages
-    lovellPage.entityUrl.path = lovellPage.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      '/lovell-federal-tricare-health-care',
-    );
-
-    // Modify the title
-    lovellPage.title = lovellPage.title.replace('Federal', 'Federal TRICARE');
-
-    return lovellPage;
-  });
-
-  drupalData.data.nodeQuery.entities.push(...modifiedLovellPages);
-
-  return drupalData;
-}
-
 function getDrupalContent(buildOptions) {
   if (!ENABLED_ENVIRONMENTS.has(buildOptions.buildtype)) {
     log(`Drupal integration disabled for buildtype ${buildOptions.buildtype}`);
@@ -351,8 +320,8 @@ function getDrupalContent(buildOptions) {
 
       await loadCachedDrupalFiles(buildOptions, files);
 
-      // clone and modify for lovell tricare pages
-      drupalData = appendDrupalDataWithLovellTricarePages(drupalData);
+      // Lovell specific data bifurcation
+      processLovellPages(drupalData);
 
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
