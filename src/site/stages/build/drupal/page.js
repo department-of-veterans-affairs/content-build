@@ -226,21 +226,9 @@ function getFacilitySidebar(page, contentData) {
     }
 
     // set the correct menuName based on the page
-    let facilityNavName = facilityPage
+    const facilityNavName = facilityPage
       ? page.fieldOffice.entity.entityLabel
       : pageTitle;
-
-    // if part of lovell set facilityNavName to 'Lovell Federal health care'
-    // This is here mostly so we can change title without breaking the build
-    // This isn't working as expected no sidebars are showing on any of the tricare pages
-    // TODO: Remove this if metalsmith-drupal getDrupalContent bifurcates menus
-    if (
-      page.fieldAdministration &&
-      page.fieldAdministration.entity.entityId === '347'
-    ) {
-      console.log(page.title, facilityNavName, page.fieldRegionPage);
-      facilityNavName = 'Lovell Federal health care';
-    }
 
     // choose the correct menu name to retrieve the object from contentData
     const facilitySidebarNavName = Object.keys(
