@@ -10,7 +10,7 @@ const LOVELL_VA_ENTITY_ID = '1040';
 const LOVELL_MENU_KEY = 'lovellFederalHealthCareFacilitySidebarQuery';
 const LOVELL_VA_TITLE_VARIATION = 'VA';
 const LOVELL_TRICARE_TITLE_VARIATION = 'TRICARE';
-const LOVELL_VA_LINK_VARIAION = 'va';
+const LOVELL_VA_LINK_VARIATION = 'va';
 const LOVELL_TRICARE_LINK_VARIATION = 'tricare';
 
 function isLovellFederalPage(page) {
@@ -35,12 +35,22 @@ function getModifiedLovellPage(page, variant) {
       ? LOVELL_VA_TITLE_VARIATION
       : LOVELL_TRICARE_TITLE_VARIATION;
   const linkVar =
-    variant === 'va' ? LOVELL_VA_LINK_VARIAION : LOVELL_TRICARE_LINK_VARIATION;
+    variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
+  const originalPath = page.entityUrl.path;
 
   // Modify the path
-  page.entityUrl.path = page.entityUrl.path.replace(
+  page.entityUrl.path = originalPath.replace(
     '/lovell-federal-health-care',
     `/lovell-federal-${linkVar}-health-care`,
+  );
+
+  page.entityUrl.switchPath = originalPath.replace(
+    '/lovell-federal-health-care',
+    `/lovell-federal-${
+      variant === 'va'
+        ? LOVELL_TRICARE_LINK_VARIATION
+        : LOVELL_VA_LINK_VARIATION
+    }-health-care`,
   );
 
   // Modify the title used for querying the menus
@@ -73,7 +83,7 @@ function lovellMenusModifyLinks(link) {
       ? LOVELL_VA_TITLE_VARIATION
       : LOVELL_TRICARE_TITLE_VARIATION;
   const linkVar =
-    variant === 'va' ? LOVELL_VA_LINK_VARIAION : LOVELL_TRICARE_LINK_VARIATION;
+    variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
 
   link.label = link.label.replace(
     LOVELL_TITLE_STRING,
@@ -133,6 +143,32 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
   };
 }
 
+function updateLovellSwitchLinks(page, pages) {
+  const allSwitchPaths = pages.map(
+    switchPage => switchPage.entityUrl.switchPath,
+  );
+  const currentSwitchPath = page.entityUrl.switchPath;
+  const isTricarePage = currentSwitchPath.includes(
+    LOVELL_TRICARE_LINK_VARIATION,
+  );
+  const switchPathVariant = isTricarePage
+    ? LOVELL_TRICARE_LINK_VARIATION
+    : LOVELL_VA_LINK_VARIATION;
+  const expectedPathVariant = isTricarePage
+    ? LOVELL_VA_LINK_VARIATION
+    : LOVELL_TRICARE_LINK_VARIATION;
+  const expectedSwitchPath = currentSwitchPath.replace(
+    switchPathVariant,
+    expectedPathVariant,
+  );
+
+  if (!allSwitchPaths.includes(expectedSwitchPath)) {
+    page.entityUrl.switchPath = false;
+  }
+
+  return page;
+}
+
 function processLovellPages(drupalData) {
   // Note: this `reduce()` function allows us to categorize all the pages with a single pass over the array.
   // We could accomplish this same outcome with a few `filter()` calls, but that would require multiple passes over the array.
@@ -179,13 +215,14 @@ function processLovellPages(drupalData) {
     getModifiedLovellPage(cloneDeep(page), 'va'),
   );
 
-  drupalData.data.nodeQuery.entities = [
+  const processedLovellPages = [
     ...modifiedLovellTricarePages,
     ...modifiedLovellVaPages,
     ...lovellFederalPagesClonedTricare,
     ...lovellFederalPagesClonedVa,
-    ...otherPages,
-  ];
+  ].map((page, index, pages) => updateLovellSwitchLinks(page, pages));
+
+  drupalData.data.nodeQuery.entities = [...processedLovellPages, ...otherPages];
 
   // Clone and modify the menu
   drupalData.data = {
