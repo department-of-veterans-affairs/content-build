@@ -7,12 +7,13 @@
     <div class="usa-grid usa-grid-full">
       <div class="usa-width-three-fourths">
         <div class="usa-content">
+          <div data-widget-type="i18-select"></div>
           <!-- Search bar -->
           <div class="medium-screen:vads-u-border-bottom--2px vads-u-border-color--gray-light medium-screen:vads-u-margin-bottom--3">
             {% include "src/site/includes/support_resources_search_bar.drupal.liquid" %}
           </div>
 
-          <article class="vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+          <article class="usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
             <!-- Title -->
             <h1>{{ title }}</h1>
 
@@ -45,6 +46,33 @@
               {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
               {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
             {% endfor %}
+
+            <!-- QAs -->
+          {% for contentBlock in fieldContentBlock %}
+            {% if contentBlock.entity.entityBundle === "q_a_group"  %}
+              {% assign fieldQAs = contentBlock.entity.queryFieldQAs.entities %}
+
+              <!-- Optional section header -->
+              {% if contentBlock.entity.fieldSectionHeader %}
+                <h2>{{ contentBlock.entity.fieldSectionHeader }}</h2>
+              {% endif %}
+              
+              {% assign fieldSectionHeaderTag = 'h2' %}
+              {% if contentBlock.entity.fieldSectionHeader %}
+                {% assign fieldSectionHeaderTag = 'h3' %}
+              {% endif %}
+              {% for fieldQA in fieldQAs %}
+                  <{{ fieldSectionHeaderTag }}>{{ fieldQA.entityLabel }}</{{ fieldSectionHeaderTag }}>
+                  {% if fieldQA.fieldAnswer %}
+                    {% assign fieldAnswer = fieldQA.fieldAnswer %}
+                    {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                    {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                    {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                  {% endif %}
+                  </ul>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
 
             <!-- Repeated buttons -->
             {% if fieldButtonsRepeat %}

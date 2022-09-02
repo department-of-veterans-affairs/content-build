@@ -1,4 +1,3 @@
-{% include "src/site/includes/faq-schema.liquid" with FAQs = fieldCcVetCenterFaqs %}
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with
@@ -45,7 +44,7 @@
                         "@type": "Place",
                         "address": {
                           "@type": "PostalAddress",
-                          "streetAddress": "{{ fieldAddress.addressLine1 }}",
+                          "streetAddress": "{{ fieldAddress.addressLine1 }}{% if fieldAddress.addressLine2 %}, {{ fieldAddress.addressLine2 }}{% endif %}",
                           "addressLocality": "{{ fieldAddress.locality }}",
                           "addressRegion": "{{ fieldAddress.administrativeArea }}",
                           "postalCode": "{{ fieldAddress.postalCode }}"
@@ -172,6 +171,49 @@
                 %}
               {% endfor %}
             </div>
+            {% for healthService in fieldHealthServices %}
+              <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "GovernmentService",
+                  "name": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.name }}",
+                  "alternateName": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterFriendlyName }}",
+                  "serviceType": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare }}",
+                  "serviceOperator": {
+                    "@type": "GovernmentOrganization",
+                    "name": "US Department of Veterans Affairs"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "{{ fieldAddress.administrativeArea }}"
+                  },
+                  "audience": {
+                    "@type": "Audience",
+                    "name": "Veterans"
+                  },
+                  "availableChannel": {
+                    "@type": "ServiceChannel",
+                    "name": "Vet Center",
+                    "availableLanguage": {
+                      "@type": "Language",
+                      "name": "English",
+                      "alternateName": "en"
+                    },
+                    "serviceLocation": {
+                      "@type": "GovernmentOffice",
+                      "name": "{{ title }}",
+                      "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "{{ fieldAddress.addressLine1 }}{% if fieldAddress.addressLine2 %}, {{ fieldAddress.addressLine2 }}{% endif %}",
+                        "addressLocality": "{{ fieldAddress.locality }}",
+                        "addressRegion": "{{ fieldAddress.administrativeArea }}",
+                        "postalCode": "{{ fieldAddress.postalCode }}"
+                      }
+                    }
+                  }
+                }
+              </script>
+            {% endfor %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
               fieldHealthServices

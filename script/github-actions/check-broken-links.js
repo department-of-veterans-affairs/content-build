@@ -20,7 +20,7 @@ if (fs.existsSync(reportPath)) {
     brokenLinks.brokenLinksCount >
       (brokenLinks.maxBrokenLinks ?? maxBrokenLinks);
   const color = shouldFail ? '#D33834' : '#FFCC00'; // danger or warning, needs to be in hex
-  const summary = brokenLinks.summary;
+  const { summary } = brokenLinks;
   const heading = `<!subteam^S010U41C30V|cms-helpdesk> ${brokenLinks.brokenLinksCount} broken links found in ${envName} \\n\\n <${SERVER_URL}> \\n`;
   const slackAttachments = `{"attachments": [{"color": "${color}","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "${heading}\\n${summary
     .replace(/\n/g, '\\n')
