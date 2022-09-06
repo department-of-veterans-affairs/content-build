@@ -8,6 +8,10 @@
       {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       <div class="usa-width-three-fourths">
         <article class="usa-content va-l-facility-detail">
+          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+            entityUrl = entityUrl
+          %}
+
           {% if title != empty %}
             <h1>{{ title }}</h1>
           {% endif %}

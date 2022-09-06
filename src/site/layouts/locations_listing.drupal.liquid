@@ -14,6 +14,10 @@
       <div class="usa-width-three-fourths">
 
         <article class="usa-content">
+          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+            entityUrl = entityUrl
+          %}
+
           <h1 class="vads-u-margin-bottom--2">Locations</h1>
           <div class="usa-grid usa-grid-full vads-u-margin-y--1p5">
             {% assign basePath = entityUrl.path | regionBasePath %}
