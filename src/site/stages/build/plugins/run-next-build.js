@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-console */
 const { spawn } = require('child_process');
+const { logDrupal } = require('../drupal/utilities-drupal');
 
 const runNextBuild = options => (files, metalsmith, done) => {
-  console.log(
+  logDrupal(
     'Next build: starting build in child process. Metalsmith will continue.',
   );
   const directory = options['next-build-directory'];
@@ -29,7 +29,7 @@ const runNextBuild = options => (files, metalsmith, done) => {
     // If the child process exits abnormally, exit parent with the same code
     child.on('exit', code => {
       if (code) {
-        console.log(scriptOutput);
+        logDrupal(scriptOutput);
         process.exit(code);
       }
     });
@@ -42,7 +42,7 @@ const runNextBuild = options => (files, metalsmith, done) => {
         ...metalsmith.metadata(),
       });
       const exitCodeText = code ? `with code ${code}` : 'successfully';
-      console.log(
+      logDrupal(
         `Next build: build completed ${exitCodeText}. Log output is available in metalsmith.metadata().nextBuildLog.`,
       );
       resolve();
