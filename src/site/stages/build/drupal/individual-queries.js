@@ -149,6 +149,9 @@ function nonNodeQueries() {
   // Get current feature flags
   const { cmsFeatureFlags } = global;
 
+  const { getEntityQueueByName } = require('./graphql/entityQueue.graphql');
+  const GetEntityQueueStagedContent = getEntityQueueByName('staged_content');
+
   const { GetIcsFiles } = require('./graphql/file-fragments/ics.file.graphql');
 
   const {
@@ -179,6 +182,7 @@ function nonNodeQueries() {
   } = require('./graphql/taxonomy-fragments/GetTaxonomies.graphql');
 
   const componentQueries = {
+    GetEntityQueueStagedContent,
     GetLocationsOperatingStatus,
     GetIcsFiles,
     GetSidebars,
