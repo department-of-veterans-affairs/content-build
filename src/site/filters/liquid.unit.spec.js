@@ -9,6 +9,7 @@ import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesM
 import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
+import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
 import stagingSurveys from './medalliaStagingSurveys.json';
 import prodSurveys from './medalliaProdSurveys.json';
@@ -2442,5 +2443,64 @@ describe('deriveTimeForJSONLD', () => {
     expect(
       liquid.filters.deriveTimeForJSONLD(time, timetype, comment),
     ).to.equal('23:59:59');
+  });
+});
+
+describe('officeHoursDataFormat', () => {
+  // The function shifts the order of the array so that monday is first the day order is then 1,2,3,4,5,6,0
+  const defaultDay = index => {
+    return {
+      comment: 'Closed',
+      day: index === 6 ? 0 : index + 1, // because of the shift
+      endhours: null,
+      starthours: null,
+    };
+  };
+
+  it('when given an incomplete week returns a complete week with default days filled in where there were no values', () => {
+    const data = vetCenterHoursData.partialWeek;
+    for (let i = 0; i < 7; i++) {
+      // Check every day is equal to default day except for day provided by the data
+      if (i !== 1) {
+        assert.deepEqual(
+          liquid.filters.officeHoursDataFormat(data)[i],
+          defaultDay(i),
+        );
+      }
+    }
+  });
+
+  it('when given an incomplete week returns a complete week with the given data in the correct place', () => {
+    const data = vetCenterHoursData.partialWeek;
+    for (let i = 0; i < 7; i++) {
+      // Day 2 gets shifted back to 1 check if day 2 is in the right space
+      if (i === 1) {
+        assert.deepEqual(
+          liquid.filters.officeHoursDataFormat(data)[i],
+          data[0],
+        );
+      }
+    }
+  });
+
+  it('when given a complete week returns a complete week with the expected data', () => {
+    const data = vetCenterHoursData.completeWeek;
+    for (let i = 0; i < 7; i++) {
+      // Check to see if the new data equals the original data shifted back one
+      assert.deepEqual(
+        liquid.filters.officeHoursDataFormat(data)[i],
+        data[i === 6 ? 0 : i + 1],
+      );
+    }
+  });
+
+  it('when given a partial week always returns a full week', () => {
+    const data = vetCenterHoursData.partialWeek;
+    expect(liquid.filters.officeHoursDataFormat(data).length, 7);
+  });
+
+  it('when given a full week always returns a full week', () => {
+    const data = vetCenterHoursData.completeWeek;
+    expect(liquid.filters.officeHoursDataFormat(data).length, 7);
   });
 });
