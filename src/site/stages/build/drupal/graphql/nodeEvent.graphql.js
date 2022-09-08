@@ -71,13 +71,10 @@ const nodeEvent = `
         entityBundle
         entityId
         entityType
-        ... on NodeHealthCareLocalFacility {
-          entityUrl {
-            path
-          }
-          fieldFacilityLocatorApiId
-          title
+        entityUrl {
+          path
         }
+        title
       }
     }
     fieldFeatured
@@ -221,13 +218,10 @@ const nodeEventWithoutBreadcrumbs = `
         entityBundle
         entityId
         entityType
-        ... on NodeHealthCareLocalFacility {
-          entityUrl {
-            path
-          }
-          fieldFacilityLocatorApiId
-          title
+        entityUrl {
+          path
         }
+        title
       }
     }
     fieldFeatured
