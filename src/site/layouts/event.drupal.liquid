@@ -10,6 +10,10 @@
       {% endunless %}
 
       <div class="usa-width-three-fourths vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 large-screen:vads-u-padding-x--0 vads-u-padding-bottom--2">
+        {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+          entityUrl = entityUrl
+        %}
+
         <!-- Title -->
         <h1>{{ title }}</h1>
 
@@ -85,7 +89,7 @@
                   <div class="vads-u-display--flex vads-u-flex-direction--column">
                     {% if fieldLocationHumanreadable != empty %}
                       <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
-                    {% endif %} 
+                    {% endif %}
                     {% if fieldAddress.addressLine1 %}
                       <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
                     {% endif %}
