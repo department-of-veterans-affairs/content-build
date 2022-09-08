@@ -8,6 +8,10 @@
       {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       <div class="usa-width-three-fourths">
         <article class="usa-content">
+          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+            entityUrl = entityUrl
+          %}
+
           <h1>{{ title }}</h1>
           {% assign image = fieldMedia.entity.image %}
 
