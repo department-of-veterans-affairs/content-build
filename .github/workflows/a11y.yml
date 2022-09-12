@@ -404,8 +404,10 @@ jobs:
   slack-failure:
     name: Notify Slack - workflow failure
     runs-on: ubuntu-latest
-    needs: [build, a11y]
-    if: ${{ always() && (needs.a11y.result == 'cancelled' || needs.build.result == 'failure' || needs.build.result == 'cancelled') }}
+    needs: [a11y]
+    # needs: [build, a11y]
+    if: ${{ always() && (needs.a11y.result == 'cancelled') }}
+    # if: ${{ always() && (needs.a11y.result == 'cancelled' || needs.build.result == 'failure' || needs.build.result == 'cancelled') }}
     defaults:
       run:
         working-directory: content-build
