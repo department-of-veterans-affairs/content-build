@@ -92,6 +92,7 @@ jobs:
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v3
+        timeout-minutes: 10
         with:
           path: |
             .cache/yarn
@@ -186,6 +187,7 @@ jobs:
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v3
+        timeout-minutes: 10
         with:
           path: |
             .cache/yarn
