@@ -152,10 +152,21 @@ function lovellMenusModifyLinks(link) {
     );
   }
 
-  link.url.path = link.url.path.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${linkVar}-health-care`,
-  );
+  // Handle the special case for the first one
+  if (
+    variant === 'tricare' &&
+    link.url.path === '/lovell-federal-va-health-care'
+  ) {
+    link.url.path = link.url.path.replace(
+      '/lovell-federal-va-health-care',
+      `/lovell-federal-tricare-health-care`,
+    );
+  } else {
+    link.url.path = link.url.path.replace(
+      '/lovell-federal-health-care',
+      `/lovell-federal-${linkVar}-health-care`,
+    );
+  }
 
   // Use recursion to modify nested links
   if (link && link.links.length > 0) {
@@ -200,6 +211,7 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
   const findString = `${LOVELL_TITLE_STRING} ${variantFind}`;
   const regexFind = new RegExp(findString, 'gi');
 
+  // Rename the name so our new cloned pages can find the cloned menu
   if (
     lovellCloneMenu.name
       .toLowerCase()
@@ -210,7 +222,6 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
       `${LOVELL_TITLE_STRING} ${titleVar}`,
     );
   } else {
-    // Rename the name so our new cloned pages can find the cloned menu
     lovellCloneMenu.name = lovellCloneMenu.name.replace(
       LOVELL_TITLE_STRING,
       `${LOVELL_TITLE_STRING} ${titleVar}`,
