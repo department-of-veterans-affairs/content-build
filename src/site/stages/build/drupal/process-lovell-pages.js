@@ -194,8 +194,8 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
   const lovellCloneMenuKey = camelize(
     `va${lovellCloneMenu.name}FacilitySidebarQuery`,
   );
-  console.log(lovellCloneMenuKey);
-  console.dir(lovellCloneMenu, { depth: 7 });
+  // console.log(lovellCloneMenuKey);
+  // console.dir(lovellCloneMenu, { depth: 9 });
 
   return {
     [lovellCloneMenuKey]: lovellCloneMenu,
