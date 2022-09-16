@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, no-console */
 const cloneDeep = require('lodash/cloneDeep');
 
 const { camelize } = require('../../../utilities/stringHelpers');
@@ -62,24 +62,62 @@ function getModifiedLovellPage(page, variant) {
   );
 
   // Modify the title used for querying the menus
+  const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
+  const titleNeedle = `${LOVELL_TITLE_STRING} ${variantName}`;
+  const regexNeedle = new RegExp(titleNeedle, 'gi');
+
   if (page.fieldOffice) {
-    page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-      LOVELL_TITLE_STRING,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
+    // services, facilites
+    if (
+      page.fieldOffice.entity.entityLabel
+        .toLowerCase()
+        .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
+    ) {
+      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
+        regexNeedle,
+        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+      );
+    } else {
+      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
+        `${LOVELL_TITLE_STRING}`,
+        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+      );
+    }
   }
   if (page.fieldRegionPage) {
-    page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
-      LOVELL_TITLE_STRING,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
+    if (
+      page.fieldRegionPage.entity.title
+        .toLowerCase()
+        .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
+    ) {
+      page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
+        regexNeedle,
+        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+      );
+    } else {
+      page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
+        `${LOVELL_TITLE_STRING}`,
+        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+      );
+    }
   }
 
   // Modify the title this will become more complex to handle specific cases
-  page.title = page.title.replace(
-    LOVELL_TITLE_STRING,
-    `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-  );
+  if (
+    page.title
+      .toLowerCase()
+      .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
+  ) {
+    page.title = page.title.replace(
+      regexNeedle,
+      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+    );
+  } else {
+    page.title = page.title.replace(
+      `${LOVELL_TITLE_STRING}`,
+      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+    );
+  }
 
   return page;
 }
@@ -93,19 +131,24 @@ function lovellMenusModifyLinks(link) {
   const linkVar =
     variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
 
-  link.label = link.label.replace(
-    LOVELL_TITLE_STRING,
-    `${LOVELL_TITLE_STRING} ${titleVar}`,
-  );
+  // Only modify the links that are in both sections
+  if (link.entity.fieldMenuSection === 'both') {
+    link.label = link.label.replace(
+      LOVELL_TITLE_STRING,
+      `${LOVELL_TITLE_STRING} ${titleVar}`,
+    );
 
-  link.url.path = link.url.path.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${linkVar}-health-care`,
-  );
+    link.url.path = link.url.path.replace(
+      '/lovell-federal-health-care',
+      `/lovell-federal-${linkVar}-health-care`,
+    );
+  }
 
   // Use recursion to modify nested links
   if (link && link.links.length > 0) {
-    // Remove the links that don't belong in either the va or tricare menus
+    // Remove the links that don't belong in this version of the menu
+    // If it's tricare va links
+    // If it's va tricare links
     link.links = link.links.filter(menuItem => {
       if (menuItem.entity.fieldMenuSection === 'va' && variant === 'tricare') {
         return false;
@@ -136,7 +179,13 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
     `${LOVELL_TITLE_STRING} ${titleVar}`,
   );
 
-  // Modify labels and paths of the cloned menu links
+  // Change the root level item
+  // It's coming in from the cms as a va item when it should be both
+  lovellCloneMenu.links[0].label = 'Lovell Federal Health Care';
+  lovellCloneMenu.links[0].url.path = '/lovell-federal-health-care';
+  lovellCloneMenu.links[0].entity.fieldMenuSection = 'both';
+
+  // Use recursion to Filter and Modify labels and paths of those links
   lovellCloneMenu.links = lovellCloneMenu.links.map(lovellMenusModifyLinks, {
     variant,
   });
