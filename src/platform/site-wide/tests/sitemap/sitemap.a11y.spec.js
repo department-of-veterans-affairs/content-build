@@ -24,13 +24,7 @@ describe(`Accessibility tests batch ${step} of 32`, () => {
   for (const url of splitURLs) {
     // eslint-disable-next-line no-loop-func
     it(`${url}`, () => {
-      // TODO: When the site from the production build is started, the sitemap URLs are va.gov but it is running on localhost? If running against staging, no replacement needed?
       const localURL = url;
-
-      // const localURL = url.replace(
-      //   `https://www.va.gov`,
-      //   `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}`,
-      // );
 
       cy.visit(localURL);
       cy.get('body').should('be.visible', { timeout: normal });
