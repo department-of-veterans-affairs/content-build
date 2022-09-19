@@ -3,12 +3,12 @@ const fetch = require('sync-fetch');
 const { normal } = require('../../../testing/e2e/timeouts');
 
 const step = Number(Cypress.env('STEP'));
-// TODO: Fetch staging version?
-const data = fetch(`http://staging.va.gov/sitemap.xml`).text();
 
 // const data = fetch(
 //   `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap.xml`,
 // ).text();
+const data = fetch(`https://staging.va.gov/sitemap.xml`).text();
+
 const urls = xml
   .parse(data)
   .urlset.url.map(url => url.loc)
