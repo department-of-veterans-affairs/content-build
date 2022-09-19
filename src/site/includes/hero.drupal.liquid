@@ -1,0 +1,57 @@
+<!--
+  Hero section on home page
+
+  Homepage redesign iteration (/homepage-test)
+  Date: September 2022
+  Author: bryan@kindsys.us
+-->
+
+<!-- Hero Content -->
+<div class="homepage-hero__wrapper">
+  <div class="vads-l-grid-container vads-u-padding-x--0 homepage-hero">
+    <div class="vads-l-row">
+      <!-- start first column-->
+      <div class="vads-l-col--12 medium-screen:vads-l-col--6">
+        <div class="vads-u-padding-left--2 vads-u-padding-right--3 vads-u-padding-top--6 vads-u-padding-bottom--8">
+          <h1 class="vads-u-color--white">
+            <!-- The PACT Act and your VA benefits -->
+            {{ headline }}
+          </h1>
+
+          <p id="myva-login--hero" class="vads-u-color--white">
+            {{ copy }}
+          </p>
+
+          <a class="vads-c-action-link--white" href="{{ link }}">{{ linkText }}</a>
+        </div>
+      </div>
+      <!-- end first column -->
+
+      <!-- start second column for login card -->
+      <!-- TODO: Move to React component? -->
+      <script>
+        // Temporary implementation for prototyping purposes
+        function openLoginModal() {
+          const params = (new URL(document.location)).searchParams;
+          params.set("next", "loginModal")
+          document.location = "?" + params.toString();
+        }
+      </script>
+      <div class="vads-l-col--12 medium-screen:vads-l-col--6 homepage-hero__container">
+        <div class="vads-u-display--flex vads-u-align-items--center vars-u-justify-content--center">
+          <div id="homepage-hero-login" class="vads-u-background-color--white vads-u-padding-x--3 vads-u-padding-y--2"
+            style="margin-left: 172px; border-radius: 5px">
+            <p class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-padding-right--2">
+              Get access to the tools you need to manage your VA benefits and care
+            </p>
+            <button class="vads-u-width--full" onclick="openLoginModal()">
+              Create account
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- end second column -->
+    </div>
+  </div>
+</div>
+<!-- /Hero -->
