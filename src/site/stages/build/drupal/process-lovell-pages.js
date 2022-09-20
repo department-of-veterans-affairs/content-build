@@ -52,6 +52,8 @@ function getModifiedLovellPage(page, variant) {
     `/lovell-federal-${linkVar}-health-care`,
   );
 
+  // Add a switchPath field
+  // These get modified later in the processLovellPages function
   page.entityUrl.switchPath = originalPath.replace(
     '/lovell-federal-health-care',
     `/lovell-federal-${
@@ -60,6 +62,22 @@ function getModifiedLovellPage(page, variant) {
         : LOVELL_VA_LINK_VARIATION
     }-health-care`,
   );
+
+  // Modify Breadcrumb
+  if (page.entityUrl.breadcrumb) {
+    page.entityUrl.breadcrumb = page.entityUrl.breadcrumb.map(crumb => {
+      crumb.text = crumb.text.replace(
+        /Lovell Federal (VA )?health care/,
+        `${LOVELL_TITLE_STRING} ${fieldOfficeMod} health care`,
+      );
+      crumb.url.path = crumb.url.path.replace(
+        /\/lovell-federal-(va-)?health-care/,
+        `/lovell-federal-${linkVar}-health-care`,
+      );
+      console.log(crumb);
+      return crumb;
+    });
+  }
 
   // Modify the title used for querying the menus
   const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
