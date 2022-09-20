@@ -75,7 +75,7 @@ jobs:
 
       - name: Install Yarn
         shell: bash
-        run: npm i -g yarn@1.21.1
+        run: npm i -g yarn@1.19.1
 
       - name: Install vets-website dependencies
         uses: nick-invision/retry@v2
