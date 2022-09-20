@@ -1088,7 +1088,7 @@
     "entryName": "coe-status",
     "rootUrl": "/housing-assistance/home-loans/check-coe-status/your-coe",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1112,7 +1112,7 @@
     "entryName": "coe",
     "rootUrl": "/housing-assistance/home-loans/request-coe-form-26-1880",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [

@@ -1510,4 +1510,32 @@ module.exports = function registerFilters() {
     }
     return moment(time, 'Hmm').format('HH:mm:ss');
   };
+
+  liquid.filters.officeHoursDataFormat = data => {
+    const formattedData = [];
+    for (let i = 0; i < 7; i++) {
+      let day = {
+        day: i,
+        starthours: null,
+        endhours: null,
+        comment: 'Closed',
+      };
+      data.forEach(item => {
+        if (item.day === i) {
+          day = {
+            day: item.day,
+            starthours: item.starthours,
+            endhours: item.endhours,
+            comment: item.comment,
+          };
+        }
+      });
+      formattedData.push(day);
+    }
+
+    return [
+      ...formattedData.filter(a => a.day !== 0),
+      ...formattedData.filter(a => a.day === 0),
+    ];
+  };
 };

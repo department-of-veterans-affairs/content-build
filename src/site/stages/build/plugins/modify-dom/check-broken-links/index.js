@@ -46,8 +46,13 @@ module.exports = {
     const linkErrors = getBrokenLinks(file, this.allPaths);
 
     if (linkErrors.length > 0) {
+      // next-build generated files return file.path as undefined, this slices off /index.html to match live link
+      let nextFilePath = '';
+      if (file.path === undefined) {
+        nextFilePath = fileName.slice(0, -11);
+      }
       this.brokenPages.push({
-        path: file.path,
+        path: file.path || nextFilePath,
         linkErrors,
       });
     }
