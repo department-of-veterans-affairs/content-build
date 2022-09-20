@@ -160,7 +160,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
           copy:
             'This new law expands and extends eligibility for care and benefits for Veterans and survivors related to toxic exposures.',
           link: '#',
-          linkText: 'Learn about the PACT Act means to you',
+          linkText: 'Learn what the PACT Act means to you',
         },
         commonTasks: {
           searchLinks: [
