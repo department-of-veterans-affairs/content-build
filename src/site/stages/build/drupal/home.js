@@ -74,24 +74,81 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       const unsortedHubs =
         homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList;
 
+      // Updating copy for each of the hubs without overrriding their current values for other fields.
+      const healthCareHub = unsortedHubs[9];
+      healthCareHub.entity.fieldTeaserText =
+        'Apply for VA health care and manage you prescriptions, appointments, and care online.';
+
+      const disabilityHub = unsortedHubs[10];
+      disabilityHub.entity.fieldTeaserText =
+        'File and track your service-connect claims and manage your benefits over time.';
+
+      const educationHub = unsortedHubs[7];
+      educationHub.entity.fieldTeaserText =
+        'Apply for and manage your GI Bill and other education benefits.';
+
+      const careersHub = unsortedHubs[3];
+      careersHub.entity.fieldTeaserText =
+        'Get support for vocations rehabilitation, your small business, or other job-related needs.';
+
+      const pensionHub = unsortedHubs[5];
+      pensionHub.entity.fieldTeaserText =
+        'Apply for monthly payments for wartime Veterans and survivors.';
+
+      const housingHub = unsortedHubs[4];
+      housingHub.entity.fieldTeaserText =
+        "Find out if you're eligible for VA-backed home loans and disability housing grants.";
+
+      const insuranceHub = unsortedHubs[6];
+      insuranceHub.entity.fieldTeaserText =
+        'Explore life insurance options for your and your family and manage you policy online.';
+
+      const burialHub = unsortedHubs[2];
+      burialHub.entity.fieldTeaserText =
+        'Plan a burial in a VA national cemetary, request memorial items, and apply for survival benefits.';
+
+      const recordsHub = unsortedHubs[8];
+      recordsHub.entity.fieldTeaserText =
+        'Apply for a printer Veteran ID card, get your benefit letters and medical records, and learn how to apply for discharge upgrade.';
+
+      const memberBenefitsHub = unsortedHubs[0];
+      memberBenefitsHub.entity.fieldTeaserText =
+        'Learn when and how to apply for benefits during service and as a you transition our of service.';
+
+      const familyBenefitsHub = unsortedHubs[1];
+      familyBenefitsHub.entity.fieldTeaserText =
+        'Find out which benefits you may be eligible for as a dependant, spouse, survivor, or family caregiver.';
+
+      // This hub is a new addition and therefore needs mocked in its entirety.
+      const vaDeptInfoHub = {
+        entity: {
+          entityId: '123456',
+          fieldTitleIcon: '',
+          path: '#',
+          fieldHomePageHubLabel: 'VA department information',
+          fieldTeaserText:
+            'Learn more about the VA departments that manage our benefits and health care programs',
+        },
+      };
+
       // This assumes that benefit hubs with beresorted in the CMS later and for now is
       // hardcoding their ordering to match the prototype mockup
       let sortedHubs = [
-        unsortedHubs[9], // Health Care
-        unsortedHubs[10], // Disability
-        unsortedHubs[7], // Education & Training
-        //
-        unsortedHubs[3], // Careers and employment
-        unsortedHubs[5], // Pension
-        unsortedHubs[4], // Housing Assistance
-        //
-        unsortedHubs[6], // Life Insurance
-        unsortedHubs[2], // Burial and memorials
-        unsortedHubs[8], //
+        healthCareHub, // Health Care
+        disabilityHub, // Disability
+        educationHub, // Education & Training
 
-        unsortedHubs[0], // Life Insurance
-        unsortedHubs[1], // Burial and memorials
-        unsortedHubs[9], // VA Dept Information -- Needs created,
+        careersHub, // Careers and employment
+        pensionHub, // Pension
+        housingHub, // Housing Assistance
+
+        insuranceHub, // Life Insurance
+        burialHub, // Burial and memorials
+        recordsHub, // Records
+
+        memberBenefitsHub, // Service Member Benefits
+        familyBenefitsHub, // Family Member Benefits
+        vaDeptInfoHub, // VA Dept Information -- Needs created,
       ];
 
       sortedHubs = divideHubRows(sortedHubs);
@@ -101,9 +158,9 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         hero: {
           headline: 'The PACT Act and your VA benefits',
           copy:
-            'Expands and extends eligibility for care and benefits for Veterans and Survivors related to toxic exposures.',
+            'This new law expands and extends eligibility for care and benefits for Veterans and survivors related to toxic exposures.',
           link: '#',
-          linkText: 'Learn about the PACT Act',
+          linkText: 'Learn about the PACT Act means to you',
         },
         commonTasks: {
           searchLinks: [
@@ -111,7 +168,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
             { link: '/find-forms/', linkText: 'Find a VA form' },
             {
               link: '/resouces/',
-              linkText: 'Find benedit resources and support',
+              linkText: 'Find benefit resources and support',
             },
           ],
           popularLinks: [
