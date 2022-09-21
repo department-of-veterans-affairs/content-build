@@ -74,7 +74,6 @@ function getModifiedLovellPage(page, variant) {
         /\/lovell-federal-(va-)?health-care/,
         `/lovell-federal-${linkVar}-health-care`,
       );
-      console.log(crumb);
       return crumb;
     });
   }
