@@ -243,6 +243,65 @@ function updateLovellSwitchLinks(page, pages) {
   return page;
 }
 
+function updateEventPageListings(page, pages) {
+  if (page.entityBundle === 'event_listing') {
+    const lovellTricareEvents = pages.filter(
+      eventPage =>
+        eventPage.entityBundle === 'event' && isLovellTricarePage(eventPage),
+    );
+
+    const lovellVaEvents = pages.filter(
+      eventPage =>
+        eventPage.entityBundle === 'event' && isLovellVaPage(eventPage),
+    );
+
+    const addedEvents = page.entityUrl.path.includes(
+      'lovell-federal-tricare-health-care',
+    )
+      ? lovellTricareEvents
+      : lovellVaEvents;
+
+    const allPastEvents = [...page.pastEvents.entities, ...addedEvents]
+      .sort(
+        (a, b) =>
+          b.fieldDatetimeRangeTimezone[0].value -
+          a.fieldDatetimeRangeTimezone[0].value,
+      )
+      .filter(event => event.fieldDatetimeRangeTimezone[0].value < Date.now());
+
+    const allFutureEvents = [
+      ...page.reverseFieldListingNode.entities,
+      ...addedEvents,
+    ]
+      .sort(
+        (a, b) =>
+          a.fieldDatetimeRangeTimezone[0].value -
+          b.fieldDatetimeRangeTimezone[0].value,
+      )
+      .filter(event => event.fieldDatetimeRangeTimezone[0].value > Date.now());
+
+    if (page.pastEvents) {
+      page.pastEvents.entities = allPastEvents;
+    }
+
+    if (page.pastEventTeasers) {
+      page.pastEventTeasers.entities = allPastEvents;
+    }
+
+    if (page.allEventTeasers) {
+      page.allEventTeasers.entities = allFutureEvents;
+    }
+
+    if (page.reverseFieldListingNode) {
+      page.reverseFieldListingNode.entities = allFutureEvents;
+    }
+
+    return page;
+  }
+
+  return page;
+}
+
 function processLovellPages(drupalData) {
   // Note: this `reduce()` function allows us to categorize all the pages with a single pass over the array.
   // We could accomplish this same outcome with a few `filter()` calls, but that would require multiple passes over the array.
@@ -294,7 +353,9 @@ function processLovellPages(drupalData) {
     ...modifiedLovellVaPages,
     ...lovellFederalPagesClonedTricare,
     ...lovellFederalPagesClonedVa,
-  ].map((page, index, pages) => updateLovellSwitchLinks(page, pages));
+  ]
+    .map((page, index, pages) => updateLovellSwitchLinks(page, pages))
+    .map((page, index, pages) => updateEventPageListings(page, pages));
 
   drupalData.data.nodeQuery.entities = [...processedLovellPages, ...otherPages];
 
