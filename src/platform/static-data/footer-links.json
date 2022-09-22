@@ -133,10 +133,10 @@
   },
   {
     "column": 3,
-    "href": "https://www.blogs.va.gov/VAntage/",
+    "href": "https://www.news.va.gov/",
     "order": 1,
     "target": "_blank",
-    "title": "VAntage Point blog",
+    "title": "VA news",
     "rel": "noopener noreferrer"
   },
   {
@@ -144,7 +144,7 @@
     "href": "https://www.va.gov/opa/pressrel",
     "order": 2,
     "target": null,
-    "title": "News releases"
+    "title": "Press releases"
   },
   {
     "column": 3,
