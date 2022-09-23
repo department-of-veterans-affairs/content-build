@@ -1152,7 +1152,7 @@
   {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
-    "rootUrl": "/education/apply-for-benefits-form-22-1990",
+    "rootUrl": "/education/apply-for-gi-bill-benefits-form-22-1990",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html"
