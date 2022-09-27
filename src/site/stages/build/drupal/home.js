@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign, no-continue */
 const fs = require('fs-extra');
+const _ = require('lodash');
 const path = require('path');
 const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
@@ -71,13 +72,14 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     if (buildOptions.buildtype !== ENVIRONMENTS.VAGOVPROD) {
       const homePreviewPath = '/homepage-test';
 
-      const unsortedHubs =
-        homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList;
+      const unsortedHubs = _.cloneDeep(
+        homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList,
+      );
 
       // Updating copy for each of the hubs without overrriding their current values for other fields.
       const healthCareHub = unsortedHubs[9];
       healthCareHub.entity.fieldTeaserText =
-        'Apply for VA health care and manage you prescriptions, appointments, and care online.';
+        'Apply for VA health care and manage your prescriptions, appointments, and care online.';
 
       const disabilityHub = unsortedHubs[10];
       disabilityHub.entity.fieldTeaserText =
@@ -167,7 +169,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
             { link: '/find-a-location/', linkText: 'Find a VA facility' },
             { link: '/find-forms/', linkText: 'Find a VA form' },
             {
-              link: '/resouces/',
+              link: '/resources/',
               linkText: 'Find benefit resources and support',
             },
           ],
@@ -181,7 +183,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
               linkText: 'VA medical records',
             },
             {
-              link: 'https://mentalhealth.va.gov/',
+              link: '/health-care/health-needs-conditions/mental-health/',
               linkText: 'Mental health help',
             },
             {
