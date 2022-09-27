@@ -206,7 +206,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
             },
             {
               link: '/va-payment-history/',
-              linkText: 'You VA payment history',
+              linkText: 'Your VA payment history',
             },
             {
               link: '/view-change-dependents',
