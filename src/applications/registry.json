@@ -1102,7 +1102,7 @@
         },
         {
           "name": "Your VA home loan COE",
-          "path": "housing-assistance/home-loans/check-coe-status"
+          "path": "housing-assistance/home-loans/check-coe-status/your-coe"
         }
       ]
     }
