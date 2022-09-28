@@ -26,10 +26,7 @@
             </div>
           {% endif %}
 
-          <nav id="table-of-contents" aria-labelledby="on-this-page">
-            <h2 id="on-this-page" class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page</h2>
-            <ul class="usa-unstyled-list" role="list"></ul>
-          </nav>
+          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
 
           <h2 id="locations-and-contact-information" class="vads-u-line-height--1 vads-u-margin-bottom--3 vads-u-font-size--lg
           small-screen:vads-u-font-size--xl">Locations and contact information</h2>
@@ -41,6 +38,39 @@
               <div>
                 <div class="vads-c-facility-detail">
                   <section class="vads-facility-detail">
+                    <script type="application/ld+json">
+                      {
+                        "@context": "https://schema.org",
+                        "@type": "Place",
+                        "address": {
+                          "@type": "PostalAddress",
+                          "streetAddress": "{{ fieldAddress.addressLine1 }}{% if fieldAddress.addressLine2 %}, {{ fieldAddress.addressLine2 }}{% endif %}",
+                          "addressLocality": "{{ fieldAddress.locality }}",
+                          "addressRegion": "{{ fieldAddress.administrativeArea }}",
+                          "postalCode": "{{ fieldAddress.postalCode }}"
+                        },
+                        "name": "{{ title }}",
+                        "telephone": "{{ fieldPhoneNumber }}",
+                        "openingHoursSpecification": [
+                          {% for hours in fieldOfficeHours %}
+                            {
+                              "@type": "OpeningHoursSpecification",
+                              "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
+                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}",
+                              "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}"
+                            }{% if !forloop.last %},{% endif %}
+                          {% endfor %}
+                        ],
+                        "hasMap": "https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}",
+                        "image": ["{{ fieldMedia.entity.image.derivative.url }}"],
+                        "branchCode": "{{ fieldFacilityLocatorApiId }}",
+                        "geo": {
+                          "@type": "GeoCoordinates",
+                          "latitude": "{{ fieldGeolocation.lat }}",
+                          "longitude": "{{ fieldGeolocation.lon }}"
+                        }
+                      }
+                    </script>
                     <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
                       Main Location</h3>
                     <div data-widget-type="expandable-operating-status-{{ fieldFacilityLocatorApiId }}"
@@ -141,6 +171,49 @@
                 %}
               {% endfor %}
             </div>
+            {% for healthService in fieldHealthServices %}
+              <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "GovernmentService",
+                  "name": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.name }}",
+                  "alternateName": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterFriendlyName }}",
+                  "serviceType": "{{ healthService.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare }}",
+                  "serviceOperator": {
+                    "@type": "GovernmentOrganization",
+                    "name": "US Department of Veterans Affairs"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "{{ fieldAddress.administrativeArea }}"
+                  },
+                  "audience": {
+                    "@type": "Audience",
+                    "name": "Veterans"
+                  },
+                  "availableChannel": {
+                    "@type": "ServiceChannel",
+                    "name": "Vet Center",
+                    "availableLanguage": {
+                      "@type": "Language",
+                      "name": "English",
+                      "alternateName": "en"
+                    },
+                    "serviceLocation": {
+                      "@type": "GovernmentOffice",
+                      "name": "{{ title }}",
+                      "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "{{ fieldAddress.addressLine1 }}{% if fieldAddress.addressLine2 %}, {{ fieldAddress.addressLine2 }}{% endif %}",
+                        "addressLocality": "{{ fieldAddress.locality }}",
+                        "addressRegion": "{{ fieldAddress.administrativeArea }}",
+                        "postalCode": "{{ fieldAddress.postalCode }}"
+                      }
+                    }
+                  }
+                }
+              </script>
+            {% endfor %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
               fieldHealthServices

@@ -5,9 +5,9 @@ DRUPAL_MAPPING = [
 ]
 
 DRUPAL_ADDRESSES = [
-  'vagovdev'    : 'http://internal-dsva-vagov-dev-cms-812329399.us-gov-west-1.elb.amazonaws.com',
-  'vagovstaging': 'http://internal-dsva-vagov-staging-cms-1188006.us-gov-west-1.elb.amazonaws.com',
-  'vagovprod'   : 'http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com',
+  'vagovdev'    : 'https://dev.cms.va.gov',
+  'vagovstaging': 'https://staging.cms.va.gov',
+  'vagovprod'   : 'https://prod.cms.va.gov',
    // This is a Tugboat URL, rebuilt frequently from PROD CMS. See https://tugboat.vfs.va.gov/6042f35d6a89945fd6399dc3.
    // If there are issues with this endpoint, please post in #cms-support Slack and tag @CMS DevOps Engineers.
    'sandbox'     : 'https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov',
@@ -29,9 +29,9 @@ BUILD_TYPE_OVERRIDE = DRUPAL_MAPPING.get(params.cmsEnvBuildOverride, null)
 
 VAGOV_BUILDTYPES = BUILD_TYPE_OVERRIDE ? [BUILD_TYPE_OVERRIDE] : ALL_VAGOV_BUILDTYPES
 
-DEV_BRANCH = 'master'
-STAGING_BRANCH = 'master'
-PROD_BRANCH = 'master'
+DEV_BRANCH = 'main'
+STAGING_BRANCH = 'main'
+PROD_BRANCH = 'main'
 
 IS_DEV_BRANCH = env.BRANCH_NAME == DEV_BRANCH
 IS_STAGING_BRANCH = env.BRANCH_NAME == STAGING_BRANCH
@@ -46,7 +46,7 @@ def isReviewable() {
 }
 
 def shouldBail() {
-  // abort the job if we're not on deployable branch (usually master) and there's a newer build going now
+  // abort the job if we're not on deployable branch (usually main) and there's a newer build going now
   return !IS_DEV_BRANCH &&
     !IS_STAGING_BRANCH &&
     !IS_PROD_BRANCH &&
@@ -78,11 +78,11 @@ def setup() {
   stage("Setup") {
 
     dir("vagov-content") {
-      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
+      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vagov-content.git']]]
     }
 
     dir("vets-website") {
-      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
+      checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/vets-website.git']]]
     }
 
     dir("content-build") {
@@ -135,7 +135,7 @@ def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnly
 
     if (!IS_PROD_BRANCH && !contentOnlyBuild) {
       // Ignore the results of the broken link checker unless
-      // we are running either on the master branch or during
+      // we are running either on the main branch or during
       // a Content Release. This way, if there is a broken link,
       // feature branches aren't affected, so VFS teams can
       // continue merging.
@@ -176,7 +176,7 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
 
    // Build using the CMS Production instance only if we are doing
   // a content-only build (as part of a Content Release) OR if
-  // we are building the master branch's production environment.
+  // we are building the main branch's production environment.
   if (
     contentOnlyBuild ||
     (IS_PROD_BRANCH && envName == 'vagovprod')

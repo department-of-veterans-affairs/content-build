@@ -14,7 +14,7 @@ jobs:
   build:
     name: Build
     runs-on: [self-hosted, asg]
-    timeout-minutes: 120
+    timeout-minutes: 180
     defaults:
       run:
         working-directory: content-build
@@ -50,6 +50,10 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
+      - name: Install Yarn
+        shell: bash
+        run: npm i -g yarn@1.19.1
+
       - name: Install vets-website dependencies
         uses: nick-invision/retry@v2
         with:
@@ -70,7 +74,7 @@ jobs:
           timeout_minutes: 7
 
       - name: Set Drupal address
-        run: echo "DRUPAL_ADDRESS=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com" >> $GITHUB_ENV
+        run: echo "DRUPAL_ADDRESS=https://prod.cms.va.gov" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -92,7 +96,7 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Build content-build
-        run: yarn build --buildtype=${{ env.BUILD_TYPE }} --asset-source=local --drupal-address=http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: yarn build --buildtype=${{ env.BUILD_TYPE }} --asset-source=local --drupal-address=https://prod.cms.va.gov --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
 
@@ -111,19 +115,21 @@ jobs:
           path: content-build/test-build.tar.bz2
           retention-days: 1
 
+      - name: Runner clean up
+        run: rm -rf ../content-build
+
   a11y:
     name: Accessibility Tests
     needs: build
     timeout-minutes: 120
-    runs-on: [self-hosted, asg]
+    runs-on: self-hosted
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
-      options: -u 1001:1001 -v /usr/local/share:/share
+      options: -u 1001:1001 -v /usr/local/share:/share --user root
     strategy:
       fail-fast: false
       max-parallel: 32
       matrix:
-        ci_node_total: [32]
         ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
 
     env:
@@ -169,7 +175,7 @@ jobs:
         run: node src/platform/testing/e2e/test-server.js --buildtype ${{ env.BUILD_TYPE }} --port=3002 &
 
       - name: Run Cypress E2E Tests
-        run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 CYPRESS_RUN_HEADINGS=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,testFiles=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
+        run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 CYPRESS_RUN_HEADINGS=true yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,specPattern=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
 
       - name: Rename Mochawesome JSON file
         if: ${{ always() }}
@@ -194,6 +200,11 @@ jobs:
           name: a11y_failures
           path: a11y_failures-${{ matrix.ci_node_index }}.csv
           retention-days: 30
+
+      - name: Runner clean up
+        run: |
+          rm -rf build
+          rm /__w/content-build/content-build/test-build.tar.bz2
 
   slack:
     name: Notify Slack
@@ -250,5 +261,5 @@ jobs:
           SSL_CERT_DIR: /etc/ssl/certs
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
         with:
-          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "ATTN: Accessibility heading-order tests have failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#FF0800","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> ATTN: Accessibility heading-order tests have failed on run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel-id: ${{ env.CHANNEL_ID }}

@@ -26,14 +26,14 @@
                             {% if location.entity.status and facility != empty %}
                                 <li class="vads-u-margin-bottom--2">
                                     <a
-                                        onclick="recordEvent(
+                                        onclick='recordEvent(
                                             {
-                                                'event': 'nav-accordion-link-click',
-                                                'accordion-parent-label': '{{ serviceTaxonomy.name }}',
-                                                'accordion-child-label': '{{ serviceTaxonomy.fieldAlsoKnownAs }}',
-                                                'accordion-section-label': '{{ sectionName }}'
+                                                "event": "nav-accordion-link-click",
+                                                "accordion-parent-label": "{{ serviceTaxonomy.name | escape }}",
+                                                "accordion-child-label": "{{ serviceTaxonomy.fieldAlsoKnownAs | escape }}",
+                                                "accordion-section-label": "{{ sectionName | escape }}"
 
-                                            })"
+                                            })'
                                         href="{{ facility.entityUrl.path }}"
                                     >
                                         {{ facility.title }}

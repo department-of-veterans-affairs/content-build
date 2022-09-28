@@ -90,6 +90,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
               title
               entityBundle
               fieldFacilityLocatorApiId
+              fieldVetcenterCapHoursOptIn
               fieldOperatingStatusFacility
               fieldOperatingStatusMoreInfo
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}

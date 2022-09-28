@@ -14,6 +14,7 @@ async function downloadFile(
   assetsToDownload,
   downloadResults,
   everythingDownloaded,
+  downloaderIndex,
 ) {
   const asset = assetsToDownload.shift();
   if (!asset) {
@@ -33,6 +34,12 @@ async function downloadFile(
   let retries = 3;
   while (retries--) {
     try {
+      if (global.verbose) {
+        const startDate = new Date().toISOString();
+        log(
+          `${startDate}: index ${downloaderIndex}: Starting download ${asset.src}`,
+        );
+      }
       // eslint-disable-next-line no-await-in-loop
       response = await client.proxyFetch(asset.src);
       break;
@@ -66,7 +73,10 @@ async function downloadFile(
     downloadResults.downloadCount++;
 
     if (global.verbose) {
-      log(`Finished downloading ${asset.src}`);
+      const endDate = new Date().toISOString();
+      log(
+        `${endDate}: index ${downloaderIndex}: Finished downloading ${asset.src}`,
+      );
     } else {
       process.stdout.write('.');
       if (!assetsToDownload.length) process.stdout.write('\n');
@@ -98,6 +108,7 @@ async function downloadFile(
       assetsToDownload,
       downloadResults,
       everythingDownloaded,
+      downloaderIndex,
     );
   } else {
     // Some downloads must still be in progress, but there are no files left to begin downloading
@@ -139,6 +150,7 @@ function downloadDrupalAssets(options) {
             assetsToDownload,
             downloadResults,
             everythingDownloaded,
+            i,
           );
         }
       });

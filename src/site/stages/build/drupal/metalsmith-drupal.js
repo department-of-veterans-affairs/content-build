@@ -190,6 +190,37 @@ function writeGraphQLCacheFile(cacheFilePath, graphQLData) {
 }
 
 /**
+ * If buildtype is production, removes pages that are set as "staged content" (via EntityQueue)
+ *
+ * @param {Object} buildOptions
+ * @param {Object} drupalPages - Array of page objects (GraphQL query results) pulled from Drupal
+ */
+function removeStagedContentFromProd(buildOptions, drupalPages) {
+  // If not production build, keep all pages
+  if (buildOptions.buildtype !== ENVIRONMENTS.VAGOVPROD) {
+    return drupalPages;
+  }
+
+  const stagedContent = drupalPages?.data?.entityQueueStagedContent?.entities[0]?.items?.map(
+    item => item.targetId,
+  );
+  if (!stagedContent || stagedContent.length === 0) {
+    return drupalPages;
+  }
+
+  if (!drupalPages?.data?.nodeQuery?.entities) {
+    return drupalPages;
+  }
+
+  const modifiedPages = drupalPages;
+  modifiedPages.data.nodeQuery.entities = drupalPages.data.nodeQuery.entities.filter(
+    page => !stagedContent.includes(page?.entityId),
+  );
+
+  return modifiedPages;
+}
+
+/**
  * Uses Drupal content via a new GraphQL query or the cached result of a
  * previous query. This is where the cache is saved.
  *
@@ -218,6 +249,8 @@ async function getContentViaGraphQL(buildOptions) {
     drupalPages = await contentApi.getAllPagesViaIndividualGraphQlQueries();
 
     console.timeEnd(drupalTimer);
+
+    drupalPages = removeStagedContentFromProd(buildOptions, drupalPages);
 
     // Error handling
     if (drupalPages.errors && drupalPages.errors.length) {
@@ -314,7 +347,7 @@ function getDrupalContent(buildOptions) {
     let drupalData = null;
     try {
       drupalData = await loadDrupal(buildOptions);
-      drupalData = convertDrupalFilesToLocal(drupalData, files, buildOptions);
+      drupalData = convertDrupalFilesToLocal(drupalData, files);
 
       await loadCachedDrupalFiles(buildOptions, files);
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
@@ -345,4 +378,5 @@ module.exports = {
   getDrupalContent,
   pipeDrupalPagesIntoMetalsmith,
   shouldPullDrupal,
+  PULL_DRUPAL_BUILD_ARG,
 };

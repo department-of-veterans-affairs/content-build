@@ -9,8 +9,6 @@ const {
   createFileObj,
 } = require('../../src/site/stages/build/drupal/page');
 
-const DRUPALS = require('../../src/site/constants/drupals');
-
 const convertDrupalFilesToLocal = require('../../src/site/stages/build/drupal/assets');
 const updateAssetLinkElements = require('../../src/site/stages/prearchive/helpers');
 
@@ -96,7 +94,6 @@ function singlePageDiff(
       const drupalDataWithUpdatedAssetRefs = convertDrupalFilesToLocal(
         drupalData,
         [],
-        buildOptions,
       );
       const drupalPage = drupalDataWithUpdatedAssetRefs.data.nodes.entities[0];
       const drupalPath = `${req.path.substring(1)}/index.html`;
@@ -132,9 +129,7 @@ function singlePageDiff(
           ...fullPage,
           isPreview: false,
           isSinglePagePublish: true,
-          drupalSite:
-            DRUPALS.PUBLIC_URLS[options['drupal-address']] ||
-            options['drupal-address'],
+          drupalSite: options['drupal-address'],
         },
       };
 

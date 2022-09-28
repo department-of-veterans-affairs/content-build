@@ -1,0 +1,15 @@
+{% if fieldSupplementalStatus.entity.name %}
+	<va-alert-expandable
+		data-template="components/covid-status.drupal.liquid"
+class="vads-u-margin-top--{{topMargin}} vads-u-margin-bottom--{{bottomMargin}} vamc-facility-expandable-alert"
+		status="info"
+		trigger="{{ fieldSupplementalStatus.entity.name }}"
+		onclick="recordEvent({
+			'event': 'covid-status',
+			'covid-status-entity-id': '{{ entityId }}',
+			'covid-status-heading':  '{{ fieldSupplementalStatus.entity.fieldStatusId }}',
+		});"
+	>
+		{{ fieldSupplementalStatus.entity.description.processed }}
+	</va-alert-expandable>
+{% endif %}

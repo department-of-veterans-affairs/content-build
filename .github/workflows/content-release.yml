@@ -4,8 +4,6 @@ on:
   repository_dispatch:
     types: [content-release]
   workflow_dispatch:
-  schedule:
-    - cron: '54 13-21 * * 1-5'
 
 concurrency:
   group: content-release-prod
@@ -15,12 +13,10 @@ env:
   VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
-  DSVA_SCHEDULE_ENABLED: true
-  NODE_ENV: production
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
-  DRUPAL_ADDRESS: http://internal-dsva-vagov-prod-cms-2000800896.us-gov-west-1.elb.amazonaws.com
+  DRUPAL_ADDRESS: https://prod.cms.va.gov
 
 jobs:
   start-runner:
@@ -33,7 +29,8 @@ jobs:
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
     env:
-      INSTANCE_TYPE: c5.4xlarge
+      INSTANCE_TYPE: m5.4xlarge
+    timeout-minutes: 15
 
     steps:
       - name: Export approximate workflow start time
@@ -53,11 +50,11 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Get latest GHA Runner AMI ID # AMI images are rebuilt every 15 days, use the latest one
+      - name: Get latest GHA Runner AMI ID
         run: |
           echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
           --owners 008577686731 \
-          --filters "Name=state,Values=available" "Name=name,Values=packer-gha-runner-ubuntu2004*" \
+          --filters "Name=state,Values=available" "Name=name,Values=platform-gha-runner-ubuntu*" \
           --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
           --output text)" >> $GITHUB_ENV
 
@@ -81,10 +78,10 @@ jobs:
           max_attempts: 3
           aws-resource-tags: >
             [
-              {"Key": "Name", "Value": "dsva-vagov-vets-website-on-demand-runner"},
+              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
               {"Key": "project", "Value": "vagov"},
               {"Key": "office", "Value": "dsva"},
-              {"Key": "application", "Value": "on-demand-gha-runner"},
+              {"Key": "application", "Value": "gha-runner"},
               {"Key": "VAECID", "Value": "AWG20180517003"},
               {"Key": "environment", "Value": "utility"}
             ]
@@ -99,20 +96,18 @@ jobs:
     outputs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
       TAG: ${{ steps.get-latest-release.outputs.tag_name }}
-    steps:
-      - name: Cancel workflow due to DSVA schedule
-        if: ${{ github.event_name == 'schedule' && env.DSVA_SCHEDULE_ENABLED != 'true' }}
-        uses: andymckay/cancel-action@0.2
+    timeout-minutes: 15
 
+    steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Notify CMS - starting
+      - name: Notify CMS - Starting
         uses: ./.github/workflows/authenticated-cms-request
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/starting
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
           method: GET
 
       - name: Install dependencies
@@ -126,7 +121,7 @@ jobs:
 
       - name: Get latest release
         id: get-latest-release
-        uses: thebritican/fetch-latest-release@v2.0.0
+        uses: gregziegan/fetch-latest-release@v2.0.0
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
@@ -145,11 +140,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CMS_NOTIFICATIONS_SLACK }}
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -159,7 +154,7 @@ jobs:
     needs:
       - start-runner
       - validate-build-status
-    timeout-minutes: 45 
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: content-build
@@ -200,6 +195,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Setup Yarn
+        run: npm i -g yarn@1.19.1
 
       - name: Cache dependencies
         id: cache-dependencies
@@ -255,16 +253,18 @@ jobs:
           env_variable_name: DRUPAL_USERNAME
 
       - name: Notify CMS - In Progress
-        uses: ./.github/workflows/authenticated-cms-request
+        uses: ./content-build/.github/workflows/authenticated-cms-request
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/inprogress
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/inprogress
           method: GET
 
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 30
+        env:
+          NODE_ENV: production
 
       - name: Export content build end time
         id: export-content-build-end
@@ -379,6 +379,7 @@ jobs:
       - build
     outputs:
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
+    timeout-minutes: 15
 
     steps:
       - name: Restore ${{ env.BUILDTYPE }} build
@@ -429,6 +430,7 @@ jobs:
       - archive
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -463,23 +465,23 @@ jobs:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2
           DEST: s3://${{ env.DEPLOY_BUCKET }}
 
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+
       - name: Notify CMS - Complete
         uses: ./.github/workflows/authenticated-cms-request
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/complete
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/complete
           method: GET
-
-      - name: Wait for the CMS to be ready
-        uses: ./.github/workflows/wait-for-cms-ready
 
       - name: CMS GovDelivery callback
         uses: ./.github/workflows/authenticated-cms-request
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
 
       - name: Export deploy end time
@@ -501,20 +503,20 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: ./.github/workflows/slack-notify
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
+
       - name: Notify CMS - Ready
         uses: ./.github/workflows/authenticated-cms-request
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: https://prod.cms.va.gov/api/content_release/ready
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/ready
           method: GET
 
   notify-failure:
@@ -534,6 +536,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
+
+      - name: Notify CMS - Error
+        uses: ./.github/workflows/authenticated-cms-request
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/error
+          method: GET
 
       - name: Get Datadog token from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
@@ -558,7 +568,7 @@ jobs:
 
       - name: Send event to Datadog
         run: |
-          curl -X POST "https://api.datadoghq.com/api/v1/events" \
+          curl -X POST "https://api.ddog-gov.com/api/v1/events" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < event.json
@@ -649,17 +659,10 @@ jobs:
 
       - name: Send metrics to Datadog
         run: |
-          curl -X POST "https://api.datadoghq.com/api/v1/series" \
+          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
-
-      - name: Record deployment event
-        uses: ./.github/workflows/record-release-interval
-        with:
-          datadog_api_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
-          datadog_app_key: ${{ env.GHA_CONTENT_BUILD_DATADOG_APP_KEY }}
-          metric_namespace: ${{ env.METRIC_NAMESPACE }}
 
   stop-runner:
     name: Stop on-demand-runner
@@ -671,6 +674,8 @@ jobs:
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
       INSTANCE_TYPE: c5.4xlarge
+    timeout-minutes: 15
+
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

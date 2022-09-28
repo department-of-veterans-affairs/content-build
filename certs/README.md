@@ -6,4 +6,4 @@ The VA uses self-signed certificates with a non-globally trusted Root Certificat
 authority. 
 
 
-Used in [the Drupal client](https://github.com/department-of-veterans-affairs/vets-website/blob/master/src/site/stages/build/drupal/api.js)'s `proxyFetch` function when using the SOCKS proxy.
+Used in [the Drupal client](https://github.com/department-of-veterans-affairs/vets-website/blob/main/src/site/stages/build/drupal/api.js)'s `proxyFetch` function when using the SOCKS proxy.

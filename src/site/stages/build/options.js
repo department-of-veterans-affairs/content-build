@@ -13,6 +13,7 @@ const projectRoot = path.resolve(__dirname, '../../../../');
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
 const defaultContentDir = path.join(projectRoot, '../vagov-content/pages');
+const nextBuildDir = path.join(projectRoot, '../next-build/');
 
 const getDrupalClient = require('./drupal/api');
 const { shouldPullDrupal } = require('./drupal/metalsmith-drupal');
@@ -38,6 +39,12 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'pull-drupal', type: Boolean, defaultValue: false },
   { name: 'drupal-fail-fast', type: Boolean, defaultValue: false },
   { name: 'setPublicPath', type: Boolean, defaultValue: false },
+  { name: 'run-next-build', type: Boolean, defaultValue: false },
+  {
+    name: 'next-build-directory',
+    type: String,
+    defaultValue: nextBuildDir,
+  },
   {
     name: 'drupal-address',
     type: String,
@@ -58,7 +65,11 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
     type: Number,
     defaultValue: process.env.DRUPAL_MAX_PARALLEL_REQUESTS,
   },
-  { name: 'no-drupal-proxy', type: Boolean, defaultValue: false },
+  {
+    name: 'no-drupal-proxy',
+    type: Boolean,
+    defaultValue: process.env.NO_DRUPAL_PROXY === 'true',
+  },
   { name: 'local-proxy-rewrite', type: Boolean, defaultValue: false },
   { name: 'local-css-sourcemaps', type: Boolean, defaultValue: false },
   { name: 'accessibility', type: Boolean, defaultValue: false },
@@ -88,6 +99,8 @@ function gatherFromCommandLine() {
 
 function applyDefaultOptions(options) {
   const contentPagesRoot = options['content-directory'];
+  const nextBuildDirectory = options['next-build-directory'];
+  const runNextBuild = options['run-next-build'];
   const contentRoot = path.join(contentPagesRoot, '../');
 
   const siteRoot = path.join(__dirname, '../../');
@@ -104,6 +117,8 @@ function applyDefaultOptions(options) {
   Object.assign(options, {
     contentRoot,
     contentPagesRoot,
+    nextBuildDirectory,
+    runNextBuild,
     contentFragments: path.join(contentRoot, 'fragments'),
     contentAssets: {
       source: path.join(contentRoot, 'assets'),

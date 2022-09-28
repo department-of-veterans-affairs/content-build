@@ -17,28 +17,34 @@
             </p>
           </div>
 
-          <nav id="table-of-contents" aria-labelledby="on-this-page">
-            <h2 id="on-this-page"
-              class="vads-u-margin-bottom--2 vads-u-font-size--lg">On this page
-            </h2>
-            <ul class="usa-unstyled-list" role="list"></ul>
-          </nav>
+          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
 
           <div class="usa-content">
-            <h2>Questions about copay balance</h2>
-            <p>
-              For questions about the copay balance of your
-              {{ fieldOffice.entity.entityLabel }}
-              bill, call us toll free at the number below. You won't need to pay
-              any copays for X-rays, lab tests,
-              preventitive tests, and services like health screenings or
-              immunizations.
-            </p>
-            <b>Phone</b>
-            <p><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
-            </p>
+            {% if fieldCcAboveTopOfPage.fetched.fieldWysiwyg.0.processed %}
+              {% include "src/site/includes/centralized-content.drupal.liquid" with
+              entity = fieldCcAboveTopOfPage.fetched
+              contentType = fieldCcAboveTopOfPage.fetchedBundle
+              %}
+            {% else %}
+              <h2>Questions about copay balance</h2>
+              <p>
+                For questions about the copay balance of your
+                {{ fieldOffice.entity.entityLabel }}
+                bill, call us toll free at the number below. You won't need to pay
+                any copays for X-rays, lab tests,
+                preventative tests, and services like health screenings or
+                immunizations.
+              </p>
+            {% endif %}
+            {% if fieldPhoneNumber %}
+              <h3>
+                Phone
+              </h3>
+              <p><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+              </p>
+            {% endif %}
             <div class="vads-u-margin-bottom--3">
-              {% include 'src/site/includes/hours.liquid' with allHours = fieldHoursForCopayInquiries headerType = 'small' %}
+              {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'small' %}
             </div>
           </div>
 

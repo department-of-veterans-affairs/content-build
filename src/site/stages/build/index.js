@@ -11,9 +11,11 @@ const markdown = require('metalsmith-markdownit');
 const navigation = require('metalsmith-navigation');
 const permalinks = require('metalsmith-permalinks');
 
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
 const silverSmith = require('./silversmith');
 const addDebugInfo = require('./add-debug-info');
-const { runCommand } = require('./../../../../script/utils');
+const { runCommand } = require('../../../../script/utils');
 // const assetSources = require('../../constants/assetSources');
 
 const registerLiquidFilters = require('../../filters/liquid');
@@ -31,6 +33,7 @@ const createResourcesAndSupportWebsiteSection = require('./plugins/create-resour
 const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
 const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+const generateStaticDataFiles = require('./plugins/generate-static-data-files');
 const getFilesToUpdate = require('./plugins/get-files-to-update');
 const ignoreAssets = require('./plugins/ignore-assets');
 const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
@@ -38,11 +41,11 @@ const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
 const updateRobots = require('./plugins/update-robots');
+const addDirectoryFiles = require('./plugins/add-directory-files');
+const runNextBuild = require('./plugins/run-next-build');
 
 // Replace fs with graceful-fs to retry on EMFILE errors. Metalsmith can
 // attempt to open too many files simultaneously, so we need to handle it.
-const realFs = require('fs');
-const gracefulFs = require('graceful-fs');
 
 gracefulFs.gracefulify(realFs);
 
@@ -86,6 +89,11 @@ function build(BUILD_OPTIONS) {
     );
   }
 
+  if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
+    smith.use(runNextBuild(BUILD_OPTIONS), 'Initiate Next build');
+  }
+
+  smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
 
   // For CMS testing, we only need to ensure that the graphql queries run. We
@@ -227,6 +235,12 @@ function build(BUILD_OPTIONS) {
       `Apply layouts ${pattern.length === 2 ? pattern[0] : pattern}`,
     );
   });
+  if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
+    smith.use(
+      addDirectoryFiles(`${BUILD_OPTIONS.nextBuildDirectory}out/`, true),
+      'Adding files from next-build directory',
+    );
+  }
 
   /*
    * This will replace links in static pages with a staging domain,

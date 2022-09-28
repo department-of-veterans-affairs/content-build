@@ -1,0 +1,54 @@
+{
+  "completeWeek": [
+    {
+      "day": 0,
+      "starthours": -1,
+      "endhours": -1,
+      "comment": "Closed"
+    },
+    {
+      "day": 1,
+      "starthours": 700,
+      "endhours": 1730,
+      "comment": "Test Comment"
+    },
+    {
+      "day": 2,
+      "starthours": 700,
+      "endhours": 1730,
+      "comment": ""
+    },
+    {
+      "day": 3,
+      "starthours": 700,
+      "endhours": 1730,
+      "comment": ""
+    },
+    {
+      "day": 4,
+      "starthours": 700,
+      "endhours": 1730,
+      "comment": ""
+    },
+    {
+      "day": 5,
+      "starthours": 700,
+      "endhours": 1630,
+      "comment": ""
+    },
+    {
+      "day": 6,
+      "starthours": -1,
+      "endhours": -1,
+      "comment": "Closed"
+    }
+  ],
+  "partialWeek": [
+    {
+      "day": 2,
+      "starthours": 700,
+      "endhours": 1730,
+      "comment": "Test Comment"
+    }
+  ]
+}
