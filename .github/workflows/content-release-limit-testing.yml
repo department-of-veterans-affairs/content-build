@@ -20,7 +20,7 @@ env:
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
   BUILDTYPE: vagovstaging
   DEPLOY_BUCKET: staging.content.www.va.gov
-  DRUPAL_ADDRESS: https://main-rufdsbo6qfzad8ds1x1anvitvwgjirbu.demo.cms.va.gov/
+  DRUPAL_ADDRESS: https://test.staging.cms.va.gov/
   # Not a sensitive secret; used for our testing environments only, with systems
   # with sanitized databases.
   DRUPAL_PASSWORD: drupal8
@@ -251,13 +251,13 @@ jobs:
       # - name: set Drupal prod password
       #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
       #   with:
-      #     ssm_parameter: /cms/staging/drupal_api_users/content_build_api/password
+      #     ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
       #     env_variable_name: DRUPAL_PASSWORD
 
       - name: set Drupal prod username
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /cms/staging/drupal_api_users/content_build_api/username
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
 
       # - name: Notify CMS - In Progress
