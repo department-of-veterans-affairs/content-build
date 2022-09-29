@@ -103,7 +103,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
       const insuranceHub = unsortedHubs[6];
       insuranceHub.entity.fieldTeaserText =
-        'Explore life insurance options for your and your family and manage you policy online.';
+        'Explore life insurance options for you and your family and manage you policy online.';
 
       const burialHub = unsortedHubs[2];
       burialHub.entity.fieldTeaserText =
@@ -115,7 +115,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
       const memberBenefitsHub = unsortedHubs[0];
       memberBenefitsHub.entity.fieldTeaserText =
-        'Learn when and how to apply for benefits during service and as a you transition our of service.';
+        'Learn when and how to apply for benefits during service and as you transition out of service.';
 
       const familyBenefitsHub = unsortedHubs[1];
       familyBenefitsHub.entity.fieldTeaserText =
