@@ -1,8 +1,6 @@
 name: Content Release Node Limit testing
 
-on:
-  workflow_dispatch:
-  pull_request:
+on: workflow_dispatch
 
   # repository_dispatch:
   #   types: [content-release]
@@ -20,7 +18,7 @@ env:
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
   BUILDTYPE: vagovstaging
   DEPLOY_BUCKET: staging.content.www.va.gov
-  DRUPAL_ADDRESS: https://test.staging.cms.va.gov
+  DRUPAL_ADDRESS: https://main-rufdsbo6qfzad8ds1x1anvitvwgjirbu.demo.cms.va.gov/
   # Not a sensitive secret; used for our testing environments only, with systems
   # with sanitized databases.
   DRUPAL_PASSWORD: drupal8
@@ -110,13 +108,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Notify CMS - Starting
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
-          method: GET
+      # - name: Notify CMS - Starting
+      #   uses: ./.github/workflows/authenticated-cms-request
+      #   with:
+      #     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
+      #     method: GET
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -136,25 +134,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  notify-start:
-    name: Notify Start
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
-    needs: validate-build-status
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  # notify-start:
+  #   name: Notify Start
+  #   runs-on:
+  #     - self-hosted
+  #     - linux
+  #     - x64
+  #   needs: validate-build-status
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #     - name: Notify Slack
+  #       uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+  #       continue-on-error: true
+  #       with:
+  #         payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+  #         channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build:
     name: Build
