@@ -1,12 +1,13 @@
-name: Content Release - Node Limit testing
+name: Content Release Node Limit testing
 
-on:
-  repository_dispatch:
-    types: [content-release]
-  workflow_dispatch:
+on: workflow_dispatch
+  # repository_dispatch:
+  #   types: [content-release]
+
+
 
 concurrency:
-  group: content-release-prod
+  group: content-release-node-limit
 
 env:
   CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
