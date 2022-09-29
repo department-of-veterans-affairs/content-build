@@ -676,8 +676,7 @@ jobs:
     name: Stop on-demand-runner
     needs:
       - start-runner
-      - deploy
-      - record-metrics
+      - build
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
     env:
