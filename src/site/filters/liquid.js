@@ -1110,10 +1110,9 @@ module.exports = function registerFilters() {
     }
 
     // Ensure path ends with a trailing slash.
-    if (!formattedPath?.endsWith('/') && !formattedPath?.endsWith('*')) {
+    if (!formattedPath?.endsWith('/')) {
       formattedPath = `${formattedPath}/`;
     }
-
     return formattedPath;
   };
 
@@ -1126,15 +1125,16 @@ module.exports = function registerFilters() {
     // Format the current path.
     const formattedCurrentPath = liquid.filters.formatPath(currentPath);
 
+    // Format the targets paths
+    // eslint-disable-next-line no-param-reassign
+    targetPaths = targetPaths.map(liquid.filters.formatPath);
+
     // Derive exception paths.
     const exceptionPaths = targetPaths
       ?.filter(path => path?.startsWith('!'))
       ?.map(path => {
         // Replace the first ! operator.
-        const formattedExceptionPath = path?.replace('!', '');
-
-        // Format the exception path.
-        return liquid.filters.formatPath(formattedExceptionPath);
+        return path?.replace('!', '');
       });
 
     // The banner is not visible if it's an exact exception match.
@@ -1145,7 +1145,7 @@ module.exports = function registerFilters() {
     // Derive exception catch-all paths.
     const exceptionCatchAllPaths = exceptionPaths
       ?.filter(exceptionPath => exceptionPath?.includes('*'))
-      ?.map(exceptionPath => exceptionPath.replace('*', ''));
+      ?.map(exceptionPath => exceptionPath.replace(/\*\/?$/gm, ''));
 
     // Derive if this page is under a catch-all exception path.
     const isExceptionCatchAllPath = exceptionCatchAllPaths?.some(
@@ -1167,7 +1167,7 @@ module.exports = function registerFilters() {
     // Derive catch-all paths.
     const catchAllTargetPaths = targetPaths
       ?.filter(path => path?.includes('*') && !path?.startsWith('!'))
-      ?.map(catchAllPath => catchAllPath.replace('*', ''));
+      ?.map(catchAllPath => catchAllPath.replace(/\*\/?$/gm, ''));
 
     // Derive if this page is under a catch-all target path.
     const isCatchAllPath = catchAllTargetPaths?.some(
