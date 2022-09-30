@@ -82,6 +82,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
     },
 
     async query(args) {
+      console.log(args)
       const response = await this.proxyFetch(drupalUri, {
         headers,
         method: 'post',

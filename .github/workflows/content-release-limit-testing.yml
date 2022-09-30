@@ -127,14 +127,14 @@ jobs:
             ~/.cache/yarn
             node_modules
 
-      - name: Get latest release
-        id: get-latest-release
-        uses: gregziegan/fetch-latest-release@v2.0.0
+      # - name: Get latest release
+      #   id: get-latest-release
+      #   uses: gregziegan/fetch-latest-release@v2.0.0
 
-      - name: Validate build status
-        run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Validate build status
+      #   run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # notify-start:
   #   name: Notify Start

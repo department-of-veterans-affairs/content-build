@@ -94,7 +94,7 @@ function build(BUILD_OPTIONS) {
   }
 
   smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
-  smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
+  smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal sweet content');
 
   // For CMS testing, we only need to ensure that the graphql queries run. We
   // don't need any actual HTML output, so we can just stop here.
