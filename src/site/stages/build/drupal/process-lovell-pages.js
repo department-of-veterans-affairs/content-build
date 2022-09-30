@@ -2,6 +2,7 @@
 const cloneDeep = require('lodash/cloneDeep');
 
 const { camelize } = require('../../../utilities/stringHelpers');
+// const pageGraphql = require('./graphql/page.graphql');
 
 const LOVELL_TITLE_STRING = 'Lovell Federal';
 const LOVELL_FEDERAL_ENTITY_ID = '347';
@@ -27,6 +28,16 @@ function isLovellTricarePage(page) {
 
 function isLovellVaPage(page) {
   return page?.fieldAdministration?.entity?.entityId === LOVELL_VA_ENTITY_ID;
+}
+
+function isLovellListingPage(page) {
+  const listingPageTypes = [
+    'event_listing',
+    // 'press_releases_listing',
+    // 'story_listing',
+  ];
+
+  return listingPageTypes.includes(page.entityBundle);
 }
 
 function getModifiedLovellPage(page, variant) {
@@ -243,91 +254,115 @@ function updateLovellSwitchLinks(page, pages) {
   return page;
 }
 
-function updateListingsForSection(page, federalPages) {
-  const listingPageTypes = [
-    'event_listing',
-    // 'press_releases_listing',
-    // 'story_listing',
-  ];
+function mergeListItemsFromLovellBoth(page, federalPages) {
+  if (isLovellListingPage(page)) {
+    const listingItemsForBoth = federalPages.find(
+      federalPage =>
+        isLovellListingPage(federalPage) &&
+        federalPage.entityBundle === page.entityBundle,
+    );
 
-  if (!listingPageTypes.includes(page.entityBundle)) {
-    return page;
-  }
+    if (
+      listingItemsForBoth.reverseFieldListingNode === undefined ||
+      listingItemsForBoth.pastEvents === undefined
+    ) {
+      return page;
+    }
 
-  const listingForBothEvents = federalPages.find(
-    federalPage => federalPage.entityBundle === page.entityBundle,
-  );
+    const dateNow = Math.round(Date.now() / 1000);
 
-  const futureEvents = [
-    ...listingForBothEvents.reverseFieldListingNode.entities,
-    ...page.reverseFieldListingNode.entities,
-  ].sort(
-    (a, b) =>
+    const sortForFutureEvents = (a, b) =>
       a.fieldDatetimeRangeTimezone[0].value -
-      b.fieldDatetimeRangeTimezone[0].value,
-  );
-  // .filter((element, index, allEvents) => {
-  //   return allEvents.indexOf(element) !== index;
-  // });
+      b.fieldDatetimeRangeTimezone[0].value;
 
-  const pastEvents = [
-    ...listingForBothEvents.pastEvents.entities,
-    ...page.pastEvents.entities,
-  ].sort(
-    (a, b) =>
+    const sortForPastEvents = (a, b) =>
       b.fieldDatetimeRangeTimezone[0].value -
-      a.fieldDatetimeRangeTimezone[0].value,
-  );
-  // .filter((element, index, allEvents) => {
-  //   return allEvents.indexOf(element) !== index;
-  // });
+      a.fieldDatetimeRangeTimezone[0].value;
 
-  // console.log({
-  //   futureEvents,
-  //   pastEvents,
-  // });
+    const removeOtherSectionPages = filterPage => {
+      if (isLovellFederalPage(filterPage)) {
+        return true;
+      }
 
-  if (page.reverseFieldListingNode && futureEvents.length > 0) {
-    page.reverseFieldListingNode.entities = futureEvents;
+      return isLovellTricarePage(page)
+        ? isLovellTricarePage(filterPage)
+        : isLovellVaPage(filterPage);
+    };
+
+    const futureEvents = [
+      ...listingItemsForBoth.reverseFieldListingNode.entities,
+      ...page.reverseFieldListingNode.entities,
+    ]
+      .sort(sortForFutureEvents)
+      .filter(removeOtherSectionPages)
+      .filter(event => event.fieldDatetimeRangeTimezone[0].value > dateNow);
+
+    const pastEvents = [
+      ...listingItemsForBoth.pastEvents.entities,
+      ...page.pastEvents.entities,
+    ]
+      .sort(sortForPastEvents)
+      .filter(removeOtherSectionPages)
+      .filter(event => event.fieldDatetimeRangeTimezone[0].value < dateNow);
+
+    if (page.reverseFieldListingNode) {
+      page.reverseFieldListingNode.entities = futureEvents;
+    }
+
+    if (page.allEventTeasers) {
+      page.allEventTeasers.entities = futureEvents;
+    }
+
+    if (page.pastEvents) {
+      page.pastEvents.entities = pastEvents;
+    }
+
+    if (page.pastEventTeasers) {
+      page.pastEventTeasers.entities = pastEvents;
+    }
   }
-
-  if (page.allEventTeasers && futureEvents.length > 0) {
-    page.allEventTeasers.entities = futureEvents;
-  }
-
-  if (page.pastEvents && pastEvents.length > 0) {
-    page.pastEvents.entities = pastEvents;
-  }
-
-  if (page.pastEventTeasers && pastEvents.length > 0) {
-    page.pastEventTeasers.entities = pastEvents;
-  }
-
-  // console.log({ futureEvents });
-  // console.log({ pastEvents });
-  // console.log(page.reverseFieldListingNode.entities);
-  // console.log(page.pastEvents.entities);
-  // console.log('-----');
 
   return page;
 }
+
+// function removeListingsData(page) {
+//   if (isLovellListingPage(page)) {
+//     if (page.reverseFieldListingNode) {
+//       page.reverseFieldListingNode.entities = [];
+//     }
+
+//     if (page.allEventTeasers) {
+//       page.allEventTeasers.entities = [];
+//     }
+
+//     if (page.pastEvents) {
+//       page.pastEvents.entities = [];
+//     }
+
+//     if (page.pastEventTeasers) {
+//       page.pastEventTeasers.entities = [];
+//     }
+//   }
+
+//   return page;
+// }
 
 function processLovellPages(drupalData) {
   // Note: this `reduce()` function allows us to categorize all the pages with a single pass over the array.
   // We could accomplish this same outcome with a few `filter()` calls, but that would require multiple passes over the array.
   const {
-    lovellFederalPages,
-    lovellVaPages,
-    lovellTricarePages,
+    gatheredLovellFederalPages,
+    gatheredLovellVaPages,
+    gatheredLovellTricarePages,
     otherPages,
   } = drupalData.data.nodeQuery.entities.reduce(
     (acc, page) => {
       if (isLovellFederalPage(page)) {
-        acc.lovellFederalPages.push(page);
+        acc.gatheredLovellFederalPages.push(page);
       } else if (isLovellTricarePage(page)) {
-        acc.lovellTricarePages.push(page);
+        acc.gatheredLovellTricarePages.push(page);
       } else if (isLovellVaPage(page)) {
-        acc.lovellVaPages.push(page);
+        acc.gatheredLovellVaPages.push(page);
       } else {
         acc.otherPages.push(page);
       }
@@ -335,28 +370,39 @@ function processLovellPages(drupalData) {
       return acc;
     },
     {
-      lovellFederalPages: [],
-      lovellTricarePages: [],
-      lovellVaPages: [],
+      gatheredLovellFederalPages: [],
+      gatheredLovellTricarePages: [],
+      gatheredLovellVaPages: [],
       otherPages: [],
     },
   );
 
+  const lovellTricarePages = gatheredLovellTricarePages.map(page =>
+    mergeListItemsFromLovellBoth(page, gatheredLovellFederalPages),
+  );
+  const lovellVaPages = gatheredLovellVaPages.map(page =>
+    mergeListItemsFromLovellBoth(page, gatheredLovellFederalPages),
+  );
+  const lovellFederalPages = gatheredLovellFederalPages;
+  // const lovellFederalPages = gatheredLovellFederalPages.map(page =>
+  //   removeListingsData(page),
+  // );
+
   // modify tricare pages
-  const modifiedLovellTricarePages = lovellTricarePages
-    .map(page => updateListingsForSection(page, lovellFederalPages))
-    .map(page => getModifiedLovellPage(page, 'tricare'));
+  const modifiedLovellTricarePages = lovellTricarePages.map(page =>
+    getModifiedLovellPage(page, 'tricare'),
+  );
   // modify va pages
-  const modifiedLovellVaPages = lovellVaPages
-    .map(page => updateListingsForSection(page, lovellFederalPages))
-    .map(page => getModifiedLovellPage(page, 'va'));
+  const modifiedLovellVaPages = lovellVaPages.map(page =>
+    getModifiedLovellPage(page, 'va'),
+  );
   // Each federal page needs to be duplicated and modified once each for tricare/va
-  const lovellFederalPagesClonedTricare = lovellFederalPages
-    .map(page => updateListingsForSection(page, lovellFederalPages))
-    .map(page => getModifiedLovellPage(cloneDeep(page), 'tricare'));
-  const lovellFederalPagesClonedVa = lovellFederalPages
-    .map(page => updateListingsForSection(page, lovellFederalPages))
-    .map(page => getModifiedLovellPage(cloneDeep(page), 'va'));
+  const lovellFederalPagesClonedTricare = lovellFederalPages.map(page =>
+    getModifiedLovellPage(cloneDeep(page), 'tricare'),
+  );
+  const lovellFederalPagesClonedVa = lovellFederalPages.map(page =>
+    getModifiedLovellPage(cloneDeep(page), 'va'),
+  );
 
   const processedLovellPages = [
     ...modifiedLovellTricarePages,
@@ -364,7 +410,6 @@ function processLovellPages(drupalData) {
     ...lovellFederalPagesClonedTricare,
     ...lovellFederalPagesClonedVa,
   ].map((page, index, pages) => updateLovellSwitchLinks(page, pages));
-  // .map((page, index, pages) => updateListingPages(page, pages));
 
   drupalData.data.nodeQuery.entities = [...processedLovellPages, ...otherPages];
 
