@@ -37,6 +37,7 @@
             {% assign id = item.entityId %}
             <va-accordion-item
               header="{{ item.fieldTitle | encode }}"
+              level=4
               id="{{item.fieldTitle | hashReference: 30 }}-{{id}}"
             >
                 <div

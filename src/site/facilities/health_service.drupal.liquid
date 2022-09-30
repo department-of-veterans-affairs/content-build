@@ -1,6 +1,7 @@
         {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
         <va-accordion-item
             header="{{ serviceTaxonomy.name }}"
+            level=3
             {% if serviceTaxonomy.fieldAlsoKnownAs %}
                 subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
                 data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
