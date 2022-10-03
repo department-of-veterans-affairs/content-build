@@ -82,6 +82,8 @@
                     <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
                        href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}">See all news releases</a>
                 </article>
+                <!-- Last updated & feedback button-->
+                  {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
             </div>
         </div>
     </main>
