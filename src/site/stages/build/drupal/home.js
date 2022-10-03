@@ -83,7 +83,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
       const disabilityHub = unsortedHubs[10];
       disabilityHub.entity.fieldTeaserText =
-        'File and track your service-connect claims and manage your benefits over time.';
+        'File and track your service-connected claims and manage your benefits over time.';
 
       const educationHub = unsortedHubs[7];
       educationHub.entity.fieldTeaserText =
@@ -91,7 +91,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
       const careersHub = unsortedHubs[3];
       careersHub.entity.fieldTeaserText =
-        'Get support for vocations rehabilitation, your small business, or other job-related needs.';
+        'Get support for vocational rehabilitation, your small business, or other job-related needs.';
 
       const pensionHub = unsortedHubs[5];
       pensionHub.entity.fieldTeaserText =
@@ -103,33 +103,33 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
       const insuranceHub = unsortedHubs[6];
       insuranceHub.entity.fieldTeaserText =
-        'Explore life insurance options for your and your family and manage you policy online.';
+        'Explore life insurance options for you and your family and manage you policy online.';
 
       const burialHub = unsortedHubs[2];
       burialHub.entity.fieldTeaserText =
-        'Plan a burial in a VA national cemetary, request memorial items, and apply for survival benefits.';
+        'Plan a burial in a VA national cemetery, request memorial items, and apply for survival benefits.';
 
       const recordsHub = unsortedHubs[8];
       recordsHub.entity.fieldTeaserText =
-        'Apply for a printer Veteran ID card, get your benefit letters and medical records, and learn how to apply for discharge upgrade.';
+        'Apply for a Veteran ID card, get your benefit letters and medical records, and learn how to apply for discharge upgrade.';
 
       const memberBenefitsHub = unsortedHubs[0];
       memberBenefitsHub.entity.fieldTeaserText =
-        'Learn when and how to apply for benefits during service and as a you transition our of service.';
+        'Learn when and how to apply for benefits during service and as a you transition out of service.';
 
       const familyBenefitsHub = unsortedHubs[1];
       familyBenefitsHub.entity.fieldTeaserText =
-        'Find out which benefits you may be eligible for as a dependant, spouse, survivor, or family caregiver.';
+        'Find out which benefits you may be eligible for as a dependent, spouse, survivor, or family caregiver.';
 
       // This hub is a new addition and therefore needs mocked in its entirety.
       const vaDeptInfoHub = {
         entity: {
           entityId: '123456',
           fieldTitleIcon: '',
-          path: '#',
+          path: '',
           fieldHomePageHubLabel: 'VA department information',
           fieldTeaserText:
-            'Learn more about the VA departments that manage our benefits and health care programs',
+            'Learn more about the VA departments that manage your benefits and health care programs.',
         },
       };
 
@@ -161,12 +161,16 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
           headline: 'The PACT Act and your VA benefits',
           copy:
             'This new law expands and extends eligibility for care and benefits for Veterans and survivors related to toxic exposures.',
-          link: '#',
+          link:
+            'https://www.va.gov/resources/the-pact-act-and-your-va-benefits/',
           linkText: 'Learn what the PACT Act means to you',
         },
         commonTasks: {
           searchLinks: [
-            { link: '/find-a-location/', linkText: 'Find a VA facility' },
+            {
+              link: 'https://www.va.gov/find-a-location/',
+              linkText: 'Find a VA facility',
+            },
             { link: '/find-forms/', linkText: 'Find a VA form' },
             {
               link: '/resources/',
@@ -212,7 +216,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
             },
             {
               link: '/view-change-dependents',
-              linkText: 'Dependants on your disability benefits',
+              linkText: 'Dependents on your disability benefits',
             },
           ],
         },
