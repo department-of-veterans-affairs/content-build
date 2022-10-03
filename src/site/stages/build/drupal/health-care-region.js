@@ -174,7 +174,8 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
  * @return nothing
  */
 function addGetUpdatesFields(page, pages) {
-  const regionPageUrlPath = page.entityUrl.breadcrumb[1]?.url?.path;
+  const regionPageUrlPath =
+    page.entityUrl.breadcrumb[1]?.url?.path || 'no-page';
 
   if (!regionPageUrlPath) {
     throw new Error(
