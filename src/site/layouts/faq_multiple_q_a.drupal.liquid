@@ -75,9 +75,11 @@
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
                     {% if fieldQA.entity %}
                       <va-accordion-item
-                        header="{{ fieldQA.entity.title }}"
                         data-faq-entity-id="{{ fieldQA.entity.entityId }}"
                       >
+                      <h3 slot="headline">
+                        {{ fieldQA.entity.title }}
+                    </h3>
                         <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}">
                           {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
                           {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
