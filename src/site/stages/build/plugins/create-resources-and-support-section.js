@@ -425,7 +425,7 @@ function createSearchResults(files) {
 
 function createResourcesAndSupportWebsiteSection() {
   return files => {
-    // excludeQaNodesThatAreNotStandalonePages(files);
+    excludeQaNodesThatAreNotStandalonePages(files);
     createArticleListingsPages(files);
     createSearchResults(files);
   };
