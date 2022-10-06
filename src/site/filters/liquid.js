@@ -1126,11 +1126,10 @@ module.exports = function registerFilters() {
     const formattedCurrentPath = liquid.filters.formatPath(currentPath);
 
     // Format the targets paths
-    // eslint-disable-next-line no-param-reassign
-    targetPaths = targetPaths.map(liquid.filters.formatPath);
+    const formattedTargetPaths = targetPaths.map(liquid.filters.formatPath);
 
     // Derive exception paths.
-    const exceptionPaths = targetPaths
+    const exceptionPaths = formattedTargetPaths
       ?.filter(path => path?.startsWith('!'))
       ?.map(path => {
         // Replace the first ! operator.
@@ -1160,12 +1159,12 @@ module.exports = function registerFilters() {
     }
 
     // If it's an exact match and not an exception, the banner is visible.
-    if (targetPaths?.includes(formattedCurrentPath)) {
+    if (formattedTargetPaths?.includes(formattedCurrentPath)) {
       return true;
     }
 
     // Derive catch-all paths.
-    const catchAllTargetPaths = targetPaths
+    const catchAllTargetPaths = formattedTargetPaths
       ?.filter(path => path?.includes('*') && !path?.startsWith('!'))
       ?.map(catchAllPath => catchAllPath.replace(/\*\/?$/gm, ''));
 
