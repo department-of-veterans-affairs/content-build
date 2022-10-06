@@ -162,7 +162,7 @@ jobs:
     needs:
       - start-runner
       - validate-build-status
-    timeout-minutes: 60
+    timeout-minutes: 120
     defaults:
       run:
         working-directory: content-build
@@ -270,7 +270,7 @@ jobs:
 
       - name: Build
         run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose --omitdebug | tee build-output.txt
-        timeout-minutes: 60
+        timeout-minutes: 120
         env:
           NODE_ENV: production
 
