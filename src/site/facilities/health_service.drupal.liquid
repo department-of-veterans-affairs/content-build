@@ -1,6 +1,5 @@
         {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
         <va-accordion-item
-            header="{{ serviceTaxonomy.name }}"
             {% if serviceTaxonomy.fieldAlsoKnownAs %}
                 subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
                 data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
@@ -8,6 +7,9 @@
             data-label="{{ serviceTaxonomy.name }}"
             data-template="facilities/health_service"
         >
+            <h3 slot="headline">
+                {{ serviceTaxonomy.name }}
+            </h3>
             <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
                 {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
                     <div class="vads-u-margin-bottom--2">
