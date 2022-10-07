@@ -1,18 +1,21 @@
 <div data-template="paragraphs/q_a.collapsible_panel">
   <va-accordion>
+    
     {% assign questions = entity.fieldQuestions %}
     {% assign sectionHeader = entity.fieldSectionHeader %}
 
     {% for accordionItem in questions %}
       {% assign item = accordionItem.entity %}
       {% assign id = item.entityId %}
-      {% assign fieldSectionHeaderTag = 'h3 slot="headline"' %}
-      {% if level %}
-        {% assign fieldSectionHeaderTag = {{ level 'slot="headline"'}} %}
-      {% endif %}
 
-      <va-accordion-item>
-      <{{ fieldSectionHeaderTag }}>{{ item.fieldQuestion }}</{{ fieldSectionHeaderTag }}>
+      <va-accordion-item
+        header="{{ item.fieldQuestion }}"
+        {% if level %}
+          level="{{ level }}"
+          {% else %}
+          level=3
+        {% endif %}
+      >
         <div
           id={{ id }}
           data-template="paragraphs/q_a.collapsible_panel__qa"
