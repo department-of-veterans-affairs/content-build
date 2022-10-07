@@ -103,7 +103,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
       const insuranceHub = unsortedHubs[6];
       insuranceHub.entity.fieldTeaserText =
-        'Explore life insurance options for you and your family and manage you policy online.';
+        'Explore life insurance options for you and your family and manage your policy online.';
 
       const burialHub = unsortedHubs[2];
       burialHub.entity.fieldTeaserText =
@@ -115,7 +115,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
       const memberBenefitsHub = unsortedHubs[0];
       memberBenefitsHub.entity.fieldTeaserText =
-        'Learn when and how to apply for benefits during service and as a you transition out of service.';
+        'Learn when and how to apply for benefits during service and as you transition out of service.';
 
       const familyBenefitsHub = unsortedHubs[1];
       familyBenefitsHub.entity.fieldTeaserText =
@@ -125,7 +125,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       const vaDeptInfoHub = {
         entity: {
           entityId: '123456',
-          fieldTitleIcon: '',
+          fieldTitleIcon: 'va-dept-info',
           path: '',
           fieldHomePageHubLabel: 'VA department information',
           fieldTeaserText:
@@ -171,51 +171,57 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
               link: 'https://www.va.gov/find-a-location/',
               linkText: 'Find a VA facility',
             },
-            { link: '/find-forms/', linkText: 'Find a VA form' },
             {
-              link: '/resources/',
+              link: 'https://www.va.gov/find-forms/',
+              linkText: 'Find a VA form',
+            },
+            {
+              link: 'https://www.va.gov/resources/',
               linkText: 'Find benefit resources and support',
             },
           ],
           popularLinks: [
             {
-              link: '/health-care/',
+              link: 'https://www.va.gov/health-care/',
               linkText: 'VA health care',
             },
             {
-              link: '/health-care/get-medical-records/',
+              link: 'https://www.va.gov/health-care/get-medical-records/',
               linkText: 'VA medical records',
             },
             {
-              link: '/health-care/health-needs-conditions/mental-health/',
+              link:
+                'https://www.va.gov/health-care/health-needs-conditions/mental-health/',
               linkText: 'Mental health help',
             },
             {
-              link: '/health-care/get-reimbursed-for-travel-pay/',
+              link:
+                'https://www.va.gov/health-care/get-reimbursed-for-travel-pay/',
               linkText: 'Travel reimbursement for health care',
             },
             {
-              link: '/resources/the-pact-act-and-your-va-benefits/',
+              link:
+                'https://www.va.gov/resources/the-pact-act-and-your-va-benefits/',
               linkText: 'PACT Act information for Veterans with toxic exposure',
             },
             {
-              link: '/claim-or-appeal-status/',
+              link: 'https://www.va.gov/claim-or-appeal-status/',
               linkText: 'Claim or appeal status',
             },
             {
-              link: '/disability/',
+              link: 'https://www.va.gov/disability/',
               linkText: 'Disability compensation',
             },
             {
-              link: '/education/',
+              link: 'https://www.va.gov/education/',
               linkText: 'Education benefits',
             },
             {
-              link: '/va-payment-history/',
+              link: 'https://www.va.gov/va-payment-history/',
               linkText: 'Your VA payment history',
             },
             {
-              link: '/view-change-dependents',
+              link: 'https://www.va.gov/view-change-dependents',
               linkText: 'Dependents on your disability benefits',
             },
           ],
