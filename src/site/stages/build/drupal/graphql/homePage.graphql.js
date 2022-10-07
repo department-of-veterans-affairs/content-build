@@ -6,6 +6,12 @@ const menu = 'homepage-top-tasks-blocks';
 const hubListQueue = 'home_page_hub_list';
 const promoBlocksQueue = 'home_page_promos';
 
+/** Prototype keys */
+const homePageHeroQueue = 'home_page_hero';
+const homePageNewsSpotlightQueue = 'home_page_news_spotlight';
+const homePagePopularLinksMenu = 'popular-on-va-gov';
+const otherSearchToolsMenu = 'other-search-tools';
+
 const query = `
   homePageMenuQuery:menuByName(name: "${menu}") {
     name
@@ -81,6 +87,103 @@ const query = `
       }
     }
   }
+  # Start Prototype Queries
+  homePageHeroQuery: entitySubqueueById(id: "${homePageHeroQueue}") {
+    ... on EntitySubqueueHomePageHero {
+      itemsOfEntitySubqueueHomePageHero {
+        entity {
+          entityId
+          ... on BlockContentBenefitPromo {
+            entityId
+            entityLabel
+            fieldPromoHeadline
+            fieldPromoText
+            fieldPromoCta {
+              entity {
+                ... on ParagraphButton {
+                  fieldButtonLink {
+                    url {
+                      path
+                    }
+                  }
+                  fieldButtonLabel
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  homePageNewsSpotlightQuery: entitySubqueueById(id: "${homePageNewsSpotlightQueue}") {
+    ... on EntitySubqueueHomePageNewsSpotlight {
+      itemsOfEntitySubqueueHomePageNewsSpotlight {
+        entity {
+          entityId
+          ... on BlockContentNewsPromo {
+            entityId
+            entityLabel
+            fieldPromoHeadline
+            fieldPromoText
+            fieldImage {
+              entity {
+                ... on MediaImage {
+                  image {
+                    derivative(style: LARGE) {
+                      url
+                    }
+                  }
+                }
+              }
+            }
+            fieldPromoCta {
+              entity {
+                ... on ParagraphButton {
+                  fieldButtonLink {
+                    url {
+                      path
+                    }
+                  }
+                  fieldButtonLabel
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  homePagePopularOnVaGovMenuQuery:  menuByName(name: "${homePagePopularLinksMenu}") {
+    name
+    links {
+      label
+      url {
+        path
+      }
+      links {
+        label
+        url {
+          path
+        }
+      }
+    }
+  }
+  homePageOtherSearchToolsMenuQuery:  menuByName(name: "${otherSearchToolsMenu}") {
+    name
+    links {
+      label
+      url {
+        path
+      }
+      links {
+        label
+        url {
+          path
+        }
+      }
+    }
+  }
+  # End Prototype queries
 `;
 
 const GetHomepage = `
