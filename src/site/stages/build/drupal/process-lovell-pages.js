@@ -33,8 +33,8 @@ function isLovellVaPage(page) {
 function isLovellListingPage(page) {
   const listingPageTypes = [
     'event_listing',
-    // 'press_releases_listing',
-    // 'story_listing',
+    'press_releases_listing',
+    'story_listing',
   ];
 
   return listingPageTypes.includes(page.entityBundle);
@@ -358,39 +358,62 @@ function updateLovellSwitchLinks(page, pages) {
  */
 function combineLovellListingPages(tricareOrVaPages, federalPages) {
   return tricareOrVaPages.map(listingPage => {
-    const { entityBundle, pastEvents, reverseFieldListingNode } = listingPage;
+    // events: pastEvents
+    // news: pastPressReleases
+    // stories: pastNewsStories
+
+    let pastObjectLabel;
+    switch (listingPage.entityBundle) {
+      case 'press_release_listing':
+        pastObjectLabel = 'pastPressReleases';
+        break;
+      case 'story_listing':
+        pastObjectLabel = 'pastNewsStories';
+        break;
+      default:
+        pastObjectLabel = 'pastEvents';
+        break;
+    }
+    const {
+      entityBundle,
+      [pastObjectLabel]: pastListItems,
+      reverseFieldListingNode,
+    } = listingPage;
     const listingPageToCombine = federalPages.find(
       page => page.entityBundle === entityBundle,
     );
 
-    const pastEventEntities = pastEvents?.entities || [];
-    const allEventEntities = reverseFieldListingNode?.entities || [];
+    const pastListItemEntities = pastListItems?.entities || [];
+    const allListItemEntities = reverseFieldListingNode?.entities || [];
 
-    const pastEventEntitiesToCombine =
-      listingPageToCombine?.pastEvents?.entities || [];
-    const allEventEntitiesToCombine =
+    const pastListItemEntitiesToCombine =
+      listingPageToCombine[pastObjectLabel]?.entities || [];
+    const allListItemEntitiesToCombine =
       listingPageToCombine?.reverseFieldListingNode?.entities || [];
 
-    const combinedPastEventEntities = [
-      ...pastEventEntities,
-      ...pastEventEntitiesToCombine,
+    const combinedPastListItemEntities = [
+      ...pastListItemEntities,
+      ...pastListItemEntitiesToCombine,
     ];
-    const combinedAllEventEntities = [
-      ...allEventEntities,
-      ...allEventEntitiesToCombine,
+    const combinedAllListItemEntities = [
+      ...allListItemEntities,
+      ...allListItemEntitiesToCombine,
     ];
 
-    return {
+    const finalListingPage = {
       ...listingPage,
-      pastEvents: {
-        ...pastEvents,
-        entities: combinedPastEventEntities,
-      },
       reverseFieldListingNode: {
         ...reverseFieldListingNode,
-        entities: combinedAllEventEntities,
+        entities: combinedAllListItemEntities,
       },
     };
+
+    finalListingPage[pastObjectLabel] = {
+      ...pastListItems,
+      entities: combinedPastListItemEntities,
+    };
+
+    return finalListingPage;
   });
 }
 
