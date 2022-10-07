@@ -1386,17 +1386,17 @@ describe('formatPath', () => {
 });
 
 describe('isBannerVisible', () => {
-  it('returns true with a trailing slash on currentPath', () => {
+  it('returns true without a trailing slash on the target path', () => {
     const targetPaths = ['/some/path/test'];
-    const currentPath = '/some/path/test/';
+    const currentPath = '/some/path/test';
 
     expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
       true,
     );
   });
 
-  it('returns true without a trailing slash on currentPath', () => {
-    const targetPaths = ['/some/path/test'];
+  it('returns true with a trailing slash on target path', () => {
+    const targetPaths = ['/some/path/test/'];
     const currentPath = '/some/path/test';
 
     expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
