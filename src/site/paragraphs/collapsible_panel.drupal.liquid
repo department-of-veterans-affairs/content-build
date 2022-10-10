@@ -36,9 +36,11 @@
             {% assign item = accordionItem.entity %}
             {% assign id = item.entityId %}
             <va-accordion-item
-              header="{{ item.fieldTitle | encode }}"
               id="{{item.fieldTitle | hashReference: 30 }}-{{id}}"
             >
+            <h4 slot="headline">
+                {{ item.fieldTitle | encode }}
+            </h4>
                 <div
                     id={{id}}
                     data-template="paragraphs/collapsible_panel__panel"
