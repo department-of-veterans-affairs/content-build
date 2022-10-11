@@ -1346,9 +1346,9 @@ describe('formatPath', () => {
     expect(liquid.filters.formatPath(path)).to.equal(expected);
   });
 
-  it('does not add a trailing slash when there is a trailing *', () => {
+  it('adds a trailing slash when there is a trailing *', () => {
     const path = '/resources/tag/all-veterans/2/*';
-    const expected = '/resources/tag/all-veterans/2/*';
+    const expected = '/resources/tag/all-veterans/2/*/';
     expect(liquid.filters.formatPath(path)).to.equal(expected);
   });
 
@@ -1386,6 +1386,24 @@ describe('formatPath', () => {
 });
 
 describe('isBannerVisible', () => {
+  it('returns true without a trailing slash on the target path', () => {
+    const targetPaths = ['/some/path/test'];
+    const currentPath = '/some/path/test';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      true,
+    );
+  });
+
+  it('returns true with a trailing slash on target path', () => {
+    const targetPaths = ['/some/path/test/'];
+    const currentPath = '/some/path/test';
+
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      true,
+    );
+  });
+
   it('returns false if an argument is missing', () => {
     const targetPaths = ['/'];
     const currentPath = '/';
@@ -1420,7 +1438,7 @@ describe('isBannerVisible', () => {
   });
 
   it('returns true if we are under a catch-all target path', () => {
-    const targetPaths = ['/some/path/*'];
+    const targetPaths = ['/some/path/*', '/some/path/*/'];
     const currentPath = '/some/path/test';
 
     expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
@@ -1454,9 +1472,14 @@ describe('isBannerVisible', () => {
   });
 
   it('returns false if it is an exception catch-all path', () => {
-    const targetPaths = ['/some/path/about/', '/some/path/*', '!/some/path/*'];
+    let targetPaths = ['/some/path/about/', '/some/path/*', '!/some/path/*/'];
     const currentPath = '/some/path/about/';
 
+    expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
+      false,
+    );
+
+    targetPaths = ['/some/path/about/', '/some/path/*', '!/some/path/*'];
     expect(liquid.filters.isBannerVisible(targetPaths, currentPath)).to.equal(
       false,
     );
