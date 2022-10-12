@@ -168,7 +168,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         commonTasks: {
           searchLinks: [
             {
-              link: 'https://www.va.gov/find-a-location/',
+              link: 'https://www.va.gov/find-locations/',
               linkText: 'Find a VA facility',
             },
             {
