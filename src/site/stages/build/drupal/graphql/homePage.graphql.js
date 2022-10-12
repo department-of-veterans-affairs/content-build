@@ -125,26 +125,21 @@ const query = `
             entityLabel
             fieldPromoHeadline
             fieldPromoText
+            fieldLink {
+              url {
+                path
+              }
+            }
+            fieldLinkLabel
             fieldImage {
               entity {
                 ... on MediaImage {
                   image {
+                    alt
                     derivative(style: LARGE) {
                       url
                     }
                   }
-                }
-              }
-            }
-            fieldPromoCta {
-              entity {
-                ... on ParagraphButton {
-                  fieldButtonLink {
-                    url {
-                      path
-                    }
-                  }
-                  fieldButtonLabel
                 }
               }
             }

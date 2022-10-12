@@ -5,8 +5,9 @@
       <!-- start first column-->
       <div
         class="vads-l-col--12 vads-u-display--none small-desktop-screen:vads-u-display--block medium-screen:vads-l-col--4">
-        <div class="homepage-blog__image demo-image-adjustments">
-          <img class="lazy" src="{{ thumbnail }}" alt="{{ thumbnailAltText }}" />
+        <div class="homepage-blog__image">
+          <img class="lazy" src="{{ fieldImage.entity.image.derivative.url }}"
+            alt="{{ fieldImage.entity.image.alt }}" />
         </div>
       </div>
       <!-- end first column -->
@@ -18,12 +19,15 @@
           <h2 class="vads-u-font-size--base vads-u-margin-top--0 vads-u-font-weight--normal vads-u-font-family--sans">VA
             NEWS</h2>
           <h3 class="vads-u-font-family--serif vads-u-margin-top--0 vads-u-font-size--xl">
-            <a href="{{ url }}" class="vads-u-color--white">{{ title }}</a>
+            <a href="{{ fieldLink.url.path }}" class="vads-u-color--white">{{ fieldPromoHeadline }}</a>
           </h3>
 
           <p class="vads-u-padding-right--0 small-desktop-screen:vads-u-padding-right--8
                     vads-u-margin-bottom--3 small-desktop-screen:vads-u-margin-bottom--6">
-            {{ copy }} <a href="{{ url }}" class="vads-u-color--white">Read the full article</a>
+            {{ fieldPromoText }}
+            <a href="{{ fieldLink.url.path }}" class="vads-u-color--white">
+              {{fieldLinkLabel}}
+            </a>
           </p>
 
           <div>
