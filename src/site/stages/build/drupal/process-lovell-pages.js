@@ -64,14 +64,32 @@ function getModifiedLovellPage(page, variant) {
 
   // Add a switchPath field
   // These get modified later in the processLovellPages function
-  page.entityUrl.switchPath = originalPath.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${
+  if (
+    page.entityUrl.path.includes(
+      `/lovell-federal-${LOVELL_TRICARE_LINK_VARIATION}-health-care`,
+    ) ||
+    page.entityUrl.path.includes(
+      `/lovell-federal-${LOVELL_VA_LINK_VARIATION}-health-care`,
+    )
+  ) {
+    page.entityUrl.switchPath = originalPath.replace(
+      variant === 'va'
+        ? LOVELL_VA_LINK_VARIATION
+        : LOVELL_TRICARE_LINK_VARIATION,
       variant === 'va'
         ? LOVELL_TRICARE_LINK_VARIATION
-        : LOVELL_VA_LINK_VARIATION
-    }-health-care`,
-  );
+        : LOVELL_VA_LINK_VARIATION,
+    );
+  } else {
+    page.entityUrl.switchPath = originalPath.replace(
+      '/lovell-federal-health-care',
+      `/lovell-federal-${
+        variant === 'va'
+          ? LOVELL_TRICARE_LINK_VARIATION
+          : LOVELL_VA_LINK_VARIATION
+      }-health-care`,
+    );
+  }
 
   // Modify Breadcrumb
   if (page.entityUrl.breadcrumb) {
