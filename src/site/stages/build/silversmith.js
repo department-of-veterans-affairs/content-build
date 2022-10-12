@@ -23,7 +23,7 @@ const { GITHUB_ACTIONS } = process.env;
 // Use the --trace-gc flag to show garbage collection stats.
 //
 // Our GHA runners have additional memory so less GC is needed there vs Jenkins.
-const GARBAGE_COLLECTION_FREQUENCY_SECONDS = GITHUB_ACTIONS ? 60 : 10;
+const GARBAGE_COLLECTION_FREQUENCY_SECONDS = GITHUB_ACTIONS ? 120 : 10;
 let garbageCollectionInterval;
 let peakRSSUsed = 0;
 
