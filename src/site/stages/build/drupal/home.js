@@ -69,14 +69,12 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
      * This page is only built on non-prod environments
      * */
     if (buildOptions.buildtype !== ENVIRONMENTS.VAGOVPROD) {
-
       const {
         data: {
           homePageHeroQuery,
           homePageNewsSpotlightQuery,
           homePagePopularOnVaGovMenuQuery,
           homePageOtherSearchToolsMenuQuery,
-
         },
       } = contentData;
 
