@@ -1207,7 +1207,7 @@
   },
   {
     "appName": "Connect Your Device",
-    "entryName": "dhp-connected-devices",
+    "entryName": "dhp-consent-flow",
     "rootUrl": "/health-care/connected-devices",
     "template": {
       "vagovprod": true,
