@@ -52,7 +52,7 @@
                 </li>
               {% endif %}
 
-              {% if fieldLink.0.uri or fieldOperatingStatusEmergInf.value %}
+              {% if fieldLink.0.uri or fieldOperatingStatusEmergInf.processed %}
                 <li class="vads-u-margin-bottom--2">
                   <a class="vads-u-display--flex vads-u-text-decoration--none" href="#emergency-resources"
                      onclick="recordEvent({ event: 'nav-jumplink-click' });">
@@ -129,12 +129,12 @@
             </section>
           {% endif %}
 
-          {% if fieldLink.0.uri or fieldOperatingStatusEmergInf.value %}
+          {% if fieldLink.0.uri or fieldOperatingStatusEmergInf.processed %}
             <section class="emergency-resources clearfix" id="emergency-resources">
               <h2>Emergency information</h2>
 
-              {% if fieldOperatingStatusEmergInf.value %}
-                <div>{{ fieldOperatingStatusEmergInf.value }}</div>
+              {% if fieldOperatingStatusEmergInf.processed %}
+                <div>{{ fieldOperatingStatusEmergInf.processed }}</div>
               {% endif %}
               {% if fieldLinks.0.uri %}
                 <h3 class="vads-u-margin-top--3 vads-u-margin-bottom--2 ">Local emergency resources</h3>
