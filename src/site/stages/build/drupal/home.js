@@ -88,14 +88,6 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         homePageNewsSpotlightQuery
           ?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0].entity;
 
-      // console.log({
-      //   contentData,
-      //   homePageHeroQuery,
-      //   homePageNewsSpotlightQuery,
-      //   homePagePopularOnVaGovMenuQuery,
-      //   homePageOtherSearchToolsMenuQuery,
-      // });
-
       const homePreviewEntityObj = {
         ...homeEntityObj,
         hero,
