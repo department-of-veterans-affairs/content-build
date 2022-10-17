@@ -87,7 +87,6 @@ const query = `
       }
     }
   }
-  # Start Prototype Queries
   homePageHeroQuery: entitySubqueueById(id: "${homePageHeroQueue}") {
     ... on EntitySubqueueHomePageHero {
       itemsOfEntitySubqueueHomePageHero {
@@ -178,7 +177,6 @@ const query = `
       }
     }
   }
-  # End Prototype queries
 `;
 
 const GetHomepage = `
