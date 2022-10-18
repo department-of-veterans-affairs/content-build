@@ -5,13 +5,20 @@
 const menu = 'homepage-top-tasks-blocks';
 const hubListQueue = 'home_page_hub_list';
 const promoBlocksQueue = 'home_page_promos';
-
-/** Prototype keys */
 const homePageHeroQueue = 'home_page_hero';
 const homePageNewsSpotlightQueue = 'home_page_news_spotlight';
 const homePagePopularLinksMenu = 'popular-on-va-gov';
 const otherSearchToolsMenu = 'other-search-tools';
 
+const linksQueryPartial = `
+  name
+  links {
+    label
+    url {
+      path
+    }
+  }
+`;
 const query = `
   homePageMenuQuery:menuByName(name: "${menu}") {
     name
@@ -51,7 +58,6 @@ const query = `
     ... on EntitySubqueueHomePagePromos {
       itemsOfEntitySubqueueHomePagePromos {
          entity {
-          entityId
           ... on BlockContentPromo {
             entityId
             entityLabel
@@ -91,7 +97,6 @@ const query = `
     ... on EntitySubqueueHomePageHero {
       itemsOfEntitySubqueueHomePageHero {
         entity {
-          entityId
           ... on BlockContentBenefitPromo {
             entityId
             entityLabel
@@ -118,7 +123,6 @@ const query = `
     ... on EntitySubqueueHomePageNewsSpotlight {
       itemsOfEntitySubqueueHomePageNewsSpotlight {
         entity {
-          entityId
           ... on BlockContentNewsPromo {
             entityId
             entityLabel
@@ -148,34 +152,10 @@ const query = `
     }
   }
   homePagePopularOnVaGovMenuQuery:  menuByName(name: "${homePagePopularLinksMenu}") {
-    name
-    links {
-      label
-      url {
-        path
-      }
-      links {
-        label
-        url {
-          path
-        }
-      }
-    }
+    ${linksQueryPartial}
   }
   homePageOtherSearchToolsMenuQuery:  menuByName(name: "${otherSearchToolsMenu}") {
-    name
-    links {
-      label
-      url {
-        path
-      }
-      links {
-        label
-        url {
-          path
-        }
-      }
-    }
+    ${linksQueryPartial}
   }
 `;
 
