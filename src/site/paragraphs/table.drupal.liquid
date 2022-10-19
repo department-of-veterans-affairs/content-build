@@ -47,7 +47,7 @@
                         {% for column in value %}
                             {% if forloop.first == true %}
                                 <th 
-                                    class="vads-u-padding-bottom--0 column-label vads-u-font-weight--bold medium-screen:vads-u-display--none table-row-header-responsive" role="rowheader" scope="row"
+                                    class="vads-u-padding-bottom--0 column-label vads-u-font-weight--bold medium-screen:vads-u-display--none" role="rowheader" scope="row"
                                 >
                                     <dfn> {{colLabels | getValueFromObjPath: forloop.index0}}      </dfn>
                                 </th>
