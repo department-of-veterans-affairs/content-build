@@ -37,7 +37,7 @@ jobs:
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
     env:
-      INSTANCE_TYPE: c5d.4xlarge
+      INSTANCE_TYPE: c5.4xlarge
     timeout-minutes: 15
 
     steps:
