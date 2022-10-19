@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-param-reassign, no-console */
 const cloneDeep = require('lodash/cloneDeep');
 
@@ -282,18 +283,12 @@ function updateLovellSwitchLinks(page, pages) {
  */
 function combineLovellListingPages(tricareOrVaPages, federalPages) {
   return tricareOrVaPages.map(listingPage => {
-    let pastObjectLabel;
-    switch (listingPage.entityBundle) {
-      case 'press_release_listing':
-        pastObjectLabel = 'pastPressReleases';
-        break;
-      case 'story_listing':
-        pastObjectLabel = 'pastNewsStories';
-        break;
-      default:
-        pastObjectLabel = 'pastEvents';
-        break;
-    }
+    const typePastMap = {
+      event_listing: 'pastEvents',
+      press_releases_listing: 'pastPressReleases',
+      story_listing: 'pastNewsStories',
+    };
+    const pastObjectLabel = typePastMap[listingPage.entityBundle];
     const {
       entityBundle,
       [pastObjectLabel]: pastListItems,
