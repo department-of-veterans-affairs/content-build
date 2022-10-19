@@ -29,7 +29,7 @@ function isLovellVaPage(page) {
   return page?.fieldAdministration?.entity?.entityId === LOVELL_VA_ENTITY_ID;
 }
 
-function isLovellListingPage(page) {
+function isListingPage(page) {
   const listingPageTypes = [
     'event_listing',
     'press_releases_listing',
@@ -351,19 +351,19 @@ function processLovellPages(drupalData) {
   } = drupalData.data.nodeQuery.entities.reduce(
     (acc, page) => {
       if (isLovellFederalPage(page)) {
-        if (isLovellListingPage(page)) {
+        if (isListingPage(page)) {
           acc.lovellFederalListingPages.push(page);
         } else {
           acc.lovellFederalNonListingPages.push(page);
         }
       } else if (isLovellTricarePage(page)) {
-        if (isLovellListingPage(page)) {
+        if (isListingPage(page)) {
           acc.lovellTricareListingPages.push(page);
         } else {
           acc.lovellTricareNonListingPages.push(page);
         }
       } else if (isLovellVaPage(page)) {
-        if (isLovellListingPage(page)) {
+        if (isListingPage(page)) {
           acc.lovellVaListingPages.push(page);
         } else {
           acc.lovellVaNonListingPages.push(page);
