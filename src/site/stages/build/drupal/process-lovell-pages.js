@@ -294,17 +294,23 @@ function combineLovellListingPages(tricareOrVaPages, federalPages) {
       [pastObjectLabel]: pastListItems,
       reverseFieldListingNode,
     } = listingPage;
+
     const listingPageToCombine = federalPages.find(
       page => page.entityBundle === entityBundle,
     );
+
+    const {
+      [pastObjectLabel]: pastListItemsToCombine,
+      reverseFieldListingNode: reverseFieldListingNodeToCombine,
+    } = listingPageToCombine;
 
     const pastListItemEntities = pastListItems?.entities || [];
     const allListItemEntities = reverseFieldListingNode?.entities || [];
 
     const pastListItemEntitiesToCombine =
-      listingPageToCombine[pastObjectLabel]?.entities || [];
+      pastListItemsToCombine?.entities || [];
     const allListItemEntitiesToCombine =
-      listingPageToCombine?.reverseFieldListingNode?.entities || [];
+      reverseFieldListingNodeToCombine?.entities || [];
 
     const combinedPastListItemEntities = [
       ...pastListItemEntities,
@@ -315,20 +321,17 @@ function combineLovellListingPages(tricareOrVaPages, federalPages) {
       ...allListItemEntitiesToCombine,
     ];
 
-    const finalListingPage = {
+    return {
       ...listingPage,
       reverseFieldListingNode: {
         ...reverseFieldListingNode,
         entities: combinedAllListItemEntities,
       },
+      [pastObjectLabel]: {
+        ...pastListItems,
+        entities: combinedPastListItemEntities,
+      },
     };
-
-    finalListingPage[pastObjectLabel] = {
-      ...pastListItems,
-      entities: combinedPastListItemEntities,
-    };
-
-    return finalListingPage;
   });
 }
 
