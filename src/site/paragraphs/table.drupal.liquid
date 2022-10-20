@@ -45,12 +45,23 @@
             {% else %}
                     <tr class="vads-u-padding-top--5" role="row">
                         {% for column in value %}
+                            {% if forloop.first == true %}
+                                <th 
+                                    class="vads-u-padding-bottom--0 column-label vads-u-font-weight--bold medium-screen:vads-u-display--none" role="rowheader" scope="row"
+                                >
+                                    <dfn> {{colLabels | getValueFromObjPath: forloop.index0}}      </dfn>
+                                </th>
+                                <th class="column-value table-row-header-responsive"  role="rowheader" scope="row">
+                                    <dfn class="vads-u-display--block"> {{ column }} </dfn>
+                                </th>
+                            {% else %}
                                 <td class="vads-u-padding-bottom--0 column-label vads-u-font-weight--bold medium-screen:vads-u-display--none" role="cell">
                                     <dfn> {{colLabels | getValueFromObjPath: forloop.index0}}      </dfn>
                                 </td>
                                 <td class="column-value"  role="cell">
                                     <dfn class="vads-u-display--block"> {{ column }}  </dfn>
                                 </td>
+                            {% endif %}
                         {% endfor %}
                     </tr>
             {% endif %}
