@@ -378,6 +378,45 @@ jobs:
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
         working-directory: ${{ github.workspace }}
 
+      - name: Set vars for scheduled runs
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
+
+      - name: Set vars for manual runs
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
+
+      - name: Build JSON object
+        run: |
+          jq $(cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json) | \
+          jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
+          # jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
+          jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+
+      - name: Get Datadog api key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Get Datadog app key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
+
+      - name: Send metrics to Datadog
+        run: |
+          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
+          -d @- < metrics.json
+
   # archive:
   #   name: Archive
   #   runs-on: ${{ needs.start-runner.outputs.label }}
@@ -581,71 +620,71 @@ jobs:
   #         -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
   #         -d @- < event.json
 
-  record-metrics:
-    name: Record metrics in Datadog
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
-    needs:
-      - start-runner
-      - build
-      # - archive
-      # - deploy
-    env:
-      METRIC_NAMESPACE: dsva_vagov.content_build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  # record-metrics:
+  #   name: Record metrics in Datadog
+  #   runs-on:
+  #     - self-hosted
+  #     - linux
+  #     - x64
+  #   needs:
+  #     - start-runner
+  #     - build
+  #     # - archive
+  #     # - deploy
+  #   env:
+  #     METRIC_NAMESPACE: dsva_vagov.content_build
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Get current timestamp
-        run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
+  #     - name: Get current timestamp
+  #       run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
 
-      - name: Set vars for scheduled runs
-        if: ${{ github.event_name == 'schedule' }}
-        run: |
-          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
+  #     - name: Set vars for scheduled runs
+  #       if: ${{ github.event_name == 'schedule' }}
+  #       run: |
+  #         echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+  #         echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
 
-      - name: Set vars for manual runs
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
+  #     - name: Set vars for manual runs
+  #       if: ${{ github.event_name == 'workflow_dispatch' }}
+  #       run: |
+  #         echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+  #         echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
 
-      - name: Build JSON object
-        run: |
-          jq $(cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json) | \
-          jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
-          jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
-          # jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
-          jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+  #     - name: Build JSON object
+  #       run: |
+  #         jq $(cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json) | \
+  #         jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
+  #         jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
+  #         # jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
+  #         jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-gov-west-1
 
-      - name: Get Datadog api key from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+  #     - name: Get Datadog api key from Parameter Store
+  #       uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+  #       with:
+  #         ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+  #         env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
-      - name: Get Datadog app key from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
+  #     - name: Get Datadog app key from Parameter Store
+  #       uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+  #       with:
+  #         ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
+  #         env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
 
-      - name: Send metrics to Datadog
-        run: |
-          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
-          -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
-          -d @- < metrics.json
+  #     - name: Send metrics to Datadog
+  #       run: |
+  #         curl -X POST "https://api.ddog-gov.com/api/v1/series" \
+  #         -H "Content-Type: text/json" \
+  #         -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
+  #         -d @- < metrics.json
 
   stop-runner:
     name: Stop on-demand-runner
