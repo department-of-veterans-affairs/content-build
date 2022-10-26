@@ -392,7 +392,7 @@ jobs:
 
       - name: Build JSON object
         run: |
-          jq $(cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json) | \
+          jq '$(cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json)' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           # jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
