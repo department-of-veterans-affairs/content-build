@@ -75,8 +75,15 @@
                   </div>
 
                 {% elsif fieldLocationType == "online" %}
-                  <p class="vads-u-margin--0 vads-u-margin-bottom--2">This is an online event.</p>
-
+                  {% if fieldUrlOfAnOnlineEvent %}
+                  <p class="vads-u-margin--0 vads-u-margin-bottom--2">
+                    <a href="{{ fieldUrlOfAnOnlineEvent.uri }}">
+                      This is an online event.
+                    </a>
+                  </p>
+                  {% else %}
+                    <p class="vads-u-margin--0 vads-u-margin-bottom--2">This is an online event.</p>
+                  {% endif %}
                 {% else %}
 
                   <div class="vads-u-display--flex vads-u-flex-direction--column">
