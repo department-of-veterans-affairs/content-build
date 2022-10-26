@@ -412,6 +412,7 @@ jobs:
 
       - name: Send metrics to Datadog
         run: |
+          cat metrics.json ||\
           curl -X POST "https://api.ddog-gov.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
