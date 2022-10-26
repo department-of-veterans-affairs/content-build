@@ -103,8 +103,8 @@ module.exports = () => {
 
   const collectStepMetrics = (description, timeElapsed) => {
     const series = {
-      metric: description,
-      points: [['placeholder', `${timeElapsed}`]],
+      metric: `dsva_vagov.content_build.build_steps.${description}`,
+      points: [['timestamp_placeholder', `${timeElapsed}`]],
     };
     stepMetrics.push(series);
   };
