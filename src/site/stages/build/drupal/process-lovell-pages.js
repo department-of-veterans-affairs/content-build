@@ -196,6 +196,14 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
     `${LOVELL_TITLE_STRING} ${titleVar}`,
   );
 
+  // Move federal health care links to the top of the menu
+  // Otherwise the menu renders as blank
+  const federalLinksIndex = lovellCloneMenu.links
+    .map(menu => menu.label)
+    .indexOf('Lovell Federal health care');
+  const federalLinks = lovellCloneMenu.links.splice(federalLinksIndex, 1);
+  lovellCloneMenu.links = [...federalLinks, ...lovellCloneMenu.links];
+
   // Change the root level item
   // It's coming in from the cms as a va item when it should be both
   lovellCloneMenu.links[0].label = 'Lovell Federal Health Care';
