@@ -590,8 +590,8 @@ jobs:
     needs:
       - start-runner
       - build
-      - archive
-      - deploy
+      # - archive
+      # - deploy
     env:
       METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
