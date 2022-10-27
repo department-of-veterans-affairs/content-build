@@ -88,7 +88,10 @@ jobs:
 
   validate-build-status:
     name: Validate Build Status
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs: start-runner
     outputs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
@@ -127,10 +130,11 @@ jobs:
 
   notify-start:
     name: Notify Start
-    runs-on: ${{ needs.start-runner.outputs.label }}
-    needs:
-      - start-runner
-      - validate-build-status
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    needs: validate-build-status
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -416,9 +420,11 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
-      - start-runner
       - validate-build-status
       - build
       - archive
@@ -484,9 +490,11 @@ jobs:
 
   notify-success:
     name: Notify Success
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
-      - start-runner
       - validate-build-status
       - deploy
 
@@ -513,12 +521,13 @@ jobs:
 
   notify-failure:
     name: Notify Failure
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     if: |
       (failure() && needs.deploy.result != 'success')
-    needs:
-      - start-runner
-      - deploy
+    needs: deploy
 
     steps:
       - name: Configure AWS Credentials
@@ -566,7 +575,10 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
       - start-runner
       - build
@@ -660,6 +672,8 @@ jobs:
       - record-metrics
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
+    env:
+      INSTANCE_TYPE: c5.4xlarge
     timeout-minutes: 15
 
     steps:
