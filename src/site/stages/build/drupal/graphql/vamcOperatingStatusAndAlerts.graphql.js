@@ -40,7 +40,7 @@ const vamcOperatingStatusAndAlerts = `
       title
     }
     fieldOperatingStatusEmergInf {
-      value
+      processed
     }
     fieldBannerAlert {
       entity {

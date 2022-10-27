@@ -1,0 +1,59 @@
+<!--
+  Search and Common tasks hub on home page
+
+  Homepage redesign iteration (/homepage-test)
+  Date: April 2022
+  Author: allison@cityfriends.tech
+-->
+
+<!-- Hub Content -->
+<div class="homepage-common-tasks__wrapper">
+  <div class="vads-l-grid-container vads-u-padding-x--0 homepage-common-tasks">
+    <div class="vads-l-row">
+      <!-- start first column-->
+      <div class="vads-l-col--12 medium-screen:vads-l-col--6">
+        <div
+          class="vads-u-margin-x--2p5 small-desktop-screen:vads-u-margin-x--0 small-desktop-screen:vads-u-padding-right--9 vads-u-padding-bottom--5">
+          <h2 class="vads-u-color--gray-dark vads-u-font-family--serif">
+            Search
+          </h2>
+
+          <div data-widget-type="homepage-search"></div>
+
+          <h3 class="vads-u-color--gray-dark vads-u-font-family--serif">
+            Other search tools
+          </h3>
+          <div class="homepage-common-tasks__search-tools">
+            <ul class="vads-u-padding-left--0">
+              {% for link in searchLinks %}
+              <li>
+                <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
+                <a href="{{ link.link }}">{{ link.linkText }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- end first column -->
+
+      <!-- start second column -->
+      <div class="vads-l-col--12 medium-screen:vads-l-col--6 vads-u-background-color--white">
+        <div class="vads-u-padding-left--2p5 medium-screen:vads-u-padding-left--6 vads-u-padding-bottom--5">
+          <h2 class="vads-u-color--gray-dark vads-u-font-family--serif">
+            Popular on VA.gov
+          </h2>
+          <ul class="homepage-common-tasks__list vads-u-padding-left--0 ">
+            {% for link in popularLinks%}
+            <li>
+              <a href="{{ link.link }}">{{ link.linkText}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <!-- end second column -->
+    </div>
+  </div>
+</div>
+<!-- /Hub -->

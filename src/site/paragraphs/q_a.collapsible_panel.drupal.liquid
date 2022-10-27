@@ -1,5 +1,6 @@
 <div data-template="paragraphs/q_a.collapsible_panel">
   <va-accordion>
+    
     {% assign questions = entity.fieldQuestions %}
     {% assign sectionHeader = entity.fieldSectionHeader %}
 
@@ -11,6 +12,8 @@
         header="{{ item.fieldQuestion }}"
         {% if level %}
           level="{{ level }}"
+          {% else %}
+          level=3
         {% endif %}
       >
         <div
