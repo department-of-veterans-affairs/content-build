@@ -660,8 +660,6 @@ jobs:
       - record-metrics
     runs-on: ubuntu-latest
     if: ${{ always() }} # Even if an error happened, let's stop the runner
-    env:
-      INSTANCE_TYPE: c5.4xlarge
     timeout-minutes: 15
 
     steps:
