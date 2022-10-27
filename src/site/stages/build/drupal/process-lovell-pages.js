@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-param-reassign, no-console */
 const cloneDeep = require('lodash/cloneDeep');
 
@@ -29,6 +30,16 @@ function isLovellVaPage(page) {
   return page?.fieldAdministration?.entity?.entityId === LOVELL_VA_ENTITY_ID;
 }
 
+function isListingPage(page) {
+  const listingPageTypes = [
+    'event_listing',
+    'press_releases_listing',
+    'story_listing',
+  ];
+
+  return listingPageTypes.includes(page.entityBundle);
+}
+
 function getModifiedLovellPage(page, variant) {
   const fieldOfficeMod =
     variant === 'va'
@@ -54,14 +65,32 @@ function getModifiedLovellPage(page, variant) {
 
   // Add a switchPath field
   // These get modified later in the processLovellPages function
-  page.entityUrl.switchPath = originalPath.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${
+  if (
+    page.entityUrl.path.includes(
+      `/lovell-federal-${LOVELL_TRICARE_LINK_VARIATION}-health-care`,
+    ) ||
+    page.entityUrl.path.includes(
+      `/lovell-federal-${LOVELL_VA_LINK_VARIATION}-health-care`,
+    )
+  ) {
+    page.entityUrl.switchPath = originalPath.replace(
+      variant === 'va'
+        ? LOVELL_VA_LINK_VARIATION
+        : LOVELL_TRICARE_LINK_VARIATION,
       variant === 'va'
         ? LOVELL_TRICARE_LINK_VARIATION
-        : LOVELL_VA_LINK_VARIATION
-    }-health-care`,
-  );
+        : LOVELL_VA_LINK_VARIATION,
+    );
+  } else {
+    page.entityUrl.switchPath = originalPath.replace(
+      '/lovell-federal-health-care',
+      `/lovell-federal-${
+        variant === 'va'
+          ? LOVELL_TRICARE_LINK_VARIATION
+          : LOVELL_VA_LINK_VARIATION
+      }-health-care`,
+    );
+  }
 
   // Modify Breadcrumb
   if (page.entityUrl.breadcrumb) {
@@ -251,22 +280,100 @@ function updateLovellSwitchLinks(page, pages) {
   return page;
 }
 
+/**
+ * For each listing page in tricareOrVaPages, finds the first occurrence of that listing page type in
+ * federalPages and injects pastEvents and reverseFieldListingNode from that entity into
+ * corresponding properties on the listing page from tricareOrVaPages.
+ *
+ * @param {*} tricareOrVaPages Listing pages that will have pastEvents and reverseFieldListingNode properties merged from federalPages
+ * @param {*} federalPages Listing pages to merge into tricareOrVaPages
+ * @returns
+ */
+function combineLovellListingPages(tricareOrVaPages, federalPages) {
+  return tricareOrVaPages.map(listingPage => {
+    const typePastMap = {
+      event_listing: 'pastEvents',
+      press_releases_listing: 'pastPressReleases',
+      story_listing: 'pastNewsStories',
+    };
+    const pastObjectLabel = typePastMap[listingPage.entityBundle];
+    const {
+      entityBundle,
+      [pastObjectLabel]: pastListItems,
+      reverseFieldListingNode,
+    } = listingPage;
+
+    const listingPageToCombine = federalPages.find(
+      page => page.entityBundle === entityBundle,
+    );
+
+    const {
+      [pastObjectLabel]: pastListItemsToCombine,
+      reverseFieldListingNode: reverseFieldListingNodeToCombine,
+    } = listingPageToCombine;
+
+    const pastListItemEntities = pastListItems?.entities || [];
+    const allListItemEntities = reverseFieldListingNode?.entities || [];
+
+    const pastListItemEntitiesToCombine =
+      pastListItemsToCombine?.entities || [];
+    const allListItemEntitiesToCombine =
+      reverseFieldListingNodeToCombine?.entities || [];
+
+    const combinedPastListItemEntities = [
+      ...pastListItemEntities,
+      ...pastListItemEntitiesToCombine,
+    ];
+    const combinedAllListItemEntities = [
+      ...allListItemEntities,
+      ...allListItemEntitiesToCombine,
+    ];
+
+    return {
+      ...listingPage,
+      reverseFieldListingNode: {
+        ...reverseFieldListingNode,
+        entities: combinedAllListItemEntities,
+      },
+      [pastObjectLabel]: {
+        ...pastListItems,
+        entities: combinedPastListItemEntities,
+      },
+    };
+  });
+}
+
 function processLovellPages(drupalData) {
   // Note: this `reduce()` function allows us to categorize all the pages with a single pass over the array.
   // We could accomplish this same outcome with a few `filter()` calls, but that would require multiple passes over the array.
   const {
-    lovellFederalPages,
-    lovellVaPages,
-    lovellTricarePages,
+    lovellFederalListingPages,
+    lovellFederalNonListingPages,
+    lovellVaListingPages,
+    lovellVaNonListingPages,
+    lovellTricareListingPages,
+    lovellTricareNonListingPages,
     otherPages,
   } = drupalData.data.nodeQuery.entities.reduce(
     (acc, page) => {
       if (isLovellFederalPage(page)) {
-        acc.lovellFederalPages.push(page);
+        if (isListingPage(page)) {
+          acc.lovellFederalListingPages.push(page);
+        } else {
+          acc.lovellFederalNonListingPages.push(page);
+        }
       } else if (isLovellTricarePage(page)) {
-        acc.lovellTricarePages.push(page);
+        if (isListingPage(page)) {
+          acc.lovellTricareListingPages.push(page);
+        } else {
+          acc.lovellTricareNonListingPages.push(page);
+        }
       } else if (isLovellVaPage(page)) {
-        acc.lovellVaPages.push(page);
+        if (isListingPage(page)) {
+          acc.lovellVaListingPages.push(page);
+        } else {
+          acc.lovellVaNonListingPages.push(page);
+        }
       } else {
         acc.otherPages.push(page);
       }
@@ -274,26 +381,46 @@ function processLovellPages(drupalData) {
       return acc;
     },
     {
-      lovellFederalPages: [],
-      lovellTricarePages: [],
-      lovellVaPages: [],
+      lovellFederalListingPages: [],
+      lovellFederalNonListingPages: [],
+      lovellTricareListingPages: [],
+      lovellTricareNonListingPages: [],
+      lovellVaListingPages: [],
+      lovellVaNonListingPages: [],
       otherPages: [],
     },
   );
 
-  // modify tricare pages
+  const lovellTricareListingPagesWithFederal = combineLovellListingPages(
+    lovellTricareListingPages,
+    lovellFederalListingPages,
+  );
+  const lovellVaListingPagesWithFederal = combineLovellListingPages(
+    lovellVaListingPages,
+    lovellFederalListingPages,
+  );
+
+  // modify all tricare pages
+  const lovellTricarePages = [
+    ...lovellTricareListingPagesWithFederal,
+    ...lovellTricareNonListingPages,
+  ];
   const modifiedLovellTricarePages = lovellTricarePages.map(page =>
     getModifiedLovellPage(page, 'tricare'),
   );
-  // modify va pages
+  // modify all va pages
+  const lovellVaPages = [
+    ...lovellVaListingPagesWithFederal,
+    ...lovellVaNonListingPages,
+  ];
   const modifiedLovellVaPages = lovellVaPages.map(page =>
     getModifiedLovellPage(page, 'va'),
   );
   // Each federal page needs to be duplicated and modified once each for tricare/va
-  const lovellFederalPagesClonedTricare = lovellFederalPages.map(page =>
-    getModifiedLovellPage(cloneDeep(page), 'tricare'),
+  const lovellFederalPagesClonedTricare = lovellFederalNonListingPages.map(
+    page => getModifiedLovellPage(cloneDeep(page), 'tricare'),
   );
-  const lovellFederalPagesClonedVa = lovellFederalPages.map(page =>
+  const lovellFederalPagesClonedVa = lovellFederalNonListingPages.map(page =>
     getModifiedLovellPage(cloneDeep(page), 'va'),
   );
 
