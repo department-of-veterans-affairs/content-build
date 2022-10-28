@@ -394,7 +394,7 @@ jobs:
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           # jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
-          jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+          jq '.series[].tags[2] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Get Datadog api key from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
@@ -410,7 +410,6 @@ jobs:
 
       - name: Send metrics to Datadog
         run: |
-          cat metrics.json ||\
           curl -X POST "https://api.ddog-gov.com/api/v1/series" \
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
