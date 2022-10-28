@@ -106,7 +106,7 @@ module.exports = () => {
       metric: `dsva_vagov.content_build.build_steps.${description
         .replace(/\s/g, '_')
         .replace(/[^a-zA-Z0-9_]/g, '')
-        .toLowerCase()}`,j
+        .toLowerCase()}`,
       points: [['timestamp_placeholder', Number(timeElapsed)]],
     };
     stepMetrics.push(series);
