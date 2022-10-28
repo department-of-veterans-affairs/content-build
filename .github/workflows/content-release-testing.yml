@@ -30,7 +30,6 @@ jobs:
   start-runner:
     runs-on:
       - self-hosted
-      - asg
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
@@ -97,7 +96,6 @@ jobs:
     name: Validate Build Status
     runs-on:
       - self-hosted
-      - asg
     needs: start-runner
     outputs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
