@@ -107,7 +107,7 @@ module.exports = () => {
         .replace(/\s/g, '_')
         .replace(/[^a-zA-Z0-9_]/g, '')
         .toLowerCase()}`,
-      points: [['timestamp_placeholder', `${timeElapsed}`]],
+      points: [['timestamp_placeholder', timeElapsed]],
     };
     stepMetrics.push(series);
   };
@@ -240,7 +240,7 @@ module.exports = () => {
 
   smith.writeStepMetricsFile = function printStepMetrics(BUILD_OPTIONS) {
     // Add a shared timestamp to each metric.
-    const timestamp = Date.now().toString();
+    const timestamp = Math.floor(Date.now().toString() / 1000);
     stepMetrics.map(metric => {
       const modifiedMetric = metric;
       modifiedMetric.points[0][0] = timestamp;
