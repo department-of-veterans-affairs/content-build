@@ -1,4 +1,4 @@
-name: Content Release Node Limit testing
+name: ZZ Content Release Workflow testing
 
 on:
   workflow_dispatch:
