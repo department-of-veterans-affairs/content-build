@@ -34,12 +34,12 @@ async function downloadFile(
   let retries = 3;
   while (retries--) {
     try {
-      if (global.verbose) {
-        const startDate = new Date().toISOString();
-        log(
-          `${startDate}: index ${downloaderIndex}: Starting download ${asset.src}`,
-        );
-      }
+      // if (global.verbose) {
+      //   const startDate = new Date().toISOString();
+      //   log(
+      //     `${startDate}: index ${downloaderIndex}: Starting download ${asset.src}`,
+      //   );
+      // }
       // eslint-disable-next-line no-await-in-loop
       response = await client.proxyFetch(asset.src);
       break;
@@ -73,10 +73,10 @@ async function downloadFile(
     downloadResults.downloadCount++;
 
     if (global.verbose) {
-      const endDate = new Date().toISOString();
-      log(
-        `${endDate}: index ${downloaderIndex}: Finished downloading ${asset.src}`,
-      );
+      // const endDate = new Date().toISOString();
+      // log(
+      //   `${endDate}: index ${downloaderIndex}: Finished downloading ${asset.src}`,
+      // );
     } else {
       process.stdout.write('.');
       if (!assetsToDownload.length) process.stdout.write('\n');

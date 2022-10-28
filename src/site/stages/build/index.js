@@ -113,158 +113,158 @@ function build(BUILD_OPTIONS) {
     return;
   }
 
-  smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
+//  smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 
-  smith.use(
-    createOfficeDirectoryData(BUILD_OPTIONS),
-    'Create office-directory data',
-  );
+  // smith.use(
+  //   createOfficeDirectoryData(BUILD_OPTIONS),
+  //   'Create office-directory data',
+  // );
 
-  smith.use(
-    createOutreachAssetsData(BUILD_OPTIONS),
-    'Create Outreach Assets Data',
-  );
+  // smith.use(
+  //   createOutreachAssetsData(BUILD_OPTIONS),
+  //   'Create Outreach Assets Data',
+  // );
 
-  smith.use(
-    createResourcesAndSupportWebsiteSection(BUILD_OPTIONS),
-    'Create "Resources and support" section of the website',
-  );
+  // smith.use(
+  //   createResourcesAndSupportWebsiteSection(BUILD_OPTIONS),
+  //   'Create "Resources and support" section of the website',
+  // );
 
-  smith.use(
-    createEnvironmentFilter(BUILD_OPTIONS),
-    'Create environment filter',
-  );
+  // smith.use(
+  //   createEnvironmentFilter(BUILD_OPTIONS),
+  //   'Create environment filter',
+  // );
 
-  // This adds the filename into the "entry" that is passed to other plugins. Without this errors
-  // during templating end up not showing which file they came from. Load it very early in in the
-  // plugin chain.
-  smith.use(filenames(), 'Add filenames for debugging');
+  // // This adds the filename into the "entry" that is passed to other plugins. Without this errors
+  // // during templating end up not showing which file they came from. Load it very early in in the
+  // // plugin chain.
+  // smith.use(filenames(), 'Add filenames for debugging');
 
-  smith.use(checkCollections(BUILD_OPTIONS), 'Check collections');
-  smith.use(collections(BUILD_OPTIONS.collections), 'Group collections');
-  smith.use(leftRailNavResetLevels(), 'Reset left rail navigation menu levels');
-  smith.use(dateInFilename(true), 'Add the date to filenames');
-  smith.use(assets(BUILD_OPTIONS.appAssets), 'Add app assets');
-  smith.use(assets(BUILD_OPTIONS.contentAssets), 'Add content assets');
+  // smith.use(checkCollections(BUILD_OPTIONS), 'Check collections');
+  // smith.use(collections(BUILD_OPTIONS.collections), 'Group collections');
+  // smith.use(leftRailNavResetLevels(), 'Reset left rail navigation menu levels');
+  // smith.use(dateInFilename(true), 'Add the date to filenames');
+  // smith.use(assets(BUILD_OPTIONS.appAssets), 'Add app assets');
+  // smith.use(assets(BUILD_OPTIONS.contentAssets), 'Add content assets');
 
-  // smith.use(cspHash({ pattern: ['js/*.js', 'generated/*.css', 'generated/*.js'] }))
+  // // smith.use(cspHash({ pattern: ['js/*.js', 'generated/*.css', 'generated/*.js'] }))
 
-  // Liquid substitution must occur before markdown is run otherwise markdown will escape the
-  // bits of liquid commands (eg., quotes) and break things.
-  //
-  // Unfortunately this must come before permalinks and navigation because of limitation in both
-  // modules regarding what files they understand. The consequence here is that liquid templates
-  // *within* a single file do NOT have access to the final path that they will be rendered under
-  // or any other metadata added by the permalinks() and navigation() filters.
-  //
-  // Thus far this has not been a problem because the only references to such paths are in the
-  // includes which are handled by the layout module. The layout module, luckily, can be run
-  // near the end of the filter chain and therefore has access to all the metadata.
-  //
-  // If this becomes a barrier in the future, permalinks should be patched to understand
-  // translating .md files which would allow inPlace() and markdown() to be moved under the
-  // permalinks() and navigation() filters making the variable stores uniform between inPlace()
-  // and layout().
-  smith.use(
-    inPlace({ engine: 'liquid', pattern: '*.{md,html}' }),
-    'Plug the content into the templates',
-  );
-  smith.use(
-    markdown({
-      typographer: true,
-      html: true,
-    }),
-    'Translate the markdown to html',
-  );
+  // // Liquid substitution must occur before markdown is run otherwise markdown will escape the
+  // // bits of liquid commands (eg., quotes) and break things.
+  // //
+  // // Unfortunately this must come before permalinks and navigation because of limitation in both
+  // // modules regarding what files they understand. The consequence here is that liquid templates
+  // // *within* a single file do NOT have access to the final path that they will be rendered under
+  // // or any other metadata added by the permalinks() and navigation() filters.
+  // //
+  // // Thus far this has not been a problem because the only references to such paths are in the
+  // // includes which are handled by the layout module. The layout module, luckily, can be run
+  // // near the end of the filter chain and therefore has access to all the metadata.
+  // //
+  // // If this becomes a barrier in the future, permalinks should be patched to understand
+  // // translating .md files which would allow inPlace() and markdown() to be moved under the
+  // // permalinks() and navigation() filters making the variable stores uniform between inPlace()
+  // // and layout().
+  // smith.use(
+  //   inPlace({ engine: 'liquid', pattern: '*.{md,html}' }),
+  //   'Plug the content into the templates',
+  // );
+  // smith.use(
+  //   markdown({
+  //     typographer: true,
+  //     html: true,
+  //   }),
+  //   'Translate the markdown to html',
+  // );
 
-  // Responsible for create permalink structure. Most commonly used change foo.md to foo/index.html.
-  //
-  // This must come before navigation module, otherwise breadcrumbs will see the wrong URLs.
-  //
-  // It also must come AFTER the markdown() module because it only recognizes .html files. See
-  // comment above the inPlace() module for explanation of effects on the metadata().
-  smith.use(
-    permalinks({
-      relative: false,
-      linksets: [
-        {
-          match: { collection: 'posts' },
-          pattern: ':date/:slug',
-        },
-      ],
-    }),
-    'Add permalinks and change foo.md to foo/index.html',
-  );
+  // // Responsible for create permalink structure. Most commonly used change foo.md to foo/index.html.
+  // //
+  // // This must come before navigation module, otherwise breadcrumbs will see the wrong URLs.
+  // //
+  // // It also must come AFTER the markdown() module because it only recognizes .html files. See
+  // // comment above the inPlace() module for explanation of effects on the metadata().
+  // smith.use(
+  //   permalinks({
+  //     relative: false,
+  //     linksets: [
+  //       {
+  //         match: { collection: 'posts' },
+  //         pattern: ':date/:slug',
+  //       },
+  //     ],
+  //   }),
+  //   'Add permalinks and change foo.md to foo/index.html',
+  // );
 
-  smith.use(createHeaderFooter(BUILD_OPTIONS), 'Create header and footer');
+  // smith.use(createHeaderFooter(BUILD_OPTIONS), 'Create header and footer');
 
-  smith.use(
-    navigation({
-      navConfigs: {
-        sortByNameFirst: true,
-        breadcrumbProperty: 'breadcrumb_path',
-        pathProperty: 'nav_path',
-        includeDirs: true,
-      },
-      navSettings: {},
-    }),
-    'Generate navigation',
-  );
+  // smith.use(
+  //   navigation({
+  //     navConfigs: {
+  //       sortByNameFirst: true,
+  //       breadcrumbProperty: 'breadcrumb_path',
+  //       pathProperty: 'nav_path',
+  //       includeDirs: true,
+  //     },
+  //     navSettings: {},
+  //   }),
+  //   'Generate navigation',
+  // );
 
-  // Split the layout step by letter. This avoids "too many open files" errors
-  // caused by the layouts plugin opening too many templates in parallel.
-  // Metalsmith's concurrency setting does not fix the issue.
-  const letters = 'abcdefghijklmnopqrstuvwxyz'
-    .split('')
-    .map(letter => letter.toUpperCase() + letter);
-  const nonletters = `0-9.-_~!$&'()*+,;=:@`;
-  const patterns = [...letters, nonletters];
+  // // Split the layout step by letter. This avoids "too many open files" errors
+  // // caused by the layouts plugin opening too many templates in parallel.
+  // // Metalsmith's concurrency setting does not fix the issue.
+  // const letters = 'abcdefghijklmnopqrstuvwxyz'
+  //   .split('')
+  //   .map(letter => letter.toUpperCase() + letter);
+  // const nonletters = `0-9.-_~!$&'()*+,;=:@`;
+  // const patterns = [...letters, nonletters];
 
-  // Only apply layouts to markdown and html files.
-  const suffix = '{md,html}';
+  // // Only apply layouts to markdown and html files.
+  // const suffix = '{md,html}';
 
-  patterns.forEach(pattern => {
-    smith.use(
-      layouts({
-        engine: 'liquid',
-        directory: BUILD_OPTIONS.layouts,
-        // At the top level, match filenames. Otherwise match the final
-        // directory name since so many files are named index.html
-        pattern: [`[${pattern}]*.${suffix}`, `**/[${pattern}]*/*.${suffix}`],
-      }),
-      `Apply layouts ${pattern.length === 2 ? pattern[0] : pattern}`,
-    );
-  });
-  if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
-    smith.use(
-      addDirectoryFiles(`${BUILD_OPTIONS.nextBuildDirectory}out/`, true),
-      'Adding files from next-build directory',
-    );
-  }
+  // patterns.forEach(pattern => {
+  //   smith.use(
+  //     layouts({
+  //       engine: 'liquid',
+  //       directory: BUILD_OPTIONS.layouts,
+  //       // At the top level, match filenames. Otherwise match the final
+  //       // directory name since so many files are named index.html
+  //       pattern: [`[${pattern}]*.${suffix}`, `**/[${pattern}]*/*.${suffix}`],
+  //     }),
+  //     `Apply layouts ${pattern.length === 2 ? pattern[0] : pattern}`,
+  //   );
+  // });
+  // if (BUILD_OPTIONS.runNextBuild && BUILD_OPTIONS.buildtype !== 'vagovprod') {
+  //   smith.use(
+  //     addDirectoryFiles(`${BUILD_OPTIONS.nextBuildDirectory}out/`, true),
+  //     'Adding files from next-build directory',
+  //   );
+  // }
 
-  /*
-   * This will replace links in static pages with a staging domain,
-   * if it is in the list of domains to replace
-   */
-  smith.use(
-    rewriteVaDomains(BUILD_OPTIONS),
-    'Rewrite VA domains for the buildtype',
-  );
-  smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
-  smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
-  smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
+  // /*
+  //  * This will replace links in static pages with a staging domain,
+  //  * if it is in the list of domains to replace
+  //  */
+  // smith.use(
+  //   rewriteVaDomains(BUILD_OPTIONS),
+  //   'Rewrite VA domains for the buildtype',
+  // );
+  // smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
+  // smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
+  // smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
-  smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
-  smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
+  // smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
+  // smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
 
-  smith.use(
-    modifyDom(BUILD_OPTIONS),
-    'Parse a virtual DOM from every .html file and perform a variety of DOM sub-operations on each file',
-  );
+  // smith.use(
+  //   modifyDom(BUILD_OPTIONS),
+  //   'Parse a virtual DOM from every .html file and perform a variety of DOM sub-operations on each file',
+  // );
 
-  // Ignore Drupal and application assets when building pages, so they don't get overwritten.
-  // We no longer need to build them now that they are stored directly on disk
-  smith.use(ignoreAssets(), 'Ignore assets for build');
+  // // Ignore Drupal and application assets when building pages, so they don't get overwritten.
+  // // We no longer need to build them now that they are stored directly on disk
+  // smith.use(ignoreAssets(), 'Ignore assets for build');
 
   smith.build(async (err, files) => {
     if (err) {
@@ -315,7 +315,7 @@ function build(BUILD_OPTIONS) {
       // Add debug info to HTML files
       await addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
-
+    smith.writeStepMetricsFile(BUILD_OPTIONS);
     smith.endGarbageCollection();
   }); // smith.build()
 }
