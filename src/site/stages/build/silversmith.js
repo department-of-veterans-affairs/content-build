@@ -238,7 +238,7 @@ module.exports = () => {
     );
   };
 
-  smith.writeStepMetricsFile = function printStepMetrics(BUILD_OPTIONS) {
+  smith.writeStepMetricsFile = function writeStepMetricsFile(BUILD_OPTIONS) {
     // Add a shared timestamp to each metric.
     const timestamp = Number(Math.floor(Date.now().toString() / 1000));
     stepMetrics.map(metric => {
