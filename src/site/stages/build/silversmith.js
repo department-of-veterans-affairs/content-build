@@ -26,7 +26,6 @@ const { GITHUB_ACTIONS } = process.env;
 const GARBAGE_COLLECTION_FREQUENCY_SECONDS = GITHUB_ACTIONS ? 60 : 10;
 let garbageCollectionInterval;
 let peakRSSUsed = 0;
-const stepMetrics = [];
 
 const formatMemory = m => Math.round((m / 1024 / 1024) * 100) / 100;
 
@@ -101,17 +100,6 @@ module.exports = () => {
     }
   };
 
-  const collectStepMetrics = (description, timeElapsed) => {
-    const series = {
-      metric: `dsva_vagov.content_build.build_steps.${description
-        .replace(/\s/g, '_')
-        .replace(/[^a-zA-Z0-9_]/g, '')
-        .toLowerCase()}`,
-      points: [['timestamp_placeholder', Number(timeElapsed)]],
-    };
-    stepMetrics.push(series);
-  };
-
   // Override the normal use function to log additional information
   smith._use = smith.use;
   smith.use = function use(plugin, description = 'Unknown Plugin') {
@@ -167,7 +155,6 @@ module.exports = () => {
         smith.stepStats[step].timeElapsed = timeElapsed;
 
         logStepEnd(step, description, timeElapsed);
-        collectStepMetrics(description, timeElapsed);
         if (global.verbose) {
           logMemoryUsage(heapUsedStart, heapUsedEnd, rssStart, rssEnd);
         }
@@ -234,29 +221,6 @@ module.exports = () => {
       err => {
         if (err) throw err;
         console.log('Metasmith data written to metalsmith-build-data.json');
-      },
-    );
-  };
-
-  smith.writeStepMetricsFile = function writeStepMetricsFile(BUILD_OPTIONS) {
-    // Add a shared timestamp to each metric.
-    const timestamp = Number(Math.floor(Date.now().toString() / 1000));
-    stepMetrics.map(metric => {
-      const modifiedMetric = metric;
-      modifiedMetric.points[0][0] = timestamp;
-      return modifiedMetric;
-    });
-    const jsonObject = {
-      series: stepMetrics,
-    };
-    fs.writeFileSync(
-      `build/${BUILD_OPTIONS.buildtype}/metalsmith-step-metrics.json`,
-      JSON.stringify(jsonObject),
-      err => {
-        if (err) throw err;
-        console.log(
-          'Metasmith step metrics failed to write to metalsmith-step-metrics.json',
-        );
       },
     );
   };
