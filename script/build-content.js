@@ -1,7 +1,6 @@
 const chokidar = require('chokidar');
 const chalk = require('chalk');
 const debounce = require('lodash/debounce');
-const v8 = require('v8');
 
 const printBuildHelp = require('./content-build-help');
 const getOptions = require('../src/site/stages/build/options');
@@ -15,8 +14,6 @@ if (process.argv[2] === 'help') {
 
 async function buildContent() {
   const buildOptions = await getOptions();
-  console.log(v8.getHeapStatistics().heap_size_limit / (1024 * 1024));
-  console.log(global.gc);
   const rebuild = debounce((event, path) => {
     // eslint-disable-next-line no-console
     console.log(
