@@ -370,7 +370,7 @@ jobs:
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
         working-directory: ${{ github.workspace }}
 
-      - name: Set vars for manual runs
+      - name: Set vars for CMS-triggered runs
         if: ${{ github.event_name == 'repository_dispatch' }}
         run: |
           echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
@@ -623,17 +623,11 @@ jobs:
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
 
-      - name: Set vars for scheduled runs
-        if: ${{ github.event_name == 'schedule' }}
+      - name: Set vars for CMS-triggered runs
+        if: ${{ github.event_name == 'repository_dispatch' }}
         run: |
           echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
-
-      - name: Set vars for manual runs
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=cms" >> $GITHUB_ENV
 
       - name: Calculate durations
         run: |
