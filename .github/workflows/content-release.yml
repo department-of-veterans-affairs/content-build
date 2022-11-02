@@ -17,6 +17,8 @@ env:
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
   DRUPAL_ADDRESS: https://prod.cms.va.gov
+  INSTANCE_TYPE: m5.4xlarge
+  MAXIMUM_HEAP: 5000
 
 jobs:
   start-runner:
@@ -28,8 +30,6 @@ jobs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
-    env:
-      INSTANCE_TYPE: m5.4xlarge
     timeout-minutes: 15
 
     steps:
@@ -261,7 +261,7 @@ jobs:
           method: GET
 
       - name: Build
-        run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
+        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
         timeout-minutes: 40
         env:
           NODE_ENV: production
@@ -369,6 +369,36 @@ jobs:
         id: export-build-end-time
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
         working-directory: ${{ github.workspace }}
+
+      - name: Set vars for CMS-triggered runs
+        if: ${{ github.event_name == 'repository_dispatch' }}
+        run: |
+          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=cms" >> $GITHUB_ENV
+
+      - name: Build JSON object for step metrics
+        run: |
+          cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json | \
+          jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
+          jq '.series[].tags[2] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
+          jq '.series[].tags[3] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
+          jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+
+
+      - name: Get Datadog api key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Send metrics to Datadog
+        run: |
+          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
+          -d @- < metrics.json
+
 
   archive:
     name: Archive
@@ -593,17 +623,11 @@ jobs:
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
 
-      - name: Set vars for scheduled runs
-        if: ${{ github.event_name == 'schedule' }}
+      - name: Set vars for CMS-triggered runs
+        if: ${{ github.event_name == 'repository_dispatch' }}
         run: |
           echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
-
-      - name: Set vars for manual runs
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=cms" >> $GITHUB_ENV
 
       - name: Calculate durations
         run: |
