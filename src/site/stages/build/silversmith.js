@@ -249,16 +249,16 @@ module.exports = () => {
     const jsonObject = {
       series: stepMetrics,
     };
-    fs.writeFileSync(
-      `build/${BUILD_OPTIONS.buildtype}/metalsmith-step-metrics.json`,
-      JSON.stringify(jsonObject),
-      err => {
-        if (err) throw err;
-        console.log(
-          'Metasmith step metrics failed to write to metalsmith-step-metrics.json',
-        );
-      },
-    );
+    // fs.writeFileSync(
+    //   `build/${BUILD_OPTIONS.buildtype}/metalsmith-step-metrics.json`,
+    //   JSON.stringify(jsonObject),
+    //   err => {
+    //     if (err) throw err;
+    //     console.log(
+    //       'Metasmith step metrics failed to write to metalsmith-step-metrics.json',
+    //     );
+    //   },
+    // );
   };
 
   return smith;
