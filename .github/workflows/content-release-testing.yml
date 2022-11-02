@@ -24,6 +24,9 @@ env:
   # Not a sensitive secret; used for our testing environments only, with systems
   # with sanitized databases.
   DRUPAL_PASSWORD: drupal8
+  INSTANCE_TYPE: c5.4xlarge
+  MAXIMUM_HEAP: 5000
+
 
 
 jobs:
@@ -34,8 +37,6 @@ jobs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
-    env:
-      INSTANCE_TYPE: m6i.4xlarge
     timeout-minutes: 15
 
     steps:
@@ -267,7 +268,7 @@ jobs:
       #     method: GET
 
       - name: Build
-        run: yarn build --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose --omitdebug | tee build-output.txt
+        run: ${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose --omitdebug | tee build-output.txt
         timeout-minutes: 120
         env:
           NODE_ENV: production
@@ -393,8 +394,10 @@ jobs:
           cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
-          # jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
-          jq '.series[].tags[2] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+          jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
+          jq '.series[].tags[3] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
+          jq '.series[].tags[4] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
+          jq '.series[].tags[5] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Get Datadog api key from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1

@@ -238,7 +238,7 @@ module.exports = () => {
     );
   };
 
-  smith.writeStepMetricsFile = function printStepMetrics(BUILD_OPTIONS) {
+  smith.writeStepMetricsFile = function writeStepMetricsFile(BUILD_OPTIONS) {
     // Add a shared timestamp to each metric.
     const timestamp = Number(Math.floor(Date.now().toString() / 1000));
     stepMetrics.map(metric => {
@@ -249,16 +249,16 @@ module.exports = () => {
     const jsonObject = {
       series: stepMetrics,
     };
-    // fs.writeFileSync(
-    //   `build/${BUILD_OPTIONS.buildtype}/metalsmith-step-metrics.json`,
-    //   JSON.stringify(jsonObject),
-    //   err => {
-    //     if (err) throw err;
-    //     console.log(
-    //       'Metasmith step metrics failed to write to metalsmith-step-metrics.json',
-    //     );
-    //   },
-    // );
+    fs.writeFileSync(
+      `build/${BUILD_OPTIONS.buildtype}/metalsmith-step-metrics.json`,
+      JSON.stringify(jsonObject),
+      err => {
+        if (err) throw err;
+        console.log(
+          'Metasmith step metrics failed to write to metalsmith-step-metrics.json',
+        );
+      },
+    );
   };
 
   return smith;
