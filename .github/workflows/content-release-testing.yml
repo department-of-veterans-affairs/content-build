@@ -394,10 +394,9 @@ jobs:
           cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
-          jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
-          jq '.series[].tags[3] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
-          jq '.series[].tags[4] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
-          jq '.series[].tags[5] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+          jq '.series[].tags[2] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
+          jq '.series[].tags[3] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
+          jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Get Datadog api key from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
