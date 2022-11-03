@@ -91,10 +91,10 @@
                       {{ fieldAddress.locality }},
                       {{ fieldAddress.administrativeArea }}
                       {{ fieldAddress.postalCode }}
-                      <div><a
-                            href="https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}"
-                            target="_blank"
-                            rel="noopener noreferrer">Directions</a>
+                      <div>
+                        <a href="https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}">
+                          Directions (Google Maps)
+                        </a>
                       </div>
                     </div>
                     <h3
