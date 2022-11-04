@@ -8,6 +8,7 @@
       class="vads-u-color--gray-dark vads-u-font-family--serif usa-width-two-thirds vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--5">
       Explore VA benefits and health care
     </h2>
+    {% if hubs %}
     {% for hub in hubs %}
     <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
       <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}"
@@ -22,5 +23,6 @@
   <div class="usa-grid usa-grid-full homepage-benefits-row">
     {% endif %}
     {% endfor %}
+    {% endif %}
   </div>
 </section>

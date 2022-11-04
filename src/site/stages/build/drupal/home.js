@@ -81,12 +81,12 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       const homePreviewPath = '/homepage-test';
 
       const hero =
-        homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0].entity;
-      const searchLinks = homePageOtherSearchToolsMenuQuery?.links;
-      const popularLinks = homePagePopularOnVaGovMenuQuery?.links;
+        homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
+      const searchLinks = homePageOtherSearchToolsMenuQuery?.links || [];
+      const popularLinks = homePagePopularOnVaGovMenuQuery?.links || [];
       const newsSpotlight =
         homePageNewsSpotlightQuery
-          ?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0].entity;
+          ?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0]?.entity || {};
 
       const homePreviewEntityObj = {
         ...homeEntityObj,
