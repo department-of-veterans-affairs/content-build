@@ -279,6 +279,34 @@ jobs:
         id: export-gql-page-count
         run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
 
+      - name: Set vars for CMS-triggered runs
+        if: ${{ github.event_name == 'repository_dispatch' }}
+        run: |
+          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+          echo "BUILD_TRIGGER=cms" >> $GITHUB_ENV
+
+      - name: Build JSON object for step metrics
+        run: |
+          cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json | \
+          jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
+          jq '.series[].tags[2] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
+          jq '.series[].tags[3] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
+          jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+
+      - name: Get Datadog api key from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Send metrics to Datadog
+        run: |
+          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
+          -d @- < metrics.json
+
       - name: Check broken links
         id: get-broken-link-info
         run: node ./script/github-actions/check-broken-links-blocks.js ${{ env.BUILDTYPE }}
@@ -369,35 +397,6 @@ jobs:
         id: export-build-end-time
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
         working-directory: ${{ github.workspace }}
-
-      - name: Set vars for CMS-triggered runs
-        if: ${{ github.event_name == 'repository_dispatch' }}
-        run: |
-          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=cms" >> $GITHUB_ENV
-
-      - name: Build JSON object for step metrics
-        run: |
-          cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json | \
-          jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
-          jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
-          jq '.series[].tags[2] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
-          jq '.series[].tags[3] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
-          jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
-
-
-      - name: Get Datadog api key from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
-
-      - name: Send metrics to Datadog
-        run: |
-          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
-          -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
-          -d @- < metrics.json
 
 
   archive:
