@@ -32,15 +32,25 @@
             bordered
         {% endif %}
     >
+    {% assign collapsibleHeaderH3 = entity.entityId | filterCollapsibleHeaderLevels %}
+
+    {% if collapsibleHeaderH3 %}
+        {% assign panelHeaderLevel = 'h3' %}
+    {% else %}
+        {% assign panelHeaderLevel = 'h4' %}
+    {% endif %}
+
         {% for accordionItem in entity.fieldVaParagraphs %}
             {% assign item = accordionItem.entity %}
             {% assign id = item.entityId %}
             <va-accordion-item
               id="{{item.fieldTitle | hashReference: 30 }}-{{id}}"
             >
-            <h4 slot="headline">
-                {{ item.fieldTitle | encode }}
-            </h4>
+
+                <{{ panelHeaderLevel }} slot="headline">
+                    {{ item.fieldTitle | encode }} 
+                </{{ panelHeaderLevel }}>
+
                 <div
                     id={{id}}
                     data-template="paragraphs/collapsible_panel__panel"
