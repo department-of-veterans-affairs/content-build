@@ -97,7 +97,6 @@ Disallow: /analytics-opt-out.html
 Disallow: /cgi-bin/
 Disallow: /drupal
 Disallow: /covid19screen
-Disallow: /health-care/health-questionnaires/questionnaires/
 
 # disallow WIP VAMCs
 # make sure to add a trailing slash at the end of the path
