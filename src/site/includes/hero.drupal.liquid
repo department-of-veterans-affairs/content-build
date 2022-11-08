@@ -20,22 +20,28 @@
             Welcome to VA.gov</h1>
           <h2
             class="vads-u-color--white vads-u-margin-top--3 vads-u-font-size--xl small-desktop-screen:vads-u-font-size--2xl">
-            {{ headline }}
+            {% if fieldPromoHeadline %}
+              {{ fieldPromoHeadline }}
+            {% endif %}
           </h2>
 
           <p id="myva-login--hero" class="vads-u-color--white vads-u-padding-right--5">
-            {{ copy }}
+            {% if fieldPromoText %}
+              {{ fieldPromoText }}
+            {% endif %}
           </p>
 
-          <a class="vads-c-action-link--white" href="{{ link }}">{{ linkText }}</a>
+          {% if fieldPromoCta.entity.fieldButtonLabel and fieldPromoCta.entity.fieldButtonLink.url.path %}
+            <a class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
+                {{fieldPromoCta.entity.fieldButtonLabel}}
+            </a>
+          {% endif %}
         </div>
       </div>
       <!-- end first column -->
 
       <!-- start second column for  bplogin card -->
-      <!-- TODO: Move to React component? -->
       <script>
-        // Temporary implementation for prototyping purposes
         function openLoginModal() {
           const params = (new URL(document.location)).searchParams;
           params.set("next", "loginModal")
