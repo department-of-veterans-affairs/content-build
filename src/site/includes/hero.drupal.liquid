@@ -31,11 +31,11 @@
             {% endif %}
           </p>
 
-          <a class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
-            {% if fieldPromoCta.entity.fieldButtonLabel %}
-              {{fieldPromoCta.entity.fieldButtonLabel}}
-            {% endif %}
-          </a>
+          {% if fieldPromoCta.entity.fieldButtonLabel and fieldPromoCta.entity.fieldButtonLink.url.path %}
+            <a class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
+                {{fieldPromoCta.entity.fieldButtonLabel}}
+            </a>
+          {% endif %}
         </div>
       </div>
       <!-- end first column -->
