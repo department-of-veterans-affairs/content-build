@@ -111,22 +111,18 @@ module.exports = function registerFilters() {
 
   liquid.filters.buildTopicList = topics => {
     if (!topics) return null;
-    const topicArray = [];
-
-    // Add unique topics to topic array
-    for (let i = 0; i < topics.length; i++) {
-      const fieldObjects = topics[i].fieldLcCategories;
-      if (fieldObjects[0]) {
-        const { entity } = fieldObjects[0];
-        const index = topicArray.findIndex(
-          object => object.name === entity.name,
-        );
-        if (index === -1) {
-          topicArray.push(entity);
+    return topics.reduce((topicArray, current) => {
+      current.fieldLcCategories.forEach(passedEntity => {
+        if (
+          !topicArray.some(
+            givenEntity => givenEntity.name === passedEntity.entity?.name,
+          )
+        ) {
+          topicArray.push(passedEntity.entity);
         }
-      }
-    }
-    return topicArray;
+      });
+      return topicArray;
+    }, []);
   };
 
   liquid.filters.alphabetizeList = items => {
