@@ -855,17 +855,6 @@
     }
   },
   {
-    "appName": "Health care Questionnaire",
-    "entryName": "questionnaire",
-    "rootUrl": "/health-care/health-questionnaires/questionnaires/answer-questions",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": false,
-      "breadcrumbs_override": []
-    }
-  },
-  {
     "appName": "eFolders",
     "entryName": "my-documents",
     "rootUrl": "/my-documents",
@@ -924,26 +913,6 @@
         {
           "path": "resources/search",
           "name": "Search results"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "Questionnaire List",
-    "entryName": "questionnaire-list",
-    "rootUrl": "/health-care/health-questionnaires/questionnaires",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "health-care/",
-          "name": "Health care"
-        },
-        {
-          "path": "health-care/health-questionnaires/questionnaires",
-          "name": "Your health questionnaires"
         }
       ]
     }
@@ -1247,9 +1216,9 @@
     }
   },
   {
-    "appName": "Request a Supplemental Claim",
+    "appName": "File a Supplemental Claim",
     "entryName": "995-supplemental-claim",
-    "rootUrl": "/decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995",
+    "rootUrl": "/decision-reviews/supplemental-claim/file-supplemental-claim-form-20-0995",
     "productId": "05712241-0f46-4e84-8d3e-70a6cf412a5e",
     "template": {
       "vagovprod": false,
@@ -1265,8 +1234,8 @@
           "path": "decision-reviews/supplemental-claim"
         },
         {
-          "name": "Request a Supplemental Claim",
-          "path": "decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995"
+          "name": "File a Supplemental Claim",
+          "path": "decision-reviews/supplemental-claim/file-supplemental-claim-form-20-0995"
         }
       ]
     }

@@ -8,19 +8,23 @@
       class="vads-u-color--gray-dark vads-u-font-family--serif usa-width-two-thirds vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--5">
       Explore VA benefits and health care
     </h2>
-    {% for hub in hubs %}
-    <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
-      <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}"
-          onclick="recordEvent({ event: 'nav-linkslist' });"><i
-            class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white vads-u-margin-right--1"></i>{{
-          hub.entity.fieldHomePageHubLabel }}</a></h3>
-      <p class="vads-u-margin-top--0 ">{{ hub.entity.fieldTeaserText }}</p>
-    </div>
-    {% comment %} Close this row and open a new one when needed. {% endcomment %}
-    {% if hub.endRow and forloop.last != true %}
-  </div>
-  <div class="usa-grid usa-grid-full homepage-benefits-row">
+    {% if hubs %}
+      {% for hub in hubs %}
+        {% if hub.entity.entityUrl.path and hub.entity.fieldHomePageHubLabel and hub.entity.fieldTeaserText and hub.entity.fieldTitleIcon %}
+        <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
+          <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}"
+              onclick="recordEvent({ event: 'nav-linkslist' });"><i
+                class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white vads-u-margin-right--1"></i>{{
+              hub.entity.fieldHomePageHubLabel }}</a></h3>
+          <p class="vads-u-margin-top--0 ">{{ hub.entity.fieldTeaserText }}</p>
+        </div> 
+        {% endif %}
+        {% comment %} Close this row and open a new one when needed. {% endcomment %}
+        {% if hub.endRow and forloop.last != true %}
+          </div>
+          <div class="usa-grid usa-grid-full homepage-benefits-row">
+        {% endif %}
+      {% endfor %}
     {% endif %}
-    {% endfor %}
   </div>
 </section>

@@ -25,12 +25,16 @@
           </h3>
           <div class="homepage-common-tasks__search-tools">
             <ul class="vads-u-padding-left--0">
-              {% for link in searchLinks %}
-              <li>
-                <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
-                <a href="{{ link.link }}">{{ link.linkText }}</a>
-              </li>
-              {% endfor %}
+              {% if searchLinks %}
+                {% for link in searchLinks %}
+                  {% if link.url.path and link.label %}
+                    <li>
+                      <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
+                      <a href="{{ link.url.path }}">{{ link.label }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -44,11 +48,15 @@
             Popular on VA.gov
           </h2>
           <ul class="homepage-common-tasks__list vads-u-padding-left--0 ">
-            {% for link in popularLinks%}
-            <li>
-              <a href="{{ link.link }}">{{ link.linkText}}</a>
-            </li>
-            {% endfor %}
+            {% if popularLinks %}
+              {% for link in popularLinks%}
+                {% if link.url.path and link.label %}
+                  <li>
+                    <a href="{{ link.url.path }}">{{ link.label }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
           </ul>
         </div>
       </div>

@@ -315,7 +315,7 @@ function build(BUILD_OPTIONS) {
       // Add debug info to HTML files
       await addDebugInfo(files, BUILD_OPTIONS.buildtype);
     }
-
+    smith.writeStepMetricsFile(BUILD_OPTIONS);
     smith.endGarbageCollection();
   }); // smith.build()
 }
