@@ -109,6 +109,26 @@ module.exports = function registerFilters() {
 
   liquid.filters.formatDate = (dt, format) => prettyTimeFormatted(dt, format);
 
+  liquid.filters.buildTopicList = topics => {
+    if (!topics) return null;
+    return topics.reduce((topicArray, current) => {
+      current.fieldLcCategories.forEach(passedEntity => {
+        if (
+          !topicArray.some(
+            givenEntity => givenEntity.name === passedEntity.entity?.name,
+          )
+        ) {
+          topicArray.push(passedEntity.entity);
+        }
+      });
+      return topicArray;
+    }, []);
+  };
+
+  liquid.filters.alphabetizeList = items => {
+    return _.orderBy(items, [item => item?.name?.toLowerCase()], ['asc']);
+  };
+
   liquid.filters.drupalToVaPath = content => {
     let replaced = content;
     if (content) {

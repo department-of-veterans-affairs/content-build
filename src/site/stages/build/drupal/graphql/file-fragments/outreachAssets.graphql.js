@@ -15,6 +15,14 @@ const outreachAssets = `
         fieldListing {
           targetId
         }
+        fieldLcCategories {
+          entity {
+            ... on TaxonomyTermLcCategories {
+              name
+              fieldTopicId
+            }
+          }
+        }
         fieldMedia {
           entity {
             ... on MediaImage {
