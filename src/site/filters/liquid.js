@@ -158,6 +158,23 @@ module.exports = function registerFilters() {
     return replaced;
   };
 
+  liquid.filters.filterCollapsibleHeaderLevels = id => {
+    const targetH3IDs = [
+      '111299',
+      '112708',
+      '112719',
+      '112728',
+      '112732',
+      '113302',
+      '113309',
+      '113323',
+      '113332',
+      '7153',
+      '37238',
+    ];
+    return targetH3IDs.includes(id);
+  };
+
   liquid.filters.dateFromUnix = (dt, format, tz = 'America/New_York') => {
     if (!dt) {
       return null;
