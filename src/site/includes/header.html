@@ -47,7 +47,7 @@
       this global file which will define all web components. Instead, they will manually
       define a subset of web components which are used in their application
     {% endcomment %}
-    {% if !defineWebComponentsLocally %}
+    {% if buildtype == 'vagovprod' or !defineWebComponentsLocally %}
       <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
     {% endif %}
   {% endif %}
