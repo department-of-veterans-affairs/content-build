@@ -76,7 +76,7 @@
     Apps that opt out of the site-wide stylesheet must include a smaller subset of styles
     in their application bundle
   {% endcomment %}
-  {% if !useLocalStylesAndComponents %}
+  {% if buildtype == 'vagovprod' or !useLocalStylesAndComponents %}
     <link rel="stylesheet" data-entry-name="style.css">
   {% endif %}
   <link rel="stylesheet" data-entry-content="content-build.css">
