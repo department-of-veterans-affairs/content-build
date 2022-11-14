@@ -39,7 +39,7 @@
                       {% assign topicList = outreachAssetsDataArray.entities | buildTopicList %}
                       {% assign sortedTopics = topicList | alphabetizeList %}
                       <option value="select">- All topics -</option>    
-                      {% for topic in topicList %}
+                      {% for topic in sortedTopics %}
                         <option value={{topic.fieldTopicId}}>{{ topic.name }}</option>
                       {% endfor %}
                     </select>
@@ -87,9 +87,8 @@
               {% assign even = true %}
               {% for entity in outreachAssetsDataArray.entities %}
               {% if entity.fieldListing.targetId == entityId %}
-
-              <div data-topic="{{entity.fieldBenefits}}"
-                {{entity.fieldBenefits | breakIntoSingles}}
+              {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
+              <div data-topic="{{topicsString}}"
                 data-type="{{entity.fieldFormat}}" data-number={{forloop.index}}
                 class="vads-l-col--12
                 vads-l-row
@@ -107,7 +106,7 @@
                 large-screen:vads-l-col--12
                   {{entity.fieldMedia.entity.entityBundle}}-asset-wrap">
                     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
-                    {% case entity.fieldBenefits %}
+                    {% case entity.fieldLcCategories[0].entity.fieldTopicId %}
                     {% when 'general' %}
                     <img alt="{{entity.title | truncate: 36}}"
                       src="/img/hub-illustrations/records.png" />
