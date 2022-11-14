@@ -106,7 +106,8 @@
                 large-screen:vads-l-col--12
                   {{entity.fieldMedia.entity.entityBundle}}-asset-wrap">
                     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
-                    {% case entity.fieldLcCategories[0].entity.fieldTopicId %}
+                    {% assign firstTopicCategory = entity.fieldLcCategories | first %}
+                    {% case firstTopicCategory.entity.fieldTopicId %}
                     {% when 'general' %}
                     <img alt="{{entity.title | truncate: 36}}"
                       src="/img/hub-illustrations/records.png" />
