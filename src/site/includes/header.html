@@ -43,11 +43,11 @@
   {% if entityId != 11463 or buildtype != "vagovdev") %}
     <link rel="stylesheet" data-entry-name="web-components.css">
     {% comment %}
-      The `defineWebComponentsLocally` registry value allows apps to opt-out of
+      The `useLocalStylesAndComponents` registry value allows apps to opt-out of
       this global file which will define all web components. Instead, they will manually
       define a subset of web components which are used in their application
     {% endcomment %}
-    {% if buildtype == 'vagovprod' or !defineWebComponentsLocally %}
+    {% if buildtype == 'vagovprod' or !useLocalStylesAndComponents%}
       <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
     {% endif %}
   {% endif %}

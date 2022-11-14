@@ -1117,7 +1117,7 @@
       "vagovprod": true,
       "layout": "page-react.html"
     },
-    "defineWebComponentsLocally": true
+    "useLocalStylesAndComponents": true
   },
   {
     "appName": "My Education Benefits",

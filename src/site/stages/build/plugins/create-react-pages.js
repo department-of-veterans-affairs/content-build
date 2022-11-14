@@ -14,7 +14,13 @@ function createReactPages(files, drupalData = { data: {} }, done) {
   const alertItems = { alert: alertsItem };
 
   appRegistry.forEach(
-    ({ entryName, appName, rootUrl, template, defineWebComponentsLocally }) => {
+    ({
+      entryName,
+      appName,
+      rootUrl,
+      template,
+      useLocalStylesAndComponents,
+    }) => {
       const trimmedUrl = path.join('.', rootUrl);
       const filePath = path.join(trimmedUrl, 'index.html');
       if (!files[filePath]) {
@@ -27,7 +33,7 @@ function createReactPages(files, drupalData = { data: {} }, done) {
           title: appName,
           entryname: entryName,
           shouldAddDebugInfo: true,
-          defineWebComponentsLocally: !!defineWebComponentsLocally,
+          useLocalStylesAndComponents: !!useLocalStylesAndComponents,
           debug: null,
           path: trimmedUrl,
           layout: 'page-react.html',
