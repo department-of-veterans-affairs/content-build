@@ -36,12 +36,23 @@
                       for="outreach-topic">Select a topic</label>
                     <select class="vads-u-max-width--100 usa-select"
                       name="outreach-topic" id="outreach-topic">
-                      {% assign topicList = outreachAssetsDataArray.entities | buildTopicList %}
-                      {% assign sortedTopics = topicList | alphabetizeList %}
-                      <option value="select">- All topics -</option>    
-                      {% for topic in topicList %}
-                        <option value={{topic.fieldTopicId}}>{{ topic.name }}</option>
-                      {% endfor %}
+                      <option value="select">- All topics -</option>
+                      <option value="healthcare">Health care</option>
+                      <option value="disability">Disability
+                      </option>
+                      <option value="education">Education and training
+                      </option>
+                      <option value="careers">Careers and employment</option>
+                      <option value="pension">Pension</option>
+                      <option value="housing">Housing assistance</option>
+                      <option value="insurance">Life insurance</option>
+                      <option value="burial">Burials and memorials
+                      </option>
+                      <option value="records">Records</option>
+                      <option value="service">Service member benefits</option>
+                      <option value="family">Family member benefits</option>
+                      <option value="general">General benefits information
+                      </option>
                     </select>
                   </div>
                   <div class="vads-l-col--12
