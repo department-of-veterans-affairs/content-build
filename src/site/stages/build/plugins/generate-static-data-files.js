@@ -1,9 +1,10 @@
 const generateStaticDataFilesFromDrupal = require('../drupal/static-data-files/generate');
 
-function generateStaticDataFiles(buildOptions) {
-  return files => {
-    return generateStaticDataFilesFromDrupal(files, buildOptions);
+const generateStaticDataFiles = buildOptions => {
+  return async (files, metalsmith, done) => {
+    await generateStaticDataFilesFromDrupal(files, buildOptions);
+    done();
   };
-}
+};
 
 module.exports = generateStaticDataFiles;

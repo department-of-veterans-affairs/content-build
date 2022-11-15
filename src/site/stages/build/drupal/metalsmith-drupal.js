@@ -33,15 +33,21 @@ const PULL_DRUPAL_BUILD_ARG = 'pull-drupal';
 // build should use the assets saved in cache instead of downloading new ones.
 const USE_CACHED_ASSETS_BUILD_ARG = 'use-cached-assets';
 
-const getDrupalCachePath = buildOptions => {
-  return path.join(buildOptions.cacheDirectory, DRUPAL_CACHE_FILENAME);
+const getDrupalCachePath = (
+  buildOptions,
+  cacheFilename = DRUPAL_CACHE_FILENAME,
+) => {
+  return path.join(buildOptions.cacheDirectory, cacheFilename);
 };
 
 // We need to pull the Drupal content if we have --pull-drupal, OR if
 // the content is not available in the cache.
-const shouldPullDrupal = buildOptions =>
+const shouldPullDrupal = (
+  buildOptions,
+  cacheFilename = DRUPAL_CACHE_FILENAME,
+) =>
   buildOptions[PULL_DRUPAL_BUILD_ARG] ||
-  !fs.existsSync(getDrupalCachePath(buildOptions));
+  !fs.existsSync(getDrupalCachePath(buildOptions, cacheFilename));
 
 function pipeDrupalPagesIntoMetalsmith(contentData, files) {
   const pages = contentData.data.nodeQuery.entities.filter(
@@ -378,5 +384,6 @@ module.exports = {
   getDrupalContent,
   pipeDrupalPagesIntoMetalsmith,
   shouldPullDrupal,
+  getDrupalCachePath,
   PULL_DRUPAL_BUILD_ARG,
 };
