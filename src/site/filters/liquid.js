@@ -109,6 +109,26 @@ module.exports = function registerFilters() {
 
   liquid.filters.formatDate = (dt, format) => prettyTimeFormatted(dt, format);
 
+  liquid.filters.buildTopicList = topics => {
+    if (!topics) return null;
+    return topics.reduce((topicArray, current) => {
+      current.fieldLcCategories.forEach(passedEntity => {
+        if (
+          !topicArray.some(
+            givenEntity => givenEntity.name === passedEntity.entity?.name,
+          )
+        ) {
+          topicArray.push(passedEntity.entity);
+        }
+      });
+      return topicArray;
+    }, []);
+  };
+
+  liquid.filters.alphabetizeList = items => {
+    return _.orderBy(items, [item => item?.name?.toLowerCase()], ['asc']);
+  };
+
   liquid.filters.drupalToVaPath = content => {
     let replaced = content;
     if (content) {
@@ -136,6 +156,23 @@ module.exports = function registerFilters() {
     }
 
     return replaced;
+  };
+
+  liquid.filters.filterCollapsibleHeaderLevels = id => {
+    const targetH3IDs = [
+      '111299',
+      '112708',
+      '112719',
+      '112728',
+      '112732',
+      '113302',
+      '113309',
+      '113323',
+      '113332',
+      '7153',
+      '37238',
+    ];
+    return targetH3IDs.includes(id);
   };
 
   liquid.filters.dateFromUnix = (dt, format, tz = 'America/New_York') => {

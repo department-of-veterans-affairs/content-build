@@ -1106,7 +1106,8 @@
     "rootUrl": "/health-care/appointment-check-in",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeFeedbackButton": false
     }
   },
   {
