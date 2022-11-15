@@ -73,7 +73,7 @@ function getModifiedLovellPage(page, variant) {
       `/lovell-federal-${LOVELL_VA_LINK_VARIATION}-health-care`,
     )
   ) {
-    page.entityUrl.switchPath = originalPath.replace(
+    page.entityUrl.switchPath = `${page.entityUrl.path}`.replace(
       variant === 'va'
         ? LOVELL_VA_LINK_VARIATION
         : LOVELL_TRICARE_LINK_VARIATION,
@@ -82,7 +82,7 @@ function getModifiedLovellPage(page, variant) {
         : LOVELL_VA_LINK_VARIATION,
     );
   } else {
-    page.entityUrl.switchPath = originalPath.replace(
+    page.entityUrl.switchPath = `${page.entityUrl.path}`.replace(
       '/lovell-federal-health-care',
       `/lovell-federal-${
         variant === 'va'
