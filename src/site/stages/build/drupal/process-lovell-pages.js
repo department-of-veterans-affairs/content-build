@@ -47,7 +47,7 @@ function getModifiedLovellPage(page, variant) {
       : LOVELL_TRICARE_TITLE_VARIATION;
   const linkVar =
     variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
-  const originalPath = page.entityUrl.path;
+  const originalPath = `${page.entityUrl.path}`;
 
   // Add a field for canonical if it has a clone and it's a tricare variant
   if (variant === 'tricare' && isLovellFederalPage(page)) {
@@ -58,7 +58,7 @@ function getModifiedLovellPage(page, variant) {
   }
 
   // Modify the path
-  page.entityUrl.path = originalPath.replace(
+  page.entityUrl.path = `${originalPath}`.replace(
     '/lovell-federal-health-care',
     `/lovell-federal-${linkVar}-health-care`,
   );
