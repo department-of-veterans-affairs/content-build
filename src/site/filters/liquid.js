@@ -125,6 +125,14 @@ module.exports = function registerFilters() {
     }, []);
   };
 
+  liquid.filters.buildTopicsString = topics => {
+    if (!topics) return null;
+    const fieldTopicIdArray = topics.map(topic => {
+      return topic.entity.fieldTopicId;
+    });
+    return fieldTopicIdArray.join(' ');
+  };
+
   liquid.filters.alphabetizeList = items => {
     return _.orderBy(items, [item => item?.name?.toLowerCase()], ['asc']);
   };
