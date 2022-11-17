@@ -134,9 +134,7 @@ jobs:
       - self-hosted
       - linux
       - x64
-    needs:
-      - start-runner
-      - validate-build-status
+    needs: validate-build-status
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -451,9 +449,11 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
-      - start-runner
       - validate-build-status
       - build
       - archive
@@ -524,7 +524,6 @@ jobs:
       - linux
       - x64
     needs:
-      - start-runner
       - validate-build-status
       - deploy
 
