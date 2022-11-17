@@ -17,7 +17,7 @@ env:
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
   DRUPAL_ADDRESS: https://prod.cms.va.gov
-  INSTANCE_TYPE: c5.4xlarge
+  INSTANCE_TYPE: c5d.4xlarge
   MAXIMUM_HEAP: 5000
 
 jobs:
@@ -582,8 +582,8 @@ jobs:
           jq '.tags[1] = "repo:content-build"' | \
           jq '.tags[2] = "workflow:content-release"' | \
           jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
-          jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
-          jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
+          jq '.tags[4] = "status:${{needs.deploy.result}}"' | \
+          jq '.tags[5] = "trigger:${{env.BUILD_TRIGGER}}"' | \
           jq '.alert_type = "error"' > event.json
 
       - name: Send event to Datadog
@@ -647,7 +647,8 @@ jobs:
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
-          jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+          jq '.series[].tags[3] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
+          jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
