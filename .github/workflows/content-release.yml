@@ -88,7 +88,10 @@ jobs:
 
   validate-build-status:
     name: Validate Build Status
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs: start-runner
     outputs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
@@ -127,7 +130,10 @@ jobs:
 
   notify-start:
     name: Notify Start
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
       - start-runner
       - validate-build-status
@@ -513,7 +519,10 @@ jobs:
 
   notify-success:
     name: Notify Success
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
       - start-runner
       - validate-build-status
@@ -542,7 +551,10 @@ jobs:
 
   notify-failure:
     name: Notify Failure
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     if: |
       (failure() && needs.deploy.result != 'success')
     needs:
@@ -595,7 +607,10 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
       - start-runner
       - build
