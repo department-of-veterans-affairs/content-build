@@ -556,10 +556,7 @@ jobs:
       - x64
     if: |
       (failure() && needs.deploy.result != 'success')
-    needs:
-      - start-runner
-      - deploy
-
+    needs: deploy
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
