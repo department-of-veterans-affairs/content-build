@@ -10,7 +10,6 @@ const outreachAssets = `
         status
         changed
         fieldFormat
-        fieldBenefits
         fieldDescription
         fieldListing {
           targetId
