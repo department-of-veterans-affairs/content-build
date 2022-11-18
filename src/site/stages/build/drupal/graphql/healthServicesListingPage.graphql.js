@@ -86,6 +86,7 @@ const healthServicesListingPage = `
                     description {
                       processed
                     }
+                    fieldTricareDescription
                     fieldServiceTypeOfCare
                   }
                 }
@@ -108,6 +109,7 @@ const healthServicesListingPage = `
       entity{
         ... on TaxonomyTermAdministration {
           entityId
+          name
         }
       }
     }
