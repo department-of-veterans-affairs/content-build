@@ -442,10 +442,8 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: ${{ needs.start-runner.outputs.label }}
+
     needs:
       - validate-build-status
       - build
