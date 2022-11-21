@@ -127,7 +127,10 @@ jobs:
 
   notify-start:
     name: Notify Start
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs: validate-build-status
     steps:
       - name: Checkout
@@ -392,6 +395,7 @@ jobs:
         run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
         working-directory: ${{ github.workspace }}
 
+
   archive:
     name: Archive
     runs-on: ${{ needs.start-runner.outputs.label }}
@@ -442,8 +446,10 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ${{ needs.start-runner.outputs.label }}
-
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
       - validate-build-status
       - build
@@ -510,7 +516,10 @@ jobs:
 
   notify-success:
     name: Notify Success
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
       - validate-build-status
       - deploy
@@ -538,7 +547,10 @@ jobs:
 
   notify-failure:
     name: Notify Failure
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     if: |
       (failure() && needs.deploy.result != 'success')
     needs: deploy
@@ -589,7 +601,10 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
     needs:
       - start-runner
       - build
