@@ -88,10 +88,7 @@ jobs:
 
   validate-build-status:
     name: Validate Build Status
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: ${{ needs.start-runner.outputs.label }}
     needs: start-runner
     outputs:
       REF: ${{ steps.get-latest-release.outputs.target_commitish }}
