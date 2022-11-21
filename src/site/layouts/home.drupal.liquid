@@ -65,7 +65,9 @@
     <section id="homepage-popular">
       <div class="usa-grid usa-grid-full">
         <div class="usa-width-one-third">
-          <a href="/find-locations/" onclick="recordEvent({ event: 'nav-main-health' });" class="homepage-button">
+          <a href="/find-locations/"
+            onclick="recordEvent({ event: 'nav-main-health', 'homepage-cta-action': 'Homepage CTA - Find a location' });"
+            class="homepage-button">
             <div class="icon-wrapper">
               <i class="fa fa-map-marker-alt homepage-button-icon"></i>
             </div>
@@ -77,7 +79,8 @@
         </div>
 
         <div class="usa-width-one-third">
-          <button onclick="recordEvent({ event: 'nav-main-vcl' });" class="homepage-button vcl va-overlay-trigger" data-show="#modal-crisisline">
+          <button onclick="recordEvent({ event: 'nav-main-vcl', 'homepage-cta-action': 'Homepage CTA - Crisis Line' });"
+            class="homepage-button vcl va-overlay-trigger" data-show="#modal-crisisline">
             <div class="icon-wrapper vcl"></div>
             <div class="button-inner">
               <span>Talk to a Veterans Crisis Line responder now</span>
@@ -86,7 +89,8 @@
         </div>
 
         <div class="usa-width-one-third" id="myva-login">
-          <button onclick="recordEvent({ event: 'nav-main-sign-in' });" class="homepage-button signin-signup-modal-trigger">
+          <button onclick="recordEvent({ event: 'nav-main-sign-in', 'homepage-cta-action': 'Homepage CTA - Sign In' });"
+            class="homepage-button signin-signup-modal-trigger">
             <div class="icon-wrapper">
               <i class="fas fa-user-circle homepage-button-icon"></i>
             </div>
