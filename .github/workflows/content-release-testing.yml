@@ -24,7 +24,7 @@ env:
   # Not a sensitive secret; used for our testing environments only, with systems
   # with sanitized databases.
   DRUPAL_PASSWORD: drupal8
-  INSTANCE_TYPE: c5.4xlarge
+  INSTANCE_TYPE: c5d.4xlarge
   MAXIMUM_HEAP: 5000
 
 
@@ -268,7 +268,7 @@ jobs:
       #     method: GET
 
       - name: Build
-        run: ${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose --omitdebug | tee build-output.txt
+        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose --omitdebug | tee build-output.txt
         timeout-minutes: 120
         env:
           NODE_ENV: production
@@ -394,10 +394,9 @@ jobs:
           cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
-          jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
-          jq '.series[].tags[3] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
-          jq '.series[].tags[4] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
-          jq '.series[].tags[5] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+          jq '.series[].tags[2] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
+          jq '.series[].tags[3] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
+          jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Get Datadog api key from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
