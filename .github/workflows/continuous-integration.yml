@@ -367,7 +367,7 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
-      
+
       # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
