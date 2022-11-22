@@ -16,7 +16,9 @@
                         <span class="vads-u-font-style--italic">Common conditions: </span>{{ serviceTaxonomy.fieldCommonlyTreatedCondition }}
                     </div>
                 {% endif %}
-                {% if serviceTaxonomy.description.processed  %}
+                {% if section.name == "Lovell - TRICARE" and serviceTaxonomy.fieldTricareDescription %}
+                    <description>{{ serviceTaxonomy.fieldTricareDescription | phoneLinks }}</description>
+                {% elsif serviceTaxonomy.description.processed  %}
                     <description>{{ serviceTaxonomy.description.processed | phoneLinks }}</description>
                 {% endif %}
 

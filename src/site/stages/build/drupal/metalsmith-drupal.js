@@ -22,6 +22,8 @@ const createReactPages = require('../plugins/create-react-pages');
 const { addHubIconField } = require('./benefit-hub');
 const { addHomeContent } = require('./home');
 
+const { processLovellPages } = require('./process-lovell-pages');
+
 const DRUPAL_CACHE_FILENAME = 'drupal/pages.json';
 const DRUPAL_HUB_NAV_FILENAME = 'hubNavNames.json';
 
@@ -350,6 +352,10 @@ function getDrupalContent(buildOptions) {
       drupalData = convertDrupalFilesToLocal(drupalData, files);
 
       await loadCachedDrupalFiles(buildOptions, files);
+
+      // Lovell specific data bifurcation
+      processLovellPages(drupalData);
+
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);

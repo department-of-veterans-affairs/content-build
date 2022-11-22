@@ -1,4 +1,8 @@
 <article aria-labelledby="article-heading" role="region" class="usa-content" data-template="health_care_region_detail_content.drupal.liquid">
+  {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+    entityUrl = entityUrl
+  %}
+
   <h1 id="article-heading">{{ title }}</h1>
   <div class="va-introtext">
     <p>{{ fieldIntroText }}</p>

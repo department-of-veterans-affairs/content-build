@@ -28,6 +28,13 @@ const nodeEventListing = `
         }
       }
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 

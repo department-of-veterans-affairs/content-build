@@ -68,7 +68,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
     const pagedEntities = _.chunk(page[pageField].entities, perPage);
 
     for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-      let pagedPage = Object.assign({}, page);
+      let pagedPage = { ...page };
 
       if (pageNum > 0) {
         pagedPage = set(
@@ -141,7 +141,7 @@ function updateEntityUrlObj(page, drupalPagePath, title, pathSuffix) {
       .replace(/\s+/g, '-')
       .toLowerCase();
 
-  let generatedPage = Object.assign({}, page);
+  let generatedPage = { ...page };
   const absolutePath = path.join('/', drupalPagePath, pathSuffix);
 
   generatedPage.entityUrl.breadcrumb = [
@@ -241,33 +241,32 @@ function getFacilitySidebar(page, contentData) {
 
     if (facilitySidebarNavName) {
       return contentData.data[facilitySidebarNavName];
-    } else {
-      const errorMessage = `Failed to find a facility sidebar with a name that matches the VAMC office label "${facilityNavName}".`;
-
-      console.log(chalk.red(errorMessage));
-
-      console.log(
-        chalk.red(
-          'The VAMC office label should match one of the following menu names as returned by the CMS -',
-        ),
-      );
-
-      const sidebarNames = Object.values(contentData.data)
-        .filter(queryData => queryData?.name)
-        .map(queryData => `- ${queryData.name}`);
-
-      console.log(chalk.red(sidebarNames.join('\n')));
-
-      const stringifiedPage = JSON.stringify(page, null, 2);
-
-      console.log(
-        chalk.red(
-          `Here is the entity evaluated when this error was triggered: \n${stringifiedPage}`,
-        ),
-      );
-
-      throw new Error(errorMessage);
     }
+    const errorMessage = `Failed to find a facility sidebar with a name that matches the VAMC office label "${facilityNavName}".`;
+
+    console.log(chalk.red(errorMessage));
+
+    console.log(
+      chalk.red(
+        'The VAMC office label should match one of the following menu names as returned by the CMS -',
+      ),
+    );
+
+    const sidebarNames = Object.values(contentData.data)
+      .filter(queryData => queryData?.name)
+      .map(queryData => `- ${queryData.name}`);
+
+    console.log(chalk.red(sidebarNames.join('\n')));
+
+    const stringifiedPage = JSON.stringify(page, null, 2);
+
+    console.log(
+      chalk.red(
+        `Here is the entity evaluated when this error was triggered: \n${stringifiedPage}`,
+      ),
+    );
+
+    throw new Error(errorMessage);
   }
 
   // return the default and most important of the menu structure
@@ -376,17 +375,16 @@ function compilePage(page, contentData) {
     case 'vamc_system_register_for_care':
     case 'vamc_system_billing_insurance':
     case 'vamc_system_medical_records_offi':
-      pageCompiled = Object.assign(
-        {},
-        page,
-        facilitySidebarNavItems,
-        outreachSidebarNavItems,
-        alertItems,
-        { bannerAlert: bannerAlertsItem },
-        { banners },
-        { promoBanners },
-        pageId,
-      );
+      pageCompiled = {
+        ...page,
+        ...facilitySidebarNavItems,
+        ...outreachSidebarNavItems,
+        ...alertItems,
+        bannerAlert: bannerAlertsItem,
+        banners,
+        promoBanners,
+        ...pageId,
+      };
       break;
     case 'health_care_local_facility':
     case 'vamc_operating_status_and_alerts':
@@ -425,16 +423,15 @@ function compilePage(page, contentData) {
         ...page,
         fieldFacilityOperatingStatus,
       };
-      pageCompiled = Object.assign(
-        {},
-        page,
-        facilitySidebarNavItems,
-        alertItems,
-        { bannerAlert: bannerAlertsItem },
-        { banners },
-        { promoBanners },
-        pageId,
-      );
+      pageCompiled = {
+        ...page,
+        ...facilitySidebarNavItems,
+        ...alertItems,
+        bannerAlert: bannerAlertsItem,
+        banners,
+        promoBanners,
+        ...pageId,
+      };
       break;
     case 'health_care_region_page':
     case 'press_release':
@@ -493,17 +490,16 @@ function compilePage(page, contentData) {
       sidebarNavItems = getHubSidebar(sideNavs, owner);
 
       // Build page with correct sidebar
-      pageCompiled = Object.assign(
-        {},
-        page,
-        sidebarNavItems,
-        outreachSidebarNavItems,
-        alertItems,
-        { bannerAlert: bannerAlertsItem },
-        { banners },
-        { promoBanners },
-        pageId,
-      );
+      pageCompiled = {
+        ...page,
+        ...sidebarNavItems,
+        ...outreachSidebarNavItems,
+        ...alertItems,
+        bannerAlert: bannerAlertsItem,
+        banners,
+        promoBanners,
+        ...pageId,
+      };
       break;
   }
 
