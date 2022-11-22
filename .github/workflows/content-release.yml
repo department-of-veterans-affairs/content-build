@@ -17,7 +17,7 @@ env:
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
   DRUPAL_ADDRESS: https://prod.cms.va.gov
-  INSTANCE_TYPE: c5d.4xlarge
+  INSTANCE_TYPE: c5.4xlarge
   MAXIMUM_HEAP: 5000
 
 jobs:
