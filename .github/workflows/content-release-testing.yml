@@ -357,16 +357,27 @@ jobs:
       options: -u 1001:1001 -v /usr/local/share:/share
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
+      NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            /github/home/.cache/Cypress
+            node_modules
+
       # Required for Docker
-      - name: Move VA cert to /etc/ssl/certs
-        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
+      # - name: Move VA cert to /etc/ssl/certs
+      #   run: mv certs/VA-Internal-S2-RCA1-v1.pem /share/ca-certificates/
 
       - name: Download production build
         run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
@@ -381,12 +392,11 @@ jobs:
         timeout-minutes: 30
         with:
           key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: on-demand-runner-cypress-
           yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             /github/home/.cache/Cypress
-            **/node_modules
+            node_modules
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
