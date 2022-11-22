@@ -1,18 +1,33 @@
 name: ZZ Content Release Workflow testing
 
 on:
+  workflow_dispatch:
   pull_request:
 
-env:
-  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-  DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
-  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
-  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
-  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
+  # repository_dispatch:
+  #   types: [content-release]
+
+
 
 concurrency:
-  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  group: content-release-node-limit
+
+env:
+  CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
+  VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
+  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
+  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
+  NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+  BUILDTYPE: vagovstaging
+  DEPLOY_BUCKET: staging.content.www.va.gov
+  DRUPAL_ADDRESS: https://main-rufdsbo6qfzad8ds1x1anvitvwgjirbu.demo.cms.va.gov
+  # Not a sensitive secret; used for our testing environments only, with systems
+  # with sanitized databases.
+  DRUPAL_PASSWORD: drupal8
+  INSTANCE_TYPE: c5d.4xlarge
+  MAXIMUM_HEAP: 5000
+
+
 
 jobs:
   build:
@@ -222,20 +237,20 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - name: Upload broken links file
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
+      # - name: Upload broken links file
+      #   if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+      #   run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      - name: Notify Slack about broken links
-        uses: slackapi/slack-github-action@v1.18.0
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
+      # - name: Notify Slack about broken links
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #     SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+      #   with:
+      #     payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+      #     channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
   unit-tests:
     name: Unit Tests
@@ -346,13 +361,12 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, asg]
     needs: build
     timeout-minutes: 30
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
       options: -u 1001:1001 -v /usr/local/share:/share
-
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
@@ -422,17 +436,17 @@ jobs:
           path: cypress/results
           retention-days: 1
 
-      - name: Notify Slack about Cypress test failures
-        if: ${{ github.ref == 'refs/heads/main' && failure() }}
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-        with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `main` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
-          channel_id: C026PD47Z19
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # - name: Notify Slack about Cypress test failures
+      #   if: ${{ github.ref == 'refs/heads/main' && failure() }}
+      #   uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `main` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel_id: C026PD47Z19
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   testing-reports:
     name: Testing Reports
@@ -666,54 +680,54 @@ jobs:
           password: ${{ env.CALLBACK_TOKEN }}
           timeout: 10000
 
-  jenkins:
-    name: Run Jenkins CI
-    runs-on: ubuntu-latest
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
+  # jenkins:
+  #   name: Run Jenkins CI
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-gov-west-1
 
-      - name: Get Jenkins token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/JENKINS_API_TOKEN
-          env_variable_name: JENKINS_API_TOKEN
+  #     - name: Get Jenkins token from Parameter Store
+  #       uses: marvinpinto/action-inject-ssm-secrets@latest
+  #       with:
+  #         ssm_parameter: /frontend-team/github-actions/parameters/JENKINS_API_TOKEN
+  #         env_variable_name: JENKINS_API_TOKEN
 
-      - name: Checkout
-        uses: actions/checkout@v3
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Install dependencies
-        uses: ./.github/workflows/install
-        timeout-minutes: 30
-        with:
-          key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: ~/.cache/yarn
-          path: |
-            ~/.cache/yarn
-            node_modules
+  #     - name: Install dependencies
+  #       uses: ./.github/workflows/install
+  #       timeout-minutes: 30
+  #       with:
+  #         key: ${{ hashFiles('yarn.lock') }}
+  #         yarn_cache_folder: ~/.cache/yarn
+  #         path: |
+  #           ~/.cache/yarn
+  #           node_modules
 
-      - name: Trigger Jenkins pipeline
-        run: node script/github-actions/trigger-jenkins.js
+  #     - name: Trigger Jenkins pipeline
+  #       run: node script/github-actions/trigger-jenkins.js
 
-  notify-failure:
-    name: Notify Failure
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
-    needs: deploy
+  # notify-failure:
+  #   name: Notify Failure
+  #   runs-on: ubuntu-latest
+  #   if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
+  #   needs: deploy
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #     - name: Notify Slack
+  #       uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+  #       continue-on-error: true
+  #       with:
+  #         payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+  #         channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
