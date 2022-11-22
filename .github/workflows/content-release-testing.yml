@@ -349,12 +349,13 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, asg]
     needs: build
     timeout-minutes: 30
     container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
+      image: public.ecr.aws/cypress-io/cypress/browsers:node16.14.2-slim-chrome103-ff102
       options: -u 1001:1001 -v /usr/local/share:/share
+
 
     env:
       NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
