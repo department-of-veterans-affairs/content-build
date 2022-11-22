@@ -7,181 +7,49 @@ on:
   # repository_dispatch:
   #   types: [content-release]
 
-
-
 concurrency:
   group: content-release-node-limit
 
 env:
-  CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
-  VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
-  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
+  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  DEVOPS_CHANNEL_ID: C37M86Y8G #devops-deploys
+  PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
-  NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
-  BUILDTYPE: vagovstaging
-  DEPLOY_BUCKET: staging.content.www.va.gov
-  DRUPAL_ADDRESS: https://main-rufdsbo6qfzad8ds1x1anvitvwgjirbu.demo.cms.va.gov
-  # Not a sensitive secret; used for our testing environments only, with systems
-  # with sanitized databases.
-  DRUPAL_PASSWORD: drupal8
-  INSTANCE_TYPE: c5d.4xlarge
-  MAXIMUM_HEAP: 5000
-
-
+  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
 
 jobs:
-  start-runner:
-    runs-on:
-      - self-hosted
-    outputs:
-      label: ${{ steps.start-ec2-runner.outputs.label }}
-      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
-      APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
-    timeout-minutes: 15
-
-    steps:
-      - name: Export approximate workflow start time
-        id: export-approx-workflow-start-time
-        run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Get latest GHA Runner AMI ID
-        run: |
-          echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
-          --owners 008577686731 \
-          --filters "Name=state,Values=available" "Name=name,Values=platform-gha-runner-ubuntu*" \
-          --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
-          --output text)" >> $GITHUB_ENV
-
-      - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
-        run: |
-          echo "SUBNET_ID=$(aws ec2 describe-subnets \
-          --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
-          --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
-          --output text)" >> $GITHUB_ENV
-
-      - name: Start EC2 Runner
-        id: start-ec2-runner
-        uses: department-of-veterans-affairs/ec2-github-runner@main
-        with:
-          mode: start
-          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          ec2-image-id: ${{ env.RUNNER_AMI_ID }}
-          ec2-instance-type: ${{ env.INSTANCE_TYPE }}
-          subnet-id: ${{ env.SUBNET_ID }}
-          security-group-id: sg-0e23b56be3798e3a1
-          max_attempts: 3
-          aws-resource-tags: >
-            [
-              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
-              {"Key": "project", "Value": "vagov"},
-              {"Key": "office", "Value": "dsva"},
-              {"Key": "application", "Value": "gha-runner"},
-              {"Key": "VAECID", "Value": "AWG20180517003"},
-              {"Key": "environment", "Value": "utility"}
-            ]
-
-  validate-build-status:
-    name: Validate Build Status
-    runs-on:
-      - self-hosted
-    needs: start-runner
-    outputs:
-      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
-      TAG: ${{ steps.get-latest-release.outputs.tag_name }}
-    timeout-minutes: 15
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          path: content-release/content-build
-
-      # - name: Notify CMS - Starting
-      #   uses: ./.github/workflows/authenticated-cms-request
-      #   with:
-      #     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
-      #     method: GET
-
-      - name: Install dependencies
-        uses: ./.github/workflows/install
-        with:
-          key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: ~/.cache/yarn
-          path: |
-            ~/.cache/yarn
-            node_modules
-
-      # - name: Get latest release
-      #   id: get-latest-release
-      #   uses: gregziegan/fetch-latest-release@v2.0.0
-
-      # - name: Validate build status
-      #   run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # notify-start:
-  #   name: Notify Start
-  #   runs-on:
-  #     - self-hosted
-  #     - linux
-  #     - x64
-  #   needs: validate-build-status
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     - name: Notify Slack
-  #       uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
-  #       continue-on-error: true
-  #       with:
-  #         payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-  #         channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
   build:
     name: Build
-    runs-on: ${{ needs.start-runner.outputs.label }}
-    needs:
-      - start-runner
-      - validate-build-status
-    timeout-minutes: 120
+    runs-on: self-hosted
+    timeout-minutes: 60
+
     defaults:
       run:
         working-directory: content-build
+
     outputs:
-      vagovprod_buildtime: ${{ env.vagovprod_buildtime }}
-      BUILD_START_TIME: ${{ steps.export-build-start-time.outputs.BUILD_START_TIME }}
-      BUILD_END_TIME: ${{ steps.export-build-end-time.outputs.BUILD_END_TIME }}
-      CONTENT_BUILD_START_TIME: ${{ steps.export-content-build-start-time.outputs.CONTENT_BUILD_START_TIME }}
-      CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end.outputs.CONTENT_BUILD_END_TIME }}
-      GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
-      GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
+      vagovdev_buildtime: ${{ env.vagovdev_buildtime }}
+      vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
+
     env:
-      CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+      # Sandbox Drupal address, username, and password is used on branches other than main.
+      DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+      DRUPAL_PASSWORD: drupal8
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      fail-fast: true
+      matrix:
+        buildtype: [vagovdev, vagovstaging, vagovprod]
+        include:
+          - buildtype: vagovdev
+            drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+          - buildtype: vagovstaging
+            drupal-address: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+          - buildtype: vagovprod
+            drupal-address: https://prod.cms.va.gov
 
     steps:
-      - name: Export build start time
-        id: export-build-start-time
-        run: echo ::set-output name=BUILD_START_TIME::$(date +"%s")
-        working-directory: ${{ github.workspace }}
-
       - name: Checkout vagov-content
         uses: actions/checkout@v3
         with:
@@ -192,7 +60,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: content-build
-          ref: ${{ needs.validate-build-status.outputs.REF }}
 
       - name: Get Node version
         id: get-node-version
@@ -225,92 +92,120 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
-      - name: Wait for the CMS to be ready
-        uses: ./content-build/.github/workflows/wait-for-cms-ready
+      - name: Configure AWS Credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
 
-      - name: Export content build start time
-        id: export-content-build-start-time
-        run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
-        working-directory: ${{ github.workspace }}
+      - name: Set Drupal address
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+
+      - name: Set Drupal prod password
+        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/main' }}
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: Set Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
 
       - name: Get buildtime
         id: buildtime
         run: |
           BUILDTIME=$(date +%s)
           echo ::set-output name=buildtime::$BUILDTIME
-          echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+          echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+      - name: Wait for the CMS to be ready
+        uses: ./content-build/.github/workflows/wait-for-cms-ready
+        with:
+          base_url: ${{ matrix.drupal-address }}
+
+      - name: Build
+        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        env:
+          NODE_ENV: production
+
+      - name: Check broken links
+        id: get-broken-link-info
+        if: ${{ matrix.buildtype == 'vagovprod' }}
+        run: node ./script/github-actions/check-broken-links-blocks.js ${{ matrix.buildtype }}
+
+      - name: Generate build details
+        run: |
+          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
+          BUILDTYPE=${{ matrix.buildtype }}
+          NODE_ENV=production
+          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          CHANGE_TARGET=null
+          RUN_ID=${{ github.run_id }}
+          RUN_NUMBER=${{ github.run_number }}
+          REF=${{ github.sha }}
+          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
+          EOF
+
+      - name: Prearchive
+        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+
+      - name: Compress build
+        run: tar -C build/${{ matrix.buildtype }} -cvf ${{ matrix.buildtype }}.tar.bz2 .
+
+      - name: Cache Drupal content
+        if: github.ref == 'refs/heads/main'
+        run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
+
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
 
-      # - name: set Drupal prod password
-      #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-      #   with:
-      #     ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
-      #     env_variable_name: DRUPAL_PASSWORD
+      - name: Upload build
+        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1
 
-      - name: set Drupal prod username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
-          env_variable_name: DRUPAL_USERNAME
+      - name: Upload Drupal cache
+        if: github.ref == 'refs/heads/main'
+        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
 
-      # - name: Notify CMS - In Progress
-      #   uses: ./content-build/.github/workflows/authenticated-cms-request
-      #   with:
-      #     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/inprogress
-      #     method: GET
-
-      - name: Build
-        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose --omitdebug | tee build-output.txt
-        timeout-minutes: 120
-        env:
-          NODE_ENV: production
-
-      - name: Export content build end time
-        id: export-content-build-end
-        run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
-        working-directory: ${{ github.workspace }}
-
-      - name: Export gql query duration
-        id: export-gql-query-duration
-        run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
-
-      - name: Export gql page count
-        id: export-gql-page-count
-        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
-
-      - name: Check broken links
-        id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links-blocks.js ${{ env.BUILDTYPE }}
-
+      # Only will get called if error in workflow
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
-      # - name: Get Slack app token
-      #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-      #   if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-      #   with:
-      #     ssm_parameter: /devops/github_actions_slack_socket_token
-      #     env_variable_name: SLACK_APP_TOKEN
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
 
-      # - name: Get Slack bot token
-      #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-      #   if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-      #   with:
-      #     ssm_parameter: /devops/github_actions_slack_bot_user_token
-      #     env_variable_name: SLACK_BOT_TOKEN
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get role from Parameter Store
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
@@ -320,7 +215,7 @@ jobs:
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -332,11 +227,10 @@ jobs:
 
       # - name: Upload broken links file
       #   if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-      #   run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
+      #   run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
 
-      # - name: Notify content broken links channel about broken links
-      #   uses: slackapi/slack-github-action@v1.16.0
-      #   id: notify-content-broken-links
+      # - name: Notify Slack about broken links
+      #   uses: slackapi/slack-github-action@v1.18.0
       #   if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
       #   continue-on-error: true
       #   env:
@@ -346,204 +240,472 @@ jobs:
       #     payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
       #     channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
-      - name: Generate build details
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Create test results folder
+        run: mkdir -p test-results
+
+      - name: Run unit tests
+        run: yarn test:unit --coverage
+        env:
+          MOCHA_FILE: test-results/unit-tests.xml
+
+      - name: Generate coverage report by app
+        run: node script/app-coverage-report.js > test-results/coverage_report.txt
+
+      - name: Get code coverage
+        if: ${{ always() }}
+        id: code-coverage
+        run: echo ::set-output name=MARKDOWN::$(node ./script/github-actions/code-coverage-format-report.js)
+
+      - name: Publish test results
+        if: ${{ always() }}
+        continue-on-error: true
+        uses: mikepenz/action-junit-report@v2.8.4
+        with:
+          check_name: 'Unit Tests Summary'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: 'test-results/unit-tests.xml'
+          summary: ${{ steps.code-coverage.outputs.MARKDOWN }}
+          fail_on_failure: 'true'
+
+  linting:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Update browserslist
+        run: npx browserslist@latest --update-db
+
+      - name: Annotate ESLint results
+        run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Audit dependencies
+        run: yarn security-check
+
+  drupal-cache-test:
+    name: Drupal Cache Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Fetch Drupal cache
+        run: yarn fetch-drupal-cache
+
+  cypress-tests:
+    name: Cypress E2E Tests
+    runs-on: [self-hosted]
+    needs: build
+    timeout-minutes: 30
+    container:
+      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
+      options: -u 1001:1001 -v /usr/local/share:/share
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.pem
+      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
+
+    steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v3
+
+      # Required for Docker
+      - name: Move VA cert to /etc/ssl/certs
+        run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
+
+      - name: Download production build
+        run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
+
+      - name: Unpack build
         run: |
-          cat > build/${{ env.BUILDTYPE }}/BUILD.txt << EOF
-          BUILDTYPE=${{ env.BUILDTYPE }}
-          NODE_ENV=production
-          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
-          CHANGE_TARGET=null
-          RUN_ID=${{ github.run_id }}
-          RUN_NUMBER=${{ github.run_number }}
-          REF=${{ needs.validate-build-status.outputs.REF }}
-          TAG=${{ needs.validate-build-status.outputs.TAG }}
-          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
-          EOF
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xf vagovprod.tar.bz2
 
-      - name: Prearchive
-        run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: on-demand-runner-cypress-
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            /github/home/.cache/Cypress
+            **/node_modules
 
-      - name: Compress build
-        run: tar -C build/${{ env.BUILDTYPE }} -cf ${{ env.BUILDTYPE }}.tar.bz2 .
+      - name: Start server
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
-      - name: Persist prearchived build
-        run: |
-          mkdir -p /tmp/${{ github.run_id }}
-          rm -rf /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}
-          mv ${{ env.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
+      - name: Run Cypress tests
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
 
-      - name: Export build end time
-        id: export-build-end-time
-        run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
-        working-directory: ${{ github.workspace }}
+      - name: Publish test results
+        if: ${{ always() }}
+        uses: mikepenz/action-junit-report@v2.8.4
+        with:
+          check_name: 'Cypress Tests Summary'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: 'test-results/e2e-test-output-*.xml'
 
-      - name: Set vars for scheduled runs
-        if: ${{ github.event_name == 'schedule' }}
-        run: |
-          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
+      - name: Archive Cypress test videos
+        uses: actions/upload-artifact@v3
+        if: ${{ failure() }}
+        with:
+          name: cypress-video-artifacts
+          path: cypress/videos
 
-      - name: Set vars for manual runs
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-          echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
+      - name: Archive Cypress test screenshots
+        uses: actions/upload-artifact@v3
+        if: ${{ failure() }}
+        with:
+          name: cypress-screenshot-artifacts
+          path: cypress/screenshots
 
-      - name: Build JSON object
-        run: |
-          cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json | \
-          jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
-          jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
-          jq '.series[].tags[2] = "instance_type:${{env.INSTANCE_TYPE}}"' | \
-          jq '.series[].tags[3] = "heap_size:${{env.MAXIMUM_HEAP}}"' | \
-          jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: cypress-mochawesome-test-results
+          path: cypress/results
+          retention-days: 1
 
-      - name: Get Datadog api key from Parameter Store
+      # - name: Notify Slack about Cypress test failures
+      #   if: ${{ github.ref == 'refs/heads/main' && failure() }}
+      #   uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+      #   continue-on-error: true
+      #   env:
+      #     SSL_CERT_DIR: /etc/ssl/certs
+      #   with:
+      #     payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `main` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+      #     channel_id: C026PD47Z19
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  testing-reports:
+    name: Testing Reports
+    runs-on: ubuntu-latest
+    needs: [cypress-tests]
+    if: ${{ needs.cypress-tests.result == 'failure' || needs.cypress-tests.result == 'success' }}
+    continue-on-error: true
+    timeout-minutes: 30
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get va-vsp-bot token
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Get Datadog app key from Parameter Store
+      # ------------------------
+      # | Upload BigQuery Data |
+      # ------------------------
+
+      - name: Checkout Testing Tools Team Dashboard Data repo
+        uses: actions/checkout@v3
+        with:
+          repository: department-of-veterans-affairs/testing-tools-team-dashboard-data
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          path: testing-tools-team-dashboard-data
+
+      # TODO: Set .nvmrc in testing-tools-team-dashboard-data.
+      # - name: Get Node version
+      #   id: get-node-version
+      #   run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      #   working-directory: testing-tools-team-dashboard-data
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14 # ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      # TODO: Potentially use install composite
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline --production=false
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+        working-directory: testing-tools-team-dashboard-data
+
+      - name: Download Mochawesome test results
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-mochawesome-test-results
+          path: testing-tools-team-dashboard-data/src/testing-reports/data
+
+      - name: Get BigQuery service credentials
         uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
+          ssm_parameter: /dsva-vagov/testing-team/bigquery_service_credentials
+          env_variable_name: BIGQUERY_SERVICE_CREDENTIALS
 
-      - name: Send metrics to Datadog
-        run: |
-          curl -X POST "https://api.ddog-gov.com/api/v1/series" \
-          -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
-          -d @- < metrics.json
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: vsp-analytics-and-insights
+          service_account_key: ${{ env.BIGQUERY_SERVICE_CREDENTIALS }}
+          export_default_credentials: true
 
-  # archive:
-  #   name: Archive
-  #   runs-on: ${{ needs.start-runner.outputs.label }}
-  #   needs:
-  #     - start-runner
-  #     - validate-build-status
-  #     - build
-  #   outputs:
-  #     ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
-  #   timeout-minutes: 15
+      - name: Set UUID for Mochawesome report
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_ENV
 
+      - name: Create report and post results to BigQuery
+        run: yarn cypress-mochawesome-to-bigquery
+        working-directory: testing-tools-team-dashboard-data
+        env:
+          IS_MASTER_BUILD: ${{ needs.cypress-tests-prep.outputs.is_master_build }}
+          NUM_CONTAINERS: ${{ needs.cypress-tests-prep.outputs.num_containers }}
+          TEST_EXECUTIONS_TABLE_NAME: content_build_cypress_test_suite_executions
+          TEST_RESULTS_TABLE_NAME: content_build_cypress_test_results
+          TEST_REPORTS_FOLDER_NAME: content-build-cypress-reports
+
+      # env.MOCHAWESOME_REPORT_RESULTS is set and exported during the above step when the mochawesome report is generated.  It contains the output string for the publish step at the end of the job with the numbers from the Mochawesome report.
+
+      # --------------------------
+      # | Publish Testing Report |
+      # --------------------------
+
+      - name: Download video artifacts
+        if: ${{ needs.cypress-tests.result == 'failure' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-video-artifacts
+          path: testing-tools-team-dashboard-data/testing-reports/videos/${{ env.UUID }}
+
+      - name: Get AWS IAM role
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Upload test videos to s3
+        if: ${{ needs.cypress-tests.result == 'failure' }}
+        run: aws s3 cp testing-tools-team-dashboard-data/cypress-reports/videos/${{ env.UUID }} s3://testing-tools-testing-reports/content-build-cypress-reports/videos/${{ env.UUID }} --acl public-read --region us-gov-west-1 --recursive
+
+      - name: Upload test report to s3
+        run: aws s3 cp testing-tools-team-dashboard-data/mochawesome-report s3://testing-tools-testing-reports/content-build-cypress-reports --acl public-read --region us-gov-west-1 --recursive
+
+      # -------------------------
+      # | Cypress Tests Summary |
+      # -------------------------
+
+      - name: Publish Cypress test results
+        if: ${{ always() }}
+        uses: LouisBrunner/checks-action@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Cypress Tests Summary
+          conclusion: ${{ needs.cypress-tests.result }}
+          output: |
+            {"summary":${{ env.MOCHAWESOME_REPORT_RESULTS }}}
+
+  get-latest-run-number:
+    name: Get Latest Workflow Run Number
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.cypress-tests.result == 'success' }}
+    needs: cypress-tests
+    outputs:
+      latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Set output of latest_run_number
+        id: latest-run-number
+        run: echo ::set-output name=latest_run_number::$(node ./script/github-actions/get-latest-run-number.js)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Deploy
+    runs-on: self-hosted
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
+    needs: [build, cypress-tests, get-latest-run-number]
+
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+
+    strategy:
+      matrix:
+        include:
+          - environment: vagovdev
+            bucket: content.dev.va.gov
+          - environment: vagovstaging
+            bucket: content.staging.va.gov
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials (1)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get role from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+
+      - name: Get Drupal token from Parameter Store
+        if: ${{ matrix.environment == 'vagovstaging' }}
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
+          env_variable_name: CALLBACK_TOKEN
+
+      - name: Configure AWS Credentials (2)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+          role-duration-seconds: 900
+          role-session-name: vsp-frontendteam-githubaction
+
+      - name: Deploy
+        run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
+        env:
+          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
+          DEST: s3://${{ matrix.bucket }}
+
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
+        with:
+          base_url: https://staging.cms.va.gov
+
+      - name: CMS GovDelivery callback
+        if: ${{ matrix.environment == 'vagovstaging' }}
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          method: GET
+          username: api
+          password: ${{ env.CALLBACK_TOKEN }}
+          timeout: 10000
+
+  # jenkins:
+  #   name: Run Jenkins CI
+  #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Restore ${{ env.BUILDTYPE }} build
-  #       run: |
-  #         mv /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}.tar.bz2 .
-  #         df -h
-  #         du -h ${{ env.BUILDTYPE }}.tar.bz2
-
-  #     - name: Configure AWS credentials (1)
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
   #       with:
   #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   #         aws-region: us-gov-west-1
 
-  #     - name: Get role from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+  #     - name: Get Jenkins token from Parameter Store
+  #       uses: marvinpinto/action-inject-ssm-secrets@latest
   #       with:
-  #         ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-  #         env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+  #         ssm_parameter: /frontend-team/github-actions/parameters/JENKINS_API_TOKEN
+  #         env_variable_name: JENKINS_API_TOKEN
 
-  #     - name: Configure AWS Credentials (2)
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
-  #         role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-  #         role-duration-seconds: 900
-  #         role-session-name: vsp-frontendteam-githubaction
-
-  #     - name: Upload build
-  #       run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
-
-  #     - name: Export archive end time
-  #       id: export-archive-end-time
-  #       run: echo ::set-output name=ARCHIVE_END_TIME::$(date +"%s")
-
-  # deploy:
-  #   name: Deploy
-  #   runs-on:
-  #     - self-hosted
-  #     - linux
-  #     - x64
-  #   needs:
-  #     - validate-build-status
-  #     - build
-  #     - archive
-  #   outputs:
-  #     DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
-  #   timeout-minutes: 15
-
-  #   steps:
   #     - name: Checkout
   #       uses: actions/checkout@v3
 
-  #     - name: Configure AWS credentials (1)
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
+  #     - name: Install dependencies
+  #       uses: ./.github/workflows/install
+  #       timeout-minutes: 30
   #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
+  #         key: ${{ hashFiles('yarn.lock') }}
+  #         yarn_cache_folder: ~/.cache/yarn
+  #         path: |
+  #           ~/.cache/yarn
+  #           node_modules
 
-  #     - name: Get role from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-  #       with:
-  #         ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
-  #         env_variable_name: AWS_FRONTEND_PROD_ROLE
+  #     - name: Trigger Jenkins pipeline
+  #       run: node script/github-actions/trigger-jenkins.js
 
-  #     - name: Configure AWS Credentials (2)
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
-  #         role-to-assume: ${{ env.AWS_FRONTEND_PROD_ROLE }}
-  #         role-duration-seconds: 900
-  #         role-session-name: vsp-frontendteam-githubaction
-
-  #     - name: Deploy
-  #       run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
-  #       env:
-  #         SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{env.BUILDTYPE}}.tar.bz2
-  #         DEST: s3://${{ env.DEPLOY_BUCKET }}
-
-  #     - name: Wait for the CMS to be ready
-  #       uses: ./.github/workflows/wait-for-cms-ready
-
-  #     - name: Notify CMS - Complete
-  #       uses: ./.github/workflows/authenticated-cms-request
-  #       with:
-  #         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/complete
-  #         method: GET
-
-  #     - name: CMS GovDelivery callback
-  #       uses: ./.github/workflows/authenticated-cms-request
-  #       with:
-  #         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         url: ${{ env.DRUPAL_ADDRESS }}/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
-  #         method: GET
-
-  #     - name: Export deploy end time
-  #       id: export-deploy-end-time
-  #       run: echo ::set-output name=DEPLOY_END_TIME::$(date +"%s")
-
-  # notify-success:
-  #   name: Notify Success
-  #   runs-on:
-  #     - self-hosted
-  #     - linux
-  #     - x64
-  #   needs:
-  #     - validate-build-status
-  #     - deploy
+  # notify-failure:
+  #   name: Notify Failure
+  #   runs-on: ubuntu-latest
+  #   if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
+  #   needs: deploy
 
   #   steps:
   #     - name: Checkout
@@ -553,168 +715,7 @@ jobs:
   #       uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
   #       continue-on-error: true
   #       with:
-  #         payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
+  #         payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
   #         channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
   #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  #     - name: Notify CMS - Ready
-  #       uses: ./.github/workflows/authenticated-cms-request
-  #       with:
-  #         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/ready
-  #         method: GET
-
-  # notify-failure:
-  #   name: Notify Failure
-  #   runs-on:
-  #     - self-hosted
-  #     - linux
-  #     - x64
-  #   if: |
-  #     (failure() && needs.deploy.result != 'success')
-  #   needs: deploy
-
-  #   steps:
-  #     - name: Configure AWS Credentials
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
-
-  #     - name: Notify CMS - Error
-  #       uses: ./.github/workflows/authenticated-cms-request
-  #       with:
-  #         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/error
-  #         method: GET
-
-  #     - name: Get Datadog token from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-  #       with:
-  #         ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
-  #         env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
-
-  #     - name: Build JSON object
-  #       run: |
-  #         jq --null-input '{}' | \
-  #         jq '.title = "VA.gov CMS content release has failed"' | \
-  #         jq '.text = "VA.gov Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
-  #         jq '.date_happened = now' | \
-  #         jq '.aggregation_key = "content release ${{github.run_id}}"' | \
-  #         jq '.tags[0] = "project:vagov"' | \
-  #         jq '.tags[1] = "repo:content-build"' | \
-  #         jq '.tags[2] = "workflow:content-release"' | \
-  #         jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
-  #         jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
-  #         jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
-  #         jq '.alert_type = "error"' > event.json
-
-  #     - name: Send event to Datadog
-  #       run: |
-  #         curl -X POST "https://api.ddog-gov.com/api/v1/events" \
-  #         -H "Content-Type: text/json" \
-  #         -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
-  #         -d @- < event.json
-
-  # record-metrics:
-  #   name: Record metrics in Datadog
-  #   runs-on:
-  #     - self-hosted
-  #     - linux
-  #     - x64
-  #   needs:
-  #     - start-runner
-  #     - build
-  #     # - archive
-  #     # - deploy
-  #   env:
-  #     METRIC_NAMESPACE: dsva_vagov.content_build
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     - name: Get current timestamp
-  #       run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
-
-  #     - name: Set vars for scheduled runs
-  #       if: ${{ github.event_name == 'schedule' }}
-  #       run: |
-  #         echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-  #         echo "BUILD_TRIGGER=scheduled" >> $GITHUB_ENV
-
-  #     - name: Set vars for manual runs
-  #       if: ${{ github.event_name == 'workflow_dispatch' }}
-  #       run: |
-  #         echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
-  #         echo "BUILD_TRIGGER=manual" >> $GITHUB_ENV
-
-  #     - name: Build JSON object
-  #       run: |
-  #         jq $(cat build/${{env.BUILDTYPE}}/metalsmith-step-metrics.json) | \
-  #         jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
-  #         jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
-  #         # jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
-  #         jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
-
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-gov-west-1
-
-  #     - name: Get Datadog api key from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-  #       with:
-  #         ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
-  #         env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
-
-  #     - name: Get Datadog app key from Parameter Store
-  #       uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-  #       with:
-  #         ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
-  #         env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
-
-  #     - name: Send metrics to Datadog
-  #       run: |
-  #         curl -X POST "https://api.ddog-gov.com/api/v1/series" \
-  #         -H "Content-Type: text/json" \
-  #         -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
-  #         -d @- < metrics.json
-
-  stop-runner:
-    name: Stop on-demand-runner
-    needs:
-      - start-runner
-      - build
-    runs-on: ubuntu-latest
-    if: ${{ always() }} # Even if an error happened, let's stop the runner
-    env:
-      INSTANCE_TYPE: c5.4xlarge
-    timeout-minutes: 15
-
-    steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Stop Runner
-        uses: department-of-veterans-affairs/ec2-github-runner@main
-        with:
-          mode: stop
-          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          label: ${{ needs.start-runner.outputs.label }}
-          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
