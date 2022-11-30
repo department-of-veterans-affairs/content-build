@@ -69,6 +69,20 @@
           {% endif %}
         </dl>
 
+        {% if fieldVaFormIssueDate %}
+          {% assign showPDFCertAlert = '2022-03-01'| isLaterThan: fieldVaFormIssueDate.value %}
+          {% if showPDFCertAlert %}
+            <va-alert status="info">
+              <h3 slot="headline">
+                We’re updating this form
+              </h3>
+              <p>
+                If you download this form now, you won't be able to use it after January 7, 2023. You can download a new copy in January.
+              </p>
+            </va-alert>
+          {% endif %}
+        {% endif %}
+
         {% if fieldVaFormUsage %}
           <h2 class="vads-u-margin-top--4" data-testid="va_form--when-to-use-this-form-header">When to use this form</h3>
           {% if fieldVaFormLanguage %}
