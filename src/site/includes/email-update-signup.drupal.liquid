@@ -5,32 +5,37 @@
         <div class="homepage-email-update-wrapper vads-u-padding-bottom--1p5">
           <div class="vads-u-display--flex vads-u-justify-content--center">
             <div>
-            <h2 class="vads-u-font-size--lg
-                       vads-u-font-family--serif
-                       vads-u-margin--0">
-               Sign up to get the latest VA updates
-            </h2>
-            <div class="vads-u-margin-top--2p5 medium-screen:vads-u-margin-top--0">
-              <form
-                action="https://public.govdelivery.com/accounts/USVACHOOSE/subscribers/qualify"
-                accept-charset="UTF-8"
-                method="post">
-                <input name="utf8" type="hidden" value="✓">
-                <input type="hidden" name="category_id" id="category_id_top" value="USVACHOOSE_C1">
-                <va-text-input label="Email address"
-                               inputmode="email"
-                               type="email"
-                               name="email"
-                               autocomplete="email"
-                               class="vads-u-width--full medium-screen:vads-u-width-auto">
-                </va-text-input>
-                <button
-                  type="submit"
-                  class="vads-u-width--full medium-screen:vads-u-width--auto vads-u-display--block">
-                  Sign up
-                </button>
-              </form>
-            </div>
+              <h2 class="vads-u-font-size--lg
+                        vads-u-font-family--serif
+                        vads-u-margin--0">
+                Sign up to get the latest VA updates
+              </h2>
+              <div class="vads-u-margin-top--2p5 medium-screen:vads-u-margin-top--0">
+                <form
+                  action="https://public.govdelivery.com/accounts/USVACHOOSE/subscribers/qualify"
+                  accept-charset="UTF-8"
+                  method="post">
+                  <input name="utf8" type="hidden" value="✓">
+                  <input type="hidden" name="category_id" id="category_id_top" value="USVACHOOSE_C1">
+                  <label for="email">Email Address</label>
+                  <input label="Email address"
+                                inputmode="email"
+                                type="email"
+                                name="email"
+                                id="email"
+                                autocomplete="email"
+                                class="vads-u-width--full
+                                        medium-screen:vads-u-width-auto">
+                  </va-text-input>
+                  <button
+                    type="submit"
+                    class="vads-u-width--full
+                          medium-screen:vads-u-width--auto
+                          vads-u-display--block">
+                    Sign up
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
