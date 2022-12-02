@@ -1,5 +1,5 @@
 const overlay = '#modal-crisisline';
-const firstModalItem = 'a[href="tel:988"]';
+const firstModalItem = 'i.va-crisis-panel-icon + a';
 const closeControl = '.va-crisis-panel.va-modal-inner button';
 const secondOpenControl = '.homepage-button.vcl.va-overlay-trigger';
 const lastModalItem = 'a[href="https://www.veteranscrisisline.net/"]';
