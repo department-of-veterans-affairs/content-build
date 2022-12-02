@@ -50,7 +50,11 @@
                            vads-u-display--inline-block
                            medium-screen:vads-u-max-width--none
                            medium-screen:vads-u-width--auto">
+                  {% comment %}
+                   This `recordEvent` was added as a placeholder as this is a temporary implementation of the Email Submit form.
+                  {% endcomment %}
                   <button
+                    onclick="recordEvent({ event: 'homepage-email-sign-up', action: 'Homepage email sign up' })"
                     class="email-update-signup-form__button vads-u-width--full medium-screen:vads-u-width--auto vads-u-display--inline-block">Sign
                     up</button>
                 </div>

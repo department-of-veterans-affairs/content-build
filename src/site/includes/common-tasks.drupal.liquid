@@ -24,7 +24,9 @@
                   {% if link.url.path and link.label %}
                     <li>
                       <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
-                      <a href="{{ link.url.path }}">{{ link.label }}</a>
+                      <a
+                        onclick="recordEvent({ event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' })"
+                        href="{{ link.url.path }}">{{ link.label }}</a>
                     </li>
                   {% endif %}
                 {% endfor %}
@@ -46,7 +48,9 @@
               {% for link in popularLinks%}
                 {% if link.url.path and link.label %}
                   <li>
-                    <a href="{{ link.url.path }}">{{ link.label }}</a>
+                    <a
+                      onclick="recordEvent({ event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' })"
+                      href="{{ link.url.path }}">{{ link.label }}</a>
                   </li>
                 {% endif %}
               {% endfor %}

@@ -26,7 +26,8 @@
           </p>
 
           {% if fieldPromoCta.entity.fieldButtonLabel and fieldPromoCta.entity.fieldButtonLink.url.path %}
-            <a class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
+            <a onclick="recordEvent({ event: 'homepage-benefit-link-click', action: 'Homepage benefit promo - {{fieldPromoCta.entity.fieldButtonLabel}}' })"
+               class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
                 {{fieldPromoCta.entity.fieldButtonLabel}}
             </a>
           {% endif %}
@@ -37,6 +38,7 @@
       <!-- start second column for  bplogin card -->
       <script>
         function openLoginModal() {
+          recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
           const params = (new URL(document.location)).searchParams;
           params.set("next", "loginModal")
           document.location = "?" + params.toString();
