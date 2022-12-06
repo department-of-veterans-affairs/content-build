@@ -1,10 +1,4 @@
-<!--
-  Hero section on home page
-
-  Homepage redesign iteration (/homepage-test)
-  Date: September 2022
-  Author: bryan@kindsys.us
--->
+<!-- Hero section on home page -->
 
 <!-- Hero Content -->
 <div class="homepage-hero__wrapper">
@@ -16,7 +10,7 @@
             vads-u-padding-bottom--3
             small-desktop-screen:vads-u-padding-bottom--8">
           <h1
-            class="homepage-hero__welcome-headline vads-u-color--white vads-u-margin-top--0 vads-u-margin-bottom--2 vads-u-padding-y--1 vads-u-border-top--2px vads-u-border-bottom--2px vads-u-font-size--lg vads-u-font-family--serif">
+            class="homepage-hero__welcome-headline vads-u-color--white vads-u-margin-top--0 vads-u-margin-bottom--2 vads-u-padding-y--1 vads-u-border-top--1px vads-u-border-bottom--1px vads-u-font-size--lg vads-u-font-family--serif">
             Welcome to VA.gov</h1>
           <h2
             class="vads-u-color--white vads-u-margin-top--3 vads-u-font-size--xl small-desktop-screen:vads-u-font-size--2xl">
@@ -32,7 +26,8 @@
           </p>
 
           {% if fieldPromoCta.entity.fieldButtonLabel and fieldPromoCta.entity.fieldButtonLink.url.path %}
-            <a class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
+            <a onclick="recordEvent({ event: 'homepage-benefit-link-click', action: 'Homepage benefit promo - {{fieldPromoCta.entity.fieldButtonLabel}}' })"
+               class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
                 {{fieldPromoCta.entity.fieldButtonLabel}}
             </a>
           {% endif %}
@@ -43,6 +38,7 @@
       <!-- start second column for  bplogin card -->
       <script>
         function openLoginModal() {
+          recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
           const params = (new URL(document.location)).searchParams;
           params.set("next", "loginModal")
           document.location = "?" + params.toString();
@@ -51,14 +47,17 @@
       <div class="vads-l-col--12 medium-screen:vads-l-col--6 homepage-hero__container">
         <div class="vads-u-display--flex vads-u-width--full vads-u-align-items--center vars-u-justify-content--center">
           <div
-            class="vads-u-background-color--white vads-u-padding-x--3 vads-u-padding-y--2 vads-u-width--full homepage-hero__create-account ">
+            class="va-flex vads-u-flex-direction--column vads-u-align-items--flex-start vads-u-background-color--white vads-u-margin-top--6 vads-u-margin-bottom--6 vads-u-padding-x--3 vads-u-padding-y--2 vads-u-width--full homepage-hero__create-account ">
             <h2
-              class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-padding-right--2 vads-u-font-family--sans vads-u-font-weight--normal">
-              Get access to the tools you need to manage your VA benefits and care
+              class="vads-u-font-size--md vads-u-line-height--5 vads-u-color--gray vads-u-margin-top--0 vads-u-padding-right--2 vads-u-font-family--sans vads-u-font-weight--normal">
+              Create an account to manage your VA benefits and care in one place — any time, from anywhere.
             </h2>
-            <button class="vads-u-width--full" onclick="openLoginModal()">
+            <button class="vads-u-padding-x--4 vads-u-margin-bottom--3" onclick="openLoginModal()">
               Create account
             </button>
+            <a href="#">
+              Learn how an account helps you
+            </a>
           </div>
         </div>
       </div>

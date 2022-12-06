@@ -13,7 +13,7 @@
         {% if hub.entity.entityUrl.path and hub.entity.fieldHomePageHubLabel and hub.entity.fieldTeaserText and hub.entity.fieldTitleIcon %}
         <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
           <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}"
-              onclick="recordEvent({ event: 'nav-linkslist' });"><i
+              onclick="recordEvent({ event: 'nav-linkslist', action: 'Benefit hub - {{ hub.entity.fieldHomePageHubLabel }}' });"><i
                 class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white vads-u-margin-right--1"></i>{{
               hub.entity.fieldHomePageHubLabel }}</a></h3>
           <p class="vads-u-margin-top--0 ">{{ hub.entity.fieldTeaserText }}</p>

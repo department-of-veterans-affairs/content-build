@@ -78,7 +78,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         },
       } = contentData;
 
-      const homePreviewPath = '/homepage-test';
+      const homePreviewPath = '/new-home-page';
 
       const hero =
         homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
@@ -102,7 +102,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         },
       };
 
-      files[`./homepage-test.html`] = createFileObj(
+      files[`.${homePreviewPath}.html`] = createFileObj(
         homePreviewEntityObj,
         'home-preview.drupal.liquid',
       );
