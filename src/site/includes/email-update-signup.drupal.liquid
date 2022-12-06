@@ -18,16 +18,15 @@
                   <input name="utf8" type="hidden" value="✓">
                   <input type="hidden" name="category_id" id="category_id_top" value="USVACHOOSE_C1">
                   <label for="email">Email Address</label>
-                  <input label="Email address"
-                                inputmode="email"
-                                type="email"
-                                name="email"
-                                id="email"
-                                autocomplete="email"
-                                class="vads-u-width--full
-                                        medium-screen:vads-u-width-auto">
-                  </va-text-input>
+                  <input inputmode="email"
+                         type="email"
+                         name="email"
+                         id="email"
+                         autocomplete="email"
+                         class="vads-u-width--full
+                                medium-screen:vads-u-width-auto" />
                   <button
+                    onclick="recordEvent({ event: 'homepage-email-sign-up', action: 'Homepage email sign up' })"
                     type="submit"
                     class="vads-u-width--full
                           medium-screen:vads-u-width--auto
