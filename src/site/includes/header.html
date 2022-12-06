@@ -47,7 +47,7 @@
       this global file which will define all web components. Instead, they will manually
       define a subset of web components which are used in their application
     {% endcomment %}
-    {% if buildtype == 'vagovprod' or !useLocalStylesAndComponents%}
+    {% if !useLocalStylesAndComponents%}
       <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
     {% endif %}
   {% endif %}
@@ -76,7 +76,7 @@
     Apps that opt out of the site-wide stylesheet must include a smaller subset of styles
     in their application bundle
   {% endcomment %}
-  {% if buildtype == 'vagovprod' or !useLocalStylesAndComponents %}
+  {% if !useLocalStylesAndComponents %}
     <link rel="stylesheet" data-entry-name="style.css">
   {% endif %}
   <link rel="stylesheet" data-entry-content="content-build.css">
