@@ -5,7 +5,7 @@ const getApiClient = require('../api');
 const { logDrupal } = require('../utilities-drupal');
 const { DATA_FILE_PATH, DATA_FILES } = require('./config');
 const {
-  // shouldPullDrupal,
+  shouldPullDrupal,
   PULL_DRUPAL_BUILD_ARG,
   getDrupalCachePath,
 } = require('../metalsmith-drupal');
@@ -255,17 +255,7 @@ const generateStaticDataFilesFromDrupal = async (
   let processedJsonDataFiles = [];
 
   // Pull static-data-file content from Drupal
-
-  // Until this is merged to prod and a build is run, the cache directory will not be present.
-  // We cannot use `shouldPullDrupal` - which checks for the existence of the cache directory - until it exists.
-  // So, we'll implement this change in two phases:
-  //  1. First, we'll push a change that pulls from Drupal only with an explicit `--pull-drupal`.
-  //     When this is merged and a build is run, the resulting files will be saved in the newly created cache directory.
-  //  2. After the cache is created, we'll change the check to `shouldPullDrupal`, which considers the existence of
-  //     the cache directory in determing whether to pull from Drupal or read from cache.
-
-  // if (shouldPullDrupal(buildOptions, DRUPAL_CACHE_STATIC_DATA_FILEPATH)) {
-  if (buildOptions[PULL_DRUPAL_BUILD_ARG]) {
+  if (shouldPullDrupal(buildOptions, DRUPAL_CACHE_STATIC_DATA_FILEPATH)) {
     logDrupal(
       `Generating static data files from Drupal at ${buildOptions['drupal-address']}.`,
     );
