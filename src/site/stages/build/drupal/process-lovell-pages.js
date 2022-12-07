@@ -48,6 +48,22 @@ function getModifiedLovellPage(page, variant) {
   const linkVar =
     variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
 
+  // Fix any incorrect URLs based on the variant
+  if (isLovellFederalPage(page)) {
+    const oppositeVariant =
+      variant === 'va'
+        ? LOVELL_TRICARE_LINK_VARIATION
+        : LOVELL_VA_LINK_VARIATION;
+    const reverseUrl = `/lovell-federal-${oppositeVariant}-health-care`;
+
+    if (page.entityUrl.path.includes(reverseUrl)) {
+      page.entityUrl.path = page.entityUrl.path.replace(
+        reverseUrl,
+        `/lovell-federal-health-care`,
+      );
+    }
+  }
+
   // Add a field for canonical if it has a clone and it's a tricare variant
   if (variant === 'tricare' && isLovellFederalPage(page)) {
     page.canonicalLink = page.entityUrl.path.replace(
