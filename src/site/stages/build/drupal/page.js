@@ -353,7 +353,10 @@ function compilePage(page, contentData) {
   const pageId = { pid: pageIdRaw };
 
   if (!('breadcrumb' in entityUrl)) {
-    page.entityUrl = generateBreadCrumbs(entityUrl.path);
+    page.entityUrl = {
+      ...entityUrl,
+      ...generateBreadCrumbs(entityUrl.path),
+    };
   }
 
   let pageCompiled;
