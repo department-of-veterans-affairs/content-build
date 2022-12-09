@@ -724,4 +724,4 @@ jobs:
           ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
 
       - name: Intentional error
-        runs: echo "HEYY" && return 1
+        run: echo "HEYY" && return 1
