@@ -26,6 +26,7 @@ env:
   DRUPAL_PASSWORD: drupal8
   INSTANCE_TYPE: c5d.4xlarge
   MAXIMUM_HEAP: 5000
+  # secrets.ACTIONS_RUNNER_DEBUG is set to true when re-running a workflow with debug.
   ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
 
