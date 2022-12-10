@@ -19,6 +19,8 @@ env:
   DRUPAL_ADDRESS: https://prod.cms.va.gov
   INSTANCE_TYPE: m6i.4xlarge
   MAXIMUM_HEAP: 5000
+    # secrets.ACTIONS_RUNNER_DEBUG is set to 'true' when re-running a workflow with debug.
+  ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
 jobs:
   start-runner:
@@ -257,9 +259,13 @@ jobs:
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/inprogress
           method: GET
 
+      - name: Get verbose level
+        if: ${{ env.ACTIONS_RUNNER_DEBUG == 'true' }}
+        run: echo "VERBOSE= --verbose" >> $GITHUB_ENV
+
       - name: Build
-        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
-        timeout-minutes: 40
+        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy ${{env.VERBOSE}} --omitdebug | tee build-output.txt
+        timeout-minutes: 120
         env:
           NODE_ENV: production
 
