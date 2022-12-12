@@ -5,6 +5,18 @@
   {% include "src/site/includes/common-tasks.drupal.liquid" with commonTasks %}
   {% include "src/site/includes/news-spotlight.drupal.liquid" with newsSpotlight %}
   {% include "src/site/includes/homepage-benefits.drupal.liquid" with hubs %}
+  <!-- Medallia feedback button-->
+  <div class="usa-grid usa-grid-full">
+    <div class="last-updated vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+      <div class="vads-u-display--flex above-footer-elements-container">
+        <div class="vads-u-flex--1 vads-u-text-align--right">
+          <span class="vads-u-text-align--right">
+              {% include "src/site/includes/medallia-feedback-button.drupal.liquid" %}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
   {% include "src/site/includes/email-update-signup.drupal.liquid" %}
 
 </main> <!-- end #content -->
