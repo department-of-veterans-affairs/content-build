@@ -261,10 +261,10 @@ jobs:
 
       - name: Get verbose level
         if: ${{ env.ACTIONS_RUNNER_DEBUG == 'true' }}
-        run: echo "VERBOSE= --verbose" >> $GITHUB_ENV
+        run: echo "VERBOSE_BUILD= --verbose" >> $GITHUB_ENV
 
       - name: Build
-        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy ${{env.VERBOSE}} | tee build-output.txt
+        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy ${{env.VERBOSE_BUILD}} | tee build-output.txt
         timeout-minutes: 40
         env:
           NODE_ENV: production
