@@ -38,3 +38,6 @@ src/site/paragraphs/facilities @department-of-veterans-affairs/vsa-facilities-fr
 
 # GraphQL Queries
 src/site/stages/build/drupal @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/cms-infrastructure
+
+# Site Assets
+src/site/assets/robots.txt @department-of-veterans-affairs/vsa-public-websites-frontend
