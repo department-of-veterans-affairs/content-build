@@ -33,5 +33,5 @@ jobs:
         with:
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           event-type: deploy_review_instance
-          repository: department-of-veterans-affairs/devops
+          repository: department-of-veterans-affairs/vets-website
           client-payload: '{"source_repo": "content-build", "source_ref": "${{ github.ref_name }}" }'
