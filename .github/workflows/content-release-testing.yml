@@ -44,7 +44,7 @@ jobs:
     steps:
       - name: Export approximate workflow start time
         id: export-approx-workflow-start-time
-        run: echo APPROX_WORKFLOW_START_TIME::$(date +"%s") >> $GITHUB_OUTPUT
+        run: echo "APPROX_WORKFLOW_START_TIME::$(date +%s)" >> $GITHUB_OUTPUT
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
