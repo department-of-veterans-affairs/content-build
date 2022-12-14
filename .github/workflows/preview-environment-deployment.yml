@@ -25,9 +25,6 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Log branch
-        run: echo ${{ github.ref_name }}
-
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
