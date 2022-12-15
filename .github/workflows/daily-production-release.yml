@@ -55,7 +55,7 @@ jobs:
 
       - name: Get current ref
         id: get-current-ref
-        run: echo ::set-output name=REF::$(git rev-parse HEAD)
+        run: echo REF=$(git rev-parse HEAD) >> $GITHUB_OUTPUT
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ steps.get-current-ref.outputs.REF }}
@@ -64,7 +64,7 @@ jobs:
 
       - name: Get latest tag
         id: get-latest-tag
-        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+        run: echo LATEST_TAG_VERSION=$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1) >> $GITHUB_OUTPUT
 
       - name: Get next tag version
         run: |
@@ -93,7 +93,7 @@ jobs:
       - name: Export new release name
         id: export-release-name
         run: |
-          echo ::set-output name=RELEASE_NAME::v0.0.${{ env.new_patch }}
+          echo RELEASE_NAME=v0.0.${{ env.new_patch }} >> $GITHUB_OUTPUT
 
   notify-success:
     name: Notify Success

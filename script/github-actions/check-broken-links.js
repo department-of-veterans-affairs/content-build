@@ -28,7 +28,7 @@ if (fs.existsSync(reportPath)) {
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
-  console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
+  console.log(`SLACK_ATTACHMENTS=${slackAttachments} >> $GITHUB_OUTPUT`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
@@ -43,12 +43,12 @@ if (fs.existsSync(reportPath)) {
    * Only emit this variable if ran against main branch or during Content Release.
    * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
    */
-  console.log(`::set-output name=UPLOAD_AND_NOTIFY::1`);
+  console.log(`UPLOAD_AND_NOTIFY=1 >> $GITHUB_OUTPUT`);
 
   if (shouldFail) {
     throw new Error('Broken links found');
   }
 } else {
   console.log('No broken links found!');
-  console.log(`::set-output name=UPLOAD_AND_NOTIFY::0`);
+  console.log(`UPLOAD_AND_NOTIFY=0 >> $GITHUB_OUTPUT`);
 }

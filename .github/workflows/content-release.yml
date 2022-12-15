@@ -37,7 +37,7 @@ jobs:
     steps:
       - name: Export approximate workflow start time
         id: export-approx-workflow-start-time
-        run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
+        run: echo APPROX_WORKFLOW_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -171,7 +171,7 @@ jobs:
     steps:
       - name: Export build start time
         id: export-build-start-time
-        run: echo ::set-output name=BUILD_START_TIME::$(date +"%s")
+        run: echo BUILD_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Checkout vagov-content
@@ -188,7 +188,7 @@ jobs:
 
       - name: Get Node version
         id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -222,14 +222,14 @@ jobs:
 
       - name: Export content build start time
         id: export-content-build-start-time
-        run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
+        run: echo CONTENT_BUILD_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Get buildtime
         id: buildtime
         run: |
           BUILDTIME=$(date +%s)
-          echo ::set-output name=buildtime::$BUILDTIME
+          echo buildtime=$BUILDTIME >> $GITHUB_OUTPUT
           echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
@@ -271,16 +271,16 @@ jobs:
 
       - name: Export content build end time
         id: export-content-build-end
-        run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
+        run: echo CONTENT_BUILD_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Export gql query duration
         id: export-gql-query-duration
-        run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
+        run: echo GQL_QUERY_DURATION=$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+') >> $GITHUB_OUTPUT
 
       - name: Export gql page count
         id: export-gql-page-count
-        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
+        run: echo GQL_PAGE_COUNT=$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+') >> $GITHUB_OUTPUT
 
       - name: Set vars for CMS-triggered runs
         if: ${{ github.event_name == 'repository_dispatch' }}
@@ -398,7 +398,7 @@ jobs:
 
       - name: Export build end time
         id: export-build-end-time
-        run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
+        run: echo BUILD_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
 
@@ -448,7 +448,7 @@ jobs:
 
       - name: Export archive end time
         id: export-archive-end-time
-        run: echo ::set-output name=ARCHIVE_END_TIME::$(date +"%s")
+        run: echo ARCHIVE_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
   deploy:
     name: Deploy
@@ -518,7 +518,7 @@ jobs:
 
       - name: Export deploy end time
         id: export-deploy-end-time
-        run: echo ::set-output name=DEPLOY_END_TIME::$(date +"%s")
+        run: echo DEPLOY_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
   notify-success:
     name: Notify Success
