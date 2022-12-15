@@ -52,6 +52,7 @@ const locationListingPage = `
       entity{
         ... on TaxonomyTermAdministration {
           entityId
+          name
         }
       }
     }
