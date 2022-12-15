@@ -6,6 +6,7 @@
 {% assign otherFacilities = fieldOffice.entity.otherFacilities %}
 {% assign mobileFacilities = fieldOffice.entity.mobileFacilities %}
 {% assign fieldOtherVaLocations = fieldOffice.entity.fieldOtherVaLocations %}
+{% assign section = fieldAdministration.entity %}
 
 <div class="interior" id="content">
   <main class="va-l-detail-page va-facility-page">
@@ -59,7 +60,7 @@
                 {% include 'src/site/includes/facilityListing.drupal.liquid' with entity = mobile type = 'mobile' %}
               {% endfor %}
             {% endif %}
-            {% if fieldOtherVaLocations != empty and fieldOtherVaLocations.length %}
+            {% if fieldOtherVaLocations != empty and fieldOtherVaLocations.length and section.name != "Lovell - TRICARE" %}
               <h2 class="medium-screen:vads-u-margin-bottom--4" id="other-nearby-va-locations">
                 Other nearby VA locations
               </h2>
