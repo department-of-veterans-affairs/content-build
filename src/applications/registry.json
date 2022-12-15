@@ -1282,5 +1282,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "MHV Medical Records",
+    "entryName": "medical-records",
+    "rootUrl": "/my-health/medical-records",
+    "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
