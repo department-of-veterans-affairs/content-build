@@ -87,6 +87,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
     const homePreviewEntityObj = {
       ...homeEntityObj,
+      canonicalLink: '/', // Match current homepage to avoid 'duplicate content' SEO demerit
       hero,
       commonTasks: {
         searchLinks,
