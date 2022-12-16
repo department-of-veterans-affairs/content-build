@@ -3,7 +3,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
-const ENVIRONMENTS = require('../../../constants/environments');
 
 function divideHubRows(hubs) {
   return hubs.map((hub, i) => {
@@ -65,48 +64,45 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
 
     /**
-     * The Below is meant to represent potentially dynamic content for the Home Page Prototype
-     * This page is only built on non-prod environments
+     * Below is the code responsible for generating the new Homepage experience.
      * */
-    if (buildOptions.buildtype !== ENVIRONMENTS.VAGOVPROD) {
-      const {
-        data: {
-          homePageHeroQuery,
-          homePageNewsSpotlightQuery,
-          homePagePopularOnVaGovMenuQuery,
-          homePageOtherSearchToolsMenuQuery,
-        },
-      } = contentData;
+    const {
+      data: {
+        homePageHeroQuery,
+        homePageNewsSpotlightQuery,
+        homePagePopularOnVaGovMenuQuery,
+        homePageOtherSearchToolsMenuQuery,
+      },
+    } = contentData;
 
-      const homePreviewPath = '/new-home-page';
+    const homePreviewPath = '/new-home-page';
 
-      const hero =
-        homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
-      const searchLinks = homePageOtherSearchToolsMenuQuery?.links || [];
-      const popularLinks = homePagePopularOnVaGovMenuQuery?.links || [];
-      const newsSpotlight =
-        homePageNewsSpotlightQuery
-          ?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0]?.entity || {};
+    const hero =
+      homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
+    const searchLinks = homePageOtherSearchToolsMenuQuery?.links || [];
+    const popularLinks = homePagePopularOnVaGovMenuQuery?.links || [];
+    const newsSpotlight =
+      homePageNewsSpotlightQuery
+        ?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0]?.entity || {};
 
-      const homePreviewEntityObj = {
-        ...homeEntityObj,
-        hero,
-        commonTasks: {
-          searchLinks,
-          popularLinks,
-        },
-        newsSpotlight,
+    const homePreviewEntityObj = {
+      ...homeEntityObj,
+      hero,
+      commonTasks: {
+        searchLinks,
+        popularLinks,
+      },
+      newsSpotlight,
+      path: homePreviewPath,
+      entityUrl: {
         path: homePreviewPath,
-        entityUrl: {
-          path: homePreviewPath,
-        },
-      };
+      },
+    };
 
-      files[`.${homePreviewPath}.html`] = createFileObj(
-        homePreviewEntityObj,
-        'home-preview.drupal.liquid',
-      );
-    }
+    files[`.${homePreviewPath}.html`] = createFileObj(
+      homePreviewEntityObj,
+      'home-preview.drupal.liquid',
+    );
   }
 }
 
