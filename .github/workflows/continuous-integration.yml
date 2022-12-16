@@ -64,7 +64,7 @@ jobs:
 
       - name: Get Node version
         id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -121,7 +121,7 @@ jobs:
         id: buildtime
         run: |
           BUILDTIME=$(date +%s)
-          echo ::set-output name=buildtime::$BUILDTIME
+          echo buildtime=$BUILDTIME >> $GITHUB_OUTPUT
           echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Wait for the CMS to be ready
@@ -272,7 +272,7 @@ jobs:
       - name: Get code coverage
         if: ${{ always() }}
         id: code-coverage
-        run: echo ::set-output name=MARKDOWN::$(node ./script/github-actions/code-coverage-format-report.js)
+        run: echo MARKDOWN=$(node ./script/github-actions/code-coverage-format-report.js) >> $GITHUB_OUTPUT
 
       - name: Publish test results
         if: ${{ always() }}
@@ -367,7 +367,7 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@v3
-      
+
       # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
         run: mv certs/VA-Internal-S2-RCA1-v1.pem /etc/ssl/certs/
@@ -475,7 +475,7 @@ jobs:
       # TODO: Set .nvmrc in testing-tools-team-dashboard-data.
       # - name: Get Node version
       #   id: get-node-version
-      #   run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      #   run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
       #   working-directory: testing-tools-team-dashboard-data
 
       - name: Setup Node
@@ -596,7 +596,7 @@ jobs:
 
       - name: Set output of latest_run_number
         id: latest-run-number
-        run: echo ::set-output name=latest_run_number::$(node ./script/github-actions/get-latest-run-number.js)
+        run: echo latest_run_number=$(node ./script/github-actions/get-latest-run-number.js) >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
