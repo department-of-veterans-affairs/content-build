@@ -200,6 +200,19 @@ function lovellMenusModifyLinks(link) {
       `${LOVELL_TITLE_STRING} ${titleVar}`,
     );
 
+    const oppositeVariant =
+      variant === 'va'
+        ? LOVELL_TRICARE_LINK_VARIATION
+        : LOVELL_VA_LINK_VARIATION;
+    const reverseUrl = `/lovell-federal-${oppositeVariant}-health-care`;
+
+    if (link.url.path.includes(reverseUrl)) {
+      link.url.path = link.url.path.replace(
+        reverseUrl,
+        `/lovell-federal-health-care`,
+      );
+    }
+
     link.url.path = link.url.path.replace(
       '/lovell-federal-health-care',
       `/lovell-federal-${linkVar}-health-care`,
