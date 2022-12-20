@@ -1,11 +1,13 @@
 const overlay = '#modal-crisisline';
+// @todo this line should not reference specific content.
+// @todo very possible this test can be removed entirely; see https://github.com/department-of-veterans-affairs/vets-website/blob/main/src/platform/site-wide/tests/accessible-modal.cypress.spec.js
 const firstModalItem = 'a[href="tel:988"]';
 const closeControl = '.va-crisis-panel.va-modal-inner button';
 const secondOpenControl = '.homepage-button.vcl.va-overlay-trigger';
 const lastModalItem = 'a[href="https://www.veteranscrisisline.net/"]';
 
 describe('Accessible Modal Test', () => {
-  it('Modal behaves appropriately in line with key presses', () => {
+  it.skip('Modal behaves appropriately in line with key presses', () => {
     cy.visit('/');
     cy.injectAxeThenAxeCheck();
 

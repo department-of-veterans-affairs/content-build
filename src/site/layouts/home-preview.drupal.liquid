@@ -1,77 +1,24 @@
 {% include "src/site/includes/header.html" %}
 <main data-template="layouts/home" id="content">
 
-  <!--
-    Homepage redesign iteration (/homepage-test)
-    Date: September 2022
-    Author:  bryan@kindsys.us
-  -->
-
   {% include "src/site/includes/hero.drupal.liquid" with hero %}
   {% include "src/site/includes/common-tasks.drupal.liquid" with commonTasks %}
   {% include "src/site/includes/news-spotlight.drupal.liquid" with newsSpotlight %}
   {% include "src/site/includes/homepage-benefits.drupal.liquid" with hubs %}
-  {% comment %}
-  {% include "src/site/includes/email-update-signup.drupal.liquid" %}
-  {% endcomment %}
-
-  <!-- Email Updates Signup -->
-  <div class="homepage-email-updates-signup">
-    <div class="homepage-email-updates-signup__wrapper vads-u-background-color--primary-alt-lightest">
-      <div class="vads-u-padding-x--2p5 vads-u-padding-top--2p5">
-        <div class="homepage-email-update-wrapper vads-u-padding-bottom--1p5">
-          <div class="vads-l-grid-container vads-u-padding--0">
-            <div class="vads-l-row">
-              <div class="vads-l-col--12
-                          vads-u-padding-left--0
-                          vads-u-padding-top--0
-                          medium-screen:vads-u-padding-left--3
-                          medium-screen:vads-u-padding-right--1
-                          medium-screen:vads-u-padding-top--1p5
-                          medium-screen:vads-l-col--7">
-                <h2 class="vads-u-font-size--lg
-                           vads-u-font-family--sans
-                           vads-u-font-weight--normal
-                           vads-u-margin--0">
-                  Want the latest VA updates? Sign up with your email address.
-                </h2>
-              </div>
-              <div class="vads-l-col--12 medium-screen:vads-l-col--5">
-                <div id="email-update-signup-form" class="vads-u-margin-top--2p5 medium-screen:vads-u-margin-top--0">
-                  <input type="email" autocomplete="email" aria-label="Email Address" class="email-update-signup-form__input
-                           vads-u-width--full
-                           vads-u-display--inline-block
-                           medium-screen:vads-u-max-width--none
-                           medium-screen:vads-u-width--auto">
-                  <button
-                    class="email-update-signup-form__button vads-u-width--full medium-screen:vads-u-width--auto vads-u-display--inline-block">Sign
-                    up</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="vets-banner-1" class="veteran-banner-2 vads-u-display--none medium-screen:vads-u-display--block">
-          <div class="veteran-banner-container vads-u-margin-y--0 vads-u-margin-x--auto">
-            <picture>
-              <source
-                srcset="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-mobile-1.png 640w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-mobile-2.png 920w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-mobile-3.png 1316w"
-                media="(max-width: 767px)">
-              <source
-                srcset="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-tablet-1.png 1008w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-tablet-2.png 1887w"
-                media="(max-width: 1008px)">
-              <img class="vads-u-width--full"
-                src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-desktop-1.png"
-                srcset="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-desktop-1.png 1280w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-desktop-2.png 2494w"
-                loading="lazy" alt="Veteran portraits">
-            </picture>
-          </div>
+  <!-- Medallia feedback button-->
+  <div class="usa-grid usa-grid-full">
+    <div class="last-updated vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+      <div class="vads-u-display--flex above-footer-elements-container">
+        <div class="vads-u-flex--1 vads-u-text-align--right">
+          <span class="vads-u-text-align--right">
+              {% include "src/site/includes/medallia-feedback-button.drupal.liquid" %}
+          </span>
         </div>
       </div>
     </div>
   </div>
+  {% include "src/site/includes/email-update-signup.drupal.liquid" %}
 
-  <!-- / Email Updates Signup -->
 </main> <!-- end #content -->
 
 

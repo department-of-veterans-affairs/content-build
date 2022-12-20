@@ -37,6 +37,13 @@ const billingAndInsuranceFragment = `
     fieldOffice {
       ${healthCareRegionNonClinicialServices}
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 

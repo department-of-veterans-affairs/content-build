@@ -12,6 +12,10 @@
       {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       <div class="usa-width-three-fourths">
         <article class="usa-content">
+          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+            entityUrl = entityUrl
+          %}
+
           <h1 class="vads-u-margin-bottom--2">Operating status</h1>
           <div class="va-introtext vads-u-margin-bottom--0">
             {{ facilitySidebar.name }}
@@ -28,7 +32,7 @@
               </div>
             </div>
           {% endif %}
-          <section aria-labelledby="on-this-page" class="table-of-contents" class="vads-u-margin-bottom--5">
+          <section class="table-of-contents" class="vads-u-margin-bottom--5">
 	          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"/>
             <ul class="usa-unstyled-list" role="list">
 
