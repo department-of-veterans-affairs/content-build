@@ -1,0 +1,61 @@
+  <!-- Email Updates Signup -->
+  <div class="homepage-email-updates-signup">
+    <div class="homepage-email-updates-signup__wrapper vads-u-background-color--primary-alt-lightest">
+      <div class="vads-u-padding-x--2p5 vads-u-padding-top--2p5">
+        <div class="homepage-email-update-wrapper vads-u-padding-bottom--1p5">
+          <div class="vads-u-display--flex vads-u-justify-content--center">
+            <div>
+              <h2 class="vads-u-font-size--lg
+                        vads-u-font-family--serif
+                        vads-u-margin--0">
+                Sign up to get the latest VA updates
+              </h2>
+              <div class="vads-u-margin-top--2p5 medium-screen:vads-u-margin-top--0">
+                <form
+                  action="https://public.govdelivery.com/accounts/USVACHOOSE/subscribers/qualify"
+                  accept-charset="UTF-8"
+                  method="post">
+                  <input name="utf8" type="hidden" value="✓">
+                  <input type="hidden" name="category_id" id="category_id_top" value="USVACHOOSE_C1">
+                  <label for="email">Email Address</label>
+                  <input inputmode="email"
+                         type="email"
+                         name="email"
+                         id="email"
+                         autocomplete="email"
+                         class="vads-u-width--full
+                                medium-screen:vads-u-width-auto" />
+                  <button
+                    onclick="recordEvent({ event: 'homepage-email-sign-up', action: 'Homepage email sign up' })"
+                    type="submit"
+                    class="vads-u-width--full
+                          medium-screen:vads-u-width--auto
+                          vads-u-display--block">
+                    Sign up
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="vets-banner-1" class="veteran-banner-2 vads-u-display--none medium-screen:vads-u-display--block">
+          <div class="veteran-banner-container vads-u-margin-y--0 vads-u-margin-x--auto">
+            <picture>
+              <source
+                srcset="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-mobile-1.png 640w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-mobile-2.png 920w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-mobile-3.png 1316w"
+                media="(max-width: 767px)">
+              <source
+                srcset="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-tablet-1.png 1008w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-tablet-2.png 1887w"
+                media="(max-width: 1008px)">
+              <img class="vads-u-width--full"
+                src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-desktop-1.png"
+                srcset="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-desktop-1.png 1280w, https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/homepage/veterans-banner-desktop-2.png 2494w"
+                loading="lazy" alt="Veteran portraits">
+            </picture>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- / Email Updates Signup -->
