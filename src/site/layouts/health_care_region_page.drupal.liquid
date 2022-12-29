@@ -52,9 +52,9 @@
 
           <!-- "Manage your health online" section -->
           {% comment %} Hide this section for Lovell TRICARE {% endcomment %}
-          {% if title != 'Lovell Federal TRICARE health care' %}
+          {% if fieldAdministration.entity.entityId != '1039' %}
           <section>
-            {% if title == 'Lovell Federal VA health care' %}
+            {% if fieldAdministration.entity.entityId == '1040' %}
               <h3>Manage your VA health online</h3>
             {% else %}
               <h3>Manage your health online</h3>
