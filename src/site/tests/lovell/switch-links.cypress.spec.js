@@ -1,3 +1,6 @@
+/* These are content only tests, that should not entangle Axe. */
+/* eslint-disable @department-of-veterans-affairs/axe-check-required */
+
 const lovellSwitchLinkPages = [
   {
     title: 'System Health Care Page',
@@ -37,7 +40,6 @@ lovellSwitchLinkPages.forEach(page => {
     describe(`Lovell ${variation.toUpperCase()} ${page.title} page`, () => {
       it('has the proper switch link', () => {
         cy.visit(getLovellUrl(`${page.path}/`, variation));
-        cy.injectAxeThenAxeCheck();
 
         cy.get('va-alert').should('have.length', 1);
 
