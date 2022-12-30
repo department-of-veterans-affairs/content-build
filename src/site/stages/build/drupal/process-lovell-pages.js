@@ -460,5 +460,7 @@ function processLovellPages(drupalData) {
 }
 
 module.exports = {
+  isLovellTricarePage,
+  isLovellVaPage,
   processLovellPages,
 };
