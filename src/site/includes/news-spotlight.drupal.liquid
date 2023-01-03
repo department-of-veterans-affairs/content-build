@@ -1,18 +1,7 @@
 <!-- Blog Promo -->
 <div class="vads-u-background-color--primary-darker">
   <div class="vads-l-grid-container vads-u-padding-x--0 homepage-blog">
-    <div class="vads-l-row">
-      <!-- start first column-->
-      <div
-        class="vads-l-col--12 vads-u-display--none small-desktop-screen:vads-u-display--block medium-screen:vads-l-col--4">
-        <div class="homepage-blog__image">
-          {% if fieldImage.entity.image.derivative.url and fieldImage.entity.image.alt %}
-            <img class="lazy" src="{{ fieldImage.entity.image.derivative.url }}"
-              alt="{{ fieldImage.entity.image.alt }}" />
-          {% endif %}
-        </div>
-      </div>
-      <!-- end first column -->
+    <div class="vads-l-row vads-u-flex-direction--row-reverse">
 
       <!-- start second column -->
       <div class="vads-l-col--12 medium-screen:vads-l-col--8">
@@ -52,6 +41,17 @@
         </div>
       </div>
       <!-- end second column -->
+      <!-- start first column-->
+      <div
+        class="vads-l-col--12 vads-u-display--none small-desktop-screen:vads-u-display--block medium-screen:vads-l-col--4">
+        <div class="homepage-blog__image">
+          {% if fieldImage.entity.image.derivative.url and fieldImage.entity.image.alt %}
+            <img class="lazy" src="{{ fieldImage.entity.image.derivative.url }}"
+              alt="{{ fieldImage.entity.image.alt }}" />
+          {% endif %}
+        </div>
+      </div>
+      <!-- end first column -->
     </div>
   </div>
 </div>
