@@ -18,7 +18,7 @@
             Other search tools
           </h3>
           <div class="homepage-common-tasks__search-tools">
-            <ul class="vads-u-padding-left--0">
+            <ul class="vads-u-padding-left--0" role="list">
               {% if searchLinks %}
                 {% for link in searchLinks %}
                   {% if link.url.path and link.label %}
@@ -43,7 +43,7 @@
           <h2 class="vads-u-color--gray-dark vads-u-font-family--serif">
             Top Pages
           </h2>
-          <ul class="homepage-common-tasks__list vads-u-padding-left--0 ">
+          <ul class="homepage-common-tasks__list vads-u-padding-left--0 " role="list">
             {% if popularLinks %}
               {% for link in popularLinks%}
                 {% if link.url.path and link.label %}
