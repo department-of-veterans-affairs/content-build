@@ -38,6 +38,9 @@
                 onclick="recordEvent({ event: 'homepage-news-promo-click', action: 'Homepage news promo - {{  fieldPromoHeadline }} - CTA' })"
                 href="{{ fieldLink.url.path }}" class="vads-u-color--white">
                 {{fieldLinkLabel}}
+                <span class="sr-only">
+                  about {{fieldPromoHeadline}}
+                </span>
               </a>
             {% endif %}
           </p>
