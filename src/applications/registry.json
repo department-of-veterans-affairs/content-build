@@ -1107,7 +1107,10 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeFeedbackButton": false
+      "includeFeedbackButton": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true
     }
   },
   {
@@ -1117,7 +1120,10 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeFeedbackButton": false
+      "includeFeedbackButton": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true
     },
     "useLocalStylesAndComponents": true
   },
