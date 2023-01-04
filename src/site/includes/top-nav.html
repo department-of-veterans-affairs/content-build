@@ -25,7 +25,7 @@
         <img src="/img/header-logo.png" alt="VA logo and seal" height="59" width="264" />
       </a>
     </div>
-    {% if !noNavOrLogin %}
+    {% unless noNavOrLogin %}
       <div id="va-nav-controls"></div>
       {% unless noMegamenu %}
         <div class="medium-screen:vads-u-display--none usa-grid usa-grid-full">
@@ -34,7 +34,7 @@
         </div>
       {% endunless %}
       <div id="login-root" class="vet-toolbar"></div>
-    {% endif %}
+    {% endunless %}
   </div>
   {% unless noMegamenu %}
     <div class="usa-grid usa-grid-full">
