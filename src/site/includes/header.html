@@ -175,9 +175,9 @@
     ></div>
 
     <!-- Tablet/Desktop Layout -->
-    {% if !noHeader %}
+    {% unless noHeader %}
       {% include "src/site/includes/top-nav.html" %}
-    {% endif %}
+    {% endunless %}
   </header>
 
   <!-- Fullwidth banner alerts -->
