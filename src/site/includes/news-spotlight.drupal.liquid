@@ -1,9 +1,19 @@
 <!-- Blog Promo -->
 <div class="vads-u-background-color--primary-darker">
   <div class="vads-l-grid-container vads-u-padding-x--0 homepage-blog">
-    <div class="vads-l-row vads-u-flex-direction--row-reverse">
+    <div class="vads-l-row">
+      <!-- start first column-->
+      <div
+        class="vads-l-col--12 vads-u-display--none small-desktop-screen:vads-u-display--block medium-screen:vads-l-col--4">
+        <div class="homepage-blog__image">
+          {% if fieldImage.entity.image.derivative.url and fieldImage.entity.image.alt %}
+            <img class="lazy" src="{{ fieldImage.entity.image.derivative.url }}" alt="" />
+          {% endif %}
+        </div>
+      </div>
+      <!-- end first column -->
 
-      <!-- start first column -->
+      <!-- start second column -->
       <div class="vads-l-col--12 medium-screen:vads-l-col--8">
         <div
           class="vads-u-padding--2p5 small-desktop-screen:vads-u-padding--6 small-desktop-screen:vads-u-padding-right--0 vads-u-color--white">
@@ -38,17 +48,6 @@
               <i class="fas fa-chevron-right vads-u-margin-left--1" role="presentation"></i>
             </a>
           </div>
-        </div>
-      </div>
-      <!-- end first column -->
-      <!-- start second column-->
-      <div
-        class="vads-l-col--12 vads-u-display--none small-desktop-screen:vads-u-display--block medium-screen:vads-l-col--4">
-        <div class="homepage-blog__image">
-          {% if fieldImage.entity.image.derivative.url and fieldImage.entity.image.alt %}
-            <img class="lazy" src="{{ fieldImage.entity.image.derivative.url }}"
-              alt="{{ fieldImage.entity.image.alt }}" />
-          {% endif %}
         </div>
       </div>
       <!-- end second column -->
