@@ -19,40 +19,39 @@ const {
 } = require('./lovell/helpers');
 
 const {
-  updateLovellPagePath,
-  updateLovellPageCanonicalLink,
-  updateLovellPageSwitchPath,
-  updateLovellPageBreadcrumbs,
-  updateLovellPageFieldRegionPage,
-  updateLovellPageFieldOfficeTitle,
-  updateLovellPageTitle,
+  getLovellPageVariables,
+  getLovellPagePath,
+  getLovellPageCanonicalLink,
+  getLovellPageSwitchPath,
+  getLovellPageBreadcrumbs,
+  getLovellTitleVariant,
 } = require('./lovell/update-page');
 
 function getModifiedLovellPage(page, variant) {
-  const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
+  const updateVars = getLovellPageVariables(page, variant);
 
-  const updateVars = {
-    page,
-    variant,
-    variantName,
-    linkVar:
-      variant === 'va'
-        ? LOVELL_VA_LINK_VARIATION
-        : LOVELL_TRICARE_LINK_VARIATION,
-    fieldOfficeMod:
-      variant === 'va'
-        ? LOVELL_VA_TITLE_VARIATION
-        : LOVELL_TRICARE_TITLE_VARIATION,
-    regexNeedle: new RegExp(`${LOVELL_TITLE_STRING} ${variantName}`, 'gi'),
-  };
+  page.entityUrl.path = getLovellPagePath(updateVars);
+  page.canonicalLink = getLovellPageCanonicalLink(updateVars);
+  page.entityUrl.switchPath = getLovellPageSwitchPath(updateVars);
+  page.title = getLovellTitleVariant(page.title, updateVars);
 
-  updateLovellPagePath(updateVars);
-  updateLovellPageCanonicalLink(updateVars);
-  updateLovellPageSwitchPath(updateVars);
-  updateLovellPageBreadcrumbs(updateVars);
-  updateLovellPageFieldOfficeTitle(updateVars);
-  updateLovellPageFieldRegionPage(updateVars);
-  updateLovellPageTitle(updateVars);
+  if (page.entityUrl.breadcrumb) {
+    page.entityUrl.breadcrumb = getLovellPageBreadcrumbs(updateVars);
+  }
+
+  if (page.fieldRegionPage) {
+    page.fieldRegionPage.entity.title = getLovellTitleVariant(
+      page.fieldRegionPage.entity.title,
+      updateVars,
+    );
+  }
+
+  if (page.fieldOffice) {
+    page.fieldOffice.entity.entityLabel = getLovellTitleVariant(
+      page.fieldOffice.entity.entityLabel,
+      updateVars,
+    );
+  }
 
   return page;
 }
