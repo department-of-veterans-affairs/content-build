@@ -18,138 +18,41 @@ const {
   resetToFederalUrlIfNeeded,
 } = require('./lovell/helpers');
 
+const {
+  updateLovellPagePath,
+  updateLovellPageCanonicalLink,
+  updateLovellPageSwitchPath,
+  updateLovellPageBreadcrumbs,
+  updateLovellPageFieldRegionPage,
+  updateLovellPageFieldOfficeTitle,
+  updateLovellPageTitle,
+} = require('./lovell/update-page');
+
 function getModifiedLovellPage(page, variant) {
-  const fieldOfficeMod =
-    variant === 'va'
-      ? LOVELL_VA_TITLE_VARIATION
-      : LOVELL_TRICARE_TITLE_VARIATION;
-  const linkVar =
-    variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
+  const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
 
-  // Fix any incorrect URLs based on the variant
-  if (isLovellFederalPage(page)) {
-    page.entityUrl.path = resetToFederalUrlIfNeeded(
-      page.entityUrl.path,
-      variant,
-    );
-  }
-
-  // Add a field for canonical if it has a clone and it's a tricare variant
-  if (variant === 'tricare' && isLovellFederalPage(page)) {
-    page.canonicalLink = page.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-va-health-care`,
-    );
-  }
-
-  // Modify the path
-  const modifiedPath = page.entityUrl.path.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${linkVar}-health-care`,
-  );
-  page.entityUrl.path = modifiedPath;
-
-  // Add a switchPath field
-  // These get modified later in the processLovellPages function
-  if (
-    page.entityUrl.path.includes(
-      `/lovell-federal-${LOVELL_TRICARE_LINK_VARIATION}-health-care`,
-    ) ||
-    page.entityUrl.path.includes(
-      `/lovell-federal-${LOVELL_VA_LINK_VARIATION}-health-care`,
-    )
-  ) {
-    page.entityUrl.switchPath = page.entityUrl.path.replace(
+  const updateVars = {
+    page,
+    variant,
+    variantName,
+    linkVar:
       variant === 'va'
         ? LOVELL_VA_LINK_VARIATION
         : LOVELL_TRICARE_LINK_VARIATION,
+    fieldOfficeMod:
       variant === 'va'
-        ? LOVELL_TRICARE_LINK_VARIATION
-        : LOVELL_VA_LINK_VARIATION,
-    );
-  } else {
-    page.entityUrl.switchPath = page.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-${
-        variant === 'va'
-          ? LOVELL_TRICARE_LINK_VARIATION
-          : LOVELL_VA_LINK_VARIATION
-      }-health-care`,
-    );
-  }
+        ? LOVELL_VA_TITLE_VARIATION
+        : LOVELL_TRICARE_TITLE_VARIATION,
+    regexNeedle: new RegExp(`${LOVELL_TITLE_STRING} ${variantName}`, 'gi'),
+  };
 
-  // Modify Breadcrumb
-  if (page.entityUrl.breadcrumb) {
-    page.entityUrl.breadcrumb = page.entityUrl.breadcrumb.map(crumb => {
-      crumb.text = crumb.text.replace(
-        /Lovell Federal (VA )?health care/,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod} health care`,
-      );
-      crumb.url.path = crumb.url.path.replace(
-        /\/lovell-federal-(va-)?health-care/,
-        `/lovell-federal-${linkVar}-health-care`,
-      );
-      return crumb;
-    });
-  }
-
-  // Modify the title used for querying the menus
-  const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
-  const titleNeedle = `${LOVELL_TITLE_STRING} ${variantName}`;
-  const regexNeedle = new RegExp(titleNeedle, 'gi');
-
-  if (page.fieldOffice) {
-    // services, facilites
-    if (
-      page.fieldOffice.entity.entityLabel
-        .toLowerCase()
-        .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
-    ) {
-      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-        regexNeedle,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    } else {
-      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-        `${LOVELL_TITLE_STRING}`,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    }
-  }
-  if (page.fieldRegionPage) {
-    if (
-      page.fieldRegionPage.entity.title
-        .toLowerCase()
-        .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
-    ) {
-      page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
-        regexNeedle,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    } else {
-      page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
-        `${LOVELL_TITLE_STRING}`,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    }
-  }
-
-  // Modify the title this will become more complex to handle specific cases
-  if (
-    page.title
-      .toLowerCase()
-      .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
-  ) {
-    page.title = page.title.replace(
-      regexNeedle,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
-  } else {
-    page.title = page.title.replace(
-      `${LOVELL_TITLE_STRING}`,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
-  }
+  updateLovellPagePath(updateVars);
+  updateLovellPageCanonicalLink(updateVars);
+  updateLovellPageSwitchPath(updateVars);
+  updateLovellPageBreadcrumbs(updateVars);
+  updateLovellPageFieldOfficeTitle(updateVars);
+  updateLovellPageFieldRegionPage(updateVars);
+  updateLovellPageTitle(updateVars);
 
   return page;
 }
