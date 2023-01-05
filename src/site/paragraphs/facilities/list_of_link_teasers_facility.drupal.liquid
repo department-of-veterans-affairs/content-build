@@ -7,13 +7,13 @@
 {% endcomment %}
 {% if paragraph != empty %}
   <section data-template="paragraphs/list_of_link_teasers_facility" data-entity-id="{{ paragraph.entityId }}" class="feature vads-u-padding-x--2 small-screen:vads-u-padding-x--4 vads-u-padding-top--3 vads-u-padding-bottom--2">
-    <h3 class="vads-u-margin-bottom--2">
+    <h2 class="vads-u-margin-bottom--2">
         {% if regionNickname != empty %}
             In the spotlight at {{ regionNickname }}
         {% else %}
             {{ paragraph.fieldTitle }}
         {% endif %}
-    </h3>
+    </h2>
 
     <div class="va-c-list-link-teasers">
       <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
