@@ -58,7 +58,11 @@
             <button class="vads-u-padding-x--4 vads-u-margin-bottom--3" onclick="openLoginModal()">
               Create account
             </button>
-            <a href="/resources/creating-an-account-for-vagov">
+            <a 
+              href="/resources/creating-an-account-for-vagov"
+              onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'secondary', 'button-click-label': 'Learn how an account helps you',  });"
+
+            >
               Learn how an account helps you
             </a>
           </div>
