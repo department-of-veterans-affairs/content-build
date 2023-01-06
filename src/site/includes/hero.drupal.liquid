@@ -38,7 +38,10 @@
       <!-- start second column for  bplogin card -->
       <script>
         function openLoginModal() {
-          recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
+          // Uncomment custom event and delete generic event once analytics team has implemented
+          // recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
+          recordEvent({ event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Create Account',  });
+          
           const params = (new URL(document.location)).searchParams;
           params.set("next", "loginModal")
           document.location = "?" + params.toString();

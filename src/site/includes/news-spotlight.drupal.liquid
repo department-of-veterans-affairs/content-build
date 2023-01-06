@@ -45,11 +45,20 @@
           </p>
 
           <div>
-            <a
+            <!-- <a
               onclick="recordEvent({ event: 'homepage-news-promo-more-news-click', action: 'Homepage news promo - More VA News' })"
               href="https://news.va.gov/" class="vads-u-color--white">More VA news
               <i class="fas fa-chevron-right vads-u-margin-left--1" role="presentation"></i>
-            </a>
+            </a> -->
+            <a
+            onclick="recordEvent({
+              event: 'nav-zone-one',
+              'nav-path': '->{% if fieldLink.url.path != empty %}{{ fieldLink.url.path }}{% else %}{{ fieldLinkLabel }}{% endif %}',
+              'click-text': '{{ fieldLinkLabel | strip }}',
+            });"
+            href="https://news.va.gov/" class="vads-u-color--white">More VA news
+            <i class="fas fa-chevron-right vads-u-margin-left--1" role="presentation"></i>
+          </a>
           </div>
         </div>
       </div>
@@ -58,3 +67,5 @@
   </div>
 </div>
 <!-- /Blog promo -->
+
+
