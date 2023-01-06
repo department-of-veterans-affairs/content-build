@@ -20,36 +20,39 @@ const {
 
 const {
   getLovellPageVariables,
-  getLovellPagePath,
-  getLovellPageCanonicalLink,
-  getLovellPageSwitchPath,
-  getLovellPageBreadcrumbs,
-  getLovellTitleVariant,
+  getLovellVariantPath,
+  getLovellCanonicalLink,
+  getLovellSwitchPath,
+  getLovellBreadcrumbs,
+  getLovellVariantTitle,
 } = require('./lovell/update-page');
 
 function getModifiedLovellPage(page, variant) {
-  const updateVars = getLovellPageVariables(page, variant);
+  const pageVars = getLovellPageVariables(page, variant);
 
-  page.entityUrl.path = getLovellPagePath(updateVars);
-  page.canonicalLink = getLovellPageCanonicalLink(updateVars);
-  page.entityUrl.switchPath = getLovellPageSwitchPath(updateVars);
-  page.title = getLovellTitleVariant(page.title, updateVars);
+  page.title = getLovellVariantTitle(page.title, pageVars);
+  page.entityUrl.path = getLovellVariantPath(pageVars);
+  page.entityUrl.switchPath = getLovellSwitchPath(pageVars);
+
+  if (variant === 'tricare' && isLovellFederalPage(page)) {
+    page.canonicalLink = getLovellCanonicalLink(pageVars);
+  }
 
   if (page.entityUrl.breadcrumb) {
-    page.entityUrl.breadcrumb = getLovellPageBreadcrumbs(updateVars);
+    page.entityUrl.breadcrumb = getLovellBreadcrumbs(pageVars);
   }
 
   if (page.fieldRegionPage) {
-    page.fieldRegionPage.entity.title = getLovellTitleVariant(
+    page.fieldRegionPage.entity.title = getLovellVariantTitle(
       page.fieldRegionPage.entity.title,
-      updateVars,
+      pageVars,
     );
   }
 
   if (page.fieldOffice) {
-    page.fieldOffice.entity.entityLabel = getLovellTitleVariant(
+    page.fieldOffice.entity.entityLabel = getLovellVariantTitle(
       page.fieldOffice.entity.entityLabel,
-      updateVars,
+      pageVars,
     );
   }
 

@@ -1,3 +1,4 @@
+const cloneDeep = require('lodash/cloneDeep');
 const {
   LOVELL_TITLE_STRING,
   LOVELL_VA_TITLE_VARIATION,
@@ -10,9 +11,10 @@ const {
 
 function getLovellPageVariables(page, variant) {
   const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
+  const pageClone = cloneDeep(page);
 
   return {
-    page,
+    pageClone,
     variant,
     variantName,
     linkVar:
@@ -27,7 +29,7 @@ function getLovellPageVariables(page, variant) {
   };
 }
 
-function getLovellPagePath(vars) {
+function getLovellVariantPath(vars) {
   const { page, linkVar, variant } = vars;
   let pagePath = page.entityUrl.path;
 
@@ -41,21 +43,21 @@ function getLovellPagePath(vars) {
   );
 }
 
-function getLovellPageCanonicalLink(vars) {
-  const { page, variant } = vars;
+function getLovellCanonicalLink(vars) {
+  const { page } = vars;
 
-  if (variant === 'tricare' && isLovellFederalPage(page)) {
-    return page.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-va-health-care`,
-    );
-  }
-
-  return false;
+  return page.entityUrl.path.replace(
+    '/lovell-federal-health-care',
+    `/lovell-federal-va-health-care`,
+  );
 }
 
-function getLovellPageSwitchPath(vars) {
+function getLovellSwitchPath(vars) {
   const { page, variant } = vars;
+  const currentVariant =
+    variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
+  const oppositeVariant =
+    variant === 'va' ? LOVELL_TRICARE_LINK_VARIATION : LOVELL_VA_LINK_VARIATION;
   const isVariantUrl =
     page.entityUrl.path.includes(
       `/lovell-federal-${LOVELL_TRICARE_LINK_VARIATION}-health-care`,
@@ -65,29 +67,17 @@ function getLovellPageSwitchPath(vars) {
     );
 
   if (isVariantUrl) {
-    return page.entityUrl.path.replace(
-      variant === 'va'
-        ? LOVELL_VA_LINK_VARIATION
-        : LOVELL_TRICARE_LINK_VARIATION,
-      variant === 'va'
-        ? LOVELL_TRICARE_LINK_VARIATION
-        : LOVELL_VA_LINK_VARIATION,
-    );
+    return page.entityUrl.path.replace(currentVariant, oppositeVariant);
   }
 
   // If not a variant page, gets switch link option for federal pages
-  // If  no page has this URL it will be set to "false" later
   return page.entityUrl.path.replace(
     '/lovell-federal-health-care',
-    `/lovell-federal-${
-      variant === 'va'
-        ? LOVELL_TRICARE_LINK_VARIATION
-        : LOVELL_VA_LINK_VARIATION
-    }-health-care`,
+    `/lovell-federal-${oppositeVariant}-health-care`,
   );
 }
 
-function getLovellPageBreadcrumbs(vars) {
+function getLovellBreadcrumbs(vars) {
   const { page, fieldOfficeMod, linkVar } = vars;
   // Modify Breadcrumb
   return page.entityUrl.breadcrumb.map(crumb => {
@@ -105,7 +95,7 @@ function getLovellPageBreadcrumbs(vars) {
   });
 }
 
-function getLovellTitleVariant(title, vars) {
+function getLovellVariantTitle(title, vars) {
   const { variantName, regexNeedle, fieldOfficeMod } = vars;
 
   if (
@@ -127,9 +117,9 @@ function getLovellTitleVariant(title, vars) {
 
 module.exports = {
   getLovellPageVariables,
-  getLovellPagePath,
-  getLovellPageCanonicalLink,
-  getLovellPageSwitchPath,
-  getLovellPageBreadcrumbs,
-  getLovellTitleVariant,
+  getLovellVariantPath,
+  getLovellCanonicalLink,
+  getLovellSwitchPath,
+  getLovellBreadcrumbs,
+  getLovellVariantTitle,
 };
