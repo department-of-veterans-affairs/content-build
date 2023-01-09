@@ -10,21 +10,20 @@ const {
 } = require('./helpers');
 
 function getLovellPageVariables(page, variant) {
-  const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
+  const variantName =
+    variant === 'va'
+      ? LOVELL_VA_TITLE_VARIATION
+      : LOVELL_TRICARE_TITLE_VARIATION;
   const pageClone = cloneDeep(page);
 
   return {
-    pageClone,
+    page: pageClone,
     variant,
     variantName,
     linkVar:
       variant === 'va'
         ? LOVELL_VA_LINK_VARIATION
         : LOVELL_TRICARE_LINK_VARIATION,
-    fieldOfficeMod:
-      variant === 'va'
-        ? LOVELL_VA_TITLE_VARIATION
-        : LOVELL_TRICARE_TITLE_VARIATION,
     regexNeedle: new RegExp(`${LOVELL_TITLE_STRING} ${variantName}`, 'gi'),
   };
 }
@@ -78,13 +77,13 @@ function getLovellSwitchPath(vars) {
 }
 
 function getLovellBreadcrumbs(vars) {
-  const { page, fieldOfficeMod, linkVar } = vars;
+  const { page, variantName, linkVar } = vars;
   // Modify Breadcrumb
   return page.entityUrl.breadcrumb.map(crumb => {
     // eslint-disable-next-line no-param-reassign
     crumb.text = crumb.text.replace(
       /Lovell Federal (VA )?health care/,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod} health care`,
+      `${LOVELL_TITLE_STRING} ${variantName} health care`,
     );
     // eslint-disable-next-line no-param-reassign
     crumb.url.path = crumb.url.path.replace(
@@ -96,22 +95,19 @@ function getLovellBreadcrumbs(vars) {
 }
 
 function getLovellVariantTitle(title, vars) {
-  const { variantName, regexNeedle, fieldOfficeMod } = vars;
+  const { variantName, regexNeedle } = vars;
 
   if (
     title
       .toLowerCase()
       .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
   ) {
-    return title.replace(
-      regexNeedle,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
+    return title.replace(regexNeedle, `${LOVELL_TITLE_STRING} ${variantName}`);
   }
 
   return title.replace(
     `${LOVELL_TITLE_STRING}`,
-    `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+    `${LOVELL_TITLE_STRING} ${variantName}`,
   );
 }
 
