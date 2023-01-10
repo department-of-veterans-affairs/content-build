@@ -361,7 +361,7 @@ jobs:
         - /etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA2.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA2.cer.pem
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
@@ -370,7 +370,7 @@ jobs:
 
       # Required for Docker
       - name: Move VA cert to /etc/ssl/certs
-        run: mv certs/VA-Internal-S2-RCA2.pem /etc/ssl/certs/
+        run: mv certs/VA-Internal-S2-RCA2.pem /etc/ssl/certs/VA-Internal-S2-RCA2.cer.pem
 
       - name: Download production build
         run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
