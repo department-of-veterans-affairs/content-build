@@ -1107,7 +1107,9 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeFeedbackButton": false
+      "includeFeedbackButton": false,
+      "noFooterLinks": true,
+      "noFooterLanguageAssistance": true
     }
   },
   {
