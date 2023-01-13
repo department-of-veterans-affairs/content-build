@@ -15,6 +15,10 @@ const generateSidebarLocation = (lovellVariant, label, urlString) => ({
   },
   links: [],
 });
+const generateVaSidebarLocation = label =>
+  generateSidebarLocation('va', label, `va-location-${label}`);
+const generateTricareSidebarLocation = label =>
+  generateSidebarLocation('tricare', label, `tricare-location-${label}`);
 
 /**
  * Generates a sidebar menu tree for testing
@@ -38,8 +42,8 @@ export default (vaLocationCount, tricareLocationCount) => {
     'va',
     'Locations',
   );
-  vaLocations.links = [...Array(vaLocationCount)].map((item, i) =>
-    generateSidebarLocation('va', i + 1, `va-location-${i + 1}`),
+  vaLocations.links = [...Array(vaLocationCount)].map((_item, i) =>
+    generateVaSidebarLocation(i + 1),
   );
 
   const tricareLocations = findSidebarMenuLinkBySectionAndOptionalLabel(
@@ -47,8 +51,8 @@ export default (vaLocationCount, tricareLocationCount) => {
     'tricare',
     'Locations',
   );
-  tricareLocations.links = [...Array(tricareLocationCount)].map((item, i) =>
-    generateSidebarLocation('tricare', i + 1, `tricare-location-${i + 1}`),
+  tricareLocations.links = [...Array(tricareLocationCount)].map((_item, i) =>
+    generateTricareSidebarLocation(i + 1),
   );
 
   return sidebar;
