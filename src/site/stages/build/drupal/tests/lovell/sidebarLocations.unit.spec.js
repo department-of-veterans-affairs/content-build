@@ -7,7 +7,7 @@ import {
 } from './utils';
 import generateSidebar from './fixtures/generateSidebar';
 
-const getSidebarProperty = (drupalData, lovellVariant) =>
+const getSidebarQuery = (drupalData, lovellVariant) =>
   lovellVariant === 'va'
     ? drupalData.data?.vaLovellFederalVaHealthCareFacilitySidebarQuery
     : drupalData.data?.vaLovellFederalTricareHealthCareFacilitySidebarQuery;
@@ -32,7 +32,7 @@ const getLocationList = (sidebarProperty, lovellVariant) => {
 };
 
 const expectLocationListToBe = (drupalData, lovellVariant, expectedList) => {
-  const sidebarProperty = getSidebarProperty(drupalData, lovellVariant);
+  const sidebarProperty = getSidebarQuery(drupalData, lovellVariant);
   const locationList = getLocationList(sidebarProperty, lovellVariant);
   expect(sidebarProperty).to.exist;
   expect(locationList).to.exist;
