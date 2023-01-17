@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
 const commandLineArgs = require('command-line-args');
 const fs = require('fs');
 const glob = require('glob');
