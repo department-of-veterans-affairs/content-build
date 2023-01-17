@@ -47,9 +47,9 @@
       this global file which will define all web components. Instead, they will manually
       define a subset of web components which are used in their application
     {% endcomment %}
-    {% if !useLocalStylesAndComponents%}
+    {% unless useLocalStylesAndComponents %}
       <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
-    {% endif %}
+    {% endunless %}
   {% endif %}
 
   <!-- Render GA template. -->
