@@ -6,6 +6,8 @@ const {
   LOVELL_VA_LINK_VARIATION,
   LOVELL_TRICARE_LINK_VARIATION,
   isLovellFederalPage,
+  getLovellUrl,
+  getLovellFormOfUrl,
   resetToFederalUrlIfNeeded,
 } = require('./helpers');
 
@@ -36,19 +38,13 @@ function getLovellVariantPath(vars) {
     pagePath = resetToFederalUrlIfNeeded(page.entityUrl.path, variant);
   }
 
-  return pagePath.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${linkVar}-health-care`,
-  );
+  return getLovellFormOfUrl(pagePath, linkVar);
 }
 
 function getLovellCanonicalLink(vars) {
   const { page } = vars;
 
-  return page.entityUrl.path.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-va-health-care`,
-  );
+  return getLovellFormOfUrl(page.entityUrl.path, LOVELL_VA_LINK_VARIATION);
 }
 
 function getLovellSwitchPath(vars) {
@@ -58,22 +54,15 @@ function getLovellSwitchPath(vars) {
   const oppositeVariant =
     variant === 'va' ? LOVELL_TRICARE_LINK_VARIATION : LOVELL_VA_LINK_VARIATION;
   const isVariantUrl =
-    page.entityUrl.path.includes(
-      `/lovell-federal-${LOVELL_TRICARE_LINK_VARIATION}-health-care`,
-    ) ||
-    page.entityUrl.path.includes(
-      `/lovell-federal-${LOVELL_VA_LINK_VARIATION}-health-care`,
-    );
+    page.entityUrl.path.includes(getLovellUrl(LOVELL_TRICARE_LINK_VARIATION)) ||
+    page.entityUrl.path.includes(getLovellUrl(LOVELL_VA_LINK_VARIATION));
 
   if (isVariantUrl) {
     return page.entityUrl.path.replace(currentVariant, oppositeVariant);
   }
 
   // If not a variant page, gets switch link option for federal pages
-  return page.entityUrl.path.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${oppositeVariant}-health-care`,
-  );
+  return getLovellFormOfUrl(page.entityUrl.path, oppositeVariant);
 }
 
 function getLovellBreadcrumbs(vars) {
@@ -88,7 +77,7 @@ function getLovellBreadcrumbs(vars) {
     // eslint-disable-next-line no-param-reassign
     crumb.url.path = crumb.url.path.replace(
       /\/lovell-federal-(va-)?health-care/,
-      `/lovell-federal-${linkVar}-health-care`,
+      getLovellUrl(linkVar),
     );
     return crumb;
   });
@@ -113,6 +102,7 @@ function getLovellVariantTitle(title, vars) {
 
 module.exports = {
   getLovellPageVariables,
+  getLovellFormOfUrl,
   getLovellVariantPath,
   getLovellCanonicalLink,
   getLovellSwitchPath,

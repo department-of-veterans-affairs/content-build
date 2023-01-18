@@ -11,10 +11,12 @@ const {
   LOVELL_TRICARE_TITLE_VARIATION,
   LOVELL_VA_LINK_VARIATION,
   LOVELL_TRICARE_LINK_VARIATION,
+  LOVELL_BASE_URL,
   isLovellFederalPage,
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
+  getLovellFormOfUrl,
   resetToFederalUrlIfNeeded,
 } = require('./lovell/helpers');
 
@@ -75,11 +77,9 @@ function lovellMenusModifyLinks(link) {
       `${LOVELL_TITLE_STRING} ${titleVar}`,
     );
 
-    link.url.path = resetToFederalUrlIfNeeded(link.url.path, variant);
-
-    link.url.path = link.url.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-${linkVar}-health-care`,
+    link.url.path = getLovellFormOfUrl(
+      resetToFederalUrlIfNeeded(link.url.path, variant),
+      linkVar,
     );
   }
 
@@ -129,7 +129,7 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
   // Change the root level item
   // It's coming in from the cms as a va item when it should be both
   lovellCloneMenu.links[0].label = 'Lovell Federal Health Care';
-  lovellCloneMenu.links[0].url.path = '/lovell-federal-health-care';
+  lovellCloneMenu.links[0].url.path = LOVELL_BASE_URL;
   lovellCloneMenu.links[0].entity.fieldMenuSection = 'both';
 
   // Use recursion to Filter and Modify labels and paths of those links

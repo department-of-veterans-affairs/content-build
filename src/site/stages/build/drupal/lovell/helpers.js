@@ -7,6 +7,7 @@ const LOVELL_VA_TITLE_VARIATION = 'VA';
 const LOVELL_TRICARE_TITLE_VARIATION = 'TRICARE';
 const LOVELL_VA_LINK_VARIATION = 'va';
 const LOVELL_TRICARE_LINK_VARIATION = 'tricare';
+const LOVELL_BASE_URL = '/lovell-federal-health-care';
 
 function isLovellFederalPage(page) {
   return (
@@ -34,13 +35,21 @@ function isListingPage(page) {
   return listingPageTypes.includes(page.entityBundle);
 }
 
+function getLovellUrl(urlVar) {
+  return `/lovell-federal-${urlVar}-health-care`;
+}
+
+function getLovellFormOfUrl(url, urlVar) {
+  return url.replace(LOVELL_BASE_URL, getLovellUrl(urlVar));
+}
+
 function resetToFederalUrlIfNeeded(path, variant) {
   const oppositeVariant =
     variant === 'va' ? LOVELL_TRICARE_LINK_VARIATION : LOVELL_VA_LINK_VARIATION;
-  const reverseUrl = `/lovell-federal-${oppositeVariant}-health-care`;
+  const reverseUrl = getLovellUrl(oppositeVariant);
 
   if (path.includes(reverseUrl)) {
-    return path.replace(reverseUrl, `/lovell-federal-health-care`);
+    return path.replace(reverseUrl, LOVELL_BASE_URL);
   }
 
   return path;
@@ -56,9 +65,11 @@ module.exports = {
   LOVELL_TRICARE_TITLE_VARIATION,
   LOVELL_VA_LINK_VARIATION,
   LOVELL_TRICARE_LINK_VARIATION,
+  LOVELL_BASE_URL,
   isLovellFederalPage,
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
+  getLovellFormOfUrl,
   resetToFederalUrlIfNeeded,
 };
