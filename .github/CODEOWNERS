@@ -7,7 +7,7 @@
 # https://github.com/department-of-veterans-affairs/va.gov-team/blob/master/platform/engineering/codeowners.md
 
 # VSP
-*       @department-of-veterans-affairs/va-platform-cop-frontend
+*       @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
 
 # Content release
 .github/workflows/content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
