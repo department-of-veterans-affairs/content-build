@@ -50,7 +50,7 @@ jobs:
       matrix: ${{ fromJson(needs.set-environment.outputs.environment) }}
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
 
     steps:
       - name: Checkout
