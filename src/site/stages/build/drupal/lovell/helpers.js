@@ -35,6 +35,10 @@ function isListingPage(page) {
   return listingPageTypes.includes(page.entityBundle);
 }
 
+function getLovellTitle(variant) {
+  return `${LOVELL_TITLE_STRING} ${variant}`;
+}
+
 function getLovellUrl(urlVar) {
   return `/lovell-federal-${urlVar}-health-care`;
 }
@@ -70,6 +74,7 @@ module.exports = {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
+  getLovellTitle,
   getLovellFormOfUrl,
   resetToFederalUrlIfNeeded,
 };

@@ -6,6 +6,7 @@ const {
   LOVELL_VA_LINK_VARIATION,
   LOVELL_TRICARE_LINK_VARIATION,
   isLovellFederalPage,
+  getLovellTitle,
   getLovellUrl,
   getLovellFormOfUrl,
   resetToFederalUrlIfNeeded,
@@ -72,7 +73,7 @@ function getLovellBreadcrumbs(vars) {
     // eslint-disable-next-line no-param-reassign
     crumb.text = crumb.text.replace(
       /Lovell Federal (VA )?health care/,
-      `${LOVELL_TITLE_STRING} ${variantName} health care`,
+      getLovellTitle(variantName),
     );
     // eslint-disable-next-line no-param-reassign
     crumb.url.path = crumb.url.path.replace(
@@ -91,13 +92,10 @@ function getLovellVariantTitle(title, vars) {
       .toLowerCase()
       .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
   ) {
-    return title.replace(regexNeedle, `${LOVELL_TITLE_STRING} ${variantName}`);
+    return title.replace(regexNeedle, getLovellTitle(variantName));
   }
 
-  return title.replace(
-    `${LOVELL_TITLE_STRING}`,
-    `${LOVELL_TITLE_STRING} ${variantName}`,
-  );
+  return title.replace(`${LOVELL_TITLE_STRING}`, getLovellTitle(variantName));
 }
 
 module.exports = {
