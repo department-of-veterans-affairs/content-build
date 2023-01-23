@@ -25,8 +25,11 @@
                          autocomplete="email"
                          class="vads-u-width--full
                                 medium-screen:vads-u-width-auto" />
+                  <!--Uncomment custom event and delete generic event when analytics team implelements custom-->
+                  <!-- <button
+                    onclick="recordEvent({ event: 'homepage-email-sign-up', action: 'Homepage email sign up' })" -->
                   <button
-                    onclick="recordEvent({ event: 'homepage-email-sign-up', action: 'Homepage email sign up' })"
+                    onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Sign up',  });"
                     type="submit"
                     class="vads-u-width--full
                           medium-screen:vads-u-width--auto
