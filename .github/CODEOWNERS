@@ -1,21 +1,21 @@
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence,
-#  @department-of-veterans-affairs/platform-release-tools will be requested for
+#  @department-of-veterans-affairs/va-platform-cop-frontend will be requested for
 # review when someone opens a pull request.
 #
 # Review the CODEOWNERS guide before editing:
 # https://github.com/department-of-veterans-affairs/va.gov-team/blob/master/platform/engineering/codeowners.md
 
 # VSP
-*       @department-of-veterans-affairs/platform-release-tools
+*       @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
 
 # Content release
-.github/workflows/content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
-.github/workflows/request-content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
+.github/workflows/content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
+.github/workflows/request-content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
 .github/workflows/deploy-content-preview-server.yml @department-of-veterans-affairs/cms-infrastructure
-.github/workflows/wait-for-cms-ready @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
-.github/workflows/record-release-interval @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
-script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/platform-release-tools
+.github/workflows/wait-for-cms-ready @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
+.github/workflows/record-release-interval @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
+script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
 
 # VSP QA Standards
 src/platform/testing/e2e/ @department-of-veterans-affairs/qa-standards
@@ -38,3 +38,6 @@ src/site/paragraphs/facilities @department-of-veterans-affairs/vsa-facilities-fr
 
 # GraphQL Queries
 src/site/stages/build/drupal @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/cms-infrastructure
+
+# Site Assets
+src/site/assets/robots.txt @department-of-veterans-affairs/vsa-public-websites-frontend

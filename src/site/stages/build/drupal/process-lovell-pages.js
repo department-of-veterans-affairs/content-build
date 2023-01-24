@@ -40,6 +40,18 @@ function isListingPage(page) {
   return listingPageTypes.includes(page.entityBundle);
 }
 
+function resetToFederalUrlIfNeeded(path, variant) {
+  const oppositeVariant =
+    variant === 'va' ? LOVELL_TRICARE_LINK_VARIATION : LOVELL_VA_LINK_VARIATION;
+  const reverseUrl = `/lovell-federal-${oppositeVariant}-health-care`;
+
+  if (path.includes(reverseUrl)) {
+    return path.replace(reverseUrl, `/lovell-federal-health-care`);
+  }
+
+  return path;
+}
+
 function getModifiedLovellPage(page, variant) {
   const fieldOfficeMod =
     variant === 'va'
@@ -47,6 +59,14 @@ function getModifiedLovellPage(page, variant) {
       : LOVELL_TRICARE_TITLE_VARIATION;
   const linkVar =
     variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
+
+  // Fix any incorrect URLs based on the variant
+  if (isLovellFederalPage(page)) {
+    page.entityUrl.path = resetToFederalUrlIfNeeded(
+      page.entityUrl.path,
+      variant,
+    );
+  }
 
   // Add a field for canonical if it has a clone and it's a tricare variant
   if (variant === 'tricare' && isLovellFederalPage(page)) {
@@ -183,6 +203,8 @@ function lovellMenusModifyLinks(link) {
       LOVELL_TITLE_STRING,
       `${LOVELL_TITLE_STRING} ${titleVar}`,
     );
+
+    link.url.path = resetToFederalUrlIfNeeded(link.url.path, variant);
 
     link.url.path = link.url.path.replace(
       '/lovell-federal-health-care',
@@ -444,5 +466,7 @@ function processLovellPages(drupalData) {
 }
 
 module.exports = {
+  isLovellTricarePage,
+  isLovellVaPage,
   processLovellPages,
 };
