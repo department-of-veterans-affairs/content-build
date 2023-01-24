@@ -33,8 +33,6 @@ function getModifiedLovellPage(page, variant) {
 
   page.title = getLovellVariantTitle(page.title, pageVars);
   page.entityUrl.path = getLovellVariantPath(pageVars);
-
-  // Could be switched with the same hard set with the opposite variant?
   page.entityUrl.switchPath = getLovellSwitchPath(pageVars);
 
   if (variant === 'tricare' && isLovellFederalPage(page)) {

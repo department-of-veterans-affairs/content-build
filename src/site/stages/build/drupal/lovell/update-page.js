@@ -39,19 +39,9 @@ function getLovellCanonicalLink(vars) {
 
 function getLovellSwitchPath(vars) {
   const { page, variant } = vars;
-  const currentVariant =
-    variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
   const oppositeVariant =
     variant === 'va' ? LOVELL_TRICARE_LINK_VARIATION : LOVELL_VA_LINK_VARIATION;
-  const isVariantUrl =
-    page.entityUrl.path.includes(getLovellUrl(LOVELL_TRICARE_LINK_VARIATION)) ||
-    page.entityUrl.path.includes(getLovellUrl(LOVELL_VA_LINK_VARIATION));
 
-  if (isVariantUrl) {
-    return page.entityUrl.path.replace(currentVariant, oppositeVariant);
-  }
-
-  // If not a variant page, gets switch link option for federal pages
   return getLovellVariantOfUrl(page.entityUrl.path, oppositeVariant);
 }
 
