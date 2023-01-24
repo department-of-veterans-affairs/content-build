@@ -20,7 +20,9 @@
           </div>
         {% endif %}
 
-        {% if serviceTaxonomy.description.processed %}
+        {% if serviceSection.name == "Lovell - TRICARE" and serviceTaxonomy.fieldTricareDescription %}
+          <div>{{ serviceTaxonomy.fieldTricareDescription }}</div>
+        {% elsif serviceTaxonomy.description.processed %}
           <div>{{ serviceTaxonomy.description.processed }}</div>
         {% endif %}
 

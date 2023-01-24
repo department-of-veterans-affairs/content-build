@@ -36,7 +36,14 @@ const policiesPageFragment = `
           title
         }
       }
-    }    
+    }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    } 
   }
 `;
 

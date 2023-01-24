@@ -1,0 +1,15 @@
+{% if entityUrl.switchPath %}
+  {% if entityUrl.switchPath contains "tricare" %}
+    {% assign currentPageVariation = "VA" %}
+    {% assign switchPageVariation = "TRICARE" %}
+  {% else %}
+    {% assign currentPageVariation = "TRICARE" %}
+    {% assign switchPageVariation = "VA" %}
+  {% endif %}
+
+  <va-alert status="info" class="vads-u-margin-bottom--2" id="va-info-alert">
+    <div class="vads-u-margin-top--0">
+      <strong>You are viewing this page as a {{ currentPageVariation }} beneficiary.</strong> <a href="{{ entityUrl.switchPath }}">View this page as a {{ switchPageVariation }} beneficiary <i aria-hidden="true" class="fas fa-angle-right"></i></a>
+    </div>
+  </va-alert>
+{% endif %}

@@ -26,6 +26,12 @@ function camelize(str) {
   return camelCase(str);
 }
 
+// Pascalcase a string
+function pascalize(str) {
+  const camelized = camelize(str);
+  return camelized[0].toUpperCase() + camelized.substring(1);
+}
+
 // Remove all underscores from body of string and then prepend an underscore if string starts with number
 function updateQueryString(matchedString) {
   const findUnderscores = new RegExp('_', 'g');
@@ -39,4 +45,5 @@ module.exports = {
   updateQueryString,
   queryParamToBeChanged,
   camelize,
+  pascalize,
 };

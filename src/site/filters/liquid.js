@@ -109,6 +109,34 @@ module.exports = function registerFilters() {
 
   liquid.filters.formatDate = (dt, format) => prettyTimeFormatted(dt, format);
 
+  liquid.filters.buildTopicList = topics => {
+    if (!topics) return null;
+    return topics.reduce((topicArray, current) => {
+      current.fieldLcCategories.forEach(passedEntity => {
+        if (
+          !topicArray.some(
+            givenEntity => givenEntity.name === passedEntity.entity?.name,
+          )
+        ) {
+          topicArray.push(passedEntity.entity);
+        }
+      });
+      return topicArray;
+    }, []);
+  };
+
+  liquid.filters.buildTopicsString = topics => {
+    if (!topics) return null;
+    const fieldTopicIdArray = topics.map(topic => {
+      return topic.entity.fieldTopicId;
+    });
+    return fieldTopicIdArray.join(' ');
+  };
+
+  liquid.filters.alphabetizeList = items => {
+    return _.orderBy(items, [item => item?.name?.toLowerCase()], ['asc']);
+  };
+
   liquid.filters.drupalToVaPath = content => {
     let replaced = content;
     if (content) {
@@ -136,6 +164,23 @@ module.exports = function registerFilters() {
     }
 
     return replaced;
+  };
+
+  liquid.filters.filterCollapsibleHeaderLevels = id => {
+    const targetH3IDs = [
+      '111299',
+      '112708',
+      '112719',
+      '112728',
+      '112732',
+      '113302',
+      '113309',
+      '113323',
+      '113332',
+      '7153',
+      '37238',
+    ];
+    return targetH3IDs.includes(id);
   };
 
   liquid.filters.dateFromUnix = (dt, format, tz = 'America/New_York') => {
@@ -1110,10 +1155,9 @@ module.exports = function registerFilters() {
     }
 
     // Ensure path ends with a trailing slash.
-    if (!formattedPath?.endsWith('/') && !formattedPath?.endsWith('*')) {
+    if (!formattedPath?.endsWith('/')) {
       formattedPath = `${formattedPath}/`;
     }
-
     return formattedPath;
   };
 
@@ -1126,15 +1170,15 @@ module.exports = function registerFilters() {
     // Format the current path.
     const formattedCurrentPath = liquid.filters.formatPath(currentPath);
 
+    // Format the targets paths
+    const formattedTargetPaths = targetPaths.map(liquid.filters.formatPath);
+
     // Derive exception paths.
-    const exceptionPaths = targetPaths
+    const exceptionPaths = formattedTargetPaths
       ?.filter(path => path?.startsWith('!'))
       ?.map(path => {
         // Replace the first ! operator.
-        const formattedExceptionPath = path?.replace('!', '');
-
-        // Format the exception path.
-        return liquid.filters.formatPath(formattedExceptionPath);
+        return path?.replace('!', '');
       });
 
     // The banner is not visible if it's an exact exception match.
@@ -1145,7 +1189,7 @@ module.exports = function registerFilters() {
     // Derive exception catch-all paths.
     const exceptionCatchAllPaths = exceptionPaths
       ?.filter(exceptionPath => exceptionPath?.includes('*'))
-      ?.map(exceptionPath => exceptionPath.replace('*', ''));
+      ?.map(exceptionPath => exceptionPath.replace(/\*\/?$/gm, ''));
 
     // Derive if this page is under a catch-all exception path.
     const isExceptionCatchAllPath = exceptionCatchAllPaths?.some(
@@ -1160,14 +1204,14 @@ module.exports = function registerFilters() {
     }
 
     // If it's an exact match and not an exception, the banner is visible.
-    if (targetPaths?.includes(formattedCurrentPath)) {
+    if (formattedTargetPaths?.includes(formattedCurrentPath)) {
       return true;
     }
 
     // Derive catch-all paths.
-    const catchAllTargetPaths = targetPaths
+    const catchAllTargetPaths = formattedTargetPaths
       ?.filter(path => path?.includes('*') && !path?.startsWith('!'))
-      ?.map(catchAllPath => catchAllPath.replace('*', ''));
+      ?.map(catchAllPath => catchAllPath.replace(/\*\/?$/gm, ''));
 
     // Derive if this page is under a catch-all target path.
     const isCatchAllPath = catchAllTargetPaths?.some(
@@ -1302,27 +1346,33 @@ module.exports = function registerFilters() {
     return sidebarData;
   };
 
-  liquid.filters.topTaskUrl = (flag, path) => {
-    if (flag === 'cerner' && path === 'refill-track-prescriptions/') {
-      return 'https://patientportal.myhealth.va.gov/pages/medications/current';
+  liquid.filters.topTaskUrl = (flag, path, buildtype) => {
+    const isNotProd = buildtype !== 'vagovprod';
+
+    // If cerner, or if cerner-staged in a non-prod environment
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (path === 'refill-track-prescriptions/') {
+        return 'https://patientportal.myhealth.va.gov/pages/medications/current';
+      }
+
+      if (path === 'secure-messaging/') {
+        return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
+      }
+
+      if (path === 'schedule-view-va-appointments/') {
+        return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
+      }
+
+      if (path === 'get-medical-records/') {
+        return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
+      }
+
+      if (path === 'view-test-and-lab-results/') {
+        return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
+      }
     }
 
-    if (flag === 'cerner' && path === 'secure-messaging/') {
-      return 'https://patientportal.myhealth.va.gov/pages/messaging/inbox';
-    }
-
-    if (flag === 'cerner' && path === 'schedule-view-va-appointments/') {
-      return 'https://patientportal.myhealth.va.gov/pages/scheduling/upcoming';
-    }
-
-    if (flag === 'cerner' && path === 'get-medical-records/') {
-      return 'https://patientportal.myhealth.va.gov/pages/health_record/clinical_documents/open_notes?pagelet=https%3A%2F%2Fportal.myhealth.va.gov%2Fperson%2F1056308125V679416%2Fhealth-record%2Fopen-notes';
-    }
-
-    if (flag === 'cerner' && path === 'view-test-and-lab-results/') {
-      return 'https://patientportal.myhealth.va.gov/pages/health_record/results';
-    }
-
+    // Vista equivalent
     return `/health-care/${path}`;
   };
 
@@ -1453,29 +1503,29 @@ module.exports = function registerFilters() {
     return null;
   };
 
-  liquid.filters.officeHoursDayFormatter = day => {
+  liquid.filters.officeHoursDayFormatter = (day, short = true) => {
     let formattedDay = '';
     switch (day) {
       case 0:
-        formattedDay = `Sun`;
+        formattedDay = short ? `Sun` : `Sunday`;
         break;
       case 1:
-        formattedDay = `Mon`;
+        formattedDay = short ? `Mon` : 'Monday';
         break;
       case 2:
-        formattedDay = `Tue`;
+        formattedDay = short ? `Tue` : 'Tuesday';
         break;
       case 3:
-        formattedDay = `Wed`;
+        formattedDay = short ? `Wed` : 'Wednesday';
         break;
       case 4:
-        formattedDay = `Thu`;
+        formattedDay = short ? `Thu` : 'Thursday';
         break;
       case 5:
-        formattedDay = `Fri`;
+        formattedDay = short ? `Fri` : 'Friday';
         break;
       case 6:
-        formattedDay = `Sat`;
+        formattedDay = short ? `Sat` : 'Saturday';
         break;
 
       default:
@@ -1489,4 +1539,47 @@ module.exports = function registerFilters() {
       .format('h:mm a')
       .replace(`am`, `a.m.`)
       .replace(`pm`, `p.m.`);
+
+  liquid.filters.deriveTimeForJSONLD = (time, timetype, comment) => {
+    if (comment === '24/7') {
+      if (timetype === 'endhours') {
+        return '23:59:59';
+      }
+      if (timetype === 'starthours') {
+        return '00:00:00';
+      }
+    }
+    if (time === null) {
+      return '';
+    }
+    return moment(time, 'Hmm').format('HH:mm:ss');
+  };
+
+  liquid.filters.officeHoursDataFormat = data => {
+    const formattedData = [];
+    for (let i = 0; i < 7; i++) {
+      let day = {
+        day: i,
+        starthours: null,
+        endhours: null,
+        comment: 'Closed',
+      };
+      data.forEach(item => {
+        if (item.day === i) {
+          day = {
+            day: item.day,
+            starthours: item.starthours,
+            endhours: item.endhours,
+            comment: item.comment,
+          };
+        }
+      });
+      formattedData.push(day);
+    }
+
+    return [
+      ...formattedData.filter(a => a.day !== 0),
+      ...formattedData.filter(a => a.day === 0),
+    ];
+  };
 };

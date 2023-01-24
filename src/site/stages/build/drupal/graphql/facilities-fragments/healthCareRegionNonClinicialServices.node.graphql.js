@@ -93,6 +93,13 @@ module.exports = `
                     }
                   }
                 }
+                fieldAdministration {
+                  entity{
+                    ... on TaxonomyTermAdministration {
+                      entityId
+                    }
+                  }
+                }
               }
             }
           }

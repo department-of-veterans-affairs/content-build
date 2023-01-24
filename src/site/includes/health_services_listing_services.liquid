@@ -8,6 +8,7 @@
       <va-accordion bordered>
       {% for service in servicesListOrderedByName %}
         {% include "src/site/facilities/health_service.drupal.liquid" with
+          section
           healthService = service
           sectionName = typeOfCare
         %}

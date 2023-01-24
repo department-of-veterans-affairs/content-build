@@ -40,7 +40,7 @@ const vamcOperatingStatusAndAlerts = `
       title
     }
     fieldOperatingStatusEmergInf {
-      value
+      processed
     }
     fieldBannerAlert {
       entity {
@@ -70,6 +70,13 @@ const vamcOperatingStatusAndAlerts = `
           fieldBody {
             processed
           }
+        }
+      }
+    }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
         }
       }
     }

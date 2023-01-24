@@ -15,6 +15,7 @@ const numberCallout = require('./paragraph-fragments/numberCallout.paragraph.gra
 const phoneNumber = require('./paragraph-fragments/phoneNumber.paragraph.graphql');
 const process = require('./paragraph-fragments/process.paragraph.graphql');
 const qa = require('./paragraph-fragments/qa.paragraph.graphql');
+const qaGroup = require('./paragraph-fragments/qaGroup.paragraph.graphql');
 const qaSection = require('./paragraph-fragments/qaSection.paragraph.graphql');
 const reactWidget = require('./paragraph-fragments/reactWidget.paragraph.graphql');
 const richTextCharLimit1000 = require('./paragraph-fragments/richTextCharLimit1000.paragraph.graphql');
@@ -53,6 +54,7 @@ const ALL_FRAGMENTS = `
   ${promo}
   ${qaSection}
   ${qa}
+  ${qaGroup}
   ${reactWidget}
   ${richTextCharLimit1000}
   ${spanishSummary}
@@ -87,6 +89,7 @@ module.exports = {
   promo,
   qaSection,
   qa,
+  qaGroup,
   reactWidget,
   richTextCharLimit1000,
   spanishSummary,

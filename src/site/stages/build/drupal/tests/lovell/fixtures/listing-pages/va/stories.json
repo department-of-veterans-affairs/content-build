@@ -1,0 +1,133 @@
+{
+  "entityBundle": "story_listing",
+  "entityId": "49631",
+  "entityPublished": true,
+  "title": "Stories",
+  "vid": 736018,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/lovell-federal-health-care", "routed": true },
+        "text": "Lovell Federal health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "NEWS AND EVENTS" },
+      { "url": { "path": "", "routed": true }, "text": "Stories" }
+    ],
+    "path": "/lovell-federal-va-health-care/stories"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaLink",
+      "key": "image_src",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Stories | Lovell Federal VA health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Lovell Federal VA health care top stories."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Stories | Lovell Federal VA health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Lovell Federal VA health care top stories."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image:alt",
+      "value": "U.S. Department of Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Lovell Federal VA health care top stories."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Stories | Lovell Federal VA health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image:alt",
+      "value": "U.S. Department of Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    }
+  ],
+  "fieldIntroText": "Lovell Federal VA health care top stories.",
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "entityId": "49931",
+        "title": "TEST story for VA Lovell",
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-va-health-care/stories/test-story-for-va-lovell"
+        },
+        "uid": {
+          "targetId": 1215,
+          "entity": {
+            "name": "Steve.Wirt@civicactions.com",
+            "timezone": null
+          }
+        },
+        "promote": false,
+        "created": 1664741589,
+        "fieldAuthor": {
+          "entity": {
+            "title": "Jill Vinge",
+            "fieldDescription": "Caregiver Support Coordinator"
+          }
+        },
+        "fieldImageCaption": null,
+        "fieldIntroText": "This is a goodish story for now.",
+        "fieldMedia": null,
+        "fieldFullStory": {
+          "processed": "<html><head></head><body><p>This is a fun little story, but still important.</p></body></html>"
+        }
+      }
+    ]
+  },
+  "fieldOffice": {
+    "targetId": 49451,
+    "entity": {
+      "title": "Lovell Federal VA health care",
+      "entityLabel": "Lovell Federal VA health care"
+    }
+  },
+  "fieldAdministration": { "entity": { "entityId": "1040" } }
+}

@@ -1,26 +1,19 @@
 {% for entity in bannerAlert.entities %}
   {% assign hideOnSubpages = entity.fieldAlertInheritanceSubpages %}
   {% assign alertType = entity.fieldAlertType %}
-
   {% if alertType == "information" %}
     {% assign alertType = "info" %}
   {% endif %}
-
   {% if entityUrl.path %}
     {% assign region = entityUrl.path | regionBasePath | prepend: "/" %}
     {% assign lastArg = entityUrl.path | split: "/" | last | prepend: "/" %}
   {% endif %}
-
   {% assign outputStatus = false %}
   {% assign emailUpdates = "" %}
   {% assign statusUrl = "" %}
-
   {% for vamc in entity.fieldBannerAlertVamcs %}
-
     {% if region == vamc.entity.fieldOffice.entity.entityUrl.path %}
-
       {% assign outputStatus = true %}
-
       {% if hideOnSubpages == true and lastArg != region and lastArg != "/operating-status" %}
         {% assign outputStatus = false %}
       {% endif %}
@@ -28,7 +21,6 @@
       {% assign statusUrl = vamc.entity.entityUrl.path %}
     {% endif %}
   {% endfor %}
-
   {% if outputStatus == true %}
     <div data-template="components/fullwidth_banner_alerts" data-entity-id="{{ entity.entityId }}"
          aria-labelledby="usa-alert-header-text-{{ entity.entityId }}"
@@ -59,7 +51,6 @@
               }
             {% endcapture %}
             {{ entity.fieldBody.processed | trackLinks: eventData }}
-
             {% if entity.fieldAlertOperatingStatusCta == true and statusUrl.length %}
               <p>
                 <a href="{{ statusUrl }}" onclick="recordEvent({
@@ -68,14 +59,12 @@
                     });">Get updates on affected services and facilities</a>
               </p>
             {% endif %}
-
             {% if entity.fieldAlertEmailUpdatesButton == true and emailUpdates.length %}
               <p>
                 <a href="{{ emailUpdates }}">Subscribe
                   to email updates</a>
               </p>
             {% endif %}
-
             {% if entity.fieldAlertFindFacilitiesCta == true %}
               <p>
                 <a href="/find-locations">Find other VA facilities near you</a>
@@ -86,5 +75,4 @@
       </div>
     </div>
   {% endif %}
-
 {% endfor %}

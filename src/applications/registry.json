@@ -855,17 +855,6 @@
     }
   },
   {
-    "appName": "Health care Questionnaire",
-    "entryName": "questionnaire",
-    "rootUrl": "/health-care/health-questionnaires/questionnaires/answer-questions",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": false,
-      "breadcrumbs_override": []
-    }
-  },
-  {
     "appName": "eFolders",
     "entryName": "my-documents",
     "rootUrl": "/my-documents",
@@ -924,26 +913,6 @@
         {
           "path": "resources/search",
           "name": "Search results"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "Questionnaire List",
-    "entryName": "questionnaire-list",
-    "rootUrl": "/health-care/health-questionnaires/questionnaires",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "health-care/",
-          "name": "Health care"
-        },
-        {
-          "path": "health-care/health-questionnaires/questionnaires",
-          "name": "Your health questionnaires"
         }
       ]
     }
@@ -1088,7 +1057,7 @@
     "entryName": "coe-status",
     "rootUrl": "/housing-assistance/home-loans/check-coe-status/your-coe",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1102,7 +1071,7 @@
         },
         {
           "name": "Your VA home loan COE",
-          "path": "housing-assistance/home-loans/check-coe-status"
+          "path": "housing-assistance/home-loans/check-coe-status/your-coe"
         }
       ]
     }
@@ -1112,7 +1081,7 @@
     "entryName": "coe",
     "rootUrl": "/housing-assistance/home-loans/request-coe-form-26-1880",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1137,7 +1106,8 @@
     "rootUrl": "/health-care/appointment-check-in",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeFeedbackButton": false
     }
   },
   {
@@ -1146,15 +1116,17 @@
     "rootUrl": "/health-care/appointment-pre-check-in",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
-    }
+      "layout": "page-react.html",
+      "includeFeedbackButton": false
+    },
+    "useLocalStylesAndComponents": true
   },
   {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
     "rootUrl": "/education/apply-for-benefits-form-22-1990",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1178,9 +1150,9 @@
     }
   },
   {
-    "appName": "'Enrollment Verification'",
+    "appName": "Enrollment Verification",
     "entryName": "enrollment-verification",
-    "rootUrl": "/enrollment-history",
+    "rootUrl": "/education/verify-school-enrollment",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -1198,7 +1170,7 @@
   {
     "appName": "Education Letters",
     "entryName": "education-letters",
-    "rootUrl": "/education/education-letters",
+    "rootUrl": "/education/download-letters",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
@@ -1210,7 +1182,7 @@
     "entryName": "dhp-consent-flow",
     "rootUrl": "/health-care/connected-devices",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "title": "Connected Devices"
     }
@@ -1247,9 +1219,9 @@
     }
   },
   {
-    "appName": "Request a Supplemental Claim",
+    "appName": "File a Supplemental Claim",
     "entryName": "995-supplemental-claim",
-    "rootUrl": "/decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995",
+    "rootUrl": "/decision-reviews/supplemental-claim/file-supplemental-claim-form-20-0995",
     "productId": "05712241-0f46-4e84-8d3e-70a6cf412a5e",
     "template": {
       "vagovprod": false,
@@ -1265,8 +1237,8 @@
           "path": "decision-reviews/supplemental-claim"
         },
         {
-          "name": "Request a Supplemental Claim",
-          "path": "decision-reviews/supplemental-claim/request-supplemental-claim-form-20-0995"
+          "name": "File a Supplemental Claim",
+          "path": "decision-reviews/supplemental-claim/file-supplemental-claim-form-20-0995"
         }
       ]
     }
@@ -1282,10 +1254,40 @@
     }
   },
   {
+    "appName": "Apply to use transferred education benefits",
+    "entryName": "toe",
+    "rootUrl": "/education/survivor-dependent-benefits/apply-for-transferred-benefits-form-22-1990e",
+    "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "burial-poc-v6",
+    "entryName": "burial-poc-v6",
+    "rootUrl": "/burial-poc-v6",
+    "productId": "3f7db617-af4b-4d7f-b30f-f288d5756668",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "MHV Secure Messaging",
     "entryName": "secure-messaging",
     "rootUrl": "/my-health/secure-messages",
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "MHV Medical Records",
+    "entryName": "medical-records",
+    "rootUrl": "/my-health/medical-records",
+    "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

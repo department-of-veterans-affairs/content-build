@@ -26,6 +26,13 @@ const registerForCareFragment = `
     fieldOffice {
       ${healthCareRegionNonClinicialServices}
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 

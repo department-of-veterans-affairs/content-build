@@ -5,7 +5,7 @@
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const pressReleasesListingPage = `
- fragment pressReleasesListingPage on NodePressReleasesListing {
+  fragment pressReleasesListingPage on NodePressReleasesListing {
     ${entityElementsFromPages}
     fieldIntroText
     reverseFieldListingNode(limit: 500, filter: {conditions: [{field: "type", value: "press_release"}, {field: "status", value: "1", operator: EQUAL}]}) {
@@ -43,7 +43,14 @@ const pressReleasesListingPage = `
         }
       }
     }
- }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
+  }
 `;
 
 const GetNodePressReleaseListingPages = `

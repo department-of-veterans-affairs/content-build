@@ -49,7 +49,7 @@ const { cmsFeatureFlags } = global;
 const {
   updateQueryString,
   queryParamToBeChanged,
-} = require('./../../../../utilities/stringHelpers');
+} = require('../../../../utilities/stringHelpers');
 
 const nodeOffice = require('./nodeOffice.graphql');
 

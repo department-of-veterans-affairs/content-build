@@ -25,6 +25,7 @@ fragment nodeSupportResourcesDetailPage on NodeSupportResourcesDetailPage {
       ... downloadableFile
       ... embeddedImage
       ... numberCallout
+      ... qaGroup 
     }
   }
   fieldTableOfContentsBoolean
@@ -106,6 +107,7 @@ const GetNodeSupportResourcesDetailPage = `
   ${fragments.process}
   ${fragments.qaSection}
   ${fragments.qa}
+  ${fragments.qaGroup}
   ${fragments.listOfLinkTeasers}
   ${fragments.reactWidget}
   ${fragments.spanishSummary}
@@ -125,7 +127,7 @@ const GetNodeSupportResourcesDetailPage = `
       ]
     }) {
       entities {
-        ... nodeSupportResourcesDetailPage
+        ... nodeSupportResourcesDetailPage 
       }
     }
   }

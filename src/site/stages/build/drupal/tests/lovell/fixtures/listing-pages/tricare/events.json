@@ -1,0 +1,666 @@
+{
+  "entityBundle": "event_listing",
+  "entityId": "49454",
+  "entityPublished": true,
+  "title": "Events",
+  "vid": 736022,
+  "entityUrl": {
+    "breadcrumb": [
+      {
+        "url": {
+          "path": "/",
+          "routed": true
+        },
+        "text": "Home"
+      },
+      {
+        "url": {
+          "path": "/lovell-federal-health-care",
+          "routed": true
+        },
+        "text": "Lovell Federal health care"
+      },
+      {
+        "url": {
+          "path": "",
+          "routed": true
+        },
+        "text": "NEWS AND EVENTS"
+      },
+      {
+        "url": {
+          "path": "",
+          "routed": true
+        },
+        "text": "Events"
+      }
+    ],
+    "path": "/lovell-federal-tricare-health-care/events"
+  },
+  "entityMetatags": [
+    {
+      "__typename": "MetaLink",
+      "key": "image_src",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Events | Lovell Federal TRICARE health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Events | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image:alt",
+      "value": "U.S. Department of Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:description",
+      "value": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events."
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Events | Lovell Federal TRICARE health care | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image:alt",
+      "value": "U.S. Department of Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    }
+  ],
+  "changed": 1671038416,
+  "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+  "pastEvents": {
+    "entities": [
+      {
+        "changed": 1671038406,
+        "entityBundle": "event",
+        "entityId": "49921",
+        "entityPublished": true,
+        "entityMetatags": [
+          {
+            "__typename": "MetaLink",
+            "key": "image_src",
+            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "title",
+            "value": "Lovell Federal TRICARE health care | Test Event A TRICARE | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:site_name",
+            "value": "Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:title",
+            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:image:height",
+            "value": "314"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:card",
+            "value": "summary_large_image"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:site",
+            "value": "@DeptVetAffairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:title",
+            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          }
+        ],
+        "entityUrl": {
+          "path": "/lovell-federal-tricare-health-care/events/49921"
+        },
+        "title": "Test Event A TRICARE",
+        "vid": 735966,
+        "fieldAdditionalInformationAbo": null,
+        "fieldAddress": {
+          "additionalName": null,
+          "addressLine1": "",
+          "addressLine2": "",
+          "administrativeArea": "",
+          "countryCode": "US",
+          "dependentLocality": null,
+          "familyName": null,
+          "givenName": null,
+          "langcode": null,
+          "locality": "",
+          "organization": null,
+          "postalCode": null,
+          "sortingCode": null
+        },
+        "fieldBody": {
+          "format": "rich_text",
+          "processed": "<html><head></head><body><p>This is another event that should appear in TRICARE lovell.</p></body></html>",
+          "value": "<p>This is another event that should appear in TRICARE lovell.</p>\r\n"
+        },
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1666251000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/New_York",
+            "value": 1666247400
+          }
+        ],
+        "fieldDescription": null,
+        "fieldEventCost": "Free",
+        "fieldEventCta": null,
+        "fieldEventRegistrationrequired": false,
+        "fieldFacilityLocation": null,
+        "fieldFeatured": false,
+        "fieldLink": null,
+        "fieldListing": {
+          "entity": {
+            "entityBundle": "event_listing",
+            "entityId": "49454",
+            "entityType": "node",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldOffice": {
+              "entity": {
+                "entityType": "node",
+                "entityBundle": "health_care_region_page",
+                "entityId": "49011"
+              }
+            }
+          }
+        },
+        "fieldLocationHumanreadable": null,
+        "fieldLocationType": "online",
+        "fieldMedia": null,
+        "fieldMetaTags": null,
+        "fieldOrder": null,
+        "fieldUrlOfAnOnlineEvent": {
+          "uri": "https://google.com",
+          "title": ""
+        },
+        "uid": {
+          "targetId": 1215,
+          "entity": {
+            "name": "Steve.Wirt@civicactions.com",
+            "timezone": null
+          }
+        },
+        "fieldAdministration": {
+          "entity": {
+            "entityId": "1039"
+          }
+        }
+      },
+      {
+        "changed": 1671038406,
+        "entityBundle": "event",
+        "entityId": "49922",
+        "entityPublished": true,
+        "entityMetatags": [
+          {
+            "__typename": "MetaLink",
+            "key": "image_src",
+            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "title",
+            "value": "Lovell Federal TRICARE health care | Test Event B TRICARE | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:site_name",
+            "value": "Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:title",
+            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:image:height",
+            "value": "314"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:card",
+            "value": "summary_large_image"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:site",
+            "value": "@DeptVetAffairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:title",
+            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          }
+        ],
+        "entityUrl": {
+          "path": "/lovell-federal-tricare-health-care/events/49922"
+        },
+        "title": "Test Event B TRICARE",
+        "vid": 735965,
+        "fieldAdditionalInformationAbo": null,
+        "fieldAddress": {
+          "additionalName": null,
+          "addressLine1": "",
+          "addressLine2": "",
+          "administrativeArea": "",
+          "countryCode": "US",
+          "dependentLocality": null,
+          "familyName": null,
+          "givenName": null,
+          "langcode": null,
+          "locality": "",
+          "organization": null,
+          "postalCode": null,
+          "sortingCode": null
+        },
+        "fieldBody": {
+          "format": "rich_text",
+          "processed": "<html><head></head><body><p>This is another event that should appear in TRICARE lovell.</p></body></html>",
+          "value": "<p>This is another event that should appear in TRICARE lovell.</p>\r\n"
+        },
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1666269300,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/New_York",
+            "value": 1666265700
+          }
+        ],
+        "fieldDescription": null,
+        "fieldEventCost": "Free",
+        "fieldEventCta": null,
+        "fieldEventRegistrationrequired": false,
+        "fieldFacilityLocation": {
+          "entity": {
+            "entityBundle": "health_care_local_facility",
+            "entityId": "49055",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+            },
+            "title": "Captain James A. Lovell Federal Health Care Center"
+          }
+        },
+        "fieldFeatured": false,
+        "fieldLink": null,
+        "fieldListing": {
+          "entity": {
+            "entityBundle": "event_listing",
+            "entityId": "49454",
+            "entityType": "node",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldOffice": {
+              "entity": {
+                "entityType": "node",
+                "entityBundle": "health_care_region_page",
+                "entityId": "49011"
+              }
+            }
+          }
+        },
+        "fieldLocationHumanreadable": null,
+        "fieldLocationType": "facility",
+        "fieldMedia": null,
+        "fieldMetaTags": null,
+        "fieldOrder": null,
+        "fieldUrlOfAnOnlineEvent": null,
+        "uid": {
+          "targetId": 1215,
+          "entity": {
+            "name": "Steve.Wirt@civicactions.com",
+            "timezone": null
+          }
+        },
+        "fieldAdministration": {
+          "entity": {
+            "entityId": "1039"
+          }
+        }
+      }
+    ]
+  },
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "changed": 1671038406,
+        "entityBundle": "event",
+        "entityId": "49921",
+        "entityPublished": true,
+        "entityMetatags": [
+          {
+            "__typename": "MetaLink",
+            "key": "image_src",
+            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "title",
+            "value": "Lovell Federal TRICARE health care | Test Event A TRICARE | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:site_name",
+            "value": "Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:title",
+            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:image:height",
+            "value": "314"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:card",
+            "value": "summary_large_image"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:site",
+            "value": "@DeptVetAffairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:title",
+            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          }
+        ],
+        "entityUrl": {
+          "path": "/lovell-federal-tricare-health-care/events/49921"
+        },
+        "title": "Test Event A TRICARE",
+        "vid": 735966,
+        "fieldAdditionalInformationAbo": null,
+        "fieldAddress": {
+          "additionalName": null,
+          "addressLine1": "",
+          "addressLine2": "",
+          "administrativeArea": "",
+          "countryCode": "US",
+          "dependentLocality": null,
+          "familyName": null,
+          "givenName": null,
+          "langcode": null,
+          "locality": "",
+          "organization": null,
+          "postalCode": null,
+          "sortingCode": null
+        },
+        "fieldBody": {
+          "format": "rich_text",
+          "processed": "<html><head></head><body><p>This is another event that should appear in TRICARE lovell.</p></body></html>",
+          "value": "<p>This is another event that should appear in TRICARE lovell.</p>\r\n"
+        },
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1666251000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/New_York",
+            "value": 1666247400
+          }
+        ],
+        "fieldDescription": null,
+        "fieldEventCost": "Free",
+        "fieldEventCta": null,
+        "fieldEventRegistrationrequired": false,
+        "fieldFacilityLocation": null,
+        "fieldFeatured": false,
+        "fieldLink": null,
+        "fieldListing": {
+          "entity": {
+            "entityBundle": "event_listing",
+            "entityId": "49454",
+            "entityType": "node",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldOffice": {
+              "entity": {
+                "entityType": "node",
+                "entityBundle": "health_care_region_page",
+                "entityId": "49011"
+              }
+            }
+          }
+        },
+        "fieldLocationHumanreadable": null,
+        "fieldLocationType": "online",
+        "fieldMedia": null,
+        "fieldMetaTags": null,
+        "fieldOrder": null,
+        "fieldUrlOfAnOnlineEvent": {
+          "uri": "https://google.com",
+          "title": ""
+        },
+        "uid": {
+          "targetId": 1215,
+          "entity": {
+            "name": "Steve.Wirt@civicactions.com",
+            "timezone": null
+          }
+        },
+        "fieldAdministration": {
+          "entity": {
+            "entityId": "1039"
+          }
+        }
+      },
+      {
+        "changed": 1671038406,
+        "entityBundle": "event",
+        "entityId": "49922",
+        "entityPublished": true,
+        "entityMetatags": [
+          {
+            "__typename": "MetaLink",
+            "key": "image_src",
+            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "title",
+            "value": "Lovell Federal TRICARE health care | Test Event B TRICARE | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:site_name",
+            "value": "Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:title",
+            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          },
+          {
+            "__typename": "MetaProperty",
+            "key": "og:image:height",
+            "value": "314"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:card",
+            "value": "summary_large_image"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:site",
+            "value": "@DeptVetAffairs"
+          },
+          {
+            "__typename": "MetaValue",
+            "key": "twitter:title",
+            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+          }
+        ],
+        "entityUrl": {
+          "path": "/lovell-federal-tricare-health-care/events/49922"
+        },
+        "title": "Test Event B TRICARE",
+        "vid": 735965,
+        "fieldAdditionalInformationAbo": null,
+        "fieldAddress": {
+          "additionalName": null,
+          "addressLine1": "",
+          "addressLine2": "",
+          "administrativeArea": "",
+          "countryCode": "US",
+          "dependentLocality": null,
+          "familyName": null,
+          "givenName": null,
+          "langcode": null,
+          "locality": "",
+          "organization": null,
+          "postalCode": null,
+          "sortingCode": null
+        },
+        "fieldBody": {
+          "format": "rich_text",
+          "processed": "<html><head></head><body><p>This is another event that should appear in TRICARE lovell.</p></body></html>",
+          "value": "<p>This is another event that should appear in TRICARE lovell.</p>\r\n"
+        },
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1666269300,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/New_York",
+            "value": 1666265700
+          }
+        ],
+        "fieldDescription": null,
+        "fieldEventCost": "Free",
+        "fieldEventCta": null,
+        "fieldEventRegistrationrequired": false,
+        "fieldFacilityLocation": {
+          "entity": {
+            "entityBundle": "health_care_local_facility",
+            "entityId": "49055",
+            "entityType": "node",
+            "entityUrl": {
+              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+            },
+            "title": "Captain James A. Lovell Federal Health Care Center"
+          }
+        },
+        "fieldFeatured": false,
+        "fieldLink": null,
+        "fieldListing": {
+          "entity": {
+            "entityBundle": "event_listing",
+            "entityId": "49454",
+            "entityType": "node",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldOffice": {
+              "entity": {
+                "entityType": "node",
+                "entityBundle": "health_care_region_page",
+                "entityId": "49011"
+              }
+            }
+          }
+        },
+        "fieldLocationHumanreadable": null,
+        "fieldLocationType": "facility",
+        "fieldMedia": null,
+        "fieldMetaTags": null,
+        "fieldOrder": null,
+        "fieldUrlOfAnOnlineEvent": null,
+        "uid": {
+          "targetId": 1215,
+          "entity": {
+            "name": "Steve.Wirt@civicactions.com",
+            "timezone": null
+          }
+        },
+        "fieldAdministration": {
+          "entity": {
+            "entityId": "1039"
+          }
+        }
+      }
+    ]
+  },
+  "fieldOffice": {
+    "entity": {
+      "entityLabel": "Lovell Federal TRICARE health care"
+    }
+  },
+  "fieldAdministration": {
+    "entity": {
+      "entityId": "1039"
+    }
+  }
+}

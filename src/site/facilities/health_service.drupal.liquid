@@ -1,6 +1,5 @@
         {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
         <va-accordion-item
-            header="{{ serviceTaxonomy.name }}"
             {% if serviceTaxonomy.fieldAlsoKnownAs %}
                 subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
                 data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
@@ -8,13 +7,18 @@
             data-label="{{ serviceTaxonomy.name }}"
             data-template="facilities/health_service"
         >
+            <h3 slot="headline">
+                {{ serviceTaxonomy.name }}
+            </h3>
             <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
                 {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
                     <div class="vads-u-margin-bottom--2">
                         <span class="vads-u-font-style--italic">Common conditions: </span>{{ serviceTaxonomy.fieldCommonlyTreatedCondition }}
                     </div>
                 {% endif %}
-                {% if serviceTaxonomy.description.processed  %}
+                {% if section.name == "Lovell - TRICARE" and serviceTaxonomy.fieldTricareDescription %}
+                    <description>{{ serviceTaxonomy.fieldTricareDescription | phoneLinks }}</description>
+                {% elsif serviceTaxonomy.description.processed  %}
                     <description>{{ serviceTaxonomy.description.processed | phoneLinks }}</description>
                 {% endif %}
 
@@ -26,14 +30,14 @@
                             {% if location.entity.status and facility != empty %}
                                 <li class="vads-u-margin-bottom--2">
                                     <a
-                                        onclick="recordEvent(
+                                        onclick='recordEvent(
                                             {
-                                                'event': 'nav-accordion-link-click',
-                                                'accordion-parent-label': '{{ serviceTaxonomy.name }}',
-                                                'accordion-child-label': '{{ serviceTaxonomy.fieldAlsoKnownAs }}',
-                                                'accordion-section-label': '{{ sectionName }}'
+                                                "event": "nav-accordion-link-click",
+                                                "accordion-parent-label": "{{ serviceTaxonomy.name | escape }}",
+                                                "accordion-child-label": "{{ serviceTaxonomy.fieldAlsoKnownAs | escape }}",
+                                                "accordion-section-label": "{{ sectionName | escape }}"
 
-                                            })"
+                                            })'
                                         href="{{ facility.entityUrl.path }}"
                                     >
                                         {{ facility.title }}

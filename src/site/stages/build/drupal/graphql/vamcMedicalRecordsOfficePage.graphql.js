@@ -55,6 +55,13 @@ const medicalRecordsOfficeFragment = `
     fieldOffice {
       ${healthCareRegionNonClinicialServices}
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 

@@ -162,8 +162,12 @@ const nodeCampaignLandingPage = `
                     height
                   }
                   targetId
-                  alt
                   title
+                }
+              }
+              ... on MediaImage {
+                image {
+                  alt
                 }
               }
             }
@@ -200,8 +204,12 @@ const nodeCampaignLandingPage = `
                     height
                   }
                   targetId
-                  alt
                   title
+                }
+              }
+              ... on MediaImage {
+                image {
+                  alt
                 }
               }
             }
@@ -238,8 +246,12 @@ const nodeCampaignLandingPage = `
               width
             }
             targetId
-            alt
             title
+          }
+        }
+        ... on MediaImage {
+          image {
+            alt
           }
         }
       }

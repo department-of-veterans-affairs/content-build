@@ -84,7 +84,11 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
   fieldOffice {
     entity {
       ... on NodeVetCenter {
-        reverseFieldOfficeNode(limit: 500, filter: {conditions: [{field: "type", value: ["vet_center_outstation", "vet_center_cap", "vet_center_mobile_vet_center"]}]}) {
+        reverseFieldOfficeNode(limit: 500, filter: {
+          conditions: [
+            { field: "type", value: ["vet_center_outstation", "vet_center_cap", "vet_center_mobile_vet_center"] },
+            { field: "status", value: ["1"], enabled: $onlyPublishedContent }
+          ]}) {
           entities {
             ... on NodeVetCenterCap {
               title

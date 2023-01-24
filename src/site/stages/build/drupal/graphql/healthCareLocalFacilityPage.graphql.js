@@ -47,6 +47,10 @@ const healthCareLocalFacilityPageFragment = `
       administrativeArea
       postalCode
     }
+    fieldGeolocation {
+      lat
+      lon
+    }
     fieldPhoneNumber
     fieldMentalHealthPhone
     fieldOfficeHours {
@@ -101,6 +105,11 @@ const healthCareLocalFacilityPageFragment = `
           status
           ${serviceLocation}
           ${appointmentItems}
+          fieldAdministration {
+            entity {
+              name
+            }
+          }
           fieldRegionalHealthService
           {
             entity {
@@ -121,6 +130,7 @@ const healthCareLocalFacilityPageFragment = `
                       description {
                         processed
                       }
+                      fieldTricareDescription
                       parent {
                         entity {
                           ...on TaxonomyTermHealthCareServiceTaxonomy {
@@ -135,6 +145,20 @@ const healthCareLocalFacilityPageFragment = `
               }
             }
           }
+          fieldAdministration {
+            entity{
+              ... on TaxonomyTermAdministration {
+                entityId
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
         }
       }
     }

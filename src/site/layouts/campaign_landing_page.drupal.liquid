@@ -106,7 +106,7 @@
           <div class="vads-l-col--12 medium-screen:vads-l-col--4 vads-u-align-content--stretch vads-u-margin-y--1 ">
             <div class="vads-u-background-color--gray-light-alt vads-u-height--full medium-screen:vads-u-margin-x--1 medium-screen:vads-u-margin-y--0">
               <img
-                alt="{{ promo.entity.fieldImage.entity.thumbnail.alt }}"
+                alt="{{ promo.entity.fieldImage.entity.image.alt }}"
                 height="{{ promo.entity.fieldImage.entity.thumbnail.derivative.height }}"
                 src="{{ promo.entity.fieldImage.entity.thumbnail.derivative.url }}"
                 width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}"
@@ -248,7 +248,7 @@
                   <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4">
                     {% if storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.url %}
                       <img
-                        alt="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.alt }}"
+                        alt="{{ storyTeaser.entity.fieldMedia.entity.image.alt }}"
                         class="story-image vads-u-height--full medium-screen:vads-u-margin-right--2"
                         height="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.height }}"
                         src="{{ storyTeaser.entity.fieldMedia.entity.thumbnail.derivative.url }}"

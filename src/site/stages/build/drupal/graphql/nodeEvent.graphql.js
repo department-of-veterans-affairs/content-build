@@ -71,13 +71,10 @@ const nodeEvent = `
         entityBundle
         entityId
         entityType
-        ... on NodeHealthCareLocalFacility {
-          entityUrl {
-            path
-          }
-          fieldFacilityLocatorApiId
-          title
+        entityUrl {
+          path
         }
+        title
       }
     }
     fieldFeatured
@@ -155,6 +152,13 @@ const nodeEvent = `
         entity {
           name
           timezone
+        }
+      }
+    }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
         }
       }
     }
@@ -221,13 +225,10 @@ const nodeEventWithoutBreadcrumbs = `
         entityBundle
         entityId
         entityType
-        ... on NodeHealthCareLocalFacility {
-          entityUrl {
-            path
-          }
-          fieldFacilityLocatorApiId
-          title
+        entityUrl {
+          path
         }
+        title
       }
     }
     fieldFeatured
@@ -305,6 +306,13 @@ const nodeEventWithoutBreadcrumbs = `
         entity {
           name
           timezone
+        }
+      }
+    }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
         }
       }
     }

@@ -1,33 +1,23 @@
 {% include "src/site/includes/header.html" %}
 <main data-template="layouts/home" id="content">
 
-  <!-- 
-    Homepage redesign iteration (/homepage-test)
-    Date: April 2022
-    Author: allison@cityfriends.tech
-  -->
-
-  {% include "src/site/includes/hero.html" %}
-
-  {% include "src/site/includes/common-tasks.html" %}
-  {% include "src/site/includes/blog-promo.html" %}
-
-  <section id="homepage-benefits" class="vads-u-padding-y--2">
-    <div class="usa-grid usa-grid-full homepage-benefits-row">
-    <h2 class="vads-u-color--gray-dark vads-u-font-family--sans usa-width-two-thirds">Learn about and apply for VA benefits and health care</h2>
-    {% for hub in hubs %}
-      <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
-        <h2 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white vads-u-margin-right--0p5"></i>{{ hub.entity.fieldHomePageHubLabel }}</a></h2>
-        <p class="vads-u-margin-top--0">{{ hub.entity.fieldTeaserText }}</p>
+  {% include "src/site/includes/hero.drupal.liquid" with hero %}
+  {% include "src/site/includes/common-tasks.drupal.liquid" with commonTasks %}
+  {% include "src/site/includes/news-spotlight.drupal.liquid" with newsSpotlight %}
+  {% include "src/site/includes/homepage-benefits.drupal.liquid" with hubs %}
+  <!-- Medallia feedback button-->
+  <div class="usa-grid usa-grid-full">
+    <div class="last-updated vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+      <div class="vads-u-display--flex above-footer-elements-container">
+        <div class="vads-u-flex--1 vads-u-text-align--right">
+          <span class="vads-u-text-align--right">
+              {% include "src/site/includes/medallia-feedback-button.drupal.liquid" %}
+          </span>
+        </div>
       </div>
-      {% comment %} Close this row and open a new one when needed. {% endcomment %}
-      {% if hub.endRow and forloop.last != true %}
-      </div>
-      <div class="usa-grid usa-grid-full homepage-benefits-row">
-      {% endif %}
-    {% endfor %}
     </div>
-  </section>
+  </div>
+  {% include "src/site/includes/email-update-signup.drupal.liquid" %}
 
 </main> <!-- end #content -->
 

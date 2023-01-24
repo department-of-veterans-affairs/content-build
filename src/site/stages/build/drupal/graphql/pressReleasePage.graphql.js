@@ -69,6 +69,13 @@ const pressReleaseFragment = `
 
       }
     }
+    fieldAdministration {
+      entity{
+        ... on TaxonomyTermAdministration {
+          entityId
+        }
+      }
+    }
   }
 `;
 

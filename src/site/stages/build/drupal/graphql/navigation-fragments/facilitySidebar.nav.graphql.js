@@ -170,42 +170,17 @@ const FACILITY_SIDEBAR_QUERY = `
   name
   description
   links {
-    label
-    expanded
-    description
-    url {
-      path
-    }
+    ...MenuItem
     links {
-      label
-      expanded
-      description
-      url {
-        path
-      }
+      ...MenuItem
       links {
-        label
-        expanded
-        description
-        url {
-          path
-        }
+        ...MenuItem
         links {
           ...MenuItem
           links {
-            label
-            expanded
-            description
-            url {
-              path
-            }
+            ...MenuItem
             links {
-              label
-              expanded
-              description
-              url {
-                path
-              }
+              ...MenuItem
             }
           }
         }
@@ -228,24 +203,27 @@ FACILITY_MENU_NAMES.forEach(facilityMenuName => {
   compiledQuery += nextSidebar;
 
   VaFacilitySidebars[`GetFacilitySidebar__${operationName}`] = `
-  fragment MenuItem on MenuLink {
-    expanded
-    description
-    label
-    url {
-      path
-    }
-    entity {
-      ... on MenuLinkContent {
-        linkedEntity(language_fallback: true, bypass_access_check: true) {
-          ... on Node {
-            entityPublished
-            moderationState
+    fragment MenuItem on MenuLink {
+      expanded
+      description
+      label
+      url {
+        path
+      }
+      entity {
+        ... on MenuLinkContent {
+          linkedEntity(language_fallback: true, bypass_access_check: true) {
+            ... on Node {
+              entityPublished
+              moderationState
+            }
           }
+        }
+        ... on MenuLinkContentLovellFederalHealthCare {
+          fieldMenuSection
         }
       }
     }
-  }
     query {
       ${nextSidebar}
     }

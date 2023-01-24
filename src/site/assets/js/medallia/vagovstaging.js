@@ -17,7 +17,7 @@ function onsiteLoaded() {
   
 const vagovstagingsurveys = {
   "/search": 20,
-  "/virtual-agent-study": 24
+  "/contact-us/virtual-agent": 24
 }
 
 function getSurveyNumber (url) {

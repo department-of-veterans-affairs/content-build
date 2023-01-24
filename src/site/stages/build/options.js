@@ -13,6 +13,7 @@ const projectRoot = path.resolve(__dirname, '../../../../');
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
 const defaultContentDir = path.join(projectRoot, '../vagov-content/pages');
+const nextBuildDir = path.join(projectRoot, '../next-build/');
 
 const getDrupalClient = require('./drupal/api');
 const { shouldPullDrupal } = require('./drupal/metalsmith-drupal');
@@ -38,6 +39,12 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   { name: 'pull-drupal', type: Boolean, defaultValue: false },
   { name: 'drupal-fail-fast', type: Boolean, defaultValue: false },
   { name: 'setPublicPath', type: Boolean, defaultValue: false },
+  { name: 'run-next-build', type: Boolean, defaultValue: false },
+  {
+    name: 'next-build-directory',
+    type: String,
+    defaultValue: nextBuildDir,
+  },
   {
     name: 'drupal-address',
     type: String,
@@ -92,6 +99,8 @@ function gatherFromCommandLine() {
 
 function applyDefaultOptions(options) {
   const contentPagesRoot = options['content-directory'];
+  const nextBuildDirectory = options['next-build-directory'];
+  const runNextBuild = options['run-next-build'];
   const contentRoot = path.join(contentPagesRoot, '../');
 
   const siteRoot = path.join(__dirname, '../../');
@@ -108,6 +117,8 @@ function applyDefaultOptions(options) {
   Object.assign(options, {
     contentRoot,
     contentPagesRoot,
+    nextBuildDirectory,
+    runNextBuild,
     contentFragments: path.join(contentRoot, 'fragments'),
     contentAssets: {
       source: path.join(contentRoot, 'assets'),

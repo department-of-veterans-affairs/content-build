@@ -1,5 +1,8 @@
 const outreachAssets = `
-  outreachAssets: nodeQuery(filter: {conditions: [{field: "type", value: "outreach_asset", field: "status", value: ["1"], enabled: $onlyPublishedContent}]}, limit: 10000) {
+  outreachAssets: nodeQuery(filter: {conditions: [
+    { field: "type", value: "outreach_asset" },
+    { field: "status", value: ["1"], enabled: $onlyPublishedContent }
+  ]}, limit: 10000) {
     entities {
       ... on NodeOutreachAsset {
         entityId
@@ -7,10 +10,17 @@ const outreachAssets = `
         status
         changed
         fieldFormat
-        fieldBenefits
         fieldDescription
         fieldListing {
           targetId
+        }
+        fieldLcCategories {
+          entity {
+            ... on TaxonomyTermLcCategories {
+              name
+              fieldTopicId
+            }
+          }
         }
         fieldMedia {
           entity {
