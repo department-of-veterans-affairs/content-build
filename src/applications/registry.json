@@ -1110,7 +1110,8 @@
       "includeFeedbackButton": false,
       "includeBreadcrumbs": false,
       "noNavOrLogin": true,
-      "noMegamenu": true
+      "noMegamenu": true,
+      "minimalFooter": true
     }
   },
   {
@@ -1123,7 +1124,8 @@
       "includeFeedbackButton": false,
       "includeBreadcrumbs": false,
       "noNavOrLogin": true,
-      "noMegamenu": true
+      "noMegamenu": true,
+      "minimalFooter": true
     },
     "useLocalStylesAndComponents": true
   },
