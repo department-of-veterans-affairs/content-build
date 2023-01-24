@@ -43,7 +43,7 @@ function getLovellUrl(urlVar) {
   return `/lovell-federal-${urlVar}-health-care`;
 }
 
-function getLovellFormOfUrl(url, urlVar) {
+function getLovellFormOfExistingUrl(url, urlVar) {
   return url.replace(LOVELL_BASE_URL, getLovellUrl(urlVar));
 }
 
@@ -75,6 +75,6 @@ module.exports = {
   isLovellVaPage,
   isListingPage,
   getLovellTitle,
-  getLovellFormOfUrl,
+  getLovellFormOfExistingUrl,
   resetToFederalUrlIfNeeded,
 };

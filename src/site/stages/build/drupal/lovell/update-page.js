@@ -8,7 +8,7 @@ const {
   isLovellFederalPage,
   getLovellTitle,
   getLovellUrl,
-  getLovellFormOfUrl,
+  getLovellFormOfExistingUrl,
   resetToFederalUrlIfNeeded,
 } = require('./helpers');
 
@@ -39,13 +39,16 @@ function getLovellVariantPath(vars) {
     pagePath = resetToFederalUrlIfNeeded(page.entityUrl.path, variant);
   }
 
-  return getLovellFormOfUrl(pagePath, linkVar);
+  return getLovellFormOfExistingUrl(pagePath, linkVar);
 }
 
 function getLovellCanonicalLink(vars) {
   const { page } = vars;
 
-  return getLovellFormOfUrl(page.entityUrl.path, LOVELL_VA_LINK_VARIATION);
+  return getLovellFormOfExistingUrl(
+    page.entityUrl.path,
+    LOVELL_VA_LINK_VARIATION,
+  );
 }
 
 function getLovellSwitchPath(vars) {
@@ -63,7 +66,7 @@ function getLovellSwitchPath(vars) {
   }
 
   // If not a variant page, gets switch link option for federal pages
-  return getLovellFormOfUrl(page.entityUrl.path, oppositeVariant);
+  return getLovellFormOfExistingUrl(page.entityUrl.path, oppositeVariant);
 }
 
 function getLovellBreadcrumbs(vars) {
@@ -100,7 +103,7 @@ function getLovellVariantTitle(title, vars) {
 
 module.exports = {
   getLovellPageVariables,
-  getLovellFormOfUrl,
+  getLovellFormOfExistingUrl,
   getLovellVariantPath,
   getLovellCanonicalLink,
   getLovellSwitchPath,

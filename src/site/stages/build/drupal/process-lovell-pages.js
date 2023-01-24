@@ -16,7 +16,7 @@ const {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
-  getLovellFormOfUrl,
+  getLovellFormOfExistingUrl,
   resetToFederalUrlIfNeeded,
 } = require('./lovell/helpers');
 
@@ -77,7 +77,7 @@ function lovellMenusModifyLinks(link) {
       `${LOVELL_TITLE_STRING} ${titleVar}`,
     );
 
-    link.url.path = getLovellFormOfUrl(
+    link.url.path = getLovellFormOfExistingUrl(
       resetToFederalUrlIfNeeded(link.url.path, variant),
       linkVar,
     );
