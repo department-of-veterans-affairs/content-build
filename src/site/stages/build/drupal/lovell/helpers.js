@@ -39,6 +39,12 @@ function getLovellTitle(variant) {
   return `${LOVELL_TITLE_STRING} ${variant}`;
 }
 
+function getLovellTitleVariation(variant) {
+  return variant === 'va'
+    ? LOVELL_VA_TITLE_VARIATION
+    : LOVELL_TRICARE_TITLE_VARIATION;
+}
+
 function getLovellUrl(urlVar) {
   return `/lovell-federal-${urlVar}-health-care`;
 }
@@ -75,6 +81,7 @@ module.exports = {
   isLovellVaPage,
   isListingPage,
   getLovellTitle,
+  getLovellTitleVariation,
   getLovellFormOfExistingUrl,
   resetToFederalUrlIfNeeded,
 };

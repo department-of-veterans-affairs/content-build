@@ -7,16 +7,15 @@ const { camelize } = require('../../../utilities/stringHelpers');
 const {
   LOVELL_TITLE_STRING,
   LOVELL_MENU_KEY,
-  LOVELL_VA_TITLE_VARIATION,
-  LOVELL_TRICARE_TITLE_VARIATION,
   LOVELL_VA_LINK_VARIATION,
   LOVELL_TRICARE_LINK_VARIATION,
   LOVELL_BASE_URL,
   isLovellFederalPage,
   isLovellTricarePage,
-  getLovellTitle,
   isLovellVaPage,
   isListingPage,
+  getLovellTitle,
+  getLovellTitleVariation,
   getLovellFormOfExistingUrl,
   resetToFederalUrlIfNeeded,
 } = require('./lovell/helpers');
@@ -64,10 +63,7 @@ function getModifiedLovellPage(page, variant) {
 
 function lovellMenusModifyLinks(link) {
   const { variant } = this;
-  const titleVar =
-    variant === 'va'
-      ? LOVELL_VA_TITLE_VARIATION
-      : LOVELL_TRICARE_TITLE_VARIATION;
+  const titleVar = getLovellTitleVariation(variant);
   const linkVar =
     variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
 
@@ -105,10 +101,7 @@ function lovellMenusModifyLinks(link) {
 }
 
 function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
-  const titleVar =
-    variant === 'va'
-      ? LOVELL_VA_TITLE_VARIATION
-      : LOVELL_TRICARE_TITLE_VARIATION;
+  const titleVar = getLovellTitleVariation(variant);
 
   // Clone the original menu
   const lovellCloneMenu = cloneDeep(drupalData.data[lovellMenuKey]);

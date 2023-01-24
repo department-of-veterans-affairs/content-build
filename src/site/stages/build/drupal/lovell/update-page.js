@@ -1,22 +1,18 @@
 const cloneDeep = require('lodash/cloneDeep');
 const {
   LOVELL_TITLE_STRING,
-  LOVELL_VA_TITLE_VARIATION,
-  LOVELL_TRICARE_TITLE_VARIATION,
   LOVELL_VA_LINK_VARIATION,
   LOVELL_TRICARE_LINK_VARIATION,
   isLovellFederalPage,
   getLovellTitle,
+  getLovellTitleVariation,
   getLovellUrl,
   getLovellFormOfExistingUrl,
   resetToFederalUrlIfNeeded,
 } = require('./helpers');
 
 function getLovellPageVariables(page, variant) {
-  const variantName =
-    variant === 'va'
-      ? LOVELL_VA_TITLE_VARIATION
-      : LOVELL_TRICARE_TITLE_VARIATION;
+  const variantName = getLovellTitleVariation(variant);
   const pageClone = cloneDeep(page);
 
   return {
