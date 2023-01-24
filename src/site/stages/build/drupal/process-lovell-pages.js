@@ -14,6 +14,7 @@ const {
   LOVELL_BASE_URL,
   isLovellFederalPage,
   isLovellTricarePage,
+  getLovellTitle,
   isLovellVaPage,
   isListingPage,
   getLovellFormOfExistingUrl,
@@ -74,7 +75,7 @@ function lovellMenusModifyLinks(link) {
   if (link.entity.fieldMenuSection === 'both') {
     link.label = link.label.replace(
       LOVELL_TITLE_STRING,
-      `${LOVELL_TITLE_STRING} ${titleVar}`,
+      getLovellTitle(titleVar),
     );
 
     link.url.path = getLovellFormOfExistingUrl(
@@ -115,7 +116,7 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
   // Rename the name so our new cloned pages can find the cloned menu
   lovellCloneMenu.name = lovellCloneMenu.name.replace(
     LOVELL_TITLE_STRING,
-    `${LOVELL_TITLE_STRING} ${titleVar}`,
+    getLovellTitle(titleVar),
   );
 
   // Move federal health care links to the top of the menu
