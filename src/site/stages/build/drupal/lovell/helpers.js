@@ -45,24 +45,15 @@ function getLovellTitleVariation(variant) {
     : LOVELL_TRICARE_TITLE_VARIATION;
 }
 
-function getLovellUrl(urlVar) {
-  return `/lovell-federal-${urlVar}-health-care`;
+function getLovellUrl(linkVar) {
+  return `/lovell-federal-${linkVar}-health-care`;
 }
 
-function getLovellFormOfExistingUrl(url, urlVar) {
-  return url.replace(LOVELL_BASE_URL, getLovellUrl(urlVar));
-}
-
-function resetToFederalUrlIfNeeded(path, variant) {
-  const oppositeVariant =
-    variant === 'va' ? LOVELL_TRICARE_LINK_VARIATION : LOVELL_VA_LINK_VARIATION;
-  const reverseUrl = getLovellUrl(oppositeVariant);
-
-  if (path.includes(reverseUrl)) {
-    return path.replace(reverseUrl, LOVELL_BASE_URL);
-  }
-
-  return path;
+function getLovellVariantOfUrl(path, linkVar) {
+  return path.replace(
+    /\/lovell-federal(?:(?:-va|-tricare)?)-health-care/i,
+    getLovellUrl(linkVar),
+  );
 }
 
 module.exports = {
@@ -82,6 +73,6 @@ module.exports = {
   isListingPage,
   getLovellTitle,
   getLovellTitleVariation,
-  getLovellFormOfExistingUrl,
-  resetToFederalUrlIfNeeded,
+  getLovellUrl,
+  getLovellVariantOfUrl,
 };

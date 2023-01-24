@@ -16,8 +16,7 @@ const {
   isListingPage,
   getLovellTitle,
   getLovellTitleVariation,
-  getLovellFormOfExistingUrl,
-  resetToFederalUrlIfNeeded,
+  getLovellVariantOfUrl,
 } = require('./lovell/helpers');
 
 const {
@@ -34,6 +33,8 @@ function getModifiedLovellPage(page, variant) {
 
   page.title = getLovellVariantTitle(page.title, pageVars);
   page.entityUrl.path = getLovellVariantPath(pageVars);
+
+  // Could be switched with the same hard set with the opposite variant?
   page.entityUrl.switchPath = getLovellSwitchPath(pageVars);
 
   if (variant === 'tricare' && isLovellFederalPage(page)) {
@@ -74,10 +75,7 @@ function lovellMenusModifyLinks(link) {
       getLovellTitle(titleVar),
     );
 
-    link.url.path = getLovellFormOfExistingUrl(
-      resetToFederalUrlIfNeeded(link.url.path, variant),
-      linkVar,
-    );
+    link.url.path = getLovellVariantOfUrl(link.url.path, linkVar);
   }
 
   // Use recursion to modify nested links
