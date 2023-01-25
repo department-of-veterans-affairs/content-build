@@ -5,7 +5,6 @@ const {
   LOVELL_TRICARE_LINK_VARIATION,
   getLovellTitle,
   getLovellTitleVariation,
-  getLovellUrl,
   getLovellVariantOfUrl,
 } = require('./helpers');
 
@@ -55,10 +54,8 @@ function getLovellBreadcrumbs(vars) {
       getLovellTitle(variantName),
     );
     // eslint-disable-next-line no-param-reassign
-    crumb.url.path = crumb.url.path.replace(
-      /\/lovell-federal-(va-)?health-care/,
-      getLovellUrl(linkVar),
-    );
+    crumb.url.path = getLovellVariantOfUrl(crumb.url.path, linkVar);
+
     return crumb;
   });
 }
