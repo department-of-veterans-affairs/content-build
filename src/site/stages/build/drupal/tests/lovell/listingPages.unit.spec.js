@@ -6,6 +6,7 @@ import {
   isLovellVaPage,
   isLovellTricarePage,
 } from '../../process-lovell-pages';
+import { stringArraysContainSameElements } from './utils';
 // Mock Data
 import federalStories from './fixtures/listing-pages/federal/stories.json';
 import federalEvents from './fixtures/listing-pages/federal/events.json';
@@ -45,10 +46,6 @@ const getMergedListing = (drupalData, lovellVariant, listingVariant) => {
       page =>
         page.entityBundle === entityBundleFromListingVariant(listingVariant),
     )[0];
-};
-
-const stringArraysContainSameElements = (a, b) => {
-  return a.sort().join(',') === b.sort().join(',');
 };
 
 describe('processLovelPages (listing pages)', () => {
