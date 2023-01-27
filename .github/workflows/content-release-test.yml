@@ -26,9 +26,9 @@ env:
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
 
-concurrency:
-  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+# concurrency:
+#   group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
+#   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
@@ -312,6 +312,7 @@ jobs:
               {"Key": "application", "Value": "gha-runner"},
               {"Key": "VAECID", "Value": "AWG20180517003"},
               {"Key": "environment", "Value": "utility"}
+            ]
 
   unit-tests:
     name: Unit Tests
