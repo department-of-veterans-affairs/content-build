@@ -22,7 +22,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     timeout-minutes: 60
 
     defaults:
@@ -244,10 +244,7 @@ jobs:
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
   start-runner:
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted, asg]
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
@@ -666,7 +663,7 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, cypress-tests, get-latest-run-number]
 
