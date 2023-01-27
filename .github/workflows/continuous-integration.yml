@@ -13,6 +13,7 @@ env:
   PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
+  INSTANCE_TYPE: m5.4xlarge
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
@@ -128,7 +129,7 @@ jobs:
       - name: Wait for the CMS to be ready
         uses: ./content-build/.github/workflows/wait-for-cms-ready
         with:
-          base_url: ${{ matrix.drupal-address }}
+          base_url: ${{ env.DRUPAL_ADDRESS }}
 
       - name: Build
         run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
@@ -242,6 +243,66 @@ jobs:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
+  start-runner:
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    outputs:
+      label: ${{ steps.start-ec2-runner.outputs.label }}
+      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+    timeout-minutes: 15
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Get latest GHA Runner AMI ID
+        run: |
+          echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
+          --owners 008577686731 \
+          --filters "Name=state,Values=available" "Name=name,Values=platform-gha-runner-ubuntu*" \
+          --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
+          --output text)" >> $GITHUB_ENV
+
+      - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
+        run: |
+          echo "SUBNET_ID=$(aws ec2 describe-subnets \
+          --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
+          --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
+          --output text)" >> $GITHUB_ENV
+
+      - name: Start EC2 Runner
+        id: start-ec2-runner
+        uses: department-of-veterans-affairs/ec2-github-runner@main
+        with:
+          mode: start
+          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          ec2-image-id: ${{ env.RUNNER_AMI_ID }}
+          ec2-instance-type: ${{ env.INSTANCE_TYPE }}
+          subnet-id: ${{ env.SUBNET_ID }}
+          security-group-id: sg-0e23b56be3798e3a1
+          max_attempts: 3
+          aws-resource-tags: >
+            [
+              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
+              {"Key": "project", "Value": "vagov"},
+              {"Key": "office", "Value": "dsva"},
+              {"Key": "application", "Value": "gha-runner"},
+              {"Key": "VAECID", "Value": "AWG20180517003"},
+              {"Key": "environment", "Value": "utility"}
+            ]
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -351,8 +412,10 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: [self-hosted, asg]
-    needs: build
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    needs:
+      - start-runner
+      - build
     timeout-minutes: 30
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
@@ -724,3 +787,36 @@ jobs:
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  stop-runner:
+    name: Stop on-demand-runner
+    needs:
+      - start-runner
+      - cypress-tests
+    runs-on: ubuntu-latest
+    if: ${{ always() }} # Even if an error happened, let's stop the runner
+    env:
+      INSTANCE_TYPE: c5.4xlarge
+    timeout-minutes: 15
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Stop Runner
+        uses: department-of-veterans-affairs/ec2-github-runner@main
+        with:
+          mode: stop
+          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
