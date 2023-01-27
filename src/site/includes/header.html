@@ -40,17 +40,15 @@
   </script>
 
   <!-- Add web components. -->
-  {% if entityId != 11463 or buildtype != "vagovdev") %}
-    <link rel="stylesheet" data-entry-name="web-components.css">
-    {% comment %}
-      The `useLocalStylesAndComponents` registry value allows apps to opt-out of
-      this global file which will define all web components. Instead, they will manually
-      define a subset of web components which are used in their application
-    {% endcomment %}
-    {% unless useLocalStylesAndComponents %}
-      <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
-    {% endunless %}
-  {% endif %}
+  <link rel="stylesheet" data-entry-name="web-components.css">
+  {% comment %}
+    The `useLocalStylesAndComponents` registry value allows apps to opt-out of
+    this global file which will define all web components. Instead, they will manually
+    define a subset of web components which are used in their application
+  {% endcomment %}
+  {% unless useLocalStylesAndComponents %}
+    <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
+  {% endunless %}
 
   <!-- Render GA template. -->
   {% include 'src/site/includes/google-analytics.liquid' %}
