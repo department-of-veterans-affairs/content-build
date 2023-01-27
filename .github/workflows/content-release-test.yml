@@ -25,6 +25,7 @@ env:
   PLATFORM_BUILD_CHANNEL_ID: C0MQ281DJ #vfs-platform-builds
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
+  INSTANCE_TYPE: m5.4xlarge
 
 # concurrency:
 #   group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
