@@ -61,17 +61,20 @@ function getLovellBreadcrumbs(vars) {
 }
 
 function getLovellVariantTitle(title, vars) {
-  const { variantName, regexNeedle } = vars;
+  const { variantName } = vars;
 
   if (
     title
       .toLowerCase()
       .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
   ) {
-    return title.replace(regexNeedle, getLovellTitle(variantName));
+    return getLovellTitle(variantName);
   }
 
-  return title.replace(`${LOVELL_TITLE_STRING}`, getLovellTitle(variantName));
+  return title.replace(
+    `${LOVELL_TITLE_STRING}`,
+    `${LOVELL_TITLE_STRING} ${getLovellTitleVariation(variantName)}`,
+  );
 }
 
 module.exports = {

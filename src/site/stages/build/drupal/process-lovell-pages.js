@@ -51,9 +51,8 @@ function getModifiedLovellPage(page, variant) {
   }
 
   if (page.fieldOffice) {
-    page.fieldOffice.entity.entityLabel = getLovellVariantTitle(
-      page.fieldOffice.entity.entityLabel,
-      pageVars,
+    page.fieldOffice.entity.entityLabel = getLovellTitle(
+      getLovellTitleVariation(pageVars.variant),
     );
   }
 
@@ -72,9 +71,9 @@ function lovellMenusModifyLinks(link) {
       LOVELL_TITLE_STRING,
       getLovellTitle(titleVar),
     );
-
-    link.url.path = getLovellVariantOfUrl(link.url.path, linkVar);
   }
+
+  link.url.path = getLovellVariantOfUrl(link.url.path, linkVar);
 
   // Use recursion to modify nested links
   if (link && link.links.length > 0) {
@@ -98,15 +97,11 @@ function lovellMenusModifyLinks(link) {
 
 function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
   const titleVar = getLovellTitleVariation(variant);
-
   // Clone the original menu
   const lovellCloneMenu = cloneDeep(drupalData.data[lovellMenuKey]);
 
   // Rename the name so our new cloned pages can find the cloned menu
-  lovellCloneMenu.name = lovellCloneMenu.name.replace(
-    LOVELL_TITLE_STRING,
-    getLovellTitle(titleVar),
-  );
+  lovellCloneMenu.name = getLovellTitle(titleVar);
 
   // Move federal health care links to the top of the menu
   // Otherwise the menu renders as blank

@@ -36,17 +36,17 @@ function isListingPage(page) {
 }
 
 function getLovellTitle(variant) {
-  return `${LOVELL_TITLE_STRING} ${variant}`;
+  return `${LOVELL_TITLE_STRING} health care - ${variant}`;
 }
 
 function getLovellTitleVariation(variant) {
-  return variant === 'va'
+  return variant === 'va' || variant.includes('va')
     ? LOVELL_VA_TITLE_VARIATION
     : LOVELL_TRICARE_TITLE_VARIATION;
 }
 
 function getLovellUrl(linkVar) {
-  return `/lovell-federal-${linkVar}-health-care`;
+  return `/lovell-federal-health-care-${linkVar}`;
 }
 
 function getLovellVariantOfUrl(path, linkVar) {
