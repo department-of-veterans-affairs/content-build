@@ -35,7 +35,7 @@
         "text": "News releases"
       }
     ],
-    "path": "/lovell-federal-tricare-health-care/news-releases"
+    "path": "/lovell-federal-health-care-tricare/news-releases"
   },
   "entityMetatags": [
     {
@@ -46,12 +46,12 @@
     {
       "__typename": "MetaValue",
       "key": "title",
-      "value": "News releases | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "News releases | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
       "key": "description",
-      "value": "Lovell Federal TRICARE health care news releases and information for the TRICARE recipients, their families, and caregivers"
+      "value": "Lovell Federal health care - TRICARE news releases and information for the TRICARE recipients, their families, and caregivers"
     },
     {
       "__typename": "MetaProperty",
@@ -61,12 +61,12 @@
     {
       "__typename": "MetaProperty",
       "key": "og:title",
-      "value": "News releases | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "News releases | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaProperty",
       "key": "og:description",
-      "value": "Lovell Federal TRICARE health care news releases and information for the TRICARE recipients, their families, and caregivers"
+      "value": "Lovell Federal health care - TRICARE news releases and information for the TRICARE recipients, their families, and caregivers"
     },
     {
       "__typename": "MetaProperty",
@@ -91,12 +91,12 @@
     {
       "__typename": "MetaValue",
       "key": "twitter:description",
-      "value": "Lovell Federal TRICARE health care news releases and information for the TRICARE recipients, their families, and caregivers"
+      "value": "Lovell Federal health care - TRICARE news releases and information for the TRICARE recipients, their families, and caregivers"
     },
     {
       "__typename": "MetaValue",
       "key": "twitter:title",
-      "value": "News releases | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "News releases | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
@@ -109,7 +109,7 @@
       "value": "https://www.va.gov/img/design/logo/va-og-image.png"
     }
   ],
-  "fieldIntroText": "News releases for Lovell Federal TRICARE health care.",
+  "fieldIntroText": "News releases for Lovell Federal health care - TRICARE.",
   "reverseFieldListingNode": {
     "entities": [
       {
@@ -119,7 +119,7 @@
           "value": "2022-10-05T19:50:12"
         },
         "entityUrl": {
-          "path": "/lovell-federal-tricare-health-care/news-releases/test-a-press-release-for-lovell-tricare"
+          "path": "/lovell-federal-health-care-tricare/news-releases/test-a-press-release-for-lovell-tricare"
         },
         "uid": {
           "targetId": 1215,
@@ -137,8 +137,8 @@
   "fieldOffice": {
     "targetId": 49011,
     "entity": {
-      "entityLabel": "Lovell Federal TRICARE health care",
-      "title": "Lovell Federal TRICARE health care"
+      "entityLabel": "Lovell Federal health care - TRICARE",
+      "title": "Lovell Federal health care - TRICARE"
     }
   },
   "fieldAdministration": {
