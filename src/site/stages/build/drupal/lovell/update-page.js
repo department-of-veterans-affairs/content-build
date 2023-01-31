@@ -20,7 +20,6 @@ function getLovellPageVariables(page, variant) {
       variant === 'va'
         ? LOVELL_VA_LINK_VARIATION
         : LOVELL_TRICARE_LINK_VARIATION,
-    regexNeedle: new RegExp(`${LOVELL_TITLE_STRING} ${variantName}`, 'gi'),
   };
 }
 
