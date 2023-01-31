@@ -2,6 +2,7 @@
 
 ## What is this?
 
+
 This repository contains scripts and templates which generate static HTML pages for the VA.gov site.
 
 There are several repositories that contain the code and content used to build VA.gov. If you're looking to get started running VA.gov locally, you should read the [Setting up your local frontend environment](https://depo-platform-documentation.scrollhelp.site/developer-docs/Setting-up-your-local-frontend-environment.1844215878.html) documentation.
