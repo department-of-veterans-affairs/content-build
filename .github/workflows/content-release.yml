@@ -24,10 +24,7 @@ env:
 
 jobs:
   start-runner:
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted]
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
@@ -129,10 +126,7 @@ jobs:
 
   notify-start:
     name: Notify Start
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted]
     needs: validate-build-status
     steps:
       - name: Checkout
@@ -452,10 +446,7 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted]
     needs:
       - validate-build-status
       - build
@@ -522,10 +513,7 @@ jobs:
 
   notify-success:
     name: Notify Success
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted]
     needs:
       - validate-build-status
       - deploy
@@ -553,10 +541,7 @@ jobs:
 
   notify-failure:
     name: Notify Failure
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted]
     if: |
       (failure() && needs.deploy.result != 'success')
     needs: deploy
@@ -607,10 +592,7 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted]
     needs:
       - start-runner
       - build
