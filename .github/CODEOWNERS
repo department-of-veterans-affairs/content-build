@@ -18,9 +18,9 @@
 script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
 
 # VSP QA Standards
-src/platform/testing/e2e/ @department-of-veterans-affairs/qa-standards
-config/cypress.json @department-of-veterans-affairs/qa-standards
-.github/workflows/a11y.yml @department-of-veterans-affairs/qa-standards
+src/platform/testing/e2e/ @department-of-veterans-affairs/qa-standards @department-of-veterans-affairs/cms-infrastructure
+config/cypress.json @department-of-veterans-affairs/qa-standards @department-of-veterans-affairs/cms-infrastructure
+.github/workflows/a11y.yml @department-of-veterans-affairs/qa-standards @department-of-veterans-affairs/cms-infrastructure
 
 # Shared templates
 src/site/includes @department-of-veterans-affairs/vsa-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/1010-health-apps-frontend

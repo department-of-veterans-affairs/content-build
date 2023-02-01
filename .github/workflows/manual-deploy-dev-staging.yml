@@ -44,7 +44,7 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: [self-hosted, asg]
+    runs-on: [self-hosted]
     needs: set-environment
     strategy:
       matrix: ${{ fromJson(needs.set-environment.outputs.environment) }}
