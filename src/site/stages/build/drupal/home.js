@@ -72,6 +72,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         homePageNewsSpotlightQuery,
         homePagePopularOnVaGovMenuQuery,
         homePageOtherSearchToolsMenuQuery,
+        homePageHubListMenuQuery,
       },
     } = contentData;
 
@@ -98,6 +99,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       entityUrl: {
         path: homePreviewPath,
       },
+      hubs: divideHubRows(homePageHubListMenuQuery.links),
     };
 
     files[`.${homePreviewPath}.html`] = createFileObj(

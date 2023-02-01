@@ -4,6 +4,7 @@
 
 const menu = 'homepage-top-tasks-blocks';
 const hubListQueue = 'home_page_hub_list';
+const hubListMenu = 'home-page-hub-list';
 const promoBlocksQueue = 'home_page_promos';
 const homePageHeroQueue = 'home_page_hero';
 const homePageNewsSpotlightQueue = 'home_page_news_spotlight';
@@ -48,6 +49,33 @@ const query = `
             entityUrl {
               path
               routed
+            }
+          }
+        }
+      }
+    }
+  }
+  homePageHubListMenuQuery:menuByName(name: "${hubListMenu}") {
+    name
+    description
+    links {
+      ... on MenuLink {
+        expanded
+        description
+        label
+        url {
+          path
+        }
+        entity {
+          parent
+          ... on MenuLinkContentHomePageHubList {
+            fieldIcon
+            fieldLinkSummary
+            linkedEntity(language_fallback: true, bypass_access_check: true) {
+              ... on Node {
+                entityPublished
+                moderationState
+              }
             }
           }
         }
