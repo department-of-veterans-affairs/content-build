@@ -181,7 +181,7 @@
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/36405"
+          "path": "/lovell-federal-health-care-va/events/36405"
         },
         "title": "Lovell Federal health care Placeholder - Event",
         "vid": 736023,
@@ -313,7 +313,7 @@
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49919"
+          "path": "/lovell-federal-health-care-va/events/49919"
         },
         "title": "Test Event 1 Both",
         "vid": 735968,
@@ -360,7 +360,7 @@
             "entityId": "1480",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-va-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-va/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -450,7 +450,7 @@
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49920"
+          "path": "/lovell-federal-health-care-va/events/49920"
         },
         "title": "Test Event 2 Both",
         "vid": 735967,
@@ -604,7 +604,7 @@
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/36405"
+          "path": "/lovell-federal-health-care-va/events/36405"
         },
         "title": "Lovell Federal health care Placeholder - Event",
         "vid": 736023,
@@ -736,7 +736,7 @@
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49919"
+          "path": "/lovell-federal-health-care-va/events/49919"
         },
         "title": "Test Event 1 Both",
         "vid": 735968,
@@ -783,7 +783,7 @@
             "entityId": "1480",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-va-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-va/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -873,7 +873,7 @@
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49920"
+          "path": "/lovell-federal-health-care-va/events/49920"
         },
         "title": "Test Event 2 Both",
         "vid": 735967,

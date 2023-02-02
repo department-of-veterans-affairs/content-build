@@ -48,7 +48,7 @@ const getMergedListing = (drupalData, lovellVariant, listingVariant) => {
     )[0];
 };
 
-describe('processLovelPages (listing pages)', () => {
+describe('processLovellPages (listing pages)', () => {
   let counts;
   let titles;
   let drupalData;

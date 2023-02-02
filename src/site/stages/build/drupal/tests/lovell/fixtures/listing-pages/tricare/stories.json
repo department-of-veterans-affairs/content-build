@@ -35,7 +35,7 @@
         "text": "Stories"
       }
     ],
-    "path": "/lovell-federal-tricare-health-care/stories"
+    "path": "/lovell-federal-health-care-tricare/stories"
   },
   "entityMetatags": [
     {
@@ -46,12 +46,12 @@
     {
       "__typename": "MetaValue",
       "key": "title",
-      "value": "Stories | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "Stories | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
       "key": "description",
-      "value": "Lovell Federal TRICARE health care top stories."
+      "value": "Lovell Federal health care - TRICARE top stories."
     },
     {
       "__typename": "MetaProperty",
@@ -61,12 +61,12 @@
     {
       "__typename": "MetaProperty",
       "key": "og:title",
-      "value": "Stories | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "Stories | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaProperty",
       "key": "og:description",
-      "value": "Lovell Federal TRICARE health care top stories."
+      "value": "Lovell Federal health care - TRICARE top stories."
     },
     {
       "__typename": "MetaProperty",
@@ -91,12 +91,12 @@
     {
       "__typename": "MetaValue",
       "key": "twitter:description",
-      "value": "Lovell Federal TRICARE health care top stories."
+      "value": "Lovell Federal health care - TRICARE top stories."
     },
     {
       "__typename": "MetaValue",
       "key": "twitter:title",
-      "value": "Stories | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "Stories | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
@@ -109,7 +109,7 @@
       "value": "https://www.va.gov/img/design/logo/va-og-image.png"
     }
   ],
-  "fieldIntroText": "Lovell Federal TRICARE health care top stories.",
+  "fieldIntroText": "Lovell Federal health care - TRICARE top stories.",
   "reverseFieldListingNode": {
     "entities": [
       {
@@ -117,7 +117,7 @@
         "title": "TEST story for TRICARE Lovell",
         "fieldFeatured": true,
         "entityUrl": {
-          "path": "/lovell-federal-tricare-health-care/stories/test-story-for-tricare-lovell"
+          "path": "/lovell-federal-health-care-tricare/stories/test-story-for-tricare-lovell"
         },
         "uid": {
           "targetId": 1215,
@@ -146,8 +146,8 @@
   "fieldOffice": {
     "targetId": 49011,
     "entity": {
-      "title": "Lovell Federal TRICARE health care",
-      "entityLabel": "Lovell Federal TRICARE health care"
+      "title": "Lovell Federal health care - TRICARE",
+      "entityLabel": "Lovell Federal health care - TRICARE"
     }
   },
   "fieldAdministration": {
