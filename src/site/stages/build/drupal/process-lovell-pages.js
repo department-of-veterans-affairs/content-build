@@ -44,9 +44,8 @@ function getModifiedLovellPage(page, variant) {
   }
 
   if (page.fieldRegionPage) {
-    page.fieldRegionPage.entity.title = getLovellVariantTitle(
-      page.fieldRegionPage.entity.title,
-      pageVars,
+    page.fieldRegionPage.entity.title = getLovellTitle(
+      getLovellTitleVariation(pageVars.variant),
     );
   }
 
@@ -71,9 +70,9 @@ function lovellMenusModifyLinks(link) {
       LOVELL_TITLE_STRING,
       getLovellTitle(titleVar),
     );
-  }
 
-  link.url.path = getLovellVariantOfUrl(link.url.path, linkVar);
+    link.url.path = getLovellVariantOfUrl(link.url.path, linkVar);
+  }
 
   // Use recursion to modify nested links
   if (link && link.links.length > 0) {

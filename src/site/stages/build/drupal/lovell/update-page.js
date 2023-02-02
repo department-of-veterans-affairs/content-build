@@ -49,7 +49,7 @@ function getLovellBreadcrumbs(vars) {
   return page.entityUrl.breadcrumb.map(crumb => {
     // eslint-disable-next-line no-param-reassign
     crumb.text = crumb.text.replace(
-      /Lovell Federal (VA )?health care/,
+      /Lovell Federal health care/,
       getLovellTitle(variantName),
     );
     // eslint-disable-next-line no-param-reassign
@@ -62,17 +62,12 @@ function getLovellBreadcrumbs(vars) {
 function getLovellVariantTitle(title, vars) {
   const { variantName } = vars;
 
-  if (
-    title
-      .toLowerCase()
-      .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
-  ) {
-    return getLovellTitle(variantName);
-  }
-
   return title.replace(
-    `${LOVELL_TITLE_STRING}`,
-    `${LOVELL_TITLE_STRING} ${getLovellTitleVariation(variantName)}`,
+    new RegExp(
+      `${LOVELL_TITLE_STRING} health care(?:(?: - VA| - TRICARE)?)`,
+      'i',
+    ),
+    getLovellTitle(variantName),
   );
 }
 

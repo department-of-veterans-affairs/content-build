@@ -51,7 +51,7 @@ function getLovellUrl(linkVar) {
 
 function getLovellVariantOfUrl(path, linkVar) {
   return path.replace(
-    /\/lovell-federal(?:(?:-va|-tricare)?)-health-care/i,
+    /\/lovell-federal-health-care(?:(?:-va|-tricare)?)/i,
     getLovellUrl(linkVar),
   );
 }
