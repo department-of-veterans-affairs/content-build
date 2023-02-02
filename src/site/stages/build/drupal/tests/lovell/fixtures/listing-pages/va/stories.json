@@ -14,7 +14,7 @@
       { "url": { "path": "", "routed": true }, "text": "NEWS AND EVENTS" },
       { "url": { "path": "", "routed": true }, "text": "Stories" }
     ],
-    "path": "/lovell-federal-va-health-care/stories"
+    "path": "/lovell-federal-health-care-va/stories"
   },
   "entityMetatags": [
     {
@@ -25,12 +25,12 @@
     {
       "__typename": "MetaValue",
       "key": "title",
-      "value": "Stories | Lovell Federal VA health care | Veterans Affairs"
+      "value": "Stories | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
       "key": "description",
-      "value": "Lovell Federal VA health care top stories."
+      "value": "Lovell Federal health care - VA top stories."
     },
     {
       "__typename": "MetaProperty",
@@ -40,12 +40,12 @@
     {
       "__typename": "MetaProperty",
       "key": "og:title",
-      "value": "Stories | Lovell Federal VA health care | Veterans Affairs"
+      "value": "Stories | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaProperty",
       "key": "og:description",
-      "value": "Lovell Federal VA health care top stories."
+      "value": "Lovell Federal health care - VA top stories."
     },
     {
       "__typename": "MetaProperty",
@@ -70,12 +70,12 @@
     {
       "__typename": "MetaValue",
       "key": "twitter:description",
-      "value": "Lovell Federal VA health care top stories."
+      "value": "Lovell Federal health care - VA top stories."
     },
     {
       "__typename": "MetaValue",
       "key": "twitter:title",
-      "value": "Stories | Lovell Federal VA health care | Veterans Affairs"
+      "value": "Stories | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
@@ -88,7 +88,7 @@
       "value": "https://www.va.gov/img/design/logo/va-og-image.png"
     }
   ],
-  "fieldIntroText": "Lovell Federal VA health care top stories.",
+  "fieldIntroText": "Lovell Federal health care - VA top stories.",
   "reverseFieldListingNode": {
     "entities": [
       {
@@ -96,7 +96,7 @@
         "title": "TEST story for VA Lovell",
         "fieldFeatured": true,
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/stories/test-story-for-va-lovell"
+          "path": "/lovell-federal-health-care-va/stories/test-story-for-va-lovell"
         },
         "uid": {
           "targetId": 1215,
@@ -125,8 +125,8 @@
   "fieldOffice": {
     "targetId": 49451,
     "entity": {
-      "title": "Lovell Federal VA health care",
-      "entityLabel": "Lovell Federal VA health care"
+      "title": "Lovell Federal health care - VA",
+      "entityLabel": "Lovell Federal health care - VA"
     }
   },
   "fieldAdministration": { "entity": { "entityId": "1040" } }

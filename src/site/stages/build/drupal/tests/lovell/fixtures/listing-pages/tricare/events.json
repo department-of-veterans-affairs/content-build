@@ -35,7 +35,7 @@
         "text": "Events"
       }
     ],
-    "path": "/lovell-federal-tricare-health-care/events"
+    "path": "/lovell-federal-health-care-tricare/events"
   },
   "entityMetatags": [
     {
@@ -46,12 +46,12 @@
     {
       "__typename": "MetaValue",
       "key": "title",
-      "value": "Events | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "Events | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
       "key": "description",
-      "value": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events."
+      "value": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events."
     },
     {
       "__typename": "MetaProperty",
@@ -66,7 +66,7 @@
     {
       "__typename": "MetaProperty",
       "key": "og:description",
-      "value": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events."
+      "value": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events."
     },
     {
       "__typename": "MetaProperty",
@@ -91,12 +91,12 @@
     {
       "__typename": "MetaValue",
       "key": "twitter:description",
-      "value": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events."
+      "value": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events."
     },
     {
       "__typename": "MetaValue",
       "key": "twitter:title",
-      "value": "Events | Lovell Federal TRICARE health care | Veterans Affairs"
+      "value": "Events | Lovell Federal health care - TRICARE | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
@@ -110,7 +110,7 @@
     }
   ],
   "changed": 1671038416,
-  "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+  "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
   "pastEvents": {
     "entities": [
       {
@@ -127,7 +127,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal TRICARE health care | Test Event A TRICARE | Veterans Affairs"
+            "value": "Lovell Federal health care - TRICARE | Test Event A TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -137,7 +137,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event A TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -157,11 +157,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event A TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-tricare-health-care/events/49921"
+          "path": "/lovell-federal-health-care-tricare/events/49921"
         },
         "title": "Test Event A TRICARE",
         "vid": 735966,
@@ -210,8 +210,8 @@
             "entityBundle": "event_listing",
             "entityId": "49454",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -257,7 +257,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal TRICARE health care | Test Event B TRICARE | Veterans Affairs"
+            "value": "Lovell Federal health care - TRICARE | Test Event B TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -267,7 +267,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event B TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -287,11 +287,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event B TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-tricare-health-care/events/49922"
+          "path": "/lovell-federal-health-care-tricare/events/49922"
         },
         "title": "Test Event B TRICARE",
         "vid": 735965,
@@ -338,7 +338,7 @@
             "entityId": "49055",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-tricare/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -350,8 +350,8 @@
             "entityBundle": "event_listing",
             "entityId": "49454",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -398,7 +398,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal TRICARE health care | Test Event A TRICARE | Veterans Affairs"
+            "value": "Lovell Federal health care - TRICARE | Test Event A TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -408,7 +408,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event A TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -428,11 +428,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event A TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event A TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-tricare-health-care/events/49921"
+          "path": "/lovell-federal-health-care-tricare/events/49921"
         },
         "title": "Test Event A TRICARE",
         "vid": 735966,
@@ -481,8 +481,8 @@
             "entityBundle": "event_listing",
             "entityId": "49454",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -528,7 +528,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal TRICARE health care | Test Event B TRICARE | Veterans Affairs"
+            "value": "Lovell Federal health care - TRICARE | Test Event B TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -538,7 +538,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event B TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -558,11 +558,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event B TRICARE | Lovell Federal TRICARE health care | Veterans Affairs"
+            "value": "Test Event B TRICARE | Lovell Federal health care - TRICARE | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-tricare-health-care/events/49922"
+          "path": "/lovell-federal-health-care-tricare/events/49922"
         },
         "title": "Test Event B TRICARE",
         "vid": 735965,
@@ -609,7 +609,7 @@
             "entityId": "49055",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-tricare/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -621,8 +621,8 @@
             "entityBundle": "event_listing",
             "entityId": "49454",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal TRICARE health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - TRICARE and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -655,7 +655,7 @@
   },
   "fieldOffice": {
     "entity": {
-      "entityLabel": "Lovell Federal TRICARE health care"
+      "entityLabel": "Lovell Federal health care - TRICARE"
     }
   },
   "fieldAdministration": {

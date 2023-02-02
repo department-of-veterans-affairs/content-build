@@ -17,6 +17,6 @@ export const findSidebarMenuLinkBySectionAndOptionalLabel = (
     ? parent.find(
         link =>
           link.entity.fieldMenuSection === menuSection &&
-          (label ? link.label === label : true),
+          (label ? link.label.toLowerCase() === label.toLowerCase() : true),
       )
     : undefined;
