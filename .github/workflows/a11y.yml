@@ -12,7 +12,7 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     timeout-minutes: 180
     defaults:
       run:
@@ -20,7 +20,7 @@ jobs:
 
     env:
       DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
 
     steps:
       - name: Configure AWS credentials
@@ -156,7 +156,7 @@ jobs:
     name: Accessibility Tests
     needs: build
     timeout-minutes: 120
-    runs-on: self-hosted
+    runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
       options: -u 1001:1001 -v /usr/local/share:/share --user root

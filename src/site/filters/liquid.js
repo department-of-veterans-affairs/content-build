@@ -179,8 +179,18 @@ module.exports = function registerFilters() {
       '113332',
       '7153',
       '37238',
+      '5697',
+      '101671',
     ];
-    return targetH3IDs.includes(id);
+    const targetH5IDs = ['112021'];
+
+    if (targetH3IDs.includes(id)) {
+      return 'h3';
+    }
+    if (targetH5IDs.includes(id)) {
+      return 'h5';
+    }
+    return 'h4';
   };
 
   liquid.filters.dateFromUnix = (dt, format, tz = 'America/New_York') => {

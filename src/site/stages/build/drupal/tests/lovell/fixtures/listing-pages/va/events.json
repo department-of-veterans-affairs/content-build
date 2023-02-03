@@ -14,7 +14,7 @@
       { "url": { "path": "", "routed": true }, "text": "NEWS AND EVENTS" },
       { "url": { "path": "", "routed": true }, "text": "Events" }
     ],
-    "path": "/lovell-federal-va-health-care/events"
+    "path": "/lovell-federal-health-care-va/events"
   },
   "entityMetatags": [
     {
@@ -25,12 +25,12 @@
     {
       "__typename": "MetaValue",
       "key": "title",
-      "value": "Events | Lovell Federal VA health care | Veterans Affairs"
+      "value": "Events | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
       "key": "description",
-      "value": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events."
+      "value": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events."
     },
     {
       "__typename": "MetaProperty",
@@ -45,7 +45,7 @@
     {
       "__typename": "MetaProperty",
       "key": "og:description",
-      "value": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events."
+      "value": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events."
     },
     {
       "__typename": "MetaProperty",
@@ -70,12 +70,12 @@
     {
       "__typename": "MetaValue",
       "key": "twitter:description",
-      "value": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events."
+      "value": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events."
     },
     {
       "__typename": "MetaValue",
       "key": "twitter:title",
-      "value": "Events | Lovell Federal VA health care | Veterans Affairs"
+      "value": "Events | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
@@ -89,7 +89,7 @@
     }
   ],
   "changed": 1671038416,
-  "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
+  "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
   "pastEvents": {
     "entities": [
       {
@@ -106,7 +106,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal VA health care | Test Event X VA | Veterans Affairs"
+            "value": "Lovell Federal health care - VA | Test Event X VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -116,7 +116,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event X VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event X VA | Lovell Federal health care - VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -136,11 +136,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event X VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event X VA | Lovell Federal health care - VA | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49923"
+          "path": "/lovell-federal-health-care-va/events/49923"
         },
         "title": "Test Event X VA",
         "vid": 735964,
@@ -187,7 +187,7 @@
             "entityId": "49055",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-tricare/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -199,8 +199,8 @@
             "entityBundle": "event_listing",
             "entityId": "49455",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -239,7 +239,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal VA health care | Test Event Y VA | Veterans Affairs"
+            "value": "Lovell Federal health care - VA | Test Event Y VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -249,7 +249,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event Y VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event Y VA | Lovell Federal health care - VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -269,11 +269,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event Y VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event Y VA | Lovell Federal health care - VA | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49924"
+          "path": "/lovell-federal-health-care-va/events/49924"
         },
         "title": "Test Event Y VA",
         "vid": 735963,
@@ -320,7 +320,7 @@
             "entityId": "49055",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-tricare/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -332,8 +332,8 @@
             "entityBundle": "event_listing",
             "entityId": "49455",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -376,7 +376,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal VA health care | Test Event X VA | Veterans Affairs"
+            "value": "Lovell Federal health care - VA | Test Event X VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -386,7 +386,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event X VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event X VA | Lovell Federal health care - VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -406,11 +406,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event X VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event X VA | Lovell Federal health care - VA | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49923"
+          "path": "/lovell-federal-health-care-va/events/49923"
         },
         "title": "Test Event X VA",
         "vid": 735964,
@@ -457,7 +457,7 @@
             "entityId": "49055",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-tricare/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -469,8 +469,8 @@
             "entityBundle": "event_listing",
             "entityId": "49455",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -509,7 +509,7 @@
           {
             "__typename": "MetaValue",
             "key": "title",
-            "value": "Lovell Federal VA health care | Test Event Y VA | Veterans Affairs"
+            "value": "Lovell Federal health care - VA | Test Event Y VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -519,7 +519,7 @@
           {
             "__typename": "MetaProperty",
             "key": "og:title",
-            "value": "Test Event Y VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event Y VA | Lovell Federal health care - VA | Veterans Affairs"
           },
           {
             "__typename": "MetaProperty",
@@ -539,11 +539,11 @@
           {
             "__typename": "MetaValue",
             "key": "twitter:title",
-            "value": "Test Event Y VA | Lovell Federal VA health care | Veterans Affairs"
+            "value": "Test Event Y VA | Lovell Federal health care - VA | Veterans Affairs"
           }
         ],
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49924"
+          "path": "/lovell-federal-health-care-va/events/49924"
         },
         "title": "Test Event Y VA",
         "vid": 735963,
@@ -590,7 +590,7 @@
             "entityId": "49055",
             "entityType": "node",
             "entityUrl": {
-              "path": "/lovell-federal-tricare-health-care/locations/captain-james-a-lovell-federal-health-care-center"
+              "path": "/lovell-federal-health-care-tricare/locations/captain-james-a-lovell-federal-health-care-center"
             },
             "title": "Captain James A. Lovell Federal Health Care Center"
           }
@@ -602,8 +602,8 @@
             "entityBundle": "event_listing",
             "entityId": "49455",
             "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal VA health care and regional events.",
+            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
+            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care - VA and regional events.",
             "fieldOffice": {
               "entity": {
                 "entityType": "node",
@@ -631,7 +631,7 @@
     ]
   },
   "fieldOffice": {
-    "entity": { "entityLabel": "Lovell Federal VA health care" }
+    "entity": { "entityLabel": "Lovell Federal health care - VA" }
   },
   "fieldAdministration": { "entity": { "entityId": "1040" } }
 }

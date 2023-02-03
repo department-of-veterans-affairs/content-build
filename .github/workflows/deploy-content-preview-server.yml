@@ -11,10 +11,7 @@ jobs:
   deploy-preview-server:
     name: Deploy Preview Servers (PROD, STAGING, DEV)
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
