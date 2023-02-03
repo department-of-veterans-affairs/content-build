@@ -44,7 +44,7 @@
               {
               "event": "nav-alert-box-link-click",
               "alert-box-status": "{{ alertType }}",
-              "alert-box-headline": "{{ entity.title }}",
+              "alert-box-headline": "{{ entity.title | escape }}",
               "alert-box-headline-level": "3",
               "alert-box-background-only": "false",
               "alert-box-closeable": "false"
