@@ -14,6 +14,8 @@ npm-debug.log
 *.log
 *.swp
 
+heading_order_violations.*
+
 config/config.proxy.js
 
 .babelcache
