@@ -60,8 +60,7 @@ const query = `
     description
     links {
       ... on MenuLink {
-        expanded
-        description
+        enabled
         label
         url {
           path
