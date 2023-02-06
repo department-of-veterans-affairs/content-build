@@ -86,6 +86,22 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       homePageNewsSpotlightQuery
         ?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0]?.entity || {};
 
+    // Filter hub menu links. We do this here instead of in the template because the
+    // grouping of hubs also happens here, and we need to filter before we group in
+    // order to preserve the intended grouping. See divideHubRows().
+    const homePreviewHubs = homePageHubListMenuQuery.links.filter(link => {
+      // Any disabled links should not be displayed.
+      if (!link.enabled) {
+        return false;
+      }
+      // If the link has a linkedEntity, and the linkedEntity is not published, it
+      // should not be displayed.
+      return (
+        !link.entity.linkedEntity ||
+        (link.entity.linkedEntity && link.entity.linkedEntity.entityPublished)
+      );
+    });
+
     const homePreviewEntityObj = {
       ...homeEntityObj,
       canonicalLink: '/', // Match current homepage to avoid 'duplicate content' SEO demerit
@@ -99,7 +115,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       entityUrl: {
         path: homePreviewPath,
       },
-      hubs: divideHubRows(homePageHubListMenuQuery.links),
+      hubs: divideHubRows(homePreviewHubs),
     };
 
     files[`.${homePreviewPath}.html`] = createFileObj(
