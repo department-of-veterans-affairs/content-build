@@ -3,7 +3,19 @@ const commandLineArgs = require('command-line-args');
 const fs = require('fs');
 const glob = require('glob');
 
-const optionDefinitions = [{ name: 'dir', alias: 'd' }];
+const optionDefinitions = [
+  { name: 'dir', alias: 'd' },
+  {
+    name: 'html-path',
+    alias: 'h',
+    defaultValue: 'heading_order_violations.html',
+  },
+  {
+    name: 'json-path',
+    alias: 'j',
+    defaultValue: 'heading_order_violations.json',
+  },
+];
 const options = commandLineArgs(optionDefinitions);
 
 if (options.help || !options.dir) {
@@ -23,7 +35,12 @@ function escape(s) {
 
 const htmlFiles = glob.sync(`${options.dir}/**/*.html`);
 
-console.log('<html><body>');
+let htmlOutput = '<html><body>';
+const jsonData = {
+  totalViolations: 0,
+  totalFilesWithViolations: 0,
+  totalFiles: 0,
+};
 
 htmlFiles.forEach((filename, index, array) => {
   console.error(`Processing file ${index} of ${array.length}`);
@@ -41,15 +58,23 @@ htmlFiles.forEach((filename, index, array) => {
     if (badHeadings) {
       const url = filename.replace('./build/vagovdev/', 'https://www.va.gov/');
       const link = `<h1><a href="${url}">${filename}</a></h1>`;
-      console.log(link);
+      htmlOutput += link;
       badHeadings.forEach(text => {
         const text2 = escape(text);
-        console.log(`<pre>${text2}</pre>`);
+        htmlOutput += `<pre>${text2}</pre>`;
       });
+      jsonData.totalViolations += badHeadings.length;
+      jsonData.totalFilesWithViolations += 1;
     }
   } catch (err) {
     console.error(err);
   }
 });
 
-console.log('</body></html>');
+jsonData.totalFiles = htmlFiles.length;
+
+htmlOutput += '</body></html>';
+const jsonOutput = JSON.stringify(jsonData, null, 2);
+
+fs.writeFileSync(options['html-path'], htmlOutput);
+fs.writeFileSync(options['json-path'], jsonOutput);
