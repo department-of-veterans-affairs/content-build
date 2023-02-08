@@ -2,8 +2,6 @@ on:
   delete:
     branches:
       - '**'
-  schedule:
-    - cron: 00 00,12 * * *
 
 name: Preview Environment Cleanup
 
@@ -13,7 +11,7 @@ env:
 
 jobs:
   cleanup-preview-environments:
-    name: Clean Up Deleted Branch and Expired Preview Environments
+    name: Clean Up Deleted Branch Preview Environments
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
