@@ -40,8 +40,10 @@
         function openLoginModal() {
           // Uncomment custom event and delete generic event once analytics team has implemented
           // recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
-          recordEvent({ event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Create Account',  });
-          
+          recordMultipleEvents([
+            { event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Create Account'  },
+            { event: "homepage-create-account", action: "Homepage Create Account CTA" }
+          ]);
           const params = (new URL(document.location)).searchParams;
           params.set("next", "loginModal")
           document.location = "?" + params.toString();

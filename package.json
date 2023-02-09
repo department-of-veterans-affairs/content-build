@@ -41,7 +41,7 @@
     "watch:codespaces": "concurrently \"yarn build:codespaces --watch\" \"http-server build/localhost -s -c-1 -p 3002\"",
     "watch:css-sourcemaps": "node --max-old-space-size=5000 --expose-gc script/build-content.js --watch --local-css-sourcemaps",
     "watch:review": "node ./script/run-review-instance-api.js",
-    "list-heading-order-violations": "node script/heading-order-violations.js --dir ./build/vagovdev > heading_order_violations.html",
+    "list-heading-order-violations": "node script/heading-order-violations.js --dir ./build/vagovdev",
     "prepare": "husky install"
   },
   "repository": {
@@ -77,6 +77,7 @@
     "ie 11"
   ],
   "devDependencies": {
+    "@actions/core": "^1.8.0",
     "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-export-namespace-from": "^7.14.5",

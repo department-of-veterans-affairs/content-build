@@ -24,16 +24,17 @@
                   {% if link.url.path and link.label %}
                     <li>
                       <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
-                      <!-- Uncomment custom event and delete generic once analytics team implements -->
-                      <!-- <a
-                        onclick="recordEvent({ event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' })"
-                        href="{{ link.url.path }}">{{ link.label }}</a> -->
                         <a
-                        onclick="recordEvent({
-                          event: 'nav-zone-one',
-                          'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
-                          'click-text': '{{ link.label | strip }}',
-                        });"
+                        onclick="recordMultipleEvents([
+                          {
+                            event: 'nav-zone-one',
+                            'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                            'click-text': '{{ link.label | strip }}',
+                          },
+                          { 
+                            event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
+                          }
+                        ]);"
                         href="{{ link.url.path }}">{{ link.label }}</a>
                     </li>
                   {% endif %}
@@ -56,16 +57,16 @@
               {% for link in popularLinks%}
                 {% if link.url.path and link.label %}
                   <li>
-                    <!-- Uncomment custom event and delete generic once analytics team implements -->
-                    <!-- <a
-                      onclick="recordEvent({ event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' })"
-                      href="{{ link.url.path }}">{{ link.label }}</a> -->
                       <a
-                      onclick="recordEvent({
+                      onclick="recordMultipleEvents([
+                        {
                         event: 'nav-zone-one',
                         'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
                         'click-text': '{{ link.label | strip }}',
-                      });"
+                        },
+                        { 
+                          event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' }
+                      ]);"
                       href="{{ link.url.path }}">{{ link.label }}</a>
                   </li>
                 {% endif %}

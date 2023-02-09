@@ -21,14 +21,14 @@
             NEWS</h2>
           {% if fieldPromoHeadline and fieldLink.url.path %}
             <h3 class="vads-u-font-family--serif vads-u-margin-top--0 vads-u-font-size--xl">
-              {% comment %} <a
-                onclick="recordEvent({ event: 'homepage-news-promo-title-click', action: 'Homepage News Promo - {{ fieldPromoHeadline }} - Title' })"
-                href="{{ fieldLink.url.path }}" class="vads-u-color--white">{{ fieldPromoHeadline }}</a> {% endcomment %}
               <a
-              onclick="recordEvent({
-                event: 'nav-zone-one',
-                  'click-text': '{{ fieldPromoHeadline }}',
-                });"
+              onclick="recordMultipleEvents([
+                {
+                  event: 'nav-zone-one',
+                    'click-text': '{{ fieldPromoHeadline }}',
+                },
+                { event: 'homepage-news-promo-title-click', action: 'Homepage News Promo - {{ fieldPromoHeadline }} - Title' }
+              ]);"
               href="{{ fieldLink.url.path }}" class="vads-u-color--white">{{ fieldPromoHeadline }}</a>
             </h3>
           {% endif %}
@@ -39,20 +39,14 @@
               {{ fieldPromoText }}
             {% endif %}
             {% if fieldLinkLabel and fieldLink.url.path %}
-              {% comment %} <a
-            onclick="recordEvent({ event: 'nav-zone-one', action: 'Homepage news promo - {{  fieldPromoHeadline }} - CTA' })"
-
-                href="{{ fieldLink.url.path }}" class="vads-u-color--white">
-                {{fieldLinkLabel}}
-                <span class="sr-only">
-                  about {{fieldPromoHeadline}}
-                </span>
-              </a> {% endcomment %}
               <a
-                onclick="recordEvent({
-                  event: 'nav-zone-one',
-                    'click-text': '{{ fieldLinkLabel | strip }}',
-                  });"
+                onclick="recordMultipleEvents([
+                  {
+                    event: 'nav-zone-one',
+                      'click-text': '{{ fieldLinkLabel | strip }}',
+                  },
+                  { event: 'nav-zone-one', action: 'Homepage news promo - {{  fieldPromoHeadline }} - CTA' }
+                ]);"
                 href="{{ fieldLink.url.path }}" class="vads-u-color--white">
                 {{fieldLinkLabel}}
                 <span class="sr-only">
@@ -64,17 +58,15 @@
           </p>
 
           <div>
-            <!-- <a
-              onclick="recordEvent({ event: 'homepage-news-promo-more-news-click', action: 'Homepage news promo - More VA News' })"
-              href="https://news.va.gov/" class="vads-u-color--white">More VA news
-              <i class="fas fa-chevron-right vads-u-margin-left--1" role="presentation"></i>
-            </a> -->
             <a
-            onclick="recordEvent({
-              event: 'nav-zone-one',
-              'nav-path': '->{% if fieldLink.url.path != empty %}{{ fieldLink.url.path }}{% else %}{{ fieldLinkLabel }}{% endif %}',
-              'click-text': 'More VA news',
-            });"
+            onclick="recordMultipleEvents([
+              {
+                event: 'nav-zone-one',
+                'nav-path': '->{% if fieldLink.url.path != empty %}{{ fieldLink.url.path }}{% else %}{{ fieldLinkLabel }}{% endif %}',
+                'click-text': 'More VA news',
+              },
+              { event: 'homepage-news-promo-more-news-click', action: 'Homepage news promo - More VA News' }
+            ]);"
             href="https://news.va.gov/" class="vads-u-color--white">More VA news
             <i class="fas fa-chevron-right vads-u-margin-left--1" role="presentation"></i>
           </a>

@@ -9,8 +9,8 @@ import generateSidebar from './fixtures/generateSidebar';
 
 const getSidebarQuery = (drupalData, lovellVariant) =>
   lovellVariant === 'va'
-    ? drupalData.data?.vaLovellFederalVaHealthCareFacilitySidebarQuery
-    : drupalData.data?.vaLovellFederalTricareHealthCareFacilitySidebarQuery;
+    ? drupalData.data?.vaLovellFederalHealthCareVaFacilitySidebarQuery
+    : drupalData.data?.vaLovellFederalHealthCareTricareFacilitySidebarQuery;
 
 const getLocationList = (sidebarProperty, lovellVariant) => {
   const topLevel = findSidebarMenuLinkBySectionAndOptionalLabel(
