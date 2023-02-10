@@ -1287,7 +1287,7 @@
     "rootUrl": "/my-health/secure-messages",
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
