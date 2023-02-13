@@ -10,13 +10,13 @@
     </h2>
     {% if hubs %}
       {% for hub in hubs %}
-        {% if hub.entity.entityUrl.path and hub.entity.fieldHomePageHubLabel and hub.entity.fieldTeaserText and hub.entity.fieldTitleIcon %}
-        <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ hub.entity.entityId }}">
-          <h3 class="heading-level-4"><a href="{{ hub.entity.entityUrl.path }}"
-              onclick="recordEvent({ event: 'nav-linkslist', action: 'Benefit hub - {{ hub.entity.fieldHomePageHubLabel }}' });"><i
-                class="icon-small icon-heading hub-icon-{{ hub.entity.fieldTitleIcon }} hub-background-{{ hub.entity.fieldTitleIcon }} white vads-u-margin-right--1"></i>{{
-              hub.entity.fieldHomePageHubLabel }}</a></h3>
-          <p class="vads-u-margin-top--0 ">{{ hub.entity.fieldTeaserText }}</p>
+        {% if hub.url.path and hub.label and hub.entity.fieldLinkSummary and hub.entity.fieldIcon %}
+        <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ forloop.index }}">
+          <h3 class="heading-level-4"><a href="{{ hub.url.path }}"
+              onclick="recordEvent({ event: 'nav-linkslist', action: 'Benefit hub - {{ hub.label }}' });"><i
+                class="icon-small icon-heading hub-icon-{{ hub.entity.fieldIcon }} hub-background-{{ hub.entity.fieldIcon }} white vads-u-margin-right--1"></i>{{
+                  hub.label }}</a></h3>
+          <p class="vads-u-margin-top--0 ">{{ hub.entity.fieldLinkSummary }}</p>
         </div> 
         {% endif %}
         {% comment %} Close this row and open a new one when needed. {% endcomment %}
