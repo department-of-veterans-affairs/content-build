@@ -54,13 +54,23 @@ module.exports = {
       headerNodes.each((index, el) => {
         const headerLevel = el.tagName;
         const headerLevelIndex = headerHierarchy.indexOf(headerLevel);
-
-        const accordionNodes = dom(el)
+        let accordionNodes = dom(el)
           .parent()
           .parent()
           .siblings('[data-template="paragraphs/collapsible_panel"]')
           .children('va-accordion')
           .children('va-accordion-item');
+
+        if (accordionNodes.length === 0) {
+          // Resolve nodes found within a ".feature" div
+          accordionNodes = dom(el)
+            .parent()
+            .parent()
+            .parent()
+            .siblings('[data-template="paragraphs/collapsible_panel"]')
+            .children('va-accordion')
+            .children('va-accordion-item');
+        }
 
         if (accordionNodes.length > 0) {
           accordionNodes.each((idx, element) =>
