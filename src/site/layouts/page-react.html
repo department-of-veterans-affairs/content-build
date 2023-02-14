@@ -8,7 +8,8 @@
   <main id="main" class="main">
     {% include "src/site/components/react-loader.html" %}
   {% if includeFeedbackButton != false %}
-    <div class="usa-grid usa-grid-full">
+    {% include "src/site/includes/above-footer-elements-full-width.drupal.liquid" %}
+    <!-- <div class="usa-grid usa-grid-full">
       <div class="last-updated vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
         <div class="vads-u-display--flex above-footer-elements-container">
           <div class="vads-u-flex--auto">
@@ -23,7 +24,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   {% endif %}
   </main>
 </div>
