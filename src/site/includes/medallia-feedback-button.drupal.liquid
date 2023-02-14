@@ -1,4 +1,4 @@
-{% assign displayFeedbackButton = true %}
+{% assign displayFeedbackButton = false %}
 {% if displayFeedbackButton == true %}
   <button 
     onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: entityUrl.path }})"   
