@@ -141,7 +141,9 @@
 </main> <!-- end #content -->
 
 <!-- Medallia feedback button-->
-<div class="usa-grid usa-grid-full">
+{% include "src/site/includes/above-footer-elements-full-width.drupal.liquid" %}
+
+{% comment %} <div class="usa-grid usa-grid-full">
   <div class="last-updated vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
     <div class="vads-u-display--flex above-footer-elements-container">
       <div class="vads-u-flex--1 vads-u-text-align--right">
@@ -151,7 +153,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
 <!-- end Medallia feedback button-->
 
 {% include "src/site/includes/footer.html" %}
