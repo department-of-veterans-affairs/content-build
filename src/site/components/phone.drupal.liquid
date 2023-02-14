@@ -3,25 +3,41 @@
     {% assign phoneNumberObj = numbers | phoneNumberArrayToObject %}
     {% if phoneNumberObj.tel %}
       {% for number in phoneNumberObj.tel %}
-        {% include "src/site/components/phone-number.drupal.liquid" with number = number phoneLabel = 'Phone' %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+          number = number
+          phoneLabel = 'Phone'
+          phoneHeaderLevel = phoneHeaderLevel
+        %}
       {% endfor %}
     {% endif %}
 
     {% if phoneNumberObj.fax %}
       {% for number in phoneNumberObj.fax %}
-        {% include "src/site/components/phone-number.drupal.liquid" with number = number phoneLabel = 'Fax' %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+          number = number
+          phoneLabel = 'Fax'
+          phoneHeaderLevel = phoneHeaderLevel
+        %}
       {% endfor %}
     {% endif %}
 
     {% if phoneNumberObj.sms %}
       {% for number in phoneNumberObj.sms %}
-        {% include "src/site/components/phone-number.drupal.liquid" with number = number phoneLabel = 'SMS' %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+          number = number
+          phoneLabel = 'SMS'
+          phoneHeaderLevel = phoneHeaderLevel
+        %}
       {% endfor %}
     {% endif %}
 
     {% if phoneNumberObj.tty %}
       {% for number in phoneNumberObj.tty %}
-        {% include "src/site/components/phone-number.drupal.liquid" with number = number phoneLabel = 'TTY'%}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+          number = number
+          phoneLabel = 'TTY'
+          phoneHeaderLevel = phoneHeaderLevel
+        %}
       {% endfor %}
     {% endif %}
   </div>

@@ -3,11 +3,12 @@
 {% for location in locations %}
   {% include "src/site/paragraphs/service_location.drupal.liquid" with
     single = location.entity
+    serviceLocationSubHeaderLevel = 5
   %}
 {% endfor %}
 
 {% if locationEntity.fieldReferralRequired or locationEntity.fieldWalkInsAccepted or locationEntity.fieldOnlineSchedulingAvailabl %}
-  <h4 data-template="facilities/health_care_local_health_service">Appointments</h4>
+  <h5 data-template="facilities/health_care_local_health_service">Appointments</h5>
 
   {% assign introText = 'Contact us to schedule, reschedule, or
     cancel your appointment. If a referral is required, you’ll need to contact your
