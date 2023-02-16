@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 // https://cms-nc3gdbj3c2p9pizhf1sm8czjvtfeg1ik.demo.cms.va.gov -- Tugboat CMS with 2 broken links
 const fs = require('fs');
+const core = require('@actions/core');
 
 const args = process.argv.slice(2);
 const envName = args[0];
@@ -28,7 +29,7 @@ if (fs.existsSync(reportPath)) {
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
-  console.log(`::set-output name=SLACK_ATTACHMENTS::${slackAttachments}`);
+  core.setOutput('SLACK_ATTACHMENTS', slackAttachments);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
@@ -43,12 +44,12 @@ if (fs.existsSync(reportPath)) {
    * Only emit this variable if ran against main branch or during Content Release.
    * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
    */
-  console.log(`::set-output name=UPLOAD_AND_NOTIFY::1`);
+  core.setOutput('UPLOAD_AND_NOTIFY', '1');
 
   if (shouldFail) {
     throw new Error('Broken links found');
   }
 } else {
   console.log('No broken links found!');
-  console.log(`::set-output name=UPLOAD_AND_NOTIFY::0`);
+  core.setOutput('UPLOAD_AND_NOTIFY', '0');
 }
