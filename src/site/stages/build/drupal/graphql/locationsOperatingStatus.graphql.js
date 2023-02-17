@@ -28,6 +28,11 @@ const locationsOperatingStatus = `
             }
           }
         }
+        fieldSupplementalStatusMoreI {
+          value
+          format
+          processed
+        }
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
         fieldRegionPage {
