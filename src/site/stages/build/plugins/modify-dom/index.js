@@ -9,6 +9,7 @@ const addSubheadingsIds = require('./add-id-to-subheadings');
 const checkBrokenLinks = require('./check-broken-links');
 const injectAxeCore = require('./inject-axe-core');
 const addLangToMain = require('./add-lang-to-main');
+const forceCorrectAccordionHeaders = require('./force-correct-accordion-headers');
 
 const getDomModifiers = BUILD_OPTIONS => {
   if (BUILD_OPTIONS.liquidUnitTestingFramework) {
@@ -18,6 +19,7 @@ const getDomModifiers = BUILD_OPTIONS => {
       addSubheadingsIds,
       injectAxeCore,
       addLangToMain,
+      forceCorrectAccordionHeaders,
     ];
   }
 
@@ -29,6 +31,7 @@ const getDomModifiers = BUILD_OPTIONS => {
     checkBrokenLinks,
     injectAxeCore,
     addLangToMain,
+    forceCorrectAccordionHeaders,
   ];
 };
 
