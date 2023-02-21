@@ -1,0 +1,260 @@
+#name: Accessibility Tests
+#
+#on:
+#  workflow_dispatch:
+#  schedule:
+#    - cron: '0 12 * * 1-5'
+
+name: ZZ Accessibilty Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+env:
+  CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
+  CHANNEL_ID: C01RAS1KAQK
+
+jobs:
+  build:
+    name: Build
+    runs-on: [self-hosted]
+    timeout-minutes: 180
+    defaults:
+      run:
+        working-directory: content-build
+
+    env:
+      DRUPAL_ADDRESS: https://cms-content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+#      - name: Get Slack bot token
+#        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+#        with:
+#          ssm_parameter: /devops/github_actions_slack_bot_user_token
+#          env_variable_name: SLACK_BOT_TOKEN
+
+#      - name: Notify Slack
+#        if: ${{ always() }}
+#        uses: slackapi/slack-github-action@v1.18.0
+#        continue-on-error: true
+#        env:
+#          SSL_CERT_DIR: /etc/ssl/certs
+#          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+#        with:
+#          payload: '{"attachments": [{"color": "#BCBCBC","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Starting the daily accessibility scan of `content-build`, with run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+#          channel-id: ${{ env.CHANNEL_ID }}
+
+      - name: Checkout vagov-content
+        uses: actions/checkout@v3
+        with:
+          repository: department-of-veterans-affairs/vagov-content
+          path: vagov-content
+
+      - name: Checkout content-build
+        uses: actions/checkout@v3
+        with:
+          path: content-build
+
+      - name: Checkout vets-website
+        uses: actions/checkout@v3
+        with:
+          repository: department-of-veterans-affairs/vets-website
+          path: vets-website
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Install Yarn
+        shell: bash
+        run: npm i -g yarn@1.19.1
+
+      - name: Install vets-website dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: cd vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 10
+
+      - name: Build vets-website
+        run: yarn build --verbose --buildtype=vagovprod
+        working-directory: vets-website
+        timeout-minutes: 30
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        timeout-minutes: 10
+        with:
+          path: |
+            .cache/yarn
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
+      - name: Install content-build dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 7
+
+      - name: Set Drupal address
+        run: echo "DRUPAL_ADDRESS=https://prod.cms.va.gov" >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod password
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+          env_variable_name: DRUPAL_PASSWORD
+
+      - name: set Drupal prod username
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
+
+      - name: Build content-build
+        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://prod.cms.va.gov --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        env:
+          NODE_ENV: production
+
+      - name: Copy vets-website assets to content-build
+        run: |
+          cd ..
+          cp -arf vets-website/build/vagovprod/* content-build/build/vagovprod
+
+      - name: Compress E2E test build
+        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+
+      - name: Upload E2E test build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-build.tar.bz2
+          path: content-build/test-build.tar.bz2
+          retention-days: 1
+
+      - name: Runner clean up
+        run: rm -rf ../content-build
+
+  a11y:
+    name: Accessibility Tests
+    needs: build
+    timeout-minutes: 120
+    runs-on: [self-hosted, asg]
+    container:
+      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
+      options: -u 1001:1001 -v /usr/local/share:/share --user root
+    strategy:
+      fail-fast: false
+      max-parallel: 1 
+      matrix:
+        ci_node_index: [1]
+
+    env:
+      NODE_EXTRA_CA_CERTS: /share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
+      CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
+
+    steps:
+      - name: Checkout content-build
+        uses: actions/checkout@v3
+
+      - name: Get Node version
+        id: get-node-version
+        run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        timeout-minutes: 10
+        with:
+          path: |
+            .cache/yarn
+            /github/home/.cache/Cypress
+            **/node_modules
+          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-cypress-
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v2
+        with:
+          command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
+          max_attempts: 3
+          timeout_minutes: 7
+        env:
+          YARN_CACHE_FOLDER: .cache/yarn
+
+      - name: Download production build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test-build.tar.bz2
+
+      - name: Unpack build
+        run: |
+          mkdir -p build/vagovprod
+          tar -C build/vagovprod -xjf /__w/content-build/content-build/test-build.tar.bz2
+
+      - name: Create a11y failures CSV file
+        run: touch a11y_failures.csv
+
+      - name: Start content-build
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+
+      - name: Run Cypress E2E Tests
+        run: CYPRESS_STEP=${{ matrix.ci_node_index }} CYPRESS_CONTENT_BUILD_PORT=3002 yarn cy:run --browser chrome --headless --port 3001 --config baseUrl=http://localhost:3002,video=false,specPattern=**/tests/**/*.a11y.spec.js --reporter mochawesome --reporter-options "configFile=config/cypress-reporters.json" --spec "src/platform/site-wide/tests/sitemap/sitemap.a11y.spec.js"
+
+      - name: Rename Mochawesome JSON file
+        if: ${{ always() }}
+        run: mv mochawesome-report/mochawesome.json mochawesome-report/mochawesome-${{ matrix.ci_node_index }}.json
+
+      - name: Rename failures CSV file
+        if: ${{ always() }}
+        run: mv a11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
+
+      - name: Archive Mochawesome test results
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: cypress-mochawesome-test-results
+          path: mochawesome-report
+          retention-days: 1
+
+      - name: Archive failures CSV
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: a11y_failures
+          path: a11y_failures-${{ matrix.ci_node_index }}.csv
+          retention-days: 30
+
+      - name: Runner clean up
+        run: |
+          rm -rf build
+          rm /__w/content-build/content-build/test-build.tar.bz2
+
