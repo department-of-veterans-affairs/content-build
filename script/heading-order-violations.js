@@ -86,24 +86,41 @@ htmlOutput += '</body></html>';
 
 const namespace = 'dsva_vagov.content_build';
 const now = Math.floor(Date.now() / 1000);
-const tags = [];
+const tags = [
+  `environment:Tugboat`,
+  `name:${process.env.TUGBOAT_PREVIEW_NAME}`,
+  `hostname:${process.env.TUGBOAT_SERVICE_HOSTNAME}`,
+];
 
 const jsonData = {
   series: [
     {
       metric: `${namespace}.header_violations.total_files`,
-      points: [now, statistics.totalFiles],
+      points: [{ timestamp: now, value: statistics.totalFiles }],
       tags,
+      type: 3,
     },
     {
       metric: `${namespace}.header_violations.total_violations`,
-      points: [now, statistics.totalViolations],
+      points: [
+        {
+          timestamp: now,
+          value: statistics.totalViolations,
+        },
+      ],
       tags,
+      type: 3,
     },
     {
       metric: `${namespace}.header_violations.total_files_with_violations`,
-      points: [now, statistics.totalFilesWithViolations],
+      points: [
+        {
+          timestamp: now,
+          value: statistics.totalFilesWithViolations,
+        },
+      ],
       tags,
+      type: 3,
     },
   ],
 };
