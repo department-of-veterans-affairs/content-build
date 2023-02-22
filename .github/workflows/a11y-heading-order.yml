@@ -125,7 +125,7 @@ jobs:
     runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
-      options: -u 1001:1001 -v /usr/local/share:/share --user root
+      options: -u 1001:1001 -v /usr/local/share:/share
     strategy:
       fail-fast: false
       max-parallel: 32
