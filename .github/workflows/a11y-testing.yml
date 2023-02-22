@@ -90,10 +90,10 @@ jobs:
           max_attempts: 3
           timeout_minutes: 10
 
-      - name: Build vets-website
-        run: yarn build --verbose --buildtype=vagovprod
-        working-directory: vets-website
-        timeout-minutes: 30
+#      - name: Build vets-website
+#        run: yarn build --verbose --buildtype=vagovprod
+#        working-directory: vets-website
+#        timeout-minutes: 30
 
       - name: Cache dependencies
         id: cache-dependencies
@@ -135,25 +135,25 @@ jobs:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
 
-      - name: Build content-build
-        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://prod.cms.va.gov --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-        env:
-          NODE_ENV: production
+#      - name: Build content-build
+#        run: yarn build --buildtype=vagovprod --asset-source=local --drupal-address=https://prod.cms.va.gov --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+#        env:
+#          NODE_ENV: production
 
-      - name: Copy vets-website assets to content-build
-        run: |
-          cd ..
-          cp -arf vets-website/build/vagovprod/* content-build/build/vagovprod
-
-      - name: Compress E2E test build
-        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
-
-      - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-build.tar.bz2
-          path: content-build/test-build.tar.bz2
-          retention-days: 1
+#      - name: Copy vets-website assets to content-build
+#        run: |
+#          cd ..
+#          cp -arf vets-website/build/vagovprod/* content-build/build/vagovprod
+#
+#      - name: Compress E2E test build
+#        run: tar -C build/vagovprod -cjf test-build.tar.bz2 .
+#
+#      - name: Upload E2E test build artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: test-build.tar.bz2
+#          path: content-build/test-build.tar.bz2
+#          retention-days: 1
 
       - name: Runner clean up
         run: rm -rf ../content-build
@@ -210,10 +210,14 @@ jobs:
         env:
           YARN_CACHE_FOLDER: .cache/yarn
 
+#      - name: Download production build artifact
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: test-build.tar.bz2
+
       - name: Download production build artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: test-build.tar.bz2
+        run: |
+          wget https://a11y-test-build.s3-us-gov-west-1.amazonaws.com/test-build.tar.bz2 
 
       - name: Unpack build
         run: |
