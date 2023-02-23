@@ -36,14 +36,17 @@ function escape(s) {
 const htmlFiles = glob.sync(`${options.dir}/**/*.html`);
 
 let htmlOutput = '<html><body>';
-const jsonData = {
+let mainHtml = '';
+const statistics = {
   totalViolations: 0,
   totalFilesWithViolations: 0,
   totalFiles: 0,
 };
 
 htmlFiles.forEach((filename, index, array) => {
-  console.error(`Processing file ${index} of ${array.length}`);
+  if (index % 100 === 0) {
+    console.error(`Processing file ${index} of ${array.length}`);
+  }
   try {
     const data = fs
       .readFileSync(filename, 'utf8')
@@ -58,22 +61,70 @@ htmlFiles.forEach((filename, index, array) => {
     if (badHeadings) {
       const url = filename.replace('./build/vagovdev/', 'https://www.va.gov/');
       const link = `<h1><a href="${url}">${filename}</a></h1>`;
-      htmlOutput += link;
+      mainHtml += link;
       badHeadings.forEach(text => {
         const text2 = escape(text);
-        htmlOutput += `<pre>${text2}</pre>`;
+        mainHtml += `<pre>${text2}</pre>`;
       });
-      jsonData.totalViolations += badHeadings.length;
-      jsonData.totalFilesWithViolations += 1;
+      statistics.totalViolations += badHeadings.length;
+      statistics.totalFilesWithViolations += 1;
     }
   } catch (err) {
     console.error(err);
   }
 });
 
-jsonData.totalFiles = htmlFiles.length;
+statistics.totalFiles = htmlFiles.length;
 
+htmlOutput += `<h1>Statistics</h1>
+<b>Total Files</b>: ${statistics.totalFiles}<br>
+<b>Total Violations</b>: ${statistics.totalViolations}<br>
+<b>Total Files With Violations</b>: ${statistics.totalFilesWithViolations}<br>
+`;
+htmlOutput += mainHtml;
 htmlOutput += '</body></html>';
+
+const namespace = 'dsva_vagov.content_build';
+const now = Math.floor(Date.now() / 1000);
+const tags = [
+  `environment:Tugboat`,
+  `name:${process.env.TUGBOAT_PREVIEW_NAME}`,
+  `hostname:${process.env.TUGBOAT_SERVICE_HOSTNAME}`,
+];
+
+const jsonData = {
+  series: [
+    {
+      metric: `${namespace}.header_violations.total_files`,
+      points: [{ timestamp: now, value: statistics.totalFiles }],
+      tags,
+      type: 3,
+    },
+    {
+      metric: `${namespace}.header_violations.total_violations`,
+      points: [
+        {
+          timestamp: now,
+          value: statistics.totalViolations,
+        },
+      ],
+      tags,
+      type: 3,
+    },
+    {
+      metric: `${namespace}.header_violations.total_files_with_violations`,
+      points: [
+        {
+          timestamp: now,
+          value: statistics.totalFilesWithViolations,
+        },
+      ],
+      tags,
+      type: 3,
+    },
+  ],
+};
+
 const jsonOutput = JSON.stringify(jsonData, null, 2);
 
 fs.writeFileSync(options['html-path'], htmlOutput);
