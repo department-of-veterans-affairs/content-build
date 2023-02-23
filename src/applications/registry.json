@@ -137,16 +137,6 @@
     }
   },
   {
-    "appName": "Terms and Conditions",
-    "entryName": "terms-and-conditions",
-    "rootUrl": "/health-care/medical-information-terms-conditions",
-    "template": {
-      "title": "Terms and Conditions for Medical Information",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true
-    }
-  },
-  {
     "appName": "21P-530 Burials benefits form",
     "entryName": "burials",
     "rootUrl": "/burials-and-memorials/application/530",
