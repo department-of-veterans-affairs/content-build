@@ -416,7 +416,7 @@ jobs:
     timeout-minutes: 30
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
-      options: -u 0
+      options: -u 1001:1001
       volumes:
         - /usr/local/share:/share
         - /etc/ssl/certs
