@@ -419,7 +419,7 @@ jobs:
       options: -u 1001:1001
       volumes:
         - /usr/local/share:/share
-        - /etc/ssl/certs
+        - /etc/ssl/certs:/etc/ssl/certs
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA-combined.pem
@@ -430,8 +430,8 @@ jobs:
         uses: actions/checkout@v3
 
       # Required for Docker
-      - name: Move VA cert to /etc/ssl/certs
-        run: mv certs/VA-Internal-S2-RCA-combined.pem /etc/ssl/certs/
+      #- name: Move VA cert to /etc/ssl/certs
+      #  run: mv certs/VA-Internal-S2-RCA-combined.pem /etc/ssl/certs/
 
       - name: Download production build
         run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
