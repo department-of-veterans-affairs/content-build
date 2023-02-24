@@ -371,10 +371,6 @@ jobs:
       - name: Checkout content-build
         uses: actions/checkout@v3
 
-      # Required for Docker
-      #- name: Move VA cert to /etc/ssl/certs
-      #  run: mv certs/VA-Internal-S2-RCA-combined.pem /etc/ssl/certs/
-
       - name: Download production build
         run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
 
