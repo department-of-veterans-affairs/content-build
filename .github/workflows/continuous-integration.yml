@@ -421,7 +421,7 @@ jobs:
         - /etc/ssl/certs:/etc/ssl/certs
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certifcates.crt
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
       CHROMEDRIVER_FILEPATH: /share/chrome_driver/chromedriver
 
     steps:
