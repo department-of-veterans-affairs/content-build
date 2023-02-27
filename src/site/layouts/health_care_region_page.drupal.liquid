@@ -52,89 +52,89 @@
 
           <!-- "Manage your health online" section -->
           {% comment %} Hide this section for Lovell TRICARE {% endcomment %}
-          {% if fieldAdministration.entity.entityId != '1039' %}
-          <section>
-            {% if fieldAdministration.entity.entityId == '1040' %}
-              <h3>Manage your VA health online</h3>
-            {% else %}
-              <h3>Manage your health online</h3>
-            {% endif %}
-            <div
-              class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
+          {% unless fieldAdministration.entity.entityId == '1039' or entityUrl.path contains '-tricare' %}
+            <section>
+              {% if fieldAdministration.entity.entityId == '1040' %}
+                <h3>Manage your VA health online</h3>
+              {% else %}
+                <h3>Manage your health online</h3>
+              {% endif %}
               <div
-                class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class=" fa fa-prescription-bottle vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Refill and track
-                      your prescriptions<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
-                </div>
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="far fa-comments vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Send a secure
-                      message to your health care team<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
-                </div>
+                class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
                 <div
-                  class="vads-facility-hub-cta vads-u-border-color--primary-alt-light medium-screen:vads-u-border-bottom--1px">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="far fa-calendar-check vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Schedule and manage
-                      health appointments<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
+                  class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
+                  <div class="vads-facility-hub-cta">
+                    <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                      href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/", buildtype }}"
+                      class="top-task-link vads-u-height--full vads-u-width--full">
+                      <i
+                        class=" fa fa-prescription-bottle vads-facility-hub-cta-circle">&nbsp;</i>
+                      <span class="vads-facility-hub-cta-label">Refill and track
+                        your prescriptions<i
+                          class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
+                    </a>
+                  </div>
+                  <div class="vads-facility-hub-cta">
+                    <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                      href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/", buildtype }}"
+                      class="top-task-link vads-u-height--full vads-u-width--full">
+                      <i
+                        class="far fa-comments vads-facility-hub-cta-circle">&nbsp;</i>
+                      <span class="vads-facility-hub-cta-label">Send a secure
+                        message to your health care team<i
+                          class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
+                    </a>
+                  </div>
+                  <div
+                    class="vads-facility-hub-cta vads-u-border-color--primary-alt-light medium-screen:vads-u-border-bottom--1px">
+                    <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                      href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", buildtype }}"
+                      class="top-task-link vads-u-height--full vads-u-width--full">
+                      <i
+                        class="far fa-calendar-check vads-facility-hub-cta-circle">&nbsp;</i>
+                      <span class="vads-facility-hub-cta-label">Schedule and manage
+                        health appointments<i
+                          class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
+                    </a>
+                  </div>
+                </div>
+                <div>
+                  <div class="vads-facility-hub-cta">
+                    <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                      href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/", buildtype }}"
+                      class="top-task-link vads-u-height--full vads-u-width--full">
+                      <i
+                        class="fa fa-file-medical vads-facility-hub-cta-circle">&nbsp;</i>
+                      <span class="vads-facility-hub-cta-label">Download your VA
+                        medical records (Blue Button)<i
+                          class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
+                    </a>
+                  </div>
+                  <div class="vads-facility-hub-cta">
+                    <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                      href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/", buildtype }}"
+                      class="top-task-link vads-u-height--full vads-u-width--full">
+                      <i
+                        class="fa fa-clipboard-list vads-facility-hub-cta-circle">&nbsp;</i>
+                      <span class="vads-facility-hub-cta-label">View your lab and
+                        test results<i
+                          class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
+                    </a>
+                  </div>
+                  <div
+                    class="vads-facility-hub-cta vads-facility-hub-cta-last-line vads-u-border-top--1px vads-u-border-color--primary-alt-light">
+                    <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                      href="/health-care/order-hearing-aid-batteries-and-accessories/"
+                      class="vads-u-height--full vads-u-width--full">
+                      <i
+                        class="fa fa-deaf vads-facility-hub-cta-circle">&nbsp;</i>
+                      <span class="vads-facility-hub-cta-label">Order hearing aid batteries <br/> and accessories<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="fa fa-file-medical vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Download your VA
-                      medical records (Blue Button)<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
-                </div>
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="fa fa-clipboard-list vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">View your lab and
-                      test results<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
-                </div>
-                <div
-                  class="vads-facility-hub-cta vads-facility-hub-cta-last-line vads-u-border-top--1px vads-u-border-color--primary-alt-light">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
-                    href="/health-care/order-hearing-aid-batteries-and-accessories/"
-                    class="vads-u-height--full vads-u-width--full">
-                    <i
-                      class="fa fa-deaf vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Order hearing aid batteries <br/> and accessories<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-          {% endif %}
+            </section>
+          {% endunless %}
 
 
           <!-- List of links section -->
