@@ -1180,7 +1180,7 @@
     "entryName": "education-letters",
     "rootUrl": "/education/download-letters",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "title": "Check your VA education letters"
     }
