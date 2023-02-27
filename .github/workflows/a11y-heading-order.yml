@@ -125,7 +125,10 @@ jobs:
     runs-on: [self-hosted, asg]
     container:
       image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
-      options: --user 1001:1001 --volume /usr/local/share:/share
+      options: --user 1001:1001
+      volumes:
+        - /usr/local/share:/share
+        - /etc/ssl/certs:/etc/ssl/certs
     strategy:
       fail-fast: false
       max-parallel: 32
