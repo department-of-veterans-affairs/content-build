@@ -29,9 +29,9 @@ module.exports = {
 
     const findPreviousHeaderLevel = node => {
       // Returns the header level when the last header is in a wysiwyg div
-      const previousHeaderLevelParent = dom(node).prev(
-        'div[data-template="paragraphs/wysiwyg"]',
-      );
+      const previousHeaderLevelParent = dom(node)
+        .prevAll('div[data-template="paragraphs/wysiwyg"]:has(:header)')
+        .first();
 
       const lastHeader = previousHeaderLevelParent.find(':header').last()[0];
       if (lastHeader) {
