@@ -14,6 +14,7 @@ const {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
+  isFederalRegionHomepage,
   getLovellTitle,
   getLovellTitleVariation,
   getLovellVariantOfUrl,
@@ -234,6 +235,11 @@ function processLovellPages(drupalData) {
   } = drupalData.data.nodeQuery.entities.reduce(
     (acc, page) => {
       if (isLovellFederalPage(page)) {
+        // Federal Region Homepage should not be cloned
+        if (isFederalRegionHomepage(page)) {
+          return acc;
+        }
+
         if (isListingPage(page)) {
           acc.lovellFederalListingPages.push(page);
         } else {
