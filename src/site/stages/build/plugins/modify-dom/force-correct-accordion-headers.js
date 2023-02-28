@@ -64,7 +64,7 @@ module.exports = {
       const accordionHeaders = dom(node).find(':header');
 
       // Prevents attempted to make a header larger than an H6
-      if (incrementedHeaderLevel === 6) incrementedHeaderLevel = 5;
+      if (incrementedHeaderLevel > 6) incrementedHeaderLevel = 6;
 
       // only reassign header level if incrementedHeaderLevel is actually a number
       if (incrementedHeaderLevel && typeof incrementedHeaderLevel === 'number')
