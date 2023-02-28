@@ -43,22 +43,6 @@ function getLovellSwitchPath(vars) {
   return getLovellVariantOfUrl(page.entityUrl.path, oppositeVariant);
 }
 
-function getLovellBreadcrumbs(vars) {
-  const { page, variantName, linkVar } = vars;
-  // Modify Breadcrumb
-  return page.entityUrl.breadcrumb.map(crumb => {
-    // eslint-disable-next-line no-param-reassign
-    crumb.text = crumb.text.replace(
-      /Lovell Federal health care/,
-      getLovellTitle(variantName),
-    );
-    // eslint-disable-next-line no-param-reassign
-    crumb.url.path = getLovellVariantOfUrl(crumb.url.path, linkVar);
-
-    return crumb;
-  });
-}
-
 function getLovellVariantTitle(title, vars) {
   const { variantName } = vars;
 
@@ -69,6 +53,20 @@ function getLovellVariantTitle(title, vars) {
     ),
     getLovellTitle(variantName),
   );
+}
+
+function getLovellBreadcrumbs(vars) {
+  const { page, linkVar } = vars;
+  // Modify Breadcrumb
+  return page.entityUrl.breadcrumb.map(crumb => {
+    // eslint-disable-next-line no-param-reassign
+    crumb.text = getLovellVariantTitle(crumb.text, vars);
+
+    // eslint-disable-next-line no-param-reassign
+    crumb.url.path = getLovellVariantOfUrl(crumb.url.path, linkVar);
+
+    return crumb;
+  });
 }
 
 module.exports = {
