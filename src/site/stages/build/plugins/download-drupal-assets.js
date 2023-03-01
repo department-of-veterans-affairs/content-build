@@ -34,7 +34,7 @@ async function downloadFile(
   let response;
   let retries = 3;
   // eslint-disable-next-line no-plusplus
-  while (retries++) {
+  while (retries--) {
     try {
       if (global.verbose) {
         const startDate = new Date().toISOString();
