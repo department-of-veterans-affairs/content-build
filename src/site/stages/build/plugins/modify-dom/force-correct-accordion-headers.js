@@ -62,13 +62,17 @@ module.exports = {
       let incrementedHeaderLevel =
         parseInt(previousHeaderLevel?.substring(1), 10) + 1;
       const accordionHeaders = dom(node).find(':header');
+      // Ensures that only the main header is affected and not headers in the accordion content
+      const topLevelAccordionHeaders = accordionHeaders.filter(function() {
+        return dom(this).parent()[0].tagName === 'va-accordion-item';
+      });
 
       // Prevents attempted to make a header larger than an H6
       if (incrementedHeaderLevel > 6) incrementedHeaderLevel = 6;
 
       // only reassign header level if incrementedHeaderLevel is actually a number
       if (incrementedHeaderLevel && typeof incrementedHeaderLevel === 'number')
-        accordionHeaders.each((_, header) => {
+        topLevelAccordionHeaders.each((_, header) => {
           dom(header).prop('tagName', `h${incrementedHeaderLevel}`);
           didModifyHeaders = true;
         });
