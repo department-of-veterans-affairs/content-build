@@ -29,11 +29,6 @@ const vamcOperatingStatusAndAlerts = `
                     }
                   }
                 }
-                fieldSupplementalStatusMoreI {
-                  value
-                  format
-                  processed
-                }
               }
             }
           }
