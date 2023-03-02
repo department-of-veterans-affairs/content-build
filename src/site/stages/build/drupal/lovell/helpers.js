@@ -35,6 +35,12 @@ function isListingPage(page) {
   return listingPageTypes.includes(page.entityBundle);
 }
 
+function isFederalRegionHomepage(page) {
+  return (
+    isLovellFederalPage(page) && page.entityBundle === 'health_care_region_page'
+  );
+}
+
 function getLovellTitle(variant) {
   return `${LOVELL_TITLE_STRING} health care - ${variant}`;
 }
@@ -71,6 +77,7 @@ module.exports = {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
+  isFederalRegionHomepage,
   getLovellTitle,
   getLovellTitleVariation,
   getLovellUrl,
