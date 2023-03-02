@@ -30,6 +30,11 @@ const FACILITIES_RESULTS = `
           }
         }
       }
+      fieldSupplementalStatusMoreI {
+        value
+        format
+        processed
+      }
       fieldOperatingStatusFacility
       fieldFacilityLocatorApiId
       fieldIntroText
