@@ -27,11 +27,6 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
-    fieldSupplementalStatusMoreI {
-      value
-      format
-      processed
-    }
     fieldOperatingStatusFacility
     fieldLocationServices {
       entity {

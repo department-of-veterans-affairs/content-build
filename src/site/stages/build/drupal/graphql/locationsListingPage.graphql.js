@@ -37,11 +37,6 @@ const locationListingPage = `
                     }
                   }
                 }
-                fieldSupplementalStatusMoreI {
-                  value
-                  format
-                  processed
-                }
               }
             }
           }

@@ -72,11 +72,6 @@ const nodeHealthCareRegionPage = `
               }
             }
           }
-          fieldSupplementalStatusMoreI {
-            value
-            format
-            processed
-          }
         }
       }
     }
