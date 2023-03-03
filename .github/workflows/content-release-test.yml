@@ -5,7 +5,7 @@ on:
   pull_request:
 
 concurrency:
-  group: content-release-prod
+  group: content-release-node-limit
 
 env:
   CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
