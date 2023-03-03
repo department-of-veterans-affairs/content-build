@@ -167,7 +167,7 @@ function updateLovellSwitchLinks(page, pages) {
  * @param {*} federalPages Listing pages to merge into tricareOrVaPages
  * @returns
  */
-function combineLovellListingPages(tricareOrVaPages, federalPages) {
+function combineLovellListingPages(tricareOrVaPages, federalPages, variant) {
   return tricareOrVaPages.map(listingPage => {
     const typePastMap = {
       event_listing: 'pastEvents',
@@ -185,6 +185,16 @@ function combineLovellListingPages(tricareOrVaPages, federalPages) {
       page => page.entityBundle === entityBundle,
     );
 
+    const updateEntityUrlForVariant = entity => {
+      return {
+        ...entity,
+        entityUrl: {
+          ...entity.entityUrl,
+          path: getLovellVariantOfUrl(entity.entityUrl.path, variant),
+        },
+      };
+    };
+
     const {
       [pastObjectLabel]: pastListItemsToCombine,
       reverseFieldListingNode: reverseFieldListingNodeToCombine,
@@ -194,9 +204,11 @@ function combineLovellListingPages(tricareOrVaPages, federalPages) {
     const allListItemEntities = reverseFieldListingNode?.entities || [];
 
     const pastListItemEntitiesToCombine =
-      pastListItemsToCombine?.entities || [];
+      pastListItemsToCombine?.entities.map(updateEntityUrlForVariant) || [];
     const allListItemEntitiesToCombine =
-      reverseFieldListingNodeToCombine?.entities || [];
+      reverseFieldListingNodeToCombine?.entities.map(
+        updateEntityUrlForVariant,
+      ) || [];
 
     const combinedPastListItemEntities = [
       ...pastListItemEntities,
@@ -277,10 +289,12 @@ function processLovellPages(drupalData) {
   const lovellTricareListingPagesWithFederal = combineLovellListingPages(
     lovellTricareListingPages,
     lovellFederalListingPages,
+    'tricare',
   );
   const lovellVaListingPagesWithFederal = combineLovellListingPages(
     lovellVaListingPages,
     lovellFederalListingPages,
+    'va',
   );
 
   // modify all tricare pages
