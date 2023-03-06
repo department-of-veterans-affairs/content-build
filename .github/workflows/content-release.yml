@@ -23,12 +23,11 @@ env:
   ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
 jobs:
-  validate-build-status:
-    name: Validate Build Status
-    runs-on: [self-hosted, asg] 
+  start-runner:
+    runs-on: [self-hosted]
     outputs:
-      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
-      TAG: ${{ steps.get-latest-release.outputs.tag_name }}
+      label: ${{ steps.start-ec2-runner.outputs.label }}
+      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
     timeout-minutes: 15
 
@@ -37,6 +36,65 @@ jobs:
         id: export-approx-workflow-start-time
         run: echo APPROX_WORKFLOW_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Get latest GHA Runner AMI ID
+        run: |
+          echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
+          --owners 008577686731 \
+          --filters "Name=state,Values=available" "Name=name,Values=platform-gha-runner-ubuntu*" \
+          --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
+          --output text)" >> $GITHUB_ENV
+
+      - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
+        run: |
+          echo "SUBNET_ID=$(aws ec2 describe-subnets \
+          --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
+          --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
+          --output text)" >> $GITHUB_ENV
+
+      - name: Start EC2 Runner
+        id: start-ec2-runner
+        uses: department-of-veterans-affairs/ec2-github-runner@main
+        with:
+          mode: start
+          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          ec2-image-id: ${{ env.RUNNER_AMI_ID }}
+          ec2-instance-type: ${{ env.INSTANCE_TYPE }}
+          subnet-id: ${{ env.SUBNET_ID }}
+          security-group-id: sg-0e23b56be3798e3a1
+          max_attempts: 3
+          aws-resource-tags: >
+            [
+              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
+              {"Key": "project", "Value": "vagov"},
+              {"Key": "office", "Value": "dsva"},
+              {"Key": "application", "Value": "gha-runner"},
+              {"Key": "VAECID", "Value": "AWG20180517003"},
+              {"Key": "environment", "Value": "utility"}
+            ]
+
+  validate-build-status:
+    name: Validate Build Status
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    needs: start-runner
+    outputs:
+      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
+      TAG: ${{ steps.get-latest-release.outputs.tag_name }}
+    timeout-minutes: 15
+
+    steps:
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -68,7 +126,7 @@ jobs:
 
   notify-start:
     name: Notify Start
-    runs-on: [self-hosted, asg]
+    runs-on: [self-hosted]
     needs: validate-build-status
     steps:
       - name: Checkout
@@ -85,8 +143,9 @@ jobs:
 
   build:
     name: Build
-    runs-on: [self-hosted, asg] 
+    runs-on: ${{ needs.start-runner.outputs.label }}
     needs:
+      - start-runner
       - validate-build-status
     timeout-minutes: 45
     defaults:
@@ -339,8 +398,9 @@ jobs:
 
   archive:
     name: Archive
-    runs-on: [self-hosted, asg] 
+    runs-on: ${{ needs.start-runner.outputs.label }}
     needs:
+      - start-runner
       - validate-build-status
       - build
     outputs:
@@ -386,7 +446,7 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: [self-hosted, asg] 
+    runs-on: [self-hosted]
     needs:
       - validate-build-status
       - build
@@ -455,7 +515,7 @@ jobs:
 
   notify-success:
     name: Notify Success
-    runs-on: [self-hosted, asg] 
+    runs-on: [self-hosted]
     needs:
       - validate-build-status
       - deploy
@@ -483,7 +543,7 @@ jobs:
 
   notify-failure:
     name: Notify Failure
-    runs-on: [self-hosted, asg] 
+    runs-on: [self-hosted]
     if: |
       (failure() && needs.deploy.result != 'success')
     needs: deploy
@@ -534,12 +594,12 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on: [self-hosted, asg] 
+    runs-on: [self-hosted]
     needs:
+      - start-runner
       - build
       - archive
       - deploy
-      - validate-build-status
     env:
       METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
@@ -557,12 +617,12 @@ jobs:
 
       - name: Calculate durations
         run: |
-          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.validate-build-status.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.start-runner.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
           echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.outputs.BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.outputs.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "ARCHIVE_DURATION=$(expr ${{needs.archive.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
           echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
-          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.validate-build-status.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.start-runner.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
 
       - name: Build JSON object
         run: |
@@ -614,3 +674,36 @@ jobs:
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
 
+  stop-runner:
+    name: Stop on-demand-runner
+    needs:
+      - start-runner
+      - deploy
+      - record-metrics
+    runs-on: ubuntu-latest
+    if: ${{ always() }} # Even if an error happened, let's stop the runner
+    env:
+      INSTANCE_TYPE: c5.4xlarge
+    timeout-minutes: 15
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get bot token from Parameter Store
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Stop Runner
+        uses: department-of-veterans-affairs/ec2-github-runner@main
+        with:
+          mode: stop
+          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}

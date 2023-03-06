@@ -22,7 +22,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: [self-hosted, asg]
+    runs-on: [self-hosted]
     timeout-minutes: 60
 
     defaults:
@@ -601,7 +601,7 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: [self-hosted, asg]
+    runs-on: [self-hosted]
     if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
     needs: [build, cypress-tests, get-latest-run-number]
 
