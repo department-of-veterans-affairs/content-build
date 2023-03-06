@@ -1332,7 +1332,7 @@
     "rootUrl": "/my-health",
     "productId": "4d8b0801-dd86-4728-9609-9d794c923e03",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   }
