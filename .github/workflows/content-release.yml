@@ -100,6 +100,7 @@ jobs:
       CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end.outputs.CONTENT_BUILD_END_TIME }}
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
+      ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
 
@@ -325,32 +326,14 @@ jobs:
       - name: Compress build
         run: tar -C build/${{ env.BUILDTYPE }} -cf ${{ env.BUILDTYPE }}.tar.bz2 .
 
-      - name: Persist prearchived build
-        run: |
-          mkdir -p /tmp/${{ github.run_id }}
-          rm -rf /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}
-          mv ${{ env.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
-
       - name: Export build end time
         id: export-build-end-time
         run: echo BUILD_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
-
-  archive:
-    name: Archive
-    runs-on: [self-hosted, asg] 
-    needs:
-      - validate-build-status
-      - build
-    outputs:
-      ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
-    timeout-minutes: 15
-
-    steps:
-      - name: Restore ${{ env.BUILDTYPE }} build
+      # Archive build by uploading it to S3
+      - name: Show build archive size
         run: |
-          mv /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}.tar.bz2 .
           df -h
           du -h ${{ env.BUILDTYPE }}.tar.bz2
 
@@ -560,8 +543,8 @@ jobs:
           echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.validate-build-status.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
           echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.outputs.BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.outputs.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
-          echo "ARCHIVE_DURATION=$(expr ${{needs.archive.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
-          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
+          echo "ARCHIVE_DURATION=$(expr ${{needs.build.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
+          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.build.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
           echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.validate-build-status.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
 
       - name: Build JSON object
