@@ -56,6 +56,13 @@ function getModifiedLovellPage(page, variant) {
     );
   }
 
+  if (page?.fieldListing?.entity?.entityUrl) {
+    page.fieldListing.entity.entityUrl.path = getLovellVariantOfUrl(
+      page.fieldListing.entity.entityUrl.path,
+      variant,
+    );
+  }
+
   return page;
 }
 
