@@ -373,7 +373,6 @@ jobs:
     needs:
       - validate-build-status
       - build
-      - archive
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
     timeout-minutes: 15
@@ -520,7 +519,6 @@ jobs:
     runs-on: [self-hosted, asg] 
     needs:
       - build
-      - archive
       - deploy
       - validate-build-status
     env:
