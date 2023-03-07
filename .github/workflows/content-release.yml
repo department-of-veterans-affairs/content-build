@@ -88,7 +88,7 @@ jobs:
     runs-on: [self-hosted, asg] 
     needs:
       - validate-build-status
-    timeout-minutes: 45
+    timeout-minutes: 60
     defaults:
       run:
         working-directory: content-build
