@@ -1160,7 +1160,7 @@
   {
     "appName": "Enrollment Verification",
     "entryName": "enrollment-verification",
-    "rootUrl": "/education/verify-school-enrollment",
+    "rootUrl": "/education/verify-school-enrollment/enrollment-verifications",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html"
@@ -1178,7 +1178,7 @@
   {
     "appName": "Education Letters",
     "entryName": "education-letters",
-    "rootUrl": "/education/download-letters",
+    "rootUrl": "/education/download-letters/letters",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
