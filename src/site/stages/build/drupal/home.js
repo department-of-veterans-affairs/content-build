@@ -73,6 +73,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         homePagePopularOnVaGovMenuQuery,
         homePageOtherSearchToolsMenuQuery,
         homePageHubListMenuQuery,
+        homePageCreateAccountQuery,
       },
     } = contentData;
 
@@ -80,6 +81,9 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
     const hero =
       homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
+    hero.createAccountBlock =
+      homePageCreateAccountQuery
+        ?.itemsOfEntitySubqueueV2HomePageCreateAccount?.[0]?.entity || {};
     const searchLinks = homePageOtherSearchToolsMenuQuery?.links || [];
     const popularLinks = homePagePopularOnVaGovMenuQuery?.links || [];
     const newsSpotlight =
