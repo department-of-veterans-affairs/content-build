@@ -120,6 +120,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         path: homePreviewPath,
       },
       hubs: divideHubRows(homePreviewHubs),
+      title: 'New VA.gov home page',
     };
 
     files[`.${homePreviewPath}.html`] = createFileObj(
