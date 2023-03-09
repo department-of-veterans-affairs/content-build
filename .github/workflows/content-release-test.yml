@@ -35,9 +35,25 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Test Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Get Slack app token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
+          ssm_parameter: /devops/github_actions_slack_socket_token
+          env_variable_name: SLACK_APP_TOKEN
+
+      - name: Get Slack bot token
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        with:
+          ssm_parameter: /devops/github_actions_slack_bot_user_token
+          env_variable_name: SLACK_BOT_TOKEN
+
+      - name: Notify content broken links channel about broken links
+        uses: slackapi/slack-github-action@v1.23.0
+        id: notify-content-broken-links
+        continue-on-error: true
+        env:
+          SSL_CERT_DIR: /etc/ssl/certs
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+        with:
+          payload: "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"plain_text\",\"text\":\"Testingupdatedpluginforslacknotifications,pleaseignore.\",\"emoji\":true}}]}"
+          channel-id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
