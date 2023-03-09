@@ -257,7 +257,7 @@ jobs:
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Accessibility Test Failure
-        uses: slackapi/slack-github-action@v1.18.0
+        uses: slackapi/slack-github-action@v1.23.0
         if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
         continue-on-error: true
         env:
