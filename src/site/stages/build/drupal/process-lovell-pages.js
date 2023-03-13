@@ -18,6 +18,7 @@ const {
   getLovellTitle,
   getLovellTitleVariation,
   getLovellVariantOfUrl,
+  getLovellUrl,
 } = require('./lovell/helpers');
 
 const {
@@ -50,10 +51,15 @@ function getModifiedLovellPage(page, variant) {
     );
   }
 
-  if (page.fieldOffice) {
-    page.fieldOffice.entity.entityLabel = getLovellTitle(
-      getLovellTitleVariation(pageVars.variant),
-    );
+  if (page?.fieldOffice?.entity) {
+    page.fieldOffice.entity = {
+      ...page.fieldOffice.entity,
+      entityLabel: getLovellTitle(getLovellTitleVariation(pageVars.variant)),
+      entityUrl: {
+        ...page.fieldOffice.entity?.entityUrl,
+        path: getLovellUrl(pageVars.linkVar),
+      },
+    };
   }
 
   if (page?.fieldListing?.entity?.entityUrl) {
