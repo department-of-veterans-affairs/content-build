@@ -40,23 +40,19 @@
       <h5>Phone</h5>
       {% if locationEntity.fieldPhoneNumbersParagraph %}
         {% for number in locationEntity.fieldPhoneNumbersParagraph %}
-          <a aria-label="{{ number.entity.fieldPhoneNumber | accessibleNumber }}"
-             href="tel:{{ number.entity.fieldPhoneNumber }}{% if number.entity.fieldPhoneExtension %}p{{ number.entity.fieldPhoneExtension }}{% endif %}">
-            {{ number.entity.fieldPhoneNumber }}
-            {% if number.entity.fieldPhoneExtension %}
-              x {{ number.entity.fieldPhoneExtension }}
-            {% endif %}
-          </a>
+          <va-telephone
+            contact="{{ number.entity.fieldPhoneNumber | removeDashes }}"
+            extension="{{ number.entity.fieldPhoneExtension | default: '' }}"
+          />
         {% endfor %}
       {% endif %}
     </div>
   {% else %}
     <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
       <h5>Phone</h5>
-      <a aria-label="{{ fieldPhoneNumber | accessibleNumber }}"
-          href="tel:{{ fieldPhoneNumber }}">
-        {{ fieldPhoneNumber }}
-      </a>
+      <va-telephone
+        contact="{{ fieldPhoneNumber | removeDashes }}"
+      />
     </div>
   {% endif %}
 
