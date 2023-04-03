@@ -1232,7 +1232,7 @@
     "rootUrl": "/decision-reviews/supplemental-claim/file-supplemental-claim-form-20-0995",
     "productId": "05712241-0f46-4e84-8d3e-70a6cf412a5e",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1304,10 +1304,10 @@
   {
     "appName": "26-4555 Application in Acquiring Specially Adapted Housing or Special Home Adaptation Grant",
     "entryName": "4555-adapted-housing",
-    "rootUrl": "/housing-assistance/disability-housing-grants/adapted-housing",
+    "rootUrl": "/housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555",
     "productId": "49929be5-0c92-42f2-b122-3cb426f691d4",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1320,8 +1320,8 @@
           "path": "housing-assistance/disability-housing-grants"
         },
         {
-          "name": "Apply for a specially adapted housing grant",
-          "path": "housing-assistance/disability-housing-grants/adapted-housing"
+          "name": "Apply for an adapted housing grant",
+          "path": "housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555"
         }
       ]
     }

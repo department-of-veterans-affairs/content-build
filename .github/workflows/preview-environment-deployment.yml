@@ -25,10 +25,19 @@ jobs:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
+      - name: Start Deployment
+        uses: bobheadxi/deployments@v1
+        id: deployment
+        with:
+          step: start
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          env: master/main/${{ github.ref_name }}
+          ref: ${{ github.ref_name }}
+
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           event-type: deploy_review_instance
           repository: department-of-veterans-affairs/vets-website
-          client-payload: '{"source_repo": "content-build", "source_ref": "${{ github.ref_name }}" }'
+          client-payload: '{"source_repo": "content-build", "source_ref": "${{ github.ref_name }}", "deployment_id": "${{ steps.deployment.outputs.deployment_id }}" }'
