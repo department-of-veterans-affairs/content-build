@@ -1345,5 +1345,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Simple Forms Patterns",
+    "entryName": "simple-forms-patterns",
+    "rootUrl": "/simple-forms/simple-forms-patterns",
+    "productId": "81df904b-0aec-4a1f-9141-cbaa9acee0ed",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
