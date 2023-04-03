@@ -1,0 +1,88 @@
+name: ZZ Content Release Workflow testing
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+  # repository_dispatch:
+  #   types: [content-release]
+
+
+
+concurrency:
+  group: content-release-node-limit
+
+env:
+  CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
+  VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
+  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
+  CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
+  NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
+  BUILDTYPE: vagovstaging
+  DEPLOY_BUCKET: staging.content.www.va.gov
+  DRUPAL_ADDRESS: https://main-rufdsbo6qfzad8ds1x1anvitvwgjirbu.demo.cms.va.gov
+  # Not a sensitive secret; used for our testing environments only, with systems
+  # with sanitized databases.
+  DRUPAL_PASSWORD: drupal8
+  INSTANCE_TYPE: c5d.4xlarge
+  MAXIMUM_HEAP: 5000
+    # secrets.ACTIONS_RUNNER_DEBUG is set to 'true' when re-running a workflow with debug.
+  ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
+
+
+
+jobs:
+  validate-build-status:
+    name: Validate Build Status
+    runs-on:
+      - self-hosted
+    needs: start-runner
+    outputs:
+      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
+      TAG: ${{ steps.get-latest-release.outputs.tag_name }}
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: content-release/content-build
+
+      # - name: Notify CMS - Starting
+      #   uses: ./.github/workflows/authenticated-cms-request
+      #   with:
+      #     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
+      #     method: GET
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: ~/.cache/yarn
+          path: |
+            ~/.cache/yarn
+            node_modules
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: set Drupal prod username
+        uses: timcosgrove/action-inject-ssm-secrets@v0.3.3
+        with:
+          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+          env_variable_name: DRUPAL_USERNAME
+
+      # - name: Get latest release
+      #   id: get-latest-release
+      #   uses: gregziegan/fetch-latest-release@v2.0.0
+
+      # - name: Validate build status
+      #   run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
