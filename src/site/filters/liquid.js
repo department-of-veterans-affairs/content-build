@@ -543,6 +543,10 @@ module.exports = function registerFilters() {
     return null;
   };
 
+  liquid.filters.removeDashes = data => {
+    return data?.replace?.(/-/g, '') || null;
+  };
+
   liquid.filters.deriveLastBreadcrumbFromPath = (
     breadcrumbs,
     string,
