@@ -1310,47 +1310,54 @@ module.exports = function registerFilters() {
     return languages[language][whichNode];
   };
 
-  // Recursive function to filter sidebar data per the following rules:
-  //  - If menu item's linked entity is published, always show
-  //  - If menu item's linked entity is draft, show only on preview
-  //  - If menu item's linked entity is archived, never show
+  // Sets the value at path of object. If a portion of path doesn't exist, it's created.
+  const setData = (data, path, value) => {
+    return _.set(data, path, value);
+  };
+
+  // If preview mode, filter facilities to show published and draft facilities.
+  // If NOT in preview mode, filter facilities to only show published facilities.
   liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
-    if (!sidebarData?.links || sidebarData?.links?.length === 0) {
-      return sidebarData;
-    }
+    if (!sidebarData || !sidebarData.links[0]?.links) return null;
 
-    const hasLinkedEntity = link => link?.entity?.linkedEntity;
-    const isLinkedEntityPublished = link =>
-      link?.entity?.linkedEntity?.entityPublished || false;
-    const isLinkedEntityDraft = link =>
-      link?.entity?.linkedEntity?.moderationState === 'draft' || false;
-
-    const filteredLinks = sidebarData.links
-      .filter(link => {
-        // if there's no linked entity, this is a header; it'll have children so keep it
-        if (!hasLinkedEntity(link)) {
-          return true;
+    const findLocationsArr = () => {
+      const servicesAndLocationsObj = _.find(sidebarData.links[0].links, [
+        'label',
+        'SERVICES AND LOCATIONS',
+      ]);
+      if (servicesAndLocationsObj && servicesAndLocationsObj.links) {
+        const locationsObj = _.find(servicesAndLocationsObj.links, [
+          'label',
+          'Locations',
+        ]);
+        if (locationsObj && locationsObj.links.length) {
+          return locationsObj.links;
         }
-
-        // if there is a linked entity, keep it only if it should be kept per rules above
-        if (
-          isLinkedEntityPublished(link) ||
-          (isLinkedEntityDraft(link) && isPreview)
-        ) {
-          return true;
-        }
-
-        return false;
-      })
-      .map(link => {
-        // recursively call this function to filter children
-        return liquid.filters.filterSidebarData(link, isPreview);
-      });
-
-    return {
-      ...sidebarData,
-      links: filteredLinks,
+        return null;
+      }
+      return null;
     };
+
+    const locationsArr = findLocationsArr();
+    const locationsPath = 'links[0]links[0]links[1]links';
+
+    if (isPreview && locationsArr) {
+      const publishedAndDraftFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.moderationState',
+        'archived',
+      );
+      return setData(sidebarData, locationsPath, publishedAndDraftFacilities);
+    }
+    if (!isPreview && locationsArr) {
+      const publishedFacilities = liquid.filters.rejectBy(
+        locationsArr,
+        'entity.linkedEntity.entityPublished',
+        false,
+      );
+      return setData(sidebarData, locationsPath, publishedFacilities);
+    }
+    return sidebarData;
   };
 
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {

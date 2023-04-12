@@ -1,4 +1,3 @@
-/* eslint-disable @department-of-veterans-affairs/axe-check-required */
 // Node modules.
 import _ from 'lodash';
 import liquid from 'tinyliquid';
@@ -1869,35 +1868,18 @@ describe('processCentralizedContent', () => {
 });
 
 describe('filterSidebarData', () => {
-  describe('empty-ish data passed in', () => {
-    it('returns passed in sidebarData if it does not have a `links` prop', () => {
-      const emptySidebarData = {};
-      expect(liquid.filters.filterSidebarData(emptySidebarData)).to.deep.equal(
-        emptySidebarData,
-      );
-    });
-
-    it('returns passed in sidebarData if `links` prop has length zero ', () => {
-      const emptySidebarData = {
-        links: [],
-      };
-      expect(liquid.filters.filterSidebarData(emptySidebarData)).to.deep.equal(
-        emptySidebarData,
-      );
-    });
-
-    it('returns passed in sidebarData if `links` prop is not an array', () => {
-      const emptySidebarData = {
-        links: '',
-      };
-      expect(liquid.filters.filterSidebarData(emptySidebarData)).to.deep.equal(
-        emptySidebarData,
-      );
-    });
+  it('returns null if sidebar data is null', () => {
+    expect(liquid.filters.filterSidebarData(null)).to.be.null;
   });
 
-  describe('when NOT preview, includes only links to published entities', () => {
-    const expectedFacilities = [
+  it('returns null if arguments are not passed', () => {
+    expect(liquid.filters.filterSidebarData()).to.be.null;
+  });
+
+  it('returns sidebarData with published facilities only', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
       {
         label: 'Brunswick County VA Clinic',
         entity: {
@@ -1918,62 +1900,49 @@ describe('filterSidebarData', () => {
       },
     ];
 
-    const expectedAboutUs = [
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      false,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
+
+  it('returns sidebarData with published facilities if second argument is not passed - isPreview defaults to false', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
       {
-        expanded: false,
-        description: null,
-        label: 'Mission and vision',
-        url: {
-          path: '/fayetteville-coastal-health-care/about-us/mission-and-vision',
-        },
+        label: 'Brunswick County VA Clinic',
         entity: {
           linkedEntity: {
             entityPublished: true,
             moderationState: 'published',
           },
         },
-        links: [],
       },
       {
-        expanded: false,
-        description: null,
-        label: 'Leadership',
-        url: {
-          path: '/fayetteville-coastal-health-care/about-us/leadership',
-        },
+        label: 'Jacksonville 2 VA Clinic',
         entity: {
           linkedEntity: {
             entityPublished: true,
             moderationState: 'published',
           },
         },
-        links: [],
       },
     ];
 
-    it('returns only links to published entities when isPreview is explicitly false', () => {
-      const filteredData = liquid.filters.filterSidebarData(sidebarData, false);
-      expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
-        expectedFacilities,
-      );
-      expect(filteredData.links[0].links[2].links[0].links).to.deep.equal(
-        expectedAboutUs,
-      );
-    });
-
-    it('returns only links to published entities when isPreview is not passed (defaults to false)', () => {
-      const filteredData = liquid.filters.filterSidebarData(sidebarData);
-      expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
-        expectedFacilities,
-      );
-      expect(filteredData.links[0].links[2].links[0].links).to.deep.equal(
-        expectedAboutUs,
-      );
-    });
+    const filteredData = liquid.filters.filterSidebarData(clonedSidebarData);
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
   });
 
-  describe('when preview, includes links to both published and draft entities', () => {
-    const expectedFacilities = [
+  it('returns sidebarData with published and draft facilities IF in preview mode', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+
+    const expected = [
       {
         label: 'Fayetteville VA Medical Center',
         entity: {
@@ -2003,63 +1972,24 @@ describe('filterSidebarData', () => {
       },
     ];
 
-    const expectedAboutUs = [
-      {
-        expanded: false,
-        description: null,
-        label: 'Mission and vision',
-        url: {
-          path: '/fayetteville-coastal-health-care/about-us/mission-and-vision',
-        },
-        entity: {
-          linkedEntity: {
-            entityPublished: true,
-            moderationState: 'published',
-          },
-        },
-        links: [],
-      },
-      {
-        expanded: false,
-        description: null,
-        label: 'History',
-        url: {
-          path: '/fayetteville-coastal-health-care/about-us/history',
-        },
-        entity: {
-          linkedEntity: {
-            entityPublished: false,
-            moderationState: 'draft',
-          },
-        },
-        links: [],
-      },
-      {
-        expanded: false,
-        description: null,
-        label: 'Leadership',
-        url: {
-          path: '/fayetteville-coastal-health-care/about-us/leadership',
-        },
-        entity: {
-          linkedEntity: {
-            entityPublished: true,
-            moderationState: 'published',
-          },
-        },
-        links: [],
-      },
-    ];
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+      expected,
+    );
+  });
 
-    it('returns links to both published and draft entities IF in preview mode', () => {
-      const filteredData = liquid.filters.filterSidebarData(sidebarData, true);
-      expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
-        expectedFacilities,
-      );
-      expect(filteredData.links[0].links[2].links[0].links).to.deep.equal(
-        expectedAboutUs,
-      );
-    });
+  it('returns empty array if array of facilities is empty', () => {
+    const clonedSidebarData = _.cloneDeep(sidebarData);
+    clonedSidebarData.links[0].links[0].links[1].links = [];
+
+    const filteredData = liquid.filters.filterSidebarData(
+      clonedSidebarData,
+      true,
+    );
+    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal([]);
   });
 });
 
