@@ -71,7 +71,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: set Drupal prod username
-        uses: timcosgrove/action-inject-ssm-secrets@v0.3.3
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@17353c8528535cfca745de75ba42bd2970030163
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
