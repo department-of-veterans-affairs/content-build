@@ -1343,7 +1343,18 @@
     "productId": "56438c7b-e586-490d-a7f6-7e3c92136564",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Health care",
+          "path": "health-care"
+        },
+        {
+          "name": "Authorize the release of medical information to the VA",
+          "path": "health-care/medical-release-form"
+        }
+      ]
     }
   },
   {
