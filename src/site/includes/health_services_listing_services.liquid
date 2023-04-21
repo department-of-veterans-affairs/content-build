@@ -1,5 +1,4 @@
-{% assign servicesList = clinicalHealthServices | filterBy: "fieldServiceNameAndDescripti.entity.fieldServiceTypeOfCare", typeOfCare %}
-{% assign servicesListOrderedByName = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.name"%}
+{% assign servicesListOrderedByName = clinicalHealthServices | filterClinicalHealthServicesByTypeOfCare: typeOfCare | sortObjectsBy: "fieldServiceNameAndDescripti.entity.name" %}
 
 {% if servicesListOrderedByName.length > 0 %}
   <section data-label="{{typeOfCare}}">
