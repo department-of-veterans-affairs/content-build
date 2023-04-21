@@ -32,11 +32,13 @@
           <div>{{ localServiceDescription }}</div>
         {% endif %}
 
-        <div
-          data-widget-type="facility-appointment-wait-times-widget"
-          data-facility="{{ fieldFacilityLocatorApiId | widgetFacilityDetail | escape }}"
-          data-service="{{ serviceTaxonomy | healthServiceApiId | escape }}"
-        ></div>
+        {% if fieldFacilityLocatorApiId contains "vha_" %}
+          <div
+            data-widget-type="facility-appointment-wait-times-widget"
+            data-facility="{{ fieldFacilityLocatorApiId | widgetFacilityDetail | escape }}"
+            data-service="{{ serviceTaxonomy | healthServiceApiId | escape }}"
+          ></div>
+        {% endif %}
 
         {% if healthService.fieldBody.processed %}
           <div>{{ healthService.fieldBody.processed | replace: 'h3', 'h4' }}</div>
