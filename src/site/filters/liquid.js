@@ -1472,19 +1472,6 @@ module.exports = function registerFilters() {
       .filter(facility => facility.locations.length > 0);
   };
 
-  liquid.filters.filterClinicalHealthServicesByTypeOfCare = (
-    clinicalHealthServices,
-    typeOfCare,
-  ) => {
-    return clinicalHealthServices.filter(healthService => {
-      const serviceTypeOfCare =
-        healthService.fieldServiceNameAndDescripti.entity
-          .fieldServiceTypeOfCare;
-
-      return serviceTypeOfCare?.length && serviceTypeOfCare === typeOfCare;
-    });
-  };
-
   liquid.filters.deriveFormattedTimestamp = fieldDatetimeRangeTimezone => {
     const startsAtUnix = fieldDatetimeRangeTimezone?.value;
     const endsAtUnix = fieldDatetimeRangeTimezone?.endValue;
