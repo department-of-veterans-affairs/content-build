@@ -34,19 +34,19 @@ runs:
         aws-region: ${{ inputs.aws_region }}
 
     - name: Get Drupal prod password
-      uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+      uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
       with:
         ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
         env_variable_name: DRUPAL_PASSWORD
 
     - name: Get Drupal prod username
-      uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+      uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
       with:
         ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
         env_variable_name: DRUPAL_USERNAME
 
     - name: HTTP request
-      uses: fjogeleit/http-request-action@v1
+      uses: fjogeleit/http-request-action@master
       with:
         url: ${{ inputs.url}}
         method: ${{ inputs.method }}
