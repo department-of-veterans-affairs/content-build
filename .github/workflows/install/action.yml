@@ -4,11 +4,11 @@ description: Install dependencies
 inputs:
   key:
     description: keys for actions/cache@v3
-    required: false
+    required: true
     default: ''
   restore-keys:
     description: restore-keys for actions/cache@v3
-    required: false
+    required: true
     default: ''
   yarn_cache_folder:
     description: path for yarn cache
@@ -16,7 +16,7 @@ inputs:
     default: ''
   path:
     description: path for actions/cache@v3
-    required: false
+    required: true
     default: ''
 
 runs:
@@ -36,13 +36,13 @@ runs:
       shell: bash
       run: npm i -g yarn@1.19.1
 
-    - name: Cache dependencies
-      id: cache-dependencies
-      uses: actions/cache@v3
-      with:
-        path: ${{ inputs.path }}
-        key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.key }}
-        restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.restore-keys }}
+    # - name: Cache dependencies
+    #   id: cache-dependencies
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: ${{ inputs.path }}
+    #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.key }}
+    #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.restore-keys }}
 
     - name: Install dependencies
       uses: nick-invision/retry@v2
