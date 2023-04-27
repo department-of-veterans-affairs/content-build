@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Cancel workflow due to DSVA schedule
         if: ${{ github.event_name == 'schedule' && env.DSVA_SCHEDULE_ENABLED != 'true' }}
-        uses: andymckay/cancel-action@0.3
+        uses: andymckay/cancel-action@0.2
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -34,7 +34,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get bot token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN

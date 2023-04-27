@@ -108,13 +108,13 @@ jobs:
 
       - name: Set Drupal prod password
         if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/main' }}
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
           env_variable_name: DRUPAL_PASSWORD
 
       - name: Set Drupal prod username
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
@@ -165,7 +165,7 @@ jobs:
         run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -197,21 +197,21 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Slack app token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_socket_token
           env_variable_name: SLACK_APP_TOKEN
 
       - name: Get Slack bot token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
@@ -279,7 +279,7 @@ jobs:
       - name: Publish test results
         if: ${{ always() }}
         continue-on-error: true
-        uses: mikepenz/action-junit-report@v3
+        uses: mikepenz/action-junit-report@v2.8.4
         with:
           check_name: 'Unit Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -399,7 +399,7 @@ jobs:
 
       - name: Publish test results
         if: ${{ always() }}
-        uses: mikepenz/action-junit-report@v3
+        uses: mikepenz/action-junit-report@v2.8.4
         with:
           check_name: 'Cypress Tests Summary'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -455,7 +455,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get va-vsp-bot token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
@@ -496,13 +496,13 @@ jobs:
           path: testing-tools-team-dashboard-data/src/testing-reports/data
 
       - name: Get BigQuery service credentials
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/testing-team/bigquery_service_credentials
           env_variable_name: BIGQUERY_SERVICE_CREDENTIALS
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+        uses: google-github-actions/setup-gcloud@v0
         with:
           project_id: vsp-analytics-and-insights
           service_account_key: ${{ env.BIGQUERY_SERVICE_CREDENTIALS }}
@@ -535,7 +535,7 @@ jobs:
           path: testing-tools-team-dashboard-data/testing-reports/videos/${{ env.UUID }}
 
       - name: Get AWS IAM role
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -563,7 +563,7 @@ jobs:
 
       - name: Publish Cypress test results
         if: ${{ always() }}
-        uses: LouisBrunner/checks-action@v1.6.0
+        uses: LouisBrunner/checks-action@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Cypress Tests Summary
@@ -628,14 +628,14 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Get Drupal token from Parameter Store
         if: ${{ matrix.environment == 'vagovstaging' }}
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
           env_variable_name: CALLBACK_TOKEN
@@ -663,7 +663,7 @@ jobs:
 
       - name: CMS GovDelivery callback
         if: ${{ matrix.environment == 'vagovstaging' }}
-        uses: fjogeleit/http-request-action@v1
+        uses: fjogeleit/http-request-action@master
         with:
           url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
@@ -683,7 +683,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Jenkins token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/JENKINS_API_TOKEN
           env_variable_name: JENKINS_API_TOKEN

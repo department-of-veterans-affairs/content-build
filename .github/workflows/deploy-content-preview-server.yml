@@ -21,7 +21,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Jenkins CMS bot user token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
         with:
           # TODO: Temporary path to token because the svc-gha-frontendteam-user has access to this path, fix before merge.
           ssm_parameter: /dsva-vagov/content-build/VA_CMS_BOT_JENKINS_TOKEN
