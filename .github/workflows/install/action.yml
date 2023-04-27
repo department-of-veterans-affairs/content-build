@@ -36,13 +36,13 @@ runs:
       shell: bash
       run: npm i -g yarn@1.19.1
 
-    # - name: Cache dependencies
-    #   id: cache-dependencies
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: ${{ inputs.path }}
-    #     key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.key }}
-    #     restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.restore-keys }}
+    - name: Cache dependencies
+      id: cache-dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ inputs.path }}
+        key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.key }}
+        restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.restore-keys }}
 
     - name: Install dependencies
       uses: nick-invision/retry@v2
