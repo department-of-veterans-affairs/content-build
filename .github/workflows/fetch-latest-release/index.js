@@ -1,9 +1,6 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
-const { Octokit } = require('@octokit/rest')
 const process = require('process')
-
-console.log(core.getInput('github_token'))
 
 const customRepo = (repoPath) => {
   const segments = repoPath.split('/', 2)
@@ -21,7 +18,7 @@ const [owner, repo] = repoInput
   ? customRepo(repoInput)
   : process.env['GITHUB_REPOSITORY'].split('/', 2)
 
-const octokit = github.getOctokit(
+const octokit = new github.getOctokit(
   core.getInput('github_token', { required: true })
 )
 
