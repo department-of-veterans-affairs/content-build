@@ -4,11 +4,11 @@ description: Install dependencies
 inputs:
   key:
     description: keys for actions/cache@v3
-    required: true
+    required: false
     default: ''
   restore-keys:
     description: restore-keys for actions/cache@v3
-    required: true
+    required: false
     default: ''
   yarn_cache_folder:
     description: path for yarn cache
@@ -16,7 +16,7 @@ inputs:
     default: ''
   path:
     description: path for actions/cache@v3
-    required: true
+    required: false
     default: ''
 
 runs:
