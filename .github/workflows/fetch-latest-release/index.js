@@ -1,10 +1,9 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
+const { Octokit } = require('@octokit/rest')
 const process = require('process')
 
-console.log(typeof core)
-console.log(typeof github)
-console.log(typeof process)
+console.log(core.getInput('github_token'))
 
 const customRepo = (repoPath) => {
   const segments = repoPath.split('/', 2)
@@ -32,7 +31,7 @@ async function run() {
   core.info(`Fetching the latest release for \`${owner}/${repo}\``)
 
   try {
-    latestRelease = await octokit.repos.getLatestRelease({
+    latestRelease = await octokit.rest.repos.getLatestRelease({
       owner,
       repo,
     })
