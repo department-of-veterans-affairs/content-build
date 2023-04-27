@@ -2,6 +2,10 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const process = require('process')
 
+console.log(typeof core)
+console.log(typeof github)
+console.log(typeof process)
+
 const customRepo = (repoPath) => {
   const segments = repoPath.split('/', 2)
 
