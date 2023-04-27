@@ -22,7 +22,7 @@ const [owner, repo] = repoInput
   ? customRepo(repoInput)
   : process.env['GITHUB_REPOSITORY'].split('/', 2)
 
-const octokit = github.GitHub(
+const octokit = github.getOctokit(
   core.getInput('github_token', { required: true })
 )
 
