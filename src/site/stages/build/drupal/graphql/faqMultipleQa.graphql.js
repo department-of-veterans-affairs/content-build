@@ -16,6 +16,7 @@ fragment faqMultipleQA on NodeFaqMultipleQA {
   fieldQAGroups {
     entity {
       ... on ParagraphQAGroup {
+        entityId
         fieldSectionHeader
         fieldAccordionDisplay
         fieldQAs {
