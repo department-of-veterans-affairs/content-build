@@ -1,43 +1,43 @@
-name: Preview Environment Deployment
+# name: Preview Environment Deployment
 
-on:
-  push:
-    branches:
-      - '**'
+# on:
+#   push:
+#     branches:
+#       - '**'
 
-jobs:
-  deploy-preview-environment:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+# jobs:
+#   deploy-preview-environment:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v2
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: us-gov-west-1
 
-      - name: Get va-vsp-bot token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+#       - name: Get va-vsp-bot token
+#         uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+#         with:
+#           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+#           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
-      - name: Start Deployment
-        uses: bobheadxi/deployments@v1
-        id: deployment
-        with:
-          step: start
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          env: master/main/${{ github.ref_name }}
-          ref: ${{ github.ref_name }}
+#       - name: Start Deployment
+#         uses: bobheadxi/deployments@v1
+#         id: deployment
+#         with:
+#           step: start
+#           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+#           env: master/main/${{ github.ref_name }}
+#           ref: ${{ github.ref_name }}
 
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          event-type: deploy_review_instance
-          repository: department-of-veterans-affairs/vets-website
-          client-payload: '{"source_repo": "content-build", "source_ref": "${{ github.ref_name }}", "deployment_id": "${{ steps.deployment.outputs.deployment_id }}" }'
+#       - name: Repository Dispatch
+#         uses: peter-evans/repository-dispatch@v2
+#         with:
+#           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+#           event-type: deploy_review_instance
+#           repository: department-of-veterans-affairs/vets-website
+#           client-payload: '{"source_repo": "content-build", "source_ref": "${{ github.ref_name }}", "deployment_id": "${{ steps.deployment.outputs.deployment_id }}" }'
