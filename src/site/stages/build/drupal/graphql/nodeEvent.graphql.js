@@ -105,7 +105,6 @@ const nodeEvent = `
                   processed
                 }
                 fieldDescription
-                fieldMetaTags
               }
             }
           }
@@ -140,7 +139,6 @@ const nodeEvent = `
         }
       }
     }
-    fieldMetaTags
     fieldOrder
     fieldUrlOfAnOnlineEvent {
       uri
@@ -259,7 +257,6 @@ const nodeEventWithoutBreadcrumbs = `
                   processed
                 }
                 fieldDescription
-                fieldMetaTags
               }
             }
           }
@@ -294,7 +291,6 @@ const nodeEventWithoutBreadcrumbs = `
         }
       }
     }
-    fieldMetaTags
     fieldOrder
     fieldUrlOfAnOnlineEvent {
       uri
