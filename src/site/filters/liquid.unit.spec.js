@@ -2481,7 +2481,7 @@ describe('getSurvey', () => {
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(24);
+    ).to.equal(26);
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
