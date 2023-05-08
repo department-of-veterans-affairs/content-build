@@ -12,9 +12,9 @@ describe('Accessible Modal Test', () => {
     cy.injectAxeThenAxeCheck();
 
     // Open modal
-    cy.get(secondOpenControl)
-      .focus()
-      .realPress('Enter');
+    cy.get(secondOpenControl).focus();
+
+    cy.realPress('Enter');
 
     // Trap backward traversal
     cy.get(firstModalItem)
