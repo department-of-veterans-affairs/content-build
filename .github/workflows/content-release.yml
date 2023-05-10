@@ -59,7 +59,7 @@ jobs:
 
       - name: Get latest release
         id: get-latest-release
-        uses: gregziegan/fetch-latest-release@v2.0.0
+        uses: ./.github/workflows/fetch-latest-release
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
