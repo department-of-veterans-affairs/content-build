@@ -1556,7 +1556,7 @@ module.exports = function registerFilters() {
         return '00:00:00';
       }
     }
-    if (time === null || time == -1) {
+    if (time === null || parseInt(time) === -1) {
       return '';
     }
     return moment(time, 'Hmm').format('HH:mm:ss');
