@@ -21,7 +21,7 @@ inputs:
   timeout:
     description: Request timeout
     required: false
-    default: 10000
+    default: "10000"
 
 runs:
   using: composite
