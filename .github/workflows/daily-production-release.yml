@@ -83,12 +83,12 @@ jobs:
             git tag v0.0.$next_patch ${{ steps.get-current-ref.outputs.REF }} && git push --no-verify origin v0.0.$next_patch
 
       - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+        uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e # v1.12.0
         with:
-          tag_name: v0.0.${{ env.new_patch }}
-          release_name: content-build/v0.0.${{ env.new_patch }}
+          tag: v0.0.${{ env.new_patch }}
+          name: content-build/v0.0.${{ env.new_patch }}
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+
 
       - name: Export new release name
         id: export-release-name
