@@ -37,6 +37,21 @@ function isListingPage(page) {
   return listingPageTypes.includes(page.entityBundle);
 }
 
+function getFeaturedListingItems(listingPages, listingType) {
+  const listingPage = listingPages.find(
+    page => page.entityBundle === listingType,
+  );
+  const listingItems = listingPage?.reverseFieldListingNode?.entities;
+  const featuredItems = listingItems?.filter?.(item => item?.fieldFeatured);
+  const sortedFeaturedItems = featuredItems?.sort?.(
+    (a, b) =>
+      (a?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER) -
+      (b?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER),
+  );
+
+  return sortedFeaturedItems || [];
+}
+
 function isFederalRegionHomepage(page) {
   return (
     isLovellFederalPage(page) &&
@@ -94,6 +109,7 @@ module.exports = {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
+  getFeaturedListingItems,
   isFederalRegionHomepage,
   isTricareRegionHomepage,
   isVaRegionHomepage,
