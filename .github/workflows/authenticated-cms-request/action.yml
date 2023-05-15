@@ -34,13 +34,13 @@ runs:
         aws-region: ${{ inputs.aws_region }}
 
     - name: Get Drupal prod password
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+      uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
       with:
         ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
         env_variable_name: DRUPAL_PASSWORD
 
     - name: Get Drupal prod username
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+      uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
       with:
         ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
         env_variable_name: DRUPAL_USERNAME
