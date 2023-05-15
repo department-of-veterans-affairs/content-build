@@ -208,20 +208,53 @@ function combineLovellListingPages(tricareOrVaPages, federalPages, variant) {
       };
     };
 
+    const entityWithFieldAdministration = fieldAdminEntityId => entity => ({
+      ...entity,
+      fieldAdministration: {
+        entity: {
+          entityId: fieldAdminEntityId,
+        },
+      },
+    });
+
     const {
       [pastObjectLabel]: pastListItemsToCombine,
       reverseFieldListingNode: reverseFieldListingNodeToCombine,
     } = listingPageToCombine;
 
-    const pastListItemEntities = pastListItems?.entities || [];
-    const allListItemEntities = reverseFieldListingNode?.entities || [];
+    // When merging listing pages, we need to track from which page an item originated,
+    //  so we add the listing page's fieldAdministration value to the item itself (entityWithFieldAdministration).
+    // When the item originates from the federal listing page, we update the item's url to reflect
+    //  the VA/TRICARE listing page it will end up on (updateEntityUrlForVariant).
+    const pastListItemEntities =
+      pastListItems?.entities?.map?.(
+        entityWithFieldAdministration(
+          listingPage?.fieldAdministration?.entity?.entityId,
+        ),
+      ) || [];
+    const allListItemEntities =
+      reverseFieldListingNode?.entities.map?.(
+        entityWithFieldAdministration(
+          listingPage?.fieldAdministration?.entity?.entityId,
+        ),
+      ) || [];
 
     const pastListItemEntitiesToCombine =
-      pastListItemsToCombine?.entities.map(updateEntityUrlForVariant) || [];
+      pastListItemsToCombine?.entities
+        .map?.(updateEntityUrlForVariant)
+        .map?.(
+          entityWithFieldAdministration(
+            listingPageToCombine?.fieldAdministration?.entity?.entityId,
+          ),
+        ) || [];
     const allListItemEntitiesToCombine =
-      reverseFieldListingNodeToCombine?.entities.map(
-        updateEntityUrlForVariant,
-      ) || [];
+      reverseFieldListingNodeToCombine?.entities
+        .map?.(updateEntityUrlForVariant)
+        .map?.(
+          entityWithFieldAdministration(
+            listingPageToCombine?.fieldAdministration?.entity?.entityId,
+          ),
+        ) || [];
 
     const combinedPastListItemEntities = [
       ...pastListItemEntities,
