@@ -1,3 +1,7 @@
+# Note: this filename has been moved to *.yml.bak to prevent GHA from seeing it as a workflow file.
+# To restore this workflow, move the file name back to *.yml and uncomment the workflow.
+# - Tim Cosgrove, 2023 May 15.
+
 # name: Preview Environment Deployment
 
 # on:
