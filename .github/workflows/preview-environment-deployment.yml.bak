@@ -1,0 +1,43 @@
+# name: Preview Environment Deployment
+
+# on:
+#   push:
+#     branches:
+#       - '**'
+
+# jobs:
+#   deploy-preview-environment:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: us-gov-west-1
+
+#       - name: Get va-vsp-bot token
+#         uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#         with:
+#           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+#           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+#       - name: Start Deployment
+#         uses: bobheadxi/deployments@v1
+#         id: deployment
+#         with:
+#           step: start
+#           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+#           env: master/main/${{ github.ref_name }}
+#           ref: ${{ github.ref_name }}
+
+#       - name: Repository Dispatch
+#         uses: peter-evans/repository-dispatch@v2
+#         with:
+#           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+#           event-type: deploy_review_instance
+#           repository: department-of-veterans-affairs/vets-website
+#           client-payload: '{"source_repo": "content-build", "source_ref": "${{ github.ref_name }}", "deployment_id": "${{ steps.deployment.outputs.deployment_id }}" }'
