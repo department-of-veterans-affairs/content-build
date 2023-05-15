@@ -1,14 +1,10 @@
 const jsesc = require('jsesc');
 
+const footerData = require('../../../../platform/static-data/footer-links.json');
+
 const {
   formatHeaderData: convertDrupalHeaderData,
 } = require('../drupal/menus');
-
-/**
- * Non-Drupal footer data. Used for:
- * Column 4 (In crisis? Talk to someone now)
- */
-const hardCodedFooterData = require('../../../../platform/static-data/footer-links.json');
 
 function createHeaderFooterData(buildOptions) {
   return (files, metalsmith, done) => {
@@ -17,23 +13,8 @@ function createHeaderFooterData(buildOptions) {
       buildOptions.drupalData,
     );
 
-    /**
-     * Drupal footer data. Includes:
-     * Column 1 (Veteran programs and services)
-     * Column 2 (More VA resources)
-     * Column 3 (Get VA updates)
-     * Bottom rail (beginning with Accessibility)
-     */
-    const bottomRailFooterData =
-      buildOptions.drupalData.data.vaGovFooterBottomRailQuery;
-    const footerColumnsData = buildOptions.drupalData.data.vaGovFooterQuery;
-
     const headerFooter = {
-      footerData: {
-        bottomRailFooterData,
-        footerColumnsData,
-        hardCodedFooterData,
-      },
+      footerData,
       megaMenuData,
     };
 

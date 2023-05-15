@@ -25,18 +25,18 @@ jobs:
 
     steps:
       - name: Checkout vagov-content
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
         with:
           path: content-build
 
       - name: Checkout vets-website
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
         with:
           repository: department-of-veterans-affairs/vets-website
           path: vets-website
@@ -46,7 +46,7 @@ jobs:
         run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
@@ -55,7 +55,7 @@ jobs:
         run: npm i -g yarn@1.19.1
 
       - name: Install vets-website dependencies
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
           command: cd vets-website && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
           max_attempts: 3
@@ -67,7 +67,7 @@ jobs:
         timeout-minutes: 30
 
       - name: Install content-build dependencies
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
           command: cd content-build && yarn install --frozen-lockfile --prefer-offline --network-concurrency 1
           max_attempts: 3
@@ -77,20 +77,20 @@ jobs:
         run: echo "DRUPAL_ADDRESS=https://prod.cms.va.gov" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: set Drupal prod password
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
           env_variable_name: DRUPAL_PASSWORD
 
       - name: set Drupal prod username
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
@@ -109,7 +109,7 @@ jobs:
         run: tar -C build/${{ env.BUILD_TYPE }} -cjf test-build.tar.bz2 .
 
       - name: Upload E2E test build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: test-build.tar.bz2
           path: content-build/test-build.tar.bz2
@@ -141,19 +141,19 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
 
       - name: Get Node version
         id: get-node-version
         run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
       - name: Install dependencies
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
           command: yarn install --frozen-lockfile --prefer-offline --production=false --network-concurrency 1
           max_attempts: 3
@@ -162,7 +162,7 @@ jobs:
           YARN_CACHE_FOLDER: .cache/yarn
 
       - name: Download production build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: test-build.tar.bz2
 
@@ -189,7 +189,7 @@ jobs:
         run: mv a11y_failures.csv a11y_failures-${{ matrix.ci_node_index }}.csv
 
       - name: Archive Mochawesome test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
@@ -197,7 +197,7 @@ jobs:
           retention-days: 1
 
       - name: Archive failures CSV
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ always() }}
         with:
           name: a11y_failures
@@ -220,13 +220,13 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
         with:
           path: content-build
 
       - name: Download failures CSV
         if: ${{ needs.a11y.result == 'failure' }}
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: a11y_failures
           path: content-build
@@ -236,7 +236,7 @@ jobs:
         run: cat *csv > a11y_failures.csv
 
       - name: Archive merged failures CSV file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ always() }}
         with:
           name: a11y_failures
@@ -244,20 +244,20 @@ jobs:
           retention-days: 30
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-gov-west-1'
 
       - name: Get Slack bot token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Accessibility Test Failure
-        uses: slackapi/slack-github-action@v1.23.0
+        uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
         if: ${{ needs.a11y.result == 'failure' || needs.build.result == 'failure' }}
         continue-on-error: true
         env:
