@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign, no-console */
 
 const cloneDeep = require('lodash/cloneDeep');
+const { ENTITY_BUNDLES } = require('../../../constants/content-modeling');
 const { camelize } = require('../../../utilities/stringHelpers');
 
 const {
@@ -14,11 +15,14 @@ const {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
+  getFeaturedListingItems,
   isFederalRegionHomepage,
   getLovellTitle,
   getLovellTitleVariation,
   getLovellVariantOfUrl,
   getLovellUrl,
+  isTricareRegionHomepage,
+  isVaRegionHomepage,
 } = require('./lovell/helpers');
 
 const {
@@ -279,39 +283,77 @@ function combineLovellListingPages(tricareOrVaPages, federalPages, variant) {
   });
 }
 
+/**
+ * Returns a new page object with featured events and stories added to it
+ *
+ * @param {*} page
+ * @param {*} listingPages
+ */
+function lovellHomepageWithFeaturedListingItems(page, listingPages) {
+  const getTeasersFeaturedObject = featuredItems => ({
+    entities: [
+      {
+        reverseFieldListingNode: {
+          entities: featuredItems,
+        },
+      },
+    ],
+  });
+
+  const featuredEvents = getFeaturedListingItems(
+    listingPages,
+    ENTITY_BUNDLES.EVENT_LISTING,
+  );
+  const featuredStories = getFeaturedListingItems(
+    listingPages,
+    ENTITY_BUNDLES.STORY_LISTING,
+  );
+
+  return {
+    ...page,
+    eventTeasersFeatured: getTeasersFeaturedObject(featuredEvents),
+    newsStoryTeasersFeatured: getTeasersFeaturedObject(featuredStories),
+  };
+}
+
 function processLovellPages(drupalData) {
   // Note: this `reduce()` function allows us to categorize all the pages with a single pass over the array.
   // We could accomplish this same outcome with a few `filter()` calls, but that would require multiple passes over the array.
   const {
     lovellFederalListingPages,
     lovellFederalNonListingPages,
-    lovellVaListingPages,
-    lovellVaNonListingPages,
+    lovellTricareHomepage,
     lovellTricareListingPages,
     lovellTricareNonListingPages,
+    lovellVaHomepage,
+    lovellVaListingPages,
+    lovellVaNonListingPages,
     otherPages,
   } = drupalData.data.nodeQuery.entities.reduce(
     (acc, page) => {
       if (isLovellFederalPage(page)) {
-        // Federal Region Homepage should not be cloned
-        if (isFederalRegionHomepage(page)) {
-          return acc;
-        }
-
         if (isListingPage(page)) {
           acc.lovellFederalListingPages.push(page);
         } else {
+          // Federal Region Homepage should not be cloned
+          if (isFederalRegionHomepage(page)) {
+            return acc;
+          }
           acc.lovellFederalNonListingPages.push(page);
         }
       } else if (isLovellTricarePage(page)) {
         if (isListingPage(page)) {
           acc.lovellTricareListingPages.push(page);
+        } else if (isTricareRegionHomepage(page)) {
+          acc.lovellTricareHomepage = page;
         } else {
           acc.lovellTricareNonListingPages.push(page);
         }
       } else if (isLovellVaPage(page)) {
         if (isListingPage(page)) {
           acc.lovellVaListingPages.push(page);
+        } else if (isVaRegionHomepage(page)) {
+          acc.lovellVaHomepage = page;
         } else {
           acc.lovellVaNonListingPages.push(page);
         }
@@ -324,8 +366,10 @@ function processLovellPages(drupalData) {
     {
       lovellFederalListingPages: [],
       lovellFederalNonListingPages: [],
+      lovellTricareHomepage: null,
       lovellTricareListingPages: [],
       lovellTricareNonListingPages: [],
+      lovellVaHomepage: null,
       lovellVaListingPages: [],
       lovellVaNonListingPages: [],
       otherPages: [],
@@ -343,8 +387,20 @@ function processLovellPages(drupalData) {
     'va',
   );
 
+  // VA and TRICARE homepages need featured stories and events injected from listing pages.
+  // Without this step, these pages would not include featured stories and events from federal listing pages.
+  const lovellTricareHomepageWithFeatured = lovellHomepageWithFeaturedListingItems(
+    lovellTricareHomepage,
+    lovellTricareListingPagesWithFederal,
+  );
+  const lovellVaHomepageWithFeatured = lovellHomepageWithFeaturedListingItems(
+    lovellVaHomepage,
+    lovellVaListingPagesWithFederal,
+  );
+
   // modify all tricare pages
   const lovellTricarePages = [
+    lovellTricareHomepageWithFeatured,
     ...lovellTricareListingPagesWithFederal,
     ...lovellTricareNonListingPages,
   ];
@@ -353,6 +409,7 @@ function processLovellPages(drupalData) {
   );
   // modify all va pages
   const lovellVaPages = [
+    lovellVaHomepageWithFeatured,
     ...lovellVaListingPagesWithFederal,
     ...lovellVaNonListingPages,
   ];
