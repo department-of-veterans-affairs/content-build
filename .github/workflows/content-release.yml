@@ -38,7 +38,7 @@ jobs:
         run: echo APPROX_WORKFLOW_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@v3
 
       - name: Notify CMS - Starting
         uses: ./.github/workflows/authenticated-cms-request
@@ -59,7 +59,7 @@ jobs:
 
       - name: Get latest release
         id: get-latest-release
-        uses: ./.github/workflows/fetch-latest-release
+        uses: gregziegan/fetch-latest-release@v2.0.0
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
@@ -72,10 +72,10 @@ jobs:
     needs: validate-build-status
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
@@ -111,13 +111,13 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Checkout vagov-content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@v3
         with:
           path: content-build
           ref: ${{ needs.validate-build-status.outputs.REF }}
@@ -127,7 +127,7 @@ jobs:
         run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
 
       - name: Setup Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
@@ -136,7 +136,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        uses: actions/cache@v3
         with:
           path: |
             .cache/yarn
@@ -145,7 +145,7 @@ jobs:
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Install dependencies
-        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
+        uses: nick-invision/retry@v2
         with:
           command: cd content-build && yarn install --frozen-lockfile --prefer-offline
           max_attempts: 3
@@ -169,20 +169,20 @@ jobs:
           echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: set Drupal prod password
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
           env_variable_name: DRUPAL_PASSWORD
 
       - name: set Drupal prod username
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
@@ -236,7 +236,7 @@ jobs:
           jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Get Datadog api key from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
@@ -253,7 +253,7 @@ jobs:
         run: node ./script/github-actions/check-broken-links-blocks.js ${{ env.BUILDTYPE }}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -261,28 +261,28 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Slack app token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_socket_token
           env_variable_name: SLACK_APP_TOKEN
 
       - name: Get Slack bot token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -297,7 +297,7 @@ jobs:
         run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
       - name: Notify content broken links channel about broken links
-        uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
+        uses: slackapi/slack-github-action@v1.23.0
         id: notify-content-broken-links
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
@@ -340,20 +340,20 @@ jobs:
           du -h ${{ env.BUILDTYPE }}.tar.bz2
 
       - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -381,23 +381,23 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
       - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -446,10 +446,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@v3
 
       - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
@@ -474,7 +474,7 @@ jobs:
 
     steps:
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -489,7 +489,7 @@ jobs:
           method: GET
 
       - name: Get Datadog token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
@@ -527,7 +527,7 @@ jobs:
       METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@v3
 
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
@@ -572,20 +572,20 @@ jobs:
           jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get Datadog api key from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
       - name: Get Datadog app key from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
