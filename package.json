@@ -30,6 +30,7 @@
     "pr-check": "node script/pr-check.js",
     "security-check": "yarn vagov-dependency-check",
     "serve": "node script/serve.js",
+    "servepreview": "node script/servepreview.js",
     "test": "npm run test:unit",
     "test:coverage": "./script/run-coverage.sh",
     "test:coverage-apps": "npm run test:coverage && node script/app-coverage-report.js",
