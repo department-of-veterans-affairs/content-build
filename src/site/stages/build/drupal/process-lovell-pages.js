@@ -290,6 +290,10 @@ function combineLovellListingPages(tricareOrVaPages, federalPages, variant) {
  * @param {*} listingPages
  */
 function lovellHomepageWithFeaturedListingItems(page, listingPages) {
+  if (!page) {
+    return null;
+  }
+
   const getTeasersFeaturedObject = featuredItems => ({
     entities: [
       {
@@ -400,22 +404,27 @@ function processLovellPages(drupalData) {
 
   // modify all tricare pages
   const lovellTricarePages = [
-    lovellTricareHomepageWithFeatured,
     ...lovellTricareListingPagesWithFederal,
     ...lovellTricareNonListingPages,
   ];
+  if (lovellTricareHomepageWithFeatured) {
+    lovellTricarePages.push(lovellTricareHomepageWithFeatured);
+  }
   const modifiedLovellTricarePages = lovellTricarePages.map(page =>
     getModifiedLovellPage(page, 'tricare'),
   );
   // modify all va pages
   const lovellVaPages = [
-    lovellVaHomepageWithFeatured,
     ...lovellVaListingPagesWithFederal,
     ...lovellVaNonListingPages,
   ];
+  if (lovellVaHomepageWithFeatured) {
+    lovellVaPages.push(lovellVaHomepageWithFeatured);
+  }
   const modifiedLovellVaPages = lovellVaPages.map(page =>
     getModifiedLovellPage(page, 'va'),
   );
+
   // Each federal page needs to be duplicated and modified once each for tricare/va
   const lovellFederalPagesClonedTricare = lovellFederalNonListingPages.map(
     page => getModifiedLovellPage(cloneDeep(page), 'tricare'),
