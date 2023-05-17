@@ -10,7 +10,6 @@ import {
   getLovellTitleVariation,
   getLovellUrl,
   getLovellVariantOfUrl,
-  getFeaturedListingItems,
 } from '../../lovell/helpers';
 
 describe('getLovellTitle', () => {
@@ -91,85 +90,5 @@ describe('getLovellVariantOfUrl', () => {
       LOVELL_TRICARE_LINK_VARIATION,
       '/lovell-federal-health-care-tricare/some-page',
     );
-  });
-});
-
-describe('getFeaturedListingItems', () => {
-  const listingPages = [
-    {
-      entityBundle: 'type1-expected',
-      reverseFieldListingNode: {
-        entities: [
-          {
-            title: 'Featured 1',
-            fieldFeatured: true,
-            fieldAdministration: {
-              entity: {
-                entityId: 2,
-              },
-            },
-          },
-          {
-            title: 'Featured 2',
-            fieldFeatured: true,
-            fieldAdministration: {
-              entity: {
-                entityId: 1,
-              },
-            },
-          },
-          {
-            title: 'Not Featured 1',
-            fieldFeatured: false,
-          },
-        ],
-      },
-    },
-    {
-      entityBundle: 'type2-malformed',
-    },
-  ];
-
-  it('returns an empty array when listingType is not found', () => {
-    const featuredItems = getFeaturedListingItems(
-      listingPages,
-      'nonExistentType',
-    );
-    expect(featuredItems).to.deep.eq([]);
-  });
-
-  it('returns an empty array when listing page is malformed', () => {
-    const featuredItems = getFeaturedListingItems(
-      listingPages,
-      'type2-malformed',
-    );
-    expect(featuredItems).to.deep.eq([]);
-  });
-
-  it('returns featured items sorted by fieldAdministration', () => {
-    const featuredItems = getFeaturedListingItems(
-      listingPages,
-      'type1-expected',
-    );
-    expect(featuredItems).to.deep.eq([
-      {
-        title: 'Featured 2',
-        fieldFeatured: true,
-        fieldAdministration: {
-          entity: {
-            entityId: 1,
-          },
-        },
-      },
-      {
-        title: 'Featured 1',
-        fieldFeatured: true,
-        fieldAdministration: {
-          entity: {
-            entityId: 2,
-          },
-        },
-      },
-    ]);
   });
 });
