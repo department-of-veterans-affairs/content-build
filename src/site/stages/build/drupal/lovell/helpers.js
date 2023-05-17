@@ -1,4 +1,5 @@
 const { ENTITY_BUNDLES } = require('../../../../constants/content-modeling');
+const { filterUpcomingEvents } = require('../../../../filters/events');
 
 const LOVELL_TITLE_STRING = 'Lovell Federal';
 const LOVELL_FEDERAL_ENTITY_ID = '347';
@@ -35,21 +36,6 @@ function isListingPage(page) {
   ];
 
   return listingPageTypes.includes(page.entityBundle);
-}
-
-function getFeaturedListingItems(listingPages, listingType) {
-  const listingPage = listingPages.find(
-    page => page.entityBundle === listingType,
-  );
-  const listingItems = listingPage?.reverseFieldListingNode?.entities;
-  const featuredItems = listingItems?.filter?.(item => item?.fieldFeatured);
-  const sortedFeaturedItems = featuredItems?.sort?.(
-    (a, b) =>
-      (a?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER) -
-      (b?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER),
-  );
-
-  return sortedFeaturedItems || [];
 }
 
 function isFederalRegionHomepage(page) {
@@ -94,6 +80,34 @@ function getLovellVariantOfUrl(path, linkVar) {
   );
 }
 
+function getFeaturedListingItems(listingPages, listingType) {
+  /*
+   * Event listings need to filter out past events.
+   * Other listings just return all entities.
+   */
+  const getCurrentListingItems = listingPage => {
+    const listingItems = listingPage?.reverseFieldListingNode?.entities;
+    if (listingPage.entityBundle !== ENTITY_BUNDLES.EVENT_LISTING) {
+      return listingItems;
+    }
+
+    return filterUpcomingEvents(listingItems);
+  };
+
+  const listingPage = listingPages.find(
+    page => page.entityBundle === listingType,
+  );
+  const listingItems = getCurrentListingItems(listingPage);
+  const featuredItems = listingItems?.filter?.(item => item?.fieldFeatured);
+  const sortedFeaturedItems = featuredItems?.sort?.(
+    (a, b) =>
+      (a?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER) -
+      (b?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER),
+  );
+
+  return sortedFeaturedItems || [];
+}
+
 module.exports = {
   LOVELL_TITLE_STRING,
   LOVELL_FEDERAL_ENTITY_ID,
@@ -109,7 +123,6 @@ module.exports = {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
-  getFeaturedListingItems,
   isFederalRegionHomepage,
   isTricareRegionHomepage,
   isVaRegionHomepage,
@@ -117,4 +130,5 @@ module.exports = {
   getLovellTitleVariation,
   getLovellUrl,
   getLovellVariantOfUrl,
+  getFeaturedListingItems,
 };
