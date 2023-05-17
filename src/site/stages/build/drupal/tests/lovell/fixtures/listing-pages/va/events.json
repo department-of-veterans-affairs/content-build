@@ -86,12 +86,12 @@
           {
             "duration": 60,
             "endTime": null,
-            "endValue": 2633119000,
+            "endValue": 2998029600,
             "rrule": null,
             "rruleIndex": null,
             "startTime": null,
             "timezone": "America/Chicago",
-            "value": 2633115400
+            "value": 2998026000
           }
         ],
         "fieldFeatured": true,
