@@ -1,32 +1,40 @@
-const { filterUpcomingEvents } = require('../../../../filters/events');
+const {
+  deriveMostRecentDate,
+  filterUpcomingEvents,
+} = require('../../../../filters/events');
 const { ENTITY_BUNDLES } = require('../../../../constants/content-modeling');
 
-/*
- * Event listings need to filter out past events.
- * Other listings just return all entities.
- */
-const getCurrentListingItems = listingPage => {
-  const listingItems = listingPage?.reverseFieldListingNode?.entities;
-  if (listingPage.entityBundle !== ENTITY_BUNDLES.EVENT_LISTING) {
-    return listingItems;
-  }
+const isFeatured = item => item?.fieldFeatured;
 
-  return filterUpcomingEvents(listingItems);
+const fieldAdministrationAsc = (a, b) =>
+  (a?.fieldAdministration?.entity?.entityId ?? Number.MAX_SAFE_INTEGER) -
+  (b?.fieldAdministration?.entity?.entityId ?? Number.MAX_SAFE_INTEGER);
+
+const dateAsc = (a, b) =>
+  (deriveMostRecentDate(a?.fieldDatetimeRangeTimezone)?.value ??
+    Number.MAX_SAFE_INTEGER) -
+  (deriveMostRecentDate(b?.fieldDatetimeRangeTimezone)?.value ??
+    Number.MAX_SAFE_INTEGER);
+
+const getFeaturedListingEvents = events => {
+  const upcomingEvents = filterUpcomingEvents(events) || [];
+  const featuredEvents = upcomingEvents.filter(isFeatured);
+  return [...featuredEvents].sort(dateAsc);
+};
+
+const getFeaturedListingStories = stories => {
+  const featuredStories = stories?.filter?.(isFeatured) || [];
+  return [...featuredStories].sort(fieldAdministrationAsc);
 };
 
 const getFeaturedListingItems = (listingPages, listingType) => {
   const listingPage = listingPages.find(
     page => page.entityBundle === listingType,
   );
-  const listingItems = getCurrentListingItems(listingPage);
-  const featuredItems = listingItems?.filter?.(item => item?.fieldFeatured);
-  const sortedFeaturedItems = featuredItems?.sort?.(
-    (a, b) =>
-      (a?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER) -
-      (b?.fieldAdministration?.entity?.entityId || Number.MAX_SAFE_INTEGER),
-  );
-
-  return sortedFeaturedItems || [];
+  const listingItems = listingPage?.reverseFieldListingNode?.entities;
+  return listingType === ENTITY_BUNDLES.EVENT_LISTING
+    ? getFeaturedListingEvents(listingItems)
+    : getFeaturedListingStories(listingItems);
 };
 
 module.exports = {
