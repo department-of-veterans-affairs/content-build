@@ -15,7 +15,6 @@ const {
   isLovellTricarePage,
   isLovellVaPage,
   isListingPage,
-  getFeaturedListingItems,
   isFederalRegionHomepage,
   getLovellTitle,
   getLovellTitleVariation,
@@ -24,6 +23,8 @@ const {
   isTricareRegionHomepage,
   isVaRegionHomepage,
 } = require('./lovell/helpers');
+
+const { getFeaturedListingItems } = require('./lovell/featured-items');
 
 const {
   getLovellPageVariables,
