@@ -34,7 +34,7 @@ const deriveMostRecentDate = (
 const filterPastEvents = data => {
   if (!data) return null;
   const currentTimestamp = new Date().getTime();
-  return data.filter(event => {
+  return data.filter?.(event => {
     const mostRecentEvent = deriveMostRecentDate(
       event.fieldDatetimeRangeTimezone[0]
         ? event.fieldDatetimeRangeTimezone[0]
@@ -47,7 +47,7 @@ const filterPastEvents = data => {
 const filterUpcomingEvents = data => {
   if (!data) return null;
   const currentTimestamp = new Date().getTime();
-  return data.filter(event => {
+  return data.filter?.(event => {
     const mostRecentEvent = deriveMostRecentDate(
       event.fieldDatetimeRangeTimezone,
     );
