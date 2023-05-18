@@ -24,23 +24,23 @@ jobs:
     steps:
       - name: Cancel workflow due to DSVA schedule
         if: ${{ github.event_name == 'schedule' && env.DSVA_SCHEDULE_ENABLED != 'true' }}
-        uses: andymckay/cancel-action@0.3
+        uses: andymckay/cancel-action@b9280e3f8986d7a8e91c7462efc0fa318010c8b1 # v0.3
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get bot token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
           env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
         with:
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
 
@@ -72,7 +72,7 @@ jobs:
           echo "new_patch=$(echo $(( $current_patch + 1 )))" >> $GITHUB_ENV
 
       - name: Create next tag
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
           timeout_seconds: 30
           max_attempts: 3
@@ -83,12 +83,16 @@ jobs:
             git tag v0.0.$next_patch ${{ steps.get-current-ref.outputs.REF }} && git push --no-verify origin v0.0.$next_patch
 
       - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+        uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e # v1.12.0
         with:
-          tag_name: v0.0.${{ env.new_patch }}
-          release_name: content-build/v0.0.${{ env.new_patch }}
+          tag: v0.0.${{ env.new_patch }}
+          name: content-build/v0.0.${{ env.new_patch }}
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          commit: ${{ steps.get-current-ref.outputs.REF }}
+          # This being set to draft is to avoid interfering with content-release until we are sure the release created by this action contain the information we need.
+          # This will be removed after testing.
+          draft: true
+
 
       - name: Export new release name
         id: export-release-name
@@ -102,10 +106,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
 
       - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Successfully tagged new content-build release: ${{ needs.create-release.outputs.RELEASE_NAME }}"}}]}]}'
@@ -121,11 +125,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
 
       - name: Notify Slack
         if: ${{ env.DSVA_SCHEDULE_ENABLED == 'true' }}
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> New content-build release could not be tagged!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
