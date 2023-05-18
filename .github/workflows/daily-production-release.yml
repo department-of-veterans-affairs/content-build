@@ -89,10 +89,6 @@ jobs:
           name: content-build/v0.0.${{ env.new_patch }}
           token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
           commit: ${{ steps.get-current-ref.outputs.REF }}
-          # This being set to draft is to avoid interfering with content-release until we are sure the release created by this action contain the information we need.
-          # This will be removed after testing.
-          draft: true
-
 
       - name: Export new release name
         id: export-release-name
