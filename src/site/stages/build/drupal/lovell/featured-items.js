@@ -37,6 +37,43 @@ const getFeaturedListingItems = (listingPages, listingType) => {
     : getFeaturedListingStories(listingItems);
 };
 
+const getTeasersFeaturedObject = featuredItems => ({
+  entities: [
+    {
+      reverseFieldListingNode: {
+        entities: featuredItems,
+      },
+    },
+  ],
+});
+
+/**
+ * Returns a new page object with featured events and stories added to it
+ *
+ * @param {*} page
+ * @param {*} listingPages
+ */
+const lovellHomepageWithFeaturedListingItems = (page, listingPages) => {
+  if (!page) {
+    return null;
+  }
+
+  const featuredEvents = getFeaturedListingItems(
+    listingPages,
+    ENTITY_BUNDLES.EVENT_LISTING,
+  );
+  const featuredStories = getFeaturedListingItems(
+    listingPages,
+    ENTITY_BUNDLES.STORY_LISTING,
+  );
+
+  return {
+    ...page,
+    eventTeasersFeatured: getTeasersFeaturedObject(featuredEvents),
+    newsStoryTeasersFeatured: getTeasersFeaturedObject(featuredStories),
+  };
+};
+
 module.exports = {
-  getFeaturedListingItems,
+  lovellHomepageWithFeaturedListingItems,
 };

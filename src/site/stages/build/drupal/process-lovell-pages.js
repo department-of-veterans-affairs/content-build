@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign, no-console */
 
 const cloneDeep = require('lodash/cloneDeep');
-const { ENTITY_BUNDLES } = require('../../../constants/content-modeling');
 const { camelize } = require('../../../utilities/stringHelpers');
 
 const {
@@ -24,7 +23,9 @@ const {
   isVaRegionHomepage,
 } = require('./lovell/helpers');
 
-const { getFeaturedListingItems } = require('./lovell/featured-items');
+const {
+  lovellHomepageWithFeaturedListingItems,
+} = require('./lovell/featured-items');
 
 const {
   getLovellPageVariables,
@@ -282,43 +283,6 @@ function combineLovellListingPages(tricareOrVaPages, federalPages, variant) {
       },
     };
   });
-}
-
-/**
- * Returns a new page object with featured events and stories added to it
- *
- * @param {*} page
- * @param {*} listingPages
- */
-function lovellHomepageWithFeaturedListingItems(page, listingPages) {
-  if (!page) {
-    return null;
-  }
-
-  const getTeasersFeaturedObject = featuredItems => ({
-    entities: [
-      {
-        reverseFieldListingNode: {
-          entities: featuredItems,
-        },
-      },
-    ],
-  });
-
-  const featuredEvents = getFeaturedListingItems(
-    listingPages,
-    ENTITY_BUNDLES.EVENT_LISTING,
-  );
-  const featuredStories = getFeaturedListingItems(
-    listingPages,
-    ENTITY_BUNDLES.STORY_LISTING,
-  );
-
-  return {
-    ...page,
-    eventTeasersFeatured: getTeasersFeaturedObject(featuredEvents),
-    newsStoryTeasersFeatured: getTeasersFeaturedObject(featuredStories),
-  };
 }
 
 function processLovellPages(drupalData) {
