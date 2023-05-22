@@ -6,7 +6,7 @@
 
 function createUniqueId(headingEl, headingOptions) {
   const headingString = headingEl.text();
-  // Any changes to srting processing here must also be made in va.gov-cms
+  // Any changes to string processing here must also be made in va.gov-cms
   // docroot/modules/custom/va_gov_post_api/src/Service/PostFacilityBase.php getFrontEndFragment().
   const length = 30;
   let anchor = headingString
