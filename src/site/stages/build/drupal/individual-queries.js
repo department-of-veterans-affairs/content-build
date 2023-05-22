@@ -178,6 +178,10 @@ function nonNodeQueries() {
     GetMenuLinks,
   } = require('./graphql/navigation-fragments/menuLinks.nav.graphql');
   const {
+    GetBottomRail,
+    GetFooterColumns,
+  } = require('./graphql/navigation-fragments/footer.nav.graphql');
+  const {
     GetTaxonomies,
   } = require('./graphql/taxonomy-fragments/GetTaxonomies.graphql');
 
@@ -193,6 +197,8 @@ function nonNodeQueries() {
     GetPromoBanners,
     GetBannnerAlerts,
     GetOutreachAssets,
+    GetBottomRail,
+    GetFooterColumns,
     GetHomepage,
     GetMenuLinks,
     GetTaxonomies,
