@@ -1,0 +1,64 @@
+{
+  "entityBundle": "health_care_region_page",
+  "entityId": "49451",
+  "entityPublished": true,
+  "title": "Lovell Federal health care - VA",
+  "entityUrl": {
+      "breadcrumb": [
+          {
+              "url": {
+                  "path": "/",
+                  "routed": true
+              },
+              "text": "Home"
+          },
+          {
+              "url": {
+                  "path": "",
+                  "routed": true
+              },
+              "text": "Lovell Federal health care - VA"
+          }
+      ],
+      "path": "/lovell-federal-health-care-va",
+      "switchPath": "/lovell-federal-health-care-tricare"
+  },
+  "newsStoryTeasers": {
+      "entities": []
+  },
+  "allNewsStoryTeasers": {
+      "entities": []
+  },
+  "eventTeasers": {
+      "entities": []
+  },
+  "allEventTeasers": {
+      "entities": []
+  },
+  "allPressReleaseTeasers": {
+      "entities": []
+  },
+  "eventTeasersFeatured": {
+      "entities": [
+          {
+              "reverseFieldListingNode": {
+                  "entities": []
+              }
+          }
+      ]
+  },
+  "newsStoryTeasersFeatured": {
+      "entities": [
+          {
+              "reverseFieldListingNode": {
+                  "entities": []
+              }
+          }
+      ]
+  },
+  "fieldAdministration": {
+      "entity": {
+          "entityId": "1040"
+      }
+  }
+}
