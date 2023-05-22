@@ -1382,5 +1382,17 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Income Limits",
+    "entryName": "income-limits",
+    "rootUrl": "/health-care/income-limits-temp",
+    "template": {
+      "title": "Income Limits",
+      "layout": "page-react.html",
+      "description": "Income Limits application",
+      "vagovprod": false,
+      "includeFeedbackButton": false
+    }
   }
 ]
