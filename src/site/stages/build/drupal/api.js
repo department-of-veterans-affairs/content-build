@@ -248,11 +248,11 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
       });
     },
 
-    getLatestPageById(nodeId) {
+    getLatestPagesByIds(nodeIds) {
       return this.query({
-        query: getQuery(queries.GET_LATEST_PAGE_BY_ID),
+        query: getQuery(queries.GET_LATEST_PAGES_BY_IDS),
         variables: {
-          id: nodeId,
+          ids: nodeIds,
           today: getCurrentDayAsUnixTimestamp().toString(),
           onlyPublishedContent: false,
         },

@@ -197,7 +197,8 @@ const nonNodeContent = {
 
 function fetchAllPageData(nodeId) {
   console.time(`Node ${nodeId}`);
-  const nodeQuery = drupalClient.getLatestPageById(nodeId).then(response => {
+  const nodeIds = [nodeId];
+  const nodeQuery = drupalClient.getLatestPagesByIds(nodeIds).then(response => {
     console.timeEnd(`Node ${nodeId}`);
     return response;
   });
@@ -280,7 +281,9 @@ app.get('/preview', async (req, res, next) => {
 
     Object.assign(drupalData.data, nonNodeContent.content.data);
 
-    const drupalPage = drupalData.data.nodes.entities[0];
+    const drupalPage = drupalData.data.nodes.entities.find(
+      entity => entity.entityId === req.query.nodeId,
+    );
     const drupalPath = `${req.path.substring(1)}/index.html`;
 
     if (!drupalPage.entityBundle) {
@@ -291,7 +294,7 @@ app.get('/preview', async (req, res, next) => {
       res.send(`
         <p>This page isn't ready to be previewed yet.
           This may mean development is still in progress or that there's an issue with the preview server.
-          Make sure the query for this page has been added to src/site/stages/build/drupal/graphql/GetLatestPageById.graphql.js.
+          Make sure the query for this page has been added to src/site/stages/build/drupal/graphql/GetLatestPagesByIds.graphql.js.
         </p>
       `);
       return;

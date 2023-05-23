@@ -170,7 +170,7 @@ A GraphQL query for retrieving pages will consist of a `nodeQuery` with a `filte
       	entityBundle
       	entityUrl {
           path
-        }    
+        }
         title
         fieldIntroText
       }
@@ -191,7 +191,7 @@ The response JSON for this GraphQL query will contain a single instance of the p
           "entityBundle": "landing_page",
            "entityUrl": {
               "path": "/records"
-           },           
+           },
           "title": "VA records",
           "fieldIntroText": "Access your VA records and documents online to more easily manage your benefits."
         }
@@ -221,7 +221,7 @@ const examplePageFragment = `
     entityBundle
     entityUrl {
       path
-    }     
+    }
     title
     fieldIntroText
   }
@@ -260,7 +260,7 @@ As of writing, the module located at `src/site/stages/build/drupal/individual-qu
 
 <details><summary>4. Register your GraphQL fragment into the preview server</summary>
 
-As of writing, there is a module located at `src/site/stages/build/drupal/graphql/GetLatestPageById.graphql.js` that contains the GraphQL query issued by the preview server when a user navigates to the route `/preview?nodeId=${nodeId}`. It is a monolithic query that includes all of the fragments describing page-types. Follow the pattern in that file to add your module's GraphQL fragment into the `GetLatestPageById` GraphQL query.
+As of writing, there is a module located at `src/site/stages/build/drupal/graphql/GetLatestPagesByIds.graphql.js` that contains the GraphQL query issued by the preview server when a user navigates to the route `/preview?nodeId=${nodeId}`. It is a monolithic query that includes all of the fragments describing page-types. Follow the pattern in that file to add your module's GraphQL fragment into the `GetLatestPagesByIds` GraphQL query.
 
 </details>
 

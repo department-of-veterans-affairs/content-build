@@ -37,7 +37,7 @@ const { ALL_FRAGMENTS } = require('./fragments.graphql');
 const {
   updateQueryString,
   queryParamToBeChanged,
-} = require('./../../../../utilities/stringHelpers');
+} = require('../../../../utilities/stringHelpers');
 
 /**
  * Queries for a page by the node id, getting the latest revision
@@ -80,10 +80,10 @@ module.exports = `
   ${leadershipListingPage.fragment}
   ${locationsListingPage.fragment}
 
-  query GetLatestPageById($id: String!, $today: String!, $onlyPublishedContent: Boolean!) {
+  query GetLatestPagesByIds($ids: [String]!, $today: String!, $onlyPublishedContent: Boolean!) {
     nodes: nodeQuery(revisions: LATEST, filter: {
     conditions: [
-      { field: "nid", value: [$id] }
+      { field: "nid", value: $ids }
     ]
     }) {
       entities {

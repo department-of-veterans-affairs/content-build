@@ -1,6 +1,6 @@
 const queries = {
   GET_ALL_PAGES: './graphql/GetAllPages.graphql',
-  GET_LATEST_PAGE_BY_ID: './graphql/GetLatestPageById.graphql',
+  GET_LATEST_PAGES_BY_IDS: './graphql/GetLatestPagesByIds.graphql',
 };
 
 function getQuery(query) {
