@@ -23,6 +23,13 @@ const HOSTNAMES = require('../src/site/constants/hostnames');
 const bucketsContent = require('../src/site/constants/buckets-content');
 const singlePageDiff = require('./preview-routes/single-page-diff');
 const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
+const {
+  getLovellPreviewPage,
+  processLovellPagesForPreview,
+} = require('../src/site/stages/build/drupal/lovell/preview');
+const {
+  getLovellPreviewNodeDependencies,
+} = require('../src/site/stages/build/drupal/lovell/preview');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -197,7 +204,7 @@ const nonNodeContent = {
 
 function fetchAllPageData(nodeId) {
   console.time(`Node ${nodeId}`);
-  const nodeIds = [nodeId];
+  const nodeIds = [nodeId, ...getLovellPreviewNodeDependencies(nodeId)];
   const nodeQuery = drupalClient.getLatestPagesByIds(nodeIds).then(response => {
     console.timeEnd(`Node ${nodeId}`);
     return response;
@@ -281,9 +288,17 @@ app.get('/preview', async (req, res, next) => {
 
     Object.assign(drupalData.data, nonNodeContent.content.data);
 
-    const drupalPage = drupalData.data.nodes.entities.find(
-      entity => entity.entityId === req.query.nodeId,
-    );
+    processLovellPagesForPreview(drupalData);
+
+    const drupalPage =
+      drupalData.data.nodes.entities.length === 1
+        ? drupalData.data.nodes.entities[0]
+        : getLovellPreviewPage(
+            drupalData,
+            req?.query?.nodeId,
+            req?.query?.lovellVariant,
+          );
+
     const drupalPath = `${req.path.substring(1)}/index.html`;
 
     if (!drupalPage.entityBundle) {

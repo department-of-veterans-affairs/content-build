@@ -79,6 +79,10 @@ function getLovellVariantOfUrl(path, linkVar) {
   );
 }
 
+function lovellPageHasVariantUrl(page, variant = 'va') {
+  return page?.entityUrl?.path.includes(getLovellUrl(variant)) || false;
+}
+
 module.exports = {
   LOVELL_TITLE_STRING,
   LOVELL_FEDERAL_ENTITY_ID,
@@ -101,4 +105,5 @@ module.exports = {
   getLovellTitleVariation,
   getLovellUrl,
   getLovellVariantOfUrl,
+  lovellPageHasVariantUrl,
 };
