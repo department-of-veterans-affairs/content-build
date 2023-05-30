@@ -10,6 +10,13 @@ if (typeof window === 'undefined') {
   isNode = true;
 }
 
+function isHostnameAllowed(hostname, allowedHostname) {
+  const sanitizedHostname = hostname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = allowedHostname.replace(/\*/g, '[a-z0-9]+(-[a-z0-9]+)*');
+  const regex = new RegExp(`^${pattern}$`, 'i');
+  return regex.test(sanitizedHostname);
+}
+
 module.exports = {
   [ENVIRONMENTS.VAGOVPROD]: {
     BUILDTYPE: ENVIRONMENTS.VAGOVPROD,
@@ -41,7 +48,8 @@ module.exports = {
         }`,
     API_URL: isNode
       ? 'http://localhost:3000'
-      : location.hostname && location.hostname.includes('preview.va.gov')
+      : location.hostname &&
+        isHostnameAllowed(location.hostname, '*.preview.va.gov')
       ? `http://${location.hostname.split('.')[0]}-api.${location.hostname
           .split('.')
           .slice(1)
