@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-const { createEntityUrlObj, createFileObj } = require('./page');
 const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
+const { createFileObj } = require('./page');
 
 function divideHubRows(hubs) {
   return hubs.map((hub, i) => {
@@ -67,7 +67,7 @@ const addHomePreviewContent = (
     legacy_homepage_banner: banner,
     promoBanners,
     promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
-    title: 'VA.gov Home',
+    title: 'New VA.gov Home Page',
   };
 
   const homePreviewPath = '/new-home-page';

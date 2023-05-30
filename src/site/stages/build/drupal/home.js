@@ -4,8 +4,6 @@ const path = require('path');
 const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
 const { addHomePreviewContent } = require('./home-preview');
-// Get current feature flags
-const { cmsFeatureFlags } = global;
 
 function divideHubRows(hubs) {
   return hubs.map((hub, i) => {
@@ -22,103 +20,124 @@ function divideHubRows(hubs) {
 
 // Processes the data received from the home page query.
 function addHomeContent(contentData, files, metalsmith, buildOptions) {
-  let homeEntityObj = createEntityUrlObj('/');
   // We cannot limit menu items in Drupal, so we must do it here.
   const menuLength = 4;
-  const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
-  const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
-  const bannerFile = fs.readFileSync(bannerLocation);
-  const banner = yaml.safeLoad(bannerFile);
 
-  const {
-    data: {
-      homePageHeroQuery,
-      homePageNewsSpotlightQuery,
-      homePagePopularOnVaGovMenuQuery,
-      homePageOtherSearchToolsMenuQuery,
-      homePageHubListMenuQuery,
-      homePageCreateAccountQuery,
+  const { cmsFeatureFlags } = buildOptions;
+
+  // Make sure that we have content for the home page.
+  if (contentData.data.homePageMenuQuery) {
+    let homeEntityObj = createEntityUrlObj('/');
+    const {
+      data: {
+        banners,
+        homePageMenuQuery,
+        homePageHubListQuery,
+        homePagePromoBlockQuery,
+        promoBanners,
+      },
+    } = contentData;
+
+    // Liquid does not have a good modulo operator, so we let the template know when to end a row.
+    const hubs = divideHubRows(
+      homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList,
+    );
+
+    const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
+    const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
+    const bannerFile = fs.readFileSync(bannerLocation);
+    const banner = yaml.safeLoad(bannerFile);
+
+    homeEntityObj = {
+      ...homeEntityObj,
       banners,
-      homePageMenuQuery,
-      homePageHubListQuery,
-      homePagePromoBlockQuery,
+      cards: homePageMenuQuery.links.slice(0, menuLength),
+      description:
+        'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
+      entityUrl: { path: '/' },
+      hubs,
+      // eslint-disable-next-line camelcase
+      legacy_homepage_banner: banner,
       promoBanners,
-    },
-  } = contentData;
-  const hubs = divideHubRows(
-    homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList,
-  );
+      promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
+      title: 'VA.gov Home',
+    };
 
-  homeEntityObj = {
-    ...homeEntityObj,
-    banners,
-    cards: homePageMenuQuery.links.slice(0, menuLength),
-    description:
-      'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
-    entityUrl: { path: '/' },
-    hubs,
-    // eslint-disable-next-line camelcase
-    legacy_homepage_banner: banner,
-    promoBanners,
-    promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
-    title: 'VA.gov Home',
-  };
+    /**
+     * Below is the code responsible for generating the new Homepage experience.
+     * */
+    const {
+      data: {
+        homePageHeroQuery,
+        homePageNewsSpotlightQuery,
+        homePagePopularOnVaGovMenuQuery,
+        homePageOtherSearchToolsMenuQuery,
+        homePageHubListMenuQuery,
+        homePageCreateAccountQuery,
+      },
+    } = contentData;
 
-  const homePreviewPath = '/';
-  const hero =
-    homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
-  hero.createAccountBlock =
-    homePageCreateAccountQuery
-      ?.itemsOfEntitySubqueueV2HomePageCreateAccount?.[0]?.entity || {};
-  const searchLinks = homePageOtherSearchToolsMenuQuery?.links || [];
-  const popularLinks = homePagePopularOnVaGovMenuQuery?.links || [];
-  const newsSpotlight =
-    homePageNewsSpotlightQuery?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0]
-      ?.entity || {};
+    const homePreviewPath = '/';
 
-  // Filter hub menu links. We do this here instead of in the template because the
-  // grouping of hubs also happens here, and we need to filter before we group in
-  // order to preserve the intended grouping. See divideHubRows().
-  const homePreviewHubs = homePageHubListMenuQuery.links.filter(link => {
-    // Any disabled links should not be displayed.
-    if (!link.enabled) {
-      return false;
-    }
-    // If the link has a linkedEntity, and the linkedEntity is not published, it
-    // should not be displayed.
-    return (
-      !link.entity.linkedEntity ||
-      (link.entity.linkedEntity && link.entity.linkedEntity.entityPublished)
-    );
-  });
+    const hero =
+      homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
+    hero.createAccountBlock =
+      homePageCreateAccountQuery
+        ?.itemsOfEntitySubqueueV2HomePageCreateAccount?.[0]?.entity || {};
+    const searchLinks = homePageOtherSearchToolsMenuQuery?.links || [];
+    const popularLinks = homePagePopularOnVaGovMenuQuery?.links || [];
+    const newsSpotlight =
+      homePageNewsSpotlightQuery
+        ?.itemsOfEntitySubqueueHomePageNewsSpotlight?.[0]?.entity || {};
 
-  const homePreviewEntityObj = {
-    ...homeEntityObj,
-    canonicalLink: '/', // Match current homepage to avoid 'duplicate content' SEO demerit
-    hero,
-    commonTasks: {
-      searchLinks,
-      popularLinks,
-    },
-    newsSpotlight,
-    path: homePreviewPath,
-    entityUrl: {
+    // Filter hub menu links. We do this here instead of in the template because the
+    // grouping of hubs also happens here, and we need to filter before we group in
+    // order to preserve the intended grouping. See divideHubRows().
+    const homePreviewHubs = homePageHubListMenuQuery.links.filter(link => {
+      // Any disabled links should not be displayed.
+      if (!link.enabled) {
+        return false;
+      }
+      // If the link has a linkedEntity, and the linkedEntity is not published, it
+      // should not be displayed.
+      return (
+        !link.entity.linkedEntity ||
+        (link.entity.linkedEntity && link.entity.linkedEntity.entityPublished)
+      );
+    });
+
+    const homePreviewEntityObj = {
+      ...homeEntityObj,
+      canonicalLink: '/',
+      hero,
+      commonTasks: {
+        searchLinks,
+        popularLinks,
+      },
+      newsSpotlight,
       path: homePreviewPath,
-    },
-    hubs: divideHubRows(homePreviewHubs),
-    title: 'VA.gov Home Page',
-  };
+      entityUrl: {
+        path: homePreviewPath,
+      },
+      hubs: divideHubRows(homePreviewHubs),
+      title: 'VA.gov Home',
+    };
 
-  if (cmsFeatureFlags.FEATURE_HOMEPAGE_V2) {
-    files[`./index.html`] = createFileObj(
-      homePreviewEntityObj,
-      'home-preview.drupal.liquid',
-    );
-  } else {
-    files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
+    addHomePreviewContent(contentData, files, metalsmith, buildOptions);
+
+    // Create correct home page based on feature flag.
+    if (cmsFeatureFlags?.FEATURE_HOMEPAGE_V2) {
+      files[`./index.html`] = createFileObj(
+        homePreviewEntityObj,
+        'home-preview.drupal.liquid',
+      );
+    } else {
+      files[`./index.html`] = createFileObj(
+        homeEntityObj,
+        'home.drupal.liquid',
+      );
+    }
   }
-
-  addHomePreviewContent(contentData, files, metalsmith, buildOptions);
 }
 
 module.exports = { addHomeContent };
