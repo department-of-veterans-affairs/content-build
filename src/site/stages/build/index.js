@@ -252,7 +252,7 @@ function build(BUILD_OPTIONS) {
   );
   smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
   smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
-  smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
+  // smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
   smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
   smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
   smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');

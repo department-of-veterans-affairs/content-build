@@ -1,11 +1,8 @@
-/* eslint-disable no-param-reassign, no-continue */
+/* eslint-disable no-param-reassign */
+const { createEntityUrlObj, createFileObj } = require('./page');
 const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
-const { createEntityUrlObj, createFileObj } = require('./page');
-const { addHomePreviewContent } = require('./home-preview');
-// Get current feature flags
-const { cmsFeatureFlags } = global;
 
 function divideHubRows(hubs) {
   return hubs.map((hub, i) => {
@@ -20,9 +17,12 @@ function divideHubRows(hubs) {
   });
 }
 
-// Processes the data received from the home page query.
-function addHomeContent(contentData, files, metalsmith, buildOptions) {
-  let homeEntityObj = createEntityUrlObj('/');
+const addHomePreviewContent = (
+  contentData,
+  files,
+  metalsmith,
+  buildOptions,
+) => {
   // We cannot limit menu items in Drupal, so we must do it here.
   const menuLength = 4;
   const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
@@ -49,13 +49,19 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList,
   );
 
-  homeEntityObj = {
-    ...homeEntityObj,
+  const homeEntityObj = {
+    breadcrumb: [
+      {
+        url: { path: '/new-home-page', routed: true },
+        text: 'V2 Home',
+      },
+    ],
+    path: '/new-home-page',
     banners,
     cards: homePageMenuQuery.links.slice(0, menuLength),
     description:
       'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
-    entityUrl: { path: '/' },
+    entityUrl: { path: '/new-home-page' },
     hubs,
     // eslint-disable-next-line camelcase
     legacy_homepage_banner: banner,
@@ -64,7 +70,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     title: 'VA.gov Home',
   };
 
-  const homePreviewPath = '/';
+  const homePreviewPath = '/new-home-page';
   const hero =
     homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
   hero.createAccountBlock =
@@ -106,19 +112,15 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       path: homePreviewPath,
     },
     hubs: divideHubRows(homePreviewHubs),
-    title: 'VA.gov Home Page',
+    title: 'New VA.gov home page',
   };
 
-  if (cmsFeatureFlags.FEATURE_HOMEPAGE_V2) {
-    files[`./index.html`] = createFileObj(
-      homePreviewEntityObj,
-      'home-preview.drupal.liquid',
-    );
-  } else {
-    files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
-  }
+  files[`.${homePreviewPath}.html`] = createFileObj(
+    homePreviewEntityObj,
+    'home-preview.drupal.liquid',
+  );
+};
 
-  addHomePreviewContent(contentData, files, metalsmith, buildOptions);
-}
-
-module.exports = { addHomeContent };
+module.exports = {
+  addHomePreviewContent,
+};
