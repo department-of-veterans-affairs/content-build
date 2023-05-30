@@ -10,6 +10,13 @@ if (typeof window === 'undefined') {
   isNode = true;
 }
 
+function isHostnameAllowed(hostname, allowedHostname) {
+  const sanitizedHostname = hostname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = allowedHostname.replace(/\*/g, '[a-z0-9]+(-[a-z0-9]+)*');
+  const regex = new RegExp(`^${pattern}$`, 'i');
+  return regex.test(sanitizedHostname);
+}
+
 module.exports = {
   [ENVIRONMENTS.VAGOVPROD]: {
     BUILDTYPE: ENVIRONMENTS.VAGOVPROD,
@@ -28,7 +35,10 @@ module.exports = {
     BASE_URL: 'https://dev.va.gov',
     API_URL: 'https://dev-api.va.gov',
   },
+
   /* eslint-disable no-restricted-globals */
+  /* eslint-disable no-nested-ternary */
+
   [ENVIRONMENTS.LOCALHOST]: {
     BUILDTYPE: ENVIRONMENTS.LOCALHOST,
     BASE_URL: isNode
@@ -38,7 +48,15 @@ module.exports = {
         }`,
     API_URL: isNode
       ? 'http://localhost:3000'
+      : location.hostname &&
+        isHostnameAllowed(location.hostname, '*.preview.va.gov')
+      ? `http://${location.hostname.split('.')[0]}-api.${location.hostname
+          .split('.')
+          .slice(1)
+          .join('.')}:3000`
       : `http://${location.hostname || 'localhost'}:3000`,
   },
+
   /* eslint-enable no-restricted-globals */
+  /* eslint-enable no-nested-ternary */
 };
