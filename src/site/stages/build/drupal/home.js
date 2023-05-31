@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
+const { addHomePreviewContent } = require('./home-preview');
 
 function divideHubRows(hubs) {
   return hubs.map((hub, i) => {
@@ -21,6 +22,8 @@ function divideHubRows(hubs) {
 function addHomeContent(contentData, files, metalsmith, buildOptions) {
   // We cannot limit menu items in Drupal, so we must do it here.
   const menuLength = 4;
+
+  const { cmsFeatureFlags } = buildOptions;
 
   // Make sure that we have content for the home page.
   if (contentData.data.homePageMenuQuery) {
@@ -60,9 +63,6 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       title: 'VA.gov Home',
     };
 
-    // Let Metalsmith know we're here.
-    files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
-
     /**
      * Below is the code responsible for generating the new Homepage experience.
      * */
@@ -77,7 +77,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       },
     } = contentData;
 
-    const homePreviewPath = '/new-home-page';
+    const homePreviewPath = '/';
 
     const hero =
       homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
@@ -108,7 +108,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
 
     const homePreviewEntityObj = {
       ...homeEntityObj,
-      canonicalLink: '/', // Match current homepage to avoid 'duplicate content' SEO demerit
+      canonicalLink: '/',
       hero,
       commonTasks: {
         searchLinks,
@@ -120,13 +120,23 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         path: homePreviewPath,
       },
       hubs: divideHubRows(homePreviewHubs),
-      title: 'New VA.gov home page',
+      title: 'VA.gov Home',
     };
 
-    files[`.${homePreviewPath}.html`] = createFileObj(
-      homePreviewEntityObj,
-      'home-preview.drupal.liquid',
-    );
+    addHomePreviewContent(contentData, files, metalsmith, buildOptions);
+
+    // Create correct home page based on feature flag.
+    if (cmsFeatureFlags?.FEATURE_HOMEPAGE_V2) {
+      files[`./index.html`] = createFileObj(
+        homePreviewEntityObj,
+        'home-preview.drupal.liquid',
+      );
+    } else {
+      files[`./index.html`] = createFileObj(
+        homeEntityObj,
+        'home.drupal.liquid',
+      );
+    }
   }
 }
 
