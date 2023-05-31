@@ -1394,5 +1394,15 @@
       "vagovprod": false,
       "includeFeedbackButton": false
     }
+  },
+  {
+    "appName": "Sign for benefits on behalf of another person",
+    "entryName": "21-0972-alternate-signer",
+    "rootUrl": "/alternate-signer",
+    "productId": "38f07696-546f-4c9a-a6f0-16348bde4d33",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
