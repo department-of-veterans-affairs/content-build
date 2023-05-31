@@ -17,8 +17,6 @@ Disallow: /covid19screen
 # to prevent sub-directories from being indexed
 # see https://developers.google.com/search/docs/advanced/robots/create-robots-txt#useful-robots.txt-rules
 
-Disallow: /lovell-federal-va-health-care/
-Disallow: /lovell-federal-tricare-health-care/
 
 # sitemap index
 Sitemap: https://www.va.gov/sitemap.xml

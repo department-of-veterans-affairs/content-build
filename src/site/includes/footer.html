@@ -1,9 +1,12 @@
 <section role="contentinfo">
   <footer class="footer">
-    <div id="footerNav"></div> <!-- let's try this React thing -->
+    <div
+      id="footerNav"
+      data-minimal-footer="{% if minimalFooter %}true{% else %}false{% endif %}"
+    ></div>
   </footer>
 </section>
-
+<div id="logout-modal-root"></div>
 <!--
 “To care for him who shall have borne the battle and for his widow, and his orphan.”
 - Abraham Lincoln

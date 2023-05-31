@@ -10,6 +10,11 @@ const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
 const stagingSurveys = require('./medalliaStagingSurveys.json');
 const prodSurveys = require('./medalliaProdSurveys.json');
+const {
+  deriveMostRecentDate,
+  filterPastEvents,
+  filterUpcomingEvents,
+} = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -179,8 +184,18 @@ module.exports = function registerFilters() {
       '113332',
       '7153',
       '37238',
+      '5697',
+      '101671',
     ];
-    return targetH3IDs.includes(id);
+    const targetH5IDs = ['112021'];
+
+    if (targetH3IDs.includes(id)) {
+      return 'h3';
+    }
+    if (targetH5IDs.includes(id)) {
+      return 'h5';
+    }
+    return 'h4';
   };
 
   liquid.filters.dateFromUnix = (dt, format, tz = 'America/New_York') => {
@@ -531,6 +546,10 @@ module.exports = function registerFilters() {
         .replace(/ -/g, '.');
     }
     return null;
+  };
+
+  liquid.filters.removeDashes = data => {
+    return data?.replace?.(/-/g, '') || null;
   };
 
   liquid.filters.deriveLastBreadcrumbFromPath = (
@@ -924,29 +943,9 @@ module.exports = function registerFilters() {
     return [featureContentObj, ...featureContentArray];
   };
 
-  liquid.filters.filterPastEvents = data => {
-    if (!data) return null;
-    const currentTimestamp = new Date().getTime();
-    return data.filter(event => {
-      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
-        event.fieldDatetimeRangeTimezone[0]
-          ? event.fieldDatetimeRangeTimezone[0]
-          : event.fieldDatetimeRangeTimezone,
-      );
-      return mostRecentEvent.value * 1000 < currentTimestamp;
-    });
-  };
+  liquid.filters.filterPastEvents = filterPastEvents;
 
-  liquid.filters.filterUpcomingEvents = data => {
-    if (!data) return null;
-    const currentTimestamp = new Date().getTime();
-    return data.filter(event => {
-      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
-        event.fieldDatetimeRangeTimezone,
-      );
-      return mostRecentEvent?.value * 1000 >= currentTimestamp;
-    });
-  };
+  liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
 
   //* Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
   //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
@@ -1296,54 +1295,47 @@ module.exports = function registerFilters() {
     return languages[language][whichNode];
   };
 
-  // Sets the value at path of object. If a portion of path doesn't exist, it's created.
-  const setData = (data, path, value) => {
-    return _.set(data, path, value);
-  };
-
-  // If preview mode, filter facilities to show published and draft facilities.
-  // If NOT in preview mode, filter facilities to only show published facilities.
+  // Recursive function to filter sidebar data per the following rules:
+  //  - If menu item's linked entity is published, always show
+  //  - If menu item's linked entity is draft, show only on preview
+  //  - If menu item's linked entity is archived, never show
   liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
-    if (!sidebarData || !sidebarData.links[0]?.links) return null;
+    if (!sidebarData?.links || sidebarData?.links?.length === 0) {
+      return sidebarData;
+    }
 
-    const findLocationsArr = () => {
-      const servicesAndLocationsObj = _.find(sidebarData.links[0].links, [
-        'label',
-        'SERVICES AND LOCATIONS',
-      ]);
-      if (servicesAndLocationsObj && servicesAndLocationsObj.links) {
-        const locationsObj = _.find(servicesAndLocationsObj.links, [
-          'label',
-          'Locations',
-        ]);
-        if (locationsObj && locationsObj.links.length) {
-          return locationsObj.links;
+    const hasLinkedEntity = link => link?.entity?.linkedEntity;
+    const isLinkedEntityPublished = link =>
+      link?.entity?.linkedEntity?.entityPublished || false;
+    const isLinkedEntityDraft = link =>
+      link?.entity?.linkedEntity?.moderationState === 'draft' || false;
+
+    const filteredLinks = sidebarData.links
+      .filter(link => {
+        // if there's no linked entity, this is a header; it'll have children so keep it
+        if (!hasLinkedEntity(link)) {
+          return true;
         }
-        return null;
-      }
-      return null;
+
+        // if there is a linked entity, keep it only if it should be kept per rules above
+        if (
+          isLinkedEntityPublished(link) ||
+          (isLinkedEntityDraft(link) && isPreview)
+        ) {
+          return true;
+        }
+
+        return false;
+      })
+      .map(link => {
+        // recursively call this function to filter children
+        return liquid.filters.filterSidebarData(link, isPreview);
+      });
+
+    return {
+      ...sidebarData,
+      links: filteredLinks,
     };
-
-    const locationsArr = findLocationsArr();
-    const locationsPath = 'links[0]links[0]links[1]links';
-
-    if (isPreview && locationsArr) {
-      const publishedAndDraftFacilities = liquid.filters.rejectBy(
-        locationsArr,
-        'entity.linkedEntity.moderationState',
-        'archived',
-      );
-      return setData(sidebarData, locationsPath, publishedAndDraftFacilities);
-    }
-    if (!isPreview && locationsArr) {
-      const publishedFacilities = liquid.filters.rejectBy(
-        locationsArr,
-        'entity.linkedEntity.entityPublished',
-        false,
-      );
-      return setData(sidebarData, locationsPath, publishedFacilities);
-    }
-    return sidebarData;
   };
 
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
@@ -1395,35 +1387,7 @@ module.exports = function registerFilters() {
     return moment().unix();
   };
 
-  liquid.filters.deriveMostRecentDate = (
-    fieldDatetimeRangeTimezone,
-    now = moment().unix(), // This is done so that we can mock the current time in tests.
-  ) => {
-    // Escape early if no fieldDatetimeRangeTimezone was passed.
-    if (!fieldDatetimeRangeTimezone) return fieldDatetimeRangeTimezone;
-
-    // Return back fieldDatetimeRangeTimezone if it is already a singular most recent date.
-    if (!_.isArray(fieldDatetimeRangeTimezone)) {
-      return fieldDatetimeRangeTimezone;
-    }
-
-    // Return back fieldDatetimeRangeTimezone's first item if it only has 1 item.
-    if (fieldDatetimeRangeTimezone?.length === 1) {
-      return fieldDatetimeRangeTimezone[0];
-    }
-
-    // Derive date times relative to now.
-    const dates = _.sortBy(fieldDatetimeRangeTimezone, 'endValue');
-    const futureDates = _.filter(dates, date => date?.endValue - now > 0);
-
-    // Return the most recent past date if there are no future dates.
-    if (_.isEmpty(futureDates)) {
-      return dates[dates?.length - 1];
-    }
-
-    // Return the most recent future date if there are future dates.
-    return futureDates[0];
-  };
+  liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
 
   // Given an array of services provided at a facility,
   // return a flattened array of service locations that

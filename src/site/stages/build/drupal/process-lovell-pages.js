@@ -1,187 +1,77 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign, no-console */
-const cloneDeep = require('lodash/cloneDeep');
 
+const cloneDeep = require('lodash/cloneDeep');
 const { camelize } = require('../../../utilities/stringHelpers');
 
-const LOVELL_TITLE_STRING = 'Lovell Federal';
-const LOVELL_FEDERAL_ENTITY_ID = '347';
-const LOVELL_TRICARE_ENTITY_ID = '1039';
-const LOVELL_VA_ENTITY_ID = '1040';
-const LOVELL_MENU_KEY = 'lovellFederalHealthCareFacilitySidebarQuery';
-const LOVELL_VA_TITLE_VARIATION = 'VA';
-const LOVELL_TRICARE_TITLE_VARIATION = 'TRICARE';
-const LOVELL_VA_LINK_VARIATION = 'va';
-const LOVELL_TRICARE_LINK_VARIATION = 'tricare';
+const {
+  LOVELL_TITLE_STRING,
+  LOVELL_MENU_KEY,
+  LOVELL_VA_LINK_VARIATION,
+  LOVELL_TRICARE_LINK_VARIATION,
+  LOVELL_BASE_URL,
+  isLovellFederalPage,
+  isLovellTricarePage,
+  isLovellVaPage,
+  isListingPage,
+  isFederalRegionHomepage,
+  getLovellTitle,
+  getLovellTitleVariation,
+  getLovellVariantOfUrl,
+  getLovellUrl,
+  isTricareRegionHomepage,
+  isVaRegionHomepage,
+} = require('./lovell/helpers');
 
-function isLovellFederalPage(page) {
-  return (
-    page?.fieldAdministration?.entity?.entityId === LOVELL_FEDERAL_ENTITY_ID
-  );
-}
+const {
+  lovellHomepageWithFeaturedListingItems,
+} = require('./lovell/featured-items');
 
-function isLovellTricarePage(page) {
-  return (
-    page?.fieldAdministration?.entity?.entityId === LOVELL_TRICARE_ENTITY_ID
-  );
-}
-
-function isLovellVaPage(page) {
-  return page?.fieldAdministration?.entity?.entityId === LOVELL_VA_ENTITY_ID;
-}
-
-function isListingPage(page) {
-  const listingPageTypes = [
-    'event_listing',
-    'press_releases_listing',
-    'story_listing',
-  ];
-
-  return listingPageTypes.includes(page.entityBundle);
-}
-
-function resetToFederalUrlIfNeeded(path, variant) {
-  const oppositeVariant =
-    variant === 'va' ? LOVELL_TRICARE_LINK_VARIATION : LOVELL_VA_LINK_VARIATION;
-  const reverseUrl = `/lovell-federal-${oppositeVariant}-health-care`;
-
-  if (path.includes(reverseUrl)) {
-    return path.replace(reverseUrl, `/lovell-federal-health-care`);
-  }
-
-  return path;
-}
+const {
+  getLovellPageVariables,
+  getLovellVariantPath,
+  getLovellCanonicalLink,
+  getLovellSwitchPath,
+  getLovellBreadcrumbs,
+  getLovellVariantTitle,
+} = require('./lovell/update-page');
 
 function getModifiedLovellPage(page, variant) {
-  const fieldOfficeMod =
-    variant === 'va'
-      ? LOVELL_VA_TITLE_VARIATION
-      : LOVELL_TRICARE_TITLE_VARIATION;
-  const linkVar =
-    variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
+  const pageVars = getLovellPageVariables(page, variant);
 
-  // Fix any incorrect URLs based on the variant
-  if (isLovellFederalPage(page)) {
-    page.entityUrl.path = resetToFederalUrlIfNeeded(
-      page.entityUrl.path,
-      variant,
-    );
-  }
+  page.title = getLovellVariantTitle(page.title, pageVars);
+  page.entityUrl.path = getLovellVariantPath(pageVars);
+  page.entityUrl.switchPath = getLovellSwitchPath(pageVars);
 
-  // Add a field for canonical if it has a clone and it's a tricare variant
   if (variant === 'tricare' && isLovellFederalPage(page)) {
-    page.canonicalLink = page.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-va-health-care`,
-    );
+    page.canonicalLink = getLovellCanonicalLink(pageVars);
   }
 
-  // Modify the path
-  const modifiedPath = page.entityUrl.path.replace(
-    '/lovell-federal-health-care',
-    `/lovell-federal-${linkVar}-health-care`,
-  );
-  page.entityUrl.path = modifiedPath;
-
-  // Add a switchPath field
-  // These get modified later in the processLovellPages function
-  if (
-    page.entityUrl.path.includes(
-      `/lovell-federal-${LOVELL_TRICARE_LINK_VARIATION}-health-care`,
-    ) ||
-    page.entityUrl.path.includes(
-      `/lovell-federal-${LOVELL_VA_LINK_VARIATION}-health-care`,
-    )
-  ) {
-    page.entityUrl.switchPath = page.entityUrl.path.replace(
-      variant === 'va'
-        ? LOVELL_VA_LINK_VARIATION
-        : LOVELL_TRICARE_LINK_VARIATION,
-      variant === 'va'
-        ? LOVELL_TRICARE_LINK_VARIATION
-        : LOVELL_VA_LINK_VARIATION,
-    );
-  } else {
-    page.entityUrl.switchPath = page.entityUrl.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-${
-        variant === 'va'
-          ? LOVELL_TRICARE_LINK_VARIATION
-          : LOVELL_VA_LINK_VARIATION
-      }-health-care`,
-    );
-  }
-
-  // Modify Breadcrumb
   if (page.entityUrl.breadcrumb) {
-    page.entityUrl.breadcrumb = page.entityUrl.breadcrumb.map(crumb => {
-      crumb.text = crumb.text.replace(
-        /Lovell Federal (VA )?health care/,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod} health care`,
-      );
-      crumb.url.path = crumb.url.path.replace(
-        /\/lovell-federal-(va-)?health-care/,
-        `/lovell-federal-${linkVar}-health-care`,
-      );
-      return crumb;
-    });
+    page.entityUrl.breadcrumb = getLovellBreadcrumbs(pageVars);
   }
 
-  // Modify the title used for querying the menus
-  const variantName = variant === 'tricare' ? 'TRICARE' : 'VA';
-  const titleNeedle = `${LOVELL_TITLE_STRING} ${variantName}`;
-  const regexNeedle = new RegExp(titleNeedle, 'gi');
-
-  if (page.fieldOffice) {
-    // services, facilites
-    if (
-      page.fieldOffice.entity.entityLabel
-        .toLowerCase()
-        .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
-    ) {
-      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-        regexNeedle,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    } else {
-      page.fieldOffice.entity.entityLabel = page.fieldOffice.entity.entityLabel.replace(
-        `${LOVELL_TITLE_STRING}`,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    }
-  }
   if (page.fieldRegionPage) {
-    if (
-      page.fieldRegionPage.entity.title
-        .toLowerCase()
-        .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
-    ) {
-      page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
-        regexNeedle,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    } else {
-      page.fieldRegionPage.entity.title = page.fieldRegionPage.entity.title.replace(
-        `${LOVELL_TITLE_STRING}`,
-        `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-      );
-    }
+    page.fieldRegionPage.entity.title = getLovellTitle(
+      getLovellTitleVariation(pageVars.variant),
+    );
   }
 
-  // Modify the title this will become more complex to handle specific cases
-  if (
-    page.title
-      .toLowerCase()
-      .includes(`${LOVELL_TITLE_STRING} ${variantName}`.toLowerCase())
-  ) {
-    page.title = page.title.replace(
-      regexNeedle,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
-    );
-  } else {
-    page.title = page.title.replace(
-      `${LOVELL_TITLE_STRING}`,
-      `${LOVELL_TITLE_STRING} ${fieldOfficeMod}`,
+  if (page?.fieldOffice?.entity) {
+    page.fieldOffice.entity = {
+      ...page.fieldOffice.entity,
+      entityLabel: getLovellTitle(getLovellTitleVariation(pageVars.variant)),
+      entityUrl: {
+        ...page.fieldOffice.entity?.entityUrl,
+        path: getLovellUrl(pageVars.linkVar),
+      },
+    };
+  }
+
+  if (page?.fieldListing?.entity?.entityUrl) {
+    page.fieldListing.entity.entityUrl.path = getLovellVariantOfUrl(
+      page.fieldListing.entity.entityUrl.path,
+      variant,
     );
   }
 
@@ -190,10 +80,7 @@ function getModifiedLovellPage(page, variant) {
 
 function lovellMenusModifyLinks(link) {
   const { variant } = this;
-  const titleVar =
-    variant === 'va'
-      ? LOVELL_VA_TITLE_VARIATION
-      : LOVELL_TRICARE_TITLE_VARIATION;
+  const titleVar = getLovellTitleVariation(variant);
   const linkVar =
     variant === 'va' ? LOVELL_VA_LINK_VARIATION : LOVELL_TRICARE_LINK_VARIATION;
 
@@ -201,15 +88,10 @@ function lovellMenusModifyLinks(link) {
   if (link.entity.fieldMenuSection === 'both') {
     link.label = link.label.replace(
       LOVELL_TITLE_STRING,
-      `${LOVELL_TITLE_STRING} ${titleVar}`,
+      getLovellTitle(titleVar),
     );
 
-    link.url.path = resetToFederalUrlIfNeeded(link.url.path, variant);
-
-    link.url.path = link.url.path.replace(
-      '/lovell-federal-health-care',
-      `/lovell-federal-${linkVar}-health-care`,
-    );
+    link.url.path = getLovellVariantOfUrl(link.url.path, linkVar);
   }
 
   // Use recursion to modify nested links
@@ -233,19 +115,12 @@ function lovellMenusModifyLinks(link) {
 }
 
 function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
-  const titleVar =
-    variant === 'va'
-      ? LOVELL_VA_TITLE_VARIATION
-      : LOVELL_TRICARE_TITLE_VARIATION;
-
+  const titleVar = getLovellTitleVariation(variant);
   // Clone the original menu
   const lovellCloneMenu = cloneDeep(drupalData.data[lovellMenuKey]);
 
   // Rename the name so our new cloned pages can find the cloned menu
-  lovellCloneMenu.name = lovellCloneMenu.name.replace(
-    LOVELL_TITLE_STRING,
-    `${LOVELL_TITLE_STRING} ${titleVar}`,
-  );
+  lovellCloneMenu.name = getLovellTitle(titleVar);
 
   // Move federal health care links to the top of the menu
   // Otherwise the menu renders as blank
@@ -258,7 +133,7 @@ function getLovellCloneMenu(drupalData, lovellMenuKey, variant) {
   // Change the root level item
   // It's coming in from the cms as a va item when it should be both
   lovellCloneMenu.links[0].label = 'Lovell Federal Health Care';
-  lovellCloneMenu.links[0].url.path = '/lovell-federal-health-care';
+  lovellCloneMenu.links[0].url.path = LOVELL_BASE_URL;
   lovellCloneMenu.links[0].entity.fieldMenuSection = 'both';
 
   // Use recursion to Filter and Modify labels and paths of those links
@@ -311,7 +186,7 @@ function updateLovellSwitchLinks(page, pages) {
  * @param {*} federalPages Listing pages to merge into tricareOrVaPages
  * @returns
  */
-function combineLovellListingPages(tricareOrVaPages, federalPages) {
+function combineLovellListingPages(tricareOrVaPages, federalPages, variant) {
   return tricareOrVaPages.map(listingPage => {
     const typePastMap = {
       event_listing: 'pastEvents',
@@ -329,18 +204,63 @@ function combineLovellListingPages(tricareOrVaPages, federalPages) {
       page => page.entityBundle === entityBundle,
     );
 
+    const updateEntityUrlForVariant = entity => {
+      return {
+        ...entity,
+        entityUrl: {
+          ...entity.entityUrl,
+          path: getLovellVariantOfUrl(entity.entityUrl.path, variant),
+        },
+      };
+    };
+
+    const entityWithFieldAdministration = fieldAdminEntityId => entity => ({
+      ...entity,
+      fieldAdministration: {
+        entity: {
+          entityId: fieldAdminEntityId,
+        },
+      },
+    });
+
     const {
       [pastObjectLabel]: pastListItemsToCombine,
       reverseFieldListingNode: reverseFieldListingNodeToCombine,
     } = listingPageToCombine;
 
-    const pastListItemEntities = pastListItems?.entities || [];
-    const allListItemEntities = reverseFieldListingNode?.entities || [];
+    // When merging listing pages, we need to track from which page an item originated,
+    //  so we add the listing page's fieldAdministration value to the item itself (entityWithFieldAdministration).
+    // When the item originates from the federal listing page, we update the item's url to reflect
+    //  the VA/TRICARE listing page it will end up on (updateEntityUrlForVariant).
+    const pastListItemEntities =
+      pastListItems?.entities?.map?.(
+        entityWithFieldAdministration(
+          listingPage?.fieldAdministration?.entity?.entityId,
+        ),
+      ) || [];
+    const allListItemEntities =
+      reverseFieldListingNode?.entities.map?.(
+        entityWithFieldAdministration(
+          listingPage?.fieldAdministration?.entity?.entityId,
+        ),
+      ) || [];
 
     const pastListItemEntitiesToCombine =
-      pastListItemsToCombine?.entities || [];
+      pastListItemsToCombine?.entities
+        .map?.(updateEntityUrlForVariant)
+        .map?.(
+          entityWithFieldAdministration(
+            listingPageToCombine?.fieldAdministration?.entity?.entityId,
+          ),
+        ) || [];
     const allListItemEntitiesToCombine =
-      reverseFieldListingNodeToCombine?.entities || [];
+      reverseFieldListingNodeToCombine?.entities
+        .map?.(updateEntityUrlForVariant)
+        .map?.(
+          entityWithFieldAdministration(
+            listingPageToCombine?.fieldAdministration?.entity?.entityId,
+          ),
+        ) || [];
 
     const combinedPastListItemEntities = [
       ...pastListItemEntities,
@@ -371,10 +291,12 @@ function processLovellPages(drupalData) {
   const {
     lovellFederalListingPages,
     lovellFederalNonListingPages,
-    lovellVaListingPages,
-    lovellVaNonListingPages,
+    lovellTricareHomepage,
     lovellTricareListingPages,
     lovellTricareNonListingPages,
+    lovellVaHomepage,
+    lovellVaListingPages,
+    lovellVaNonListingPages,
     otherPages,
   } = drupalData.data.nodeQuery.entities.reduce(
     (acc, page) => {
@@ -382,17 +304,25 @@ function processLovellPages(drupalData) {
         if (isListingPage(page)) {
           acc.lovellFederalListingPages.push(page);
         } else {
+          // Federal Region Homepage should not be cloned
+          if (isFederalRegionHomepage(page)) {
+            return acc;
+          }
           acc.lovellFederalNonListingPages.push(page);
         }
       } else if (isLovellTricarePage(page)) {
         if (isListingPage(page)) {
           acc.lovellTricareListingPages.push(page);
+        } else if (isTricareRegionHomepage(page)) {
+          acc.lovellTricareHomepage = page;
         } else {
           acc.lovellTricareNonListingPages.push(page);
         }
       } else if (isLovellVaPage(page)) {
         if (isListingPage(page)) {
           acc.lovellVaListingPages.push(page);
+        } else if (isVaRegionHomepage(page)) {
+          acc.lovellVaHomepage = page;
         } else {
           acc.lovellVaNonListingPages.push(page);
         }
@@ -405,8 +335,10 @@ function processLovellPages(drupalData) {
     {
       lovellFederalListingPages: [],
       lovellFederalNonListingPages: [],
+      lovellTricareHomepage: null,
       lovellTricareListingPages: [],
       lovellTricareNonListingPages: [],
+      lovellVaHomepage: null,
       lovellVaListingPages: [],
       lovellVaNonListingPages: [],
       otherPages: [],
@@ -416,10 +348,23 @@ function processLovellPages(drupalData) {
   const lovellTricareListingPagesWithFederal = combineLovellListingPages(
     lovellTricareListingPages,
     lovellFederalListingPages,
+    'tricare',
   );
   const lovellVaListingPagesWithFederal = combineLovellListingPages(
     lovellVaListingPages,
     lovellFederalListingPages,
+    'va',
+  );
+
+  // VA and TRICARE homepages need featured stories and events injected from listing pages.
+  // Without this step, these pages would not include featured stories and events from federal listing pages.
+  const lovellTricareHomepageWithFeatured = lovellHomepageWithFeaturedListingItems(
+    lovellTricareHomepage,
+    lovellTricareListingPagesWithFederal,
+  );
+  const lovellVaHomepageWithFeatured = lovellHomepageWithFeaturedListingItems(
+    lovellVaHomepage,
+    lovellVaListingPagesWithFederal,
   );
 
   // modify all tricare pages
@@ -427,6 +372,9 @@ function processLovellPages(drupalData) {
     ...lovellTricareListingPagesWithFederal,
     ...lovellTricareNonListingPages,
   ];
+  if (lovellTricareHomepageWithFeatured) {
+    lovellTricarePages.push(lovellTricareHomepageWithFeatured);
+  }
   const modifiedLovellTricarePages = lovellTricarePages.map(page =>
     getModifiedLovellPage(page, 'tricare'),
   );
@@ -435,9 +383,13 @@ function processLovellPages(drupalData) {
     ...lovellVaListingPagesWithFederal,
     ...lovellVaNonListingPages,
   ];
+  if (lovellVaHomepageWithFeatured) {
+    lovellVaPages.push(lovellVaHomepageWithFeatured);
+  }
   const modifiedLovellVaPages = lovellVaPages.map(page =>
     getModifiedLovellPage(page, 'va'),
   );
+
   // Each federal page needs to be duplicated and modified once each for tricare/va
   const lovellFederalPagesClonedTricare = lovellFederalNonListingPages.map(
     page => getModifiedLovellPage(cloneDeep(page), 'tricare'),

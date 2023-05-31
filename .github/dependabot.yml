@@ -1,0 +1,23 @@
+version: 2
+updates:
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    # Check for updates to GitHub Actions every week
+    interval: "weekly"
+# This npm dependabot config is lifted from https://github.com/department-of-veterans-affairs/vets-website/blob/main/.github/dependabot.yml.
+# We will differentiate and refine over time.
+- package-ecosystem: "npm"
+  directory: "/" # Location of package manifests
+  schedule:
+    interval: "daily"
+    time: "09:00"
+    timezone: "America/New_York"
+  # Allow up to 10 open pull requests for npm dependencies
+  open-pull-requests-limit: 0
+  ignore:
+    # Ignore updates to packages that start with 'cypress'
+    # Wildcards match zero or more arbitrary characters
+    - dependency-name: "cypress*"
+    - dependency-name: "@testing-library/*"
+    - dependency-name: "eslint*"

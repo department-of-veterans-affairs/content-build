@@ -1,0 +1,73 @@
+on:
+  delete:
+
+name: Preview Environment Cleanup
+
+env:
+  DELETED_BRANCH: ${{ github.event.ref }}
+  CURRENT_REPOSITORY: ${{ github.event.repository.name }}
+
+jobs:
+  cleanup-preview-environments:
+    name: Clean Up Deleted Branch Preview Environments
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get GitHub Bot Token
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Checkout Application Infra Manifests Repository
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          repository: department-of-veterans-affairs/vsp-infra-application-manifests
+          token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          path: manifests
+          fetch-depth: 0
+
+      - name: Scan values files and delete as necessary
+        run: node ./script/github-actions/pe-cleanup.js
+        env:
+          TRIGGERING_EVENT: ${{ github.event_name }}
+
+      - name: Add and Commit change(s)
+        if: ${{ env.FILES_TO_DELETE == 'true'}}
+        uses: EndBug/add-and-commit@1bad3abcf0d6ec49a5857d124b0bfb52dc7bb081 # 9.1.3
+        with:
+          author_name: va-vsp-bot
+          author_email: devops@va.gov
+          branch: main
+          cwd: manifests/apps/preview-environment/dev/
+          add: 'pe-envs'
+          message: 'Remove values file(s) in accordance with Preview Environment cleanup policies'
+
+      - name: Add and Commit change(s)
+        if: ${{ env.ENVS_TO_DELETE == 'true'}}
+        uses: EndBug/add-and-commit@1bad3abcf0d6ec49a5857d124b0bfb52dc7bb081 # 9.1.3
+        with:
+          author_name: va-vsp-bot
+          author_email: devops@va.gov
+          branch: main
+          cwd: manifests/apps/preview-environment/dev/
+          add: 'argocd-apps'
+          message: 'Remove envronment listing(s) in accordance with Preview Environment cleanup policies'

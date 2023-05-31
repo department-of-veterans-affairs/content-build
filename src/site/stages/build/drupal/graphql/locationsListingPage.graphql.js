@@ -10,7 +10,6 @@ const locationListingPage = `
     ${entityElementsFromPages}
     title
     entityId
-    fieldIntroText
     fieldMetaTags
     fieldOffice {
       targetId
@@ -36,6 +35,11 @@ const locationListingPage = `
                       }
                     }
                   }
+                }
+                fieldSupplementalStatusMoreI {
+                  value
+                  format
+                  processed
                 }
               }
             }

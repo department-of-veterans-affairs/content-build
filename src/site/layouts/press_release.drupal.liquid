@@ -66,9 +66,9 @@
                                         {% case a.entityBundle %}
                                         {% when 'document' %}
                                             <a href="{{ a.fieldDocument.entity.url }}" download>{{ a.name }}</a>
-                                        {% when a.entityBundle === 'image' %}
+                                        {% when 'image' %}
                                             <a href="{{ a.image.url }}" download>{{ a.name }}</a>
-                                        {% when a.entityBundle === 'video' %}
+                                        {% when 'video' %}
                                             <a href="{{ a.fieldMediaVideoEmbedField }}">{{ a.name }}</a>
                                         {%  endcase %}
                                     </li>
@@ -82,7 +82,7 @@
                     <section class="vads-u-margin-bottom--3">
                         {{ fieldOffice.entity.fieldPressReleaseBlurb.processed }}
                     </section>
-                    {% assign index = entityUrl.breadcrumb.length | minus: 1 %}
+                    {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
                     <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
                        href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}">See all news releases</a>
                 </article>

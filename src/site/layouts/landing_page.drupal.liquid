@@ -62,9 +62,9 @@
         {% endif %}
 
         <va-accordion bordered multi>
-          <va-accordion-item level="3" open="true" header="Ask questions">
+          <va-accordion-item level="2" open="true" header="Ask questions">
             <section>
-              <h4>Message us</h4>
+              <h3 class="vads-u-font-size--h4">Message us</h3>
               <ul class="va-nav-linkslist-list social">
                 <li data-widget-type="ask-va"></li>
               </ul>
@@ -72,7 +72,7 @@
 
             {% if fieldSupportServices != empty %}
               <section>
-                <h4>Call us</h4>
+                <h3 class="vads-u-font-size--h4">Call us</h3>
                 <ul class="va-nav-linkslist-list social">
                   {% for supportService in fieldSupportServices %}
                     {% assign service = supportService.entity %}
@@ -108,9 +108,9 @@
           </va-accordion-item>
 
           {% if fieldLinks != empty and fieldLinks.length > 0 %}
-            <va-accordion-item level="3" open="true" header="Not a Veteran?">
+            <va-accordion-item level="2" open="true" header="Not a Veteran?">
               <section>
-                <h4>Get information for:</h4>
+                <h3 class="vads-u-font-size--h4">Get information for:</h3>
                 <ul class="va-nav-linkslist-list links">
                   {% for link in fieldLinks %}
                     <li>
@@ -126,17 +126,17 @@
 
         <!-- Connect with us -->
         {% if fieldRelatedOffice != empty and fieldRelatedOffice.entity.fieldExternalLink.title != "Records benefits hub" %}
-            <va-accordion-item level="3" header="Connect with us" open="true">
+            <va-accordion-item level="2" header="Connect with us" open="true">
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
-                <h4 class="va-nav-linkslist-list">
+                <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
                     {{ fieldRelatedOffice.entity.fieldExternalLink.title }}
                   </a>
-                </h4>
+                </h3>
               {% endif %}
 
               <section>
-                <h4>Get updates</h4>
+                <h3 class="vads-u-font-size--h4">Get updates</h3>
                   <ul class="va-nav-linkslist-list social">
                     <li>
                       <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
@@ -148,7 +148,7 @@
               </section>
 
               <section>
-                <h4>Follow us</h4>
+                <h3 class="vads-u-font-size--h4">Follow us</h3>
                 <ul class="va-nav-linkslist-list social">
                   {% assign socialLinks =  fieldRelatedOffice.entity.fieldSocialMediaLinks.platformValues | jsonToObj %}
                   {% assign socialPlatforms = socialLinks | keys %}

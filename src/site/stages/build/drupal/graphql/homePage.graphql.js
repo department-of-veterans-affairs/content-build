@@ -4,6 +4,8 @@
 
 const menu = 'homepage-top-tasks-blocks';
 const hubListQueue = 'home_page_hub_list';
+const hubListMenu = 'home-page-hub-list';
+const hubListCreateAccountQueue = 'v2_home_page_create_account';
 const promoBlocksQueue = 'home_page_promos';
 const homePageHeroQueue = 'home_page_hero';
 const homePageNewsSpotlightQueue = 'home_page_news_spotlight';
@@ -48,6 +50,32 @@ const query = `
             entityUrl {
               path
               routed
+            }
+          }
+        }
+      }
+    }
+  }
+  homePageHubListMenuQuery:menuByName(name: "${hubListMenu}") {
+    name
+    description
+    links {
+      ... on MenuLink {
+        enabled
+        label
+        url {
+          path
+        }
+        entity {
+          parent
+          ... on MenuLinkContentHomePageHubList {
+            fieldIcon
+            fieldLinkSummary
+            linkedEntity(language_fallback: true, bypass_access_check: true) {
+              ... on Node {
+                entityPublished
+                moderationState
+              }
             }
           }
         }
@@ -139,7 +167,7 @@ const query = `
                 ... on MediaImage {
                   image {
                     alt
-                    derivative(style: LARGE) {
+                    derivative(style: CROPSQUARE) {
                       url
                     }
                   }
@@ -156,6 +184,27 @@ const query = `
   }
   homePageOtherSearchToolsMenuQuery:  menuByName(name: "${otherSearchToolsMenu}") {
     ${linksQueryPartial}
+  }
+  homePageCreateAccountQuery: entitySubqueueById(id: "${hubListCreateAccountQueue}") {
+    ... on EntitySubqueueV2HomePageCreateAccount {
+      itemsOfEntitySubqueueV2HomePageCreateAccount {
+        entity {
+          entityId
+          ... on BlockContentCtaWithLink {
+            entityId
+            entityLabel
+            fieldCtaSummaryText
+            fieldPrimaryCtaButtonText
+            fieldRelatedInfoLinks {
+              title
+              url {
+                path
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 

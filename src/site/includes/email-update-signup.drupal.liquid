@@ -26,7 +26,12 @@
                          class="vads-u-width--full
                                 medium-screen:vads-u-width-auto" />
                   <button
-                    onclick="recordEvent({ event: 'homepage-email-sign-up', action: 'Homepage email sign up' })"
+                    onclick="recordMultipleEvents([
+                      { 
+                        event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Sign up',  
+                      },
+                      { event: 'homepage-email-sign-up', action: 'Homepage email sign up' }
+                      ]);"
                     type="submit"
                     class="vads-u-width--full
                           medium-screen:vads-u-width--auto

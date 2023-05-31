@@ -14,7 +14,7 @@
       { "url": { "path": "", "routed": true }, "text": "NEWS AND EVENTS" },
       { "url": { "path": "", "routed": true }, "text": "News releases" }
     ],
-    "path": "/lovell-federal-va-health-care/news-releases"
+    "path": "/lovell-federal-health-care-va/news-releases"
   },
   "entityMetatags": [
     {
@@ -25,12 +25,12 @@
     {
       "__typename": "MetaValue",
       "key": "title",
-      "value": "News releases | Lovell Federal VA health care | Veterans Affairs"
+      "value": "News releases | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
       "key": "description",
-      "value": "Lovell Federal VA health care news releases and information for the Veterans, their families, and caregivers"
+      "value": "Lovell Federal health care - VA news releases and information for the Veterans, their families, and caregivers"
     },
     {
       "__typename": "MetaProperty",
@@ -40,12 +40,12 @@
     {
       "__typename": "MetaProperty",
       "key": "og:title",
-      "value": "News releases | Lovell Federal VA health care | Veterans Affairs"
+      "value": "News releases | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaProperty",
       "key": "og:description",
-      "value": "Lovell Federal VA health care news releases and information for the Veterans, their families, and caregivers"
+      "value": "Lovell Federal health care - VA news releases and information for the Veterans, their families, and caregivers"
     },
     {
       "__typename": "MetaProperty",
@@ -70,12 +70,12 @@
     {
       "__typename": "MetaValue",
       "key": "twitter:description",
-      "value": "Lovell Federal VA health care news releases and information for the Veterans, their families, and caregivers"
+      "value": "Lovell Federal health care - VA news releases and information for the Veterans, their families, and caregivers"
     },
     {
       "__typename": "MetaValue",
       "key": "twitter:title",
-      "value": "News releases | Lovell Federal VA health care | Veterans Affairs"
+      "value": "News releases | Lovell Federal health care - VA | Veterans Affairs"
     },
     {
       "__typename": "MetaValue",
@@ -88,7 +88,7 @@
       "value": "https://www.va.gov/img/design/logo/va-og-image.png"
     }
   ],
-  "fieldIntroText": "News releases for Lovell Federal VA health care.",
+  "fieldIntroText": "News releases for Lovell Federal health care - VA.",
   "reverseFieldListingNode": {
     "entities": [
       {
@@ -96,7 +96,7 @@
         "title": "TEST C press release for Lovell VA",
         "fieldReleaseDate": { "value": "2022-10-13T19:50:12" },
         "entityUrl": {
-          "path": "/lovell-federal-va-health-care/news-releases/test-c-press-release-for-lovell-va"
+          "path": "/lovell-federal-health-care-va/news-releases/test-c-press-release-for-lovell-va"
         },
         "uid": {
           "targetId": 1215,
@@ -114,8 +114,8 @@
   "fieldOffice": {
     "targetId": 49451,
     "entity": {
-      "entityLabel": "Lovell Federal VA health care",
-      "title": "Lovell Federal VA health care"
+      "entityLabel": "Lovell Federal health care - VA",
+      "title": "Lovell Federal health care - VA"
     }
   },
   "fieldAdministration": { "entity": { "entityId": "1040" } }

@@ -35,7 +35,7 @@
     {% assign collapsibleHeaderH3 = entity.entityId | filterCollapsibleHeaderLevels %}
 
     {% if collapsibleHeaderH3 %}
-        {% assign panelHeaderLevel = 'h3' %}
+        {% assign panelHeaderLevel = collapsibleHeaderH3 %}
     {% else %}
         {% assign panelHeaderLevel = 'h4' %}
     {% endif %}

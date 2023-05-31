@@ -24,8 +24,17 @@
                   {% if link.url.path and link.label %}
                     <li>
                       <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
-                      <a
-                        onclick="recordEvent({ event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' })"
+                        <a
+                        onclick="recordMultipleEvents([
+                          {
+                            event: 'nav-zone-one',
+                            'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                            'click-text': '{{ link.label | strip }}',
+                          },
+                          { 
+                            event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
+                          }
+                        ]);"
                         href="{{ link.url.path }}">{{ link.label }}</a>
                     </li>
                   {% endif %}
@@ -41,15 +50,23 @@
       <div class="vads-l-col--12 medium-screen:vads-l-col--6">
         <div class="vads-u-padding-left--2p5 medium-screen:vads-u-padding-left--6 vads-u-padding-bottom--5">
           <h2 class="vads-u-color--gray-dark vads-u-font-family--serif">
-            Top Pages
+            Top pages
           </h2>
           <ul class="homepage-common-tasks__list vads-u-padding-left--0 " role="list">
             {% if popularLinks %}
               {% for link in popularLinks%}
                 {% if link.url.path and link.label %}
                   <li>
-                    <a
-                      onclick="recordEvent({ event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' })"
+                      <a
+                      onclick="recordMultipleEvents([
+                        {
+                        event: 'nav-zone-one',
+                        'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                        'click-text': '{{ link.label | strip }}',
+                        },
+                        { 
+                          event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' }
+                      ]);"
                       href="{{ link.url.path }}">{{ link.label }}</a>
                   </li>
                 {% endif %}

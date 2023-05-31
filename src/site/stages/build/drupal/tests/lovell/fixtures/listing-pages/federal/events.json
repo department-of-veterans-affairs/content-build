@@ -37,926 +37,6 @@
     ],
     "path": "/lovell-federal-health-care/events"
   },
-  "entityMetatags": [
-    {
-      "__typename": "MetaLink",
-      "key": "image_src",
-      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "title",
-      "value": "Events | Lovell Federal health care | Veterans Affairs"
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "description",
-      "value": "Check early and often to see upcoming events at Lovell Federal health care and regional events."
-    },
-    {
-      "__typename": "MetaProperty",
-      "key": "og:site_name",
-      "value": "Veterans Affairs"
-    },
-    {
-      "__typename": "MetaProperty",
-      "key": "og:title",
-      "value": "Events | Veterans Affairs"
-    },
-    {
-      "__typename": "MetaProperty",
-      "key": "og:description",
-      "value": "Check early and often to see upcoming events at Lovell Federal health care and regional events."
-    },
-    {
-      "__typename": "MetaProperty",
-      "key": "og:image",
-      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-    },
-    {
-      "__typename": "MetaProperty",
-      "key": "og:image:alt",
-      "value": "U.S. Department of Veterans Affairs"
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "twitter:card",
-      "value": "summary_large_image"
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "twitter:site",
-      "value": "@DeptVetAffairs"
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "twitter:description",
-      "value": "Check early and often to see upcoming events at Lovell Federal health care and regional events."
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "twitter:title",
-      "value": "Events | Lovell Federal health care | Veterans Affairs"
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "twitter:image:alt",
-      "value": "U.S. Department of Veterans Affairs"
-    },
-    {
-      "__typename": "MetaValue",
-      "key": "twitter:image",
-      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-    }
-  ],
-  "changed": 1671038410,
-  "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-  "pastEvents": {
-    "entities": [
-      {
-        "changed": 1671038416,
-        "entityBundle": "event",
-        "entityId": "36405",
-        "entityPublished": true,
-        "entityMetatags": [
-          {
-            "__typename": "MetaLink",
-            "key": "image_src",
-            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "title",
-            "value": "Lovell Federal health care | Lovell Federal health care Placeholder - Event | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:site_name",
-            "value": "Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:title",
-            "value": "Lovell Federal health care Placeholder - Event | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image",
-            "value": "/img/styles/3_2_medium_thumbnail/public/2021-03/Placeholder%20image%20-%20VA%20logo.png"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:height",
-            "value": "314"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:alt",
-            "value": "VA logo"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:card",
-            "value": "summary_large_image"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:site",
-            "value": "@DeptVetAffairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:title",
-            "value": "Lovell Federal health care Placeholder - Event | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:image:alt",
-            "value": "VA logo"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:image",
-            "value": "/img/styles/3_2_medium_thumbnail/public/2021-03/Placeholder%20image%20-%20VA%20logo.png"
-          }
-        ],
-        "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/36405"
-        },
-        "title": "Lovell Federal health care Placeholder - Event",
-        "vid": 736023,
-        "fieldAdditionalInformationAbo": null,
-        "fieldAddress": null,
-        "fieldBody": null,
-        "fieldDatetimeRangeTimezone": [
-          {
-            "duration": 60,
-            "endTime": null,
-            "endValue": 1633119000,
-            "rrule": null,
-            "rruleIndex": null,
-            "startTime": null,
-            "timezone": "America/Chicago",
-            "value": 1633115400
-          }
-        ],
-        "fieldDescription": null,
-        "fieldEventCost": null,
-        "fieldEventCta": null,
-        "fieldEventRegistrationrequired": false,
-        "fieldFacilityLocation": null,
-        "fieldFeatured": false,
-        "fieldLink": null,
-        "fieldListing": {
-          "entity": {
-            "entityBundle": "event_listing",
-            "entityId": "36319",
-            "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldOffice": {
-              "entity": {
-                "entityType": "node",
-                "entityBundle": "health_care_region_page",
-                "entityId": "15007"
-              }
-            }
-          }
-        },
-        "fieldLocationHumanreadable": null,
-        "fieldLocationType": "online",
-        "fieldMedia": {
-          "entity": {
-            "entityBundle": "image",
-            "entityId": "2858",
-            "entityType": "media",
-            "image": {
-              "alt": "VA logo",
-              "title": "",
-              "derivative": {
-                "height": 300,
-                "url": "/img/styles/7_2_medium_thumbnail/public/2021-03/Placeholder%20image%20-%20VA%20logo.png",
-                "width": 1050
-              }
-            },
-            "thumbnail": {
-              "alt": "VA logo",
-              "height": 320,
-              "targetId": 3145,
-              "title": null,
-              "url": "/img/2021-03/Placeholder%20image%20-%20VA%20logo.png",
-              "width": 320
-            }
-          }
-        },
-        "fieldMetaTags": null,
-        "fieldOrder": null,
-        "fieldUrlOfAnOnlineEvent": null,
-        "uid": {
-          "targetId": 1282,
-          "entity": {
-            "name": "lisa.trombley@va.gov",
-            "timezone": null
-          }
-        },
-        "fieldAdministration": {
-          "entity": {
-            "entityId": "347"
-          }
-        }
-      },
-      {
-        "changed": 1671038406,
-        "entityBundle": "event",
-        "entityId": "49919",
-        "entityPublished": true,
-        "entityMetatags": [
-          {
-            "__typename": "MetaLink",
-            "key": "image_src",
-            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "title",
-            "value": "Lovell Federal health care | Test Event 1 Both | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:site_name",
-            "value": "Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:title",
-            "value": "Test Event 1 Both | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:height",
-            "value": "314"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:card",
-            "value": "summary_large_image"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:site",
-            "value": "@DeptVetAffairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:title",
-            "value": "Test Event 1 Both | Lovell Federal health care | Veterans Affairs"
-          }
-        ],
-        "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49919"
-        },
-        "title": "Test Event 1 Both",
-        "vid": 735968,
-        "fieldAdditionalInformationAbo": null,
-        "fieldAddress": {
-          "additionalName": null,
-          "addressLine1": "",
-          "addressLine2": "",
-          "administrativeArea": "",
-          "countryCode": "US",
-          "dependentLocality": null,
-          "familyName": null,
-          "givenName": null,
-          "langcode": null,
-          "locality": "",
-          "organization": null,
-          "postalCode": null,
-          "sortingCode": null
-        },
-        "fieldBody": {
-          "format": "rich_text",
-          "processed": "<html><head></head><body><p>This is an event that should appear in both Lovells.</p></body></html>",
-          "value": "<p>This is an event that should appear in both Lovells.</p>\r\n"
-        },
-        "fieldDatetimeRangeTimezone": [
-          {
-            "duration": 60,
-            "endTime": null,
-            "endValue": 1666402200,
-            "rrule": null,
-            "rruleIndex": null,
-            "startTime": null,
-            "timezone": "America/New_York",
-            "value": 1666398600
-          }
-        ],
-        "fieldDescription": null,
-        "fieldEventCost": "Free",
-        "fieldEventCta": null,
-        "fieldEventRegistrationrequired": false,
-        "fieldFacilityLocation": {
-          "entity": {
-            "entityBundle": "health_care_local_facility",
-            "entityId": "1480",
-            "entityType": "node",
-            "entityUrl": {
-              "path": "/lovell-federal-va-health-care/locations/captain-james-a-lovell-federal-health-care-center"
-            },
-            "title": "Captain James A. Lovell Federal Health Care Center"
-          }
-        },
-        "fieldFeatured": false,
-        "fieldLink": null,
-        "fieldListing": {
-          "entity": {
-            "entityBundle": "event_listing",
-            "entityId": "36319",
-            "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldOffice": {
-              "entity": {
-                "entityType": "node",
-                "entityBundle": "health_care_region_page",
-                "entityId": "15007"
-              }
-            }
-          }
-        },
-        "fieldLocationHumanreadable": null,
-        "fieldLocationType": "facility",
-        "fieldMedia": null,
-        "fieldMetaTags": null,
-        "fieldOrder": null,
-        "fieldUrlOfAnOnlineEvent": null,
-        "uid": {
-          "targetId": 1215,
-          "entity": {
-            "name": "Steve.Wirt@civicactions.com",
-            "timezone": null
-          }
-        },
-        "fieldAdministration": {
-          "entity": {
-            "entityId": "347"
-          }
-        }
-      },
-      {
-        "changed": 1671038406,
-        "entityBundle": "event",
-        "entityId": "49920",
-        "entityPublished": true,
-        "entityMetatags": [
-          {
-            "__typename": "MetaLink",
-            "key": "image_src",
-            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "title",
-            "value": "Lovell Federal health care | Test Event 2 Both | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:site_name",
-            "value": "Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:title",
-            "value": "Test Event 2 Both | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:height",
-            "value": "314"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:card",
-            "value": "summary_large_image"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:site",
-            "value": "@DeptVetAffairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:title",
-            "value": "Test Event 2 Both | Lovell Federal health care | Veterans Affairs"
-          }
-        ],
-        "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49920"
-        },
-        "title": "Test Event 2 Both",
-        "vid": 735967,
-        "fieldAdditionalInformationAbo": null,
-        "fieldAddress": {
-          "additionalName": null,
-          "addressLine1": "",
-          "addressLine2": "",
-          "administrativeArea": "",
-          "countryCode": "US",
-          "dependentLocality": null,
-          "familyName": null,
-          "givenName": null,
-          "langcode": null,
-          "locality": "",
-          "organization": null,
-          "postalCode": null,
-          "sortingCode": null
-        },
-        "fieldBody": {
-          "format": "rich_text",
-          "processed": "<html><head></head><body><p>This is another event that should appear in both Lovells.</p></body></html>",
-          "value": "<p>This is another event that should appear in both Lovells.</p>\r\n"
-        },
-        "fieldDatetimeRangeTimezone": [
-          {
-            "duration": 60,
-            "endTime": null,
-            "endValue": 1666589400,
-            "rrule": null,
-            "rruleIndex": null,
-            "startTime": null,
-            "timezone": "America/New_York",
-            "value": 1666585800
-          }
-        ],
-        "fieldDescription": null,
-        "fieldEventCost": "Free",
-        "fieldEventCta": null,
-        "fieldEventRegistrationrequired": false,
-        "fieldFacilityLocation": null,
-        "fieldFeatured": false,
-        "fieldLink": null,
-        "fieldListing": {
-          "entity": {
-            "entityBundle": "event_listing",
-            "entityId": "36319",
-            "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldOffice": {
-              "entity": {
-                "entityType": "node",
-                "entityBundle": "health_care_region_page",
-                "entityId": "15007"
-              }
-            }
-          }
-        },
-        "fieldLocationHumanreadable": null,
-        "fieldLocationType": "online",
-        "fieldMedia": null,
-        "fieldMetaTags": null,
-        "fieldOrder": null,
-        "fieldUrlOfAnOnlineEvent": {
-          "uri": "https://google.com",
-          "title": ""
-        },
-        "uid": {
-          "targetId": 1215,
-          "entity": {
-            "name": "Steve.Wirt@civicactions.com",
-            "timezone": null
-          }
-        },
-        "fieldAdministration": {
-          "entity": {
-            "entityId": "347"
-          }
-        }
-      }
-    ]
-  },
-  "reverseFieldListingNode": {
-    "entities": [
-      {
-        "changed": 1671038416,
-        "entityBundle": "event",
-        "entityId": "36405",
-        "entityPublished": true,
-        "entityMetatags": [
-          {
-            "__typename": "MetaLink",
-            "key": "image_src",
-            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "title",
-            "value": "Lovell Federal health care | Lovell Federal health care Placeholder - Event | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:site_name",
-            "value": "Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:title",
-            "value": "Lovell Federal health care Placeholder - Event | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image",
-            "value": "/img/styles/3_2_medium_thumbnail/public/2021-03/Placeholder%20image%20-%20VA%20logo.png"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:height",
-            "value": "314"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:alt",
-            "value": "VA logo"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:card",
-            "value": "summary_large_image"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:site",
-            "value": "@DeptVetAffairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:title",
-            "value": "Lovell Federal health care Placeholder - Event | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:image:alt",
-            "value": "VA logo"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:image",
-            "value": "/img/styles/3_2_medium_thumbnail/public/2021-03/Placeholder%20image%20-%20VA%20logo.png"
-          }
-        ],
-        "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/36405"
-        },
-        "title": "Lovell Federal health care Placeholder - Event",
-        "vid": 736023,
-        "fieldAdditionalInformationAbo": null,
-        "fieldAddress": null,
-        "fieldBody": null,
-        "fieldDatetimeRangeTimezone": [
-          {
-            "duration": 60,
-            "endTime": null,
-            "endValue": 1633119000,
-            "rrule": null,
-            "rruleIndex": null,
-            "startTime": null,
-            "timezone": "America/Chicago",
-            "value": 1633115400
-          }
-        ],
-        "fieldDescription": null,
-        "fieldEventCost": null,
-        "fieldEventCta": null,
-        "fieldEventRegistrationrequired": false,
-        "fieldFacilityLocation": null,
-        "fieldFeatured": false,
-        "fieldLink": null,
-        "fieldListing": {
-          "entity": {
-            "entityBundle": "event_listing",
-            "entityId": "36319",
-            "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldOffice": {
-              "entity": {
-                "entityType": "node",
-                "entityBundle": "health_care_region_page",
-                "entityId": "15007"
-              }
-            }
-          }
-        },
-        "fieldLocationHumanreadable": null,
-        "fieldLocationType": "online",
-        "fieldMedia": {
-          "entity": {
-            "entityBundle": "image",
-            "entityId": "2858",
-            "entityType": "media",
-            "image": {
-              "alt": "VA logo",
-              "title": "",
-              "derivative": {
-                "height": 300,
-                "url": "/img/styles/7_2_medium_thumbnail/public/2021-03/Placeholder%20image%20-%20VA%20logo.png",
-                "width": 1050
-              }
-            },
-            "thumbnail": {
-              "alt": "VA logo",
-              "height": 320,
-              "targetId": 3145,
-              "title": null,
-              "url": "/img/2021-03/Placeholder%20image%20-%20VA%20logo.png",
-              "width": 320
-            }
-          }
-        },
-        "fieldMetaTags": null,
-        "fieldOrder": null,
-        "fieldUrlOfAnOnlineEvent": null,
-        "uid": {
-          "targetId": 1282,
-          "entity": {
-            "name": "lisa.trombley@va.gov",
-            "timezone": null
-          }
-        },
-        "fieldAdministration": {
-          "entity": {
-            "entityId": "347"
-          }
-        }
-      },
-      {
-        "changed": 1671038406,
-        "entityBundle": "event",
-        "entityId": "49919",
-        "entityPublished": true,
-        "entityMetatags": [
-          {
-            "__typename": "MetaLink",
-            "key": "image_src",
-            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "title",
-            "value": "Lovell Federal health care | Test Event 1 Both | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:site_name",
-            "value": "Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:title",
-            "value": "Test Event 1 Both | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:height",
-            "value": "314"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:card",
-            "value": "summary_large_image"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:site",
-            "value": "@DeptVetAffairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:title",
-            "value": "Test Event 1 Both | Lovell Federal health care | Veterans Affairs"
-          }
-        ],
-        "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49919"
-        },
-        "title": "Test Event 1 Both",
-        "vid": 735968,
-        "fieldAdditionalInformationAbo": null,
-        "fieldAddress": {
-          "additionalName": null,
-          "addressLine1": "",
-          "addressLine2": "",
-          "administrativeArea": "",
-          "countryCode": "US",
-          "dependentLocality": null,
-          "familyName": null,
-          "givenName": null,
-          "langcode": null,
-          "locality": "",
-          "organization": null,
-          "postalCode": null,
-          "sortingCode": null
-        },
-        "fieldBody": {
-          "format": "rich_text",
-          "processed": "<html><head></head><body><p>This is an event that should appear in both Lovells.</p></body></html>",
-          "value": "<p>This is an event that should appear in both Lovells.</p>\r\n"
-        },
-        "fieldDatetimeRangeTimezone": [
-          {
-            "duration": 60,
-            "endTime": null,
-            "endValue": 1666402200,
-            "rrule": null,
-            "rruleIndex": null,
-            "startTime": null,
-            "timezone": "America/New_York",
-            "value": 1666398600
-          }
-        ],
-        "fieldDescription": null,
-        "fieldEventCost": "Free",
-        "fieldEventCta": null,
-        "fieldEventRegistrationrequired": false,
-        "fieldFacilityLocation": {
-          "entity": {
-            "entityBundle": "health_care_local_facility",
-            "entityId": "1480",
-            "entityType": "node",
-            "entityUrl": {
-              "path": "/lovell-federal-va-health-care/locations/captain-james-a-lovell-federal-health-care-center"
-            },
-            "title": "Captain James A. Lovell Federal Health Care Center"
-          }
-        },
-        "fieldFeatured": false,
-        "fieldLink": null,
-        "fieldListing": {
-          "entity": {
-            "entityBundle": "event_listing",
-            "entityId": "36319",
-            "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldOffice": {
-              "entity": {
-                "entityType": "node",
-                "entityBundle": "health_care_region_page",
-                "entityId": "15007"
-              }
-            }
-          }
-        },
-        "fieldLocationHumanreadable": null,
-        "fieldLocationType": "facility",
-        "fieldMedia": null,
-        "fieldMetaTags": null,
-        "fieldOrder": null,
-        "fieldUrlOfAnOnlineEvent": null,
-        "uid": {
-          "targetId": 1215,
-          "entity": {
-            "name": "Steve.Wirt@civicactions.com",
-            "timezone": null
-          }
-        },
-        "fieldAdministration": {
-          "entity": {
-            "entityId": "347"
-          }
-        }
-      },
-      {
-        "changed": 1671038406,
-        "entityBundle": "event",
-        "entityId": "49920",
-        "entityPublished": true,
-        "entityMetatags": [
-          {
-            "__typename": "MetaLink",
-            "key": "image_src",
-            "value": "https://www.va.gov/img/design/logo/va-og-image.png"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "title",
-            "value": "Lovell Federal health care | Test Event 2 Both | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:site_name",
-            "value": "Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:title",
-            "value": "Test Event 2 Both | Lovell Federal health care | Veterans Affairs"
-          },
-          {
-            "__typename": "MetaProperty",
-            "key": "og:image:height",
-            "value": "314"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:card",
-            "value": "summary_large_image"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:site",
-            "value": "@DeptVetAffairs"
-          },
-          {
-            "__typename": "MetaValue",
-            "key": "twitter:title",
-            "value": "Test Event 2 Both | Lovell Federal health care | Veterans Affairs"
-          }
-        ],
-        "entityUrl": {
-          "path": "/lovell-federal-va-health-care/events/49920"
-        },
-        "title": "Test Event 2 Both",
-        "vid": 735967,
-        "fieldAdditionalInformationAbo": null,
-        "fieldAddress": {
-          "additionalName": null,
-          "addressLine1": "",
-          "addressLine2": "",
-          "administrativeArea": "",
-          "countryCode": "US",
-          "dependentLocality": null,
-          "familyName": null,
-          "givenName": null,
-          "langcode": null,
-          "locality": "",
-          "organization": null,
-          "postalCode": null,
-          "sortingCode": null
-        },
-        "fieldBody": {
-          "format": "rich_text",
-          "processed": "<html><head></head><body><p>This is another event that should appear in both Lovells.</p></body></html>",
-          "value": "<p>This is another event that should appear in both Lovells.</p>\r\n"
-        },
-        "fieldDatetimeRangeTimezone": [
-          {
-            "duration": 60,
-            "endTime": null,
-            "endValue": 1666589400,
-            "rrule": null,
-            "rruleIndex": null,
-            "startTime": null,
-            "timezone": "America/New_York",
-            "value": 1666585800
-          }
-        ],
-        "fieldDescription": null,
-        "fieldEventCost": "Free",
-        "fieldEventCta": null,
-        "fieldEventRegistrationrequired": false,
-        "fieldFacilityLocation": null,
-        "fieldFeatured": false,
-        "fieldLink": null,
-        "fieldListing": {
-          "entity": {
-            "entityBundle": "event_listing",
-            "entityId": "36319",
-            "entityType": "node",
-            "fieldDescription": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldIntroText": "Check early and often to see upcoming events at Lovell Federal health care and regional events.",
-            "fieldOffice": {
-              "entity": {
-                "entityType": "node",
-                "entityBundle": "health_care_region_page",
-                "entityId": "15007"
-              }
-            }
-          }
-        },
-        "fieldLocationHumanreadable": null,
-        "fieldLocationType": "online",
-        "fieldMedia": null,
-        "fieldMetaTags": null,
-        "fieldOrder": null,
-        "fieldUrlOfAnOnlineEvent": {
-          "uri": "https://google.com",
-          "title": ""
-        },
-        "uid": {
-          "targetId": 1215,
-          "entity": {
-            "name": "Steve.Wirt@civicactions.com",
-            "timezone": null
-          }
-        },
-        "fieldAdministration": {
-          "entity": {
-            "entityId": "347"
-          }
-        }
-      }
-    ]
-  },
   "fieldOffice": {
     "entity": {
       "entityLabel": "Lovell Federal health care"
@@ -966,5 +46,179 @@
     "entity": {
       "entityId": "347"
     }
+  },
+  "pastEvents": {
+    "entities": [
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "11",
+        "entityPublished": true,
+        "title": "Lovell Federal - Featured - Past - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1262336400,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 1262332800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care/events/11"
+        }
+      }
+    ]
+  },
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "11",
+        "entityPublished": true,
+        "title": "Lovell Federal - Featured - Past - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1262336400,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 1262332800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care/events/11"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "12",
+        "entityPublished": true,
+        "title": "Lovell Federal - Featured - Future - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2633119000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2633115400
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care/events/12"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "13",
+        "entityPublished": true,
+        "title": "Lovell Federal - Featured - Future - 2",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2633119000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2633115400
+          },
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2650874400,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2650870800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care/events/13"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "14",
+        "entityPublished": true,
+        "title": "Lovell Federal - Featured - Future - 3",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2524644000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2524640400
+          },
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2650874400,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2650870800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care/events/14"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "15",
+        "entityPublished": true,
+        "title": "Lovell Federal - Not Featured - Future - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2633119000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2633115400
+          },
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2650874400,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2650870800
+          }
+        ],
+        "fieldFeatured": false,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care/events/15"
+        }
+      }
+    ]
   }
 }

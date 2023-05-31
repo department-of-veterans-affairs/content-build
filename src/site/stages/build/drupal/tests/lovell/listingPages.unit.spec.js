@@ -1,11 +1,8 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 /* eslint-disable camelcase */
 import { expect } from 'chai';
-import {
-  processLovellPages,
-  isLovellVaPage,
-  isLovellTricarePage,
-} from '../../process-lovell-pages';
+import { processLovellPages } from '../../process-lovell-pages';
+import { stringArraysContainSameElements } from './utils';
 // Mock Data
 import federalStories from './fixtures/listing-pages/federal/stories.json';
 import federalEvents from './fixtures/listing-pages/federal/events.json';
@@ -17,6 +14,8 @@ import vaStories from './fixtures/listing-pages/va/stories.json';
 import vaEvents from './fixtures/listing-pages/va/events.json';
 import vaNews from './fixtures/listing-pages/va/news.json';
 import lovellFederalHealthCareFacilitySidebarQuery from './fixtures/sidebar.json';
+
+const { isLovellVaPage, isLovellTricarePage } = require('../../lovell/helpers');
 
 const entityBundleFromListingVariant = listingVariant => {
   let prefix = listingVariant;
@@ -47,11 +46,7 @@ const getMergedListing = (drupalData, lovellVariant, listingVariant) => {
     )[0];
 };
 
-const stringArraysContainSameElements = (a, b) => {
-  return a.sort().join(',') === b.sort().join(',');
-};
-
-describe('processLovelPages (listing pages)', () => {
+describe('processLovellPages (listing pages)', () => {
   let counts;
   let titles;
   let drupalData;
