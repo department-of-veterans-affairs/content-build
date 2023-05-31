@@ -1384,6 +1384,18 @@
     }
   },
   {
+    "appName": "Income Limits",
+    "entryName": "income-limits",
+    "rootUrl": "/health-care/income-limits-temp",
+    "template": {
+      "title": "Income Limits",
+      "layout": "page-react.html",
+      "description": "Income Limits application",
+      "vagovprod": false,
+      "includeFeedbackButton": false
+    }
+  },
+  {
     "appName": "Sign for benefits on behalf of another person",
     "entryName": "21-0972-alternate-signer",
     "rootUrl": "/alternate-signer",

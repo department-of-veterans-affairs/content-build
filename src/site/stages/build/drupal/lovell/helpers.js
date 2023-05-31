@@ -1,3 +1,5 @@
+const { ENTITY_BUNDLES } = require('../../../../constants/content-modeling');
+
 const LOVELL_TITLE_STRING = 'Lovell Federal';
 const LOVELL_FEDERAL_ENTITY_ID = '347';
 const LOVELL_TRICARE_ENTITY_ID = '1039';
@@ -27,9 +29,9 @@ function isLovellVaPage(page) {
 
 function isListingPage(page) {
   const listingPageTypes = [
-    'event_listing',
-    'press_releases_listing',
-    'story_listing',
+    ENTITY_BUNDLES.EVENT_LISTING,
+    ENTITY_BUNDLES.PRESS_RELEASES_LISTING,
+    ENTITY_BUNDLES.STORY_LISTING,
   ];
 
   return listingPageTypes.includes(page.entityBundle);
@@ -37,7 +39,22 @@ function isListingPage(page) {
 
 function isFederalRegionHomepage(page) {
   return (
-    isLovellFederalPage(page) && page.entityBundle === 'health_care_region_page'
+    isLovellFederalPage(page) &&
+    page.entityBundle === ENTITY_BUNDLES.HEALTH_CARE_REGION_PAGE
+  );
+}
+
+function isTricareRegionHomepage(page) {
+  return (
+    isLovellTricarePage(page) &&
+    page.entityBundle === ENTITY_BUNDLES.HEALTH_CARE_REGION_PAGE
+  );
+}
+
+function isVaRegionHomepage(page) {
+  return (
+    isLovellVaPage(page) &&
+    page.entityBundle === ENTITY_BUNDLES.HEALTH_CARE_REGION_PAGE
   );
 }
 
@@ -78,6 +95,8 @@ module.exports = {
   isLovellVaPage,
   isListingPage,
   isFederalRegionHomepage,
+  isTricareRegionHomepage,
+  isVaRegionHomepage,
   getLovellTitle,
   getLovellTitleVariation,
   getLovellUrl,

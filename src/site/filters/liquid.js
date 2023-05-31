@@ -10,6 +10,11 @@ const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
 const stagingSurveys = require('./medalliaStagingSurveys.json');
 const prodSurveys = require('./medalliaProdSurveys.json');
+const {
+  deriveMostRecentDate,
+  filterPastEvents,
+  filterUpcomingEvents,
+} = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -938,29 +943,9 @@ module.exports = function registerFilters() {
     return [featureContentObj, ...featureContentArray];
   };
 
-  liquid.filters.filterPastEvents = data => {
-    if (!data) return null;
-    const currentTimestamp = new Date().getTime();
-    return data.filter(event => {
-      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
-        event.fieldDatetimeRangeTimezone[0]
-          ? event.fieldDatetimeRangeTimezone[0]
-          : event.fieldDatetimeRangeTimezone,
-      );
-      return mostRecentEvent.value * 1000 < currentTimestamp;
-    });
-  };
+  liquid.filters.filterPastEvents = filterPastEvents;
 
-  liquid.filters.filterUpcomingEvents = data => {
-    if (!data) return null;
-    const currentTimestamp = new Date().getTime();
-    return data.filter(event => {
-      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
-        event.fieldDatetimeRangeTimezone,
-      );
-      return mostRecentEvent?.value * 1000 >= currentTimestamp;
-    });
-  };
+  liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
 
   //* Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
   //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
@@ -1402,35 +1387,7 @@ module.exports = function registerFilters() {
     return moment().unix();
   };
 
-  liquid.filters.deriveMostRecentDate = (
-    fieldDatetimeRangeTimezone,
-    now = moment().unix(), // This is done so that we can mock the current time in tests.
-  ) => {
-    // Escape early if no fieldDatetimeRangeTimezone was passed.
-    if (!fieldDatetimeRangeTimezone) return fieldDatetimeRangeTimezone;
-
-    // Return back fieldDatetimeRangeTimezone if it is already a singular most recent date.
-    if (!_.isArray(fieldDatetimeRangeTimezone)) {
-      return fieldDatetimeRangeTimezone;
-    }
-
-    // Return back fieldDatetimeRangeTimezone's first item if it only has 1 item.
-    if (fieldDatetimeRangeTimezone?.length === 1) {
-      return fieldDatetimeRangeTimezone[0];
-    }
-
-    // Derive date times relative to now.
-    const dates = _.sortBy(fieldDatetimeRangeTimezone, 'endValue');
-    const futureDates = _.filter(dates, date => date?.endValue - now > 0);
-
-    // Return the most recent past date if there are no future dates.
-    if (_.isEmpty(futureDates)) {
-      return dates[dates?.length - 1];
-    }
-
-    // Return the most recent future date if there are future dates.
-    return futureDates[0];
-  };
+  liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
 
   // Given an array of services provided at a facility,
   // return a flattened array of service locations that

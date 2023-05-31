@@ -167,7 +167,7 @@ const query = `
                 ... on MediaImage {
                   image {
                     alt
-                    derivative(style: LARGE) {
+                    derivative(style: CROPSQUARE) {
                       url
                     }
                   }
