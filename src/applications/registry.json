@@ -1406,6 +1406,16 @@
     }
   },
   {
+    "appName": "21-0845 Authorization to Disclose Personal Information to a Third Party",
+    "entryName": "0845-auth-disclose",
+    "rootUrl": "/authorization-to-disclose",
+    "productId": "08a7da80-f48a-4677-9b74-0dcb642b97a1",
+      "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Sign for benefits on behalf of another person",
     "entryName": "21-0972-alternate-signer",
     "rootUrl": "/alternate-signer",
