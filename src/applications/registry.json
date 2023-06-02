@@ -1392,7 +1392,17 @@
       "layout": "page-react.html",
       "description": "Income Limits application",
       "vagovprod": false,
-      "includeFeedbackButton": false
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "income-limits/health-care",
+          "name": "Your health care costs"
+        },
+        {
+          "path": "income-limits/health-care/zip",
+          "name": "Check income limits"
+        }
+      ]
     }
   },
   {
