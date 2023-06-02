@@ -1414,5 +1414,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "MHV Medications",
+    "entryName": "medications",
+    "rootUrl": "/my-health/medications",
+    "productId": "0203ca08-b7a2-4cd6-abb5-56d38c239cd3",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
