@@ -1449,6 +1449,28 @@ module.exports = function registerFilters() {
     return `${formattedStartsAt} – ${formattedEndsAt} ${endsAtTimezone}`;
   };
 
+  liquid.filters.organizeSatelliteVetCenters = centers => {
+    const { outstations, CAPs } = centers.reduce(
+      (acc, center) => {
+        if (center.entityBundle === 'vet_center_outstation') {
+          acc.outstations.push(center);
+        } else if (center.entityBundle === 'vet_center_cap') {
+          acc.CAPs.push(center);
+        }
+        return acc;
+      },
+      {
+        outstations: [],
+        CAPs: [],
+      },
+    );
+
+    return [
+      ...liquid.filters.sortObjectsBy(outstations, 'title'),
+      ...liquid.filters.sortObjectsBy(CAPs, 'title'),
+    ];
+  };
+
   liquid.filters.dynamicVetCenterHoursKey = forloopindex => {
     return `vetCenterHoursKey_${forloopindex}`;
   };

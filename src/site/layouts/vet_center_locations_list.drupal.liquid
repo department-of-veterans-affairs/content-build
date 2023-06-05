@@ -40,7 +40,7 @@
               confidentiality in a non-medical setting.
               Call us for more information about these locations.
             </p>
-            {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | rejectBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
+            {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | rejectBy: 'entityBundle', 'vet_center_mobile_vet_center' | organizeSatelliteVetCenters %}
             {% for entityVetCenter in satelliteVetCenters %}
               {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
