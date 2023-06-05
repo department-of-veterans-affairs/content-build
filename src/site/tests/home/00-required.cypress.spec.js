@@ -18,16 +18,22 @@ Cypress.Commands.add('verifyGoogleAnalytics', () => {
   });
 });
 
-// Cypress.Commands.add('verifyElementCount', (selector, expectedLength) => {
-//   cy.get(selector).should('have.length', expectedLength);
-// });
+Cypress.Commands.add('verifyElementCount', (selector, expectedLength) => {
+  cy.get(selector).should('have.length', expectedLength);
+});
 
 describe('Homepage Test', () => {
   it('has the right analytics', () => {
     cy.visit('/');
-    // cy.verifyElementCount('[data-e2e="bucket"]', 4);
-    // cy.verifyElementCount('[data-e2e="hub"]', 11);
-    // cy.verifyElementCount('[data-e2e="news"]', 3);
+    cy.injectAxeThenAxeCheck();
     cy.verifyGoogleAnalytics();
+  });
+  it('has the right elements', () => {
+    cy.visit('/');
+    cy.verifyElementCount('[data-e2e="hero"]', 1);
+    cy.verifyElementCount('[data-e2e="common"]', 1);
+    cy.verifyElementCount('[data-e2e="news"]', 1);
+    cy.verifyElementCount('[data-e2e="hubs"]', 1);
+    cy.injectAxeThenAxeCheck();
   });
 });
