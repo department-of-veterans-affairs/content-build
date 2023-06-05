@@ -17,7 +17,7 @@ function divideHubRows(hubs) {
   });
 }
 
-const addHomePreviewContent = (
+const addHomeSandboxContent = (
   contentData,
   files,
   metalsmith,
@@ -70,7 +70,7 @@ const addHomePreviewContent = (
     title: 'New VA.gov Home Page',
   };
 
-  const homePreviewPath = '/new-home-page';
+  const homeSandboxPath = '/new-home-page';
   const hero =
     homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
   hero.createAccountBlock =
@@ -85,7 +85,7 @@ const addHomePreviewContent = (
   // Filter hub menu links. We do this here instead of in the template because the
   // grouping of hubs also happens here, and we need to filter before we group in
   // order to preserve the intended grouping. See divideHubRows().
-  const homePreviewHubs = homePageHubListMenuQuery.links.filter(link => {
+  const homeSandboxHubs = homePageHubListMenuQuery.links.filter(link => {
     // Any disabled links should not be displayed.
     if (!link.enabled) {
       return false;
@@ -98,7 +98,7 @@ const addHomePreviewContent = (
     );
   });
 
-  const homePreviewEntityObj = {
+  const homeSandboxEntityObj = {
     ...homeEntityObj,
     canonicalLink: '/', // Match current homepage to avoid 'duplicate content' SEO demerit
     hero,
@@ -107,20 +107,20 @@ const addHomePreviewContent = (
       popularLinks,
     },
     newsSpotlight,
-    path: homePreviewPath,
+    path: homeSandboxPath,
     entityUrl: {
-      path: homePreviewPath,
+      path: homeSandboxPath,
     },
-    hubs: divideHubRows(homePreviewHubs),
+    hubs: divideHubRows(homeSandboxHubs),
     title: 'New VA.gov home page',
   };
 
-  files[`.${homePreviewPath}.html`] = createFileObj(
-    homePreviewEntityObj,
-    'home-preview.drupal.liquid',
+  files[`.${homeSandboxPath}.html`] = createFileObj(
+    homeSandboxEntityObj,
+    'home-sandbox.drupal.liquid',
   );
 };
 
 module.exports = {
-  addHomePreviewContent,
+  addHomeSandboxContent,
 };
