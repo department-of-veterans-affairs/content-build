@@ -11,15 +11,6 @@
         {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" with entity %}
       </div>
     {% endif %}
-    {% assign topMargin = '1' %}
-    {% assign bottomMargin = '2' %}
-    {% for covidStatus in fieldOffice.entity.reverseFieldRegionPageNode.entities %}
-      {% if covidStatus.entityId == entity.entityId %}
-      {% include "src/site/includes/covid-status.drupal.liquid" with covidStatus %}
-
-      {% endif %}
-    {% endfor %}
-
     {% unless type == 'mobile' %}
       <div class="vads-u-margin-bottom--1">
         <address class="vads-u-margin-bottom--0">
