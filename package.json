@@ -150,7 +150,7 @@
     "eslint-plugin-sonarjs": "^0.10.0",
     "eslint-plugin-unicorn": "^36.0.0",
     "express-history-api-fallback": "^2.0.0",
-    "fast-xml-parser": "^3.19.0",
+    "fast-xml-parser": "^4.2.4",
     "find": "^0.3.0",
     "find-root": "^1.1.0",
     "fs-extra": "^7.0.0",
