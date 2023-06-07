@@ -18,4 +18,6 @@ In a case like this, it is still important for the CMS Team to monitor Content R
 
 **Response:** Wait for subsequent content release, which should begin automatically. 
 
-**Cause:** Runners 
+**Cause:** Runners are provisioned by a system that creates additional instances as needed to handle more work, and then shuts them down when they are no longer needed. However, the system does not properly keep track of whether a runner is currently in use when it decides to shut them down. This can result in a runner shutting down mid-job.
+
+**Remediation:** Ticket needed.
