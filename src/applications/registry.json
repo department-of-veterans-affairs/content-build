@@ -1395,18 +1395,7 @@
       "title": "Income Limits",
       "layout": "page-react.html",
       "description": "Income Limits application",
-      "vagovprod": false,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "health-care",
-          "name": "Health Care"
-        },
-        {
-          "path": "health-care/income-limits-temp/zip",
-          "name": "Check income limits"
-        }
-      ]
+      "vagovprod": false
     }
   },
   {
