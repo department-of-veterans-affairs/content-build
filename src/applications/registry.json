@@ -1370,7 +1370,7 @@
   {
     "appName": "21-10210 Lay/Witness Statement",
     "entryName": "10210-lay-witness-statement",
-    "rootUrl": "/lay-witness-statement",
+    "rootUrl": "/supporting-forms-for-claims/lay-witness-statement-form-21-10210",
     "productId": "f8117c9f-0d57-486f-91ee-89c806b84d65",
     "template": {
       "vagovprod": false,
@@ -1403,7 +1403,7 @@
     "entryName": "0845-auth-disclose",
     "rootUrl": "/authorization-to-disclose",
     "productId": "08a7da80-f48a-4677-9b74-0dcb642b97a1",
-      "template": {
+    "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
