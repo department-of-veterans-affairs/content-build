@@ -563,7 +563,7 @@ jobs:
 
       - name: Publish Cypress test results
         if: ${{ always() }}
-        uses: LouisBrunner/checks-action@69aaabbcf32668b60dc03b65deabfe23e92d9c41 # v1.6.0
+        uses: LouisBrunner/checks-action@fc37386e131fb5857dd162d3d3369b65e5dc070e # v1.6.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Cypress Tests Summary
