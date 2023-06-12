@@ -48,18 +48,18 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
 
       - name: Checkout vagov-content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           path: content-build
 
       - name: Checkout vets-website
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: department-of-veterans-affairs/vets-website
           path: vets-website
@@ -172,7 +172,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
 
       - name: Get Node version
         id: get-node-version
@@ -263,7 +263,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           path: content-build
 
@@ -409,7 +409,7 @@ jobs:
 
     steps:
       - name: Checkout content-build
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           path: content-build
 
