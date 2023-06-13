@@ -54,16 +54,7 @@ module.exports = {
         }`,
     API_URL: isNode
       ? 'http://localhost:3000'
-      : location.hostname &&
-        isHostnameAllowed(location.hostname, [
-          '*.preview.va.gov',
-          '*.vfs.va.gov',
-        ])
-      ? `http://${location.hostname.split('.')[0]}-api.${location.hostname
-          .split('.')
-          .slice(1)
-          .join('.')}:3000`
-      : `http://${location.hostname || 'localhost'}:3000`,
+      : 'http://vets-api-web:3004',
   },
 
   /* eslint-enable no-restricted-globals */
