@@ -1,42 +1,40 @@
 <!-- Hero section on home page -->
 
-<!-- Hero Content -->
-<div class="homepage-hero__wrapper" data-e2e="hero">
-  <div class="vads-l-grid-container vads-u-padding-x--0 homepage-hero">
-    <div class="vads-l-row">
-      <!-- start first column-->
-      <div class="vads-l-col--12 medium-screen:vads-l-col--6">
-        <div class="vads-u-padding-left--2 vads-u-padding-right--3 vads-u-padding-top--5
-            vads-u-padding-bottom--3
-            small-desktop-screen:vads-u-padding-bottom--8">
-          <h1
-            class="homepage-hero__welcome-headline vads-u-color--white vads-u-margin-top--0 vads-u-margin-bottom--2 vads-u-padding-y--1 vads-u-border-top--1px vads-u-border-bottom--1px vads-u-font-size--lg vads-u-font-family--serif">
-            Welcome to VA.gov</h1>
-          <h2
-            class="vads-u-color--white vads-u-margin-top--3 vads-u-font-size--xl small-desktop-screen:vads-u-font-size--2xl">
-            {% if fieldPromoHeadline %}
-              {{ fieldPromoHeadline }}
-            {% endif %}
-          </h2>
+{% if fieldPromoHeadline and fieldPromoCta %}
+  <div class="homepage-hero__wrapper" data-e2e="hero">
+    <div class="vads-l-grid-container vads-u-padding-x--0 homepage-hero">
+      <div class="vads-l-row">
+        <!-- start first column -->
+        <div class="vads-l-col--12 medium-screen:vads-l-col--6">
+          <div class="vads-u-padding-left--2 vads-u-padding-right--3 vads-u-padding-top--5
+              vads-u-padding-bottom--3
+              small-desktop-screen:vads-u-padding-bottom--8">
+            <h1
+              class="homepage-hero__welcome-headline vads-u-color--white vads-u-margin-top--0 vads-u-margin-bottom--2 vads-u-padding-y--1 vads-u-border-top--1px vads-u-border-bottom--1px vads-u-font-size--lg vads-u-font-family--serif">
+              Welcome to VA.gov</h1>
+            <h2
+              class="vads-u-color--white vads-u-margin-top--3 vads-u-font-size--xl small-desktop-screen:vads-u-font-size--2xl">
+                {{ fieldPromoHeadline }}
+            </h2>
 
-          <p id="myva-login--hero" class="vads-u-color--white vads-u-padding-right--5">
-            {% if fieldPromoText %}
-              {{ fieldPromoText }}
-            {% endif %}
-          </p>
+            <p id="myva-login--hero" class="vads-u-color--white vads-u-padding-right--5">
+              {% if fieldPromoText %}
+                {{ fieldPromoText }}
+              {% endif %}
+            </p>
 
-          {% if fieldPromoCta.entity.fieldButtonLabel and fieldPromoCta.entity.fieldButtonLink.url.path %}
-            <a onclick="recordEvent({ event: 'homepage-benefit-link-click', action: 'Homepage benefit promo - {{fieldPromoCta.entity.fieldButtonLabel}}' })"
-               class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
-                {{fieldPromoCta.entity.fieldButtonLabel}}
-            </a>
-          {% endif %}
+            {% if fieldPromoCta.entity.fieldButtonLabel and fieldPromoCta.entity.fieldButtonLink.url.path %}
+              <a onclick="recordEvent({ event: 'homepage-benefit-link-click', action: 'Homepage benefit promo - {{fieldPromoCta.entity.fieldButtonLabel}}' })"
+                class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
+                  {{fieldPromoCta.entity.fieldButtonLabel}}
+              </a>
+            {% endif %}
+          </div>
         </div>
-      </div>
-      <!-- end first column -->
+        <!-- end first column -->
 
-      <!-- start second column for  bplogin card -->
-      <script>
+        <!-- start second column for  bplogin card -->
+        <script>
         function openLoginModal() {
           // Uncomment custom event and delete generic event once analytics team has implemented
           // recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
@@ -48,31 +46,100 @@
           params.set("next", "loginModal")
           document.location = "?" + params.toString();
         }
-      </script>
-      <div class="vads-l-col--12 medium-screen:vads-l-col--6 homepage-hero__container">
-        <div class="vads-u-display--flex vads-u-width--full vads-u-align-items--center vars-u-justify-content--center">
-          <div
-            class="va-flex vads-u-flex-direction--column vads-u-align-items--flex-start vads-u-background-color--white vads-u-margin-top--6 vads-u-margin-bottom--6 vads-u-padding-x--3 vads-u-padding-y--2 vads-u-width--full homepage-hero__create-account vads-u-display--none">
-            <h2
-              class="vads-u-font-size--md vads-u-line-height--5 vads-u-color--gray vads-u-margin-top--0 vads-u-padding-right--2 vads-u-font-family--sans vads-u-font-weight--normal">
-              {{ createAccountBlock.fieldCtaSummaryText }}
-            </h2>
-            <button class="vads-u-padding-x--4 vads-u-margin-bottom--3" onclick="openLoginModal()">
-              {{ createAccountBlock.fieldPrimaryCtaButtonText }}
-            </button>
-            {% for link in createAccountBlock.fieldRelatedInfoLinks %}
-              <a
-                href="{{ link.url.path }}"
-                onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'secondary', 'button-click-label': '{{ link.title }}',  });"
-                >
-                {{ link.title }}
-              </a>
-            {% endfor %}
+        </script>
+        <div class="vads-l-col--12 medium-screen:vads-l-col--6 homepage-hero__container">
+          <div class="vads-u-display--flex vads-u-width--full vads-u-align-items--center vars-u-justify-content--center">
+            <div
+              class="va-flex vads-u-flex-direction--column vads-u-align-items--flex-start vads-u-background-color--white vads-u-margin-top--6 vads-u-margin-bottom--6 vads-u-padding-x--3 vads-u-padding-y--2 vads-u-width--full homepage-hero__create-account vads-u-display--none">
+              <h2
+                class="vads-u-font-size--md vads-u-line-height--5 vads-u-color--gray vads-u-margin-top--0 vads-u-padding-right--2 vads-u-font-family--sans vads-u-font-weight--normal">
+                {{ createAccountBlock.fieldCtaSummaryText }}
+              </h2>
+              <button class="vads-u-padding-x--4 vads-u-margin-bottom--3" onclick="openLoginModal()">
+                {{ createAccountBlock.fieldPrimaryCtaButtonText }}
+              </button>
+              {% for link in createAccountBlock.fieldRelatedInfoLinks %}
+                <a
+                  href="{{ link.url.path }}"
+                  onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'secondary', 'button-click-label': '{{ link.title }}',  });"
+                  >
+                  {{ link.title }}
+                </a>
+              {% endfor %}
+            </div>
           </div>
         </div>
+        <!-- end second column -->
       </div>
-      <!-- end second column -->
     </div>
   </div>
-</div>
-<!-- /Hero -->
+{% endif %}
+
+{% if !fieldPromoHeadline and !fieldPromoCta %}
+  <div class="homepage-hero__wrapper fallback" data-e2e="hero">
+    <div class="vads-l-grid-container vads-u-padding-x--0 homepage-hero">
+      <div class="vads-l-row vads-u-display--flex vads-u-flex-wrap--nowrap">
+        <!-- start first column -->
+          <div class="vads-u-padding-right--3 homepage-hero-first-column">
+            <h1 class="homepage-hero__welcome-headline vads-u-color--white vads-u-padding-y--1 vads-u-border-top--1px vads-u-border-bottom--1px vads-u-font-size--lg vads-u-font-family--serif">
+              Welcome to VA.gov
+            </h1>
+            <div class="homepage-hero__create-account vads-u-display--none">
+              <h2 class="vads-u-color--white vads-u-font-size--lg small-desktop-screen:vads-u-font-size--xl">
+                Access and manage your VA benefits and health care
+              </h2>
+              <a
+                onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'secondary', 'button-click-label': 'Learn how an account helps you',  });"
+                class="vads-u-color--white vads-u-display--block vads-u-font-weight--normal"
+                href="/resources/creating-an-account-for-vagov/"
+              >
+                Learn how an account helps you
+              </a>
+              <script>
+              function openLoginModal() {
+                // Uncomment custom event and delete generic event once analytics team has implemented
+                // recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
+                recordMultipleEvents([
+                  { event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': '{{ createAccountBlock.entityLabel }}'  },
+                  { event: "homepage-create-account", action: "{{ createAccountBlock.fieldPrimaryCtaButtonText }}" }
+                ]);
+                const params = (new URL(document.location)).searchParams;
+                params.set("next", "loginModal")
+                document.location = "?" + params.toString();
+              }
+              </script>
+              <button
+                class="vads-u-background-color--white vads-u-color--primary"
+                onclick="openLoginModal()"
+                text="Create an account"
+                type="button"
+              >
+                Create an account
+              </button>
+            </div>
+        </div>
+        <!-- end first column -->
+
+        <!-- start second column -->
+        <div class="homepage-hero-second-column">
+          <div
+            class="veteran-portraits vads-u-display--flex vads-u-width--full vads-u-margin-left--0">
+            <img
+              style="background-color:#0071BB"
+              alt=""
+            />
+            <img
+              style="background-color:#005EA2"
+              alt=""
+            />
+            <img
+              style="background-color:#003E73"
+              alt=""
+            />
+          </div>
+        </div>
+        <!-- end second column -->
+        </div>
+    </div>
+  </div>
+{% endif %}
