@@ -970,6 +970,15 @@
     }
   },
   {
+    "appName": "Ask VA Integration Project",
+    "entryName": "ask-va-too",
+    "rootUrl": "contact-us/ask-va-too",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "covid-vaccine-expansion",
     "entryName": "covid-vaccine",
     "rootUrl": "/health-care/covid-19-vaccine/sign-up",
