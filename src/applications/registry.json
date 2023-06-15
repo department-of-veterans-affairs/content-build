@@ -1374,7 +1374,18 @@
     "productId": "f8117c9f-0d57-486f-91ee-89c806b84d65",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Submit a lay witness statement to support a VA claim",
+          "path": "supporting-forms-for-claims/lay-witness-statement-form-21-10210"
+        }
+      ]
     }
   },
   {
