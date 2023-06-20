@@ -1,0 +1,14 @@
+{
+  "fieldPromoHeadline": "The PACT Act and your VA benefits",
+  "fieldPromoText": "This new law expands and extends eligibility for care and benefits for Veterans and survivors related to toxic exposures.",
+  "fieldPromoCta": {
+    "entity": {
+      "fieldButtonLabel": "Learn what the PACT Act means for you",
+      "fieldButtonLink": {
+        "url": {
+          "path": "/resources/the-pact-act-and-your-va-benefits"
+        }
+      }
+    }
+  }
+}
