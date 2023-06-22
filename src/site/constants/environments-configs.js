@@ -40,7 +40,7 @@ module.exports = {
           location.port ? location.port : '3002'
         }`,
     API_URL: isNode
-      ? 'http://localhost:3000'
+      ? `http://localhost:3000`
       : location.hostname && location.hostname.includes('preview.va.gov')
       ? `http://${location.hostname.split('.')[0]}-api.${location.hostname
           .split('.')
