@@ -1342,7 +1342,7 @@
     "rootUrl": "/supporting-forms-for-claims/release-information-to-va-form-21-4142",
     "productId": "56438c7b-e586-490d-a7f6-7e3c92136564",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1351,7 +1351,7 @@
           "path": "supporting-forms-for-claims"
         },
         {
-          "name": "Authorize the release of non-VA medical information to VA",
+          "name": "Authorize the release of non&#8208;VA medical information to VA",
           "path": "supporting-forms-for-claims/release-information-to-va-form-21-4142"
         }
       ]
