@@ -972,10 +972,12 @@
   {
     "appName": "Ask VA Integration Project",
     "entryName": "ask-va-too",
-    "rootUrl": "contact-us/ask-va-too",
+    "rootUrl": "/contact-us/ask-va-too",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "Ask VA Integration Project",
+      "description": "Ask VA (AVA) is an online portal that allows veterans, caregivers, and supporting personnel in education, debt, loans, etc. to submit questions to VA and receive a secure message response."
     }
   },
   {
