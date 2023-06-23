@@ -17,20 +17,9 @@ function divideHubRows(hubs) {
 
 // Processes the data received from the home page query.
 function addHomeContent(contentData, files, metalsmith, buildOptions) {
-  // We cannot limit menu items in Drupal, so we must do it here.
-  const menuLength = 4;
-
   // Make sure that we have content for the home page.
-  if (contentData.data.homePageMenuQuery) {
+  if (contentData.data.homePageHubListMenuQuery) {
     let homeEntityObj = createEntityUrlObj('/');
-    const {
-      data: {
-        banners,
-        homePageMenuQuery,
-        homePagePromoBlockQuery,
-        promoBanners,
-      },
-    } = contentData;
 
     const {
       data: {
@@ -40,6 +29,8 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         homePageOtherSearchToolsMenuQuery,
         homePageHubListMenuQuery,
         homePageCreateAccountQuery,
+        banners,
+        promoBanners,
       },
     } = contentData;
     const homePath = '/';
@@ -74,7 +65,6 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     homeEntityObj = {
       banners,
       canonicalLink: '/',
-      cards: homePageMenuQuery.links.slice(0, menuLength),
       commonTasks: {
         searchLinks,
         popularLinks,
@@ -84,7 +74,6 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       hubs: divideHubRows(homeHubs),
       newsSpotlight,
       promoBanners,
-      promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
       path: homePath,
       title: 'VA.gov Home',
     };

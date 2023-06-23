@@ -23,8 +23,6 @@ const addHomeSandboxContent = (
   metalsmith,
   buildOptions,
 ) => {
-  // We cannot limit menu items in Drupal, so we must do it here.
-  const menuLength = 4;
   const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
   const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
   const bannerFile = fs.readFileSync(bannerLocation);
@@ -39,15 +37,9 @@ const addHomeSandboxContent = (
       homePageHubListMenuQuery,
       homePageCreateAccountQuery,
       banners,
-      homePageMenuQuery,
-      homePageHubListQuery,
-      homePagePromoBlockQuery,
       promoBanners,
     },
   } = contentData;
-  const hubs = divideHubRows(
-    homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList,
-  );
 
   const homeEntityObj = {
     breadcrumb: [
@@ -58,15 +50,12 @@ const addHomeSandboxContent = (
     ],
     path: '/new-home-page',
     banners,
-    cards: homePageMenuQuery.links.slice(0, menuLength),
     description:
       'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
     entityUrl: { path: '/new-home-page' },
-    hubs,
     // eslint-disable-next-line camelcase
     legacy_homepage_banner: banner,
     promoBanners,
-    promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
     title: 'New VA.gov Home Page',
   };
 
