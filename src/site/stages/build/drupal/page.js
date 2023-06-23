@@ -211,11 +211,18 @@ function getFacilitySidebar(page, contentData) {
   // for Local Facility pages
   const localFacilityPage = page.fieldRegionPage;
 
-  // if neither of those, check if it's a health care region page
+  const isHealthCarePage =
+    typeof page?.fieldOffice?.entity?.entityLabel === 'string' &&
+    page?.fieldOffice?.entity?.entityLabel
+      .toLowerCase()
+      .includes('health care');
+
+  // if neither of those, check if it's a health care or health care region page
   if (
-    facilityPage ||
-    localFacilityPage ||
-    page.entityBundle === 'health_care_region_page'
+    (facilityPage ||
+      localFacilityPage ||
+      page.entityBundle === 'health_care_region_page') &&
+    isHealthCarePage
   ) {
     let pageTitle = null;
 
@@ -242,6 +249,7 @@ function getFacilitySidebar(page, contentData) {
     if (facilitySidebarNavName) {
       return contentData.data[facilitySidebarNavName];
     }
+
     const errorMessage = `Failed to find a facility sidebar with a name that matches the VAMC office label "${facilityNavName}".`;
 
     console.log(chalk.red(errorMessage));
