@@ -186,7 +186,7 @@
     "recursive-readdir": "^2.2.2",
     "sass-lint": "^1.13.1",
     "sass-loader": "^12.1.0",
-    "semver": "^7.3.5",
+    "semver": "^7.5.2",
     "sentry-testkit": "^3.3.4",
     "sinon": "^3.2.1",
     "socks-proxy-agent": "^5.0.0",
