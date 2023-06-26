@@ -1412,7 +1412,7 @@
   {
     "appName": "Income Limits",
     "entryName": "income-limits",
-    "rootUrl": "/health-care/income-limits-temp",
+    "rootUrl": "/health-care/income-limits",
     "template": {
       "title": "Income Limits",
       "layout": "page-react.html",
