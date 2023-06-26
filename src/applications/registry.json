@@ -1459,5 +1459,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "After Visit Summary",
+    "entryName": "avs",
+    "rootUrl": "/my-health/medical-records/care-notes/avs",
+    "productId": "e5bd4cff-77b1-4d56-ab8e-a66c9c2667ab",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
