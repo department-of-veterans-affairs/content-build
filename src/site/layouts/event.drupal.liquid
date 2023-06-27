@@ -100,11 +100,11 @@
 
                     <p class="vads-u-margin--0">
                       {% if fieldAddress.locality %}
-                        {{ fieldAddress.locality -}}
+                        {{ fieldAddress.locality | strip }},
                       {% endif %}
 
                       {% if fieldAddress.administrativeArea %}
-                        , {{ fieldAddress.administrativeArea }}
+                        {{ fieldAddress.administrativeArea }}
                       {% endif %}
                     </p>
                   </div>
