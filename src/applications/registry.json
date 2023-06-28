@@ -1412,7 +1412,7 @@
   {
     "appName": "Income Limits",
     "entryName": "income-limits",
-    "rootUrl": "/health-care/income-limits-temp",
+    "rootUrl": "/health-care/income-limits",
     "template": {
       "title": "Income Limits",
       "layout": "page-react.html",
@@ -1455,6 +1455,16 @@
     "entryName": "21P-0847-substitute-claimant",
     "rootUrl": "/substitute-claimant",
     "productId": "8b51d056-9bea-493f-a815-65555ba66188",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "After Visit Summary",
+    "entryName": "avs",
+    "rootUrl": "/my-health/medical-records/care-notes/avs",
+    "productId": "e5bd4cff-77b1-4d56-ab8e-a66c9c2667ab",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
