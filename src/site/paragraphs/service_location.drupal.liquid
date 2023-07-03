@@ -25,11 +25,24 @@
     {% endif %}
 {% endcase %}
 
-
 {% if single.fieldAdditionalHoursInfo %}
   <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
 {% endif %}
 
+{% comment %}
+  Conditionally display facility phone number
+{% endcomment %}
+{% if single.fieldUseMainFacilityPhone %}
+  {% include "src/site/components/phone-number.drupal.liquid" with
+    phoneNumber = fieldPhoneNumber
+    phoneLabel = 'Main Phone'
+    phoneHeaderLevel = serviceLocationSubHeaderLevel
+  %}
+{% endif %}
+
+{% comment %}
+  Display each additional phone number provided
+{% endcomment %}
 {% include "src/site/components/phone.drupal.liquid" with
   numbers = single.fieldPhone
   phoneHeaderLevel = serviceLocationSubHeaderLevel

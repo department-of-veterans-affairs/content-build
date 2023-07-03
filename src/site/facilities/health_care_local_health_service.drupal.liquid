@@ -37,22 +37,22 @@
   {% endcomment %}
   {% if locationEntity.fieldPhoneNumbersParagraph.length > 0 %}
     <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
-      <h5>Phone</h5>
-      {% if locationEntity.fieldPhoneNumbersParagraph %}
-        {% for number in locationEntity.fieldPhoneNumbersParagraph %}
-          <va-telephone
-            contact="{{ number.entity.fieldPhoneNumber | removeDashes }}"
-            extension="{{ number.entity.fieldPhoneExtension | default: '' }}"
-          />
-        {% endfor %}
-      {% endif %}
+      {% for number in locationEntity.fieldPhoneNumbersParagraph %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+          phoneNumber = number.entity.fieldPhoneNumber
+          phoneExtension = number.entity.fieldPhoneExtension
+          phoneLabel = number.entity.fieldPhoneLabel
+          phoneHeaderLevel = 5
+        %}
+      {% endfor %}
     </div>
   {% else %}
     <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
-      <h5>Phone</h5>
-      <va-telephone
-        contact="{{ fieldPhoneNumber | removeDashes }}"
-      />
+      {% include "src/site/components/phone-number.drupal.liquid" with
+        phoneNumber = fieldPhoneNumber
+        phoneLabel = 'Main Phone'
+        phoneHeaderLevel = 5
+      %}
     </div>
   {% endif %}
 
