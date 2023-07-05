@@ -670,6 +670,8 @@ jobs:
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
           timeout: 10000
+        # A failure here should not prevent the workflow from continuing.
+        continue-on-error: true
 
   jenkins:
     name: Run Jenkins CI
