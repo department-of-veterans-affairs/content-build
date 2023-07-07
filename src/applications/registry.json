@@ -1469,5 +1469,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Notification Center",
+    "entryName": "notification-center",
+    "rootUrl": "/notification-center",
+    "productId": "",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
