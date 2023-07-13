@@ -1568,4 +1568,23 @@ module.exports = function registerFilters() {
       ...formattedData.filter(a => a.day === 0),
     ];
   };
+
+  liquid.filters.shouldShowiOSBanner = currentPath => {
+    const urlsForBanner = [
+      '/health-care/refill-track-prescriptions',
+      '/health-care/secure-messaging',
+      '/health-care/get-medical-records',
+      '/disability/view-disability-rating',
+      '/claim-or-appeal-status',
+      '/disability/upload-supporting-evidence',
+      '/records/download-va-letters',
+      '/va-payment-history',
+      '/change-direct-deposit',
+    ];
+
+    return (
+      cmsFeatureFlags.FEATURE_MOBILE_APP_PROMO &&
+      urlsForBanner.includes(currentPath)
+    );
+  };
 };
