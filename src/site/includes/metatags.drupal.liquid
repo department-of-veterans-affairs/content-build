@@ -22,6 +22,12 @@
   <meta name="DC.Date" content="{{ lastupdate| date: '%Y-%m-%d' }}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
+{% assign shouldShow = entityUrl.path | shouldShowiOSBanner %}
+<!-- iOS banner -->
+{% if shouldShow and buildtype === 'vagovstaging' %}
+  <meta name="apple-itunes-app" content="app-id=1559609596">
+{% endif %}
+
 <!-- og:url -->
 {% if entityUrl.path %}
   <meta property="og:url" content="{{ hostUrl }}{{ entityUrl.path }}/">
