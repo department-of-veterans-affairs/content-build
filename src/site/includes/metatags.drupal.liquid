@@ -24,7 +24,7 @@
 
 {% assign shouldShow = entityUrl.path | shouldShowiOSBanner %}
 <!-- iOS banner -->
-{% if shouldShow %}
+{% if shouldShow and buildtype === 'vagovstaging' %}
   <meta name="apple-itunes-app" content="app-id=1559609596">
 {% endif %}
 
