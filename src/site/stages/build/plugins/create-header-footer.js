@@ -3,30 +3,31 @@ const jsesc = require('jsesc');
 const hardCodedFooterData = require('../../../../platform/static-data/footer-links.json');
 
 const {
+  convertLinkToAbsolute,
   formatHeaderData: convertDrupalHeaderData,
 } = require('../drupal/menus');
 
-const formatLink = (link, linkIndex, columnId) => {
+const formatLink = (link, linkIndex, columnId, hostUrl) => {
   return {
     column: columnId,
-    href: link?.url?.path,
+    href: convertLinkToAbsolute(hostUrl, link?.url?.path),
     order: linkIndex + 1,
     target: null,
     title: link?.description,
   };
 };
 
-const formatColumn = (data, columnId) => {
+const formatColumn = (data, columnId, hostUrl) => {
   return data?.links?.map((link, linkIndex) =>
-    formatLink(link, linkIndex, columnId),
+    formatLink(link, linkIndex, columnId, hostUrl),
   );
 };
 
-const formatFooterColumns = data => {
+const formatFooterColumns = (data, hostUrl) => {
   return data?.links?.reduce?.(
     (acc, column, columnIndex) => [
       ...acc,
-      ...formatColumn(column, columnIndex + 1),
+      ...formatColumn(column, columnIndex + 1, hostUrl),
     ],
     [],
   );
@@ -34,6 +35,8 @@ const formatFooterColumns = data => {
 
 function createHeaderFooterData(buildOptions) {
   return (files, metalsmith, done) => {
+    const { hostUrl } = buildOptions;
+
     const megaMenuData = convertDrupalHeaderData(
       buildOptions,
       buildOptions.drupalData,
@@ -43,9 +46,14 @@ function createHeaderFooterData(buildOptions) {
       formatColumn(
         buildOptions.drupalData.data.vaGovFooterBottomRailQuery,
         'bottom_rail',
+        hostUrl,
       ) || [];
+
     const footerColumnsData =
-      formatFooterColumns(buildOptions.drupalData.data.vaGovFooterQuery) || [];
+      formatFooterColumns(
+        buildOptions.drupalData.data.vaGovFooterQuery,
+        hostUrl,
+      ) || [];
 
     const footerData = [
       ...bottomRailFooterData,
