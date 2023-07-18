@@ -342,4 +342,4 @@ function formatHeaderData(buildOptions, contentData) {
   return headerData;
 }
 
-module.exports = { convertLinkToAbsolute, formatHeaderData };
+module.exports = { formatHeaderData };

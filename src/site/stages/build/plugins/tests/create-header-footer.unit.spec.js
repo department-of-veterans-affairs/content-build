@@ -1,4 +1,3 @@
-/* eslint-disable @department-of-veterans-affairs/axe-check-required */
 import { expect } from 'chai';
 import { formatColumn, formatFooterColumns } from '../create-header-footer';
 
@@ -17,12 +16,6 @@ describe('footer utilities', () => {
         url: {
           path:
             'https://www.va.gov/resources/your-civil-rights-and-how-to-file-a-discrimination-complaint/',
-        },
-      },
-      {
-        description: 'Partial Link Test',
-        url: {
-          path: '/link-test-1',
         },
       },
     ],
@@ -44,12 +37,6 @@ describe('footer utilities', () => {
             description: 'Women Veterans',
             url: {
               path: 'https://www.va.gov/womenvet/',
-            },
-          },
-          {
-            description: 'Partial Link Test',
-            url: {
-              path: '/link-test-2',
             },
           },
         ],
@@ -81,9 +68,9 @@ describe('footer utilities', () => {
         description: 'Column 3',
         links: [
           {
-            description: 'Partial Link Test',
+            description: 'VA news',
             url: {
-              path: '/link-test-3',
+              path: 'https://news.va.gov/',
             },
           },
         ],
@@ -93,9 +80,7 @@ describe('footer utilities', () => {
 
   describe('formatColumn', () => {
     it('should properly return an array of formatted links for the footer', () => {
-      expect(
-        formatColumn(bottomRail, 'bottom_rail', 'https://www.va.gov'),
-      ).to.deep.equal([
+      expect(formatColumn(bottomRail, 'bottom_rail')).to.deep.equal([
         {
           column: 'bottom_rail',
           href: 'https://www.va.gov/accessibility-at-va',
@@ -111,21 +96,12 @@ describe('footer utilities', () => {
           target: null,
           title: 'Civil Rights',
         },
-        {
-          column: 'bottom_rail',
-          href: 'https://www.va.gov/link-test-1',
-          order: 3,
-          target: null,
-          title: 'Partial Link Test',
-        },
       ]);
     });
 
     describe('formatFooterColumns', () => {
       it('should properly return an array of formatted links for the footer', () => {
-        expect(
-          formatFooterColumns(footerColumns, 'https://www.va.gov'),
-        ).to.deep.equal([
+        expect(formatFooterColumns(footerColumns)).to.deep.equal([
           {
             column: 1,
             href: 'https://www.va.gov/homeless/',
@@ -141,39 +117,32 @@ describe('footer utilities', () => {
             title: 'Women Veterans',
           },
           {
-            column: 1,
-            href: 'https://www.va.gov/link-test-2',
-            order: 3,
-            target: null,
-            title: 'Partial Link Test',
-          },
-          {
             column: 2,
-            href: 'https://www.va.gov/find-forms',
+            href: '/find-forms',
             order: 1,
             target: null,
             title: 'VA forms',
           },
           {
             column: 2,
-            href: 'https://www.va.gov/jobs',
+            href: '/jobs',
             order: 2,
             target: null,
             title: 'Careers at VA',
           },
           {
             column: 2,
-            href: 'https://www.va.gov/outreach-and-events/outreach-materials',
+            href: '/outreach-and-events/outreach-materials',
             order: 3,
             target: null,
             title: 'VA outreach materials',
           },
           {
             column: 3,
-            href: 'https://www.va.gov/link-test-3',
+            href: 'https://news.va.gov/',
             order: 1,
             target: null,
-            title: 'Partial Link Test',
+            title: 'VA news',
           },
         ]);
       });
