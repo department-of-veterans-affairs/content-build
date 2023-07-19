@@ -18,7 +18,7 @@ const {
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
-const TINYLIQUID_TIMEOUT_MINUTES = 20;
+const TINYLIQUID_TIMEOUT_MINUTES = process.env.SOURCE_REF ? 20 : 60;
 
 function getPath(obj) {
   return obj.path;
