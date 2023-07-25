@@ -131,6 +131,7 @@ const FACILITY_MENU_NAMES = [
   'va-western-colorado-health-care',
   // VISN 20
   'va-alaska-health-care',
+  'va-alaska-2-health-care',
   'va-boise-health-care',
   'va-portland-health-care',
   'va-puget-sound-health-care',
