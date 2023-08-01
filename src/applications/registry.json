@@ -56,7 +56,7 @@
   },
   {
     "appName": "VA Online Scheduling NEW",
-    "entryName": "vaosNew",
+    "entryName": "vaos",
     "rootUrl": "/my-health/appointments",
     "template": {
       "vagovprod": false,
