@@ -77,6 +77,7 @@
                     {% if fieldQA.entity %}
                       <va-accordion-item
                         data-faq-entity-id="{{ fieldQA.entity.entityId }}"
+                        id="{{ fieldQA.entity.title | hashReference: 30 }}"
                       >
                         <h3 slot="headline">
                           {{ fieldQA.entity.title }}
