@@ -1476,12 +1476,16 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
+    const abTestSurvey = (surveyA, surveyB) => {
+      return Math.random() < 0.5 ? surveyA : surveyB;
+    };
+
     if (
       buildtype === 'localhost' ||
       buildtype === 'vagovstaging' ||
       buildtype === 'vagovdev'
     ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+      return stagingSurveys[url] ? stagingSurveys[url] : abTestSurvey(11, 37);
     }
     if (buildtype === 'vagovprod') {
       return prodSurveys[url] ? prodSurveys[url] : 17;

@@ -2470,14 +2470,19 @@ describe('getSurvey', () => {
       '/contact-us/virtual-agent',
     ];
     const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
+    const stagingAbTest = [11, 37];
+
+    const stagingDefault = liquid.filters.getSurvey(
+      testBuildTypes[1],
+      testUrls[1],
+      stagingSurveys,
+    );
+
+    expect(stagingAbTest.includes(stagingDefault)).to.be.true;
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
     ).to.equal(20);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[1], stagingSurveys),
-    ).to.equal(11);
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
