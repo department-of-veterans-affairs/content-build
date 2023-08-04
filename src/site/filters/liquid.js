@@ -1476,8 +1476,8 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    const abTestSurvey = (num1, num2) => {
-      return Math.random() < 0.5 ? num1 : num2;
+    const abTestSurvey = (surveyA, surveyB) => {
+      return Math.random() < 0.5 ? surveyA : surveyB;
     };
 
     if (
