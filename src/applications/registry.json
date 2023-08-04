@@ -1388,6 +1388,16 @@
     }
   },
   {
+    "appName": "Mock Form Patterns",
+    "entryName": "mock-form-patterns-v3",
+    "rootUrl": "/mock-form-patterns",
+    "productId": "46a3411a-7a98-4527-bcd8-b0cd71226bff",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "21-10210 Lay/Witness Statement",
     "entryName": "10210-lay-witness-statement",
     "rootUrl": "/supporting-forms-for-claims/lay-witness-statement-form-21-10210",
