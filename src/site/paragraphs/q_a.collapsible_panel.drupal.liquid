@@ -10,6 +10,7 @@
 
       <va-accordion-item
         header="{{ item.fieldQuestion }}"
+        id="{{ item.fieldQuestion | hashReference: 30 }}"
         {% if level %}
           level="{{ level }}"
           {% else %}
