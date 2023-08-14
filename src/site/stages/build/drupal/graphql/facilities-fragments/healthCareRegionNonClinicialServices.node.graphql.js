@@ -27,6 +27,7 @@ module.exports = `
       entities {
         ... on NodeHealthCareLocalFacility {
           entityLabel
+          fieldPhoneNumber
           fieldOfficeHours {
             day
             starthours
