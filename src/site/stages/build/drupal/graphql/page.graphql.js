@@ -41,6 +41,7 @@ const pageFragment = `
         ... downloadableFile
         ... embeddedImage
         ... numberCallout
+        ... qaGroup 
       }
     }
     ${FIELD_ALERT}
@@ -67,6 +68,7 @@ function getPageNodeSlice(operationName, offset, limit) {
     ${fragments.process}
     ${fragments.qaSection}
     ${fragments.qa}
+    ${fragments.qaGroup}
     ${fragments.listOfLinkTeasers}
     ${fragments.reactWidget}
     ${fragments.spanishSummary}
