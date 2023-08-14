@@ -1487,8 +1487,9 @@ module.exports = function registerFilters() {
     ) {
       return stagingSurveys[url] ? stagingSurveys[url] : abTestSurvey(11, 37);
     }
+
     if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : 17;
+      return prodSurveys[url] ? prodSurveys[url] : abTestSurvey(17, 39);
     }
     return null;
   };
