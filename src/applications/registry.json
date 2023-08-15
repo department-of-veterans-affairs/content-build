@@ -1543,5 +1543,16 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "PACT Act",
+    "entryName": "pact-act",
+    "rootUrl": "/test/pact-act",
+    "template": {
+      "title": "PACT Act",
+      "layout": "page-react.html",
+      "description": "PACT Act application",
+      "vagovprod": false
+    }
   }
 ]
