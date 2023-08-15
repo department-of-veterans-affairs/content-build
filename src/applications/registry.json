@@ -921,7 +921,7 @@
         },
         {
           "path": "resources/search",
-          "name": "Search results"
+          "name": "Resources and Support Search Results"
         }
       ]
     }
@@ -1456,7 +1456,10 @@
     "productId": "f1075156-0d85-4a0e-bce6-3f053b6243b5",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "minimalFooter": true
     }
   },
   {
