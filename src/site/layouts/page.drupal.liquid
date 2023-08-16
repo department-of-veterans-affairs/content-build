@@ -50,9 +50,13 @@
           {% endif %}
 
           {% for block in fieldContentBlock %}
+            {% if block.entity.entityBundle == "q_a_group" %}
+            {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = block.entity %}
+          {% else %}
             {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
             {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
             {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
+          {% endif %}  
           {% endfor %}
           {% if fieldRelatedLinks != empty %}
             <div class="row">

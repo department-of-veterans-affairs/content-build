@@ -1553,5 +1553,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+   },
+   {
+    "appName": "Request a Presidential Memorial Certificate",
+    "entryName": "0247-pmc",
+    "rootUrl": "/request-presidential-memorial-certificate",
+    "productId": "5af7a83b-c1a0-4a0a-b0e9-88baf150e6a9",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
