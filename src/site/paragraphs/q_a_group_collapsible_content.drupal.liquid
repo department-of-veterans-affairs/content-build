@@ -9,6 +9,39 @@
     {% if entity.fieldRichWysiwyg.processed %}
         {{ entity.fieldRichWysiwyg.processed }}
     {% endif %}
+
+    <div>
+    <va-accordion>  
+      {% for accordionItem in fieldQAs %}
+        {% assign item = accordionItem.entity %}
+        {% assign id = item.entityId %}
+        <va-accordion-item
+          header="{{ item.entityLabel }}"
+          id="{{ item.entityLabel | hashReference: 30 }}"
+        >
+          <div
+            id={{ id }}
+            data-entity-id="{{ id }}"
+          >
+            <div id="{{ entity.entitiyBundle }}-{{ id }}">
+              {% for answer in item.fieldAnswer %}
+                {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
+                {% include {{ bundleComponent }} with entity = answer.entity %}
+              {% endfor %}
+            </div>
+          </div>
+        </va-accordion-item>
+      {% endfor %}
+    </va-accordion>
+  </div>
+  
+
+
+
+
+
+
+
                   
     {% assign fieldSectionHeaderTag = 'h2' %}
     {% if entity.fieldSectionHeader %}
@@ -24,6 +57,3 @@
             {% endif %}
         </ul>
     {% endfor %}
-
-                  
-                  
