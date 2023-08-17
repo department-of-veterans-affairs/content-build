@@ -1535,6 +1535,26 @@
     }
   },
   {
+    "appName": "DS Playground",
+    "entryName": "ds-playground",
+    "rootUrl": "/ds-playground",
+    "productId": "7cb70bc6-9331-416f-aa20-20e6a595cfb1",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "DS V3 Playground",
+    "entryName": "ds-v3-playground",
+    "rootUrl": "/ds-v3-playground",
+    "productId": "63fa0a80-e79d-47e7-9cce-e03a8edb2535",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+   },
+   {
     "appName": "Request a Presidential Memorial Certificate",
     "entryName": "0247-pmc",
     "rootUrl": "/request-presidential-memorial-certificate",
