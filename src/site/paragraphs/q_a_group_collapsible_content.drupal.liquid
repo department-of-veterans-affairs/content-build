@@ -16,7 +16,7 @@
       {% assign id = item.entityId %}
       <va-accordion-item header="{{ item.entityLabel }}" id="{{ item.entityLabel | hashReference: 30 }}">
         <div id={{ id }} data-entity-id="{{ id }}">
-          <div id="{{ entity.entitiyBundle }}-{{ id }}">
+          <div id="{{ entity.entityBundle }}-{{ id }}">
             {% for answer in item.fieldAnswer %}
               {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
               {% include {{ bundleComponent }} with entity = answer.entity %}
