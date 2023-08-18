@@ -1,9 +1,15 @@
 <section role="contentinfo">
   <footer class="footer">
+    {% unless customFooter %}
     <div
       id="footerNav"
       data-minimal-footer="{% if minimalFooter %}true{% else %}false{% endif %}"
     ></div>
+    {% else %}
+      {% if customFooter === "custom-footer" %}
+        {% include "src/site/includes/custom-footer.html" %}
+      {% endif %}
+    {% endunless %}
   </footer>
 </section>
 <div id="logout-modal-root"></div>

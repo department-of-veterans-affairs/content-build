@@ -1551,7 +1551,10 @@
     "productId": "63fa0a80-e79d-47e7-9cce-e03a8edb2535",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "noHeader": true,
+      "customHeader": "custom-header",
+      "customFooter": "custom-footer"
     }
    },
    {

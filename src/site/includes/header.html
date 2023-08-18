@@ -178,6 +178,14 @@
     {% unless noHeader %}
       {% include "src/site/includes/top-nav.html" %}
     {% endunless %}
+
+    {% if customHeader === "custom-header" %}
+      {% include "src/site/includes/custom-header.html" %}
+    {% endif %}
+
+    {% if customHeader === "flag-header" %}
+      {% include "src/site/includes/usa-website-header.html" %}
+    {% endif %}
   </header>
 
   <!-- Fullwidth banner alerts -->
