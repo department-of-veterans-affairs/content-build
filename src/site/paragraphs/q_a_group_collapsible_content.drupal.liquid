@@ -10,20 +10,18 @@
   {{ entity.fieldRichWysiwyg.processed }}
 {% endif %}
 
-<div>
-  <va-accordion>
-    {% for item in fieldQAs %}
-      {% assign id = item.entityId %}
-      <va-accordion-item header="{{ item.entityLabel }}" id="{{ item.entityLabel | hashReference: 30 }}">
-        <div id={{ id }} data-entity-id="{{ id }}">
-          <div id="{{ item.fieldAnswer.entity.entityBundle }}-{{ item.fieldAnswer.entity.entityId }}">
-            {% if item.fieldAnswer %}
-              {% assign bundleComponent = "src/site/paragraphs/" | append: item.fieldAnswer.entity.entityBundle | append: ".drupal.liquid" %}
-              {% include {{ bundleComponent }} with entity = item.fieldAnswer.entity %}
-            {% endif %}
-          </div>
+<va-accordion>
+  {% for item in fieldQAs %}
+    {% assign id = item.entityId %}
+    <va-accordion-item header="{{ item.entityLabel }}" id="{{ item.entityLabel | hashReference: 30 }}">
+      <div id={{ id }} data-entity-id="{{ id }}">
+        <div id="{{ item.fieldAnswer.entity.entityBundle }}-{{ item.fieldAnswer.entity.entityId }}">
+          {% if item.fieldAnswer %}
+            {% assign bundleComponent = "src/site/paragraphs/" | append: item.fieldAnswer.entity.entityBundle | append: ".drupal.liquid" %}
+            {% include {{ bundleComponent }} with entity = item.fieldAnswer.entity %}
+          {% endif %}
         </div>
-      </va-accordion-item>
-    {% endfor %}
-  </va-accordion>
-</div>
+      </div>
+    </va-accordion-item>
+  {% endfor %}
+</va-accordion>

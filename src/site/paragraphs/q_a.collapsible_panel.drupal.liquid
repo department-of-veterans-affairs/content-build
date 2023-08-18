@@ -1,6 +1,6 @@
 <div data-template="paragraphs/q_a.collapsible_panel">
   <va-accordion>
-
+    
     {% assign questions = entity.fieldQuestions %}
     {% assign sectionHeader = entity.fieldSectionHeader %}
 
@@ -12,16 +12,18 @@
         header="{{ item.fieldQuestion }}"
         id="{{ item.fieldQuestion | hashReference: 30 }}"
         {% if level %}
-        level="{{ level }}"
-        {% else %}
-        level=3
-        {% endif %}>
+          level="{{ level }}"
+          {% else %}
+          level=3
+        {% endif %}
+      >
         <div
           id={{ id }}
           data-template="paragraphs/q_a.collapsible_panel__qa"
           data-entity-id="{{ id }}"
           data-analytics-faq-section="{{ sectionHeader | escape }}"
-          data-analytics-faq-text="{{ item.fieldQuestion | escape }}">
+          data-analytics-faq-text="{{ item.fieldQuestion | escape }}"
+        >
           <div id="{{ item.entityBundle }}-{{ id }}">
             {% for answer in item.fieldAnswer %}
               {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
