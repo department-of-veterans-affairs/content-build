@@ -46,7 +46,11 @@
             <!-- Content blocks -->
             {% for block in fieldContentBlock %}
               {% if block.entity.entityBundle == "q_a_group" %}
-                {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = block.entity %}
+                {% if block.entity.fieldAccordionDisplay %}
+                  {% include "src/site/paragraphs/q_a_group_collapsible_content.drupal.liquid" with entity = block.entity %}
+                {% else %}
+                  {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = block.entity %}
+                {% endif %}
               {% else %}
                 {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
                 {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
