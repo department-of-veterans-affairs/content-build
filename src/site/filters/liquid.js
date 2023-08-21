@@ -1421,6 +1421,7 @@ module.exports = function registerFilters() {
         entityUrl: facility?.entityUrl,
         fieldAddress: facility?.fieldAddress,
         fieldOfficeHours: facility?.fieldOfficeHours,
+        fieldPhoneNumber: facility?.fieldPhoneNumber,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
           facility?.reverseFieldFacilityLocationNode?.entities || [],
           serviceType,

@@ -32,7 +32,7 @@
 {% comment %}
   Conditionally display facility phone number
 {% endcomment %}
-{% if single.fieldUseMainFacilityPhone %}
+{% if fieldPhoneNumber and single.fieldUseMainFacilityPhone %}
   {% include "src/site/components/phone-number.drupal.liquid" with
     phoneNumber = fieldPhoneNumber
     phoneLabel = 'Main Phone'
