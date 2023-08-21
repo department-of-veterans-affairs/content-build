@@ -13,7 +13,7 @@ const formatLink = (link, linkIndex, columnId, hostUrl) => {
     href: convertLinkToAbsolute(hostUrl, link?.url?.path),
     order: linkIndex + 1,
     target: null,
-    title: link?.description,
+    title: link?.label,
   };
 };
 

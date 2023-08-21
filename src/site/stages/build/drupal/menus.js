@@ -267,7 +267,7 @@ function formatHeaderData(buildOptions, contentData) {
   if (!contentData?.data?.menuLinkContentQuery?.entities) {
     // eslint-disable-next-line no-console
     throw new Error(
-      'contentData not recieved from Drupal, please check and restart SOCKS connection.',
+      'contentData not received from Drupal, please check and restart SOCKS connection.',
     );
   }
 
