@@ -42,17 +42,19 @@
       </div>
 
       <!-- Content blocks -->
-      <article class="vads-u-padding-bottom--4">
-        {% for block in fieldContentBlock %}
-          {% if block.entity.entityBundle == 'lists_of_links' and block.entity.fieldSectionHeader == 'Browse by audience' %}
-            {% include 'src/site/components/browse-by-audience.drupal.liquid' %}
-          {% else %}
-              {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
-              {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-              {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
-          {% endif %}
+      <article class="usa-width-three-fourths vads-u-padding-bottom--4">
+        <div class="usa-content">
+          {% for block in fieldContentBlock %}
+            {% if block.entity.entityBundle == 'lists_of_links' and block.entity.fieldSectionHeader == 'Browse by audience' %}
+              {% include 'src/site/components/browse-by-audience.drupal.liquid' %}
+            {% else %}
+                {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
+                {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
+            {% endif %}
 
-        {% endfor %}
+          {% endfor %}
+        </div>
       </article>
 
       <div class="usa-width-three-fourths">
