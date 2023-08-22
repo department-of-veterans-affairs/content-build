@@ -463,6 +463,7 @@
               {% for faqParagraph in fieldClpFaqParagraphs %}
                 {% if faqParagraph.entity %}
                   <va-accordion-item
+                    class="va-accordion-item"
                     header="{{ faqParagraph.entity.fieldQuestion }}"
                     level="3"
                     data-faq-entity-id="{{ faqParagraph.entity.entityId }}"

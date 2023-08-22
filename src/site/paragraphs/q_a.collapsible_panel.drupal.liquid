@@ -9,6 +9,7 @@
       {% assign id = item.entityId %}
 
       <va-accordion-item
+        class="va-accordion-item"
         header="{{ item.fieldQuestion }}"
         id="{{ item.fieldQuestion | hashReference: 30 }}"
         {% if level %}
