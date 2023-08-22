@@ -71,6 +71,7 @@ const nodeEvent = `
         entityBundle
         entityId
         entityType
+        fieldAddress
         entityUrl {
           path
         }
@@ -223,6 +224,7 @@ const nodeEventWithoutBreadcrumbs = `
         entityBundle
         entityId
         entityType
+        fieldAddress
         entityUrl {
           path
         }

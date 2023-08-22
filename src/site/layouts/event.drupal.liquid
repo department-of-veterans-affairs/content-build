@@ -62,6 +62,7 @@
 
             <!-- Where -->
             {% if fieldFacilityLocation or fieldAddress.addressLine1 or fieldLocationType == "online" %}
+            {% assign fieldFacilityAddress = fieldFacilityLocation.entity.fieldAddress  %}
               <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
                 <p class="vads-u-margin--0 vads-u-margin-right--0p5">
                   <strong>Where:</strong>
@@ -90,23 +91,24 @@
                     {% if fieldLocationHumanreadable != empty %}
                       <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                     {% endif %}
-                    {% if fieldAddress.addressLine1 %}
-                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
+                    {% if fieldAddress.addressLine1 or fieldFacilityAddress.addressLine1 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 or fieldFacilityAddress.addressLine1 }}</p>
                     {% endif %}
 
-                    {% if fieldAddress.addressLine2 %}
-                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
+                    {% if fieldAddress.addressLine2 or fieldFacilityAddress.addressLine2 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 or fieldFacilityAddress.addressLine2 }}</p>
                     {% endif %}
 
                     <p class="vads-u-margin--0">
-                      {% if fieldAddress.locality %}
-                        {{ fieldAddress.locality | strip }},
+                      {% if fieldAddress.locality or fieldFacilityAddress.locality  %}
+                        {{ fieldAddress.locality or fieldFacilityAddress.locality | strip }},
                       {% endif %}
 
-                      {% if fieldAddress.administrativeArea %}
-                        {{ fieldAddress.administrativeArea }}
+                      {% if fieldAddress.administrativeArea or fieldFacilityAddress.administrativeArea  %}
+                        {{ fieldAddress.administrativeArea or fieldFacilityAddress.administrativeArea }}
                       {% endif %}
                     </p>
+                  </div>
                   </div>
                 {% endif %}
               </div>
