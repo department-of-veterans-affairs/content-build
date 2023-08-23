@@ -68,7 +68,7 @@ const nodeEvent = `
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
-        ...on NodeVetCenter{
+        ...on NodeHealthCareLocalFacility {
           fieldAddress {
             locality
             administrativeArea
@@ -229,7 +229,15 @@ const nodeEventWithoutBreadcrumbs = `
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
-        ...on NodeVetCenter{
+        ... on NodeVetCenter {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
+        ...on NodeHealthCareLocalFacility
           fieldAddress {
             locality
             administrativeArea
