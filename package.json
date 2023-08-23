@@ -43,8 +43,8 @@
     "watch:review": "node ./script/run-review-instance-api.js",
     "list-heading-order-violations": "node script/heading-order-violations.js --dir ./build/vagovdev",
     "prepare": "husky install",
-    "prune-self-hosted-runners": "export DEBUG=true; node script/prune-self-hosted-runners.js",
-    "prune-self-hosted-runners:dry-run": "export DEBUG=true; export DRY_RUN=true; node script/prune-self-hosted-runners.js"
+    "prune-self-hosted-runners": "node script/prune-self-hosted-runners.js",
+    "prune-self-hosted-runners:dry-run": "export DRY_RUN=true; node script/prune-self-hosted-runners.js"
   },
   "repository": {
     "type": "git",

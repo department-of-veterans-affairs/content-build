@@ -219,7 +219,7 @@ function getDoomedRunners(instances, runners) {
  */
 async function deleteRunners(runners, token, owner, repo, dryRun) {
   if (dryRun) {
-    console.log('Dry run: Not deleting runners.');
+    debug('Dry run: Not deleting runners.');
     return;
   }
   const octokit = new Octokit({
@@ -234,7 +234,7 @@ async function deleteRunners(runners, token, owner, repo, dryRun) {
         runner_id: runnerId,
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
       });
     debug('Delete runner response:', response);
   }
@@ -248,7 +248,7 @@ async function deleteRunners(runners, token, owner, repo, dryRun) {
  */
 async function removeInstances(instances, dryRun) {
   if (dryRun) {
-    console.log('Dry run: Not marking instances as unhealthy.');
+    debug('Dry run: Not marking instances as unhealthy.');
     return;
   }
   const asg = new AWS.AutoScaling();
