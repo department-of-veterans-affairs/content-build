@@ -68,15 +68,18 @@ const nodeEvent = `
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
+        ...on NodeVetCenter{
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
         entityBundle
         entityId
         entityType
-        fieldAddress {
-          locality
-          administrativeArea
-          postalCode
-          addressLine1
-        }
+
         entityUrl {
           path
         }
@@ -226,15 +229,17 @@ const nodeEventWithoutBreadcrumbs = `
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
+        ...on NodeVetCenter{
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
         entityBundle
         entityId
         entityType
-        fieldAddress {         
-          locality
-          administrativeArea
-          postalCode
-          addressLine1
-        }
         entityUrl {
           path
         }
