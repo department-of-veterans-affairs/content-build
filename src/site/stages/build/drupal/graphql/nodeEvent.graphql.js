@@ -71,7 +71,12 @@ const nodeEvent = `
         entityBundle
         entityId
         entityType
-        fieldAddress
+        fieldAddress {
+          locality
+          administrativeArea
+          postalCode
+          addressLine1
+        }
         entityUrl {
           path
         }
@@ -224,7 +229,12 @@ const nodeEventWithoutBreadcrumbs = `
         entityBundle
         entityId
         entityType
-        fieldAddress
+        fieldAddress {         
+          locality
+          administrativeArea
+          postalCode
+          addressLine1
+        }
         entityUrl {
           path
         }
