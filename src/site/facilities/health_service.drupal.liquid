@@ -4,6 +4,7 @@
                 subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
                 data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
             {% endif %}
+            class="va-accordion-item"
             data-label="{{ serviceTaxonomy.name }}"
             data-template="facilities/health_service"
             id="{{serviceTaxonomy.name | hashReference: 30 }}"
