@@ -42,7 +42,9 @@
     "watch:css-sourcemaps": "node --max-old-space-size=5000 --expose-gc script/build-content.js --watch --local-css-sourcemaps",
     "watch:review": "node ./script/run-review-instance-api.js",
     "list-heading-order-violations": "node script/heading-order-violations.js --dir ./build/vagovdev",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prune-self-hosted-runners": "export DEBUG=true; node script/prune-self-hosted-runners.js",
+    "prune-self-hosted-runners:dry-run": "export DEBUG=true; export DRY_RUN=true; node script/prune-self-hosted-runners.js"
   },
   "repository": {
     "type": "git",
@@ -205,6 +207,7 @@
   "private": true,
   "dependencies": {
     "@department-of-veterans-affairs/vagov-platform": "^0.0.1",
+    "aws-sdk": "^2.1441.0",
     "blob-polyfill": "^4.0.20200601",
     "core-js": "^3.17.3",
     "diff2html": "^3.4.11",
