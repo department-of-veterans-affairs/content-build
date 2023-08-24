@@ -458,7 +458,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Wait for the CMS to be ready
-        uses: ./content-build/.github/workflows/wait-for-cms-ready
+        uses: ./.github/workflows/wait-for-cms-ready
 
       - name: Notify CMS - Ready
         uses: ./.github/workflows/authenticated-cms-request
@@ -484,7 +484,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Wait for the CMS to be ready
-        uses: ./content-build/.github/workflows/wait-for-cms-ready
+        uses: ./.github/workflows/wait-for-cms-ready
 
       - name: Notify CMS - Error
         uses: ./.github/workflows/authenticated-cms-request
