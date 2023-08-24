@@ -75,8 +75,32 @@
                         {{ fieldFacilityLocation.entity.title }}
                       </a>
                     </p>
-
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+                    {% if fieldFacilityAddress.addressLine1 != empty %}
+                    <p class="vads-u-margin--0">{{ fieldFacilityAddress.addressLine1  }}</p>
+                  {% endif %}
+                  {% if fieldFacilityAddress.addressLine2 != empty %}
+                  <p class="vads-u-margin--0">{{ fieldFacilityAddress.addressLine2 }}</p>
+                {% endif %}
+
+                <p class="vads-u-margin--0">
+                  {% if fieldFacilityAddress.locality != empty  %}
+                    {{ fieldFacilityAddress.locality | strip }},
+                  {% endif %}
+
+                  {% if fieldFacilityAddress.administrativeArea != empty  %}
+                    {{ fieldFacilityAddress.administrativeArea }}
+                  {% endif %}
+                  </p>
+                    {% capture fullAddress %}
+                      {{ fieldFacilityAddress.addressLine1 }}, {{ fieldFacilityAddress.locality }}, {{ fieldFacilityAddress.administrativeArea}} {{ fieldFacilityAddress.postalCode }}
+                    {% endcapture %}
+                    {% include "src/site/includes/directions-google-maps.liquid" with
+                      directionsLinkTitle = fieldFacilityLocation.entity.title
+                      directionsLinkAddress = fullAddress
+                      directionsLinkOnClickPropName = "vet-center-facility-name"
+                      directionsLinkOnClickPropValue = fieldFacilityLocation.entity.title
+                    %}
                   </div>
 
                 {% elsif fieldLocationType == "online" %}
@@ -91,23 +115,32 @@
                     {% if fieldLocationHumanreadable != empty %}
                       <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                     {% endif %}
-                    {% if fieldAddress.addressLine1 or fieldFacilityAddress.addressLine1 %}
-                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 or fieldFacilityAddress.addressLine1 }}</p>
+                    {% if fieldAddress.addressLine1  %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1  }}</p>
                     {% endif %}
 
-                    {% if fieldAddress.addressLine2 or fieldFacilityAddress.addressLine2 %}
-                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 or fieldFacilityAddress.addressLine2 }}</p>
+                    {% if fieldAddress.addressLine2  %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2  }}</p>
                     {% endif %}
 
                     <p class="vads-u-margin--0">
-                      {% if fieldAddress.locality or fieldFacilityAddress.locality  %}
-                        {{ fieldAddress.locality or fieldFacilityAddress.locality | strip }},
+                      {% if fieldAddress.locality   %}
+                        {{ fieldAddress.locality  | strip }},
                       {% endif %}
 
-                      {% if fieldAddress.administrativeArea or fieldFacilityAddress.administrativeArea  %}
-                        {{ fieldAddress.administrativeArea or fieldFacilityAddress.administrativeArea }}
+                      {% if fieldAddress.administrativeArea   %}
+                        {{ fieldAddress.administrativeArea  }}
                       {% endif %}
                     </p>
+                    {% capture fullAddress %}
+                      {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea}} {{ fieldAddress.postalCode }}
+                    {% endcapture %}
+                    {% include "src/site/includes/directions-google-maps.liquid" with
+                      directionsLinkTitle = title
+                      directionsLinkAddress = fullAddress
+                      directionsLinkOnClickPropName = "facility-name"
+                      directionsLinkOnClickPropValue = title
+                    %}
                   </div>
                   </div>
                 {% endif %}

@@ -84,6 +84,38 @@ const nodeEvent = `
             addressLine1
           }
         }
+        ...on NodeNcaFacility {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
+        ...on NodeVbaFacility {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
+        ...on NodeVetCenterOutstation {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
+        ...on NodeVetCenterCap {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
         entityBundle
         entityId
         entityType
@@ -252,6 +284,39 @@ const nodeEventWithoutBreadcrumbs = `
             postalCode
             addressLine1
           }
+        }
+        ...on NodeNcaFacility {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
+        ...on NodeVbaFacility {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
+        ...on NodeVetCenterOutstation {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
+        ...on NodeVetCenterCap {
+          fieldAddress {
+            locality
+            administrativeArea
+            postalCode
+            addressLine1
+          }
+        }
         }
         entityBundle
         entityId
