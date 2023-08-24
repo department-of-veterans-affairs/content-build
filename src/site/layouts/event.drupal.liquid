@@ -62,13 +62,13 @@
 
             <!-- Where -->
             {% if fieldFacilityLocation or fieldAddress.addressLine1 or fieldLocationType == "online" %}
-            {% assign fieldFacilityAddress = fieldFacilityLocation.entity.fieldAddress  %}
               <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
                 <p class="vads-u-margin--0 vads-u-margin-right--0p5">
                   <strong>Where:</strong>
                 </p>
 
                 {% if fieldFacilityLocation %}
+                {% assign fieldFacilityAddress = fieldFacilityLocation.entity.fieldAddress  %}
                   <div class="vads-u-display--flex vads-u-flex-direction--column">
                     <p class="vads-u-margin--0">
                       <a href="{{ fieldFacilityLocation.entity.entityUrl.path }}">
@@ -115,21 +115,21 @@
                     {% if fieldLocationHumanreadable != empty %}
                       <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                     {% endif %}
-                    {% if fieldAddress.addressLine1  %}
-                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1  }}</p>
+                    {% if fieldAddress.addressLine1 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine1 }}</p>
                     {% endif %}
 
-                    {% if fieldAddress.addressLine2  %}
-                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2  }}</p>
+                    {% if fieldAddress.addressLine2 %}
+                      <p class="vads-u-margin--0">{{ fieldAddress.addressLine2 }}</p>
                     {% endif %}
 
                     <p class="vads-u-margin--0">
-                      {% if fieldAddress.locality   %}
-                        {{ fieldAddress.locality  | strip }},
+                      {% if fieldAddress.locality %}
+                        {{ fieldAddress.locality | strip }},
                       {% endif %}
 
-                      {% if fieldAddress.administrativeArea   %}
-                        {{ fieldAddress.administrativeArea  }}
+                      {% if fieldAddress.administrativeArea %}
+                        {{ fieldAddress.administrativeArea }}
                       {% endif %}
                     </p>
                     {% capture fullAddress %}
