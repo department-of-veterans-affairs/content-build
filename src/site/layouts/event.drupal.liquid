@@ -76,7 +76,7 @@
                       </a>
                     </p>
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
-                    {% if fieldFacilityAddress.addressLine1 != empty %}
+                      {% if fieldFacilityAddress.addressLine1 != empty %}
                     <p class="vads-u-margin--0">{{ fieldFacilityAddress.addressLine1  }}</p>
                   {% endif %}
                   {% if fieldFacilityAddress.addressLine2 != empty %}
@@ -92,6 +92,7 @@
                     {{ fieldFacilityAddress.administrativeArea }}
                   {% endif %}
                   </p>
+                  {% if fieldFacilityAddress.addressLine1 %}
                     {% capture fullAddress %}
                       {{ fieldFacilityAddress.addressLine1 }}, {{ fieldFacilityAddress.locality }}, {{ fieldFacilityAddress.administrativeArea}} {{ fieldFacilityAddress.postalCode }}
                     {% endcapture %}
@@ -101,6 +102,7 @@
                       directionsLinkOnClickPropName = "vet-center-facility-name"
                       directionsLinkOnClickPropValue = fieldFacilityLocation.entity.title
                     %}
+                  {% endif %}
                   </div>
 
                 {% elsif fieldLocationType == "online" %}
@@ -132,15 +134,17 @@
                         {{ fieldAddress.administrativeArea }}
                       {% endif %}
                     </p>
-                    {% capture fullAddress %}
-                      {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea}} {{ fieldAddress.postalCode }}
-                    {% endcapture %}
-                    {% include "src/site/includes/directions-google-maps.liquid" with
+                    {% if fieldAddress.addressLine1 %}
+                      {% capture fullAddress %}
+                        {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea}} {{ fieldAddress.postalCode }}
+                      {% endcapture %}
+                      {% include "src/site/includes/directions-google-maps.liquid" with
                       directionsLinkTitle = title
                       directionsLinkAddress = fullAddress
                       directionsLinkOnClickPropName = "facility-name"
                       directionsLinkOnClickPropValue = title
-                    %}
+                      %}
+                    {% endif %}
                   </div>
                   </div>
                 {% endif %}

@@ -1,6 +1,15 @@
 // Relative imports.
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
+const FIELD_ADDRESS = `
+fieldAddress {
+  addressLine1
+  addressLine2
+  postalCode
+  locality
+  administrativeArea
+}`;
+
 // Create NodeEvent fragment.
 const nodeEvent = `
   fragment nodeEvent on NodeEvent {
@@ -69,52 +78,22 @@ const nodeEvent = `
     fieldFacilityLocation {
       entity {
         ... on NodeVetCenter {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeHealthCareLocalFacility {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeNcaFacility {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeVbaFacility {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeVetCenterOutstation {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeVetCenterCap {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         entityBundle
         entityId
@@ -270,52 +249,22 @@ const nodeEventWithoutBreadcrumbs = `
     fieldFacilityLocation {
       entity {
         ... on NodeVetCenter {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeHealthCareLocalFacility {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeNcaFacility {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeVbaFacility {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeVetCenterOutstation {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         ...on NodeVetCenterCap {
-          fieldAddress {
-            locality
-            administrativeArea
-            postalCode
-            addressLine1
-          }
+          ${FIELD_ADDRESS}
         }
         entityBundle
         entityId
