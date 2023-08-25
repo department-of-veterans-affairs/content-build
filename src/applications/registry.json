@@ -1552,7 +1552,8 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
-    }
+    },
+    "useLocalStylesAndComponents": true
    },
    {
     "appName": "Request a Presidential Memorial Certificate",
