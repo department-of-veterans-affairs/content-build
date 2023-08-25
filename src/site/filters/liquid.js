@@ -811,11 +811,30 @@ module.exports = function registerFilters() {
 
     // Converts all complex key/value pairs in obj to simple strings
     // e.g. key: [{ value: 'foo' }] => key: 'foo'
-    const flattenArrayValues = obj => {
+    // Recursion is used to flatten pairs in entity objects deeper in the data
+    const flattenArrayValues = (obj, flattenContentType) => {
+      const isEntityArray = a => {
+        const uniqKeyValues = a.filter((item, pos) => a.indexOf(item) === pos);
+        return uniqKeyValues.length === 1 && uniqKeyValues[0] === 'entity';
+      };
+
       const newObj = {};
       for (const [key] of Object.entries(obj)) {
-        if (Array.isArray(obj[key]) && obj[key][0]?.value) {
+        if (
+          Array.isArray(obj[key]) &&
+          obj[key][0]?.value &&
+          (Object.keys(obj[key][0]).length === 1 ||
+            flattenContentType === 'react_widget')
+        ) {
           newObj[key] = obj[key][0].value;
+        } else if (
+          Array.isArray(obj[key]) &&
+          isEntityArray(obj[key].map(objKey => Object.keys(objKey)[0]))
+        ) {
+          // Recursively flattens nested entity arrays
+          newObj[key] = obj[key].map(nestedObj => {
+            return { entity: flattenArrayValues(nestedObj.entity) };
+          });
         } else {
           newObj[key] = obj[key];
         }
@@ -867,7 +886,7 @@ module.exports = function registerFilters() {
         };
       }
       case 'react_widget': {
-        const normalizedData = flattenArrayValues(entity);
+        const normalizedData = flattenArrayValues(entity, 'react_widget');
         if (!normalizedData.fieldErrorMessage.value) {
           return {
             ...normalizedData,
@@ -1421,6 +1440,7 @@ module.exports = function registerFilters() {
         entityUrl: facility?.entityUrl,
         fieldAddress: facility?.fieldAddress,
         fieldOfficeHours: facility?.fieldOfficeHours,
+        fieldPhoneNumber: facility?.fieldPhoneNumber,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
           facility?.reverseFieldFacilityLocationNode?.entities || [],
           serviceType,

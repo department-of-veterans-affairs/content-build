@@ -7,20 +7,20 @@ describe('footer utilities', () => {
     description: 'bottom rail footer data',
     links: [
       {
-        description: 'Accessibility',
+        label: 'Accessibility',
         url: {
           path: 'https://www.va.gov/accessibility-at-va',
         },
       },
       {
-        description: 'Civil Rights',
+        label: 'Civil Rights',
         url: {
           path:
             'https://www.va.gov/resources/your-civil-rights-and-how-to-file-a-discrimination-complaint/',
         },
       },
       {
-        description: 'Partial Link Test',
+        label: 'Partial Link Test',
         url: {
           path: '/link-test-1',
         },
@@ -35,19 +35,19 @@ describe('footer utilities', () => {
         description: 'Column 1',
         links: [
           {
-            description: 'Homeless Veterans',
+            label: 'Homeless Veterans',
             url: {
               path: 'https://www.va.gov/homeless/',
             },
           },
           {
-            description: 'Women Veterans',
+            label: 'Women Veterans',
             url: {
               path: 'https://www.va.gov/womenvet/',
             },
           },
           {
-            description: 'Partial Link Test',
+            label: 'Partial Link Test',
             url: {
               path: '/link-test-2',
             },
@@ -58,19 +58,19 @@ describe('footer utilities', () => {
         description: 'Column 2',
         links: [
           {
-            description: 'VA forms',
+            label: 'VA forms',
             url: {
               path: '/find-forms',
             },
           },
           {
-            description: 'Careers at VA',
+            label: 'Careers at VA',
             url: {
               path: '/jobs',
             },
           },
           {
-            description: 'VA outreach materials',
+            label: 'VA outreach materials',
             url: {
               path: '/outreach-and-events/outreach-materials',
             },
@@ -81,7 +81,7 @@ describe('footer utilities', () => {
         description: 'Column 3',
         links: [
           {
-            description: 'Partial Link Test',
+            label: 'Partial Link Test',
             url: {
               path: '/link-test-3',
             },

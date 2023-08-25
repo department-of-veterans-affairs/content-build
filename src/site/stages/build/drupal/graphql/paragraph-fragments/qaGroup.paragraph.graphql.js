@@ -1,6 +1,7 @@
 module.exports = `
 fragment qaGroup on ParagraphQAGroup {
     fieldSectionHeader
+    fieldAccordionDisplay
     fieldRichWysiwyg {
       value
       format

@@ -71,11 +71,12 @@
               {% endif %}
 
               {% if fieldQAGroup.entity.fieldAccordionDisplay %}
-                <va-accordion bordered>
+                <va-accordion>
                 {% assign groupId = fieldQAGroup.entity.entityId %}
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
                     {% if fieldQA.entity %}
                       <va-accordion-item
+                        class="va-accordion-item"
                         data-faq-entity-id="{{ fieldQA.entity.entityId }}"
                         id="{{ fieldQA.entity.title | hashReference: 30 }}"
                       >

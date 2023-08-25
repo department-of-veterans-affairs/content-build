@@ -1499,7 +1499,7 @@
     "rootUrl": "/supporting-forms-for-claims/substitute-claimant-form-21P-0847",
     "productId": "8b51d056-9bea-493f-a815-65555ba66188",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1562,6 +1562,17 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "PACT Act",
+    "entryName": "pact-act",
+    "rootUrl": "/test/pact-act",
+    "template": {
+      "title": "PACT Act",
+      "layout": "page-react.html",
+      "description": "PACT Act application",
+      "vagovprod": false
     }
   }
 ]

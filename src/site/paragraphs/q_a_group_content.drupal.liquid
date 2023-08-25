@@ -4,6 +4,11 @@
     {% if entity.fieldSectionHeader %}
         <h2>{{ entity.fieldSectionHeader }}</h2>
     {% endif %}
+
+    <!-- Optional QA Group Introduction -->
+    {% if entity.fieldRichWysiwyg.processed %}
+        {{ entity.fieldRichWysiwyg.processed }}
+    {% endif %}
                   
     {% assign fieldSectionHeaderTag = 'h2' %}
     {% if entity.fieldSectionHeader %}

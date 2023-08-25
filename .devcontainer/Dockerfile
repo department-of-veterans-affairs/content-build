@@ -44,6 +44,7 @@ ENV AWS_CA_BUNDLE /etc/ssl/certs/ca-certificates.crt
 # Add VA Root CA to Docker Certificate Authority (CA) Store so that NODE can use it for requests.
 ADD http://crl.pki.va.gov/PKI/AIA/VA/VA-Internal-S2-RCA1-v1.cer /usr/local/share/ca-certificates/
 RUN mv /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer.crt
+ADD http://crl.pki.va.gov/PKI/AIA/VA/VA-Internal-S2-RCA2.cer /usr/local/share/ca-certificates/VA-Internal-S2-RCA2.cer.crt
 RUN update-ca-certificates
 # Display VA Internal certificates that are now trusted
 RUN awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < /etc/ssl/certs/ca-certificates.crt | grep -i 'VA-Internal'
