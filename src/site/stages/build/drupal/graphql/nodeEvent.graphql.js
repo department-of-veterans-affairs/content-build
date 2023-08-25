@@ -317,7 +317,6 @@ const nodeEventWithoutBreadcrumbs = `
             addressLine1
           }
         }
-        }
         entityBundle
         entityId
         entityType
