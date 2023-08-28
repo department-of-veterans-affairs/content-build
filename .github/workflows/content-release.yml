@@ -529,21 +529,37 @@ jobs:
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < event.json
 
-  notify-failure-slack:
-    name: Notify Failure (Slack)
-    runs-on: [self-hosted, asg]
-    if: |
-      (failure() && needs.deploy.result != 'success')
-    needs: deploy
-    steps:
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": ":bangbang: <!subteam^S010U41C30V|cms-helpdesk> Content release using ${{ needs.validate-build-status.outputs.TAG }} has failed."}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          notify-failure-slack:
+            name: Notify Failure (Slack)
+            runs-on: [self-hosted, asg]
+            if: |
+              (failure() && needs.deploy.result != 'success')
+            needs: deploy
+            steps:
+              - name: Notify Slack
+                uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4
+                continue-on-error: true
+                with:
+                  payload: >
+                    {
+                      "attachments": [
+                        {
+                          "color": "#2EB67D",
+                          "blocks": [
+                            {
+                              "type": "section",
+                              "text": {
+                                "type": "mrkdwn",
+                                "text": ":bangbang: <!subteam^S010U41C30V|cms-helpdesk> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed."
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   record-metrics:
     name: Record metrics in Datadog
