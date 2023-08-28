@@ -18,7 +18,8 @@ env:
   DEPLOY_BUCKET: content.www.va.gov
   DRUPAL_ADDRESS: https://prod.cms.va.gov
   INSTANCE_TYPE: m6i.4xlarge
-  MAXIMUM_HEAP: 5000
+  MAXIMUM_HEAP:
+    5000
     # secrets.ACTIONS_RUNNER_DEBUG is set to 'true' when re-running a workflow with debug.
   ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
@@ -66,8 +67,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  notify-start:
-    name: Notify Start
+  notify-start-slack:
+    name: Notify Start (Slack)
     runs-on: [self-hosted, asg]
     needs: validate-build-status
     steps:
@@ -448,15 +449,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
 
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
 
@@ -468,13 +460,29 @@ jobs:
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/ready
           method: GET
 
+  notify-success-slack:
+    name: Notify Success (Slack)
+    runs-on: [self-hosted, asg]
+    needs:
+      - validate-build-status
+      - deploy
+
+    steps:
+      - name: Notify Slack
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
+        continue-on-error: true
+        with:
+          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
   notify-failure:
     name: Notify Failure
     runs-on: [self-hosted, asg]
     if: |
       (failure() && needs.deploy.result != 'success')
     needs: deploy
-
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
@@ -493,15 +501,6 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/error
           method: GET
-
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": ":bangbang: <!subteam^S010U41C30V|cms-helpdesk> Content release using ${{ needs.validate-build-status.outputs.TAG }} has failed."}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Get Datadog token from Parameter Store
         uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
@@ -530,6 +529,22 @@ jobs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < event.json
+
+  notify-failure-slack:
+    name: Notify Failure (Slack)
+    runs-on: [self-hosted, asg]
+    if: |
+      (failure() && needs.deploy.result != 'success')
+    needs: deploy
+    steps:
+      - name: Notify Slack
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
+        continue-on-error: true
+        with:
+          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": ":bangbang: <!subteam^S010U41C30V|cms-helpdesk> Content release using ${{ needs.validate-build-status.outputs.TAG }} has failed."}}]}]}'
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   record-metrics:
     name: Record metrics in Datadog
@@ -611,4 +626,3 @@ jobs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
-
