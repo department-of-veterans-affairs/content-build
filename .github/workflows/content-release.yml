@@ -18,9 +18,8 @@ env:
   DEPLOY_BUCKET: content.www.va.gov
   DRUPAL_ADDRESS: https://prod.cms.va.gov
   INSTANCE_TYPE: m6i.4xlarge
-  MAXIMUM_HEAP:
-    5000
-    # secrets.ACTIONS_RUNNER_DEBUG is set to 'true' when re-running a workflow with debug.
+  # secrets.ACTIONS_RUNNER_DEBUG is set to 'true' when re-running a workflow with debug.
+  MAXIMUM_HEAP: 5000
   ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
 jobs:
