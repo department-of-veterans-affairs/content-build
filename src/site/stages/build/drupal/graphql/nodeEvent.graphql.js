@@ -1,6 +1,15 @@
 // Relative imports.
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
+const FIELD_ADDRESS = `
+fieldAddress {
+  addressLine1
+  addressLine2
+  postalCode
+  locality
+  administrativeArea
+}`;
+
 // Create NodeEvent fragment.
 const nodeEvent = `
   fragment nodeEvent on NodeEvent {
@@ -68,9 +77,28 @@ const nodeEvent = `
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
+        ... on NodeVetCenter {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeHealthCareLocalFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeNcaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVbaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterOutstation {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterCap {
+          ${FIELD_ADDRESS}
+        }
         entityBundle
         entityId
         entityType
+
         entityUrl {
           path
         }
@@ -220,6 +248,24 @@ const nodeEventWithoutBreadcrumbs = `
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
+        ... on NodeVetCenter {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeHealthCareLocalFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeNcaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVbaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterOutstation {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterCap {
+          ${FIELD_ADDRESS}
+        }
         entityBundle
         entityId
         entityType

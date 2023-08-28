@@ -1,9 +1,9 @@
 {% comment %}
-  parameters:
-    directionsLinkTitle
-    directionsLinkAddress
-    directionsLinkOnClickPropName
-    directionsLinkOnClickPropValue
+parameters:
+directionsLinkTitle
+directionsLinkAddress
+directionsLinkOnClickPropName
+directionsLinkOnClickPropValue
 {% endcomment %}
 
 {% assign onClick = "" %}
@@ -16,7 +16,9 @@
 <div>
   <a
     {{ onClick | strip }}
-    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}">
-    Get directions on Google Maps <span class="sr-only">to {{ directionsLinkTitle | strip }}</span>
+    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
+    target="_blank">
+    Get directions on Google Maps
+    <span class="sr-only">to {{ directionsLinkTitle | strip }}</span>
   </a>
 </div>
