@@ -3,7 +3,7 @@ name: Prune Self-Hosted Runners
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *' # Hourly
+    - cron: '27 2 * * *' # Daily, @ ~2:27AM
 
 jobs:
 
