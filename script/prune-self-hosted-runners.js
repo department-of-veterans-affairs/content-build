@@ -123,10 +123,13 @@ async function getRunners(token, owner, repo) {
   const octokit = new Octokit({
     auth: token,
   });
-  const response = await octokit.actions.listSelfHostedRunnersForRepo({
-    owner,
-    repo,
-  });
+  const response = await octokit.request(
+    'GET /repos/{owner}/{repo}/actions/runners?per_page=100',
+    {
+      owner,
+      repo,
+    },
+  );
   const result = response.data.runners;
   debug('Runners:', result);
   return result;
