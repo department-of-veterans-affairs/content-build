@@ -1436,7 +1436,7 @@
       "title": "Income Limits",
       "layout": "page-react.html",
       "description": "Income Limits application",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
