@@ -530,6 +530,46 @@ module.exports = function registerFilters() {
       : null;
   };
 
+  liquid.filters.orderFieldLocalHealthCareServices = healthServicesArray => {
+    const services = healthServicesArray.reduce(
+      (acc, healthService) => {
+        if (!healthService.entity?.fieldFacilityLocation?.entity) {
+          return acc;
+        }
+
+        const facility = healthService.entity.fieldFacilityLocation.entity;
+
+        if (facility.fieldMainLocation) {
+          acc.mainClinics.push(healthService);
+        } else if (facility.fieldMobile) {
+          acc.mobileClinics.push(healthService);
+        } else if (
+          facility.fieldFacilityClassification === '7' || // Community Living Centers (CLCs)
+          facility.fieldFacilityClassification === '8' // Domiliciary Residential Rehabilitation Treatment Programs (DOMs)
+        ) {
+          acc.CLCsAndDOMs.push(healthService);
+        } else {
+          acc.alphaClinics.push(healthService);
+        }
+
+        return acc;
+      },
+      {
+        mainClinics: [],
+        alphaClinics: [],
+        CLCsAndDOMs: [],
+        mobileClinics: [],
+      },
+    );
+
+    return [
+      ...services.mainClinics,
+      ...services.alphaClinics,
+      ...services.CLCsAndDOMs,
+      ...services.mobileClinics,
+    ];
+  };
+
   liquid.filters.featureSingleValueFieldLink = fieldLink => {
     if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
       return fieldLink[0];
