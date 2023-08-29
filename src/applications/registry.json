@@ -1574,5 +1574,21 @@
       "description": "PACT Act application",
       "vagovprod": false
     }
+  },
+  {
+    "appName": "Appeals Testing",
+    "entryName": "appeals-testing",
+    "rootUrl": "/decision-reviews/appeals-testing",
+    "productId": "5dd32517-00fd-4e97-afed-e6db1f1f54f9",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Testing new layout for Appeals forms",
+      "vagovprod": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "includeFeedbackButton": false,
+      "minimalFooter": true
+    }
   }
 ]
