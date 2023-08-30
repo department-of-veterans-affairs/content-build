@@ -531,6 +531,23 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.orderFieldLocalHealthCareServices = healthServicesArray => {
+    const sortHealthServiceAlphabetically = (a, b) => {
+      if (
+        a.entity.fieldFacilityLocation.entity.title <
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return -1;
+      }
+      if (
+        a.entity.fieldFacilityLocation.entity.title >
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return 1;
+      }
+
+      return 0;
+    };
+
     const services = healthServicesArray.reduce(
       (acc, healthService) => {
         if (!healthService.entity?.fieldFacilityLocation?.entity) {
@@ -563,10 +580,10 @@ module.exports = function registerFilters() {
     );
 
     return [
-      ...services.mainClinics,
-      ...services.alphaClinics,
-      ...services.CLCsAndDOMs,
-      ...services.mobileClinics,
+      ...services.mainClinics.sort(sortHealthServiceAlphabetically),
+      ...services.alphaClinics.sort(sortHealthServiceAlphabetically),
+      ...services.CLCsAndDOMs.sort(sortHealthServiceAlphabetically),
+      ...services.mobileClinics.sort(sortHealthServiceAlphabetically),
     ];
   };
 
