@@ -146,13 +146,14 @@
     }
   },
   {
-    "appName": "Terms and Conditions",
-    "entryName": "terms-and-conditions",
-    "rootUrl": "/health-care/medical-information-terms-conditions",
+    "appName": "Terms of use",
+    "entryName": "terms-of-use",
+    "rootUrl": "/terms-of-use",
     "template": {
-      "title": "Terms and Conditions for Medical Information",
+      "title": "VA online services terms of use",
       "layout": "page-react.html",
-      "includeBreadcrumbs": true
+      "includeBreadcrumbs": true,
+      "vagovprod": false
     }
   },
   {
@@ -1553,8 +1554,8 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
-   },
-   {
+  },
+  {
     "appName": "Request a Presidential Memorial Certificate",
     "entryName": "0247-pmc",
     "rootUrl": "/request-presidential-memorial-certificate",
