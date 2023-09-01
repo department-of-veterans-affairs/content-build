@@ -146,13 +146,14 @@
     }
   },
   {
-    "appName": "Terms and Conditions",
-    "entryName": "terms-and-conditions",
-    "rootUrl": "/health-care/medical-information-terms-conditions",
+    "appName": "Terms of use",
+    "entryName": "terms-of-use",
+    "rootUrl": "/terms-of-use",
     "template": {
-      "title": "Terms and Conditions for Medical Information",
+      "title": "VA online services terms of use",
       "layout": "page-react.html",
-      "includeBreadcrumbs": true
+      "includeBreadcrumbs": true,
+      "vagovprod": false
     }
   },
   {
@@ -1461,7 +1462,7 @@
       "title": "Income Limits",
       "layout": "page-react.html",
       "description": "Income Limits application",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
@@ -1578,8 +1579,8 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
-   },
-   {
+  },
+  {
     "appName": "Request a Presidential Memorial Certificate",
     "entryName": "0247-pmc",
     "rootUrl": "/request-presidential-memorial-certificate",
@@ -1598,6 +1599,22 @@
       "layout": "page-react.html",
       "description": "PACT Act application",
       "vagovprod": false
+    }
+  },
+  {
+    "appName": "Appeals Testing",
+    "entryName": "appeals-testing",
+    "rootUrl": "/decision-reviews/appeals-testing",
+    "productId": "5dd32517-00fd-4e97-afed-e6db1f1f54f9",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Testing new layout for Appeals forms",
+      "vagovprod": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "includeFeedbackButton": false,
+      "minimalFooter": true
     }
   }
 ]

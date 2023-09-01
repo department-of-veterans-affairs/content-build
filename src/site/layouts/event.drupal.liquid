@@ -2,7 +2,10 @@
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with deriveBreadcrumbsFromUrl = true replaceLastItem = true %}
 
-<div class="interior" id="content" data-template="layouts/event.drupal.liquid">
+<div
+  class="interior"
+  id="content"
+  data-template="layouts/event.drupal.liquid">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
       {% unless entityUrl.path contains "/outreach-and-events" %}
@@ -11,8 +14,7 @@
 
       <div class="usa-width-three-fourths vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 large-screen:vads-u-padding-x--0 vads-u-padding-bottom--2">
         {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
-          entityUrl = entityUrl
-        %}
+         entityUrl = entityUrl %}
 
         <!-- Title -->
         <h1>{{ title }}</h1>
@@ -22,8 +24,7 @@
           <img
             alt="{{ fieldMedia.entity.image.alt }}"
             class="event-detail-img vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4"
-            src="{{ fieldMedia.entity.image.derivative.url }}"
-          />
+            src="{{ fieldMedia.entity.image.derivative.url }}" />
         {% endif %}
 
         <!-- Intro text -->
@@ -33,7 +34,7 @@
           </p>
         {% endif %}
 
-        <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+        <div class="vads-u-display--flex vads-u-flex-direction--column">
           <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
             <!-- When -->
             <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
@@ -54,7 +55,8 @@
                 {% if fieldDatetimeRangeTimezone.length > 1 %}
                   <!-- Repeats -->
                   <p class="vads-u-margin--0">
-                    <i aria-hidden="true" class="fa fa-sync vads-u-font-size--sm vads-u-margin-right--0p5"></i> Repeats
+                    <i aria-hidden="true" class="fa fa-sync vads-u-font-size--sm vads-u-margin-right--0p5"></i>
+                    Repeats
                   </p>
                 {% endif %}
               </div>
@@ -62,27 +64,57 @@
 
             <!-- Where -->
             {% if fieldFacilityLocation or fieldAddress.addressLine1 or fieldLocationType == "online" %}
-              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1">
+              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
                 <p class="vads-u-margin--0 vads-u-margin-right--0p5">
                   <strong>Where:</strong>
                 </p>
 
                 {% if fieldFacilityLocation %}
+                  {% assign fieldFacilityAddress = fieldFacilityLocation.entity.fieldAddress %}
                   <div class="vads-u-display--flex vads-u-flex-direction--column">
                     <p class="vads-u-margin--0">
                       <a href="{{ fieldFacilityLocation.entity.entityUrl.path }}">
                         {{ fieldFacilityLocation.entity.title }}
                       </a>
                     </p>
-
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
+                    {% if fieldFacilityAddress.addressLine1 != empty %}
+                      <p class="vads-u-margin--0">{{ fieldFacilityAddress.addressLine1 }}</p>
+                    {% endif %}
+                    {% if fieldFacilityAddress.addressLine2 != empty %}
+                      <p class="vads-u-margin--0">{{ fieldFacilityAddress.addressLine2 }}</p>
+                    {% endif %}
+
+                    <p class="vads-u-margin--0">
+                      {% if fieldFacilityAddress.locality != empty %}
+                        {{ fieldFacilityAddress.locality | strip }},
+                      {% endif %}
+
+                      {% if fieldFacilityAddress.administrativeArea != empty %}
+                        {{ fieldFacilityAddress.administrativeArea }}
+                      {% endif %}
+                    </p>
+                    {% if fieldFacilityAddress.addressLine1 %}
+                      {% capture fullAddress %}
+                        {{ fieldFacilityAddress.addressLine1 }}, {{ fieldFacilityAddress.locality }}, {{ fieldFacilityAddress.administrativeArea }} {{ fieldFacilityAddress.postalCode }}
+                      {% endcapture %}
+                      {% include "src/site/includes/directions-google-maps.liquid" with
+                       directionsLinkTitle = fieldFacilityLocation.entity.title
+                       directionsLinkAddress = fullAddress
+                       directionsLinkOnClickPropName = "vet-center-facility-name"
+                       directionsLinkOnClickPropValue = fieldFacilityLocation.entity.title %}
+                    {% endif %}
                   </div>
 
                 {% elsif fieldLocationType == "online" %}
                   <p class="vads-u-margin--0 vads-u-margin-bottom--2">
-                    {% if fieldUrlOfAnOnlineEvent %}<a href="{{ fieldUrlOfAnOnlineEvent.uri }}">{% endif %}
+                    {% if fieldUrlOfAnOnlineEvent %}
+                      <a href="{{ fieldUrlOfAnOnlineEvent.uri }}">
+                      {% endif %}
                       This is an online event.
-                    {% if fieldUrlOfAnOnlineEvent %}</a>{% endif %}
+                      {% if fieldUrlOfAnOnlineEvent %}
+                      </a>
+                    {% endif %}
                   </p>
                 {% else %}
 
@@ -107,24 +139,35 @@
                         {{ fieldAddress.administrativeArea }}
                       {% endif %}
                     </p>
+                    {% if fieldAddress.addressLine1 %}
+                      {% capture fullAddress %}
+                        {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }} {{ fieldAddress.postalCode }}
+                      {% endcapture %}
+                      {% include "src/site/includes/directions-google-maps.liquid" with
+                       directionsLinkTitle = fieldLocationHumanreadable
+                       directionsLinkAddress = fullAddress
+                       directionsLinkOnClickPropName = "facility-name"
+                       directionsLinkOnClickPropValue = fieldLocationHumanreadable %}
+                    {% endif %}
                   </div>
-                {% endif %}
-              </div>
-            {% endif %}
-
-            <!-- Cost -->
-            {% if fieldEventCost %}
-              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
-                <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-                  <strong>Cost:</strong>
-                </p>
-
-                <p class="vads-u-margin--0">
-                  {{ fieldEventCost }}
-                </p>
+                </div>
               </div>
             {% endif %}
           </div>
+
+          <!-- Cost -->
+          {% if fieldEventCost %}
+            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--2">
+              <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                <strong>Cost:</strong>
+              </p>
+
+              <p class="vads-u-margin--0">
+                {{ fieldEventCost }}
+              </p>
+            </div>
+          {% endif %}
+
 
           <!-- Social links -->
           <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
@@ -168,17 +211,17 @@
             class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0 vads-u-margin-top--1"
             id="expand-recurring-events"
             style="z-index: 1;"
-            type="button"
-          >
-            View other times for this event <i aria-hidden="true" class="fa fa-plus" id="expand-recurring-events-icon"></i>
+            type="button">
+            View other times for this event
+            <i
+              aria-hidden="true"
+              class="fa fa-plus"
+              id="expand-recurring-events-icon"></i>
           </button>
-          <div
-            class="vads-u-display--none vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2"
-            id="recurring-events"
-          >
+          <div class="vads-u-display--none vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2" id="recurring-events">
             <!-- Recurring events list. -->
             {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
-            <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %} vads-u-margin-bottom--2">
+              <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %} vads-u-margin-bottom--2">
                 <p class="vads-u-margin--0">
                   {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
                 </p>
@@ -191,9 +234,11 @@
                   data-subject="{{ title }}"
                   href="{{ entityUrl.path }}"
                   rel="noreferrer noopener"
-                  style="max-width: 140px;"
-                >
-                  <i aria-hidden="true" class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5" role="presentation"></i>
+                  style="max-width: 140px;">
+                  <i
+                    aria-hidden="true"
+                    class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5"
+                    role="presentation"></i>
                   Add to Calendar
                 </a>
               </div>
@@ -205,8 +250,7 @@
                 <button
                   class="usa-button-secondary vads-u-width--full medium-screen:vads-u-width--auto"
                   id="show-all-recurring-events"
-                  type="button"
-                >
+                  type="button">
                   Show all times
                 </button>
               </div>
@@ -219,10 +263,12 @@
         <a
           class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold"
           href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
-          onclick="recordEvent({ event: 'nav-secondary-button-click' });"
-        >
+          onclick="recordEvent({ event: 'nav-secondary-button-click' });">
           See more events
-          <i aria-hidden="true" class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right' role="presentation"></i>
+          <i
+            aria-hidden="true"
+            class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right'
+            role="presentation"></i>
         </a>
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
@@ -234,67 +280,63 @@
 <script nonce="**CSP_NONCE**" type="text/javascript">
 
   function onExpandRecurringEventsClick() {
-    var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-    var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
-    var recurringEvents = document.getElementById('recurring-events');
-
-    // Escape early if we are not able to find the elements.
-    if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
-      return;
-    }
-
-    // Toggle the bottom borders of the button.
-    if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
-      expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
-      expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
-    } else {
-      expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
-      expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
-    }
-
-    // Toggle the visibility of the recurring events.
-    recurringEvents.classList.toggle('vads-u-display--none');
-    recurringEvents.classList.toggle('vads-u-display--flex');
-
-    // Toggle the icon.
-    expandRecurringEventsIcon.classList.toggle('fa-plus');
-    expandRecurringEventsIcon.classList.toggle('fa-minus');
-  }
-
-  function onShowAllRecurringEventsClick() {
-    // Derive recurring event items.
-    var recurringEventItems = document.querySelectorAll('.recurring-event');
-
-    // Show all recurring events.
-    for (var index = 0; index < recurringEventItems.length; index++) {
-      if (recurringEventItems[index]) {
-        recurringEventItems[index].classList.remove('vads-u-display--none');
-      }
-    }
-
-    // Hide the show all recurring events button.
-    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-
-    // Hide the button if we find it.
-    if (showAllRecurringEventsButton) {
-      showAllRecurringEventsButton.classList.add('vads-u-display--none');
-    }
-  }
-
-
   var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-  if (expandRecurringEventsButton) {
-    expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
-  }
-
-  var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-  if (showAllRecurringEventsButton) {
-    showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
-  }
-
-
-
-</script>
+            var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
+            var recurringEvents = document.getElementById('recurring-events');
+          
+            // Escape early if we are not able to find the elements.
+            if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
+              return;
+            }
+          
+            // Toggle the bottom borders of the button.
+            if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
+              expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
+              expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
+            } else {
+              expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
+              expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
+            }
+          
+            // Toggle the visibility of the recurring events.
+            recurringEvents.classList.toggle('vads-u-display--none');
+            recurringEvents.classList.toggle('vads-u-display--flex');
+          
+            // Toggle the icon.
+            expandRecurringEventsIcon.classList.toggle('fa-plus');
+            expandRecurringEventsIcon.classList.toggle('fa-minus');
+          }
+          
+          function onShowAllRecurringEventsClick() {
+            // Derive recurring event items.
+            var recurringEventItems = document.querySelectorAll('.recurring-event');
+          
+            // Show all recurring events.
+            for (var index = 0; index < recurringEventItems.length; index++) {
+              if (recurringEventItems[index]) {
+                recurringEventItems[index].classList.remove('vads-u-display--none');
+              }
+            }
+          
+            // Hide the show all recurring events button.
+            var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+          
+            // Hide the button if we find it.
+            if (showAllRecurringEventsButton) {
+              showAllRecurringEventsButton.classList.add('vads-u-display--none');
+            }
+          }
+          
+          
+          var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
+          if (expandRecurringEventsButton) {
+            expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
+          }
+          
+          var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+          if (showAllRecurringEventsButton) {
+            showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
+          }</script>
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
