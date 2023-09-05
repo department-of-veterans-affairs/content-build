@@ -2560,47 +2560,33 @@ describe('deriveFormattedTimestamp', () => {
 });
 
 describe('getSurvey', () => {
+  const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
+  const testUrls = [
+    '/resources',
+    '/find-locations',
+    '/search',
+    '/contact-us/virtual-agent',
+  ];
+
   it('returns the survey number if url is listed in the survey object', () => {
-    const testUrls = [
-      '/resources',
-      '/find-locations',
-      '/search',
-      '/contact-us/virtual-agent',
-    ];
-    const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
-    const stagingAbTest = [11, 37];
-    const prodAbTest = [17, 39];
-
     // Staging survey tests
-    const stagingDefault = liquid.filters.getSurvey(
-      testBuildTypes[1],
-      testUrls[1],
-      stagingSurveys,
-    );
-
-    expect(stagingAbTest.includes(stagingDefault)).to.be.true;
-
-    expect(prodAbTest.includes(stagingDefault)).to.be.false;
-
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
+    ).to.equal(20);
+
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[2], testUrls[2], stagingSurveys),
     ).to.equal(20);
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
     ).to.equal(26);
 
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
+    ).to.equal(26);
+
     // Prod survey tests
-    const prodDefault = liquid.filters.getSurvey(
-      testBuildTypes[0],
-      testUrls[1],
-      prodSurveys,
-    );
-
-    expect(prodAbTest.includes(prodDefault)).to.be.true;
-
-    expect(stagingAbTest.includes(prodDefault)).to.be.false;
-
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
     ).to.equal(21);
@@ -2608,6 +2594,18 @@ describe('getSurvey', () => {
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
     ).to.equal(25);
+  });
+
+  it('returns null for a build type not present in the staging survey object', () => {
+    expect(
+      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], stagingSurveys),
+    ).to.be.null;
+  });
+
+  it('returns null for a build type not present in the production survey object', () => {
+    expect(
+      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], prodSurveys),
+    ).to.be.null;
   });
 });
 
