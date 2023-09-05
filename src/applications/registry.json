@@ -1568,7 +1568,7 @@
   {
     "appName": "PACT Act",
     "entryName": "pact-act",
-    "rootUrl": "/test/pact-act",
+    "rootUrl": "pact-act-wizard-test",
     "template": {
       "title": "PACT Act",
       "layout": "page-react.html",
