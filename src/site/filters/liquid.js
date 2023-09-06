@@ -530,6 +530,63 @@ module.exports = function registerFilters() {
       : null;
   };
 
+  liquid.filters.orderFieldLocalHealthCareServices = healthServicesArray => {
+    const sortHealthServiceAlphabetically = (a, b) => {
+      if (
+        a.entity.fieldFacilityLocation.entity.title <
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return -1;
+      }
+      if (
+        a.entity.fieldFacilityLocation.entity.title >
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return 1;
+      }
+
+      return 0;
+    };
+
+    const services = healthServicesArray.reduce(
+      (acc, healthService) => {
+        if (!healthService.entity?.fieldFacilityLocation?.entity) {
+          return acc;
+        }
+
+        const facility = healthService.entity.fieldFacilityLocation.entity;
+
+        if (facility.fieldMainLocation) {
+          acc.mainClinics.push(healthService);
+        } else if (facility.fieldMobile) {
+          acc.mobileClinics.push(healthService);
+        } else if (
+          facility.fieldFacilityClassification === '7' || // Community Living Centers (CLCs)
+          facility.fieldFacilityClassification === '8' // Domiliciary Residential Rehabilitation Treatment Programs (DOMs)
+        ) {
+          acc.CLCsAndDOMs.push(healthService);
+        } else {
+          acc.alphaClinics.push(healthService);
+        }
+
+        return acc;
+      },
+      {
+        mainClinics: [],
+        alphaClinics: [],
+        CLCsAndDOMs: [],
+        mobileClinics: [],
+      },
+    );
+
+    return [
+      ...services.mainClinics.sort(sortHealthServiceAlphabetically),
+      ...services.alphaClinics.sort(sortHealthServiceAlphabetically),
+      ...services.CLCsAndDOMs.sort(sortHealthServiceAlphabetically),
+      ...services.mobileClinics.sort(sortHealthServiceAlphabetically),
+    ];
+  };
+
   liquid.filters.featureSingleValueFieldLink = fieldLink => {
     if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
       return fieldLink[0];
