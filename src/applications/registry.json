@@ -1442,12 +1442,23 @@
   },
   {
     "appName": "21-0845 Authorization to Disclose Personal Information to a Third Party",
-    "entryName": "0845-auth-disclose",
+    "entryName": "/supporting-forms-for-claims/third-party-authorization-form-21-0845",
     "rootUrl": "/authorization-to-disclose",
     "productId": "08a7da80-f48a-4677-9b74-0dcb642b97a1",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Submit a lay witness statement to support a VA claim",
+          "path": "supporting-forms-for-claims/third-party-authorization-form-21-0845"
+        }
+      ]
     }
   },
   {
