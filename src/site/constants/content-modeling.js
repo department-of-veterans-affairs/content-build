@@ -5,11 +5,9 @@
  */
 const ENTITY_BUNDLES = {
   BASIC_LANDING_PAGE: 'basic_landing_page',
-  BIOS_PAGE: 'bios_page',
   CHECKLIST: 'checklist',
   EVENT_LISTING: 'event_listing',
   EVENT: 'event',
-  EVENTS_PAGE: 'events_page',
   FAQ_MULTIPLE_Q_A: 'faq_multiple_q_a',
   FULL_WIDTH_BANNER_ALERT: 'full_width_banner_alert',
   HEALTH_CARE_FACILITY_STATUS: 'health_care_facility_status',
@@ -25,7 +23,6 @@ const ENTITY_BUNDLES = {
   LOCATIONS_LISTING: 'locations_listing',
   MEDIA_LIST_IMAGES: 'media_list_images',
   MEDIA_LIST_VIDEOS: 'media_list_videos',
-  NEWS_STORIES_PAGE: 'news_stories_page',
   NEWS_STORY: 'news_story',
   OFFICE: 'office',
   OUTREACH_ASSET: 'outreach_asset',
@@ -33,7 +30,6 @@ const ENTITY_BUNDLES = {
   PERSON_PROFILE: 'person_profile',
   PRESS_RELEASE: 'press_release',
   PRESS_RELEASES_LISTING: 'press_releases_listing',
-  PRESS_RELEASES_PAGE: 'press_releases_page',
   PUBLICATION_LISTING: 'publication_listing',
   Q_A: 'q_a',
   REGIONAL_HEALTH_CARE_SERVICE_DES: 'regional_health_care_service_des',

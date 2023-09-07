@@ -35,13 +35,16 @@
             {{ vetCenter.fieldAddress.postalCode }}
           </div>
         </address>
-        <div>
-          <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ vetCenter.title }}'})"
-             href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}"
-             aria-label="Directions to {{ vetCenter.title }} on Google Maps">
-            Directions (Google Maps)
-          </a>
-        </div>
+
+        {% capture fullAddress %}
+          {{ vetCenter.fieldAddress.addressLine1 }}, {{ vetCenter.fieldAddress.locality }}, {{ vetCenter.fieldAddress.administrativeArea }} {{ vetCenter.fieldAddress.postalCode }}
+        {% endcapture %}
+        {% include "src/site/includes/directions-google-maps.liquid" with
+          directionsLinkTitle = vetCenter.title
+          directionsLinkAddress = fullAddress
+          directionsLinkOnClickPropName = "vet-center-facility-name"
+          directionsLinkOnClickPropValue = vetCenter.title
+        %}
       </div>
     {% endif %}
     <div class="vads-u-margin-bottom--3">

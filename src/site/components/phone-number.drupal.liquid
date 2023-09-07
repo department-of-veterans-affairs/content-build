@@ -1,11 +1,7 @@
-{% if number.fieldPhoneLabel != empty %}
-  {% assign phoneLabel = number.fieldPhoneLabel %}
-{% endif %}
-{% if phoneLabel == empty %}
-  {% assign phoneLabel = 'Phone' %}
-{% endif %}
-<h{{ phoneHeaderLevel }}>{{ phoneLabel }}</h{{ phoneHeaderLevel }}>
-<a class="vads-u-margin-bottom--1" aria-label="{{ number.fieldPhoneNumber | accessibleNumber }}{% if number.fieldPhoneExtension %} extension: {{ number.fieldPhoneExtension | accessibleNumber }}{% endif %}"
-   href="tel:{{ number.fieldPhoneNumber }}{% if number.fieldPhoneExtension %}p{{ number.fieldPhoneExtension }}{% endif %}">
-  {{ number.fieldPhoneNumber }}{% if number.fieldPhoneExtension %}x {{ number.fieldPhoneExtension }}{% endif %}
-</a>
+<h{{ phoneHeaderLevel }}>{{ phoneLabel | default: 'Phone' }}</h{{ phoneHeaderLevel }}>
+<div>
+  <va-telephone
+    contact="{{ phoneNumber | removeDashes }}"
+    extension="{{ phoneExtension | default: '' }}"
+  />
+</div>

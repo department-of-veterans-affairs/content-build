@@ -17,14 +17,12 @@ function divideHubRows(hubs) {
   });
 }
 
-const addHomePreviewContent = (
+const addHomeSandboxContent = (
   contentData,
   files,
   metalsmith,
   buildOptions,
 ) => {
-  // We cannot limit menu items in Drupal, so we must do it here.
-  const menuLength = 4;
   const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
   const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
   const bannerFile = fs.readFileSync(bannerLocation);
@@ -39,15 +37,9 @@ const addHomePreviewContent = (
       homePageHubListMenuQuery,
       homePageCreateAccountQuery,
       banners,
-      homePageMenuQuery,
-      homePageHubListQuery,
-      homePagePromoBlockQuery,
       promoBanners,
     },
   } = contentData;
-  const hubs = divideHubRows(
-    homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList,
-  );
 
   const homeEntityObj = {
     breadcrumb: [
@@ -58,19 +50,16 @@ const addHomePreviewContent = (
     ],
     path: '/new-home-page',
     banners,
-    cards: homePageMenuQuery.links.slice(0, menuLength),
     description:
       'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
     entityUrl: { path: '/new-home-page' },
-    hubs,
     // eslint-disable-next-line camelcase
     legacy_homepage_banner: banner,
     promoBanners,
-    promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
     title: 'New VA.gov Home Page',
   };
 
-  const homePreviewPath = '/new-home-page';
+  const homeSandboxPath = '/new-home-page';
   const hero =
     homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
   hero.createAccountBlock =
@@ -85,7 +74,7 @@ const addHomePreviewContent = (
   // Filter hub menu links. We do this here instead of in the template because the
   // grouping of hubs also happens here, and we need to filter before we group in
   // order to preserve the intended grouping. See divideHubRows().
-  const homePreviewHubs = homePageHubListMenuQuery.links.filter(link => {
+  const homeSandboxHubs = homePageHubListMenuQuery.links.filter(link => {
     // Any disabled links should not be displayed.
     if (!link.enabled) {
       return false;
@@ -98,7 +87,7 @@ const addHomePreviewContent = (
     );
   });
 
-  const homePreviewEntityObj = {
+  const homeSandboxEntityObj = {
     ...homeEntityObj,
     canonicalLink: '/', // Match current homepage to avoid 'duplicate content' SEO demerit
     hero,
@@ -107,20 +96,20 @@ const addHomePreviewContent = (
       popularLinks,
     },
     newsSpotlight,
-    path: homePreviewPath,
+    path: homeSandboxPath,
     entityUrl: {
-      path: homePreviewPath,
+      path: homeSandboxPath,
     },
-    hubs: divideHubRows(homePreviewHubs),
+    hubs: divideHubRows(homeSandboxHubs),
     title: 'New VA.gov home page',
   };
 
-  files[`.${homePreviewPath}.html`] = createFileObj(
-    homePreviewEntityObj,
-    'home-preview.drupal.liquid',
+  files[`.${homeSandboxPath}.html`] = createFileObj(
+    homeSandboxEntityObj,
+    'home-sandbox.drupal.liquid',
   );
 };
 
 module.exports = {
-  addHomePreviewContent,
+  addHomeSandboxContent,
 };

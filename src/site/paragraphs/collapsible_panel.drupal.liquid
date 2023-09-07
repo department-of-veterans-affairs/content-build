@@ -44,6 +44,7 @@
             {% assign item = accordionItem.entity %}
             {% assign id = item.entityId %}
             <va-accordion-item
+              class="va-accordion-item"
               id="{{item.fieldTitle | hashReference: 30 }}-{{id}}"
             >
 

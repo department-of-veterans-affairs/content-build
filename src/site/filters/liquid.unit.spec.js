@@ -1685,6 +1685,61 @@ describe('processCentralizedContent', () => {
                   ],
                 },
               },
+              {
+                entity: {
+                  targetId: '135322',
+                  targetRevisionId: '1025879',
+                  entityType: 'paragraph',
+                  entityBundle: 'alert',
+                  pid: '135322',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldAlertBlockReference: [],
+                  fieldAlertHeading: [
+                    {
+                      value:
+                        'What are the covered educational assistance benefits?',
+                    },
+                  ],
+                  fieldAlertType: [
+                    {
+                      value: 'information',
+                    },
+                  ],
+                  fieldVaParagraphs: [
+                    {
+                      entity: {
+                        targetId: '135321',
+                        targetRevisionId: '1025878',
+                        entityType: 'paragraph',
+                        entityBundle: 'expandable_text',
+                        pid: '135321',
+                        label:
+                          'National Vet Center content > Content > Questions > Answer > Alert content',
+                        status: true,
+                        langcode: 'en',
+                        fieldTextExpander: [
+                          {
+                            value:
+                              'What are the covered educational assistance benefits?',
+                          },
+                        ],
+                        fieldWysiwyg: [
+                          {
+                            value:
+                              '<p>The covered educational assistance benefits are benefits from any of these programs:&nbsp;</p>\r\n\r\n<ul>\r\n\t<li>Montgomery GI Bill Active Duty</li>\r\n\t<li>Montgomery GI Bill Selected Reserve</li>\r\n\t<li>Post-9/11 GI Bill</li>\r\n\t<li>Reserve Educational Assistance Program (REAP)</li>\r\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\r\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\r\n\t<li>Veterans’ Educational Assistance Program (VEAP)</li>\r\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\r\n</ul>\r\n',
+                            format: 'rich_text',
+                            processed:
+                              '<html><head></head><body><p>The covered educational assistance benefits are benefits from any of these programs:&#xA0;</p>\n\n<ul><li>Montgomery GI Bill Active Duty</li>\n\t<li>Montgomery GI Bill Selected Reserve</li>\n\t<li>Post-9/11 GI Bill</li>\n\t<li>Reserve Educational Assistance Program (REAP)</li>\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\n\t<li>Veterans&#x2019; Educational Assistance Program (VEAP)</li>\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\n</ul></body></html>',
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
             ],
             fieldQuestion: [
               {
@@ -1727,6 +1782,49 @@ describe('processCentralizedContent', () => {
                       format: 'rich_text_limited',
                       processed:
                         "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
+                },
+              },
+              {
+                entity: {
+                  targetId: '135322',
+                  targetRevisionId: '1025879',
+                  entityType: 'paragraph',
+                  entityBundle: 'alert',
+                  pid: '135322',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldAlertBlockReference: [],
+                  fieldAlertHeading:
+                    'What are the covered educational assistance benefits?',
+                  fieldAlertType: 'information',
+                  fieldVaParagraphs: [
+                    {
+                      entity: {
+                        targetId: '135321',
+                        targetRevisionId: '1025878',
+                        entityType: 'paragraph',
+                        entityBundle: 'expandable_text',
+                        pid: '135321',
+                        label:
+                          'National Vet Center content > Content > Questions > Answer > Alert content',
+                        status: true,
+                        langcode: 'en',
+                        fieldTextExpander:
+                          'What are the covered educational assistance benefits?',
+                        fieldWysiwyg: [
+                          {
+                            value:
+                              '<p>The covered educational assistance benefits are benefits from any of these programs:&nbsp;</p>\r\n\r\n<ul>\r\n\t<li>Montgomery GI Bill Active Duty</li>\r\n\t<li>Montgomery GI Bill Selected Reserve</li>\r\n\t<li>Post-9/11 GI Bill</li>\r\n\t<li>Reserve Educational Assistance Program (REAP)</li>\r\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\r\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\r\n\t<li>Veterans’ Educational Assistance Program (VEAP)</li>\r\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\r\n</ul>\r\n',
+                            format: 'rich_text',
+                            processed:
+                              '<html><head></head><body><p>The covered educational assistance benefits are benefits from any of these programs:&#xA0;</p>\n\n<ul><li>Montgomery GI Bill Active Duty</li>\n\t<li>Montgomery GI Bill Selected Reserve</li>\n\t<li>Post-9/11 GI Bill</li>\n\t<li>Reserve Educational Assistance Program (REAP)</li>\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\n\t<li>Veterans&#x2019; Educational Assistance Program (VEAP)</li>\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\n</ul></body></html>',
+                          },
+                        ],
+                      },
                     },
                   ],
                 },
@@ -2462,27 +2560,33 @@ describe('deriveFormattedTimestamp', () => {
 });
 
 describe('getSurvey', () => {
-  it('returns the survey number if url is listed in the survey object', () => {
-    const testUrls = [
-      '/resources',
-      '/find-locations',
-      '/search',
-      '/contact-us/virtual-agent',
-    ];
-    const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
+  const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
+  const testUrls = [
+    '/resources',
+    '/find-locations',
+    '/search',
+    '/contact-us/virtual-agent',
+  ];
 
+  it('returns the survey number if url is listed in the survey object', () => {
+    // Staging survey tests
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
     ).to.equal(20);
 
     expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[1], stagingSurveys),
-    ).to.equal(11);
+      liquid.filters.getSurvey(testBuildTypes[2], testUrls[2], stagingSurveys),
+    ).to.equal(20);
 
     expect(
       liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
     ).to.equal(26);
 
+    expect(
+      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
+    ).to.equal(26);
+
+    // Prod survey tests
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
     ).to.equal(21);
@@ -2490,10 +2594,18 @@ describe('getSurvey', () => {
     expect(
       liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
     ).to.equal(25);
+  });
 
+  it('returns null for a build type not present in the staging survey object', () => {
     expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[1], prodSurveys),
-    ).to.equal(17);
+      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], stagingSurveys),
+    ).to.be.null;
+  });
+
+  it('returns null for a build type not present in the production survey object', () => {
+    expect(
+      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], prodSurveys),
+    ).to.be.null;
   });
 });
 

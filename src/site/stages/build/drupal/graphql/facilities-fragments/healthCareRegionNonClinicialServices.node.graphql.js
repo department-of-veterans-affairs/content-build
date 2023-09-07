@@ -15,10 +15,19 @@ module.exports = `
   entity {
     entityId
     entityLabel
-    reverseFieldRegionPageNode(limit: 50, filter: {conditions: [{field: "type", value: ["health_care_local_facility"]}]}) {
+    reverseFieldRegionPageNode(
+      limit: 50,
+      filter: {
+        conditions: [
+          { field: "type", value: ["health_care_local_facility"] },
+          { field: "status", value: ["1"], enabled: $onlyPublishedContent }
+        ]
+      }
+    ) {
       entities {
         ... on NodeHealthCareLocalFacility {
           entityLabel
+          fieldPhoneNumber
           fieldOfficeHours {
             day
             starthours
@@ -31,9 +40,8 @@ module.exports = `
           ${FIELD_ADDRESS}
           reverseFieldFacilityLocationNode(limit: 50, filter: {
             conditions: [
-              {
-                field: "type", value: ["vha_facility_nonclinical_service"]
-              }
+              { field: "type", value: ["vha_facility_nonclinical_service"] },
+              { field: "status", value: ["1"], enabled: $onlyPublishedContent }
             ]
           }) {
             entities {

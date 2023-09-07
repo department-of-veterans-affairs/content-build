@@ -8,11 +8,11 @@
 	{% if !hours.starthours && !hours.endhours && !hours.comment %}
         Closed
 	{% else %}
-		{% if hours.starthours %}
+		{% if hours.starthours && hours.starthours != -1 %}
 			{{ hours.starthours | officeHoursTimeFormatter}}
 			to
 		{% endif %}
-		{% if hours.endhours %}
+		{% if hours.endhours && hours.endhours != -1 %}
 			{{ hours.endhours | officeHoursTimeFormatter}}
 		{% endif %}
     {% endif %}

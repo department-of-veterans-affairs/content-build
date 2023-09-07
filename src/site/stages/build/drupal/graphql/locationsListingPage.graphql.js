@@ -10,7 +10,6 @@ const locationListingPage = `
     ${entityElementsFromPages}
     title
     entityId
-    fieldMetaTags
     fieldOffice {
       targetId
       entity {
