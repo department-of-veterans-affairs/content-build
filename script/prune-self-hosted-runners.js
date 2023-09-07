@@ -38,6 +38,9 @@ const DEBUG = process.env.DEBUG === 'true';
 // value to allow for scheduling vagaries, long-running jobs, etc.
 const THRESHOLD_DAYS = process.env.THRESHOLD_DAYS || 5;
 
+// The maximum number of runners to terminate at a time.
+const TERMINATE_LIMIT = process.env.TERMINATE_LIMIT || 3;
+
 // The owner of the repository.
 const GITHUB_OWNER =
   process.env.GITHUB_OWNER || 'department-of-veterans-affairs';
@@ -123,10 +126,13 @@ async function getRunners(token, owner, repo) {
   const octokit = new Octokit({
     auth: token,
   });
-  const response = await octokit.actions.listSelfHostedRunnersForRepo({
-    owner,
-    repo,
-  });
+  const response = await octokit.request(
+    'GET /repos/{owner}/{repo}/actions/runners?per_page=100',
+    {
+      owner,
+      repo,
+    },
+  );
   const result = response.data.runners;
   debug('Runners:', result);
   return result;
@@ -317,6 +323,11 @@ async function getOldIdleInstances(instances, runners, thresholdDays) {
   if (oldIdleInstances.length === 0) {
     debug('No old, idle instances to delete!');
   } else {
+    // Don't kill more than _n_ runners at a time.
+    if (oldIdleInstances.length > TERMINATE_LIMIT) {
+      oldIdleInstances.length = TERMINATE_LIMIT;
+    }
+
     // Determine the runners we should delete, and delete them.
     const doomedRunners = getDoomedRunners(oldIdleInstances, runners);
     debug('Deleting doomed runners:', doomedRunners);
