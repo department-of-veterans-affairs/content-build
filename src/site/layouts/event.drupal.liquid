@@ -12,7 +12,7 @@
         {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       {% endunless %}
 
-      <div class="usa-width-three-fourths vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 large-screen:vads-u-padding-x--0 vads-u-padding-bottom--2">
+      <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 large-screen:vads-u-padding-x--0 vads-u-padding-bottom--2">
         {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
          entityUrl = entityUrl %}
 
@@ -64,7 +64,7 @@
 
             <!-- Where -->
             {% if fieldFacilityLocation or fieldAddress.addressLine1 or fieldLocationType == "online" %}
-              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--1">
+              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
                 <p class="vads-u-margin--0 vads-u-margin-right--0p5">
                   <strong>Where:</strong>
                 </p>
@@ -144,29 +144,30 @@
                         {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }} {{ fieldAddress.postalCode }}
                       {% endcapture %}
                       {% include "src/site/includes/directions-google-maps.liquid" with
-                       directionsLinkTitle = title
+                       directionsLinkTitle = fieldLocationHumanreadable
                        directionsLinkAddress = fullAddress
                        directionsLinkOnClickPropName = "facility-name"
-                       directionsLinkOnClickPropValue = title %}
+                       directionsLinkOnClickPropValue = fieldLocationHumanreadable %}
                     {% endif %}
                   </div>
                 </div>
               </div>
             {% endif %}
-
-            <!-- Cost -->
-            {% if fieldEventCost %}
-              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-top--1 vads-u-margin-bottom--2">
-                <p class="vads-u-margin--0 vads-u-margin-right--0p5">
-                  <strong>Cost:</strong>
-                </p>
-
-                <p class="vads-u-margin--0">
-                  {{ fieldEventCost }}
-                </p>
-              </div>
-            {% endif %}
           </div>
+
+          <!-- Cost -->
+          {% if fieldEventCost %}
+            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--2">
+              <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                <strong>Cost:</strong>
+              </p>
+
+              <p class="vads-u-margin--0">
+                {{ fieldEventCost }}
+              </p>
+            </div>
+          {% endif %}
+
 
           <!-- Social links -->
           <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-flex--1">
@@ -280,62 +281,62 @@
 
   function onExpandRecurringEventsClick() {
   var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-            var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
-            var recurringEvents = document.getElementById('recurring-events');
-        
-            // Escape early if we are not able to find the elements.
-            if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
-              return;
-            }
-        
-            // Toggle the bottom borders of the button.
-            if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
-              expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
-              expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
-            } else {
-              expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
-              expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
-            }
-        
-            // Toggle the visibility of the recurring events.
-            recurringEvents.classList.toggle('vads-u-display--none');
-            recurringEvents.classList.toggle('vads-u-display--flex');
-        
-            // Toggle the icon.
-            expandRecurringEventsIcon.classList.toggle('fa-plus');
-            expandRecurringEventsIcon.classList.toggle('fa-minus');
-          }
-        
-          function onShowAllRecurringEventsClick() {
-            // Derive recurring event items.
-            var recurringEventItems = document.querySelectorAll('.recurring-event');
-        
-            // Show all recurring events.
-            for (var index = 0; index < recurringEventItems.length; index++) {
-              if (recurringEventItems[index]) {
-                recurringEventItems[index].classList.remove('vads-u-display--none');
+                var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
+                var recurringEvents = document.getElementById('recurring-events');
+              
+                // Escape early if we are not able to find the elements.
+                if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
+                  return;
+                }
+              
+                // Toggle the bottom borders of the button.
+                if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
+                  expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
+                  expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
+                } else {
+                  expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
+                  expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
+                }
+              
+                // Toggle the visibility of the recurring events.
+                recurringEvents.classList.toggle('vads-u-display--none');
+                recurringEvents.classList.toggle('vads-u-display--flex');
+              
+                // Toggle the icon.
+                expandRecurringEventsIcon.classList.toggle('fa-plus');
+                expandRecurringEventsIcon.classList.toggle('fa-minus');
               }
-            }
-        
-            // Hide the show all recurring events button.
-            var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-        
-            // Hide the button if we find it.
-            if (showAllRecurringEventsButton) {
-              showAllRecurringEventsButton.classList.add('vads-u-display--none');
-            }
-          }
-        
-        
-          var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-          if (expandRecurringEventsButton) {
-            expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
-          }
-        
-          var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-          if (showAllRecurringEventsButton) {
-            showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
-          }</script>
+              
+              function onShowAllRecurringEventsClick() {
+                // Derive recurring event items.
+                var recurringEventItems = document.querySelectorAll('.recurring-event');
+              
+                // Show all recurring events.
+                for (var index = 0; index < recurringEventItems.length; index++) {
+                  if (recurringEventItems[index]) {
+                    recurringEventItems[index].classList.remove('vads-u-display--none');
+                  }
+                }
+              
+                // Hide the show all recurring events button.
+                var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+              
+                // Hide the button if we find it.
+                if (showAllRecurringEventsButton) {
+                  showAllRecurringEventsButton.classList.add('vads-u-display--none');
+                }
+              }
+              
+              
+              var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
+              if (expandRecurringEventsButton) {
+                expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
+              }
+              
+              var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+              if (showAllRecurringEventsButton) {
+                showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
+              }</script>
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

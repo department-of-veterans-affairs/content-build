@@ -530,6 +530,63 @@ module.exports = function registerFilters() {
       : null;
   };
 
+  liquid.filters.orderFieldLocalHealthCareServices = healthServicesArray => {
+    const sortHealthServiceAlphabetically = (a, b) => {
+      if (
+        a.entity.fieldFacilityLocation.entity.title <
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return -1;
+      }
+      if (
+        a.entity.fieldFacilityLocation.entity.title >
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return 1;
+      }
+
+      return 0;
+    };
+
+    const services = healthServicesArray.reduce(
+      (acc, healthService) => {
+        if (!healthService.entity?.fieldFacilityLocation?.entity) {
+          return acc;
+        }
+
+        const facility = healthService.entity.fieldFacilityLocation.entity;
+
+        if (facility.fieldMainLocation) {
+          acc.mainClinics.push(healthService);
+        } else if (facility.fieldMobile) {
+          acc.mobileClinics.push(healthService);
+        } else if (
+          facility.fieldFacilityClassification === '7' || // Community Living Centers (CLCs)
+          facility.fieldFacilityClassification === '8' // Domiliciary Residential Rehabilitation Treatment Programs (DOMs)
+        ) {
+          acc.CLCsAndDOMs.push(healthService);
+        } else {
+          acc.alphaClinics.push(healthService);
+        }
+
+        return acc;
+      },
+      {
+        mainClinics: [],
+        alphaClinics: [],
+        CLCsAndDOMs: [],
+        mobileClinics: [],
+      },
+    );
+
+    return [
+      ...services.mainClinics.sort(sortHealthServiceAlphabetically),
+      ...services.alphaClinics.sort(sortHealthServiceAlphabetically),
+      ...services.CLCsAndDOMs.sort(sortHealthServiceAlphabetically),
+      ...services.mobileClinics.sort(sortHealthServiceAlphabetically),
+    ];
+  };
+
   liquid.filters.featureSingleValueFieldLink = fieldLink => {
     if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
       return fieldLink[0];
@@ -1496,20 +1553,16 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    const abTestSurvey = (surveyA, surveyB) => {
-      return Math.random() < 0.5 ? surveyA : surveyB;
-    };
-
     if (
       buildtype === 'localhost' ||
       buildtype === 'vagovstaging' ||
       buildtype === 'vagovdev'
     ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : abTestSurvey(11, 37);
+      return stagingSurveys[url] ? stagingSurveys[url] : 11;
     }
 
     if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : abTestSurvey(17, 39);
+      return prodSurveys[url] ? prodSurveys[url] : 17;
     }
     return null;
   };
