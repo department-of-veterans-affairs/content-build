@@ -1441,13 +1441,24 @@
     }
   },
   {
-    "appName": "21-0845 Authorization to Disclose Personal Information to a Third Party",
+    "appName": "Authorize VA to release your information to a third-party source",
     "entryName": "0845-auth-disclose",
-    "rootUrl": "/authorization-to-disclose",
+    "rootUrl": "/supporting-forms-for-claims/third-party-authorization-form-21-0845",
     "productId": "08a7da80-f48a-4677-9b74-0dcb642b97a1",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Authorize VA to release your information to a third-party source",
+          "path": "supporting-forms-for-claims/third-party-authorization-form-21-0845"
+        }
+      ]
     }
   },
   {
