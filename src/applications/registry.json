@@ -1466,13 +1466,24 @@
     }
   },
   {
-    "appName": "21-0845 Authorization to Disclose Personal Information to a Third Party",
+    "appName": "Authorize VA to release your information to a third-party source",
     "entryName": "0845-auth-disclose",
-    "rootUrl": "/authorization-to-disclose",
+    "rootUrl": "/supporting-forms-for-claims/third-party-authorization-form-21-0845",
     "productId": "08a7da80-f48a-4677-9b74-0dcb642b97a1",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Authorize VA to release your information to a third-party source",
+          "path": "supporting-forms-for-claims/third-party-authorization-form-21-0845"
+        }
+      ]
     }
   },
   {
@@ -1489,7 +1500,7 @@
     }
   },
   {
-    "appName": "Sign for benefits on behalf of another person",
+    "appName": "Sign VA claim forms as an alternate signer",
     "entryName": "21-0972-alternate-signer",
     "rootUrl": "/supporting-forms-for-claims/alternate-signer-form-21-0972",
     "productId": "38f07696-546f-4c9a-a6f0-16348bde4d33",
@@ -1503,7 +1514,7 @@
           "path": "supporting-forms-for-claims"
         },
         {
-          "name": "Sign for benefits on behalf of another person",
+          "name": "Sign VA claim forms as an alternate signer",
           "path": "supporting-forms-for-claims/alternate-signer-form-21-0972"
         }
       ]
@@ -1593,7 +1604,7 @@
   {
     "appName": "PACT Act",
     "entryName": "pact-act",
-    "rootUrl": "/test/pact-act",
+    "rootUrl": "pact-act-wizard-test",
     "template": {
       "title": "PACT Act",
       "layout": "page-react.html",
