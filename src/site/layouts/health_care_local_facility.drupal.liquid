@@ -9,8 +9,7 @@
       <div class="usa-width-three-fourths">
         <article class="usa-content va-l-facility-detail">
           {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
-            entityUrl = entityUrl
-          %}
+           entityUrl = entityUrl %}
 
           {% if title != empty %}
             <h1>{{ title }}</h1>
@@ -22,8 +21,7 @@
             </div>
           {% endif %}
 
-          <div
-              class="usa-grid usa-grid-full vads-u-margin-y--1p5 vads-u-margin-bottom--6">
+          <div class="usa-grid usa-grid-full vads-u-margin-y--1p5 vads-u-margin-bottom--6">
             {% assign basePath = entityUrl.path | regionBasePath %}
             {% include "src/site/facilities/facilities_health_services_buttons.drupal.liquid" with path = basePath %}
           </div>
@@ -33,12 +31,10 @@
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">Location and
             contact information</h2>
 
-          <div
-              class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
+          <div class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
 
 
-            <div
-                class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
+            <div class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
               <div>
                 <div class="vads-c-facility-detail">
 
@@ -51,39 +47,38 @@
                   <section class="vads-facility-detail">
                     <script type="application/ld+json">
                       {
-                        "@context": "https://schema.org",
-                        "@type": "Place",
-                        "address": {
-                          "@type": "PostalAddress",
-                          "streetAddress": "{{ fieldAddress.addressLine1 }}",
-                          "addressLocality": "{{ fieldAddress.locality }}",
-                          "addressRegion": "{{ fieldAddress.administrativeArea }}",
-                          "postalCode": "{{ fieldAddress.postalCode }}"
-                        },
-                        "name": "{{ title }}",
-                        "telephone": "{{ fieldPhoneNumber }}",
-                        "openingHoursSpecification": [
-                          {% for hours in fieldOfficeHours %}
-                            {
-                              "@type": "OpeningHoursSpecification",
-                              "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
-                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}",
-                              "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}"
-                            }{% if !forloop.last %},{% endif %}
-                          {% endfor %}
-                        ],
-                        "hasMap": "https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}",
-                        "image": ["{{ fieldMedia.entity.image.derivative.url }}"],
-                        "branchCode": "{{ fieldFacilityLocatorApiId }}",
-                        "geo": {
-                          "@type": "GeoCoordinates",
-                          "latitude": "{{ fieldGeolocation.lat }}",
-                          "longitude": "{{ fieldGeolocation.lon }}"
-                        }
+                      "@context": "https://schema.org",
+                                              "@type": "Place",
+                                              "address": {
+                                                "@type": "PostalAddress",
+                                                "streetAddress": "{{ fieldAddress.addressLine1 }}",
+                      "addressLocality": "{{ fieldAddress.locality }}",
+                      "addressRegion": "{{ fieldAddress.administrativeArea }}",
+                      "postalCode": "{{ fieldAddress.postalCode }}"
+                      },
+                                              "name": "{{ title }}",
+                      "telephone": "{{ fieldPhoneNumber }}",
+                      "openingHoursSpecification": [
+                      {% for hours in fieldOfficeHours %}
+                        {
+                        "@type": "OpeningHoursSpecification",
+                                                      "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
+                        "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}",
+                        "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}"
+                        }{% if !forloop.last %},{% endif %}
+                      {% endfor %}
+                      ],
+                      "hasMap": "https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}",
+                      "image": ["{{ fieldMedia.entity.image.derivative.url }}"],
+                      "branchCode": "{{ fieldFacilityLocatorApiId }}",
+                      "geo": {
+                                                "@type": "GeoCoordinates",
+                                                "latitude": "{{ fieldGeolocation.lat }}",
+                      "longitude": "{{ fieldGeolocation.lon }}"
                       }
+                                            }
                     </script>
-                    <h3
-                        class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                    <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
                       Address
                     </h3>
                     <div class="vads-u-margin-bottom--3">
@@ -96,36 +91,35 @@
                         {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }} {{ fieldAddress.postalCode }}
                       {% endcapture %}
                       {% include "src/site/includes/directions-google-maps.liquid" with
-                        directionsLinkTitle = title
-                        directionsLinkAddress = fullAddress
-                      %}
+                       directionsLinkTitle = title
+                       directionsLinkAddress = fullAddress %}
 
                     </div>
-                    <h3
-                        class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                    <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
                       Phone numbers
                     </h3>
                     <div class="vads-u-margin-bottom--0">
                       {% if fieldPhoneNumber %}
                         <div class="main-phone vads-u-margin-bottom--1">
                           <strong>Main phone:
-                          </strong><a
-                              href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+                          </strong>
+                          <a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
                         </div>
                       {% endif %}
                       {% if fieldRegionPage.entity.fieldVaHealthConnectPhone %}
                         <div class="vads-u-margin-bottom--1">
                           <strong>VA health connect:</strong>
                           <a href="tel:{{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}">
-                              {{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}
+                            {{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}
                           </a>
                         </div>
                       {% endif %}
                       {% if fieldMentalHealthPhone %}
-                        <div class="mental-health-care-phone"><strong>Mental
+                        <div class="mental-health-care-phone">
+                          <strong>Mental
                             health care:
-                          </strong><a
-                              href="tel:{{ fieldMentalHealthPhone }}">{{ fieldMentalHealthPhone }}</a>
+                          </strong>
+                          <a href="tel:{{ fieldMentalHealthPhone }}">{{ fieldMentalHealthPhone }}</a>
                         </div>
                       {% endif %}
                     </div>
@@ -135,9 +129,8 @@
               </div>
             </div>
             {% include "src/site/includes/image_and_static_map.liquid" with
-                facilityMedia = fieldMedia
-                facilityId = fieldFacilityLocatorApiId
-            %}
+             facilityMedia = fieldMedia
+             facilityId = fieldFacilityLocatorApiId %}
           </div>
 
           <!-- Location services section -->
@@ -146,23 +139,21 @@
           {% endcapture %}
           {% unless difference contains '-' %}
             <section class="vads-u-margin-bottom--4" data-label="Prepare for your visit">
-              <h2 id="prepare-for-your-visit"
-                  class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
+              <h2 id="prepare-for-your-visit" class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
               <p>Click on a topic for more details.</p>
               <va-accordion section-heading="Prepare for your visit" bordered>
                 {% for accordionItem in fieldLocationServices %}
                   {% assign item = accordionItem.entity %}
                   {% comment %}
-                    See Google Analytics datalayer handling in src/applications/static-pages/subscribeAccordionEvents.js
+                  See Google Analytics datalayer handling in src/applications/static-pages/subscribeAccordionEvents.js
                   {% endcomment %}
                   <va-accordion-item
                     class="va-accordion-item"
                     header="{{ item.fieldTitle }}"
                     level="3"
                     data-label="{{ item.fieldTitle }}"
-                    id="{{ item.fieldTitle | hashReference: 30 }}"
-                  >
+                    id="{{ item.fieldTitle | hashReference: 60 }}">
                     <div id="{{ item.entityBundle }}-{{ item.entityId }}">
                       {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
                     </div>
@@ -175,61 +166,58 @@
           <!-- List of links section -->
           {% if fieldRegionPage.entity.fieldRelatedLinks != empty %}
             {% include "src/site/paragraphs/facilities/list_of_link_teasers_facility.drupal.liquid"
-               with paragraph = fieldRegionPage.entity.fieldRelatedLinks.entity
-                    regionNickname = fieldRegionPage.entity.title
-            %}
+             with paragraph = fieldRegionPage.entity.fieldRelatedLinks.entity
+             regionNickname = fieldRegionPage.entity.title %}
           {% endif %}
 
           <!-- Local Health Services -->
           {% if fieldLocalHealthCareService != empty and fieldLocalHealthCareService.length %}
-            <h2 id="health-care-offered-here"
-                class="vads-u-font-size--xl vads-u-margin-top--5">Health services offered here</h2>
+            <h2 id="health-care-offered-here" class="vads-u-font-size--xl vads-u-margin-top--5">Health services offered here</h2>
             <p>Click on a service for more details like location, contact, and appointment
               information.</p>
-            <section class="local-health-services" id="local-health-services" data-label="Health services">
+            <section
+              class="local-health-services"
+              id="local-health-services"
+              data-label="Health services">
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
 
               <va-accordion bordered>
-              {% for localService in localHealthServices %}
-                {% assign serviceSection = localService.entity.fieldAdministration.entity %}
-                {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}
-                {% if localHealthService != empty and localService.entity.status == true %}
+                {% for localService in localHealthServices %}
+                  {% assign serviceSection = localService.entity.fieldAdministration.entity %}
+                  {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}
+                  {% if localHealthService != empty and localService.entity.status == true %}
 
-                  {% include "src/site/facilities/facility_health_service.drupal.liquid" with
-                      serviceSection
-                      healthService = localHealthService
-                      locationEntity = localService.entity
-                      locations = localService.entity.fieldServiceLocation
-                      localServiceDescription = localService.entity.fieldBody.processed
-                      fieldFacilityLocatorApiId = fieldFacilityLocatorApiId
-                  %}
+                    {% include "src/site/facilities/facility_health_service.drupal.liquid" with
+                     serviceSection
+                     healthService = localHealthService
+                     locationEntity = localService.entity
+                     locations = localService.entity.fieldServiceLocation
+                     localServiceDescription = localService.entity.fieldBody.processed
+                     fieldFacilityLocatorApiId = fieldFacilityLocatorApiId %}
 
-                {% endif %}
-              {% endfor %}
+                  {% endif %}
+                {% endfor %}
               </va-accordion>
             </section>
           {% endif %}
 
           {% if fieldFacilityLocatorApiId contains "vha_" %}
-            <div data-widget-type="facility-patient-satisfaction-scores"
-                data-facility="{{ fieldFacilityLocatorApiId | widgetFacilityDetail | escape }}">
-            </div>
+            <div data-widget-type="facility-patient-satisfaction-scores" data-facility="{{ fieldFacilityLocatorApiId | widgetFacilityDetail | escape }}"></div>
           {% endif %}
 
           <!-- Social Links -->
           {% include "src/site/facilities/facility_social_links.drupal.liquid"
-              with  regionNickname = fieldRegionPage.entity.title
-                    fieldGovdeliveryIdEmerg = fieldRegionPage.entity.fieldGovdeliveryIdEmerg
-                    fieldGovdeliveryIdNews = fieldRegionPage.entity.fieldGovdeliveryIdNews
-                    fieldOperatingStatus = fieldRegionPage.entity.fieldOperatingStatus
-                    fieldFacebook = fieldRegionPage.entity.fieldFacebook
-                    fieldTwitter = fieldRegionPage.entity.fieldTwitter
-                    fieldInstagram = fieldRegionPage.entity.fieldInstagram
-                    fieldFlickr = fieldRegionPage.entity.fieldFlickr
-          %}
-  <!-- Last updated & feedback button-->
-        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+           with regionNickname = fieldRegionPage.entity.title
+           fieldGovdeliveryIdEmerg = fieldRegionPage.entity.fieldGovdeliveryIdEmerg
+           fieldGovdeliveryIdNews = fieldRegionPage.entity.fieldGovdeliveryIdNews
+           fieldOperatingStatus = fieldRegionPage.entity.fieldOperatingStatus
+           fieldFacebook = fieldRegionPage.entity.fieldFacebook
+           fieldTwitter = fieldRegionPage.entity.fieldTwitter
+           fieldInstagram = fieldRegionPage.entity.fieldInstagram
+           fieldFlickr = fieldRegionPage.entity.fieldFlickr %}
+          <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
 
       </div>

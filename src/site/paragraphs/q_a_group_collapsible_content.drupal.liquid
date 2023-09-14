@@ -13,7 +13,7 @@
 <va-accordion>
   {% for item in fieldQAs %}
     {% assign id = item.entityId %}
-    <va-accordion-item header="{{ item.entityLabel }}" id="{{ item.entityLabel | hashReference: 30 }}">
+    <va-accordion-item header="{{ item.entityLabel }}" id="{{ item.entityLabel | hashReference: 60}}">
       <div id={{ id }} data-entity-id="{{ id }}">
         <div id="{{ item.fieldAnswer.entity.entityBundle }}-{{ item.fieldAnswer.entity.entityId }}">
           {% if item.fieldAnswer %}
