@@ -1446,7 +1446,7 @@
     "rootUrl": "/supporting-forms-for-claims/third-party-authorization-form-21-0845",
     "productId": "08a7da80-f48a-4677-9b74-0dcb642b97a1",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
