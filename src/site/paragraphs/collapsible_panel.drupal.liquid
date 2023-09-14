@@ -1,68 +1,74 @@
 {% comment %}
-Example data:
-{
-"entity": {
-"entityType": "paragraph",
-"entityBundle": "collapsible_panel",
-"fieldCollapsiblePanelMulti": false,
-"fieldCollapsiblePanelExpand": false,
-"fieldCollapsiblePanelBordered": false,
-"fieldVaParagraphs": [
-{
-"entity": {
-"entityId": "391",
-"entityBundle": "collapsible_panel_item"
-"fieldTitle": "Will using mental health services at VA put my career at risk?",
-"fieldWysiwyg": {
-"processed": "..."
-}
-}
-}
-}
-}
-}
+  Example data:
+  {
+    "entity": {
+        "entityType": "paragraph",
+        "entityBundle": "collapsible_panel",
+        "fieldCollapsiblePanelMulti": false,
+        "fieldCollapsiblePanelExpand": false,
+        "fieldCollapsiblePanelBordered": false,
+        "fieldVaParagraphs": [
+            {
+                "entity": {
+                    "entityId": "391",
+                    "entityBundle": "collapsible_panel_item"
+                    "fieldTitle": "Will using mental health services at VA put my career at risk?",
+                    "fieldWysiwyg": {
+                        "processed": "..."
+                    }
+                }
+            }
+        }
+    }
+  }
 {% endcomment %}
 <div
-  data-template="paragraphs/collapsible_panel"
-  data-entity-id="{{ entity.entityId }}"
-  data-multiselectable="{{ entity.fieldCollapsiblePanelMulti }}">
-  <va-accordion
-    {% if entity.fieldCollapsiblePanelBordered %}
-    bordered
-    {% endif %}>
+    data-template="paragraphs/collapsible_panel"
+    data-entity-id="{{ entity.entityId }}"
+    data-multiselectable="{{ entity.fieldCollapsiblePanelMulti }}"
+>
+    <va-accordion
+        {% if entity.fieldCollapsiblePanelBordered %}
+            bordered
+        {% endif %}
+    >
     {% assign collapsibleHeaderH3 = entity.entityId | filterCollapsibleHeaderLevels %}
 
     {% if collapsibleHeaderH3 %}
-      {% assign panelHeaderLevel = collapsibleHeaderH3 %}
+        {% assign panelHeaderLevel = collapsibleHeaderH3 %}
     {% else %}
-      {% assign panelHeaderLevel = 'h4' %}
+        {% assign panelHeaderLevel = 'h4' %}
     {% endif %}
 
-    {% for accordionItem in entity.fieldVaParagraphs %}
-      {% assign item = accordionItem.entity %}
-      {% assign id = item.entityId %}
-      <va-accordion-item class="va-accordion-item" id="{{item.fieldTitle | hashReference: 60 }}-{{id}}">
+        {% for accordionItem in entity.fieldVaParagraphs %}
+            {% assign item = accordionItem.entity %}
+            {% assign id = item.entityId %}
+            <va-accordion-item
+              class="va-accordion-item"
+              id="{{item.fieldTitle | hashReference: 60 }}-{{id}}"
+            >
 
-        <{{ panelHeaderLevel }} slot="headline">
-          {{ item.fieldTitle | encode }}
-        </{{ panelHeaderLevel }}>
+                <{{ panelHeaderLevel }} slot="headline">
+                    {{ item.fieldTitle | encode }} 
+                </{{ panelHeaderLevel }}>
 
-        <div
-          id={{id}}
-          data-template="paragraphs/collapsible_panel__panel"
-          data-entity-id="{{ item.entityId }}"
-          data-analytics-faq-text="{{ item.fieldTitle | escape }}">
-          <div id="{{ item.entityBundle }}-{{ item.entityId }}">
-            {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
+                <div
+                    id={{id}}
+                    data-template="paragraphs/collapsible_panel__panel"
+                    data-entity-id="{{ item.entityId }}"
+                    data-analytics-faq-text="{{ item.fieldTitle | escape }}"
+                >
+                    <div id="{{ item.entityBundle }}-{{ item.entityId }}">
+                        {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
 
-            {% for paragraph in item.fieldVaParagraphs %}
-              {% assign bundleComponent = "src/site/paragraphs/" | append: paragraph.entity.entityBundle | append: ".drupal.liquid" %}
-              {% include {{ bundleComponent }} with entity = paragraph.entity %}
-            {% endfor %}
+                        {% for paragraph in item.fieldVaParagraphs %}
+                            {%  assign bundleComponent = "src/site/paragraphs/" | append: paragraph.entity.entityBundle | append: ".drupal.liquid" %}
+                            {% include {{ bundleComponent }} with entity = paragraph.entity %}
+                        {%  endfor %}
 
-          </div>
-        </div>
-      </va-accordion-item>
-    {% endfor %}
-  </va-accordion>
+                    </div>
+                </div>
+            </va-accordion-item>
+        {% endfor %}
+    </va-accordion>
 </div>
