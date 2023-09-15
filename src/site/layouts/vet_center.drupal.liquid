@@ -155,7 +155,7 @@
                 {% for entity in fieldPrepareForVisit %}
                   <va-accordion-item
                     class="va-accordion-item"
-                    id="prepare-for-your-visit-accordion-item-{{ entity.entity.fieldHeader }}"
+                    id="prepare-for-your-visit-accordion-item-{{ entity.entity.fieldHeader | hashReference: 60  }}"
                     header="{{ entity.entity.fieldHeader }}" level="3"
                   >
                     {{ entity.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
