@@ -467,7 +467,7 @@
                     header="{{ faqParagraph.entity.fieldQuestion }}"
                     level="3"
                     data-faq-entity-id="{{ faqParagraph.entity.entityId }}"
-                    id="{{ faqParagraph.entity.fieldQuestion | hashReference: 30 }}"
+                    id="{{ faqParagraph.entity.fieldQuestion | hashReference: 60 }}"
                   >
                     {% assign fieldAnswer = faqParagraph.entity.fieldAnswer | first %}
                     {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}

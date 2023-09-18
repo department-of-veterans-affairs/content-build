@@ -4,7 +4,7 @@
         {% assign idService = entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare %}
             <va-accordion-item
                     class="va-accordion-item"
-                    id="{{ idService }}-item-{{ entity.entity.fieldServiceNameAndDescripti.entity.name}}"
+                    id="{{ idService }}-item-{{ entity.entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}"
                     header="{{ entity.entity.fieldServiceNameAndDescripti.entity.name }}"
                     subheader="{{ entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterFriendlyName }}"
                     level="3">
