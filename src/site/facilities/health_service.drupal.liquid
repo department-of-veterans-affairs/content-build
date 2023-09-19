@@ -7,7 +7,7 @@
             class="va-accordion-item"
             data-label="{{ serviceTaxonomy.name }}"
             data-template="facilities/health_service"
-            id="{{serviceTaxonomy.name | hashReference: 60 }}"
+            id="item-{{ serviceTaxonomy.name | hashReference: 60 }}"
         >
             <h3 slot="headline">
                 {{ serviceTaxonomy.name }}
