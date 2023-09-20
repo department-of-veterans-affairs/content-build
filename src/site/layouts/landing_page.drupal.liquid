@@ -67,7 +67,7 @@
             level="2"
             open="true"
             header="Ask questions"
-            id="{{ 'Message us' | hashReference: 30 }}"
+            id="{{ 'Message us' | hashReference: 60 }}"
           >
             <section>
               <h3 class="vads-u-font-size--h4">Message us</h3>
@@ -119,7 +119,7 @@
               level="2"
               open="true"
               header="Not a Veteran?"
-              id="{{ 'Get information for' | hashReference: 30 }}"
+              id="{{ 'Get information for' | hashReference: 60 }}"
             >
               <section>
                 <h3 class="vads-u-font-size--h4">Get information for:</h3>
@@ -143,7 +143,7 @@
               level="2"
               header="Connect with us"
               open="true"
-              id="{{ fieldRelatedOffice.entity.fieldExternalLink.title | hashReference: 30 }}">
+              id="{{ fieldRelatedOffice.entity.fieldExternalLink.title | hashReference: 60 }}">
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
