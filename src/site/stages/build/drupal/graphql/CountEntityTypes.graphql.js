@@ -31,6 +31,16 @@ const CountEntityTypes = `
     count
   }
 
+  vbaFacilities: nodeQuery(
+    filter: {
+      conditions: [
+        {field: "status", value: ["1"]},
+        {field: "type", value: ["vba_facility"]}
+      ]}
+  	) {
+    count
+  }
+
   newsStories: nodeQuery(
     filter: {
       conditions: [

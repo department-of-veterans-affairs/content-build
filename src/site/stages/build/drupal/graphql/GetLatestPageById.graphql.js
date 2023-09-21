@@ -31,13 +31,14 @@ const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const vamcRegisterForCarePages = require('./vamcRegisterForCarePage.graphql');
 const vetCenterLocations = require('./vetCenterLocations.graphql');
 const vetCenters = require('./vetCenter.graphql');
+const vbaFacilities = require('./vbaFacility.graphql');
 const { ALL_FRAGMENTS } = require('./fragments.graphql');
 
 // String Helpers
 const {
   updateQueryString,
   queryParamToBeChanged,
-} = require('./../../../../utilities/stringHelpers');
+} = require('../../../../utilities/stringHelpers');
 
 /**
  * Queries for a page by the node id, getting the latest revision
@@ -72,6 +73,7 @@ module.exports = `
   ${nodeBasicLandingPage.fragment}
   ${nodeCampaignLandingPage.fragment}
   ${vetCenters.fragment}
+  ${vbaFacilities.fragment}
   ${vetCenterLocations.fragment}
   ${vamcPolicyPages.fragment}
   ${vamcRegisterForCarePages.fragment}
@@ -112,6 +114,7 @@ module.exports = `
         ... nodeBasicLandingPage
         ... nodeCampaignLandingPage
         ... vetCenterFragment
+        ... vbaFacilityFragment
         ... vetCenterLocationsFragment
         ... policiesPageFragment
         ... registerForCareFragment
