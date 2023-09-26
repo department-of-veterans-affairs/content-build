@@ -40,7 +40,7 @@
         },
         {
           "path": "pension/application/527EZ",
-          "name": "Apply for Veterans Pension"
+          "name": "Review pension benefits application"
         }
       ]
     }
@@ -178,7 +178,7 @@
         },
         {
           "path": "burials-and-memorials/application/530",
-          "name": "Apply for burial benefits"
+          "name": "Review burial benefits application"
         }
       ]
     }
