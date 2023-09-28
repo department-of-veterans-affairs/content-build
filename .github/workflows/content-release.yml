@@ -47,6 +47,9 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
           method: GET
+          retry: 5
+          retryWait: 5000
+
 
       - name: Install dependencies
         uses: ./.github/workflows/install
