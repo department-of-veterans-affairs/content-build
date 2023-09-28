@@ -97,6 +97,7 @@ const {
 } = require('./graphql/vamcBillingAndInsurancePage.graphql');
 
 const { getVetCenterQueries } = require('./graphql/vetCenter.graphql');
+const { getVbaFacilityQueries } = require('./graphql/vbaFacility.graphql');
 
 const {
   GetVetCenterLocations,
@@ -137,6 +138,7 @@ function getNodeQueries(entityCounts) {
     GetNodeBasicLandingPage,
     GetCampaignLandingPages,
     ...getVetCenterQueries(entityCounts),
+    ...getVbaFacilityQueries(entityCounts),
     GetVetCenterLocations,
     GetPolicyPages,
     GetBillingAndInsurancePages,

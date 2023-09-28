@@ -62,7 +62,13 @@
         {% endif %}
 
         <va-accordion bordered multi>
-          <va-accordion-item level="2" open="true" header="Ask questions">
+          <va-accordion-item 
+            class="va-accordion-item"
+            level="2"
+            open="true"
+            header="Ask questions"
+            id="{{ 'Message us' | hashReference: 60 }}"
+          >
             <section>
               <h3 class="vads-u-font-size--h4">Message us</h3>
               <ul class="va-nav-linkslist-list social">
@@ -108,7 +114,13 @@
           </va-accordion-item>
 
           {% if fieldLinks != empty and fieldLinks.length > 0 %}
-            <va-accordion-item level="2" open="true" header="Not a Veteran?">
+            <va-accordion-item
+              class="va-accordion-item"
+              level="2"
+              open="true"
+              header="Not a Veteran?"
+              id="{{ 'Get information for' | hashReference: 60 }}"
+            >
               <section>
                 <h3 class="vads-u-font-size--h4">Get information for:</h3>
                 <ul class="va-nav-linkslist-list links">
@@ -126,7 +138,12 @@
 
         <!-- Connect with us -->
         {% if fieldRelatedOffice != empty and fieldRelatedOffice.entity.fieldExternalLink.title != "Records benefits hub" %}
-            <va-accordion-item level="2" header="Connect with us" open="true">
+            <va-accordion-item
+              class="va-accordion-item"
+              level="2"
+              header="Connect with us"
+              open="true"
+              id="{{ fieldRelatedOffice.entity.fieldExternalLink.title | hashReference: 60 }}">
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">

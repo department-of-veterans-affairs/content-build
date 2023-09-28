@@ -20,11 +20,14 @@
             {{ entity.fieldAddress.postalCode }}
           </div>
         </address>
-        <directions>
-          <a href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ entity.fieldAddress.addressLine1 }}, {{ entity.fieldAddress.locality }}, {{ entity.fieldAddress.administrativeArea }} {{ entity.fieldAddress.postalCode }}">
-            Directions (Google Maps)
-          </a>
-        </directions>
+
+        {% capture fullAddress %}
+          {{ entity.fieldAddress.addressLine1 }}, {{ entity.fieldAddress.locality }}, {{ entity.fieldAddress.administrativeArea }} {{ entity.fieldAddress.postalCode }}
+        {% endcapture %}
+        {% include "src/site/includes/directions-google-maps.liquid" with
+          directionsLinkTitle = entity.title
+          directionsLinkAddress = fullAddress
+        %}
       </div>
     {% endunless %}
     <div class="vads-u-margin-bottom--0">
