@@ -1505,7 +1505,7 @@
     "rootUrl": "/supporting-forms-for-claims/alternate-signer-form-21-0972",
     "productId": "38f07696-546f-4c9a-a6f0-16348bde4d33",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
