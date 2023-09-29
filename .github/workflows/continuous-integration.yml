@@ -23,7 +23,7 @@ jobs:
   build:
     name: Build
     runs-on: [self-hosted, asg]
-    timeout-minutes: 75
+    timeout-minutes: 90
 
     defaults:
       run:
