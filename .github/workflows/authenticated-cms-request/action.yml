@@ -22,14 +22,6 @@ inputs:
     description: Request timeout
     required: false
     default: "10000"
-  retry:
-    description: Number of times to retry the request
-    required: false
-    default: "1"
-  retryWait:
-    description: Number of milliseconds to wait between retries
-    required: false
-    default: "1000"
 
 runs:
   using: composite

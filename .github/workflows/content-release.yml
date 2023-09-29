@@ -40,6 +40,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
 
+      - name: Wait for the CMS to be ready
+        uses: ./content-build/.github/workflows/wait-for-cms-ready
+
       - name: Notify CMS - Starting
         uses: ./.github/workflows/authenticated-cms-request
         with:
@@ -47,9 +50,6 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
           method: GET
-          retry: 5
-          retryWait: 5000
-
 
       - name: Install dependencies
         uses: ./.github/workflows/install
