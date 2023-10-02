@@ -52,3 +52,4 @@ runs:
         method: ${{ inputs.method }}
         username: ${{ env.DRUPAL_USERNAME }}
         password: ${{ env.DRUPAL_PASSWORD }}
+        timeout: ${{ inputs.timeout }}
