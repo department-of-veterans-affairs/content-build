@@ -48,18 +48,9 @@
   {
     "appName": "VA Online Scheduling",
     "entryName": "vaos",
-    "rootUrl": "/health-care/schedule-view-va-appointments/appointments",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "VA Online Scheduling NEW",
-    "entryName": "vaos",
     "rootUrl": "/my-health/appointments",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
