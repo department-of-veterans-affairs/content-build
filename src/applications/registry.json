@@ -1618,15 +1618,15 @@
         },
         {
           "name": "Memorial items",
-          "path": "memorial-items"
+          "path": "burials-memorials/memorial-items"
         },
         {
           "name": "Presidential Memorial Certificates",
-          "path": "presidential-memorial-certificates"
+          "path": "burials-memorials/memorial-items/presidential-memorial-certificates"
         },
         {
           "name": "Request a Presidential Memorial Certificate",
-          "path": "request-certificate-form-40-0247"
+          "path": "burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247"
         }
       ]
     }
