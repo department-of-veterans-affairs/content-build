@@ -204,6 +204,26 @@
     }
   },
   {
+    "appName": "10-10EZR Update health benefits info form",
+    "entryName": "ezr",
+    "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
+    "template": {
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "my-heath/",
+          "name": "My Health"
+        },
+        {
+          "path": "update-benefits-information-form-10-10ezr",
+          "name": "Update your VA health benefits information"
+        }
+      ]
+    }
+  },
+  {
     "appName": "686C-674",
     "entryName": "686C-674",
     "rootUrl": "/view-change-dependents/add-remove-form-21-686c",
@@ -1585,11 +1605,30 @@
   {
     "appName": "Request a Presidential Memorial Certificate",
     "entryName": "0247-pmc",
-    "rootUrl": "/request-presidential-memorial-certificate",
+    "rootUrl": "/burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247",
     "productId": "5af7a83b-c1a0-4a0a-b0e9-88baf150e6a9",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Burials and memorials",
+          "path": "burials-memorials"
+        },
+        {
+          "name": "Memorial items",
+          "path": "memorial-items"
+        },
+        {
+          "name": "Presidential Memorial Certificates",
+          "path": "presidential-memorial-certificates"
+        },
+        {
+          "name": "Request a Presidential Memorial Certificate",
+          "path": "request-certificate-form-40-0247"
+        }
+      ]
     }
   },
   {
