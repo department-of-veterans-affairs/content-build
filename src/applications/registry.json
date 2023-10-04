@@ -204,6 +204,26 @@
     }
   },
   {
+    "appName": "10-10EZR Update health benefits info form",
+    "entryName": "ezr",
+    "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
+    "template": {
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "my-heath/",
+          "name": "My Health"
+        },
+        {
+          "path": "update-benefits-information-form-10-10ezr",
+          "name": "Update your VA health benefits information"
+        }
+      ]
+    }
+  },
+  {
     "appName": "686C-674",
     "entryName": "686C-674",
     "rootUrl": "/view-change-dependents/add-remove-form-21-686c",
