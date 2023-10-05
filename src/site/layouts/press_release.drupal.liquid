@@ -1,6 +1,6 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true deriveBreadcrumbsFromUrl = true %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
 
 <div id="content" class="interior">
     <main class="va-l-detail-page va-facility-page">
@@ -82,7 +82,6 @@
                     <section class="vads-u-margin-bottom--3">
                         {{ fieldOffice.entity.fieldPressReleaseBlurb.processed }}
                     </section>
-                    {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
                     <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
                        href="{{ fieldListing.entity.entityUrl.path }}">See all news releases</a>
                 </article>
