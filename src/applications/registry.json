@@ -1637,5 +1637,15 @@
     "appName": "Order hearing aid or CPAP supplies",
     "entryName": "health-care-supply-reordering",
     "rootUrl": "/health-care/order-hearing-aid-or-CPAP-supplies-form"
+  },
+  {
+    "appName": "Request personal records",
+    "entryName": "10206-foia",
+    "rootUrl": "/request-personal-records",
+    "productId": "560247e7-3a80-4fdd-ad00-8d0e14435d22",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
