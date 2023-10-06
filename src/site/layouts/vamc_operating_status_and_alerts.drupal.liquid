@@ -32,11 +32,12 @@
               </div>
             </div>
           {% endif %}
+          {% assign fieldBannerAlertData = reverseFieldBannerAlertVamcsNode.entities %}
           <section class="table-of-contents" class="vads-u-margin-bottom--5">
 	          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"/>
             <ul class="usa-unstyled-list" role="list">
 
-              {% if fieldBannerAlert.0.entity.status != false and fieldBannerAlert.0.entity.fieldSituationUpdates.0.entity %}
+              {% if fieldBannerAlertData.0.status != false and fieldBannerAlertData.0.fieldSituationUpdates.0.entity %}
                 <li class="vads-u-margin-bottom--2">
                   <a class="vads-u-display--flex vads-u-text-decoration--none" href="#situation-updates"
                      onclick="recordEvent({ event: 'nav-jumplink-click' });">
@@ -68,9 +69,9 @@
             </ul>
           </section>
 
-          {% assign situationUpdates = fieldBannerAlert | hasContentAtPath: 'entity.fieldSituationUpdates' %}
-          {% if fieldBannerAlert and situationUpdates %}
-            {% include "src/site/components/situation_updates.drupal.liquid" with fieldBannerAlert %}
+          {% assign situationUpdates = fieldBannerAlertData | hasContentAtPath: 'entity.fieldSituationUpdates' %}
+          {% if fieldBannerAlertData and situationUpdates %}
+            {% include "src/site/components/situation_updates.drupal.liquid" with fieldBannerAlertData %}
           {% endif %}
 
           {% if fieldFacilityOperatingStatus.0.entity %}
