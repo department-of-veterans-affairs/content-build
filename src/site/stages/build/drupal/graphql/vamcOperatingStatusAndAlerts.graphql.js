@@ -47,8 +47,8 @@ const vamcOperatingStatusAndAlerts = `
     fieldOperatingStatusEmergInf {
       processed
     }
-    fieldBannerAlert {
-      entity {
+    reverseFieldBannerAlertVamcsNode {
+      entities {
         ... on NodeFullWidthBannerAlert {
           status
           title
