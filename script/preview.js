@@ -353,7 +353,9 @@ if (process.env.SENTRY_DSN) {
   app.use(Raven.errorHandler());
 }
 
-app.use((err, _req, res) => {
+// `next` commented out for time being.
+app.use((err, req, res) => {
+  // , next) => {
   console.error(err);
   res.send(`
     <p>We're sorry, something went wrong when trying to preview that page.</p>

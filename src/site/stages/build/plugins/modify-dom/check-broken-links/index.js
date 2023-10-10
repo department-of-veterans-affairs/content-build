@@ -42,8 +42,15 @@ module.exports = {
 
     const isHtml = path.extname(fileName) === '.html';
     if (!isHtml) return;
-
-    const linkErrors = getBrokenLinks(file, this.allPaths);
+    // The use of `undefined` here allows the function getBrokenLinks() to use
+    // its default parameter even in cases where there are further arguments
+    // to the 'right'.
+    const linkErrors = getBrokenLinks(
+      file,
+      this.allPaths,
+      undefined,
+      this.buildOptions.buildtype,
+    );
 
     if (linkErrors.length > 0) {
       // next-build generated files return file.path as undefined, this slices off /index.html to match live link
