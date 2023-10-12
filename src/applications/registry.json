@@ -144,7 +144,7 @@
       "title": "VA online services terms of use",
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
