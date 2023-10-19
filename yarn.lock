@@ -10539,6 +10539,11 @@ smart-buffer@^4.1.0:
   resolved "https://registry.yarnpkg.com/smart-buffer/-/smart-buffer-4.1.0.tgz#91605c25d91652f4661ea69ccf45f1b331ca21ba"
   integrity sha512-iVICrxOzCynf/SNaBQCw34eM9jROU/s5rzIhpOvzhzuYHfJR/DhZfDkXiZSgKXfgv26HT3Yni3AV/DGw0cGnnw==
 
+smartbanner.js@^1.19.3:
+  version "1.19.3"
+  resolved "https://registry.yarnpkg.com/smartbanner.js/-/smartbanner.js-1.19.3.tgz#32999151a9e851fd3b1bca288b28c7a01c1a13fa"
+  integrity sha512-30JaYaPHO0VRC8MXGeUGWm1jF3+kCwKgV2GW9uLa8J3zOuv9D9ZhZo0IKf/xIcX0HQBRisOU4RPhEj7UrNt8Sw==
+
 sockjs@^0.3.21:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/sockjs/-/sockjs-0.3.21.tgz#b34ffb98e796930b60a0cfa11904d6a339a7d417"
