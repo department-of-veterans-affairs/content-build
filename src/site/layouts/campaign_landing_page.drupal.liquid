@@ -458,14 +458,16 @@
             <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin-bottom--0">FAQ</p>
             <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
 
-            <!-- Questions/Answers -->
+            <!-- Page-specific Questions/Answers -->
             <va-accordion bordered>
               {% for faqParagraph in fieldClpFaqParagraphs %}
                 {% if faqParagraph.entity %}
                   <va-accordion-item
+                    class="va-accordion-item"
                     header="{{ faqParagraph.entity.fieldQuestion }}"
                     level="3"
                     data-faq-entity-id="{{ faqParagraph.entity.entityId }}"
+                    id="{{ faqParagraph.entity.fieldQuestion | hashReference: 60 }}"
                   >
                     {% assign fieldAnswer = faqParagraph.entity.fieldAnswer | first %}
                     {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
@@ -475,6 +477,17 @@
                 {% endif %}
               {% endfor %}
             </va-accordion>
+
+            <!-- Reusable QAs -->
+            {% for reusableQA in fieldClpReusableQA %}
+              {% if reusableQA.entity.entityBundle == "q_a_group" %}
+                {% if reusableQA.entity.fieldAccordionDisplay %}
+                  {% include "src/site/paragraphs/q_a_group_collapsible_content.drupal.liquid" with entity = reusableQA.entity %}
+                {% else %}
+                  {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = reusableQA.entity %}
+                {% endif %}  
+              {% endif %}
+            {% endfor %}
           </div>
         </div>
 

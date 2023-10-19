@@ -88,14 +88,16 @@
                         {{ fieldAddress.administrativeArea }}
                         {{ fieldAddress.postalCode }}
                       </address>
-                      <div>
-                        <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ entityLabel }}'});"
-                           href="https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}"
-                           aria-label="Directions to {{ entityLabel }} on Google Maps"
-                        >
-                          Directions (Google Maps)
-                        </a>
-                      </div>
+
+                      {% capture fullAddress %}
+                        {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea}} {{ fieldAddress.postalCode }}
+                      {% endcapture %}
+                      {% include "src/site/includes/directions-google-maps.liquid" with
+                        directionsLinkTitle = entityLabel
+                        directionsLinkAddress = fullAddress
+                        directionsLinkOnClickPropName = "vet-center-facility-name"
+                        directionsLinkOnClickPropValue = entityLabel
+                      %}
                     </div>
                     <h4 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
                       Direct line</h4>
@@ -149,11 +151,13 @@
             <p> Click on a topic for more details. </p>
             <div class="vads-u-margin-bottom--3">
               <va-accordion bordered
-                            id="prepare-for-your-visit-accordion-{{ entity.entity.fieldHeader }}">
+                id="prepare-for-your-visit-accordion-{{ entity.entity.fieldHeader }}">
                 {% for entity in fieldPrepareForVisit %}
                   <va-accordion-item
-                      id="prepare-for-your-visit-accordion-item-{{ entity.entity.fieldHeader }}"
-                      header="{{ entity.entity.fieldHeader }}" level="3">
+                    class="va-accordion-item"
+                    id="prepare-for-your-visit-accordion-item-{{ entity.entity.fieldHeader | hashReference: 60  }}"
+                    header="{{ entity.entity.fieldHeader }}" level="3"
+                  >
                     {{ entity.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
                   </va-accordion-item>
                 {% endfor %}

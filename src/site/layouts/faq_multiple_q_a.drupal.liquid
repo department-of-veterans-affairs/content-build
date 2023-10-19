@@ -71,16 +71,19 @@
               {% endif %}
 
               {% if fieldQAGroup.entity.fieldAccordionDisplay %}
-                <va-accordion bordered>
+                <va-accordion>
+                {% assign groupId = fieldQAGroup.entity.entityId %}
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
                     {% if fieldQA.entity %}
                       <va-accordion-item
+                        class="va-accordion-item"
                         data-faq-entity-id="{{ fieldQA.entity.entityId }}"
+                        id="{{ fieldQA.entity.title | hashReference: 60 }}"
                       >
-                      <h3 slot="headline">
-                        {{ fieldQA.entity.title }}
-                    </h3>
-                        <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}">
+                        <h3 slot="headline">
+                          {{ fieldQA.entity.title }}
+                        </h3>
+                        <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}-{{ groupId }}">
                           {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
                           {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
                           {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}

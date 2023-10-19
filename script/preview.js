@@ -23,6 +23,9 @@ const HOSTNAMES = require('../src/site/constants/hostnames');
 const bucketsContent = require('../src/site/constants/buckets-content');
 const singlePageDiff = require('./preview-routes/single-page-diff');
 const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create-symlink');
+const {
+  processLovellPages,
+} = require('../src/site/stages/build/drupal/process-lovell-pages');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -280,7 +283,11 @@ app.get('/preview', async (req, res, next) => {
 
     Object.assign(drupalData.data, nonNodeContent.content.data);
 
-    const drupalPage = drupalData.data.nodes.entities[0];
+    drupalData.data.nodeQuery = drupalData.data.nodes;
+    processLovellPages(drupalData);
+    const pageIndex = req.query?.lovellVariant === 'va' ? 1 : 0;
+
+    const drupalPage = drupalData.data.nodes.entities[pageIndex];
     const drupalPath = `${req.path.substring(1)}/index.html`;
 
     if (!drupalPage.entityBundle) {

@@ -16,7 +16,13 @@ Example data:
         <div class="additional-info-title">{{ entity.fieldTextExpander }}</div>
 
         {% if entity.fieldWysiwyg %}
-            <div class="additional-info-content usa-alert-text" hidden>{{ entity.fieldWysiwyg.processed }}</div>
+            <div class="additional-info-content usa-alert-text" hidden>
+                {% if entity.fieldWysiwyg.processed %}
+                    {{ entity.fieldWysiwyg.processed }}
+                {% elsif entity.fieldWysiwyg.0.processed %}
+                    {{ entity.fieldWysiwyg.0.processed }}
+                {% endif %}
+            </div>
         {% endif %}
     </div>
 {% endif %}

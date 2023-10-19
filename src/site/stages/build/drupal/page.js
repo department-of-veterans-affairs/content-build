@@ -202,6 +202,18 @@ function getHubSidebar(navsArray, owner) {
 
 // used to find the correct sidebar menu if the page belongs to a health care region
 function getFacilitySidebar(page, contentData) {
+  const defaultEmptySidebar = { links: [] };
+
+  // skip this processing for person_profile pages:
+  //  1. person_profile pages can have fieldOffice values like 'VHA',
+  //     which will never have a matching sidebar and will break the build
+  //  2. person_profile pages do not display a real sidebar anyway,
+  //     so no need to do this processing
+  const personProfilePage = page?.entityBundle === 'person_profile';
+  if (personProfilePage) {
+    return defaultEmptySidebar;
+  }
+
   // for pages like New Releases, Stories, Events, and Detail Pages
   const facilityPage =
     page.fieldOffice &&
@@ -270,7 +282,7 @@ function getFacilitySidebar(page, contentData) {
   }
 
   // return the default and most important of the menu structure
-  return { links: [] };
+  return defaultEmptySidebar;
 }
 
 function mergeTaxonomiesIntoResourcesAndSupportHomepage(

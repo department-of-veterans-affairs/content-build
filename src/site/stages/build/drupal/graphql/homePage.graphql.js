@@ -2,11 +2,8 @@
  * Home page
  */
 
-const menu = 'homepage-top-tasks-blocks';
-const hubListQueue = 'home_page_hub_list';
 const hubListMenu = 'home-page-hub-list';
 const hubListCreateAccountQueue = 'v2_home_page_create_account';
-const promoBlocksQueue = 'home_page_promos';
 const homePageHeroQueue = 'home_page_hero';
 const homePageNewsSpotlightQueue = 'home_page_news_spotlight';
 const homePagePopularLinksMenu = 'popular-on-va-gov';
@@ -22,40 +19,6 @@ const linksQueryPartial = `
   }
 `;
 const query = `
-  homePageMenuQuery:menuByName(name: "${menu}") {
-    name
-    links {
-      label
-      url {
-        path
-      }
-      links {
-        label
-        url {
-          path
-        }
-      }
-    }
-  }
-  homePageHubListQuery: entitySubqueueById(id: "${hubListQueue}") {
-    ... on EntitySubqueueHomePageHubList {
-      itemsOfEntitySubqueueHomePageHubList {
-        entity {
-          ... on NodeLandingPage {
-            entityId
-            entityLabel
-            fieldTeaserText
-            fieldTitleIcon
-            fieldHomePageHubLabel
-            entityUrl {
-              path
-              routed
-            }
-          }
-        }
-      }
-    }
-  }
   homePageHubListMenuQuery:menuByName(name: "${hubListMenu}") {
     name
     description
@@ -75,45 +38,6 @@ const query = `
               ... on Node {
                 entityPublished
                 moderationState
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  homePagePromoBlockQuery: entitySubqueueById(id: "${promoBlocksQueue}") {
-    ... on EntitySubqueueHomePagePromos {
-      itemsOfEntitySubqueueHomePagePromos {
-         entity {
-          ... on BlockContentPromo {
-            entityId
-            entityLabel
-            fieldImage {
-              targetId
-              entity {
-                ...on MediaImage {
-                  image {
-                    url
-                    alt
-                  }
-                }
-
-              }
-            }
-            fieldPromoLink {
-              targetId
-              ...on FieldBlockContentPromoFieldPromoLink {
-                entity {
-                  ... on ParagraphLinkTeaser {
-                    fieldLink {
-                      uri
-                      title
-                      options
-                    }
-                    fieldLinkSummary
-                  }
-                }
               }
             }
           }
@@ -167,7 +91,7 @@ const query = `
                 ... on MediaImage {
                   image {
                     alt
-                    derivative(style: LARGE) {
+                    derivative(style: CROPSQUARE) {
                       url
                     }
                   }

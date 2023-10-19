@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign, no-continue */
-const fs = require('fs-extra');
-const path = require('path');
-const yaml = require('js-yaml');
 const { createEntityUrlObj, createFileObj } = require('./page');
+const { addHomeSandboxContent } = require('./home-sandbox');
 
 function divideHubRows(hubs) {
   return hubs.map((hub, i) => {
@@ -19,53 +17,10 @@ function divideHubRows(hubs) {
 
 // Processes the data received from the home page query.
 function addHomeContent(contentData, files, metalsmith, buildOptions) {
-  // We cannot limit menu items in Drupal, so we must do it here.
-  const menuLength = 4;
-
   // Make sure that we have content for the home page.
-  if (contentData.data.homePageMenuQuery) {
+  if (contentData.data.homePageHubListMenuQuery) {
     let homeEntityObj = createEntityUrlObj('/');
-    const {
-      data: {
-        banners,
-        homePageMenuQuery,
-        homePageHubListQuery,
-        homePagePromoBlockQuery,
-        promoBanners,
-      },
-    } = contentData;
 
-    // Liquid does not have a good modulo operator, so we let the template know when to end a row.
-    const hubs = divideHubRows(
-      homePageHubListQuery.itemsOfEntitySubqueueHomePageHubList,
-    );
-
-    const fragmentsRoot = metalsmith.path(buildOptions.contentFragments);
-    const bannerLocation = path.join(fragmentsRoot, 'home/banner.yml');
-    const bannerFile = fs.readFileSync(bannerLocation);
-    const banner = yaml.safeLoad(bannerFile);
-
-    homeEntityObj = {
-      ...homeEntityObj,
-      banners,
-      cards: homePageMenuQuery.links.slice(0, menuLength),
-      description:
-        'Apply for and manage the VA benefits and services you’ve earned as a Veteran, Servicemember, or family member—like health care, disability, education, and more.',
-      entityUrl: { path: '/' },
-      hubs,
-      // eslint-disable-next-line camelcase
-      legacy_homepage_banner: banner,
-      promoBanners,
-      promos: homePagePromoBlockQuery.itemsOfEntitySubqueueHomePagePromos,
-      title: 'VA.gov Home',
-    };
-
-    // Let Metalsmith know we're here.
-    files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
-
-    /**
-     * Below is the code responsible for generating the new Homepage experience.
-     * */
     const {
       data: {
         homePageHeroQuery,
@@ -74,10 +29,11 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
         homePageOtherSearchToolsMenuQuery,
         homePageHubListMenuQuery,
         homePageCreateAccountQuery,
+        banners,
+        promoBanners,
       },
     } = contentData;
-
-    const homePreviewPath = '/new-home-page';
+    const homePath = '/';
 
     const hero =
       homePageHeroQuery?.itemsOfEntitySubqueueHomePageHero?.[0]?.entity || {};
@@ -93,7 +49,7 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
     // Filter hub menu links. We do this here instead of in the template because the
     // grouping of hubs also happens here, and we need to filter before we group in
     // order to preserve the intended grouping. See divideHubRows().
-    const homePreviewHubs = homePageHubListMenuQuery.links.filter(link => {
+    const homeHubs = homePageHubListMenuQuery.links.filter(link => {
       // Any disabled links should not be displayed.
       if (!link.enabled) {
         return false;
@@ -106,27 +62,25 @@ function addHomeContent(contentData, files, metalsmith, buildOptions) {
       );
     });
 
-    const homePreviewEntityObj = {
-      ...homeEntityObj,
-      canonicalLink: '/', // Match current homepage to avoid 'duplicate content' SEO demerit
-      hero,
+    homeEntityObj = {
+      banners,
+      canonicalLink: '/',
       commonTasks: {
         searchLinks,
         popularLinks,
       },
+      entityUrl: { path: homePath },
+      hero,
+      hubs: divideHubRows(homeHubs),
       newsSpotlight,
-      path: homePreviewPath,
-      entityUrl: {
-        path: homePreviewPath,
-      },
-      hubs: divideHubRows(homePreviewHubs),
-      title: 'New VA.gov home page',
+      promoBanners,
+      path: homePath,
+      title: 'VA.gov Home',
     };
 
-    files[`.${homePreviewPath}.html`] = createFileObj(
-      homePreviewEntityObj,
-      'home-preview.drupal.liquid',
-    );
+    addHomeSandboxContent(contentData, files, metalsmith, buildOptions);
+
+    files[`./index.html`] = createFileObj(homeEntityObj, 'home.drupal.liquid');
   }
 }
 

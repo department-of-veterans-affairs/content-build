@@ -14,14 +14,14 @@ jobs:
     runs-on: [self-hosted, asg]
     steps:
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get Jenkins CMS bot user token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           # TODO: Temporary path to token because the svc-gha-frontendteam-user has access to this path, fix before merge.
           ssm_parameter: /dsva-vagov/content-build/VA_CMS_BOT_JENKINS_TOKEN
@@ -29,7 +29,7 @@ jobs:
 
       - name: Trigger Preview server deployment job in Jenkins
         id: trigger-preview-request
-        uses: fjogeleit/http-request-action@v1
+        uses: fjogeleit/http-request-action@e8dd067b83c3ab0774c76bf065b1c4f11c7e45ba # v1.14.0
         with:
           url: 'http://jenkins.vfs.va.gov/job/deploys/job/content-preview-auto-deploy/build'
           method: 'POST'

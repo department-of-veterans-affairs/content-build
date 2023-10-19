@@ -1,0 +1,27 @@
+{% assign fieldQAs = entity.queryFieldQAs.entities %}
+
+<!-- Optional section header -->
+{% if entity.fieldSectionHeader %}
+  <h2>{{ entity.fieldSectionHeader }}</h2>
+{% endif %}
+
+<!-- Optional QA Group Introduction -->
+{% if entity.fieldRichWysiwyg.processed %}
+  {{ entity.fieldRichWysiwyg.processed }}
+{% endif %}
+
+<va-accordion>
+  {% for item in fieldQAs %}
+    {% assign id = item.entityId %}
+    <va-accordion-item header="{{ item.entityLabel }}" id="{{ item.entityLabel | hashReference: 60 }}">
+      <div id={{ id }} data-entity-id="{{ id }}">
+        <div id="{{ item.fieldAnswer.entity.entityBundle }}-{{ item.fieldAnswer.entity.entityId }}">
+          {% if item.fieldAnswer %}
+            {% assign bundleComponent = "src/site/paragraphs/" | append: item.fieldAnswer.entity.entityBundle | append: ".drupal.liquid" %}
+            {% include {{ bundleComponent }} with entity = item.fieldAnswer.entity %}
+          {% endif %}
+        </div>
+      </div>
+    </va-accordion-item>
+  {% endfor %}
+</va-accordion>

@@ -14,7 +14,9 @@ const leftRailNavResetLevels = require('../build/plugins/left-rail-nav-reset-lev
 const rewriteVaDomains = require('../build/plugins/rewrite-va-domains');
 const rewriteAWSUrls = require('../build/plugins/rewrite-cms-aws-urls');
 const modifyDom = require('../build/plugins/modify-dom');
-const createHeaderFooter = require('../build/plugins/create-header-footer');
+const {
+  createHeaderFooterData,
+} = require('../build/plugins/create-header-footer');
 
 async function createPipeline(options) {
   const BUILD_OPTIONS = await getOptions(options);
@@ -84,7 +86,7 @@ async function createPipeline(options) {
     }),
   );
 
-  smith.use(createHeaderFooter(BUILD_OPTIONS));
+  smith.use(createHeaderFooterData(BUILD_OPTIONS));
 
   smith.use(
     navigation({
