@@ -21,6 +21,11 @@ const nodeEventListing = `
         ... nodeEventWithoutBreadcrumbs
       }
     }
+    reverseFieldAdditionalListingsNode(limit: 5000, filter: { conditions: [{ field: "status", value: "1", operator: EQUAL, enabled: $onlyPublishedContent }, { field: "moderation_state", value: "archived", operator: NOT_EQUAL }, { field: "type", value: "event" }]}, sort: {field: "changed", direction: DESC}) {
+      entities {
+        ... nodeEventWithoutBreadcrumbs
+      }
+    }
     fieldOffice {
       entity {
         ...on NodeHealthCareRegionPage {

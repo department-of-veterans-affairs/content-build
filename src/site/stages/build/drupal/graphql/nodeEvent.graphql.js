@@ -309,6 +309,32 @@ const nodeEventWithoutBreadcrumbs = `
         }
       }
     }
+    fieldAdditionalListings {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeEventListing {
+          fieldDescription
+          fieldIntroText
+          fieldOffice {
+            entity {
+              entityType
+              entityBundle
+              entityId
+              ... on NodeOffice {
+                fieldBody {
+                  value
+                  format
+                  processed
+                }
+                fieldDescription
+              }
+            }
+          }
+        }
+      }
+    }
     fieldLocationHumanreadable
     fieldLocationType
     fieldMedia {
