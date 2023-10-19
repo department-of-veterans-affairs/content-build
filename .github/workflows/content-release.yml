@@ -516,6 +516,7 @@ jobs:
           jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
           jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
+          jq '.tags[7] = "source:content-release"' | \
           jq '.alert_type = "success"' > event.json
 
       - name: Send event to Datadog
