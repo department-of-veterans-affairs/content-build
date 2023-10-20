@@ -32,29 +32,29 @@ const DATA_FILES = [
     description: 'VAMC EHR System',
     filename: 'vamc-ehr.json',
     query: queryVamcEhrSystem,
+    queryType: 'graphql',
     postProcess: postProcessVamcEhrSystem,
   },
   {
     description: 'VAMC Facility Supplemental Status',
     filename: 'vamc-facility-supplemental-status.json',
     query: queryVamcFacilitySupplementalStatus,
+    queryType: 'graphql',
     postProcess: postProcessVamcFacilitySupplementalStatus,
   },
   {
     description: 'VA Police Data',
     filename: 'va-police.json',
     queryType: 'curl',
-    query: queryVAPoliceData(
-      [
-        url
-          .pathToFileURL(join(__dirname, 'vaPoliceData', 'police-contact.csv'))
-          .toString(),
-        url
-          .pathToFileURL(join(__dirname, 'vaPoliceData', 'police-events.csv'))
-          .toString(),
-      ],
-      ['pre-police-contact.csv', 'pre-police-violations.csv'],
-    ),
+    // This looks like a highly complicated route to get the file data, but it is generalizeable to all CURL requests, not just file URLs
+    query: queryVAPoliceData([
+      url
+        .pathToFileURL(join(__dirname, 'vaPoliceData', 'police-contact.csv'))
+        .toString(),
+      url
+        .pathToFileURL(join(__dirname, 'vaPoliceData', 'police-events.csv'))
+        .toString(),
+    ]),
     postProcess: postProcessVAPoliceData,
   },
 ];
