@@ -64,6 +64,15 @@
     }
   },
   {
+    "appName": "Rated Disabilities",
+    "entryName": "rated-disabilities",
+    "rootUrl": "/disability/view-disability-rating/my-rating",
+    "template": {
+      "layout": "page-react.html",
+      "vagovprod": true
+    }
+  },
+  {
     "appName": "Dashboard",
     "entryName": "dashboard",
     "rootUrl": "/my-va",
