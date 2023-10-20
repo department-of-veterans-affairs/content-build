@@ -78,7 +78,6 @@ const writeProcessedDataFilesToCache = (
   processedDataFiles,
 ) => {
   const fullCacheFilepath = getDrupalCachePath(buildOptions, cacheFilepath);
-  fs.rmSync(fullCacheFilepath, { recursive: true, force: true });
 
   const successfulDataFiles = processedDataFiles.filter(
     ({ error }) => error === undefined,
@@ -88,7 +87,12 @@ const writeProcessedDataFilesToCache = (
     return;
   }
 
+  const newSuccessful = [...successfulDataFiles];
   const configCacheFilenameWithPath = `${fullCacheFilepath}/${cacheConfigFilename}`;
+  if (fs.existsSync(configCacheFilenameWithPath)) {
+    const existingConfig = fs.readJSONSync(configCacheFilenameWithPath);
+    successfulDataFiles.push(...existingConfig);
+  }
   fs.outputJSON(
     configCacheFilenameWithPath,
     successfulDataFiles.map(({ description, filename }) => ({
@@ -96,11 +100,16 @@ const writeProcessedDataFilesToCache = (
       filename,
     })),
     {
+      append: false,
       spaces: 2,
     },
   );
-
-  successfulDataFiles.forEach(({ filename, data }) => {
+  for (const processedData of newSuccessful) {
+    fs.rmSync(`${fullCacheFilepath}/${processedData.filename}`, {
+      force: true,
+    });
+  }
+  newSuccessful.forEach(({ filename, data }) => {
     writeProcessedDataFileToCache(fullCacheFilepath, filename, data);
   });
 };
@@ -161,7 +170,6 @@ const processGraphQLDataFile = async (
           error: json.error,
         };
       }
-
       return {
         ...baseResult,
         data: postProcess ? postProcess(json) : json,
@@ -185,11 +193,11 @@ const pullDataFileContentFromCurls = async (
 };
 
 const pullGraphQLDataFileContentFromDrupal = async (
-  _dataFiles,
+  dataFiles,
   buildOptions,
   onlyPublishedContent,
 ) => {
-  const graphQLDataFiles = DATA_FILES.filter(isQueryTypeGraphQL);
+  const graphQLDataFiles = dataFiles.filter(isQueryTypeGraphQL);
   const graphQLApiClient = getApiClient(buildOptions);
   return Promise.all(
     graphQLDataFiles.map(dataFile =>
@@ -385,7 +393,6 @@ const generateStaticDataFilesFromDrupal = async (
       buildOptions,
       onlyPublishedContent,
     );
-
     writeProcessedDataFilesToCache(
       buildOptions,
       DRUPAL_CACHE_STATIC_DATA_FILEPATH,

@@ -21,7 +21,6 @@ const query = inputs => async () => {
   return outputData;
 };
 
-/* eslint-disable camelcase */
 const postProcess = async queryResult => {
   const processedJSON = {};
   const [contact, events] = queryResult;
