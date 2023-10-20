@@ -184,11 +184,11 @@ const processGraphQLDataFile = async (
 };
 
 const pullDataFileContentFromCurls = async (
-  _dataFiles,
+  dataFiles,
   _buildOptions,
   _onlyPublishedContent,
 ) => {
-  const curlFiles = DATA_FILES.filter(isQueryTypeCurl);
+  const curlFiles = dataFiles.filter(isQueryTypeCurl);
   return Promise.all(curlFiles.map(dataFile => processCurlDataFile(dataFile)));
 };
 
@@ -229,6 +229,24 @@ const pullDataFileContentFromCurl = async (
     buildOptions,
     onlyPublishedContent,
   );
+};
+
+const pullDataFileContent = async (
+  dataFiles,
+  buildOptions,
+  onlyPublishedContent,
+) => {
+  const curls = await pullDataFileContentFromCurl(
+    dataFiles,
+    buildOptions,
+    onlyPublishedContent,
+  );
+  const drupal = await pullDataFileContentFromDrupal(
+    dataFiles,
+    buildOptions,
+    onlyPublishedContent,
+  );
+  return curls.concat(drupal);
 };
 
 const readProcessedDataFileFromCache = async (path, filename) => {
@@ -285,67 +303,6 @@ const pullDataFileContentFromCache = async (
     ),
   );
 };
-const generateStaticDataFilesFromCurl = async (
-  files,
-  buildOptions,
-  onlyPublishedContent = true,
-) => {
-  if (!ENABLED_ENVIRONMENTS.has(buildOptions.buildtype)) {
-    logDrupal(
-      `Drupal integration disabled for buildtype ${buildOptions.buildtype}`,
-    );
-    return;
-  }
-  let processedJsonDataFiles = [];
-  // Pull static-data-file content from Drupal
-  if (shouldPullDrupal(buildOptions, DRUPAL_CACHE_STATIC_DATA_FILEPATH)) {
-    logDrupal(
-      `Generating static data files from Drupal at ${buildOptions['drupal-address']}.`,
-    );
-
-    if (!Array.isArray(DATA_FILES)) {
-      logDrupal(
-        'Malformed static-data-file configuration at src/site/stages/build/drupal/static-data-files/config.js.',
-      );
-      logDrupal('Static data files cannot be generated.');
-      return;
-    }
-
-    if (DATA_FILES.length === 0) {
-      logDrupal('No static data files configured for Drupal.');
-      logDrupal('Static data files cannot be generated.');
-      return;
-    }
-
-    processedJsonDataFiles = await pullDataFileContentFromCurl(
-      DATA_FILES,
-      buildOptions,
-      onlyPublishedContent,
-    );
-
-    writeProcessedDataFilesToCache(
-      buildOptions,
-      DRUPAL_CACHE_STATIC_DATA_FILEPATH,
-      DRUPAL_CACHE_CONFIG_FILENAME,
-      processedJsonDataFiles,
-    );
-  }
-
-  // Read static-data-file content from cache
-  else {
-    logDrupal('Generating static data files from cache.');
-    logDrupal(`To pull latest, run with "--${PULL_DRUPAL_BUILD_ARG}" flag.`);
-
-    processedJsonDataFiles = await pullDataFileContentFromCache(
-      buildOptions,
-      DRUPAL_CACHE_STATIC_DATA_FILEPATH,
-      DRUPAL_CACHE_CONFIG_FILENAME,
-    );
-  }
-
-  // Write processed data files to build output
-  writeProcessedDataFilesToBuild(files, DATA_FILE_PATH, processedJsonDataFiles);
-};
 
 /**
  * Generates static data files defined at ../config.js
@@ -354,7 +311,7 @@ const generateStaticDataFilesFromCurl = async (
  *  --pull-drupal is used
  *  Cache cannot be found
  */
-const generateStaticDataFilesFromDrupal = async (
+const generateStaticDataFiles = async (
   files,
   buildOptions,
   onlyPublishedContent = true,
@@ -365,13 +322,11 @@ const generateStaticDataFilesFromDrupal = async (
     );
     return;
   }
-
   let processedJsonDataFiles = [];
-
   // Pull static-data-file content from Drupal
   if (shouldPullDrupal(buildOptions, DRUPAL_CACHE_STATIC_DATA_FILEPATH)) {
     logDrupal(
-      `Generating static data files from Drupal at ${buildOptions['drupal-address']}.`,
+      `Generating static data files from all sources, including ${buildOptions['drupal-address']}.`,
     );
 
     if (!Array.isArray(DATA_FILES)) {
@@ -388,11 +343,12 @@ const generateStaticDataFilesFromDrupal = async (
       return;
     }
 
-    processedJsonDataFiles = await pullDataFileContentFromDrupal(
+    processedJsonDataFiles = await pullDataFileContent(
       DATA_FILES,
       buildOptions,
       onlyPublishedContent,
     );
+
     writeProcessedDataFilesToCache(
       buildOptions,
       DRUPAL_CACHE_STATIC_DATA_FILEPATH,
@@ -417,5 +373,4 @@ const generateStaticDataFilesFromDrupal = async (
   writeProcessedDataFilesToBuild(files, DATA_FILE_PATH, processedJsonDataFiles);
 };
 
-module.exports.generateStaticDataFilesFromDrupal = generateStaticDataFilesFromDrupal;
-module.exports.generateStaticDataFilesFromCurl = generateStaticDataFilesFromCurl;
+module.exports.generateStaticDataFiles = generateStaticDataFiles;
