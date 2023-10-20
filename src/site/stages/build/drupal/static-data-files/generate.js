@@ -16,6 +16,8 @@ const DRUPAL_CACHE_CONFIG_FILENAME = 'config.json';
 const isQueryTypeGraphQL = ({ queryType }) =>
   queryType === 'graphql' || queryType === undefined; // if undefined, default to graphql
 
+const isQueryTypeCurl = ({ queryType }) => queryType === 'curl';
+
 const writeProcessedDataFileToBuild = (
   files,
   filenameWithPath,
@@ -103,6 +105,28 @@ const writeProcessedDataFilesToCache = (
   });
 };
 
+// Applies the process function to download the inputs to the DATA_FILE (A DATA_FILE for curl may have multiple files)
+const processCurlDataFile = async dataFile => {
+  const { description, filename, query, postProcess } = dataFile;
+  const baseResult = {
+    description,
+    filename,
+    from: 'Curl',
+  };
+  if (!filename) {
+    return Promise.resolve({
+      ...baseResult,
+      error: 'A filename must be provided.',
+    });
+  }
+  const outputFiles = await query();
+  const data = postProcess ? await postProcess(outputFiles) : outputFiles;
+  return {
+    ...baseResult,
+    data,
+  };
+};
+
 const processGraphQLDataFile = async (
   graphQLApiClient,
   onlyPublishedContent,
@@ -151,8 +175,17 @@ const processGraphQLDataFile = async (
     });
 };
 
+const pullDataFileContentFromCurls = async (
+  _dataFiles,
+  _buildOptions,
+  _onlyPublishedContent,
+) => {
+  const curlFiles = DATA_FILES.filter(isQueryTypeCurl);
+  return Promise.all(curlFiles.map(dataFile => processCurlDataFile(dataFile)));
+};
+
 const pullGraphQLDataFileContentFromDrupal = async (
-  dataFiles,
+  _dataFiles,
   buildOptions,
   onlyPublishedContent,
 ) => {
@@ -172,6 +205,18 @@ const pullDataFileContentFromDrupal = async (
 ) => {
   // Currently, only supports GraphQL. In future, possibly JSON:API
   return pullGraphQLDataFileContentFromDrupal(
+    dataFiles,
+    buildOptions,
+    onlyPublishedContent,
+  );
+};
+
+const pullDataFileContentFromCurl = async (
+  dataFiles,
+  buildOptions,
+  onlyPublishedContent,
+) => {
+  return pullDataFileContentFromCurls(
     dataFiles,
     buildOptions,
     onlyPublishedContent,
@@ -231,6 +276,67 @@ const pullDataFileContentFromCache = async (
       processCachedDataFile(fullCacheFilepath, dataFile),
     ),
   );
+};
+const generateStaticDataFilesFromCurl = async (
+  files,
+  buildOptions,
+  onlyPublishedContent = true,
+) => {
+  if (!ENABLED_ENVIRONMENTS.has(buildOptions.buildtype)) {
+    logDrupal(
+      `Drupal integration disabled for buildtype ${buildOptions.buildtype}`,
+    );
+    return;
+  }
+  let processedJsonDataFiles = [];
+  // Pull static-data-file content from Drupal
+  if (shouldPullDrupal(buildOptions, DRUPAL_CACHE_STATIC_DATA_FILEPATH)) {
+    logDrupal(
+      `Generating static data files from Drupal at ${buildOptions['drupal-address']}.`,
+    );
+
+    if (!Array.isArray(DATA_FILES)) {
+      logDrupal(
+        'Malformed static-data-file configuration at src/site/stages/build/drupal/static-data-files/config.js.',
+      );
+      logDrupal('Static data files cannot be generated.');
+      return;
+    }
+
+    if (DATA_FILES.length === 0) {
+      logDrupal('No static data files configured for Drupal.');
+      logDrupal('Static data files cannot be generated.');
+      return;
+    }
+
+    processedJsonDataFiles = await pullDataFileContentFromCurl(
+      DATA_FILES,
+      buildOptions,
+      onlyPublishedContent,
+    );
+
+    writeProcessedDataFilesToCache(
+      buildOptions,
+      DRUPAL_CACHE_STATIC_DATA_FILEPATH,
+      DRUPAL_CACHE_CONFIG_FILENAME,
+      processedJsonDataFiles,
+    );
+  }
+
+  // Read static-data-file content from cache
+  else {
+    logDrupal('Generating static data files from cache.');
+    logDrupal(`To pull latest, run with "--${PULL_DRUPAL_BUILD_ARG}" flag.`);
+
+    processedJsonDataFiles = await pullDataFileContentFromCache(
+      buildOptions,
+      DRUPAL_CACHE_STATIC_DATA_FILEPATH,
+      DRUPAL_CACHE_CONFIG_FILENAME,
+    );
+  }
+
+  // Write processed data files to build output
+  writeProcessedDataFilesToBuild(files, DATA_FILE_PATH, processedJsonDataFiles);
 };
 
 /**
@@ -304,4 +410,5 @@ const generateStaticDataFilesFromDrupal = async (
   writeProcessedDataFilesToBuild(files, DATA_FILE_PATH, processedJsonDataFiles);
 };
 
-module.exports = generateStaticDataFilesFromDrupal;
+module.exports.generateStaticDataFilesFromDrupal = generateStaticDataFilesFromDrupal;
+module.exports.generateStaticDataFilesFromCurl = generateStaticDataFilesFromCurl;
