@@ -38,8 +38,8 @@ const postProcess = async queryResult => {
   const [contact, events] = queryResult.outputData;
   const contactFile = path.join(__dirname, 'pre-contact-police.csv');
   const eventsFile = path.join(__dirname, 'pre-events-police.csv');
-  fs.writeFileSync(contactFile, contact);
-  fs.writeFileSync(eventsFile, events);
+  fs.writeFileSync(contactFile, contact, { append: false });
+  fs.writeFileSync(eventsFile, events, { append: false });
   const jsonContact = await csv().fromFile(contactFile);
   const jsonEvents = await csv().fromFile(eventsFile);
   log(jsonContact);
