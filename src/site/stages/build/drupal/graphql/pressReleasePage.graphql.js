@@ -69,6 +69,13 @@ const pressReleaseFragment = `
 
       }
     }
+    fieldListing {
+      entity {
+        entityUrl {
+          path
+        }
+      }
+    }
     fieldAdministration {
       entity{
         ... on TaxonomyTermAdministration {
@@ -83,7 +90,7 @@ const getPressReleaseSlice = (operationName, offset, limit) => {
   return `
 
     ${pressReleaseFragment}
-  
+
     query GetNodePressRelease($onlyPublishedContent: Boolean!) {
       nodeQuery(
         limit: ${limit}
