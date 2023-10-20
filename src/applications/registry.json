@@ -785,31 +785,6 @@
     }
   },
   {
-    "appName": "Apply for Personalized Career Planning and Guidance with VA Form 28-8832",
-    "entryName": "28-8832-planning-and-career-guidance",
-    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832",
-    "template": {
-      "title": "Personalized Career Planning and Guidance Chapter 36 Form 28-8832",
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "careers-employment",
-          "name": "Careers and employment"
-        },
-        {
-          "path": "careers-employment/education-and-career-counseling/",
-          "name": "Career planning and guidance"
-        },
-        {
-          "path": "careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832/introduction",
-          "name": "Apply for Personalized Career Planning and Guidance Form 28‑8832"
-        }
-      ]
-    }
-  },
-  {
     "appName": "Apply for Personalized Career Planning and Guidance with VA Form 25-8832",
     "entryName": "25-8832-planning-and-career-guidance",
     "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-25-8832",
@@ -1329,7 +1304,7 @@
     "rootUrl": "/my-health/medical-records",
     "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1593,15 +1568,15 @@
         },
         {
           "name": "Memorial items",
-          "path": "memorial-items"
+          "path": "burials-memorials/memorial-items"
         },
         {
           "name": "Presidential Memorial Certificates",
-          "path": "presidential-memorial-certificates"
+          "path": "burials-memorials/memorial-items/presidential-memorial-certificates"
         },
         {
           "name": "Request a Presidential Memorial Certificate",
-          "path": "request-certificate-form-40-0247"
+          "path": "burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247"
         }
       ]
     }
@@ -1643,6 +1618,16 @@
     "entryName": "10206-foia",
     "rootUrl": "/request-personal-records",
     "productId": "560247e7-3a80-4fdd-ad00-8d0e14435d22",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Find a Local Representative",
+    "entryName": "representative-app",
+    "rootUrl": "/representative",
+    "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
