@@ -81,12 +81,10 @@ describe('home page', () => {
           verifyElement('#vetnav');
           verifyElement('.va-crisis-line');
 
-          // TODO: Commented out because CI pipelines failing with them in
-          // Possibly related to a PR in vets-website not in prod yet
           verifyElement('[data-e2e-id="va-benefits-and-health-care-0"]');
           verifyElement('[data-e2e-id="about-va-1"]');
           verifyElement('[data-e2e-id="find-a-va-location-2"]');
-          // verifyElement('[data-e2e-id="my-va-3"]');
+          verifyElement('[data-e2e-id="my-va-3"]');
         });
 
       // Hero =======================================================
