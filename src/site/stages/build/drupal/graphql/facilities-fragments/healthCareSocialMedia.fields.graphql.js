@@ -5,17 +5,21 @@ module.exports = `
     fieldFacebook {
       title
       uri
-    }    
+    }
     fieldTwitter {
-      title    
+      title
       uri
     }
     fieldFlickr {
-      title    
+      title
       uri
     }
     fieldInstagram {
-      title    
+      title
+      uri
+    }
+    fieldYoutube {
+      title
       uri
     }
 `;
