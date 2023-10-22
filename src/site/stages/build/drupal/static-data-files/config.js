@@ -43,8 +43,8 @@ const DATA_FILES = [
     postProcess: postProcessVamcFacilitySupplementalStatus,
   },
   {
-    description: 'VA Police Data',
-    filename: 'va-police.json',
+    description: 'VAMC Police Data',
+    filename: 'vamc-police.json',
     queryType: 'curl',
     // This looks like a highly complicated route to get the file data, but it is generalizeable to all CURL requests, not just file URLs
     query: queryVAPoliceData([

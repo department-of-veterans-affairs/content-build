@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
-const table = require('table').table;
+const { table } = require('table');
+const { downloadFile } = require('cypress-downloadfile/lib/addPlugin');
 
 const tableConfig = {
   columns: {
@@ -75,6 +76,15 @@ module.exports = on => {
       }
 
       return dir;
+    },
+    downloadFile,
+    deleteFileOrFolder(fileOrFolderName) {
+      if (fs.existsSync(fileOrFolderName)) {
+        fs.rmSync(fileOrFolderName, {
+          recursive: true,
+        });
+      }
+      return null;
     },
   });
 };

@@ -3518,6 +3518,13 @@ create-eslint-index@^1.0.0:
   dependencies:
     lodash.get "^4.3.0"
 
+cross-fetch@^3.1.5:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.8.tgz#0327eba65fd68a7d119f8fb2bf9334a1a7956f82"
+  integrity sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==
+  dependencies:
+    node-fetch "^2.6.12"
+
 cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
@@ -3736,6 +3743,19 @@ cypress-axe@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-1.0.0.tgz#ab4e9486eaa3bb956a90a1ae40d52df42827b4f0"
   integrity sha512-QBlNMAd5eZoyhG8RGGR/pLtpHGkvgWXm2tkP68scJ+AjYiNNOlJihxoEwH93RT+rWOLrefw4iWwEx8kpEcrvJA==
+
+cypress-delete-downloads-folder@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/cypress-delete-downloads-folder/-/cypress-delete-downloads-folder-0.0.4.tgz#00693d4d7a36b552e7a11148e49d2c4c34ed3ec3"
+  integrity sha512-0zix5YIROeMHCrCGQVmMP+jUL3KtKliAs1msSnHCPwkX8rNL4DioI8UHvbBVVghWA3vxWN6GCtV1qW+5DHi9Bg==
+
+cypress-downloadfile@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/cypress-downloadfile/-/cypress-downloadfile-1.2.3.tgz#af4b23ec055732a60d0c09e76e28a50a7bfe8c1a"
+  integrity sha512-XvjMi081VJPs8gdmITHLpdbcscW8HHlTpIuKBqqFTRnIqPqcsjaZfJ22tqqDSr5w4X9T5FPFfr4SiklPsfoXiw==
+  dependencies:
+    cross-fetch "^3.1.5"
+    fs-extra "10.1.0"
 
 cypress-multi-reporters@^1.5.0:
   version "1.5.0"
@@ -5507,6 +5527,15 @@ fs-constants@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
+
+fs-extra@10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
+  integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
 
 fs-extra@^3.0.1:
   version "3.0.1"
@@ -8417,7 +8446,7 @@ nise@^1.0.1:
     lolex "^5.0.1"
     path-to-regexp "^1.7.0"
 
-node-fetch@^1.0.1, node-fetch@^2.6.1, node-fetch@^2.6.7:
+node-fetch@^1.0.1, node-fetch@^2.6.1, node-fetch@^2.6.12, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==

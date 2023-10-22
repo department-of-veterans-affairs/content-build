@@ -324,7 +324,15 @@ const generateStaticDataFiles = async (
   }
   let processedJsonDataFiles = [];
   // Pull static-data-file content from Drupal
-  if (shouldPullDrupal(buildOptions, DRUPAL_CACHE_STATIC_DATA_FILEPATH)) {
+  // if any of the files are missing from cache
+  if (
+    DATA_FILES.some(df =>
+      shouldPullDrupal(
+        buildOptions,
+        `${DRUPAL_CACHE_STATIC_DATA_FILEPATH}/${df.filename}`,
+      ),
+    )
+  ) {
     logDrupal(
       `Generating static data files from all sources, including ${buildOptions['drupal-address']}.`,
     );

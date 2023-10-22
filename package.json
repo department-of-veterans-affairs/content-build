@@ -130,6 +130,8 @@
     "cy-mobile-commands": "^0.3.0",
     "cypress": "^10.8.0",
     "cypress-axe": "^1.0.0",
+    "cypress-delete-downloads-folder": "^0.0.4",
+    "cypress-downloadfile": "^1.2.3",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-plugin-tab": "^1.0.5",
     "cypress-real-events": "^1.7.1",
