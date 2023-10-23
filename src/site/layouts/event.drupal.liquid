@@ -259,10 +259,9 @@
         {% endif %}
 
         <!-- See more events. -->
-        {% assign index = entityUrl.breadcrumb.length | minus: 2 %}
         <a
           class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold"
-          href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}"
+          href="{{ fieldListing.entity.entityUrl.path }}"
           onclick="recordEvent({ event: 'nav-secondary-button-click' });">
           See more events
           <i
@@ -283,12 +282,12 @@
   var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
                 var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
                 var recurringEvents = document.getElementById('recurring-events');
-              
+
                 // Escape early if we are not able to find the elements.
                 if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
                   return;
                 }
-              
+
                 // Toggle the bottom borders of the button.
                 if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
                   expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
@@ -297,42 +296,42 @@
                   expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
                   expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
                 }
-              
+
                 // Toggle the visibility of the recurring events.
                 recurringEvents.classList.toggle('vads-u-display--none');
                 recurringEvents.classList.toggle('vads-u-display--flex');
-              
+
                 // Toggle the icon.
                 expandRecurringEventsIcon.classList.toggle('fa-plus');
                 expandRecurringEventsIcon.classList.toggle('fa-minus');
               }
-              
+
               function onShowAllRecurringEventsClick() {
                 // Derive recurring event items.
                 var recurringEventItems = document.querySelectorAll('.recurring-event');
-              
+
                 // Show all recurring events.
                 for (var index = 0; index < recurringEventItems.length; index++) {
                   if (recurringEventItems[index]) {
                     recurringEventItems[index].classList.remove('vads-u-display--none');
                   }
                 }
-              
+
                 // Hide the show all recurring events button.
                 var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-              
+
                 // Hide the button if we find it.
                 if (showAllRecurringEventsButton) {
                   showAllRecurringEventsButton.classList.add('vads-u-display--none');
                 }
               }
-              
-              
+
+
               var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
               if (expandRecurringEventsButton) {
                 expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
               }
-              
+
               var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
               if (showAllRecurringEventsButton) {
                 showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);

@@ -118,6 +118,9 @@ const nodeEvent = `
         entityBundle
         entityId
         entityType
+        entityUrl {
+          path
+        }
         ... on NodeEventListing {
           fieldDescription
           fieldIntroText

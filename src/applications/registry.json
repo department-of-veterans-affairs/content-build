@@ -1632,5 +1632,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Verify Your Enrollment",
+    "entryName": "verify-your-enrollment",
+    "rootUrl": "/education/verify-your-enrollment",
+    "productId": "90b61c25-80ce-444f-89fb-eb186b52bfe6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
