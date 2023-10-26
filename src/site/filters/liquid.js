@@ -1660,9 +1660,6 @@ module.exports = function registerFilters() {
       '/change-direct-deposit',
     ];
 
-    return (
-      cmsFeatureFlags.FEATURE_MOBILE_APP_PROMO &&
-      urlsForBanner.includes(currentPath)
-    );
+    return urlsForBanner.includes(currentPath);
   };
 };
