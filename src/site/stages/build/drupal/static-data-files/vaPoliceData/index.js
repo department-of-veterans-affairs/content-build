@@ -22,7 +22,7 @@ const query = inputs => async () => {
 };
 
 const postProcess = async queryResult => {
-  const processedJSON = {};
+  const processedJSON = { data: { statistics: {}, contacts: {} } };
   const [contact, events] = queryResult;
   const contactFile = path.join(__dirname, 'pre-contact-police.csv');
   const eventsFile = path.join(__dirname, 'pre-events-police.csv');
