@@ -18,21 +18,21 @@
 script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
 
 # Shared templates
-src/site/includes @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/1010-health-apps-frontend
-src/site/components @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/1010-health-apps-frontend
-src/site/layouts @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend
-src/site/teasers @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend
-src/site/filters @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend
+src/site/includes @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/1010-health-apps-frontend
+src/site/components @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/1010-health-apps-frontend
+src/site/layouts @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/teasers @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/filters @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend
 
 # Facility Locator and VAMC pages
-src/site/facilities @department-of-veterans-affairs/vsa-facilities-frontend
-src/site/layouts/health*.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
-src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
-src/site/navigation/facility_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vsa-facilities-frontend
-src/site/paragraphs/facilities @department-of-veterans-affairs/vsa-facilities-frontend
+src/site/facilities @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/health*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/navigation/facility_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/paragraphs/facilities @department-of-veterans-affairs/vfs-facilities-frontend
 
 # GraphQL Queries
-src/site/stages/build/drupal @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vsa-facilities-frontend @department-of-veterans-affairs/cms-infrastructure
+src/site/stages/build/drupal @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/cms-infrastructure
 
 # Site Assets
 src/site/assets/robots.txt @department-of-veterans-affairs/vfs-public-websites-frontend
