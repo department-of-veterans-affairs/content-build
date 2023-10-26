@@ -86,6 +86,29 @@ function createPastEventListPages(page, drupalPagePath, files) {
   );
 }
 
+/**
+ * Compiles fields for event listing pages.
+ *
+ *  @param {page} page The page object.
+ *  @return nothing
+ */
+function compileEventListingPage(page) {
+  const { cmsFeatureFlags } = global;
+  // Combine events from reverse entity reference queries, if additional
+  // listings data exists and feature flag is on.
+  if (
+    cmsFeatureFlags.FEATURE_EVENT_OUTREACH_CHECKBOX &&
+    page?.reverseFieldAdditionalListingsNode?.entities
+  ) {
+    page.reverseFieldListingNode.entities.push(
+      ...page.reverseFieldAdditionalListingsNode.entities,
+    );
+  }
+  // Compile final template variables.
+  page.pastEventTeasers = page.pastEvents;
+  page.allEventTeasers = page.reverseFieldListingNode;
+}
+
 // Creates the facility pages
 function createHealthCareRegionListPages(page, drupalPagePath, files) {
   const sidebar = page.facilitySidebar;
@@ -283,4 +306,5 @@ module.exports = {
   createPastEventListPages,
   addGetUpdatesFields,
   addPager,
+  compileEventListingPage,
 };
