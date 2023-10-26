@@ -64,6 +64,30 @@
     }
   },
   {
+    "appName": "Rated Disabilities",
+    "entryName": "rated-disabilities",
+    "rootUrl": "/disability/view-disability-rating/my-rating",
+    "template": {
+      "layout": "page-react.html",
+      "vagovprod": true,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "disability",
+          "name": "Disability benefits"
+        },
+        {
+          "path": "disability/view-disability-rating",
+          "name": "View your VA disability rating"
+        },
+        {
+          "path": "disability/view-disability-rating/my-rating",
+          "name": "Your VA disability rating"
+        }
+      ]
+    }
+  },
+  {
     "appName": "Dashboard",
     "entryName": "dashboard",
     "rootUrl": "/my-va",
@@ -1628,6 +1652,16 @@
     "entryName": "representative-app",
     "rootUrl": "/representative",
     "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Verify Your Enrollment",
+    "entryName": "verify-your-enrollment",
+    "rootUrl": "/education/verify-your-enrollment",
+    "productId": "90b61c25-80ce-444f-89fb-eb186b52bfe6",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

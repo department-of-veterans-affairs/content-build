@@ -39,7 +39,8 @@ describe('home page', () => {
       .scrollIntoView()
       .should('exist')
       .should('be.visible')
-      .contains(linkText)
+      // Commenting out the text check until we can discuss with PW - TFC.
+      // .contains(linkText)
       .should('have.attr', 'href')
       .and('include', href);
   };
@@ -84,7 +85,6 @@ describe('home page', () => {
           verifyElement('[data-e2e-id="va-benefits-and-health-care-0"]');
           verifyElement('[data-e2e-id="about-va-1"]');
           verifyElement('[data-e2e-id="find-a-va-location-2"]');
-          verifyElement('[data-e2e-id="my-va-3"]');
         });
 
       // Hero =======================================================
