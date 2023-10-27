@@ -16,6 +16,7 @@ const {
   createPastEventListPages,
   addGetUpdatesFields,
   addPager,
+  compileEventListingPage,
 } = require('./health-care-region');
 const createReactPages = require('../plugins/create-react-pages');
 
@@ -82,8 +83,7 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
         addGetUpdatesFields(pageCompiled, pages);
         break;
       case 'event_listing':
-        pageCompiled.pastEventTeasers = pageCompiled.pastEvents;
-        pageCompiled.allEventTeasers = pageCompiled.reverseFieldListingNode;
+        compileEventListingPage(pageCompiled);
         addPager(
           pageCompiled,
           files,
