@@ -106,7 +106,7 @@ jobs:
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-
+      DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
     steps:
       - name: Export build start time
         id: export-build-start-time
