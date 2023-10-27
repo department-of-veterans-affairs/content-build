@@ -78,13 +78,16 @@ module.exports = on => {
       return dir;
     },
     downloadFile,
-    deleteFileOrFolder(fileOrFolderName) {
-      if (fs.existsSync(fileOrFolderName)) {
-        fs.rmSync(fileOrFolderName, {
+    deleteFileOrDir(fileOrDirName) {
+      if (fs.existsSync(fileOrDirName)) {
+        fs.rmSync(fileOrDirName, {
           recursive: true,
         });
       }
       return null;
+    },
+    fileOrDirExists(fileOrDirName) {
+      return fs.existsSync(fileOrDirName);
     },
   });
 };

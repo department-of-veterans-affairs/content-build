@@ -8,6 +8,10 @@ import 'cy-mobile-commands';
 import 'cypress-wait-until';
 import 'cypress-downloadfile/lib/downloadFileCommand';
 
-Cypress.Commands.add('deleteFileOrFolder', folderOrFileName => {
-  return cy.task('deleteFileOrFolder', folderOrFileName);
+Cypress.Commands.add('deleteFileOrDir', fileOrDirName => {
+  return cy.task('deleteFileOrDir', fileOrDirName);
+});
+
+Cypress.Commands.add('fileOrDirExists', fileOrDirName => {
+  return cy.task('fileOrDirExists', fileOrDirName);
 });

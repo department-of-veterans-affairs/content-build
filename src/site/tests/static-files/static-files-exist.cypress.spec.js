@@ -3,7 +3,8 @@ describe('Static Data Files Test', () => {
   /* This is not a visual test -- no accessibility involvement */
   /* eslint-disable @department-of-veterans-affairs/axe-check-required */
   it('has the EHR JSON static file', () => {
-    cy.deleteFileOrFolder('../cypress/downloads/vamc-ehr.json');
+    cy.deleteFileOrDir('../cypress/downloads/vamc-ehr.json');
+    cy.fileOrDirExists('cypress/downloads/vamc-ehr.json').should('eq', false);
     cy.downloadFile(
       'http://localhost:3002/data/cms/vamc-ehr.json',
       '../cypress/downloads',
@@ -12,9 +13,12 @@ describe('Static Data Files Test', () => {
     cy.readFile('cypress/downloads/vamc-ehr.json').should('exist');
   });
   it('has the Supplemental Status JSON static file', () => {
-    cy.deleteFileOrFolder(
+    cy.deleteFileOrDir(
       '../cypress/downloads/vamc-facility-supplemental-status.json',
     );
+    cy.fileOrDirExists(
+      'cypress/downloads/vamc-facility-supplemental-status.json',
+    ).should('eq', false);
     cy.downloadFile(
       'http://localhost:3002/data/cms/vamc-facility-supplemental-status.json',
       '../cypress/downloads',
@@ -25,7 +29,11 @@ describe('Static Data Files Test', () => {
     ).should('exist');
   });
   it('has the VAMC Police JSON static file', () => {
-    cy.deleteFileOrFolder('../cypress/downloads/vamc-police.json');
+    cy.deleteFileOrDir('../cypress/downloads/vamc-police.json');
+    cy.fileOrDirExists('cypress/downloads/vamc-police.json').should(
+      'eq',
+      false,
+    );
     cy.downloadFile(
       'http://localhost:3002/data/cms/vamc-police.json',
       '../cypress/downloads',

@@ -188,8 +188,10 @@ const pullDataFileContentFromCurls = async (
   _buildOptions,
   _onlyPublishedContent,
 ) => {
-  const curlFiles = dataFiles.filter(isQueryTypeCurl);
-  return Promise.all(curlFiles.map(dataFile => processCurlDataFile(dataFile)));
+  const curlDataFiles = dataFiles.filter(isQueryTypeCurl);
+  return Promise.all(
+    curlDataFiles.map(dataFile => processCurlDataFile(dataFile)),
+  );
 };
 
 const pullGraphQLDataFileContentFromDrupal = async (
@@ -219,24 +221,12 @@ const pullDataFileContentFromDrupal = async (
   );
 };
 
-const pullDataFileContentFromCurl = async (
-  dataFiles,
-  buildOptions,
-  onlyPublishedContent,
-) => {
-  return pullDataFileContentFromCurls(
-    dataFiles,
-    buildOptions,
-    onlyPublishedContent,
-  );
-};
-
 const pullDataFileContent = async (
   dataFiles,
   buildOptions,
   onlyPublishedContent,
 ) => {
-  const curls = await pullDataFileContentFromCurl(
+  const curls = await pullDataFileContentFromCurls(
     dataFiles,
     buildOptions,
     onlyPublishedContent,
