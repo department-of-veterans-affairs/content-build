@@ -1,40 +1,14 @@
-const { Curl } = require('node-libcurl');
 const fs = require('fs');
 const csv = require('csvtojson');
 const path = require('path');
+const { join } = require('path');
+const { pathToFileURL } = require('url');
 
-const query = inputs => async () => {
-  if (!Array.isArray(inputs)) {
-    throw new Error('inputs must be an array');
-  }
-  const outputData = [];
-  for await (const input of inputs) {
-    if (typeof input !== 'string') {
-      throw new Error('inputs must be an array of strings');
-    }
-    if (/https?|file:\/\//.test(input)) {
-      const curl = new Curl();
-      curl.setOpt(Curl.option.URL, input);
-      if (input.endsWith('cms.va.gov')) {
-        curl.setOpt(Curl.option.PROXY, '127.0.0.1:2001');
-      }
-      curl.setOpt(Curl.option.CUSTOMREQUEST, 'GET');
-
-      const data = await new Promise((resolve, reject) => {
-        curl.on('end', (statusCode, body) => {
-          resolve(body);
-        });
-        curl.on('error', err => {
-          reject(err);
-        });
-        curl.perform();
-      });
-
-      outputData.push(data);
-    }
-  }
-  return outputData;
-};
+// URLs to fetch (even if they are local files)
+const query = [
+  pathToFileURL(join(__dirname, 'police-contact.csv')).toString(),
+  pathToFileURL(join(__dirname, 'police-events.csv')).toString(),
+];
 
 const postProcess = async queryResult => {
   const processedJSON = {

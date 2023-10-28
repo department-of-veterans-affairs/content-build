@@ -2,6 +2,8 @@
 const fs = require('fs-extra');
 const { ENABLED_ENVIRONMENTS } = require('../../../../constants/drupals');
 const getApiClient = require('../api');
+const getCurlClient = require('./fetchApi');
+
 const { logDrupal } = require('../utilities-drupal');
 const { DATA_FILE_PATH, DATA_FILES } = require('./config');
 const {
@@ -114,8 +116,8 @@ const writeProcessedDataFilesToCache = (
   });
 };
 
-// Applies the process function to download the inputs to the DATA_FILE (A DATA_FILE for curl may have multiple files)
-const processCurlDataFile = async dataFile => {
+// Applies the process function to download the inputs to the DATA_FILE (A DATA_FILE for curl may have multiple inputs)
+const processCurlDataFile = async (dataFile, curlClient) => {
   const { description, filename, query, postProcess } = dataFile;
   const baseResult = {
     description,
@@ -128,8 +130,13 @@ const processCurlDataFile = async dataFile => {
       error: 'A filename must be provided.',
     });
   }
-  const outputFiles = await query();
-  const data = postProcess ? await postProcess(outputFiles) : outputFiles;
+  const responses = await Promise.all(
+    query.map(URL => curlClient.proxyFetch(URL, { method: 'GET' })),
+  );
+  const outputData = await Promise.all(
+    responses.map(response => response.text()),
+  );
+  const data = postProcess ? await postProcess(outputData) : outputData;
   return {
     ...baseResult,
     data,
@@ -185,12 +192,13 @@ const processGraphQLDataFile = async (
 
 const pullDataFileContentFromCurls = async (
   dataFiles,
-  _buildOptions,
+  buildOptions,
   _onlyPublishedContent,
 ) => {
   const curlDataFiles = dataFiles.filter(isQueryTypeCurl);
+  const curlClient = getCurlClient(buildOptions);
   return Promise.all(
-    curlDataFiles.map(dataFile => processCurlDataFile(dataFile)),
+    curlDataFiles.map(dataFile => processCurlDataFile(dataFile, curlClient)),
   );
 };
 

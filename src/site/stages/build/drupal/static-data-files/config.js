@@ -1,6 +1,3 @@
-const { join } = require('path');
-const url = require('url');
-
 const {
   query: queryVamcEhrSystem,
   postProcess: postProcessVamcEhrSystem,
@@ -47,14 +44,7 @@ const DATA_FILES = [
     filename: 'vamc-police.json',
     queryType: 'curl',
     // This looks like a highly complicated route to get the file data, but it is generalizeable to all CURL requests, not just file URLs
-    query: queryVAPoliceData([
-      url
-        .pathToFileURL(join(__dirname, 'vaPoliceData', 'police-contact.csv'))
-        .toString(),
-      url
-        .pathToFileURL(join(__dirname, 'vaPoliceData', 'police-events.csv'))
-        .toString(),
-    ]),
+    query: queryVAPoliceData,
     postProcess: postProcessVAPoliceData,
   },
 ];
