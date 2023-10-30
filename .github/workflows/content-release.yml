@@ -106,7 +106,6 @@ jobs:
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-      DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
     steps:
       - name: Export build start time
         id: export-build-start-time
@@ -209,6 +208,7 @@ jobs:
         timeout-minutes: 40
         env:
           NODE_ENV: production
+          DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
       - name: Export content build end time
         id: export-content-build-end
@@ -534,7 +534,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
@@ -594,7 +594,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
