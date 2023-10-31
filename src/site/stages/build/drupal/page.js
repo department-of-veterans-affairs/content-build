@@ -450,6 +450,7 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_region_page':
     case 'press_release':
+    case 'vba_facility':
       pageCompiled = Object.assign(
         page,
         facilitySidebarNavItems,
