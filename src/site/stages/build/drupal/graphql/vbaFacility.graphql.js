@@ -1,20 +1,11 @@
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 const draftContentOverride = process.env.UNPUBLISHED_CONTENT === 'true';
+const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const vbaFacilityFragment = `
       fragment vbaFacilityFragment on NodeVbaFacility {
-        entityId
-        entityUrl {
-          path
-          routed
-        }
-        entityMetatags {
-          __typename
-          key
-          value
-        }
-        entityBundle
+        ${entityElementsFromPages}
         entityLabel
         ... on NodeVbaFacility {
           title
@@ -41,6 +32,30 @@ const vbaFacilityFragment = `
             starthours
             endhours
             comment
+          }
+          fieldCcNationalSpotlight1 {
+            fetched
+          }
+          fieldCcNationalSpotlight2 {
+            fetched
+          }
+          fieldCcNationalSpotlight3 {
+            fetched
+          }
+          fieldMedia {
+            entity {
+              ... on MediaImage {
+                image {
+                  alt
+                  title
+                  derivative(style: _32MEDIUMTHUMBNAIL) {
+                    url
+                    width
+                    height
+                  }
+                }
+              }
+            }
           }
         }
       }`;
