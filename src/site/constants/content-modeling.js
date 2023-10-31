@@ -40,6 +40,7 @@ const ENTITY_BUNDLES = {
   SUPPORT_SERVICE: 'support_service',
   VA_FORM: 'va_form',
   VAMC_OPERATING_STATUS_AND_ALERTS: 'vamc_operating_status_and_alerts',
+  VBA_FACILITY: 'vba_facility',
 };
 
 module.exports = {
