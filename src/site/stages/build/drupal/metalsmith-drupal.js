@@ -56,7 +56,6 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
   const pages = contentData.data.nodeQuery.entities.filter(
     e => e && Object.keys(e).length,
   );
-
   for (const page of pages) {
     const {
       entityUrl: { path: drupalUrl },
@@ -355,6 +354,44 @@ function getDrupalContent(buildOptions) {
     let drupalData = null;
     try {
       drupalData = await loadDrupal(buildOptions);
+
+      // Add to drupal Sidebars at the bottom of the ABOUT VA/ABOUT LOVELL section the va-police link
+      // TODO: Remove if CMS goes forward with creating VA Police Pages
+      // const facilitySidebarQueries = Object.keys(drupalData.data).filter(k =>
+      //   k.includes('FacilitySidebarQuery'),
+      // );
+      // FOR EACH FACILITY SIDEBAR QUERY, UNDER THE ABOUT XYZ SECTION ADD "VA Police" link
+      // for (const query of facilitySidebarQueries) {
+      //   for (let i = 0; i < drupalData.data[query].links.length; i += 1) {
+      //     const j = drupalData.data[query].links[i].links.findIndex(l => {
+      //       return (
+      //         l.label.toUpperCase().startsWith('ABOUT VA') ||
+      //         l.label.toUpperCase().startsWith('ABOUT LOVELL')
+      //       );
+      //     });
+      //     if (j !== -1) {
+      //       console.log(
+      //         `Adding VA Police to: ${drupalData.data[query].links[0].url.path}/va-police`,
+      //       );
+      //       drupalData.data[query].links[i].links[j].links.push({
+      //         expanded: false,
+      //         description: 'Police data',
+      //         label: 'VA Police',
+      //         links: [],
+      //         url: {
+      //           path: `${drupalData.data[query].links[0].url.path}/va-police`,
+      //         },
+      //         entity: {
+      //           linkedEntity: {
+      //             entityPublished: true,
+      //             moderationState: 'published',
+      //           },
+      //         },
+      //       });
+      //     }
+      //   }
+      // }
+
       drupalData = convertDrupalFilesToLocal(drupalData, files);
 
       await loadCachedDrupalFiles(buildOptions, files);
