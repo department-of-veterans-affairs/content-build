@@ -167,7 +167,7 @@
     "template": {
       "title": "VA online services terms of use",
       "layout": "page-react.html",
-      "includeBreadcrumbs": true,
+      "includeBreadcrumbs": false,
       "vagovprod": true
     }
   },
