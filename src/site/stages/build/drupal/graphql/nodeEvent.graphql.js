@@ -118,6 +118,9 @@ const nodeEvent = `
         entityBundle
         entityId
         entityType
+        entityUrl {
+          path
+        }
         ... on NodeEventListing {
           fieldDescription
           fieldIntroText
@@ -284,6 +287,32 @@ const nodeEventWithoutBreadcrumbs = `
       title
     }
     fieldListing {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeEventListing {
+          fieldDescription
+          fieldIntroText
+          fieldOffice {
+            entity {
+              entityType
+              entityBundle
+              entityId
+              ... on NodeOffice {
+                fieldBody {
+                  value
+                  format
+                  processed
+                }
+                fieldDescription
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldAdditionalListings {
       entity {
         entityBundle
         entityId

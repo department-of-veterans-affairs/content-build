@@ -75,6 +75,40 @@ const nodeCampaignLandingPage = `
         }
       }
     }
+    fieldClpReusableQA {
+      entity {
+        entityType
+        entityBundle
+        entityId
+        ... on ParagraphQAGroup {
+          fieldSectionHeader
+          fieldRichWysiwyg {
+            processed
+          }
+          fieldAccordionDisplay
+          queryFieldQAs {
+            entities {
+              entityId
+              entityLabel
+              entityBundle
+              ... on NodeQA {
+                fieldAnswer {
+                  entity {
+                    entityBundle
+                    entityId
+                    ... on ParagraphRichTextCharLimit1000 {
+                      fieldWysiwyg {
+                        processed
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     fieldClpResources {
       entity {
         entityType
