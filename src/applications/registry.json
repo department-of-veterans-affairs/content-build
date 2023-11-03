@@ -1610,7 +1610,7 @@
   {
     "appName": "PACT Act",
     "entryName": "pact-act",
-    "rootUrl": "pact-act-wizard-test",
+    "rootUrl": "pact-act-eligibility",
     "template": {
       "title": "PACT Act",
       "layout": "page-react.html",
