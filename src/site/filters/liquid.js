@@ -821,6 +821,7 @@ module.exports = function registerFilters() {
       }));
 
     const tagList = [...topics, ...audiences];
+    console.log('TAGS LIST: ', _.sortBy(tagList, 'name'));
 
     return _.sortBy(tagList, 'name');
   };
