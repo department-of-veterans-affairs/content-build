@@ -72,7 +72,7 @@
           "name": "View your VA disability rating"
         },
         {
-          "path": "disability/view-disability-rating/my-rating",
+          "path": "disability/view-disability-rating/rating",
           "name": "Your VA disability rating"
         }
       ]
