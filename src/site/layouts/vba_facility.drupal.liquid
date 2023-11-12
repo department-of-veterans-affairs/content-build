@@ -23,7 +23,7 @@
           {% endif %}
 
           <div
-            class="usa-grid usa-grid-full vads-u-margin-top--0 vads-u-margin-bottom--3">
+            class="usa-grid usa-grid-full vads-u-margin-top--1p5 vads-u-margin-bottom--3">
             {% assign basePath = entityUrl.path | regionBasePath %}
             {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath %}
           </div>
@@ -46,7 +46,6 @@
                       {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" %}
                     </div>
                   {% endif %}
-
                   <section class="vads-facility-detail">
                     <script type="application/ld+json">
                       {
@@ -98,7 +97,6 @@
                         directionsLinkTitle = title
                         directionsLinkAddress = fullAddress
                       %}
-
                     </div>
                     <h3
                         class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
@@ -106,25 +104,19 @@
                     </h3>
                     <div class="vads-u-margin-bottom--3">
                       {% if fieldPhoneNumber %}
-                        <div class="main-phone vads-u-margin-bottom--1">
-                          <strong>Main phone:
-                          </strong><a
-                              href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
-                        </div>
-                      {% endif %}
-                      {% if fieldRegionPage.entity.fieldVaHealthConnectPhone %}
                         <div class="vads-u-margin-bottom--1">
-                          <strong>VA health connect:</strong>
-                          <a href="tel:{{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}">
-                              {{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}
-                          </a>
+                          <strong>Main phone:</strong> 
+                          <va-telephone contact="{{fieldPhoneNumber}}" />
                         </div>
                       {% endif %}
-                      {% if fieldMentalHealthPhone %}
-                        <div class="mental-health-care-phone"><strong>Mental
-                            health care:
-                          </strong><a
-                              href="tel:{{ fieldMentalHealthPhone }}">{{ fieldMentalHealthPhone }}</a>
+                      {% if fieldCcBenefitsHotline %}
+                        {% assign benefitsHotline = fieldCcBenefitsHotline | processCentralizedBenefitsHotline: fieldCcBenefitsHotline  %}
+                        <div class="vads-u-margin-bottom--1">
+                          <strong>VA benefits hotline:</strong>
+                          <va-telephone 
+                            contact="{{ benefitsHotline.fieldPhoneNumber }}" 
+                            extension="{{ benefitsHotline.fieldPhoneExtension }}"
+                          />
                         </div>
                       {% endif %}
                     </div>
@@ -155,7 +147,7 @@
 
             {% for spotlightContent in spotlightContentAll %}
               {% if spotlightContent.entity %}
-                {% include "src/site/includes/vet_centers/featured_content.liquid" with
+                {% include "src/site/includes/vba_facilities/spotlight_content.liquid" with
                     entity = spotlightContent.entity
                 %}
               {% endif %}
@@ -178,18 +170,46 @@
             Other services
           </h2>
 
+          {% if fieldCcCantFindBenefits %}
+            {% assign cantFindBenefits = fieldCcCantFindBenefits | processfieldCcCantFindBenefits: fieldCcCantFindBenefits %}
+            <va-alert
+              status="info"
+              background-only="false"
+              disable-analytics="false"
+              visible="true"
+              closeable="false"
+              full-width="false"
+            >
+              <h3 id="cant-find-benefits-headline" slot="headline">
+                {{ cantFindBenefits.fieldSectionHeader }}
+              </h2>
+              <div>
+                {{ cantFindBenefits.fieldDescription }}
+                <va-link
+                  href="{{ cantFindBenefits.fieldCta.fieldButtonLink }}"
+                  text="{{ cantFindBenefits.fieldCta.fieldButtonLabel }}"
+                />
+              </div>
+            </va-alert>
+            
+          {% endif %}
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
             Other nearby VA locations
           </h2>
 
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            VA locations in other areas
+          </h2>
           <p>
             Looking for a VA benefits location in another area?
           </p>
 
           <p>
-            <a href="/find-locations">
-              Find a VA benefits location.
-            </a>
+            <va-link 
+              href="/find-locations"
+              text="Find a VA benefits location"
+            >
           </p>
         </article>
           <!-- Last updated & feedback button-->

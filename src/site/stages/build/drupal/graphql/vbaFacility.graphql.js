@@ -15,6 +15,12 @@ const vbaFacilityFragment = `
           fieldOperatingStatusFacility
           fieldOperatingStatusMoreInfo
           fieldPhoneNumber
+          fieldCcBenefitsHotline {
+            fetched
+          }
+          fieldCcCantFindBenefits {
+           fetched
+          }
           fieldAddress {
             addressLine1
             addressLine2
