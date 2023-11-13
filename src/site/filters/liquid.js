@@ -869,7 +869,11 @@ module.exports = function registerFilters() {
   liquid.filters.processfieldCcCantFindBenefits = field => {
     if (!field || !field.fetched) return null;
 
-    const processed = { fieldCta: {} };
+    const processed = {
+      fieldCta: {},
+      fieldSectionHeader: '',
+      fieldDescription: '',
+    };
     processed.fieldSectionHeader = field.fetched.fieldSectionHeader[0].value;
 
     const ctaEntity = field.fetched.fieldCta[0].entity;
