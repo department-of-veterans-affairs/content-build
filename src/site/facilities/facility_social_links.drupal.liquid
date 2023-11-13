@@ -26,8 +26,7 @@
                 {% endif %}
                 {% if fieldOperatingStatus.url.path %}
                         <div class="social-links-email vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer"
-                             href="{{ fieldOperatingStatus.url.path}}">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" href="{{ fieldOperatingStatus.url.path}}">
                                 <i class="fas fa-dot-circle vads-u-margin-right--1"></i>
                                 <span class="vads-u-text-decoration--underline">{{ regionNickname }} operating status</span>
                             </a>
@@ -70,6 +69,15 @@
                             <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer" href="{{ fieldInstagram.uri }}">
                                 <i class="fab fa-instagram vads-u-text-decoration--none vads-u-margin-right--1"></i>
                                 <span class="vads-u-text-decoration--underline">{{ fieldInstagram.title }}</span>
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    {% if fieldYoutube != empty %}
+                        <div class="social-links social-links-youtube vads-u-margin-bottom--2">
+                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer" href="{{ fieldYoutube.uri }}">
+                                <i class="fab fa-youtube vads-u-text-decoration--none vads-u-margin-right--1"></i>
+                                <span class="vads-u-text-decoration--underline">{{ fieldYoutube.title }}</span>
                             </a>
                         </div>
                     {% endif %}

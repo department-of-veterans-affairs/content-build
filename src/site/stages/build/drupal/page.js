@@ -67,7 +67,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
   if (page[pageField]) {
     const pagedEntities = _.chunk(page[pageField].entities, perPage);
 
-    for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
+    for (let pageNum = 0; pageNum < pagedEntities.length; pageNum += 1) {
       let pagedPage = { ...page };
 
       if (pageNum > 0) {
@@ -98,7 +98,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
             start = pageNum;
           }
         }
-        for (let num = start; num < start + length; num++) {
+        for (let num = start; num < start + length; num += 1) {
           innerPages.push({
             href:
               num === pageNum
@@ -356,6 +356,7 @@ function compilePage(page, contentData) {
   const facilitySidebarNavItems = {
     facilitySidebar: getFacilitySidebar(page, contentData),
   };
+
   const outreachSidebarNavItems = { outreachSidebar: outreachSidebarNav };
   const alertItems = { alert: alertsItem };
 
