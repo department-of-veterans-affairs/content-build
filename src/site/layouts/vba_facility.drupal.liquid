@@ -1,6 +1,6 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" with customHomeCrumbText = "VA.gov home" %}
 
 <div id="content" class="interior">
   <main class="va-l-detail-page va-facility-page">
@@ -182,7 +182,7 @@
             >
               <h3 id="cant-find-benefits-headline" slot="headline">
                 {{ cantFindBenefits.fieldSectionHeader }}
-              </h2>
+              </h3>
               <div>
                 {{ cantFindBenefits.fieldDescription }}
                 <va-link
