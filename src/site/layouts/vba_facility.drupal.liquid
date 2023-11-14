@@ -1,6 +1,6 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with customHomeCrumbText = "VA.gov home" %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" %}
 
 <div id="content" class="interior">
   <main class="va-l-detail-page va-facility-page">
@@ -105,7 +105,7 @@
                     <div class="vads-u-margin-bottom--3">
                       {% if fieldPhoneNumber %}
                         <div class="vads-u-margin-bottom--1">
-                          <strong>Main phone:</strong> 
+                          <strong>Main phone:</strong>
                           <va-telephone contact="{{fieldPhoneNumber}}" />
                         </div>
                       {% endif %}
@@ -113,8 +113,8 @@
                         {% assign benefitsHotline = fieldCcBenefitsHotline | processCentralizedBenefitsHotline: fieldCcBenefitsHotline  %}
                         <div class="vads-u-margin-bottom--1">
                           <strong>VA benefits hotline:</strong>
-                          <va-telephone 
-                            contact="{{ benefitsHotline.fieldPhoneNumber }}" 
+                          <va-telephone
+                            contact="{{ benefitsHotline.fieldPhoneNumber }}"
                             extension="{{ benefitsHotline.fieldPhoneExtension }}"
                           />
                         </div>
@@ -191,7 +191,7 @@
                 />
               </div>
             </va-alert>
-            
+
           {% endif %}
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
             Other nearby VA locations
@@ -206,7 +206,7 @@
           </p>
 
           <p>
-            <va-link 
+            <va-link
               href="/find-locations"
               text="Find a VA benefits location"
             >
