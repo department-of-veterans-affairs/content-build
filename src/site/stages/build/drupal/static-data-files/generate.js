@@ -107,9 +107,11 @@ const writeProcessedDataFilesToCache = (
     },
   );
   for (const processedData of newSuccessful) {
-    fs.rmSync(`${fullCacheFilepath}/${processedData.filename}`, {
-      force: true,
-    });
+    if (fs.existsSync(`${fullCacheFilepath}/${processedData.filename}`)) {
+      fs.rmSync(`${fullCacheFilepath}/${processedData.filename}`, {
+        force: true,
+      });
+    }
   }
   newSuccessful.forEach(({ filename, data }) => {
     writeProcessedDataFileToCache(fullCacheFilepath, filename, data);
