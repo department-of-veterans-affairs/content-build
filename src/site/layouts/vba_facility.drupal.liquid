@@ -105,18 +105,22 @@
                     <div class="vads-u-margin-bottom--3">
                       {% if fieldPhoneNumber %}
                         <div class="vads-u-margin-bottom--1">
-                          <strong>Main phone:</strong>
-                          <va-telephone contact="{{fieldPhoneNumber}}" />
+                          <p>
+                            <strong>Main phone:</strong>
+                            <va-telephone contact="{{fieldPhoneNumber}}" />
+                          </p>
                         </div>
                       {% endif %}
                       {% if fieldCcBenefitsHotline %}
                         {% assign benefitsHotline = fieldCcBenefitsHotline | processCentralizedBenefitsHotline: fieldCcBenefitsHotline  %}
                         <div class="vads-u-margin-bottom--1">
-                          <strong>VA benefits hotline:</strong>
-                          <va-telephone
-                            contact="{{ benefitsHotline.fieldPhoneNumber }}"
-                            extension="{{ benefitsHotline.fieldPhoneExtension }}"
-                          />
+                          <p>
+                            <strong>VA benefits hotline:</strong>
+                            <va-telephone
+                              contact="{{ benefitsHotline.fieldPhoneNumber }}"
+                              extension="{{ benefitsHotline.fieldPhoneExtension }}"
+                            />
+                          </p>
                         </div>
                       {% endif %}
                     </div>

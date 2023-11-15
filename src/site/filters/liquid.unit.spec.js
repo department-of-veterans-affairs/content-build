@@ -14,6 +14,8 @@ import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/ve
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
 import stagingSurveys from './medalliaStagingSurveys.json';
 import prodSurveys from './medalliaProdSurveys.json';
+import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility_data_cant_find_benefits.json';
+import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
 
 // Register filters.
 registerFilters();
@@ -1602,7 +1604,36 @@ describe('getValueFromObjPath', () => {
     ).to.eq(1);
   });
 });
-
+describe('processfieldCcCantFindBenefits', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processfieldCcCantFindBenefits(null)).to.be.null;
+  });
+  it('returns Cannot Find Benefits data in simplified object', () => {
+    const data = liquid.filters.processfieldCcCantFindBenefits(vbaDataCantFind);
+    expect(data.fieldSectionHeader).to.be.equal(
+      vbaDataCantFind.fetched.fieldSectionHeader[0].value,
+    );
+    expect(data.fieldDescription).to.be.equal(
+      vbaDataCantFind.fetched.fieldDescription[0].processed,
+    );
+    const { entity } = vbaDataCantFind.fetched.fieldCta[0];
+    expect(data.fieldCta.label).to.be.equal(entity.fieldButtonLabel[0].value);
+    expect(data.fieldCta.link).to.be.equal(entity.fieldButtonLink[0].url.path);
+  });
+});
+describe('processCentralizedBenefitsHotline', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedBenefitsHotline(null)).to.be.null;
+  });
+  it('returns hotline data in simplified object', () => {
+    const data = liquid.filters.processCentralizedBenefitsHotline(
+      vbaDataBenefitHotline,
+    );
+    expect(data.fieldPhoneExtension).to.be.equal(
+      vbaDataBenefitHotline.fetched.fieldPhoneExtension[0].value,
+    );
+  });
+});
 describe('processCentralizedContent', () => {
   it('returns null if null is passed', () => {
     expect(liquid.filters.processCentralizedContent(null, 'wysiwyg')).to.be

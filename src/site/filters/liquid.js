@@ -880,7 +880,7 @@ module.exports = function registerFilters() {
     processed.fieldCta.label = ctaEntity.fieldButtonLabel[0].value;
     processed.fieldCta.link = ctaEntity.fieldButtonLink[0].url.path;
 
-    processed.fieldDescription = field.fetched.fieldDescription[0].value;
+    processed.fieldDescription = field.fetched.fieldDescription[0].processed;
     return processed;
   };
 
