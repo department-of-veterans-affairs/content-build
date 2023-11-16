@@ -177,13 +177,13 @@
     {% unless noHeader %}
       {% include "src/site/includes/top-nav.html" %}
     {% endunless %}
+
+    <!-- Banners -->
+    {% include "src/site/components/banners.drupal.liquid" %}
   </header>
 
   <!-- Fullwidth banner alerts -->
   {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
-
-  <!-- Banners -->
-  {% include "src/site/components/banners.drupal.liquid" %}
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
     {% include "src/site/assets/js/skip-link-focus.js" %}
