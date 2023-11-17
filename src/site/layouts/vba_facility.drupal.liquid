@@ -5,7 +5,7 @@
 <div id="content" class="interior">
   <main class="va-l-detail-page va-facility-page">
     <div class="usa-grid usa-grid-full">
-      {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
+
       <div class="usa-width-three-fourths">
         <article class="usa-content va-l-facility-detail">
           {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
@@ -124,7 +124,11 @@
                         </div>
                       {% endif %}
                     </div>
-                    {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'standard' %}
+                    {% include 'src/site/includes/hours.liquid' with 
+                          allHours = fieldOfficeHours 
+                          headerType = 'office' 
+                          boldDay = true 
+                    %}
                   </section>
                 </div>
               </div>
@@ -177,12 +181,9 @@
           {% if fieldCcCantFindBenefits %}
             {% assign cantFindBenefits = fieldCcCantFindBenefits | processfieldCcCantFindBenefits: fieldCcCantFindBenefits %}
             <va-alert
+              uswds
               status="info"
-              background-only="false"
-              disable-analytics="false"
-              visible="true"
-              closeable="false"
-              full-width="false"
+              visible
             >
               <h3 id="cant-find-benefits-headline" slot="headline">
                 {{ cantFindBenefits.fieldSectionHeader }}

@@ -1,14 +1,33 @@
 {% comment %}
     This is used for Region Landing page and Contact us page
+    Also used for VBA with parameter
 {% endcomment %}
 <div data-template="facilities/main_buttons">
-    <div>
-        <a class="vads-c-action-link--blue" href="/{{ path }}/make-an-appointment">Make an appointment</a>
-    </div>
-    <div class="vads-u-margin-y--2">
-        <a class="vads-c-action-link--blue" href="/{{ path }}/health-services">View all health services</a>
-    </div>
-    <div>
-        <a class="vads-c-action-link--blue" href="/{{ path }}/register-for-care">Register for care</a>
-    </div>
+    {% if buttonType == 'vba'  %}
+        <div>
+            <a class="vads-c-action-link--blue" href="https://va.my.site.com/VAVERA/s/">Make an appointment</a>
+        </div>
+    {% else %}
+        <div>
+            <a class="vads-c-action-link--blue" href="/{{ path }}/make-an-appointment">Make an appointment</a>
+        </div>
+    {% endif %}
+    {% if buttonType == 'vba'  %}
+        <div class="vads-u-margin-y--2">
+            <a class="vads-c-action-link--blue" href="https://ask.va.gov">Ask a benefit question</a>
+        </div>
+    {% else %}
+        <div class="vads-u-margin-y--2">
+            <a class="vads-c-action-link--blue" href="/{{ path }}/health-services">View all health services</a>
+        </div>
+    {% endif %}
+    {% if buttonType == 'vba' %}
+        <div>
+            <a class="vads-c-action-link--blue" href="/{{ path }}/claim-or-appeal-status">Check a claim status</a>
+        </div>
+    {% else %}
+        <div>
+            <a class="vads-c-action-link--blue" href="/{{ path }}/register-for-care">Register for care</a>
+        </div>
+    {% endif %}
 </div>
