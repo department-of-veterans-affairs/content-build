@@ -228,7 +228,7 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "my-heath/",
+          "path": "my-health/",
           "name": "My Health"
         },
         {
