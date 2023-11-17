@@ -13,7 +13,6 @@ const vbaFacilityFragment = `
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
-          fieldOperatingStatusMoreInfo
           fieldPhoneNumber
           fieldAddress {
             addressLine1
