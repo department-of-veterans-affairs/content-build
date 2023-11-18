@@ -58,6 +58,9 @@ const vbaFacilityFragment = `
           fieldCcNationalSpotlight3 {
             fetched
           }
+          fieldCcGetUpdatesFromVba {
+            fetched
+          }
           fieldMedia {
             entity {
               ... on MediaImage {

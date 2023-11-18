@@ -863,6 +863,38 @@ module.exports = function registerFilters() {
     });
   };
 
+  liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
+    if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)
+      return null;
+
+    const processed = {
+      links: {},
+      sectionHeader: '',
+    };
+    const { fetched } = fieldCcGetUpdatesFromVba;
+    processed.sectionHeader = fetched.fieldSectionHeader[0].value;
+    for (const link of fetched.fieldLinks) {
+      if (link.url.path.startsWith('/')) {
+        processed.links.news = {
+          title: link.title,
+          uri: link.url.path,
+        };
+      } else {
+        // may throw if we get something that's not a URL in the data
+        const url = new URL(link.url.path);
+        const hostnameParts = url.hostname.split('.');
+        // just retrieving the domain part i.e. facebook/flickr/twitter
+        processed.links[hostnameParts.slice(-2, -1)[0]] = {
+          title: link.title,
+          uri: link.url.path,
+        };
+      }
+    }
+    // example:
+    // processed = {sectionHeader: "Veteran Benefits Administration", links:{ news: { uri: '', title: '' }, flickr: { uri: '', title: '' } }}
+    return processed;
+  };
+
   // Processes the necessary components to display the Centralized Content
   // of Can't Find Benefits. It is not the same as the other centralized content
   // since the url path is necessary

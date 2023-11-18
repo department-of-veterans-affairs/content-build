@@ -196,7 +196,18 @@
                 />
               </div>
             </va-alert>
-
+          {% endif %}
+          {% if fieldCcGetUpdatesFromVba != empty %}
+            <!-- Social Links -->
+            {%  assign fieldUpdatesVba = fieldCcGetUpdatesFromVba | processCentralizedUpdatesVBA: fieldCcGetUpdatesFromVba %}
+            {% include "src/site/facilities/vba_social_links.drupal.liquid"
+              with  regionNickname = "the Veteran Benefits Administration"
+                    fieldNews = fieldUpdatesVba.links.news
+                    fieldFacebook = fieldUpdatesVba.links.facebook
+                    fieldTwitter = fieldUpdatesVba.links.twitter
+                    fieldInstagram = fieldUpdatesVba.links.instagram
+                    fieldFlickr = fieldUpdatesVba.links.flickr
+            %}
           {% endif %}
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
             Other nearby VA locations
