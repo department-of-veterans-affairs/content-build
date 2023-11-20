@@ -1605,6 +1605,7 @@ describe('getValueFromObjPath', () => {
     ).to.eq(1);
   });
 });
+
 describe('processfieldCcCantFindBenefits', () => {
   it('returns null if null is passed', () => {
     expect(liquid.filters.processfieldCcCantFindBenefits(null)).to.be.null;
@@ -1622,6 +1623,7 @@ describe('processfieldCcCantFindBenefits', () => {
     expect(data.fieldCta.link).to.be.equal(entity.fieldButtonLink[0].url.path);
   });
 });
+
 describe('processCentralizedBenefitsHotline', () => {
   it('returns null if null is passed', () => {
     expect(liquid.filters.processCentralizedBenefitsHotline(null)).to.be.null;
