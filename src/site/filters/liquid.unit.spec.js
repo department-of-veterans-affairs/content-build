@@ -16,6 +16,7 @@ import stagingSurveys from './medalliaStagingSurveys.json';
 import prodSurveys from './medalliaProdSurveys.json';
 import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility_data_cant_find_benefits.json';
 import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
+import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
 
 // Register filters.
 registerFilters();
@@ -1634,6 +1635,21 @@ describe('processCentralizedBenefitsHotline', () => {
     );
   });
 });
+describe('processCentralizedUpdatesVBA', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedUpdatesVBA(null)).to.be.null;
+  });
+  it('returns simple object of VBA updates', () => {
+    const data = liquid.filters.processCentralizedUpdatesVBA(vbaDataUpdates);
+    expect(data.sectionHeader).to.be.equal(
+      vbaDataUpdates.fetched.fieldSectionHeader[0].value,
+    );
+    expect(Object.keys(data.links).length).to.be.equal(
+      vbaDataUpdates.fetched.fieldLinks.length,
+    );
+  });
+});
+
 describe('processCentralizedContent', () => {
   it('returns null if null is passed', () => {
     expect(liquid.filters.processCentralizedContent(null, 'wysiwyg')).to.be
