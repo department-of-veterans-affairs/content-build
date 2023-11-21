@@ -228,11 +228,11 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "my-heath/",
+          "path": "my-health/",
           "name": "My Health"
         },
         {
-          "path": "update-benefits-information-form-10-10ezr",
+          "path": "my-health/update-benefits-information-form-10-10ezr",
           "name": "Update your VA health benefits information"
         }
       ]
@@ -1423,10 +1423,10 @@
   {
     "appName": "21-0966 Intent to file a claim",
     "entryName": "21-0966-intent-to-file-a-claim",
-    "rootUrl": "/supporting-forms-for-claims/intent-to-file-a-claim-form-21-0966",
+    "rootUrl": "/supporting-forms-for-claims/intent-to-file-form-21-0966",
     "productId": "8233bd78-20c6-4498-b36f-55ec0028b1e5",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1436,7 +1436,7 @@
         },
         {
           "name": "Submit an intent to file",
-          "path": "supporting-forms-for-claims/intent-to-file-a-claim-form-21-0966"
+          "path": "supporting-forms-for-claims/intent-to-file-form-21-0966"
         }
       ]
     }
