@@ -1329,7 +1329,7 @@
     "rootUrl": "/housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555",
     "productId": "49929be5-0c92-42f2-b122-3cb426f691d4",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1421,7 +1421,7 @@
     }
   },
   {
-    "appName": "21-0966 Intent to file a claim",
+    "appName": "Submit an intent to file",
     "entryName": "21-0966-intent-to-file-a-claim",
     "rootUrl": "/supporting-forms-for-claims/intent-to-file-form-21-0966",
     "productId": "8233bd78-20c6-4498-b36f-55ec0028b1e5",
