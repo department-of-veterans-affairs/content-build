@@ -10,10 +10,27 @@ const vbaFacilityFragment = `
         ... on NodeVbaFacility {
           title
           changed
+          entityUrl {
+            ... on EntityCanonicalUrl {
+              breadcrumb {
+                text
+                url {
+                  path
+                  routed
+                }
+              }
+            }
+          }
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
           fieldPhoneNumber
+          fieldCcBenefitsHotline {
+            fetched
+          }
+          fieldCcCantFindBenefits {
+           fetched
+          }
           fieldAddress {
             addressLine1
             addressLine2
@@ -39,6 +56,9 @@ const vbaFacilityFragment = `
             fetched
           }
           fieldCcNationalSpotlight3 {
+            fetched
+          }
+          fieldCcGetUpdatesFromVba {
             fetched
           }
           fieldMedia {

@@ -863,6 +863,59 @@ module.exports = function registerFilters() {
     });
   };
 
+  liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
+    if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)
+      return null;
+
+    const processed = {
+      links: {},
+      sectionHeader: '',
+    };
+    const { fetched } = fieldCcGetUpdatesFromVba;
+    processed.sectionHeader = fetched.fieldSectionHeader[0].value;
+    for (const link of fetched.fieldLinks) {
+      if (link.url.path.startsWith('/')) {
+        processed.links.news = {
+          title: link.title,
+          uri: link.url.path,
+        };
+      } else {
+        // may throw if we get something that's not a URL in the data
+        const url = new URL(link.url.path);
+        const hostnameParts = url.hostname.split('.');
+        // just retrieving the domain part i.e. facebook/flickr/twitter
+        processed.links[hostnameParts.slice(-2, -1)[0]] = {
+          title: link.title,
+          uri: link.url.path,
+        };
+      }
+    }
+    // example:
+    // processed = {sectionHeader: "Veteran Benefits Administration", links:{ news: { uri: '', title: '' }, flickr: { uri: '', title: '' } }}
+    return processed;
+  };
+
+  // Processes the necessary components to display the Centralized Content
+  // of Can't Find Benefits. It is not the same as the other centralized content
+  // since the url path is necessary
+  liquid.filters.processfieldCcCantFindBenefits = field => {
+    if (!field || !field.fetched) return null;
+
+    const processed = {
+      fieldCta: {},
+      fieldSectionHeader: '',
+      fieldDescription: '',
+    };
+    processed.fieldSectionHeader = field.fetched.fieldSectionHeader[0].value;
+
+    const ctaEntity = field.fetched.fieldCta[0].entity;
+    processed.fieldCta.label = ctaEntity.fieldButtonLabel[0].value;
+    processed.fieldCta.link = ctaEntity.fieldButtonLink[0].url.path;
+
+    processed.fieldDescription = field.fetched.fieldDescription[0].processed;
+    return processed;
+  };
+
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
@@ -974,6 +1027,18 @@ module.exports = function registerFilters() {
     return he.encode(string, { useNamedReferences: true });
   };
 
+  // fieldCcBenefitsHotline is odd because it has no entity
+  liquid.filters.processCentralizedBenefitsHotline = fieldCcBenefitsHotline => {
+    if (!fieldCcBenefitsHotline || !fieldCcBenefitsHotline.fetched) {
+      return null;
+    }
+    const processedFetched = {};
+    for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
+      processedFetched[key] = value[0].value;
+    }
+    return processedFetched;
+  };
+
   // fieldCcVetCenterFeaturedCon data structure is different
   // from objects inside fieldVetCenterFeatureContent. Recreates the array
   // with the expected structure so that it can be directly passed inside the template
@@ -1010,6 +1075,7 @@ module.exports = function registerFilters() {
         entity: {
           fieldButtonLink: {
             uri: fieldCta[0]?.entity.fieldButtonLink[0].uri,
+            url: fieldCta[0]?.entity.fieldButtonLink[0].url?.path,
           },
           fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0].value,
         },
