@@ -1637,6 +1637,7 @@ describe('processCentralizedBenefitsHotline', () => {
     );
   });
 });
+
 describe('processCentralizedUpdatesVBA', () => {
   it('returns null if null is passed', () => {
     expect(liquid.filters.processCentralizedUpdatesVBA(null)).to.be.null;
