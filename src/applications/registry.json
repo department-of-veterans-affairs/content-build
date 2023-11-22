@@ -1678,5 +1678,25 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Application for CHAMPVA Benefits",
+    "entryName": "10-10d",
+    "rootUrl": "/application-for-champva-benefits",
+    "productId": "b5e0032b-9474-46b4-83e5-6cda77616e03",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+   }
+  },
+  {
+    "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
+    "entryName": "10-7959C",
+    "rootUrl": "/simple-forms/10-7959C",
+    "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
