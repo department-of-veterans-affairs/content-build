@@ -92,7 +92,6 @@ if (fs.existsSync(reportPath)) {
   console.log(
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
-  core.setOutput('BROKEN_LINKS', `${brokenLinks.brokenLinksCount}`);
   core.setOutput('SLACK_BLOCKS', `${JSON.stringify(payload)}`);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
