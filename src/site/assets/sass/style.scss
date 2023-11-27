@@ -18,3 +18,18 @@
   margin-top: 0;
   padding-top: 1.25rem;
 }
+
+
+// START: Styles for mobile app promo banner
+.smartbanner.smartbanner--android .smartbanner__button__label {
+  background: #112e51 !important;
+}
+
+.smartbanner .smartbanner__exit  {
+  &::before,
+  &::after {
+    background-color: #2a2929 !important; 
+  }
+
+// End: Styles for mobile app promo banner  
+}
