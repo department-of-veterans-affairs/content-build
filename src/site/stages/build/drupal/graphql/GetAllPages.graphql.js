@@ -1,6 +1,7 @@
 const landingPage = require('./landingPage.graphql');
 const page = require('./page.graphql');
 const healthCareRegionPage = require('./healthCareRegionPage.graphql');
+const vbaFacility = require('./vbaFacility.graphql');
 
 const alertsQuery = require('./alerts.graphql');
 const allSideNavMachineNamesQuery = require('./navigation-fragments/allSideNavMachineNames.nav.graphql');
@@ -66,6 +67,7 @@ const buildQuery = () => {
   ${landingPage.fragment}
   ${page.fragment}
   ${healthCareRegionPage.fragment}
+  ${vbaFacility.fragment}
   ${healthCareLocalFacilityPage.fragment}
   ${healthCareRegionDetailPage.fragment}
   ${pressReleasePage.fragment}
@@ -131,6 +133,7 @@ const buildQuery = () => {
         ... nodeBasicLandingPage
         ... nodeCampaignLandingPage
         ... policiesPageFragment
+        ... vbaFacilityFragment
       }
     }`;
 

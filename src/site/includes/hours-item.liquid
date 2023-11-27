@@ -1,5 +1,5 @@
 <li>
-    {% if headerType == 'clinical' %}
+    {% if headerType == 'clinical' or boldDay == true %}
         <b class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
     {% else %}
         <span class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}.</span>
