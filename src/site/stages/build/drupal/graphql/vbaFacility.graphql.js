@@ -76,6 +76,26 @@ const vbaFacilityFragment = `
               }
             }
           }
+          reverseFieldVbaRegionFacilityListNode {
+            count
+            entities {
+              ... on NodeServiceRegion {
+                entityId
+                entityLabel
+                reverseFieldVbaServiceRegionsTaxonomyTerm {
+                  count
+                  entities {
+                    ... on TaxonomyTermHealthCareServiceTaxonomy {
+                      entityId
+                      entityLabel
+                      fieldRegionalServiceHeader
+                      fieldRegionalServiceDescripti
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }`;
 
