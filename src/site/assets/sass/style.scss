@@ -25,11 +25,10 @@
   background: #112e51 !important;
 }
 
-.smartbanner .smartbanner__exit  {
+.smartbanner.smartbanner--ios .smartbanner__exit  {
   &::before,
   &::after {
     background-color: #2a2929 !important; 
   }
-
 // End: Styles for mobile app promo banner  
 }
