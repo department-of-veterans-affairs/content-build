@@ -1426,7 +1426,7 @@
     "rootUrl": "/supporting-forms-for-claims/intent-to-file-form-21-0966",
     "productId": "8233bd78-20c6-4498-b36f-55ec0028b1e5",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1584,7 +1584,7 @@
     "rootUrl": "/burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247",
     "productId": "5af7a83b-c1a0-4a0a-b0e9-88baf150e6a9",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
