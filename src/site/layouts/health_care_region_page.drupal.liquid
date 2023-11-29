@@ -186,13 +186,14 @@
           </section>
           {% elsif eventTeasersAll.entities.0.reverseFieldListingNode.entities.length %}
           {% assign upcomingEvents = eventTeasersAll.entities.0.reverseFieldListingNode.entities %}
-          {% assign sortedEvents = upcomingEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
-          {% assign filteredEvents = sortedEvents | filterPastEvents %}
+          {% assign filteredEvents = upcomingEvents | filterPastEvents %}
+          {% assign sortedEvents = filteredEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
+          
           <section>
             <h2
               class="vads-u-margin-top--4 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--2p5">
               Events</h2>
-            {% for event in filteredEvents limit:1 %}
+            {% for event in sortedEvents limit:1 %}
               {% assign node = event %}
               {% include "src/site/teasers/event.drupal.liquid" %}
             {% endfor %}
