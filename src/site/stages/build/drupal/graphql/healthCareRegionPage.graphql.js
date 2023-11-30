@@ -116,7 +116,7 @@ const nodeHealthCareRegionPage = `
     eventTeasersFeatured: reverseFieldOfficeNode(limit: 1000, filter: {conditions: [{field: "type", value: "event_listing"}]}) {
       entities {
         ... on NodeEventListing {
-          reverseFieldListingNode(limit: 5000, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}, {field: "field_featured", value: "1"}]}) {
+          reverseFieldListingNode(limit: 5000, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}, {field: "field_featured", value: "1"}, { field: "field_datetime_range_timezone", value: [$today], operator: GREATER_THAN}]}) {
             entities {
               ... nodeEventWithoutBreadcrumbs
             }
