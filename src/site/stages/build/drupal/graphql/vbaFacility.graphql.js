@@ -52,12 +52,6 @@ const vbaFacilityFragment = `
           fieldCcNationalSpotlight1 {
             fetched
           }
-          fieldCcNationalSpotlight2 {
-            fetched
-          }
-          fieldCcNationalSpotlight3 {
-            fetched
-          }
           fieldCcGetUpdatesFromVba {
             fetched
           }
@@ -71,6 +65,26 @@ const vbaFacilityFragment = `
                     url
                     width
                     height
+                  }
+                }
+              }
+            }
+          }
+          reverseFieldVbaRegionFacilityListNode {
+            count
+            entities {
+              ... on NodeServiceRegion {
+                entityId
+                entityLabel
+                reverseFieldVbaServiceRegionsTaxonomyTerm {
+                  count
+                  entities {
+                    ... on TaxonomyTermHealthCareServiceTaxonomy {
+                      entityId
+                      entityLabel
+                      fieldRegionalServiceHeader
+                      fieldRegionalServiceDescripti
+                    }
                   }
                 }
               }
