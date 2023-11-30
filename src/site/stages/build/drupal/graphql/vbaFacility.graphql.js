@@ -1,29 +1,36 @@
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 const draftContentOverride = process.env.UNPUBLISHED_CONTENT === 'true';
+const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const vbaFacilityFragment = `
       fragment vbaFacilityFragment on NodeVbaFacility {
-        entityId
-        entityUrl {
-          path
-          routed
-        }
-        entityMetatags {
-          __typename
-          key
-          value
-        }
-        entityBundle
+        ${entityElementsFromPages}
         entityLabel
         ... on NodeVbaFacility {
           title
           changed
+          entityUrl {
+            ... on EntityCanonicalUrl {
+              breadcrumb {
+                text
+                url {
+                  path
+                  routed
+                }
+              }
+            }
+          }
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
-          fieldOperatingStatusMoreInfo
           fieldPhoneNumber
+          fieldCcBenefitsHotline {
+            fetched
+          }
+          fieldCcCantFindBenefits {
+           fetched
+          }
           fieldAddress {
             addressLine1
             addressLine2
@@ -41,6 +48,47 @@ const vbaFacilityFragment = `
             starthours
             endhours
             comment
+          }
+          fieldCcNationalSpotlight1 {
+            fetched
+          }
+          fieldCcGetUpdatesFromVba {
+            fetched
+          }
+          fieldMedia {
+            entity {
+              ... on MediaImage {
+                image {
+                  alt
+                  title
+                  derivative(style: _32MEDIUMTHUMBNAIL) {
+                    url
+                    width
+                    height
+                  }
+                }
+              }
+            }
+          }
+          reverseFieldVbaRegionFacilityListNode {
+            count
+            entities {
+              ... on NodeServiceRegion {
+                entityId
+                entityLabel
+                reverseFieldVbaServiceRegionsTaxonomyTerm {
+                  count
+                  entities {
+                    ... on TaxonomyTermHealthCareServiceTaxonomy {
+                      entityId
+                      entityLabel
+                      fieldRegionalServiceHeader
+                      fieldRegionalServiceDescripti
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }`;

@@ -1,3 +1,238 @@
-{% comment %}
-  This is a placeholder layout for now, since not including it breaks the main build.
-{% endcomment %}
+{% include "src/site/includes/header.html" %}
+{% include "src/site/includes/preview-edit.drupal.liquid" %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" %}
+
+<div id="content" class="interior">
+  <main class="va-l-detail-page va-facility-page">
+    <div class="usa-grid usa-grid-full">
+
+      <div class="usa-width-three-fourths">
+        <article class="usa-content va-l-facility-detail">
+          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+            entityUrl = entityUrl
+          %}
+
+          <h1>{{ title }}</h1>
+
+          {% if fieldIntroText %}
+            <div class="va-introtext">
+              <p>
+                {{ fieldIntroText }}
+              </p>
+            </div>
+          {% endif %}
+
+          <div
+            class="usa-grid usa-grid-full vads-u-margin-top--1p5 vads-u-margin-bottom--3">
+            {% assign basePath = entityUrl.path | regionBasePath %}
+            {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath buttonType = 'vba'%}
+          </div>
+
+          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            Location and contact information
+          </h2>
+
+          <div
+              class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
+            <div
+                class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
+              <div>
+                <div class="vads-c-facility-detail">
+
+                  {% if fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
+                    <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
+                      {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" %}
+                    </div>
+                  {% endif %}
+                  <section class="vads-facility-detail">
+                    <script type="application/ld+json">
+                      {
+                        "@context": "https://schema.org",
+                        "@type": "Place",
+                        "address": {
+                          "@type": "PostalAddress",
+                          "streetAddress": "{{ fieldAddress.addressLine1 }}",
+                          "addressLocality": "{{ fieldAddress.locality }}",
+                          "addressRegion": "{{ fieldAddress.administrativeArea }}",
+                          "postalCode": "{{ fieldAddress.postalCode }}"
+                        },
+                        "name": "{{ title }}",
+                        "telephone": "{{ fieldPhoneNumber }}",
+                        "openingHoursSpecification": [
+                          {% for hours in fieldOfficeHours %}
+                            {
+                              "@type": "OpeningHoursSpecification",
+                              "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
+                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}",
+                              "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}"
+                            }{% if !forloop.last %},{% endif %}
+                          {% endfor %}
+                        ],
+                        "hasMap": "https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}",
+                        "image": ["{{ fieldMedia.entity.image.derivative.url }}"],
+                        "branchCode": "{{ fieldFacilityLocatorApiId }}",
+                        "geo": {
+                          "@type": "GeoCoordinates",
+                          "latitude": "{{ fieldGeolocation.lat }}",
+                          "longitude": "{{ fieldGeolocation.lon }}"
+                        }
+                      }
+                    </script>
+                    <h3
+                        class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                      Address
+                    </h3>
+                    <div class="vads-u-margin-bottom--3">
+                      <div>{{ fieldAddress.addressLine1 }}</div>
+                      {{ fieldAddress.locality }},
+                      {{ fieldAddress.administrativeArea }}
+                      {{ fieldAddress.postalCode }}
+
+                      {% capture fullAddress %}
+                        {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }} {{ fieldAddress.postalCode }}
+                      {% endcapture %}
+                      {% include "src/site/includes/directions-google-maps.liquid" with
+                        directionsLinkTitle = title
+                        directionsLinkAddress = fullAddress
+                      %}
+                    </div>
+                    <h3
+                        class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                      Phone numbers
+                    </h3>
+                    <div class="vads-u-margin-bottom--3">
+                      {% if fieldPhoneNumber %}
+                        <div class="vads-u-margin-bottom--1">
+                          <p class="vads-u-margin-top--0">
+                            <strong>Main phone:</strong>
+                            <va-telephone contact="{{fieldPhoneNumber}}" />
+                          </p>
+                        </div>
+                      {% endif %}
+                      {% if fieldCcBenefitsHotline %}
+                        {% assign benefitsHotline = fieldCcBenefitsHotline | processCentralizedBenefitsHotline: fieldCcBenefitsHotline  %}
+                        <div class="vads-u-margin-bottom--1">
+                          <p class="vads-u-margin-top--0">
+                            <strong>VA benefits hotline:</strong>
+                            <va-telephone
+                              contact="{{ benefitsHotline.fieldPhoneNumber }}"
+                              extension="{{ benefitsHotline.fieldPhoneExtension }}"
+                            />
+                          </p>
+                        </div>
+                      {% endif %}
+                    </div>
+                    {% include 'src/site/includes/hours.liquid' with 
+                          allHours = fieldOfficeHours 
+                          headerType = 'office' 
+                          boldDay = true 
+                    %}
+                  </section>
+                </div>
+              </div>
+            </div>
+            {% include "src/site/includes/image_and_static_map.liquid" with
+                facilityMedia = fieldMedia
+                facilityId = fieldFacilityLocatorApiId
+            %}
+          </div>
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            Prepare for your visit
+          </h2>
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            In the spotlight at {{ entityLabel }}
+          </h2>
+
+          <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
+            {% assign spotlightContent1 = "" | split: "," %}
+            {% assign spotlightContent2 = fieldCcNationalSpotlight1 | appendCentralizedFeaturedContent: spotlightContent1 %}
+            {% assign spotlightContent3 = fieldCcNationalSpotlight2 | appendCentralizedFeaturedContent: spotlightContent2 %}
+            {% assign spotlightContentAll = fieldCcNationalSpotlight3 | appendCentralizedFeaturedContent: spotlightContent3 %}
+
+            {% for spotlightContent in spotlightContentAll %}
+              {% if spotlightContent.entity %}
+                {% include "src/site/includes/vba_facilities/spotlight_content.liquid" with
+                    entity = spotlightContent.entity
+                %}
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            Veteran benefits
+          </h2>
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            Family member and caregiver benefits
+          </h2>
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            Service member benefits
+          </h2>
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            Other services
+          </h2>
+
+          {% if fieldCcCantFindBenefits %}
+            {% assign cantFindBenefits = fieldCcCantFindBenefits | processfieldCcCantFindBenefits: fieldCcCantFindBenefits %}
+            <va-alert
+              uswds
+              status="info"
+              visible
+            >
+              <h3 id="cant-find-benefits-headline" slot="headline">
+                {{ cantFindBenefits.fieldSectionHeader }}
+              </h3>
+              <div>
+                {{ cantFindBenefits.fieldDescription }}
+                <va-link
+                  href="{{ cantFindBenefits.fieldCta.link }}"
+                  text="{{ cantFindBenefits.fieldCta.label }}"
+                />
+              </div>
+            </va-alert>
+          {% endif %}
+          {% if fieldCcGetUpdatesFromVba != empty %}
+            <!-- Social Links -->
+            {%  assign fieldUpdatesVba = fieldCcGetUpdatesFromVba | processCentralizedUpdatesVBA: fieldCcGetUpdatesFromVba %}
+            {% include "src/site/facilities/vba_social_links.drupal.liquid"
+              with  regionNickname = "the Veteran Benefits Administration"
+                    fieldNews = fieldUpdatesVba.links.news
+                    fieldFacebook = fieldUpdatesVba.links.facebook
+                    fieldTwitter = fieldUpdatesVba.links.twitter
+                    fieldInstagram = fieldUpdatesVba.links.instagram
+                    fieldFlickr = fieldUpdatesVba.links.flickr
+            %}
+          {% endif %}
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            Other nearby VA locations
+          </h2>
+
+
+          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            VA locations in other areas
+          </h2>
+          <p>
+            Looking for a VA benefits location in another area?
+          </p>
+
+          <p>
+            <va-link
+              href="/find-locations"
+              text="Find a VA benefits location"
+            >
+          </p>
+          <va-back-to-top></va-back-to-top>
+          <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+        </article>
+    </div>
+  </main>
+</div>
+{% include "src/site/includes/footer.html" %}
+{% include "src/site/includes/debug.drupal.liquid" %}

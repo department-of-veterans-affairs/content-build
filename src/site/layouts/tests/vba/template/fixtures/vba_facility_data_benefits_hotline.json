@@ -1,0 +1,24 @@
+{
+  "fetched": {
+    "fieldPhoneExtension": [
+      {
+        "value": "4023022840"
+      }
+    ],
+    "fieldPhoneLabel": [
+      {
+        "value": "VA benefits hotline"
+      }
+    ],
+    "fieldPhoneNumber": [
+      {
+        "value": "800-827-1000"
+      }
+    ],
+    "fieldPhoneNumberType": [
+      {
+        "value": "tel"
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "fetched": {
+    "fieldCta": [
+      {
+        "entity": {
+          "targetId": "139797",
+          "targetRevisionId": "1104167",
+          "entityType": "paragraph",
+          "entityBundle": "button",
+          "pid": "139797",
+          "label": "VBA -- benefit office content > Content > Call to Action",
+          "status": true,
+          "langcode": "en",
+          "fieldButtonLabel": [
+            {
+              "value": "Find a VA benefits location"
+            }
+          ],
+          "fieldButtonLink": [
+            {
+              "uri": "https://www.va.gov/find-locations/?facilityType=benefits",
+              "title": "",
+              "options": {
+                "href": "https://www.va.gov/find-locations/?facilityType=benefits",
+                "dataEntityType": "",
+                "dataEntityUuid": "",
+                "dataEntitySubstitution": ""
+              },
+              "url": {
+                "path": "https://www.va.gov/find-locations/?facilityType=benefits"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "fieldDescription": [
+      {
+        "value": "<p>Call our VA benefits hotline at <a aria-label=\"8 0 0. 8 2 7. 1 0 0 0.\" href=\"tel:+18008271000\">800-827-1000</a> (<a aria-label=\"TTY. 7 1 1.\" href=\"tel:711\">TTY: 711</a>). We’re here 8:00 a.m. to 9:00 p.m. ET, Monday through Friday.</p>\r\n\r\n<p>&nbsp;</p>\r\n",
+        "format": "rich_text_limited",
+        "processed": "<p>Call our VA benefits hotline at <a aria-label=\"8 0 0. 8 2 7. 1 0 0 0.\" href=\"tel:+18008271000\">800-827-1000</a> (<a aria-label=\"TTY. 7 1 1.\" href=\"tel:711\">TTY: 711</a>). We’re here 8:00 a.m. to 9:00 p.m. ET, Monday through Friday.</p>\n<p> </p>\n"
+      }
+    ],
+    "fieldSectionHeader": [
+      {
+        "value": "Can't find the service you're looking for?"
+      }
+    ]
+  }
+}
