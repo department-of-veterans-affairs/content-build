@@ -1109,6 +1109,32 @@ module.exports = function registerFilters() {
     });
   };
 
+  //* Filters and Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
+  //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
+  liquid.filters.filterAndSortEvents = data => {
+    if (!data) return null;
+    const currentTimestamp = moment().unix();
+
+    const filteredEvents = data.filter(event => {
+      const occurrenceArray = event.fieldDatetimeRangeTimezone.map(
+        occurrence => {
+          return occurrence.value;
+        },
+      );
+      const futureOccurrences = occurrenceArray.filter(
+        occurrence => occurrence >= currentTimestamp,
+      );
+
+      return futureOccurrences.length > 0;
+    });
+
+    return liquid.filters.sortByDateKey(
+      filteredEvents,
+      'fieldDatetimeRangeTimezone',
+      false,
+    );
+  };
+
   //* paginatePages has limitations, it is not yet fully operational.
   liquid.filters.paginatePages = (page, items, aria) => {
     const perPage = 10;

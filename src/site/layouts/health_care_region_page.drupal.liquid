@@ -186,7 +186,10 @@
           </section>
           {% elsif eventTeasersAll.entities.0.reverseFieldListingNode.entities.length %}
           {% assign upcomingEvents = eventTeasersAll.entities.0.reverseFieldListingNode.entities %}
-          {% assign sortedEvents = upcomingEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
+        {% comment %} {% assign filteredEvents = upcomingEvents | filterPastEvents %}
+          {% assign sortedEvents = filteredEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}  {% endcomment %}
+
+          {% assign sortedEvents = upcomingEvents | filterAndSortEvents %}
           
           <section>
             <h2
