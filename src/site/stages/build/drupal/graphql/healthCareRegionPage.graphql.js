@@ -105,7 +105,7 @@ const nodeHealthCareRegionPage = `
     eventTeasersAll: reverseFieldOfficeNode(limit: 1, filter: {conditions: [{field: "type", value: "event_listing"}]}) {
       entities {
         ... on NodeEventListing {
-          reverseFieldListingNode(sort: {field: "field_datetime_range_timezone", direction: ASC }, limit: 10, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}, { field: "field_datetime_range_timezone", value: [$today], operator: GREATER_THAN}]}) {
+          reverseFieldListingNode(sort: {field: "field_datetime_range_timezone", direction: ASC }, limit: 1000, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}]}) {
             entities {
               ... nodeEventWithoutBreadcrumbs
             }
@@ -116,7 +116,7 @@ const nodeHealthCareRegionPage = `
     eventTeasersFeatured: reverseFieldOfficeNode(limit: 1000, filter: {conditions: [{field: "type", value: "event_listing"}]}) {
       entities {
         ... on NodeEventListing {
-          reverseFieldListingNode(limit: 5000, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}, {field: "field_featured", value: "1"}, { field: "field_datetime_range_timezone", value: [$today], operator: GREATER_THAN}]}) {
+          reverseFieldListingNode(limit: 5000, filter: {conditions: [{field: "type", value: "event"}, {field: "status", value: "1"}, {field: "field_featured", value: "1"}]}) {
             entities {
               ... nodeEventWithoutBreadcrumbs
             }
