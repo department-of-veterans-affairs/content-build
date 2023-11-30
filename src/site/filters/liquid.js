@@ -1110,7 +1110,6 @@ module.exports = function registerFilters() {
   };
 
   //* Filters and Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
-  //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
   liquid.filters.filterAndSortEvents = data => {
     if (!data) return null;
     const currentTimestamp = moment().unix();
