@@ -28,6 +28,10 @@
     <meta name="robots" content="noindex">
   {% endif %}
 
+  
+  <link rel="stylesheet" href="https://unpkg.com/smartbanner.js/dist/smartbanner.min.css">
+  <script src="https://unpkg.com/smartbanner.js/dist/smartbanner.min.js"></script>  
+
   <!-- Add metatags. -->
   {% include "src/site/includes/metatags.drupal.liquid" %}
 
@@ -187,4 +191,13 @@
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
     {% include "src/site/assets/js/skip-link-focus.js" %}
+  </script>
+
+  <script  type="text/javascript" defer>
+    window.onload = function() {
+      const contentElement = document.querySelector('.smartbanner');
+        if(contentElement){
+          contentElement.style.top = '-84px'
+        }
+    };
   </script>
