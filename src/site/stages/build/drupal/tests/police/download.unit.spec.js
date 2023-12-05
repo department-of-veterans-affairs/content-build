@@ -61,15 +61,15 @@ describe('process police csv files', () => {
       client,
     );
     const keys = Object.keys(processedDataFile.data.data.statistics);
-    expect(keys).to.contain('vha_635');
-    expect(keys).to.contain('vha_523A5');
-    expect(processedDataFile.data.data.statistics.vha_635).to.be.an('array');
-    expect(processedDataFile.data.data.statistics.vha_523A5).to.be.an('array');
-    expect(processedDataFile.data.data.statistics.vha_635[0].VISN).to.be.equal(
+    expect(keys).to.contain('avha_635');
+    expect(keys).to.contain('avha_523A5');
+    expect(processedDataFile.data.data.statistics.avha_635).to.be.an('array');
+    expect(processedDataFile.data.data.statistics.avha_523A5).to.be.an('array');
+    expect(processedDataFile.data.data.statistics.avha_635[0].VISN).to.be.equal(
       19,
     ); // that way we know processing succeeded
     expect(
-      processedDataFile.data.data.statistics.vha_523A5[0].VISN,
+      processedDataFile.data.data.statistics.avha_523A5[0].VISN,
     ).to.be.equal(1);
   });
 });
