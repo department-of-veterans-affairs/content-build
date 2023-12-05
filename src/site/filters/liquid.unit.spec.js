@@ -935,11 +935,13 @@ describe('getTagsList', () => {
           },
         },
       ],
-      fieldAudienceBeneficiares: {
-        entity: {
-          name: 'C. Example',
+      fieldAudienceBeneficiares: [
+        {
+          entity: {
+            name: 'C. Example',
+          },
         },
-      },
+      ],
       fieldNonBeneficiares: {
         entity: {
           name: 'D. Example',
