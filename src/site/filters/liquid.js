@@ -811,11 +811,13 @@ module.exports = function registerFilters() {
     }));
 
     const beneficiaresAudiences = fieldAudienceBeneficiares
-      .filter(tag => !!tag)
-      .map(audience => ({
-        ...audience?.entity,
-        categoryLabel: 'Audience',
-      }));
+      ? fieldAudienceBeneficiares
+          .filter(tag => !!tag)
+          .map(audience => ({
+            ...audience?.entity,
+            categoryLabel: 'Audience',
+          }))
+      : [];
 
     const audiences = [fieldNonBeneficiares?.entity]
       .filter(tag => !!tag)
