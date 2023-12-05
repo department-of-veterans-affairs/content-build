@@ -1515,7 +1515,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "private":true
+      "private": true
     }
   },
   {
