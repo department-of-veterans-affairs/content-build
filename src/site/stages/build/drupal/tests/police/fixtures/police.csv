@@ -1,3 +1,3 @@
 VISN,Facility API ID,Facility Name,MM/YYYY,Number of service calls (officer initiated and response to calls),Traffic and parking tickets,Non-traffic (criminal) tickets,Arrests,Complaints and investigations,Numbers of sustained allegations,Numbers of disciplinary actions
-19,avha_635,Not Oklahoma City VA Medical Center,10/2023,4000,100,100,600,50,10,2
-1,avha_523A5,Not Brockton VA Medical Center,10/2023,5200,220,325,752,78,8,3
+19,vha_635,Oklahoma City VA Medical Center,12/2023,4000,100,100,600,50,10,2
+1,vha_523A5,Brockton VA Medical Center,12/2023,5200,220,325,752,78,8,3

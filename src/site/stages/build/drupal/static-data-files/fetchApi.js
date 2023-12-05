@@ -58,7 +58,6 @@ function getCurlClient(buildOptions, _clientOptionsArg = { verbose: true }) {
           'certs/VA-Internal-S2-RCA2.pem',
         ]);
       }
-
       return fetchWrapper(
         url,
         // eslint-disable-next-line prefer-object-spread
