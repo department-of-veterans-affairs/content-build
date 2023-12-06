@@ -452,6 +452,7 @@ function compilePage(page, contentData) {
     case 'health_care_region_page':
     case 'press_release':
     case 'vba_facility':
+    case 'vamc_system_va_police':
       pageCompiled = Object.assign(
         page,
         facilitySidebarNavItems,

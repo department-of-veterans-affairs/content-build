@@ -71,6 +71,16 @@ const CountEntityTypes = `
     count
   }
 
+  vaPolicePage: nodeQuery(
+    filter: {
+      conditions: [
+        {field: "status", value: ["1"]},
+        {field: "type", value: ["vamc_system_va_police"]}
+      ]}
+    ) {
+    count
+  }
+
   healthServicesListing: nodeQuery(
     filter: {
       conditions: [
