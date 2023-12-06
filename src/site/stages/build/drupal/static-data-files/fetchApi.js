@@ -12,7 +12,6 @@ async function fetchWrapper(url, options) {
     const { data } = await curly.get(url);
     return new Response(data, { status: 200, statusText: 'OK', url });
   }
-  
   return fetch(url, options);
 }
 
@@ -59,7 +58,6 @@ function getCurlClient(buildOptions, _clientOptionsArg = { verbose: true }) {
           'certs/VA-Internal-S2-RCA2.pem',
         ]);
       }
-      
       return fetchWrapper(
         url,
         // eslint-disable-next-line prefer-object-spread
