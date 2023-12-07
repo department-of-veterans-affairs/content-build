@@ -74,7 +74,9 @@ function groupByTags(allArticles) {
     const terms = [...fieldTopics];
 
     if (fieldAudienceBeneficiares) {
-      terms.push(fieldAudienceBeneficiares);
+      fieldAudienceBeneficiares.forEach(tag => {
+        terms.push(tag);
+      });
     }
 
     if (fieldNonBeneficiares) {
