@@ -816,7 +816,7 @@ module.exports = function registerFilters() {
       !Array.isArray(fieldAudienceBeneficiares)
     ) {
       beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
-    } else {
+    } else if (fieldAudienceBeneficiares) {
       beneficiaresAudiences = fieldAudienceBeneficiares.map(
         audience => audience?.entity,
       );
