@@ -800,7 +800,7 @@ module.exports = function registerFilters() {
     const {
       entity: {
         fieldTopics = [],
-        fieldAudienceBeneficiares = [],
+        fieldAudienceBeneficiares,
         fieldNonBeneficiares,
       },
     } = fieldTags;
@@ -810,23 +810,26 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    const beneficiaresAudiences = fieldAudienceBeneficiares
-      ? fieldAudienceBeneficiares
-          .filter(tag => !!tag)
-          .map(audience => ({
-            ...audience?.entity,
-            categoryLabel: 'Audience',
-          }))
-      : [];
+    let beneficiaresAudiences = [];
+    if (
+      fieldAudienceBeneficiares &&
+      !Array.isArray(fieldAudienceBeneficiares)
+    ) {
+      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
+    } else {
+      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+        audience => audience?.entity,
+      );
+    }
 
-    const audiences = [fieldNonBeneficiares?.entity]
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
         categoryLabel: 'Audience',
       }));
 
-    const tagList = [...topics, ...audiences, ...beneficiaresAudiences];
+    const tagList = [...topics, ...audiences];
 
     return _.sortBy(tagList, 'name');
   };
