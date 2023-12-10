@@ -19,15 +19,23 @@ const vaPoliceFragment = `
           entityLabel
           fieldCcFaq {
             fetched
+            fetchedBundle
           }
           fieldCcVaPoliceOverview {
             fetched
+            fetchedBundle
           }
           fieldCcTermDefinitionsNation {
             fetched
+            fetchedBundle
+          }
+          fieldCcTermDefinitions{
+            fetched
+            fetchedBundle
           }
           fieldCcPoliceReport{
             fetched
+            fetchedBundle
           }
           fieldAdministration {
             entity{

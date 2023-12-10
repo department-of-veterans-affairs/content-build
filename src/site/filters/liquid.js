@@ -916,6 +916,31 @@ module.exports = function registerFilters() {
     return processed;
   };
 
+  liquid.filters.processWysiwygSimple = field => {
+    if (!field?.fetched?.fieldWysiwyg?.length) return null;
+    return field.fetched.fieldWysiwyg[0].value;
+  };
+
+  liquid.filters.processCcFeatured = fieldFeaturedCc => {
+    if (!fieldFeaturedCc?.fetched) return null;
+    const { fetched } = fieldFeaturedCc;
+    const processed = {
+      fieldSectionHeader: '',
+      fieldDescription: '',
+      fieldCta: {
+        label: '',
+        uri: '',
+      },
+    };
+    processed.fieldSectionHeader = fetched.fieldSectionHeader[0].value;
+    processed.fieldDescription = fetched.fieldDescription[0].value; // HTML usually
+    processed.fieldCta.label =
+      fetched.fieldCta[0].entity.fieldButtonLabel[0].value;
+    processed.fieldCta.uri =
+      fetched.fieldCta[0].entity.fieldButtonLink[0].url.path;
+    return processed;
+  };
+
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
