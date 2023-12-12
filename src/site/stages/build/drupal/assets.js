@@ -89,7 +89,11 @@ function updateAttr(attr, doc) {
 
 function convertDrupalFilesToLocal(drupalData, files) {
   return replacePathInData(drupalData, (data, key) => {
-    if (data.match(/^.*\/sites\/.*\/files\//)) {
+    if (
+      data.match(
+        /^https?:\/\/(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+cms\.va\.gov\/sites\/[\w-]+\/files\//,
+      )
+    ) {
       const newPath = convertAssetPath(data);
       const decodedFileName = decodeURIComponent(newPath).substring(1);
       const htmlRegex = new RegExp(/<\/?[a-z][\s\S]*>/i);
