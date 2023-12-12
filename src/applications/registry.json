@@ -1689,5 +1689,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
+    "entryName": "10-7959C",
+    "rootUrl": "/simple-forms/10-7959C",
+    "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
