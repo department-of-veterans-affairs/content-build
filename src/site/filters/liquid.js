@@ -810,10 +810,19 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    const audiences = [
-      fieldAudienceBeneficiares?.entity,
-      fieldNonBeneficiares?.entity,
-    ]
+    let beneficiaresAudiences = [];
+    if (
+      fieldAudienceBeneficiares &&
+      !Array.isArray(fieldAudienceBeneficiares)
+    ) {
+      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
+    } else if (fieldAudienceBeneficiares) {
+      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+        audience => audience?.entity,
+      );
+    }
+
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
