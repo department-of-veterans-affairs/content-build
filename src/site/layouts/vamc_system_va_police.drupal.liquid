@@ -24,7 +24,6 @@
 
           {% if fieldCcPoliceReport.fetched %}
             {% assign policeFeatured = fieldCcPoliceReport | processCcFeatured %}
-            <script>console.log({processed: {{policeFeatured|json}}})</script>
             {% if policeFeatured %}
               <div class="vads-u-margin-bottom--3" id="field-va-police-reports">
                 {% include "src/site/includes/va_police/featured_content.liquid"
@@ -49,7 +48,7 @@
           
           
         </article>
-            <!-- Last updated & feedback button-->
+        <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
     </div>
