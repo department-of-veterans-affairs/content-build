@@ -38,13 +38,10 @@ const vaPoliceFragment = `
             fetchedBundle
           }
           fieldAdministration {
-            entity{
-              name
-              path {
-                alias
-                pid
-                langcode
-                pathauto
+            entity {
+              ... on TaxonomyTermAdministration {
+        	      entityId
+        	      name
               }
             }
           }
