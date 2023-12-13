@@ -192,6 +192,17 @@
                   </a>
                 </p>
               {% endif %}
+              {% if fieldHowToSignUp == 'email' %}
+                <p class="vads-u-margin--0">
+                  <a class="vads-c-action-link--green" href="mailto:{{ fieldCtaEmail.url.path }}">
+                    {% if fieldEventCta %}
+                      {{ fieldEventCta | removeUnderscores | capitalize }}
+                    {% else %}
+                      More details
+                    {% endif %}
+                  </a>
+                </p>
+              {% endif %}
 
               {% if fieldAdditionalInformationAbo %}
                 <p class="vads-u-margin--0">{{ fieldAdditionalInformationAbo.processed | phoneLinks }}</p>
