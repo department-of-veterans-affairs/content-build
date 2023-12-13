@@ -1514,7 +1514,8 @@
     "productId": "0203ca08-b7a2-4cd6-abb5-56d38c239cd3",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
