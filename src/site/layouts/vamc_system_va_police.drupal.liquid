@@ -8,10 +8,13 @@
       {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       <div class="usa-width-three-fourths">
         <article class="usa-content">
+          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+            entityUrl = entityUrl
+          %}
 
           <h1>{{ title }}</h1>
           {% if fieldCcVaPoliceOverview.fetched %}
-            <div class="va-introtext">
+            <div class="va-introtext vads-u-font-size--lg vads-u-font-family--serif">
               {% assign overview = fieldCcVaPoliceOverview | processWysiwygSimple %}
               {{ overview }}
             </div>
