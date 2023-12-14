@@ -237,6 +237,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "regenerator-runtime": "^0.13.9",
+    "smartbanner.js": "^1.22.0",
     "sync-fetch": "^0.3.0",
     "syswide-cas": "^5.3.0",
     "tar-fs": "^2.0.1",

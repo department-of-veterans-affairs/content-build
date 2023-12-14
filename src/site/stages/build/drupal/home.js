@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign, no-continue */
 const { createEntityUrlObj, createFileObj } = require('./page');
 const { addHomeSandboxContent } = require('./home-sandbox');
+// require('smartbanner.js');
+// require('smartbanner.js/dist/smartbanner.min.css');
 
 function divideHubRows(hubs) {
   return hubs.map((hub, i) => {
