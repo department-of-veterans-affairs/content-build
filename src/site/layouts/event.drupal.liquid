@@ -192,14 +192,12 @@
                   </a>
                 </p>
               {% endif %}
-              
+
               {% if fieldHowToSignUp == 'email' %}
                 <p class="vads-u-margin--0">
                   <a class="vads-c-action-link--green" href="mailto:{{ fieldCtaEmail }}">
                     {% if fieldEventCta %}
                       {{ fieldEventCta | removeUnderscores | capitalize }}
-                    {% else %}
-                      More details
                     {% endif %}
                   </a>
                 </p>
