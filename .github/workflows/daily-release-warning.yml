@@ -2,7 +2,7 @@ name: Daily Release Warning
 
 on:
   schedule:
-    - cron: 0 17 * * 1-5
+    - cron: 0 19 * * 1-5
 
 concurrency:
   group: daily-release-warning
