@@ -36,13 +36,25 @@
             {% endif %}
           {% endif %}
 
-          {% if fieldPhoneNumbersParagraph  %}
+          {% if fieldPhoneNumbersParagraph %}
+            {%  assign  phoneNumber = fieldPhoneNumbersParagraph | processFieldPhoneNumbersParagraph %}
+            {% if phoneNumber %}
               {% include "src/site/includes/va_police/contact_section.liquid" with
-                phoneNumber = fieldPhoneNumbersParagraph %}
+                phoneNumber = phoneNumber %}
+            {% endif %}
           {% endif %}
     
-         
+          {% if fieldCcFaq.fetched %}
+            <div class="vads-u-margin-bottom--3" id="field-cc-faq-police">
+              {% include "src/site/includes/centralized-content.drupal.liquid"
+                entity = fieldCcFaq.fetched
+                contentType = fieldCcFaq.fetchedBundle
+                level = 3
+              %}
+            </div>
+          {% endif %}
           
+          <va-back-to-top></va-back-to-top>
         </article>
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}

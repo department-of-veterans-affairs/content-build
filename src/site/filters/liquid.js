@@ -930,6 +930,20 @@ module.exports = function registerFilters() {
     return field.fetched.fieldWysiwyg[0].value;
   };
 
+  liquid.filters.processFieldPhoneNumbersParagraph = fields => {
+    if (!fields.length) return null; // no phone numbers
+    // Should only have 1 phone number
+    const field = fields[0];
+    if (!field.entity) return null; // error in paragraph
+    const { entity } = field;
+    return {
+      label: entity.fieldPhoneLabel,
+      contact: entity.fieldPhoneNumber,
+      extension: entity.fieldPhoneExtension,
+      numberType: entity.fieldPhoneNumberType,
+    };
+  };
+
   liquid.filters.processCcFeatured = fieldFeaturedCc => {
     if (!fieldFeaturedCc?.fetched) return null;
     const { fetched } = fieldFeaturedCc;
