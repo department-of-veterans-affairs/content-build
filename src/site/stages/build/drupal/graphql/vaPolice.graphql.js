@@ -5,8 +5,8 @@ const entityElementsFromPages = require('./entityElementsForPages.graphql');
 
 const vaPoliceFragment = `
       fragment vaPoliceFragment on NodeVamcSystemVaPolice {
-        ${entityElementsFromPages}
         ... on NodeVamcSystemVaPolice  {
+          ${entityElementsFromPages}
           fieldOffice {
             entity {
               ... on NodeHealthCareRegionPage {
@@ -36,6 +36,16 @@ const vaPoliceFragment = `
           fieldCcPoliceReport{
             fetched
             fetchedBundle
+          }
+          fieldPhoneNumbersParagraph {
+            entity {
+              ... on ParagraphPhoneNumber {
+                fieldPhoneExtension
+                fieldPhoneLabel
+                fieldPhoneNumber
+                fieldPhoneNumberType
+              }
+            }
           }
           fieldAdministration {
             entity {

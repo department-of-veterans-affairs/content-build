@@ -13,6 +13,7 @@
           %}
 
           <h1>{{ title }}</h1>
+
           {% if fieldCcVaPoliceOverview.fetched %}
             <div class="va-introtext vads-u-font-size--lg vads-u-font-family--serif">
               {% assign overview = fieldCcVaPoliceOverview | processWysiwygSimple %}
@@ -35,17 +36,12 @@
             {% endif %}
           {% endif %}
 
-
-          {% if fieldCcFaq.fetched %}
-            <div class="vads-u-margin-bottom--3" id="field-vet-center-faqs">
-              {% include "src/site/includes/centralized-content.drupal.liquid"
-                entity = fieldCcFaq.fetched
-                contentType = fieldCcFaq.fetchedBundle
-                level = 3
-              %}
-            </div>
+          {% if fieldPhoneNumbersParagraph  %}
+              {% include "src/site/includes/va_police/contact_section.liquid" with
+                phoneNumber = fieldPhoneNumbersParagraph %}
           {% endif %}
-          
+    
+         
           
         </article>
         <!-- Last updated & feedback button-->
