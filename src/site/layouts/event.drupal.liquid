@@ -193,9 +193,11 @@
                 </p>
               {% endif %}
 
-              {% if fieldHowToSignUp == 'email' %}
+            {% if fieldHowToSignUp == 'email' %}
+              {% assign now = '' | currentTime %}
+              {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}   
                 <p class="vads-u-margin--0">
-                  <a class="vads-c-action-link--green" href="mailto:{{ fieldCtaEmail }}">
+                  <a class="vads-c-action-link--green" href="mailto:{{ fieldCtaEmail }}?subject={{ title }}?body=I would like to register for {{title}} on {{ mostRecentDate | deriveFormattedTimestamp }}. ({{entityUrl.path}}) ">
                     {% if fieldEventCta %}
                       {{ fieldEventCta | removeUnderscores | capitalize }}
                     {% endif %}
