@@ -104,6 +104,7 @@ jobs:
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
+      BROKEN_LINK_COUNT: ${{ steps.broken-link-count.outputs.BROKEN_LINK_COUNT }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
     steps:
@@ -310,6 +311,12 @@ jobs:
         with:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
+
+      - name: Get broken Links Count from json output
+        id: broken-link-count
+        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+        run: echo BROKEN_LINK_COUNT=$(jq .brokenLinksCount ./logs/${{ env.BUILDTYPE }}-broken-links.json) >> $GITHUB_ENV
+
 
       - name: Generate build details
         run: |
@@ -678,8 +685,10 @@ jobs:
           jq '.series[5].points[0] = [${{env.NOW}}, ${{env.ARCHIVE_DURATION}}]' | \
           jq '.series[6].metric = "${{env.METRIC_NAMESPACE}}.deploy.duration"' | \
           jq '.series[6].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
-          jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
+          jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.build.duration"' | \
           jq '.series[7].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
+          jq '.series[8].metric = "${{env.METRIC_NAMESPACE}}.build.broken-links.count"' | \
+          jq '.series[8].points[0] = [${{env.NOW}}, ${{needs.build.outputs.BROKEN_LINK_COUNT}}]' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
