@@ -380,3 +380,4 @@ const generateStaticDataFiles = async (
 };
 
 module.exports.generateStaticDataFiles = generateStaticDataFiles;
+module.exports.processCurlDataFile = processCurlDataFile;

@@ -810,10 +810,19 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    const audiences = [
-      fieldAudienceBeneficiares?.entity,
-      fieldNonBeneficiares?.entity,
-    ]
+    let beneficiaresAudiences = [];
+    if (
+      fieldAudienceBeneficiares &&
+      !Array.isArray(fieldAudienceBeneficiares)
+    ) {
+      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
+    } else if (fieldAudienceBeneficiares) {
+      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+        audience => audience?.entity,
+      );
+    }
+
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
@@ -1107,6 +1116,31 @@ module.exports = function registerFilters() {
 
       return reverse ? start2 - start1 : start1 - start2;
     });
+  };
+
+  //* Filters and Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
+  liquid.filters.filterAndSortEvents = data => {
+    if (!data) return null;
+    const currentTimestamp = moment().unix();
+
+    const filteredEvents = data.filter(event => {
+      const occurrenceArray = event.fieldDatetimeRangeTimezone.map(
+        occurrence => {
+          return occurrence.value;
+        },
+      );
+      const futureOccurrences = occurrenceArray.filter(
+        occurrence => occurrence >= currentTimestamp,
+      );
+
+      return futureOccurrences.length > 0;
+    });
+
+    return liquid.filters.sortByDateKey(
+      filteredEvents,
+      'fieldDatetimeRangeTimezone',
+      false,
+    );
   };
 
   //* paginatePages has limitations, it is not yet fully operational.

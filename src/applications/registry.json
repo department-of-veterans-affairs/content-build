@@ -1426,7 +1426,7 @@
     "rootUrl": "/supporting-forms-for-claims/intent-to-file-form-21-0966",
     "productId": "8233bd78-20c6-4498-b36f-55ec0028b1e5",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1514,7 +1514,8 @@
     "productId": "0203ca08-b7a2-4cd6-abb5-56d38c239cd3",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -1541,7 +1542,7 @@
   {
     "appName": "After Visit Summary",
     "entryName": "avs",
-    "rootUrl": "/my-health/medical-records/care-notes/avs",
+    "rootUrl": "/my-health/medical-records/summaries-and-notes/visit-summary",
     "productId": "e5bd4cff-77b1-4d56-ab8e-a66c9c2667ab",
     "template": {
       "vagovprod": false,
@@ -1584,7 +1585,7 @@
     "rootUrl": "/burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247",
     "productId": "5af7a83b-c1a0-4a0a-b0e9-88baf150e6a9",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1642,11 +1643,22 @@
   {
     "appName": "Request personal records",
     "entryName": "10206-pa",
-    "rootUrl": "/request-personal-records",
+    "rootUrl": "/records/request-personal-records-form-20-10206",
     "productId": "560247e7-3a80-4fdd-ad00-8d0e14435d22",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Records",
+          "path": "records"
+        },
+        {
+          "name": "Request personal records",
+          "path": "records/request-personal-records-form-20-10206"
+        }
+      ]
     }
   },
   {
@@ -1655,7 +1667,7 @@
     "rootUrl": "/get-help-from-accredited-representative/find-rep",
     "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
