@@ -23,6 +23,17 @@
 
           <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
 
+          {% if fieldPhoneNumbersParagraph %}
+            {%  assign  phoneNumber = fieldPhoneNumbersParagraph | processFieldPhoneNumbersParagraph %}
+            {% if phoneNumber %}
+              <div class="vads-u-margin-bottom--6" id="field-phone-numbers">
+                {% include "src/site/includes/va_police/contact_section.liquid" with
+                  phoneNumber = phoneNumber %}
+              </div>
+            {% endif %}
+          {% endif %}
+    
+
           {% if fieldCcPoliceReport.fetched %}
             {% assign policeFeatured = fieldCcPoliceReport | processCcFeatured %}
             {% if policeFeatured %}
@@ -36,14 +47,7 @@
             {% endif %}
           {% endif %}
 
-          {% if fieldPhoneNumbersParagraph %}
-            {%  assign  phoneNumber = fieldPhoneNumbersParagraph | processFieldPhoneNumbersParagraph %}
-            {% if phoneNumber %}
-              {% include "src/site/includes/va_police/contact_section.liquid" with
-                phoneNumber = phoneNumber %}
-            {% endif %}
-          {% endif %}
-    
+         
           {% if fieldCcFaq.fetched %}
             <div class="vads-u-margin-bottom--3" id="field-cc-faq-police">
               {% include "src/site/includes/centralized-content.drupal.liquid"
