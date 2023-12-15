@@ -104,7 +104,7 @@ jobs:
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
-      BROKEN_LINK_COUNT: ${{ steps.broken-link-count.outputs.BROKEN_LINK_COUNT }}
+      BROKEN_LINK_COUNT: ${{ steps.get-broken-link-info.outputs.BROKEN_LINK_COUNT }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
     steps:
@@ -311,12 +311,6 @@ jobs:
         with:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
-
-      - name: Get broken Links Count from json output
-        id: broken-link-count
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        run: echo BROKEN_LINK_COUNT=$(jq .brokenLinksCount ./logs/${{ env.BUILDTYPE }}-broken-links.json) >> $GITHUB_ENV
-
 
       - name: Generate build details
         run: |
