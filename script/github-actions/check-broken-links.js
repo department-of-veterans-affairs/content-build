@@ -45,6 +45,7 @@ if (fs.existsSync(reportPath)) {
    * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
    */
   core.setOutput('UPLOAD_AND_NOTIFY', '1');
+  core.setOutput('BROKEN_LINK_COUNT', brokenLinks.brokenLinksCount);
 
   if (shouldFail) {
     throw new Error('Broken links found');
@@ -52,4 +53,5 @@ if (fs.existsSync(reportPath)) {
 } else {
   console.log('No broken links found!');
   core.setOutput('UPLOAD_AND_NOTIFY', '0');
+  core.setOutput('BROKEN_LINK_COUNT', 0);
 }
