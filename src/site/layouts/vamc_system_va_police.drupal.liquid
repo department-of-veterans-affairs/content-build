@@ -16,8 +16,7 @@
 
           {% if fieldCcVaPoliceOverview.fetched %}
             <div class="va-introtext vads-u-font-size--lg vads-u-font-family--serif">
-              {% assign overview = fieldCcVaPoliceOverview | processWysiwygSimple %}
-              {{ overview }}
+              {{ fieldCcVaPoliceOverview | processWysiwygSimple }}
             </div>
           {% endif %}
 
@@ -26,7 +25,7 @@
           {% if fieldPhoneNumbersParagraph %}
             {%  assign  phoneNumber = fieldPhoneNumbersParagraph | processFieldPhoneNumbersParagraph %}
             {% if phoneNumber %}
-              <div class="vads-u-margin-bottom--6" id="field-phone-numbers">
+              <div class="vads-u-margin-bottom--4" id="field-phone-numbers">
                 {% include "src/site/includes/va_police/contact_section.liquid" with
                   phoneNumber = phoneNumber %}
               </div>

@@ -947,21 +947,14 @@ module.exports = function registerFilters() {
   liquid.filters.processCcFeatured = fieldFeaturedCc => {
     if (!fieldFeaturedCc?.fetched) return null;
     const { fetched } = fieldFeaturedCc;
-    const processed = {
-      fieldSectionHeader: '',
-      fieldDescription: '',
+    return {
+      fieldSectionHeader: fetched.fieldSectionHeader[0].value,
+      fieldDescription: fetched.fieldDescription[0].value,
       fieldCta: {
-        label: '',
-        uri: '',
+        label: fetched.fieldCta[0].entity.fieldButtonLabel[0].value,
+        uri: fetched.fieldCta[0].entity.fieldButtonLink[0].url.path,
       },
     };
-    processed.fieldSectionHeader = fetched.fieldSectionHeader[0].value;
-    processed.fieldDescription = fetched.fieldDescription[0].value; // HTML usually
-    processed.fieldCta.label =
-      fetched.fieldCta[0].entity.fieldButtonLabel[0].value;
-    processed.fieldCta.uri =
-      fetched.fieldCta[0].entity.fieldButtonLink[0].url.path;
-    return processed;
   };
 
   liquid.filters.processCentralizedContent = (entity, contentType) => {
