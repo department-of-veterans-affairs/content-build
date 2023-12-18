@@ -30,6 +30,7 @@ if (fs.existsSync(reportPath)) {
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
   core.setOutput('SLACK_ATTACHMENTS', slackAttachments);
+  core.setOutput('BROKEN_LINK_COUNT', brokenLinks.brokenLinksCount);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
@@ -45,8 +46,6 @@ if (fs.existsSync(reportPath)) {
    * Meets the following condition: blocks & attachments & IS_PROD_BRANCH
    */
   core.setOutput('UPLOAD_AND_NOTIFY', '1');
-  core.setOutput('BROKEN_LINK_COUNT', `${brokenLinks.brokenLinksCount}`);
-  console.log(`Broken links found: ${brokenLinks.brokenLinksCount}`);
 
   if (shouldFail) {
     throw new Error('Broken links found');
@@ -54,5 +53,5 @@ if (fs.existsSync(reportPath)) {
 } else {
   console.log('No broken links found!');
   core.setOutput('UPLOAD_AND_NOTIFY', '0');
-  core.setOutput('BROKEN_LINK_COUNT', '0');
+  core.setOutput('BROKEN_LINK_COUNT', 0);
 }
