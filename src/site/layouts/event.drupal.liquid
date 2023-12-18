@@ -196,9 +196,6 @@
               {% if fieldHowToSignUp == 'email' %}
                 {% assign now = '' | currentTime %}
                 {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}   
-                <p class="vads-u-margin-bottom--2">
-                  Registration is required for this event.
-                </p>
                 <p class="vads-u-margin--0">
                   <a class="vads-c-action-link--green" href="mailto:{{ fieldCtaEmail }}?subject=RSVP for {{ title }} on {{ mostRecentDate | deriveFormattedTimestamp }}&body=I would like to register for {{title}} on {{ mostRecentDate | deriveFormattedTimestamp }}. (https://va.gov{{entityUrl.path}}) ">
                     {% if fieldEventCta %}
