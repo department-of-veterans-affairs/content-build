@@ -11,8 +11,7 @@ const regex = /([^A-Za-z0-9/()%-])+\s/g;
 
 const codeCoverageData = codeCoverageReport.replace(regex, ',').split(',');
 
-let codeCoverageHTML =
-  '<va-table> \n <va-table-row slot="headers" key="header"> \n'; // html format
+let codeCoverageHTML = '<table> \n <thead> \n <tr> \n'; // html format
 
 codeCoverageData.forEach((data, index) => {
   if (data === '') {
@@ -20,22 +19,22 @@ codeCoverageData.forEach((data, index) => {
     codeCoverageHTML += '';
   } else if (index < 5) {
     // create table header
-    codeCoverageHTML += `<span> ${data} </span> \n`;
+    codeCoverageHTML += `<th> ${data} </th> \n`;
   } else if (index === 5) {
     // separate table header from data
-    codeCoverageHTML += `<span> ${data} </span> \n </va-table-row> \n`;
+    codeCoverageHTML += `<th> ${data} </th> \n </tr> \n </thead> \n <tbody> \n`;
   } else if ((index - 1) % 5 === 0) {
     // start of row in table body
-    codeCoverageHTML += `<va-table-row> \n <span> ${data} </span> \n`;
+    codeCoverageHTML += `<tr> \n <td> ${data} </td> \n`;
   } else if ((index - 1) % 5 === 4) {
     // end of row in table body
-    codeCoverageHTML += `<span> ${data} </span> \n </va-table-row> \n`;
+    codeCoverageHTML += `<td> ${data} </td> \n </tr> \n`;
   } else {
     // row in table body
-    codeCoverageHTML += `<span> ${data} </span> \n`;
+    codeCoverageHTML += `<td> ${data} </td> \n`;
   }
 });
 
-codeCoverageHTML += `</va-table>`; // close html
+codeCoverageHTML += `</tbody> \n </table>`; // close html
 
 console.log(codeCoverageHTML); // eslint-disable-line no-console
