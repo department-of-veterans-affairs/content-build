@@ -868,6 +868,94 @@ module.exports = function registerFilters() {
     });
   };
 
+  liquid.filters.processVbaServices = (serviceRegions, offices) => {
+    const hasServiceRegions =
+      Array.isArray(serviceRegions) && serviceRegions.length === 0;
+    const hasOffices = Array.isArray(offices) && offices.length === 0;
+
+    if (!hasServiceRegions && !hasOffices) {
+      return {
+        veteranBenefits: [],
+        familyCaregiverBenefits: [],
+        serviceMemberBenefits: [],
+        otherServices: [],
+      };
+    }
+
+    let flattenedVbaServiceRegions = [];
+    let flattenedVbaOffices = [];
+
+    if (hasServiceRegions) {
+      flattenedVbaServiceRegions = serviceRegions.reduce(
+        (acc, serviceRegion) => {
+          serviceRegion.reverseFieldVbaServiceRegionsTaxonomyTerm.entities.forEach(
+            taxonomy =>
+              acc.push({
+                vbaCategory: 'serviceRegion',
+                vbaId: taxonomy.entityId,
+                vbaType: taxonomy.fieldVbaTypeOfCare,
+                vbaHeader: taxonomy.entityLabel,
+                vbaDescription: taxonomy.fieldVbaServiceDescrip,
+                vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
+                ...taxonomy,
+              }),
+          );
+          return acc;
+        },
+        [],
+      );
+    }
+
+    if (hasOffices) {
+      flattenedVbaOffices = offices.map(office => {
+        return {
+          vbaCategory: 'office',
+          vbaId: office.entityId,
+          vbaType:
+            office.fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare,
+          vbaHeader: office.fieldServiceNameAndDescripti.entity.name,
+          vbaDescription:
+            office.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip,
+          vbaIsVisible:
+            office.fieldServiceNameAndDescripti.entity
+              .fieldShowForVbaFacilities,
+          ...office,
+        };
+      });
+    }
+
+    return [...flattenedVbaServiceRegions, ...flattenedVbaOffices].reduce(
+      (acc, vbaService) => {
+        if (!vbaService.vbaIsVisible) {
+          return acc;
+        }
+
+        switch (vbaService.vbaType) {
+          case 'vba_veteran_benefits':
+            acc.veteranBenefits.push(vbaService);
+            break;
+          case 'vba_family_member_and_caregiver_benefits':
+            acc.familyCaregiverBenefits.push(vbaService);
+            break;
+          case 'vba_service_member_benefits':
+            acc.serviceMemberBenefits.push(vbaService);
+            break;
+          default:
+            acc.otherServices.push(vbaService);
+            break;
+        }
+
+        return acc;
+      },
+      {
+        veteranBenefits: [],
+        familyCaregiverBenefits: [],
+        serviceMemberBenefits: [],
+        otherServices: [],
+      },
+    );
+  };
+
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
     if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)
       return null;
