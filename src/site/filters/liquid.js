@@ -925,6 +925,38 @@ module.exports = function registerFilters() {
     return processed;
   };
 
+  liquid.filters.processWysiwygSimple = field => {
+    if (!field?.fetched?.fieldWysiwyg?.length) return null;
+    return field.fetched.fieldWysiwyg[0].value;
+  };
+
+  liquid.filters.processFieldPhoneNumbersParagraph = fields => {
+    if (!fields.length) return null; // no phone numbers
+    // Should only have 1 phone number
+    const field = fields[0];
+    if (!field.entity) return null; // error in paragraph
+    const { entity } = field;
+    return {
+      label: entity.fieldPhoneLabel,
+      contact: entity.fieldPhoneNumber,
+      extension: entity.fieldPhoneExtension,
+      numberType: entity.fieldPhoneNumberType,
+    };
+  };
+
+  liquid.filters.processCcFeatured = fieldFeaturedCc => {
+    if (!fieldFeaturedCc?.fetched) return null;
+    const { fetched } = fieldFeaturedCc;
+    return {
+      fieldSectionHeader: fetched.fieldSectionHeader[0].value,
+      fieldDescription: fetched.fieldDescription[0].value,
+      fieldCta: {
+        label: fetched.fieldCta[0].entity.fieldButtonLabel[0].value,
+        uri: fetched.fieldCta[0].entity.fieldButtonLink[0].url.path,
+      },
+    };
+  };
+
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
