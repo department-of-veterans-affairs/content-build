@@ -51,7 +51,8 @@
     "rootUrl": "/my-health/appointments",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -226,6 +227,7 @@
       "layout": "page-react.html",
       "vagovprod": true,
       "includeBreadcrumbs": true,
+      "private": true,
       "breadcrumbs_override": [
         {
           "path": "my-health/",
@@ -1310,7 +1312,8 @@
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -1320,7 +1323,8 @@
     "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -1355,7 +1359,8 @@
     "productId": "4d8b0801-dd86-4728-9609-9d794c923e03",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
