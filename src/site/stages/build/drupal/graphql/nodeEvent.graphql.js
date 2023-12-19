@@ -74,6 +74,8 @@ const nodeEvent = `
     fieldDescription
     fieldEventCost
     fieldEventCta
+    fieldCtaEmail
+    fieldHowToSignUp
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
@@ -248,6 +250,8 @@ const nodeEventWithoutBreadcrumbs = `
     fieldDescription
     fieldEventCost
     fieldEventCta
+    fieldCtaEmail
+    fieldHowToSignUp
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
