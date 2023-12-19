@@ -7,6 +7,10 @@ import featuredContentData from '../layouts/tests/vet_center/template/fixtures/f
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
+import {
+  vbaFacilityOfficeNode,
+  vbaRegionFacilityNode,
+} from './fixtures/vbaFacility';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
@@ -2484,6 +2488,82 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
       expected.fieldServiceLocation[0],
     );
   });
+});
+
+describe('processVbaServices', () => {
+  const allVbaServices = liquid.filters.processVbaServices(
+    [
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_family_member_and_caregiver_benefits',
+      }),
+    ],
+    [
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'other',
+      }),
+    ],
+  );
+
+  expect(allVbaServices.veteranBenefits.length).to.equal(1);
+  expect(allVbaServices.familyCaregiverBenefits.length).to.equal(1);
+  expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(allVbaServices.otherServices.length).to.equal(1);
+
+  const singleVbaService = liquid.filters.processVbaServices(
+    [
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+    ],
+    [
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+    ],
+  );
+
+  expect(singleVbaService.veteranBenefits.length).to.equal(4);
+  expect(singleVbaService.familyCaregiverBenefits.length).to.equal(0);
+  expect(singleVbaService.serviceMemberBenefits.length).to.equal(0);
+  expect(singleVbaService.otherServices.length).to.equal(0);
+
+  const hiddenVbaServices = liquid.filters.processVbaServices(
+    [
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+        fieldShowForVbaFacilities: false,
+      }),
+    ],
+    [
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+        fieldShowForVbaFacilities: false,
+      }),
+    ],
+  );
+
+  expect(hiddenVbaServices.veteranBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.familyCaregiverBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(2);
+  expect(hiddenVbaServices.otherServices.length).to.equal(0);
 });
 
 describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
