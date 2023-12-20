@@ -93,13 +93,9 @@ function createPastEventListPages(page, drupalPagePath, files) {
  *  @return nothing
  */
 function compileEventListingPage(page) {
-  const { cmsFeatureFlags } = global;
   // Combine events from reverse entity reference queries, if additional
   // listings data exists and feature flag is on.
-  if (
-    cmsFeatureFlags.FEATURE_EVENT_OUTREACH_CHECKBOX &&
-    page?.reverseFieldAdditionalListingsNode?.entities
-  ) {
+  if (page?.reverseFieldAdditionalListingsNode?.entities) {
     page.reverseFieldListingNode.entities.push(
       ...page.reverseFieldAdditionalListingsNode.entities,
     );
