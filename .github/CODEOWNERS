@@ -31,6 +31,7 @@ src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @departmen
 src/site/navigation/facility_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/paragraphs/facilities @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/stages/build/drupal/static-data-files/vaPoliceData @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/includes/vet_centers @department-of-veterans-affairs/vfs-facilities-frontend
 
 # GraphQL Queries
 src/site/stages/build/drupal @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/cms-infrastructure
