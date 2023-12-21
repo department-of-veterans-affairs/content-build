@@ -46,6 +46,7 @@ src/site/layouts/story.drupal.liquid @department-of-veterans-affairs/vfs-facilit
 src/site/layouts/tests/vamc* @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/layouts/vamc*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/stages/build/drupal/static-data-files/vaPoliceData @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/tests/police @department-of-veterans-affairs/vfs-facilities-frontend
 
 ## VBA
 src/site/includes/vba_facilities @department-of-veterans-affairs/vfs-facilities-frontend
@@ -71,6 +72,7 @@ src/site/layouts/publication_listing.drupal.liquid @department-of-veterans-affai
 src/site/layouts/q_a.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/support*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/va_form.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/tests/home @department-of-veterans-affairs/vfs-public-websites-frontend
 
 
 # GraphQL Queries
