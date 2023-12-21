@@ -21,6 +21,14 @@ const vbaFacilityFragment = `
               }
             }
           }
+          fieldShowBanner
+          fieldDismissibleOption
+          fieldBannerTitle
+          fieldBannerContent {
+            value
+            format
+            processed
+          }
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
