@@ -931,7 +931,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.processFieldPhoneNumbersParagraph = fields => {
-    if (!fields.length) return null; // no phone numbers
+    if (!fields?.length) return null; // no phone numbers
     // Should only have 1 phone number
     const field = fields[0];
     if (!field.entity) return null; // error in paragraph
