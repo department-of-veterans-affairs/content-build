@@ -18,6 +18,8 @@ import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility
 import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
 import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
 import phoneMockData from '../layouts/tests/vamc/fixtures/phoneMockData.json';
+import simpleWysiwygMockData from '../layouts/tests/vamc/fixtures/simpleWysiwygMockData.json';
+
 // Register filters.
 registerFilters();
 
@@ -1666,6 +1668,22 @@ describe('processFieldPhoneNumbersParagraph', () => {
     expect(data.contact).to.be.equal(phoneMockData[0].entity.fieldPhoneNumber);
     expect(data.extension).to.be.equal(
       phoneMockData[0].entity.fieldPhoneExtension,
+    );
+  });
+});
+describe('processWysiwygSimple', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processWysiwygSimple(null)).to.be.null;
+  });
+  it('returns null if wysiwyg is empty list', () => {
+    expect(
+      liquid.filters.processWysiwygSimple({ fetched: { fieldWysiwyg: [] } }),
+    ).to.be.null;
+  });
+  it('returns simple object of wysiwyg', () => {
+    const data = liquid.filters.processWysiwygSimple(simpleWysiwygMockData);
+    expect(data).to.be.equal(
+      simpleWysiwygMockData.fetched.fieldWysiwyg[0].value,
     );
   });
 });
