@@ -1779,7 +1779,11 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.shouldShowiOSBanner = currentPath => {
+  liquid.filters.shouldShowiOSBanner = (currentPath, isSmartbanner = false) => {
+    if (!cmsFeatureFlags.FEATURE_SMART_BANNER && isSmartbanner) {
+      return false;
+    }
+
     const urlsForBanner = [
       '/health-care/refill-track-prescriptions',
       '/health-care/secure-messaging',
