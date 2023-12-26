@@ -1,9 +1,7 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
-// Node modules.
 import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-// Relative imports.
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
@@ -20,7 +18,6 @@ import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_
 import phoneMockData from '../layouts/tests/vamc/fixtures/phoneMockData.json';
 import simpleWysiwygMockData from '../layouts/tests/vamc/fixtures/simpleWysiwygMockData.json';
 
-// Register filters.
 registerFilters();
 
 const getTomorrow = () => {
@@ -146,73 +143,81 @@ describe('hasContentAtPath', () => {
   });
 });
 
-describe('filterPastEvents', () => {
-  it('returns null when null is passed', () => {
-    expect(liquid.filters.filterPastEvents(null)).to.eq(null);
-  });
-
-  it('returns null when undefined is passed', () => {
-    expect(liquid.filters.filterPastEvents(undefined)).to.eq(null);
-  });
-
-  it('returns null when empty string is passed', () => {
-    expect(liquid.filters.filterPastEvents('')).to.eq(null);
-  });
-
-  it('returns events that occurred BEFORE the current date and time', () => {
-    const actual = liquid.filters.filterPastEvents(eventsMockData);
-    expect(actual.length).to.eq(3);
-    expect(actual).to.deep.include.members([
-      {
-        title: 'Yesterday',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday,
-        },
-      },
-      {
-        title: 'Yesterday Draft - 10',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday - 10,
-        },
-      },
-      {
-        title: 'Yesterday - 1',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday - 1,
-        },
-      },
-    ]);
-  });
-});
-
 describe('filterUpcomingEvents', () => {
-  it('returns null when null is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents(null)).to.eq(null);
-  });
-
-  it('returns null when undefined is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents(undefined)).to.eq(null);
-  });
-
-  it('returns null when empty string is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents('')).to.eq(null);
-  });
-
-  it('returns events that occurred AFTER the current date', () => {
-    expect(liquid.filters.filterUpcomingEvents(eventsMockData)).to.deep.equal([
-      {
-        title: 'Tomorrow',
-        fieldDatetimeRangeTimezone: {
-          value: tomorrow,
-        },
+  const futureEvents = [
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2100-12-07 14:00:00 America/New_York',
+        endValue: 4131892800,
+        startTime: '2100-12-07 15:00:00 America/New_York',
+        timezone: 'America/New_York',
+        value: 4131896400,
       },
-      {
-        title: 'Tomorrow + 1',
-        fieldDatetimeRangeTimezone: {
-          value: tomorrow + 1,
-        },
+    },
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2100-09-05 17:00:00 America/New_York',
+        endValue: 4123864800,
+        startTime: '2100-09-05 18:00:00 America/New_York',
+        value: 4123868400,
       },
-    ]);
+    },
+  ];
+
+  const pastEvents = [
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2023-12-07 13:00:00 America/New_York',
+        endValue: 1701972000,
+        startTime: '2023-12-07 10:00:00 America/New_York',
+        value: 1701961200,
+      },
+    },
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2023-09-05 17:00:00 America/New_York',
+        endValue: 1693947600,
+        startTime: '2023-09-05 14:00:00 America/New_York',
+        value: 1693936800,
+      },
+    },
+  ];
+
+  it('should return null when no data is given', () => {
+    expect(liquid.filters.filterUpcomingEvents()).to.be.null;
+  });
+
+  it('should return only events that are in the future', () => {
+    expect(liquid.filters.filterUpcomingEvents(pastEvents)).to.deep.equal([]);
+  });
+
+  it('should return only events that are in the future', () => {
+    expect(liquid.filters.filterUpcomingEvents(futureEvents)).to.deep.equal(
+      futureEvents,
+    );
+  });
+
+  it('should return only events that are in the future', () => {
+    const events = [
+      {
+        fieldDatetimeRangeTimezone: [
+          {
+            endTime: '2023-11-16 13:00:00 America/New_York',
+            endValue: 1700157600,
+            startTime: '2023-11-16 11:00:00 America/New_York',
+            value: 1700150400,
+          },
+          {
+            endTime: '2100-12-07 14:00:00 America/New_York',
+            endValue: 4131892800,
+            startTime: '2100-12-07 15:00:00 America/New_York',
+            value: 4131896400,
+          },
+        ],
+      },
+    ];
+
+    expect(liquid.filters.filterUpcomingEvents(events)).to.deep.equal(events);
   });
 });
 
@@ -2327,42 +2332,35 @@ describe('pathContainsSubstring', () => {
 
 describe('deriveMostRecentDate', () => {
   it('returns the argument fieldDatetimeRangeTimezone when it is falsey', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = undefined;
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.eq(fieldDatetimeRangeTimezone);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an object', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = {
       value: 1642014000,
       endValue: 1642017600,
     };
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.deep.eq(fieldDatetimeRangeTimezone);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 1', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.deep.eq(fieldDatetimeRangeTimezone[0]);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only past dates', () => {
-    // Setup.
     const now = 1642030600;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2370,14 +2368,12 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642025600, endValue: 1642029600 });
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are past and future dates', () => {
-    // Setup.
     const now = 1642019600;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2385,14 +2381,12 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642017000, endValue: 1642020600 });
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only future dates', () => {
-    // Setup.
     const now = 1642014000;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2400,7 +2394,6 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642014000, endValue: 1642017600 });
@@ -2625,7 +2618,6 @@ describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
 
 describe('deriveFormattedTimestamp', () => {
   it('returns what we expect', () => {
-    // Set up.
     const fieldDatetimeRangeTimezone = {
       duration: 60,
       endTime: null,
@@ -2637,7 +2629,6 @@ describe('deriveFormattedTimestamp', () => {
       value: 1641405600,
     };
 
-    // Assertions.
     expect(
       liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
     ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. – 2:00 p.m. ET');

@@ -10,11 +10,7 @@ const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
 const stagingSurveys = require('./medalliaStagingSurveys.json');
 const prodSurveys = require('./medalliaProdSurveys.json');
-const {
-  deriveMostRecentDate,
-  filterPastEvents,
-  filterUpcomingEvents,
-} = require('./events');
+const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -1125,8 +1121,6 @@ module.exports = function registerFilters() {
     }
     return [featureContentObj, ...featureContentArray];
   };
-
-  liquid.filters.filterPastEvents = filterPastEvents;
 
   liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
 
