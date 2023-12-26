@@ -1,11 +1,9 @@
-<section role="contentinfo">
-  <footer class="footer">
-    <div
-      id="footerNav"
-      data-minimal-footer="{% if minimalFooter %}true{% else %}false{% endif %}"
-    ></div>
-  </footer>
-</section>
+<footer class="footer">
+  <div
+    id="footerNav"
+    data-minimal-footer="{% if minimalFooter %}true{% else %}false{% endif %}"
+  ></div>
+</footer>
 <div id="logout-modal-root"></div>
 <!--
 “To care for him who shall have borne the battle and for his widow, and his orphan.”
@@ -13,9 +11,9 @@
 -->
 <script nonce="**CSP_NONCE**" type="text/javascript">
 (function() {
-  var module = {};
-  {% include "src/site/assets/js/static-page-widgets.js" %}
-  mountWidgets(document.querySelectorAll('[data-widget-type]'), 6000);
+var module = {};
+{% include "src/site/assets/js/static-page-widgets.js" %}
+mountWidgets(document.querySelectorAll('[data-widget-type]'), 6000);
 })();
 </script>
 
