@@ -22,6 +22,7 @@ const vbaFacilityFragment = `
             }
           }
           fieldShowBanner
+          fieldAlertType
           fieldDismissibleOption
           fieldBannerTitle
           fieldBannerContent {
