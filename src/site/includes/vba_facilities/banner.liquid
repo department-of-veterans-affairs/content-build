@@ -1,0 +1,27 @@
+{% if shouldDisplayBanner %}
+    {% if alertType ==  "information" %}
+      {% assign status = "info" %}
+    {% elsif alertType ==  "warning" %}
+      {% assign status = "warning" %}
+    {% endif %}
+    <va-alert
+      uswds
+      status="{{ status }}"
+      fullWidth
+      {% if  dismissible == "dismiss" %}closeable{% endif %}
+    >
+      <h3 slot="headline">{{ alertTitle }}</h3>
+      <div>
+        <p className="vads-u-margin-y--0">
+          {{ alertContent }}
+        </p>
+      </div>
+    </va-alert> 
+    <script>
+      // This removes the va-alert when the close button is clicked
+      const element = document.querySelector('va-alert');
+      const exampleCallback = event => { element.remove() }
+      element.addEventListener('closeEvent', exampleCallback)
+    </script>
+{% endif %}
+   
