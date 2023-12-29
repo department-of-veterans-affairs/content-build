@@ -104,7 +104,7 @@ jobs:
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
-      BROKEN_LINK_COUNT: ${{ steps.get-broken-link-count.outputs.BROKEN_LINK_COUNT }}
+      BROKEN_LINK_COUNT: ${{ steps.get-broken-link-info.outputs.BROKEN_LINK_COUNT }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
     steps:
@@ -314,7 +314,7 @@ jobs:
 
       - name: Export broken links count
         id: get-broken-link-count
-        run: echo BROKEN_LINK_COUNT=${{ steps.get-broken-link-info.outputs.BROKEN_LINK_COUNT }}>> $GITHUB_OUTPUT
+        run: echo BROKEN_LINK_COUNT=${{ steps.get-broken-link-info.outputs.BROKEN_LINK_COUNT || 0 }}>> $GITHUB_OUTPUT
 
       - name: Generate build details
         run: |
