@@ -1,26 +1,26 @@
-{% if shouldDisplayBanner %}
-    {% if alertType ==  "information" %}
-      {% assign status = "info" %}
-    {% elsif alertType ==  "warning" %}
-      {% assign status = "warning" %}
+{% comment %} 
+          Creates a full width va-alert banner
+          expcts the following variables to be passed in
+          alertType: "information" or "warning"; string
+          alertTitle: "title of the alert"; string
+          alertContent: "content of the alert"; string
+          dismissible: "dismiss" or something else; string
+{% endcomment %}
+{% if shouldDisplayBanner and alertType and alertTitle and alertContent %}
+  {% if alertType == "information" %}
+    {% assign status = "info" %}
+  {% elsif alertType == "warning" %}
+    {% assign status = "warning" %}
+  {% endif %}
+  <va-banner
+    id="vba-banner"
+    type="{{ status }}"
+    {% if dismissible == "dismiss" %}
+    show-close
     {% endif %}
-    <va-alert
-      uswds
-      status="{{ status }}"
-      {% if  dismissible == "dismiss" %}closeable{% endif %}
-    >
-      <h3 slot="headline">{{ alertTitle }}</h3>
-      <div>
-        <p className="vads-u-margin-y--0">
-          {{ alertContent }}
-        </p>
-      </div>
-    </va-alert> 
-    <script>
-      // This removes the va-alert when the close button is clicked
-      const element = document.querySelector('va-alert');
-      const exampleCallback = event => { element.remove() }
-      element.addEventListener('closeEvent', exampleCallback)
-    </script>
+    headline="{{ alertTitle }}">
+    <p className="vads-u-margin-y--0">
+      {{ alertContent }}
+    </p>
+  </va-banner>
 {% endif %}
-   
