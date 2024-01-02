@@ -188,3 +188,12 @@
   <script nonce="**CSP_NONCE**" type="text/javascript">
     {% include "src/site/assets/js/skip-link-focus.js" %}
   </script>
+
+<script  type="text/javascript" defer>
+  window.onload = function() {
+    const contentElement = document.querySelector('.smartbanner');
+      if(contentElement){
+        contentElement.style.top = '-84px'
+      }
+  };
+</script>
