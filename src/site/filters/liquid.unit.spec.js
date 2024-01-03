@@ -1,14 +1,16 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
-// Node modules.
 import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-// Relative imports.
 import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
+import {
+  vbaFacilityOfficeNode,
+  vbaRegionFacilityNode,
+} from './fixtures/vbaFacility';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
@@ -17,8 +19,9 @@ import prodSurveys from './medalliaProdSurveys.json';
 import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility_data_cant_find_benefits.json';
 import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
 import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
+import phoneMockData from '../layouts/tests/vamc/fixtures/phoneMockData.json';
+import simpleWysiwygMockData from '../layouts/tests/vamc/fixtures/simpleWysiwygMockData.json';
 
-// Register filters.
 registerFilters();
 
 const getTomorrow = () => {
@@ -144,73 +147,81 @@ describe('hasContentAtPath', () => {
   });
 });
 
-describe('filterPastEvents', () => {
-  it('returns null when null is passed', () => {
-    expect(liquid.filters.filterPastEvents(null)).to.eq(null);
-  });
-
-  it('returns null when undefined is passed', () => {
-    expect(liquid.filters.filterPastEvents(undefined)).to.eq(null);
-  });
-
-  it('returns null when empty string is passed', () => {
-    expect(liquid.filters.filterPastEvents('')).to.eq(null);
-  });
-
-  it('returns events that occurred BEFORE the current date and time', () => {
-    const actual = liquid.filters.filterPastEvents(eventsMockData);
-    expect(actual.length).to.eq(3);
-    expect(actual).to.deep.include.members([
-      {
-        title: 'Yesterday',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday,
-        },
-      },
-      {
-        title: 'Yesterday Draft - 10',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday - 10,
-        },
-      },
-      {
-        title: 'Yesterday - 1',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday - 1,
-        },
-      },
-    ]);
-  });
-});
-
 describe('filterUpcomingEvents', () => {
-  it('returns null when null is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents(null)).to.eq(null);
-  });
-
-  it('returns null when undefined is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents(undefined)).to.eq(null);
-  });
-
-  it('returns null when empty string is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents('')).to.eq(null);
-  });
-
-  it('returns events that occurred AFTER the current date', () => {
-    expect(liquid.filters.filterUpcomingEvents(eventsMockData)).to.deep.equal([
-      {
-        title: 'Tomorrow',
-        fieldDatetimeRangeTimezone: {
-          value: tomorrow,
-        },
+  const futureEvents = [
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2100-12-07 14:00:00 America/New_York',
+        endValue: 4131892800,
+        startTime: '2100-12-07 15:00:00 America/New_York',
+        timezone: 'America/New_York',
+        value: 4131896400,
       },
-      {
-        title: 'Tomorrow + 1',
-        fieldDatetimeRangeTimezone: {
-          value: tomorrow + 1,
-        },
+    },
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2100-09-05 17:00:00 America/New_York',
+        endValue: 4123864800,
+        startTime: '2100-09-05 18:00:00 America/New_York',
+        value: 4123868400,
       },
-    ]);
+    },
+  ];
+
+  const pastEvents = [
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2023-12-07 13:00:00 America/New_York',
+        endValue: 1701972000,
+        startTime: '2023-12-07 10:00:00 America/New_York',
+        value: 1701961200,
+      },
+    },
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2023-09-05 17:00:00 America/New_York',
+        endValue: 1693947600,
+        startTime: '2023-09-05 14:00:00 America/New_York',
+        value: 1693936800,
+      },
+    },
+  ];
+
+  it('should return null when no data is given', () => {
+    expect(liquid.filters.filterUpcomingEvents()).to.be.null;
+  });
+
+  it('should return only events that are in the future', () => {
+    expect(liquid.filters.filterUpcomingEvents(pastEvents)).to.deep.equal([]);
+  });
+
+  it('should return only events that are in the future', () => {
+    expect(liquid.filters.filterUpcomingEvents(futureEvents)).to.deep.equal(
+      futureEvents,
+    );
+  });
+
+  it('should return only events that are in the future', () => {
+    const events = [
+      {
+        fieldDatetimeRangeTimezone: [
+          {
+            endTime: '2023-11-16 13:00:00 America/New_York',
+            endValue: 1700157600,
+            startTime: '2023-11-16 11:00:00 America/New_York',
+            value: 1700150400,
+          },
+          {
+            endTime: '2100-12-07 14:00:00 America/New_York',
+            endValue: 4131892800,
+            startTime: '2100-12-07 15:00:00 America/New_York',
+            value: 4131896400,
+          },
+        ],
+      },
+    ];
+
+    expect(liquid.filters.filterUpcomingEvents(events)).to.deep.equal(events);
   });
 });
 
@@ -935,11 +946,13 @@ describe('getTagsList', () => {
           },
         },
       ],
-      fieldAudienceBeneficiares: {
-        entity: {
-          name: 'C. Example',
+      fieldAudienceBeneficiares: [
+        {
+          entity: {
+            name: 'C. Example',
+          },
         },
-      },
+      ],
       fieldNonBeneficiares: {
         entity: {
           name: 'D. Example',
@@ -1653,6 +1666,37 @@ describe('processCentralizedUpdatesVBA', () => {
   });
 });
 
+describe('processFieldPhoneNumbersParagraph', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processFieldPhoneNumbersParagraph(null)).to.be.null;
+  });
+  it('returns simple object of phone numbers', () => {
+    const data = liquid.filters.processFieldPhoneNumbersParagraph(
+      phoneMockData,
+    );
+    expect(data.contact).to.be.equal(phoneMockData[0].entity.fieldPhoneNumber);
+    expect(data.extension).to.be.equal(
+      phoneMockData[0].entity.fieldPhoneExtension,
+    );
+  });
+});
+describe('processWysiwygSimple', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processWysiwygSimple(null)).to.be.null;
+  });
+  it('returns null if wysiwyg is empty list', () => {
+    expect(
+      liquid.filters.processWysiwygSimple({ fetched: { fieldWysiwyg: [] } }),
+    ).to.be.null;
+  });
+  it('returns simple object of wysiwyg', () => {
+    const data = liquid.filters.processWysiwygSimple(simpleWysiwygMockData);
+    expect(data).to.be.equal(
+      simpleWysiwygMockData.fetched.fieldWysiwyg[0].value,
+    );
+  });
+});
+
 describe('processCentralizedContent', () => {
   it('returns null if null is passed', () => {
     expect(liquid.filters.processCentralizedContent(null, 'wysiwyg')).to.be
@@ -2292,42 +2336,35 @@ describe('pathContainsSubstring', () => {
 
 describe('deriveMostRecentDate', () => {
   it('returns the argument fieldDatetimeRangeTimezone when it is falsey', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = undefined;
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.eq(fieldDatetimeRangeTimezone);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an object', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = {
       value: 1642014000,
       endValue: 1642017600,
     };
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.deep.eq(fieldDatetimeRangeTimezone);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 1', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.deep.eq(fieldDatetimeRangeTimezone[0]);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only past dates', () => {
-    // Setup.
     const now = 1642030600;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2335,14 +2372,12 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642025600, endValue: 1642029600 });
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are past and future dates', () => {
-    // Setup.
     const now = 1642019600;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2350,14 +2385,12 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642017000, endValue: 1642020600 });
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only future dates', () => {
-    // Setup.
     const now = 1642014000;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2365,7 +2398,6 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642014000, endValue: 1642017600 });
@@ -2491,6 +2523,81 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
   });
 });
 
+describe('processVbaServices', () => {
+  const allVbaServices = liquid.filters.processVbaServices(
+    [
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'other',
+      }),
+    ],
+    [
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_family_member_and_caregiver_benefits',
+      }),
+    ],
+  );
+  expect(allVbaServices.veteranBenefits.length).to.equal(1);
+  expect(allVbaServices.familyCaregiverBenefits.length).to.equal(1);
+  expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(allVbaServices.otherServices.length).to.equal(1);
+
+  const singleVbaService = liquid.filters.processVbaServices(
+    [
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+    ],
+    [
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+    ],
+  );
+
+  expect(singleVbaService.veteranBenefits.length).to.equal(4);
+  expect(singleVbaService.familyCaregiverBenefits.length).to.equal(0);
+  expect(singleVbaService.serviceMemberBenefits.length).to.equal(0);
+  expect(singleVbaService.otherServices.length).to.equal(0);
+
+  const hiddenVbaServices = liquid.filters.processVbaServices(
+    [
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaRegionFacilityNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+        fieldShowForVbaFacilities: false,
+      }),
+    ],
+    [
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+        fieldShowForVbaFacilities: false,
+      }),
+    ],
+  );
+
+  expect(hiddenVbaServices.veteranBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.familyCaregiverBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(2);
+  expect(hiddenVbaServices.otherServices.length).to.equal(0);
+});
+
 describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
   const facilitiesInSystem =
     healthCareRegionNonClinicalServicesData.reverseFieldRegionPageNode.entities;
@@ -2590,7 +2697,6 @@ describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
 
 describe('deriveFormattedTimestamp', () => {
   it('returns what we expect', () => {
-    // Set up.
     const fieldDatetimeRangeTimezone = {
       duration: 60,
       endTime: null,
@@ -2602,7 +2708,6 @@ describe('deriveFormattedTimestamp', () => {
       value: 1641405600,
     };
 
-    // Assertions.
     expect(
       liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
     ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. – 2:00 p.m. ET');

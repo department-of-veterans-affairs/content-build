@@ -963,31 +963,6 @@
     }
   },
   {
-    "appName": "Coronavirus Vaccination",
-    "entryName": "coronavirus-vaccination",
-    "rootUrl": "/health-care/covid-19-vaccine/stay-informed",
-    "template": {
-      "title": "Sign up to get a COVID-19 vaccine at VA",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "description": "We’re working to provide COVID-19 vaccines as quickly and safely as we can. We base our vaccine plans on CDC guidelines, federal law, and available supply. Sign up to tell us you’d like to get a COVID-19 vaccine at VA.",
-      "breadcrumbs_override": [
-        {
-          "path": "health-care/",
-          "name": "Health care"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/",
-          "name": "COVID-19 vaccines"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/stay-informed",
-          "name": "Sign up for vaccine updates"
-        }
-      ]
-    }
-  },
-  {
     "appName": "View your representative",
     "entryName": "view-representative",
     "rootUrl": "/view-change-representative/view",
@@ -1514,7 +1489,8 @@
     "productId": "0203ca08-b7a2-4cd6-abb5-56d38c239cd3",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -1541,7 +1517,7 @@
   {
     "appName": "After Visit Summary",
     "entryName": "avs",
-    "rootUrl": "/my-health/medical-records/care-notes/avs",
+    "rootUrl": "/my-health/medical-records/summaries-and-notes/visit-summary",
     "productId": "e5bd4cff-77b1-4d56-ab8e-a66c9c2667ab",
     "template": {
       "vagovprod": false,
@@ -1642,21 +1618,22 @@
   {
     "appName": "Request personal records",
     "entryName": "10206-pa",
-    "rootUrl": "/request-personal-records",
+    "rootUrl": "/records/request-personal-records-form-20-10206",
     "productId": "560247e7-3a80-4fdd-ad00-8d0e14435d22",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "Find a Representative",
-    "entryName": "find-a-representative",
-    "rootUrl": "/get-help-from-accredited-representative/find-rep",
-    "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Records",
+          "path": "records"
+        },
+        {
+          "name": "Request personal records",
+          "path": "records/request-personal-records-form-20-10206"
+        }
+      ]
     }
   },
   {
