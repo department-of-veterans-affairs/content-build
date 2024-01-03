@@ -2493,14 +2493,6 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
 describe('processVbaServices', () => {
   const allVbaServices = liquid.filters.processVbaServices(
     [
-      vbaFacilityOfficeNode({
-        fieldVbaTypeOfCare: 'vba_veteran_benefits',
-      }),
-      vbaFacilityOfficeNode({
-        fieldVbaTypeOfCare: 'vba_family_member_and_caregiver_benefits',
-      }),
-    ],
-    [
       vbaRegionFacilityNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
@@ -2508,8 +2500,15 @@ describe('processVbaServices', () => {
         fieldVbaTypeOfCare: 'other',
       }),
     ],
+    [
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaFacilityOfficeNode({
+        fieldVbaTypeOfCare: 'vba_family_member_and_caregiver_benefits',
+      }),
+    ],
   );
-
   expect(allVbaServices.veteranBenefits.length).to.equal(1);
   expect(allVbaServices.familyCaregiverBenefits.length).to.equal(1);
   expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
@@ -2517,18 +2516,18 @@ describe('processVbaServices', () => {
 
   const singleVbaService = liquid.filters.processVbaServices(
     [
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
     ],
     [
-      vbaRegionFacilityNode({
+      vbaFacilityOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaRegionFacilityNode({
+      vbaFacilityOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
     ],
@@ -2541,19 +2540,19 @@ describe('processVbaServices', () => {
 
   const hiddenVbaServices = liquid.filters.processVbaServices(
     [
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
         fieldShowForVbaFacilities: false,
       }),
     ],
     [
-      vbaRegionFacilityNode({
+      vbaFacilityOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaRegionFacilityNode({
+      vbaFacilityOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
         fieldShowForVbaFacilities: false,
       }),

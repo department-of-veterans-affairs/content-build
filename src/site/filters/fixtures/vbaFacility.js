@@ -1,12 +1,55 @@
+// One item of reverseFieldOfficeNode.entities array
 const vbaFacilityOfficeNode = fieldService => {
   return {
-    entityId: '64141',
+    entityId: '64397',
     entityLabel: 'Cleveland VA Regional Benefit Office - Veterans Pension',
     title: 'Cleveland VA Regional Benefit Office - Veterans Pension',
     reverseFieldVbaServiceRegionsTaxonomyTerm: {
       entities: [],
     },
     fieldServiceLocation: [
+      {
+        entity: {
+          fieldServiceLocationAddress: {
+            entity: {
+              fieldUseFacilityAddress: true,
+              fieldAddress: {
+                addressLine1: '',
+                addressLine2: '',
+                organization: null,
+                additionalName: null,
+                givenName: null,
+                postalCode: '',
+              },
+            },
+          },
+          fieldUseMainFacilityPhone: true,
+          fieldPhone: [
+            {
+              entity: {
+                fieldPhoneNumber: '123-456-7890',
+              },
+            },
+          ],
+          fieldEmailContacts: [
+            {
+              entity: {
+                entityLabel:
+                  'Cleveland VA Regional Benefit Office - Veterans Pension > Service locations > Email contacts',
+              },
+            },
+          ],
+          fieldOfficeHours: [
+            {
+              day: 1,
+              allDay: false,
+              starthours: 600,
+              endhours: 1000,
+              comment: '',
+            },
+          ],
+        },
+      },
       {
         entity: {
           fieldServiceLocationAddress: {
@@ -34,8 +77,8 @@ const vbaFacilityOfficeNode = fieldService => {
       entity: {
         name: 'Veterans Pension',
         entityBundle: 'health_care_service_taxonomy',
-        fieldFacilityServiceDescripti: null,
-        fieldFacilityServiceHeader: null,
+        fieldFacilityServiceDescripti: 'Pension description',
+        fieldFacilityServiceHeader: 'Pension header',
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
         fieldShowForVbaFacilities: true,
         fieldVbaServiceDescrip:
@@ -51,6 +94,7 @@ const vbaFacilityOfficeNode = fieldService => {
   };
 };
 
+// One item of reverseFieldVbaRegionFacilityListNode.entities array
 const vbaRegionFacilityNode = taxonomy => {
   return {
     entityId: '61786',

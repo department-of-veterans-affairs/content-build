@@ -870,8 +870,8 @@ module.exports = function registerFilters() {
 
   liquid.filters.processVbaServices = (serviceRegions, offices) => {
     const hasServiceRegions =
-      Array.isArray(serviceRegions) && serviceRegions.length === 0;
-    const hasOffices = Array.isArray(offices) && offices.length === 0;
+      Array.isArray(serviceRegions) && serviceRegions.length !== 0;
+    const hasOffices = Array.isArray(offices) && offices.length !== 0;
 
     if (!hasServiceRegions && !hasOffices) {
       return {
@@ -881,7 +881,6 @@ module.exports = function registerFilters() {
         otherServices: [],
       };
     }
-
     let flattenedVbaServiceRegions = [];
     let flattenedVbaOffices = [];
 
@@ -908,17 +907,14 @@ module.exports = function registerFilters() {
 
     if (hasOffices) {
       flattenedVbaOffices = offices.map(office => {
+        const { entity } = office.fieldServiceNameAndDescripti;
         return {
           vbaCategory: 'office',
           vbaId: office.entityId,
-          vbaType:
-            office.fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare,
-          vbaHeader: office.fieldServiceNameAndDescripti.entity.name,
-          vbaDescription:
-            office.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip,
-          vbaIsVisible:
-            office.fieldServiceNameAndDescripti.entity
-              .fieldShowForVbaFacilities,
+          vbaType: entity.fieldVbaTypeOfCare,
+          vbaHeader: entity.name,
+          vbaDescription: entity.fieldVbaServiceDescrip,
+          vbaIsVisible: entity.fieldShowForVbaFacilities,
           ...office,
         };
       });
