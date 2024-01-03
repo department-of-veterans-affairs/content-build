@@ -1,10 +1,11 @@
 {% comment %} 
-              Creates a full width va-alert banner
-              expcts the following variables to be passed in
-              alertType: "information" or "warning"; string
-              alertTitle: "title of the alert"; string
-              alertContent: "content of the alert"; string
-              dismissible: "dismiss" or something else; string
+    Creates a full width va-banner (banner alert)
+    expcts the following variables to be passed in
+    alertType: "information" or "warning"; string
+    alertTitle: "title of the alert"; string
+    alertContent: "content of the alert"; string
+    dismissible: "dismiss" or something else; string
+    shouldDisplayBanner: true or false; boolean
 {% endcomment %}
 {% if shouldDisplayBanner and alertType and alertTitle and alertContent %}
   {% if alertType == "information" %}
