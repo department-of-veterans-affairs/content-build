@@ -93,6 +93,7 @@ if (fs.existsSync(reportPath)) {
     `${brokenLinks.brokenLinksCount} broken links found. \n ${brokenLinks.summary}`,
   );
   core.setOutput('SLACK_BLOCKS', `${JSON.stringify(payload)}`);
+  core.setOutput('BROKEN_LINK_COUNT', brokenLinks.brokenLinksCount);
 
   if (!IS_PROD_BRANCH && !contentOnlyBuild) {
     // Ignore the results of the broken link checker unless
@@ -114,4 +115,5 @@ if (fs.existsSync(reportPath)) {
 } else {
   console.log('No broken links found!');
   core.setOutput('UPLOAD_AND_NOTIFY', '0');
+  core.setOutput('BROKEN_LINK_COUNT', 0);
 }

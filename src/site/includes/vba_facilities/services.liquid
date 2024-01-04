@@ -1,0 +1,29 @@
+{% if vbaServices.length > 0 %}
+  <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+    {{ vbaTitle }}
+  </h2>
+
+  <div class="vads-u-margin-bottom--3">
+    <va-accordion bordered id="vba-regional-facilities-accordion-{{ entity.vbaHeader | hashReference: 60 }}">
+      {% for entity in vbaServices %}
+        {% capture entityId %}{{ entity.vbaId | hashReference: 60 }}-{{ entity.vbaHeader | hashReference: 60 }}{% endcapture %}
+
+        <va-accordion-item
+            class="va-accordion-item"
+            id="vba-service-item-{{ entityId }}"
+            header="{{ entity.vbaHeader }}"
+            level="3">
+          {% if entity.vbaDescription != empty %}
+            <p>{{ entity.vbaDescription | phoneLinks }}</p>
+          {% endif %}
+
+          {% if entity.fieldServiceNameAndDescripti.entity.description.value and entity.fieldServiceNameAndDescripti.entity.description.processed %}
+            <div id="vba-service-body-{{ entityId }}">
+              {{ entity.fieldServiceNameAndDescripti.entity.description.processed | drupalToVaPath | phoneLinks }}
+            </div>
+          {% endif %}
+        </va-accordion-item>
+      {% endfor %}
+    </va-accordion>
+  </div>
+{% endif %}

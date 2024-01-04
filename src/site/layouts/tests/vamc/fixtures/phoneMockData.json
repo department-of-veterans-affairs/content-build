@@ -1,0 +1,10 @@
+[
+  {
+    "entity": {
+      "fieldPhoneExtension": "9090",
+      "fieldPhoneLabel": "non-emergency phone number, 24/7",
+      "fieldPhoneNumber": "202-745-8189",
+      "fieldPhoneNumberType": "tel"
+    }
+  }
+]

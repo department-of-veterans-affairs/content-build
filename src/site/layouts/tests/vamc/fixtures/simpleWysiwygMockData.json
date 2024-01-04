@@ -1,0 +1,12 @@
+{
+  "fetched": {
+    "fieldWysiwyg": [
+      {
+        "value": "<p>VA police officers help make VA medical centers and other VA health facilities safe for Veterans and their family members.</p>",
+        "format": "rich_text_limited",
+        "attributes": [],
+        "processed": "<p>VA police officers help make VA medical centers and other VA health facilities safe for Veterans and their family members.</p>\n"
+      }
+    ]
+  }
+}
