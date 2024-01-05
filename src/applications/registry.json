@@ -1671,5 +1671,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Find a VA accredited representative or VSO",
+    "entryName": "find-a-representative",
+    "rootUrl": "/get-help-from-accredited-representative/find-rep",
+    "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
   }
 ]
