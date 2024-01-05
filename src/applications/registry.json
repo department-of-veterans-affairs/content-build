@@ -1627,7 +1627,7 @@
     "rootUrl": "/records/request-personal-records-form-20-10206",
     "productId": "560247e7-3a80-4fdd-ad00-8d0e14435d22",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
