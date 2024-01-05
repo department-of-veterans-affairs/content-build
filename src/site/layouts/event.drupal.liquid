@@ -193,6 +193,18 @@
                 </p>
               {% endif %}
 
+              {% if fieldHowToSignUp == 'email' %}
+                {% assign now = '' | currentTime %}
+                {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}   
+                <p class="vads-u-margin--0">
+                  <a class="vads-c-action-link--green" href="mailto:{{ fieldCtaEmail }}?subject=RSVP for {{ title }} on {{ mostRecentDate | deriveFormattedTimestamp }}&body=I would like to register for {{title}} on {{ mostRecentDate | deriveFormattedTimestamp }}. (https://va.gov{{entityUrl.path}}) ">
+                    {% if fieldEventCta %}
+                      {{ fieldEventCta | removeUnderscores | capitalize }}
+                    {% endif %}
+                  </a>
+                </p>
+              {% endif %}
+
               {% if fieldAdditionalInformationAbo %}
                 <p class="vads-u-margin--0">{{ fieldAdditionalInformationAbo.processed | phoneLinks }}</p>
               {% endif %}
