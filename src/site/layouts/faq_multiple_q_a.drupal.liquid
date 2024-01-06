@@ -64,12 +64,10 @@
 
             <!-- QAs -->
             {% for fieldQAGroup in fieldQAGroups %}
-              {% if fieldQAGroup.entity.entityBundle == "q_a_group" %}
                 {% if fieldQAGroup.entity.fieldAccordionDisplay %}
                   {% include "src/site/paragraphs/q_a_group_collapsible_content.drupal.liquid" with entity = fieldQAGroup.entity %}
                 {% else %}
                   {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = fieldQAGroup.entity %}
-                {% endif %}  
               {% endif %}
             {% endfor %}
 
