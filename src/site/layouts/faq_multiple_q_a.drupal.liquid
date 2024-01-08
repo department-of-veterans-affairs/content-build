@@ -76,6 +76,7 @@
                 <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
                 <h2>{{ fieldQAGroup.entity.fieldSectionHeader }}</h2>
               {% endif %}
+            {% if fieldQAGroup.entity.fieldAccordionDisplay %}
               {% assign headerLevel = '2' %}
               {% if fieldQAGroup.entity.fieldSectionHeader %}
                 {% assign headerLevel = '3' %}
