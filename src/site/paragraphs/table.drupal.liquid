@@ -26,7 +26,7 @@
         }
     }
 {% endcomment %}
-<va-table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" role="table" tableTitle="{{ entity.fieldTable.caption }}">
+<va-table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" role="table" table-title="{{ entity.fieldTable.caption }}">
     {% assign colLabels = entity.fieldTable.value.0  %}
     {% for value in entity.fieldTable.value %}
         {% if forloop.first == true %}
