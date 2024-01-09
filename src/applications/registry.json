@@ -1643,6 +1643,16 @@
     }
   },
   {
+    "appName": "Request priority processing",
+    "entryName": "10207-pp",
+    "rootUrl": "/priority-processing-20-10207",
+    "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Verify Your Enrollment",
     "entryName": "verify-your-enrollment",
     "rootUrl": "/education/verify-your-enrollment",
