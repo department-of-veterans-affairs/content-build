@@ -67,20 +67,22 @@
               {% if fieldQAGroup.entity.fieldSectionHeader %}
                 <h2>{{ fieldQAGroup.entity.fieldSectionHeader }}</h2>
               {% endif %}
-
-              {% if fieldQAGroup.entity.fieldAccordionDisplay %}
-                <va-accordion>
+            {% if fieldQAGroup.entity.fieldAccordionDisplay %}
+              {% assign headerLevel = '2' %}
+              {% if fieldQAGroup.entity.fieldSectionHeader %}
+                {% assign headerLevel = '3' %}
+              {% endif %}
+              <va-accordion>
                 {% assign groupId = fieldQAGroup.entity.entityId %}
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
                     {% if fieldQA.entity %}
                       <va-accordion-item
                         class="va-accordion-item"
+                        level="{{ headerLevel }}"
+                        header="{{fieldQA.entity.title}}"
                         data-faq-entity-id="{{ fieldQA.entity.entityId }}"
                         id="{{ fieldQA.entity.title | hashReference: 60 }}"
                       >
-                        <h3 slot="headline">
-                          {{ fieldQA.entity.title }}
-                        </h3>
                         <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}-{{ groupId }}">
                           {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
                           {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
