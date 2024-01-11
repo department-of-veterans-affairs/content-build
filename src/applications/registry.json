@@ -1566,7 +1566,7 @@
     "rootUrl": "/burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247",
     "productId": "5af7a83b-c1a0-4a0a-b0e9-88baf150e6a9",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
