@@ -29,8 +29,7 @@
 {% endif %}
 
 {% assign shouldShowCustomBanner = entityUrl.path | shouldShowCustomMobilePromoBanner: false %}
-<!-- TODO add buildtype check -->
-{% if shouldShowCustomBanner %}
+{% if shouldShowCustomBanner and buildtype === 'vagovstaging' %}
   <script type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
 
   <!-- Start SmartBanner configuration -->
