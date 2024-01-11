@@ -58,7 +58,6 @@
 
             <!-- TOC -->
             {% if fieldTableOfContentsBoolean %}
-              <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
               <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
             {% endif %}
 
@@ -66,23 +65,24 @@
             {% for fieldQAGroup in fieldQAGroups %}
               <!-- Optional section header -->
               {% if fieldQAGroup.entity.fieldSectionHeader %}
-                <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
                 <h2>{{ fieldQAGroup.entity.fieldSectionHeader }}</h2>
               {% endif %}
-
-              {% if fieldQAGroup.entity.fieldAccordionDisplay %}
-                <va-accordion>
+            {% if fieldQAGroup.entity.fieldAccordionDisplay %}
+              {% assign headerLevel = '2' %}
+              {% if fieldQAGroup.entity.fieldSectionHeader %}
+                {% assign headerLevel = '3' %}
+              {% endif %}
+              <va-accordion>
                 {% assign groupId = fieldQAGroup.entity.entityId %}
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
                     {% if fieldQA.entity %}
                       <va-accordion-item
                         class="va-accordion-item"
+                        level="{{ headerLevel }}"
+                        header="{{fieldQA.entity.title}}"
                         data-faq-entity-id="{{ fieldQA.entity.entityId }}"
                         id="{{ fieldQA.entity.title | hashReference: 60 }}"
                       >
-                        <h3 slot="headline">
-                          {{ fieldQA.entity.title }}
-                        </h3>
                         <div id="{{ fieldQA.entity.entityBundle }}-{{ fieldQA.entity.entityId }}-{{ groupId }}">
                           {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
                           {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
@@ -100,7 +100,6 @@
                   {% endif %}
 
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
-                    <button type="button" class="vads-u-visibility--screen-reader">Back to top</button>
                     <{{ fieldSectionHeaderTag }}>{{ fieldQA.entity.title }}</{{ fieldSectionHeaderTag }}>
                     {% if fieldQA.entity %}
                       {% assign fieldAnswer = fieldQA.entity.fieldAnswer %}
