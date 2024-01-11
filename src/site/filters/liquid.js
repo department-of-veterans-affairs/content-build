@@ -1878,6 +1878,6 @@ module.exports = function registerFilters() {
       currentPath,
     );
 
-    return cmsFeatureFlags.FEATURE_MOBILE_APP_PROMO && isCorrectPath;
+    return cmsFeatureFlags?.FEATURE_MOBILE_APP_PROMO && isCorrectPath;
   };
 };
