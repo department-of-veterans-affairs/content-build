@@ -1857,7 +1857,7 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.shouldShowiOSBanner = currentPath => {
+  liquid.filters.shouldShowMobileAppPromoBanner = currentPath => {
     const urlsForBanner = [
       '/health-care/refill-track-prescriptions',
       '/health-care/secure-messaging',
@@ -1871,5 +1871,13 @@ module.exports = function registerFilters() {
     ];
 
     return urlsForBanner.includes(currentPath);
+  };
+
+  liquid.filters.shouldShowCustomMobilePromoBanner = currentPath => {
+    const isCorrectPath = liquid.filters.shouldShowMobileAppPromoBanner(
+      currentPath,
+    );
+
+    return cmsFeatureFlags?.FEATURE_MOBILE_APP_PROMO && isCorrectPath;
   };
 };
