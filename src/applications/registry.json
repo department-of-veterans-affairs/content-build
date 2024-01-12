@@ -1684,6 +1684,16 @@
     }
   },
   {
+    "appName": "Beneficiary Travel",
+    "entryName": "travel-pay",
+    "rootUrl": "/health-care/file-travel-claim",
+    "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "10-10d Application for CHAMPVA benefits",
     "entryName": "10-10D",
     "rootUrl": "/ivc-champva/10-10D",
