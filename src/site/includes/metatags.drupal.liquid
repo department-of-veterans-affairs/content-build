@@ -22,15 +22,15 @@
   <meta name="DC.Date" content="{{ lastupdate| date: '%Y-%m-%d' }}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
-{% assign shouldShow = entityUrl.path | shouldShowiOSBanner: false %}
+{% assign shouldShowiOSBanner = entityUrl.path | shouldShowMobileAppPromoBanner: false %}
 <!-- iOS banner -->
-{% if shouldShow %}
+{% if shouldShowiOSBanner %}
   <meta name="apple-itunes-app" content="app-id=1559609596">
 {% endif %}
 
-{% if shouldShow and buildtype === 'vagovstaging' %}
-  <link rel="stylesheet" nonce="**CSP_NONCE**" href="https://unpkg.com/smartbanner.js/dist/smartbanner.min.css">
-  <script type="text/javascript" nonce="**CSP_NONCE**" src="https://unpkg.com/smartbanner.js/dist/smartbanner.min.js"></script>  
+{% assign shouldShowCustomBanner = entityUrl.path | shouldShowCustomMobilePromoBanner: false %}
+{% if shouldShowCustomBanner and buildtype === 'vagovstaging' %}
+  <script nonce="**CSP_NONCE**" type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
 
   <!-- Start SmartBanner configuration -->
   <meta name="smartbanner:exclude-user-agent-regex" content="^.*(Version).*Safari">
