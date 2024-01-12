@@ -30,7 +30,7 @@
 
 {% assign shouldShowCustomBanner = entityUrl.path | shouldShowCustomMobilePromoBanner: false %}
 {% if shouldShowCustomBanner and buildtype === 'vagovstaging' %}
-  <script type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
+  <script nonce="**CSP_NONCE**" type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
 
   <!-- Start SmartBanner configuration -->
   <meta name="smartbanner:exclude-user-agent-regex" content="^.*(Version).*Safari">
