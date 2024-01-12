@@ -1,7 +1,7 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/vba_facilities/banner.liquid" with
-      shouldDisplayBanner = fieldShowBanner 
+      shouldDisplayBanner = fieldShowBanner
       alertType = fieldAlertType
       alertTitle = fieldBannerTitle
       alertContent = fieldBannerContent.processed
@@ -199,9 +199,9 @@
               status="info"
               visible
             >
-              <h3 id="cant-find-benefits-headline" slot="headline">
+              <h2 id="cant-find-benefits-headline" slot="headline">
                 {{ cantFindBenefits.fieldSectionHeader }}
-              </h3>
+              </h2>
               <div>
                 {{ cantFindBenefits.fieldDescription }}
                 <va-link
