@@ -25,7 +25,7 @@
 
   <!-- Index only pages on production. -->
   {% if buildtype != 'vagovprod' %}
-    <meta name="robots" content="noindex">
+  <meta name="robots" content="noindex">
   {% endif %}
 
   <!-- Add metatags. -->
@@ -41,15 +41,15 @@
 
   <!-- Add web components. -->
   {% if entityId != 11463 or buildtype != "vagovdev") %}
-    <link rel="stylesheet" data-entry-name="web-components.css">
-    {% comment %}
-      The `useLocalStylesAndComponents` registry value allows apps to opt-out of
-      this global file which will define all web components. Instead, they will manually
-      define a subset of web components which are used in their application
-    {% endcomment %}
-    {% unless useLocalStylesAndComponents %}
-      <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
-    {% endunless %}
+  <link rel="stylesheet" data-entry-name="web-components.css">
+  {% comment %}
+  The `useLocalStylesAndComponents` registry value allows apps to opt-out of
+  this global file which will define all web components. Instead, they will manually
+  define a subset of web components which are used in their application
+  {% endcomment %}
+  {% unless useLocalStylesAndComponents %}
+  <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
+  {% endunless %}
   {% endif %}
 
   <!-- Render GA template. -->
@@ -73,11 +73,11 @@
 
   <!-- CSS -->
   {% comment %}
-    Apps that opt out of the site-wide stylesheet must include a smaller subset of styles
-    in their application bundle
+  Apps that opt out of the site-wide stylesheet must include a smaller subset of styles
+  in their application bundle
   {% endcomment %}
   {% unless useLocalStylesAndComponents %}
-    <link rel="stylesheet" data-entry-name="style.css">
+  <link rel="stylesheet" data-entry-name="style.css">
   {% endunless %}
   <link rel="stylesheet" data-entry-content="content-build.css">
   <link rel="stylesheet" data-entry-name="{{ entryname | default: 'static-pages' }}.css">
@@ -107,7 +107,7 @@
       e.preventDefault();
       const contentElement = document.querySelector('#content h1') || document.querySelector('#content');
       contentElement.setAttribute('tabindex', '-1');
-      contentElement.addEventListener('blur', function(event) {
+      contentElement.addEventListener('blur', function (event) {
         event.target.removeAttribute('tabindex');
       }, true);
       window.scrollTo(0, contentElement.offsetTop);
@@ -121,24 +121,23 @@
 
   {% comment %} TODO: Remove this block once the focus styling changes have been tested {% endcomment %}
   {% if entityId == 11463 and buildtype == "vagovdev" %}
-    <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-3/dist/formation.min.css">
-    <script type="module">
-      import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-3/loader/index.es2017.js";
-      defineCustomElements();
-    </script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/@department-of-veterans-affairs/component-library@11.3.2-3/dist/main.css"
-    />
-    <style>
-      .usa-accordion-button:focus {
-        border: none !important;
-      }
-      .va-sidebarnav .usa-sidenav-sub_list a:focus {
-        outline: 2px solid #936f38;
-      }
-    </style>
+  <link rel="stylesheet"
+    href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-3/dist/formation.min.css">
+  <script type="module">
+    import { defineCustomElements } from "https://unpkg.com/@department-of-veterans-affairs/web-components@4.10.2-3/loader/index.es2017.js";
+    defineCustomElements();
+  </script>
+  <link rel="stylesheet" type="text/css"
+    href="https://unpkg.com/@department-of-veterans-affairs/component-library@11.3.2-3/dist/main.css" />
+  <style>
+    .usa-accordion-button:focus {
+      border: none !important;
+    }
+
+    .va-sidebarnav .usa-sidenav-sub_list a:focus {
+      outline: 2px solid #936f38;
+    }
+  </style>
   {% endif %}
 
 </head>
@@ -163,19 +162,15 @@
   <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
   <!-- Header -->
-  <header class="header" role="banner">
+  <header class="header vads-u-background-color--primary-darker" role="banner">
     <!-- Mobile Layout -->
-    <div
-      data-widget-type="header"
-      data-show="{% if noHeader %}false{% else %}true{% endif %}"
+    <div data-widget-type="header" data-show="{% if noHeader %}false{% else %}true{% endif %}"
       data-show-nav-login="{% if noNavOrLogin %}false{% else %}true{% endif %}"
-      data-show-mega-menu="{% if noMegamenu %}false{% else %}true{% endif %}"
-      id="header-v2"
-    ></div>
+      data-show-mega-menu="{% if noMegamenu %}false{% else %}true{% endif %}" id="header-v2"></div>
 
     <!-- Tablet/Desktop Layout -->
     {% unless noHeader %}
-      {% include "src/site/includes/top-nav.html" %}
+    {% include "src/site/includes/top-nav.html" %}
     {% endunless %}
 
     <!-- Banners -->
@@ -189,11 +184,11 @@
     {% include "src/site/assets/js/skip-link-focus.js" %}
   </script>
 
-<script  type="text/javascript" defer>
-  window.onload = function() {
-    const contentElement = document.querySelector('.smartbanner');
-      if(contentElement){
+  <script type="text/javascript" defer>
+    window.onload = function () {
+      const contentElement = document.querySelector('.smartbanner');
+      if (contentElement) {
         contentElement.style.top = '-84px'
       }
-  };
-</script>
+    };
+  </script>
