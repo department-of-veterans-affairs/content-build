@@ -29,7 +29,7 @@
 {% endif %}
 
 {% assign shouldShowCustomBanner = entityUrl.path | shouldShowCustomMobilePromoBanner: false %}
-{% if shouldShowCustomBanner and buildtype === 'vagovstaging' %}
+{% if shouldShowCustomBanner %}
   <script nonce="**CSP_NONCE**" type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
 
   <!-- Start SmartBanner configuration -->
