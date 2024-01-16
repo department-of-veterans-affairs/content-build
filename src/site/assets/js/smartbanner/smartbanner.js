@@ -198,10 +198,10 @@ class SmartBanner {
 
   get icon() {
     if (this.platform === 'android') {
-      return this.options.iconGoogle;
+      return '/img/Android_app_icon.webp';
     }
 
-    return this.options.iconApple;
+    return '/img/iOS_app_icon.webp';
   }
 
   get buttonUrl() {
