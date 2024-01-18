@@ -1531,6 +1531,16 @@
     }
   },
   {
+    "appName": "Temporary order hearing aid or CPAP supplies redirect",
+    "entryName": "health-care-supply-reordering-redirect",
+    "rootUrl": "/my-health/order-hearing-aid-or-CPAP-supplies-form",
+    "productId": "",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Notification Center",
     "entryName": "notification-center",
     "rootUrl": "/notification-center",
