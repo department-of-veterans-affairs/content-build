@@ -22,10 +22,29 @@
   <meta name="DC.Date" content="{{ lastupdate| date: '%Y-%m-%d' }}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
-{% assign shouldShow = entityUrl.path | shouldShowiOSBanner %}
+{% assign shouldShowiOSBanner = entityUrl.path | shouldShowMobileAppPromoBanner: false %}
 <!-- iOS banner -->
-{% if shouldShow %}
+{% if shouldShowiOSBanner %}
   <meta name="apple-itunes-app" content="app-id=1559609596">
+{% endif %}
+
+{% assign shouldShowCustomBanner = entityUrl.path | shouldShowCustomMobilePromoBanner: false %}
+{% if shouldShowCustomBanner %}
+  <script nonce="**CSP_NONCE**" type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
+
+  <!-- Start SmartBanner configuration -->
+  <meta name="smartbanner:exclude-user-agent-regex" content="^.*(Version).*Safari">
+  <meta name="smartbanner:title" content="VA: Health and Benefits">
+  <meta name="smartbanner:author" content="US Dept. of Veteran Affairs">
+  <meta name="smartbanner:price" content=" ">
+  <meta name="smartbanner:price-suffix-apple" content=" ">
+  <meta name="smartbanner:price-suffix-google" content=" ">
+  <meta name="smartbanner:button" content="VIEW">
+  <meta name="smartbanner:button-url-apple" content="https://apps.apple.com/us/app/va-health-and-benefits/id1559609596">
+  <meta name="smartbanner:button-url-google" content="https://play.google.com/store/apps/details?id=gov.va.mobileapp&hl=en_US&gl=US&pli=1">
+  <meta name="smartbanner:enabled-platforms" content="android,ios">
+  <meta name="smartbanner:close-label" content="Close">
+  <!-- End SmartBanner configuration -->
 {% endif %}
 
 <!-- og:url -->

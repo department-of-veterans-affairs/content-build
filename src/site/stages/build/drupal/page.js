@@ -391,6 +391,7 @@ function compilePage(page, contentData) {
     case 'vamc_system_register_for_care':
     case 'vamc_system_billing_insurance':
     case 'vamc_system_medical_records_offi':
+    case 'vamc_system_va_police':
       pageCompiled = {
         ...page,
         ...facilitySidebarNavItems,

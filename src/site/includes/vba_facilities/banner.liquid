@@ -1,0 +1,28 @@
+{% comment %} 
+    Creates a full width va-banner (banner alert)
+    expcts the following variables to be passed in
+    alertType: "information" or "warning"; string
+    alertTitle: "title of the alert"; string
+    alertContent: "content of the alert"; string
+    dismissible: "dismiss" or something else; string
+    shouldDisplayBanner: true or false; boolean
+{% endcomment %}
+{% if shouldDisplayBanner and alertType and alertTitle and alertContent %}
+  {% if alertType == "information" %}
+    {% assign status = "info" %}
+  {% elsif alertType == "warning" %}
+    {% assign status = "warning" %}
+  {% endif %}
+  <va-banner
+    id="vba-banner"
+    data-testid="vba-banner"
+    type="{{ status }}"
+    {% if dismissible == "dismiss" %}
+    show-close
+    {% endif %}
+    headline="{{ alertTitle }}">
+    <p className="vads-u-margin-y--0">
+      {{ alertContent }}
+    </p>
+  </va-banner>
+{% endif %}

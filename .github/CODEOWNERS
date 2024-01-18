@@ -25,12 +25,55 @@ src/site/teasers @department-of-veterans-affairs/vfs-public-websites-frontend @d
 src/site/filters @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend
 
 # Facility Locator and VAMC pages
+## Multiple Facility types
 src/site/facilities @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/health*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/locations_listing.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/navigation/facility_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/paragraphs/facilities @department-of-veterans-affairs/vfs-facilities-frontend
+
+
+## Facility locator
+
+## VAMC
+src/site/includes/va_police @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/health*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/leadership_listing*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/news_story.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/person_profile.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/press_release.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/story.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/tests/vamc* @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/vamc*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/stages/build/drupal/static-data-files/vaPoliceData @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/tests/police @department-of-veterans-affairs/vfs-facilities-frontend
+
+## VBA
+src/site/includes/vba_facilities @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/vba*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/tests/vba* @department-of-veterans-affairs/vfs-facilities-frontend
+
+## Vet Center
+src/site/includes/vet_centers @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/vet_center*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/tests/vet_center* @department-of-veterans-affairs/vfs-facilities-frontend
+
+# Public Websites
+src/site/layouts/campaign_landing_page.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/checklist.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/event* @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/ap-admins
+src/site/layouts/faq*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/full_width_banner_alert.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/home* @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/media_list*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/outreach_asset.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/page* @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/publication_listing.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/q_a.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/support*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/va_form.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/tests/home @department-of-veterans-affairs/vfs-public-websites-frontend
+
 
 # GraphQL Queries
 src/site/stages/build/drupal @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/cms-infrastructure

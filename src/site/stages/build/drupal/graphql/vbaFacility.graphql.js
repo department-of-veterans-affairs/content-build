@@ -21,6 +21,15 @@ const vbaFacilityFragment = `
               }
             }
           }
+          fieldShowBanner
+          fieldAlertType
+          fieldDismissibleOption
+          fieldBannerTitle
+          fieldBannerContent {
+            value
+            format
+            processed
+          }
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
@@ -54,6 +63,119 @@ const vbaFacilityFragment = `
           }
           fieldCcGetUpdatesFromVba {
             fetched
+          }
+          reverseFieldVbaRegionFacilityListNode {
+            count
+            entities {
+              entityId
+              entityLabel
+              ... on NodeServiceRegion {
+                entityBundle
+                reverseFieldVbaServiceRegionsTaxonomyTerm {
+                  count
+                  entities {
+                    entityType
+                    ... on TaxonomyTermHealthCareServiceTaxonomy {
+                      name
+                      tid
+                      entityId
+                      entityLabel
+                      fieldFacilityServiceHeader
+                      fieldRegionalServiceHeader
+                      fieldRegionalServiceDescripti
+                      fieldShowForVbaFacilities
+                      fieldVbaTypeOfCare
+                      fieldOnlineSelfService {
+                        url {
+                          path
+                        }
+                        uri
+                      }
+                      fieldVbaServiceDescrip
+                    }
+                  }
+                }
+              }
+            }
+          }
+          reverseFieldOfficeNode(
+            filter: {conditions: [{field: "type", value: ["vba_facility_service"]}]}
+          ) {
+            entities {
+              ... on NodeVbaFacilityService {
+                entityId
+                entityLabel
+                title
+                reverseFieldVbaServiceRegionsTaxonomyTerm {
+                  entities {
+                    entityLabel
+                  }
+                }
+                fieldServiceLocation {
+                  entity {
+                    ... on ParagraphServiceLocation {
+                      fieldServiceLocationAddress {
+                        entity {
+                          ... on ParagraphServiceLocationAddress {
+                            fieldUseFacilityAddress
+                            fieldAddress {
+                              addressLine1
+                              addressLine2
+                              organization
+                              additionalName
+                              givenName
+                              postalCode
+                            }
+                          }
+                        }
+                      }
+                      fieldUseMainFacilityPhone
+                      fieldPhone {
+                        entity {
+                          ... on ParagraphPhoneNumber {
+                            fieldPhoneNumber
+                          }
+                        }
+                      }
+                      fieldEmailContacts {
+                        ... on FieldParagraphServiceLocationFieldEmailContacts {
+                          entity {
+                            entityLabel
+                          }
+                        }
+                      }
+                      fieldOfficeHours {
+                        day
+                        allDay
+                        starthours
+                        endhours
+                        comment
+                      }
+                      fieldUseMainFacilityPhone
+                    }
+                  }
+                }
+                entityBundle
+                fieldServiceNameAndDescripti {
+                  entity {
+                    name
+                    entityBundle
+                    ... on TaxonomyTermHealthCareServiceTaxonomy {
+                      fieldFacilityServiceDescripti
+                      fieldFacilityServiceHeader
+                      fieldVbaTypeOfCare
+                      fieldShowForVbaFacilities
+                      fieldVbaServiceDescrip
+                      description {
+                        value
+                        format
+                        processed
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
           fieldMedia {
             entity {

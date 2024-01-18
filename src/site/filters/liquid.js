@@ -10,11 +10,7 @@ const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
 const stagingSurveys = require('./medalliaStagingSurveys.json');
 const prodSurveys = require('./medalliaProdSurveys.json');
-const {
-  deriveMostRecentDate,
-  filterPastEvents,
-  filterUpcomingEvents,
-} = require('./events');
+const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -810,10 +806,19 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    const audiences = [
-      fieldAudienceBeneficiares?.entity,
-      fieldNonBeneficiares?.entity,
-    ]
+    let beneficiaresAudiences = [];
+    if (
+      fieldAudienceBeneficiares &&
+      !Array.isArray(fieldAudienceBeneficiares)
+    ) {
+      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
+    } else if (fieldAudienceBeneficiares) {
+      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+        audience => audience?.entity,
+      );
+    }
+
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
@@ -861,6 +866,90 @@ module.exports = function registerFilters() {
       const targetValue = _.get(e, filterBy);
       return targetValue && targetValue !== valueFilter;
     });
+  };
+
+  liquid.filters.processVbaServices = (serviceRegions, offices) => {
+    const hasServiceRegions =
+      Array.isArray(serviceRegions) && serviceRegions.length !== 0;
+    const hasOffices = Array.isArray(offices) && offices.length !== 0;
+
+    if (!hasServiceRegions && !hasOffices) {
+      return {
+        veteranBenefits: [],
+        familyCaregiverBenefits: [],
+        serviceMemberBenefits: [],
+        otherServices: [],
+      };
+    }
+    let flattenedVbaServiceRegions = [];
+    let flattenedVbaOffices = [];
+
+    if (hasServiceRegions) {
+      flattenedVbaServiceRegions = serviceRegions.reduce(
+        (acc, serviceRegion) => {
+          serviceRegion.reverseFieldVbaServiceRegionsTaxonomyTerm.entities.forEach(
+            taxonomy =>
+              acc.push({
+                vbaCategory: 'serviceRegion',
+                vbaId: taxonomy.entityId,
+                vbaType: taxonomy.fieldVbaTypeOfCare,
+                vbaHeader: taxonomy.entityLabel,
+                vbaDescription: taxonomy.fieldVbaServiceDescrip,
+                vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
+                ...taxonomy,
+              }),
+          );
+          return acc;
+        },
+        [],
+      );
+    }
+
+    if (hasOffices) {
+      flattenedVbaOffices = offices.map(office => {
+        const { entity } = office.fieldServiceNameAndDescripti;
+        return {
+          vbaCategory: 'office',
+          vbaId: office.entityId,
+          vbaType: entity.fieldVbaTypeOfCare,
+          vbaHeader: entity.name,
+          vbaDescription: entity.fieldVbaServiceDescrip,
+          vbaIsVisible: entity.fieldShowForVbaFacilities,
+          ...office,
+        };
+      });
+    }
+
+    return [...flattenedVbaServiceRegions, ...flattenedVbaOffices].reduce(
+      (acc, vbaService) => {
+        if (!vbaService.vbaIsVisible) {
+          return acc;
+        }
+
+        switch (vbaService.vbaType) {
+          case 'vba_veteran_benefits':
+            acc.veteranBenefits.push(vbaService);
+            break;
+          case 'vba_family_member_and_caregiver_benefits':
+            acc.familyCaregiverBenefits.push(vbaService);
+            break;
+          case 'vba_service_member_benefits':
+            acc.serviceMemberBenefits.push(vbaService);
+            break;
+          default:
+            acc.otherServices.push(vbaService);
+            break;
+        }
+
+        return acc;
+      },
+      {
+        veteranBenefits: [],
+        familyCaregiverBenefits: [],
+        serviceMemberBenefits: [],
+        otherServices: [],
+      },
+    );
   };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
@@ -914,6 +1003,38 @@ module.exports = function registerFilters() {
 
     processed.fieldDescription = field.fetched.fieldDescription[0].processed;
     return processed;
+  };
+
+  liquid.filters.processWysiwygSimple = field => {
+    if (!field?.fetched?.fieldWysiwyg?.length) return null;
+    return field.fetched.fieldWysiwyg[0].value;
+  };
+
+  liquid.filters.processFieldPhoneNumbersParagraph = fields => {
+    if (!fields?.length) return null; // no phone numbers
+    // Should only have 1 phone number
+    const field = fields[0];
+    if (!field.entity) return null; // error in paragraph
+    const { entity } = field;
+    return {
+      label: entity.fieldPhoneLabel,
+      contact: entity.fieldPhoneNumber,
+      extension: entity.fieldPhoneExtension,
+      numberType: entity.fieldPhoneNumberType,
+    };
+  };
+
+  liquid.filters.processCcFeatured = fieldFeaturedCc => {
+    if (!fieldFeaturedCc?.fetched) return null;
+    const { fetched } = fieldFeaturedCc;
+    return {
+      fieldSectionHeader: fetched.fieldSectionHeader[0].value,
+      fieldDescription: fetched.fieldDescription[0].value,
+      fieldCta: {
+        label: fetched.fieldCta[0].entity.fieldButtonLabel[0].value,
+        uri: fetched.fieldCta[0].entity.fieldButtonLink[0].url.path,
+      },
+    };
   };
 
   liquid.filters.processCentralizedContent = (entity, contentType) => {
@@ -1084,8 +1205,6 @@ module.exports = function registerFilters() {
     }
     return [featureContentObj, ...featureContentArray];
   };
-
-  liquid.filters.filterPastEvents = filterPastEvents;
 
   liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
 
@@ -1738,7 +1857,7 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.shouldShowiOSBanner = currentPath => {
+  liquid.filters.shouldShowMobileAppPromoBanner = currentPath => {
     const urlsForBanner = [
       '/health-care/refill-track-prescriptions',
       '/health-care/secure-messaging',
@@ -1752,5 +1871,13 @@ module.exports = function registerFilters() {
     ];
 
     return urlsForBanner.includes(currentPath);
+  };
+
+  liquid.filters.shouldShowCustomMobilePromoBanner = currentPath => {
+    const isCorrectPath = liquid.filters.shouldShowMobileAppPromoBanner(
+      currentPath,
+    );
+
+    return cmsFeatureFlags?.FEATURE_MOBILE_APP_PROMO && isCorrectPath;
   };
 };

@@ -1,0 +1,8 @@
+<va-featured-content uswds="true" class="vads-u-border--0">
+  <h2 slot="headline" class="vads-u-padding-x--2 vads-u-padding-top--2 vads-u-font-size--h3">{{ fieldSectionHeader }}</h3>
+  <div class="vads-u-font-size--base vads-u-padding-x--2 vads-u-padding-bottom--2">
+    {% comment %} fieldDescription is HTML inline, surrounded by a <p> tag {% endcomment %}
+    {{ fieldDescription }} 
+    <va-link href="{{ fieldCta.uri }}" text="{{ fieldCta.label }}" />
+  </div>
+</va-featured-content>
