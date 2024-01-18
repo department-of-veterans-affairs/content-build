@@ -1101,6 +1101,13 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@department-of-veterans-affairs/css-library@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/css-library/-/css-library-0.2.0.tgz#19d3c2a6428687034c9faf8aff4020167d274bad"
+  integrity sha512-Reaj5iUyg3WrSKD/fyiKyGkWFog5oJQzg4j9bC+uyazNXVFMmtqERvRI/FRsUhTV5cTrh52KGjoEWfRI/gdonA==
+  dependencies:
+    "@divriots/style-dictionary-to-figma" "^0.4.0"
+
 "@department-of-veterans-affairs/eslint-plugin@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/eslint-plugin/-/eslint-plugin-1.1.0.tgz#fcfb3651485aaddb66f1f46f227b670b2adce7da"
@@ -1113,12 +1120,11 @@
   dependencies:
     minimist "^1.2.6"
 
-"@department-of-veterans-affairs/web-components@~4.9.6":
-  version "4.9.6"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-4.9.6.tgz#16e9f057c0dbef33aa4342fc4d6ea94cdfd07c41"
-  integrity sha512-VJQq4VY8OQ0ZD32BacCjnnBeHyrJ9OoRmlBKZ7bR4LTLQwUWBDNYgSnLh8LQMO1h2gLnXdeeuMOz8xKEqT/Jig==
+"@department-of-veterans-affairs/web-components@../component-library/packages/web-components":
+  version "4.53.1"
   dependencies:
-    "@stencil/core" "^2.10.0"
+    "@department-of-veterans-affairs/css-library" "^0.2.0"
+    "@stencil/core" "^2.19.2"
     aria-hidden "^1.1.3"
     body-scroll-lock "^4.0.0-beta.0"
     classnames "^2.3.1"
@@ -1128,6 +1134,11 @@
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.5.tgz#9283c9ce5b289a3c4f61c12757469e59377f81f3"
   integrity sha512-6nFkfkmSeV/rqSaS4oWHgmpnYw194f6hmWF5is6b0J1naJZoiD0NTc9AiUwPHvWsowkjuHErCZT1wa0jg+BLIA==
+
+"@divriots/style-dictionary-to-figma@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@divriots/style-dictionary-to-figma/-/style-dictionary-to-figma-0.4.0.tgz#c518116620887eb71d2750c30201f9ffceb3dac9"
+  integrity sha512-vSC3u1xBi9ShYpGEP+atS+L0vnNnSFmjtvB976+yNUT25nvgpUYCb1ZsSpKBe8+Uk1Qww+4ZIK+/91k3msfs2Q==
 
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
@@ -1455,10 +1466,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@stencil/core@^2.10.0":
-  version "2.17.3"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.17.3.tgz#b86cb76eb57231ce1f04014c2a51d1690c64325d"
-  integrity sha512-qw2DZzOpyaltLLEfYRTj3n+XbvRtkmv4QQimYDJubC6jMY0NXK9r6H2+VyszdbbVmvK1D9GqZtyvY0NmOrztsg==
+"@stencil/core@^2.19.2":
+  version "2.22.3"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.22.3.tgz#83987e20bba855c450f6d6780e3a20192603f13f"
+  integrity sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==
 
 "@testing-library/cypress@^8.0.3":
   version "8.0.3"
