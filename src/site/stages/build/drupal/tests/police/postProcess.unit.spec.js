@@ -38,7 +38,7 @@ describe('process police csv files', () => {
   });
   it('should have an error', async () => {
     const queryResultMock = [policeData.toString('utf-8')];
-    expect(await postProcessPolice(queryResultMock)).to.be.an('error');
+    await expect(postProcessPolice(queryResultMock)).to.be.rejectedWith(Error);
   });
   it('should process files of CSV content', async () => {
     const queryResultMock = [
@@ -78,6 +78,19 @@ describe('process police csv files', () => {
               numServiceCalls: 5200,
               sustainedAllegations: 8,
               trafficParkingTickets: 220,
+            },
+            {
+              VISN: 1,
+              arrests: 752,
+              complaintsInvestigations: 78,
+              criminalTickets: 325,
+              date: '01/2024',
+              disciplinaryActions: 3,
+              facilityAPIId: 'avha_523A5',
+              facilityName: 'Brockton VA Medical Center',
+              numServiceCalls: 3000,
+              sustainedAllegations: 8,
+              trafficParkingTickets: 120,
             },
           ],
           avha_635: [
