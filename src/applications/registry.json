@@ -34,13 +34,16 @@
       "order": 3,
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
+        { "path": "/",
+          "name": "Home"
+        },
         {
           "path": "pension/",
           "name": "Pension benefits"
         },
         {
-          "path": "pension/application/527EZ",
-          "name": "Apply for Veterans Pension"
+          "path": "pension/application/",
+          "name": "Apply for Veterans Pension benefits"
         }
       ]
     }
