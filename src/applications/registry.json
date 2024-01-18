@@ -1536,7 +1536,7 @@
     "rootUrl": "/my-health/order-hearing-aid-or-cpap-supplies-form",
     "productId": "",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
