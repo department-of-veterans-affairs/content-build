@@ -4,17 +4,43 @@ import path from 'path';
 import fs from 'fs-extra';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { postProcessPolice } from '../../static-data-files/vaPoliceData/postProcessPolice';
+import csv from 'csvtojson';
+import {
+  postProcessPolice,
+  processJsonPoliceData,
+} from '../../static-data-files/vaPoliceData/postProcessPolice';
 
 /* This is not a FE test but a unit test. */
 describe('process police csv files', () => {
-  it('should have an error if the police-contact.csv file is missing', async () => {
-    const contact = fs.readFileSync(
-      path.join(__dirname, 'fixtures/police-contact.csv'),
-    );
-    const policeData = fs.readFileSync(
-      path.join(__dirname, 'fixtures/police.csv'),
-    );
+  const contact = fs.readFileSync(
+    path.join(__dirname, 'fixtures/police-contact.csv'),
+  );
+  const policeData = fs.readFileSync(
+    path.join(__dirname, 'fixtures/police.csv'),
+  );
+  it('should process individual row of police data', async () => {
+    const readin = await csv().fromString(policeData.toString('utf-8'));
+    const firstLine = readin[0];
+    const processed = processJsonPoliceData(firstLine);
+    expect(processed).to.deep.equal({
+      VISN: 19,
+      arrests: 600,
+      complaintsInvestigations: 50,
+      criminalTickets: 100,
+      date: '12/2023',
+      disciplinaryActions: 2,
+      facilityAPIId: 'avha_635',
+      facilityName: 'Oklahoma City VA Medical Center',
+      numServiceCalls: 4000,
+      sustainedAllegations: 10,
+      trafficParkingTickets: 100,
+    });
+  });
+  it('should have an error', async () => {
+    const queryResultMock = [policeData.toString('utf-8')];
+    expect(await postProcessPolice(queryResultMock)).to.be.an('error');
+  });
+  it('should process files of CSV content', async () => {
     const queryResultMock = [
       contact.toString('utf-8'),
       policeData.toString('utf-8'),
