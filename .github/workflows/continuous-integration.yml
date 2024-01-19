@@ -373,12 +373,12 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Download production build
-        run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
+        run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovstaging.tar.bz2" -o vagovstaging.tar.bz2
 
       - name: Unpack build
         run: |
-          mkdir -p build/vagovprod
-          tar -C build/vagovprod -xf vagovprod.tar.bz2
+          mkdir -p build/vagovstaging
+          tar -C build/vagovstaging -xf vagovstaging.tar.bz2
 
       - name: Install dependencies
         uses: ./.github/workflows/install
@@ -393,10 +393,10 @@ jobs:
             **/node_modules
 
       - name: Start server
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovstaging --port=3002 &
 
       - name: Run Cypress tests
-        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
+        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovstaging
 
       - name: Publish test results
         if: ${{ always() }}
