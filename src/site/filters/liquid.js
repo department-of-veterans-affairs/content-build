@@ -1159,7 +1159,34 @@ module.exports = function registerFilters() {
     }
     return processedFetched;
   };
-
+  liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent = featuredContentEntity => {
+    if (
+      !featuredContentEntity ||
+      !featuredContentEntity.fieldDescription ||
+      !featuredContentEntity.fieldSectionHeader
+    ) {
+      return null;
+    }
+    const {
+      fieldDescription,
+      fieldSectionHeader,
+      fieldCta,
+    } = featuredContentEntity;
+    const updatedCta = [
+      {
+        entity: {
+          fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
+          fieldButtonLink: [fieldCta.entity.fieldButtonLink],
+        },
+      },
+    ];
+    const fetched = {
+      fieldDescription: [fieldDescription],
+      fieldSectionHeader: [{ value: fieldSectionHeader }],
+      fieldCta: updatedCta,
+    };
+    return { fetched };
+  };
   // fieldCcVetCenterFeaturedCon data structure is different
   // from objects inside fieldVetCenterFeatureContent. Recreates the array
   // with the expected structure so that it can be directly passed inside the template

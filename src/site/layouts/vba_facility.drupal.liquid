@@ -156,11 +156,12 @@
           </h2>
 
           <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
-            {% assign spotlightContent1 = "" | split: "," %}
-            {% assign spotlightContent2 = fieldCcNationalSpotlight1 | appendCentralizedFeaturedContent: spotlightContent1 %}
-            {% assign spotlightContent3 = fieldCcNationalSpotlight2 | appendCentralizedFeaturedContent: spotlightContent2 %}
-            {% assign spotlightContentAll = fieldCcNationalSpotlight3 | appendCentralizedFeaturedContent: spotlightContent3 %}
-
+            {% assign spotlightContentAll = "" | split: "," %}
+            {% assign spotlightContentAll = fieldCcNationalSpotlight1 | appendCentralizedFeaturedContent: spotlightContentAll %}
+            {% for localSpotlight in fieldLocalSpotlight %}
+              {% assign spotlightContentAll = localSpotlight.entity | shimNonFetchedFeaturedToFetchedFeaturedContent | appendCentralizedFeaturedContent: spotlightContentAll %}
+            {% endfor %}
+            
             {% for spotlightContent in spotlightContentAll %}
               {% if spotlightContent.entity %}
                 {% include "src/site/includes/vba_facilities/spotlight_content.liquid" with
