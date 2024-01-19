@@ -43,7 +43,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
+        buildtype: [vagovdev, vagovstaging]
         include:
           - buildtype: vagovdev
             drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
