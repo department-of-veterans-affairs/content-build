@@ -61,6 +61,12 @@ const vbaFacilityFragment = `
           fieldCcNationalSpotlight1 {
             fetched
           }
+          fieldCcNationalSpotlight2 {
+            fetched
+          }
+          fieldCcNationalSpotlight3 {
+            fetched
+          }
           fieldCcGetUpdatesFromVba {
             fetched
           }
