@@ -161,7 +161,7 @@
             {% for localSpotlight in fieldLocalSpotlight %}
               {% assign spotlightContentAll = localSpotlight.entity | shimNonFetchedFeaturedToFetchedFeaturedContent | appendCentralizedFeaturedContent: spotlightContentAll %}
             {% endfor %}
-            
+
             {% for spotlightContent in spotlightContentAll %}
               {% if spotlightContent.entity %}
                 {% include "src/site/includes/vba_facilities/spotlight_content.liquid" with
@@ -176,21 +176,29 @@
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Veteran benefits"
             vbaServices = allVbaServices.veteranBenefits
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
           %}
 
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Family member and caregiver benefits"
             vbaServices = allVbaServices.familyCaregiverBenefits
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
           %}
 
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Service member benefits"
             vbaServices = allVbaServices.serviceMemberBenefits
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
           %}
 
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Other services"
             vbaServices = allVbaServices.otherServices
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
           %}
 
           {% if fieldCcCantFindBenefits %}
