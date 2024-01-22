@@ -61,6 +61,34 @@ const vbaFacilityFragment = `
           fieldCcNationalSpotlight1 {
             fetched
           }
+          fieldLocalSpotlight {
+            entity {
+              ... on ParagraphFeaturedContent {
+                id
+                fieldDescription {
+                  value
+                  processed
+                  format
+                }
+                fieldSectionHeader
+                fieldCta {
+                  entity {
+                    ... on ParagraphButton {
+                      fieldButtonLink {
+                        url {
+                          path
+                        }
+                        uri
+                        title
+                        options
+                      }
+                      fieldButtonLabel
+                    }
+                  }
+                }
+              }
+            }
+          }
           fieldCcGetUpdatesFromVba {
             fetched
           }
