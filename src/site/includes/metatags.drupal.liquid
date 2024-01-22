@@ -22,11 +22,11 @@
   <meta name="DC.Date" content="{{ lastupdate| date: '%Y-%m-%d' }}" property="http://purl.org/dc/terms/date">
 {% endif %}
 
-{% assign shouldShowiOSBanner = entityUrl.path | shouldShowMobileAppPromoBanner: false %}
+{% assign shouldShowMobileBanners = entityUrl.path | shouldShowMobileAppPromoBanner: false %}
 <!-- iOS banner -->
-{% if shouldShowiOSBanner %}
+{% if shouldShowMobileBanners %}
   <meta name="apple-itunes-app" content="app-id=1559609596">
-  
+
   <!-- Start SmartBanner configuration -->
   <script nonce="**CSP_NONCE**" type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
 
