@@ -861,87 +861,48 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.processVbaServices = (serviceRegions, offices) => {
+    const emptyVbaServicesObj = {
+      veteranBenefits: [],
+      familyCaregiverBenefits: [],
+      serviceMemberBenefits: [],
+      otherServices: [],
+    };
+
     const hasServiceRegions =
       Array.isArray(serviceRegions) && serviceRegions.length !== 0;
     const hasOffices = Array.isArray(offices) && offices.length !== 0;
 
     if (!hasServiceRegions && !hasOffices) {
-      return {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      };
-    }
-    let flattenedVbaServiceRegions = [];
-    let flattenedVbaOffices = [];
-
-    if (hasServiceRegions) {
-      flattenedVbaServiceRegions = serviceRegions.reduce(
-        (acc, serviceRegion) => {
-          serviceRegion.reverseFieldVbaServiceRegionsTaxonomyTerm.entities.forEach(
-            taxonomy =>
-              acc.push({
-                vbaCategory: 'serviceRegion',
-                vbaId: taxonomy.entityId,
-                vbaType: taxonomy.fieldVbaTypeOfCare,
-                vbaHeader: taxonomy.entityLabel,
-                vbaDescription: taxonomy.fieldVbaServiceDescrip,
-                vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
-                ...taxonomy,
-              }),
-          );
-          return acc;
-        },
-        [],
-      );
+      return emptyVbaServicesObj;
     }
 
-    if (hasOffices) {
-      flattenedVbaOffices = offices.map(office => {
-        const { entity } = office.fieldServiceNameAndDescripti;
-        return {
-          vbaCategory: 'office',
-          vbaId: office.entityId,
-          vbaType: entity.fieldVbaTypeOfCare,
-          vbaHeader: entity.name,
-          vbaDescription: entity.fieldVbaServiceDescrip,
-          vbaIsVisible: entity.fieldShowForVbaFacilities,
-          ...office,
-        };
-      });
-    }
-
-    return [...flattenedVbaServiceRegions, ...flattenedVbaOffices].reduce(
-      (acc, vbaService) => {
-        if (!vbaService.vbaIsVisible) {
-          return acc;
-        }
-
-        switch (vbaService.vbaType) {
-          case 'vba_veteran_benefits':
-            acc.veteranBenefits.push(vbaService);
-            break;
-          case 'vba_family_member_and_caregiver_benefits':
-            acc.familyCaregiverBenefits.push(vbaService);
-            break;
-          case 'vba_service_member_benefits':
-            acc.serviceMemberBenefits.push(vbaService);
-            break;
-          default:
-            acc.otherServices.push(vbaService);
-            break;
-        }
-
+    return [...serviceRegions, ...offices].reduce((acc, vbaService) => {
+      if (
+        !vbaService.fieldServiceNameAndDescripti.entity
+          .fieldShowForVbaFacilities
+      ) {
         return acc;
-      },
-      {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      },
-    );
+      }
+
+      switch (
+        vbaService.fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare
+      ) {
+        case 'vba_veteran_benefits':
+          acc.veteranBenefits.push(vbaService);
+          break;
+        case 'vba_family_member_caregiver_benefits':
+          acc.familyCaregiverBenefits.push(vbaService);
+          break;
+        case 'vba_service_member_benefits':
+          acc.serviceMemberBenefits.push(vbaService);
+          break;
+        default:
+          acc.otherServices.push(vbaService);
+          break;
+      }
+
+      return acc;
+    }, emptyVbaServicesObj);
   };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
