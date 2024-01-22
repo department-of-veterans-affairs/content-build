@@ -26,13 +26,10 @@
 <!-- iOS banner -->
 {% if shouldShowiOSBanner %}
   <meta name="apple-itunes-app" content="app-id=1559609596">
-{% endif %}
-
-{% assign shouldShowCustomBanner = entityUrl.path | shouldShowCustomMobilePromoBanner: false %}
-{% if shouldShowCustomBanner %}
+  
+  <!-- Start SmartBanner configuration -->
   <script nonce="**CSP_NONCE**" type="text/javascript" src="/js/smartbanner/smartbanner.js"></script>  
 
-  <!-- Start SmartBanner configuration -->
   <meta name="smartbanner:exclude-user-agent-regex" content="^.*(Version).*Safari">
   <meta name="smartbanner:title" content="VA: Health and Benefits">
   <meta name="smartbanner:author" content="US Dept. of Veteran Affairs">
