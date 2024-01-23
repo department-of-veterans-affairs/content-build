@@ -27,6 +27,12 @@ describe('Static Data Files Test', () => {
     cy.readFile(
       'cypress/downloads/vamc-facility-supplemental-status.json',
     ).should('exist');
+    cy.downloadFile(
+      'http://localhost:3002/data/cms/vamc-system.json',
+      '../cypress/downloads',
+      'vamc-system.json',
+    );
+    cy.readFile('cypress/downloads/vamc-system.json').should('exist');
   });
   it('has the VAMC Police JSON static file', () => {
     cy.deleteFileOrDir('../cypress/downloads/vamc-police.json');
