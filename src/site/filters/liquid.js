@@ -583,14 +583,6 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.featureSingleValueFieldLink = fieldLink => {
-    if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
-      return fieldLink[0];
-    }
-
-    return fieldLink;
-  };
-
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
