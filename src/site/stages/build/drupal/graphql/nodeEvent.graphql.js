@@ -74,6 +74,8 @@ const nodeEvent = `
     fieldDescription
     fieldEventCost
     fieldEventCta
+    fieldCtaEmail
+    fieldHowToSignUp
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
@@ -248,6 +250,8 @@ const nodeEventWithoutBreadcrumbs = `
     fieldDescription
     fieldEventCost
     fieldEventCta
+    fieldCtaEmail
+    fieldHowToSignUp
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
@@ -287,6 +291,32 @@ const nodeEventWithoutBreadcrumbs = `
       title
     }
     fieldListing {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeEventListing {
+          fieldDescription
+          fieldIntroText
+          fieldOffice {
+            entity {
+              entityType
+              entityBundle
+              entityId
+              ... on NodeOffice {
+                fieldBody {
+                  value
+                  format
+                  processed
+                }
+                fieldDescription
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldAdditionalListings {
       entity {
         entityBundle
         entityId

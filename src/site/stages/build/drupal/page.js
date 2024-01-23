@@ -67,7 +67,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
   if (page[pageField]) {
     const pagedEntities = _.chunk(page[pageField].entities, perPage);
 
-    for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
+    for (let pageNum = 0; pageNum < pagedEntities.length; pageNum += 1) {
       let pagedPage = { ...page };
 
       if (pageNum > 0) {
@@ -98,7 +98,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
             start = pageNum;
           }
         }
-        for (let num = start; num < start + length; num++) {
+        for (let num = start; num < start + length; num += 1) {
           innerPages.push({
             href:
               num === pageNum
@@ -356,6 +356,7 @@ function compilePage(page, contentData) {
   const facilitySidebarNavItems = {
     facilitySidebar: getFacilitySidebar(page, contentData),
   };
+
   const outreachSidebarNavItems = { outreachSidebar: outreachSidebarNav };
   const alertItems = { alert: alertsItem };
 
@@ -390,6 +391,7 @@ function compilePage(page, contentData) {
     case 'vamc_system_register_for_care':
     case 'vamc_system_billing_insurance':
     case 'vamc_system_medical_records_offi':
+    case 'vamc_system_va_police':
       pageCompiled = {
         ...page,
         ...facilitySidebarNavItems,
@@ -450,6 +452,7 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_region_page':
     case 'press_release':
+    case 'vba_facility':
       pageCompiled = Object.assign(
         page,
         facilitySidebarNavItems,

@@ -38,7 +38,7 @@ jobs:
         run: echo APPROX_WORKFLOW_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
@@ -75,7 +75,7 @@ jobs:
     needs: validate-build-status
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Notify Slack
         uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
@@ -104,9 +104,9 @@ jobs:
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
+      BROKEN_LINK_COUNT: ${{ steps.get-broken-link-info.outputs.BROKEN_LINK_COUNT || 0 }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-
     steps:
       - name: Export build start time
         id: export-build-start-time
@@ -114,13 +114,13 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Checkout vagov-content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           path: content-build
           ref: ${{ needs.validate-build-status.outputs.REF }}
@@ -209,6 +209,7 @@ jobs:
         timeout-minutes: 40
         env:
           NODE_ENV: production
+          DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
       - name: Export content build end time
         id: export-content-build-end
@@ -384,7 +385,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Configure AWS credentials (1)
         uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
@@ -449,7 +450,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
@@ -488,7 +489,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
@@ -533,8 +534,8 @@ jobs:
     needs: deploy
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
@@ -552,34 +553,6 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/error
           method: GET
-
-      - name: Get Datadog token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        with:
-          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
-          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
-
-      - name: Build JSON object
-        run: |
-          jq --null-input '{}' | \
-          jq '.title = "VA.gov CMS content release has failed"' | \
-          jq '.text = "VA.gov Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
-          jq '.date_happened = now' | \
-          jq '.aggregation_key = "content release ${{github.run_id}}"' | \
-          jq '.tags[0] = "project:vagov"' | \
-          jq '.tags[1] = "repo:content-build"' | \
-          jq '.tags[2] = "workflow:content-release"' | \
-          jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
-          jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
-          jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
-          jq '.alert_type = "error"' > event.json
-
-      - name: Send event to Datadog
-        run: |
-          curl -X POST "https://api.ddog-gov.com/api/v1/events" \
-          -H "Content-Type: text/json" \
-          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
-          -d @- < event.json
 
   notify-failure-slack:
     name: Notify Failure (Slack)
@@ -613,6 +586,51 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+  notify-failure-datadog:
+    name: Notify Failure (Datadog)
+    runs-on: [self-hosted, asg]
+    if: |
+      (failure() && needs.deploy.result != 'success')
+    needs: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Datadog token from Parameter Store
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Build JSON object
+        run: |
+          jq --null-input '{}' | \
+          jq '.title = "VA.gov CMS content release has failed"' | \
+          jq '.text = "VA.gov Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.date_happened = now' | \
+          jq '.aggregation_key = "content release ${{github.run_id}}"' | \
+          jq '.tags[0] = "project:vagov"' | \
+          jq '.tags[1] = "repo:content-build"' | \
+          jq '.tags[2] = "workflow:content-release"' | \
+          jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
+          jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
+          jq '.alert_type = "error"' > event.json
+
+      - name: Send event to Datadog
+        run: |
+          curl -X POST "https://api.ddog-gov.com/api/v1/events" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
+          -d @- < event.json
+
   record-metrics:
     name: Record metrics in Datadog
     runs-on: [self-hosted, asg]
@@ -624,7 +642,7 @@ jobs:
       METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
@@ -663,6 +681,8 @@ jobs:
           jq '.series[6].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
           jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
           jq '.series[7].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
+          jq '.series[8].metric = "${{env.METRIC_NAMESPACE}}.build.broken-links.count"' | \
+          jq '.series[8].points[0] = [${{env.NOW}}, ${{needs.build.outputs.BROKEN_LINK_COUNT}}]' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \

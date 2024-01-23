@@ -2,6 +2,8 @@
 const fs = require('fs-extra');
 const { ENABLED_ENVIRONMENTS } = require('../../../../constants/drupals');
 const getApiClient = require('../api');
+const getCurlClient = require('./fetchApi');
+
 const { logDrupal } = require('../utilities-drupal');
 const { DATA_FILE_PATH, DATA_FILES } = require('./config');
 const {
@@ -15,6 +17,8 @@ const DRUPAL_CACHE_CONFIG_FILENAME = 'config.json';
 
 const isQueryTypeGraphQL = ({ queryType }) =>
   queryType === 'graphql' || queryType === undefined; // if undefined, default to graphql
+
+const isQueryTypeCurl = ({ queryType }) => queryType === 'curl';
 
 const writeProcessedDataFileToBuild = (
   files,
@@ -76,7 +80,6 @@ const writeProcessedDataFilesToCache = (
   processedDataFiles,
 ) => {
   const fullCacheFilepath = getDrupalCachePath(buildOptions, cacheFilepath);
-  fs.rmSync(fullCacheFilepath, { recursive: true, force: true });
 
   const successfulDataFiles = processedDataFiles.filter(
     ({ error }) => error === undefined,
@@ -86,7 +89,12 @@ const writeProcessedDataFilesToCache = (
     return;
   }
 
+  const newSuccessful = [...successfulDataFiles];
   const configCacheFilenameWithPath = `${fullCacheFilepath}/${cacheConfigFilename}`;
+  if (fs.existsSync(configCacheFilenameWithPath)) {
+    const existingConfig = fs.readJSONSync(configCacheFilenameWithPath);
+    successfulDataFiles.push(...existingConfig);
+  }
   fs.outputJSON(
     configCacheFilenameWithPath,
     successfulDataFiles.map(({ description, filename }) => ({
@@ -94,13 +102,45 @@ const writeProcessedDataFilesToCache = (
       filename,
     })),
     {
+      append: false,
       spaces: 2,
     },
   );
-
-  successfulDataFiles.forEach(({ filename, data }) => {
+  for (const processedData of newSuccessful) {
+    fs.rmSync(`${fullCacheFilepath}/${processedData.filename}`, {
+      force: true,
+    });
+  }
+  newSuccessful.forEach(({ filename, data }) => {
     writeProcessedDataFileToCache(fullCacheFilepath, filename, data);
   });
+};
+
+// Applies the process function to download the inputs to the DATA_FILE (A DATA_FILE for curl may have multiple inputs)
+const processCurlDataFile = async (dataFile, curlClient) => {
+  const { description, filename, query, postProcess } = dataFile;
+  const baseResult = {
+    description,
+    filename,
+    from: 'Curl',
+  };
+  if (!filename) {
+    return Promise.resolve({
+      ...baseResult,
+      error: 'A filename must be provided.',
+    });
+  }
+  const responses = await Promise.all(
+    query.map(URL => curlClient.proxyFetch(URL, { method: 'GET' })),
+  );
+  const outputData = await Promise.all(
+    responses.map(response => response.text()),
+  );
+  const data = postProcess ? await postProcess(outputData) : outputData;
+  return {
+    ...baseResult,
+    data,
+  };
 };
 
 const processGraphQLDataFile = async (
@@ -137,7 +177,6 @@ const processGraphQLDataFile = async (
           error: json.error,
         };
       }
-
       return {
         ...baseResult,
         data: postProcess ? postProcess(json) : json,
@@ -151,12 +190,24 @@ const processGraphQLDataFile = async (
     });
 };
 
+const pullDataFileContentFromCurls = async (
+  dataFiles,
+  buildOptions,
+  _onlyPublishedContent,
+) => {
+  const curlDataFiles = dataFiles.filter(isQueryTypeCurl);
+  const curlClient = getCurlClient(buildOptions);
+  return Promise.all(
+    curlDataFiles.map(dataFile => processCurlDataFile(dataFile, curlClient)),
+  );
+};
+
 const pullGraphQLDataFileContentFromDrupal = async (
   dataFiles,
   buildOptions,
   onlyPublishedContent,
 ) => {
-  const graphQLDataFiles = DATA_FILES.filter(isQueryTypeGraphQL);
+  const graphQLDataFiles = dataFiles.filter(isQueryTypeGraphQL);
   const graphQLApiClient = getApiClient(buildOptions);
   return Promise.all(
     graphQLDataFiles.map(dataFile =>
@@ -176,6 +227,24 @@ const pullDataFileContentFromDrupal = async (
     buildOptions,
     onlyPublishedContent,
   );
+};
+
+const pullDataFileContent = async (
+  dataFiles,
+  buildOptions,
+  onlyPublishedContent,
+) => {
+  const curls = await pullDataFileContentFromCurls(
+    dataFiles,
+    buildOptions,
+    onlyPublishedContent,
+  );
+  const drupal = await pullDataFileContentFromDrupal(
+    dataFiles,
+    buildOptions,
+    onlyPublishedContent,
+  );
+  return curls.concat(drupal);
 };
 
 const readProcessedDataFileFromCache = async (path, filename) => {
@@ -240,7 +309,7 @@ const pullDataFileContentFromCache = async (
  *  --pull-drupal is used
  *  Cache cannot be found
  */
-const generateStaticDataFilesFromDrupal = async (
+const generateStaticDataFiles = async (
   files,
   buildOptions,
   onlyPublishedContent = true,
@@ -251,13 +320,19 @@ const generateStaticDataFilesFromDrupal = async (
     );
     return;
   }
-
   let processedJsonDataFiles = [];
-
   // Pull static-data-file content from Drupal
-  if (shouldPullDrupal(buildOptions, DRUPAL_CACHE_STATIC_DATA_FILEPATH)) {
+  // if any of the files are missing from cache
+  if (
+    DATA_FILES.some(df =>
+      shouldPullDrupal(
+        buildOptions,
+        `${DRUPAL_CACHE_STATIC_DATA_FILEPATH}/${df.filename}`,
+      ),
+    )
+  ) {
     logDrupal(
-      `Generating static data files from Drupal at ${buildOptions['drupal-address']}.`,
+      `Generating static data files from all sources, including ${buildOptions['drupal-address']}.`,
     );
 
     if (!Array.isArray(DATA_FILES)) {
@@ -274,7 +349,7 @@ const generateStaticDataFilesFromDrupal = async (
       return;
     }
 
-    processedJsonDataFiles = await pullDataFileContentFromDrupal(
+    processedJsonDataFiles = await pullDataFileContent(
       DATA_FILES,
       buildOptions,
       onlyPublishedContent,
@@ -304,4 +379,5 @@ const generateStaticDataFilesFromDrupal = async (
   writeProcessedDataFilesToBuild(files, DATA_FILE_PATH, processedJsonDataFiles);
 };
 
-module.exports = generateStaticDataFilesFromDrupal;
+module.exports.generateStaticDataFiles = generateStaticDataFiles;
+module.exports.processCurlDataFile = processCurlDataFile;

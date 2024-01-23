@@ -1,0 +1,64 @@
+{
+  "fetched": {
+    "fieldLink": [],
+    "fieldLinks": [
+      {
+        "uri": "entity:node/46129",
+        "title": "Subscribe to VBA news",
+        "options": {
+          "href": "entity:node/46129",
+          "dataEntityType": "node",
+          "dataEntityUuid": "9016392b-9dfd-4c7d-a98f-b222a69a9bd0",
+          "dataEntitySubstitution": "canonical"
+        },
+        "url": {
+          "path": "/boston-health-care/work-with-us/internships-and-fellowships/faculty-development/newsletter"
+        }
+      },
+      {
+        "uri": "https://facebook.com",
+        "title": "Get updates from the VBA Facebook page",
+        "options": {
+          "href": "https://facebook.com",
+          "dataEntityType": "",
+          "dataEntityUuid": "",
+          "dataEntitySubstitution": ""
+        },
+        "url": {
+          "path": "https://facebook.com"
+        }
+      },
+      {
+        "uri": "https://twitter.com",
+        "title": "Get updates from the VBA Twitter page",
+        "options": {
+          "href": "https://twitter.com",
+          "dataEntityType": "",
+          "dataEntityUuid": "",
+          "dataEntitySubstitution": ""
+        },
+        "url": {
+          "path": "https://twitter.com"
+        }
+      },
+      {
+        "uri": "https://flickr.com",
+        "title": "Get updates from the VBA Flickr",
+        "options": {
+          "href": "",
+          "dataEntityType": "",
+          "dataEntityUuid": "",
+          "dataEntitySubstitution": ""
+        },
+        "url": {
+          "path": "https://flickr.com"
+        }
+      }
+    ],
+    "fieldSectionHeader": [
+      {
+        "value": "Get updates from the Veterans Benefits Administration"
+      }
+    ]
+  }
+}
