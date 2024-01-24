@@ -45,6 +45,7 @@ class Detector {
     const { maxTouchPoints } = window.navigator;
     const { userAgent } = window.navigator;
 
+    console.log(userAgent)
     if (/Android/i.test(userAgent)) {
       return 'android';
     }
@@ -58,9 +59,8 @@ class Detector {
     ) {
       return 'ios';
     }
-
-    return null;
-  }
+    return null;  
+}
 
   static userAgentMatchesRegex(regexString) {
     return new RegExp(regexString).test(window.navigator.userAgent);
@@ -198,10 +198,10 @@ class SmartBanner {
 
   get icon() {
     if (this.platform === 'android') {
-      return '/img/Android_app_icon.webp';
+      return this.options.iconGoogle;
     }
 
-    return '/img/iOS_app_icon.webp';
+    return this.options.iconApple;
   }
 
   get buttonUrl() {
