@@ -209,11 +209,11 @@ class SmartBanner {
 
   get buttonUrl() {
     if (this.platform === 'android') {
-      return this.options.buttonUrlGoogle;
+      return '/img/Android_app_icon.webp';
     }
 
     if (this.platform === 'ios') {
-      return this.options.buttonUrlApple;
+      return '/img/iOS_app_icon.webp';
     }
     return '#';
   }
