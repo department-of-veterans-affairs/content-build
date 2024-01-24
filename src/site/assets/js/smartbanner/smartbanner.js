@@ -45,7 +45,7 @@ class Detector {
     const { maxTouchPoints } = window.navigator;
     const { userAgent } = window.navigator;
 
-  if(userAgent.match((/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/))) {
+  if(userAgent.match((/(iPhone|iPad|Android)/))) {
     if (/Android/i.test(userAgent)) {
       return 'android';
     }
