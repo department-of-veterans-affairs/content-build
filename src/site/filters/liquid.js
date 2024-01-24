@@ -1901,10 +1901,6 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.shouldShowCustomMobilePromoBanner = currentPath => {
-    const isCorrectPath = liquid.filters.shouldShowMobileAppPromoBanner(
-      currentPath,
-    );
-
-    return cmsFeatureFlags?.FEATURE_MOBILE_APP_PROMO && isCorrectPath;
+    return liquid.filters.shouldShowMobileAppPromoBanner(currentPath);
   };
 };

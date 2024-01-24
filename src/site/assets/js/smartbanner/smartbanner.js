@@ -45,7 +45,7 @@ class Detector {
     const { maxTouchPoints } = window.navigator;
     const { userAgent } = window.navigator;
 
-    console.log(userAgent)
+  if(userAgent.match((/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/))) {
     if (/Android/i.test(userAgent)) {
       return 'android';
     }
@@ -59,7 +59,10 @@ class Detector {
     ) {
       return 'ios';
     }
-    return null;  
+  } else {
+    return null;
+  }    
+
 }
 
   static userAgentMatchesRegex(regexString) {
