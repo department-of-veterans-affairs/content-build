@@ -1292,6 +1292,17 @@
     }
   },
   {
+    "appName": "MHV Secure Messaging - OH Pilot",
+    "entryName": "secure-messaging-pilot",
+    "rootUrl": "/my-health/secure-messages/pilot-test",
+    "productId": "c1486f38-a24e-4211-bf6b-258df6e63cd3",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
     "appName": "MHV Medical Records",
     "entryName": "medical-records",
     "rootUrl": "/my-health/medical-records",
