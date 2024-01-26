@@ -4,7 +4,7 @@
   </h2>
 
   <div class="vads-u-margin-bottom--3">
-    <va-accordion bordered id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}">
+    <va-accordion uswds bordered id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}">
       {% for entity in vbaServices %}
         {% capture entityId %}{{ entity.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
         {% assign entityLabel = entity.entityLabel %}
@@ -16,7 +16,7 @@
         {% assign regionalServiceDescription = entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
         {% assign onlineSelfService = entity.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
 
-        <va-accordion-item
+        <va-accordion-item uswds
             class="va-accordion-item"
             id="vba-service-item-{{ entityId }}"
             header="{{ entity.fieldServiceNameAndDescripti.entity.name }}"
