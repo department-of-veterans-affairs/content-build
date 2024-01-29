@@ -582,14 +582,6 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.featureSingleValueFieldLink = fieldLink => {
-    if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
-      return fieldLink[0];
-    }
-
-    return fieldLink;
-  };
-
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
@@ -1161,7 +1153,34 @@ module.exports = function registerFilters() {
     }
     return processedFetched;
   };
-
+  liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent = featuredContentEntity => {
+    if (
+      !featuredContentEntity ||
+      !featuredContentEntity.fieldDescription ||
+      !featuredContentEntity.fieldSectionHeader
+    ) {
+      return null;
+    }
+    const {
+      fieldDescription,
+      fieldSectionHeader,
+      fieldCta,
+    } = featuredContentEntity;
+    const updatedCta = [
+      {
+        entity: {
+          fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
+          fieldButtonLink: [fieldCta.entity.fieldButtonLink],
+        },
+      },
+    ];
+    const fetched = {
+      fieldDescription: [fieldDescription],
+      fieldSectionHeader: [{ value: fieldSectionHeader }],
+      fieldCta: updatedCta,
+    };
+    return { fetched };
+  };
   // fieldCcVetCenterFeaturedCon data structure is different
   // from objects inside fieldVetCenterFeatureContent. Recreates the array
   // with the expected structure so that it can be directly passed inside the template
@@ -1876,10 +1895,6 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.shouldShowCustomMobilePromoBanner = currentPath => {
-    const isCorrectPath = liquid.filters.shouldShowMobileAppPromoBanner(
-      currentPath,
-    );
-
-    return cmsFeatureFlags?.FEATURE_MOBILE_APP_PROMO && isCorrectPath;
+    return liquid.filters.shouldShowMobileAppPromoBanner(currentPath);
   };
 };

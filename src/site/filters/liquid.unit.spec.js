@@ -1160,6 +1160,85 @@ describe('appendCentralizedFeaturedContent', () => {
   });
 });
 
+describe('local spotlight content', () => {
+  it('shims local featured content from local spotlight to fetched form centralized content', () => {
+    const localSpotlightData = {
+      id: 144308,
+      fieldDescription: {
+        value: '<p>Local Spotlight for Facebook</p>',
+        processed:
+          '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+        format: 'rich_text_limited',
+      },
+      fieldSectionHeader: 'Facebook Spotlight 1',
+      fieldCta: {
+        entity: {
+          fieldButtonLink: {
+            url: {
+              path: 'https://facebook.com',
+            },
+            uri: 'https://facebook.com',
+            title: '',
+            options: {
+              href: 'https://facebook.com',
+              'data-entity-type': '',
+              'data-entity-uuid': '',
+              'data-entity-substitution': '',
+            },
+          },
+          fieldButtonLabel: 'Facebook',
+        },
+      },
+    };
+    const centralizedContentFormattedData = liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent(
+      localSpotlightData,
+    );
+    expect(centralizedContentFormattedData).to.deep.equal({
+      fetched: {
+        fieldCta: [
+          {
+            entity: {
+              fieldButtonLabel: [
+                {
+                  value: 'Facebook',
+                },
+              ],
+              fieldButtonLink: [
+                {
+                  options: {
+                    'data-entity-substitution': '',
+                    'data-entity-type': '',
+                    'data-entity-uuid': '',
+                    href: 'https://facebook.com',
+                  },
+                  title: '',
+                  uri: 'https://facebook.com',
+                  url: {
+                    path: 'https://facebook.com',
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        fieldDescription: [
+          {
+            format: 'rich_text_limited',
+            processed:
+              '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+            value: '<p>Local Spotlight for Facebook</p>',
+          },
+        ],
+        fieldSectionHeader: [
+          {
+            value: 'Facebook Spotlight 1',
+          },
+        ],
+      },
+    });
+  });
+});
+
 describe('run', () => {
   it('sets timeout to 20 minutes', () => {
     // Save the context so we can check the timeout value

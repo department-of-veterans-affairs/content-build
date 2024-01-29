@@ -75,7 +75,9 @@ async function postProcessPolice(queryResult) {
   ); // each file has its own header, but JSON's are the same
   const processedEventsData = eventsData.flat().map(processJsonPoliceData); // convert keys to usable format
   for (const processedEventsDataEntry of processedEventsData) {
-    if (processedJSON.data.statistics[processedEventsDataEntry.facilityAPIId]) {
+    if (
+      processedEventsDataEntry.facilityAPIId in processedJSON.data.statistics
+    ) {
       processedJSON.data.statistics[
         processedEventsDataEntry.facilityAPIId
       ].push(processedEventsDataEntry);
