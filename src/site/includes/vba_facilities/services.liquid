@@ -8,26 +8,32 @@
   </h2>
 
   <div class="vads-u-margin-bottom--3">
-    <va-accordion uswds bordered id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}">
+    <va-accordion
+      uswds
+      bordered
+      id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}"
+      data-testid="vba-accordion-{{vbaTitle}}">
+
       {% for entity in vbaServices %}
-        {% capture entityId %}{{ entity.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
-        {% assign entityLabel = entity.entityLabel %}
+        {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId or entity.regionalService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
+        {% assign entityLabel = entity.facilityService.entityLabel or entity.regionalService.entityLabel %}
 
-        {% assign facilityServiceHeader = entity.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader %}
-        {% assign facilityServiceDescription = entity.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti %}
+        {% assign facilityServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
+        {% assign facilityServiceDescription = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
 
-        <va-accordion-item uswds
-            class="va-accordion-item"
-            id="vba-service-item-{{ entityId }}"
-            header="{{ entity.fieldServiceNameAndDescripti.entity.name }}"
-            level="3">
-          {% if entity.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip != empty %}
-            <p>{{ entity.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}</p>
+        <va-accordion-item
+          uswds
+          class="va-accordion-item"
+          id="vba-service-item-{{ entityId }}"
+          header="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.name or entity.regionalService.fieldServiceNameAndDescripti.entity.name }}"
+          level="3">
+          {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip != empty %}
+            <p>{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}</p>
           {% endif %}
 
-          {% if entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
+          {% if entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
             <h3 class="vads-u-margin-top--2">
-              {{ entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
+              {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
             </h3>
 
             <div id="vba-service-body-{{ entityId }}">
@@ -35,7 +41,7 @@
             </div>
           {% endif %}
 
-          {% if entity.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url %}
+          {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url %}
             <h4>
               Manage your benefits online
             </h4>
@@ -43,13 +49,12 @@
             <p>
               <va-link
                 active
-                href="{{ entity.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
-                text="{{ entity.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title }}"
-              />
+                href="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path or  entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
+                text="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title or  entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title}}" />
             </p>
           {% endif %}
 
-          {% for location in entity.fieldServiceLocation %}
+          {% for location in entity.facilityService.fieldServiceLocation | concat: entity.regionalService.fieldServiceLocation %}
             <div class="vads-u-padding-x--2 vads-u-margin-top--3 vads-u-margin-bottom--2 vads-u-border--1px">
               <h4 class="vads-u-margin-top--2">
                 {{ facilityServiceHeader }}
@@ -86,16 +91,13 @@
                       {{ phoneObj.entity.fieldPhoneLabel }}
                     </h5>
 
-                    <va-telephone
-                      contact="{{ phoneObj.entity.fieldPhoneNumber }}"
-                      extension="{{ phoneObj.entity.fieldPhoneExtension }}" />
+                    <va-telephone contact="{{ phoneObj.entity.fieldPhoneNumber }}" extension="{{ phoneObj.entity.fieldPhoneExtension }}" />
                   </div>
                 {% endfor %}
               {% endif %}
 
               <div class="vads-u-margin-bottom--3">
-                <a class="vads-c-action-link--blue"
-                  href="/health-care/schedule-view-va-appointments">
+                <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
                   Schedule an appointment online
                 </a>
               </div>
@@ -115,7 +117,7 @@
 
                 {% if hasAddress %}
                   <p>
-                    {{ addressData.addressLine1 }}<br />
+                    {{ addressData.addressLine1 }}<br/>
                     {{ addressData.locality }},
                     {{ addressData.administrativeArea }}
                     {{ addressData.postalCode }}
@@ -125,7 +127,7 @@
                 {% if location.entity.fieldServiceLocationAddress.entity.fieldClinicName or location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber or location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
                   <p>
                     {% if location.entity.fieldServiceLocationAddress.entity.fieldClinicName %}
-                      {{ location.entity.fieldServiceLocationAddress.entity.fieldClinicName }} <br />
+                      {{ location.entity.fieldServiceLocationAddress.entity.fieldClinicName }} <br/>
                     {% endif %}
 
                     {% if location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber and location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
