@@ -888,16 +888,7 @@ module.exports = function registerFilters() {
           entity.fieldVbaTypeOfCare,
         );
         accordions[key].push({
-          facilityService: {
-            vbaCategory: 'office',
-            vbaId: office.entityId,
-            vbaType: entity.fieldVbaTypeOfCare,
-            vbaName: entity.name,
-            vbaHeader: entity.fieldFacilityServiceHeader,
-            vbaDescription: entity.fieldFacilityServiceDescripti,
-            vbaIsVisible: entity.fieldShowForVbaFacilities,
-            ...office,
-          },
+          facilityService: office,
         });
       });
     }
@@ -915,28 +906,12 @@ module.exports = function registerFilters() {
                 service.facilityService?.vbaName === taxonomy.entityLabel,
             );
             if (indexOfFacilityService !== -1) {
-              accordions[key][indexOfFacilityService].regionalService = {
-                vbaCategory: 'serviceRegion',
-                vbaId: taxonomy.entityId,
-                vbaType: taxonomy.fieldVbaTypeOfCare,
-                vbaName: taxonomy.entityLabel,
-                vbaHeader: taxonomy.fieldRegionalServiceHeader,
-                vbaDescription: taxonomy.fieldVbaServiceDescrip,
-                vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
-                ...taxonomy,
-              };
+              accordions[key][
+                indexOfFacilityService
+              ].regionalService = taxonomy;
             } else {
               accordions[key].push({
-                regionalService: {
-                  vbaCategory: 'serviceRegion',
-                  vbaId: taxonomy.entityId,
-                  vbaType: taxonomy.fieldVbaTypeOfCare,
-                  vbaName: taxonomy.entityLabel,
-                  vbaHeader: taxonomy.fieldRegionalServiceHeader,
-                  vbaDescription: taxonomy.fieldVbaServiceDescrip,
-                  vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
-                  ...taxonomy,
-                },
+                regionalService: taxonomy,
               });
             }
           },
