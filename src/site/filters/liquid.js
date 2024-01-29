@@ -11,7 +11,6 @@ const renameKey = require('../../platform/utilities/data/renameKey');
 const stagingSurveys = require('./medalliaStagingSurveys.json');
 const prodSurveys = require('./medalliaProdSurveys.json');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
-
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
 const TINYLIQUID_TIMEOUT_MINUTES = 20;
@@ -867,89 +866,92 @@ module.exports = function registerFilters() {
       return targetValue && targetValue !== valueFilter;
     });
   };
+  /**
+    * Converts a string to camel case and removes a prefix
+    @param {string} prefix - prefix to be removed - make empty string not to change string 
+    @param {string} string - string to be converted
+  */
+  liquid.filters.trimAndCamelCase = (toRemove, string) => {
+    if (!string) return null;
+    const trimmedString = string.replace(toRemove, '');
+    return _.camelCase(trimmedString);
+  };
 
   liquid.filters.processVbaServices = (serviceRegions, offices) => {
     const hasServiceRegions =
       Array.isArray(serviceRegions) && serviceRegions.length !== 0;
     const hasOffices = Array.isArray(offices) && offices.length !== 0;
-
-    if (!hasServiceRegions && !hasOffices) {
-      return {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      };
+    const accordions = {
+      veteranBenefits: [],
+      familyMemberCaregiverBenefits: [],
+      serviceMemberBenefits: [],
+      otherServices: [],
+    };
+    if (hasOffices) {
+      offices.forEach(office => {
+        const { entity } = office.fieldServiceNameAndDescripti;
+        if (!entity.fieldShowForVbaFacilities) return;
+        const key = liquid.filters.trimAndCamelCase(
+          'vba_',
+          entity.fieldVbaTypeOfCare,
+        );
+        accordions[key].push({
+          facilityService: {
+            vbaCategory: 'office',
+            vbaId: office.entityId,
+            vbaType: entity.fieldVbaTypeOfCare,
+            vbaName: entity.name,
+            vbaHeader: entity.fieldFacilityServiceHeader,
+            vbaDescription: entity.fieldFacilityServiceDescripti,
+            vbaIsVisible: entity.fieldShowForVbaFacilities,
+            ...office,
+          },
+        });
+      });
     }
-    let flattenedVbaServiceRegions = [];
-    let flattenedVbaOffices = [];
-
     if (hasServiceRegions) {
-      flattenedVbaServiceRegions = serviceRegions.reduce(
-        (acc, serviceRegion) => {
-          serviceRegion.reverseFieldVbaServiceRegionsTaxonomyTerm.entities.forEach(
-            taxonomy =>
-              acc.push({
+      serviceRegions.forEach(serviceRegion => {
+        serviceRegion.reverseFieldVbaServiceRegionsTaxonomyTerm.entities.forEach(
+          taxonomy => {
+            if (!taxonomy.fieldShowForVbaFacilities) return;
+            const key = liquid.filters.trimAndCamelCase(
+              'vba_',
+              taxonomy.fieldVbaTypeOfCare,
+            );
+            const indexOfFacilityService = accordions[key].findIndex(
+              service =>
+                service.facilityService?.vbaName === taxonomy.entityLabel,
+            );
+            if (indexOfFacilityService !== -1) {
+              accordions[key][indexOfFacilityService].regionalService = {
                 vbaCategory: 'serviceRegion',
                 vbaId: taxonomy.entityId,
                 vbaType: taxonomy.fieldVbaTypeOfCare,
-                vbaHeader: taxonomy.entityLabel,
+                vbaName: taxonomy.entityLabel,
+                vbaHeader: taxonomy.fieldRegionalServiceHeader,
                 vbaDescription: taxonomy.fieldVbaServiceDescrip,
                 vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
                 ...taxonomy,
-              }),
-          );
-          return acc;
-        },
-        [],
-      );
-    }
-
-    if (hasOffices) {
-      flattenedVbaOffices = offices.map(office => {
-        const { entity } = office.fieldServiceNameAndDescripti;
-        return {
-          vbaCategory: 'office',
-          vbaId: office.entityId,
-          vbaType: entity.fieldVbaTypeOfCare,
-          vbaHeader: entity.name,
-          vbaDescription: entity.fieldVbaServiceDescrip,
-          vbaIsVisible: entity.fieldShowForVbaFacilities,
-          ...office,
-        };
+              };
+            } else {
+              accordions[key].push({
+                regionalService: {
+                  vbaCategory: 'serviceRegion',
+                  vbaId: taxonomy.entityId,
+                  vbaType: taxonomy.fieldVbaTypeOfCare,
+                  vbaName: taxonomy.entityLabel,
+                  vbaHeader: taxonomy.fieldRegionalServiceHeader,
+                  vbaDescription: taxonomy.fieldVbaServiceDescrip,
+                  vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
+                  ...taxonomy,
+                },
+              });
+            }
+          },
+        );
       });
     }
-
-    return [...flattenedVbaServiceRegions, ...flattenedVbaOffices].reduce(
-      (acc, vbaService) => {
-        if (!vbaService.vbaIsVisible) {
-          return acc;
-        }
-
-        switch (vbaService.vbaType) {
-          case 'vba_veteran_benefits':
-            acc.veteranBenefits.push(vbaService);
-            break;
-          case 'vba_family_member_and_caregiver_benefits':
-            acc.familyCaregiverBenefits.push(vbaService);
-            break;
-          case 'vba_service_member_benefits':
-            acc.serviceMemberBenefits.push(vbaService);
-            break;
-          default:
-            acc.otherServices.push(vbaService);
-            break;
-        }
-
-        return acc;
-      },
-      {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      },
-    );
+    return accordions;
   };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {

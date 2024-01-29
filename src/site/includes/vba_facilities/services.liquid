@@ -4,23 +4,36 @@
   </h2>
 
   <div class="vads-u-margin-bottom--3">
-    <va-accordion bordered id="vba-regional-facilities-accordion-{{ entity.vbaHeader | hashReference: 60 }}">
+    <va-accordion
+      uswds
+      bordered
+      id="vba-regional-facilities-accordion-{{ entity.vbaHeader | hashReference: 60 }}"
+      data-testid="vba-accordion-{{vbaTitle}}">
       {% for entity in vbaServices %}
-        {% capture entityId %}{{ entity.vbaId | hashReference: 60 }}-{{ entity.vbaHeader | hashReference: 60 }}{% endcapture %}
-
         <va-accordion-item
-            class="va-accordion-item"
-            id="vba-service-item-{{ entityId }}"
-            header="{{ entity.vbaHeader }}"
-            level="3">
-          {% if entity.vbaDescription != empty %}
-            <p>{{ entity.vbaDescription | phoneLinks }}</p>
+          class="va-accordion-item"
+          id="vba-service-item-{{ entityId }}"
+          {% if entity.facilityService.vbaName %}
+          header="{{ entity.facilityService.vbaName }}"
+          {% else %}
+          header="{{ entity.regionalService.vbaName }}"
           {% endif %}
-
-          {% if entity.fieldServiceNameAndDescripti.entity.description.value and entity.fieldServiceNameAndDescripti.entity.description.processed %}
-            <div id="vba-service-body-{{ entityId }}">
-              {{ entity.fieldServiceNameAndDescripti.entity.description.processed | drupalToVaPath | phoneLinks }}
-            </div>
+          level="3">
+          {% if entity.facilityService and entity.facilityService.vbaDescription != empty %}
+            <p>{{ entity.facilityService.vbaDescription | phoneLinks }}</p>
+          {% elsif entity.regionalService and entity.regionalService.vbaDescription != empty %}
+            <p>{{ entity.regionalService.vbaDescription | phoneLinks }}</p>
+          {% endif %}
+          {% if entity.facilityService %}
+            {% capture entityId %}{{ entity.facilityService.vbaId | hashReference: 60 }}-{{ entity.facilityService.vbaHeader | hashReference: 60 }}{% endcapture %}
+            {% if entity.facilityService.fieldServiceNameAndDescripti.entity.description.value and entity.facilityService.fieldServiceNameAndDescripti.entity.description.processed %}
+              <div id="vba-service-body-{{ entityId }}">
+                {{ entity.facilityService.fieldServiceNameAndDescripti.entity.description.processed | drupalToVaPath | phoneLinks }}
+              </div>
+            {% endif %}
+          {% endif %}
+          {% if entity.regionalService %}
+            {% capture entityId %}{{ entity.regionalService.vbaId | hashReference: 60 }}-{{ entity.regionalService.vbaHeader | hashReference: 60 }}{% endcapture %}
           {% endif %}
         </va-accordion-item>
       {% endfor %}
