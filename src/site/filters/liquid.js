@@ -5,6 +5,7 @@ const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
 const set = require('lodash/fp/set');
+const log = require('debug')('liquid');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
@@ -899,14 +900,14 @@ module.exports = function registerFilters() {
         const {
           fieldVbaTypeOfCare,
           fieldShowForVbaFacilities,
-          entityLabel,
+          name,
         } = serviceRegion.fieldServiceNameAndDescripti.entity;
         if (!fieldShowForVbaFacilities) return;
         const key = liquid.filters.trimAndCamelCase('vba_', fieldVbaTypeOfCare);
         const indexOfFacilityService = accordions[key].findIndex(
           service =>
             service.facilityService?.fieldServiceNameAndDescripti.entity
-              .name === entityLabel,
+              .name === name,
         );
         if (indexOfFacilityService !== -1) {
           accordions[key][
@@ -1105,6 +1106,20 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.concat = (...args) => _.concat(...args);
+
+  /**
+   *
+   * @param {Array} a
+   * @param {Array} b
+   * @returns Array
+   */
+  liquid.filters.joinArrays = (a, b) => {
+    log(Array.isArray(a), Array.isArray(b));
+    if (Array.isArray(a) && Array.isArray(b)) return [...a, ...b];
+    if (Array.isArray(b)) return b;
+    if (Array.isArray(a)) return a;
+    return [];
+  };
 
   liquid.filters.strip = (string = '') => _.trim(string);
 

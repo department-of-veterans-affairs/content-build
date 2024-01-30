@@ -20,12 +20,15 @@
 
         {% assign facilityServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
         {% assign facilityServiceDescription = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
-
         <va-accordion-item
           uswds
           class="va-accordion-item"
           id="vba-service-item-{{ entityId }}"
-          header="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.name or entity.regionalService.fieldServiceNameAndDescripti.entity.name }}"
+          {% if entity.facilityService.fieldServiceNameAndDescripti %}
+          header="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.name}}"
+          {% else %}
+          header="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.name}}"
+          {% endif %}
           level="3">
           {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip != empty %}
             <p>{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}</p>
@@ -49,138 +52,141 @@
             <p>
               <va-link
                 active
-                href="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path or  entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
-                text="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title or  entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title}}" />
-            </p>
-          {% endif %}
-
-          {% for location in entity.facilityService.fieldServiceLocation | concat: entity.regionalService.fieldServiceLocation %}
-            <div class="vads-u-padding-x--2 vads-u-margin-top--3 vads-u-margin-bottom--2 vads-u-border--1px">
-              <h4 class="vads-u-margin-top--2">
-                {{ facilityServiceHeader }}
-              </h4>
-
-              <p id="vba-service-body-{{ entityId }}">
-                {{ facilityServiceDescription | drupalToVaPath | phoneLinks }}
+                {% if entity.facilityService %}
+                href="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path}}"
+                text="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title}}" />
+                {% else %}href="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
+                text="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title }}" />{% endif %}
               </p>
+            {% endif %}
+            {% assign fieldServiceLocations = entity.facilityService.fieldServiceLocation | join: entity.regionalService.fieldServiceLocation %}
+            {% for location in fieldServiceLocations %}
+              <div class="vads-u-padding-x--2 vads-u-margin-top--3 vads-u-margin-bottom--2 vads-u-border--1px">
+                <h4 class="vads-u-margin-top--2">
+                  {{ facilityServiceHeader }}
+                </h4>
 
-              {% if location.entity.fieldAdditionalHoursInfo %}
+                <p id="vba-service-body-{{ entityId }}">
+                  {{ facilityServiceDescription | drupalToVaPath | phoneLinks }}
+                </p>
+
+                {% if location.entity.fieldAdditionalHoursInfo %}
+                  <div>
+                    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                      Appointments
+                    </h5>
+
+                    <p>
+                      {{ location.entity.fieldAdditionalHoursInfo }}
+                    </p>
+                  </div>
+                {% endif %}
+
+                {% if location.entity.fieldUseMainFacilityPhone and facilityPhone %}
+                  <div class="vads-u-margin-bottom--3">
+                    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                      Main Phone
+                    </h5>
+
+                    <va-telephone contact="{{ facilityPhone }}" />
+                  </div>
+                {% elsif location.entity.fieldPhone %}
+                  {% for phoneObj in location.entity.fieldPhone %}
+                    <div class="vads-u-margin-bottom--3">
+                      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                        {{ phoneObj.entity.fieldPhoneLabel }}
+                      </h5>
+
+                      <va-telephone contact="{{ phoneObj.entity.fieldPhoneNumber }}" extension="{{ phoneObj.entity.fieldPhoneExtension }}" />
+                    </div>
+                  {% endfor %}
+                {% endif %}
+
+                <div class="vads-u-margin-bottom--3">
+                  <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
+                    Schedule an appointment online
+                  </a>
+                </div>
+
                 <div>
                   <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                    Appointments
+                    {{ entityLabel }}
                   </h5>
 
-                  <p>
-                    {{ location.entity.fieldAdditionalHoursInfo }}
-                  </p>
+                  {% if location.entity.fieldServiceLocationAddress.entity.fieldUseFacilityAddress and facilityAddress %}
+                    {% assign hasAddress = true %}
+                    {% assign addressData = facilityAddress %}
+                  {% elsif location.entity.fieldServiceLocationAddress %}
+                    {% assign hasAddress = true %}
+                    {% assign addressData = location.entity.fieldServiceLocationAddress.entity.fieldAddress %}
+                  {% endif %}
+
+                  {% if hasAddress %}
+                    <p>
+                      {{ addressData.addressLine1 }}<br/>
+                      {{ addressData.locality }},
+                      {{ addressData.administrativeArea }}
+                      {{ addressData.postalCode }}
+                    </p>
+                  {% endif %}
+
+                  {% if location.entity.fieldServiceLocationAddress.entity.fieldClinicName or location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber or location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
+                    <p>
+                      {% if location.entity.fieldServiceLocationAddress.entity.fieldClinicName %}
+                        {{ location.entity.fieldServiceLocationAddress.entity.fieldClinicName }} <br/>
+                      {% endif %}
+
+                      {% if location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber and location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
+                        {{ location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber }}, {{ location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber }}
+                      {% endif %}
+                    </p>
+                  {% endif %}
                 </div>
-              {% endif %}
 
-              {% if location.entity.fieldUseMainFacilityPhone and facilityPhone %}
-                <div class="vads-u-margin-bottom--3">
-                  <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                    Main Phone
-                  </h5>
+                {% if location.entity.fieldEmailContacts %}
+                  {% for emailObj in location.entity.fieldEmailContacts %}
+                    <div class="vads-u-margin-bottom--3">
+                      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                        {{ emailObj.entity.fieldEmailLabel }}:
+                      </h5>
 
-                  <va-telephone contact="{{ facilityPhone }}" />
-                </div>
-              {% elsif location.entity.fieldPhone %}
-                {% for phoneObj in location.entity.fieldPhone %}
-                  <div class="vads-u-margin-bottom--3">
-                    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                      {{ phoneObj.entity.fieldPhoneLabel }}
-                    </h5>
-
-                    <va-telephone contact="{{ phoneObj.entity.fieldPhoneNumber }}" extension="{{ phoneObj.entity.fieldPhoneExtension }}" />
-                  </div>
-                {% endfor %}
-              {% endif %}
-
-              <div class="vads-u-margin-bottom--3">
-                <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
-                  Schedule an appointment online
-                </a>
-              </div>
-
-              <div>
-                <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                  {{ entityLabel }}
-                </h5>
-
-                {% if location.entity.fieldServiceLocationAddress.entity.fieldUseFacilityAddress and facilityAddress %}
-                  {% assign hasAddress = true %}
-                  {% assign addressData = facilityAddress %}
-                {% elsif location.entity.fieldServiceLocationAddress %}
-                  {% assign hasAddress = true %}
-                  {% assign addressData = location.entity.fieldServiceLocationAddress.entity.fieldAddress %}
-                {% endif %}
-
-                {% if hasAddress %}
-                  <p>
-                    {{ addressData.addressLine1 }}<br/>
-                    {{ addressData.locality }},
-                    {{ addressData.administrativeArea }}
-                    {{ addressData.postalCode }}
-                  </p>
-                {% endif %}
-
-                {% if location.entity.fieldServiceLocationAddress.entity.fieldClinicName or location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber or location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
-                  <p>
-                    {% if location.entity.fieldServiceLocationAddress.entity.fieldClinicName %}
-                      {{ location.entity.fieldServiceLocationAddress.entity.fieldClinicName }} <br/>
-                    {% endif %}
-
-                    {% if location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber and location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
-                      {{ location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber }}, {{ location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber }}
-                    {% endif %}
-                  </p>
-                {% endif %}
-              </div>
-
-              {% if location.entity.fieldEmailContacts %}
-                {% for emailObj in location.entity.fieldEmailContacts %}
-                  <div class="vads-u-margin-bottom--3">
-                    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                      {{ emailObj.entity.fieldEmailLabel }}:
-                    </h5>
-
-                    <p class="
+                      <p class="
                     vads-u-margin--0
                     vads-u-margin-bottom--0p5
                     vads-u-font-weight--regular">
-                      <a target="blank" href="mailto:{{ emailObj.entity.fieldEmailAddress }}">
-                        {{ emailObj.entity.fieldEmailAddress }}
-                      </a>
+                        <a target="blank" href="mailto:{{ emailObj.entity.fieldEmailAddress }}">
+                          {{ emailObj.entity.fieldEmailAddress }}
+                        </a>
+                      </p>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+
+                {% if location.entity.fieldHours == "2" and location.entity.fieldOfficeHours %}
+                  <div class="vads-u-margin-bottom--3">
+                    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                      Office Hours
+                    </h5>
+
+                    {% include 'src/site/includes/hours.liquid' with allHours = location.entity.fieldOfficeHours %}
+                  </div>
+                {% endif %}
+
+                {% if location.entity.fieldHours == "0" %}
+                  <div class="vads-u-margin-bottom--3">
+                    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                      Office Hours
+                    </h5>
+
+                    <p>
+                      The service ours are the same as our facility hours.
                     </p>
                   </div>
-                {% endfor %}
-              {% endif %}
-
-              {% if location.entity.fieldHours == "2" and location.entity.fieldOfficeHours %}
-                <div class="vads-u-margin-bottom--3">
-                  <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                    Office Hours
-                  </h5>
-
-                  {% include 'src/site/includes/hours.liquid' with allHours = location.entity.fieldOfficeHours %}
-                </div>
-              {% endif %}
-
-              {% if location.entity.fieldHours == "0" %}
-                <div class="vads-u-margin-bottom--3">
-                  <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                    Office Hours
-                  </h5>
-
-                  <p>
-                    The service ours are the same as our facility hours.
-                  </p>
-                </div>
-              {% endif %}
-            </div>
-          {% endfor %}
-        </va-accordion-item>
-      {% endfor %}
-    </va-accordion>
-  </div>
-{% endif %}
+                {% endif %}
+              </div>
+            {% endfor %}
+          </va-accordion-item>
+        {% endfor %}
+      </va-accordion>
+    </div>
+  {% endif %}
