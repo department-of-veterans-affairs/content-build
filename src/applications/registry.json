@@ -35,10 +35,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "/",
-          "name": "Home"
-        },
-        {
           "path": "pension/",
           "name": "Pension benefits"
         },
