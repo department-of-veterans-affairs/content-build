@@ -869,6 +869,16 @@ module.exports = function registerFilters() {
     const trimmedString = string.replace(toRemove, '');
     return _.camelCase(trimmedString);
   };
+  /**
+    * Converts a string to camel case and removes a prefix
+    @param {string} prefix - prefix to be removed - make empty string not to change string 
+    @param {string} string - string to be converted
+  */
+  liquid.filters.trimAndCamelCase = (toRemove, string) => {
+    if (!string) return null;
+    const trimmedString = string.replace(toRemove, '');
+    return _.camelCase(trimmedString);
+  };
 
   liquid.filters.processVbaServices = (serviceRegions, offices) => {
     const hasServiceRegions =
