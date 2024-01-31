@@ -2,10 +2,6 @@
   Does the facility data also need to be passed into here so it can be used as a backup when needed?
 {% endcomment %}
 
-{% comment %}
-  Does the facility data also need to be passed into here so it can be used as a backup when needed?
-{% endcomment %}
-
 {% if vbaServices.length > 0 %}
   <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
     {{ vbaTitle }}
@@ -48,9 +44,9 @@
           {% endif %}
 
           {% if entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
-            <h3 class="vads-u-margin-top--2">
+            <h4 class="vads-u-margin-top--2">
               {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
-            </h3>
+            </h4>
 
             <div id="vba-service-body-{{ entityId }}">
               {{ entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti | drupalToVaPath | phoneLinks }}
@@ -113,7 +109,11 @@
                         </h5>
                       {% endif %}
 
-                      <va-telephone contact="{{ phoneObj.entity.fieldPhoneNumber }}" extension="{{ phoneObj.entity.fieldPhoneExtension }}" />
+                      <va-telephone
+                        contact="{{ phoneObj.entity.fieldPhoneNumber }}"
+                        extension="{{ phoneObj.entity.fieldPhoneExtension }}"
+                        message-aria-describedby="{{ phoneObj.entity.fieldPhoneLabel }}" />
+                      />
                     </div>
                   {% endfor %}
                 {% endif %}
