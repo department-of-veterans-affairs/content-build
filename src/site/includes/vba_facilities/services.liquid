@@ -15,7 +15,11 @@
       data-testid="vba-accordion-{{vbaTitle}}">
 
       {% for entity in vbaServices %}
-        {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId or entity.regionalService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
+        {% if entity.facilityService %}
+          {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
+        {% else %}
+          {% capture entityId %}{{ entity.regionalService.fieldServiceNameAndDescripti.entity.entityId  | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
+        {% endif %}
         {% if entity.facilityService.entityLabel %}
           {% assign entityLabel = entity.facilityService.entityLabel %}
         {% else %}
