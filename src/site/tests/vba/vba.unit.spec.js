@@ -49,14 +49,21 @@ describe('VBA accordions for Service Locations', () => {
     const { children: serviceMemberBenefitsChildren } = serviceMemberBenefits;
     for (const child of serviceMemberBenefitsChildren) {
       expect(child.outerHTML).to.include('va-accordion-item');
-      expect(child.getAttribute('header')).to.oneOf(['Billing and insurance']);
+      expect(child.getAttribute('header')).to.oneOf([
+        'Billing and insurance',
+        "Cashier's office",
+        'Urgent care',
+      ]);
     }
     const otherServices = getByTestId(VBAHTML, 'vba-accordion-Other services');
     expect(otherServices).to.exist;
     const { children: otherServicesChildren } = otherServices;
     for (const child of otherServicesChildren) {
       expect(child.outerHTML).to.include('va-accordion-item');
-      expect(child.getAttribute('header')).to.oneOf(['Case management']);
+      expect(child.getAttribute('header')).to.oneOf([
+        'Case management',
+        'Dermatology',
+      ]);
     }
     expect(otherServicesChildren.length).to.equal(1); // it has both facility service and regional service, but should only have 1 element
   });
