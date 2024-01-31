@@ -24,6 +24,7 @@ describe('VBA accordions for Service Locations', () => {
       expect(child.getAttribute('header')).to.oneOf([
         'Home loans',
         'Veterans pension',
+        'Vascular surgery',
       ]);
     }
     expect(vaBenefitsChildren.length).to.equal(2);
@@ -35,7 +36,10 @@ describe('VBA accordions for Service Locations', () => {
     const { children: familyBenefitsChildren } = familyBenefits;
     for (const child of familyBenefitsChildren) {
       expect(child.outerHTML).to.include('va-accordion-item');
-      expect(child.getAttribute('header')).to.oneOf(['Advice nurse']);
+      expect(child.getAttribute('header')).to.oneOf([
+        'Advice nurse',
+        'Veterans pension',
+      ]);
     }
     const serviceMemberBenefits = getByTestId(
       VBAHTML,

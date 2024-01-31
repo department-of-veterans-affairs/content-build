@@ -3,7 +3,7 @@
   "entityId": "4105",
   "entityPublished": true,
   "title": "Cleveland VA Regional Benefit Office",
-  "vid": 839774,
+  "vid": 839336,
   "entityUrl": {
     "breadcrumb": [
       {
@@ -91,16 +91,12 @@
     }
   ],
   "entityLabel": "Cleveland VA Regional Benefit Office",
-  "changed": 1706044596,
-  "fieldShowBanner": true,
-  "fieldAlertType": "warning",
-  "fieldDismissibleOption": "dismiss",
-  "fieldBannerTitle": "Dismissible Warning Banner",
-  "fieldBannerContent": {
-    "value": "<p>Dismissible warning banner! Dismissible warning banner! Dismissible warning banner! Dismissible warning banner! Dismissible warning banner! Dismissible warning banner!</p>",
-    "format": "rich_text_limited",
-    "processed": "<p>Dismissible warning banner! Dismissible warning banner! Dismissible warning banner! Dismissible warning banner! Dismissible warning banner! Dismissible warning banner!</p>\n"
-  },
+  "changed": 1705681713,
+  "fieldShowBanner": false,
+  "fieldAlertType": null,
+  "fieldDismissibleOption": null,
+  "fieldBannerTitle": null,
+  "fieldBannerContent": null,
   "fieldIntroText": null,
   "fieldFacilityLocatorApiId": "vba_325",
   "fieldOperatingStatusFacility": "limited",
@@ -285,6 +281,7 @@
       ]
     }
   },
+  "fieldLocalSpotlight": [],
   "fieldCcGetUpdatesFromVba": {
     "fetched": {
       "fieldLink": [],
@@ -349,6 +346,233 @@
       ]
     }
   },
+  "fieldMedia": null,
+  "reverseFieldOfficeNode": {
+    "entities": [
+      {
+        "entityId": "65038",
+        "entityLabel": "Cleveland VA Regional Benefit Office - Cashier's office",
+        "title": "Cleveland VA Regional Benefit Office - Cashier's office",
+        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
+          "entities": []
+        },
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "entityId": "145045",
+              "id": 145045,
+              "fieldHours": "0",
+              "fieldOfficeHours": [],
+              "fieldUseMainFacilityPhone": true,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "id": 145042,
+                    "fieldPhoneNumber": "873-591-8886",
+                    "fieldPhoneLabel": "Office Fax Number"
+                  }
+                }
+              ],
+              "fieldAdditionalHoursInfo": "Ask for invitations via smoke signals",
+              "fieldEmailContacts": [
+                {
+                  "entity": {
+                    "id": 145043,
+                    "fieldEmailAddress": "kwejhn@myspace.biz",
+                    "fieldEmailLabel": "MySpace Email Contact"
+                  }
+                }
+              ],
+              "fieldServiceLocationAddress": {
+                "targetId": 145044,
+                "entity": {
+                  "id": 145044,
+                  "fieldAddress": {
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "administrativeArea": "",
+                    "countryCode": "US",
+                    "postalCode": "",
+                    "locality": ""
+                  },
+                  "fieldBuildingNameNumber": "Perkins Cashier Super Office Building",
+                  "fieldClinicName": "Perkins Facility Cashier's Office",
+                  "fieldUseFacilityAddress": true,
+                  "fieldWingFloorOrRoomNumber": "Third Floor"
+                }
+              }
+            }
+          }
+        ],
+        "entityBundle": "vba_facility_service",
+        "fieldServiceNameAndDescripti": {
+          "entity": {
+            "name": "Cashier's office",
+            "tid": 1024,
+            "entityId": "1024",
+            "entityLabel": "Cashier's office",
+            "entityBundle": "health_care_service_taxonomy",
+            "fieldFacilityServiceHeader": "Cashier's Office Facility Service Header",
+            "fieldRegionalServiceHeader": "Cashier's Office Regional Service Header",
+            "fieldFacilityServiceDescripti": "Cashier's Office Facility Service Description",
+            "fieldRegionalServiceDescripti": "Cashier's Office Regional Service Description",
+            "fieldShowForVbaFacilities": true,
+            "fieldVbaTypeOfCare": "vba_service_member_benefits",
+            "fieldOnlineSelfService": null,
+            "fieldVbaServiceDescrip": "Cashier's Office VBA Description",
+            "description": {
+              "value": null,
+              "format": null,
+              "processed": ""
+            }
+          }
+        }
+      },
+      {
+        "entityId": "65039",
+        "entityLabel": "Cleveland VA Regional Benefit Office - Vascular surgery",
+        "title": "Cleveland VA Regional Benefit Office - Vascular surgery",
+        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
+          "entities": []
+        },
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "entityId": "145051",
+              "id": 145051,
+              "fieldHours": "2",
+              "fieldOfficeHours": [
+                {
+                  "starthours": 1600,
+                  "endhours": 2350,
+                  "day": 0,
+                  "comment": "Party night!",
+                  "allDay": false
+                },
+                {
+                  "starthours": 700,
+                  "endhours": 1530,
+                  "day": 1,
+                  "comment": "Comment #1",
+                  "allDay": false
+                },
+                {
+                  "starthours": 700,
+                  "endhours": 1600,
+                  "day": 2,
+                  "comment": "Comment #2",
+                  "allDay": false
+                },
+                {
+                  "starthours": 800,
+                  "endhours": 1400,
+                  "day": 3,
+                  "comment": "",
+                  "allDay": false
+                },
+                {
+                  "starthours": 730,
+                  "endhours": 1500,
+                  "day": 4,
+                  "comment": "",
+                  "allDay": false
+                },
+                {
+                  "starthours": 900,
+                  "endhours": 1800,
+                  "day": 5,
+                  "comment": "Comment #3",
+                  "allDay": false
+                },
+                {
+                  "starthours": 400,
+                  "endhours": 2100,
+                  "day": 6,
+                  "comment": "Long day!",
+                  "allDay": false
+                }
+              ],
+              "fieldUseMainFacilityPhone": false,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "id": 145046,
+                    "fieldPhoneNumber": "333-333-3333",
+                    "fieldPhoneLabel": "Some other number"
+                  }
+                },
+                {
+                  "entity": {
+                    "id": 145047,
+                    "fieldPhoneNumber": "452-555-7301",
+                    "fieldPhoneLabel": "What the hell is a TTY number?"
+                  }
+                }
+              ],
+              "fieldAdditionalHoursInfo": "No visits on party night.",
+              "fieldEmailContacts": [
+                {
+                  "entity": {
+                    "id": 145048,
+                    "fieldEmailAddress": "amyfarrahfowler@twitter.com",
+                    "fieldEmailLabel": "Amy Farrah Fowler"
+                  }
+                },
+                {
+                  "entity": {
+                    "id": 145049,
+                    "fieldEmailAddress": "sheldoncooper@linkedin.com",
+                    "fieldEmailLabel": "Sheldon Cooper"
+                  }
+                }
+              ],
+              "fieldServiceLocationAddress": {
+                "targetId": 145050,
+                "entity": {
+                  "id": 145050,
+                  "fieldAddress": {
+                    "addressLine1": "444 Trust Ave",
+                    "addressLine2": "PO Box XYZ",
+                    "administrativeArea": "VA",
+                    "countryCode": "US",
+                    "postalCode": "92851",
+                    "locality": "Tunisia"
+                  },
+                  "fieldBuildingNameNumber": "North Building",
+                  "fieldClinicName": "Derma Tonic's Vascular Surgery Wonderland",
+                  "fieldUseFacilityAddress": false,
+                  "fieldWingFloorOrRoomNumber": "South Wing"
+                }
+              }
+            }
+          }
+        ],
+        "entityBundle": "vba_facility_service",
+        "fieldServiceNameAndDescripti": {
+          "entity": {
+            "name": "Vascular surgery",
+            "tid": 145,
+            "entityId": "145",
+            "entityLabel": "Vascular surgery",
+            "entityBundle": "health_care_service_taxonomy",
+            "fieldFacilityServiceHeader": "Vascular Surgery Facility Service Header",
+            "fieldRegionalServiceHeader": "Vascular Surgery Regional Service Header",
+            "fieldFacilityServiceDescripti": "Vascular Surgery Facility Service Description",
+            "fieldRegionalServiceDescripti": "Vascular Surgery Regional Service Description",
+            "fieldShowForVbaFacilities": true,
+            "fieldVbaTypeOfCare": "vba_veteran_benefits",
+            "fieldOnlineSelfService": null,
+            "fieldVbaServiceDescrip": "Vascular Surgery VBA Description Here",
+            "description": {
+              "value": "<p>Our expert team diagnoses and treats diseases and conditions that affect arteries, veins and blood circulation.</p>\r\n",
+              "format": "rich_text",
+              "processed": "<p>Our expert team diagnoses and treats diseases and conditions that affect arteries, veins&nbsp;and blood circulation.</p>"
+            }
+          }
+        }
+      }
+    ]
+  },
   "reverseFieldVbaRegionFacilityListNode": {
     "count": 4,
     "entities": [
@@ -356,146 +580,101 @@
         "entityId": "61786",
         "entityLabel": "Regional Loan Center in Cleveland",
         "entityBundle": "service_region",
-        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
-          "count": 1,
-          "entities": [
-            {
-              "entityType": "taxonomy_term",
-              "name": "Home loans",
-              "tid": 1131,
-              "entityId": "1131",
-              "entityLabel": "Home loans",
-              "fieldFacilityServiceHeader": "Get help requesting a COE or filling out paperwork",
-              "fieldRegionalServiceHeader": "Get help checking the status of your COE",
-              "fieldRegionalServiceDescripti": "Check the status of your COE by calling a VA home loan representative at a Regional Loan Center.",
-              "fieldShowForVbaFacilities": true,
-              "fieldVbaTypeOfCare": "vba_veteran_benefits",
-              "fieldOnlineSelfService": {
-                "url": {
-                  "path": "/housing-assistance/home-loans"
-                },
-                "uri": "entity:node/752"
+        "fieldServiceNameAndDescripti": {
+          "entity": {
+            "name": "Home loans",
+            "tid": 1131,
+            "entityId": "1131",
+            "entityLabel": "Home loans",
+            "entityBundle": "health_care_service_taxonomy",
+            "fieldFacilityServiceHeader": "Get help requesting a COE or filling out paperwork",
+            "fieldRegionalServiceHeader": "Get help checking the status of your COE",
+            "fieldFacilityServiceDescripti": "Our benefit counselors can help you fill out paperwork.",
+            "fieldRegionalServiceDescripti": "Check the status of your COE by calling a VA home loan representative at a Regional Loan Center.",
+            "fieldShowForVbaFacilities": true,
+            "fieldVbaTypeOfCare": "vba_veteran_benefits",
+            "fieldOnlineSelfService": {
+              "title": "Learn how to manage VA home loan benefits online",
+              "url": {
+                "path": "/housing-assistance/home-loans"
               },
-              "fieldVbaServiceDescrip": "We can help you learn about eligibility for VA home loans and request a VA home loan Certificate of Eligibility (COE). \r\n\r\nIf you have a service-connected disability, we can help you find out if you’re eligible for housing grants."
+              "uri": "entity:node/752"
+            },
+            "fieldVbaServiceDescrip": "We can help you learn about eligibility for VA home loans and request a VA home loan Certificate of Eligibility (COE). \r\n\r\nIf you have a service-connected disability, we can help you find out if you’re eligible for housing grants.",
+            "description": {
+              "value": null,
+              "format": null,
+              "processed": ""
             }
-          ]
-        }
-      },
-      {
-        "entityId": "65101",
-        "entityLabel": "Cleveland Advice Nurse Region",
-        "entityBundle": "service_region",
-        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
-          "count": 1,
-          "entities": [
-            {
-              "entityType": "taxonomy_term",
-              "name": "Advice nurse",
-              "tid": 104,
-              "entityId": "104",
-              "entityLabel": "Advice nurse",
-              "fieldFacilityServiceHeader": "The Facility Service Header",
-              "fieldRegionalServiceHeader": "The Regional Service Header For Advice Nurse",
-              "fieldRegionalServiceDescripti": "The Regional Service Description for Advice Nurse",
-              "fieldShowForVbaFacilities": true,
-              "fieldVbaTypeOfCare": "vba_family_member_caregiver_benefits",
-              "fieldOnlineSelfService": null,
-              "fieldVbaServiceDescrip": "The VBA Description of Advice Nurse"
-            }
-          ]
-        }
-      },
-      {
-        "entityId": "65102",
-        "entityLabel": "Cleveland Billing and Insurance Regional Service",
-        "entityBundle": "service_region",
-        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
-          "count": 1,
-          "entities": [
-            {
-              "entityType": "taxonomy_term",
-              "name": "Billing and insurance",
-              "tid": 1027,
-              "entityId": "1027",
-              "entityLabel": "Billing and insurance",
-              "fieldFacilityServiceHeader": "Billing and Insurance Facility Service Header",
-              "fieldRegionalServiceHeader": "Billing and Insurance Regional Service Header",
-              "fieldRegionalServiceDescripti": "Billing and Insurance Regional Service Description",
-              "fieldShowForVbaFacilities": true,
-              "fieldVbaTypeOfCare": "vba_service_member_benefits",
-              "fieldOnlineSelfService": null,
-              "fieldVbaServiceDescrip": "Billing and Insurance"
-            }
-          ]
-        }
-      },
-      {
-        "entityId": "65103",
-        "entityLabel": "Cleveland Regional Case Management",
-        "entityBundle": "service_region",
-        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
-          "count": 1,
-          "entities": [
-            {
-              "entityType": "taxonomy_term",
-              "name": "Case management",
-              "tid": 1119,
-              "entityId": "1119",
-              "entityLabel": "Case management",
-              "fieldFacilityServiceHeader": "Case Management Facility Service Header",
-              "fieldRegionalServiceHeader": "Case Management Regional Service Header",
-              "fieldRegionalServiceDescripti": "Case Management Regional Service Description",
-              "fieldShowForVbaFacilities": true,
-              "fieldVbaTypeOfCare": "vba_other_services",
-              "fieldOnlineSelfService": null,
-              "fieldVbaServiceDescrip": "Case management for VBA"
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "reverseFieldOfficeNode": {
-    "entities": [
-      {
-        "entityId": "65100",
-        "entityLabel": "Cleveland VA Regional Benefit Office - Veterans pension",
-        "title": "Cleveland VA Regional Benefit Office - Veterans pension",
-        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
-          "entities": []
+          }
         },
         "fieldServiceLocation": [
           {
             "entity": {
+              "entityId": "139858",
+              "id": 139858,
+              "fieldHours": "0",
+              "fieldAdditionalHoursInfo": "Some other additional hours option",
+              "fieldOfficeHours": [],
+              "fieldUseMainFacilityPhone": true,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "id": 139856,
+                    "fieldPhoneNumberType": "tel",
+                    "fieldPhoneNumber": "123-456-7890",
+                    "fieldPhoneExtension": "123",
+                    "fieldPhoneLabel": "Local phone (fake) number"
+                  }
+                }
+              ],
+              "fieldEmailContacts": [],
               "fieldServiceLocationAddress": {
+                "targetId": 139857,
                 "entity": {
-                  "fieldUseFacilityAddress": true,
+                  "id": 139857,
                   "fieldAddress": {
                     "addressLine1": "",
                     "addressLine2": "",
-                    "organization": null,
-                    "additionalName": null,
-                    "givenName": null,
-                    "postalCode": ""
-                  }
+                    "administrativeArea": "",
+                    "countryCode": "US",
+                    "postalCode": "",
+                    "locality": ""
+                  },
+                  "fieldBuildingNameNumber": null,
+                  "fieldClinicName": null,
+                  "fieldUseFacilityAddress": true,
+                  "fieldWingFloorOrRoomNumber": null
                 }
-              },
-              "fieldUseMainFacilityPhone": true,
-              "fieldPhone": [],
-              "fieldEmailContacts": [],
-              "fieldOfficeHours": []
+              }
             }
           }
-        ],
-        "entityBundle": "vba_facility_service",
+        ]
+      },
+      {
+        "entityId": "65035",
+        "entityLabel": "Veterans Pension Center around Cleveland",
+        "entityBundle": "service_region",
         "fieldServiceNameAndDescripti": {
           "entity": {
             "name": "Veterans pension",
+            "tid": 1130,
+            "entityId": "1130",
+            "entityLabel": "Veterans pension",
             "entityBundle": "health_care_service_taxonomy",
-            "fieldFacilityServiceDescripti": "Our benefit counselors can help you with: understanding eligibility, gathering required documents, filling out paperwork, and more.",
             "fieldFacilityServiceHeader": "Get help applying for Veterans Pension benefits",
-            "fieldVbaTypeOfCare": "vba_veteran_benefits",
+            "fieldRegionalServiceHeader": "Submit your application by mail",
+            "fieldFacilityServiceDescripti": "Our benefit counselors can help you with: understanding eligibility, gathering required documents, filling out paperwork, and more.",
+            "fieldRegionalServiceDescripti": "You can submit your completed VA Form 21P-527EZ by mailing it to this address:",
             "fieldShowForVbaFacilities": true,
+            "fieldVbaTypeOfCare": "vba_family_member_caregiver_benefits",
+            "fieldOnlineSelfService": {
+              "title": "Learn how to manage Veterans Pension benefits online",
+              "url": {
+                "path": "/pension"
+              },
+              "uri": "entity:node/73"
+            },
             "fieldVbaServiceDescrip": "If you meet certain age, income, and disability requirements, we can help you apply for monthly pension payments.",
             "description": {
               "value": null,
@@ -503,57 +682,350 @@
               "processed": ""
             }
           }
-        }
-      },
-      {
-        "entityId": "65104",
-        "entityLabel": "Cleveland VA Regional Benefit Office - Case management",
-        "title": "Cleveland VA Regional Benefit Office - Case management",
-        "reverseFieldVbaServiceRegionsTaxonomyTerm": {
-          "entities": []
         },
         "fieldServiceLocation": [
           {
             "entity": {
-              "fieldServiceLocationAddress": {
-                "entity": {
-                  "fieldUseFacilityAddress": true,
-                  "fieldAddress": {
-                    "addressLine1": "",
-                    "addressLine2": "",
-                    "organization": null,
-                    "additionalName": null,
-                    "givenName": null,
-                    "postalCode": ""
+              "entityId": "145031",
+              "id": 145031,
+              "fieldHours": "2",
+              "fieldAdditionalHoursInfo": "Appointments may be available in an alternate dimension.",
+              "fieldOfficeHours": [
+                {
+                  "starthours": 600,
+                  "endhours": 1900,
+                  "day": 0,
+                  "comment": "Lotsa hours",
+                  "allDay": false
+                },
+                {
+                  "starthours": 900,
+                  "endhours": 1700,
+                  "day": 1,
+                  "comment": "",
+                  "allDay": false
+                },
+                {
+                  "starthours": 830,
+                  "endhours": 1630,
+                  "day": 2,
+                  "comment": "Slightly earlier hours",
+                  "allDay": false
+                },
+                {
+                  "starthours": 800,
+                  "endhours": 1800,
+                  "day": 3,
+                  "comment": "More hours",
+                  "allDay": false
+                },
+                {
+                  "starthours": 900,
+                  "endhours": 1700,
+                  "day": 4,
+                  "comment": "Back to the same hours",
+                  "allDay": false
+                },
+                {
+                  "starthours": 1300,
+                  "endhours": 1445,
+                  "day": 5,
+                  "comment": "Weird, small hours",
+                  "allDay": false
+                },
+                {
+                  "starthours": 800,
+                  "endhours": 1700,
+                  "day": 6,
+                  "comment": "",
+                  "allDay": false
+                }
+              ],
+              "fieldUseMainFacilityPhone": false,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "id": 145024,
+                    "fieldPhoneNumberType": "tel",
+                    "fieldPhoneNumber": "123-456-7890",
+                    "fieldPhoneExtension": "345",
+                    "fieldPhoneLabel": "First fake number"
+                  }
+                },
+                {
+                  "entity": {
+                    "id": 145025,
+                    "fieldPhoneNumberType": "fax",
+                    "fieldPhoneNumber": "098-765-4321",
+                    "fieldPhoneExtension": null,
+                    "fieldPhoneLabel": "Fake fax number"
+                  }
+                },
+                {
+                  "entity": {
+                    "id": 145026,
+                    "fieldPhoneNumberType": "sms",
+                    "fieldPhoneNumber": "832-862-9900",
+                    "fieldPhoneExtension": null,
+                    "fieldPhoneLabel": "Fake SMS Number"
+                  }
+                },
+                {
+                  "entity": {
+                    "id": 145027,
+                    "fieldPhoneNumberType": "tty",
+                    "fieldPhoneNumber": "982-333-6124",
+                    "fieldPhoneExtension": null,
+                    "fieldPhoneLabel": "Fake TTY Number (whatever that is)"
                   }
                 }
-              },
-              "fieldUseMainFacilityPhone": true,
-              "fieldPhone": [],
-              "fieldEmailContacts": [],
-              "fieldOfficeHours": []
+              ],
+              "fieldEmailContacts": [
+                {
+                  "entity": {
+                    "id": 145028,
+                    "fieldEmailAddress": "123oiewf@fakeemail.com",
+                    "fieldEmailLabel": "Fake Email #1"
+                  }
+                },
+                {
+                  "entity": {
+                    "id": 145029,
+                    "fieldEmailAddress": "23908fy0@anotherfakeemail.com",
+                    "fieldEmailLabel": "Second Fake Email"
+                  }
+                }
+              ],
+              "fieldServiceLocationAddress": {
+                "targetId": 145030,
+                "entity": {
+                  "id": 145030,
+                  "fieldAddress": {
+                    "addressLine1": "123 Fake Street",
+                    "addressLine2": "PO Box 444",
+                    "administrativeArea": "OH",
+                    "countryCode": "US",
+                    "postalCode": "12345",
+                    "locality": "Cleveland"
+                  },
+                  "fieldBuildingNameNumber": "Fake Office Building",
+                  "fieldClinicName": "Veterans Pension Office Fake",
+                  "fieldUseFacilityAddress": false,
+                  "fieldWingFloorOrRoomNumber": "The Nonexistent Wing"
+                }
+              }
             }
           }
-        ],
-        "entityBundle": "vba_facility_service",
+        ]
+      },
+      {
+        "entityId": "65036",
+        "entityLabel": "Cleveland Service Region Dermatology",
+        "entityBundle": "service_region",
         "fieldServiceNameAndDescripti": {
           "entity": {
-            "name": "Case management",
+            "name": "Dermatology",
+            "tid": 84,
+            "entityId": "84",
+            "entityLabel": "Dermatology",
             "entityBundle": "health_care_service_taxonomy",
-            "fieldFacilityServiceDescripti": "Case Management Facility Service Description",
-            "fieldFacilityServiceHeader": "Case Management Facility Service Header",
-            "fieldVbaTypeOfCare": "vba_other_services",
+            "fieldFacilityServiceHeader": "Here's a facility service header thing",
+            "fieldRegionalServiceHeader": "Find some useful regional services around here",
+            "fieldFacilityServiceDescripti": "Here's a facility description thing that's longer than the header",
+            "fieldRegionalServiceDescripti": "Here's a description of those useful regional services",
             "fieldShowForVbaFacilities": true,
-            "fieldVbaServiceDescrip": "Case management for VBA",
+            "fieldVbaTypeOfCare": "vba_other_services",
+            "fieldOnlineSelfService": {
+              "title": "Fake link to fake online self-service",
+              "url": {
+                "path": "/eastern-oklahoma-health-care/locations/mcalester-va-clinic/dermatology"
+              },
+              "uri": "entity:node/8950"
+            },
+            "fieldVbaServiceDescrip": "Ea culpa cillum culpa eu deserunt aute proident exercitation enim do elit. Est occaecat sint est reprehenderit Lorem velit id sit. Amet dolore commodo est tempor laborum adipisicing quis deserunt enim esse in sunt.",
             "description": {
-              "value": null,
-              "format": null,
-              "processed": ""
+              "value": "Our dermatologists offer expert treatment for a range of conditions that affect your skin, hair and nails—from acne to psoriasis to skin cancer. We also offer skin cancer screening and education.\r\n",
+              "format": "rich_text",
+              "processed": "Our dermatologists offer expert treatment for a range of conditions that affect your skin, hair&nbsp;and nails—from acne to psoriasis to skin cancer. We also offer skin cancer screening and education."
             }
           }
-        }
+        },
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "entityId": "145035",
+              "id": 145035,
+              "fieldHours": "2",
+              "fieldAdditionalHoursInfo": "Appointments are available upon request within the below hours, please call.",
+              "fieldOfficeHours": [
+                {
+                  "starthours": 1100,
+                  "endhours": 2300,
+                  "day": 0,
+                  "comment": "Comment #7",
+                  "allDay": false
+                },
+                {
+                  "starthours": 500,
+                  "endhours": 1700,
+                  "day": 1,
+                  "comment": "Comment #1",
+                  "allDay": false
+                },
+                {
+                  "starthours": 600,
+                  "endhours": 1800,
+                  "day": 2,
+                  "comment": "Comment #2",
+                  "allDay": false
+                },
+                {
+                  "starthours": 700,
+                  "endhours": 1900,
+                  "day": 3,
+                  "comment": "Comment #3",
+                  "allDay": false
+                },
+                {
+                  "starthours": 800,
+                  "endhours": 2000,
+                  "day": 4,
+                  "comment": "Comment #4",
+                  "allDay": false
+                },
+                {
+                  "starthours": 900,
+                  "endhours": 2100,
+                  "day": 5,
+                  "comment": "Comment #5",
+                  "allDay": false
+                },
+                {
+                  "starthours": 1000,
+                  "endhours": 2200,
+                  "day": 6,
+                  "comment": "Comment #6",
+                  "allDay": false
+                }
+              ],
+              "fieldUseMainFacilityPhone": false,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "id": 145032,
+                    "fieldPhoneNumberType": "sms",
+                    "fieldPhoneNumber": "123-456-7890",
+                    "fieldPhoneExtension": "88",
+                    "fieldPhoneLabel": "Emergency text number"
+                  }
+                }
+              ],
+              "fieldEmailContacts": [
+                {
+                  "entity": {
+                    "id": 145033,
+                    "fieldEmailAddress": "fake-email@yahoo.net",
+                    "fieldEmailLabel": "Extremely fake email"
+                  }
+                }
+              ],
+              "fieldServiceLocationAddress": {
+                "targetId": 145034,
+                "entity": {
+                  "id": 145034,
+                  "fieldAddress": {
+                    "addressLine1": "123 Fake Street",
+                    "addressLine2": "",
+                    "administrativeArea": "OH",
+                    "countryCode": "US",
+                    "postalCode": "22222",
+                    "locality": "Springfield"
+                  },
+                  "fieldBuildingNameNumber": "Derma Building",
+                  "fieldClinicName": "Dermatology Super Office",
+                  "fieldUseFacilityAddress": false,
+                  "fieldWingFloorOrRoomNumber": "Floor 33"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "entityId": "65037",
+        "entityLabel": "Some Cleveland Urgent Care Stuff",
+        "entityBundle": "service_region",
+        "fieldServiceNameAndDescripti": {
+          "entity": {
+            "name": "Urgent care",
+            "tid": 156,
+            "entityId": "156",
+            "entityLabel": "Urgent care",
+            "entityBundle": "health_care_service_taxonomy",
+            "fieldFacilityServiceHeader": "Get help finding and accessing urgent care services",
+            "fieldRegionalServiceHeader": "Find access to important regional services",
+            "fieldFacilityServiceDescripti": "Our urgent care facility works for you",
+            "fieldRegionalServiceDescripti": "Find nearby regional services and if they meet your needs",
+            "fieldShowForVbaFacilities": true,
+            "fieldVbaTypeOfCare": "vba_service_member_benefits",
+            "fieldOnlineSelfService": {
+              "title": "Get urgent care access (other one, fake one)",
+              "url": {
+                "path": "/san-francisco-health-care/locations/oakland-va-clinic/urgent-care"
+              },
+              "uri": "entity:node/14121"
+            },
+            "fieldVbaServiceDescrip": "Tempor ipsum commodo minim aliqua aute mollit. Mollit ex reprehenderit incididunt nulla in quis adipisicing sunt elit nulla deserunt duis. Tempor culpa cupidatat est minim eiusmod aliquip duis.\r\n\r\nQui eiusmod et cupidatat non consequat deserunt quis deserunt consequat. Sunt consequat mollit mollit duis ullamco voluptate proident est. Officia elit nostrud excepteur quis aute.",
+            "description": {
+              "value": "<p>We provide immediate, walk-in care for minor injuries and non-emergency illnesses that are not life-threatening but need early attention.</p>\r\n",
+              "format": "rich_text",
+              "processed": "<p>We provide immediate, walk-in care for minor&nbsp;injuries and non-emergency illnesses&nbsp;that are not life-threatening but need early attention.</p>"
+            }
+          }
+        },
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "entityId": "145039",
+              "id": 145039,
+              "fieldHours": "0",
+              "fieldAdditionalHoursInfo": null,
+              "fieldOfficeHours": [],
+              "fieldUseMainFacilityPhone": true,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "id": 145037,
+                    "fieldPhoneNumberType": "tel",
+                    "fieldPhoneNumber": "737-862-1139",
+                    "fieldPhoneExtension": "523",
+                    "fieldPhoneLabel": "Some Other Label"
+                  }
+                }
+              ],
+              "fieldEmailContacts": [],
+              "fieldServiceLocationAddress": {
+                "targetId": 145038,
+                "entity": {
+                  "id": 145038,
+                  "fieldAddress": {
+                    "addressLine1": "987 Cooper Ave",
+                    "addressLine2": "PO Box 444",
+                    "administrativeArea": "VA",
+                    "countryCode": "US",
+                    "postalCode": "87316",
+                    "locality": "Fake City"
+                  },
+                  "fieldBuildingNameNumber": "Urgent Care Fake Building",
+                  "fieldClinicName": "Super Urgent Care Location",
+                  "fieldUseFacilityAddress": false,
+                  "fieldWingFloorOrRoomNumber": "The Damsel in Distress Wing"
+                }
+              }
+            }
+          }
+        ]
       }
     ]
-  },
-  "fieldMedia": null
+  }
 }

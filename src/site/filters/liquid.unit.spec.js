@@ -2642,7 +2642,7 @@ describe('processVbaServices', () => {
       }),
     ],
   );
-  expect(singleVbaService.veteranBenefits.length).to.equal(2);
+  expect(singleVbaService.veteranBenefits.length).to.equal(1);
   expect(singleVbaService.familyMemberCaregiverBenefits.length).to.equal(0);
   expect(singleVbaService.serviceMemberBenefits.length).to.equal(0);
   expect(singleVbaService.otherServices.length).to.equal(0);
@@ -2670,7 +2670,13 @@ describe('processVbaServices', () => {
 
   expect(hiddenVbaServices.veteranBenefits.length).to.equal(0);
   expect(hiddenVbaServices.familyMemberCaregiverBenefits.length).to.equal(0);
-  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(2);
+  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'facilityService',
+  );
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'regionalService',
+  );
   expect(hiddenVbaServices.otherServices.length).to.equal(0);
 });
 
