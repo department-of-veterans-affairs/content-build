@@ -12,7 +12,7 @@
   {{ entity.fieldRichWysiwyg.processed }}
 {% endif %}
 
-<va-accordion>
+<va-accordion uswds="false">
   {% for item in fieldQAs %}
     {% assign id = item.entityId %}
     <va-accordion-item header="{{ item.entityLabel }}" level="{{ headerLevel }}" id="{{ item.entityLabel | hashReference: 60 }}">
