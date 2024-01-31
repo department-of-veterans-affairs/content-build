@@ -2,6 +2,10 @@
   Does the facility data also need to be passed into here so it can be used as a backup when needed?
 {% endcomment %}
 
+{% comment %}
+  Does the facility data also need to be passed into here so it can be used as a backup when needed?
+{% endcomment %}
+
 {% if vbaServices.length > 0 %}
   <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
     {{ vbaTitle }}
@@ -16,10 +20,19 @@
 
       {% for entity in vbaServices %}
         {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId or entity.regionalService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
-        {% assign entityLabel = entity.facilityService.entityLabel or entity.regionalService.entityLabel %}
+        {% if entity.facilityService.entityLabel %}
+          {% assign entityLabel = entity.facilityService.entityLabel %}
+        {% else %}
+          {% assign entityLabel = entity.regionalService.entityLabel %}
+        {% endif %}
+        {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
+          {% assign facilityServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader %}
+          {% assign facilityServiceDescription = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti %}
+        {% elsif entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
+          {% assign facilityServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader %}
+          {% assign facilityServiceDescription = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti %}
+        {% endif %}
 
-        {% assign facilityServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
-        {% assign facilityServiceDescription = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
         <va-accordion-item
           uswds
           class="va-accordion-item"
@@ -34,7 +47,7 @@
             <p>{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}</p>
           {% endif %}
 
-          {% if entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
+          {% if entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
             <h3 class="vads-u-margin-top--2">
               {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
             </h3>
@@ -59,7 +72,8 @@
                 text="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title }}" />{% endif %}
               </p>
             {% endif %}
-            {% assign fieldServiceLocations = entity.facilityService.fieldServiceLocation | join: entity.regionalService.fieldServiceLocation %}
+
+            {% assign fieldServiceLocations = entity.facilityService.fieldServiceLocation | joinArrays: entity.regionalService.fieldServiceLocation %}
             {% for location in fieldServiceLocations %}
               <div class="vads-u-padding-x--2 vads-u-margin-top--3 vads-u-margin-bottom--2 vads-u-border--1px">
                 <h4 class="vads-u-margin-top--2">
@@ -93,9 +107,11 @@
                 {% elsif location.entity.fieldPhone %}
                   {% for phoneObj in location.entity.fieldPhone %}
                     <div class="vads-u-margin-bottom--3">
-                      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                        {{ phoneObj.entity.fieldPhoneLabel }}
-                      </h5>
+                      {% if phoneObj.entity.fieldPhoneLabel %}
+                        <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+                          {{ phoneObj.entity.fieldPhoneLabel }}
+                        </h5>
+                      {% endif %}
 
                       <va-telephone contact="{{ phoneObj.entity.fieldPhoneNumber }}" extension="{{ phoneObj.entity.fieldPhoneExtension }}" />
                     </div>

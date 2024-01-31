@@ -1,5 +1,5 @@
 const commandLineArgs = require('command-line-args');
-const printUnitTestHelp = require('./run-unit-test-help.js');
+const printUnitTestHelp = require('./run-unit-test-help');
 const { runCommand } = require('./utils');
 
 // For usage instructions see https://github.com/department-of-veterans-affairs/vets-website#unit-tests
@@ -7,7 +7,7 @@ const { runCommand } = require('./utils');
 const defaultPath = './src/**/*.unit.spec.js?(x)';
 
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
-  { name: 'log-level', type: String, defaultValue: 'all' },
+  { name: 'log-level', type: String, defaultValue: 'debug' },
   { name: 'app-folder', type: String, defaultValue: null },
   { name: 'coverage', type: Boolean, defaultValue: false },
   { name: 'reporter', type: String, defaultValue: null },
