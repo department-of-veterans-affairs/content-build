@@ -1891,8 +1891,4 @@ module.exports = function registerFilters() {
 
     return urlsForBanner.includes(currentPath);
   };
-
-  liquid.filters.shouldShowCustomMobilePromoBanner = currentPath => {
-    return liquid.filters.shouldShowMobileAppPromoBanner(currentPath);
-  };
 };
