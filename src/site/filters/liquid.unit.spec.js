@@ -2599,12 +2599,6 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
   });
 });
 
-/*
-      veteranBenefits: [],
-      familyMemberCaregiverBenefits: [],
-      serviceMemberBenefits: [],
-      otherServices: [],
-      */
 describe('processVbaServices', () => {
   const allVbaServices = liquid.filters.processVbaServices(
     [

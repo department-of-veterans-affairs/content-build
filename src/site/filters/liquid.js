@@ -5,7 +5,6 @@ const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
 const set = require('lodash/fp/set');
-const log = require('debug')('liquid');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
@@ -1124,7 +1123,6 @@ module.exports = function registerFilters() {
    * @returns Array
    */
   liquid.filters.joinArrays = (a, b) => {
-    log(Array.isArray(a), Array.isArray(b));
     if (Array.isArray(a) && Array.isArray(b)) return [...a, ...b];
     if (Array.isArray(b)) return b;
     if (Array.isArray(a)) return a;
