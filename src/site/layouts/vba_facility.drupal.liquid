@@ -162,6 +162,7 @@
               {% assign spotlightContentAll = localSpotlight.entity | shimNonFetchedFeaturedToFetchedFeaturedContent | appendCentralizedFeaturedContent: spotlightContentAll %}
             {% endfor %}
 
+
             {% for spotlightContent in spotlightContentAll %}
               {% if spotlightContent.entity %}
                 {% include "src/site/includes/vba_facilities/spotlight_content.liquid" with
