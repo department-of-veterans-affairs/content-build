@@ -1,97 +1,103 @@
 {% if vbaServices.length > 0 %}
-  <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-    {{ vbaTitle }}
-  </h2>
+<h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+  {{ vbaTitle }}
+</h2>
 
-  <div class="vads-u-margin-bottom--3">
-    <va-accordion
-      uswds
-      bordered
-      id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}"
-      data-testid="vba-accordion-{{vbaTitle}}">
+<div class="vads-u-margin-bottom--3">
+  <va-accordion uswds bordered id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}"
+    data-testid="vba-accordion-{{vbaTitle}}">
+    {% for entity in vbaServices %}
+    {% if entity.facilityService %}
+    {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
+    {% else %}
+    {% capture entityId %}{{ entity.regionalService.fieldServiceNameAndDescripti.entity.entityId  | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
+    {% endif %}
+    {% if entity.facilityService.entityLabel %}
+    {% assign facilityLabel = entity.facilityService.entityLabel %}
+    {% endif %}
+    {% if entity.regionalService.entityLabel %}
+    {% assign regionalLabel = entity.regionalService.entityLabel %}
+    {% endif %}
+    {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader %}
+    {% assign facilityServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader %}
+    {% assign facilityServiceDescription = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti %}
+    {% endif %}
+    {% if entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
+    {% assign regionalServiceHeader = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
+    {% assign regionalServiceDescription = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
+    {% endif %}
+    <va-accordion-item uswds class="va-accordion-item" id="vba-service-item-{{ entityId }}"
+      {% if entity.facilityService.fieldServiceNameAndDescripti %}
+      header="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.name}}" {% else %}
+      header="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.name}}" {% endif %} level="3">
 
-      {% for entity in vbaServices %}
-        {% if entity.facilityService %}
-          {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
-        {% else %}
-          {% capture entityId %}{{ entity.regionalService.fieldServiceNameAndDescripti.entity.entityId  | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
-        {% endif %}
-        {% if entity.facilityService.entityLabel %}
-          {% assign facilityLabel = entity.facilityService.entityLabel %}
-        {% endif %}
-        {% if entity.regionalService.entityLabel %}
-          {% assign regionalLabel = entity.regionalService.entityLabel %}
-        {% endif %}
-        {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader %}
-          {% assign facilityServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceHeader %}
-          {% assign facilityServiceDescription = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldFacilityServiceDescripti %}
-        {% endif %}
-        {% if entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
-          {% assign regionalServiceHeader = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
-          {% assign regionalServiceDescription = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
-        {% endif %}
-        <va-accordion-item
-          uswds
-          class="va-accordion-item"
-          id="vba-service-item-{{ entityId }}"
-          {% if entity.facilityService.fieldServiceNameAndDescripti %}
-          header="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.name}}"
+      {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip != empty %}
+      <p>
+        {{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}
+      </p>
+      {% elsif entity.regionalService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip != empty %}
+      <p>
+        {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}
+      </p>
+      {% endif %}
+
+
+      {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.facilityService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
+      <h4 class="vads-u-margin-top--2">
+        {{ entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
+      </h4>
+
+      <div id="vba-service-body-{{ entityId }}">
+        {{ entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti | drupalToVaPath | phoneLinks }}
+      </div>
+      {% elsif entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
+      <h4 class="vads-u-margin-top--2">
+        {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
+      </h4>
+
+      <div id="vba-service-body-{{ entityId }}">
+        {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti | drupalToVaPath | phoneLinks }}
+      </div>
+      {% endif %}
+
+      {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url %}
+      <h4>
+        Manage your benefits online
+      </h4>
+      <p>
+        <va-link active {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url %}
+          href="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
+          text="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title }}"
           {% else %}
-          header="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.name}}"
-          {% endif %}
-          level="3">
+          href="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
+          text="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title }}"
+          {% endif %}></va-link>
+      </p>
+      {% endif %}
 
-          {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip != empty %}
-            <p>{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}</p>
-          {% elsif entity.regionalService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip != empty %}
-            <p>{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip | drupalToVaPath | phoneLinks }}</p>
-          {% endif %}
+      {% if entity.facilityService.fieldServiceLocation != empty %}
+        {% for fServiceLocation in entity.facilityService.fieldServiceLocation %}
+          {% include "src/site/includes/vba_facilities/service_location.liquid" with
+                    serviceLocation = fServiceLocation 
+                    entityLabel = facilityLabel 
+                    serviceHeader = facilityServiceHeader 
+                    serviceDescription = facilityServiceDescription 
+          %}
+        {% endfor %}
+      {% endif %}
+      {% if entity.regionalService.fieldServiceLocation != empty %}
+        {% for rServiceLocation in entity.regionalService.fieldServiceLocation %}
+          {% include "src/site/includes/vba_facilities/service_location.liquid" with 
+                  serviceLocation = rServiceLocation 
+                  entityLabel = regionalLabel 
+                  serviceHeader = regionalServiceHeader 
+                  serviceDescription = regionalServiceDescription 
+          %}
+        {% endfor %}
+      {% endif %}
 
-
-          {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.facilityService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
-            <h4 class="vads-u-margin-top--2">
-              {{ entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
-            </h4>
-
-            <div id="vba-service-body-{{ entityId }}">
-              {{ entity.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti | drupalToVaPath | phoneLinks }}
-            </div>
-          {% elsif entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader and entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
-            <h4 class="vads-u-margin-top--2">
-              {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader }}
-            </h4>
-
-            <div id="vba-service-body-{{ entityId }}">
-              {{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti | drupalToVaPath | phoneLinks }}
-            </div>
-          {% endif %}
-
-          {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url or entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url %}
-            <h4>
-              Manage your benefits online
-            </h4>
-            <p>
-              <va-link
-                active
-                {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url %}
-                href="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
-                text="{{ entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title }}"
-                {% else %}
-                href="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.url.path }}"
-                text="{{ entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService.title }}"
-                {% endif %}></va-link>
-            </p>
-          {% endif %}
-          {% for fServiceLocation in entity.facilityService.fieldServiceLocation %}
-            {% include "src/site/includes/service_location.liquid" with serviceLocation = fServiceLocation entityLabel = facilityLabel serviceHeader = facilityServiceHeader serviceDescription = facilityServiceDescription
-            %}
-          {% endfor %}
-
-          {% for rserviceLocation in entity.regionalService.fieldServiceLocation %}
-            {% include "src/site/includes/service_location.liquid" with serviceLocation = rServiceLocation entityLabel = regionalLabel serviceHeader = regionalServiceHeader serviceDescription = regionalServiceDescription %}
-          {% endfor %}
-        </va-accordion-item>
-      {% endfor %}
-    </va-accordion>
-  </div>
+    </va-accordion-item>
+    {% endfor %}
+  </va-accordion>
+</div>
 {% endif %}

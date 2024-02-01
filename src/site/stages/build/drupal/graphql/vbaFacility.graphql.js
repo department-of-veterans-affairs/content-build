@@ -256,7 +256,6 @@ const vbaFacilityFragment = `
                       id
                       entityId
                       fieldHours
-                      fieldAdditionalHoursInfo
                       fieldOfficeHours {
                         starthours
                         endhours
@@ -269,9 +268,7 @@ const vbaFacilityFragment = `
                         entity {
                           ... on ParagraphPhoneNumber {
                             id
-                            fieldPhoneNumberType
                             fieldPhoneNumber
-                            fieldPhoneExtension
                             fieldPhoneLabel
                           }
                         }
