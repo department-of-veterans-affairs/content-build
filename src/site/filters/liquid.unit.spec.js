@@ -7,10 +7,7 @@ import featuredContentData from '../layouts/tests/vet_center/template/fixtures/f
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
-import {
-  vbaFacilityOfficeNode,
-  vbaRegionFacilityNode,
-} from './fixtures/vbaFacility';
+import { vbaRegionFacilityOrOfficeNode } from './fixtures/vbaFacility';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
@@ -2605,22 +2602,23 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
 describe('processVbaServices', () => {
   const allVbaServices = liquid.filters.processVbaServices(
     [
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'other',
       }),
     ],
     [
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaFacilityOfficeNode({
-        fieldVbaTypeOfCare: 'vba_family_member_and_caregiver_benefits',
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_family_member_caregiver_benefits',
       }),
     ],
   );
+
   expect(allVbaServices.veteranBenefits.length).to.equal(1);
   expect(allVbaServices.familyCaregiverBenefits.length).to.equal(1);
   expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
@@ -2628,18 +2626,18 @@ describe('processVbaServices', () => {
 
   const singleVbaService = liquid.filters.processVbaServices(
     [
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
     ],
     [
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
     ],
@@ -2652,19 +2650,19 @@ describe('processVbaServices', () => {
 
   const hiddenVbaServices = liquid.filters.processVbaServices(
     [
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
         fieldShowForVbaFacilities: false,
       }),
     ],
     [
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
         fieldShowForVbaFacilities: false,
       }),
