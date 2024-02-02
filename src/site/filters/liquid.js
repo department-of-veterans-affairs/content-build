@@ -866,7 +866,7 @@ module.exports = function registerFilters() {
     @param {string} string - string to be converted
   */
   liquid.filters.trimAndCamelCase = (toRemove, string) => {
-    if (!string) return null;
+    if (!string || typeof string !== 'string') return null;
     const trimmedString = string.replace(toRemove, '');
     return _.camelCase(trimmedString);
   };
