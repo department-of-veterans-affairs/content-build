@@ -2606,7 +2606,7 @@ describe('processVbaServices', () => {
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
       vbaRegionFacilityOrOfficeNode({
-        fieldVbaTypeOfCare: 'other',
+        fieldVbaTypeOfCare: 'vba_other_services',
       }),
     ],
     [
@@ -2620,7 +2620,7 @@ describe('processVbaServices', () => {
   );
 
   expect(allVbaServices.veteranBenefits.length).to.equal(1);
-  expect(allVbaServices.familyCaregiverBenefits.length).to.equal(1);
+  expect(allVbaServices.familyMemberCaregiverBenefits.length).to.equal(1);
   expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
   expect(allVbaServices.otherServices.length).to.equal(1);
 
@@ -2629,22 +2629,15 @@ describe('processVbaServices', () => {
       vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaRegionFacilityOrOfficeNode({
-        fieldVbaTypeOfCare: 'vba_veteran_benefits',
-      }),
     ],
     [
       vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaRegionFacilityOrOfficeNode({
-        fieldVbaTypeOfCare: 'vba_veteran_benefits',
-      }),
     ],
   );
-
-  expect(singleVbaService.veteranBenefits.length).to.equal(4);
-  expect(singleVbaService.familyCaregiverBenefits.length).to.equal(0);
+  expect(singleVbaService.veteranBenefits.length).to.equal(1);
+  expect(singleVbaService.familyMemberCaregiverBenefits.length).to.equal(0);
   expect(singleVbaService.serviceMemberBenefits.length).to.equal(0);
   expect(singleVbaService.otherServices.length).to.equal(0);
 
@@ -2670,8 +2663,14 @@ describe('processVbaServices', () => {
   );
 
   expect(hiddenVbaServices.veteranBenefits.length).to.equal(0);
-  expect(hiddenVbaServices.familyCaregiverBenefits.length).to.equal(0);
-  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(2);
+  expect(hiddenVbaServices.familyMemberCaregiverBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'facilityService',
+  );
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'regionalService',
+  );
   expect(hiddenVbaServices.otherServices.length).to.equal(0);
 });
 
