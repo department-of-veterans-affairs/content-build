@@ -878,8 +878,10 @@ module.exports = function registerFilters() {
 
     return [...serviceRegions, ...offices].reduce((acc, vbaService) => {
       if (
+        !vbaService.fieldServiceNameAndDescripti ||
         !vbaService.fieldServiceNameAndDescripti.entity
-          .fieldShowForVbaFacilities
+          .fieldShowForVbaFacilities ||
+        !vbaService.fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare
       ) {
         return acc;
       }
