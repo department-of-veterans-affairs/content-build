@@ -46,6 +46,8 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
                       onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
                       {% if link.external == true %}
                         target="_blank" rel="noopener noreferrer"
+                      {% else %}
+                        target="_self"
                       {% endif %}
                       >
                       {% if link.icon != empty %}
