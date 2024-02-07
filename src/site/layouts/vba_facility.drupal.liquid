@@ -147,9 +147,29 @@
             %}
           </div>
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-            Prepare for your visit
-          </h2>
+          {% if fieldPrepareForVisit %}
+            <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+              Prepare for your visit
+            </h2>
+
+            <p>
+              Select a topic to learn more.
+            </p>
+
+            <div class="vads-u-margin-bottom--3">
+              <va-accordion uswds bordered id="vba-regional-facilities-accordion-prepare-for-visit">
+                {% for prepareObj in fieldPrepareForVisit %}
+                  <va-accordion-item uswds
+                    class="va-accordion-item"
+                    id="vba-service-item-{{ prepareObj.entity.id }}"
+                    header="{{ prepareObj.entity.fieldHeader }}"
+                    level="3">
+                    {{ prepareObj.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
+                  </va-accordion-item>
+                {% endfor %}
+              </va-accordion>
+            </div>
+          {% endif %}
 
           <h2 class="vads-u-line-height--2 vads-u-margin-bottom--3">
             In the spotlight at {{ entityLabel }}
