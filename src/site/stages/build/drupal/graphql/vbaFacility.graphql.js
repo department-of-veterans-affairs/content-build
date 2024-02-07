@@ -107,6 +107,19 @@ const vbaFacilityFragment = `
               }
             }
           }
+          fieldPrepareForVisit {
+            entity {
+              id
+              entityBundle
+              ... on ParagraphBasicAccordion {
+                id
+                fieldHeader
+                fieldRichWysiwyg {
+                  processed
+                }
+              }
+            }
+          }
           reverseFieldOfficeNode(
             filter: {conditions: [{field: "type", value: ["vba_facility_service"]}]}
           ) {
