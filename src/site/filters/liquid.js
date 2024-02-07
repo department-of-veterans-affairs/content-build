@@ -870,68 +870,68 @@ module.exports = function registerFilters() {
     const trimmedString = string.replace(toRemove, '');
     return _.camelCase(trimmedString);
   };
+  /**
+   *
+   * @param {Object} object Object of arrays
+   * @param {Array} array
+   * @param {string} keyField key for object e.g. "fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare"
+   * @returns {Object} Object with value inserted into keyField
+   */
+  function processVbaObjectHelper(object, arrayOfServices, typeOfOffice) {
+    if (!object || !typeOfOffice || !Array.isArray(arrayOfServices))
+      return object;
+    const objectCopy = { ...object };
+    const visibleArray = arrayOfServices.filter(
+      o => o?.fieldServiceNameAndDescripti?.entity?.fieldShowForVbaFacilities,
+    );
+    for (const el of visibleArray) {
+      const {
+        fieldVbaTypeOfCare,
+        name,
+      } = el.fieldServiceNameAndDescripti.entity;
+      const key = liquid.filters.trimAndCamelCase('vba_', fieldVbaTypeOfCare);
 
+      const indexOfFacilityService =
+        typeOfOffice === 'regionalService'
+          ? object[key].findIndex(
+              service =>
+                service.facilityService?.fieldServiceNameAndDescripti.entity
+                  .name === name,
+            )
+          : -1;
+      if (indexOfFacilityService !== -1) {
+        objectCopy[key][indexOfFacilityService][typeOfOffice] = el;
+      } else {
+        objectCopy[key].push({
+          [typeOfOffice]: el,
+        });
+      }
+    }
+    return objectCopy;
+  }
   liquid.filters.processVbaServices = (serviceRegions, offices) => {
     const hasServiceRegions =
       Array.isArray(serviceRegions) && serviceRegions.length !== 0;
     const hasOffices = Array.isArray(offices) && offices.length !== 0;
-    const accordions = {
+    let accordions = {
       veteranBenefits: [],
       familyMemberCaregiverBenefits: [],
       serviceMemberBenefits: [],
       otherServices: [],
     };
     if (hasOffices) {
-      offices.forEach(office => {
-        if (
-          office?.fieldServiceNameAndDescripti?.entity
-            ?.fieldShowForVbaFacilities
-        ) {
-          const {
-            fieldVbaTypeOfCare,
-          } = office.fieldServiceNameAndDescripti.entity;
-
-          const key = liquid.filters.trimAndCamelCase(
-            'vba_',
-            fieldVbaTypeOfCare,
-          );
-          accordions[key].push({
-            facilityService: office,
-          });
-        }
-      });
+      accordions = processVbaObjectHelper(
+        accordions,
+        offices,
+        'facilityService',
+      );
     }
     if (hasServiceRegions) {
-      serviceRegions.forEach(serviceRegion => {
-        if (
-          serviceRegion?.fieldServiceNameAndDescripti?.entity
-            ?.fieldShowForVbaFacilities
-        ) {
-          const {
-            fieldVbaTypeOfCare,
-            name,
-          } = serviceRegion.fieldServiceNameAndDescripti.entity;
-
-          const key = liquid.filters.trimAndCamelCase(
-            'vba_',
-            fieldVbaTypeOfCare,
-          );
-          const indexOfFacilityService = accordions[key].findIndex(
-            service =>
-              service.facilityService?.fieldServiceNameAndDescripti.entity
-                .name === name,
-          );
-          if (indexOfFacilityService !== -1) {
-            accordions[key][
-              indexOfFacilityService
-            ].regionalService = serviceRegion;
-          } else {
-            accordions[key].push({
-              regionalService: serviceRegion,
-            });
-          }
-        }
-      });
+      accordions = processVbaObjectHelper(
+        accordions,
+        serviceRegions,
+        'regionalService',
+      );
     }
     return accordions;
   };

@@ -4,14 +4,18 @@
   </h2>
 
   <div class="vads-u-margin-bottom--3">
-    <va-accordion uswds bordered id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}" data-testid="vba-accordion-{{vbaTitle}}">
+    <va-accordion
+      uswds
+      bordered
+      id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}"
+      data-testid="vba-accordion-{{vbaTitle}}">
       {% for entity in vbaServices %}
         {% if entity.facilityService %}
           {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
         {% else %}
           {% capture entityId %}{{ entity.regionalService.fieldServiceNameAndDescripti.entity.entityId  | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
         {% endif %}
-        
+
         {% if entity.facilityService.entityLabel %}
           {% assign facilityLabel = entity.facilityService.entityLabel %}
         {% endif %}
@@ -38,24 +42,25 @@
           {% assign regionalServiceHeader = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceHeader %}
           {% assign regionalServiceDescription = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
         {% endif %}
-    
+
         {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
           {% assign onlineSelfService = entity.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
         {% elsif entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
           {% assign onlineSelfService = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
         {% endif %}
-        
+
         {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip %}
           {% assign vbaServiceDescription = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip %}
         {% else %}
           {% assign vbaServiceDescription = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldVbaServiceDescrip %}
         {% endif %}
 
-        <va-accordion-item uswds
-            class="va-accordion-item"
-            id="vba-service-item-{{ entityId }}"
-            header="{{ entityName }}"
-            level="3">
+        <va-accordion-item
+          uswds
+          class="va-accordion-item"
+          id="vba-service-item-{{ entityId }}"
+          header="{{ entityName }}"
+          level="3">
           {% if vbaServiceDescription != empty %}
             <p>{{ vbaServiceDescription | drupalToVaPath | phoneLinks }}</p>
           {% endif %}
@@ -69,28 +74,19 @@
               <va-link
                 active
                 href="{{ onlineSelfService.url.path }}"
-                text="{{ onlineSelfService.title }}"
-              />
+                text="{{ onlineSelfService.title }}" />
             </p>
           {% endif %}
 
           {% for fServiceLocation in entity.facilityService.fieldServiceLocation %}
-            {% include "src/site/includes/vba_facilities/service_location.liquid" with
-                location = fServiceLocation 
-                entityLabel = facilityLabel 
-                serviceHeader = facilityServiceHeader 
-                serviceDescription = facilityServiceDescription
+            {% include "src/site/includes/vba_facilities/service_location.liquid" with location = fServiceLocation entityLabel = facilityLabel serviceHeader = facilityServiceHeader serviceDescription = facilityServiceDescription
             %}
           {% endfor %}
           {% for rServiceLocation in entity.regionalService.fieldServiceLocation %}
-            {% include "src/site/includes/vba_facilities/service_location.liquid" with
-                location = rServiceLocation 
-                entityLabel = regionalLabel 
-                serviceHeader = regionalServiceHeader 
-                serviceDescription = regionalServiceDescription 
+            {% include "src/site/includes/vba_facilities/service_location.liquid" with location = rServiceLocation entityLabel = regionalLabel serviceHeader = regionalServiceHeader serviceDescription = regionalServiceDescription
             %}
           {% endfor %}
-          
+
         </va-accordion-item>
       {% endfor %}
     </va-accordion>

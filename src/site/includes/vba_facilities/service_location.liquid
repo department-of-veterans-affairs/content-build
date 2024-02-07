@@ -8,43 +8,47 @@
   </p>
 
   {% if location.entity.fieldAdditionalHoursInfo %}
-  <div>
-    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-      Appointments
-    </h5>
+    <div>
+      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+        Appointments
+      </h5>
 
-    <p>
-      {{ location.entity.fieldAdditionalHoursInfo }}
-    </p>
-  </div>
+      <p>
+        {{ location.entity.fieldAdditionalHoursInfo }}
+      </p>
+    </div>
   {% endif %}
 
   {% if location.entity.fieldUseMainFacilityPhone and facilityPhone %}
-  <div class="vads-u-margin-bottom--3">
-    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-      Main Phone
-    </h5>
+    <div class="vads-u-margin-bottom--3">
+      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+        Main Phone
+      </h5>
 
-    <va-telephone contact="{{ facilityPhone }}" message-aria-describedby="Main Phone" />
-  </div>
+      <va-telephone contact="{{ facilityPhone }}" message-aria-describedby="Main Phone" />
+    </div>
   {% elsif location.entity.fieldPhone %}
-  {% for phoneObj in location.entity.fieldPhone %}
-  <div class="vads-u-margin-bottom--3">
-    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-      {{ phoneObj.entity.fieldPhoneLabel }}
-    </h5>
+    {% for phoneObj in location.entity.fieldPhone %}
+      <div class="vads-u-margin-bottom--3">
+        <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+          {{ phoneObj.entity.fieldPhoneLabel }}
+        </h5>
 
-    {% if phoneObj.entity.fieldPhoneNumberType == 'sms' or phoneObj.entity.fieldPhoneNumberType == 'tty' %}
-    {% assign phoneNumberType = phoneObj.entity.fieldPhoneNumberType %}
-    {% else %}
-    {% assign phoneNumberType = false %}
-    {% endif %}
+        {% if phoneObj.entity.fieldPhoneNumberType == 'sms' or phoneObj.entity.fieldPhoneNumberType == 'tty' %}
+          {% assign phoneNumberType = phoneObj.entity.fieldPhoneNumberType %}
+        {% else %}
+          {% assign phoneNumberType = false %}
+        {% endif %}
 
-    <va-telephone {% if phoneNumberType %}{{ phoneNumberType }}{% endif %}
-      contact="{{ phoneObj.entity.fieldPhoneNumber }}" extension="{{ phoneObj.entity.fieldPhoneExtension }}"
-      message-aria-describedby="{{ phoneObj.entity.fieldPhoneLabel }}" />
-  </div>
-  {% endfor %}
+        <va-telephone
+          {% if phoneNumberType %}
+          {{ phoneNumberType }}
+          {% endif %}
+          contact="{{ phoneObj.entity.fieldPhoneNumber }}"
+          extension="{{ phoneObj.entity.fieldPhoneExtension }}"
+          message-aria-describedby="{{ phoneObj.entity.fieldPhoneLabel }}" />
+      </div>
+    {% endfor %}
   {% endif %}
 
   <div class="vads-u-margin-bottom--3">
@@ -59,20 +63,20 @@
     </h5>
 
     {% if location.entity.fieldServiceLocationAddress.entity.fieldUseFacilityAddress and facilityAddress %}
-    {% assign hasAddress = true %}
-    {% assign addressData = facilityAddress %}
+      {% assign hasAddress = true %}
+      {% assign addressData = facilityAddress %}
     {% elsif location.entity.fieldServiceLocationAddress %}
-    {% assign hasAddress = true %}
-    {% assign addressData = location.entity.fieldServiceLocationAddress.entity.fieldAddress %}
+      {% assign hasAddress = true %}
+      {% assign addressData = location.entity.fieldServiceLocationAddress.entity.fieldAddress %}
     {% endif %}
 
     {% if hasAddress %}
-    <p>
-      {{ addressData.addressLine1 }}<br />
-      {{ addressData.locality }},
-      {{ addressData.administrativeArea }}
-      {{ addressData.postalCode }}
-    </p>
+      <p>
+        {{ addressData.addressLine1 }}<br/>
+        {{ addressData.locality }},
+        {{ addressData.administrativeArea }}
+        {{ addressData.postalCode }}
+      </p>
     {% endif %}
 
     {% assign clinicName = location.entity.fieldServiceLocationAddress.entity.fieldClinicName %}
@@ -80,56 +84,56 @@
     {% assign wingFloorOrRoomNumber = location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
 
     {% if clinicName or buildingNameAndNumber or wingFloorOrRoomNumber %}
-    <p>
-      {% if clinicName %}
-      {{ clinicName }} <br />
-      {% endif %}
+      <p>
+        {% if clinicName %}
+          {{ clinicName }} <br/>
+        {% endif %}
 
-      {% if buildingNameAndNumber and wingFloorOrRoomNumber %}
-      {{ buildingNameAndNumber }}, {{ wingFloorOrRoomNumber }}
-      {% endif %}
-    </p>
+        {% if buildingNameAndNumber and wingFloorOrRoomNumber %}
+          {{ buildingNameAndNumber }}, {{ wingFloorOrRoomNumber }}
+        {% endif %}
+      </p>
     {% endif %}
   </div>
 
   {% if location.entity.fieldEmailContacts %}
-  {% for emailObj in location.entity.fieldEmailContacts %}
-  <div class="vads-u-margin-bottom--3">
-    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-      {{ emailObj.entity.fieldEmailLabel }}:
-    </h5>
+    {% for emailObj in location.entity.fieldEmailContacts %}
+      <div class="vads-u-margin-bottom--3">
+        <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+          {{ emailObj.entity.fieldEmailLabel }}:
+        </h5>
 
-    <p class="
+        <p class="
                     vads-u-margin--0
                     vads-u-margin-bottom--0p5
                     vads-u-font-weight--regular">
-      <a target="_blank" href="mailto:{{ emailObj.entity.fieldEmailAddress }}">
-        {{ emailObj.entity.fieldEmailAddress }}
-      </a>
-    </p>
-  </div>
-  {% endfor %}
+          <a target="_blank" href="mailto:{{ emailObj.entity.fieldEmailAddress }}">
+            {{ emailObj.entity.fieldEmailAddress }}
+          </a>
+        </p>
+      </div>
+    {% endfor %}
   {% endif %}
 
   {% if location.entity.fieldHours == "2" and location.entity.fieldOfficeHours %}
-  <div class="vads-u-margin-bottom--3">
-    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-      Office Hours
-    </h5>
+    <div class="vads-u-margin-bottom--3">
+      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+        Office Hours
+      </h5>
 
-    {% include 'src/site/includes/hours.liquid' with allHours = location.entity.fieldOfficeHours %}
-  </div>
+      {% include 'src/site/includes/hours.liquid' with allHours = location.entity.fieldOfficeHours %}
+    </div>
   {% endif %}
 
   {% if location.entity.fieldHours == "0" %}
-  <div class="vads-u-margin-bottom--3">
-    <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-      Office Hours
-    </h5>
+    <div class="vads-u-margin-bottom--3">
+      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+        Office Hours
+      </h5>
 
-    <p>
-      The service hours are the same as our facility hours.
-    </p>
-  </div>
+      <p>
+        The service hours are the same as our facility hours.
+      </p>
+    </div>
   {% endif %}
 </div>
