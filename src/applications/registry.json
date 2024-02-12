@@ -1138,6 +1138,7 @@
       "includeBreadcrumbs": false,
       "noNavOrLogin": true,
       "noMegamenu": true,
+      "minimalFooter": true,
       "vagovprod": false
     }
   },
