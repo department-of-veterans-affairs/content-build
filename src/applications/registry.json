@@ -1129,6 +1129,19 @@
     "useLocalStylesAndComponents": true
   },
   {
+    "appName": "Travel Claim",
+    "entryName": "travel-claim",
+    "rootUrl": "/my-health/appointment-travel-claim",
+    "template": {
+      "layout": "page-react.html",
+      "includeFeedbackButton": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "vagovprod": false
+    }
+  },
+  {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
     "rootUrl": "/education/apply-for-benefits-form-22-1990",
