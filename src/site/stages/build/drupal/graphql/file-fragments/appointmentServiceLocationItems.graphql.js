@@ -4,6 +4,7 @@
  *
  */
 module.exports = `
+  fieldVirtualSupport
   fieldOnlineSchedulingAvail
   fieldUseFacilityPhoneNumber
   fieldOtherPhoneNumbers {
