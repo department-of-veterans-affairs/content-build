@@ -83,7 +83,7 @@
             %}
           {% endfor %}
           {% for rServiceLocation in entity.regionalService.fieldServiceLocation %}
-            {% include "src/site/paragraphs/service_location.liquid" with single = rServiceLocation.entity serviceLocationSubHeaderLevel = 5 serviceLocationType="VBA"
+            {% include "src/site/paragraphs/service_location.drupal.liquid" with single = rServiceLocation.entity serviceLocationSubHeaderLevel = 5 serviceLocationType="VBA"
             %}
           {% endfor %}
 
