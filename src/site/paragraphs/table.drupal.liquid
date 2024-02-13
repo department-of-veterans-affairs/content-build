@@ -26,20 +26,21 @@
         }
     }
 {% endcomment %}
-<va-table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" role="table" table-title="{{ entity.fieldTable.caption }}">
-    {% assign colLabels = entity.fieldTable.value.0  %}
-    {% for value in entity.fieldTable.value %}
-        {% if forloop.first == true %}
-            <va-table-row slot="headers" key="header">
-                {% for column in value %}
-                    {% if column == "" or column == nil %}
-                    <span role="columnheader"> </span>
+<div class="va-table-margin">
+    <va-table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" role="table" table-title="{{ entity.fieldTable.caption }}">
+        {% assign colLabels = entity.fieldTable.value.0  %}
+        {% for value in entity.fieldTable.value %}
+            {% if forloop.first == true %}
+                <va-table-row slot="headers" key="header">
+                    {% for column in value %}
+                        {% if column == "" or column == nil %}
+                        <span role="columnheader"> </span>
                     {% else %}
-                    <span role="columnheader" scope="col">{{ column }}</span>
+                        <span role="columnheader" scope="col">{{ column }}</span>
                     {% endif %}
-                {% endfor %}
-            </va-table-row>
-        {% else %}
+                    {% endfor %}
+                </va-table-row>
+            {% else %}
                 <va-table-row>
                     {% for column in value %}
                         <span>
@@ -47,6 +48,7 @@
                         </span>
                     {% endfor %}
                 </va-table-row>
-        {% endif %}
-    {% endfor %}
-</va-table>
+            {% endif %}
+        {% endfor %}    
+    </va-table>
+</div>
