@@ -96,9 +96,6 @@
   {% if single.fieldOtherPhoneNumbers.length > 0 %}
     <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
       {% for number in single.fieldOtherPhoneNumbers %}
-        <script>
-          console.log("number", {{ number | json }});
-        </script>
         {% include "src/site/components/phone-number.drupal.liquid" with
           phoneNumber = number.entity.fieldPhoneNumber
           phoneExtension = number.entity.fieldPhoneExtension
