@@ -13,9 +13,7 @@
         Appointments
       </h5>
 
-      <p>
-        {{ location.entity.fieldAdditionalHoursInfo }}
-      </p>
+      <p></p>
     </div>
   {% endif %}
 
@@ -62,78 +60,29 @@
       {{ entityLabel }}
     </h5>
 
-    {% if location.entity.fieldServiceLocationAddress.entity.fieldUseFacilityAddress and facilityAddress %}
-      {% assign hasAddress = true %}
-      {% assign addressData = facilityAddress %}
-    {% elsif location.entity.fieldServiceLocationAddress %}
-      {% assign hasAddress = true %}
-      {% assign addressData = location.entity.fieldServiceLocationAddress.entity.fieldAddress %}
-    {% endif %}
+    {% include "src/site/facilities/service_address.drupal.liquid" with serviceLocationAddress = single.fieldServiceLocationAddress.entity serviceLocationAddressHeaderLevel = serviceLocationSubHeaderLevel
+    %}
 
-    {% if hasAddress %}
-      <p>
-        {{ addressData.addressLine1 }}<br/>
-        {{ addressData.locality }},
-        {{ addressData.administrativeArea }}
-        {{ addressData.postalCode }}
-      </p>
-    {% endif %}
-
-    {% assign clinicName = location.entity.fieldServiceLocationAddress.entity.fieldClinicName %}
-    {% assign buildingNameAndNumber = location.entity.fieldServiceLocationAddress.entity.fieldBuildingNameNumber %}
-    {% assign wingFloorOrRoomNumber = location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
-
-    {% if clinicName or buildingNameAndNumber or wingFloorOrRoomNumber %}
-      <p>
-        {% if clinicName %}
-          {{ clinicName }} <br/>
-        {% endif %}
-
-        {% if buildingNameAndNumber and wingFloorOrRoomNumber %}
-          {{ buildingNameAndNumber }}, {{ wingFloorOrRoomNumber }}
-        {% endif %}
-      </p>
-    {% endif %}
-  </div>
-
-  {% if location.entity.fieldEmailContacts %}
-    {% for emailObj in location.entity.fieldEmailContacts %}
+    {% if location.entity.fieldHours == "2" and location.entity.fieldOfficeHours %}
       <div class="vads-u-margin-bottom--3">
         <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-          {{ emailObj.entity.fieldEmailLabel }}:
+          Office Hours
         </h5>
 
-        <p class="
-                    vads-u-margin--0
-                    vads-u-margin-bottom--0p5
-                    vads-u-font-weight--regular">
-          <a target="_blank" href="mailto:{{ emailObj.entity.fieldEmailAddress }}">
-            {{ emailObj.entity.fieldEmailAddress }}
-          </a>
+        {% include 'src/site/includes/hours.liquid' with allHours = location.entity.fieldOfficeHours %}
+      </div>
+    {% endif %}
+
+    {% if location.entity.fieldHours == "0" %}
+      <div class="vads-u-margin-bottom--3">
+        <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
+          Office Hours
+        </h5>
+
+        <p>
+          The service hours are the same as our facility hours.
         </p>
       </div>
-    {% endfor %}
-  {% endif %}
-
-  {% if location.entity.fieldHours == "2" and location.entity.fieldOfficeHours %}
-    <div class="vads-u-margin-bottom--3">
-      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-        Office Hours
-      </h5>
-
-      {% include 'src/site/includes/hours.liquid' with allHours = location.entity.fieldOfficeHours %}
-    </div>
-  {% endif %}
-
-  {% if location.entity.fieldHours == "0" %}
-    <div class="vads-u-margin-bottom--3">
-      <h5 class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-        Office Hours
-      </h5>
-
-      <p>
-        The service hours are the same as our facility hours.
-      </p>
-    </div>
-  {% endif %}
+    {% endif %}
+  </div>
 </div>

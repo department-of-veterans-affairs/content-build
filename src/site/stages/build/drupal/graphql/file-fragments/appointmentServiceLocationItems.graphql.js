@@ -1,6 +1,6 @@
 /*
  *
- * Appointments info for a facility service under the Service Location 
+ * Appointments info for a facility service under the Service Location
  *
  */
 module.exports = `

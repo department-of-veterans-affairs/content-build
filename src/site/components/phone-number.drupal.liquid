@@ -1,7 +1,11 @@
 <h{{ phoneHeaderLevel }}>{{ phoneLabel | default: 'Phone' }}</h{{ phoneHeaderLevel }}>
 <div>
   <va-telephone
+    {% if phoneNumberType %}
+    {{ phoneNumberType }}
+    {% endif %}
     contact="{{ phoneNumber | removeDashes }}"
     extension="{{ phoneExtension | default: '' }}"
+    message-aria-describedby="{{ phoneLabel }}" />
   />
 </div>

@@ -1,95 +1,104 @@
-{% include "src/site/facilities/service_address.drupal.liquid" with
-  serviceLocationAddress = single.fieldServiceLocationAddress.entity
-  serviceLocationAddressHeaderLevel = serviceLocationSubHeaderLevel
-%}
+<div class="vads-u-padding-x--2 vads-u-margin-top--3 vads-u-margin-bottom--2 vads-u-border--1px">
+  <h4 class="vads-u-margin-top--2">
+    {{ serviceHeader }}
+  </h4>
 
-{% comment %}
-  single.fieldHours values:
-  - 0 = Use facility hours
-  - 1 = Do not specify hours
-  - 2 = Display specific hours
-{% endcomment %}
+  <p id="vba-service-body-{{ entityId }}">
+    {{ serviceDescription | drupalToVaPath | phoneLinks }}
+  </p>
 
-{% if single.fieldHours != "1" %}
-  <h{{ serviceLocationSubHeaderLevel }} data-template="paragraphs/service_location">Hours</h{{ serviceLocationSubHeaderLevel }}>
-{% endif %}
-
-{% case single.fieldHours %}
-  {% when '2' %}
-    {% if single.fieldOfficeHours %}
-      {% include "src/site/includes/hours.liquid" with allHours = single.fieldOfficeHours headerType = 'included' %}
-    {% endif %}
-  {% when '0' %}
-    {% if fieldOfficeHours %}
-      {% include "src/site/includes/hours.liquid" with allHours = fieldOfficeHours headerType = 'included' %}
-    {% endif %}
-{% endcase %}
-
-{% if single.fieldAdditionalHoursInfo %}
-  <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
-{% endif %}
-
-{% comment %}
-  Conditionally display facility phone number
-{% endcomment %}
-{% if fieldPhoneNumber and single.fieldUseMainFacilityPhone %}
-  {% include "src/site/components/phone-number.drupal.liquid" with
-    phoneNumber = fieldPhoneNumber
-    phoneLabel = 'Main Phone'
-    phoneHeaderLevel = serviceLocationSubHeaderLevel
-  %}
-{% endif %}
-
-{% comment %}
-  Display each additional phone number provided
-{% endcomment %}
-{% include "src/site/components/phone.drupal.liquid" with
-  numbers = single.fieldPhone
-  phoneHeaderLevel = serviceLocationSubHeaderLevel
-%}
-
-{% if single.fieldEmailContacts %}
-  {% for email in single.fieldEmailContacts %}
-    <p class="vads-u-margin-y--1" data-template="paragraphs/service_location">
-    {% if email.entity.fieldEmailLabel %}
-      <h{{ serviceLocationSubHeaderLevel }}>{{ email.entity.fieldEmailLabel }} </h{{ serviceLocationSubHeaderLevel }}>
-    {% endif %}
-    <a aria-label="{{ email.entity.fieldEmailAddress }}"
-        data-template="paragraphs/service_location"
-        href="mailto:{{ email.entity.fieldEmailAddress }}">{{ email.entity.fieldEmailAddress }}
-    </a>
-  {% endfor %}
-{% endif %}
-
-
-{% comment %} 
-
-{% if locationEntity.fieldReferralRequired or locationEntity.fieldWalkInsAccepted or locationEntity.fieldOnlineSchedulingAvailabl %}
-  <h5 data-template="facilities/health_care_local_health_service">Appointments</h5>
-
-  {% assign introText = 'Contact us to schedule, reschedule, or
-    cancel your appointment. If a referral is required, you’ll need to contact your
-    primary care provider first.'
-  %}
-
-  {% case locationEntity.fieldHserviceApptIntroSelect %}
-    {% when 'custom_intro_text' %}
-      {% if locationEntity.fieldHserviceApptLeadin != empty %}
-        {% assign introText = locationEntity.fieldHserviceApptLeadin %}
-      {% endif %}
-    {% when 'no_intro_text' %}
-      {% assign introText = '' %}
-  {% endcase %}
-
-  {% if introText != empty %}
-    <p class="vads-u-margin--0" data-template="facilities/health_care_local_health_service">
-      {{  introText }}
-    </p>
+  {% if single.fieldOfficeVisits %}
+    <div>
+      <p>
+        <i class="fas fa-building"></i>
+        {% case single.fieldOfficeVisits %}
+          {% when "yes_appointment_only" %}
+            Must have appointment
+          {% when "yes_with_or_without_appointment" %}
+            Visit our office, with or without an appointment
+        {% endcase %}
+      </p>
+    </div>
   {% endif %}
 
-  {% if locationEntity.fieldPhoneNumbersParagraph.length > 0 %}
+  {% if single.fieldOnlineSchedulingAvail == "yes" %}
+    <div>
+      <p>
+        <i class="fas fa-calendar"></i> Schedule a virtual appointment
+      </p>
+    </div>
+  {% endif %}
+  
+  {% if fieldReferralRequired %}
+    <div>
+      <p>
+        {% case fieldReferralRequired %}
+          {% when "yes" %}
+            <i class="fas fa-check-circle"></i> A referral is required
+          {% when "not_applicable" %}
+            <i class="fas fa-times-circle"></i> A referral is not required
+        {% endcase %}
+      </p>
+    </div>
+  {% endif %}
+
+  {% if single.fieldAdditionalHoursInfo or single.fieldApptIntroTextType != 'remove_text' or single.fieldOtherPhoneNumbers != empty or single.fieldOfficeVisits %}
+    <div>
+      <h{{serviceLocationSubHeaderLevel}} class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Appointments</h{{serviceLocationSubHeaderLevel}} >
+    </div>
+
+    {% if single.fieldApptIntroTextType == 'customize_text' and single.fieldApptIntroTextCustom != empty %}
+      <p>{{ single.fieldApptIntroTextCustom }}</p>
+    {% elsif single.fieldApptIntroTextType == 'use_default_text' %}
+      <p>
+        Contact us to schedule, reschedule, or cancel your appointment. If a referral is required, 
+        you’ll need to contact your primary care provider first.
+      </p>
+    {% endif %}
+  {% endif %}
+
+  {% comment %}
+    Conditionally display facility phone number
+  {% endcomment %}
+  {% if fieldPhoneNumber and single.fieldUseMainFacilityPhone %}
+    <div class="vads-u-margin-bottom--2">
+      {% include "src/site/components/phone-number.drupal.liquid" with
+        phoneNumber = fieldPhoneNumber
+        phoneLabel = 'Main Phone'
+        phoneHeaderLevel = serviceLocationSubHeaderLevel
+      %}
+    </div>
+  {% endif %}
+
+  {% if single.fieldOnlineSchedulingAvail == "yes" %}
+    <div class="vads-u-margin-bottom--2">
+      <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
+        Schedule an appointment online
+      </a>
+    </div>
+  {% endif %}
+
+
+  {% comment %} Includes header for clinic name {% endcomment %}
+  {% include "src/site/facilities/service_address.drupal.liquid" with
+    serviceLocationAddress = single.fieldServiceLocationAddress.entity
+    serviceLocationAddressHeaderLevel = serviceLocationSubHeaderLevel
+  %}
+
+  {% comment %}
+    Display each additional phone number provided
+  {% endcomment %}
+  {% include "src/site/components/phone.drupal.liquid" with
+    numbers = single.fieldPhone
+    phoneHeaderLevel = serviceLocationSubHeaderLevel
+  %}
+
+  {% if single.fieldOtherPhoneNumbers.length > 0 %}
     <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
-      {% for number in locationEntity.fieldPhoneNumbersParagraph %}
+      {% for number in single.fieldOtherPhoneNumbers %}
+        <script>
+          console.log("number", {{ number | json }});
+        </script>
         {% include "src/site/components/phone-number.drupal.liquid" with
           phoneNumber = number.entity.fieldPhoneNumber
           phoneExtension = number.entity.fieldPhoneExtension
@@ -98,46 +107,44 @@
         %}
       {% endfor %}
     </div>
-  {% else %}
-    <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
-      {% include "src/site/components/phone-number.drupal.liquid" with
-        phoneNumber = fieldPhoneNumber
-        phoneLabel = 'Main Phone'
-        phoneHeaderLevel = 5
-      %}
-    </div>
   {% endif %}
 
-  {% assign OMIT_REFERRAL_OR_WALKIN = "not_applicable, unknown" %}
+  {% if single.fieldEmailContacts %}
+    {% for email in single.fieldEmailContacts %}
+      <p class="vads-u-margin-y--1" data-template="paragraphs/service_location">
+      {% if email.entity.fieldEmailLabel %}
+        <h{{ serviceLocationSubHeaderLevel }}>{{ email.entity.fieldEmailLabel }} </h{{ serviceLocationSubHeaderLevel }}>
+      {% endif %}
+      <a aria-label="{{ email.entity.fieldEmailAddress }}"
+          data-template="paragraphs/service_location"
+          href="mailto:{{ email.entity.fieldEmailAddress }}">{{ email.entity.fieldEmailAddress }}
+      </a>
+    {% endfor %}
+  {% endif %}
 
-  {% if locationEntity.fieldReferralRequired %}
-    {% unless OMIT_REFERRAL_OR_WALKIN contains locationEntity.fieldReferralRequired %}
-      <p class="vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
-        <strong>Referral required?</strong>
-        {% if locationEntity.fieldReferralRequired == '1' %}Yes{% else %}No{% endif %}
+  {% comment %}
+    single.fieldHours values:
+    - 0 = Use facility hours
+    - 1 = Do not specify hours
+    - 2 = Display specific hours
+  {% endcomment %}
+
+  {% if single.fieldHours != "1" %}
+    <h{{ serviceLocationSubHeaderLevel }} data-template="paragraphs/service_location">{{% if serviceLocationType == "VBA"}}Service {{% endif %}}Hours</h{{ serviceLocationSubHeaderLevel }}>
+  {% endif %}
+
+  {% case single.fieldHours %}
+    {% when '2' %}
+      {% if single.fieldOfficeHours %}
+        {% include "src/site/includes/hours.liquid" with allHours = single.fieldOfficeHours headerType = 'included' %}
+      {% endif %}
+    {% when '0' %}
+      <p>
+        The service hours are the same as our facility hours.
       </p>
-    {% endunless %}
-  {% endif %}
+  {% endcase %}
 
-  {% if locationEntity.fieldWalkInsAccepted %}
-    {% unless OMIT_REFERRAL_OR_WALKIN contains locationEntity.fieldWalkInsAccepted %}
-      <p class="vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
-        <strong>Walk-ins accepted?</strong>
-        {% if locationEntity.fieldWalkInsAccepted == '1' %}Yes{% else %}No{% endif %}
-      </p>
-    {% endunless %}
+  {% if single.fieldAdditionalHoursInfo %}
+    <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
   {% endif %}
-
-  {% if locationEntity.fieldOnlineSchedulingAvailabl == '1' %}
-    <a class="usa-button vads-u-margin-bottom--0"
-       data-entity-substitution="canonical"
-       data-entity-type="node"
-       data-template="facilities/health_care_local_health_service"
-       href="/health-care/schedule-view-va-appointments"
-       title="Schedule and manage health appointments">
-      Schedule an appointment online
-    </a>
-  {% endif %}
-{% endif %}
-
- {% endcomment %}
+</div>
