@@ -10,10 +10,10 @@
   {% if single.fieldOfficeVisits %}
     <div>
       <p>
-        <i class="fas fa-building"></i>
+        <i class="fas fa-building vads-u-margin-right--0p5"></i>
         {% case single.fieldOfficeVisits %}
           {% when "yes_appointment_only" %}
-            Must have appointment
+            Visit our office, with an appointment only
           {% when "yes_with_or_without_appointment" %}
             Visit our office, with or without an appointment
         {% endcase %}
@@ -24,7 +24,7 @@
   {% if single.fieldOnlineSchedulingAvail == "yes" %}
     <div>
       <p>
-        <i class="fas fa-calendar"></i> Schedule a virtual appointment
+        <i class="fas fa-calendar vads-u-margin-right--0p5"></i> Schedule a virtual appointment
       </p>
     </div>
   {% endif %}
@@ -33,10 +33,10 @@
     <div>
       <p>
         {% case fieldReferralRequired %}
-          {% when "yes" %}
-            <i class="fas fa-check-circle"></i> A referral is required
+          {% when "1","2" %}
+            <i class="fas fa-check-circle vads-u-margin-right--0p5"></i> A referral is required
           {% when "not_applicable" %}
-            <i class="fas fa-times-circle"></i> A referral is not required
+            <i class="fas fa-times-circle vads-u-margin-right--0p5"></i> A referral is not required
         {% endcase %}
       </p>
     </div>
@@ -130,21 +130,25 @@
   {% endcomment %}
 
   {% if single.fieldHours != "1" %}
-    <h{{ serviceLocationSubHeaderLevel }} data-template="paragraphs/service_location">{{% if serviceLocationType == "VBA"}}Service {{% endif %}}Hours</h{{ serviceLocationSubHeaderLevel }}>
+    <h{{ serviceLocationSubHeaderLevel }} data-template="paragraphs/service_location">Service Hours</h{{ serviceLocationSubHeaderLevel }}>
   {% endif %}
-
-  {% case single.fieldHours %}
-    {% when '2' %}
-      {% if single.fieldOfficeHours %}
-        {% include "src/site/includes/hours.liquid" with allHours = single.fieldOfficeHours headerType = 'included' %}
-      {% endif %}
-    {% when '0' %}
-      <p>
-        The service hours are the same as our facility hours.
-      </p>
-  {% endcase %}
-
+  {% if single.fieldHours != empty %}
+    <div class="vads-u-margin-bottom--2">
+    {% case single.fieldHours %}
+      {% when '2' %}
+        {% if single.fieldOfficeHours %}
+          {% include "src/site/includes/hours.liquid" with allHours = single.fieldOfficeHours headerType = 'included' %}
+        {% endif %}
+      {% when '0' %}
+        <p>
+          The service hours are the same as our facility hours.
+        </p>
+    {% endcase %}
+    </div>
+  {% endif %}
   {% if single.fieldAdditionalHoursInfo %}
-    <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
+    <p>
+      <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
+    </p>
   {% endif %}
 </div>
