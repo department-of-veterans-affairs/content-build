@@ -9,9 +9,6 @@ const set = require('lodash/fp/set');
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
 const medalliaSurveys = require('./medalliaSurveys.json');
-
-// const stagingSurveys = require('./medalliaStagingSurveys.json');
-// const prodSurveys = require('./medalliaProdSurveys.json');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
@@ -1784,6 +1781,11 @@ module.exports = function registerFilters() {
     );
     const effectiveBuildType = isStaging ? 'staging' : 'production';
 
+    // Validate the URL to ensure it's a non-null, non-undefined string
+    if (typeof url !== 'string' || url === null) {
+      // Handle invalid URL input. Could return a default value or null.
+      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
+    }
     // Check if the URL exists in the main URL object
     if (url in surveyData.urls) {
       const surveyInfo = surveyData.urls[url];
