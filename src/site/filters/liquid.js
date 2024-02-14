@@ -8,8 +8,10 @@ const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const stagingSurveys = require('./medalliaStagingSurveys.json');
-const prodSurveys = require('./medalliaProdSurveys.json');
+const medalliaSurveys = require('./medalliaSurveys.json');
+
+// const stagingSurveys = require('./medalliaStagingSurveys.json');
+// const prodSurveys = require('./medalliaProdSurveys.json');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
@@ -1774,19 +1776,76 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    if (
-      buildtype === 'localhost' ||
-      buildtype === 'vagovstaging' ||
-      buildtype === 'vagovdev'
-    ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    const surveyData = medalliaSurveys;
+    const defaultStagingSurvey = 11;
+    const defaultProdSurvey = 17;
+    const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
+      buildtype,
+    );
+    const effectiveBuildType = isStaging ? 'staging' : 'production';
+
+    // Check if the URL exists in the main URL object
+    if (url in surveyData.urls) {
+      const surveyInfo = surveyData.urls[url];
+      // Return the survey ID for the effective build type, or the default based on the build type
+      return (
+        surveyInfo[effectiveBuildType] ||
+        (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+      );
     }
 
-    if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : 17;
+    // Check if the URL matches any subpaths
+    for (const [subpath, surveyInfo] of Object.entries(
+      surveyData.urlsWithSubPaths,
+    )) {
+      if (url.startsWith(subpath)) {
+        // Return the survey ID for the effective build type, or the default based on the build type
+        return (
+          surveyInfo[effectiveBuildType] ||
+          (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+        );
+      }
     }
-    return null;
+
+    // If no URL match is found, return the default survey number based on the build type
+    return isStaging ? defaultStagingSurvey : defaultProdSurvey;
   };
+
+  // liquid.filters.getSurvey = (buildtype, url) => {
+  //   const surveyData = medalliaSurveys;
+
+  //   // Check if the URL exists in the main URL object
+  //   if (url in surveyData.urls) {
+  //     // Access the survey info for the URL
+  //     const surveyInfo = surveyData.urls[url];
+  //     // Return the survey ID for the specified build type
+  //     return surveyInfo[buildtype] || null;
+  //   }
+  //   // Check if the URL matches any subpaths
+  //   for (const [subpath, surveyInfo] of Object.entries(
+  //     surveyData.urlsWithSubPaths,
+  //   )) {
+  //     if (url.startsWith(subpath)) {
+  //       // Return the survey ID for the specified build type
+  //       return surveyInfo[buildtype] || null;
+  //     }
+  //   }
+  //   return null; // URL not found in the survey data
+  // };
+  // liquid.filters.getSurvey = (buildtype, url) => {
+  //   if (
+  //     buildtype === 'localhost' ||
+  //     buildtype === 'vagovstaging' ||
+  //     buildtype === 'vagovdev'
+  //   ) {
+  //     return stagingSurveys[url] ? stagingSurveys[url] : 11;
+  //   }
+
+  //   if (buildtype === 'vagovprod') {
+  //     return prodSurveys[url] ? prodSurveys[url] : 17;
+  //   }
+  //   return null;
+  // };
 
   liquid.filters.officeHoursDayFormatter = (day, short = true) => {
     let formattedDay = '';
