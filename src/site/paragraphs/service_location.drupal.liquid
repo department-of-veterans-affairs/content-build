@@ -1,4 +1,4 @@
-<div class="vads-u-padding-x--2 vads-u-margin-top--3 vads-u-margin-bottom--2 vads-u-border--1px">
+<div class="vads-u-padding-x--2 vads-u-margin-top--2 vads-u-margin-bottom--2 vads-u-border--1px">
   <h4 class="vads-u-margin-top--2">
     {{ serviceHeader }}
   </h4>
@@ -15,7 +15,7 @@
       yes_with_or_without_appointment
   {% endcomment %}
   {% if single.fieldOfficeVisits and single.fieldOfficeVisits != "no" %}
-    <div>
+    <div class="vads-u-margin-top--0p5">
       <p>
         <i class="fas fa-building vads-u-margin-right--0p5"></i>
         {% case single.fieldOfficeVisits %}
@@ -29,6 +29,7 @@
       </p>
     </div>
   {% endif %}
+
   {% comment %} 
     possibly values for fieldVirtualSupport
       value: 'no'
@@ -57,15 +58,14 @@
       </p>
     </div>
   {% endif %}
-
-
-  {% if single.fieldVirtualSupport != "no" and single.fieldOfficeVisits != "no" or  single.fieldVirtualSupport != "no" and single.fieldOfficeVisits != "yes_first_come_first_served_basis" or single.fieldVirtualSupport == "yes_first_come_first_served_basis" and single.fieldOfficeVisits == "no" or single.fieldVirtualSupport == "yes_first_come_first_served_basis" and single.fieldOfficeVisits == "yes_first_come_first_served_basis" %}
+  
+  {% if single.fieldVirtualSupport == "yes_appointment_only" or single.fieldVirtualSupport == 'yes_with_or_without_appointment' or single.fieldOfficeVisits == "yes_appointment_only" or single.fieldOfficeVisits == 'yes_with_or_without_appointment' %}
     <div>
       <h{{serviceLocationSubHeaderLevel}} class="vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Appointments</h{{serviceLocationSubHeaderLevel}} >
     </div>
     {% if single.fieldApptIntroTextType != 'remove_text' %}
-      {% if single.fieldApptIntroTextType == 'customize_text' and single.fieldApptIntroTextCustom != empty or single.fieldOnlineSchedulingAvail == "yes"  %}
-        <p>{{ single.fieldApptIntroTextCustom }}</p>
+      {% if single.fieldApptIntroTextType == 'customize_text' and single.fieldApptIntroTextCustom != empty  %}
+        <p>{{ single.fieldApptIntroTextCustom | drupalToVaPath | phoneLinks }}</p>
       {% elsif single.fieldApptIntroTextType == 'use_default_text' %}
         <p>
           Contact us to schedule, reschedule, or cancel your appointment. If a referral is required, 
