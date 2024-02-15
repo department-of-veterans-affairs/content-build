@@ -16,8 +16,12 @@
 
   "urlsWithSubPaths": {
     "/health-care": {
-      "production": 43,
+      "production": 17,
       "staging": 41
-    }
+    },
+    "/my-health/medical-records/summaries-and-notes/visit-summary": {
+      "production": 17,
+      "staging": 41
+    }   
   }
 }

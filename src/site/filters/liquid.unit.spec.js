@@ -2807,34 +2807,89 @@ describe('deriveFormattedTimestamp', () => {
 });
 
 describe('getSurvey', () => {
-  test('returns correct survey ID for direct URL match in production', () => {
-    expect(liquid.filters.getSurvey('vagovprod', '/search')).toBe(21);
+  it('returns correct survey ID for direct URL match in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/search')).to.equal(21);
   });
 
-  test('returns correct survey ID for direct URL match in staging', () => {
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
       liquid.filters.getSurvey('vagovstaging', '/contact-us/virtual-agent'),
-    ).toBe(26);
+    ).to.equal(26);
   });
 
-  test('returns default survey ID when no direct URL match is found in production', () => {
-    expect(liquid.filters.getSurvey('vagovprod', '/')).toBe(17);
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/')).to.equal(17);
   });
 
-  test('returns default survey ID when no direct URL match is found in staging', () => {
-    expect(liquid.filters.getSurvey('vagovstaging', '/')).toBe(11);
+  it('returns default survey ID when no direct URL match is found in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/')).to.equal(11);
   });
 
-  test('returns correct survey ID for subpath URL match in production', () => {
+  it('returns default survey ID when no direct URL match is found in production', () => {
     expect(
-      liquid.filters.getSurvey('vagovprod', '/health-care/appointments'),
-    ).toBe(43);
+      liquid.filters.getSurvey(
+        'vagovstaging',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(11);
   });
 
-  test('returns correct survey ID for subpath URL match in staging', () => {
+  it('returns default survey ID when no direct URL match is found in production', () => {
     expect(
-      liquid.filters.getSurvey('vagovdev', '/health-care/eligibility'),
-    ).toBe(41);
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/64545443',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey('vagovstaging', '/health-care/eligibility'),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/health-care')).to.equal(
+      41,
+    );
+  });
+
+  it('handles null URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', null)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', null)).to.equal(11);
+  });
+
+  it('handles undefined URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', undefined)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', undefined)).to.equal(11);
   });
 });
 

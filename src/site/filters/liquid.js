@@ -1781,9 +1781,7 @@ module.exports = function registerFilters() {
     );
     const effectiveBuildType = isStaging ? 'staging' : 'production';
 
-    // Validate the URL to ensure it's a non-null, non-undefined string
     if (typeof url !== 'string' || url === null) {
-      // Handle invalid URL input. Could return a default value or null.
       return isStaging ? defaultStagingSurvey : defaultProdSurvey;
     }
     // Check if the URL exists in the main URL object
@@ -1795,7 +1793,6 @@ module.exports = function registerFilters() {
         (isStaging ? defaultStagingSurvey : defaultProdSurvey)
       );
     }
-
     // Check if the URL matches any subpaths
     for (const [subpath, surveyInfo] of Object.entries(
       surveyData.urlsWithSubPaths,
@@ -1812,42 +1809,6 @@ module.exports = function registerFilters() {
     // If no URL match is found, return the default survey number based on the build type
     return isStaging ? defaultStagingSurvey : defaultProdSurvey;
   };
-
-  // liquid.filters.getSurvey = (buildtype, url) => {
-  //   const surveyData = medalliaSurveys;
-
-  //   // Check if the URL exists in the main URL object
-  //   if (url in surveyData.urls) {
-  //     // Access the survey info for the URL
-  //     const surveyInfo = surveyData.urls[url];
-  //     // Return the survey ID for the specified build type
-  //     return surveyInfo[buildtype] || null;
-  //   }
-  //   // Check if the URL matches any subpaths
-  //   for (const [subpath, surveyInfo] of Object.entries(
-  //     surveyData.urlsWithSubPaths,
-  //   )) {
-  //     if (url.startsWith(subpath)) {
-  //       // Return the survey ID for the specified build type
-  //       return surveyInfo[buildtype] || null;
-  //     }
-  //   }
-  //   return null; // URL not found in the survey data
-  // };
-  // liquid.filters.getSurvey = (buildtype, url) => {
-  //   if (
-  //     buildtype === 'localhost' ||
-  //     buildtype === 'vagovstaging' ||
-  //     buildtype === 'vagovdev'
-  //   ) {
-  //     return stagingSurveys[url] ? stagingSurveys[url] : 11;
-  //   }
-
-  //   if (buildtype === 'vagovprod') {
-  //     return prodSurveys[url] ? prodSurveys[url] : 17;
-  //   }
-  //   return null;
-  // };
 
   liquid.filters.officeHoursDayFormatter = (day, short = true) => {
     let formattedDay = '';
