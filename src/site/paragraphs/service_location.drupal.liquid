@@ -1,14 +1,14 @@
 <div class="vads-u-padding-x--2 vads-u-margin-top--2 vads-u-margin-bottom--2 vads-u-border--1px">
   {% if serviceHeader %}
     <h4 class="vads-u-margin-top--2">
-    {{ serviceHeader }}
-  </h4>
+      {{ serviceHeader }}
+    </h4>
   {% endif %}
 
   {% if serviceDescription %}
-  <p id="vba-service-body-{{ entityId }}">
-    {{ serviceDescription | drupalToVaPath | phoneLinks }}
-  </p>
+    <p id="vba-service-body-{{ entityId }}">
+      {{ serviceDescription | drupalToVaPath | phoneLinks }}
+    </p>
   {% endif %}
 
 
