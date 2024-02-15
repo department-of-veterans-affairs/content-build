@@ -8,8 +8,7 @@
 {% endfor %}
 
 {% if locationEntity.fieldReferralRequired or locationEntity.fieldWalkInsAccepted or locationEntity.fieldOnlineSchedulingAvailabl %}
-  <h5 data-template="facilities/health_care_local_health_service">Appointments</h5>
-
+  {% assign showAppointmentsHeader = true %}
   {% assign introText = 'Contact us to schedule, reschedule, or
     cancel your appointment. If a referral is required, you’ll need to contact your
     primary care provider first.'
@@ -24,12 +23,21 @@
       {% assign introText = '' %}
   {% endcase %}
 
+  {% for numberFirst in locationEntity.fieldPhoneNumbersParagraph %}
+    {% if introText == '' and numberFirst.entity.fieldPhoneLabel == "Appointments" and forloop.first %}
+      {% assign showAppointmentsHeader = false %}
+    {% endif %}
+  {% endfor %}
+
+  {% if showAppointmentsHeader %}
+    <h5 data-template="facilities/health_care_local_health_service">Appointments</h5>
+  {% endif %}
+
   {% if introText != empty %}
     <p class="vads-u-margin--0" data-template="facilities/health_care_local_health_service">
       {{  introText }}
     </p>
   {% endif %}
-
 
   {% comment %}
     if fieldPhoneNumbersParagraph has values
