@@ -37,13 +37,21 @@
   {% endcomment %}
   {% if locationEntity.fieldPhoneNumbersParagraph.length > 0 %}
     <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
+      {% if isMentalHealthService and fieldMentalHealthPhone %}
+        {% assign localServiceMainNumber = fieldMentalHealthPhone %}
+      {% else %}
+        {% assign localServiceMainNumber = fieldPhoneNumber %}
+      {% endif %}
+
       {% for number in locationEntity.fieldPhoneNumbersParagraph %}
-        {% include "src/site/components/phone-number.drupal.liquid" with
-          phoneNumber = number.entity.fieldPhoneNumber
-          phoneExtension = number.entity.fieldPhoneExtension
-          phoneLabel = number.entity.fieldPhoneLabel
-          phoneHeaderLevel = 5
-        %}
+        {% if number.entity.fieldPhoneNumber != localServiceMainNumber or number.entity.fieldPhoneNumber == localServiceMainNumber and number.entity.fieldPhoneExtension %}
+          {% include "src/site/components/phone-number.drupal.liquid" with
+            phoneNumber = number.entity.fieldPhoneNumber
+            phoneExtension = number.entity.fieldPhoneExtension
+            phoneLabel = number.entity.fieldPhoneLabel
+            phoneHeaderLevel = 5
+          %}
+        {% endif %}
       {% endfor %}
     </div>
   {% else %}
