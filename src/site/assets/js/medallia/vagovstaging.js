@@ -49,11 +49,12 @@ function getSurvey(buildtype, url) {
   for (const [subpath, surveyInfo] of Object.entries(
     surveyData.urlsWithSubPaths,
   )) {
-  if (pathUrl.startsWith(subpath)) {
-    return (
-      surveyInfo[effectiveBuildType] ||
-      (isStaging ? defaultStagingSurvey : defaultProdSurvey)
-    );
+    if (pathUrl.startsWith(subpath)) {
+      return (
+        surveyInfo[effectiveBuildType] ||
+        (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+      );
+    }
   }
 }
 
