@@ -1,4 +1,5 @@
-  
+const medalliaSurveys = require('../../../filters/medalliaSurveys.json')
+
 (function () {
   if (window.KAMPYLE_ONSITE_SDK) {
       onsiteLoaded();
@@ -15,14 +16,45 @@ function onsiteLoaded() {
   }
 }
   
-const vagovstagingsurveys = {
-  "/search": 20,
-  "/contact-us/virtual-agent": 26
-}
+// const vagovstagingsurveys = {
+//   "/search": 20,
+//   "/contact-us/virtual-agent": 26
+// }
 
-function getSurveyNumber (url) {
-    let pathUrl = trimSlash(url.toString())
-    return vagovstagingsurveys[pathUrl] ? vagovstagingsurveys[pathUrl] : 11;
+// function getSurveyNumber (url) {
+//     let pathUrl = trimSlash(url.toString())
+//     return vagovstagingsurveys[pathUrl] ? vagovstagingsurveys[pathUrl] : 11;
+// }
+
+function getSurvey(buildtype, url) {
+  const surveyData = medalliaSurveys;
+  const defaultStagingSurvey = 11;
+  const defaultProdSurvey = 17;
+  const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
+    buildtype,
+  );
+  const effectiveBuildType = isStaging ? 'staging' : 'production';
+  const pathUrl = trimSlash(url.toString())
+
+  if (typeof pathUrl !== 'string' || pathUrl === null) {
+    return isStaging ? defaultStagingSurvey : defaultProdSurvey;
+  }
+  if (pathUrl in surveyData.urls) {
+    const surveyInfo = surveyData.urls[pathUrl];
+    return (
+      surveyInfo[effectiveBuildType] ||
+      (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+    );
+  }
+  for (const [subpath, surveyInfo] of Object.entries(
+    surveyData.urlsWithSubPaths,
+  )) {
+  if (pathUrl.startsWith(subpath)) {
+    return (
+      surveyInfo[effectiveBuildType] ||
+      (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+    );
+  }
 }
 
 function trimSlash(url) {
