@@ -79,11 +79,11 @@
           {% endif %}
 
           {% for fServiceLocation in entity.facilityService.fieldServiceLocation %}
-            {% include "src/site/paragraphs/service_location.drupal.liquid" with single = fServiceLocation.entity serviceLocationSubHeaderLevel = 5 serviceLocationType="VBA" serviceHeader = facilityServiceHeader serviceDescription = facilityServiceDescription
+            {% include "src/site/paragraphs/service_location.drupal.liquid" with single = fServiceLocation.entity serviceLocationSubHeaderLevel = 4 serviceLocationType="VBA" serviceHeader = facilityServiceHeader serviceDescription = facilityServiceDescription
             %}
           {% endfor %}
           {% for rServiceLocation in entity.regionalService.fieldServiceLocation %}
-            {% include "src/site/paragraphs/service_location.drupal.liquid" with single = rServiceLocation.entity serviceLocationSubHeaderLevel = 5 serviceLocationType="VBA" serviceHeader = regionalServiceHeader serviceDescription = regionalServiceDescription
+            {% include "src/site/paragraphs/service_location.drupal.liquid" with single = rServiceLocation.entity serviceLocationSubHeaderLevel = 4 serviceLocationType="VBA" serviceHeader = regionalServiceHeader serviceDescription = regionalServiceDescription
             %}
           {% endfor %}
 

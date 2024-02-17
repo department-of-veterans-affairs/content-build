@@ -1,10 +1,10 @@
 {% if facilities %}
   {% for facility in facilities %}
-    <h3>
+    <h4>
       <a href="{{ facility.entityUrl.path }}">
         {{ facility.entityLabel }}
       </a>
-    </h3>
+    </h4>
 
     {% comment %}
       Facility Address
@@ -25,15 +25,13 @@
         {% endif %}
         {% if facilityAddress.locality and facilityAddress.administrativeArea and facilityAddress.postalCode %}
           <span class="vads-u-margin-bottom--0">
-            {{ facilityAddress.locality }}, {{ facilityAddress.administrativeArea}} {{ facilityAddress.postalCode }}
+            {{ facilityAddress.locality }}, {{ facilityAddress.administrativeArea }} {{ facilityAddress.postalCode }}
           </span>
         {% endif %}
       </div>
     {% endif %}
 
-    {% include "src/site/facilities/vha_facility_nonclinical_service.drupal.liquid" with
-      facility = facility
-      serviceLocationSubHeaderLevel = 4
+    {% include "src/site/facilities/vha_facility_nonclinical_service.drupal.liquid" with facility = facility serviceLocationSubHeaderLevel = 5
     %}
   {% endfor %}
 {% endif %}
