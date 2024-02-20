@@ -1,5 +1,3 @@
-const medalliaSurveys = require('../../../filters/medalliaSurveys.json')
-
 (function () {
   if (window.KAMPYLE_ONSITE_SDK) {
       onsiteLoaded();
@@ -25,6 +23,34 @@ function onsiteLoaded() {
 //     let pathUrl = trimSlash(url.toString())
 //     return vagovstagingsurveys[pathUrl] ? vagovstagingsurveys[pathUrl] : 11;
 // }
+
+const medalliaSurveys = {
+  "urls":  {
+    "/search": {
+      "production": 21,
+      "staging": 20
+    },
+    "/contact-us/virtual-agent": {
+      "production": 25,
+      "staging": 26
+    },
+    "/school-administrators": {
+      "production": 17,
+      "staging": 37
+    }
+  },
+
+  "urlsWithSubPaths": {
+    "/health-care": {
+      "production": 17,
+      "staging": 41
+    },
+    "/my-health/medical-records/summaries-and-notes/visit-summary": {
+      "production": 17,
+      "staging": 41
+    }   
+  }
+}
 
 function getSurvey(buildtype, url) {
   const surveyData = medalliaSurveys;
