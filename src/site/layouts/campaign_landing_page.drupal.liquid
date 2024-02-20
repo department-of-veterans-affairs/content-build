@@ -26,7 +26,7 @@
               {% endif %}
             </div>
             <div class="vads-u-display--none small-desktop-screen:vads-u-display--block">
-              <img alt="" src="{{ fieldHeroImage.entity.image.derivative.url }}" style="width:468px">
+              <img alt="" src="{{ fieldHeroImage.entity.image.derivative.url }}">
             </div>
           </div>
         </div>
@@ -461,7 +461,7 @@
             <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
 
             <!-- Page-specific Questions/Answers -->
-            <va-accordion bordered>
+            <va-accordion bordered uswds="false">
               {% for faqParagraph in fieldClpFaqParagraphs %}
                 {% if faqParagraph.entity %}
                   <va-accordion-item

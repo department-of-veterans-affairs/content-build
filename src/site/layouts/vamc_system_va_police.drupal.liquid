@@ -1,0 +1,69 @@
+{% include "src/site/includes/header.html" %}
+{% include "src/site/includes/preview-edit.drupal.liquid" %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
+
+<div id="content" class="interior">
+  <main class="va-l-detail-page va-facility-page">
+    <div class="usa-grid usa-grid-full">
+      {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
+      <div class="usa-width-three-fourths">
+        <article class="usa-content">
+          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
+            entityUrl = entityUrl
+          %}
+
+          <h1>{{ title }}</h1>
+
+          {% if fieldCcVaPoliceOverview.fetched %}
+            <div class="va-introtext vads-u-font-size--lg vads-u-font-family--serif">
+              {{ fieldCcVaPoliceOverview | processWysiwygSimple }}
+            </div>
+          {% endif %}
+
+          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+
+          {% if fieldPhoneNumbersParagraph %}
+            {%  assign  phoneNumber = fieldPhoneNumbersParagraph | processFieldPhoneNumbersParagraph %}
+            {% if phoneNumber %}
+              <div class="vads-u-margin-bottom--4" id="field-phone-numbers">
+                {% include "src/site/includes/va_police/contact_section.liquid" with
+                  phoneNumber = phoneNumber %}
+              </div>
+            {% endif %}
+          {% endif %}
+
+
+          {% if fieldCcPoliceReport.fetched %}
+            {% assign policeFeatured = fieldCcPoliceReport | processCcFeatured %}
+            {% if policeFeatured %}
+              <div class="vads-u-margin-bottom--3" id="field-va-police-reports">
+                {% include "src/site/includes/va_police/featured_content.liquid"
+                  fieldCta = policeFeatured.fieldCta
+                  fieldDescription = policeFeatured.fieldDescription
+                  fieldSectionHeader = policeFeatured.fieldSectionHeader
+                %}
+              </div>
+            {% endif %}
+          {% endif %}
+
+
+          {% if fieldCcFaq.fetched %}
+            <div class="vads-u-margin-bottom--3" id="field-cc-faq-police">
+              {% include "src/site/includes/centralized-content.drupal.liquid"
+                entity = fieldCcFaq.fetched
+                contentType = fieldCcFaq.fetchedBundle
+                level = 3
+              %}
+            </div>
+          {% endif %}
+
+          <va-back-to-top></va-back-to-top>
+
+          <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+        </article>
+      </div>
+    </div>
+  </main>
+  {% include "src/site/includes/footer.html" %}
+  {% include "src/site/includes/debug.drupal.liquid" %}

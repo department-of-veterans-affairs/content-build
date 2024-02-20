@@ -1,5 +1,13 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
+{% include "src/site/includes/vba_facilities/banner.liquid" with
+      shouldDisplayBanner = fieldShowBanner
+      alertType = fieldAlertType
+      alertTitle = fieldBannerTitle
+      alertContent = fieldBannerContent.processed
+      dismissible = fieldDismissibleOption
+%}
+
 {% include "src/site/includes/breadcrumbs.drupal.liquid" %}
 
 <div id="content" class="interior">
@@ -124,10 +132,10 @@
                         </div>
                       {% endif %}
                     </div>
-                    {% include 'src/site/includes/hours.liquid' with 
-                          allHours = fieldOfficeHours 
-                          headerType = 'office' 
-                          boldDay = true 
+                    {% include 'src/site/includes/hours.liquid' with
+                          allHours = fieldOfficeHours
+                          headerType = 'office'
+                          boldDay = true
                     %}
                   </section>
                 </div>
@@ -139,19 +147,40 @@
             %}
           </div>
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-            Prepare for your visit
-          </h2>
+          {% if fieldPrepareForVisit %}
+            <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+              Prepare for your visit
+            </h2>
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+            <p>
+              Select a topic to learn more.
+            </p>
+
+            <div class="vads-u-margin-bottom--3">
+              <va-accordion uswds bordered id="vba-regional-facilities-accordion-prepare-for-visit">
+                {% for prepareObj in fieldPrepareForVisit %}
+                  <va-accordion-item uswds
+                    class="va-accordion-item"
+                    id="vba-service-item-{{ prepareObj.entity.id }}"
+                    header="{{ prepareObj.entity.fieldHeader }}"
+                    level="3">
+                    {{ prepareObj.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
+                  </va-accordion-item>
+                {% endfor %}
+              </va-accordion>
+            </div>
+          {% endif %}
+
+          <h2 class="vads-u-line-height--2 vads-u-margin-bottom--3">
             In the spotlight at {{ entityLabel }}
           </h2>
 
           <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
-            {% assign spotlightContent1 = "" | split: "," %}
-            {% assign spotlightContent2 = fieldCcNationalSpotlight1 | appendCentralizedFeaturedContent: spotlightContent1 %}
-            {% assign spotlightContent3 = fieldCcNationalSpotlight2 | appendCentralizedFeaturedContent: spotlightContent2 %}
-            {% assign spotlightContentAll = fieldCcNationalSpotlight3 | appendCentralizedFeaturedContent: spotlightContent3 %}
+            {% assign spotlightContentAll = "" | split: "," %}
+            {% assign spotlightContentAll = fieldCcNationalSpotlight1 | appendCentralizedFeaturedContent: spotlightContentAll %}
+            {% for localSpotlight in fieldLocalSpotlight %}
+              {% assign spotlightContentAll = localSpotlight.entity | shimNonFetchedFeaturedToFetchedFeaturedContent | appendCentralizedFeaturedContent: spotlightContentAll %}
+            {% endfor %}
 
             {% for spotlightContent in spotlightContentAll %}
               {% if spotlightContent.entity %}
@@ -162,21 +191,35 @@
             {% endfor %}
           </div>
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-            Veteran benefits
-          </h2>
+          {% assign allVbaServices = reverseFieldVbaRegionFacilityListNode.entities | processVbaServices: reverseFieldOfficeNode.entities %}
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-            Family member and caregiver benefits
-          </h2>
+          {% include "src/site/includes/vba_facilities/services.liquid" with
+            vbaTitle = "Veteran benefits"
+            vbaServices = allVbaServices.veteranBenefits
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
+          %}
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-            Service member benefits
-          </h2>
+          {% include "src/site/includes/vba_facilities/services.liquid" with
+            vbaTitle = "Family member and caregiver benefits"
+            vbaServices = allVbaServices.familyMemberCaregiverBenefits
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
+          %}
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-            Other services
-          </h2>
+          {% include "src/site/includes/vba_facilities/services.liquid" with
+            vbaTitle = "Service member benefits"
+            vbaServices = allVbaServices.serviceMemberBenefits
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
+          %}
+
+          {% include "src/site/includes/vba_facilities/services.liquid" with
+            vbaTitle = "Other services"
+            vbaServices = allVbaServices.otherServices
+            facilityAddress = fieldAddress
+            facilityPhone = fieldPhoneNumber
+          %}
 
           {% if fieldCcCantFindBenefits %}
             {% assign cantFindBenefits = fieldCcCantFindBenefits | processfieldCcCantFindBenefits: fieldCcCantFindBenefits %}
@@ -185,9 +228,9 @@
               status="info"
               visible
             >
-              <h3 id="cant-find-benefits-headline" slot="headline">
+              <h2 id="cant-find-benefits-headline" slot="headline">
                 {{ cantFindBenefits.fieldSectionHeader }}
-              </h3>
+              </h2>
               <div>
                 {{ cantFindBenefits.fieldDescription }}
                 <va-link

@@ -34,7 +34,7 @@
 <div data-template="blocks/promo" data-entity-id="{{ entity.entityId }}" class="merger-r-rail hub-promo" id="promo">
     <img src="{{ image.derivative.url }}" alt="{{ image.alt }}" title="{{ image.title }}" width="{{ image.derivative.width }}" height="{{ image.derivative.height }}">
   {% if entity.fieldPromoLink != empty %}
-    {% assign link = entity.fieldPromoLink.entity.fieldLink | featureSingleValueFieldLink %}
+    {% assign link = entity.fieldPromoLink.entity.fieldLink %}
     <section class="hub-promo-text">
         <h2 class="vads-u-font-size--h4 vads-u-text-decoration--underline vads-u-margin-top--0">
           <a onClick="recordEvent({ event: 'nav-hub-promo' });"

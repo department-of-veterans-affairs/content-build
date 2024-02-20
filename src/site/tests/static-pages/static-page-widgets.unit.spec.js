@@ -14,7 +14,7 @@ const widgetContent = `
       </span>
     </div>
     <span class="static-widget-content vads-u-display--none" aria-hidden="true">
-     <a class="usa-button-primary va-button-primary" href="/pension/application/527EZ">Apply for Veterans Pension Benefits</a>
+     <a class="vads-c-action-link--green" href="/pension/application/527EZ">Apply for Veterans Pension Benefits</a>
     </span>
     <div class="usa-alert usa-alert-error sip-application-error vads-u-display--none" aria-hidden="true">
      <div class="usa-alert-body">

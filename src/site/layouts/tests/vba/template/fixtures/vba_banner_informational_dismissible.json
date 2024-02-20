@@ -1,0 +1,7 @@
+{
+  "alertType": "information",
+  "alertTitle": "Dismissible Information Title",
+  "alertContent": "Dismissible Information Content",
+  "dismissible": "dismiss",
+  "shouldDisplayBanner": true
+}

@@ -40,7 +40,7 @@
         },
         {
           "path": "pension/application/527EZ",
-          "name": "Review pension benefits application"
+          "name": "Apply for Veterans’ pension benefits"
         }
       ]
     }
@@ -51,7 +51,8 @@
     "rootUrl": "/my-health/appointments",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -226,6 +227,7 @@
       "layout": "page-react.html",
       "vagovprod": true,
       "includeBreadcrumbs": true,
+      "private": true,
       "breadcrumbs_override": [
         {
           "path": "my-health/",
@@ -963,31 +965,6 @@
     }
   },
   {
-    "appName": "Coronavirus Vaccination",
-    "entryName": "coronavirus-vaccination",
-    "rootUrl": "/health-care/covid-19-vaccine/stay-informed",
-    "template": {
-      "title": "Sign up to get a COVID-19 vaccine at VA",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "description": "We’re working to provide COVID-19 vaccines as quickly and safely as we can. We base our vaccine plans on CDC guidelines, federal law, and available supply. Sign up to tell us you’d like to get a COVID-19 vaccine at VA.",
-      "breadcrumbs_override": [
-        {
-          "path": "health-care/",
-          "name": "Health care"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/",
-          "name": "COVID-19 vaccines"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/stay-informed",
-          "name": "Sign up for vaccine updates"
-        }
-      ]
-    }
-  },
-  {
     "appName": "View your representative",
     "entryName": "view-representative",
     "rootUrl": "/view-change-representative/view",
@@ -1152,6 +1129,20 @@
     "useLocalStylesAndComponents": true
   },
   {
+    "appName": "Travel Claim",
+    "entryName": "travel-claim",
+    "rootUrl": "/my-health/appointment-travel-claim",
+    "template": {
+      "layout": "page-react.html",
+      "includeFeedbackButton": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "minimalFooter": true,
+      "vagovprod": false
+    }
+  },
+  {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
     "rootUrl": "/education/apply-for-benefits-form-22-1990",
@@ -1310,7 +1301,19 @@
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "MHV Secure Messaging - OH Pilot",
+    "entryName": "secure-messaging-pilot",
+    "rootUrl": "/my-health/secure-messages-pilot",
+    "productId": "802ebe63-66e9-4ab1-82cd-bbf45d2db91f",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -1320,7 +1323,8 @@
     "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -1349,17 +1353,18 @@
     }
   },
   {
-    "appName": "MyHealtheVet on VA.gov",
+    "appName": "My HealtheVet",
     "entryName": "mhv-landing-page",
     "rootUrl": "/my-health",
     "productId": "4d8b0801-dd86-4728-9609-9d794c923e03",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
-    "appName": "Authorize the release of medical information to the VA",
+    "appName": "Authorize the release of non-VA medical information to VA",
     "entryName": "21-4142-medical-release",
     "rootUrl": "/supporting-forms-for-claims/release-information-to-va-form-21-4142",
     "productId": "56438c7b-e586-490d-a7f6-7e3c92136564",
@@ -1514,7 +1519,8 @@
     "productId": "0203ca08-b7a2-4cd6-abb5-56d38c239cd3",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
@@ -1541,10 +1547,21 @@
   {
     "appName": "After Visit Summary",
     "entryName": "avs",
-    "rootUrl": "/my-health/medical-records/care-notes/avs",
+    "rootUrl": "/my-health/medical-records/summaries-and-notes/visit-summary",
     "productId": "e5bd4cff-77b1-4d56-ab8e-a66c9c2667ab",
     "template": {
       "vagovprod": false,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "Order hearing aid or CPAP supplies",
+    "entryName": "health-care-supply-reordering",
+    "rootUrl": "/my-health/order-hearing-aid-or-cpap-supplies-form",
+    "productId": "",
+    "template": {
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1584,7 +1601,7 @@
     "rootUrl": "/burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247",
     "productId": "5af7a83b-c1a0-4a0a-b0e9-88baf150e6a9",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1635,6 +1652,17 @@
     }
   },
   {
+    "appName": "Submitted Appeals view & download",
+    "entryName": "submitted-appeal",
+    "rootUrl": "/decision-reviews/submitted-appeal",
+    "productId": "8057a5e9-196a-462f-9bc3-3bd1d199892c",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Show submitted appeal data for print & download",
+      "vagovprod": false
+    }
+  },
+  {
     "appName": "Order hearing aid or CPAP supplies",
     "entryName": "health-care-supply-reordering",
     "rootUrl": "/health-care/order-hearing-aid-or-CPAP-supplies-form"
@@ -1661,12 +1689,12 @@
     }
   },
   {
-    "appName": "Find a Representative",
-    "entryName": "find-a-representative",
-    "rootUrl": "/get-help-from-accredited-representative/find-rep",
-    "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
+    "appName": "Request priority processing",
+    "entryName": "10207-pp",
+    "rootUrl": "/priority-processing-20-10207",
+    "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html"
     }
   },
@@ -1691,9 +1719,49 @@
     }
   },
   {
+    "appName": "Beneficiary Travel",
+    "entryName": "travel-pay",
+    "rootUrl": "/health-care/file-travel-claim",
+    "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "10-10d Application for CHAMPVA benefits",
+    "entryName": "10-10D",
+    "rootUrl": "/ivc-champva/10-10D",
+    "productId": "c485d6da-8094-433d-9cd3-3d31e7813650",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Find a VA accredited representative or VSO",
+    "entryName": "find-a-representative",
+    "rootUrl": "/get-help-from-accredited-representative/find-rep",
+    "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Representatives",
+    "entryName": "representatives",
+    "rootUrl": "/representatives",
+    "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
     "entryName": "10-7959C",
-    "rootUrl": "/simple-forms/10-7959C",
+    "rootUrl": "/ivc-champva/10-7959C",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": false,

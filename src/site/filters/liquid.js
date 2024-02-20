@@ -10,11 +10,7 @@ const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
 const stagingSurveys = require('./medalliaStagingSurveys.json');
 const prodSurveys = require('./medalliaProdSurveys.json');
-const {
-  deriveMostRecentDate,
-  filterPastEvents,
-  filterUpcomingEvents,
-} = require('./events');
+const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -587,14 +583,6 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.featureSingleValueFieldLink = fieldLink => {
-    if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
-      return fieldLink[0];
-    }
-
-    return fieldLink;
-  };
-
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
@@ -872,6 +860,82 @@ module.exports = function registerFilters() {
     });
   };
 
+  /**
+    * Converts a string to camel case and removes a prefix
+    @param {string} prefix - prefix to be removed - make empty string not to change string 
+    @param {string} string - string to be converted
+  */
+  liquid.filters.trimAndCamelCase = (toRemove, string) => {
+    if (!string || typeof string !== 'string') return null;
+    const trimmedString = string.replace(toRemove, '');
+    return _.camelCase(trimmedString);
+  };
+  /**
+   *
+   * @param {Object} object Object of arrays
+   * @param {Array} array
+   * @param {string} keyField key for object e.g. "fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare"
+   * @returns {Object} Object with value inserted into keyField
+   */
+  function processVbaObjectHelper(object, arrayOfServices, typeOfOffice) {
+    if (!object || !typeOfOffice || !Array.isArray(arrayOfServices))
+      return object;
+    const objectCopy = { ...object };
+    const visibleArray = arrayOfServices.filter(
+      o => o?.fieldServiceNameAndDescripti?.entity?.fieldShowForVbaFacilities,
+    );
+    for (const el of visibleArray) {
+      const {
+        fieldVbaTypeOfCare,
+        name,
+      } = el.fieldServiceNameAndDescripti.entity;
+      const key = liquid.filters.trimAndCamelCase('vba_', fieldVbaTypeOfCare);
+
+      const indexOfFacilityService =
+        typeOfOffice === 'regionalService'
+          ? object[key].findIndex(
+              service =>
+                service.facilityService?.fieldServiceNameAndDescripti.entity
+                  .name === name,
+            )
+          : -1;
+      if (indexOfFacilityService !== -1) {
+        objectCopy[key][indexOfFacilityService][typeOfOffice] = el;
+      } else {
+        objectCopy[key].push({
+          [typeOfOffice]: el,
+        });
+      }
+    }
+    return objectCopy;
+  }
+  liquid.filters.processVbaServices = (serviceRegions, offices) => {
+    const hasServiceRegions =
+      Array.isArray(serviceRegions) && serviceRegions.length !== 0;
+    const hasOffices = Array.isArray(offices) && offices.length !== 0;
+    let accordions = {
+      veteranBenefits: [],
+      familyMemberCaregiverBenefits: [],
+      serviceMemberBenefits: [],
+      otherServices: [],
+    };
+    if (hasOffices) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        offices,
+        'facilityService',
+      );
+    }
+    if (hasServiceRegions) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        serviceRegions,
+        'regionalService',
+      );
+    }
+    return accordions;
+  };
+
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
     if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)
       return null;
@@ -923,6 +987,38 @@ module.exports = function registerFilters() {
 
     processed.fieldDescription = field.fetched.fieldDescription[0].processed;
     return processed;
+  };
+
+  liquid.filters.processWysiwygSimple = field => {
+    if (!field?.fetched?.fieldWysiwyg?.length) return null;
+    return field.fetched.fieldWysiwyg[0].value;
+  };
+
+  liquid.filters.processFieldPhoneNumbersParagraph = fields => {
+    if (!fields?.length) return null; // no phone numbers
+    // Should only have 1 phone number
+    const field = fields[0];
+    if (!field.entity) return null; // error in paragraph
+    const { entity } = field;
+    return {
+      label: entity.fieldPhoneLabel,
+      contact: entity.fieldPhoneNumber,
+      extension: entity.fieldPhoneExtension,
+      numberType: entity.fieldPhoneNumberType,
+    };
+  };
+
+  liquid.filters.processCcFeatured = fieldFeaturedCc => {
+    if (!fieldFeaturedCc?.fetched) return null;
+    const { fetched } = fieldFeaturedCc;
+    return {
+      fieldSectionHeader: fetched.fieldSectionHeader[0].value,
+      fieldDescription: fetched.fieldDescription[0].value,
+      fieldCta: {
+        label: fetched.fieldCta[0].entity.fieldButtonLabel[0].value,
+        uri: fetched.fieldCta[0].entity.fieldButtonLink[0].url.path,
+      },
+    };
   };
 
   liquid.filters.processCentralizedContent = (entity, contentType) => {
@@ -1047,7 +1143,34 @@ module.exports = function registerFilters() {
     }
     return processedFetched;
   };
-
+  liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent = featuredContentEntity => {
+    if (
+      !featuredContentEntity ||
+      !featuredContentEntity.fieldDescription ||
+      !featuredContentEntity.fieldSectionHeader
+    ) {
+      return null;
+    }
+    const {
+      fieldDescription,
+      fieldSectionHeader,
+      fieldCta,
+    } = featuredContentEntity;
+    const updatedCta = [
+      {
+        entity: {
+          fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
+          fieldButtonLink: [fieldCta.entity.fieldButtonLink],
+        },
+      },
+    ];
+    const fetched = {
+      fieldDescription: [fieldDescription],
+      fieldSectionHeader: [{ value: fieldSectionHeader }],
+      fieldCta: updatedCta,
+    };
+    return { fetched };
+  };
   // fieldCcVetCenterFeaturedCon data structure is different
   // from objects inside fieldVetCenterFeatureContent. Recreates the array
   // with the expected structure so that it can be directly passed inside the template
@@ -1093,8 +1216,6 @@ module.exports = function registerFilters() {
     }
     return [featureContentObj, ...featureContentArray];
   };
-
-  liquid.filters.filterPastEvents = filterPastEvents;
 
   liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
 
@@ -1747,7 +1868,7 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.shouldShowiOSBanner = currentPath => {
+  liquid.filters.shouldShowMobileAppPromoBanner = currentPath => {
     const urlsForBanner = [
       '/health-care/refill-track-prescriptions',
       '/health-care/secure-messaging',

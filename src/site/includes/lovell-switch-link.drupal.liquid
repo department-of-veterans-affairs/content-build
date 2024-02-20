@@ -7,7 +7,7 @@
     {% assign switchPageVariation = "VA" %}
   {% endif %}
 
-  <va-alert status="warning" class="vads-u-margin-bottom--2" id="va-info-alert">
+  <va-alert status="warning" class="vads-u-margin-bottom--2" id="va-info-alert" uswds="false">
     <h2 slot="headline">You are viewing this page as a {{ currentPageVariation }} beneficiary.</h2>
     <div>
       <p className="vads-u-margin-y--0">
@@ -17,6 +17,6 @@
           text="View this page as a {{ switchPageVariation }} beneficiary"
         />
       </p>
-    </div> 
+    </div>
   </va-alert>
 {% endif %}
