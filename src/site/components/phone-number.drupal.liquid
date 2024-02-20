@@ -1,4 +1,10 @@
-<h{{ phoneHeaderLevel }}>{{ phoneLabel | default: 'Phone' }}</h{{ phoneHeaderLevel }}>
+<h{{ phoneHeaderLevel }}
+  {% if phoneNoMarginTop %}
+  className="vads-u-margin-top--0"
+  {% endif %}
+ >
+  {{ phoneLabel | default: 'Phone' }}
+</h{{ phoneHeaderLevel }}>
 <div>
   <va-telephone
     {% if phoneNumberType %}
