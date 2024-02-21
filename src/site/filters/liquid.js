@@ -1883,4 +1883,15 @@ module.exports = function registerFilters() {
 
     return urlsForBanner.includes(currentPath);
   };
+
+  liquid.filters.makeBreadcrumbList = (entityUrl, deriveBreadcrumbsFromUrl) => {
+    console.log('entityUrl: ', entityUrl);
+    let crumbs = entityUrl?.breadcrumb;
+
+    // if (deriveBreadcrumbsFromUrl) {
+    //   crumbs = entityUrl.breadcrumb ||
+    //   liquid.filters.deriveLastBreadcrumbFromPath(title, entityUrl.path, replaceLastItem)
+    // }
+    
+  };
 };
