@@ -34,7 +34,7 @@
       yes_with_or_without_appointment
   {% endcomment %}
   {% if single.fieldOfficeVisits and single.fieldOfficeVisits != "no" %}
-    <div class="vads-u-margin-top--0" data-testid="service-location-field-office-visits">
+    <div data-testid="service-location-field-office-visits">
       <p class="vads-u-margin-top--0">
         <i class="fas fa-building vads-u-margin-right--0p5" aria-hidden="true"></i>
         {% case single.fieldOfficeVisits %}
@@ -58,14 +58,7 @@
       value: yes_with_or_without_appointment
   {% endcomment %}
   {% if single.fieldVirtualSupport and single.fieldVirtualSupport != "no" %}
-    <div 
-      data-testid="service-location-virtual-support"
-      {% if hasPriorParagraph %}
-        class="vads-u-margin-top--0"
-      {% else %}
-        class="vads-u-margin-top--1"
-      {% endif %}
-    >
+    <div data-testid="service-location-virtual-support">
       <p class="vads-u-margin-top--0">
         <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Schedule a virtual appointment
       </p>
@@ -74,19 +67,13 @@
   {% endif %}
   
 
-  {% if fieldReferralRequired and fieldReferralRequired != "not_applicable"  %}
-    <div
-      {% if hasPriorParagraph %}
-        class="vads-u-margin-top--0"
-      {% else %}
-        class="vads-u-margin-top--1"
-      {% endif %}
-    >
-      <p>
+  {% if fieldReferralRequired  %}
+    <div>
+      <p class="vads-u-margin-top--0">
         {% case fieldReferralRequired %}
           {% when "1" %}
             <i class="fas fa-check-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is required
-          {% when "0" %}
+          {% when "0","not_applicable","2" %}
             <i class="fas fa-times-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is not required
         {% endcase %}
       </p>
