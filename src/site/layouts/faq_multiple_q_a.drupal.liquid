@@ -72,7 +72,7 @@
               {% if fieldQAGroup.entity.fieldSectionHeader %}
                 {% assign headerLevel = '3' %}
               {% endif %}
-              <va-accordion uswds="false">
+              <va-accordion uswds>
                 {% assign groupId = fieldQAGroup.entity.entityId %}
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
                     {% if fieldQA.entity %}
