@@ -121,17 +121,12 @@
     Conditionally display facility phone number
   {% endcomment %}
   {% if fieldPhoneNumber and single.fieldUseMainFacilityPhone %}
-    <div data-testid="service-location-main-facility-phone"
-      {% if hasPriorParagraph %}
-        class="vads-u-margin-top--0"
-      {% else %}
-        class="vads-u-margin-top--1"
-      {% endif %}
-    >
+    <div data-testid="service-location-main-facility-phone">
       {% include "src/site/components/phone-number.drupal.liquid" with
         phoneNumber = fieldPhoneNumber
         phoneLabel = 'Main Phone'
         phoneHeaderLevel = serviceLocationH
+        phoneNoMarginTop = true
       %}
     </div>
     {% assign hasPriorParagraph = true %}
