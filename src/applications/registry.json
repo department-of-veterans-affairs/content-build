@@ -1749,13 +1749,17 @@
     }
   },
   {
-    "appName": "Representatives",
-    "entryName": "representatives",
-    "rootUrl": "/representatives",
+    "appName": "Accredited Representative Portal",
+    "entryName": "accredited-representative-portal",
+    "rootUrl": "/accredited-representative-portal",
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "noMegamenu": true,
+      "minimalFooter": true,
+      "includeFeedbackButton": false,
+      "includeBreadcrumbs": false
     }
   }
 ]
