@@ -2817,6 +2817,12 @@ describe('getSurvey', () => {
     ).to.equal(26);
   });
 
+  it('returns correct survey ID for direct URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey('vagovstaging', '/school-administrators'),
+    ).to.equal(37);
+  });
+
   it('returns default survey ID when no direct URL match is found in production', () => {
     expect(liquid.filters.getSurvey('vagovprod', '/')).to.equal(17);
   });
