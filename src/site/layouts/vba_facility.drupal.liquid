@@ -22,9 +22,9 @@
 
           <h1>{{ title }}</h1>
 
-          {% if fieldIntroText %}
+          {% if fieldCcVbaFacilityOverview %}
             <div class="va-introtext">
-              {{ fieldCcVbaFacilityOverview.fetched.fieldWysiwyg.0.value }}
+              {{ fieldCcVbaFacilityOverview | processWysiwygSimple }}
             </div>
           {% endif %}
 
