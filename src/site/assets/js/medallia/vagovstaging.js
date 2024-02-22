@@ -82,6 +82,7 @@ function getSurvey(buildtype, url) {
       );
     }
   }
+  return isStaging ? defaultStagingSurvey : defaultProdSurvey;
 }
 
 function trimSlash(url) {
