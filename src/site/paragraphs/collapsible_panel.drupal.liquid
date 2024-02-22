@@ -45,8 +45,11 @@
             {% assign item = accordionItem.entity %}
             {% assign id = item.entityId %}
             <va-accordion-item
-              class="va-accordion-item"
-              id="{{item.fieldTitle | hashReference: 60 }}-{{id}}"
+                class="va-accordion-item"
+                id="{{item.fieldTitle | hashReference: 60 }}-{{id}}"
+                {% if entity.fieldCollapsiblePanelBordered %}
+                    bordered
+                {% endif %}
             >
 
                 <{{ panelHeaderLevel }} slot="headline">
