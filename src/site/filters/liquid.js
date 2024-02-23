@@ -936,6 +936,20 @@ module.exports = function registerFilters() {
     }
     return accordions;
   };
+  liquid.filters.shouldShowIconDiv = (
+    fieldOfficeVisits,
+    fieldVirtualSupport,
+    fieldReferralRequired,
+  ) => {
+    if (
+      (fieldOfficeVisits && fieldOfficeVisits !== 'no') ||
+      (fieldVirtualSupport && fieldVirtualSupport !== 'no') ||
+      fieldReferralRequired
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
     if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)

@@ -3,48 +3,28 @@
     {% assign phoneNumberObj = numbers | phoneNumberArrayToObject %}
     {% if phoneNumberObj.tel %}
       {% for number in phoneNumberObj.tel %}
-        {% include "src/site/components/phone-number.drupal.liquid" with
-          phoneNumber = number.fieldPhoneNumber
-          phoneExtension = number.fieldPhoneExtension
-          phoneLabel = number.fieldPhoneLabel | default: 'Phone'
-          phoneHeaderLevel = phoneHeaderLevel
-          phoneNumberType = false
+        {% include "src/site/components/phone-number.drupal.liquid" with phoneNumber = number.fieldPhoneNumber phoneExtension = number.fieldPhoneExtension phoneLabel = number.fieldPhoneLabel | default: 'Phone' phoneHeaderLevel = phoneHeaderLevel phoneNumberType = false
         %}
       {% endfor %}
     {% endif %}
 
     {% if phoneNumberObj.fax %}
       {% for number in phoneNumberObj.fax %}
-        {% include "src/site/components/phone-number.drupal.liquid" with
-          phoneNumber = number.fieldPhoneNumber
-          phoneExtension = number.fieldPhoneExtension
-          phoneLabel = number.fieldPhoneLabel | default: 'Fax'
-          phoneHeaderLevel = phoneHeaderLevel
-          phoneNumberType = false
+        {% include "src/site/components/phone-number.drupal.liquid" with phoneNumber = number.fieldPhoneNumber phoneExtension = number.fieldPhoneExtension phoneLabel = number.fieldPhoneLabel | default: 'Fax' phoneHeaderLevel = phoneHeaderLevel phoneNumberType = false
         %}
       {% endfor %}
     {% endif %}
 
     {% if phoneNumberObj.sms %}
       {% for number in phoneNumberObj.sms %}
-        {% include "src/site/components/phone-number.drupal.liquid" with
-          phoneNumber = number.fieldPhoneNumber
-          phoneExtension = number.fieldPhoneExtension
-          phoneLabel = number.fieldPhoneLabel | default: 'SMS'
-          phoneHeaderLevel = phoneHeaderLevel
-          phoneNumberType = 'sms'
+        {% include "src/site/components/phone-number.drupal.liquid" with phoneNumber = number.fieldPhoneNumber phoneExtension = number.fieldPhoneExtension phoneLabel = number.fieldPhoneLabel | default: 'SMS' phoneHeaderLevel = phoneHeaderLevel phoneNumberType = 'sms'
         %}
       {% endfor %}
     {% endif %}
 
     {% if phoneNumberObj.tty %}
       {% for number in phoneNumberObj.tty %}
-        {% include "src/site/components/phone-number.drupal.liquid" with
-          phoneNumber = number.fieldPhoneNumber
-          phoneExtension = number.fieldPhoneExtension
-          phoneLabel = number.fieldPhoneLabel | default: 'TTY'
-          phoneHeaderLevel = phoneHeaderLevel
-          phoneNumberType = 'tty'
+        {% include "src/site/components/phone-number.drupal.liquid" with phoneNumber = number.fieldPhoneNumber phoneExtension = number.fieldPhoneExtension phoneLabel = number.fieldPhoneLabel | default: 'TTY' phoneHeaderLevel = phoneHeaderLevel phoneNumberType = 'tty'
         %}
       {% endfor %}
     {% endif %}
