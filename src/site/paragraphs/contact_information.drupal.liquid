@@ -43,11 +43,18 @@
                       {% if entity.fieldAdditionalContact.entity.fieldPhoneLabel and entity.fieldAdditionalContact.entity.fieldPhoneNumber %}
                         <strong>{{ entity.fieldAdditionalContact.entity.fieldPhoneLabel }}: </strong>
                         {% if entity.fieldAdditionalContact.entity.fieldPhoneNumber %}
-                          <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ entity.fieldAdditionalContact.entity.fieldPhoneNumber | escape }}{% if fieldPhoneExtension %}p{{ fieldPhoneExtension }}{% endif %}', 'links-list-section-header': 'Need more help?' })"
+                          {% comment %} {% assign phoneNumber = entity.fieldAdditionalContact.entity.fieldPhoneNumber  %}
+                          {% assign shouldShowTelephoneComponent = phoneNumber | determineTelephoneComponent %} 
+                          {% if shouldShowTelephoneComponent %}
+                            {% assign telephoneComponent = "src/site/paragraphs/telephone.drupal.liquid"%}
+                            {% include {{ telephoneComponent }} with entity = entity.fieldAdditionalContact.entity %} 
+                          {% else %}
+                            <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ entity.fieldAdditionalContact.entity.fieldPhoneNumber | escape }}{% if fieldPhoneExtension %}p{{ fieldPhoneExtension }}{% endif %}', 'links-list-section-header': 'Need more help?' })"
                               href="tel:{{ entity.fieldAdditionalContact.entity.fieldPhoneNumber }}{% if fieldPhoneExtension %}p{{ fieldPhoneExtension }}{% endif %}"
                               rel="noreferrer noopener">
-                            {{ entity.fieldAdditionalContact.entity.fieldPhoneNumber }}{% if fieldPhoneExtension %}p{{ fieldPhoneExtension }}{% endif %}
-                          </a>
+                                {{ entity.fieldAdditionalContact.entity.fieldPhoneNumber }}{% if fieldPhoneExtension %}p{{ fieldPhoneExtension }}{% endif %}
+                            </a> 
+                          {% endif %} {% endcomment %}
                         {% endif %}
                       {% endif %}
                     </li>
@@ -59,12 +66,20 @@
                   {% for supportService in entity.fieldBenefitHubContacts.entity.fieldSupportServices %}
                     <li class="vads-u-margin-top--1">
                       <strong>{{ supportService.entity.title }} </strong>
-                      {% if supportService.entity.fieldLink %}
-                        <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ supportService.entity.fieldPhoneNumber | escape }}', 'links-list-section-header': 'Need more help?' })"
+                      {% if supportService.entity.fieldLink and supportService.entity.fieldPhoneNumber %}
+                        <!-- Debugging: {{ supportService.entity.fieldPhoneNumber}} -->
+                        {% assign shouldShowTelephoneComponent = supportService.entity.fieldPhoneNumber | useTelephoneWebComponent %} 
+                         <!-- Debugging: {{ shouldShowTelephoneComponent}} -->
+                        {% if shouldShowTelephoneComponent %}
+                          {% assign telephoneComponent = "src/site/paragraphs/telephone.drupal.liquid"%}
+                          {% include {{ telephoneComponent }} with entity = supportService.entity %} 
+                        {% else %}   
+                          <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ supportService.entity.fieldPhoneNumber | escape }}', 'links-list-section-header': 'Need more help?' })"
                             href="{{ supportService.entity.fieldLink.url.path }}"
                             rel="noreferrer noopener">
-                          {{ supportService.entity.fieldPhoneNumber }}
-                        </a>
+                            {{ supportService.entity.fieldPhoneNumber }}
+                          </a> 
+                        {% endif %}
                       {% endif %}
                     </li>
                   {% endfor %}

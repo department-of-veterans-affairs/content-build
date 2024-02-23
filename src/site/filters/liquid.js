@@ -1883,4 +1883,11 @@ module.exports = function registerFilters() {
 
     return urlsForBanner.includes(currentPath);
   };
+
+  liquid.filters.useTelephoneWebComponent = telephone => {
+    if (/[a-zA-Z+]/.test(telephone)) {
+      return false;
+    }
+    return true;
+  };
 };
