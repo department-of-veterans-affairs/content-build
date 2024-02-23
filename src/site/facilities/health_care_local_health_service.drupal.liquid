@@ -3,6 +3,7 @@
 {% for location in locations %}
   {% include "src/site/paragraphs/service_location.drupal.liquid" with
     single = location.entity
+    isMentalHealth = isMentalHealthService
     serviceLocationSubHeaderLevel = 5
   %}
 {% endfor %}
@@ -47,9 +48,15 @@
       {% endfor %}
     </div>
   {% else %}
+    {% if isMentalHealthService and fieldMentalHealthPhone %}
+      {% assign localHealthServiceMainNumber = fieldMentalHealthPhone %}
+    {% else %}
+      {% assign localHealthServiceMainNumber = fieldPhoneNumber %}
+    {% endif %}
+
     <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--1" data-template="facilities/health_care_local_health_service">
       {% include "src/site/components/phone-number.drupal.liquid" with
-        phoneNumber = fieldPhoneNumber
+        phoneNumber = localHealthServiceMainNumber
         phoneLabel = 'Main Phone'
         phoneHeaderLevel = 5
       %}
