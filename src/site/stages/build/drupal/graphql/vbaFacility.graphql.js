@@ -33,6 +33,7 @@ const vbaFacilityFragment = `
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
+          fieldOperatingStatusMoreInfo
           fieldPhoneNumber
           fieldCcBenefitsHotline {
             fetched
