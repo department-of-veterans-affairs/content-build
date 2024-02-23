@@ -147,3 +147,7 @@ for doing very specific things.
 | Safari / iOS Safari       | 9               |                                        |
 | Chrome / Android Web view | 44              | _Latest version with >0.5% of traffic_ |
 | Firefox                   | 52              | _Latest version with >0.5% of traffic_ |
+
+## Not a member of the repository and want to be added?
+- If you're on a VA.gov Platform team, contact your Program Manager.
+- If you're on a VFS team, you must complete [Platform Orientation](https://depo-platform-documentation.scrollhelp.site/getting-started/platform-orientation) to be added to this repository, including completing your Platform Orientation ticket(s) in GitHub.
