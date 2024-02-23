@@ -1784,7 +1784,7 @@ module.exports = function registerFilters() {
     if (typeof url !== 'string' || url === null) {
       return isStaging ? defaultStagingSurvey : defaultProdSurvey;
     }
-    // Check if the URL exists in the main URL object
+    // Check if the URL exists in the main custom survey URL object
     if (url in surveyData.urls) {
       const surveyInfo = surveyData.urls[url];
       // Return the survey ID for the effective build type, or the default based on the build type

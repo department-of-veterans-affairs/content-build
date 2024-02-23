@@ -13,16 +13,6 @@ function onsiteLoaded() {
       console.log(`survey number ${surveyNumber} has loaded`)
   }
 }
-  
-// const vagovstagingsurveys = {
-//   "/search": 20,
-//   "/contact-us/virtual-agent": 26
-// }
-
-// function getSurveyNumber (url) {
-//     let pathUrl = trimSlash(url.toString())
-//     return vagovstagingsurveys[pathUrl] ? vagovstagingsurveys[pathUrl] : 11;
-// }
 
 const medalliaSurveys = {
   "urls":  {
