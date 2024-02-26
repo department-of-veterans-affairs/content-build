@@ -191,6 +191,33 @@
     }
   },
   {
+    "appName": "21P-530 Burials benefits form",
+    "entryName": "burials-v2",
+    "rootUrl": "/burials-and-memorials-v2/application/530",
+    "template": {
+      "title": "Apply for Burial Benefits (VA Form 21P-530)",
+      "display_title": "Apply Now",
+      "layout": "page-react.html",
+      "description": "Use VA Form 21P-530 to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
+      "order": 1,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "burials-memorials/",
+          "name": "Burials and memorials"
+        },
+        {
+          "path": "burials-memorials/veterans-burial-allowance",
+          "name": "Burial allowance"
+        },
+        {
+          "path": "burials-and-memorials/application/530",
+          "name": "Review burial benefits application"
+        }
+      ]
+    }
+  },
+  {
     "appName": "1010ez Health Care Application form",
     "entryName": "hca",
     "rootUrl": "/health-care/apply/application",
@@ -1129,6 +1156,20 @@
     "useLocalStylesAndComponents": true
   },
   {
+    "appName": "Travel Claim",
+    "entryName": "travel-claim",
+    "rootUrl": "/my-health/appointment-travel-claim",
+    "template": {
+      "layout": "page-react.html",
+      "includeFeedbackButton": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "minimalFooter": true,
+      "vagovprod": false
+    }
+  },
+  {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
     "rootUrl": "/education/apply-for-benefits-form-22-1990",
@@ -1287,6 +1328,17 @@
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
       "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "MHV Secure Messaging - OH Pilot",
+    "entryName": "secure-messaging-pilot",
+    "rootUrl": "/my-health/secure-messages-pilot",
+    "productId": "802ebe63-66e9-4ab1-82cd-bbf45d2db91f",
+    "template": {
+      "vagovprod": false,
       "layout": "page-react.html",
       "private": true
     }
@@ -1648,7 +1700,7 @@
     "rootUrl": "/records/request-personal-records-form-20-10206",
     "productId": "560247e7-3a80-4fdd-ad00-8d0e14435d22",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1666,11 +1718,22 @@
   {
     "appName": "Request priority processing",
     "entryName": "10207-pp",
-    "rootUrl": "/priority-processing-20-10207",
+    "rootUrl": "/supporting-forms-for-claims/request-priority-processing-form-20-10207",
     "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Request priority processing",
+          "path": "supporting-forms-for-claims/request-priority-processing-form-20-10207"
+        }
+      ]
     }
   },
   {
@@ -1728,6 +1791,16 @@
     "entryName": "representatives",
     "rootUrl": "/representatives",
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
+    "entryName": "10-7959C",
+    "rootUrl": "/ivc-champva/10-7959C",
+    "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

@@ -33,6 +33,7 @@ const vbaFacilityFragment = `
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
+          fieldOperatingStatusMoreInfo
           fieldPhoneNumber
           fieldCcBenefitsHotline {
             fetched
@@ -103,6 +104,19 @@ const vbaFacilityFragment = `
                     width
                     height
                   }
+                }
+              }
+            }
+          }
+          fieldPrepareForVisit {
+            entity {
+              id
+              entityBundle
+              ... on ParagraphBasicAccordion {
+                id
+                fieldHeader
+                fieldRichWysiwyg {
+                  processed
                 }
               }
             }

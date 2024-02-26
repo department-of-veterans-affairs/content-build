@@ -61,7 +61,6 @@
         </div>
       {% endif %}
       
-
       {% if fieldReferralRequired %}
         <p class="vads-u-margin-top--1">
           {% case fieldReferralRequired %}
@@ -92,12 +91,22 @@
   {% endif %}
 
   {% comment %}
+  Conditionally display facility phone number
+  {% endcomment %}
+
+  {% if isMentalHealthService and fieldMentalHealthPhone %}
+    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+  {% else %}
+    {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+  {% endif %}
+
+  {% comment %}
     Conditionally display facility phone number
   {% endcomment %}
   {% if fieldPhoneNumber and single.fieldUseMainFacilityPhone %}
     <div data-testid="service-location-main-facility-phone">
       {% include "src/site/components/phone-number.drupal.liquid" with
-        phoneNumber = fieldPhoneNumber
+        phoneNumber = serviceLocationMainNumber
         phoneLabel = 'Main Phone'
         phoneHeaderLevel = serviceLocationH
       %}
