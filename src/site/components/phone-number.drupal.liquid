@@ -3,5 +3,6 @@
   <va-telephone
     contact="{{ phoneNumber | removeDashes }}"
     extension="{{ phoneExtension | default: '' }}"
+    message-aria-describedby="{{ phoneLabel | default: 'Phone' }}"
   />
 </div>

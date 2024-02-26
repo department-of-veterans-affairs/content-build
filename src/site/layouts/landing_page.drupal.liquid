@@ -61,13 +61,15 @@
           {% include "src/site/blocks/promo.drupal.liquid" with entity = fieldPromo.entity %}
         {% endif %}
 
-        <va-accordion bordered uswds="false">
+        <va-accordion bordered uswds>
           <va-accordion-item 
             class="va-accordion-item"
             level="2"
             open="true"
             header="Ask questions"
             id="{{ 'Message us' | hashReference: 60 }}"
+            bordered
+            uswds
           >
             <section>
               <h3 class="vads-u-font-size--h4">Message us</h3>
@@ -120,6 +122,8 @@
               open="true"
               header="Not a Veteran?"
               id="{{ 'Get information for' | hashReference: 60 }}"
+              bordered
+              uswds
             >
               <section>
                 <h3 class="vads-u-font-size--h4">Get information for:</h3>
@@ -142,6 +146,8 @@
               class="va-accordion-item"
               level="2"
               header="Connect with us"
+              bordered
+              uswds
               open="true"
               id="{{ fieldRelatedOffice.entity.fieldExternalLink.title | hashReference: 60 }}">
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
