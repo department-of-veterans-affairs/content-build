@@ -36,7 +36,7 @@
             <i class="fas fa-building vads-u-margin-right--0p5" aria-hidden="true"></i>
             {% case single.fieldOfficeVisits %}
               {% when "yes_appointment_only" %}
-                Visit our office, with an appointment only
+                Visit our office, by appointment only
               {% when "yes_with_or_without_appointment" %}
                 Visit our office, with or without an appointment
               {% when "yes_first_come_first_served_basis" %}
@@ -92,14 +92,14 @@
 
   {% comment %} Appointment related phone numbers {% endcomment %}
   {% if single.fieldOtherPhoneNumbers.length > 0 %}
-    {% assign phoneForAppointmentH = serviceLocationH | plus: 1 %}
+    {% comment %} {% assign phoneForAppointmentH = serviceLocationH | plus: 1 %} {% endcomment %}
     <div class="vads-u-display--flex vads-u-flex-direction--column" data-template="facilities/health_care_local_health_service" data-testid="service-location-show-other-phone-numbers" >
       {% for number in single.fieldOtherPhoneNumbers %}
         {% include "src/site/components/phone-number.drupal.liquid" with
           phoneNumber = number.entity.fieldPhoneNumber
           phoneExtension = number.entity.fieldPhoneExtension
           phoneLabel = number.entity.fieldPhoneLabel
-          phoneHeaderLevel = phoneForAppointmentH
+          phoneHeaderLevel = serviceLocationH
         %}
       {% endfor %}
     </div>
