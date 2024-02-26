@@ -289,6 +289,13 @@ module.exports = function registerFilters() {
     return data;
   };
 
+  liquid.filters.separatePhoneNumberExtension = phoneNumber => {
+    return {
+      phoneNumber: phoneNumber.split(', ext. ')[0],
+      extension: phoneNumber.split(', ext. ')[1],
+    };
+  };
+
   liquid.filters.trackLinks = (html, eventDataString) => {
     // Add calls to "recordEvent" to all links found in html
     const eventData = JSON.parse(eventDataString);
@@ -866,7 +873,7 @@ module.exports = function registerFilters() {
 
   /**
     * Converts a string to camel case and removes a prefix
-    @param {string} prefix - prefix to be removed - make empty string not to change string 
+    @param {string} prefix - prefix to be removed - make empty string not to change string
     @param {string} string - string to be converted
   */
   liquid.filters.trimAndCamelCase = (toRemove, string) => {
