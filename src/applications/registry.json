@@ -1718,11 +1718,22 @@
   {
     "appName": "Request priority processing",
     "entryName": "10207-pp",
-    "rootUrl": "/priority-processing-20-10207",
+    "rootUrl": "/supporting-forms-for-claims/request-priority-processing-form-20-10207",
     "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Request priority processing",
+          "path": "supporting-forms-for-claims/request-priority-processing-form-20-10207"
+        }
+      ]
     }
   },
   {
@@ -1780,6 +1791,16 @@
     "entryName": "representatives",
     "rootUrl": "/representatives",
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
+    "entryName": "10-7959C",
+    "rootUrl": "/ivc-champva/10-7959C",
+    "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
