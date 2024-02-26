@@ -90,6 +90,21 @@
     </div>
   {% endif %}
 
+  {% comment %} Appointment related phone numbers {% endcomment %}
+  {% if single.fieldOtherPhoneNumbers.length > 0 %}
+    {% assign phoneForAppointmentH = serviceLocationH | plus: 1 %}
+    <div class="vads-u-display--flex vads-u-flex-direction--column" data-template="facilities/health_care_local_health_service" data-testid="service-location-show-other-phone-numbers" >
+      {% for number in single.fieldOtherPhoneNumbers %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+          phoneNumber = number.entity.fieldPhoneNumber
+          phoneExtension = number.entity.fieldPhoneExtension
+          phoneLabel = number.entity.fieldPhoneLabel
+          phoneHeaderLevel = phoneForAppointmentH
+        %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
   {% comment %}
   Conditionally display facility phone number
   {% endcomment %}
@@ -98,6 +113,17 @@
     {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
   {% else %}
     {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+  {% endif %}
+
+  {% if single.fieldOnlineSchedulingAvail == "yes" %}
+    <div 
+      data-testid="service-location-action-link-online" 
+      class="vads-u-margin-top--2 vads-u-margin-bottom--1"
+    >
+      <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
+        Schedule an appointment online
+      </a>
+    </div>
   {% endif %}
 
   {% comment %}
@@ -112,18 +138,6 @@
       %}
     </div>
   {% endif %}
-
-  {% if single.fieldOnlineSchedulingAvail == "yes" %}
-    <div 
-      data-testid="service-location-action-link-online" 
-      class="vads-u-margin-top--2 vads-u-margin-bottom--1"
-    >
-      <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
-        Schedule an appointment online
-      </a>
-    </div>
-  {% endif %}
-
 
   {% comment %} Includes header for clinic name {% endcomment %}
   {% if single.fieldServiceLocationAddress.entity %}
@@ -140,18 +154,6 @@
     numbers = single.fieldPhone
     phoneHeaderLevel = serviceLocationH
   %}
-
-  {% if single.fieldOtherPhoneNumbers.length > 0 %}
-    <div class="vads-u-display--flex vads-u-flex-direction--column" data-template="facilities/health_care_local_health_service" data-testid="service-location-show-other-phone-numbers" >
-      {% for number in single.fieldOtherPhoneNumbers %}
-        {% include "src/site/components/phone-number.drupal.liquid" with
-          phoneNumber = number.entity.fieldPhoneNumber
-          phoneExtension = number.entity.fieldPhoneExtension
-          phoneHeaderLevel = serviceLocationH
-        %}
-      {% endfor %}
-    </div>
-  {% endif %}
 
   {% if single.fieldEmailContacts %}
     {% for email in single.fieldEmailContacts %}
