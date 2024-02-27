@@ -8,7 +8,10 @@ const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
+const {
+  SURVEY_NUMBERS,
+  medalliaSurveys,
+} = require('./medalliaSurveysConfig').default;
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
