@@ -152,6 +152,8 @@ const vbaFacilityFragment = `
                         allDay
                       }
                       fieldUseMainFacilityPhone
+                      fieldOfficeVisits
+                      fieldVirtualSupport
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
@@ -205,8 +207,8 @@ const vbaFacilityFragment = `
                     entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
                       fieldFacilityServiceHeader
-                      fieldRegionalServiceHeader
                       fieldFacilityServiceDescripti
+                      fieldRegionalServiceHeader
                       fieldRegionalServiceDescripti
                       fieldShowForVbaFacilities
                       fieldVbaTypeOfCare
@@ -245,8 +247,8 @@ const vbaFacilityFragment = `
                     entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
                       fieldFacilityServiceHeader
-                      fieldRegionalServiceHeader
                       fieldFacilityServiceDescripti
+                      fieldRegionalServiceHeader
                       fieldRegionalServiceDescripti
                       fieldShowForVbaFacilities
                       fieldVbaTypeOfCare
@@ -282,6 +284,8 @@ const vbaFacilityFragment = `
                         allDay
                       }
                       fieldUseMainFacilityPhone
+                      fieldOfficeVisits
+                      fieldVirtualSupport
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
