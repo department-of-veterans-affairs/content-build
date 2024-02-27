@@ -21,6 +21,9 @@ const vbaFacilityFragment = `
               }
             }
           }
+          fieldCcVbaFacilityOverview {
+            fetched
+          }
           fieldShowBanner
           fieldAlertType
           fieldDismissibleOption

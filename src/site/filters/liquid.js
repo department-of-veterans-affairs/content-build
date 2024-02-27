@@ -827,6 +827,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.replace = (string, oldVal, newVal) => {
+    if (!string) return null;
     const regex = new RegExp(oldVal, 'g');
     return string.replace(regex, newVal);
   };
