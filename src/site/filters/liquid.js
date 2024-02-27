@@ -8,7 +8,7 @@ const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const medalliaSurveys = require('./medalliaSurveys.json');
+const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
@@ -1774,8 +1774,8 @@ module.exports = function registerFilters() {
 
   liquid.filters.getSurvey = (buildtype, url) => {
     const surveyData = medalliaSurveys;
-    const defaultStagingSurvey = 11;
-    const defaultProdSurvey = 17;
+    const defaultStagingSurvey = SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY;
+    const defaultProdSurvey = SURVEY_NUMBERS.DEFAULT_PROD_SURVEY;
     const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
       buildtype,
     );
