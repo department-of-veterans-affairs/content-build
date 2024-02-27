@@ -3,6 +3,7 @@
       {% for entity in services %}
         {% assign idService = entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare %}
             <va-accordion-item
+                    bordered
                     class="va-accordion-item"
                     id="{{ idService }}-item-{{ entity.entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}"
                     header="{{ entity.entity.fieldServiceNameAndDescripti.entity.name }}"
