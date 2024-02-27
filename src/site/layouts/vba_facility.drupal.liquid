@@ -49,11 +49,12 @@
               <div>
                 <div class="vads-c-facility-detail">
 
-                  {% if fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
+                  {% if fieldOperatingStatusMoreInfo and fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
                     <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
-                      {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" %}
+                      {% include "src/site/includes/vba_facilities/expandable_alert.liquid" %}
                     </div>
                   {% endif %}
+
                   <section class="vads-facility-detail">
                     <script type="application/ld+json">
                       {

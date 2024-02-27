@@ -583,6 +583,10 @@ module.exports = function registerFilters() {
     ];
   };
 
+  liquid.filters.localHealthCareServiceIsMentalHealth = healthServiceName => {
+    return healthServiceName.toLowerCase().includes('mental health');
+  };
+
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
