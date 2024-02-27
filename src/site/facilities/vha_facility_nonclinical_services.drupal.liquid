@@ -1,10 +1,11 @@
 {% if facilities %}
+  {% assign nonClinicalSubHeaderLevel = nonClinicalHeaderLevel | plus: 1 %}
   {% for facility in facilities %}
-    <h4>
+    <h{{nonClinicalHeaderLevel}}>
       <a href="{{ facility.entityUrl.path }}">
         {{ facility.entityLabel }}
       </a>
-    </h4>
+    </h{{nonClinicalHeaderLevel}}>
 
     {% comment %}
       Facility Address
@@ -31,7 +32,7 @@
       </div>
     {% endif %}
 
-    {% include "src/site/facilities/vha_facility_nonclinical_service.drupal.liquid" with facility = facility serviceLocationSubHeaderLevel = 5
+    {% include "src/site/facilities/vha_facility_nonclinical_service.drupal.liquid" with facility = facility serviceLocationSubHeaderLevel = nonClinicalSubHeaderLevel
     %}
   {% endfor %}
 {% endif %}
