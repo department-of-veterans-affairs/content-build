@@ -1805,7 +1805,8 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
-
+  },
+  {
     "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
     "entryName": "10-7959C",
     "rootUrl": "/ivc-champva/10-7959C",
