@@ -582,6 +582,10 @@ module.exports = function registerFilters() {
     ];
   };
 
+  liquid.filters.localHealthCareServiceIsMentalHealth = healthServiceName => {
+    return healthServiceName.toLowerCase().includes('mental health');
+  };
+
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
@@ -822,6 +826,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.replace = (string, oldVal, newVal) => {
+    if (!string) return null;
     const regex = new RegExp(oldVal, 'g');
     return string.replace(regex, newVal);
   };
