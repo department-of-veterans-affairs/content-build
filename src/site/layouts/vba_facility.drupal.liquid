@@ -22,11 +22,9 @@
 
           <h1>{{ title }}</h1>
 
-          {% if fieldIntroText %}
+          {% if fieldCcVbaFacilityOverview %}
             <div class="va-introtext">
-              <p>
-                {{ fieldIntroText }}
-              </p>
+              {{ fieldCcVbaFacilityOverview | processWysiwygSimple }}
             </div>
           {% endif %}
 
@@ -49,11 +47,12 @@
               <div>
                 <div class="vads-c-facility-detail">
 
-                  {% if fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
+                  {% if fieldOperatingStatusMoreInfo and fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
                     <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
-                      {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" %}
+                      {% include "src/site/includes/vba_facilities/expandable_alert.liquid" %}
                     </div>
                   {% endif %}
+
                   <section class="vads-facility-detail">
                     <script type="application/ld+json">
                       {
@@ -147,9 +146,29 @@
             %}
           </div>
 
-          <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
-            Prepare for your visit
-          </h2>
+          {% if fieldPrepareForVisit %}
+            <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+              Prepare for your visit
+            </h2>
+
+            <p>
+              Select a topic to learn more.
+            </p>
+
+            <div class="vads-u-margin-bottom--3">
+              <va-accordion uswds bordered id="vba-regional-facilities-accordion-prepare-for-visit">
+                {% for prepareObj in fieldPrepareForVisit %}
+                  <va-accordion-item uswds
+                    class="va-accordion-item"
+                    id="vba-service-item-{{ prepareObj.entity.id }}"
+                    header="{{ prepareObj.entity.fieldHeader }}"
+                    level="3">
+                    {{ prepareObj.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
+                  </va-accordion-item>
+                {% endfor %}
+              </va-accordion>
+            </div>
+          {% endif %}
 
           <h2 class="vads-u-line-height--2 vads-u-margin-bottom--3">
             In the spotlight at {{ entityLabel }}
@@ -182,7 +201,7 @@
 
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Family member and caregiver benefits"
-            vbaServices = allVbaServices.familyCaregiverBenefits
+            vbaServices = allVbaServices.familyMemberCaregiverBenefits
             facilityAddress = fieldAddress
             facilityPhone = fieldPhoneNumber
           %}
@@ -225,11 +244,12 @@
             {%  assign fieldUpdatesVba = fieldCcGetUpdatesFromVba | processCentralizedUpdatesVBA: fieldCcGetUpdatesFromVba %}
             {% include "src/site/facilities/vba_social_links.drupal.liquid"
               with  regionNickname = "the Veteran Benefits Administration"
-                    fieldNews = fieldUpdatesVba.links.news
+                    fieldNews = fieldUpdatesVba.links.govdelivery
                     fieldFacebook = fieldUpdatesVba.links.facebook
                     fieldTwitter = fieldUpdatesVba.links.twitter
                     fieldInstagram = fieldUpdatesVba.links.instagram
                     fieldFlickr = fieldUpdatesVba.links.flickr
+                    
             %}
           {% endif %}
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">

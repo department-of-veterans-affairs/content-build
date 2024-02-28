@@ -18,6 +18,10 @@ import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_fa
 import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
 import phoneMockData from '../layouts/tests/vamc/fixtures/phoneMockData.json';
 import simpleWysiwygMockData from '../layouts/tests/vamc/fixtures/simpleWysiwygMockData.json';
+// import debug from 'debug';
+// To make debugging/building liquid filter tests easier. Add DEBUG=liquid before yarn test
+// Add `log` statements in the liquid filters while building.
+// const log = debug('liquid');
 
 registerFilters();
 
@@ -2598,7 +2602,21 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
     );
   });
 });
+describe('trimAndCamelCase', () => {
+  it('returns null if string is null', () => {
+    expect(liquid.filters.trimAndCamelCase(null)).to.be.null;
+  });
 
+  it('returns null if string is not a string', () => {
+    expect(liquid.filters.trimAndCamelCase('a', 123)).to.be.null;
+  });
+
+  it('returns vba_string_thing with with trimmed vba_ and camel cased rest', () => {
+    expect(
+      liquid.filters.trimAndCamelCase('vba_', 'vba_string_thing'),
+    ).to.equal('stringThing');
+  });
+});
 describe('processVbaServices', () => {
   const allVbaServices = liquid.filters.processVbaServices(
     [
@@ -2606,7 +2624,7 @@ describe('processVbaServices', () => {
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
       vbaRegionFacilityOrOfficeNode({
-        fieldVbaTypeOfCare: 'other',
+        fieldVbaTypeOfCare: 'vba_other_services',
       }),
     ],
     [
@@ -2620,7 +2638,7 @@ describe('processVbaServices', () => {
   );
 
   expect(allVbaServices.veteranBenefits.length).to.equal(1);
-  expect(allVbaServices.familyCaregiverBenefits.length).to.equal(1);
+  expect(allVbaServices.familyMemberCaregiverBenefits.length).to.equal(1);
   expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
   expect(allVbaServices.otherServices.length).to.equal(1);
 
@@ -2629,22 +2647,15 @@ describe('processVbaServices', () => {
       vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaRegionFacilityOrOfficeNode({
-        fieldVbaTypeOfCare: 'vba_veteran_benefits',
-      }),
     ],
     [
       vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaRegionFacilityOrOfficeNode({
-        fieldVbaTypeOfCare: 'vba_veteran_benefits',
-      }),
     ],
   );
-
-  expect(singleVbaService.veteranBenefits.length).to.equal(4);
-  expect(singleVbaService.familyCaregiverBenefits.length).to.equal(0);
+  expect(singleVbaService.veteranBenefits.length).to.equal(1);
+  expect(singleVbaService.familyMemberCaregiverBenefits.length).to.equal(0);
   expect(singleVbaService.serviceMemberBenefits.length).to.equal(0);
   expect(singleVbaService.otherServices.length).to.equal(0);
 
@@ -2670,8 +2681,14 @@ describe('processVbaServices', () => {
   );
 
   expect(hiddenVbaServices.veteranBenefits.length).to.equal(0);
-  expect(hiddenVbaServices.familyCaregiverBenefits.length).to.equal(0);
-  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(2);
+  expect(hiddenVbaServices.familyMemberCaregiverBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'facilityService',
+  );
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'regionalService',
+  );
   expect(hiddenVbaServices.otherServices.length).to.equal(0);
 });
 
@@ -2896,7 +2913,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given an incomplete week returns a complete week with default days filled in where there were no values', () => {
     const data = vetCenterHoursData.partialWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Check every day is equal to default day except for day provided by the data
       if (i !== 1) {
         assert.deepEqual(
@@ -2909,7 +2926,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given an incomplete week returns a complete week with the given data in the correct place', () => {
     const data = vetCenterHoursData.partialWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Day 2 gets shifted back to 1 check if day 2 is in the right space
       if (i === 1) {
         assert.deepEqual(
@@ -2922,7 +2939,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given a complete week returns a complete week with the expected data', () => {
     const data = vetCenterHoursData.completeWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Check to see if the new data equals the original data shifted back one
       assert.deepEqual(
         liquid.filters.officeHoursDataFormat(data)[i],

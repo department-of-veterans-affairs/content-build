@@ -21,6 +21,9 @@ const vbaFacilityFragment = `
               }
             }
           }
+          fieldCcVbaFacilityOverview {
+            fetched
+          }
           fieldShowBanner
           fieldAlertType
           fieldDismissibleOption
@@ -33,6 +36,7 @@ const vbaFacilityFragment = `
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
+          fieldOperatingStatusMoreInfo
           fieldPhoneNumber
           fieldCcBenefitsHotline {
             fetched
@@ -107,6 +111,19 @@ const vbaFacilityFragment = `
               }
             }
           }
+          fieldPrepareForVisit {
+            entity {
+              id
+              entityBundle
+              ... on ParagraphBasicAccordion {
+                id
+                fieldHeader
+                fieldRichWysiwyg {
+                  processed
+                }
+              }
+            }
+          }
           reverseFieldOfficeNode(
             filter: {conditions: [{field: "type", value: ["vba_facility_service"]}]}
           ) {
@@ -135,6 +152,8 @@ const vbaFacilityFragment = `
                         allDay
                       }
                       fieldUseMainFacilityPhone
+                      fieldOfficeVisits
+                      fieldVirtualSupport
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
@@ -188,8 +207,8 @@ const vbaFacilityFragment = `
                     entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
                       fieldFacilityServiceHeader
-                      fieldRegionalServiceHeader
                       fieldFacilityServiceDescripti
+                      fieldRegionalServiceHeader
                       fieldRegionalServiceDescripti
                       fieldShowForVbaFacilities
                       fieldVbaTypeOfCare
@@ -228,8 +247,8 @@ const vbaFacilityFragment = `
                     entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
                       fieldFacilityServiceHeader
-                      fieldRegionalServiceHeader
                       fieldFacilityServiceDescripti
+                      fieldRegionalServiceHeader
                       fieldRegionalServiceDescripti
                       fieldShowForVbaFacilities
                       fieldVbaTypeOfCare
@@ -265,6 +284,8 @@ const vbaFacilityFragment = `
                         allDay
                       }
                       fieldUseMainFacilityPhone
+                      fieldOfficeVisits
+                      fieldVirtualSupport
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
