@@ -1,4 +1,6 @@
     {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
+    {% assign isMentalHealthService = serviceTaxonomy.name | localHealthCareServiceIsMentalHealth %}
+
     <va-accordion-item
       {% if serviceTaxonomy.fieldAlsoKnownAs %}
         subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"

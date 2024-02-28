@@ -461,15 +461,17 @@
             <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
 
             <!-- Page-specific Questions/Answers -->
-            <va-accordion bordered uswds="false">
+            <va-accordion bordered uswds>
               {% for faqParagraph in fieldClpFaqParagraphs %}
                 {% if faqParagraph.entity %}
                   <va-accordion-item
+                    bordered
                     class="va-accordion-item"
                     header="{{ faqParagraph.entity.fieldQuestion }}"
                     level="3"
                     data-faq-entity-id="{{ faqParagraph.entity.entityId }}"
                     id="{{ faqParagraph.entity.fieldQuestion | hashReference: 60 }}"
+                    uswds
                   >
                     {% assign fieldAnswer = faqParagraph.entity.fieldAnswer | first %}
                     {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
