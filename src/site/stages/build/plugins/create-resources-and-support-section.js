@@ -206,6 +206,8 @@ function createPaginatedArticleListings({
             allArticlesForGroup.length,
           );
 
+          console.log('all articles for group: ', allArticlesForGroup.length);
+
           const paginationTitle = getPaginationSummary({
             pageStart,
             pageEnd,
