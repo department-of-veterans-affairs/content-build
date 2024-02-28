@@ -40,4 +40,4 @@ const medalliaSurveys = {
   },
 };
 
-export default { SURVEY_NUMBERS, medalliaSurveys };
+module.exports = { SURVEY_NUMBERS, medalliaSurveys };
