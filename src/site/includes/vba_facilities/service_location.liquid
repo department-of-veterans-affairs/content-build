@@ -25,7 +25,12 @@
         Main Phone
       </h5>
 
-      <va-telephone contact="{{ facilityPhone }}" message-aria-describedby="Main Phone" />
+      {% assign serviceLocationMainPhone = facilityPhone | separatePhoneNumberExtension %}
+      <va-telephone
+        contact="{{ serviceLocationMainPhone.phoneNumber }}"
+        extension="{{ serviceLocationMainPhone.extension }}"
+        message-aria-describedby="Main Phone"
+      />
     </div>
   {% elsif location.entity.fieldPhone %}
     {% for phoneObj in location.entity.fieldPhone %}
