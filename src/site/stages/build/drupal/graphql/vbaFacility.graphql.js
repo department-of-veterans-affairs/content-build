@@ -152,8 +152,6 @@ const vbaFacilityFragment = `
                         allDay
                       }
                       fieldUseMainFacilityPhone
-                      fieldOfficeVisits
-                      fieldVirtualSupport
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
@@ -284,8 +282,6 @@ const vbaFacilityFragment = `
                         allDay
                       }
                       fieldUseMainFacilityPhone
-                      fieldOfficeVisits
-                      fieldVirtualSupport
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
