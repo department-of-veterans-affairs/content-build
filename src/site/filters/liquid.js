@@ -1182,6 +1182,7 @@ module.exports = function registerFilters() {
   liquid.filters.appendCentralizedFeaturedContent = (
     ccFeatureContent,
     featureContentArray,
+    isAppend = false,
   ) => {
     if (!ccFeatureContent || !ccFeatureContent.fetched) {
       return featureContentArray;
@@ -1219,7 +1220,9 @@ module.exports = function registerFilters() {
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
     }
-    return [featureContentObj, ...featureContentArray];
+    return isAppend
+      ? [...featureContentArray, featureContentObj] // append -- VBA
+      : [featureContentObj, ...featureContentArray]; // prepend -- VetCenter - default
   };
 
   liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
