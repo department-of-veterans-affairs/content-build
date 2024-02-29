@@ -69,10 +69,10 @@
               {% endif %}
             
               <!-- Optional QA Group Introduction -->
-              {% if entity.fieldRichWysiwyg.processed %}
-                  {{ entity.fieldRichWysiwyg.processed }}
+              {% if fieldQAGroup.entity.fieldRichWysiwyg.processed %}
+                  {{ fieldQAGroup.entity.fieldRichWysiwyg.processed }}
               {% endif %}  
-              
+
             {% if fieldQAGroup.entity.fieldAccordionDisplay %}
               {% assign headerLevel = '2' %}
               {% if fieldQAGroup.entity.fieldSectionHeader %}
