@@ -19,6 +19,11 @@ fragment faqMultipleQA on NodeFaqMultipleQA {
         entityId
         fieldSectionHeader
         fieldAccordionDisplay
+        fieldRichWysiwyg {
+          value
+          format
+          processed
+        }
         fieldQAs {
           entity {
             ... on NodeQA {
