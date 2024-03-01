@@ -205,8 +205,8 @@ const vbaFacilityFragment = `
                     entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
                       fieldFacilityServiceHeader
-                      fieldFacilityServiceDescripti
                       fieldRegionalServiceHeader
+                      fieldFacilityServiceDescripti
                       fieldRegionalServiceDescripti
                       fieldShowForVbaFacilities
                       fieldVbaTypeOfCare
@@ -245,8 +245,8 @@ const vbaFacilityFragment = `
                     entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
                       fieldFacilityServiceHeader
-                      fieldFacilityServiceDescripti
                       fieldRegionalServiceHeader
+                      fieldFacilityServiceDescripti
                       fieldRegionalServiceDescripti
                       fieldShowForVbaFacilities
                       fieldVbaTypeOfCare
