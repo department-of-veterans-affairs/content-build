@@ -8,8 +8,7 @@ const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const stagingSurveys = require('./medalliaStagingSurveys.json');
-const prodSurveys = require('./medalliaProdSurveys.json');
+const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
@@ -287,6 +286,26 @@ module.exports = function registerFilters() {
     }
 
     return data;
+  };
+
+  liquid.filters.separatePhoneNumberExtension = phoneNumber => {
+    if (!phoneNumber) {
+      return null;
+    }
+
+    if (!phoneNumber.includes(', ext. ')) {
+      return {
+        phoneNumber,
+        extension: null,
+      };
+    }
+
+    const splitNumber = phoneNumber.split(', ext. ');
+
+    return {
+      phoneNumber: splitNumber[0],
+      extension: splitNumber[1],
+    };
   };
 
   liquid.filters.trackLinks = (html, eventDataString) => {
@@ -827,6 +846,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.replace = (string, oldVal, newVal) => {
+    if (!string) return null;
     const regex = new RegExp(oldVal, 'g');
     return string.replace(regex, newVal);
   };
@@ -866,7 +886,7 @@ module.exports = function registerFilters() {
 
   /**
     * Converts a string to camel case and removes a prefix
-    @param {string} prefix - prefix to be removed - make empty string not to change string 
+    @param {string} prefix - prefix to be removed - make empty string not to change string
     @param {string} string - string to be converted
   */
   liquid.filters.trimAndCamelCase = (toRemove, string) => {
@@ -1181,6 +1201,7 @@ module.exports = function registerFilters() {
   liquid.filters.appendCentralizedFeaturedContent = (
     ccFeatureContent,
     featureContentArray,
+    placement = 'prepend',
   ) => {
     if (!ccFeatureContent || !ccFeatureContent.fetched) {
       return featureContentArray;
@@ -1218,7 +1239,9 @@ module.exports = function registerFilters() {
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
     }
-    return [featureContentObj, ...featureContentArray];
+    return placement === 'append'
+      ? [...featureContentArray, featureContentObj] // append -- VBA
+      : [featureContentObj, ...featureContentArray]; // prepend -- VetCenter - default
   };
 
   liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
@@ -1778,18 +1801,41 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    if (
-      buildtype === 'localhost' ||
-      buildtype === 'vagovstaging' ||
-      buildtype === 'vagovdev'
-    ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    const surveyData = medalliaSurveys;
+    const defaultStagingSurvey = SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY;
+    const defaultProdSurvey = SURVEY_NUMBERS.DEFAULT_PROD_SURVEY;
+    const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
+      buildtype,
+    );
+    const effectiveBuildType = isStaging ? 'staging' : 'production';
+
+    if (typeof url !== 'string' || url === null) {
+      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
+    }
+    // Check if the URL exists in the main custom survey URL object
+    if (url in surveyData.urls) {
+      const surveyInfo = surveyData.urls[url];
+      // Return the survey ID for the effective build type, or the default based on the build type
+      return (
+        surveyInfo[effectiveBuildType] ||
+        (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+      );
+    }
+    // Check if the URL matches any subpaths
+    for (const [subpath, surveyInfo] of Object.entries(
+      surveyData.urlsWithSubPaths,
+    )) {
+      if (url.startsWith(subpath)) {
+        // Return the survey ID for the effective build type, or the default based on the build type
+        return (
+          surveyInfo[effectiveBuildType] ||
+          (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+        );
+      }
     }
 
-    if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : 17;
-    }
-    return null;
+    // If no URL match is found, return the default survey number based on the build type
+    return isStaging ? defaultStagingSurvey : defaultProdSurvey;
   };
 
   liquid.filters.officeHoursDayFormatter = (day, short = true) => {

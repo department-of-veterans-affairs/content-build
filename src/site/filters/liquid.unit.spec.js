@@ -11,8 +11,6 @@ import { vbaRegionFacilityOrOfficeNode } from './fixtures/vbaFacility';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
-import stagingSurveys from './medalliaStagingSurveys.json';
-import prodSurveys from './medalliaProdSurveys.json';
 import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility_data_cant_find_benefits.json';
 import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
 import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
@@ -2809,52 +2807,95 @@ describe('deriveFormattedTimestamp', () => {
 });
 
 describe('getSurvey', () => {
-  const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
-  const testUrls = [
-    '/resources',
-    '/find-locations',
-    '/search',
-    '/contact-us/virtual-agent',
-  ];
-
-  it('returns the survey number if url is listed in the survey object', () => {
-    // Staging survey tests
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
-    ).to.equal(20);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[2], testUrls[2], stagingSurveys),
-    ).to.equal(20);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(26);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(26);
-
-    // Prod survey tests
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
-    ).to.equal(21);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
-    ).to.equal(25);
+  it('returns correct survey ID for direct URL match in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/search')).to.equal(21);
   });
 
-  it('returns null for a build type not present in the staging survey object', () => {
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], stagingSurveys),
-    ).to.be.null;
+      liquid.filters.getSurvey('vagovstaging', '/contact-us/virtual-agent'),
+    ).to.equal(26);
   });
 
-  it('returns null for a build type not present in the production survey object', () => {
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], prodSurveys),
-    ).to.be.null;
+      liquid.filters.getSurvey('vagovstaging', '/school-administrators'),
+    ).to.equal(37);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/')).to.equal(17);
+  });
+
+  it('returns default survey ID when no direct URL match is found in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/')).to.equal(11);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovstaging',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(11);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/64545443',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey('vagovstaging', '/health-care/eligibility'),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/health-care')).to.equal(
+      41,
+    );
+  });
+
+  it('handles null URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', null)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', null)).to.equal(11);
+  });
+
+  it('handles undefined URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', undefined)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', undefined)).to.equal(11);
   });
 });
 
