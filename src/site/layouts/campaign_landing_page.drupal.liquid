@@ -114,12 +114,11 @@
                 width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}"
               />
               <h3 class="vads-u-padding-x--2 vads-u-margin-top--2">
-                <a
+                <va-link
                   href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'What you can do', 'clp-section-title': '{{ fieldClpWhatYouCanDoHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ promo.entity.fieldPromoLink.entity.fieldLink.title | encode }}' });"
-                >
-                  {{ promo.entity.fieldPromoLink.entity.fieldLink.title }}
-                </a>
+                  text="{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}"
+                />
               </h3>
               <p class="vads-u-margin-bottom--2 vads-u-margin-top--1 vads-u-padding-x--2">
                 {{ promo.entity.fieldPromoLink.entity.fieldLinkSummary }}
@@ -199,12 +198,11 @@
             <p class="va-introtext vads-u-margin-top--1 vads-u-margin-bottom--4">
               {{ fieldClpSpotlightIntroText }}
               {% if fieldClpSpotlightCta.entity.fieldButtonLink.url.path and fieldClpSpotlightCta.entity.fieldButtonLabel %}
-                <a
+                <va-link
                   href="{{ fieldClpSpotlightCta.entity.fieldButtonLink.url.path }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpSpotlightCta.entity.fieldButtonLabel | encode }}' });"
-                >
-                  {{ fieldClpSpotlightCta.entity.fieldButtonLabel }}
-                </a>
+                  text="{{ fieldClpSpotlightCta.entity.fieldButtonLabel }}"
+                />
               {% endif %}
             </p>
           </div>
@@ -215,12 +213,11 @@
               <div class="vads-u-background-color--gray-light-alt vads-u-height--full medium-screen:vads-u-margin-x--1 medium-screen:vads-u-margin-y--0">
                 <div class="vads-u-padding--2">
                   <h3 class="vads-u-margin-top--0">
-                    <a
+                    <va-link
                       href="{{ linkTeaser.entity.fieldLink.uri }}"
                       onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ linkTeaser.entity.fieldLink.title | encode }}' });"
-                    >
-                      {{ linkTeaser.entity.fieldLink.title }}
-                    </a>
+                      text="{{ linkTeaser.entity.fieldLink.title }}"
+                      />
                   </h3>
                   <p class="vads-u-margin-top--1">{{ linkTeaser.entity.fieldLinkSummary }}</p>
                 </div>
@@ -259,12 +256,11 @@
                     {% endif %}
                     <div class="vads-u-margin-top--2 medium-screen:vads-u-margin-top--0">
                       <h3 class="vads-u-margin-top--0">
-                        <a
+                        <va-link
                           href="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.uri }}"
                           onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Stories', 'clp-section-title': '{{ fieldClpStoriesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title | encode }}' });"
-                        >
-                          {{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title }}
-                        </a>
+                          text="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title }}"
+                          />
                       </h3>
                       <p>{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLinkSummary }}</p>
                     </div>
@@ -309,14 +305,13 @@
               <div class="vads-u-background-color--gray-light-alt vads-u-height--full vads-u-padding--2 vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-margin-x--1 medium-screen:vads-u-margin-y--0">
                 <h3 class="vads-u-margin--0">{{ resource.entity.name }}</h3>
                 <p class="vads-u-flex--1">{{ resource.entity.fieldDescription }}</p>
-                <a
+                <va-link
                   aria-label="Download {{ resource.entity.name }} PDF"
                   download
                   href="{{ resource.entity.fieldMediaExternalFile.uri }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Downloadable resources', 'clp-section-title': '{{ fieldClpResourcesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': 'Download {{ resource.entity.name | encode }}' });"
-                >
-                  Download (PDF)
-                </a>
+                  text="Download (PDF)"
+                />
               </div>
             </div>
           {% endfor %}
@@ -360,12 +355,11 @@
                 <!-- Title -->
                 <h3 class="vads-u-margin-top--0">
                   {% if eventReference.entity.entityUrl.path and eventReference.entity.title %}
-                    <a
+                    <va-link
                       href="{{ eventReference.entity.entityUrl.path }}"
                       onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.title | encode }}' });"
-                    >
-                      {{ eventReference.entity.title }}
-                    </a>
+                      text="{{ eventReference.entity.title }}"
+                    />
                   {% elsif %}
                     {{ eventReference.entity.title }}
                   {% endif %}
