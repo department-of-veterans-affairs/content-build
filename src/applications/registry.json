@@ -446,8 +446,7 @@
       "keywords": "upgrade discharge, military discharge upgrade, discharge upgrade",
       "order": 6,
       "spoke": "Get records",
-      "collection": "records",
-      "includeBreadcrumbs": true
+      "collection": "records"
     }
   },
   {
