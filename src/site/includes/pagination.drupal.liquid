@@ -15,21 +15,42 @@
 {% assign paginatorCount = paginator.inner | size %}
 {% assign totalItems = paginatorCount %}
 
+{% if numItems %}
+{% assign totalItems = numItems | times: .1 %}
+{% endif%}
+
 {% if paginator != empty and totalItems <= paginatorCount %}
-  <script>
-    const pagination = document.querySelector('va-pagination');
-    const updateCurrentPage = event => { 
-      currentPage = event.detail;
-      return;
-    }
 
-    pagination.addEventListener('pageSelect', updateCurrentPage);
-  </script>
-
-  <va-pagination
-    max-page-list-length="7"
-    page="{{ currentPage }}"
-    pages="{{ totalItems }}"
-    uswds
-  ></va-pagination>
+  <div class="va-pagination" data-template="includes/pagination">
+    {% if paginator.prev != empty %}
+      <span class="va-pagination-prev">
+        <a href="{{ paginator.prev }}" aria-label="Load previous page{{ paginator.ariaLabel }}">
+          <abbr title="Previous">Prev</abbr>
+        </a>
+      </span>
+    {% endif %}
+    <div class="va-pagination-inner">
+      {% for page in paginator.inner %}
+        <a
+          aria-label="Load page {{ page.label }}{{ paginator.ariaLabel }}"
+          {% if page.class %}
+            class="{{ page.class }}"
+          {% endif %}
+          {% if page.class != "va-pagination-active" %}
+            href="{{ page.href }}"
+          {% endif %}
+        >
+          {{ page.label }}
+        </a>
+        {% assign totalItems = totalItems | minus: 1 %}
+      {% endfor %}
+    </div>
+    {% if paginator.next != empty %}
+      <span class="va-pagination-next">
+        <a href="{{ paginator.next }}" aria-label="Load next page{{ paginator.ariaLabel }}">
+          Next
+        </a>
+      </span>
+    {% endif %}
+  </div>
 {% endif %}
