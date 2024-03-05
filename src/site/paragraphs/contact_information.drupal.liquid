@@ -64,7 +64,7 @@
                   {% for supportService in entity.fieldBenefitHubContacts.entity.fieldSupportServices %}
                     <li class="vads-u-margin-top--1">
                       <strong>{{ supportService.entity.title }} </strong>
-                      {% if supportService.entity.fieldLink and supportService.entity.fieldPhoneNumber %}
+                      {% if supportService.entity.fieldPhoneNumber %}
                         {% assign shouldShowTelephoneComponent = supportService.entity.fieldPhoneNumber | useTelephoneWebComponent %} 
                         {% if shouldShowTelephoneComponent %}
                           {% assign telephoneComponent = "src/site/paragraphs/telephone.drupal.liquid"%}
