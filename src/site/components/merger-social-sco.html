@@ -40,7 +40,6 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
                 <li class="vads-u-margin-bottom--0 vads-u-margin-top--0">
                 {% endif %}
                   {% if navPath == 'Ask questions' %}
-                  <h4 class='va-nav-linkslist-list'>
                   {% endif %}
                     <a href="{{link.url}}"
                       onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
@@ -66,7 +65,6 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
                       {% endif %}
                     </a>
                   {% if navPath == 'Ask questions' %}
-                  </h4>
                   {% endif %}
                 </li>
               {% else %}
