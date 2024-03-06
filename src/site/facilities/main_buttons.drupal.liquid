@@ -3,31 +3,29 @@
     Also used for VBA with parameter
 {% endcomment %}
 <div data-template="facilities/main_buttons">
-    {% if buttonType == 'vba'  %}
-        <div>
+    <div>
+        {% assign ehrSystem = fieldVamcEhrSystem | findEhr: fieldRegionPage, fieldOffice %}
+        {% if buttonType == 'vba' %}
             <a class="vads-c-action-link--blue" href="https://va.my.site.com/VAVERA/s/">Make an appointment</a>
-        </div>
-    {% else %}
-        <div>
+        {% elsif fieldAdministration.entity.entityId == '1039' %}
+            {% assign topTaskLovell = ehrSystem | topTaskLovell: path, "make-an-appointment", buildtype %}
+            <a class="vads-c-action-link--blue" href="{{topTaskLovell.url}}">{{topTaskLovell.text}}</a>
+        {% else %}
             <a class="vads-c-action-link--blue" href="/{{ path }}/make-an-appointment">Make an appointment</a>
-        </div>
-    {% endif %}
-    {% if buttonType == 'vba'  %}
-        <div class="vads-u-margin-y--2">
+        {% endif %}
+    </div>
+    <div class="vads-u-margin-y--2">
+        {% if buttonType == 'vba'  %}
             <a class="vads-c-action-link--blue" href="https://ask.va.gov">Ask a benefit question</a>
-        </div>
-    {% else %}
-        <div class="vads-u-margin-y--2">
+        {% else %}
             <a class="vads-c-action-link--blue" href="/{{ path }}/health-services">View all health services</a>
-        </div>
-    {% endif %}
-    {% if buttonType == 'vba' %}
-        <div>
+        {% endif %}
+    </div>
+    <div>
+        {% if buttonType == 'vba' %}
             <a class="vads-c-action-link--blue" href="/claim-or-appeal-status">Check a claim status</a>
-        </div>
-    {% else %}
-        <div>
+        {% else %}
             <a class="vads-c-action-link--blue" href="/{{ path }}/register-for-care">Register for care</a>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>

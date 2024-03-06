@@ -1663,6 +1663,32 @@ module.exports = function registerFilters() {
     };
   };
 
+  liquid.filters.findEhr = (value, fieldRegionPage, fieldOffice) => {
+    return (
+      value ||
+      fieldOffice?.entity?.fieldVamcEhrSystem ||
+      fieldRegionPage?.entity?.fieldVamcEhrSystem ||
+      ''
+    );
+  };
+
+  liquid.filters.topTaskLovell = (flag, basePath, linkType, buildtype) => {
+    const isNotProd = buildtype !== 'vagovprod';
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (linkType === 'make-an-appointment')
+        return {
+          text: 'MHS Genesis Patient Portal',
+          url: 'https://my.mhsgenesis.health.mil/',
+        };
+    } else if (linkType === 'make-an-appointment') {
+      return {
+        text: 'Make an appointment',
+        url: `/${basePath}/make-an-appointment`,
+      };
+    }
+    return {};
+  };
+
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
     const isNotProd = buildtype !== 'vagovprod';
 

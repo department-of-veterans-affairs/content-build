@@ -40,6 +40,7 @@ const bannerAlerts = `
               fieldOffice {
                 entity {
                   ... on NodeHealthCareRegionPage {
+                    fieldVamcEhrSystem
                     title
                     entityUrl {
                       path
