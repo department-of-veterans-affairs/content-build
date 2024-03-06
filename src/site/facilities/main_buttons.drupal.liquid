@@ -4,14 +4,11 @@
 {% endcomment %}
 <div data-template="facilities/main_buttons">
     <div>
-        {% assign ehrSystem = fieldVamcEhrSystem | findEhr: fieldRegionPage, fieldOffice %}
         {% if buttonType == 'vba' %}
             <a class="vads-c-action-link--blue" href="https://va.my.site.com/VAVERA/s/">Make an appointment</a>
-        {% elsif fieldAdministration.entity.entityId == '1039' %}
-            {% assign topTaskLovell = ehrSystem | topTaskLovell: path, "make-an-appointment", buildtype %}
-            <a class="vads-c-action-link--blue" href="{{topTaskLovell.url}}">{{topTaskLovell.text}}</a>
         {% else %}
-            <a class="vads-c-action-link--blue" href="/{{ path }}/make-an-appointment">Make an appointment</a>
+            {% assign topTask = "make-an-appointment" | topTaskLovellComp: path, buildtype, fieldAdministration, fieldVamcEhrSystem, fieldRegionPage, fieldOffice %}
+            <a class="vads-c-action-link--blue" href="{{topTask.url}}">{{topTask.text}}</a>
         {% endif %}
     </div>
     <div class="vads-u-margin-y--2">

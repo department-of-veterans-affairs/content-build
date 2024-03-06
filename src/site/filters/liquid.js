@@ -1663,30 +1663,41 @@ module.exports = function registerFilters() {
     };
   };
 
-  liquid.filters.findEhr = (value, fieldRegionPage, fieldOffice) => {
-    return (
-      value ||
+  liquid.filters.topTaskLovellComp = (
+    linkType,
+    basePath,
+    buildtype,
+    fieldAdministration,
+    fieldVamcEhrSystem,
+    fieldRegionPage,
+    fieldOffice,
+  ) => {
+    const isNotProd = buildtype !== 'vagovprod';
+    const flag =
+      fieldVamcEhrSystem ||
       fieldOffice?.entity?.fieldVamcEhrSystem ||
       fieldRegionPage?.entity?.fieldVamcEhrSystem ||
-      ''
-    );
-  };
+      '';
+    const isPageLovell = fieldAdministration?.entity.entityId === '1039';
 
-  liquid.filters.topTaskLovell = (flag, basePath, linkType, buildtype) => {
-    const isNotProd = buildtype !== 'vagovprod';
     if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
-      if (linkType === 'make-an-appointment')
+      if (linkType === 'make-an-appointment' && isPageLovell) {
         return {
           text: 'MHS Genesis Patient Portal',
           url: 'https://my.mhsgenesis.health.mil/',
         };
+      }
     } else if (linkType === 'make-an-appointment') {
       return {
         text: 'Make an appointment',
         url: `/${basePath}/make-an-appointment`,
       };
     }
-    return {};
+    // fallback
+    return {
+      text: 'Make an appointment',
+      url: `/${basePath}/make-an-appointment`,
+    };
   };
 
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
