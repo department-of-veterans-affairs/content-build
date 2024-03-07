@@ -17,6 +17,7 @@ const query = `
           fieldFacilityLocatorApiId,
           fieldRegionPage {
             entity {
+              entityId,
               title,
               ... on NodeHealthCareRegionPage {
                 fieldVamcEhrSystem
