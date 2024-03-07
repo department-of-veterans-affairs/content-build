@@ -39,8 +39,6 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
                 {% else %}
                 <li class="vads-u-margin-bottom--0 vads-u-margin-top--0">
                 {% endif %}
-                  {% if navPath == 'Ask questions' %}
-                  {% endif %}
                     <a href="{{link.url}}"
                       onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
                       {% if link.external == true %}
@@ -64,8 +62,6 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
                         <span>{{link.number}}</span>
                       {% endif %}
                     </a>
-                  {% if navPath == 'Ask questions' %}
-                  {% endif %}
                 </li>
               {% else %}
                 {% if forloop.first == true %}
