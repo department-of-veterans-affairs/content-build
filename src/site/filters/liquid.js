@@ -1688,12 +1688,14 @@ module.exports = function registerFilters() {
         };
       }
     } else if (linkType === 'make-an-appointment') {
+      // If we remove this eslint complains of the nested if, so
+      // keeping this as a placeholder for future other linktypes for the MHS Genesis site (e.g. Pharmacy)
       return {
         text: 'Make an appointment',
         url: `/${basePath}/make-an-appointment`,
       };
     }
-    // fallback
+    // fallback as default
     return {
       text: 'Make an appointment',
       url: `/${basePath}/make-an-appointment`,
