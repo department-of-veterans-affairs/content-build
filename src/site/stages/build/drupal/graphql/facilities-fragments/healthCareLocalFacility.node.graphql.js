@@ -10,7 +10,6 @@ const FACILITIES_RESULTS = `
         path
       }
     }
-      entityBundle
       title
       entityId
       entityBundle

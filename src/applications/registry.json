@@ -1312,16 +1312,6 @@
     }
   },
   {
-    "appName": "burial-poc-v6",
-    "entryName": "burial-poc-v6",
-    "rootUrl": "/burial-poc-v6",
-    "productId": "3f7db617-af4b-4d7f-b30f-f288d5756668",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "MHV Secure Messaging",
     "entryName": "secure-messaging",
     "rootUrl": "/my-health/secure-messages",
@@ -1801,6 +1791,16 @@
     "entryName": "10-7959C",
     "rootUrl": "/ivc-champva/10-7959C",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Foreign Medical Program (FMP) Registration Form",
+    "entryName": "10-7959f-1-FMP",
+    "rootUrl": "/ivc-champva/10-7959f-1",
+    "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
