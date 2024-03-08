@@ -305,13 +305,14 @@
               <div class="vads-u-background-color--gray-light-alt vads-u-height--full vads-u-padding--2 vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-margin-x--1 medium-screen:vads-u-margin-y--0">
                 <h3 class="vads-u-margin--0">{{ resource.entity.name }}</h3>
                 <p class="vads-u-flex--1">{{ resource.entity.fieldDescription }}</p>
-                <va-link
+                <a
                   aria-label="Download {{ resource.entity.name }} PDF"
                   download
                   href="{{ resource.entity.fieldMediaExternalFile.uri }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Downloadable resources', 'clp-section-title': '{{ fieldClpResourcesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': 'Download {{ resource.entity.name | encode }}' });"
-                  text="Download (PDF)"
-                />
+                >
+                Download (PDF)
+              </a>
               </div>
             </div>
           {% endfor %}
