@@ -1282,28 +1282,28 @@ describe('phoneLinks', () => {
   it('wraps text phone numbers in a link', () => {
     const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with parentheses around the area code', () => {
     const text = 'Here is a phone number: (123)-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with space after the area code', () => {
     const text = 'Here is a phone number: (123) 456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with no dash or space after the area code', () => {
     const text = 'Here is a phone number: (123)456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
@@ -1311,14 +1311,19 @@ describe('phoneLinks', () => {
     const text =
       'Here is a phone number: (123)-456-7890. And (1111) more: 890-456-1234. Noice!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
-      'And (1111) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+      'Here is a phone number: <va-telephone contact="123-456-7890"></va-telephone>. ' +
+      'And (1111) more: <va-telephone contact="890-456-1234"></va-telephone>. Noice!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('does not double-wrap phone numbers', () => {
     const html =
       'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+  it('does not double-wrap phone numbers in va-telephone components', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });
