@@ -73,13 +73,8 @@
                         }
                       }
                     </script>
-                    <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                      Main Location</h3>
-                    <div data-widget-type="expandable-operating-status-{{ fieldFacilityLocatorApiId }}"
-                         facilityId="{{ fieldFacilityLocatorApiId }}"
-                         status="{{ fieldOperatingStatusFacility }}"
-                         info="{{ fieldOperatingStatusMoreInfo }}">
-                    </div>
+                    <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Main Location</h3>
+                    {% include "src/site/includes/operating_status_expandable_alert.liquid" %}
                     <div class="vads-u-margin-bottom--3">
                       <address>
                         <div>{{ fieldAddress.addressLine1 }}</div>
@@ -105,7 +100,8 @@
                       Direct line</h4>
                     <div class="vads-u-margin-bottom--3">
                       <div class="main-phone vads-u-margin-bottom--1">
-                        </strong><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+                        {% assign phoneNumber = fieldPhoneNumber | separatePhoneNumberExtension %}
+                        </strong><va-telephone contact="{{phoneNumber.phoneNumber}}" extension="{{phoneNumber.extension}}"></va-telephone>
                       </div>
                     </div>
 
@@ -129,8 +125,7 @@
               <p class="vads-u-margin-bottom--0 vads-u-line-height--4">Vet Centers are community based to be more
                 accessible in areas where you live.
               </p>
-              <a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
-                  locations</a>
+              <va-link href="{{ entityUrl.path }}/locations" text="View more {{ entityLabel }} locations"></va-link>
             </div>
           </div>
 
@@ -154,12 +149,13 @@
             <div class="vads-u-margin-bottom--3">
               <va-accordion bordered
                 id="prepare-for-your-visit-accordion-{{ entity.entity.fieldHeader }}"
-                uswds="false">
+                uswds>
                 {% for entity in fieldPrepareForVisit %}
                   <va-accordion-item
                     class="va-accordion-item"
                     id="prepare-for-your-visit-accordion-item-{{ entity.entity.fieldHeader | hashReference: 60  }}"
                     header="{{ entity.entity.fieldHeader }}" level="3"
+                    uswds
                   >
                     {{ entity.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
                   </va-accordion-item>
@@ -243,6 +239,7 @@
                 entity = fieldCcVetCenterFaqs.fetched
                 contentType = fieldCcVetCenterFaqs.fetchedBundle
                 level = 3
+                vetcenter = 1
               %}
             </div>
           {% endif %}

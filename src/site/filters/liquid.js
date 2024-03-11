@@ -281,6 +281,7 @@ module.exports = function registerFilters() {
     if (data) {
       return data.replace(
         replacePattern,
+        '<va-telephone contact="$1-$2"></va-telephone>',
         '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
       );
     }
@@ -293,18 +294,22 @@ module.exports = function registerFilters() {
       return null;
     }
 
-    if (!phoneNumber.includes(', ext. ')) {
+    // pattern for non-numeric, non-hyphen, non-plus characters
+    const nonPhoneCharacter = new RegExp('[^0-9\\+\\-]+', 'g');
+    if (phoneNumber.search(nonPhoneCharacter) < 0) {
       return {
-        phoneNumber,
+        phoneNumber: phoneNumber.replace(/-/g, '').trim(),
         extension: null,
       };
     }
-
-    const splitNumber = phoneNumber.split(', ext. ');
-
+    const tempPhone = phoneNumber
+      .split(nonPhoneCharacter)
+      .map(c => c.replace(/-/g, '').trim())
+      .filter(c => c);
+    const [phone, ext] = tempPhone;
     return {
-      phoneNumber: splitNumber[0],
-      extension: splitNumber[1],
+      phoneNumber: phone,
+      extension: ext,
     };
   };
 
