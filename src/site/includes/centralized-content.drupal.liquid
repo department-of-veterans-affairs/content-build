@@ -9,4 +9,4 @@
 {% assign bundleComponent = "src/site/paragraphs/" | append: contentType %}
 {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
 {% assign processedEntity = entity | processCentralizedContent: contentType %}
-{% include {{ bundleComponentWithExtension }} with entity = processedEntity vetcenter = vetcenter %}
+{% include {{ bundleComponentWithExtension }} with entity = processedEntity %}
