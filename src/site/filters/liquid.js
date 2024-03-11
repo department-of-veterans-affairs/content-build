@@ -295,21 +295,21 @@ module.exports = function registerFilters() {
     }
 
     // pattern for non-numeric, non-hyphen, non-plus characters
-    const nonPhoneCharacter = new RegExp('[^0-9\\+\\-]+', 'g');
+    const nonPhoneCharacter = new RegExp('[^0-9\\+\\-\\(\\) ]+', 'g');
     if (phoneNumber.search(nonPhoneCharacter) < 0) {
       return {
-        phoneNumber: phoneNumber.replace(/-/g, '').trim(),
-        extension: null,
+        phoneNumber: phoneNumber.replace(/[-\\(\\) ]/g, '').trim(),
+        extension: '',
       };
     }
     const tempPhone = phoneNumber
       .split(nonPhoneCharacter)
-      .map(c => c.replace(/-/g, '').trim())
+      .map(c => c.replace(/[-\\(\\) ]/g, '').trim())
       .filter(c => c);
     const [phone, ext] = tempPhone;
     return {
       phoneNumber: phone,
-      extension: ext,
+      extension: ext || '',
     };
   };
 
