@@ -73,12 +73,12 @@
               <div data-template="includes/social-share" id="va-c-social-share">
                 <ul class="usa-unstyled-list" role="list">
                   <li class="vads-u-margin-bottom--2p5">
-                    <i class="va-c-social-icon fab fa-facebook vads-u-margin-right--0p5" role="presentation" aria-hidden="true"></i>
+                    <i class="va-c-social-icon fab fa-facebook vads-u-margin-right--0p5" aria-hidden="true"></i>
                     <va-link class="va-js-share-link" href="https://www.facebook.com/sharer/sharer.php?href={{ hostUrl }}{{ entityUrl.path }}" text="Share on Facebook">
                     </va-link>
                   </li>
                   <li>
-                    <i class="va-c-social-icon fab fa-twitter vads-u-margin-right--0p5" role="presentation" aria-hidden="true"></i>
+                    <i class="va-c-social-icon fab fa-twitter vads-u-margin-right--0p5" aria-hidden="true"></i>
                     <va-link class="va-js-share-link" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ hostUrl }}{{ entityUrl.path }}" text="Share on Twitter">
                     </va-link>
                   </li>
@@ -651,8 +651,8 @@
                   <i
                     aria-hidden="true"
                     class="vads-u-flex--auto icon-small white vads-u-margin-right--1 hub-icon-{{ benefitCategory.entity.fieldTitleIcon }} hub-background-{{ benefitCategory.entity.fieldTitleIcon }}"
-                    role="presentation"
                   ></i>
+                  <h3>
                   <va-link
                     class="vads-u-flex--1"
                     disable-analytics
@@ -661,6 +661,7 @@
                     text="{{ benefitCategory.entity.title }}"
                   >
                   </va-link>
+                  </h3>
                 </div>
                 <p class="vads-u-margin-top--1">{{ benefitCategory.entity.fieldTeaserText }}</p>
               </div>
