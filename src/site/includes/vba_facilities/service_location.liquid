@@ -30,6 +30,14 @@
         contact="{{ serviceLocationMainPhone.phoneNumber }}"
         extension="{{ serviceLocationMainPhone.extension }}"
         message-aria-describedby="Main Phone"
+        onclick="recordEvent(
+          {
+            'event': 'vba-regional-facility-service-location-phone-number',
+            'vba-regional-facility-name': '{{ facilityName }}',
+            'accordion-parent-label': '{{ entityName }}',
+            'link-label': 'Main Phone'
+          }
+        )"
       />
     </div>
   {% elsif location.entity.fieldPhone %}
@@ -51,13 +59,33 @@
           {% endif %}
           contact="{{ phoneObj.entity.fieldPhoneNumber }}"
           extension="{{ phoneObj.entity.fieldPhoneExtension }}"
-          message-aria-describedby="{{ phoneObj.entity.fieldPhoneLabel }}" />
+          message-aria-describedby="{{ phoneObj.entity.fieldPhoneLabel }}"
+          onclick="recordEvent(
+            {
+              'event': 'vba-regional-facility-service-location-phone-number',
+              'vba-regional-facility-name': '{{ facilityName }}',
+              'accordion-parent-label': '{{ entityName }}',
+              'link-label': '{{ phoneObj.entity.fieldPhoneLabel }}'
+            }
+          )"
+        />
       </div>
     {% endfor %}
   {% endif %}
 
   <div class="vads-u-margin-bottom--3">
-    <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
+    <a
+      class="vads-c-action-link--blue"
+      href="/health-care/schedule-view-va-appointments"
+      onclick="recordEvent(
+        {
+          'event': 'vba-regional-facility-service-location-schedule-appointment',
+          'vba-regional-facility-name': '{{ facilityName }}',
+          'accordion-parent-label': '{{ entityName }}',
+          'link-label': 'Schedule an appointment online'
+        }
+      )"
+    >
       Schedule an appointment online
     </a>
   </div>
@@ -112,7 +140,18 @@
                     vads-u-margin--0
                     vads-u-margin-bottom--0p5
                     vads-u-font-weight--regular">
-          <a target="_blank" href="mailto:{{ emailObj.entity.fieldEmailAddress }}">
+          <a
+            target="_blank"
+            href="mailto:{{ emailObj.entity.fieldEmailAddress }}"
+            onclick="recordEvent(
+              {
+                'event': 'vba-regional-facility-service-location-email-address',
+                'vba-regional-facility-name': '{{ facilityName }}',
+                'accordion-parent-label': '{{ entityName }}',
+                'link-label': '{{ emailObj.entity.fieldEmailAddress }}'
+              }
+            )"
+          >
             {{ emailObj.entity.fieldEmailAddress }}
           </a>
         </p>
