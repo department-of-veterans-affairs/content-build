@@ -293,23 +293,18 @@ module.exports = function registerFilters() {
     if (!phoneNumber) {
       return null;
     }
-
-    // pattern for non-numeric, non-hyphen, non-plus characters
-    const nonPhoneCharacter = new RegExp('[^0-9\\+\\-\\(\\) ]+', 'g');
-    if (phoneNumber.search(nonPhoneCharacter) < 0) {
-      return {
-        phoneNumber: phoneNumber.replace(/[-\\(\\) ]/g, '').trim(),
-        extension: '',
-      };
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const match = phoneRegex.exec(phoneNumber);
+    if (!match[1] || !match[2] || !match[3]) {
+      return null;
     }
-    const tempPhone = phoneNumber
-      .split(nonPhoneCharacter)
-      .map(c => c.replace(/[-\\(\\) ]/g, '').trim())
-      .filter(c => c);
-    const [phone, ext] = tempPhone;
+    const phone = match[1] + match[2] + match[3];
+    // optional extension
+    const extension = match[4] || match[5] || '';
+
     return {
       phoneNumber: phone,
-      extension: ext || '',
+      extension,
     };
   };
 
