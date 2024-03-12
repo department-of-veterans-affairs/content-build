@@ -1662,6 +1662,45 @@ module.exports = function registerFilters() {
     };
   };
 
+  liquid.filters.topTaskLovellComp = (
+    linkType,
+    basePath,
+    buildtype,
+    fieldAdministration,
+    fieldVamcEhrSystem,
+    fieldRegionPage,
+    fieldOffice,
+  ) => {
+    const isNotProd = buildtype !== 'vagovprod';
+    const flag =
+      fieldVamcEhrSystem ||
+      fieldOffice?.entity?.fieldVamcEhrSystem ||
+      fieldRegionPage?.entity?.fieldVamcEhrSystem ||
+      '';
+    const isPageLovell = fieldAdministration?.entity.entityId === '1039';
+
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (linkType === 'make-an-appointment' && isPageLovell) {
+        return {
+          text: 'MHS Genesis Patient Portal',
+          url: 'https://my.mhsgenesis.health.mil/',
+        };
+      }
+    } else if (linkType === 'make-an-appointment') {
+      // If we remove this eslint complains of the nested if, so
+      // keeping this as a placeholder for future other linktypes for the MHS Genesis site (e.g. Pharmacy)
+      return {
+        text: 'Make an appointment',
+        url: `/${basePath}/make-an-appointment`,
+      };
+    }
+    // fallback as default
+    return {
+      text: 'Make an appointment',
+      url: `/${basePath}/make-an-appointment`,
+    };
+  };
+
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
     const isNotProd = buildtype !== 'vagovprod';
 
