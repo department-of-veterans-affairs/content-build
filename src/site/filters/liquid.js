@@ -299,7 +299,7 @@ module.exports = function registerFilters() {
       return null;
     }
     const phone = match[1] + match[2] + match[3];
-    // optional extension
+    // optional extension matching x1234 (match 4) or ext1234 (match 5)
     const extension = match[4] || match[5] || '';
 
     return {
