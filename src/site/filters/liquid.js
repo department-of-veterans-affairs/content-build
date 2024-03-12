@@ -1294,7 +1294,6 @@ module.exports = function registerFilters() {
   //* paginatePages has limitations, it is not yet fully operational.
   liquid.filters.paginatePages = (page, items, aria) => {
     const perPage = 10;
-
     const ariaLabel = aria ? ` of ${aria}` : '';
 
     const paginationPath = pageNum => {
@@ -1308,6 +1307,7 @@ module.exports = function registerFilters() {
 
       for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
         let pagedPage = { ...page };
+
         if (pageNum > 0) {
           pagedPage = set(
             'entityUrl.path',
