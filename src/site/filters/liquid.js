@@ -1180,14 +1180,18 @@ module.exports = function registerFilters() {
       fieldSectionHeader,
       fieldCta,
     } = featuredContentEntity;
-    const updatedCta = [
-      {
+    const updatedCta = [];
+    if (
+      fieldCta?.entity?.fieldButtonLink &&
+      fieldCta?.entity?.fieldButtonLabel
+    ) {
+      updatedCta.push({
         entity: {
           fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
           fieldButtonLink: [fieldCta.entity.fieldButtonLink],
         },
-      },
-    ];
+      });
+    }
     const fetched = {
       fieldDescription: [fieldDescription],
       fieldSectionHeader: [{ value: fieldSectionHeader }],
