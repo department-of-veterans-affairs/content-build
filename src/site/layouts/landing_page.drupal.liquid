@@ -98,14 +98,14 @@
                           href="tel:+1711"
                           onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
                         >
-                        {{ service.title }}
+                        <span>{{ service.title }}</span><br>
                         </a>
                       {% elsif service.fieldLink.url.path %}
                         <a
                           href="{{ service.fieldLink.url.path }}" 
                           onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
                         >
-                        {{ service.title }}
+                        <span>{{ service.title }}</span>
                         </a>
                       {% else %}
                         {{ service.title }}
@@ -132,7 +132,8 @@
                 <ul class="va-nav-linkslist-list links">
                   {% for link in fieldLinks %}
                     <li>
-                      <va-link 
+                      <va-link
+                        disable-analytics 
                         href="{{ link.url.path }}" 
                         onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Not a Veteran?' });" 
                         text="{{ link.title }}"
@@ -158,6 +159,7 @@
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <va-link 
+                  disable-analytics
                   class="vads-u-text-decoration--underline" 
                   href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
                   onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
@@ -173,6 +175,7 @@
                     <li>
                       <i aria-hidden="true" class="va-c-social-icon fas fa-envelope vads-u-padding-right--1"></i>
                       <va-link 
+                        disable-analytics
                         class="vads-u-text-decoration--underline" 
                         href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" 
                         onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
@@ -196,6 +199,7 @@
                         <li>
                           <i aria-hidden="true" class="va-c-social-icon fab fa-youtube vads-u-padding-right--1"></i>
                           <va-link 
+                            disable-analytics
                             class="vads-u-text-decoration--underline" 
                             href="http://youtube.com/channel/{{ socialLink.value }}" 
                             onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
@@ -207,6 +211,7 @@
                         <li>
                           <i aria-hidden="true" class="va-c-social-icon fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
                           <va-link 
+                            disable-analytics
                             class="vads-u-text-decoration--underline" 
                             href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
                             onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
@@ -218,6 +223,7 @@
                         <li>
                           <i aria-hidden="true" class="va-c-social-icon fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
                           <va-link 
+                            disable-analytics
                             class="vads-u-text-decoration--underline" 
                             href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
                             onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });" 
