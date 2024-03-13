@@ -1236,6 +1236,40 @@ describe('local spotlight content', () => {
       },
     });
   });
+  it('shims local featured content from local spotlight to fetched form centralized content without CTA', () => {
+    const localSpotlightData = {
+      id: 144308,
+      fieldDescription: {
+        value: '<p>Local Spotlight for Facebook</p>',
+        processed:
+          '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+        format: 'rich_text_limited',
+      },
+      fieldSectionHeader: 'Facebook Spotlight 1',
+      fieldCta: null,
+    };
+    const centralizedContentFormattedData = liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent(
+      localSpotlightData,
+    );
+    expect(centralizedContentFormattedData).to.deep.equal({
+      fetched: {
+        fieldCta: [],
+        fieldDescription: [
+          {
+            format: 'rich_text_limited',
+            processed:
+              '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+            value: '<p>Local Spotlight for Facebook</p>',
+          },
+        ],
+        fieldSectionHeader: [
+          {
+            value: 'Facebook Spotlight 1',
+          },
+        ],
+      },
+    });
+  });
 });
 
 describe('run', () => {
