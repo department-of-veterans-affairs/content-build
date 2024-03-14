@@ -62,7 +62,7 @@
       {% endif %}
       
       {% if fieldReferralRequired %}
-        <p class="vads-u-margin-top--1">
+        <p class="vads-u-margin-top--1 vads-u-margin-bottom-0">
           {% case fieldReferralRequired %}
             {% when "1" %}
               <i class="fas fa-check-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is required
@@ -76,7 +76,7 @@
 
   {% if single.fieldVirtualSupport == "yes_appointment_only" or single.fieldVirtualSupport == 'yes_with_or_without_appointment' or single.fieldOfficeVisits == 'yes_appointment_only' or single.fieldOfficeVisits == 'yes_with_or_without_appointment' %}
     <div>
-      <h{{serviceLocationH}} class="vads-u-margin-top--1 vads-u-line-height--1" data-testid="service-location-appoinments-header">Appointments</h{{serviceLocationH}} >
+      <h{{serviceLocationH}} class="vads-u-margin-top--2 vads-u-line-height--1" data-testid="service-location-appoinments-header">Appointments</h{{serviceLocationH}} >
       {% if single.fieldApptIntroTextType != 'remove_text' %}
         {% if single.fieldApptIntroTextType == 'customize_text' and single.fieldApptIntroTextCustom != empty  %}
           <p data-testid="service-location-custom-text" class="vads-u-margin-bottom--0">{{ single.fieldApptIntroTextCustom | drupalToVaPath | phoneLinks }}</p>
