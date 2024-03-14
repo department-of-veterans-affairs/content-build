@@ -48,7 +48,7 @@ jobs:
           - buildtype: vagovdev
             drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovstaging
-            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+            drupal-address: https://main-bwj6qn18llmdla8pffimuqxckl0nsehj.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: https://prod.cms.va.gov
 
@@ -648,7 +648,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
           role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
+          role-duration-seconds: 1800
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Deploy
@@ -725,4 +725,3 @@ jobs:
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-

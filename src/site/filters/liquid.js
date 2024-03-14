@@ -1181,14 +1181,18 @@ module.exports = function registerFilters() {
       fieldSectionHeader,
       fieldCta,
     } = featuredContentEntity;
-    const updatedCta = [
-      {
+    const updatedCta = [];
+    if (
+      fieldCta?.entity?.fieldButtonLink &&
+      fieldCta?.entity?.fieldButtonLabel
+    ) {
+      updatedCta.push({
         entity: {
           fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
           fieldButtonLink: [fieldCta.entity.fieldButtonLink],
         },
-      },
-    ];
+      });
+    }
     const fetched = {
       fieldDescription: [fieldDescription],
       fieldSectionHeader: [{ value: fieldSectionHeader }],
@@ -1295,7 +1299,6 @@ module.exports = function registerFilters() {
   //* paginatePages has limitations, it is not yet fully operational.
   liquid.filters.paginatePages = (page, items, aria) => {
     const perPage = 10;
-
     const ariaLabel = aria ? ` of ${aria}` : '';
 
     const paginationPath = pageNum => {
@@ -1309,6 +1312,7 @@ module.exports = function registerFilters() {
 
       for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
         let pagedPage = { ...page };
+
         if (pageNum > 0) {
           pagedPage = set(
             'entityUrl.path',
@@ -1972,5 +1976,12 @@ module.exports = function registerFilters() {
     ];
 
     return urlsForBanner.includes(currentPath);
+  };
+
+  liquid.filters.useTelephoneWebComponent = telephone => {
+    if (/[a-zA-Z+]/.test(telephone)) {
+      return false;
+    }
+    return true;
   };
 };

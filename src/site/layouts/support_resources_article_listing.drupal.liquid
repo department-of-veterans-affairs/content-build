@@ -31,7 +31,7 @@
                   {{ articleTypesByEntityBundle | get: article.entityBundle }}
                 </div>
                 <h2 class="vads-u-font-size--h3 vads-u-margin-top--0">
-                  <a href="{{ article.entityUrl.path }}">{{ article.title }}</a>
+                  <va-link href="{{ article.entityUrl.path }}" text="{{ article.title }}"></va-link>
                 </h2>
                 {% assign snippet = article.fieldIntroTextLimitedHtml %}
 
@@ -49,7 +49,7 @@
           {% endfor %}
           </ul>
         </div>
-        {% include "src/site/includes/pagination.drupal.liquid" %}
+        {% include "src/site/includes/pagination.drupal.liquid" with entityUrl = path %}
         <div class="usa-content">
           <va-back-to-top></va-back-to-top>
         <!-- Last updated & feedback button-->
