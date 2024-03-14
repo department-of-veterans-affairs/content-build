@@ -282,7 +282,6 @@ module.exports = function registerFilters() {
       return data.replace(
         replacePattern,
         '<va-telephone contact="$1-$2"></va-telephone>',
-        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
       );
     }
 
