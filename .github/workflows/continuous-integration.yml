@@ -648,7 +648,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
           role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
+          role-duration-seconds: 1800
           role-session-name: vsp-frontendteam-githubaction
 
       - name: Deploy

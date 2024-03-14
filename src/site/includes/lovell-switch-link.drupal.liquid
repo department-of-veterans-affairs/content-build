@@ -1,22 +1,28 @@
 {% if entityUrl.switchPath %}
-  {% if entityUrl.switchPath contains "tricare" %}
-    {% assign currentPageVariation = "VA" %}
-    {% assign switchPageVariation = "TRICARE" %}
+    {% if entityUrl.switchPath contains "tricare" %}
+      {% assign currentPageVariation = "VA" %}
+      {% assign switchPageVariation = "TRICARE" %}
+    {% else %}
+      {% assign currentPageVariation = "TRICARE" %}
+      {% assign switchPageVariation = "VA" %}
+    {% endif %}
+  {% if currentPageVariation == "VA" and entityUrl.switchPath contains "make-an-appointment" %}
+    {% comment %} 
+      Cannot negate group of conditions, so negation of conditions handled in else.
+      Could instead do != "VA" and not contains but that would be more complex logic.
+    {% endcomment %}
   {% else %}
-    {% assign currentPageVariation = "TRICARE" %}
-    {% assign switchPageVariation = "VA" %}
+    <va-alert status="warning" class="vads-u-margin-bottom--2" id="va-info-alert" uswds="false">
+      <h2 slot="headline">You are viewing this page as a {{ currentPageVariation }} beneficiary.</h2>
+      <div>
+        <p className="vads-u-margin-y--0">
+          <va-link
+            active
+            href="{{ entityUrl.switchPath }}"
+            text="View this page as a {{ switchPageVariation }} beneficiary"
+          />
+        </p>
+      </div>
+    </va-alert>
   {% endif %}
-
-  <va-alert status="warning" class="vads-u-margin-bottom--2" id="va-info-alert" uswds="false">
-    <h2 slot="headline">You are viewing this page as a {{ currentPageVariation }} beneficiary.</h2>
-    <div>
-      <p className="vads-u-margin-y--0">
-        <va-link
-          active
-          href="{{ entityUrl.switchPath }}"
-          text="View this page as a {{ switchPageVariation }} beneficiary"
-        />
-      </p>
-    </div>
-  </va-alert>
 {% endif %}

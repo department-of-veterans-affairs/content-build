@@ -1,0 +1,49 @@
+{
+  "entity": {
+    "targetId": "135322",
+    "targetRevisionId": "1156772",
+    "entityType": "paragraph",
+    "entityBundle": "alert",
+    "pid": "135322",
+    "label": "Vet Center -- Facility pages > Content > Questions > Answer",
+    "status": true,
+    "langcode": "en",
+    "fieldAlertBlockReference": [],
+    "fieldAlertHeading": [
+      {
+        "value": "What are the covered educational assistance benefits?"
+      }
+    ],
+    "fieldAlertType": [
+      {
+        "value": "information"
+      }
+    ],
+    "fieldVaParagraphs": [
+      {
+        "entity": {
+          "targetId": "135321",
+          "targetRevisionId": "1156771",
+          "entityType": "paragraph",
+          "entityBundle": "expandable_text",
+          "pid": "135321",
+          "label": "Vet Center -- Facility pages > Content > Questions > Answer > Alert content",
+          "status": true,
+          "langcode": "en",
+          "fieldTextExpander": [
+            {
+              "value": "They're benefits from any of these programs"
+            }
+          ],
+          "fieldWysiwyg": [
+            {
+              "value": "<ul>\r\n\t<li>Montgomery GI Bill Active Duty</li>\r\n\t<li>Montgomery GI Bill Selected Reserve</li>\r\n\t<li>Post-9/11 GI Bill</li>\r\n\t<li>Reserve Educational Assistance Program (REAP)</li>\r\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\r\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\r\n\t<li>Veterans’ Educational Assistance Program (VEAP)</li>\r\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\r\n</ul>\r\n",
+              "format": "rich_text",
+              "processed": "<html><head></head><body><ul>\n\t<li>Montgomery GI Bill Active Duty</li>\n\t<li>Montgomery GI Bill Selected Reserve</li>\n\t<li>Post-9/11 GI Bill</li>\n\t<li>Reserve Educational Assistance Program (REAP)</li>\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\n\t<li>Veterans&#x2019; Educational Assistance Program (VEAP)</li>\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\n</ul></body></html>"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
