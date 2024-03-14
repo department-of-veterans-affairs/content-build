@@ -14,17 +14,31 @@
 {% endcomment %}
 
 {% assign paginatorCount = paginator.inner | size %}
-{% assign totalItems = paginatorCount %}
-
-{% if paginator != empty and totalItems <= paginatorCount %}
+{% assign totalPages = paginatorCount %}
+  
+{% if totalPages %}
   <va-pagination
     max-page-list-length="7"
     page="1"
-    pages="{{ totalItems }}"
+    pages="{{ totalPages }}"
     uswds
   >
   </va-pagination>
+{% endif %}
 
+<script>
+  let totalStoryPages;
+
+  if (Number('{{ totalStories }}')) {
+    totalStoryPages = Math.ceil(Number('{{ totalStories }}')  / 10);
+
+    const pagination = document.querySelector('va-pagination');
+
+    pagination.setAttribute('pages', totalStoryPages);
+  }
+</script>
+
+{% if totalPages or totalStoryPages %}
   <script>
     // See README-pagination.md for a detailed walkthrough of this code
 
