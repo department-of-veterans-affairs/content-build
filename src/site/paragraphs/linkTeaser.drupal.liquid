@@ -37,11 +37,13 @@
   {% if header === "h3" %}
     {% if link.title != empty %}
         <h3 class="{{ headerClass }}">
-            <va-link href="{{link.url.path}}" 
-                {% if linkTeaser.options["target"] %}target="{{ linkTeaser.options["target"] }}"{% endif %}
+            <va-link
+                href="{{link.url.path}}"
                 text="{{ link.title }}"
-            >
-            </va-link>
+                {% if linkTeaser.options["target"] %}
+                    target="{{ linkTeaser.options["target"] }}"
+                {% endif %}
+            />
         </h3>
     {% endif %}
   {% else %}
