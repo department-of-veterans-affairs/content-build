@@ -10,7 +10,7 @@ describe('include: VBA banner tests', () => {
     );
 
     const vbaHTML = await renderHTML(
-      'src/site/layouts/vba_facility.drupal.liquid',
+      'src/site/includes/vba_facilities/banner.liquid',
       fixtureForVBAInfo,
     );
     const foundBanner = getByTestId(vbaHTML, 'vba-banner');
@@ -24,7 +24,7 @@ describe('include: VBA banner tests', () => {
     );
 
     const vbaHTML = await renderHTML(
-      'src/site/layouts/vba_facility.drupal.liquid',
+      'src/site/includes/vba_facilities/banner.liquid',
       fixtureForVBAWarning,
     );
     const foundBanner = getByTestId(vbaHTML, 'vba-banner');
@@ -38,7 +38,7 @@ describe('include: VBA banner tests', () => {
     );
 
     const vbaHTML = await renderHTML(
-      'src/site/layouts/vba_facility.drupal.liquid',
+      'src/site/includes/vba_facilities/banner.liquid',
       fixtureForVBAWarning,
     );
     const foundBanner = getByTestId(vbaHTML, 'vba-banner');

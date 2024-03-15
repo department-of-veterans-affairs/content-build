@@ -32,9 +32,16 @@
 {% comment %}
   Conditionally display facility phone number
 {% endcomment %}
-{% if fieldPhoneNumber and single.fieldUseMainFacilityPhone %}
+
+{% if isMentalHealthService and fieldMentalHealthPhone %}
+  {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+{% else %}
+  {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+{% endif %}
+
+{% if serviceLocationMainNumber and single.fieldUseMainFacilityPhone %}
   {% include "src/site/components/phone-number.drupal.liquid" with
-    phoneNumber = fieldPhoneNumber
+    phoneNumber = serviceLocationMainNumber
     phoneLabel = 'Main Phone'
     phoneHeaderLevel = serviceLocationSubHeaderLevel
   %}

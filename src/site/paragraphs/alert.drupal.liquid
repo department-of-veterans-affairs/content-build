@@ -33,7 +33,13 @@
   {% include "src/site/blocks/alert.drupal.liquid" with alert = alertBlock %}
 <!-- hide ghost alerts -->
 {% elsif entity.fieldAlertHeading.length > 0 and entity.fieldVaParagraphs.length > 0 %}
-  <va-alert date-template="paragraphs/alert" data-entity-id="{{ entity.entityId }}" status="{{ alertType }}" class="vads-u-margin-top--3" role="alert">
+  <va-alert
+    date-template="paragraphs/alert"
+    data-entity-id="{{ entity.entityId }}"
+    status="{{ alertType }}"
+    class="vads-u-margin-top--3"
+    uswds
+  >
     <h2 slot="headline" class="vads-u-font-size--h3">
       {{ entity.fieldAlertHeading }}
     </h2>

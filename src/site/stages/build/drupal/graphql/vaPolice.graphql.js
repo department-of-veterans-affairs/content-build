@@ -10,8 +10,10 @@ const vaPoliceFragment = `
           fieldOffice {
             entity {
               ... on NodeHealthCareRegionPage {
+                entityId
                 entityLabel
                 title
+                fieldVamcEhrSystem
               }
             }
           }

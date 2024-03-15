@@ -1,0 +1,30 @@
+{% assign showVBAExpandableAlert = false %}
+
+{% if fieldOperatingStatusFacility == 'notice' %}
+  {% assign showVBAExpandableAlert = true %}
+  {% assign VBAExpandableAlertTrigger = 'Facility Notice' %}
+  {% assign VBAExpandableAlertStatus = 'info' %}
+{% elsif fieldOperatingStatusFacility == 'limited' %}
+  {% assign showVBAExpandableAlert = true %}
+  {% assign VBAExpandableAlertTrigger = 'Limited services and hours' %}
+  {% assign VBAExpandableAlertStatus = 'warning' %}
+{% elsif fieldOperatingStatusFacility == 'closed' %}
+  {% assign showVBAExpandableAlert = true %}
+  {% assign VBAExpandableAlertTrigger = 'Facility Closed' %}
+  {% assign VBAExpandableAlertStatus = 'error' %}
+{% endif %}
+
+{% if showVBAExpandableAlert %}
+  <va-alert-expandable
+    data-template="components/vba_facilities/expandable-alert.drupal.liquid"
+    class="vads-u-margin-top--0 vads-u-margin-bottom--0 vamc-facility-expandable-alert"
+    status="{{ VBAExpandableAlertStatus }}"
+    trigger="{{ VBAExpandableAlertTrigger }}"
+  >
+    <div>
+      <p>
+        {{ fieldOperatingStatusMoreInfo | newline_to_br }}
+      </p>
+    </div>
+  </va-alert-expandable>
+{% endif %}

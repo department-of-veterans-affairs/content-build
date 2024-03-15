@@ -8,8 +8,7 @@ const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const stagingSurveys = require('./medalliaStagingSurveys.json');
-const prodSurveys = require('./medalliaProdSurveys.json');
+const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
@@ -287,6 +286,26 @@ module.exports = function registerFilters() {
     }
 
     return data;
+  };
+
+  liquid.filters.separatePhoneNumberExtension = phoneNumber => {
+    if (!phoneNumber) {
+      return null;
+    }
+
+    if (!phoneNumber.includes(', ext. ')) {
+      return {
+        phoneNumber,
+        extension: null,
+      };
+    }
+
+    const splitNumber = phoneNumber.split(', ext. ');
+
+    return {
+      phoneNumber: splitNumber[0],
+      extension: splitNumber[1],
+    };
   };
 
   liquid.filters.trackLinks = (html, eventDataString) => {
@@ -583,12 +602,8 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.featureSingleValueFieldLink = fieldLink => {
-    if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
-      return fieldLink[0];
-    }
-
-    return fieldLink;
+  liquid.filters.localHealthCareServiceIsMentalHealth = healthServiceName => {
+    return healthServiceName.toLowerCase().includes('mental health');
   };
 
   liquid.filters.accessibleNumber = data => {
@@ -831,6 +846,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.replace = (string, oldVal, newVal) => {
+    if (!string) return null;
     const regex = new RegExp(oldVal, 'g');
     return string.replace(regex, newVal);
   };
@@ -868,88 +884,80 @@ module.exports = function registerFilters() {
     });
   };
 
+  /**
+    * Converts a string to camel case and removes a prefix
+    @param {string} prefix - prefix to be removed - make empty string not to change string
+    @param {string} string - string to be converted
+  */
+  liquid.filters.trimAndCamelCase = (toRemove, string) => {
+    if (!string || typeof string !== 'string') return null;
+    const trimmedString = string.replace(toRemove, '');
+    return _.camelCase(trimmedString);
+  };
+  /**
+   *
+   * @param {Object} object Object of arrays
+   * @param {Array} array
+   * @param {string} keyField key for object e.g. "fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare"
+   * @returns {Object} Object with value inserted into keyField
+   */
+  function processVbaObjectHelper(object, arrayOfServices, typeOfOffice) {
+    if (!object || !typeOfOffice || !Array.isArray(arrayOfServices))
+      return object;
+    const objectCopy = { ...object };
+    const visibleArray = arrayOfServices.filter(
+      o => o?.fieldServiceNameAndDescripti?.entity?.fieldShowForVbaFacilities,
+    );
+    for (const el of visibleArray) {
+      const {
+        fieldVbaTypeOfCare,
+        name,
+      } = el.fieldServiceNameAndDescripti.entity;
+      const key = liquid.filters.trimAndCamelCase('vba_', fieldVbaTypeOfCare);
+
+      const indexOfFacilityService =
+        typeOfOffice === 'regionalService'
+          ? object[key].findIndex(
+              service =>
+                service.facilityService?.fieldServiceNameAndDescripti.entity
+                  .name === name,
+            )
+          : -1;
+      if (indexOfFacilityService !== -1) {
+        objectCopy[key][indexOfFacilityService][typeOfOffice] = el;
+      } else {
+        objectCopy[key].push({
+          [typeOfOffice]: el,
+        });
+      }
+    }
+    return objectCopy;
+  }
   liquid.filters.processVbaServices = (serviceRegions, offices) => {
     const hasServiceRegions =
       Array.isArray(serviceRegions) && serviceRegions.length !== 0;
     const hasOffices = Array.isArray(offices) && offices.length !== 0;
-
-    if (!hasServiceRegions && !hasOffices) {
-      return {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      };
-    }
-    let flattenedVbaServiceRegions = [];
-    let flattenedVbaOffices = [];
-
-    if (hasServiceRegions) {
-      flattenedVbaServiceRegions = serviceRegions.reduce(
-        (acc, serviceRegion) => {
-          serviceRegion.reverseFieldVbaServiceRegionsTaxonomyTerm.entities.forEach(
-            taxonomy =>
-              acc.push({
-                vbaCategory: 'serviceRegion',
-                vbaId: taxonomy.entityId,
-                vbaType: taxonomy.fieldVbaTypeOfCare,
-                vbaHeader: taxonomy.entityLabel,
-                vbaDescription: taxonomy.fieldVbaServiceDescrip,
-                vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
-                ...taxonomy,
-              }),
-          );
-          return acc;
-        },
-        [],
+    let accordions = {
+      veteranBenefits: [],
+      familyMemberCaregiverBenefits: [],
+      serviceMemberBenefits: [],
+      otherServices: [],
+    };
+    if (hasOffices) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        offices,
+        'facilityService',
       );
     }
-
-    if (hasOffices) {
-      flattenedVbaOffices = offices.map(office => {
-        const { entity } = office.fieldServiceNameAndDescripti;
-        return {
-          vbaCategory: 'office',
-          vbaId: office.entityId,
-          vbaType: entity.fieldVbaTypeOfCare,
-          vbaHeader: entity.name,
-          vbaDescription: entity.fieldVbaServiceDescrip,
-          vbaIsVisible: entity.fieldShowForVbaFacilities,
-          ...office,
-        };
-      });
+    if (hasServiceRegions) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        serviceRegions,
+        'regionalService',
+      );
     }
-
-    return [...flattenedVbaServiceRegions, ...flattenedVbaOffices].reduce(
-      (acc, vbaService) => {
-        if (!vbaService.vbaIsVisible) {
-          return acc;
-        }
-
-        switch (vbaService.vbaType) {
-          case 'vba_veteran_benefits':
-            acc.veteranBenefits.push(vbaService);
-            break;
-          case 'vba_family_member_and_caregiver_benefits':
-            acc.familyCaregiverBenefits.push(vbaService);
-            break;
-          case 'vba_service_member_benefits':
-            acc.serviceMemberBenefits.push(vbaService);
-            break;
-          default:
-            acc.otherServices.push(vbaService);
-            break;
-        }
-
-        return acc;
-      },
-      {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      },
-    );
+    return accordions;
   };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
@@ -1159,13 +1167,45 @@ module.exports = function registerFilters() {
     }
     return processedFetched;
   };
-
+  liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent = featuredContentEntity => {
+    if (
+      !featuredContentEntity ||
+      !featuredContentEntity.fieldDescription ||
+      !featuredContentEntity.fieldSectionHeader
+    ) {
+      return null;
+    }
+    const {
+      fieldDescription,
+      fieldSectionHeader,
+      fieldCta,
+    } = featuredContentEntity;
+    const updatedCta = [];
+    if (
+      fieldCta?.entity?.fieldButtonLink &&
+      fieldCta?.entity?.fieldButtonLabel
+    ) {
+      updatedCta.push({
+        entity: {
+          fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
+          fieldButtonLink: [fieldCta.entity.fieldButtonLink],
+        },
+      });
+    }
+    const fetched = {
+      fieldDescription: [fieldDescription],
+      fieldSectionHeader: [{ value: fieldSectionHeader }],
+      fieldCta: updatedCta,
+    };
+    return { fetched };
+  };
   // fieldCcVetCenterFeaturedCon data structure is different
   // from objects inside fieldVetCenterFeatureContent. Recreates the array
   // with the expected structure so that it can be directly passed inside the template
   liquid.filters.appendCentralizedFeaturedContent = (
     ccFeatureContent,
     featureContentArray,
+    placement = 'prepend',
   ) => {
     if (!ccFeatureContent || !ccFeatureContent.fetched) {
       return featureContentArray;
@@ -1203,7 +1243,9 @@ module.exports = function registerFilters() {
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
     }
-    return [featureContentObj, ...featureContentArray];
+    return placement === 'append'
+      ? [...featureContentArray, featureContentObj] // append -- VBA
+      : [featureContentObj, ...featureContentArray]; // prepend -- VetCenter - default
   };
 
   liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
@@ -1256,7 +1298,6 @@ module.exports = function registerFilters() {
   //* paginatePages has limitations, it is not yet fully operational.
   liquid.filters.paginatePages = (page, items, aria) => {
     const perPage = 10;
-
     const ariaLabel = aria ? ` of ${aria}` : '';
 
     const paginationPath = pageNum => {
@@ -1270,6 +1311,7 @@ module.exports = function registerFilters() {
 
       for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
         let pagedPage = { ...page };
+
         if (pageNum > 0) {
           pagedPage = set(
             'entityUrl.path',
@@ -1624,6 +1666,45 @@ module.exports = function registerFilters() {
     };
   };
 
+  liquid.filters.topTaskLovellComp = (
+    linkType,
+    basePath,
+    buildtype,
+    fieldAdministration,
+    fieldVamcEhrSystem,
+    fieldRegionPage,
+    fieldOffice,
+  ) => {
+    const isNotProd = buildtype !== 'vagovprod';
+    const flag =
+      fieldVamcEhrSystem ||
+      fieldOffice?.entity?.fieldVamcEhrSystem ||
+      fieldRegionPage?.entity?.fieldVamcEhrSystem ||
+      '';
+    const isPageLovell = fieldAdministration?.entity.entityId === '1039';
+
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (linkType === 'make-an-appointment' && isPageLovell) {
+        return {
+          text: 'MHS Genesis Patient Portal',
+          url: 'https://my.mhsgenesis.health.mil/',
+        };
+      }
+    } else if (linkType === 'make-an-appointment') {
+      // If we remove this eslint complains of the nested if, so
+      // keeping this as a placeholder for future other linktypes for the MHS Genesis site (e.g. Pharmacy)
+      return {
+        text: 'Make an appointment',
+        url: `/${basePath}/make-an-appointment`,
+      };
+    }
+    // fallback as default
+    return {
+      text: 'Make an appointment',
+      url: `/${basePath}/make-an-appointment`,
+    };
+  };
+
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
     const isNotProd = buildtype !== 'vagovprod';
 
@@ -1763,18 +1844,41 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    if (
-      buildtype === 'localhost' ||
-      buildtype === 'vagovstaging' ||
-      buildtype === 'vagovdev'
-    ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    const surveyData = medalliaSurveys;
+    const defaultStagingSurvey = SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY;
+    const defaultProdSurvey = SURVEY_NUMBERS.DEFAULT_PROD_SURVEY;
+    const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
+      buildtype,
+    );
+    const effectiveBuildType = isStaging ? 'staging' : 'production';
+
+    if (typeof url !== 'string' || url === null) {
+      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
+    }
+    // Check if the URL exists in the main custom survey URL object
+    if (url in surveyData.urls) {
+      const surveyInfo = surveyData.urls[url];
+      // Return the survey ID for the effective build type, or the default based on the build type
+      return (
+        surveyInfo[effectiveBuildType] ||
+        (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+      );
+    }
+    // Check if the URL matches any subpaths
+    for (const [subpath, surveyInfo] of Object.entries(
+      surveyData.urlsWithSubPaths,
+    )) {
+      if (url.startsWith(subpath)) {
+        // Return the survey ID for the effective build type, or the default based on the build type
+        return (
+          surveyInfo[effectiveBuildType] ||
+          (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+        );
+      }
     }
 
-    if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : 17;
-    }
-    return null;
+    // If no URL match is found, return the default survey number based on the build type
+    return isStaging ? defaultStagingSurvey : defaultProdSurvey;
   };
 
   liquid.filters.officeHoursDayFormatter = (day, short = true) => {
@@ -1857,7 +1961,7 @@ module.exports = function registerFilters() {
     ];
   };
 
-  liquid.filters.shouldShowiOSBanner = currentPath => {
+  liquid.filters.shouldShowMobileAppPromoBanner = currentPath => {
     const urlsForBanner = [
       '/health-care/refill-track-prescriptions',
       '/health-care/secure-messaging',
@@ -1871,5 +1975,12 @@ module.exports = function registerFilters() {
     ];
 
     return urlsForBanner.includes(currentPath);
+  };
+
+  liquid.filters.useTelephoneWebComponent = telephone => {
+    if (/[a-zA-Z+]/.test(telephone)) {
+      return false;
+    }
+    return true;
   };
 };

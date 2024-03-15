@@ -32,6 +32,7 @@ const policiesPageFragment = `
     fieldOffice {
       entity {
         ...on NodeHealthCareRegionPage {
+          fieldVamcEhrSystem
           entityLabel
           title
         }

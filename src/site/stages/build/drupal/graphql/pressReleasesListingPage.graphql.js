@@ -38,8 +38,10 @@ const pressReleasesListingPage = `
       targetId
       entity {
         ... on NodeHealthCareRegionPage {
+          entityId
           entityLabel
           title
+          fieldVamcEhrSystem
         }
       }
     }

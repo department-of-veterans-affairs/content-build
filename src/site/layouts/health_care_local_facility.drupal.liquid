@@ -150,7 +150,7 @@
                   class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
               <p>Click on a topic for more details.</p>
-              <va-accordion section-heading="Prepare for your visit" bordered>
+              <va-accordion section-heading="Prepare for your visit" bordered uswds="false">
                 {% for accordionItem in fieldLocationServices %}
                   {% assign item = accordionItem.entity %}
                   {% comment %}
@@ -190,7 +190,7 @@
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
 
-              <va-accordion bordered>
+              <va-accordion bordered uswds="false">
               {% for localService in localHealthServices %}
                 {% assign serviceSection = localService.entity.fieldAdministration.entity %}
                 {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}

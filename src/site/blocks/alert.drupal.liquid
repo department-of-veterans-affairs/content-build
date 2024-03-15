@@ -5,7 +5,13 @@
 {% endif %}
 
 {% if isPreview or alert.entityPublished %}
-  <va-alert data-template="blocks/alert" data-entity-id="{{ alert.entityId }}" status="{{ alertType }}" class="vads-u-margin-top--3" role="alert">
+  <va-alert
+    data-template="blocks/alert"
+    data-entity-id="{{ alert.entityId }}"
+    status="{{ alertType }}"
+    class="vads-u-margin-top--3"
+    uswds
+  >
     <h2 slot="headline" class="vads-u-font-size--h3">
       {{ alert.fieldAlertTitle }}
     </h2>

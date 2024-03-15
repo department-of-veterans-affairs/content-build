@@ -1,7 +1,19 @@
-<h{{ phoneHeaderLevel }}>{{ phoneLabel | default: 'Phone' }}</h{{ phoneHeaderLevel }}>
-<div>
-  <va-telephone
-    contact="{{ phoneNumber | removeDashes }}"
-    extension="{{ phoneExtension | default: '' }}"
-  />
-</div>
+{% if phoneNumber %}
+  {% if phoneExtension %}
+    {% assign partialPhoneNumber = phoneNumber %}
+    {% assign partialPhoneExtension = phoneExtension %}
+  {% else %}
+    {% assign separatedPhoneNumber = phoneNumber | separatePhoneNumberExtension %}
+    {% assign partialPhoneNumber = separatedPhoneNumber.phoneNumber %}
+    {% assign partialPhoneExtension = separatedPhoneNumber.extension %}
+  {% endif %}
+
+  <h{{ phoneHeaderLevel }}>{{ phoneLabel | default: 'Phone' }}</h{{ phoneHeaderLevel }}>
+  <div>
+    <va-telephone
+      contact="{{ partialPhoneNumber | removeDashes }}"
+      extension="{{ partialPhoneExtension | default: '' }}"
+      message-aria-describedby="{{ phoneLabel | default: 'Phone' }}"
+    />
+  </div>
+{% endif %}

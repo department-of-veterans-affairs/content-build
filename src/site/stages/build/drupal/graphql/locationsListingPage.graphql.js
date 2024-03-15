@@ -43,6 +43,7 @@ const locationListingPage = `
               }
             }
           }
+          fieldVamcEhrSystem
           fieldVaHealthConnectPhone
           ${healthCareLocalFacilities}
           fieldOtherVaLocations

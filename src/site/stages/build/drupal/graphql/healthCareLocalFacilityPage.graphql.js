@@ -83,6 +83,7 @@ const healthCareLocalFacilityPageFragment = `
     fieldRegionPage {
       entity {
         ... on NodeHealthCareRegionPage {
+          fieldVamcEhrSystem
           entityBundle
           entityId
           entityPublished

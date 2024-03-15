@@ -64,8 +64,10 @@ const storyListingPage = `
       entity {
         title
         ... on NodeHealthCareRegionPage {
+          entityId
           entityLabel
           title
+          fieldVamcEhrSystem
         }
       }
     }

@@ -13,6 +13,11 @@ const {
   postProcess: postProcessVAPoliceData,
 } = require('./vaPoliceData');
 
+const {
+  query: queryVamcSystem,
+  postProcess: postProcessVamcSystem,
+} = require('./vamcSystem');
+
 const DATA_FILE_PATH = 'data/cms';
 
 /**
@@ -38,6 +43,13 @@ const DATA_FILES = [
     query: queryVamcFacilitySupplementalStatus,
     queryType: 'graphql',
     postProcess: postProcessVamcFacilitySupplementalStatus,
+  },
+  {
+    description: 'VAMC System',
+    filename: 'vamc-system.json',
+    query: queryVamcSystem,
+    queryType: 'curl',
+    postProcess: postProcessVamcSystem,
   },
   {
     description: 'VAMC Police Data',

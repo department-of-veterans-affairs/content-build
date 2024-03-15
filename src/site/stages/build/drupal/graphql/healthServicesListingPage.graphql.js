@@ -103,8 +103,10 @@ const healthServicesListingPage = `
       targetId
       entity {
         ... on NodeHealthCareRegionPage {
+          entityId
           entityLabel
           title
+          fieldVamcEhrSystem
         }
       }
     }

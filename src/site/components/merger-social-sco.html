@@ -6,7 +6,7 @@ Social Media - R. Rail
 See https://help.shopify.com/themes/liquid/tags/theme-tags#include
 {% endcomment %}
 
-  <va-accordion bordered multi class="social">
+  <va-accordion bordered multi class="social" uswds="false">
   {% for group in social %}
     <va-accordion-item level="3" open="true" header="{{ group.heading }}">
       {% if group.url != empty %}
@@ -39,13 +39,12 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
                 {% else %}
                 <li class="vads-u-margin-bottom--0 vads-u-margin-top--0">
                 {% endif %}
-                  {% if navPath == 'Ask questions' %}
-                  <h4 class='va-nav-linkslist-list'>
-                  {% endif %}
                     <a href="{{link.url}}"
                       onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
                       {% if link.external == true %}
                         target="_blank" rel="noopener noreferrer"
+                      {% else %}
+                        target="_self"
                       {% endif %}
                       >
                       {% if link.icon != empty %}
@@ -63,9 +62,6 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
                         <span>{{link.number}}</span>
                       {% endif %}
                     </a>
-                  {% if navPath == 'Ask questions' %}
-                  </h4>
-                  {% endif %}
                 </li>
               {% else %}
                 {% if forloop.first == true %}

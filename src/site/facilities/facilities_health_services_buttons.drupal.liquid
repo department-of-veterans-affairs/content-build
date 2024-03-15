@@ -3,7 +3,8 @@
 {% endcomment %}
 <div data-template="facilities/facilities_health_services_buttons">
     <div>
-        <a class="vads-c-action-link--blue" href="/{{ path }}/make-an-appointment">Make an appointment</a>
+        {% assign topTask = "make-an-appointment" | topTaskLovellComp: path, buildtype, fieldAdministration, fieldVamcEhrSystem, fieldRegionPage, fieldOffice %}
+        <a class="vads-c-action-link--blue" href="{{topTask.url}}">{{topTask.text}}</a>
     </div>
     <div class="vads-u-margin-y--2">
         <a class="vads-c-action-link--blue" href="/{{ path }}/register-for-care">Register for care</a>

@@ -21,6 +21,7 @@ const personProfileFragment = `
           entityLabel
           entityType
           ...on NodeHealthCareRegionPage {
+            fieldVamcEhrSystem
             ${entityElementsFromPages}
             title
           }

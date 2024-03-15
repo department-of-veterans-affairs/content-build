@@ -15,18 +15,16 @@
           <!-- Links -->
           {% for fieldLink in vaParagraph.entity.fieldLinks %}
             <li class="vads-u-padding-y--1">
-              <a href="{{ fieldLink.url.path }}" rel="noreferrer noopener">
-                {{ fieldLink.title }}
-              </a>
+              <va-link href="{{ fieldLink.url.path }}" text="{{ fieldLink.title }}"></va-link>
             </li>
           {% endfor %}
 
           <!-- See more articles link -->
           {% if vaParagraph.entity.fieldLink.url.path %}
             <li class="vads-u-padding-y--1">
-              <a class="vads-u-text-decoration--none" href="{{ vaParagraph.entity.fieldLink.url.path }}" rel="noreferrer noopener">
-                {{ vaParagraph.entity.fieldLink.title }} <i class="fa fa-chevron-right vads-u-padding-left--0p5 vads-u-font-size--sm" aria-hidden="true" role="presentation"></i>
-              </a>
+              <va-link active href="{{ vaParagraph.entity.fieldLink.url.path }}" text="{{ vaParagraph.entity.fieldLink.title }}">
+                <i class="fa fa-chevron-right vads-u-padding-left--0p5 vads-u-font-size--sm" aria-hidden="true" role="presentation"></i>
+              </va-link>
             </li>
           {% endif %}
         </ul>
@@ -49,18 +47,14 @@
           <!-- Links -->
           {% for fieldLink in vaParagraph.entity.fieldLinks %}
             <li class="vads-u-padding-y--1">
-              <a href="{{ fieldLink.url.path }}" rel="noreferrer noopener">
-                {{ fieldLink.title }}
-              </a>
+              <va-link href="{{ fieldLink.url.path }}" text="{{ fieldLink.title }}"></va-link>
             </li>
           {% endfor %}
 
           <!-- See more articles link -->
           {% if vaParagraph.entity.fieldLink.url.path %}
             <li class="vads-u-padding-y--1">
-              <a class="vads-u-text-decoration--none" href="{{ vaParagraph.entity.fieldLink.url.path }}" rel="noreferrer noopener">
-                {{ vaParagraph.entity.fieldLink.title }} <i class="fa fa-chevron-right vads-u-padding-left--0p5 vads-u-font-size--sm" aria-hidden="true" role="presentation"></i>
-              </a>
+              <va-link active href="{{ vaParagraph.entity.fieldLink.url.path }}" text="{{ vaParagraph.entity.fieldLink.title }}"></va-link>
             </li>
           {% endif %}
         </ul>
@@ -91,6 +85,6 @@
   </script>
 
   <div aria-hidden="false" class="vads-u-display--flex vads-u-justify-content--center vads-u-margin-top--3" data-show-all-topics-button-lists_of_links-entity-id="{{ entity.entityId }}">
-    <button class="usa-button" onclick="onShowAllTopics()" type="button">Show all topics</button>
+    <va-button onclick="onShowAllTopics()" text="Show all topics" uswds></button>
   </div>
 {% endif %}

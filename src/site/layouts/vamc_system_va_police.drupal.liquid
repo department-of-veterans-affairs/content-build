@@ -31,7 +31,7 @@
               </div>
             {% endif %}
           {% endif %}
-    
+
 
           {% if fieldCcPoliceReport.fetched %}
             {% assign policeFeatured = fieldCcPoliceReport | processCcFeatured %}
@@ -46,7 +46,7 @@
             {% endif %}
           {% endif %}
 
-         
+
           {% if fieldCcFaq.fetched %}
             <div class="vads-u-margin-bottom--3" id="field-cc-faq-police">
               {% include "src/site/includes/centralized-content.drupal.liquid"
@@ -56,9 +56,12 @@
               %}
             </div>
           {% endif %}
+
+          <va-back-to-top></va-back-to-top>
+
+          <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
-        <!-- Last updated & feedback button-->
-        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
     </div>
   </main>
