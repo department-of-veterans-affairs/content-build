@@ -16,8 +16,9 @@ env:
   INSTANCE_TYPE: m5.4xlarge
 
 concurrency:
-  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  # If this is no a prod push it sets the concurrency group to the workflow name. Otherwise, it sets to the branch name.
+  group: ${{ github.ref != 'refs/heads/main' && github.workflow || github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -42,13 +43,14 @@ jobs:
 
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
           - buildtype: vagovdev
             drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovstaging
-            drupal-address: https://main-bwj6qn18llmdla8pffimuqxckl0nsehj.ci.cms.va.gov
+            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: https://prod.cms.va.gov
 
