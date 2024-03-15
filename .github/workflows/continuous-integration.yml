@@ -16,8 +16,9 @@ env:
   INSTANCE_TYPE: m5.4xlarge
 
 concurrency:
-  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  # If this is no a prod push it sets the concurrency group to the workflow name. Otherwise, it sets to the branch name.
+  group: ${{ github.ref != 'refs/heads/main' && github.workflow || github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -42,6 +43,7 @@ jobs:
 
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
@@ -725,4 +727,3 @@ jobs:
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
