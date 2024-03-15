@@ -84,7 +84,6 @@
                 <ul class="va-nav-linkslist-list social">
                   {% for supportService in fieldSupportServices %}
                     {% assign service = supportService.entity %}
-
                     <li>
                       {% if service.fieldPhoneNumber %}
                         <a href="{{ service.fieldLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
@@ -99,11 +98,14 @@
                           href="tel:+1711"
                           onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
                         >
-                          <span>{{ service.title }}</span><br>
+                        <span>{{ service.title }}</span><br>
                         </a>
                       {% elsif service.fieldLink.url.path %}
-                        <a href="{{ service.fieldLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });">
-                          <span>{{ service.title }}</span><br>
+                        <a
+                          href="{{ service.fieldLink.url.path }}" 
+                          onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
+                        >
+                        <span>{{ service.title }}</span>
                         </a>
                       {% else %}
                         {{ service.title }}
@@ -130,9 +132,13 @@
                 <ul class="va-nav-linkslist-list links">
                   {% for link in fieldLinks %}
                     <li>
-                      <a href="{{ link.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Not a Veteran?' });">
-                        <span>{{ link.title }}</span>
-                      </a>
+                      <va-link
+                        disable-analytics 
+                        href="{{ link.url.path }}" 
+                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Not a Veteran?' });" 
+                        text="{{ link.title }}"
+                      >
+                      </va-link>
                     </li>
                   {% endfor %}
                 </ul>
@@ -152,9 +158,14 @@
               id="{{ fieldRelatedOffice.entity.fieldExternalLink.title | hashReference: 60 }}">
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
-                  <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
-                    {{ fieldRelatedOffice.entity.fieldExternalLink.title }}
-                  </a>
+                  <va-link 
+                  disable-analytics
+                  class="vads-u-text-decoration--underline" 
+                  href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
+                  onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
+                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
+                  >
+                  </va-link>
                 </h3>
               {% endif %}
 
@@ -162,10 +173,15 @@
                 <h3 class="vads-u-font-size--h4">Get updates</h3>
                   <ul class="va-nav-linkslist-list social">
                     <li>
-                      <a class="vads-u-text-decoration--underline" href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
-                        <i aria-hidden="true" class="fas fa-envelope vads-u-padding-right--1"></i>
-                        {{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}
-                      </a>
+                      <i aria-hidden="true" class="va-c-social-icon fas fa-envelope vads-u-padding-right--1"></i>
+                      <va-link 
+                        disable-analytics
+                        class="vads-u-text-decoration--underline" 
+                        href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" 
+                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
+                        text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
+                        >
+                      </va-link>
                     </li>
                 </ul>
               </section>
@@ -181,24 +197,39 @@
                     {% if socialLink.value %}
                       {% if socialPlatform = "youtube_channel" %}
                         <li>
-                          <a class="vads-u-text-decoration--underline" href="http://youtube.com/channel/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
-                            <i aria-hidden="true" class="fab fa-youtube vads-u-padding-right--1"></i>
-                            {{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | remove: '_' | capitalize }}
-                          </a>
+                          <i aria-hidden="true" class="va-c-social-icon fab fa-youtube vads-u-padding-right--1"></i>
+                          <va-link 
+                            disable-analytics
+                            class="vads-u-text-decoration--underline" 
+                            href="http://youtube.com/channel/{{ socialLink.value }}" 
+                            onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
+                            text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | remove: '_' | capitalize }}"
+                          >
+                          </va-link>
                         </li>
                       {% elsif socialPlatform == "youtube" %}
                         <li>
-                          <a class="vads-u-text-decoration--underline" href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
-                            <i aria-hidden="true" class="fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
-                            {{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube
-                          </a>
+                          <i aria-hidden="true" class="va-c-social-icon fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
+                          <va-link 
+                            disable-analytics
+                            class="vads-u-text-decoration--underline" 
+                            href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
+                            onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
+                            text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube"
+                          >
+                          </va-link>
                         </li>
                       {% else %}
                         <li>
-                          <a class="vads-u-text-decoration--underline" href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });">
-                            <i aria-hidden="true" class="fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
-                            {{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | capitalize }}
-                          </a>
+                          <i aria-hidden="true" class="va-c-social-icon fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
+                          <va-link 
+                            disable-analytics
+                            class="vads-u-text-decoration--underline" 
+                            href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
+                            onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });" 
+                            text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | capitalize }}"
+                          >
+                          </va-link>
                         </li>
                       {% endif %}
                     {% endif %}
