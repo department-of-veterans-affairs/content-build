@@ -1,44 +1,29 @@
 {% comment %}
   See README-pagination.md for details about this template
-  
-  paginator {
-    prev: url or null
-    page {
-      href: url or null
-      class:
-      href:
-      label
-    }
-    prev: url or null
-  }
 {% endcomment %}
 
-{% assign paginatorCount = paginator.inner | size %}
-{% assign totalPages = paginatorCount %}
   
 {% if totalPages %}
   <va-pagination
     max-page-list-length="7"
     page="1"
-    pages="{{ totalPages }}"
+    pages="1"
     uswds
   >
   </va-pagination>
 {% endif %}
 
 <script>
-  let totalStoryPages;
-
-  if (Number('{{ totalStories }}')) {
-    totalStoryPages = Math.ceil(Number('{{ totalStories }}')  / 10);
+  if (Number('{{ totalPages }}')) {
+    const pages = Math.ceil(Number('{{ totalPages }}')  / 10);
 
     const pagination = document.querySelector('va-pagination');
 
-    pagination.setAttribute('pages', totalStoryPages);
+    pagination.setAttribute('pages', pages);
   }
 </script>
 
-{% if totalPages or totalStoryPages %}
+{% if totalPages %}
   <script>
     // See README-pagination.md for a detailed walkthrough of this code
 
