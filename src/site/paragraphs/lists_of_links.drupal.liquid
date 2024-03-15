@@ -85,6 +85,11 @@
   </script>
 
   <div aria-hidden="false" class="vads-u-display--flex vads-u-justify-content--center vads-u-margin-top--3" data-show-all-topics-button-lists_of_links-entity-id="{{ entity.entityId }}">
-    <va-button onclick="onShowAllTopics()" text="Show all topics" uswds></button>
+    <va-button
+      disable-analytics
+      onclick="onShowAllTopics()" 
+      text="Show all topics"
+      uswds
+    ></button>
   </div>
 {% endif %}
