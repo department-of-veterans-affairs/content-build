@@ -10,10 +10,14 @@
     {% endif %}
     {% if entity.fieldCta.entity.fieldButtonLink %}
         {% assign fieldButtonUri = entity.fieldCta.entity.fieldButtonLink.uri | hasCharacterOtherThanSpace %}
-        {% if fieldButtonUri %}
-            <a class="vads-u-display--block vads-u-padding-top--1" href="{{ entity.fieldCta.entity.fieldButtonLink.uri }}" >
-                <span> {{  entity.fieldCta.entity.fieldButtonLabel }} <i class="fa fa-chevron-right vads-facility-hub-cta-arrow" aria-hidden="true"></i></span>
-            </a>
+        {% assign fieldButtonUrl = entity.fieldCta.entity.fieldButtonLink.url.path | hasCharacterOtherThanSpace %}
+        {% if entity.fieldCta.entity.fieldButtonLink.url.path and fieldButtonUrl %}
+            {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.url.path %}
+        {% elsif fieldButtonUri %}
+            {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.uri %}
+        {% endif %}
+        {% if fieldUrl %}
+            <va-link active href="{{ fieldUrl }}" text="{{entity.fieldCta.entity.fieldButtonLabel}}"></va-link>
         {%endif%}
     {% endif %}
 </div>
