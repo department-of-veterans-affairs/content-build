@@ -1,8 +1,6 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
-import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
@@ -11,8 +9,6 @@ import { vbaRegionFacilityOrOfficeNode } from './fixtures/vbaFacility';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
-import stagingSurveys from './medalliaStagingSurveys.json';
-import prodSurveys from './medalliaProdSurveys.json';
 import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility_data_cant_find_benefits.json';
 import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
 import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
@@ -309,54 +305,6 @@ describe('sortByDateKey', () => {
         title: 'Women Veterans resource fair spotlights VA and community care',
       },
     ]);
-  });
-});
-
-describe('paginatePages', () => {
-  it('passing in less than 10 events', () => {
-    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
-
-    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
-      0,
-      -6,
-    );
-
-    const result = liquid.filters.paginatePages(
-      slicedEventListingMockData,
-      slicedEventListingMockData.reverseFieldListingNode.entities,
-    );
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator.next).to.be.null;
-  });
-
-  it('passing in more than 10 events', () => {
-    const result = liquid.filters.paginatePages(
-      eventListingMockData,
-      eventListingMockData.reverseFieldListingNode.entities,
-      'event',
-    );
-
-    const expected = {
-      ariaLabel: ' of event',
-      prev: null,
-      inner: [
-        {
-          href: null,
-          label: 1,
-          class: 'va-pagination-active',
-        },
-        {
-          href: '/pittsburgh-health-care/events/page-2',
-          label: 2,
-          class: '',
-        },
-      ],
-      next: '/pittsburgh-health-care/events/page-2',
-    };
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator).to.deep.equal(expected);
   });
 });
 
@@ -1238,6 +1186,40 @@ describe('local spotlight content', () => {
       },
     });
   });
+  it('shims local featured content from local spotlight to fetched form centralized content without CTA', () => {
+    const localSpotlightData = {
+      id: 144308,
+      fieldDescription: {
+        value: '<p>Local Spotlight for Facebook</p>',
+        processed:
+          '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+        format: 'rich_text_limited',
+      },
+      fieldSectionHeader: 'Facebook Spotlight 1',
+      fieldCta: null,
+    };
+    const centralizedContentFormattedData = liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent(
+      localSpotlightData,
+    );
+    expect(centralizedContentFormattedData).to.deep.equal({
+      fetched: {
+        fieldCta: [],
+        fieldDescription: [
+          {
+            format: 'rich_text_limited',
+            processed:
+              '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+            value: '<p>Local Spotlight for Facebook</p>',
+          },
+        ],
+        fieldSectionHeader: [
+          {
+            value: 'Facebook Spotlight 1',
+          },
+        ],
+      },
+    });
+  });
 });
 
 describe('run', () => {
@@ -1284,28 +1266,28 @@ describe('phoneLinks', () => {
   it('wraps text phone numbers in a link', () => {
     const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with parentheses around the area code', () => {
     const text = 'Here is a phone number: (123)-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with space after the area code', () => {
     const text = 'Here is a phone number: (123) 456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with no dash or space after the area code', () => {
     const text = 'Here is a phone number: (123)456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
@@ -1313,14 +1295,14 @@ describe('phoneLinks', () => {
     const text =
       'Here is a phone number: (123)-456-7890. And (1111) more: 890-456-1234. Noice!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
-      'And (1111) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. ' +
+      'And (1111) more: <va-telephone target="_blank" href="tel:890-456-1234" contact="890-456-1234"></va-telephone>. Noice!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('does not double-wrap phone numbers', () => {
     const html =
-      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a <va-telephone href="test">phone number</va-telephone>: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });
@@ -2809,52 +2791,95 @@ describe('deriveFormattedTimestamp', () => {
 });
 
 describe('getSurvey', () => {
-  const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
-  const testUrls = [
-    '/resources',
-    '/find-locations',
-    '/search',
-    '/contact-us/virtual-agent',
-  ];
-
-  it('returns the survey number if url is listed in the survey object', () => {
-    // Staging survey tests
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
-    ).to.equal(20);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[2], testUrls[2], stagingSurveys),
-    ).to.equal(20);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(26);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(26);
-
-    // Prod survey tests
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
-    ).to.equal(21);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
-    ).to.equal(25);
+  it('returns correct survey ID for direct URL match in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/search')).to.equal(21);
   });
 
-  it('returns null for a build type not present in the staging survey object', () => {
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], stagingSurveys),
-    ).to.be.null;
+      liquid.filters.getSurvey('vagovstaging', '/contact-us/virtual-agent'),
+    ).to.equal(26);
   });
 
-  it('returns null for a build type not present in the production survey object', () => {
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], prodSurveys),
-    ).to.be.null;
+      liquid.filters.getSurvey('vagovstaging', '/school-administrators'),
+    ).to.equal(37);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/')).to.equal(17);
+  });
+
+  it('returns default survey ID when no direct URL match is found in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/')).to.equal(11);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovstaging',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(11);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/64545443',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey('vagovstaging', '/health-care/eligibility'),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/health-care')).to.equal(
+      41,
+    );
+  });
+
+  it('handles null URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', null)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', null)).to.equal(11);
+  });
+
+  it('handles undefined URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', undefined)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', undefined)).to.equal(11);
   });
 });
 

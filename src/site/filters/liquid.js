@@ -4,12 +4,10 @@ const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
-const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const stagingSurveys = require('./medalliaStagingSurveys.json');
-const prodSurveys = require('./medalliaProdSurveys.json');
+const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
@@ -282,7 +280,7 @@ module.exports = function registerFilters() {
     if (data) {
       return data.replace(
         replacePattern,
-        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
+        '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
       );
     }
 
@@ -1181,14 +1179,18 @@ module.exports = function registerFilters() {
       fieldSectionHeader,
       fieldCta,
     } = featuredContentEntity;
-    const updatedCta = [
-      {
+    const updatedCta = [];
+    if (
+      fieldCta?.entity?.fieldButtonLink &&
+      fieldCta?.entity?.fieldButtonLabel
+    ) {
+      updatedCta.push({
         entity: {
           fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
           fieldButtonLink: [fieldCta.entity.fieldButtonLink],
         },
-      },
-    ];
+      });
+    }
     const fetched = {
       fieldDescription: [fieldDescription],
       fieldSectionHeader: [{ value: fieldSectionHeader }],
@@ -1290,94 +1292,6 @@ module.exports = function registerFilters() {
       'fieldDatetimeRangeTimezone',
       false,
     );
-  };
-
-  //* paginatePages has limitations, it is not yet fully operational.
-  liquid.filters.paginatePages = (page, items, aria) => {
-    const perPage = 10;
-
-    const ariaLabel = aria ? ` of ${aria}` : '';
-
-    const paginationPath = pageNum => {
-      return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
-    };
-
-    const pageReturn = [];
-
-    if (items.length > 0) {
-      const pagedEntities = _.chunk(items, perPage);
-
-      for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-        let pagedPage = { ...page };
-        if (pageNum > 0) {
-          pagedPage = set(
-            'entityUrl.path',
-            `${page.entityUrl.path}${paginationPath(pageNum)}`,
-            page,
-          );
-        }
-
-        pagedPage.pagedItems = pagedEntities[pageNum];
-        const innerPages = [];
-
-        if (pagedEntities.length > 0) {
-          // add page numbers
-          const numPageLinks = 3;
-          let start;
-          let length;
-          if (pagedEntities.length <= numPageLinks) {
-            start = 0;
-            length = pagedEntities.length;
-          } else {
-            length = numPageLinks;
-
-            if (pageNum + numPageLinks > pagedEntities.length) {
-              start = pagedEntities.length - numPageLinks;
-            } else {
-              start = pageNum;
-            }
-          }
-
-          for (let num = start; num < start + length; num++) {
-            innerPages.push({
-              href:
-                num === pageNum
-                  ? null
-                  : `${page.entityUrl.path}${paginationPath(num)}`,
-              label: num + 1,
-              class: num === pageNum ? 'va-pagination-active' : '',
-            });
-          }
-
-          pagedPage.paginator = {
-            ariaLabel,
-            prev:
-              pageNum > 0
-                ? `${page.entityUrl.path}${paginationPath(pageNum - 1)}`
-                : null,
-            inner: innerPages,
-            next:
-              pageNum < pagedEntities.length - 1
-                ? `${page.entityUrl.path}${paginationPath(pageNum + 1)}`
-                : null,
-          };
-          pageReturn.push(pagedPage);
-        }
-      }
-    }
-
-    if (!pageReturn[0]) {
-      return {};
-    }
-
-    return {
-      pagedItems: pageReturn[0].pagedItems,
-      paginator: pageReturn[0].paginator,
-    };
-  };
-
-  liquid.filters.isFirstPage = paginator => {
-    return !paginator || paginator.prev === null;
   };
 
   liquid.filters.hasContentAtPath = (rootArray, path) => {
@@ -1663,6 +1577,45 @@ module.exports = function registerFilters() {
     };
   };
 
+  liquid.filters.topTaskLovellComp = (
+    linkType,
+    basePath,
+    buildtype,
+    fieldAdministration,
+    fieldVamcEhrSystem,
+    fieldRegionPage,
+    fieldOffice,
+  ) => {
+    const isNotProd = buildtype !== 'vagovprod';
+    const flag =
+      fieldVamcEhrSystem ||
+      fieldOffice?.entity?.fieldVamcEhrSystem ||
+      fieldRegionPage?.entity?.fieldVamcEhrSystem ||
+      '';
+    const isPageLovell = fieldAdministration?.entity.entityId === '1039';
+
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (linkType === 'make-an-appointment' && isPageLovell) {
+        return {
+          text: 'MHS Genesis Patient Portal',
+          url: 'https://my.mhsgenesis.health.mil/',
+        };
+      }
+    } else if (linkType === 'make-an-appointment') {
+      // If we remove this eslint complains of the nested if, so
+      // keeping this as a placeholder for future other linktypes for the MHS Genesis site (e.g. Pharmacy)
+      return {
+        text: 'Make an appointment',
+        url: `/${basePath}/make-an-appointment`,
+      };
+    }
+    // fallback as default
+    return {
+      text: 'Make an appointment',
+      url: `/${basePath}/make-an-appointment`,
+    };
+  };
+
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
     const isNotProd = buildtype !== 'vagovprod';
 
@@ -1802,18 +1755,41 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    if (
-      buildtype === 'localhost' ||
-      buildtype === 'vagovstaging' ||
-      buildtype === 'vagovdev'
-    ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    const surveyData = medalliaSurveys;
+    const defaultStagingSurvey = SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY;
+    const defaultProdSurvey = SURVEY_NUMBERS.DEFAULT_PROD_SURVEY;
+    const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
+      buildtype,
+    );
+    const effectiveBuildType = isStaging ? 'staging' : 'production';
+
+    if (typeof url !== 'string' || url === null) {
+      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
+    }
+    // Check if the URL exists in the main custom survey URL object
+    if (url in surveyData.urls) {
+      const surveyInfo = surveyData.urls[url];
+      // Return the survey ID for the effective build type, or the default based on the build type
+      return (
+        surveyInfo[effectiveBuildType] ||
+        (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+      );
+    }
+    // Check if the URL matches any subpaths
+    for (const [subpath, surveyInfo] of Object.entries(
+      surveyData.urlsWithSubPaths,
+    )) {
+      if (url.startsWith(subpath)) {
+        // Return the survey ID for the effective build type, or the default based on the build type
+        return (
+          surveyInfo[effectiveBuildType] ||
+          (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+        );
+      }
     }
 
-    if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : 17;
-    }
-    return null;
+    // If no URL match is found, return the default survey number based on the build type
+    return isStaging ? defaultStagingSurvey : defaultProdSurvey;
   };
 
   liquid.filters.officeHoursDayFormatter = (day, short = true) => {
@@ -1910,5 +1886,12 @@ module.exports = function registerFilters() {
     ];
 
     return urlsForBanner.includes(currentPath);
+  };
+
+  liquid.filters.useTelephoneWebComponent = telephone => {
+    if (/[a-zA-Z+]/.test(telephone)) {
+      return false;
+    }
+    return true;
   };
 };

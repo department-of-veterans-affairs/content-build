@@ -40,7 +40,7 @@
         },
         {
           "path": "pension/application/527EZ",
-          "name": "Apply for Veterans’ pension benefits"
+          "name": "Apply for Veterans Pension benefits"
         }
       ]
     }
@@ -446,8 +446,7 @@
       "keywords": "upgrade discharge, military discharge upgrade, discharge upgrade",
       "order": 6,
       "spoke": "Get records",
-      "collection": "records",
-      "includeBreadcrumbs": true
+      "collection": "records"
     }
   },
   {
@@ -795,16 +794,6 @@
     }
   },
   {
-    "appName": "Debt Letters",
-    "entryName": "your-debt",
-    "rootUrl": "/manage-va-debt/your-debt",
-    "template": {
-      "vagovprod": true,
-      "title": "Your VA Debt",
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "28-1900 Veteran Readiness",
     "entryName": "28-1900-chapter-31",
     "rootUrl": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
@@ -950,16 +939,6 @@
           "name": "Request help with VA debt"
         }
       ]
-    }
-  },
-  {
-    "appName": "Medical Copays",
-    "entryName": "medical-copays",
-    "rootUrl": "/health-care/pay-copay-bill/your-current-balances",
-    "template": {
-      "title": "Medical Copays",
-      "layout": "page-react.html",
-      "vagovprod": true
     }
   },
   {
@@ -1308,16 +1287,6 @@
     "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "burial-poc-v6",
-    "entryName": "burial-poc-v6",
-    "rootUrl": "/burial-poc-v6",
-    "productId": "3f7db617-af4b-4d7f-b30f-f288d5756668",
-    "template": {
-      "vagovprod": false,
       "layout": "page-react.html"
     }
   },
@@ -1801,6 +1770,16 @@
     "entryName": "10-7959C",
     "rootUrl": "/ivc-champva/10-7959C",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Foreign Medical Program (FMP) Registration Form",
+    "entryName": "10-7959f-1-FMP",
+    "rootUrl": "/ivc-champva/10-7959f-1",
+    "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

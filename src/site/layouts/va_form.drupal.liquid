@@ -155,7 +155,6 @@
                     <i
                       aria-hidden="true"
                       class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                      role="presentation"
                     > </i>
                     {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}
                     {{ translatedDownloadText }} (PDF)
@@ -180,11 +179,12 @@
                 {% for vaFormLinkTeaser in fieldVaFormLinkTeasers %}
                   <li>
                     <h3 class="vads-u-font-size--h4">
-                      <a
+                      <va-link
+                        disable-analytics
                         href="{{ vaFormLinkTeaser.entity.fieldLink.url.path }}"
-                        onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': '{{ vaFormLinkTeaser.entity.fieldLink.title | escape }}', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
-                        {{ vaFormLinkTeaser.entity.fieldLink.title }}
-                      </a>
+                        onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': '{{ vaFormLinkTeaser.entity.fieldLink.title | escape }}', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
+                        text="{{ vaFormLinkTeaser.entity.fieldLink.title }}"
+                      />
                     </h3>
                     <p class="vads-u-margin--0">{{ vaFormLinkTeaser.entity.fieldLinkSummary }}</p>
                   </li>
@@ -193,41 +193,45 @@
                 {% comment %} The default related links if custom links aren't defined {% endcomment %}
                 <li>
                   <h3 class="vads-u-font-size--h4">
-                    <a
+                    <va-link
+                      disable-analytics
                       href="/change-direct-deposit"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your direct deposit information', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
-                      Change your direct deposit information
-                    </a>
+                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your direct deposit information', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
+                      text="Change your direct deposit information"
+                    />
                   </h3>
                   <p class="vads-u-margin--0">Find out how to update your direct deposit information online for disability compensation, pension, or education benefits. </p>
                 </li>
                 <li>
                   <h3 class="vads-u-font-size--h4">
-                    <a
+                    <va-link
+                      disable-analytics
                       href="/change-address"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your address', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
-                      Change your address
-                    </a>
+                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your address', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
+                      text="Change your address"
+                    />
                   </h3>
                   <p class="vads-u-margin--0">Find out how to change your address and other information in your VA.gov profile for disability compensation, claims and appeals, VA health care, and other benefits.</p>
                 </li>
                 <li>
                   <h3 class="vads-u-font-size--h4">
-                    <a
+                    <va-link
+                      disable-analytics
                       href="/records/get-military-service-records/"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Request your military records, including DD214', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
-                      Request your military records, including DD214
-                    </a>
+                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Request your military records, including DD214', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
+                      text="Request your military records, including DD214"
+                    />
                   </h3>
                   <p class="vads-u-margin--0">Submit an online request to get your DD214 or other military service records through the milConnect website.</p>
                 </li>
                 <li>
                   <h3 class="vads-u-font-size--h4">
-                    <a
+                    <va-link
+                      disable-analytics
                       href="/records/"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Get your VA records and documents online', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })">
-                      Get your VA records and documents online
-                    </a>
+                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Get your VA records and documents online', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
+                      text="Get your VA records and documents online"
+                    />
                   </h3>
                   <p class="vads-u-margin--0">Learn how to access your VA records, benefit letters, and documents online.</p>
                 </li>

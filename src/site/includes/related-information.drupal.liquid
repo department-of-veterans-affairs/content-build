@@ -10,9 +10,11 @@
       <li class="vads-u-margin-y--2">
         <p class="vads-u-margin--0">
           <strong>
-            <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ fieldRelatedInformationLink.entity.fieldLink.title | escape }}', 'links-list-section-header': 'Related information' })" href="{{ fieldRelatedInformationLink.entity.fieldLink.url.path }}">
-              {{ fieldRelatedInformationLink.entity.fieldLink.title }}
-            </a>
+            <va-link 
+              component-library-analytics="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ fieldRelatedInformationLink.entity.fieldLink.title | escape }}', 'links-list-section-header': 'Related information'})" 
+              href="{{ fieldRelatedInformationLink.entity.fieldLink.url.path }}" 
+              text="{{ fieldRelatedInformationLink.entity.fieldLink.title }}"
+            />
           </strong>
         </p>
         <p class="vads-u-margin--0">{{ fieldRelatedInformationLink.entity.fieldLinkSummary }}</p>
