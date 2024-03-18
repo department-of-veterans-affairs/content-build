@@ -9,11 +9,11 @@
         </div>
     {% endif %}
     {% if entity.fieldCta.entity.fieldButtonLink %}
-        {% if entity.fieldCta.entity.fieldButtonLink.url %}
+        {% if entity.fieldCta.entity.fieldButtonLink.url.path %}
             <div class="vads-u-padding-top--1">
                 <p>
                     <va-link 
-                        href="{{ entity.fieldCta.entity.fieldButtonLink.url }}" 
+                        href="{{ entity.fieldCta.entity.fieldButtonLink.url.path }}" 
                         text="{{ entity.fieldCta.entity.fieldButtonLabel }}" 
                     ></va-link>
                 </p>

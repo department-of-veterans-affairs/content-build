@@ -11,7 +11,7 @@
     {% if entity.fieldCta.entity.fieldButtonLink %}
         {% assign fieldButtonUri = entity.fieldCta.entity.fieldButtonLink.uri | hasCharacterOtherThanSpace %}
         {% assign fieldButtonUrl = entity.fieldCta.entity.fieldButtonLink.url.path | hasCharacterOtherThanSpace %}
-        {% if entity.fieldCta.entity.fieldButtonLink.url.path and fieldButtonUrl %}
+        {% if fieldButtonUrl %}
             {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.url.path %}
         {% elsif fieldButtonUri %}
             {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.uri %}
