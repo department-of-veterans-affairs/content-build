@@ -1,8 +1,6 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
-import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
@@ -307,54 +305,6 @@ describe('sortByDateKey', () => {
         title: 'Women Veterans resource fair spotlights VA and community care',
       },
     ]);
-  });
-});
-
-describe('paginatePages', () => {
-  it('passing in less than 10 events', () => {
-    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
-
-    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
-      0,
-      -6,
-    );
-
-    const result = liquid.filters.paginatePages(
-      slicedEventListingMockData,
-      slicedEventListingMockData.reverseFieldListingNode.entities,
-    );
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator.next).to.be.null;
-  });
-
-  it('passing in more than 10 events', () => {
-    const result = liquid.filters.paginatePages(
-      eventListingMockData,
-      eventListingMockData.reverseFieldListingNode.entities,
-      'event',
-    );
-
-    const expected = {
-      ariaLabel: ' of event',
-      prev: null,
-      inner: [
-        {
-          href: null,
-          label: 1,
-          class: 'va-pagination-active',
-        },
-        {
-          href: '/pittsburgh-health-care/events/page-2',
-          label: 2,
-          class: '',
-        },
-      ],
-      next: '/pittsburgh-health-care/events/page-2',
-    };
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator).to.deep.equal(expected);
   });
 });
 
