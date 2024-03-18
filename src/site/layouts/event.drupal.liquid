@@ -73,9 +73,10 @@
                   {% assign fieldFacilityAddress = fieldFacilityLocation.entity.fieldAddress %}
                   <div class="vads-u-display--flex vads-u-flex-direction--column">
                     <p class="vads-u-margin--0">
-                      <a href="{{ fieldFacilityLocation.entity.entityUrl.path }}">
-                        {{ fieldFacilityLocation.entity.title }}
-                      </a>
+                      <va-link
+                        href="{{ fieldFacilityLocation.entity.entityUrl.path }}"
+                        text="{{ fieldFacilityLocation.entity.title }}"
+                      />
                     </p>
                     <p class="vads-u-margin--0">{{ fieldLocationHumanreadable }}</p>
                     {% if fieldFacilityAddress.addressLine1 != empty %}
@@ -109,11 +110,9 @@
                 {% elsif fieldLocationType == "online" %}
                   <p class="vads-u-margin--0 vads-u-margin-bottom--2">
                     {% if fieldUrlOfAnOnlineEvent %}
-                      <a href="{{ fieldUrlOfAnOnlineEvent.uri }}">
-                      {% endif %}
+                      <va-link href="{{ fieldUrlOfAnOnlineEvent.uri }}" text="This is an online event." />
+                    {% else %}
                       This is an online event.
-                      {% if fieldUrlOfAnOnlineEvent %}
-                      </a>
                     {% endif %}
                   </p>
                 {% else %}
@@ -219,68 +218,54 @@
 
         <!-- Repeating event instances -->
         {% if fieldDatetimeRangeTimezone.length > 1 %}
-          <button
-            class="vads-u-background-color--gray-lightest vads-u-color--primary-darkest vads-u-font-weight--bold vads-u-display--flex vads-u-align-items--center vads-u-justify-content--space-between vads-u-height--full vads-u-padding--2 vads-u-margin--0 vads-u-margin-top--1"
-            id="expand-recurring-events"
-            style="z-index: 1;"
-            type="button">
-            View other times for this event
-            <i
-              aria-hidden="true"
-              class="fa fa-plus"
-              id="expand-recurring-events-icon"></i>
-          </button>
-          <div class="vads-u-display--none vads-u-flex-direction--column vads-u-background-color--white vads-u-border--2px vads-u-border-color--gray-lightest vads-u-padding--2" id="recurring-events">
-            <!-- Recurring events list. -->
-            {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
-              <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %} vads-u-margin-bottom--2">
-                <p class="vads-u-margin--0">
-                  {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
-                </p>
-                <a
-                  class="recurring-event "
-                  data-description="{{ fieldDescription }}"
-                  data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
-                  data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
-                  data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
-                  data-subject="{{ title }}"
-                  href="{{ entityUrl.path }}"
-                  rel="noreferrer noopener"
-                  style="max-width: 140px;">
-                  <i
-                    aria-hidden="true"
-                    class="va-c-social-icon fas fa-calendar-check vads-u-margin-right--0p5"
-                    role="presentation"></i>
-                  Add to Calendar
-                </a>
-              </div>
-            {% endfor %}
+          <va-accordion id="expand-recurring-events">
+            <va-accordion-item
+              header="View other times for this event"
+              bordered
+            >
+              <!-- Recurring events list. -->
+              {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
+                <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %} vads-u-margin-bottom--2">
+                  <p class="vads-u-margin--0">
+                    {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
+                  </p>
+                  <va-link
+                    calendar
+                    class="recurrent-event "
+                    data-description="{{ fieldDescription }}"
+                    data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
+                    data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
+                    data-start="{{ recurringEventDatetimeRangeTimezone.value }}"
+                    data-subject="{{ title }}"
+                    href="{{ entityUrl.path }}"
+                    text="Add to Calendar"
+                  />
+                </div>
+              {% endfor %}
 
-            <!-- Show all recurring events. -->
-            {% if fieldDatetimeRangeTimezone.length > 6 %}
-              <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-justify-content--flex-end vads-u-width--full medium-screen:vads-u-width--auto">
-                <button
-                  class="usa-button-secondary vads-u-width--full medium-screen:vads-u-width--auto"
-                  id="show-all-recurring-events"
-                  type="button">
-                  Show all times
-                </button>
-              </div>
-            {% endif %}
-          </div>
+              <!-- Show all recurring events. -->
+              {% if fieldDatetimeRangeTimezone.length > 6 %}
+                <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-justify-content--flex-end vads-u-width--full medium-screen:vads-u-width--auto">
+                  <va-button
+                    id="show-all-recurring-events"
+                    secondary
+                    text="Show all times"
+                  />
+                </div>
+              {% endif %}
+            </va-accordion-item>
+          </va-accordion>
         {% endif %}
 
         <!-- See more events. -->
-        <a
-          class="vads-u-padding-bottom--3 vads-u-margin-top--1 vads-u-font-weight--bold"
+        <va-link
+          active
+          class="vads-u-padding-bottom--3 vads-u-margin-top--1"
+          disable-analytics
           href="{{ fieldListing.entity.entityUrl.path }}"
-          onclick="recordEvent({ event: 'nav-secondary-button-click' });">
-          See more events
-          <i
-            aria-hidden="true"
-            class='vads-u-font-size--sm vads-u-margin-left--1 fa fa-chevron-right'
-            role="presentation"></i>
-        </a>
+          onclick="recordEvent({ event: 'nav-secondary-button-click' });"
+          text="See more events"
+        />
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
