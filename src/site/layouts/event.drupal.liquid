@@ -176,7 +176,7 @@
 
         <!-- CTA -->
         {% if fieldLink or fieldEventCta or fieldAdditionalInformationAbo %}
-          <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--1">
+          <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--1 vads-u-padding-x--1p5">
             {% if start_timestamp < current_timestamp %}
               <p class="vads-u-margin--0 vads-u-color--secondary vads-u-font-weight--bold">This event already happened.</p>
             {% else %}
@@ -218,7 +218,7 @@
 
         <!-- Repeating event instances -->
         {% if fieldDatetimeRangeTimezone.length > 1 %}
-          <va-accordion id="expand-recurring-events">
+          <va-accordion open-single id="expand-recurring-events">
             <va-accordion-item
               header="View other times for this event"
               bordered
@@ -260,12 +260,12 @@
         <!-- See more events. -->
         <va-link
           active
-          class="vads-u-padding-bottom--3 vads-u-margin-top--1"
+          class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
           disable-analytics
           href="{{ fieldListing.entity.entityUrl.path }}"
           onclick="recordEvent({ event: 'nav-secondary-button-click' });"
           text="See more events"
-        />
+        ></va-link>
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
