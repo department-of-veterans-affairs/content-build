@@ -17,15 +17,22 @@
                   method="post">
                   <input name="utf8" type="hidden" value="✓">
                   <input type="hidden" name="category_id" id="category_id_top" value="USVACHOOSE_C1">
-                  <label for="email">Email Address</label>
-                  <input inputmode="email"
-                         type="email"
-                         name="email"
-                         id="email"
-                         autocomplete="email"
-                         class="vads-u-width--full
-                                medium-screen:vads-u-width-auto" />
-                  <button
+                  <va-text-input
+                    class="vads-u-width--full medium-screen:vads-u-width-auto"
+                    label="Email address"
+                    id="email"
+                    name="email"
+                    inputmode="email"
+                    type="email"
+                    autocomplete="email"
+                  ></va-text-input>
+                  {% comment %}
+                    The button below is affected by formation styles
+                    https://github.com/department-of-veterans-affairs/veteran-facing-services-tools/blob/9f28d6c22e9324f8f0787f3e33189344d6b7b0aa/packages/formation/sass/_shame.scss#L139 
+                    Overwriting these with inline styles until we remove dependency on formation
+                  {% endcomment %}
+                  <va-button
+                    style="width: fit-content !important; padding: 0 !important"
                     onclick="recordMultipleEvents([
                       { 
                         event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Sign up',  
@@ -35,9 +42,9 @@
                     type="submit"
                     class="vads-u-width--full
                           medium-screen:vads-u-width--auto
-                          vads-u-display--block">
-                    Sign up
-                  </button>
+                          vads-u-display--block"
+                    text="Sign up"
+                  />
                 </form>
               </div>
             </div>
