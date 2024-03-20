@@ -14,6 +14,7 @@ env:
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   INSTANCE_TYPE: m5.4xlarge
+  MAXIMUM_HEAP: 6000
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
@@ -132,7 +133,9 @@ jobs:
           base_url: ${{ env.DRUPAL_ADDRESS }}
 
       - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+        run: |
+          set -eo pipefail
+          NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
         env:
           NODE_ENV: production
           DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
