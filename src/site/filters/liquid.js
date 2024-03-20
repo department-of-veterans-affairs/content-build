@@ -1177,7 +1177,7 @@ module.exports = function registerFilters() {
     const processedFetched = {};
     for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
       if (value?.length) {
-        processedFetched[key] = value[0].value;
+        processedFetched[key] = value[0]?.value;
       }
     }
     return processedFetched;
