@@ -1162,7 +1162,9 @@ module.exports = function registerFilters() {
     }
     const processedFetched = {};
     for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
-      processedFetched[key] = value[0].value;
+      if (value?.length) {
+        processedFetched[key] = value[0]?.value;
+      }
     }
     return processedFetched;
   };
