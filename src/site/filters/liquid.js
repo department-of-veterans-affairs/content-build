@@ -968,7 +968,7 @@ module.exports = function registerFilters() {
       sectionHeader: '',
     };
     const { fetched } = fieldCcGetUpdatesFromVba;
-    processed.sectionHeader = fetched.fieldSectionHeader[0].value;
+    processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value || '';
     for (const link of fetched.fieldLinks) {
       if (link.url.path.startsWith('/')) {
         processed.links.news = {
@@ -1002,13 +1002,14 @@ module.exports = function registerFilters() {
       fieldSectionHeader: '',
       fieldDescription: '',
     };
-    processed.fieldSectionHeader = field.fetched.fieldSectionHeader[0].value;
+    processed.fieldSectionHeader =
+      field.fetched.fieldSectionHeader?.[0]?.value || '';
 
     const ctaEntity = field.fetched.fieldCta[0].entity;
-    processed.fieldCta.label = ctaEntity.fieldButtonLabel[0].value;
-    processed.fieldCta.link = ctaEntity.fieldButtonLink[0].url.path;
+    processed.fieldCta.label = ctaEntity.fieldButtonLabel?.[0]?.value;
+    processed.fieldCta.link = ctaEntity.fieldButtonLink?.[0]?.url.path;
 
-    processed.fieldDescription = field.fetched.fieldDescription[0].processed;
+    processed.fieldDescription = field.fetched.fieldDescription?.[0]?.processed;
     return processed;
   };
 
@@ -1035,11 +1036,11 @@ module.exports = function registerFilters() {
     if (!fieldFeaturedCc?.fetched) return null;
     const { fetched } = fieldFeaturedCc;
     return {
-      fieldSectionHeader: fetched.fieldSectionHeader[0].value,
-      fieldDescription: fetched.fieldDescription[0].value,
+      fieldSectionHeader: fetched.fieldSectionHeader?.[0]?.value,
+      fieldDescription: fetched.fieldDescription?.[0]?.value,
       fieldCta: {
-        label: fetched.fieldCta[0].entity.fieldButtonLabel[0].value,
-        uri: fetched.fieldCta[0].entity.fieldButtonLink[0].url.path,
+        label: fetched.fieldCta[0].entity.fieldButtonLabel?.[0]?.value,
+        uri: fetched.fieldCta[0].entity.fieldButtonLink?.[0]?.url.path,
       },
     };
   };
@@ -1162,7 +1163,9 @@ module.exports = function registerFilters() {
     }
     const processedFetched = {};
     for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
-      processedFetched[key] = value[0].value;
+      if (value.length > 0) {
+        processedFetched[key] = value[0]?.value;
+      }
     }
     return processedFetched;
   };
