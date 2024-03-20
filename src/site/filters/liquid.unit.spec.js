@@ -1,8 +1,6 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
-import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
@@ -307,54 +305,6 @@ describe('sortByDateKey', () => {
         title: 'Women Veterans resource fair spotlights VA and community care',
       },
     ]);
-  });
-});
-
-describe('paginatePages', () => {
-  it('passing in less than 10 events', () => {
-    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
-
-    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
-      0,
-      -6,
-    );
-
-    const result = liquid.filters.paginatePages(
-      slicedEventListingMockData,
-      slicedEventListingMockData.reverseFieldListingNode.entities,
-    );
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator.next).to.be.null;
-  });
-
-  it('passing in more than 10 events', () => {
-    const result = liquid.filters.paginatePages(
-      eventListingMockData,
-      eventListingMockData.reverseFieldListingNode.entities,
-      'event',
-    );
-
-    const expected = {
-      ariaLabel: ' of event',
-      prev: null,
-      inner: [
-        {
-          href: null,
-          label: 1,
-          class: 'va-pagination-active',
-        },
-        {
-          href: '/pittsburgh-health-care/events/page-2',
-          label: 2,
-          class: '',
-        },
-      ],
-      next: '/pittsburgh-health-care/events/page-2',
-    };
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator).to.deep.equal(expected);
   });
 });
 
@@ -1316,28 +1266,28 @@ describe('phoneLinks', () => {
   it('wraps text phone numbers in a link', () => {
     const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with parentheses around the area code', () => {
     const text = 'Here is a phone number: (123)-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with space after the area code', () => {
     const text = 'Here is a phone number: (123) 456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with no dash or space after the area code', () => {
     const text = 'Here is a phone number: (123)456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
@@ -1345,15 +1295,77 @@ describe('phoneLinks', () => {
     const text =
       'Here is a phone number: (123)-456-7890. And (1111) more: 890-456-1234. Noice!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
-      'And (1111) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. ' +
+      'And (1111) more: <va-telephone target="_blank" href="tel:890-456-1234" contact="890-456-1234"></va-telephone>. Noice!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('does not double-wrap phone numbers', () => {
     const html =
-      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a <va-telephone href="test">phone number</va-telephone>: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+  it('does not double-wrap phone numbers in va-telephone components', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
+
+describe('separatePhoneNumberExtension similar to functioning on Vets-website', () => {
+  it('processes a phone number with an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '123-456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('processes a phone number with parentheses an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '(123) 456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('should process phone number strings into phone and extension', () => {
+    const phoneNumber = '800-827-1000';
+    const phoneNumberNoDashes = '8008271000';
+    const extension = '123';
+    const phoneConditions = [
+      '',
+      'x',
+      ' ext ',
+      ' ext. ',
+      ' x. ',
+      ', x',
+      ', ext',
+      ', ext.',
+      ', ext. ',
+    ]
+      // For all cases except the first, concatenate the phoneNumber, extension separator, and extension
+      .map((e, i) => (i === 0 ? phoneNumber : phoneNumber + e + extension));
+    for (let i = 0; i < phoneConditions.length; i += 1) {
+      const processed = liquid.filters.separatePhoneNumberExtension(
+        phoneConditions[i],
+      );
+      if (i === 0) {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension: '',
+        });
+      } else {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension,
+        });
+      }
+    }
   });
 });
 

@@ -4,7 +4,6 @@ const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
-const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
@@ -281,7 +280,7 @@ module.exports = function registerFilters() {
     if (data) {
       return data.replace(
         replacePattern,
-        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
+        '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
       );
     }
 
@@ -292,19 +291,19 @@ module.exports = function registerFilters() {
     if (!phoneNumber) {
       return null;
     }
-
-    if (!phoneNumber.includes(', ext. ')) {
-      return {
-        phoneNumber,
-        extension: null,
-      };
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const match = phoneRegex.exec(phoneNumber);
+    if (!match || !match[1] || !match[2] || !match[3]) {
+      // Short number or not a normal format
+      return { phoneNumber, extension: '' };
     }
-
-    const splitNumber = phoneNumber.split(', ext. ');
+    const phone = match[1] + match[2] + match[3];
+    // optional extension matching x1234 (match 4) or ext1234 (match 5)
+    const extension = match[4] || match[5] || '';
 
     return {
-      phoneNumber: splitNumber[0],
-      extension: splitNumber[1],
+      phoneNumber: phone,
+      extension,
     };
   };
 
@@ -1309,94 +1308,6 @@ module.exports = function registerFilters() {
       'fieldDatetimeRangeTimezone',
       false,
     );
-  };
-
-  //* paginatePages has limitations, it is not yet fully operational.
-  liquid.filters.paginatePages = (page, items, aria) => {
-    const perPage = 10;
-    const ariaLabel = aria ? ` of ${aria}` : '';
-
-    const paginationPath = pageNum => {
-      return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
-    };
-
-    const pageReturn = [];
-
-    if (items.length > 0) {
-      const pagedEntities = _.chunk(items, perPage);
-
-      for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-        let pagedPage = { ...page };
-
-        if (pageNum > 0) {
-          pagedPage = set(
-            'entityUrl.path',
-            `${page.entityUrl.path}${paginationPath(pageNum)}`,
-            page,
-          );
-        }
-
-        pagedPage.pagedItems = pagedEntities[pageNum];
-        const innerPages = [];
-
-        if (pagedEntities.length > 0) {
-          // add page numbers
-          const numPageLinks = 3;
-          let start;
-          let length;
-          if (pagedEntities.length <= numPageLinks) {
-            start = 0;
-            length = pagedEntities.length;
-          } else {
-            length = numPageLinks;
-
-            if (pageNum + numPageLinks > pagedEntities.length) {
-              start = pagedEntities.length - numPageLinks;
-            } else {
-              start = pageNum;
-            }
-          }
-
-          for (let num = start; num < start + length; num++) {
-            innerPages.push({
-              href:
-                num === pageNum
-                  ? null
-                  : `${page.entityUrl.path}${paginationPath(num)}`,
-              label: num + 1,
-              class: num === pageNum ? 'va-pagination-active' : '',
-            });
-          }
-
-          pagedPage.paginator = {
-            ariaLabel,
-            prev:
-              pageNum > 0
-                ? `${page.entityUrl.path}${paginationPath(pageNum - 1)}`
-                : null,
-            inner: innerPages,
-            next:
-              pageNum < pagedEntities.length - 1
-                ? `${page.entityUrl.path}${paginationPath(pageNum + 1)}`
-                : null,
-          };
-          pageReturn.push(pagedPage);
-        }
-      }
-    }
-
-    if (!pageReturn[0]) {
-      return {};
-    }
-
-    return {
-      pagedItems: pageReturn[0].pagedItems,
-      paginator: pageReturn[0].paginator,
-    };
-  };
-
-  liquid.filters.isFirstPage = paginator => {
-    return !paginator || paginator.prev === null;
   };
 
   liquid.filters.hasContentAtPath = (rootArray, path) => {
