@@ -1238,7 +1238,9 @@ module.exports = function registerFilters() {
         entity: {
           fieldButtonLink: {
             uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
-            url: { path: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '' },
+            url: {
+              path: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
+            },
           },
           fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
