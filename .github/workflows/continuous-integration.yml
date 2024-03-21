@@ -14,7 +14,6 @@ env:
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   INSTANCE_TYPE: m5.4xlarge
-  MAXIMUM_HEAP: 6000
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
