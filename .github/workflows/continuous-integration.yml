@@ -16,9 +16,8 @@ env:
   INSTANCE_TYPE: m5.4xlarge
 
 concurrency:
-  # If this is no a prod push it sets the concurrency group to the workflow name. Otherwise, it sets to the branch name.
-  group: ${{ github.ref != 'refs/heads/main' && github.workflow || github.ref }}
-  cancel-in-progress: false
+  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
