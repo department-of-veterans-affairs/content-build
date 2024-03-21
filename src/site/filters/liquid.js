@@ -968,7 +968,7 @@ module.exports = function registerFilters() {
       sectionHeader: '',
     };
     const { fetched } = fieldCcGetUpdatesFromVba;
-    processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value;
+    processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value || '';
     for (const link of fetched.fieldLinks) {
       if (link.url.path.startsWith('/')) {
         processed.links.news = {
@@ -1002,11 +1002,12 @@ module.exports = function registerFilters() {
       fieldSectionHeader: '',
       fieldDescription: '',
     };
-    processed.fieldSectionHeader = field.fetched.fieldSectionHeader?.[0]?.value;
+    processed.fieldSectionHeader =
+      field.fetched.fieldSectionHeader?.[0]?.value || '';
 
     const ctaEntity = field.fetched.fieldCta[0].entity;
-    processed.fieldCta.label = ctaEntity.fieldButtonLabel?.[0]?.value;
-    processed.fieldCta.link = ctaEntity.fieldButtonLink?.[0]?.url.path;
+    processed.fieldCta.label = ctaEntity.fieldButtonLabel?.[0]?.value || '';
+    processed.fieldCta.link = ctaEntity.fieldButtonLink?.[0]?.url.path || '';
 
     processed.fieldDescription = field.fetched.fieldDescription?.[0]?.processed;
     return processed;
@@ -1014,7 +1015,7 @@ module.exports = function registerFilters() {
 
   liquid.filters.processWysiwygSimple = field => {
     if (!field?.fetched?.fieldWysiwyg?.length) return null;
-    return field.fetched.fieldWysiwyg[0]?.value;
+    return field.fetched.fieldWysiwyg[0]?.value || '';
   };
 
   liquid.filters.processFieldPhoneNumbersParagraph = fields => {
@@ -1163,7 +1164,7 @@ module.exports = function registerFilters() {
     const processedFetched = {};
     for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
       if (value?.length > 0) {
-        processedFetched[key] = value[0]?.value;
+        processedFetched[key] = value[0]?.value || '';
       }
     }
     return processedFetched;
@@ -1222,9 +1223,9 @@ module.exports = function registerFilters() {
     const featureContentObj = {
       entity: {
         fieldDescription: {
-          processed: fieldDescription[0]?.processed,
+          processed: fieldDescription[0]?.processed || '',
         },
-        fieldSectionHeader: fieldSectionHeader[0]?.value,
+        fieldSectionHeader: fieldSectionHeader[0]?.value || '',
       },
     };
 
@@ -1236,10 +1237,10 @@ module.exports = function registerFilters() {
       const buttonFeatured = {
         entity: {
           fieldButtonLink: {
-            uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri,
-            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path,
+            uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
+            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
           },
-          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value,
+          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
