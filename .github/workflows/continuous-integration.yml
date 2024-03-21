@@ -48,7 +48,7 @@ jobs:
           - buildtype: vagovdev
             drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovstaging
-            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+            drupal-address: https://main-bwj6qn18llmdla8pffimuqxckl0nsehj.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: https://prod.cms.va.gov
 
