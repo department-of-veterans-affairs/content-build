@@ -291,19 +291,19 @@ module.exports = function registerFilters() {
     if (!phoneNumber) {
       return null;
     }
-
-    if (!phoneNumber.includes(', ext. ')) {
-      return {
-        phoneNumber,
-        extension: null,
-      };
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const match = phoneRegex.exec(phoneNumber);
+    if (!match || !match[1] || !match[2] || !match[3]) {
+      // Short number or not a normal format
+      return { phoneNumber, extension: '' };
     }
-
-    const splitNumber = phoneNumber.split(', ext. ');
+    const phone = match[1] + match[2] + match[3];
+    // optional extension matching x1234 (match 4) or ext1234 (match 5)
+    const extension = match[4] || match[5] || '';
 
     return {
-      phoneNumber: splitNumber[0],
-      extension: splitNumber[1],
+      phoneNumber: phone,
+      extension,
     };
   };
 
