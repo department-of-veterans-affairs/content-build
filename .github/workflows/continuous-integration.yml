@@ -20,229 +20,229 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  build:
-    name: Build
-    runs-on: [self-hosted, asg]
-    timeout-minutes: 120
-
-    defaults:
-      run:
-        working-directory: content-build
-
-    outputs:
-      vagovdev_buildtime: ${{ env.vagovdev_buildtime }}
-      vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
-
-    env:
-      # Sandbox Drupal address, username, and password is used on branches other than main.
-      DRUPAL_ADDRESS: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-      # This is a test credential and is not used on any production instances.
-      DRUPAL_PASSWORD: drupal8
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
-
-    strategy:
-      fail-fast: true
-      matrix:
-        buildtype: [vagovdev, vagovstaging, vagovprod]
-        include:
-          - buildtype: vagovdev
-            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-          - buildtype: vagovstaging
-            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-          - buildtype: vagovprod
-            drupal-address: https://prod.cms.va.gov
-
-    steps:
-      - name: Checkout vagov-content
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
-
-      - name: Checkout content-build
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        with:
-          path: content-build
-
-      - name: Get Node version
-        id: get-node-version
-        run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
-
-      - name: Setup Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
-        with:
-          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
-
-      - name: Setup Yarn
-        run: npm i -g yarn@1.19.1
-
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
-        with:
-          path: |
-            .cache/yarn
-            **/node_modules
-          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
-
-      - name: Install dependencies
-        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
-        with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
-          max_attempts: 3
-          timeout_minutes: 7
-        env:
-          YARN_CACHE_FOLDER: .cache/yarn
-
-      - name: Configure AWS Credentials (1)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Set Drupal address
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
-
-      - name: Set Drupal prod password
-        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/main' }}
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
-          env_variable_name: DRUPAL_PASSWORD
-
-      - name: Set Drupal prod username
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        with:
-          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
-          env_variable_name: DRUPAL_USERNAME
-
-      - name: Get buildtime
-        id: buildtime
-        run: |
-          BUILDTIME=$(date +%s)
-          echo buildtime=$BUILDTIME >> $GITHUB_OUTPUT
-          echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
-
-      - name: Wait for the CMS to be ready
-        uses: ./content-build/.github/workflows/wait-for-cms-ready
-        with:
-          base_url: ${{ env.DRUPAL_ADDRESS }}
-
-      - name: Build
-        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
-        env:
-          NODE_ENV: production
-          DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
-
-      - name: Check broken links
-        id: get-broken-link-info
-        if: ${{ matrix.buildtype == 'vagovprod' }}
-        run: node ./script/github-actions/check-broken-links-blocks.js ${{ matrix.buildtype }}
-
-      - name: Generate build details
-        run: |
-          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
-          BUILDTYPE=${{ matrix.buildtype }}
-          NODE_ENV=production
-          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
-          CHANGE_TARGET=null
-          RUN_ID=${{ github.run_id }}
-          RUN_NUMBER=${{ github.run_number }}
-          REF=${{ github.sha }}
-          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
-          EOF
-
-      - name: Prearchive
-        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
-
-      - name: Compress build
-        run: tar -C build/${{ matrix.buildtype }} -cvf ${{ matrix.buildtype }}.tar.bz2 .
-
-      - name: Cache Drupal content
-        if: github.ref == 'refs/heads/main'
-        run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
-
-      - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
-
-      - name: Upload build
-        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
-
-      - name: Upload Drupal cache
-        if: github.ref == 'refs/heads/main'
-        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
-
-      # Only will get called if error in workflow
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get Slack app token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
-      - name: Get Slack bot token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
-
-      - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
-
-      - name: Upload broken links file
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
-
-      - name: Notify Slack about broken links
-        uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
+#  build:
+#    name: Build
+#    runs-on: [self-hosted, asg]
+#    timeout-minutes: 120
+#
+#    defaults:
+#      run:
+#        working-directory: content-build
+#
+#    outputs:
+#      vagovdev_buildtime: ${{ env.vagovdev_buildtime }}
+#      vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
+#
+#    env:
+#      # Sandbox Drupal address, username, and password is used on branches other than main.
+#      DRUPAL_ADDRESS: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+#      # This is a test credential and is not used on any production instances.
+#      DRUPAL_PASSWORD: drupal8
+#      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
+#
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        buildtype: [vagovdev, vagovstaging, vagovprod]
+#        include:
+#          - buildtype: vagovdev
+#            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+#          - buildtype: vagovstaging
+#            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+#          - buildtype: vagovprod
+#            drupal-address: https://prod.cms.va.gov
+#
+#    steps:
+#      - name: Checkout vagov-content
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+#        with:
+#          repository: department-of-veterans-affairs/vagov-content
+#          path: vagov-content
+#
+#      - name: Checkout content-build
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+#        with:
+#          path: content-build
+#
+#      - name: Get Node version
+#        id: get-node-version
+#        run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
+#
+#      - name: Setup Node
+#        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+#        with:
+#          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+#
+#      - name: Setup Yarn
+#        run: npm i -g yarn@1.19.1
+#
+#      - name: Cache dependencies
+#        id: cache-dependencies
+#        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+#        with:
+#          path: |
+#            .cache/yarn
+#            **/node_modules
+#          key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-${{ hashFiles('**/yarn.lock') }}
+#          restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
+#
+#      - name: Install dependencies
+#        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
+#        with:
+#          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
+#          max_attempts: 3
+#          timeout_minutes: 7
+#        env:
+#          YARN_CACHE_FOLDER: .cache/yarn
+#
+#      - name: Configure AWS Credentials (1)
+#        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-gov-west-1
+#
+#      - name: Set Drupal address
+#        if: ${{ github.ref == 'refs/heads/main' }}
+#        run: echo "DRUPAL_ADDRESS=${{ matrix.drupal-address }}" >> $GITHUB_ENV
+#
+#      - name: Set Drupal prod password
+#        if: ${{ matrix.buildtype == 'vagovprod' && github.ref == 'refs/heads/main' }}
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        with:
+#          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
+#          env_variable_name: DRUPAL_PASSWORD
+#
+#      - name: Set Drupal prod username
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        with:
+#          ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
+#          env_variable_name: DRUPAL_USERNAME
+#
+#      - name: Get buildtime
+#        id: buildtime
+#        run: |
+#          BUILDTIME=$(date +%s)
+#          echo buildtime=$BUILDTIME >> $GITHUB_OUTPUT
+#          echo "${{ matrix.buildtype }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
+#
+#      - name: Wait for the CMS to be ready
+#        uses: ./content-build/.github/workflows/wait-for-cms-ready
+#        with:
+#          base_url: ${{ env.DRUPAL_ADDRESS }}
+#
+#      - name: Build
+#        run: yarn build --buildtype=${{ matrix.buildtype }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose
+#        env:
+#          NODE_ENV: production
+#          DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
+#
+#      - name: Check broken links
+#        id: get-broken-link-info
+#        if: ${{ matrix.buildtype == 'vagovprod' }}
+#        run: node ./script/github-actions/check-broken-links-blocks.js ${{ matrix.buildtype }}
+#
+#      - name: Generate build details
+#        run: |
+#          cat > build/${{ matrix.buildtype }}/BUILD.txt << EOF
+#          BUILDTYPE=${{ matrix.buildtype }}
+#          NODE_ENV=production
+#          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+#          CHANGE_TARGET=null
+#          RUN_ID=${{ github.run_id }}
+#          RUN_NUMBER=${{ github.run_number }}
+#          REF=${{ github.sha }}
+#          BUILDTIME=${{ steps.buildtime.outputs.buildtime }}
+#          EOF
+#
+#      - name: Prearchive
+#        run: node ./script/prearchive.js --buildtype=${{ matrix.buildtype }}
+#
+#      - name: Compress build
+#        run: tar -C build/${{ matrix.buildtype }} -cvf ${{ matrix.buildtype }}.tar.bz2 .
+#
+#      - name: Cache Drupal content
+#        if: github.ref == 'refs/heads/main'
+#        run: node ./script/drupal-aws-cache.js --buildtype=${{ matrix.buildtype }}
+#
+#      - name: Get role from Parameter Store
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        with:
+#          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+#          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+#
+#      - name: Configure AWS Credentials (2)
+#        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-gov-west-1
+#          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+#          role-duration-seconds: 900
+#          role-session-name: vsp-frontendteam-githubaction
+#
+#      - name: Upload build
+#        run: aws s3 cp ${{ matrix.buildtype }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.buildtype }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
+#
+#      - name: Upload Drupal cache
+#        if: github.ref == 'refs/heads/main'
+#        run: aws s3 sync .cache/content s3://vetsgov-website-builds-s3-upload/content/ --acl public-read --region us-gov-west-1 --quiet
+#
+#      # Only will get called if error in workflow
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+#        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-gov-west-1
+#
+#      - name: Get Slack app token
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+#        with:
+#          ssm_parameter: /devops/github_actions_slack_socket_token
+#          env_variable_name: SLACK_APP_TOKEN
+#
+#      - name: Get Slack bot token
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+#        with:
+#          ssm_parameter: /devops/github_actions_slack_bot_user_token
+#          env_variable_name: SLACK_BOT_TOKEN
+#
+#      - name: Get role from Parameter Store
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+#        with:
+#          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+#          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+#
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+#        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-gov-west-1
+#          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+#          role-duration-seconds: 900
+#          role-session-name: vsp-frontendteam-githubaction
+#
+#      - name: Upload broken links file
+#        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+#        run: aws s3 cp ./logs/${{ matrix.buildtype }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ matrix.buildtype }}-broken-links.json --acl public-read --region us-gov-west-1
+#
+#      - name: Notify Slack about broken links
+#        uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
+#        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
+#        continue-on-error: true
+#        env:
+#          SSL_CERT_DIR: /etc/ssl/certs
+#          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+#        with:
+#          payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
+#          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
   unit-tests:
     name: Unit Tests
@@ -350,15 +350,39 @@ jobs:
 
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
+  # This is necessary to get credentials to use the private ECR image defined in the test job container.
+  login-to-amazon-ecr:
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-gov-west-1
+        mask-aws-account-id: 'false'
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      with:
+        mask-password: 'false'
+    outputs:
+      docker_username: ${{ steps.login-ecr.outputs.docker_username_008577686731_dkr_ecr_us_gov_west_1_amazonaws_com }}
+      docker_password: ${{ steps.login-ecr.outputs.docker_password_008577686731_dkr_ecr_us_gov_west_1_amazonaws_com }}
 
   cypress-tests:
     name: Cypress E2E Tests
     runs-on: [self-hosted, asg]
     needs:
-      - build
+      - login-to-amazon-ecr
+#      - build
     timeout-minutes: 30
     container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
+      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/cypress-io:node16.13.2-chrome100-ff98
+      credentials:
+        username: ${{ needs.login-to-amazon-ecr.outputs.docker_username }}
+        password: ${{ needs.login-to-amazon-ecr.outputs.docker_password }}
       options: --user 1001:1001
       volumes:
         - /usr/local/share:/share
@@ -600,79 +624,79 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy:
-    name: Deploy
-    runs-on: [self-hosted, asg]
-    if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
-    needs: [build, cypress-tests, get-latest-run-number]
-
-    env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
-
-    strategy:
-      matrix:
-        include:
-          - environment: vagovdev
-            bucket: content.dev.va.gov
-          - environment: vagovstaging
-            bucket: content.staging.va.gov
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-
-      - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Get Drupal token from Parameter Store
-        if: ${{ matrix.environment == 'vagovstaging' }}
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        with:
-          ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
-          env_variable_name: CALLBACK_TOKEN
-
-      - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 1800
-          role-session-name: vsp-frontendteam-githubaction
-
-      - name: Deploy
-        run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
-        env:
-          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
-          DEST: s3://${{ matrix.bucket }}
-
-      - name: Wait for the CMS to be ready
-        uses: ./.github/workflows/wait-for-cms-ready
-        with:
-          base_url: https://staging.cms.va.gov
-
-      - name: CMS GovDelivery callback
-        if: ${{ matrix.environment == 'vagovstaging' }}
-        uses: fjogeleit/http-request-action@e8dd067b83c3ab0774c76bf065b1c4f11c7e45ba # v1.14.0
-        with:
-          url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
-          method: GET
-          username: api
-          password: ${{ env.CALLBACK_TOKEN }}
-          timeout: 10000
-        # A failure here should not prevent the workflow from continuing.
-        continue-on-error: true
+#  deploy:
+#    name: Deploy
+#    runs-on: [self-hosted, asg]
+#    if: ${{ always() && github.ref == 'refs/heads/main' && needs.get-latest-run-number.result == 'success' && needs.get-latest-run-number.outputs.latest_run_number == github.run_number }}
+#    needs: [build, cypress-tests, get-latest-run-number]
+#
+#    env:
+#      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
+#
+#    strategy:
+#      matrix:
+#        include:
+#          - environment: vagovdev
+#            bucket: content.dev.va.gov
+#          - environment: vagovstaging
+#            bucket: content.staging.va.gov
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+#
+#      - name: Configure AWS credentials (1)
+#        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-gov-west-1
+#
+#      - name: Get role from Parameter Store
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        with:
+#          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
+#          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
+#
+#      - name: Get Drupal token from Parameter Store
+#        if: ${{ matrix.environment == 'vagovstaging' }}
+#        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+#        with:
+#          ssm_parameter: /dsva-vagov/vets-website/staging/drupal-password
+#          env_variable_name: CALLBACK_TOKEN
+#
+#      - name: Configure AWS Credentials (2)
+#        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-gov-west-1
+#          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
+#          role-duration-seconds: 1800
+#          role-session-name: vsp-frontendteam-githubaction
+#
+#      - name: Deploy
+#        run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
+#        env:
+#          SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/${{ matrix.environment }}.tar.bz2
+#          DEST: s3://${{ matrix.bucket }}
+#
+#      - name: Wait for the CMS to be ready
+#        uses: ./.github/workflows/wait-for-cms-ready
+#        with:
+#          base_url: https://staging.cms.va.gov
+#
+#      - name: CMS GovDelivery callback
+#        if: ${{ matrix.environment == 'vagovstaging' }}
+#        uses: fjogeleit/http-request-action@e8dd067b83c3ab0774c76bf065b1c4f11c7e45ba # v1.14.0
+#        with:
+#          url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+#          method: GET
+#          username: api
+#          password: ${{ env.CALLBACK_TOKEN }}
+#          timeout: 10000
+#        # A failure here should not prevent the workflow from continuing.
+#        continue-on-error: true
 
   jenkins:
     name: Run Jenkins CI
@@ -707,21 +731,21 @@ jobs:
       - name: Trigger Jenkins pipeline
         run: node script/github-actions/trigger-jenkins.js
 
-  notify-failure:
-    name: Notify Failure
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
-    needs: deploy
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!subteam^S01JXBLLMJL|cms-devops-engineers> content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#  notify-failure:
+#    name: Notify Failure
+#    runs-on: ubuntu-latest
+#    if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
+#    needs: deploy
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+#
+#      - name: Notify Slack
+#        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
+#        continue-on-error: true
+#        with:
+#          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!subteam^S01JXBLLMJL|cms-devops-engineers> content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+#          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
