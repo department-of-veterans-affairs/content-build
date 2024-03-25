@@ -354,7 +354,6 @@ jobs:
   # This is necessary to get credentials to use the private ECR image defined in the test job container.
   login-to-amazon-ecr:
     runs-on: ubuntu-latest
-    if: github.event.deployment_status.state == 'success'
     steps:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
