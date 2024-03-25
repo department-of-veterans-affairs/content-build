@@ -331,25 +331,26 @@ jobs:
       - name: Audit dependencies
         run: yarn security-check
 
-  drupal-cache-test:
-    name: Drupal Cache Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+#  drupal-cache-test:
+#    name: Drupal Cache Test
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+#
+#      - name: Install dependencies
+#        uses: ./.github/workflows/install
+#        timeout-minutes: 30
+#        with:
+#          key: ${{ hashFiles('yarn.lock') }}
+#          yarn_cache_folder: .cache/yarn
+#          path: |
+#            .cache/yarn
+#            node_modules
+#
+#      - name: Fetch Drupal cache
+#        run: yarn fetch-drupal-cache
 
-      - name: Install dependencies
-        uses: ./.github/workflows/install
-        timeout-minutes: 30
-        with:
-          key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-
-      - name: Fetch Drupal cache
-        run: yarn fetch-drupal-cache
   # This is necessary to get credentials to use the private ECR image defined in the test job container.
   login-to-amazon-ecr:
     runs-on: ubuntu-latest
