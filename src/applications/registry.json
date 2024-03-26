@@ -1747,16 +1747,6 @@
   },
   {
     "appName": "Accredited Representative Portal",
-    "entryName": "representatives",
-    "rootUrl": "/representatives",
-    "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "Accredited Representative Portal",
     "entryName": "representative",
     "rootUrl": "/representative",
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
@@ -1778,7 +1768,7 @@
   {
     "appName": "Foreign Medical Program (FMP) Registration Form",
     "entryName": "10-7959f-1-FMP",
-    "rootUrl": "/ivc-champva/10-7959f-1",
+    "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
       "vagovprod": false,

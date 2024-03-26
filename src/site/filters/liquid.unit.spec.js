@@ -1305,6 +1305,68 @@ describe('phoneLinks', () => {
       'Here is a <va-telephone href="test">phone number</va-telephone>: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
+  it('does not double-wrap phone numbers in va-telephone components', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
+
+describe('separatePhoneNumberExtension similar to functioning on Vets-website', () => {
+  it('processes a phone number with an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '123-456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('processes a phone number with parentheses an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '(123) 456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('should process phone number strings into phone and extension', () => {
+    const phoneNumber = '800-827-1000';
+    const phoneNumberNoDashes = '8008271000';
+    const extension = '123';
+    const phoneConditions = [
+      '',
+      'x',
+      ' ext ',
+      ' ext. ',
+      ' x. ',
+      ', x',
+      ', ext',
+      ', ext.',
+      ', ext. ',
+    ]
+      // For all cases except the first, concatenate the phoneNumber, extension separator, and extension
+      .map((e, i) => (i === 0 ? phoneNumber : phoneNumber + e + extension));
+    for (let i = 0; i < phoneConditions.length; i += 1) {
+      const processed = liquid.filters.separatePhoneNumberExtension(
+        phoneConditions[i],
+      );
+      if (i === 0) {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension: '',
+        });
+      } else {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension,
+        });
+      }
+    }
+  });
 });
 
 describe('formatTitleTag', () => {

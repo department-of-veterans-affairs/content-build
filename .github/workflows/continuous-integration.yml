@@ -351,14 +351,38 @@ jobs:
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
 
+  # This is necessary to get credentials to use the private ECR image defined in the test job container.
+  login-to-amazon-ecr:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-gov-west-1
+        mask-aws-account-id: 'false'
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      with:
+        mask-password: 'false'
+    outputs:
+      docker_username: ${{ steps.login-ecr.outputs.docker_username_008577686731_dkr_ecr_us_gov_west_1_amazonaws_com }}
+      docker_password: ${{ steps.login-ecr.outputs.docker_password_008577686731_dkr_ecr_us_gov_west_1_amazonaws_com }}
+
   cypress-tests:
     name: Cypress E2E Tests
     runs-on: [self-hosted, asg]
     needs:
+      - login-to-amazon-ecr
       - build
     timeout-minutes: 30
     container:
-      image: public.ecr.aws/cypress-io/cypress/browsers:node16.13.2-chrome100-ff98
+      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/cypress-io:node16.13.2-chrome100-ff98
+      credentials:
+        username: ${{ needs.login-to-amazon-ecr.outputs.docker_username }}
+        password: ${{ needs.login-to-amazon-ecr.outputs.docker_password }}
       options: --user 1001:1001
       volumes:
         - /usr/local/share:/share
