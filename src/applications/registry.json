@@ -1314,6 +1314,17 @@
     }
   },
   {
+    "appName": "MHV Medical Records isolated app test",
+    "entryName": "medical-records-test",
+    "rootUrl": "/my-health/medical-records-test",
+    "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002-test",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
     "appName": "26-4555 Application in Acquiring Specially Adapted Housing or Special Home Adaptation Grant",
     "entryName": "4555-adapted-housing",
     "rootUrl": "/housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555",
