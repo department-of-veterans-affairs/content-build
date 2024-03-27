@@ -10,7 +10,7 @@
   {% endif %}
 
   {% if serviceDescription %}
-    <p 
+    <p
       id="vba-service-body-{{ entityId }}"
       class="vads-u-margin-top--2 vads-u-margin-bottom--0"
     >
@@ -20,7 +20,7 @@
   {% endif %}
 
 
-  {% comment %} 
+  {% comment %}
     possibly values for fieldOfficeVists
       no
       yes_appointment_only
@@ -46,7 +46,7 @@
         </div>
       {% endif %}
 
-      {% comment %} 
+      {% comment %}
         possibly values for fieldVirtualSupport
           value: 'no'
           value: yes_appointment_only
@@ -60,16 +60,20 @@
           </p>
         </div>
       {% endif %}
-      
+
+      {% assign SL_OMIT_REFERRAL_OR_WALKIN = "not_applicable, unknown, 2" %}
+
       {% if fieldReferralRequired %}
-        <p class="vads-u-margin-top--1 vads-u-margin-bottom-0">
-          {% case fieldReferralRequired %}
-            {% when "1" %}
-              <i class="fas fa-check-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is required
-            {% when "0","not_applicable","2" %}
-              <i class="fas fa-times-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is not required
-          {% endcase %}
-        </p>
+        {% unless SL_OMIT_REFERRAL_OR_WALKIN contains fieldReferralRequired %}
+          <p class="vads-u-margin-top--1 vads-u-margin-bottom-0">
+            {% case fieldReferralRequired %}
+              {% when "1" %}
+                <i class="fas fa-check-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is required
+              {% when "0" %}
+                <i class="fas fa-times-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is not required
+            {% endcase %}
+          </p>
+        {% endunless %}
       {% endif %}
     </div>
   {% endif %}
@@ -82,7 +86,7 @@
           <p data-testid="service-location-custom-text" class="vads-u-margin-bottom--0">{{ single.fieldApptIntroTextCustom | drupalToVaPath | phoneLinks }}</p>
         {% elsif single.fieldApptIntroTextType == 'use_default_text' %}
           <p data-testid="service-location-default-text" class="vads-u-margin-bottom--0">
-            Contact us to schedule, reschedule, or cancel your appointment. If a referral is required, 
+            Contact us to schedule, reschedule, or cancel your appointment. If a referral is required,
             you’ll need to contact your primary care provider first.
           </p>
         {% endif %}
@@ -125,8 +129,8 @@
 
 
   {% if single.fieldOnlineSchedulingAvail == "yes" %}
-    <div 
-      data-testid="service-location-action-link-online" 
+    <div
+      data-testid="service-location-action-link-online"
       class="vads-u-margin-top--2 vads-u-margin-bottom--1"
     >
       <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
