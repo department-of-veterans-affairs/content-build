@@ -63,6 +63,7 @@
           {% assign billingAndInsuranceFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Billing and insurance' %}
           {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
               facilities = billingAndInsuranceFacilities
+              nonClinicalHeaderLevel = 3
             %}
           {% endif %}
 

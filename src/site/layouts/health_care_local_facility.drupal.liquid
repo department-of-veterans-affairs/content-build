@@ -189,7 +189,6 @@
             <section class="local-health-services" id="local-health-services" data-label="Health services">
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
-
               <va-accordion bordered uswds="false">
               {% for localService in localHealthServices %}
                 {% assign serviceSection = localService.entity.fieldAdministration.entity %}
@@ -203,6 +202,7 @@
                       locations = localService.entity.fieldServiceLocation
                       localServiceDescription = localService.entity.fieldBody.processed
                       fieldFacilityLocatorApiId = fieldFacilityLocatorApiId
+                      fieldReferralRequired = localService.entity.fieldReferralRequired
                   %}
 
                 {% endif %}

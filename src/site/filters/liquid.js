@@ -298,7 +298,7 @@ module.exports = function registerFilters() {
       return { phoneNumber, extension: '' };
     }
     const phone = match[1] + match[2] + match[3];
-    // optional extension matching x1234 (match 4) or ext1234 (match 5)
+    // optional extension matching x(1234) (match 4) or ext(1234) (match 5)
     const extension = match[4] || match[5] || '';
 
     return {
@@ -957,6 +957,20 @@ module.exports = function registerFilters() {
       );
     }
     return accordions;
+  };
+  liquid.filters.shouldShowIconDiv = (
+    fieldOfficeVisits,
+    fieldVirtualSupport,
+    fieldReferralRequired,
+  ) => {
+    if (
+      (fieldOfficeVisits && fieldOfficeVisits !== 'no') ||
+      (fieldVirtualSupport && fieldVirtualSupport !== 'no') ||
+      fieldReferralRequired
+    ) {
+      return true;
+    }
+    return false;
   };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {

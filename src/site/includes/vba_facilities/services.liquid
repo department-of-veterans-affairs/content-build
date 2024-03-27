@@ -57,6 +57,7 @@
 
         <va-accordion-item
           uswds
+          bordered
           class="va-accordion-item"
           id="vba-service-item-{{ entityId }}"
           header="{{ entityName }}"
@@ -76,7 +77,7 @@
               <va-link
                 active
                 href="{{ onlineSelfService.url.path }}"
-                text="{{ onlineSelfService.title }}" /
+                text="{{ onlineSelfService.title }}" 
                 onclick="recordEvent(
                   {
                     'event': 'vba-regional-facility-services-manage-benefits-online',
@@ -90,19 +91,21 @@
           {% endif %}
 
           {% for fServiceLocation in entity.facilityService.fieldServiceLocation %}
-            {% include "src/site/includes/vba_facilities/service_location.liquid" with
-              location = fServiceLocation
-              entityLabel = facilityLabel
-              serviceHeader = facilityServiceHeader
-              serviceDescription = facilityServiceDescription
+            {% include "src/site/paragraphs/service_location.drupal.liquid" with 
+                single = fServiceLocation.entity
+                serviceLocationSubHeaderLevel = 4
+                serviceLocationType="VBA"
+                serviceHeader = facilityServiceHeader
+                serviceDescription = facilityServiceDescription
             %}
           {% endfor %}
           {% for rServiceLocation in entity.regionalService.fieldServiceLocation %}
-            {% include "src/site/includes/vba_facilities/service_location.liquid" with
-              location = rServiceLocation
-              entityLabel = regionalLabel
-              serviceHeader = regionalServiceHeader
-              serviceDescription = regionalServiceDescription
+            {% include "src/site/paragraphs/service_location.drupal.liquid" with
+                single = rServiceLocation.entity
+                serviceLocationSubHeaderLevel = 4
+                serviceLocationType="VBA"
+                serviceHeader = regionalServiceHeader
+                serviceDescription = regionalServiceDescription
             %}
           {% endfor %}
 
