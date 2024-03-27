@@ -31,10 +31,14 @@ describe('VBA accordions for Service Locations', () => {
       .exist;
     expect(getByTestId(covidHTML, 'service-location-appoinments-header')).to
       .exist;
-    expect(getByTestId(covidHTML, 'service-location-main-facility-phone')).to
-      .exist;
     expect(getByTestId(covidHTML, 'service-location-show-other-phone-numbers'))
       .to.exist;
+    expect(
+      getByTestId(
+        covidHTML,
+        'service-location-main-facility-phone-for-contact',
+      ),
+    ).to.exist;
     expect(getByTestId(covidHTML, 'service-location-field-hours')).to.exist;
     expect(getByTestId(covidHTML, 'service-location-custom-text')).to.exist;
   });

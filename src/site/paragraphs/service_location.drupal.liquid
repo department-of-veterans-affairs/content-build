@@ -94,9 +94,26 @@
     </div>
   {% endif %}
 
-  {% comment %} Appointment related phone numbers {% endcomment %}
-  {% if single.fieldOtherPhoneNumbers.length > 0 %}
-    {% comment %} {% assign phoneForAppointmentH = serviceLocationH | plus: 1 %} {% endcomment %}
+  {% comment %}
+  Conditionally display facility phone number
+  {% endcomment %}
+  {% if isMentalHealthService and fieldMentalHealthPhone %}
+    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+  {% elsif fieldPhoneNumber %}
+    {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+  {% endif %}
+  
+  {% comment %} if there is a main phone number and it should be used for appointments {% endcomment %}
+  {% if serviceLocationMainNumber and single.fieldUseFacilityPhoneNumber %}
+    <div data-testid="service-location-main-facility-phone">
+      {% include "src/site/components/phone-number.drupal.liquid" with
+            phoneNumber = serviceLocationMainNumber
+            phoneLabel = 'Main Phone'
+            phoneHeaderLevel = serviceLocationH
+          %}
+    </div>
+  {% elsif single.fieldOtherPhoneNumbers.length > 0 %}
+    {% comment %} other phone numbers {% endcomment %}
     <div class="vads-u-display--flex vads-u-flex-direction--column" data-template="facilities/health_care_local_health_service" data-testid="service-location-show-other-phone-numbers" >
       {% for number in single.fieldOtherPhoneNumbers %}
         {% include "src/site/components/phone-number.drupal.liquid" with
@@ -109,14 +126,7 @@
     </div>
   {% endif %}
 
-  {% comment %}
-  Conditionally display facility phone number
-  {% endcomment %}
-  {% if isMentalHealthService and fieldMentalHealthPhone %}
-    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
-  {% else if single.fieldUseFacilityPhoneNumber and fieldPhoneNumber %}
-    {% assign serviceLocationMainNumber = fieldPhoneNumber %}
-  {% endif %}
+
 
   {% if single.fieldOnlineSchedulingAvail == "yes" %}
     <div
@@ -129,18 +139,7 @@
     </div>
   {% endif %}
 
-  {% comment %}
-    Conditionally display facility phone number
-  {% endcomment %}
-  {% if serviceLocationMainNumber %}
-    <div data-testid="service-location-main-facility-phone">
-      {% include "src/site/components/phone-number.drupal.liquid" with
-        phoneNumber = serviceLocationMainNumber
-        phoneLabel = 'Main Phone'
-        phoneHeaderLevel = serviceLocationH
-      %}
-    </div>
-  {% endif %}
+  
 
   {% comment %} Includes header for clinic name {% endcomment %}
   {% if single.fieldServiceLocationAddress.entity %}
@@ -150,13 +149,32 @@
     %}
   {% endif %}
 
-  {% comment %}
-    Display each additional phone number provided
-  {% endcomment %}
-  {% include "src/site/components/phone.drupal.liquid" with
-    numbers = single.fieldPhone
-    phoneHeaderLevel = serviceLocationH
-  %}
+  {% if single.fieldUseMainFacilityPhone and serviceLocationMainNumber %}
+    {% comment %}
+      Display the main facility phone number
+    {% endcomment %}
+    <div data-testid="service-location-main-facility-phone-for-contact">
+      {% include "src/site/components/phone-number.drupal.liquid" with
+        phoneNumber = serviceLocationMainNumber
+        phoneLabel = 'Main Phone'
+        phoneHeaderLevel = serviceLocationH
+      %}
+    </div>
+  {% elsif single.fieldPhone.length > 0 %}
+    {% comment %}
+      Display each additional contact phone number provided
+    {% endcomment %}
+    <div class="vads-u-display--flex vads-u-flex-direction--column" data-testid="service-location-show-contact-phone-numbers">
+      {% for number in single.fieldPhone %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+            phoneNumber = number.entity.fieldPhoneNumber
+            phoneExtension = number.entity.fieldPhoneExtension
+            phoneLabel = number.entity.fieldPhoneLabel
+            phoneHeaderLevel = serviceLocationH
+        %}
+      {% endfor %}
+    </div>
+  {% endif %}
 
   {% if single.fieldEmailContacts %}
     {% for email in single.fieldEmailContacts %}
