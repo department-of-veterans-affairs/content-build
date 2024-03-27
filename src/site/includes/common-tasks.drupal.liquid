@@ -24,18 +24,21 @@
                   {% if link.url.path and link.label %}
                     <li>
                       <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
-                        <a
-                        onclick="recordMultipleEvents([
-                          {
-                            event: 'nav-zone-one',
-                            'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
-                            'click-text': '{{ link.label | strip }}',
-                          },
-                          { 
-                            event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
-                          }
-                        ]);"
-                        href="{{ link.url.path }}">{{ link.label }}</a>
+                        <va-link
+                          disable-analytics
+                          onclick="recordMultipleEvents([
+                            {
+                              event: 'nav-zone-one',
+                              'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                              'click-text': '{{ link.label | strip }}',
+                            },
+                            { 
+                              event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
+                            }
+                          ]);"
+                          href="{{ link.url.path }}"
+                          text="{{ link.label }}" 
+                        />
                     </li>
                   {% endif %}
                 {% endfor %}
@@ -57,17 +60,20 @@
               {% for link in popularLinks%}
                 {% if link.url.path and link.label %}
                   <li>
-                      <a
-                      onclick="recordMultipleEvents([
-                        {
-                        event: 'nav-zone-one',
-                        'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
-                        'click-text': '{{ link.label | strip }}',
-                        },
-                        { 
-                          event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' }
-                      ]);"
-                      href="{{ link.url.path }}">{{ link.label }}</a>
+                      <va-link
+                        disable-analytics
+                        onclick="recordMultipleEvents([
+                          {
+                          event: 'nav-zone-one',
+                          'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                          'click-text': '{{ link.label | strip }}',
+                          },
+                          { 
+                            event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' }
+                        ]);"
+                        href="{{ link.url.path }}"
+                        text="{{ link.label }}"
+                      />
                   </li>
                 {% endif %}
               {% endfor %}
