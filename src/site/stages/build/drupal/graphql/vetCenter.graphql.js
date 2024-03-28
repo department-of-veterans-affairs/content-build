@@ -41,6 +41,9 @@ const vetCenterFragment = `
                      ... on ParagraphButton {
                         fieldButtonLink {
                             uri
+                            url {
+                              path
+                            }
                             title
                             options
                         }
