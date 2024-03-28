@@ -159,8 +159,8 @@
     "template": {
       "title": "VA online services terms of use",
       "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "vagovprod": false
+      "includeBreadcrumbs": false,
+      "vagovprod": true
     }
   },
   {
@@ -212,7 +212,7 @@
         },
         {
           "path": "burials-and-memorials/application/530",
-          "name": "Review burial benefits application"
+          "name": "Apply for burial benefits"
         }
       ]
     }
