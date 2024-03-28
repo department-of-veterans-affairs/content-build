@@ -3,6 +3,10 @@
     <h{{ serviceLocationAddressHeaderLevel }}>
       {{ serviceLocationAddress.fieldClinicName }}
     </h{{ serviceLocationAddressHeaderLevel }}>
+  {% elsif serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
+    <h{{ serviceLocationAddressHeaderLevel }}>
+      Location
+    </h{{ serviceLocationAddressHeaderLevel }}>
   {% endif %}
 
   {% comment %}

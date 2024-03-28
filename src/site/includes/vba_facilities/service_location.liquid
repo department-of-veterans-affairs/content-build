@@ -120,9 +120,15 @@
       <p>
         {% if clinicName %}
           {{ clinicName }} <br/>
+        {% else %}
+          Location <br/>
         {% endif %}
 
-        {% if buildingNameAndNumber and wingFloorOrRoomNumber %}
+        {% if buildingNameAndNumber and !wingFloorOrRoomNumber %}
+          {{ buildingNameAndNumber }}
+        {% elsif !buildingNameAndNumber and wingFloorOrRoomNumber %}
+          {{ wingFloorOrRoomNumber }}
+        {% elsif buildingNameAndNumber and wingFloorOrRoomNumber %}
           {{ buildingNameAndNumber }}, {{ wingFloorOrRoomNumber }}
         {% endif %}
       </p>
