@@ -1499,6 +1499,17 @@
     }
   },
   {
+    "appName": "MHV Medications new",
+    "entryName": "medications-new",
+    "rootUrl": "/my-health/medications-new",
+    "productId": "c69c3eee-5250-4919-92f1-065b24cc718a",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
     "appName": "Request to be a substitute claimant for a deceased claimant",
     "entryName": "21P-0847-substitute-claimant",
     "rootUrl": "/supporting-forms-for-claims/substitute-claimant-form-21P-0847",
