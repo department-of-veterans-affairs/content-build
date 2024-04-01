@@ -67,12 +67,19 @@
               {% if fieldQAGroup.entity.fieldSectionHeader %}
                 <h2>{{ fieldQAGroup.entity.fieldSectionHeader }}</h2>
               {% endif %}
+            
+              <!-- Optional QA Group Introduction -->
+              {% if fieldQAGroup.entity.fieldRichWysiwyg.processed %}
+                  {{ fieldQAGroup.entity.fieldRichWysiwyg.processed }}
+              {% endif %}  
+
             {% if fieldQAGroup.entity.fieldAccordionDisplay %}
               {% assign headerLevel = '2' %}
               {% if fieldQAGroup.entity.fieldSectionHeader %}
                 {% assign headerLevel = '3' %}
               {% endif %}
-              <va-accordion>
+              
+              <va-accordion uswds>
                 {% assign groupId = fieldQAGroup.entity.entityId %}
                   {% for fieldQA in fieldQAGroup.entity.fieldQAs %}
                     {% if fieldQA.entity %}

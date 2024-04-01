@@ -69,6 +69,7 @@ const healthCareRegionDetailPage = `
     fieldOffice {
       entity {
         ...on NodeHealthCareRegionPage {
+          fieldVamcEhrSystem
           entityLabel
           title
         }

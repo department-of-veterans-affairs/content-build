@@ -21,6 +21,9 @@ const vbaFacilityFragment = `
               }
             }
           }
+          fieldCcVbaFacilityOverview {
+            fetched
+          }
           fieldShowBanner
           fieldAlertType
           fieldDismissibleOption
@@ -33,6 +36,7 @@ const vbaFacilityFragment = `
           fieldIntroText
           fieldFacilityLocatorApiId
           fieldOperatingStatusFacility
+          fieldOperatingStatusMoreInfo
           fieldPhoneNumber
           fieldCcBenefitsHotline {
             fetched
@@ -92,36 +96,30 @@ const vbaFacilityFragment = `
           fieldCcGetUpdatesFromVba {
             fetched
           }
-          reverseFieldVbaRegionFacilityListNode {
-            count
-            entities {
-              entityId
-              entityLabel
-              ... on NodeServiceRegion {
-                entityBundle
-                reverseFieldVbaServiceRegionsTaxonomyTerm {
-                  count
-                  entities {
-                    entityType
-                    ... on TaxonomyTermHealthCareServiceTaxonomy {
-                      name
-                      tid
-                      entityId
-                      entityLabel
-                      fieldFacilityServiceHeader
-                      fieldRegionalServiceHeader
-                      fieldRegionalServiceDescripti
-                      fieldShowForVbaFacilities
-                      fieldVbaTypeOfCare
-                      fieldOnlineSelfService {
-                        url {
-                          path
-                        }
-                        uri
-                      }
-                      fieldVbaServiceDescrip
-                    }
+          fieldMedia {
+            entity {
+              ... on MediaImage {
+                image {
+                  alt
+                  title
+                  derivative(style: _32MEDIUMTHUMBNAIL) {
+                    url
+                    width
+                    height
                   }
+                }
+              }
+            }
+          }
+          fieldPrepareForVisit {
+            entity {
+              id
+              entityBundle
+              ... on ParagraphBasicAccordion {
+                id
+                fieldHeader
+                fieldRichWysiwyg {
+                  processed
                 }
               }
             }
@@ -141,45 +139,59 @@ const vbaFacilityFragment = `
                 }
                 fieldServiceLocation {
                   entity {
+                    entityId
                     ... on ParagraphServiceLocation {
-                      fieldServiceLocationAddress {
-                        entity {
-                          ... on ParagraphServiceLocationAddress {
-                            fieldUseFacilityAddress
-                            fieldAddress {
-                              addressLine1
-                              addressLine2
-                              organization
-                              additionalName
-                              givenName
-                              postalCode
-                            }
-                          }
-                        }
+                      id
+                      entityId
+                      fieldHours
+                      fieldOfficeHours {
+                        starthours
+                        endhours
+                        day
+                        comment
+                        allDay
                       }
                       fieldUseMainFacilityPhone
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
+                            id
                             fieldPhoneNumber
+                            fieldPhoneLabel
                           }
                         }
                       }
+                      fieldAdditionalHoursInfo
                       fieldEmailContacts {
-                        ... on FieldParagraphServiceLocationFieldEmailContacts {
-                          entity {
-                            entityLabel
+                        entity {
+                          id
+                          ... on ParagraphEmailContact {
+                            id
+                            fieldEmailAddress
+                            fieldEmailLabel
                           }
                         }
                       }
-                      fieldOfficeHours {
-                        day
-                        allDay
-                        starthours
-                        endhours
-                        comment
+                      fieldServiceLocationAddress {
+                        targetId
+                        entity {
+                          ... on ParagraphServiceLocationAddress {
+                            id
+                            fieldAddress {
+                              addressLine1
+                              addressLine2
+                              administrativeArea
+                              countryCode
+                              postalCode
+                              locality
+                            }
+                            fieldBuildingNameNumber
+                            fieldClinicName
+                            fieldUseFacilityAddress
+                            fieldWingFloorOrRoomNumber
+                          }
+                        }
                       }
-                      fieldUseMainFacilityPhone
                     }
                   }
                 }
@@ -187,12 +199,24 @@ const vbaFacilityFragment = `
                 fieldServiceNameAndDescripti {
                   entity {
                     name
+                    tid
+                    entityId
+                    entityLabel
                     entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
-                      fieldFacilityServiceDescripti
                       fieldFacilityServiceHeader
-                      fieldVbaTypeOfCare
+                      fieldRegionalServiceHeader
+                      fieldFacilityServiceDescripti
+                      fieldRegionalServiceDescripti
                       fieldShowForVbaFacilities
+                      fieldVbaTypeOfCare
+                      fieldOnlineSelfService {
+                        title
+                        url {
+                          path
+                        }
+                        uri
+                      }
                       fieldVbaServiceDescrip
                       description {
                         value
@@ -205,35 +229,101 @@ const vbaFacilityFragment = `
               }
             }
           }
-          fieldMedia {
-            entity {
-              ... on MediaImage {
-                image {
-                  alt
-                  title
-                  derivative(style: _32MEDIUMTHUMBNAIL) {
-                    url
-                    width
-                    height
-                  }
-                }
-              }
-            }
-          }
           reverseFieldVbaRegionFacilityListNode {
             count
             entities {
+              entityId
+              entityLabel
               ... on NodeServiceRegion {
-                entityId
-                entityLabel
-                reverseFieldVbaServiceRegionsTaxonomyTerm {
-                  count
-                  entities {
+                entityBundle
+                fieldServiceNameAndDescripti {
+                  entity {
+                    name
+                    tid
+                    entityId
+                    entityLabel
+                    entityBundle
                     ... on TaxonomyTermHealthCareServiceTaxonomy {
-                      entityId
-                      entityLabel
+                      fieldFacilityServiceHeader
                       fieldRegionalServiceHeader
+                      fieldFacilityServiceDescripti
                       fieldRegionalServiceDescripti
+                      fieldShowForVbaFacilities
+                      fieldVbaTypeOfCare
+                      fieldOnlineSelfService {
+                        title
+                        url {
+                          path
+                        }
+                        uri
+                      }
+                      fieldVbaServiceDescrip
+                      description {
+                        value
+                        format
+                        processed
+                      }
+                    }
+                  }
+                }
+                fieldServiceLocation {
+                  entity {
+                    entityId
+                    ... on ParagraphServiceLocation {
+                      id
+                      entityId
+                      fieldHours
+                      fieldAdditionalHoursInfo
+                      fieldOfficeHours {
+                        starthours
+                        endhours
+                        day
+                        comment
+                        allDay
+                      }
+                      fieldUseMainFacilityPhone
+                      fieldPhone {
+                        entity {
+                          ... on ParagraphPhoneNumber {
+                            id
+                            fieldPhoneNumberType
+                            fieldPhoneNumber
+                            fieldPhoneExtension
+                            fieldPhoneLabel
+                          }
+                        }
+                      }
+                      fieldAdditionalHoursInfo
+                      fieldEmailContacts {
+                        entity {
+                          id
+                          ... on ParagraphEmailContact {
+                            id
+                            fieldEmailAddress
+                            fieldEmailLabel
+                          }
+                        }
+                      }
+                      fieldServiceLocationAddress {
+                        targetId
+                        entity {
+                          ... on ParagraphServiceLocationAddress {
+                            id
+                            fieldAddress {
+                              addressLine1
+                              addressLine2
+                              administrativeArea
+                              countryCode
+                              postalCode
+                              locality
+                            }
+                            fieldBuildingNameNumber
+                            fieldClinicName
+                            fieldUseFacilityAddress
+                            fieldWingFloorOrRoomNumber
+                          }
+                        }
+                      }
                     }
                   }
                 }

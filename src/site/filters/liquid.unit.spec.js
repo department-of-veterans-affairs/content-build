@@ -1,26 +1,23 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
-import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
-import {
-  vbaFacilityOfficeNode,
-  vbaRegionFacilityNode,
-} from './fixtures/vbaFacility';
+import { vbaRegionFacilityOrOfficeNode } from './fixtures/vbaFacility';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
-import stagingSurveys from './medalliaStagingSurveys.json';
-import prodSurveys from './medalliaProdSurveys.json';
 import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility_data_cant_find_benefits.json';
 import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
 import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
 import phoneMockData from '../layouts/tests/vamc/fixtures/phoneMockData.json';
 import simpleWysiwygMockData from '../layouts/tests/vamc/fixtures/simpleWysiwygMockData.json';
+// import debug from 'debug';
+// To make debugging/building liquid filter tests easier. Add DEBUG=liquid before yarn test
+// Add `log` statements in the liquid filters while building.
+// const log = debug('liquid');
 
 registerFilters();
 
@@ -308,54 +305,6 @@ describe('sortByDateKey', () => {
         title: 'Women Veterans resource fair spotlights VA and community care',
       },
     ]);
-  });
-});
-
-describe('paginatePages', () => {
-  it('passing in less than 10 events', () => {
-    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
-
-    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
-      0,
-      -6,
-    );
-
-    const result = liquid.filters.paginatePages(
-      slicedEventListingMockData,
-      slicedEventListingMockData.reverseFieldListingNode.entities,
-    );
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator.next).to.be.null;
-  });
-
-  it('passing in more than 10 events', () => {
-    const result = liquid.filters.paginatePages(
-      eventListingMockData,
-      eventListingMockData.reverseFieldListingNode.entities,
-      'event',
-    );
-
-    const expected = {
-      ariaLabel: ' of event',
-      prev: null,
-      inner: [
-        {
-          href: null,
-          label: 1,
-          class: 'va-pagination-active',
-        },
-        {
-          href: '/pittsburgh-health-care/events/page-2',
-          label: 2,
-          class: '',
-        },
-      ],
-      next: '/pittsburgh-health-care/events/page-2',
-    };
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator).to.deep.equal(expected);
   });
 });
 
@@ -1237,6 +1186,40 @@ describe('local spotlight content', () => {
       },
     });
   });
+  it('shims local featured content from local spotlight to fetched form centralized content without CTA', () => {
+    const localSpotlightData = {
+      id: 144308,
+      fieldDescription: {
+        value: '<p>Local Spotlight for Facebook</p>',
+        processed:
+          '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+        format: 'rich_text_limited',
+      },
+      fieldSectionHeader: 'Facebook Spotlight 1',
+      fieldCta: null,
+    };
+    const centralizedContentFormattedData = liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent(
+      localSpotlightData,
+    );
+    expect(centralizedContentFormattedData).to.deep.equal({
+      fetched: {
+        fieldCta: [],
+        fieldDescription: [
+          {
+            format: 'rich_text_limited',
+            processed:
+              '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+            value: '<p>Local Spotlight for Facebook</p>',
+          },
+        ],
+        fieldSectionHeader: [
+          {
+            value: 'Facebook Spotlight 1',
+          },
+        ],
+      },
+    });
+  });
 });
 
 describe('run', () => {
@@ -1283,28 +1266,28 @@ describe('phoneLinks', () => {
   it('wraps text phone numbers in a link', () => {
     const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with parentheses around the area code', () => {
     const text = 'Here is a phone number: (123)-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with space after the area code', () => {
     const text = 'Here is a phone number: (123) 456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with no dash or space after the area code', () => {
     const text = 'Here is a phone number: (123)456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
@@ -1312,15 +1295,77 @@ describe('phoneLinks', () => {
     const text =
       'Here is a phone number: (123)-456-7890. And (1111) more: 890-456-1234. Noice!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
-      'And (1111) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. ' +
+      'And (1111) more: <va-telephone target="_blank" href="tel:890-456-1234" contact="890-456-1234"></va-telephone>. Noice!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('does not double-wrap phone numbers', () => {
     const html =
-      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a <va-telephone href="test">phone number</va-telephone>: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+  it('does not double-wrap phone numbers in va-telephone components', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
+
+describe('separatePhoneNumberExtension similar to functioning on Vets-website', () => {
+  it('processes a phone number with an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '123-456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('processes a phone number with parentheses an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '(123) 456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('should process phone number strings into phone and extension', () => {
+    const phoneNumber = '800-827-1000';
+    const phoneNumberNoDashes = '8008271000';
+    const extension = '123';
+    const phoneConditions = [
+      '',
+      'x',
+      ' ext ',
+      ' ext. ',
+      ' x. ',
+      ', x',
+      ', ext',
+      ', ext.',
+      ', ext. ',
+    ]
+      // For all cases except the first, concatenate the phoneNumber, extension separator, and extension
+      .map((e, i) => (i === 0 ? phoneNumber : phoneNumber + e + extension));
+    for (let i = 0; i < phoneConditions.length; i += 1) {
+      const processed = liquid.filters.separatePhoneNumberExtension(
+        phoneConditions[i],
+      );
+      if (i === 0) {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension: '',
+        });
+      } else {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension,
+        });
+      }
+    }
   });
 });
 
@@ -2601,70 +2646,78 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
     );
   });
 });
+describe('trimAndCamelCase', () => {
+  it('returns null if string is null', () => {
+    expect(liquid.filters.trimAndCamelCase(null)).to.be.null;
+  });
 
+  it('returns null if string is not a string', () => {
+    expect(liquid.filters.trimAndCamelCase('a', 123)).to.be.null;
+  });
+
+  it('returns vba_string_thing with with trimmed vba_ and camel cased rest', () => {
+    expect(
+      liquid.filters.trimAndCamelCase('vba_', 'vba_string_thing'),
+    ).to.equal('stringThing');
+  });
+});
 describe('processVbaServices', () => {
   const allVbaServices = liquid.filters.processVbaServices(
     [
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaRegionFacilityNode({
-        fieldVbaTypeOfCare: 'other',
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_other_services',
       }),
     ],
     [
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
-      vbaFacilityOfficeNode({
-        fieldVbaTypeOfCare: 'vba_family_member_and_caregiver_benefits',
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_family_member_caregiver_benefits',
       }),
     ],
   );
+
   expect(allVbaServices.veteranBenefits.length).to.equal(1);
-  expect(allVbaServices.familyCaregiverBenefits.length).to.equal(1);
+  expect(allVbaServices.familyMemberCaregiverBenefits.length).to.equal(1);
   expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
   expect(allVbaServices.otherServices.length).to.equal(1);
 
   const singleVbaService = liquid.filters.processVbaServices(
     [
-      vbaRegionFacilityNode({
-        fieldVbaTypeOfCare: 'vba_veteran_benefits',
-      }),
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
     ],
     [
-      vbaFacilityOfficeNode({
-        fieldVbaTypeOfCare: 'vba_veteran_benefits',
-      }),
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_veteran_benefits',
       }),
     ],
   );
-
-  expect(singleVbaService.veteranBenefits.length).to.equal(4);
-  expect(singleVbaService.familyCaregiverBenefits.length).to.equal(0);
+  expect(singleVbaService.veteranBenefits.length).to.equal(1);
+  expect(singleVbaService.familyMemberCaregiverBenefits.length).to.equal(0);
   expect(singleVbaService.serviceMemberBenefits.length).to.equal(0);
   expect(singleVbaService.otherServices.length).to.equal(0);
 
   const hiddenVbaServices = liquid.filters.processVbaServices(
     [
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaRegionFacilityNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
         fieldShowForVbaFacilities: false,
       }),
     ],
     [
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
       }),
-      vbaFacilityOfficeNode({
+      vbaRegionFacilityOrOfficeNode({
         fieldVbaTypeOfCare: 'vba_service_member_benefits',
         fieldShowForVbaFacilities: false,
       }),
@@ -2672,8 +2725,14 @@ describe('processVbaServices', () => {
   );
 
   expect(hiddenVbaServices.veteranBenefits.length).to.equal(0);
-  expect(hiddenVbaServices.familyCaregiverBenefits.length).to.equal(0);
-  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(2);
+  expect(hiddenVbaServices.familyMemberCaregiverBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'facilityService',
+  );
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'regionalService',
+  );
   expect(hiddenVbaServices.otherServices.length).to.equal(0);
 });
 
@@ -2794,52 +2853,95 @@ describe('deriveFormattedTimestamp', () => {
 });
 
 describe('getSurvey', () => {
-  const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
-  const testUrls = [
-    '/resources',
-    '/find-locations',
-    '/search',
-    '/contact-us/virtual-agent',
-  ];
-
-  it('returns the survey number if url is listed in the survey object', () => {
-    // Staging survey tests
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
-    ).to.equal(20);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[2], testUrls[2], stagingSurveys),
-    ).to.equal(20);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(26);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(26);
-
-    // Prod survey tests
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
-    ).to.equal(21);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
-    ).to.equal(25);
+  it('returns correct survey ID for direct URL match in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/search')).to.equal(21);
   });
 
-  it('returns null for a build type not present in the staging survey object', () => {
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], stagingSurveys),
-    ).to.be.null;
+      liquid.filters.getSurvey('vagovstaging', '/contact-us/virtual-agent'),
+    ).to.equal(26);
   });
 
-  it('returns null for a build type not present in the production survey object', () => {
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey('invalidbuildtype', testUrls[2], prodSurveys),
-    ).to.be.null;
+      liquid.filters.getSurvey('vagovstaging', '/school-administrators'),
+    ).to.equal(37);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/')).to.equal(17);
+  });
+
+  it('returns default survey ID when no direct URL match is found in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/')).to.equal(11);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovstaging',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(11);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/64545443',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey('vagovstaging', '/health-care/eligibility'),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/health-care')).to.equal(
+      41,
+    );
+  });
+
+  it('handles null URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', null)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', null)).to.equal(11);
+  });
+
+  it('handles undefined URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', undefined)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', undefined)).to.equal(11);
   });
 });
 
@@ -2898,7 +3000,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given an incomplete week returns a complete week with default days filled in where there were no values', () => {
     const data = vetCenterHoursData.partialWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Check every day is equal to default day except for day provided by the data
       if (i !== 1) {
         assert.deepEqual(
@@ -2911,7 +3013,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given an incomplete week returns a complete week with the given data in the correct place', () => {
     const data = vetCenterHoursData.partialWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Day 2 gets shifted back to 1 check if day 2 is in the right space
       if (i === 1) {
         assert.deepEqual(
@@ -2924,7 +3026,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given a complete week returns a complete week with the expected data', () => {
     const data = vetCenterHoursData.completeWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Check to see if the new data equals the original data shifted back one
       assert.deepEqual(
         liquid.filters.officeHoursDataFormat(data)[i],

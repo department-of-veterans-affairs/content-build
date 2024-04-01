@@ -1,65 +1,98 @@
 <section data-template="facilities/facility_social_links" class="feature vads-u-background-color--gray-lightest vads-u-margin-top--4 small-screen:vads-u-margin-top--6 vads-u-padding-x--3 vads-u-padding-y--2p5">
-    <h2 class="vads-u-margin-bottom--2">Get updates from {{ regionNickname }}</h2>
-    <div class="va-c-list-link-teasers usa-grid usa-grid-full">
-
-            <div class="usa-width-one-half social-links">
-                {% if fieldNews != empty %}
-                        <div class="social-links-email vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer"
-                             href="{{fieldNews.uri}}">
-                                <i class="fas fa-envelope vads-u-margin-right--1"></i>
-                                <span class="vads-u-text-decoration--underline">{{ fieldNews.title }}</span>
-                            </a>
-                        </div>
-                {% endif %}
-                {% if fieldFacebook != empty %}
-                    <div class="social-links social-links-facebook vads-u-margin-bottom--2">
-                        <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer" href="{{ fieldFacebook.uri }}">
-                            <i class="fab fa-facebook-square vads-u-margin-right--1"></i>
-                            <span class="vads-u-text-decoration--underline">{{ fieldFacebook.title }}</span>
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-            {% if fieldTwitter != empty || fieldFlickr != empty || fieldInstagram != empty %}
-            <div class="usa-width-one-half social-links">
-                <div class="">
-                    {% if fieldTwitter != empty %}
-                        <div class="social-links social-links-twitter vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer" href="{{ fieldTwitter.uri }}">
-                                <i class="fab fa-twitter vads-u-text-decoration--none vads-u-margin-right--1"></i>
-                                <span class="vads-u-text-decoration--underline">{{ fieldTwitter.title }}</span>
-                            </a>
-                        </div>
-                    {% endif %}
-                    {% if fieldFlickr != empty %}
-                        <div class="social-links social-links-flickr vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer" href="{{ fieldFlickr.uri }}">
-                                <i class="fab fa-flickr vads-u-text-decoration--none vads-u-margin-right--1"></i>
-                                <span class="vads-u-text-decoration--underline">{{ fieldFlickr.title }}</span>
-                            </a>
-                        </div>
-                    {% endif %}
-
-                    {% if fieldInstagram != empty %}
-                        <div class="social-links social-links-instagram vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer" href="{{ fieldInstagram.uri }}">
-                                <i class="fab fa-instagram vads-u-text-decoration--none vads-u-margin-right--1"></i>
-                                <span class="vads-u-text-decoration--underline">{{ fieldInstagram.title }}</span>
-                            </a>
-                        </div>
-                    {% endif %}
-
-                    {% if fieldYoutube != empty %}
-                        <div class="social-links social-links-youtube vads-u-margin-bottom--2">
-                            <a class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none" rel="noreferrer" href="{{ fieldYoutube.uri }}">
-                                <i class="fab fa-youtube vads-u-text-decoration--none vads-u-margin-right--1"></i>
-                                <span class="vads-u-text-decoration--underline">{{ fieldYoutube.title }}</span>
-                            </a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
+  <h2 class="vads-u-margin-bottom--2">Get updates from {{ regionNickname }}</h2>
+  <div class="va-c-list-link-teasers usa-grid usa-grid-full">
+    {% if fieldGovdeliveryIdEmerg != empty or fieldNews != empty %}
+      <div class="usa-width-one-half social-links">
+        {% if fieldNews != empty %}
+          <div class="social-links-email vads-u-margin-bottom--2">
+            <a
+              class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
+              rel="noreferrer"
+              href="{{ fieldNews.uri }}">
+              <i class="fas fa-envelope vads-u-margin-right--1" aria-hidden="true"></i>
+              <span class="vads-u-text-decoration--underline">{{ fieldNews.title }}</span>
+            </a>
+          </div>
         {% endif %}
-    </div>
+
+        {% if fieldGovdeliveryIdEmerg != empty %}
+          <div class="social-links-email vads-u-margin-bottom--2">
+            <a
+              class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
+              rel="noreferrer"
+              href="https://public.govdelivery.com/accounts/USVHA/subscriber/new?topic_id={{ fieldGovdeliveryIdEmerg }}">
+              <i class="fas fa-envelope vads-u-margin-right--1" aria-hidden="true"></i>
+              <span class="vads-u-text-decoration--underline">Subscribe to {{ regionNickname }} emergency notifications</span>
+            </a>
+          </div>
+        {% endif %}
+        {% if fieldFacebook != empty %}
+          <div class="social-links social-links-facebook vads-u-padding-bottom--2">
+            <a
+              class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
+              rel="noreferrer"
+              href="{{ fieldFacebook.uri }}">
+              <i class="fab fa-facebook-square vads-u-margin-right--1" aria-hidden="true"></i>
+              <span class="vads-u-text-decoration--underline">{{ fieldFacebook.title }}</span>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if fieldFacebook != empty | | fieldTwitter != empty | | fieldFlickr != empty | | fieldInstagram != empty %}
+      <div class="usa-width-one-half social-links">
+        <div class="">
+
+
+          {% if fieldTwitter != empty %}
+            <div class="social-links social-links-twitter vads-u-margin-bottom--2">
+              <a
+                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
+                rel="noreferrer"
+                href="{{ fieldTwitter.uri }}">
+                <i class="fab fa-twitter vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
+                <span class="vads-u-text-decoration--underline">{{ fieldTwitter.title }}</span>
+              </a>
+            </div>
+          {% endif %}
+          {% if fieldFlickr != empty %}
+            <div class="social-links social-links-flickr vads-u-margin-bottom--2">
+              <a
+                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
+                rel="noreferrer"
+                href="{{ fieldFlickr.uri }}">
+                <i class="fab fa-flickr vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
+                <span class="vads-u-text-decoration--underline">{{ fieldFlickr.title }}</span>
+              </a>
+            </div>
+          {% endif %}
+
+          {% if fieldInstagram != empty %}
+            <div class="social-links social-links-instagram vads-u-margin-bottom--2">
+              <a
+                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
+                rel="noreferrer"
+                href="{{ fieldInstagram.uri }}">
+                <i class="fab fa-instagram vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
+                <span class="vads-u-text-decoration--underline">{{ fieldInstagram.title }}</span>
+              </a>
+            </div>
+          {% endif %}
+
+          {% if fieldYoutube != empty %}
+            <div class="social-links social-links-youtube vads-u-margin-bottom--2">
+              <a
+                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
+                rel="noreferrer"
+                href="{{ fieldYoutube.uri }}">
+                <i class="fab fa-youtube vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
+                <span class="vads-u-text-decoration--underline">{{ fieldYoutube.title }}</span>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
 </section>

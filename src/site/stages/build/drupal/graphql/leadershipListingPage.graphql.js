@@ -108,8 +108,10 @@ const leadershipListingPage = `
       targetId
       entity {
         ... on NodeHealthCareRegionPage {
+          entityId
           entityLabel
           title
+          fieldVamcEhrSystem
         }
       }
     }

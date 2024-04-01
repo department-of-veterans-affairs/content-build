@@ -4,12 +4,10 @@ const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
-const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const stagingSurveys = require('./medalliaStagingSurveys.json');
-const prodSurveys = require('./medalliaProdSurveys.json');
+const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
@@ -282,11 +280,31 @@ module.exports = function registerFilters() {
     if (data) {
       return data.replace(
         replacePattern,
-        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
+        '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
       );
     }
 
     return data;
+  };
+
+  liquid.filters.separatePhoneNumberExtension = phoneNumber => {
+    if (!phoneNumber) {
+      return null;
+    }
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const match = phoneRegex.exec(phoneNumber);
+    if (!match || !match[1] || !match[2] || !match[3]) {
+      // Short number or not a normal format
+      return { phoneNumber, extension: '' };
+    }
+    const phone = match[1] + match[2] + match[3];
+    // optional extension matching x1234 (match 4) or ext1234 (match 5)
+    const extension = match[4] || match[5] || '';
+
+    return {
+      phoneNumber: phone,
+      extension,
+    };
   };
 
   liquid.filters.trackLinks = (html, eventDataString) => {
@@ -583,6 +601,10 @@ module.exports = function registerFilters() {
     ];
   };
 
+  liquid.filters.localHealthCareServiceIsMentalHealth = healthServiceName => {
+    return healthServiceName.toLowerCase().includes('mental health');
+  };
+
   liquid.filters.accessibleNumber = data => {
     if (data) {
       return data
@@ -823,6 +845,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.replace = (string, oldVal, newVal) => {
+    if (!string) return null;
     const regex = new RegExp(oldVal, 'g');
     return string.replace(regex, newVal);
   };
@@ -860,88 +883,80 @@ module.exports = function registerFilters() {
     });
   };
 
+  /**
+    * Converts a string to camel case and removes a prefix
+    @param {string} prefix - prefix to be removed - make empty string not to change string
+    @param {string} string - string to be converted
+  */
+  liquid.filters.trimAndCamelCase = (toRemove, string) => {
+    if (!string || typeof string !== 'string') return null;
+    const trimmedString = string.replace(toRemove, '');
+    return _.camelCase(trimmedString);
+  };
+  /**
+   *
+   * @param {Object} object Object of arrays
+   * @param {Array} array
+   * @param {string} keyField key for object e.g. "fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare"
+   * @returns {Object} Object with value inserted into keyField
+   */
+  function processVbaObjectHelper(object, arrayOfServices, typeOfOffice) {
+    if (!object || !typeOfOffice || !Array.isArray(arrayOfServices))
+      return object;
+    const objectCopy = { ...object };
+    const visibleArray = arrayOfServices.filter(
+      o => o?.fieldServiceNameAndDescripti?.entity?.fieldShowForVbaFacilities,
+    );
+    for (const el of visibleArray) {
+      const {
+        fieldVbaTypeOfCare,
+        name,
+      } = el.fieldServiceNameAndDescripti.entity;
+      const key = liquid.filters.trimAndCamelCase('vba_', fieldVbaTypeOfCare);
+
+      const indexOfFacilityService =
+        typeOfOffice === 'regionalService'
+          ? object[key].findIndex(
+              service =>
+                service.facilityService?.fieldServiceNameAndDescripti.entity
+                  .name === name,
+            )
+          : -1;
+      if (indexOfFacilityService !== -1) {
+        objectCopy[key][indexOfFacilityService][typeOfOffice] = el;
+      } else {
+        objectCopy[key].push({
+          [typeOfOffice]: el,
+        });
+      }
+    }
+    return objectCopy;
+  }
   liquid.filters.processVbaServices = (serviceRegions, offices) => {
     const hasServiceRegions =
       Array.isArray(serviceRegions) && serviceRegions.length !== 0;
     const hasOffices = Array.isArray(offices) && offices.length !== 0;
-
-    if (!hasServiceRegions && !hasOffices) {
-      return {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      };
-    }
-    let flattenedVbaServiceRegions = [];
-    let flattenedVbaOffices = [];
-
-    if (hasServiceRegions) {
-      flattenedVbaServiceRegions = serviceRegions.reduce(
-        (acc, serviceRegion) => {
-          serviceRegion.reverseFieldVbaServiceRegionsTaxonomyTerm.entities.forEach(
-            taxonomy =>
-              acc.push({
-                vbaCategory: 'serviceRegion',
-                vbaId: taxonomy.entityId,
-                vbaType: taxonomy.fieldVbaTypeOfCare,
-                vbaHeader: taxonomy.entityLabel,
-                vbaDescription: taxonomy.fieldVbaServiceDescrip,
-                vbaIsVisible: taxonomy.fieldShowForVbaFacilities,
-                ...taxonomy,
-              }),
-          );
-          return acc;
-        },
-        [],
+    let accordions = {
+      veteranBenefits: [],
+      familyMemberCaregiverBenefits: [],
+      serviceMemberBenefits: [],
+      otherServices: [],
+    };
+    if (hasOffices) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        offices,
+        'facilityService',
       );
     }
-
-    if (hasOffices) {
-      flattenedVbaOffices = offices.map(office => {
-        const { entity } = office.fieldServiceNameAndDescripti;
-        return {
-          vbaCategory: 'office',
-          vbaId: office.entityId,
-          vbaType: entity.fieldVbaTypeOfCare,
-          vbaHeader: entity.name,
-          vbaDescription: entity.fieldVbaServiceDescrip,
-          vbaIsVisible: entity.fieldShowForVbaFacilities,
-          ...office,
-        };
-      });
+    if (hasServiceRegions) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        serviceRegions,
+        'regionalService',
+      );
     }
-
-    return [...flattenedVbaServiceRegions, ...flattenedVbaOffices].reduce(
-      (acc, vbaService) => {
-        if (!vbaService.vbaIsVisible) {
-          return acc;
-        }
-
-        switch (vbaService.vbaType) {
-          case 'vba_veteran_benefits':
-            acc.veteranBenefits.push(vbaService);
-            break;
-          case 'vba_family_member_and_caregiver_benefits':
-            acc.familyCaregiverBenefits.push(vbaService);
-            break;
-          case 'vba_service_member_benefits':
-            acc.serviceMemberBenefits.push(vbaService);
-            break;
-          default:
-            acc.otherServices.push(vbaService);
-            break;
-        }
-
-        return acc;
-      },
-      {
-        veteranBenefits: [],
-        familyCaregiverBenefits: [],
-        serviceMemberBenefits: [],
-        otherServices: [],
-      },
-    );
+    return accordions;
   };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
@@ -953,7 +968,7 @@ module.exports = function registerFilters() {
       sectionHeader: '',
     };
     const { fetched } = fieldCcGetUpdatesFromVba;
-    processed.sectionHeader = fetched.fieldSectionHeader[0].value;
+    processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value || '';
     for (const link of fetched.fieldLinks) {
       if (link.url.path.startsWith('/')) {
         processed.links.news = {
@@ -987,19 +1002,20 @@ module.exports = function registerFilters() {
       fieldSectionHeader: '',
       fieldDescription: '',
     };
-    processed.fieldSectionHeader = field.fetched.fieldSectionHeader[0].value;
+    processed.fieldSectionHeader =
+      field.fetched.fieldSectionHeader?.[0]?.value || '';
 
     const ctaEntity = field.fetched.fieldCta[0].entity;
-    processed.fieldCta.label = ctaEntity.fieldButtonLabel[0].value;
-    processed.fieldCta.link = ctaEntity.fieldButtonLink[0].url.path;
+    processed.fieldCta.label = ctaEntity.fieldButtonLabel?.[0]?.value || '';
+    processed.fieldCta.link = ctaEntity.fieldButtonLink?.[0]?.url.path || '';
 
-    processed.fieldDescription = field.fetched.fieldDescription[0].processed;
+    processed.fieldDescription = field.fetched.fieldDescription?.[0]?.processed;
     return processed;
   };
 
   liquid.filters.processWysiwygSimple = field => {
     if (!field?.fetched?.fieldWysiwyg?.length) return null;
-    return field.fetched.fieldWysiwyg[0].value;
+    return field.fetched.fieldWysiwyg[0]?.value || '';
   };
 
   liquid.filters.processFieldPhoneNumbersParagraph = fields => {
@@ -1147,7 +1163,9 @@ module.exports = function registerFilters() {
     }
     const processedFetched = {};
     for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
-      processedFetched[key] = value[0].value;
+      if (value?.length > 0) {
+        processedFetched[key] = value[0]?.value || '';
+      }
     }
     return processedFetched;
   };
@@ -1164,14 +1182,18 @@ module.exports = function registerFilters() {
       fieldSectionHeader,
       fieldCta,
     } = featuredContentEntity;
-    const updatedCta = [
-      {
+    const updatedCta = [];
+    if (
+      fieldCta?.entity?.fieldButtonLink &&
+      fieldCta?.entity?.fieldButtonLabel
+    ) {
+      updatedCta.push({
         entity: {
           fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
           fieldButtonLink: [fieldCta.entity.fieldButtonLink],
         },
-      },
-    ];
+      });
+    }
     const fetched = {
       fieldDescription: [fieldDescription],
       fieldSectionHeader: [{ value: fieldSectionHeader }],
@@ -1185,6 +1207,7 @@ module.exports = function registerFilters() {
   liquid.filters.appendCentralizedFeaturedContent = (
     ccFeatureContent,
     featureContentArray,
+    placement = 'prepend',
   ) => {
     if (!ccFeatureContent || !ccFeatureContent.fetched) {
       return featureContentArray;
@@ -1200,9 +1223,9 @@ module.exports = function registerFilters() {
     const featureContentObj = {
       entity: {
         fieldDescription: {
-          processed: fieldDescription[0]?.processed,
+          processed: fieldDescription[0]?.processed || '',
         },
-        fieldSectionHeader: fieldSectionHeader[0]?.value,
+        fieldSectionHeader: fieldSectionHeader[0]?.value || '',
       },
     };
 
@@ -1214,15 +1237,17 @@ module.exports = function registerFilters() {
       const buttonFeatured = {
         entity: {
           fieldButtonLink: {
-            uri: fieldCta[0]?.entity.fieldButtonLink[0].uri,
-            url: fieldCta[0]?.entity.fieldButtonLink[0].url?.path,
+            uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
+            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
           },
-          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0].value,
+          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
     }
-    return [featureContentObj, ...featureContentArray];
+    return placement === 'append'
+      ? [...featureContentArray, featureContentObj] // append -- VBA
+      : [featureContentObj, ...featureContentArray]; // prepend -- VetCenter - default
   };
 
   liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
@@ -1270,94 +1295,6 @@ module.exports = function registerFilters() {
       'fieldDatetimeRangeTimezone',
       false,
     );
-  };
-
-  //* paginatePages has limitations, it is not yet fully operational.
-  liquid.filters.paginatePages = (page, items, aria) => {
-    const perPage = 10;
-
-    const ariaLabel = aria ? ` of ${aria}` : '';
-
-    const paginationPath = pageNum => {
-      return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
-    };
-
-    const pageReturn = [];
-
-    if (items.length > 0) {
-      const pagedEntities = _.chunk(items, perPage);
-
-      for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-        let pagedPage = { ...page };
-        if (pageNum > 0) {
-          pagedPage = set(
-            'entityUrl.path',
-            `${page.entityUrl.path}${paginationPath(pageNum)}`,
-            page,
-          );
-        }
-
-        pagedPage.pagedItems = pagedEntities[pageNum];
-        const innerPages = [];
-
-        if (pagedEntities.length > 0) {
-          // add page numbers
-          const numPageLinks = 3;
-          let start;
-          let length;
-          if (pagedEntities.length <= numPageLinks) {
-            start = 0;
-            length = pagedEntities.length;
-          } else {
-            length = numPageLinks;
-
-            if (pageNum + numPageLinks > pagedEntities.length) {
-              start = pagedEntities.length - numPageLinks;
-            } else {
-              start = pageNum;
-            }
-          }
-
-          for (let num = start; num < start + length; num++) {
-            innerPages.push({
-              href:
-                num === pageNum
-                  ? null
-                  : `${page.entityUrl.path}${paginationPath(num)}`,
-              label: num + 1,
-              class: num === pageNum ? 'va-pagination-active' : '',
-            });
-          }
-
-          pagedPage.paginator = {
-            ariaLabel,
-            prev:
-              pageNum > 0
-                ? `${page.entityUrl.path}${paginationPath(pageNum - 1)}`
-                : null,
-            inner: innerPages,
-            next:
-              pageNum < pagedEntities.length - 1
-                ? `${page.entityUrl.path}${paginationPath(pageNum + 1)}`
-                : null,
-          };
-          pageReturn.push(pagedPage);
-        }
-      }
-    }
-
-    if (!pageReturn[0]) {
-      return {};
-    }
-
-    return {
-      pagedItems: pageReturn[0].pagedItems,
-      paginator: pageReturn[0].paginator,
-    };
-  };
-
-  liquid.filters.isFirstPage = paginator => {
-    return !paginator || paginator.prev === null;
   };
 
   liquid.filters.hasContentAtPath = (rootArray, path) => {
@@ -1643,6 +1580,45 @@ module.exports = function registerFilters() {
     };
   };
 
+  liquid.filters.topTaskLovellComp = (
+    linkType,
+    basePath,
+    buildtype,
+    fieldAdministration,
+    fieldVamcEhrSystem,
+    fieldRegionPage,
+    fieldOffice,
+  ) => {
+    const isNotProd = buildtype !== 'vagovprod';
+    const flag =
+      fieldVamcEhrSystem ||
+      fieldOffice?.entity?.fieldVamcEhrSystem ||
+      fieldRegionPage?.entity?.fieldVamcEhrSystem ||
+      '';
+    const isPageLovell = fieldAdministration?.entity.entityId === '1039';
+
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (linkType === 'make-an-appointment' && isPageLovell) {
+        return {
+          text: 'MHS Genesis Patient Portal',
+          url: 'https://my.mhsgenesis.health.mil/',
+        };
+      }
+    } else if (linkType === 'make-an-appointment') {
+      // If we remove this eslint complains of the nested if, so
+      // keeping this as a placeholder for future other linktypes for the MHS Genesis site (e.g. Pharmacy)
+      return {
+        text: 'Make an appointment',
+        url: `/${basePath}/make-an-appointment`,
+      };
+    }
+    // fallback as default
+    return {
+      text: 'Make an appointment',
+      url: `/${basePath}/make-an-appointment`,
+    };
+  };
+
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
     const isNotProd = buildtype !== 'vagovprod';
 
@@ -1782,18 +1758,41 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    if (
-      buildtype === 'localhost' ||
-      buildtype === 'vagovstaging' ||
-      buildtype === 'vagovdev'
-    ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    const surveyData = medalliaSurveys;
+    const defaultStagingSurvey = SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY;
+    const defaultProdSurvey = SURVEY_NUMBERS.DEFAULT_PROD_SURVEY;
+    const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
+      buildtype,
+    );
+    const effectiveBuildType = isStaging ? 'staging' : 'production';
+
+    if (typeof url !== 'string' || url === null) {
+      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
+    }
+    // Check if the URL exists in the main custom survey URL object
+    if (url in surveyData.urls) {
+      const surveyInfo = surveyData.urls[url];
+      // Return the survey ID for the effective build type, or the default based on the build type
+      return (
+        surveyInfo[effectiveBuildType] ||
+        (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+      );
+    }
+    // Check if the URL matches any subpaths
+    for (const [subpath, surveyInfo] of Object.entries(
+      surveyData.urlsWithSubPaths,
+    )) {
+      if (url.startsWith(subpath)) {
+        // Return the survey ID for the effective build type, or the default based on the build type
+        return (
+          surveyInfo[effectiveBuildType] ||
+          (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+        );
+      }
     }
 
-    if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : 17;
-    }
-    return null;
+    // If no URL match is found, return the default survey number based on the build type
+    return isStaging ? defaultStagingSurvey : defaultProdSurvey;
   };
 
   liquid.filters.officeHoursDayFormatter = (day, short = true) => {
@@ -1892,7 +1891,10 @@ module.exports = function registerFilters() {
     return urlsForBanner.includes(currentPath);
   };
 
-  liquid.filters.shouldShowCustomMobilePromoBanner = currentPath => {
-    return liquid.filters.shouldShowMobileAppPromoBanner(currentPath);
+  liquid.filters.useTelephoneWebComponent = telephone => {
+    if (/[a-zA-Z+]/.test(telephone)) {
+      return false;
+    }
+    return true;
   };
 };

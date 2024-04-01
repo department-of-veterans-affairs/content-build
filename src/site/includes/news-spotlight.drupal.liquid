@@ -21,6 +21,10 @@
             NEWS</h2>
           {% if fieldPromoHeadline and fieldLink.url.path %}
             <h3 class="vads-u-font-family--serif vads-u-margin-top--0 vads-u-font-size--xl">
+            {% comment %}
+              We can convert this link to <va-link> when DST has addressed this ticket to allow links to be white:
+              https://github.com/department-of-veterans-affairs/vets-design-system-documentation/issues/2602
+            {% endcomment %}
               <a
               onclick="recordMultipleEvents([
                 {
@@ -39,6 +43,10 @@
               {{ fieldPromoText }}
             {% endif %}
             {% if fieldLinkLabel and fieldLink.url.path %}
+              {% comment %}
+                We can convert this link to <va-link> when DST has addressed this ticket to allow links to be white:
+                https://github.com/department-of-veterans-affairs/vets-design-system-documentation/issues/2602
+              {% endcomment %}
               <a
                 onclick="recordMultipleEvents([
                   {
@@ -58,6 +66,10 @@
           </p>
 
           <div>
+            {% comment %}
+              We can convert this link to <va-link> when DST has addressed this ticket to allow links to be white:
+              https://github.com/department-of-veterans-affairs/vets-design-system-documentation/issues/2602
+            {% endcomment %}
             <a
             onclick="recordMultipleEvents([
               {
