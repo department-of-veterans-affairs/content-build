@@ -1305,9 +1305,16 @@ describe('phoneLinks', () => {
       'Here is a <va-telephone href="test">phone number</va-telephone>: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
+
   it('does not double-wrap phone numbers in va-telephone components', () => {
     const html =
       'Here is a <a href="test">phone number</a>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+
+  it('properly returns the data when a phone number is not in it', () => {
+    const html =
+      'Here is some completely unrelated stuff <h4> with no phone numbers </h4> and just <p> some basic text</p> blah';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
   });
 });

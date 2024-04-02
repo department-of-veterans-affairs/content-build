@@ -156,7 +156,7 @@
 
           <!-- Cost -->
           {% if fieldEventCost %}
-            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--2">
+            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
               <p class="vads-u-margin--0 vads-u-margin-right--0p5">
                 <strong>Cost:</strong>
               </p>
@@ -164,6 +164,28 @@
               <p class="vads-u-margin--0">
                 {{ fieldEventCost }}
               </p>
+            </div>
+          {% endif %}
+
+          <!-- Registration / Apply / RSVP required -->
+          {% if fieldEventRegistrationrequired %}
+            <div class="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--3">
+              {% if fieldEventCta %}
+                <p class="vads-u-margin--0 vads-u-margin-right--0p5">
+                  {% if fieldEventCta == 'register' %}
+                    <strong>Registration:</strong>
+                  {% elsif fieldEventCta == 'apply' %}
+                    <strong>Application:</strong>
+                  {% elsif fieldEventCta == 'rsvp' %}
+                    <strong>RSVP:</strong>
+                  {% endif %}
+                </p>
+                {% if fieldEventCta != 'more_details' %}
+                  <p class="vads-u-margin--0">
+                    Required
+                  </p>
+                {% endif %}
+              {% endif %}
             </div>
           {% endif %}
 
@@ -184,28 +206,35 @@
                 <p class="vads-u-margin--0">
                   <a class="vads-c-action-link--green" href="{{ fieldLink.url.path }}">
                     {% if fieldEventCta %}
-                      {{ fieldEventCta | removeUnderscores | capitalize }}
+                      {% if fieldEventCta == 'rsvp' %}
+                        RSVP
+                      {% else %}
+                        {{ fieldEventCta | removeUnderscores | capitalize }}
+                      {% endif %}
                     {% else %}
                       More details
                     {% endif %}
                   </a>
                 </p>
               {% endif %}
-
               {% if fieldHowToSignUp == 'email' %}
                 {% assign now = '' | currentTime %}
                 {% assign mostRecentDate = fieldDatetimeRangeTimezone | deriveMostRecentDate: now %}   
                 <p class="vads-u-margin--0">
                   <a class="vads-c-action-link--green" href="mailto:{{ fieldCtaEmail }}?subject=RSVP for {{ title }} on {{ mostRecentDate | deriveFormattedTimestamp }}&body=I would like to register for {{title}} on {{ mostRecentDate | deriveFormattedTimestamp }}. (https://va.gov{{entityUrl.path}}) ">
                     {% if fieldEventCta %}
-                      {{ fieldEventCta | removeUnderscores | capitalize }}
+                      {% if fieldEventCta == 'rsvp' %}
+                        RSVP
+                      {% else %}
+                        {{ fieldEventCta | removeUnderscores | capitalize }}
+                      {% endif %}
                     {% endif %}
                   </a>
                 </p>
               {% endif %}
 
-              {% if fieldAdditionalInformationAbo %}
-                <p class="vads-u-margin--0">{{ fieldAdditionalInformationAbo.processed | phoneLinks }}</p>
+              {% if fieldAdditionalInformationAbo.processed %}
+                {{ fieldAdditionalInformationAbo.processed | phoneLinks }}
               {% endif %}
             {% endif %}
           </div>
