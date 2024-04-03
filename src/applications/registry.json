@@ -22,6 +22,32 @@
   {
     "appName": "21-527EZ pension benefits form",
     "entryName": "pensions",
+    "rootUrl": "/pension/apply-for-veteran-pension-form-21p-527ez",
+    "template": {
+      "title": "Apply For Pension Benefits",
+      "heading": "Apply for pension benefits",
+      "display_title": "Apply now",
+      "description": "Submit your VA pension application (VA Form 21P-527EZ) online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back later to finish filling it out.",
+      "layout": "page-react.html",
+      "spoke": "Get benefits",
+      "collection": "pension",
+      "order": 3,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "pension/",
+          "name": "Pension benefits"
+        },
+        {
+          "path": "pension/apply-for-veteran-pension-form-21p-527ez",
+          "name": "Apply for Veterans Pension benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "21-527EZ pension benefits form",
+    "entryName": "pensions",
     "rootUrl": "/pension/application/527EZ",
     "template": {
       "title": "Apply For Pension Benefits",
@@ -1314,6 +1340,17 @@
     }
   },
   {
+    "appName": "MHV Medical Records isolated app test",
+    "entryName": "medical-records-test",
+    "rootUrl": "/my-health/medical-records-test",
+    "productId": "33f531eb-ed52-4e7f-a6ae-f9ff78de939f",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
     "appName": "26-4555 Application in Acquiring Specially Adapted Housing or Special Home Adaptation Grant",
     "entryName": "4555-adapted-housing",
     "rootUrl": "/housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555",
@@ -1417,7 +1454,7 @@
     "rootUrl": "/supporting-forms-for-claims/intent-to-file-form-21-0966",
     "productId": "8233bd78-20c6-4498-b36f-55ec0028b1e5",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
