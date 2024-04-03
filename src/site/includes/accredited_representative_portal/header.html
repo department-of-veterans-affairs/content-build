@@ -14,9 +14,6 @@
     <meta name="robots" content="noindex">
   {% endif %}
 
-  <!-- Add metatags. -->
-  {% include "src/site/includes/metatags.drupal.liquid" %}
-
   <!-- Add polyfills. -->
   <script nonce="**CSP_NONCE**" nomodule data-entry-name="polyfills.js"></script>
 
@@ -42,14 +39,8 @@
   {% include 'src/site/includes/google-analytics.liquid' %}
 
   <!-- Add Icons. -->
-  <link href="/img/design/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed" />
-  <link href="/img/design/icons/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72" />
-  <link href="/img/design/icons/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114" />
-  <link href="/img/design/icons/apple-touch-icon-152x152.png" rel="apple-touch-icon-precomposed" sizes="144x144" />
+  <!-- New favicon in future, keeping default to prevent blank -->
   <link rel="shortcut icon" href="/img/design/icons/favicon.ico" />
-
-  <meta name="msapplication-TileImage" content="/img/design/icons/apple-touch-icon-114x114">
-  <meta name="msapplication-TileColor" content="#144073">
 
   <!-- Preload main fonts -->
   <link rel="preload" href="/generated/sourcesanspro-bold-webfont.woff2" as="font" type="font/woff2" crossorigin>
@@ -67,12 +58,6 @@
   {% endunless %}
   <link rel="stylesheet" data-entry-content="content-build.css">
   <link rel="stylesheet" data-entry-name="{{ entryname | default: 'static-pages' }}.css">
-
-  <!-- Old IE -->
-
-  <!--[if lt IE 9]>
-<link rel='stylesheet' href='/assets/css/ie.css'>
-<![endif]-->
 
   {% if botframework_cdn %}
   <script nonce="**CSP_NONCE**" src="{{ botframework_cdn }}"></script>
@@ -103,8 +88,6 @@
     window.VetsGov.headerFooter = JSON.parse({{ headerFooterData }});
   </script>
 
-  {% include "src/site/includes/survey-tools.html" %}
-
   {% comment %} TODO: Remove this block once the focus styling changes have been tested {% endcomment %}
   {% if entityId == 11463 and buildtype == "vagovdev" %}
     <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation@8.0.1-3/dist/formation.min.css">
@@ -130,56 +113,11 @@
 </head>
 
 <body class="{{ body_class }} merger">
-  <div id="announcement-root"></div>
-  <!-- Draft status -->
-  {% if entityUrl.path && isPreview && !entityPublished %}
-  <div class="vads-u-background-color--primary-alt-lightest vads-u-padding--1">
-    <div class="vads-l-grid-container medium-screen:vads-u-padding-x--0">
-      You are viewing a draft of "{{ entityUrl.path }}".
-      {% if drupalSite && entityId %}
-      <a data-same-tab href="{{ drupalSite }}/node/{{ entityId }}/edit">
-        Edit this page in the CMS.
-      </a>
-      {% endif %}
-    </div>
-  </div>
-  {% endif %}
 
   {{ google_analytics_noscript }}
   <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
   <!-- Header -->
   <header class="header" role="banner">
-    <!-- Mobile Layout -->
-    <div
-      data-widget-type="header"
-      data-show="{% if noHeader %}false{% else %}true{% endif %}"
-      data-show-nav-login="{% if noNavOrLogin %}false{% else %}true{% endif %}"
-      data-show-mega-menu="{% if noMegamenu %}false{% else %}true{% endif %}"
-      id="header-v2"
-    ></div>
-
-    <!-- Tablet/Desktop Layout -->
-    {% unless noHeader %}
-      {% include "src/site/includes/top-nav.html" %}
-    {% endunless %}
-
-    <!-- Banners -->
-    {% include "src/site/components/banners.drupal.liquid" %}
+  <!-- To Add: Moble Layouts -->
   </header>
-
-  <!-- Fullwidth banner alerts -->
-  {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
-
-  <script nonce="**CSP_NONCE**" type="text/javascript">
-    {% include "src/site/assets/js/skip-link-focus.js" %}
-  </script>
-
-<script  type="text/javascript" defer>
-  window.onload = function() {
-    const contentElement = document.querySelector('.smartbanner');
-      if(contentElement){
-        contentElement.style.top = '-84px'
-      }
-  };
-</script>
