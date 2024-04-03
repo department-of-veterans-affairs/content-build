@@ -23,7 +23,7 @@
   </script>
 
   <!-- Add web components. -->
-  {% if buildtype != "vagovdev") %}
+  {% if buildtype != 'vagovdev' %}
     <link rel="stylesheet" data-entry-name="web-components.css">
   {% endif %}
 
@@ -45,7 +45,7 @@
   <link rel="stylesheet" data-entry-name="{{ entryname | default: 'static-pages' }}.css">
 
   {% if botframework_cdn %}
-  <script nonce="**CSP_NONCE**" src="{{ botframework_cdn }}"></script>
+    <script nonce="**CSP_NONCE**" src="{{ botframework_cdn }}"></script>
   {% endif %}
 
   <script nonce="**CSP_NONCE**" defer data-entry-name="vendor.js"></script>
