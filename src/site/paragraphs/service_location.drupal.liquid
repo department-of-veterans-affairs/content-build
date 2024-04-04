@@ -112,7 +112,8 @@
             phoneHeaderLevel = serviceLocationH
           %}
     </div>
-  {% elsif single.fieldOtherPhoneNumbers.length > 0 %}
+  {% endif %}
+  {% if single.fieldOtherPhoneNumbers.length > 0 %}
     {% comment %} other phone numbers {% endcomment %}
     <div class="vads-u-display--flex vads-u-flex-direction--column" data-template="facilities/health_care_local_health_service" data-testid="service-location-show-other-phone-numbers" >
       {% for number in single.fieldOtherPhoneNumbers %}
@@ -160,7 +161,8 @@
         phoneHeaderLevel = serviceLocationH
       %}
     </div>
-  {% elsif single.fieldPhone.length > 0 %}
+  {% endif %}
+  {% if single.fieldPhone.length > 0 %}
     {% comment %}
       Display each additional contact phone number provided
     {% endcomment %}
