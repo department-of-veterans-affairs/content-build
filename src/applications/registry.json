@@ -1308,7 +1308,7 @@
   },
   {
     "appName": "MHV Secure Messaging",
-    "entryName": "secure-messaging",
+    "entryName": "mhv-secure-messaging",
     "rootUrl": "/my-health/secure-messages",
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
@@ -1319,7 +1319,7 @@
   },
   {
     "appName": "MHV Secure Messaging - OH Pilot",
-    "entryName": "secure-messaging-pilot",
+    "entryName": "mhv-secure-messaging-pilot",
     "rootUrl": "/my-health/secure-messages-pilot",
     "productId": "802ebe63-66e9-4ab1-82cd-bbf45d2db91f",
     "template": {
