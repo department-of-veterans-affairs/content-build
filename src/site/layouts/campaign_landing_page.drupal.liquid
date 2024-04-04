@@ -486,7 +486,7 @@
             {% for reusableQA in fieldClpReusableQA %}
               {% if reusableQA.entity.entityBundle == "q_a_group" %}
                 {% if reusableQA.entity.fieldAccordionDisplay %}
-                  {% include "src/site/paragraphs/q_a_group_collapsible_content.drupal.liquid" with entity = reusableQA.entity %}
+                  {% include "src/site/paragraphs/q_a_group_collapsible_content_clp.drupal.liquid" with entity = reusableQA.entity %}
                 {% else %}
                   {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = reusableQA.entity %}
                 {% endif %}  

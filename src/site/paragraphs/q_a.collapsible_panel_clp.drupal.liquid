@@ -1,0 +1,56 @@
+{% comment %}
+This is a special implementation for Campaign Landing pages
+They can have page-specific Q&As as well as reusable Q&A sections back to back
+Because the header of the reusable Q&A section is not required, this can cause
+unnecessary separations between different accordion sections at the bottom of the page.
+
+To remedy this, we have two scenarios:
+
+1. If a reusable Q&A accordion section is added, but the header is empty,
+use the "Frequently Asked Questions" header (that is sent for the page-specific Q&As)
+and combine all header-less reusable Q&As with the page-specific Q&As under the FAQ header
+
+2. If a reusable Q&A accordion section is added and the header is given,
+use the header given by the reusable Q&A section and add the page-specific Q&As before the reusable Q&As
+in that section
+
+{% endcomment %}
+
+<div data-template="paragraphs/q_a.collapsible_panel">
+  <va-accordion uswds>
+    
+    {% assign questions = entity.fieldQuestions %}
+    {% assign sectionHeader = entity.fieldSectionHeader %}
+
+    {% for accordionItem in questions %}
+      {% assign item = accordionItem.entity %}
+      {% assign id = item.entityId %}
+
+      <va-accordion-item
+        class="va-accordion-item"
+        header="{{ item.fieldQuestion }}"
+        id="{{ item.fieldQuestion | hashReference: 60 }}"
+        {% if level %}
+          level="{{ level }}"
+          {% else %}
+          level=3
+        {% endif %}
+      >
+        <div
+          id={{ id }}
+          data-template="paragraphs/q_a.collapsible_panel__qa"
+          data-entity-id="{{ id }}"
+          data-analytics-faq-section="{{ sectionHeader | escape }}"
+          data-analytics-faq-text="{{ item.fieldQuestion | escape }}"
+        >
+          <div id="{{ item.entityBundle }}-{{ id }}">
+            {% for answer in item.fieldAnswer %}
+              {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
+              {% include {{ bundleComponent }} with entity = answer.entity %}
+            {% endfor %}
+          </div>
+        </div>
+      </va-accordion-item>
+    {% endfor %}
+  </va-accordion>
+</div>
