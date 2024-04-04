@@ -277,14 +277,15 @@ module.exports = function registerFilters() {
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
     const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
-    if (data) {
-      return data.replace(
-        replacePattern,
-        '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
-      );
+
+    if (!data?.match(replacePattern)) {
+      return data;
     }
 
-    return data;
+    return data.replace(
+      replacePattern,
+      '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
+    );
   };
 
   liquid.filters.separatePhoneNumberExtension = phoneNumber => {
