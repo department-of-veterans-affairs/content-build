@@ -52,8 +52,10 @@
             {% include 'src/site/paragraphs/list_of_link_teasers.drupal.liquid' entity = fieldRelatedLinks.entity boldTitle = true %}
           </section>
         {% endif %}
-    <!-- Last updated & feedback button -->
-          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+        <!-- Last updated & feedback button -->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" with
+            responsiveLayout = 'desktop'
+          %}
       </article>
 
       <div class="usa-width-one-third" id="hub-rail">
@@ -241,6 +243,10 @@
         {% endif %}
       </div>
     </div>
+    <!-- Last updated & feedback button -->
+      {% include "src/site/includes/above-footer-elements.drupal.liquid" with
+        responsiveLayout = 'mobile'
+      %}
   {% include "src/site/includes/veteran-banner.html" %}
   </main>
 </div>
