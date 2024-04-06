@@ -150,7 +150,7 @@
                   class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
               <p>Click on a topic for more details.</p>
-              <va-accordion section-heading="Prepare for your visit" bordered uswds="false">
+              <va-accordion section-heading="Prepare for your visit" bordered uswds="true">
                 {% for accordionItem in fieldLocationServices %}
                   {% assign item = accordionItem.entity %}
                   {% comment %}
@@ -162,6 +162,7 @@
                     level="3"
                     data-label="{{ item.fieldTitle }}"
                     id="{{ item.fieldTitle | hashReference: 60 }}"
+                    uswds="true"
                   >
                     <div id="{{ item.entityBundle }}-{{ item.entityId }}">
                       {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
@@ -190,7 +191,7 @@
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
 
-              <va-accordion bordered uswds="false">
+              <va-accordion bordered uswds="true">
               {% for localService in localHealthServices %}
                 {% assign serviceSection = localService.entity.fieldAdministration.entity %}
                 {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}
