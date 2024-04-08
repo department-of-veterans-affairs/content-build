@@ -1685,6 +1685,27 @@ module.exports = function registerFilters() {
 
   liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
 
+  // from the matrix of when to show Service Location Appointments header and text
+  liquid.filters.shouldShowServiceLocationAppointments = serviceLocation => {
+    // single.fieldVirtualSupport == "yes_appointment_only" or single.fieldVirtualSupport == 'yes_with_or_without_appointment' or single.fieldOfficeVisits == 'yes_appointment_only' or single.fieldOfficeVisits == 'yes_with_or_without_appointment'
+    const {
+      fieldVirtualSupport,
+      fieldOfficeVisits,
+      fieldApptIntroTextType,
+      fieldApptIntroTextCustom,
+    } = serviceLocation;
+    return (
+      fieldVirtualSupport === 'yes_appointment_only' ||
+      fieldVirtualSupport === 'yes_with_or_without_appointment' ||
+      fieldOfficeVisits === 'yes_appointment_only' ||
+      fieldOfficeVisits === 'yes_with_or_without_appointment' ||
+      (!fieldOfficeVisits &&
+        fieldApptIntroTextType === 'customize_text' &&
+        fieldApptIntroTextCustom) ||
+      (!fieldOfficeVisits && fieldApptIntroTextType === 'default_text')
+    );
+  };
+
   // Given an array of services provided at a facility,
   // return a flattened array of service locations that
   // offer service of type `serviceType`
