@@ -273,6 +273,32 @@
     }
   },
   {
+    "appName": "1010ez Health Care Application form",
+    "entryName": "hca",
+    "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
+    "template": {
+      "title": "Apply for Health Care",
+      "display_title": "Apply Now",
+      "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
+      "body_class": "page-healthcare",
+      "layout": "page-react.html",
+      "collection": "healthCare",
+      "spoke": "Get benefits",
+      "order": 4,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "health-care/",
+          "name": "Health care"
+        },
+        {
+          "path": "health-care/apply-for-health-care-form-10-10ez",
+          "name": "Apply for VA health care"
+        }
+      ]
+    }
+  },
+  {
     "appName": "10-10EZR Update health benefits info form",
     "entryName": "ezr",
     "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
