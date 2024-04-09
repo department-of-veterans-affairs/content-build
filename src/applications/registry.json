@@ -211,7 +211,7 @@
         },
         {
           "path": "burials-and-memorials/application/530",
-          "name": "Review burial benefits application"
+          "name": "Apply for burial benefits"
         }
       ]
     }
@@ -267,6 +267,32 @@
         },
         {
           "path": "health-care/apply/application",
+          "name": "Apply for VA health care"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "1010ez Health Care Application form",
+    "entryName": "hca",
+    "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
+    "template": {
+      "title": "Apply for Health Care",
+      "display_title": "Apply Now",
+      "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
+      "body_class": "page-healthcare",
+      "layout": "page-react.html",
+      "collection": "healthCare",
+      "spoke": "Get benefits",
+      "order": 4,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "health-care/",
+          "name": "Health care"
+        },
+        {
+          "path": "health-care/apply-for-health-care-form-10-10ez",
           "name": "Apply for VA health care"
         }
       ]
@@ -1308,7 +1334,7 @@
   },
   {
     "appName": "MHV Secure Messaging",
-    "entryName": "secure-messaging",
+    "entryName": "mhv-secure-messaging",
     "rootUrl": "/my-health/secure-messages",
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
@@ -1319,7 +1345,7 @@
   },
   {
     "appName": "MHV Secure Messaging - OH Pilot",
-    "entryName": "secure-messaging-pilot",
+    "entryName": "mhv-secure-messaging-pilot",
     "rootUrl": "/my-health/secure-messages-pilot",
     "productId": "802ebe63-66e9-4ab1-82cd-bbf45d2db91f",
     "template": {
