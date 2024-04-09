@@ -120,6 +120,13 @@
                               contact="{{ vbaFacilityMainPhone.phoneNumber }}"
                               extension="{{ vbaFacilityMainPhone.extension }}"
                               message-aria-describedby="Main Phone"
+                              onclick="recordEvent(
+                                {
+                                  'event': 'vba-regional-facility-vba-facility-main-phone-number',
+                                  'vba-regional-facility-name': '{{ entityLabel }}',
+                                  'link-label': 'Main Phone'
+                                }
+                              )"
                             />
                           </p>
                         </div>
@@ -132,6 +139,13 @@
                             <va-telephone
                               contact="{{ benefitsHotline.fieldPhoneNumber }}"
                               extension="{{ benefitsHotline.fieldPhoneExtension }}"
+                              onclick="recordEvent(
+                                {
+                                  'event': 'vba-regional-facility-vba-facility-va-benefits-online',
+                                  'vba-regional-facility-name': '{{ entityLabel }}',
+                                  'link-label': 'VA benefits hotline'
+                                }
+                              )"
                             />
                           </p>
                         </div>
@@ -200,6 +214,7 @@
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Veteran benefits"
             vbaServices = allVbaServices.veteranBenefits
+            facilityName = entityLabel
             facilityAddress = fieldAddress
             facilityPhone = fieldPhoneNumber
           %}
@@ -207,6 +222,7 @@
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Family member and caregiver benefits"
             vbaServices = allVbaServices.familyMemberCaregiverBenefits
+            facilityName = entityLabel
             facilityAddress = fieldAddress
             facilityPhone = fieldPhoneNumber
           %}
@@ -214,6 +230,7 @@
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Service member benefits"
             vbaServices = allVbaServices.serviceMemberBenefits
+            facilityName = entityLabel
             facilityAddress = fieldAddress
             facilityPhone = fieldPhoneNumber
           %}
@@ -221,6 +238,7 @@
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Other services"
             vbaServices = allVbaServices.otherServices
+            facilityName = entityLabel
             facilityAddress = fieldAddress
             facilityPhone = fieldPhoneNumber
           %}
@@ -260,6 +278,11 @@
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
             Other nearby VA locations
           </h2>
+          {% include 'src/site/includes/vba_facilities/nearby.liquid' with
+              mainPhone = fieldPhoneNumber
+              mainAddress = fieldAddress
+              mainFacilityApiId = fieldFacilityLocatorApiId
+          %}
 
 
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
@@ -273,6 +296,13 @@
             <va-link
               href="/find-locations"
               text="Find a VA benefits location"
+              onclick="recordEvent(
+                {
+                  'event': 'vba-regional-facility-vba-facility-find-VA-benefits-location',
+                  'vba-regional-facility-name': '{{ entityLabel }}',
+                  'link-label': 'Find a VA benefits location'
+                }
+              )"
             >
           </p>
           <va-back-to-top></va-back-to-top>

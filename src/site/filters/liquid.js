@@ -4,7 +4,6 @@ const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
-const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
@@ -278,33 +277,34 @@ module.exports = function registerFilters() {
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
     const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
-    if (data) {
-      return data.replace(
-        replacePattern,
-        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
-      );
+
+    if (!data?.match(replacePattern)) {
+      return data;
     }
 
-    return data;
+    return data.replace(
+      replacePattern,
+      '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
+    );
   };
 
   liquid.filters.separatePhoneNumberExtension = phoneNumber => {
     if (!phoneNumber) {
       return null;
     }
-
-    if (!phoneNumber.includes(', ext. ')) {
-      return {
-        phoneNumber,
-        extension: null,
-      };
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const match = phoneRegex.exec(phoneNumber);
+    if (!match || !match[1] || !match[2] || !match[3]) {
+      // Short number or not a normal format
+      return { phoneNumber, extension: '' };
     }
-
-    const splitNumber = phoneNumber.split(', ext. ');
+    const phone = match[1] + match[2] + match[3];
+    // optional extension matching x1234 (match 4) or ext1234 (match 5)
+    const extension = match[4] || match[5] || '';
 
     return {
-      phoneNumber: splitNumber[0],
-      extension: splitNumber[1],
+      phoneNumber: phone,
+      extension,
     };
   };
 
@@ -969,7 +969,7 @@ module.exports = function registerFilters() {
       sectionHeader: '',
     };
     const { fetched } = fieldCcGetUpdatesFromVba;
-    processed.sectionHeader = fetched.fieldSectionHeader[0].value;
+    processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value || '';
     for (const link of fetched.fieldLinks) {
       if (link.url.path.startsWith('/')) {
         processed.links.news = {
@@ -1003,19 +1003,20 @@ module.exports = function registerFilters() {
       fieldSectionHeader: '',
       fieldDescription: '',
     };
-    processed.fieldSectionHeader = field.fetched.fieldSectionHeader[0].value;
+    processed.fieldSectionHeader =
+      field.fetched.fieldSectionHeader?.[0]?.value || '';
 
     const ctaEntity = field.fetched.fieldCta[0].entity;
-    processed.fieldCta.label = ctaEntity.fieldButtonLabel[0].value;
-    processed.fieldCta.link = ctaEntity.fieldButtonLink[0].url.path;
+    processed.fieldCta.label = ctaEntity.fieldButtonLabel?.[0]?.value || '';
+    processed.fieldCta.link = ctaEntity.fieldButtonLink?.[0]?.url.path || '';
 
-    processed.fieldDescription = field.fetched.fieldDescription[0].processed;
+    processed.fieldDescription = field.fetched.fieldDescription?.[0]?.processed;
     return processed;
   };
 
   liquid.filters.processWysiwygSimple = field => {
     if (!field?.fetched?.fieldWysiwyg?.length) return null;
-    return field.fetched.fieldWysiwyg[0].value;
+    return field.fetched.fieldWysiwyg[0]?.value || '';
   };
 
   liquid.filters.processFieldPhoneNumbersParagraph = fields => {
@@ -1163,7 +1164,9 @@ module.exports = function registerFilters() {
     }
     const processedFetched = {};
     for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
-      processedFetched[key] = value[0].value;
+      if (value?.length > 0) {
+        processedFetched[key] = value[0]?.value || '';
+      }
     }
     return processedFetched;
   };
@@ -1180,14 +1183,18 @@ module.exports = function registerFilters() {
       fieldSectionHeader,
       fieldCta,
     } = featuredContentEntity;
-    const updatedCta = [
-      {
+    const updatedCta = [];
+    if (
+      fieldCta?.entity?.fieldButtonLink &&
+      fieldCta?.entity?.fieldButtonLabel
+    ) {
+      updatedCta.push({
         entity: {
           fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
           fieldButtonLink: [fieldCta.entity.fieldButtonLink],
         },
-      },
-    ];
+      });
+    }
     const fetched = {
       fieldDescription: [fieldDescription],
       fieldSectionHeader: [{ value: fieldSectionHeader }],
@@ -1217,9 +1224,9 @@ module.exports = function registerFilters() {
     const featureContentObj = {
       entity: {
         fieldDescription: {
-          processed: fieldDescription[0]?.processed,
+          processed: fieldDescription[0]?.processed || '',
         },
-        fieldSectionHeader: fieldSectionHeader[0]?.value,
+        fieldSectionHeader: fieldSectionHeader[0]?.value || '',
       },
     };
 
@@ -1231,10 +1238,10 @@ module.exports = function registerFilters() {
       const buttonFeatured = {
         entity: {
           fieldButtonLink: {
-            uri: fieldCta[0]?.entity.fieldButtonLink[0].uri,
-            url: fieldCta[0]?.entity.fieldButtonLink[0].url?.path,
+            uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
+            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
           },
-          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0].value,
+          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
@@ -1289,94 +1296,6 @@ module.exports = function registerFilters() {
       'fieldDatetimeRangeTimezone',
       false,
     );
-  };
-
-  //* paginatePages has limitations, it is not yet fully operational.
-  liquid.filters.paginatePages = (page, items, aria) => {
-    const perPage = 10;
-
-    const ariaLabel = aria ? ` of ${aria}` : '';
-
-    const paginationPath = pageNum => {
-      return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
-    };
-
-    const pageReturn = [];
-
-    if (items.length > 0) {
-      const pagedEntities = _.chunk(items, perPage);
-
-      for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-        let pagedPage = { ...page };
-        if (pageNum > 0) {
-          pagedPage = set(
-            'entityUrl.path',
-            `${page.entityUrl.path}${paginationPath(pageNum)}`,
-            page,
-          );
-        }
-
-        pagedPage.pagedItems = pagedEntities[pageNum];
-        const innerPages = [];
-
-        if (pagedEntities.length > 0) {
-          // add page numbers
-          const numPageLinks = 3;
-          let start;
-          let length;
-          if (pagedEntities.length <= numPageLinks) {
-            start = 0;
-            length = pagedEntities.length;
-          } else {
-            length = numPageLinks;
-
-            if (pageNum + numPageLinks > pagedEntities.length) {
-              start = pagedEntities.length - numPageLinks;
-            } else {
-              start = pageNum;
-            }
-          }
-
-          for (let num = start; num < start + length; num++) {
-            innerPages.push({
-              href:
-                num === pageNum
-                  ? null
-                  : `${page.entityUrl.path}${paginationPath(num)}`,
-              label: num + 1,
-              class: num === pageNum ? 'va-pagination-active' : '',
-            });
-          }
-
-          pagedPage.paginator = {
-            ariaLabel,
-            prev:
-              pageNum > 0
-                ? `${page.entityUrl.path}${paginationPath(pageNum - 1)}`
-                : null,
-            inner: innerPages,
-            next:
-              pageNum < pagedEntities.length - 1
-                ? `${page.entityUrl.path}${paginationPath(pageNum + 1)}`
-                : null,
-          };
-          pageReturn.push(pagedPage);
-        }
-      }
-    }
-
-    if (!pageReturn[0]) {
-      return {};
-    }
-
-    return {
-      pagedItems: pageReturn[0].pagedItems,
-      paginator: pageReturn[0].paginator,
-    };
-  };
-
-  liquid.filters.isFirstPage = paginator => {
-    return !paginator || paginator.prev === null;
   };
 
   liquid.filters.hasContentAtPath = (rootArray, path) => {
@@ -1971,5 +1890,12 @@ module.exports = function registerFilters() {
     ];
 
     return urlsForBanner.includes(currentPath);
+  };
+
+  liquid.filters.useTelephoneWebComponent = telephone => {
+    if (/[a-zA-Z+]/.test(telephone)) {
+      return false;
+    }
+    return true;
   };
 };

@@ -1,0 +1,24 @@
+{% if fieldOperatingStatusFacility != "normal" %}
+  {% case fieldOperatingStatusFacility %}
+  {% when 'limited' %}
+    {% assign status = "warning" %}
+    {% assign trigger = "Limited services and hours" %}
+  {% when 'closed' %}
+    {% assign status = "error" %}
+    {% assign trigger = "Facility Closed" %}
+  {% when 'notice' %}
+    {% assign status = "info" %}
+    {% assign trigger = "Facility notice" %}
+  {% endcase %}
+  <div class="vads-u-margin-bottom--1">
+    <va-alert-expandable
+      id="operating-status-{{ fieldFacilityLocatorApiId }}"
+      trigger="{{ trigger }}"
+      status="{{ status }}"
+      class="vads-u-margin-y--0 vamc-facility-expandable-alert"
+      style="max-width: 303px;"
+    >
+      <p>{{ fieldOperatingStatusMoreInfo | drupalToVaPath | phoneLinks | newline_to_br }}</p>
+    </va-alert-expandable>
+  </div>
+{% endif %}
