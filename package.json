@@ -213,7 +213,7 @@
     "csvtojson": "^2.0.10",
     "diff2html": "^3.4.11",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "express": "^4.19.2",
     "express-http-proxy": "^1.6.0",
     "git-diff": "^2.0.6",
     "js-yaml": "^3.14.0",
