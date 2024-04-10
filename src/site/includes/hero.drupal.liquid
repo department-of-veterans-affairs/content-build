@@ -55,16 +55,19 @@
                 class="vads-u-font-size--md vads-u-line-height--5 vads-u-color--gray vads-u-margin-top--0 vads-u-padding-right--2 vads-u-font-family--sans vads-u-font-weight--normal">
                 {{ createAccountBlock.fieldCtaSummaryText }}
               </h2>
-              <button class="vads-u-padding-x--4 vads-u-margin-bottom--3" onclick="openLoginModal()">
-                {{ createAccountBlock.fieldPrimaryCtaButtonText }}
-              </button>
+              <va-button
+                disable-analytics
+                class="vads-u-margin-bottom--3"
+                text="{{ createAccountBlock.fieldPrimaryCtaButtonText }}"
+                onclick="openLoginModal()"
+              ></va-button>
               {% for link in createAccountBlock.fieldRelatedInfoLinks %}
-                <a
+                <va-link
+                  disable-analytics
                   href="{{ link.url.path }}"
                   onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'secondary', 'button-click-label': '{{ link.title }}',  });"
-                  >
-                  {{ link.title }}
-                </a>
+                  text="{{ link.title }}"
+                ></va-link>
               {% endfor %}
             </div>
           </div>

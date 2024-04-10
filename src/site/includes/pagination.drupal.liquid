@@ -1,56 +1,79 @@
 {% comment %}
-  paginator {
-    prev: url or null
-    page {
-      href: url or null
-      class:
-      href:
-      label
-    }
-    prev: url or null
-  }
+  See README-pagination.md for details about this template
 {% endcomment %}
 
+  
+{% if totalPages %}
+  <va-pagination
+    max-page-list-length="7"
+    page="1"
+    pages="1"
+    uswds
+  >
+  </va-pagination>
+{% endif %}
 
-{% assign paginatorCount = paginator.inner | size %}
-{% assign totalItems = paginatorCount %}
+<script>
+  if (Number('{{ totalPages }}')) {
+    const pages = Math.ceil(Number('{{ totalPages }}')  / 10);
 
-{% if numItems %}
-{% assign totalItems = numItems | times: .1 %}
-{% endif%}
+    const pagination = document.querySelector('va-pagination');
 
-{% if paginator != empty and totalItems <= paginatorCount %}
+    pagination.setAttribute('pages', pages);
+  }
+</script>
 
-  <div class="va-pagination" data-template="includes/pagination">
-    {% if paginator.prev != empty %}
-      <span class="va-pagination-prev">
-        <a href="{{ paginator.prev }}" aria-label="Load previous page{{ paginator.ariaLabel }}">
-          <abbr title="Previous">Prev</abbr>
-        </a>
-      </span>
-    {% endif %}
-    <div class="va-pagination-inner">
-      {% for page in paginator.inner %}
-        <a
-          aria-label="Load page {{ page.label }}{{ paginator.ariaLabel }}"
-          {% if page.class %}
-            class="{{ page.class }}"
-          {% endif %}
-          {% if page.class != "va-pagination-active" %}
-            href="{{ page.href }}"
-          {% endif %}
-        >
-          {{ page.label }}
-        </a>
-        {% assign totalItems = totalItems | minus: 1 %}
-      {% endfor %}
-    </div>
-    {% if paginator.next != empty %}
-      <span class="va-pagination-next">
-        <a href="{{ paginator.next }}" aria-label="Load next page{{ paginator.ariaLabel }}">
-          Next
-        </a>
-      </span>
-    {% endif %}
-  </div>
+{% if totalPages %}
+  <script>
+    // See README-pagination.md for a detailed walkthrough of this code
+
+    const addPrefixToPage = !!'{{ pagePrefix }}';
+    const pagination = document.querySelector('va-pagination');
+    let landingUrl = '{{ entityUrl }}';
+
+    if (landingUrl.charAt(landingUrl.length - 1) !== '/') {
+      landingUrl = `${landingUrl}/`;
+    }
+
+    let urlParts = landingUrl.split('/');
+    urlParts = urlParts.filter(part => part !== '');
+    const lastPart = urlParts[urlParts.length - 1];
+
+    let currentPage;
+
+    if (lastPart.includes('page')) {
+      currentPage = lastPart.replace('page-', '');
+      urlParts.pop(lastPart);
+    } else if (Number(lastPart)) {
+      currentPage = lastPart;
+      urlParts.pop(lastPart);
+    } else {
+      currentPage = '1';
+    }
+
+    pagination.setAttribute('page', currentPage);
+
+    const updateCurrentPage = event => { 
+      let newPage = event?.detail?.page.toString();
+      let newEntityUrl;
+
+      if (newPage === '1') {
+        newPage = '';
+      } else if (addPrefixToPage && newPage !== '1') {
+        newPage = `page-${newPage}`;
+      }
+
+      const joinedUrl = urlParts.join('/');
+
+      if (joinedUrl.charAt(0) === '/') {
+        newEntityUrl = `${joinedUrl}/${newPage}`;
+      } else {
+        newEntityUrl = `/${joinedUrl}/${newPage}`;
+      }
+
+      window.location.href = newEntityUrl;
+    }
+
+    pagination.addEventListener('pageSelect', updateCurrentPage);
+  </script>
 {% endif %}

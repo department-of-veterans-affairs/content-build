@@ -22,6 +22,32 @@
   {
     "appName": "21-527EZ pension benefits form",
     "entryName": "pensions",
+    "rootUrl": "/pension/apply-for-veteran-pension-form-21p-527ez",
+    "template": {
+      "title": "Apply For Pension Benefits",
+      "heading": "Apply for pension benefits",
+      "display_title": "Apply now",
+      "description": "Submit your VA pension application (VA Form 21P-527EZ) online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back later to finish filling it out.",
+      "layout": "page-react.html",
+      "spoke": "Get benefits",
+      "collection": "pension",
+      "order": 3,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "pension/",
+          "name": "Pension benefits"
+        },
+        {
+          "path": "pension/apply-for-veteran-pension-form-21p-527ez",
+          "name": "Apply for Veterans Pension benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "21-527EZ pension benefits form",
+    "entryName": "pensions",
     "rootUrl": "/pension/application/527EZ",
     "template": {
       "title": "Apply For Pension Benefits",
@@ -159,8 +185,8 @@
     "template": {
       "title": "VA online services terms of use",
       "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "vagovprod": false
+      "includeBreadcrumbs": false,
+      "vagovprod": true
     }
   },
   {
@@ -185,7 +211,7 @@
         },
         {
           "path": "burials-and-memorials/application/530",
-          "name": "Review burial benefits application"
+          "name": "Apply for burial benefits"
         }
       ]
     }
@@ -212,7 +238,7 @@
         },
         {
           "path": "burials-and-memorials/application/530",
-          "name": "Review burial benefits application"
+          "name": "Apply for burial benefits"
         }
       ]
     }
@@ -241,6 +267,32 @@
         },
         {
           "path": "health-care/apply/application",
+          "name": "Apply for VA health care"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "1010ez Health Care Application form",
+    "entryName": "hca",
+    "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
+    "template": {
+      "title": "Apply for Health Care",
+      "display_title": "Apply Now",
+      "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
+      "body_class": "page-healthcare",
+      "layout": "page-react.html",
+      "collection": "healthCare",
+      "spoke": "Get benefits",
+      "order": 4,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "health-care/",
+          "name": "Health care"
+        },
+        {
+          "path": "health-care/apply-for-health-care-form-10-10ez",
           "name": "Apply for VA health care"
         }
       ]
@@ -446,8 +498,7 @@
       "keywords": "upgrade discharge, military discharge upgrade, discharge upgrade",
       "order": 6,
       "spoke": "Get records",
-      "collection": "records",
-      "includeBreadcrumbs": true
+      "collection": "records"
     }
   },
   {
@@ -795,16 +846,6 @@
     }
   },
   {
-    "appName": "Debt Letters",
-    "entryName": "your-debt",
-    "rootUrl": "/manage-va-debt/your-debt",
-    "template": {
-      "vagovprod": true,
-      "title": "Your VA Debt",
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "28-1900 Veteran Readiness",
     "entryName": "28-1900-chapter-31",
     "rootUrl": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
@@ -950,16 +991,6 @@
           "name": "Request help with VA debt"
         }
       ]
-    }
-  },
-  {
-    "appName": "Medical Copays",
-    "entryName": "medical-copays",
-    "rootUrl": "/health-care/pay-copay-bill/your-current-balances",
-    "template": {
-      "title": "Medical Copays",
-      "layout": "page-react.html",
-      "vagovprod": true
     }
   },
   {
@@ -1247,16 +1278,6 @@
     }
   },
   {
-    "appName": "Transfer Account",
-    "entryName": "mhv-inherited-proofing",
-    "rootUrl": "/transfer-account",
-    "template": {
-      "vagovprod": false,
-      "title": "Transfer Account",
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "Combined Debt Portal",
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-va-debt/summary",
@@ -1312,18 +1333,8 @@
     }
   },
   {
-    "appName": "burial-poc-v6",
-    "entryName": "burial-poc-v6",
-    "rootUrl": "/burial-poc-v6",
-    "productId": "3f7db617-af4b-4d7f-b30f-f288d5756668",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "MHV Secure Messaging",
-    "entryName": "secure-messaging",
+    "entryName": "mhv-secure-messaging",
     "rootUrl": "/my-health/secure-messages",
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
@@ -1334,7 +1345,7 @@
   },
   {
     "appName": "MHV Secure Messaging - OH Pilot",
-    "entryName": "secure-messaging-pilot",
+    "entryName": "mhv-secure-messaging-pilot",
     "rootUrl": "/my-health/secure-messages-pilot",
     "productId": "802ebe63-66e9-4ab1-82cd-bbf45d2db91f",
     "template": {
@@ -1350,6 +1361,17 @@
     "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
     "template": {
       "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "MHV Medical Records isolated app test",
+    "entryName": "medical-records-test",
+    "rootUrl": "/my-health/medical-records-test",
+    "productId": "33f531eb-ed52-4e7f-a6ae-f9ff78de939f",
+    "template": {
+      "vagovprod": false,
       "layout": "page-react.html",
       "private": true
     }
@@ -1458,7 +1480,7 @@
     "rootUrl": "/supporting-forms-for-claims/intent-to-file-form-21-0966",
     "productId": "8233bd78-20c6-4498-b36f-55ec0028b1e5",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1769,7 +1791,7 @@
   {
     "appName": "10-10d Application for CHAMPVA benefits",
     "entryName": "10-10D",
-    "rootUrl": "/ivc-champva/10-10D",
+    "rootUrl": "/health-care/champva/apply-form-10-10d",
     "productId": "c485d6da-8094-433d-9cd3-3d31e7813650",
     "template": {
       "vagovprod": false,
@@ -1787,9 +1809,9 @@
     }
   },
   {
-    "appName": "Representatives",
-    "entryName": "representatives",
-    "rootUrl": "/representatives",
+    "appName": "Accredited Representative Portal",
+    "entryName": "representative",
+    "rootUrl": "/representative",
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
     "template": {
       "vagovprod": false,
@@ -1801,6 +1823,16 @@
     "entryName": "10-7959C",
     "rootUrl": "/ivc-champva/10-7959C",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Foreign Medical Program (FMP) Registration Form",
+    "entryName": "10-7959f-1-FMP",
+    "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
+    "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

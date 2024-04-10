@@ -11,18 +11,15 @@ Example data:
 {% endcomment %}
 
 {% if entity.fieldTextExpander %}
-    <div data-template="paragraphs/expandable_text" data-entity-id="{{ entity.entityId }}"
-    class="form-expanding-group borderless-alert additional-info-container">
-        <div class="additional-info-title">{{ entity.fieldTextExpander }}</div>
-
-        {% if entity.fieldWysiwyg %}
-            <div class="additional-info-content usa-alert-text" hidden>
-                {% if entity.fieldWysiwyg.processed %}
-                    {{ entity.fieldWysiwyg.processed }}
-                {% elsif entity.fieldWysiwyg.0.processed %}
-                    {{ entity.fieldWysiwyg.0.processed }}
-                {% endif %}
-            </div>
-        {% endif %}
-    </div>
+    <va-additional-info disable-border trigger="{{entity.fieldTextExpander}}" uswds>
+    {% if entity.fieldWysiwyg %}
+        <div>
+            {% if entity.fieldWysiwyg.processed %}
+                {{ entity.fieldWysiwyg.processed }}
+            {% elsif entity.fieldWysiwyg.0.processed %}
+                {{ entity.fieldWysiwyg.0.processed }}
+            {% endif %}
+        </div>
+    {% endif %}
+    </va-additional-info>
 {% endif %}

@@ -1,4 +1,23 @@
-<div class="last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+{% comment %}
+  The landing_page.drupal.liquid template has a right column on the desktop layout. The feedback button on desktop is
+  included under the contents on the left column (spanning the normal page content). On mobile, this means the feedback
+  button ends up between the left column content and the right column content because the columns stack.
+
+  In landing_page.drupal.liquid, this template (above-footer-elements) appears twice. The desktop version is at the end of the left column content and
+  the mobile version is at the end of the page content.
+
+  The classes below control visibility of each of the templates in landing_page.drupal.liquid only. This should not affect any other templates where the right column is not present.
+{% endcomment %}
+
+{% assign classes = 'last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0' %}
+
+{% if responsiveLayout == 'desktop' %}
+  {% assign classes = 'last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0 vads-u-display--none medium-screen:vads-u-display--block' %}
+{% elsif responsiveLayout == 'mobile' %}
+  {% assign classes = 'last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0 medium-screen:vads-u-display--none' %}
+{% endif %}
+
+<div class="{{ classes }}">
   <div class="small-screen:vads-u-display--flex above-footer-elements-container">
     <div class="vads-u-flex--auto">
       <span class="vads-u-text-align--justify">
