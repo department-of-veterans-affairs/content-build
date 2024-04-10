@@ -1687,22 +1687,23 @@ module.exports = function registerFilters() {
 
   // from the matrix of when to show Service Location Appointments header and text
   liquid.filters.shouldShowServiceLocationAppointments = serviceLocation => {
-    // single.fieldVirtualSupport == "yes_appointment_only" or single.fieldVirtualSupport == 'yes_with_or_without_appointment' or single.fieldOfficeVisits == 'yes_appointment_only' or single.fieldOfficeVisits == 'yes_with_or_without_appointment'
     const {
-      fieldVirtualSupport,
-      fieldOfficeVisits,
-      fieldApptIntroTextType,
-      fieldApptIntroTextCustom,
+      fieldVirtualSupport: virtualSupport,
+      fieldOfficeVisits: officeVisits,
+      fieldApptIntroTextType: introTextType,
+      fieldApptIntroTextCustom: introTextCustom,
     } = serviceLocation;
+    const yesConditions = [
+      'yes_appointment_only',
+      'yes_with_or_without_appointment',
+    ];
     return (
-      fieldVirtualSupport === 'yes_appointment_only' ||
-      fieldVirtualSupport === 'yes_with_or_without_appointment' ||
-      fieldOfficeVisits === 'yes_appointment_only' ||
-      fieldOfficeVisits === 'yes_with_or_without_appointment' ||
-      (!fieldOfficeVisits &&
-        fieldApptIntroTextType === 'customize_text' &&
-        fieldApptIntroTextCustom) ||
-      (!fieldOfficeVisits && fieldApptIntroTextType === 'default_text')
+      yesConditions.includes(virtualSupport) ||
+      yesConditions.includes(officeVisits) ||
+      (!officeVisits &&
+        introTextType === 'customize_text' &&
+        introTextCustom) ||
+      (!officeVisits && introTextType === 'default_text')
     );
   };
 
