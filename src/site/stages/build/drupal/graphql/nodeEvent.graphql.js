@@ -371,6 +371,7 @@ const nodeEventWithoutBreadcrumbs = `
       }
     }
     fieldOrder
+    fieldPublishToOutreachCal
     fieldUrlOfAnOnlineEvent {
       uri
       title
