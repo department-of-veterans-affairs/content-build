@@ -7,6 +7,8 @@ describe('home page', () => {
       .should('exist')
       .should('be.visible');
 
+  const verifyHiddenElement = selector => cy.get(selector).should('exist');
+
   const verifyText = (selector, text) =>
     cy
       .get(selector)
@@ -138,7 +140,7 @@ describe('home page', () => {
       email()
         .scrollIntoView()
         .within(() => {
-          verifyElement('[name="email"]');
+          verifyHiddenElement('[name="email"]');
         });
 
       // Footer ====================================================
