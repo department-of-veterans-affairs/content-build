@@ -1703,7 +1703,7 @@ module.exports = function registerFilters() {
       (!officeVisits &&
         introTextType === 'customize_text' &&
         introTextCustom) ||
-      (!officeVisits && introTextType === 'default_text')
+      (!officeVisits && introTextType === 'use_default_text')
     );
   };
 
