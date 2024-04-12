@@ -148,7 +148,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
               title
               entityBundle
               fieldFacilityLocatorApiId
-              fieldOperatingStatusFacility
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
               fieldAddress {
                 locality
