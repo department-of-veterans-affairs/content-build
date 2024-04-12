@@ -117,12 +117,21 @@
     {% assign wingFloorOrRoomNumber = location.entity.fieldServiceLocationAddress.entity.fieldWingFloorOrRoomNumber %}
 
     {% if clinicName or buildingNameAndNumber or wingFloorOrRoomNumber %}
+
       <p>
         {% if clinicName %}
           {{ clinicName }} <br/>
+        {% else %}
+          <span class="vads-u-font-weight--bold vads-u-font-family--serif vads-u-font-size--sm">
+            Location
+          </span> <br/>
         {% endif %}
 
-        {% if buildingNameAndNumber and wingFloorOrRoomNumber %}
+        {% if buildingNameAndNumber and !wingFloorOrRoomNumber %}
+          {{ buildingNameAndNumber }}
+        {% elsif !buildingNameAndNumber and wingFloorOrRoomNumber %}
+          {{ wingFloorOrRoomNumber }}
+        {% elsif buildingNameAndNumber and wingFloorOrRoomNumber %}
           {{ buildingNameAndNumber }}, {{ wingFloorOrRoomNumber }}
         {% endif %}
       </p>
