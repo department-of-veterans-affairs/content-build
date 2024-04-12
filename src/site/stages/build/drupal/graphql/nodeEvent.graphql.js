@@ -125,6 +125,32 @@ const nodeEvent = `
         }
         ... on NodeEventListing {
           fieldDescription
+        fieldIntroText
+        fieldOffice {
+            entity {
+              entityType
+              entityBundle
+              entityId
+              ... on NodeOffice {
+                fieldBody {
+                  value
+                  format
+                  processed
+                }
+                fieldDescription
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldAdditionalListings {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeEventListing {
+          fieldDescription
           fieldIntroText
           fieldOffice {
             entity {
@@ -173,6 +199,7 @@ const nodeEvent = `
       }
     }
     fieldOrder
+    fieldPublishToOutreachCal
     fieldUrlOfAnOnlineEvent {
       uri
       title
