@@ -40,7 +40,7 @@ describe('Vet Center Locations Operating Status', () => {
     const updatedFixture = { ...fixture };
     updatedFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusFacility =
       'limited';
-    updatedFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusMoreInfo = undefined;
+    updatedFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusMoreInfo = null;
     const rendered = await renderHTML(
       'src/site/layouts/vet_center_locations_list.drupal.liquid',
       updatedFixture,

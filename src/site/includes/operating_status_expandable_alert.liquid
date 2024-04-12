@@ -15,7 +15,7 @@
     {% assign status = "info" %}
     {% assign trigger = "Facility notice" %}
   {% endcase %}
-  {% if status and fieldOperatingStatusMoreInfo %}
+  {% if status and fieldOperatingStatusMoreInfo and fieldOperatingStatusMoreInfo != blank %}
     <div class="vads-u-margin-bottom--1">
       <va-alert-expandable
         id="operating-status-{{ operatingStatusId }}"
