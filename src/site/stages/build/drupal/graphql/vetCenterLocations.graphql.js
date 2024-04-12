@@ -25,7 +25,6 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
       ... on NodeVetCenter {
         title
         entityBundle
-
         fieldOfficialName
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
