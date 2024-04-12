@@ -37,10 +37,10 @@ describe('Vet Center Locations Operating Status', () => {
     expect(operatingStatus).to.be.empty;
   });
   it('should not render a limited operating status when has status but no more info', async () => {
-    const updatedFixture = fixture;
+    const updatedFixture = { ...fixture };
     updatedFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusFacility =
       'limited';
-
+    updatedFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusMoreInfo = undefined;
     const rendered = await renderHTML(
       'src/site/layouts/vet_center_locations_list.drupal.liquid',
       updatedFixture,
@@ -53,14 +53,14 @@ describe('Vet Center Locations Operating Status', () => {
   });
 
   it('should render a limited operating status when has status and more info', async () => {
-    const updatedFixture = fixture;
-    updatedFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusFacility =
+    const updatedFixture2 = { ...fixture };
+    updatedFixture2.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusFacility =
       'limited';
-    updatedFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusMoreInfo =
+    updatedFixture2.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusMoreInfo =
       'More info';
     const rendered = await renderHTML(
       'src/site/layouts/vet_center_locations_list.drupal.liquid',
-      updatedFixture,
+      updatedFixture2,
     );
     const operatingStatus = queryAllByTestId(
       rendered,
