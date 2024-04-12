@@ -1,4 +1,9 @@
 {% if fieldOperatingStatusFacility and fieldOperatingStatusFacility != "normal" %}
+  {% if fieldFacilityLocatorApiId %}
+    {% assign operatingStatusId = fieldFacilityLocatorApiId %}
+  {% elsif facilityTitle %}
+    {% assign operatingStatusId = '' | trimAndCamelCase: facilityTitle %}
+  {% endif %}
   {% case fieldOperatingStatusFacility %}
   {% when 'limited' %}
     {% assign status = "warning" %}
@@ -10,10 +15,11 @@
     {% assign status = "info" %}
     {% assign trigger = "Facility notice" %}
   {% endcase %}
-  {% if status %}
+  {% if status and fieldOperatingStatusMoreInfo %}
     <div class="vads-u-margin-bottom--1">
       <va-alert-expandable
-        id="operating-status-{{ fieldFacilityLocatorApiId }}"
+        id="operating-status-{{ operatingStatusId }}"
+        data-testid="operating-status-{{ operatingStatusId }}"
         trigger="{{ trigger }}"
         status="{{ status }}"
         class="vads-u-margin-y--0 vamc-facility-expandable-alert"

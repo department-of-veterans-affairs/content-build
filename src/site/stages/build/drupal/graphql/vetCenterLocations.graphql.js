@@ -25,9 +25,11 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
       ... on NodeVetCenter {
         title
         entityBundle
+
         fieldOfficialName
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
+        fieldFacilityLocatorApiId
         fieldAddress {
           locality
           administrativeArea
@@ -44,6 +46,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         fieldOfficialName
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
+        fieldFacilityLocatorApiId
         fieldAddress {
           locality
           administrativeArea
@@ -58,6 +61,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
         title
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
+        fieldFacilityLocatorApiId
         entityBundle
         fieldAddress {
           locality
@@ -71,6 +75,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
       ... on NodeVetCenterMobileVetCenter {
         title
         entityBundle
+        fieldFacilityLocatorApiId
         fieldAddress {
           locality
           administrativeArea
@@ -143,6 +148,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
               title
               entityBundle
               fieldFacilityLocatorApiId
+              fieldOperatingStatusFacility
               ${derivativeImage('_32MEDIUMTHUMBNAIL')}
               fieldAddress {
                 locality
