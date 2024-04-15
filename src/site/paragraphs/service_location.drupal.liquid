@@ -78,7 +78,8 @@
     </div>
   {% endif %}
 
-  {% if single.fieldVirtualSupport == "yes_appointment_only" or single.fieldVirtualSupport == 'yes_with_or_without_appointment' or single.fieldOfficeVisits == 'yes_appointment_only' or single.fieldOfficeVisits == 'yes_with_or_without_appointment' %}
+  {% assign showAppointments = single | shouldShowServiceLocationAppointments  %}
+  {% if showAppointments %}
     <div>
       <h{{serviceLocationH}} class="vads-u-margin-top--2 vads-u-line-height--1" data-testid="service-location-appoinments-header">Appointments</h{{serviceLocationH}} >
       {% if single.fieldApptIntroTextType != 'remove_text' %}
