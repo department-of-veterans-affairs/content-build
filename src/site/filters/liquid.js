@@ -1697,13 +1697,15 @@ module.exports = function registerFilters() {
       'yes_appointment_only',
       'yes_with_or_without_appointment',
     ];
+    const noVisitsAndCustomIntro =
+      !officeVisits && introTextType === 'customize_text' && introTextCustom;
+    const noVisitsAndDefaultInto =
+      !officeVisits && introTextType === 'use_default_text';
     return (
       yesConditions.includes(virtualSupport) ||
       yesConditions.includes(officeVisits) ||
-      (!officeVisits &&
-        introTextType === 'customize_text' &&
-        introTextCustom) ||
-      (!officeVisits && introTextType === 'use_default_text')
+      noVisitsAndCustomIntro ||
+      noVisitsAndDefaultInto
     );
   };
 
