@@ -12,6 +12,10 @@
     <h{{ serviceLocationAddressHeaderLevel }} class="vads-u-margin-top--0">
       {{ serviceLocationAddress.fieldClinicName }}
     </h{{ serviceLocationAddressHeaderLevel }}>
+  {% elsif serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
+    <h{{ serviceLocationAddressHeaderLevel }}>
+      Location
+    </h{{ serviceLocationAddressHeaderLevel }}>
   {% endif %}
 
   

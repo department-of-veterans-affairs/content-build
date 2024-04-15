@@ -1,0 +1,345 @@
+{
+  "entityId": "28228",
+  "entityUrl": {
+    "path": "/salt-lake-city-vet-center/locations",
+    "routed": true
+  },
+  "title": "Locations",
+  "entityMetatags": [
+    {
+      "__typename": "MetaValue",
+      "key": "title",
+      "value": "Locations | Salt Lake City Vet Center | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "description",
+      "value": "We provide all of our counseling, outreach, and support services at our main location."
+    },
+    {
+      "__typename": "MetaLink",
+      "key": "image_src",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:site_name",
+      "value": "Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:title",
+      "value": "Locations | Salt Lake City Vet Center | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:description",
+      "value": "We provide all of our counseling, outreach, and support services at our main location."
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    },
+    {
+      "__typename": "MetaProperty",
+      "key": "og:image:alt",
+      "value": "U.S. Department of Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:card",
+      "value": "summary_large_image"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:site",
+      "value": "@DeptVetAffairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:title",
+      "value": "Locations | Salt Lake City Vet Center | Veterans Affairs"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image",
+      "value": "https://www.va.gov/img/design/logo/va-og-image.png"
+    },
+    {
+      "__typename": "MetaValue",
+      "key": "twitter:image:alt",
+      "value": "U.S. Department of Veterans Affairs"
+    }
+  ],
+  "entityBundle": "vet_center_locations_list",
+  "entityLabel": "Locations",
+  "fieldIntroText": "We provide all of our counseling, outreach, and support services at our main location. ",
+  "fieldNearbyMobileVetCenters": [
+    {
+      "entity": {
+        "title": "Saint George Mobile Vet Center",
+        "entityBundle": "vet_center_mobile_vet_center",
+        "fieldFacilityLocatorApiId": "vc_0868MVC",
+        "fieldAddress": {
+          "locality": "Saint George",
+          "administrativeArea": "UT",
+          "postalCode": "84770",
+          "addressLine1": "1664 South Dixie Drive",
+          "organization": null
+        },
+        "fieldPhoneNumber": "435-673-4494",
+        "fieldMedia": {
+          "entity": {
+            "image": {
+              "alt": "St. George Mobile Vet Center",
+              "title": "",
+              "derivative": {
+                "url": "http://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2022-01/Full%20MVC_0.jpg",
+                "width": 480,
+                "height": 320
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "title": "Boise Mobile Vet Center",
+        "entityBundle": "vet_center_mobile_vet_center",
+        "fieldFacilityLocatorApiId": "vc_0827MVC",
+        "fieldAddress": {
+          "locality": "Boise",
+          "administrativeArea": "ID",
+          "postalCode": "83705",
+          "addressLine1": "2424 Bank Drive",
+          "organization": null
+        },
+        "fieldPhoneNumber": "208-342-3612",
+        "fieldMedia": {
+          "entity": {
+            "image": {
+              "alt": "boise MVC ",
+              "title": "",
+              "derivative": {
+                "url": "http://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2021-09/MVC%20at%20Capitol_0.jpg?h=18f68638",
+                "width": 480,
+                "height": 320
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "title": "Casper Mobile Vet Center",
+        "entityBundle": "vet_center_mobile_vet_center",
+        "fieldFacilityLocatorApiId": "vc_0834MVC",
+        "fieldAddress": {
+          "locality": "Casper",
+          "administrativeArea": "WY",
+          "postalCode": "82601",
+          "addressLine1": "1030 North Poplar Street",
+          "organization": null
+        },
+        "fieldPhoneNumber": "307-261-5355",
+        "fieldMedia": {
+          "entity": {
+            "image": {
+              "alt": "Casper Mobile Vet Center",
+              "title": "",
+              "derivative": {
+                "url": "http://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2023-07/IMG_0100.jpg",
+                "width": 480,
+                "height": 320
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "fieldOffice": {
+    "entity": {
+      "reverseFieldOfficeNode": {
+        "entities": [
+          {
+            "fieldOfficeHours": [
+              {
+                "day": 0,
+                "starthours": null,
+                "endhours": null,
+                "comment": "Closed"
+              },
+              {
+                "day": 1,
+                "starthours": 800,
+                "endhours": 1630,
+                "comment": ""
+              },
+              {
+                "day": 2,
+                "starthours": 800,
+                "endhours": 1630,
+                "comment": ""
+              },
+              {
+                "day": 3,
+                "starthours": 800,
+                "endhours": 1630,
+                "comment": ""
+              },
+              {
+                "day": 4,
+                "starthours": 800,
+                "endhours": 1630,
+                "comment": ""
+              },
+              {
+                "day": 5,
+                "starthours": null,
+                "endhours": null,
+                "comment": "Closed"
+              },
+              {
+                "day": 6,
+                "starthours": null,
+                "endhours": null,
+                "comment": "Closed"
+              }
+            ],
+            "title": "Major Brent Taylor Vet Center Outstation",
+            "entityBundle": "vet_center_outstation",
+            "fieldFacilityLocatorApiId": "vc_5141OS",
+            "fieldOfficialName": "Major Brent Taylor Vet Center Outstation",
+            "fieldOperatingStatusFacility": "normal",
+            "fieldOperatingStatusMoreInfo": null,
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "Ogden Outstation",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2022-01/Ogden%20MBTO%20exterior_0.jpg",
+                    "width": 480,
+                    "height": 320
+                  }
+                }
+              }
+            },
+            "fieldAddress": {
+              "locality": "North Ogden",
+              "administrativeArea": "UT",
+              "postalCode": "84414",
+              "addressLine1": "2357 North 400, East",
+              "addressLine2": "",
+              "organization": null
+            },
+            "fieldPhoneNumber": "801-737-9737"
+          },
+          {
+            "title": "Salt Lake City Mobile Vet Center",
+            "entityBundle": "vet_center_mobile_vet_center",
+            "fieldFacilityLocatorApiId": "vc_0831MVC",
+            "fieldMedia": {
+              "entity": {
+                "image": {
+                  "alt": "MVC at Utah State Capital",
+                  "title": "",
+                  "derivative": {
+                    "url": "http://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2022-01/MVC%20at%20Capitol.jpg",
+                    "width": 480,
+                    "height": 320
+                  }
+                }
+              }
+            },
+            "fieldAddress": {
+              "locality": "Murray",
+              "administrativeArea": "UT",
+              "postalCode": "84107",
+              "addressLine1": "84 West 4800 South",
+              "addressLine2": "Suite 100",
+              "organization": null
+            },
+            "fieldPhoneNumber": "801-266-1499"
+          }
+        ]
+      },
+      "title": "Salt Lake City Vet Center",
+      "fieldAddress": {
+        "countryCode": "US",
+        "administrativeArea": "UT",
+        "locality": "Murray",
+        "postalCode": "84107",
+        "addressLine1": "84 West 4800 South",
+        "addressLine2": "Suite 100",
+        "organization": null
+      },
+      "fieldFacilityLocatorApiId": "vc_0514V",
+      "fieldPhoneNumber": "801-266-1499",
+      "fieldOfficialName": "Salt Lake City Vet Center",
+      "fieldOperatingStatusFacility": "normal",
+      "fieldOperatingStatusMoreInfo": null,
+      "fieldMedia": {
+        "entity": {
+          "image": {
+            "alt": "Salt Lake Vet Center Exterior",
+            "title": "",
+            "derivative": {
+              "url": "http://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov/sites/default/files/styles/3_2_medium_thumbnail/public/2022-01/Vet%20Center%20exterior%20picture2.jpg",
+              "width": 480,
+              "height": 320
+            }
+          }
+        }
+      },
+      "fieldOfficeHours": [
+        {
+          "starthours": null,
+          "endhours": null,
+          "day": 0,
+          "comment": "Closed"
+        },
+        {
+          "starthours": 800,
+          "endhours": 1800,
+          "day": 1,
+          "comment": ""
+        },
+        {
+          "starthours": 800,
+          "endhours": 1800,
+          "day": 2,
+          "comment": ""
+        },
+        {
+          "starthours": 800,
+          "endhours": 1800,
+          "day": 3,
+          "comment": ""
+        },
+        {
+          "starthours": 800,
+          "endhours": 1800,
+          "day": 4,
+          "comment": ""
+        },
+        {
+          "starthours": 800,
+          "endhours": 1630,
+          "day": 5,
+          "comment": ""
+        },
+        {
+          "starthours": null,
+          "endhours": null,
+          "day": 6,
+          "comment": "Closed"
+        }
+      ]
+    }
+  }
+}

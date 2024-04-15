@@ -5,11 +5,14 @@
   <section data-label="{{typeOfCare}}">
     <h2>{{ typeOfCare }}</h2>
     <div class="service-accordion-output">
-      <va-accordion bordered uswds="false">
-        {% for service in servicesListOrderedByName %}
-          {% include "src/site/facilities/health_service.drupal.liquid" with section healthService = service sectionName = typeOfCare
-          %}
-        {% endfor %}
+      <va-accordion bordered uswds="true">
+      {% for service in servicesListOrderedByName %}
+        {% include "src/site/facilities/health_service.drupal.liquid" with
+          section
+          healthService = service
+          sectionName = typeOfCare
+        %}
+      {% endfor%}
       </va-accordion>
     </div>
   </section>
