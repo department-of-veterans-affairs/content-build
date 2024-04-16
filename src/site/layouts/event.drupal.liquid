@@ -289,18 +289,54 @@
           </va-accordion>
         {% endif %}
 
-        <p>breadcrumb: {{ getVamcFromBreadcrumbs: entityUrl.breadcrumb }}</p>
+        {% assign crumbs = entityUrl.breadcrumb | deriveLastBreadcrumbFromPath: title, entityUrl.path, replaceLastItem %}
+        {% for crumb in crumbs %}
+      <p>{{ crumb.text }}</p>
+      <p>{{ crumb.url.path }}</p>
+      {% endfor %}
+        {% assign vamcLocation = getVamcFromBreadcrumbs: entityUrl.breadcrumb %}
+        {% if vamcLocation %}
+          <p>breadcrumb: {{ vamcLocation }}</p>
+          {% endif %}
 
-        <!-- See more events. -->
+        {% comment %}
+          An Outreach event will have an entity ID of 7.
+
+          A VAMC event will have an entity ID other than 7 (usually between 300-400).
+
+          A VAMC event that is also published to the Outreach Calendar will have a `true`
+          value for fieldPublishToOutreachCal (and Outreach only events will also).
+        {% endcomment %}
+
+        {% assign eventEntityId = fieldAdministration.entity.entityId %}
+        {% assign publishInOutreachCal = fieldPublishToOutreachCal %}
+
+        <!-- Get VAMC location -->
+        <script>
+
+        </script>
+
+        <!-- See more events (VAMC only) -->
+        {% if eventEntityId != '7' and !publishInOutreachCal %}
+          <p>{{ entityMetatags[]}}
+          <va-link
+            active
+            href="{{ fieldListing.entity.entityUrl.path }}"
+            onclick="recordEvent({ event: 'nav-secondary-button-click' });"
+            text="Want to see more events offered at TODO?"
+          ></va-link>
+        {% endif %}
+
+        <!-- See more events (Outreach only, or VAMC/Outreach) -->
         <va-link
           active
           class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
           disable-analytics
-          href="{{ fieldListing.entity.entityUrl.path }}"
+          href="/outreach-and-events/events/"
           onclick="recordEvent({ event: 'nav-secondary-button-click' });"
-          text="See more events"
+          text="Want to see more events offered by the VA across the country?"
         ></va-link>
-        <p>entityId: {{ fieldAdministration.entity.entityId }}</p>
+
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>

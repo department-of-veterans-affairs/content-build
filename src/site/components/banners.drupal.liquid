@@ -28,14 +28,12 @@
 {% assign visiblePromoBanners = promoBanners.entities | deriveVisibleBanners: entityUrl.path %}
 
 <!-- Promo Banners -->
-{% for promoBanner in visiblePromoBanners %}
   <va-promo-banner
     onclick="recordEvent({ event: 'promo-banner-event', 'promo-banner-action': 'Footer alert - {{promoBanner.title}}'})"
-    aria-label="{{ promoBanner.title }}"
+    aria-label="Test Banner"
     role="region"
     data-template="components/banners.drupal.liquid"
-    id="{{ promoBanner.entityId }}"
-    href="{{ promoBanner.fieldLink.url.path }}"
-    type="{{ promoBanner.fieldPromoType }}"
-  >{{ promoBanner.title }}</va-promo-banner>
-{% endfor %}
+    id="5""
+    href="https://google.com"
+    type="I'm promoting a thing!"
+  >Whoohoo look at this promo banner</va-promo-banner>
