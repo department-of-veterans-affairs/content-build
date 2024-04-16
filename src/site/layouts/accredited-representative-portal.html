@@ -1,8 +1,33 @@
 {% include "src/site/includes/accredited-representative-portal/head.html" %}
 
 <div id="content">
-  {{ contents }}
+  <main id="main" class="main">
+    {% if custom_react_root != true %} {{ contents }}
+      <div class="section">
+        <div id="react-root">
+          <div class="vads-u-margin-y--5">
+            <div class="loading-indicator-container">
+              <div
+                class="loading-indicator"
+                role="progressbar"
+                aria-valuetext="{{ loadingMessage }}"
+                tabindex="0"
+              ></div>
+              {{ loadingMessage }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      {{ contents }}
+    {% endif %}
+  </main>
 </div>
+<!-- If remove this div it breaks this layout so currently hiding this with scss in vets-website -->
+<div
+  class="arp-footer-hidden"
+  id="footerNav"
+></div>
 
 </body>
 
