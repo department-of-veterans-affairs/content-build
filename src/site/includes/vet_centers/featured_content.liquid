@@ -10,8 +10,14 @@
     {% endif %}
     {% if entity.fieldCta.entity.fieldButtonLink %}
         {% assign fieldButtonUri = entity.fieldCta.entity.fieldButtonLink.uri | hasCharacterOtherThanSpace %}
-        {% if fieldButtonUri %}
-            <va-link active href="{{ entity.fieldCta.entity.fieldButtonLink.uri }}" text="{{ entity.fieldCta.entity.fieldButtonLabel }}"></va-link>
-        {%endif%}
+        {% assign fieldButtonUrl = entity.fieldCta.entity.fieldButtonLink.url.path | hasCharacterOtherThanSpace %}
+        {% if fieldButtonUrl %}
+            {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.url.path %}
+        {% elsif fieldButtonUri %}
+            {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.uri %}
+        {% endif %}
+        {% if fieldUrl %}
+            <va-link active href="{{ fieldUrl }}" text="{{entity.fieldCta.entity.fieldButtonLabel}}"></va-link>
+        {% endif %}
     {% endif %}
 </div>
