@@ -289,16 +289,6 @@
           </va-accordion>
         {% endif %}
 
-        {% assign crumbs = entityUrl.breadcrumb | deriveLastBreadcrumbFromPath: title, entityUrl.path, replaceLastItem %}
-        {% for crumb in crumbs %}
-      <p>{{ crumb.text }}</p>
-      <p>{{ crumb.url.path }}</p>
-      {% endfor %}
-        {% assign vamcLocation = getVamcFromBreadcrumbs: entityUrl.breadcrumb %}
-        {% if vamcLocation %}
-          <p>breadcrumb: {{ vamcLocation }}</p>
-          {% endif %}
-
         {% comment %}
           An Outreach event will have an entity ID of 7.
 
@@ -318,24 +308,31 @@
 
         <!-- See more events (VAMC only) -->
         {% if eventEntityId != '7' and !publishInOutreachCal %}
-          <p>{{ entityMetatags[]}}
+        {% assign breadcrumbs = entityUrl.breadcrumb | deriveLastBreadcrumbFromPath: title, entityUrl.path, replaceLastItem %}
+        <script>
+          const breadcrumbsHere = '{{ breadcrumbs }}';
+          console.log('BREADCRUMBS HERE: ', JSON.stringify(breadcrumbsHere));
+        </script>
+        {% assign vamcLocation = breadcrumbs[1].text %}
+        
+
           <va-link
             active
             href="{{ fieldListing.entity.entityUrl.path }}"
             onclick="recordEvent({ event: 'nav-secondary-button-click' });"
-            text="Want to see more events offered at TODO?"
+            text="Want to see more events offered at {{ vamcLocation }}?"
           ></va-link>
         {% endif %}
 
         <!-- See more events (Outreach only, or VAMC/Outreach) -->
-        <va-link
-          active
-          class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
-          disable-analytics
-          href="/outreach-and-events/events/"
-          onclick="recordEvent({ event: 'nav-secondary-button-click' });"
-          text="Want to see more events offered by the VA across the country?"
-        ></va-link>
+        {% if publishInOutreachCal %}
+          <va-link
+            active
+            class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
+            href="/outreach-and-events/events/"
+            text="Want to see more events offered by the VA across the country?"
+          ></va-link>
+        {% endif %}
 
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}

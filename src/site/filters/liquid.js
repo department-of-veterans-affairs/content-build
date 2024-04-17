@@ -672,10 +672,6 @@ module.exports = function registerFilters() {
     return breadcrumbs;
   };
 
-  liquid.filters.getVAMCfromBreadcrumbs = breadcrumbs => {
-    return breadcrumbs?.[1]?.text;
-  };
-
   liquid.filters.deriveLcBreadcrumbs = (
     breadcrumbs,
     string,
