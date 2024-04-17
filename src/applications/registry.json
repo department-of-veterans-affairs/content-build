@@ -1826,5 +1826,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "21-4138 Statement in Support of a Claim",
+    "entryName": "4138-ss",
+    "rootUrl": "/statement-in-support-of-claim",
+    "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
