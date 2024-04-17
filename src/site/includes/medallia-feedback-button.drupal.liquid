@@ -1,5 +1,5 @@
 <button 
-  onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: entityUrl.path }})"   
+  onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: entityUrl.path || window.location.pathname }})"   
   type="button"
   class="feedback-button usa-button"
   id="mdFormButton"
