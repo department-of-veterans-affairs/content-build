@@ -1768,15 +1768,16 @@ module.exports = function registerFilters() {
       buildtype,
     );
     const effectiveBuildType = isStaging ? 'staging' : 'production';
+    // Check if originalUrl is a valid string
+    if (typeof originalUrl !== 'string' || originalUrl === null) {
+      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
+    }
+
     // Ensure URL ends without a slash for consistent matching
     const url =
       originalUrl.charAt(originalUrl.length - 1) === '/'
         ? originalUrl.slice(0, -1)
         : originalUrl;
-
-    if (typeof url !== 'string' || url === null) {
-      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
-    }
 
     // Check if the URL exists in the main custom survey URL object
     if (url in surveyData.urls) {
