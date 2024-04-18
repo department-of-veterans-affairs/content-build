@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!-- This page was derived from src/site/includes/header.html file. -->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,38 +7,34 @@
   <!-- Preconnecting required origins: https://web.dev/uses-rel-preconnect/ -->
   <link rel="preconnect" href="https://www.googletagmanager.com" />
 
-  <!-- Index only pages on production. -->
   {% if buildtype != 'vagovprod' %}
     <meta name="robots" content="noindex">
   {% endif %}
 
-  <!-- Add polyfills. -->
   <script nonce="**CSP_NONCE**" nomodule data-entry-name="polyfills.js"></script>
 
   <!-- Add analytics helpers. -->
   <script nonce="**CSP_NONCE**">
-    {% include "src/site/assets/js/record-event.js" %}
+    {% include 'src/site/assets/js/record-event.js' %}
   </script>
 
   <!-- Add web components. -->
   {% if buildtype != 'vagovdev' %}
     <link rel="stylesheet" data-entry-name="web-components.css">
+    <script nonce="**CSP_NONCE**" defer data-entry-name="web-components.js"></script>
   {% endif %}
 
-  <!-- Render GA template. -->
   {% include 'src/site/includes/google-analytics.liquid' %}
 
-  <!-- Add Icons. -->
-  <!-- New favicon in future, keeping default to prevent blank -->
   <link rel="shortcut icon" href="/img/design/icons/favicon.ico" />
 
-  <!-- Preload main fonts -->
   <link rel="preload" href="/generated/sourcesanspro-bold-webfont.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/generated/sourcesanspro-regular-webfont.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/generated/bitter-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/generated/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- CSS -->
+  <link rel="stylesheet" data-entry-name="style.css">
   <link rel="stylesheet" data-entry-content="content-build.css">
   <link rel="stylesheet" data-entry-name="{{ entryname | default: 'static-pages' }}.css">
 
@@ -52,9 +46,9 @@
   <script nonce="**CSP_NONCE**" defer data-entry-name="{{ entryname | default: 'static-pages' }}.js"></script>
 
   <!--
-  We participate in the US government’s analytics program. See the data at analytics.usa.gov.
+  See the data at analytics.usa.gov.
   https://github.com/digital-analytics-program/gov-wide-code
--->
+  -->
   <script async type="text/javascript" nonce="**CSP_NONCE**"
     src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=VA" id="_fed_an_ua_tag"></script>
 
@@ -72,15 +66,4 @@
     window.VetsGov = window.VetsGov || {};
     window.VetsGov.headerFooter = JSON.parse({{ headerFooterData }});
   </script>
-
 </head>
-
-<body class="{{ body_class }} merger">
-
-  {{ google_analytics_noscript }}
-  <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
-
-  <!-- Header -->
-  <header class="header" role="banner">
-  <!-- To Add: Moble Layouts -->
-  </header>
