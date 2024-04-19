@@ -92,11 +92,124 @@
           "links": []
         },
         {
+          "expanded": false,
+          "description": null,
           "label": "ABOUT VA FAYETTEVILLE COASTAL",
           "url": {
             "path": ""
           },
-          "links": []
+          "entity": {
+            "linkedEntity": null
+          },
+          "links": [
+            {
+              "expanded": false,
+              "description": null,
+              "label": "About us",
+              "url": {
+                "path": "/fayetteville-coastal-health-care/about-us"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": true,
+                  "moderationState": "published"
+                }
+              },
+              "links": [
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Mission and vision",
+                  "url": {
+                    "path": "/fayetteville-coastal-health-care/about-us/mission-and-vision"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": true,
+                      "moderationState": "published"
+                    }
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "History",
+                  "url": {
+                    "path": "/fayetteville-coastal-health-care/about-us/history"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    }
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Performance",
+                  "url": {
+                    "path": "/fayetteville-coastal-health-care/about-us/performance"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "archived"
+                    }
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Leadership",
+                  "url": {
+                    "path": "/fayetteville-coastal-health-care/about-us/leadership"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": true,
+                      "moderationState": "published"
+                    }
+                  },
+                  "links": []
+                }
+              ]
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Work with us",
+              "url": {
+                "path": "/fayetteville-coastal-health-care/work-with-us"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": true,
+                  "moderationState": "published"
+                }
+              },
+              "links": [
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Jobs and careers",
+                  "url": {
+                    "path": "/fayetteville-coastal-health-care/work-with-us/jobs-and-careers"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": true,
+                      "moderationState": "published"
+                    }
+                  },
+                  "links": []
+                }
+              ]
+            }
+          ]
         }
       ]
     }

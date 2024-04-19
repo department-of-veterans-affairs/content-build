@@ -16,8 +16,14 @@ fragment faqMultipleQA on NodeFaqMultipleQA {
   fieldQAGroups {
     entity {
       ... on ParagraphQAGroup {
+        entityId
         fieldSectionHeader
         fieldAccordionDisplay
+        fieldRichWysiwyg {
+          value
+          format
+          processed
+        }
         fieldQAs {
           entity {
             ... on NodeQA {

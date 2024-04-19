@@ -9,3 +9,6 @@ window.dataLayer = [] || window.dataLayer;
 window.recordEvent = function(data) {
   return window.dataLayer.push(data);
 };
+window.recordMultipleEvents = function (events){
+  events.forEach(event => recordEvent(event))
+}

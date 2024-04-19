@@ -26,8 +26,7 @@ const downloadAssets = require('./plugins/download-assets');
 // const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
 const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
-const createHeaderFooter = require('./plugins/create-header-footer');
-const createOfficeDirectoryData = require('./plugins/create-office-directory-data');
+const { createHeaderFooterData } = require('./plugins/create-header-footer');
 const createOutreachAssetsData = require('./plugins/create-outreach-assets-data');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
 const createSitemaps = require('./plugins/create-sitemaps');
@@ -116,11 +115,6 @@ function build(BUILD_OPTIONS) {
   smith.use(addDrupalPrefix(BUILD_OPTIONS), 'Add Drupal Prefix');
 
   smith.use(
-    createOfficeDirectoryData(BUILD_OPTIONS),
-    'Create office-directory data',
-  );
-
-  smith.use(
     createOutreachAssetsData(BUILD_OPTIONS),
     'Create Outreach Assets Data',
   );
@@ -196,7 +190,7 @@ function build(BUILD_OPTIONS) {
     'Add permalinks and change foo.md to foo/index.html',
   );
 
-  smith.use(createHeaderFooter(BUILD_OPTIONS), 'Create header and footer');
+  smith.use(createHeaderFooterData(BUILD_OPTIONS), 'Create header and footer');
 
   smith.use(
     navigation({

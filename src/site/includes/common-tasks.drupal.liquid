@@ -1,14 +1,14 @@
 <!-- Search and Common tasks hub on home page -->
 
 <!-- Hub Content -->
-<div class="homepage-common-tasks__wrapper">
+<div class="homepage-common-tasks__wrapper" data-e2e="common">
   <div class="vads-l-grid-container vads-u-padding-x--0 homepage-common-tasks">
     <div class="vads-l-row">
       <!-- start first column-->
-      <div class="vads-l-col--12 medium-screen:vads-l-col--6">
+      <div class="vads-l-col--12 medium-screen:vads-l-col--6 vads-u-background-color--white ">
         <div
-          class="vads-u-margin-x--2p5 small-desktop-screen:vads-u-margin-x--0 small-desktop-screen:vads-u-padding-right--9 vads-u-padding-bottom--5">
-          <h2 class="vads-u-color--gray-dark vads-u-font-family--serif">
+          class="vads-u-margin-x--2 medium-desktop-screen:vads-u-margin-x--0 small-desktop-screen:vads-u-padding-right--9 vads-u-padding-bottom--5">
+          <h2 class="vads-u-color--gray-dark vads-u-font-family--serif" id="search-tools-header">
             Search
           </h2>
 
@@ -18,15 +18,27 @@
             Other search tools
           </h3>
           <div class="homepage-common-tasks__search-tools">
-            <ul class="vads-u-padding-left--0">
+            <ul class="vads-u-padding-left--0" role="list">
               {% if searchLinks %}
                 {% for link in searchLinks %}
                   {% if link.url.path and link.label %}
                     <li>
                       <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
-                      <a
-                        onclick="recordEvent({ event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' })"
-                        href="{{ link.url.path }}">{{ link.label }}</a>
+                        <va-link
+                          disable-analytics
+                          onclick="recordMultipleEvents([
+                            {
+                              event: 'nav-zone-one',
+                              'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                              'click-text': '{{ link.label | strip }}',
+                            },
+                            { 
+                              event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
+                            }
+                          ]);"
+                          href="{{ link.url.path }}"
+                          text="{{ link.label }}" 
+                        />
                     </li>
                   {% endif %}
                 {% endfor %}
@@ -38,19 +50,30 @@
       <!-- end first column -->
 
       <!-- start second column -->
-      <div class="vads-l-col--12 medium-screen:vads-l-col--6 vads-u-background-color--white">
-        <div class="vads-u-padding-left--2p5 medium-screen:vads-u-padding-left--6 vads-u-padding-bottom--5">
+      <div class="vads-l-col--12 medium-screen:vads-l-col--6">
+        <div class="vads-u-padding-left--2p5 medium-screen:vads-u-padding-right--2p5 vads-u-padding-bottom--5">
           <h2 class="vads-u-color--gray-dark vads-u-font-family--serif">
-            Top Pages
+            Top pages
           </h2>
-          <ul class="homepage-common-tasks__list vads-u-padding-left--0 ">
+          <ul class="homepage-common-tasks__list vads-u-padding-left--0 " role="list">
             {% if popularLinks %}
               {% for link in popularLinks%}
                 {% if link.url.path and link.label %}
                   <li>
-                    <a
-                      onclick="recordEvent({ event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' })"
-                      href="{{ link.url.path }}">{{ link.label }}</a>
+                      <va-link
+                        disable-analytics
+                        onclick="recordMultipleEvents([
+                          {
+                          event: 'nav-zone-one',
+                          'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                          'click-text': '{{ link.label | strip }}',
+                          },
+                          { 
+                            event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' }
+                        ]);"
+                        href="{{ link.url.path }}"
+                        text="{{ link.label }}"
+                      />
                   </li>
                 {% endif %}
               {% endfor %}

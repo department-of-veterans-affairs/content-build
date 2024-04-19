@@ -19,26 +19,26 @@ runs:
   using: composite
   steps:
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
       with:
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
         aws-region: us-gov-west-1
 
     # - name: Get Slack app token
-    #   uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+    #   uses: department-of-veterans-affairs/action-inject-ssm-secrets@latest
     #   with:
     #     ssm_parameter: /devops/github_actions_slack_socket_token
     #     env_variable_name: SLACK_APP_TOKEN
 
     - name: Get Slack bot token
-      uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
       with:
         ssm_parameter: /devops/github_actions_slack_bot_user_token
         env_variable_name: SLACK_BOT_TOKEN
 
     - name: Notify Slack
-      uses: slackapi/slack-github-action@v1.18.0
+      uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
       env:
         SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
       with:

@@ -11,15 +11,6 @@
         {% include "src/site/includes/operatingStatusFlagsLinks.drupal.liquid" with entity %}
       </div>
     {% endif %}
-    {% assign topMargin = '1' %}
-    {% assign bottomMargin = '2' %}
-    {% for covidStatus in fieldOffice.entity.reverseFieldRegionPageNode.entities %}
-      {% if covidStatus.entityId == entity.entityId %}
-      {% include "src/site/includes/covid-status.drupal.liquid" with covidStatus %}
-
-      {% endif %}
-    {% endfor %}
-
     {% unless type == 'mobile' %}
       <div class="vads-u-margin-bottom--1">
         <address class="vads-u-margin-bottom--0">
@@ -29,11 +20,14 @@
             {{ entity.fieldAddress.postalCode }}
           </div>
         </address>
-        <directions>
-          <a href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ entity.fieldAddress.addressLine1 }}, {{ entity.fieldAddress.locality }}, {{ entity.fieldAddress.administrativeArea }} {{ entity.fieldAddress.postalCode }}">
-            Directions (Google Maps)
-          </a>
-        </directions>
+
+        {% capture fullAddress %}
+          {{ entity.fieldAddress.addressLine1 }}, {{ entity.fieldAddress.locality }}, {{ entity.fieldAddress.administrativeArea }} {{ entity.fieldAddress.postalCode }}
+        {% endcapture %}
+        {% include "src/site/includes/directions-google-maps.liquid" with
+          directionsLinkTitle = entity.title
+          directionsLinkAddress = fullAddress
+        %}
       </div>
     {% endunless %}
     <div class="vads-u-margin-bottom--0">

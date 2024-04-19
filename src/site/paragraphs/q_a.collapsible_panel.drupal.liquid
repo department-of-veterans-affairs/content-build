@@ -1,5 +1,5 @@
 <div data-template="paragraphs/q_a.collapsible_panel">
-  <va-accordion>
+  <va-accordion uswds>
     
     {% assign questions = entity.fieldQuestions %}
     {% assign sectionHeader = entity.fieldSectionHeader %}
@@ -9,7 +9,9 @@
       {% assign id = item.entityId %}
 
       <va-accordion-item
+        class="va-accordion-item"
         header="{{ item.fieldQuestion }}"
+        id="{{ item.fieldQuestion | hashReference: 60 }}"
         {% if level %}
           level="{{ level }}"
           {% else %}

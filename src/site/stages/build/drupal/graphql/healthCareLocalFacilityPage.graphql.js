@@ -27,6 +27,11 @@ const healthCareLocalFacilityPageFragment = `
         }
       }
     }
+    fieldSupplementalStatusMoreI {
+      value
+      format
+      processed
+    }
     fieldOperatingStatusFacility
     fieldLocationServices {
       entity {
@@ -78,6 +83,7 @@ const healthCareLocalFacilityPageFragment = `
     fieldRegionPage {
       entity {
         ... on NodeHealthCareRegionPage {
+          fieldVamcEhrSystem
           entityBundle
           entityId
           entityPublished

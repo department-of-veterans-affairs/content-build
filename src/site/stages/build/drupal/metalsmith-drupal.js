@@ -16,6 +16,7 @@ const {
   createPastEventListPages,
   addGetUpdatesFields,
   addPager,
+  compileEventListingPage,
 } = require('./health-care-region');
 const createReactPages = require('../plugins/create-react-pages');
 
@@ -35,21 +36,26 @@ const PULL_DRUPAL_BUILD_ARG = 'pull-drupal';
 // build should use the assets saved in cache instead of downloading new ones.
 const USE_CACHED_ASSETS_BUILD_ARG = 'use-cached-assets';
 
-const getDrupalCachePath = buildOptions => {
-  return path.join(buildOptions.cacheDirectory, DRUPAL_CACHE_FILENAME);
+const getDrupalCachePath = (
+  buildOptions,
+  cacheFilename = DRUPAL_CACHE_FILENAME,
+) => {
+  return path.join(buildOptions.cacheDirectory, cacheFilename);
 };
 
 // We need to pull the Drupal content if we have --pull-drupal, OR if
 // the content is not available in the cache.
-const shouldPullDrupal = buildOptions =>
+const shouldPullDrupal = (
+  buildOptions,
+  cacheFilename = DRUPAL_CACHE_FILENAME,
+) =>
   buildOptions[PULL_DRUPAL_BUILD_ARG] ||
-  !fs.existsSync(getDrupalCachePath(buildOptions));
+  !fs.existsSync(getDrupalCachePath(buildOptions, cacheFilename));
 
 function pipeDrupalPagesIntoMetalsmith(contentData, files) {
   const pages = contentData.data.nodeQuery.entities.filter(
     e => e && Object.keys(e).length,
   );
-
   for (const page of pages) {
     const {
       entityUrl: { path: drupalUrl },
@@ -77,8 +83,7 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
         addGetUpdatesFields(pageCompiled, pages);
         break;
       case 'event_listing':
-        pageCompiled.pastEventTeasers = pageCompiled.pastEvents;
-        pageCompiled.allEventTeasers = pageCompiled.reverseFieldListingNode;
+        compileEventListingPage(pageCompiled);
         addPager(
           pageCompiled,
           files,
@@ -349,6 +354,44 @@ function getDrupalContent(buildOptions) {
     let drupalData = null;
     try {
       drupalData = await loadDrupal(buildOptions);
+
+      // Add to drupal Sidebars at the bottom of the ABOUT VA/ABOUT LOVELL section the va-police link
+      // TODO: Remove if CMS goes forward with creating VA Police Pages
+      // const facilitySidebarQueries = Object.keys(drupalData.data).filter(k =>
+      //   k.includes('FacilitySidebarQuery'),
+      // );
+      // FOR EACH FACILITY SIDEBAR QUERY, UNDER THE ABOUT XYZ SECTION ADD "VA Police" link
+      // for (const query of facilitySidebarQueries) {
+      //   for (let i = 0; i < drupalData.data[query].links.length; i += 1) {
+      //     const j = drupalData.data[query].links[i].links.findIndex(l => {
+      //       return (
+      //         l.label.toUpperCase().startsWith('ABOUT VA') ||
+      //         l.label.toUpperCase().startsWith('ABOUT LOVELL')
+      //       );
+      //     });
+      //     if (j !== -1) {
+      //       console.log(
+      //         `Adding VA Police to: ${drupalData.data[query].links[0].url.path}/va-police`,
+      //       );
+      //       drupalData.data[query].links[i].links[j].links.push({
+      //         expanded: false,
+      //         description: 'Police data',
+      //         label: 'VA Police',
+      //         links: [],
+      //         url: {
+      //           path: `${drupalData.data[query].links[0].url.path}/va-police`,
+      //         },
+      //         entity: {
+      //           linkedEntity: {
+      //             entityPublished: true,
+      //             moderationState: 'published',
+      //           },
+      //         },
+      //       });
+      //     }
+      //   }
+      // }
+
       drupalData = convertDrupalFilesToLocal(drupalData, files);
 
       await loadCachedDrupalFiles(buildOptions, files);
@@ -384,5 +427,6 @@ module.exports = {
   getDrupalContent,
   pipeDrupalPagesIntoMetalsmith,
   shouldPullDrupal,
+  getDrupalCachePath,
   PULL_DRUPAL_BUILD_ARG,
 };

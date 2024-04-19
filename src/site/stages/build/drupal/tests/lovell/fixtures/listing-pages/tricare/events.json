@@ -1,0 +1,191 @@
+{
+  "entityBundle": "event_listing",
+  "entityId": "49454",
+  "entityPublished": true,
+  "title": "Events",
+  "vid": 736022,
+  "entityUrl": {
+    "breadcrumb": [
+      {
+        "url": {
+          "path": "/",
+          "routed": true
+        },
+        "text": "Home"
+      },
+      {
+        "url": {
+          "path": "/lovell-federal-health-care",
+          "routed": true
+        },
+        "text": "Lovell Federal health care"
+      },
+      {
+        "url": {
+          "path": "",
+          "routed": true
+        },
+        "text": "NEWS AND EVENTS"
+      },
+      {
+        "url": {
+          "path": "",
+          "routed": true
+        },
+        "text": "Events"
+      }
+    ],
+    "path": "/lovell-federal-health-care-tricare/events"
+  },
+  "fieldOffice": {
+    "entity": {
+      "entityLabel": "Lovell Federal health care - TRICARE"
+    }
+  },
+  "fieldAdministration": {
+    "entity": {
+      "entityId": "1039"
+    }
+  },
+  "pastEvents": {
+    "entities": [
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "21",
+        "entityPublished": true,
+        "title": "Lovell Tricare - Featured - Past - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1262336400,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 1262332800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-tricare/events/21"
+        }
+      }
+    ]
+  },
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "21",
+        "entityPublished": true,
+        "title": "Lovell Tricare - Featured - Past - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1262336400,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 1262332800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-tricare/events/21"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "22",
+        "entityPublished": true,
+        "title": "Lovell Tricare - Featured - Future - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2633119000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2633115400
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-tricare/events/22"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "23",
+        "entityPublished": true,
+        "title": "Lovell Federal - Featured - Future - 2",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2366877600,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2366874000
+          },
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2650874400,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2650870800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-tricare/events/23"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "24",
+        "entityPublished": true,
+        "title": "Lovell Tricare - Not Featured - Future - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2633119000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2633115400
+          },
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2650874400,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2650870800
+          }
+        ],
+        "fieldFeatured": false,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-tricare/events/24"
+        }
+      }
+    ]
+  }
+}

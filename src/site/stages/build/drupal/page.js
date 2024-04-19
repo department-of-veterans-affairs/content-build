@@ -67,7 +67,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
   if (page[pageField]) {
     const pagedEntities = _.chunk(page[pageField].entities, perPage);
 
-    for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
+    for (let pageNum = 0; pageNum < pagedEntities.length; pageNum += 1) {
       let pagedPage = { ...page };
 
       if (pageNum > 0) {
@@ -98,7 +98,7 @@ function paginatePages(page, files, field, layout, ariaLabel, perPage) {
             start = pageNum;
           }
         }
-        for (let num = start; num < start + length; num++) {
+        for (let num = start; num < start + length; num += 1) {
           innerPages.push({
             href:
               num === pageNum
@@ -202,6 +202,18 @@ function getHubSidebar(navsArray, owner) {
 
 // used to find the correct sidebar menu if the page belongs to a health care region
 function getFacilitySidebar(page, contentData) {
+  const defaultEmptySidebar = { links: [] };
+
+  // skip this processing for person_profile pages:
+  //  1. person_profile pages can have fieldOffice values like 'VHA',
+  //     which will never have a matching sidebar and will break the build
+  //  2. person_profile pages do not display a real sidebar anyway,
+  //     so no need to do this processing
+  const personProfilePage = page?.entityBundle === 'person_profile';
+  if (personProfilePage) {
+    return defaultEmptySidebar;
+  }
+
   // for pages like New Releases, Stories, Events, and Detail Pages
   const facilityPage =
     page.fieldOffice &&
@@ -270,7 +282,7 @@ function getFacilitySidebar(page, contentData) {
   }
 
   // return the default and most important of the menu structure
-  return { links: [] };
+  return defaultEmptySidebar;
 }
 
 function mergeTaxonomiesIntoResourcesAndSupportHomepage(
@@ -344,6 +356,7 @@ function compilePage(page, contentData) {
   const facilitySidebarNavItems = {
     facilitySidebar: getFacilitySidebar(page, contentData),
   };
+
   const outreachSidebarNavItems = { outreachSidebar: outreachSidebarNav };
   const alertItems = { alert: alertsItem };
 
@@ -353,7 +366,10 @@ function compilePage(page, contentData) {
   const pageId = { pid: pageIdRaw };
 
   if (!('breadcrumb' in entityUrl)) {
-    page.entityUrl = generateBreadCrumbs(entityUrl.path);
+    page.entityUrl = {
+      ...entityUrl,
+      ...generateBreadCrumbs(entityUrl.path),
+    };
   }
 
   let pageCompiled;
@@ -375,6 +391,7 @@ function compilePage(page, contentData) {
     case 'vamc_system_register_for_care':
     case 'vamc_system_billing_insurance':
     case 'vamc_system_medical_records_offi':
+    case 'vamc_system_va_police':
       pageCompiled = {
         ...page,
         ...facilitySidebarNavItems,
@@ -435,6 +452,7 @@ function compilePage(page, contentData) {
       break;
     case 'health_care_region_page':
     case 'press_release':
+    case 'vba_facility':
       pageCompiled = Object.assign(
         page,
         facilitySidebarNavItems,

@@ -6,7 +6,12 @@
   {% endif %}
   {% assign isEventsPage = entityUrl.path | isPage: "events" %}
   <div data-template="teasers/event" class="vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4">
-      <{{ header }} class="vads-u-margin-top--0 vad-u-margin-bottom-1 vads-u-font-size--md medium-screen:vads-u-font-size--lg"><a href="{{ node.entityUrl.path }}">{{ node.title }}</a></{{ header }}>
+      <{{ header }} class="vads-u-margin-top--0 vad-u-margin-bottom-1 vads-u-font-size--md medium-screen:vads-u-font-size--lg">
+        <va-link
+          text="{{ node.title }}"
+          href="{{ node.entityUrl.path }}"
+        />
+      </{{ header }}>
       <p class="vads-u-margin-bottom--1p5 vads-u-margin-top--0">{{ node.fieldDescription | truncatewords: 60, "..." }}</p>
       <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--row vads-u-margin-bottom--1">
         <div class="vads-u-margin-right--2 when-where-width">
@@ -34,12 +39,15 @@
           <strong>Where</strong>
         </div>
         <div class="usa-width-five-sixths">
-              <p class="vads-u-margin-top--0 vads-u-margin-bottom--1">
-                  <a href="{{ node.fieldFacilityLocation.entity.entityUrl.path }}">{{ node.fieldFacilityLocation.entity.title }}</a>
-              </p>
-            {% if node.fieldLocationHumanreadable != empty %}
-                <span>{{ node.fieldLocationHumanreadable }}</span>
-            {% endif %}
+          <p class="vads-u-margin-top--0 vads-u-margin-bottom--1">
+            <va-link
+              href="{{ node.fieldFacilityLocation.entity.entityUrl.path }}"
+              text="{{ node.fieldFacilityLocation.entity.title }}"
+            />
+          </p>
+          {% if node.fieldLocationHumanreadable != empty %}
+            <span>{{ node.fieldLocationHumanreadable }}</span>
+          {% endif %}
         </div>
       </div>
       {% endif %}

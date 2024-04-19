@@ -97,7 +97,8 @@ const {
 } = require('./graphql/vamcBillingAndInsurancePage.graphql');
 
 const { getVetCenterQueries } = require('./graphql/vetCenter.graphql');
-
+const { getVbaFacilityQueries } = require('./graphql/vbaFacility.graphql');
+const { getVaPoliceQueries } = require('./graphql/vaPolice.graphql');
 const {
   GetVetCenterLocations,
 } = require('./graphql/vetCenterLocations.graphql');
@@ -121,6 +122,7 @@ function getNodeQueries(entityCounts) {
     GetNodePressReleaseListingPages,
     ...getNodeEventListingQueries(entityCounts),
     ...getNodeEventQueries(entityCounts),
+    ...getVaPoliceQueries(entityCounts),
     GetNodeStoryListingPages,
     GetNodeLocationsListingPages,
     GetNodeLeadershipListingPages,
@@ -137,6 +139,7 @@ function getNodeQueries(entityCounts) {
     GetNodeBasicLandingPage,
     GetCampaignLandingPages,
     ...getVetCenterQueries(entityCounts),
+    ...getVbaFacilityQueries(entityCounts),
     GetVetCenterLocations,
     GetPolicyPages,
     GetBillingAndInsurancePages,
@@ -178,6 +181,10 @@ function nonNodeQueries() {
     GetMenuLinks,
   } = require('./graphql/navigation-fragments/menuLinks.nav.graphql');
   const {
+    GetBottomRail,
+    GetFooterColumns,
+  } = require('./graphql/navigation-fragments/footer.nav.graphql');
+  const {
     GetTaxonomies,
   } = require('./graphql/taxonomy-fragments/GetTaxonomies.graphql');
 
@@ -193,6 +200,8 @@ function nonNodeQueries() {
     GetPromoBanners,
     GetBannnerAlerts,
     GetOutreachAssets,
+    GetBottomRail,
+    GetFooterColumns,
     GetHomepage,
     GetMenuLinks,
     GetTaxonomies,

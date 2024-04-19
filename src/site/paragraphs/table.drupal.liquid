@@ -26,47 +26,29 @@
         }
     }
 {% endcomment %}
-
-<table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" class="va-table va-table--responsive" role="table">
-        {% if entity.fieldTable.caption %}
-            <caption>{{ entity.fieldTable.caption }}</caption>
-        {% endif %}
+<div class="va-table-margin">
+    <va-table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" role="table" table-title="{{ entity.fieldTable.caption }}">
         {% assign colLabels = entity.fieldTable.value.0  %}
         {% for value in entity.fieldTable.value %}
             {% if forloop.first == true %}
-                <thead>
-                    <tr role="row">
-                        {% for column in value %}
-                            <th role="columnheader" scope="col">{{ column }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
+                <va-table-row slot="headers" key="header">
+                    {% for column in value %}
+                        {% if column == "" or column == nil %}
+                        <span role="columnheader"> </span>
+                    {% else %}
+                        <span role="columnheader" scope="col">{{ column }}</span>
+                    {% endif %}
+                    {% endfor %}
+                </va-table-row>
             {% else %}
-                    <tr class="vads-u-padding-top--5" role="row">
-                        {% for column in value %}
-                            {% if forloop.first == true %}
-                                <th 
-                                    class="vads-u-padding-bottom--0 column-label vads-u-font-weight--bold medium-screen:vads-u-display--none" role="rowheader" scope="row"
-                                >
-                                    <dfn> {{colLabels | getValueFromObjPath: forloop.index0}}      </dfn>
-                                </th>
-                                <th class="column-value table-row-header-responsive"  role="rowheader" scope="row">
-                                    <dfn class="vads-u-display--block"> {{ column }} </dfn>
-                                </th>
-                            {% else %}
-                                <td class="vads-u-padding-bottom--0 column-label vads-u-font-weight--bold medium-screen:vads-u-display--none" role="cell">
-                                    <dfn> {{colLabels | getValueFromObjPath: forloop.index0}}      </dfn>
-                                </td>
-                                <td class="column-value"  role="cell">
-                                    <dfn class="vads-u-display--block"> {{ column }}  </dfn>
-                                </td>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
+                <va-table-row>
+                    {% for column in value %}
+                        <span>
+                        {{ column }}
+                        </span>
+                    {% endfor %}
+                </va-table-row>
             {% endif %}
-            {% if forloop.last %}
-                </tbody>
-            {% endif %}
-        {% endfor %}
-</table>
+        {% endfor %}    
+    </va-table>
+</div>

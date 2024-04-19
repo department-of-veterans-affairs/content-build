@@ -1,8 +1,12 @@
 <div class="vads-u-display--flex vads-u-flex-direction--column">
   {% if serviceLocationAddress.fieldClinicName %}
-    <h4>
+    <h{{ serviceLocationAddressHeaderLevel }}>
       {{ serviceLocationAddress.fieldClinicName }}
-    </h4>
+    </h{{ serviceLocationAddressHeaderLevel }}>
+  {% elsif serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
+    <h{{ serviceLocationAddressHeaderLevel }}>
+      Location
+    </h{{ serviceLocationAddressHeaderLevel }}>
   {% endif %}
 
   {% comment %}

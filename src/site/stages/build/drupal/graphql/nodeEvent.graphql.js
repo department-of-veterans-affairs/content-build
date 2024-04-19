@@ -1,6 +1,15 @@
 // Relative imports.
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
+const FIELD_ADDRESS = `
+fieldAddress {
+  addressLine1
+  addressLine2
+  postalCode
+  locality
+  administrativeArea
+}`;
+
 // Create NodeEvent fragment.
 const nodeEvent = `
   fragment nodeEvent on NodeEvent {
@@ -65,12 +74,33 @@ const nodeEvent = `
     fieldDescription
     fieldEventCost
     fieldEventCta
+    fieldCtaEmail
+    fieldHowToSignUp
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
+        ... on NodeVetCenter {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeHealthCareLocalFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeNcaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVbaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterOutstation {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterCap {
+          ${FIELD_ADDRESS}
+        }
         entityBundle
         entityId
         entityType
+
         entityUrl {
           path
         }
@@ -90,6 +120,9 @@ const nodeEvent = `
         entityBundle
         entityId
         entityType
+        entityUrl {
+          path
+        }
         ... on NodeEventListing {
           fieldDescription
           fieldIntroText
@@ -105,7 +138,6 @@ const nodeEvent = `
                   processed
                 }
                 fieldDescription
-                fieldMetaTags
               }
             }
           }
@@ -140,7 +172,6 @@ const nodeEvent = `
         }
       }
     }
-    fieldMetaTags
     fieldOrder
     fieldUrlOfAnOnlineEvent {
       uri
@@ -219,9 +250,29 @@ const nodeEventWithoutBreadcrumbs = `
     fieldDescription
     fieldEventCost
     fieldEventCta
+    fieldCtaEmail
+    fieldHowToSignUp
     fieldEventRegistrationrequired
     fieldFacilityLocation {
       entity {
+        ... on NodeVetCenter {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeHealthCareLocalFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeNcaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVbaFacility {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterOutstation {
+          ${FIELD_ADDRESS}
+        }
+        ...on NodeVetCenterCap {
+          ${FIELD_ADDRESS}
+        }
         entityBundle
         entityId
         entityType
@@ -259,7 +310,32 @@ const nodeEventWithoutBreadcrumbs = `
                   processed
                 }
                 fieldDescription
-                fieldMetaTags
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldAdditionalListings {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeEventListing {
+          fieldDescription
+          fieldIntroText
+          fieldOffice {
+            entity {
+              entityType
+              entityBundle
+              entityId
+              ... on NodeOffice {
+                fieldBody {
+                  value
+                  format
+                  processed
+                }
+                fieldDescription
               }
             }
           }
@@ -294,7 +370,6 @@ const nodeEventWithoutBreadcrumbs = `
         }
       }
     }
-    fieldMetaTags
     fieldOrder
     fieldUrlOfAnOnlineEvent {
       uri

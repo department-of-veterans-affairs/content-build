@@ -1,0 +1,935 @@
+{
+  "name": "Lovell Federal health care",
+  "description": "VISN 12 | va.gov/lovell-federal-health-care",
+  "links": [
+    {
+      "expanded": false,
+      "description": null,
+      "label": "Lovell Federal health care - TRICARE",
+      "url": {
+        "path": "/lovell-federal-health-care-tricare"
+      },
+      "entity": {
+        "linkedEntity": {
+          "entityPublished": false,
+          "moderationState": "draft"
+        },
+        "fieldMenuSection": "tricare"
+      },
+      "links": []
+    },
+    {
+      "expanded": false,
+      "description": null,
+      "label": "Lovell Federal health care - VA",
+      "url": {
+        "path": "/lovell-federal-health-care-va"
+      },
+      "entity": {
+        "linkedEntity": {
+          "entityPublished": false,
+          "moderationState": "draft"
+        },
+        "fieldMenuSection": "va"
+      },
+      "links": []
+    },
+    {
+      "expanded": false,
+      "description": null,
+      "label": "Lovell Federal health care",
+      "url": {
+        "path": "/lovell-federal-health-care"
+      },
+      "entity": {
+        "linkedEntity": {
+          "entityPublished": false,
+          "moderationState": "archived"
+        },
+        "fieldMenuSection": "both"
+      },
+      "links": [
+        {
+          "expanded": false,
+          "description": null,
+          "label": "SERVICES AND LOCATIONS",
+          "url": {
+            "path": ""
+          },
+          "entity": {
+            "linkedEntity": null,
+            "fieldMenuSection": "both"
+          },
+          "links": [
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Health services",
+              "url": {
+                "path": "/lovell-federal-health-care-va/health-services"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "va"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Health services",
+              "url": {
+                "path": "/lovell-federal-health-care-tricare/health-services"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "tricare"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Locations",
+              "url": {
+                "path": "/lovell-federal-health-care-va/locations"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "va"
+              },
+              "links": [
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Captain James A. Lovell Federal Health Care Center",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/locations/captain-james-a-lovell-federal-health-care-center"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Evanston VA Clinic",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/locations/evanston-va-clinic"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Kenosha VA Clinic",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/locations/kenosha-va-clinic"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "McHenry VA Clinic",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/locations/mchenry-va-clinic"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                }
+              ]
+            },
+            {
+              "expanded": false,
+              "description": "TRICARE locations",
+              "label": "Locations",
+              "url": {
+                "path": "/lovell-federal-health-care-tricare/locations"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "tricare"
+              },
+              "links": [
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Captain James A. Lovell Federal Health Care Center",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/locations/captain-james-a-lovell-federal-health-care-center"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "USS Osborne Dental Clinic",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/locations/uss-osborne-dental-clinic"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "USS Red Rover",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/locations/uss-red-rover"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "USS Tranquillity",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/locations/uss-tranquillity"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Zachary and Elizabeth Fisher Medical and Dental Clinic",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/locations/zachary-and-elizabeth-fisher-medical-and-dental-clinic"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "expanded": false,
+          "description": null,
+          "label": "NEWS AND EVENTS",
+          "url": {
+            "path": ""
+          },
+          "entity": {
+            "linkedEntity": null,
+            "fieldMenuSection": "both"
+          },
+          "links": [
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Events",
+              "url": {
+                "path": "/lovell-federal-health-care-va/events"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "va"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Events",
+              "url": {
+                "path": "/lovell-federal-health-care-tricare/events"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "tricare"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "News releases",
+              "url": {
+                "path": "/lovell-federal-health-care-tricare/news-releases"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "tricare"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "News releases",
+              "url": {
+                "path": "/lovell-federal-health-care-va/news-releases"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "va"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Stories",
+              "url": {
+                "path": "/lovell-federal-health-care-tricare/stories"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "tricare"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Stories",
+              "url": {
+                "path": "/lovell-federal-health-care-va/stories"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "va"
+              },
+              "links": []
+            }
+          ]
+        },
+        {
+          "expanded": false,
+          "description": null,
+          "label": "ABOUT LOVELL FEDERAL",
+          "url": {
+            "path": ""
+          },
+          "entity": {
+            "linkedEntity": null,
+            "fieldMenuSection": "both"
+          },
+          "links": [
+            {
+              "expanded": false,
+              "description": null,
+              "label": "About us",
+              "url": {
+                "path": "/lovell-federal-health-care-va/about-us"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "both"
+              },
+              "links": [
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Mission and vision",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/about-us/mission-and-vision"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "both"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "History",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/about-us/history"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "both"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Performance",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/about-us/performance"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Leadership",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/about-us/leadership-0"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Leadership",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/about-us/leadership"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                }
+              ]
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Work with us",
+              "url": {
+                "path": "/lovell-federal-health-care-va/work-with-us"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "both"
+              },
+              "links": [
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Jobs and careers",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/work-with-us/jobs-and-careers"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "both"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Internships and fellowships",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/work-with-us/internships-and-fellowships"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "both"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Volunteer or donate",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/work-with-us/volunteer-or-donate"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "both"
+                  },
+                  "links": []
+                }
+              ]
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Contact us",
+              "url": {
+                "path": "/lovell-federal-health-care-va/contact-us"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "both"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Policies",
+              "url": {
+                "path": "/lovell-federal-health-care-va/policies"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "va"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Policies",
+              "url": {
+                "path": "/lovell-federal-health-care-tricare/policies"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "tricare"
+              },
+              "links": []
+            },
+            {
+              "expanded": false,
+              "description": null,
+              "label": "Programs",
+              "url": {
+                "path": "/lovell-federal-health-care-va/programs"
+              },
+              "entity": {
+                "linkedEntity": {
+                  "entityPublished": false,
+                  "moderationState": "draft"
+                },
+                "fieldMenuSection": "both"
+              },
+              "links": [
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Audiology and speech",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/audiology-and-speech"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": [
+                    {
+                      "expanded": false,
+                      "description": null,
+                      "label": "Audiology and speech",
+                      "url": {
+                        "path": "/lovell-federal-health-care-tricare/programs/audiology-and-speech/audiology-and-speech"
+                      },
+                      "entity": {
+                        "linkedEntity": {
+                          "entityPublished": false,
+                          "moderationState": "draft"
+                        },
+                        "fieldMenuSection": "tricare"
+                      },
+                      "links": []
+                    }
+                  ]
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Gynecology clinic",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/gynecology-clinic-0"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Gynecology clinic",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/gynecology-clinic"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Internal Medicine",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/internal-medicine"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Internal Medicine",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/internal-medicine-0"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Intimate partner violence support",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/intimate-partner-violence-support"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Intimate partner violence support",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/intimate-partner-violence-support"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "MOVE! weight management",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/move-weight-management"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Mental health",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/mental-health-services"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Ophthalmology",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/ophthalmology"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Ophthalmology",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/ophthalmology"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Palliative and hospice care",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/palliative-and-hospice-care"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Patient advocates",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/patient-advocates"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Pharmacy",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/pharmacy"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Physical medicine and rehabilitation",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/physical-medicine-and-rehabilitation"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Physical medicine and rehabilitation",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/physical-medicine-and-rehabilitation"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Veterans justice outreach",
+                  "url": {
+                    "path": "/lovell-federal-health-care-tricare/programs/veterans-justice-outreach"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "tricare"
+                  },
+                  "links": []
+                },
+                {
+                  "expanded": false,
+                  "description": null,
+                  "label": "Veterans justice outreach",
+                  "url": {
+                    "path": "/lovell-federal-health-care-va/programs/veterans-justice-outreach"
+                  },
+                  "entity": {
+                    "linkedEntity": {
+                      "entityPublished": false,
+                      "moderationState": "draft"
+                    },
+                    "fieldMenuSection": "va"
+                  },
+                  "links": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

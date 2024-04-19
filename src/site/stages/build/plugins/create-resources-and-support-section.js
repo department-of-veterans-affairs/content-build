@@ -74,7 +74,13 @@ function groupByTags(allArticles) {
     const terms = [...fieldTopics];
 
     if (fieldAudienceBeneficiares) {
-      terms.push(fieldAudienceBeneficiares);
+      if (!Array.isArray(fieldAudienceBeneficiares)) {
+        terms.push({ ...fieldAudienceBeneficiares });
+      } else {
+        fieldAudienceBeneficiares.forEach(tag => {
+          terms.push(tag);
+        });
+      }
     }
 
     if (fieldNonBeneficiares) {
@@ -176,24 +182,6 @@ function createPaginatedArticleListings({
 
       const pagesForCategory = paginatedArticles.map(
         (pageOfArticles, index) => {
-          const paginatorInner = paginatedArticles.map(
-            (nextPage, pageIndex) => {
-              return {
-                label: pageIndex + 1,
-                href: `/${nextPage.uri}`,
-                class: pageIndex === index ? 'va-pagination-active' : '',
-              };
-            },
-          );
-
-          let paginatorPrev = null;
-          let paginatorNext = null;
-
-          if (index > 0) paginatorPrev = paginatorInner[index - 1].href;
-
-          if (index + 1 < paginatedArticles.length)
-            paginatorNext = paginatorInner[index + 1].href;
-
           const pageStart = index * PAGE_SIZE + 1;
           const pageEnd = Math.min(
             (index + 1) * PAGE_SIZE,
@@ -217,12 +205,8 @@ function createPaginatedArticleListings({
             layout: 'support_resources_article_listing.drupal.liquid',
             title: sectionTitle,
             articles: pageOfArticles,
+            totalArticles: allArticlesForGroup.length,
             paginationTitle,
-            paginator: {
-              prev: paginatorPrev,
-              inner: paginatorInner,
-              next: paginatorNext,
-            },
           };
 
           page.debug = JSON.stringify(page);

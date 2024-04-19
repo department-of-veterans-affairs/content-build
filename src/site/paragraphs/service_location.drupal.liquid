@@ -1,11 +1,7 @@
-{% assign serviceLocationAddress = single.fieldServiceLocationAddress.entity %}
-{% if serviceLocationAddress.fieldClinicName %}
-  {% assign haveLocationName = true %}
-{% else %}
-  {% assign haveLocationName = false %}
-{% endif %}
-
-{% include "src/site/facilities/service_address.drupal.liquid" %}
+{% include "src/site/facilities/service_address.drupal.liquid" with
+  serviceLocationAddress = single.fieldServiceLocationAddress.entity
+  serviceLocationAddressHeaderLevel = serviceLocationSubHeaderLevel
+%}
 
 {% comment %}
   single.fieldHours values:
@@ -15,11 +11,7 @@
 {% endcomment %}
 
 {% if single.fieldHours != "1" %}
-  {% if haveLocationName %}
-    <h4 data-template="paragraphs/service_location">Hours</h4>
-  {% else %}
-    <h3 class="force-small-header" data-template="paragraphs/service_location">Hours</h3>
-  {% endif %}
+  <h{{ serviceLocationSubHeaderLevel }} data-template="paragraphs/service_location">Hours</h{{ serviceLocationSubHeaderLevel }}>
 {% endif %}
 
 {% case single.fieldHours %}
@@ -33,22 +25,41 @@
     {% endif %}
 {% endcase %}
 
-
 {% if single.fieldAdditionalHoursInfo %}
   <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
 {% endif %}
 
-{% include "src/site/components/phone.drupal.liquid" with numbers = single.fieldPhone haveLocationName = haveLocationName %}
+{% comment %}
+  Conditionally display facility phone number
+{% endcomment %}
+
+{% if isMentalHealthService and fieldMentalHealthPhone %}
+  {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+{% else %}
+  {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+{% endif %}
+
+{% if serviceLocationMainNumber and single.fieldUseMainFacilityPhone %}
+  {% include "src/site/components/phone-number.drupal.liquid" with
+    phoneNumber = serviceLocationMainNumber
+    phoneLabel = 'Main Phone'
+    phoneHeaderLevel = serviceLocationSubHeaderLevel
+  %}
+{% endif %}
+
+{% comment %}
+  Display each additional phone number provided
+{% endcomment %}
+{% include "src/site/components/phone.drupal.liquid" with
+  numbers = single.fieldPhone
+  phoneHeaderLevel = serviceLocationSubHeaderLevel
+%}
 
 {% if single.fieldEmailContacts %}
   {% for email in single.fieldEmailContacts %}
     <p class="vads-u-margin-y--1" data-template="paragraphs/service_location">
     {% if email.entity.fieldEmailLabel %}
-      {% if haveLocationName %}
-        <h5>{{ email.entity.fieldEmailLabel }} </h5>
-      {% else %}
-        <h4 class="force-small-header">{{ email.entity.fieldEmailLabel }} </h4>
-      {% endif %}
+      <h{{ serviceLocationSubHeaderLevel }}>{{ email.entity.fieldEmailLabel }} </h{{ serviceLocationSubHeaderLevel }}>
     {% endif %}
     <a aria-label="{{ email.entity.fieldEmailAddress }}"
         data-template="paragraphs/service_location"

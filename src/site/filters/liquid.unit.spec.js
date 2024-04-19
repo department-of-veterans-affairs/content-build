@@ -1,20 +1,24 @@
-// Node modules.
-import _ from 'lodash';
+/* eslint-disable @department-of-veterans-affairs/axe-check-required */
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-// Relative imports.
-import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
 import sidebarData from './fixtures/sidebarData.json';
+import { vbaRegionFacilityOrOfficeNode } from './fixtures/vbaFacility';
 import vetCenterData from '../layouts/tests/vet_center/template/fixtures/vet_center_data.json';
 import vetCenterHoursData from '../layouts/tests/vet_center/template/fixtures/vet_center_hours_data.json';
 import healthCareRegionNonClinicalServicesData from './fixtures/healthCareRegionNonClinicalServicesData.json';
-import stagingSurveys from './medalliaStagingSurveys.json';
-import prodSurveys from './medalliaProdSurveys.json';
+import vbaDataCantFind from '../layouts/tests/vba/template/fixtures/vba_facility_data_cant_find_benefits.json';
+import vbaDataBenefitHotline from '../layouts/tests/vba/template/fixtures/vba_facility_data_benefits_hotline.json';
+import vbaDataUpdates from '../layouts/tests/vba/template/fixtures/vba_facility_data_updates.json';
+import phoneMockData from '../layouts/tests/vamc/fixtures/phoneMockData.json';
+import simpleWysiwygMockData from '../layouts/tests/vamc/fixtures/simpleWysiwygMockData.json';
+// import debug from 'debug';
+// To make debugging/building liquid filter tests easier. Add DEBUG=liquid before yarn test
+// Add `log` statements in the liquid filters while building.
+// const log = debug('liquid');
 
-// Register filters.
 registerFilters();
 
 const getTomorrow = () => {
@@ -140,73 +144,81 @@ describe('hasContentAtPath', () => {
   });
 });
 
-describe('filterPastEvents', () => {
-  it('returns null when null is passed', () => {
-    expect(liquid.filters.filterPastEvents(null)).to.eq(null);
-  });
-
-  it('returns null when undefined is passed', () => {
-    expect(liquid.filters.filterPastEvents(undefined)).to.eq(null);
-  });
-
-  it('returns null when empty string is passed', () => {
-    expect(liquid.filters.filterPastEvents('')).to.eq(null);
-  });
-
-  it('returns events that occurred BEFORE the current date and time', () => {
-    const actual = liquid.filters.filterPastEvents(eventsMockData);
-    expect(actual.length).to.eq(3);
-    expect(actual).to.deep.include.members([
-      {
-        title: 'Yesterday',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday,
-        },
-      },
-      {
-        title: 'Yesterday Draft - 10',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday - 10,
-        },
-      },
-      {
-        title: 'Yesterday - 1',
-        fieldDatetimeRangeTimezone: {
-          value: yesterday - 1,
-        },
-      },
-    ]);
-  });
-});
-
 describe('filterUpcomingEvents', () => {
-  it('returns null when null is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents(null)).to.eq(null);
-  });
-
-  it('returns null when undefined is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents(undefined)).to.eq(null);
-  });
-
-  it('returns null when empty string is passed', () => {
-    expect(liquid.filters.filterUpcomingEvents('')).to.eq(null);
-  });
-
-  it('returns events that occurred AFTER the current date', () => {
-    expect(liquid.filters.filterUpcomingEvents(eventsMockData)).to.deep.equal([
-      {
-        title: 'Tomorrow',
-        fieldDatetimeRangeTimezone: {
-          value: tomorrow,
-        },
+  const futureEvents = [
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2100-12-07 14:00:00 America/New_York',
+        endValue: 4131892800,
+        startTime: '2100-12-07 15:00:00 America/New_York',
+        timezone: 'America/New_York',
+        value: 4131896400,
       },
-      {
-        title: 'Tomorrow + 1',
-        fieldDatetimeRangeTimezone: {
-          value: tomorrow + 1,
-        },
+    },
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2100-09-05 17:00:00 America/New_York',
+        endValue: 4123864800,
+        startTime: '2100-09-05 18:00:00 America/New_York',
+        value: 4123868400,
       },
-    ]);
+    },
+  ];
+
+  const pastEvents = [
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2023-12-07 13:00:00 America/New_York',
+        endValue: 1701972000,
+        startTime: '2023-12-07 10:00:00 America/New_York',
+        value: 1701961200,
+      },
+    },
+    {
+      fieldDatetimeRangeTimezone: {
+        endTime: '2023-09-05 17:00:00 America/New_York',
+        endValue: 1693947600,
+        startTime: '2023-09-05 14:00:00 America/New_York',
+        value: 1693936800,
+      },
+    },
+  ];
+
+  it('should return null when no data is given', () => {
+    expect(liquid.filters.filterUpcomingEvents()).to.be.null;
+  });
+
+  it('should return only events that are in the future', () => {
+    expect(liquid.filters.filterUpcomingEvents(pastEvents)).to.deep.equal([]);
+  });
+
+  it('should return only events that are in the future', () => {
+    expect(liquid.filters.filterUpcomingEvents(futureEvents)).to.deep.equal(
+      futureEvents,
+    );
+  });
+
+  it('should return only events that are in the future', () => {
+    const events = [
+      {
+        fieldDatetimeRangeTimezone: [
+          {
+            endTime: '2023-11-16 13:00:00 America/New_York',
+            endValue: 1700157600,
+            startTime: '2023-11-16 11:00:00 America/New_York',
+            value: 1700150400,
+          },
+          {
+            endTime: '2100-12-07 14:00:00 America/New_York',
+            endValue: 4131892800,
+            startTime: '2100-12-07 15:00:00 America/New_York',
+            value: 4131896400,
+          },
+        ],
+      },
+    ];
+
+    expect(liquid.filters.filterUpcomingEvents(events)).to.deep.equal(events);
   });
 });
 
@@ -293,54 +305,6 @@ describe('sortByDateKey', () => {
         title: 'Women Veterans resource fair spotlights VA and community care',
       },
     ]);
-  });
-});
-
-describe('paginatePages', () => {
-  it('passing in less than 10 events', () => {
-    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
-
-    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
-      0,
-      -6,
-    );
-
-    const result = liquid.filters.paginatePages(
-      slicedEventListingMockData,
-      slicedEventListingMockData.reverseFieldListingNode.entities,
-    );
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator.next).to.be.null;
-  });
-
-  it('passing in more than 10 events', () => {
-    const result = liquid.filters.paginatePages(
-      eventListingMockData,
-      eventListingMockData.reverseFieldListingNode.entities,
-      'event',
-    );
-
-    const expected = {
-      ariaLabel: ' of event',
-      prev: null,
-      inner: [
-        {
-          href: null,
-          label: 1,
-          class: 'va-pagination-active',
-        },
-        {
-          href: '/pittsburgh-health-care/events/page-2',
-          label: 2,
-          class: '',
-        },
-      ],
-      next: '/pittsburgh-health-care/events/page-2',
-    };
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator).to.deep.equal(expected);
   });
 });
 
@@ -931,11 +895,13 @@ describe('getTagsList', () => {
           },
         },
       ],
-      fieldAudienceBeneficiares: {
-        entity: {
-          name: 'C. Example',
+      fieldAudienceBeneficiares: [
+        {
+          entity: {
+            name: 'C. Example',
+          },
         },
-      },
+      ],
       fieldNonBeneficiares: {
         entity: {
           name: 'D. Example',
@@ -1143,6 +1109,119 @@ describe('appendCentralizedFeaturedContent', () => {
   });
 });
 
+describe('local spotlight content', () => {
+  it('shims local featured content from local spotlight to fetched form centralized content', () => {
+    const localSpotlightData = {
+      id: 144308,
+      fieldDescription: {
+        value: '<p>Local Spotlight for Facebook</p>',
+        processed:
+          '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+        format: 'rich_text_limited',
+      },
+      fieldSectionHeader: 'Facebook Spotlight 1',
+      fieldCta: {
+        entity: {
+          fieldButtonLink: {
+            url: {
+              path: 'https://facebook.com',
+            },
+            uri: 'https://facebook.com',
+            title: '',
+            options: {
+              href: 'https://facebook.com',
+              'data-entity-type': '',
+              'data-entity-uuid': '',
+              'data-entity-substitution': '',
+            },
+          },
+          fieldButtonLabel: 'Facebook',
+        },
+      },
+    };
+    const centralizedContentFormattedData = liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent(
+      localSpotlightData,
+    );
+    expect(centralizedContentFormattedData).to.deep.equal({
+      fetched: {
+        fieldCta: [
+          {
+            entity: {
+              fieldButtonLabel: [
+                {
+                  value: 'Facebook',
+                },
+              ],
+              fieldButtonLink: [
+                {
+                  options: {
+                    'data-entity-substitution': '',
+                    'data-entity-type': '',
+                    'data-entity-uuid': '',
+                    href: 'https://facebook.com',
+                  },
+                  title: '',
+                  uri: 'https://facebook.com',
+                  url: {
+                    path: 'https://facebook.com',
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        fieldDescription: [
+          {
+            format: 'rich_text_limited',
+            processed:
+              '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+            value: '<p>Local Spotlight for Facebook</p>',
+          },
+        ],
+        fieldSectionHeader: [
+          {
+            value: 'Facebook Spotlight 1',
+          },
+        ],
+      },
+    });
+  });
+  it('shims local featured content from local spotlight to fetched form centralized content without CTA', () => {
+    const localSpotlightData = {
+      id: 144308,
+      fieldDescription: {
+        value: '<p>Local Spotlight for Facebook</p>',
+        processed:
+          '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+        format: 'rich_text_limited',
+      },
+      fieldSectionHeader: 'Facebook Spotlight 1',
+      fieldCta: null,
+    };
+    const centralizedContentFormattedData = liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent(
+      localSpotlightData,
+    );
+    expect(centralizedContentFormattedData).to.deep.equal({
+      fetched: {
+        fieldCta: [],
+        fieldDescription: [
+          {
+            format: 'rich_text_limited',
+            processed:
+              '<html><head></head><body><p>Local Spotlight for Facebook</p>\n</body></html>',
+            value: '<p>Local Spotlight for Facebook</p>',
+          },
+        ],
+        fieldSectionHeader: [
+          {
+            value: 'Facebook Spotlight 1',
+          },
+        ],
+      },
+    });
+  });
+});
+
 describe('run', () => {
   it('sets timeout to 20 minutes', () => {
     // Save the context so we can check the timeout value
@@ -1187,28 +1266,28 @@ describe('phoneLinks', () => {
   it('wraps text phone numbers in a link', () => {
     const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with parentheses around the area code', () => {
     const text = 'Here is a phone number: (123)-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with space after the area code', () => {
     const text = 'Here is a phone number: (123) 456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with no dash or space after the area code', () => {
     const text = 'Here is a phone number: (123)456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
@@ -1216,15 +1295,84 @@ describe('phoneLinks', () => {
     const text =
       'Here is a phone number: (123)-456-7890. And (1111) more: 890-456-1234. Noice!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
-      'And (1111) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+      'Here is a phone number: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. ' +
+      'And (1111) more: <va-telephone target="_blank" href="tel:890-456-1234" contact="890-456-1234"></va-telephone>. Noice!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('does not double-wrap phone numbers', () => {
     const html =
-      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a <va-telephone href="test">phone number</va-telephone>: <va-telephone target="_blank" href="tel:123-456-7890" contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+
+  it('does not double-wrap phone numbers in va-telephone components', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+
+  it('properly returns the data when a phone number is not in it', () => {
+    const html =
+      'Here is some completely unrelated stuff <h4> with no phone numbers </h4> and just <p> some basic text</p> blah';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
+
+describe('separatePhoneNumberExtension similar to functioning on Vets-website', () => {
+  it('processes a phone number with an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '123-456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('processes a phone number with parentheses an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '(123) 456-7890 x1234';
+    const expected = {
+      phoneNumber: '1234567890',
+      extension: '1234',
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('should process phone number strings into phone and extension', () => {
+    const phoneNumber = '800-827-1000';
+    const phoneNumberNoDashes = '8008271000';
+    const extension = '123';
+    const phoneConditions = [
+      '',
+      'x',
+      ' ext ',
+      ' ext. ',
+      ' x. ',
+      ', x',
+      ', ext',
+      ', ext.',
+      ', ext. ',
+    ]
+      // For all cases except the first, concatenate the phoneNumber, extension separator, and extension
+      .map((e, i) => (i === 0 ? phoneNumber : phoneNumber + e + extension));
+    for (let i = 0; i < phoneConditions.length; i += 1) {
+      const processed = liquid.filters.separatePhoneNumberExtension(
+        phoneConditions[i],
+      );
+      if (i === 0) {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension: '',
+        });
+      } else {
+        expect(processed).to.deep.equal({
+          phoneNumber: phoneNumberNoDashes,
+          extension,
+        });
+      }
+    }
   });
 });
 
@@ -1602,6 +1750,84 @@ describe('getValueFromObjPath', () => {
   });
 });
 
+describe('processfieldCcCantFindBenefits', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processfieldCcCantFindBenefits(null)).to.be.null;
+  });
+  it('returns Cannot Find Benefits data in simplified object', () => {
+    const data = liquid.filters.processfieldCcCantFindBenefits(vbaDataCantFind);
+    expect(data.fieldSectionHeader).to.be.equal(
+      vbaDataCantFind.fetched.fieldSectionHeader[0].value,
+    );
+    expect(data.fieldDescription).to.be.equal(
+      vbaDataCantFind.fetched.fieldDescription[0].processed,
+    );
+    const { entity } = vbaDataCantFind.fetched.fieldCta[0];
+    expect(data.fieldCta.label).to.be.equal(entity.fieldButtonLabel[0].value);
+    expect(data.fieldCta.link).to.be.equal(entity.fieldButtonLink[0].url.path);
+  });
+});
+
+describe('processCentralizedBenefitsHotline', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedBenefitsHotline(null)).to.be.null;
+  });
+  it('returns hotline data in simplified object', () => {
+    const data = liquid.filters.processCentralizedBenefitsHotline(
+      vbaDataBenefitHotline,
+    );
+    expect(data.fieldPhoneExtension).to.be.equal(
+      vbaDataBenefitHotline.fetched.fieldPhoneExtension[0].value,
+    );
+  });
+});
+
+describe('processCentralizedUpdatesVBA', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processCentralizedUpdatesVBA(null)).to.be.null;
+  });
+  it('returns simple object of VBA updates', () => {
+    const data = liquid.filters.processCentralizedUpdatesVBA(vbaDataUpdates);
+    expect(data.sectionHeader).to.be.equal(
+      vbaDataUpdates.fetched.fieldSectionHeader[0].value,
+    );
+    expect(Object.keys(data.links).length).to.be.equal(
+      vbaDataUpdates.fetched.fieldLinks.length,
+    );
+  });
+});
+
+describe('processFieldPhoneNumbersParagraph', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processFieldPhoneNumbersParagraph(null)).to.be.null;
+  });
+  it('returns simple object of phone numbers', () => {
+    const data = liquid.filters.processFieldPhoneNumbersParagraph(
+      phoneMockData,
+    );
+    expect(data.contact).to.be.equal(phoneMockData[0].entity.fieldPhoneNumber);
+    expect(data.extension).to.be.equal(
+      phoneMockData[0].entity.fieldPhoneExtension,
+    );
+  });
+});
+describe('processWysiwygSimple', () => {
+  it('returns null if null is passed', () => {
+    expect(liquid.filters.processWysiwygSimple(null)).to.be.null;
+  });
+  it('returns null if wysiwyg is empty list', () => {
+    expect(
+      liquid.filters.processWysiwygSimple({ fetched: { fieldWysiwyg: [] } }),
+    ).to.be.null;
+  });
+  it('returns simple object of wysiwyg', () => {
+    const data = liquid.filters.processWysiwygSimple(simpleWysiwygMockData);
+    expect(data).to.be.equal(
+      simpleWysiwygMockData.fetched.fieldWysiwyg[0].value,
+    );
+  });
+});
+
 describe('processCentralizedContent', () => {
   it('returns null if null is passed', () => {
     expect(liquid.filters.processCentralizedContent(null, 'wysiwyg')).to.be
@@ -1684,6 +1910,61 @@ describe('processCentralizedContent', () => {
                   ],
                 },
               },
+              {
+                entity: {
+                  targetId: '135322',
+                  targetRevisionId: '1025879',
+                  entityType: 'paragraph',
+                  entityBundle: 'alert',
+                  pid: '135322',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldAlertBlockReference: [],
+                  fieldAlertHeading: [
+                    {
+                      value:
+                        'What are the covered educational assistance benefits?',
+                    },
+                  ],
+                  fieldAlertType: [
+                    {
+                      value: 'information',
+                    },
+                  ],
+                  fieldVaParagraphs: [
+                    {
+                      entity: {
+                        targetId: '135321',
+                        targetRevisionId: '1025878',
+                        entityType: 'paragraph',
+                        entityBundle: 'expandable_text',
+                        pid: '135321',
+                        label:
+                          'National Vet Center content > Content > Questions > Answer > Alert content',
+                        status: true,
+                        langcode: 'en',
+                        fieldTextExpander: [
+                          {
+                            value:
+                              'What are the covered educational assistance benefits?',
+                          },
+                        ],
+                        fieldWysiwyg: [
+                          {
+                            value:
+                              '<p>The covered educational assistance benefits are benefits from any of these programs:&nbsp;</p>\r\n\r\n<ul>\r\n\t<li>Montgomery GI Bill Active Duty</li>\r\n\t<li>Montgomery GI Bill Selected Reserve</li>\r\n\t<li>Post-9/11 GI Bill</li>\r\n\t<li>Reserve Educational Assistance Program (REAP)</li>\r\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\r\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\r\n\t<li>Veterans’ Educational Assistance Program (VEAP)</li>\r\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\r\n</ul>\r\n',
+                            format: 'rich_text',
+                            processed:
+                              '<html><head></head><body><p>The covered educational assistance benefits are benefits from any of these programs:&#xA0;</p>\n\n<ul><li>Montgomery GI Bill Active Duty</li>\n\t<li>Montgomery GI Bill Selected Reserve</li>\n\t<li>Post-9/11 GI Bill</li>\n\t<li>Reserve Educational Assistance Program (REAP)</li>\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\n\t<li>Veterans&#x2019; Educational Assistance Program (VEAP)</li>\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\n</ul></body></html>',
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
             ],
             fieldQuestion: [
               {
@@ -1726,6 +2007,49 @@ describe('processCentralizedContent', () => {
                       format: 'rich_text_limited',
                       processed:
                         "<p>Vet Centers are small, non-medical, counseling centers conveniently located in your community. They're staffed by highly trained counselors and team members dedicated to seeing you through the challenges that come with managing life during and after the military.</p>\n<p>Whether you come in for one-on-one counseling or to participate in a group session, at Vet Centers you can form social connections, try new things, and build a support system with people who understand you and want to help you succeed.</p>\n",
+                    },
+                  ],
+                },
+              },
+              {
+                entity: {
+                  targetId: '135322',
+                  targetRevisionId: '1025879',
+                  entityType: 'paragraph',
+                  entityBundle: 'alert',
+                  pid: '135322',
+                  label:
+                    'National Vet Center content > Content > Questions > Answer',
+                  status: true,
+                  langcode: 'en',
+                  fieldAlertBlockReference: [],
+                  fieldAlertHeading:
+                    'What are the covered educational assistance benefits?',
+                  fieldAlertType: 'information',
+                  fieldVaParagraphs: [
+                    {
+                      entity: {
+                        targetId: '135321',
+                        targetRevisionId: '1025878',
+                        entityType: 'paragraph',
+                        entityBundle: 'expandable_text',
+                        pid: '135321',
+                        label:
+                          'National Vet Center content > Content > Questions > Answer > Alert content',
+                        status: true,
+                        langcode: 'en',
+                        fieldTextExpander:
+                          'What are the covered educational assistance benefits?',
+                        fieldWysiwyg: [
+                          {
+                            value:
+                              '<p>The covered educational assistance benefits are benefits from any of these programs:&nbsp;</p>\r\n\r\n<ul>\r\n\t<li>Montgomery GI Bill Active Duty</li>\r\n\t<li>Montgomery GI Bill Selected Reserve</li>\r\n\t<li>Post-9/11 GI Bill</li>\r\n\t<li>Reserve Educational Assistance Program (REAP)</li>\r\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\r\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\r\n\t<li>Veterans’ Educational Assistance Program (VEAP)</li>\r\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\r\n</ul>\r\n',
+                            format: 'rich_text',
+                            processed:
+                              '<html><head></head><body><p>The covered educational assistance benefits are benefits from any of these programs:&#xA0;</p>\n\n<ul><li>Montgomery GI Bill Active Duty</li>\n\t<li>Montgomery GI Bill Selected Reserve</li>\n\t<li>Post-9/11 GI Bill</li>\n\t<li>Reserve Educational Assistance Program (REAP)</li>\n\t<li>Veteran Rapid Retraining Assistance Program (VRRAP)</li>\n\t<li>Veteran Readiness and Employment (VR&amp;E)</li>\n\t<li>Veterans&#x2019; Educational Assistance Program (VEAP)</li>\n\t<li>Veteran Employment Through Technology Education Courses (VET TEC)</li>\n</ul></body></html>',
+                          },
+                        ],
+                      },
                     },
                   ],
                 },
@@ -1868,18 +2192,35 @@ describe('processCentralizedContent', () => {
 });
 
 describe('filterSidebarData', () => {
-  it('returns null if sidebar data is null', () => {
-    expect(liquid.filters.filterSidebarData(null)).to.be.null;
+  describe('empty-ish data passed in', () => {
+    it('returns passed in sidebarData if it does not have a `links` prop', () => {
+      const emptySidebarData = {};
+      expect(liquid.filters.filterSidebarData(emptySidebarData)).to.deep.equal(
+        emptySidebarData,
+      );
+    });
+
+    it('returns passed in sidebarData if `links` prop has length zero ', () => {
+      const emptySidebarData = {
+        links: [],
+      };
+      expect(liquid.filters.filterSidebarData(emptySidebarData)).to.deep.equal(
+        emptySidebarData,
+      );
+    });
+
+    it('returns passed in sidebarData if `links` prop is not an array', () => {
+      const emptySidebarData = {
+        links: '',
+      };
+      expect(liquid.filters.filterSidebarData(emptySidebarData)).to.deep.equal(
+        emptySidebarData,
+      );
+    });
   });
 
-  it('returns null if arguments are not passed', () => {
-    expect(liquid.filters.filterSidebarData()).to.be.null;
-  });
-
-  it('returns sidebarData with published facilities only', () => {
-    const clonedSidebarData = _.cloneDeep(sidebarData);
-
-    const expected = [
+  describe('when NOT preview, includes only links to published entities', () => {
+    const expectedFacilities = [
       {
         label: 'Brunswick County VA Clinic',
         entity: {
@@ -1900,49 +2241,62 @@ describe('filterSidebarData', () => {
       },
     ];
 
-    const filteredData = liquid.filters.filterSidebarData(
-      clonedSidebarData,
-      false,
-    );
-    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
-      expected,
-    );
-  });
-
-  it('returns sidebarData with published facilities if second argument is not passed - isPreview defaults to false', () => {
-    const clonedSidebarData = _.cloneDeep(sidebarData);
-
-    const expected = [
+    const expectedAboutUs = [
       {
-        label: 'Brunswick County VA Clinic',
+        expanded: false,
+        description: null,
+        label: 'Mission and vision',
+        url: {
+          path: '/fayetteville-coastal-health-care/about-us/mission-and-vision',
+        },
         entity: {
           linkedEntity: {
             entityPublished: true,
             moderationState: 'published',
           },
         },
+        links: [],
       },
       {
-        label: 'Jacksonville 2 VA Clinic',
+        expanded: false,
+        description: null,
+        label: 'Leadership',
+        url: {
+          path: '/fayetteville-coastal-health-care/about-us/leadership',
+        },
         entity: {
           linkedEntity: {
             entityPublished: true,
             moderationState: 'published',
           },
         },
+        links: [],
       },
     ];
 
-    const filteredData = liquid.filters.filterSidebarData(clonedSidebarData);
-    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
-      expected,
-    );
+    it('returns only links to published entities when isPreview is explicitly false', () => {
+      const filteredData = liquid.filters.filterSidebarData(sidebarData, false);
+      expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+        expectedFacilities,
+      );
+      expect(filteredData.links[0].links[2].links[0].links).to.deep.equal(
+        expectedAboutUs,
+      );
+    });
+
+    it('returns only links to published entities when isPreview is not passed (defaults to false)', () => {
+      const filteredData = liquid.filters.filterSidebarData(sidebarData);
+      expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+        expectedFacilities,
+      );
+      expect(filteredData.links[0].links[2].links[0].links).to.deep.equal(
+        expectedAboutUs,
+      );
+    });
   });
 
-  it('returns sidebarData with published and draft facilities IF in preview mode', () => {
-    const clonedSidebarData = _.cloneDeep(sidebarData);
-
-    const expected = [
+  describe('when preview, includes links to both published and draft entities', () => {
+    const expectedFacilities = [
       {
         label: 'Fayetteville VA Medical Center',
         entity: {
@@ -1972,24 +2326,63 @@ describe('filterSidebarData', () => {
       },
     ];
 
-    const filteredData = liquid.filters.filterSidebarData(
-      clonedSidebarData,
-      true,
-    );
-    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
-      expected,
-    );
-  });
+    const expectedAboutUs = [
+      {
+        expanded: false,
+        description: null,
+        label: 'Mission and vision',
+        url: {
+          path: '/fayetteville-coastal-health-care/about-us/mission-and-vision',
+        },
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+        links: [],
+      },
+      {
+        expanded: false,
+        description: null,
+        label: 'History',
+        url: {
+          path: '/fayetteville-coastal-health-care/about-us/history',
+        },
+        entity: {
+          linkedEntity: {
+            entityPublished: false,
+            moderationState: 'draft',
+          },
+        },
+        links: [],
+      },
+      {
+        expanded: false,
+        description: null,
+        label: 'Leadership',
+        url: {
+          path: '/fayetteville-coastal-health-care/about-us/leadership',
+        },
+        entity: {
+          linkedEntity: {
+            entityPublished: true,
+            moderationState: 'published',
+          },
+        },
+        links: [],
+      },
+    ];
 
-  it('returns empty array if array of facilities is empty', () => {
-    const clonedSidebarData = _.cloneDeep(sidebarData);
-    clonedSidebarData.links[0].links[0].links[1].links = [];
-
-    const filteredData = liquid.filters.filterSidebarData(
-      clonedSidebarData,
-      true,
-    );
-    expect(filteredData.links[0].links[0].links[1].links).to.deep.equal([]);
+    it('returns links to both published and draft entities IF in preview mode', () => {
+      const filteredData = liquid.filters.filterSidebarData(sidebarData, true);
+      expect(filteredData.links[0].links[0].links[1].links).to.deep.equal(
+        expectedFacilities,
+      );
+      expect(filteredData.links[0].links[2].links[0].links).to.deep.equal(
+        expectedAboutUs,
+      );
+    });
   });
 });
 
@@ -2074,42 +2467,35 @@ describe('pathContainsSubstring', () => {
 
 describe('deriveMostRecentDate', () => {
   it('returns the argument fieldDatetimeRangeTimezone when it is falsey', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = undefined;
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.eq(fieldDatetimeRangeTimezone);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an object', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = {
       value: 1642014000,
       endValue: 1642017600,
     };
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.deep.eq(fieldDatetimeRangeTimezone);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 1', () => {
-    // Setup.
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone),
     ).to.deep.eq(fieldDatetimeRangeTimezone[0]);
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only past dates', () => {
-    // Setup.
     const now = 1642030600;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2117,14 +2503,12 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642025600, endValue: 1642029600 });
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are past and future dates', () => {
-    // Setup.
     const now = 1642019600;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2132,14 +2516,12 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642017000, endValue: 1642020600 });
   });
 
   it('returns the most recent date when fieldDatetimeRangeTimezone is an array of 2 or more + there are only future dates', () => {
-    // Setup.
     const now = 1642014000;
     const fieldDatetimeRangeTimezone = [
       { value: 1642014000, endValue: 1642017600 },
@@ -2147,7 +2529,6 @@ describe('deriveMostRecentDate', () => {
       { value: 1642025600, endValue: 1642029600 },
     ];
 
-    // Assertions.
     expect(
       liquid.filters.deriveMostRecentDate(fieldDatetimeRangeTimezone, now),
     ).to.deep.eq({ value: 1642014000, endValue: 1642017600 });
@@ -2272,6 +2653,95 @@ describe('serviceLocationsAtFacilityByServiceType', () => {
     );
   });
 });
+describe('trimAndCamelCase', () => {
+  it('returns null if string is null', () => {
+    expect(liquid.filters.trimAndCamelCase(null)).to.be.null;
+  });
+
+  it('returns null if string is not a string', () => {
+    expect(liquid.filters.trimAndCamelCase('a', 123)).to.be.null;
+  });
+
+  it('returns vba_string_thing with with trimmed vba_ and camel cased rest', () => {
+    expect(
+      liquid.filters.trimAndCamelCase('vba_', 'vba_string_thing'),
+    ).to.equal('stringThing');
+  });
+});
+describe('processVbaServices', () => {
+  const allVbaServices = liquid.filters.processVbaServices(
+    [
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_other_services',
+      }),
+    ],
+    [
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_family_member_caregiver_benefits',
+      }),
+    ],
+  );
+
+  expect(allVbaServices.veteranBenefits.length).to.equal(1);
+  expect(allVbaServices.familyMemberCaregiverBenefits.length).to.equal(1);
+  expect(allVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(allVbaServices.otherServices.length).to.equal(1);
+
+  const singleVbaService = liquid.filters.processVbaServices(
+    [
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+    ],
+    [
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_veteran_benefits',
+      }),
+    ],
+  );
+  expect(singleVbaService.veteranBenefits.length).to.equal(1);
+  expect(singleVbaService.familyMemberCaregiverBenefits.length).to.equal(0);
+  expect(singleVbaService.serviceMemberBenefits.length).to.equal(0);
+  expect(singleVbaService.otherServices.length).to.equal(0);
+
+  const hiddenVbaServices = liquid.filters.processVbaServices(
+    [
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+        fieldShowForVbaFacilities: false,
+      }),
+    ],
+    [
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+      }),
+      vbaRegionFacilityOrOfficeNode({
+        fieldVbaTypeOfCare: 'vba_service_member_benefits',
+        fieldShowForVbaFacilities: false,
+      }),
+    ],
+  );
+
+  expect(hiddenVbaServices.veteranBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.familyMemberCaregiverBenefits.length).to.equal(0);
+  expect(hiddenVbaServices.serviceMemberBenefits.length).to.equal(1);
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'facilityService',
+  );
+  expect(hiddenVbaServices.serviceMemberBenefits[0]).to.haveOwnProperty(
+    'regionalService',
+  );
+  expect(hiddenVbaServices.otherServices.length).to.equal(0);
+});
 
 describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
   const facilitiesInSystem =
@@ -2372,7 +2842,6 @@ describe('healthCareRegionNonClinicalServiceLocationsByType', () => {
 
 describe('deriveFormattedTimestamp', () => {
   it('returns what we expect', () => {
-    // Set up.
     const fieldDatetimeRangeTimezone = {
       duration: 60,
       endTime: null,
@@ -2384,7 +2853,6 @@ describe('deriveFormattedTimestamp', () => {
       value: 1641405600,
     };
 
-    // Assertions.
     expect(
       liquid.filters.deriveFormattedTimestamp(fieldDatetimeRangeTimezone),
     ).to.equal('Wed. Jan. 5, 2022, 1:00 p.m. – 2:00 p.m. ET');
@@ -2392,38 +2860,95 @@ describe('deriveFormattedTimestamp', () => {
 });
 
 describe('getSurvey', () => {
-  it('returns the survey number if url is listed in the survey object', () => {
-    const testUrls = [
-      '/resources',
-      '/find-locations',
-      '/search',
-      '/contact-us/virtual-agent',
-    ];
-    const testBuildTypes = ['vagovprod', 'vagovstaging', 'localhost'];
+  it('returns correct survey ID for direct URL match in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/search')).to.equal(21);
+  });
 
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[2], stagingSurveys),
-    ).to.equal(20);
+      liquid.filters.getSurvey('vagovstaging', '/contact-us/virtual-agent'),
+    ).to.equal(26);
+  });
 
+  it('returns correct survey ID for direct URL match in staging', () => {
     expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[1], stagingSurveys),
+      liquid.filters.getSurvey('vagovstaging', '/school-administrators'),
+    ).to.equal(37);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(liquid.filters.getSurvey('vagovprod', '/')).to.equal(17);
+  });
+
+  it('returns default survey ID when no direct URL match is found in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/')).to.equal(11);
+  });
+
+  it('returns default survey ID when no direct URL match is found in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovstaging',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
     ).to.equal(11);
+  });
 
+  it('returns default survey ID when no direct URL match is found in production', () => {
     expect(
-      liquid.filters.getSurvey(testBuildTypes[1], testUrls[3], stagingSurveys),
-    ).to.equal(24);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[2], prodSurveys),
-    ).to.equal(21);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[3], prodSurveys),
-    ).to.equal(25);
-
-    expect(
-      liquid.filters.getSurvey(testBuildTypes[0], testUrls[1], prodSurveys),
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/burials-memorials/veterans-burial-allowance',
+      ),
     ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in production', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovprod',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/64545443',
+      ),
+    ).to.equal(17);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey(
+        'vagovdev',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
+      ),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(
+      liquid.filters.getSurvey('vagovstaging', '/health-care/eligibility'),
+    ).to.equal(41);
+  });
+
+  it('returns correct survey ID for subpath URL match in staging', () => {
+    expect(liquid.filters.getSurvey('vagovstaging', '/health-care')).to.equal(
+      41,
+    );
+  });
+
+  it('handles null URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', null)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', null)).to.equal(11);
+  });
+
+  it('handles undefined URL gracefully', () => {
+    expect(liquid.filters.getSurvey('vagovprod', undefined)).to.equal(17);
+    expect(liquid.filters.getSurvey('vagovstaging', undefined)).to.equal(11);
   });
 });
 
@@ -2482,7 +3007,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given an incomplete week returns a complete week with default days filled in where there were no values', () => {
     const data = vetCenterHoursData.partialWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Check every day is equal to default day except for day provided by the data
       if (i !== 1) {
         assert.deepEqual(
@@ -2495,7 +3020,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given an incomplete week returns a complete week with the given data in the correct place', () => {
     const data = vetCenterHoursData.partialWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Day 2 gets shifted back to 1 check if day 2 is in the right space
       if (i === 1) {
         assert.deepEqual(
@@ -2508,7 +3033,7 @@ describe('officeHoursDataFormat', () => {
 
   it('when given a complete week returns a complete week with the expected data', () => {
     const data = vetCenterHoursData.completeWeek;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       // Check to see if the new data equals the original data shifted back one
       assert.deepEqual(
         liquid.filters.officeHoursDataFormat(data)[i],

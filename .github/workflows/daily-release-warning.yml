@@ -21,19 +21,19 @@ jobs:
     steps:
       - name: Cancel workflow due to DSVA schedule
         if: ${{ env.DSVA_SCHEDULE_ENABLED != 'true' }}
-        uses: andymckay/cancel-action@0.2
+        uses: andymckay/cancel-action@b9280e3f8986d7a8e91c7462efc0fa318010c8b1 # v0.3
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
 
       - name: Get latest tag
         id: get-latest-tag
-        run: echo ::set-output name=LATEST_TAG_VERSION::$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1)
+        run: echo LATEST_TAG_VERSION=$(git fetch --all --tags > /dev/null && git tag -l | sort -V --reverse | head -n 1) >> $GITHUB_OUTPUT
 
       - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#07711E","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, production release for content-build coming up in 60 minutes. Please review staging before then. View what coming here: <https://github.com/${{ github.repository }}/compare/${{ steps.get-latest-tag.outputs.LATEST_TAG_VERSION }}...main>"}}]}]}'

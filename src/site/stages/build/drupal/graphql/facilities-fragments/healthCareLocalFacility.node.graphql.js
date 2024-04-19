@@ -10,7 +10,6 @@ const FACILITIES_RESULTS = `
         path
       }
     }
-      entityBundle
       title
       entityId
       entityBundle
@@ -29,6 +28,11 @@ const FACILITIES_RESULTS = `
             }
           }
         }
+      }
+      fieldSupplementalStatusMoreI {
+        value
+        format
+        processed
       }
       fieldOperatingStatusFacility
       fieldFacilityLocatorApiId

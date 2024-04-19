@@ -2,9 +2,8 @@
  * Home page
  */
 
-const menu = 'homepage-top-tasks-blocks';
-const hubListQueue = 'home_page_hub_list';
-const promoBlocksQueue = 'home_page_promos';
+const hubListMenu = 'home-page-hub-list';
+const hubListCreateAccountQueue = 'v2_home_page_create_account';
 const homePageHeroQueue = 'home_page_hero';
 const homePageNewsSpotlightQueue = 'home_page_news_spotlight';
 const homePagePopularLinksMenu = 'popular-on-va-gov';
@@ -20,72 +19,25 @@ const linksQueryPartial = `
   }
 `;
 const query = `
-  homePageMenuQuery:menuByName(name: "${menu}") {
+  homePageHubListMenuQuery:menuByName(name: "${hubListMenu}") {
     name
+    description
     links {
-      label
-      url {
-        path
-      }
-      links {
+      ... on MenuLink {
+        enabled
         label
         url {
           path
         }
-      }
-    }
-  }
-  homePageHubListQuery: entitySubqueueById(id: "${hubListQueue}") {
-    ... on EntitySubqueueHomePageHubList {
-      itemsOfEntitySubqueueHomePageHubList {
         entity {
-          ... on NodeLandingPage {
-            entityId
-            entityLabel
-            fieldTeaserText
-            fieldTitleIcon
-            fieldHomePageHubLabel
-            entityUrl {
-              path
-              routed
-            }
-          }
-        }
-      }
-    }
-  }
-  homePagePromoBlockQuery: entitySubqueueById(id: "${promoBlocksQueue}") {
-    ... on EntitySubqueueHomePagePromos {
-      itemsOfEntitySubqueueHomePagePromos {
-         entity {
-          ... on BlockContentPromo {
-            entityId
-            entityLabel
-            fieldImage {
-              targetId
-              entity {
-                ...on MediaImage {
-                  image {
-                    url
-                    alt
-                  }
-                }
-
-              }
-            }
-            fieldPromoLink {
-              targetId
-              ...on FieldBlockContentPromoFieldPromoLink {
-                entity {
-                  ... on ParagraphLinkTeaser {
-                    fieldLink {
-                      uri
-                      title
-                      options
-                    }
-                    fieldLinkSummary
-                  }
-                }
+          parent
+          ... on MenuLinkContentHomePageHubList {
+            fieldIcon
+            fieldLinkSummary
+            linkedEntity(language_fallback: true, bypass_access_check: true) {
+              ... on Node {
+                entityPublished
+                moderationState
               }
             }
           }
@@ -139,7 +91,7 @@ const query = `
                 ... on MediaImage {
                   image {
                     alt
-                    derivative(style: LARGE) {
+                    derivative(style: CROPSQUARE) {
                       url
                     }
                   }
@@ -156,6 +108,27 @@ const query = `
   }
   homePageOtherSearchToolsMenuQuery:  menuByName(name: "${otherSearchToolsMenu}") {
     ${linksQueryPartial}
+  }
+  homePageCreateAccountQuery: entitySubqueueById(id: "${hubListCreateAccountQueue}") {
+    ... on EntitySubqueueV2HomePageCreateAccount {
+      itemsOfEntitySubqueueV2HomePageCreateAccount {
+        entity {
+          entityId
+          ... on BlockContentCtaWithLink {
+            entityId
+            entityLabel
+            fieldCtaSummaryText
+            fieldPrimaryCtaButtonText
+            fieldRelatedInfoLinks {
+              title
+              url {
+                path
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 

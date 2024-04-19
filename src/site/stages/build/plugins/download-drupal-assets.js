@@ -6,6 +6,7 @@ const chalk = require('chalk');
 
 const { logDrupal: log } = require('../drupal/utilities-drupal');
 const getDrupalClient = require('../drupal/api');
+const ENVIRONMENTS = require('../../../constants/environments');
 
 async function downloadFile(
   files,
@@ -15,6 +16,7 @@ async function downloadFile(
   downloadResults,
   everythingDownloaded,
   downloaderIndex,
+  verbose = false,
 ) {
   const asset = assetsToDownload.shift();
   if (!asset) {
@@ -32,9 +34,10 @@ async function downloadFile(
 
   let response;
   let retries = 3;
+  // eslint-disable-next-line no-plusplus
   while (retries--) {
     try {
-      if (global.verbose) {
+      if (verbose) {
         const startDate = new Date().toISOString();
         log(
           `${startDate}: index ${downloaderIndex}: Starting download ${asset.src}`,
@@ -52,13 +55,20 @@ async function downloadFile(
         // Pause to give the proxy connection a break.
         // eslint-disable-next-line no-await-in-loop,no-loop-func
         await new Promise(resolve => setTimeout(resolve, 2000 - retries * 500));
+      } else if (options.buildtype === ENVIRONMENTS.LOCALHOST) {
+        // If this is local, do not fail on missing assets, but inform the user.
+        // Note that review instances run as local.
+        // eslint-disable-next-line no-console
+        console.error(
+          `Unable to download ${asset.src}. Error: ${e}. If you are developing locally, check that your proxy is active.`,
+        );
       } else {
         throw e;
       }
     }
   }
 
-  if (response.ok) {
+  if (response && response.ok) {
     files[asset.dest] = {
       path: asset.dest,
       isDrupalAsset: true,
@@ -70,9 +80,10 @@ async function downloadFile(
     // Store file contents directly on disk
     outputPaths.forEach(outputPath => fs.outputFileSync(outputPath, contents));
 
+    // eslint-disable-next-line no-plusplus
     downloadResults.downloadCount++;
 
-    if (global.verbose) {
+    if (verbose) {
       const endDate = new Date().toISOString();
       log(
         `${endDate}: index ${downloaderIndex}: Finished downloading ${asset.src}`,
@@ -84,9 +95,10 @@ async function downloadFile(
   } else {
     // For now, not going to fail the build for a missing asset
     // Should get caught by the broken link checker, though
+    // eslint-disable-next-line no-plusplus
     downloadResults.errorCount++;
-    if (global.verbose) {
-      log(`Image download failed: ${response.statusText}: ${asset.src}`);
+    if (verbose) {
+      log(`File download failed: ${response.statusText}: ${asset.src}`);
     } else {
       process.stdout.write(chalk.red('.'));
       if (!assetsToDownload.length) process.stdout.write('\n');
@@ -109,6 +121,7 @@ async function downloadFile(
       downloadResults,
       everythingDownloaded,
       downloaderIndex,
+      verbose,
     );
   } else {
     // Some downloads must still be in progress, but there are no files left to begin downloading
@@ -140,8 +153,10 @@ function downloadDrupalAssets(options) {
       };
 
       const downloadersCount = 5;
+      const verbose = global.verbose && process.env.DEBUG === 'true';
 
       await new Promise(everythingDownloaded => {
+        // eslint-disable-next-line no-plusplus
         for (let i = 0; i < downloadersCount; i++) {
           downloadFile(
             files,
@@ -151,6 +166,7 @@ function downloadDrupalAssets(options) {
             downloadResults,
             everythingDownloaded,
             i,
+            verbose,
           );
         }
       });

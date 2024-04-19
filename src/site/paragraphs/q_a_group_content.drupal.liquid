@@ -1,0 +1,29 @@
+{% assign fieldQAs = entity.queryFieldQAs.entities %}
+    
+    <!-- Optional section header -->
+    {% if entity.fieldSectionHeader %}
+        <h2>{{ entity.fieldSectionHeader }}</h2>
+    {% endif %}
+
+    <!-- Optional QA Group Introduction -->
+    {% if entity.fieldRichWysiwyg.processed %}
+        {{ entity.fieldRichWysiwyg.processed }}
+    {% endif %}
+                  
+    {% assign fieldSectionHeaderTag = 'h2' %}
+    {% if entity.fieldSectionHeader %}
+        {% assign fieldSectionHeaderTag = 'h3' %}
+    {% endif %}
+    {% for fieldQA in fieldQAs %}
+        <{{ fieldSectionHeaderTag }}>{{ fieldQA.entityLabel }}</{{ fieldSectionHeaderTag }}>
+            {% if fieldQA.fieldAnswer %}
+                {% assign fieldAnswer = fieldQA.fieldAnswer %}
+                {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+            {% endif %}
+        </ul>
+    {% endfor %}
+
+                  
+                  

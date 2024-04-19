@@ -1,0 +1,48 @@
+name: Prune Self-Hosted Runners
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 * * * *' # Hourly at 27 minutes past the hour
+
+jobs:
+
+  prune-self-hosted-runners:
+    name: Prune Old and Idle Self-Hosted Runners
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get va-vsp-bot token
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        with:
+          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
+          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: ~/.cache/yarn
+          path: |
+            ~/.cache/yarn
+            node_modules
+
+      - name: Run the prune script
+        run: yarn prune-self-hosted-runners
+        env:
+          GITHUB_TOKEN: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'us-gov-west-1'
+          DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}

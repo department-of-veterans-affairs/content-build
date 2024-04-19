@@ -1,0 +1,7 @@
+{
+  "alertType": "warning",
+  "alertTitle": "Non-dismissible Warning Title",
+  "alertContent": "Non-dismissible Warning content",
+  "dismissible": "perm",
+  "shouldDisplayBanner": true
+}

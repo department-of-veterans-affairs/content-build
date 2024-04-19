@@ -32,15 +32,20 @@
 {% endcomment %}
 {% assign image = entity.fieldImage.entity.image %}
 <div data-template="blocks/promo" data-entity-id="{{ entity.entityId }}" class="merger-r-rail hub-promo" id="promo">
-    <img src="{{ image.derivative.url }}" alt="{{ image.alt }}" title="{{ image.title }}" width="{{ image.derivative.width }}" height="{{ image.derivative.height }}">
+  <img src="{{ image.derivative.url }}" alt="{{ image.alt }}" title="{{ image.title }}" width="{{ image.derivative.width }}" height="{{ image.derivative.height }}">
   {% if entity.fieldPromoLink != empty %}
-    {% assign link = entity.fieldPromoLink.entity.fieldLink | featureSingleValueFieldLink %}
+    {% assign link = entity.fieldPromoLink.entity.fieldLink %}
     <section class="hub-promo-text">
-        <h4 class="heading">
-          <a onClick="recordEvent({ event: 'nav-hub-promo' });"
-            href="{{ link.url.path }}">{{ link.title }}</a>
-        </h4>
+        <h2 class="vads-u-font-size--h4 vads-u-text-decoration--underline vads-u-margin-top--0">
+          <va-link
+            disable-analytics
+            onclick="recordEvent({ event: 'nav-hub-promo' });"
+            href="{{ link.url.path }}"
+            text="{{ link.title }}"
+          />
+        </h2>
         <p>{{ entity.fieldPromoLink.entity.fieldLinkSummary }}</p>
     </section>
   {% endif %}
 </div>
+

@@ -22,6 +22,32 @@
   {
     "appName": "21-527EZ pension benefits form",
     "entryName": "pensions",
+    "rootUrl": "/pension/apply-for-veteran-pension-form-21p-527ez",
+    "template": {
+      "title": "Apply For Pension Benefits",
+      "heading": "Apply for pension benefits",
+      "display_title": "Apply now",
+      "description": "Submit your VA pension application (VA Form 21P-527EZ) online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back later to finish filling it out.",
+      "layout": "page-react.html",
+      "spoke": "Get benefits",
+      "collection": "pension",
+      "order": 3,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "pension/",
+          "name": "Pension benefits"
+        },
+        {
+          "path": "pension/apply-for-veteran-pension-form-21p-527ez",
+          "name": "Apply for Veterans Pension benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "21-527EZ pension benefits form",
+    "entryName": "pensions",
     "rootUrl": "/pension/application/527EZ",
     "template": {
       "title": "Apply For Pension Benefits",
@@ -40,7 +66,7 @@
         },
         {
           "path": "pension/application/527EZ",
-          "name": "Apply for Veterans Pension"
+          "name": "Apply for Veterans Pension benefits"
         }
       ]
     }
@@ -48,19 +74,35 @@
   {
     "appName": "VA Online Scheduling",
     "entryName": "vaos",
-    "rootUrl": "/health-care/schedule-view-va-appointments/appointments",
+    "rootUrl": "/my-health/appointments",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "private": true
     }
   },
   {
     "appName": "Rated Disabilities",
-    "entryName": "disability-my-rated-disabilities",
+    "entryName": "rated-disabilities",
     "rootUrl": "/disability/view-disability-rating/rating",
     "template": {
       "layout": "page-react.html",
-      "vagovprod": true
+      "vagovprod": true,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "disability",
+          "name": "Disability benefits"
+        },
+        {
+          "path": "disability/view-disability-rating",
+          "name": "View your VA disability rating"
+        },
+        {
+          "path": "disability/view-disability-rating/rating",
+          "name": "Your VA disability rating"
+        }
+      ]
     }
   },
   {
@@ -137,19 +179,47 @@
     }
   },
   {
-    "appName": "Terms and Conditions",
-    "entryName": "terms-and-conditions",
-    "rootUrl": "/health-care/medical-information-terms-conditions",
+    "appName": "Terms of use",
+    "entryName": "terms-of-use",
+    "rootUrl": "/terms-of-use",
     "template": {
-      "title": "Terms and Conditions for Medical Information",
+      "title": "VA online services terms of use",
       "layout": "page-react.html",
-      "includeBreadcrumbs": true
+      "includeBreadcrumbs": false,
+      "vagovprod": true
     }
   },
   {
     "appName": "21P-530 Burials benefits form",
     "entryName": "burials",
     "rootUrl": "/burials-and-memorials/application/530",
+    "template": {
+      "title": "Apply for Burial Benefits (VA Form 21P-530)",
+      "display_title": "Apply Now",
+      "layout": "page-react.html",
+      "description": "Use VA Form 21P-530 to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
+      "order": 1,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "burials-memorials/",
+          "name": "Burials and memorials"
+        },
+        {
+          "path": "burials-memorials/veterans-burial-allowance",
+          "name": "Burial allowance"
+        },
+        {
+          "path": "burials-and-memorials/application/530",
+          "name": "Apply for burial benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "21P-530 Burials benefits form",
+    "entryName": "burials-v2",
+    "rootUrl": "/burials-and-memorials-v2/application/530",
     "template": {
       "title": "Apply for Burial Benefits (VA Form 21P-530)",
       "display_title": "Apply Now",
@@ -193,11 +263,58 @@
       "breadcrumbs_override": [
         {
           "path": "health-care/",
-          "name": "Health Care"
+          "name": "Health care"
         },
         {
           "path": "health-care/apply/application",
           "name": "Apply for VA health care"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "1010ez Health Care Application form",
+    "entryName": "hca",
+    "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
+    "template": {
+      "title": "Apply for Health Care",
+      "display_title": "Apply Now",
+      "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
+      "body_class": "page-healthcare",
+      "layout": "page-react.html",
+      "collection": "healthCare",
+      "spoke": "Get benefits",
+      "order": 4,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "health-care/",
+          "name": "Health care"
+        },
+        {
+          "path": "health-care/apply-for-health-care-form-10-10ez",
+          "name": "Apply for VA health care"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "10-10EZR Update health benefits info form",
+    "entryName": "ezr",
+    "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
+    "template": {
+      "layout": "page-react.html",
+      "vagovprod": true,
+      "includeBreadcrumbs": true,
+      "private": true,
+      "breadcrumbs_override": [
+        {
+          "path": "my-health/",
+          "name": "My Health"
+        },
+        {
+          "path": "my-health/update-benefits-information-form-10-10ezr",
+          "name": "Update your VA health benefits information"
         }
       ]
     }
@@ -320,11 +437,11 @@
       "breadcrumbs_override": [
         {
           "path": "burials-memorials/",
-          "name": "Burials and Memorials"
+          "name": "Burials and memorials"
         },
         {
           "path": "burials-and-memorials/pre-need/form-10007-apply-for-eligibility/",
-          "name": "Pre-need Eligibility Determination"
+          "name": "Pre&#8211;need eligibility determination"
         }
       ]
     }
@@ -381,8 +498,7 @@
       "keywords": "upgrade discharge, military discharge upgrade, discharge upgrade",
       "order": 6,
       "spoke": "Get records",
-      "collection": "records",
-      "includeBreadcrumbs": true
+      "collection": "records"
     }
   },
   {
@@ -730,16 +846,6 @@
     }
   },
   {
-    "appName": "Debt Letters",
-    "entryName": "your-debt",
-    "rootUrl": "/manage-va-debt/your-debt",
-    "template": {
-      "vagovprod": true,
-      "title": "Your VA Debt",
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "28-1900 Veteran Readiness",
     "entryName": "28-1900-chapter-31",
     "rootUrl": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
@@ -764,11 +870,11 @@
     }
   },
   {
-    "appName": "Apply for Personalized Career Planning and Guidance with VA Form 28-8832",
-    "entryName": "28-8832-planning-and-career-guidance",
-    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832",
+    "appName": "Apply for Personalized Career Planning and Guidance with VA Form 25-8832",
+    "entryName": "25-8832-planning-and-career-guidance",
+    "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-25-8832",
     "template": {
-      "title": "Personalized Career Planning and Guidance Chapter 36 Form 28-8832",
+      "title": "Personalized Career Planning and Guidance Chapter 36 Form 25-8832",
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
@@ -782,8 +888,8 @@
           "name": "Career planning and guidance"
         },
         {
-          "path": "careers-employment/education-and-career-counseling/apply-career-guidance-form-28-8832/introduction",
-          "name": "Apply for Personalized Career Planning and Guidance Form 28‑8832"
+          "path": "careers-employment/education-and-career-counseling/apply-career-guidance-form-25-8832/introduction",
+          "name": "Apply for Personalized Career Planning and Guidance Form 25‑8832"
         }
       ]
     }
@@ -888,16 +994,6 @@
     }
   },
   {
-    "appName": "Medical Copays",
-    "entryName": "medical-copays",
-    "rootUrl": "/health-care/pay-copay-bill/your-current-balances",
-    "template": {
-      "title": "Medical Copays",
-      "layout": "page-react.html",
-      "vagovprod": true
-    }
-  },
-  {
     "appName": "Resources and support",
     "entryName": "resources-and-support",
     "rootUrl": "/resources/search",
@@ -912,7 +1008,7 @@
         },
         {
           "path": "resources/search",
-          "name": "Search results"
+          "name": "Resources and Support Search Results"
         }
       ]
     }
@@ -924,31 +1020,6 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "Coronavirus Vaccination",
-    "entryName": "coronavirus-vaccination",
-    "rootUrl": "/health-care/covid-19-vaccine/stay-informed",
-    "template": {
-      "title": "Sign up to get a COVID-19 vaccine at VA",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "description": "We’re working to provide COVID-19 vaccines as quickly and safely as we can. We base our vaccine plans on CDC guidelines, federal law, and available supply. Sign up to tell us you’d like to get a COVID-19 vaccine at VA.",
-      "breadcrumbs_override": [
-        {
-          "path": "health-care/",
-          "name": "Health care"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/",
-          "name": "COVID-19 vaccines"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/stay-informed",
-          "name": "Sign up for vaccine updates"
-        }
-      ]
     }
   },
   {
@@ -970,28 +1041,14 @@
     }
   },
   {
-    "appName": "covid-vaccine-expansion",
-    "entryName": "covid-vaccine",
-    "rootUrl": "/health-care/covid-19-vaccine/sign-up",
+    "appName": "Ask VA Integration Project",
+    "entryName": "ask-va-too",
+    "rootUrl": "/contact-us/ask-va-too",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
-      "title": "Sign up to get a vaccine",
-      "description": "We’re working to provide COVID-19 vaccines as quickly and safely as we can. We base our vaccine plans on CDC guidelines, federal law, and available supply. Sign up to tell us you’d like to get a COVID-19 vaccine at VA.",
-      "breadcrumbs_override": [
-        {
-          "path": "health-care/",
-          "name": "Health care"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/",
-          "name": "COVID-19 vaccines"
-        },
-        {
-          "path": "health-care/covid-19-vaccine/sign-up",
-          "name": "Sign up to get a vaccine"
-        }
-      ]
+      "title": "Ask VA Integration Project",
+      "description": "Ask VA (AVA) is an online portal that allows veterans, caregivers, and supporting personnel in education, debt, loans, etc. to submit questions to VA and receive a secure message response."
     }
   },
   {
@@ -1107,7 +1164,11 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeFeedbackButton": false
+      "includeFeedbackButton": true,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "minimalFooter": true
     }
   },
   {
@@ -1117,9 +1178,27 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeFeedbackButton": false
+      "includeFeedbackButton": true,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "minimalFooter": true
     },
     "useLocalStylesAndComponents": true
+  },
+  {
+    "appName": "Travel Claim",
+    "entryName": "travel-claim",
+    "rootUrl": "/my-health/appointment-travel-claim",
+    "template": {
+      "layout": "page-react.html",
+      "includeFeedbackButton": true,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "minimalFooter": true,
+      "vagovprod": false
+    }
   },
   {
     "appName": "My Education Benefits",
@@ -1152,9 +1231,9 @@
   {
     "appName": "Enrollment Verification",
     "entryName": "enrollment-verification",
-    "rootUrl": "/education/verify-school-enrollment",
+    "rootUrl": "/education/verify-school-enrollment/enrollment-verifications",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1170,9 +1249,9 @@
   {
     "appName": "Education Letters",
     "entryName": "education-letters",
-    "rootUrl": "/education/download-letters",
+    "rootUrl": "/education/download-letters/letters",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "title": "Check your VA education letters"
     }
@@ -1199,16 +1278,6 @@
     }
   },
   {
-    "appName": "Transfer Account",
-    "entryName": "mhv-inherited-proofing",
-    "rootUrl": "/transfer-account",
-    "template": {
-      "vagovprod": false,
-      "title": "Transfer Account",
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "Combined Debt Portal",
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-va-debt/summary",
@@ -1224,7 +1293,7 @@
     "rootUrl": "/decision-reviews/supplemental-claim/file-supplemental-claim-form-20-0995",
     "productId": "05712241-0f46-4e84-8d3e-70a6cf412a5e",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1259,25 +1328,500 @@
     "rootUrl": "/education/survivor-dependent-benefits/apply-for-transferred-benefits-form-22-1990e",
     "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
   {
-    "appName": "burial-poc-v6",
-    "entryName": "burial-poc-v6",
-    "rootUrl": "/burial-poc-v6",
-    "productId": "3f7db617-af4b-4d7f-b30f-f288d5756668",
+    "appName": "MHV Secure Messaging",
+    "entryName": "mhv-secure-messaging",
+    "rootUrl": "/my-health/secure-messages",
+    "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "MHV Secure Messaging - OH Pilot",
+    "entryName": "mhv-secure-messaging-pilot",
+    "rootUrl": "/my-health/secure-messages-pilot",
+    "productId": "802ebe63-66e9-4ab1-82cd-bbf45d2db91f",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "MHV Medical Records",
+    "entryName": "medical-records",
+    "rootUrl": "/my-health/medical-records",
+    "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "26-4555 Application in Acquiring Specially Adapted Housing or Special Home Adaptation Grant",
+    "entryName": "4555-adapted-housing",
+    "rootUrl": "/housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555",
+    "productId": "49929be5-0c92-42f2-b122-3cb426f691d4",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Housing assistance",
+          "path": "housing-assistance"
+        },
+        {
+          "name": "Housing grants",
+          "path": "housing-assistance/disability-housing-grants"
+        },
+        {
+          "name": "Apply for an adapted housing grant",
+          "path": "housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "My HealtheVet",
+    "entryName": "mhv-landing-page",
+    "rootUrl": "/my-health",
+    "productId": "4d8b0801-dd86-4728-9609-9d794c923e03",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "Authorize the release of non-VA medical information to VA",
+    "entryName": "21-4142-medical-release",
+    "rootUrl": "/supporting-forms-for-claims/release-information-to-va-form-21-4142",
+    "productId": "56438c7b-e586-490d-a7f6-7e3c92136564",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Authorize the release of non&#8208;VA medical information to VA",
+          "path": "supporting-forms-for-claims/release-information-to-va-form-21-4142"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Simple Forms Patterns",
+    "entryName": "mock-simple-forms-patterns",
+    "rootUrl": "/mock-simple-forms-patterns",
+    "productId": "81df904b-0aec-4a1f-9141-cbaa9acee0ed",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
   },
   {
-    "appName": "MHV Secure Messaging",
-    "entryName": "secure-messaging",
-    "rootUrl": "/my-health/secure-messages",
-    "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
+    "appName": "Mock Form Patterns",
+    "entryName": "mock-form-patterns-v3",
+    "rootUrl": "/mock-form-patterns",
+    "productId": "46a3411a-7a98-4527-bcd8-b0cd71226bff",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Submit a lay or witness statement to support a VA claim",
+    "entryName": "10210-lay-witness-statement",
+    "rootUrl": "/supporting-forms-for-claims/lay-witness-statement-form-21-10210",
+    "productId": "f8117c9f-0d57-486f-91ee-89c806b84d65",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Submit a lay witness statement to support a VA claim",
+          "path": "supporting-forms-for-claims/lay-witness-statement-form-21-10210"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Submit an intent to file",
+    "entryName": "21-0966-intent-to-file-a-claim",
+    "rootUrl": "/supporting-forms-for-claims/intent-to-file-form-21-0966",
+    "productId": "8233bd78-20c6-4498-b36f-55ec0028b1e5",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Submit an intent to file",
+          "path": "supporting-forms-for-claims/intent-to-file-form-21-0966"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Income Limits",
+    "entryName": "income-limits",
+    "rootUrl": "/health-care/income-limits",
+    "template": {
+      "title": "Income Limits",
+      "layout": "page-react.html",
+      "description": "Income Limits application",
+      "vagovprod": true
+    }
+  },
+  {
+    "appName": "Authorize VA to release your information to a third-party source",
+    "entryName": "0845-auth-disclose",
+    "rootUrl": "/supporting-forms-for-claims/third-party-authorization-form-21-0845",
+    "productId": "08a7da80-f48a-4677-9b74-0dcb642b97a1",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Authorize VA to release your information to a third-party source",
+          "path": "supporting-forms-for-claims/third-party-authorization-form-21-0845"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Mock Form - Alternate header - 21-0845 Authorization to Disclose Personal Information to a Third Party",
+    "entryName": "mock-alternate-header-0845",
+    "rootUrl": "/authorization-to-disclose-alternate",
+    "productId": "f1075156-0d85-4a0e-bce6-3f053b6243b5",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "minimalFooter": true
+    }
+  },
+  {
+    "appName": "Sign VA claim forms as an alternate signer",
+    "entryName": "21-0972-alternate-signer",
+    "rootUrl": "/supporting-forms-for-claims/alternate-signer-form-21-0972",
+    "productId": "38f07696-546f-4c9a-a6f0-16348bde4d33",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Sign VA claim forms as an alternate signer",
+          "path": "supporting-forms-for-claims/alternate-signer-form-21-0972"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "MHV Medications",
+    "entryName": "medications",
+    "rootUrl": "/my-health/medications",
+    "productId": "0203ca08-b7a2-4cd6-abb5-56d38c239cd3",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "Request to be a substitute claimant for a deceased claimant",
+    "entryName": "21P-0847-substitute-claimant",
+    "rootUrl": "/supporting-forms-for-claims/substitute-claimant-form-21P-0847",
+    "productId": "8b51d056-9bea-493f-a815-65555ba66188",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Request to be a substitute claimant for a deceased claimant",
+          "path": "supporting-forms-for-claims/substitute-claimant-form-21P-0847"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "After Visit Summary",
+    "entryName": "avs",
+    "rootUrl": "/my-health/medical-records/summaries-and-notes/visit-summary",
+    "productId": "e5bd4cff-77b1-4d56-ab8e-a66c9c2667ab",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "Order hearing aid or CPAP supplies",
+    "entryName": "health-care-supply-reordering",
+    "rootUrl": "/my-health/order-hearing-aid-or-cpap-supplies-form",
+    "productId": "",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Notification Center",
+    "entryName": "notification-center",
+    "rootUrl": "/notification-center",
+    "productId": "",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "DS Playground",
+    "entryName": "ds-playground",
+    "rootUrl": "/ds-playground",
+    "productId": "7cb70bc6-9331-416f-aa20-20e6a595cfb1",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "DS V3 Playground",
+    "entryName": "ds-v3-playground",
+    "rootUrl": "/ds-v3-playground",
+    "productId": "63fa0a80-e79d-47e7-9cce-e03a8edb2535",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Request a Presidential Memorial Certificate",
+    "entryName": "0247-pmc",
+    "rootUrl": "/burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247",
+    "productId": "5af7a83b-c1a0-4a0a-b0e9-88baf150e6a9",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Burials and memorials",
+          "path": "burials-memorials"
+        },
+        {
+          "name": "Memorial items",
+          "path": "burials-memorials/memorial-items"
+        },
+        {
+          "name": "Presidential Memorial Certificates",
+          "path": "burials-memorials/memorial-items/presidential-memorial-certificates"
+        },
+        {
+          "name": "Request a Presidential Memorial Certificate",
+          "path": "burials-memorials/memorial-items/presidential-memorial-certificates/request-certificate-form-40-0247"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "PACT Act",
+    "entryName": "pact-act",
+    "rootUrl": "pact-act-eligibility",
+    "template": {
+      "title": "PACT Act",
+      "layout": "page-react.html",
+      "description": "PACT Act application",
+      "vagovprod": false
+    }
+  },
+  {
+    "appName": "Appeals Testing",
+    "entryName": "appeals-testing",
+    "rootUrl": "/decision-reviews/appeals-testing",
+    "productId": "5dd32517-00fd-4e97-afed-e6db1f1f54f9",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Testing new layout for Appeals forms",
+      "vagovprod": false,
+      "includeBreadcrumbs": false,
+      "noNavOrLogin": true,
+      "noMegamenu": true,
+      "includeFeedbackButton": false,
+      "minimalFooter": true
+    }
+  },
+  {
+    "appName": "Submitted Appeals view & download",
+    "entryName": "submitted-appeal",
+    "rootUrl": "/decision-reviews/submitted-appeal",
+    "productId": "8057a5e9-196a-462f-9bc3-3bd1d199892c",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Show submitted appeal data for print & download",
+      "vagovprod": false
+    }
+  },
+  {
+    "appName": "Order hearing aid or CPAP supplies",
+    "entryName": "health-care-supply-reordering",
+    "rootUrl": "/health-care/order-hearing-aid-or-CPAP-supplies-form"
+  },
+  {
+    "appName": "Request personal records",
+    "entryName": "10206-pa",
+    "rootUrl": "/records/request-personal-records-form-20-10206",
+    "productId": "560247e7-3a80-4fdd-ad00-8d0e14435d22",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Records",
+          "path": "records"
+        },
+        {
+          "name": "Request personal records",
+          "path": "records/request-personal-records-form-20-10206"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Request priority processing",
+    "entryName": "10207-pp",
+    "rootUrl": "/supporting-forms-for-claims/request-priority-processing-form-20-10207",
+    "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Request priority processing for an existing claim",
+          "path": "supporting-forms-for-claims/request-priority-processing-form-20-10207"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Verify Your Enrollment",
+    "entryName": "verify-your-enrollment",
+    "rootUrl": "/education/verify-your-enrollment",
+    "productId": "90b61c25-80ce-444f-89fb-eb186b52bfe6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "40-10007 Burial pre-need eligibility determination",
+    "entryName": "pre-need-integration",
+    "rootUrl": "/burials-and-memorials/pre-need-integration",
+    "productId": "e5593a96-1ba0-476c-9033-31ab963436c6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Beneficiary Travel",
+    "entryName": "travel-pay",
+    "rootUrl": "/health-care/file-travel-claim",
+    "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "10-10d Application for CHAMPVA benefits",
+    "entryName": "10-10D",
+    "rootUrl": "/health-care/champva/apply-form-10-10d",
+    "productId": "c485d6da-8094-433d-9cd3-3d31e7813650",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Find a VA accredited representative or VSO",
+    "entryName": "find-a-representative",
+    "rootUrl": "/get-help-from-accredited-representative/find-rep",
+    "productId": "decb6c85-abcd-44b5-b722-550905f48dd7",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Accredited Representative Portal",
+    "entryName": "representative",
+    "rootUrl": "/representative",
+    "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
+    "template": {
+      "vagovprod": false,
+      "layout": "accredited-representative-portal.html"
+    }
+  },
+  {
+    "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
+    "entryName": "10-7959C",
+    "rootUrl": "/ivc-champva/10-7959C",
+    "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Foreign Medical Program (FMP) Registration Form",
+    "entryName": "10-7959f-1-FMP",
+    "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
+    "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

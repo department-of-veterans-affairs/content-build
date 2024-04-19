@@ -51,8 +51,14 @@
           </section>
 
           <!-- "Manage your health online" section -->
+          {% comment %} Hide this section for Lovell TRICARE {% endcomment %}
+          {% if fieldAdministration.entity.entityId != '1039' %}
           <section>
-            <h3>Manage your health online</h3>
+            {% if fieldAdministration.entity.entityId == '1040' %}
+              <h3>Manage your VA health online</h3>
+            {% else %}
+              <h3>Manage your health online</h3>
+            {% endif %}
             <div
               class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
               <div
@@ -128,11 +134,15 @@
               </div>
             </div>
           </section>
+          {% endif %}
 
 
           <!-- List of links section -->
           <div class="vads-u-margin-top--5">
-            {% include "src/site/paragraphs/facilities/list_of_link_teasers_facility.drupal.liquid" with paragraph = fieldRelatedLinks.entity %}
+            {% include "src/site/paragraphs/facilities/list_of_link_teasers_facility.drupal.liquid"
+                    with paragraph = fieldRelatedLinks.entity
+                         regionNickname = title
+            %}
           </div>
 
           {% assign header = "h3" %}
@@ -176,7 +186,7 @@
           </section>
           {% elsif eventTeasersAll.entities.0.reverseFieldListingNode.entities.length %}
           {% assign upcomingEvents = eventTeasersAll.entities.0.reverseFieldListingNode.entities %}
-          {% assign sortedEvents = upcomingEvents | sortByDateKey: 'fieldDatetimeRangeTimezone', false %}
+          {% assign sortedEvents = upcomingEvents | filterAndSortEvents %}         
           <section>
             <h2
               class="vads-u-margin-top--4 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--2p5">

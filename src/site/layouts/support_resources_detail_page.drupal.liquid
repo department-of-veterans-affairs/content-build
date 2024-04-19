@@ -1,8 +1,11 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with constructLcBreadcrumbs = true titleInclude = true %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" with titleInclude = true %}
 
-<div id="content" class="interior" data-template="node-support_resources_detail_page">
+<div
+  id="content"
+  class="interior"
+  data-template="node-support_resources_detail_page">
   <main class="va-l-detail-page">
     <div class="usa-grid usa-grid-full">
       <div class="usa-width-three-fourths">
@@ -42,37 +45,20 @@
 
             <!-- Content blocks -->
             {% for block in fieldContentBlock %}
-              {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
-              {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-              {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
+              {% if block.entity.entityBundle == "q_a_group" %}
+                {% if block.entity.fieldAccordionDisplay %}
+                  {% include "src/site/paragraphs/q_a_group_collapsible_content.drupal.liquid" with entity = block.entity %}
+                {% else %}
+                  {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = block.entity %}
+                {% endif %}
+              {% else %}
+                {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
+                {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
+              {% endif %}
             {% endfor %}
 
-            <!-- QAs -->
-          {% for contentBlock in fieldContentBlock %}
-            {% if contentBlock.entity.entityBundle === "q_a_group"  %}
-              {% assign fieldQAs = contentBlock.entity.queryFieldQAs.entities %}
 
-              <!-- Optional section header -->
-              {% if contentBlock.entity.fieldSectionHeader %}
-                <h2>{{ contentBlock.entity.fieldSectionHeader }}</h2>
-              {% endif %}
-              
-              {% assign fieldSectionHeaderTag = 'h2' %}
-              {% if contentBlock.entity.fieldSectionHeader %}
-                {% assign fieldSectionHeaderTag = 'h3' %}
-              {% endif %}
-              {% for fieldQA in fieldQAs %}
-                  <{{ fieldSectionHeaderTag }}>{{ fieldQA.entityLabel }}</{{ fieldSectionHeaderTag }}>
-                  {% if fieldQA.fieldAnswer %}
-                    {% assign fieldAnswer = fieldQA.fieldAnswer %}
-                    {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
-                    {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-                    {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
-                  {% endif %}
-                  </ul>
-              {% endfor %}
-            {% endif %}
-          {% endfor %}
 
             <!-- Repeated buttons -->
             {% if fieldButtonsRepeat %}
@@ -108,7 +94,7 @@
       <div class="usa-width-three-fourths">
         <div class="usa-content">
           <va-back-to-top></va-back-to-top>
-        <!-- Last updated & feedback button-->
+          <!-- Last updated & feedback button-->
           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </div>
       </div>

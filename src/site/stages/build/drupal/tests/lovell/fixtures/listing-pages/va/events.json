@@ -1,0 +1,170 @@
+{
+  "entityBundle": "event_listing",
+  "entityId": "49455",
+  "entityPublished": true,
+  "title": "Events",
+  "vid": 736021,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/lovell-federal-health-care", "routed": true },
+        "text": "Lovell Federal health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "NEWS AND EVENTS" },
+      { "url": { "path": "", "routed": true }, "text": "Events" }
+    ],
+    "path": "/lovell-federal-health-care-va/events"
+  },
+  "fieldOffice": {
+    "entity": {
+      "entityLabel": "Lovell Federal health care - VA"
+    }
+  },
+  "fieldAdministration": {
+    "entity": {
+      "entityId": "1040"
+    }
+  },
+  "pastEvents": {
+    "entities": [
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "31",
+        "entityPublished": true,
+        "title": "Lovell VA - Featured - Past - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1262336400,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 1262332800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/events/31"
+        }
+      }
+    ]
+  },
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "31",
+        "entityPublished": true,
+        "title": "Lovell VA - Featured - Past - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 1262336400,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 1262332800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/events/31"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "32",
+        "entityPublished": true,
+        "title": "Lovell VA - Featured - Future - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2998029600,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2998026000
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/events/32"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "33",
+        "entityPublished": true,
+        "title": "Lovell VA - Featured - Future - 2",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2633119000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2633115400
+          },
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2650874400,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2650870800
+          }
+        ],
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/events/33"
+        }
+      },
+      {
+        "changed": 1671038416,
+        "entityBundle": "event",
+        "entityId": "34",
+        "entityPublished": true,
+        "title": "Lovell VA - Not Featured - Future - 1",
+        "fieldDatetimeRangeTimezone": [
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2633119000,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2633115400
+          },
+          {
+            "duration": 60,
+            "endTime": null,
+            "endValue": 2650874400,
+            "rrule": null,
+            "rruleIndex": null,
+            "startTime": null,
+            "timezone": "America/Chicago",
+            "value": 2650870800
+          }
+        ],
+        "fieldFeatured": false,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/events/34"
+        }
+      }
+    ]
+  }
+}

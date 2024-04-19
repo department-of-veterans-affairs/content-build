@@ -1,0 +1,56 @@
+{
+  "entityBundle": "story_listing",
+  "entityId": "49631",
+  "entityPublished": true,
+  "title": "Stories",
+  "vid": 736018,
+  "entityUrl": {
+    "breadcrumb": [
+      { "url": { "path": "/", "routed": true }, "text": "Home" },
+      {
+        "url": { "path": "/lovell-federal-health-care", "routed": true },
+        "text": "Lovell Federal health care"
+      },
+      { "url": { "path": "", "routed": true }, "text": "NEWS AND EVENTS" },
+      { "url": { "path": "", "routed": true }, "text": "Stories" }
+    ],
+    "path": "/lovell-federal-health-care-va/stories"
+  },
+  "fieldIntroText": "Lovell Federal health care - VA top stories.",
+  "reverseFieldListingNode": {
+    "entities": [
+      {
+        "entityId": "301",
+        "title": "Lovell VA Story - Featured - 1",
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/stories/lovell-va-story-featured-1"
+        }
+      },
+      {
+        "entityId": "302",
+        "title": "Lovell VA Story - Featured - 2",
+        "fieldFeatured": true,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/stories/lovell-va-story-featured-2"
+        }
+      },
+      {
+        "entityId": "303",
+        "title": "Lovell VA Story - Not Featured - 1",
+        "fieldFeatured": false,
+        "entityUrl": {
+          "path": "/lovell-federal-health-care-va/stories/lovell-va-story-not-featured-1"
+        }
+      }
+    ]
+  },
+  "fieldOffice": {
+    "targetId": 49451,
+    "entity": {
+      "title": "Lovell Federal health care - VA",
+      "entityLabel": "Lovell Federal health care - VA"
+    }
+  },
+  "fieldAdministration": { "entity": { "entityId": "1040" } }
+}

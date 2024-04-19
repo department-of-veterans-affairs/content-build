@@ -40,7 +40,7 @@
               confidentiality in a non-medical setting.
               Call us for more information about these locations.
             </p>
-            {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | rejectBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
+            {% assign satelliteVetCenters = fieldOffice.entity.reverseFieldOfficeNode.entities | rejectBy: 'entityBundle', 'vet_center_mobile_vet_center' | organizeSatelliteVetCenters %}
             {% for entityVetCenter in satelliteVetCenters %}
               {% assign myVetCenterHoursKeys = forloop.index | dynamicVetCenterHoursKey %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
@@ -75,10 +75,11 @@
             Vet Centers in other areas
           </h2>
           <p class="vads-u-font-size--base">
-            You can locate a Vet Center near you by visiting
-            <a aria-label="find locations" href="/find-locations">
-              http://www.va.gov/find-locations.
-            </a>
+            Looking for a Vet Center in another area?
+            <va-link 
+              href="/find-locations"
+              text="Find a Vet Center location"
+            >
           </p>
           <va-back-to-top></va-back-to-top>
     <!-- Last updated & feedback button -->

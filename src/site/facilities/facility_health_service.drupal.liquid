@@ -1,12 +1,16 @@
     {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
+    {% assign isMentalHealthService = serviceTaxonomy.name | localHealthCareServiceIsMentalHealth %}
+
     <va-accordion-item
       {% if serviceTaxonomy.fieldAlsoKnownAs %}
         subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
       {% endif %}
-      class="facilities_health_service"
+      class="facilities_health_service va-accordion-item"
       data-label="{{ serviceTaxonomy.name }}"
       data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
       data-template="facilities/facilities_health_service"
+      id="{{serviceTaxonomy.name | hashReference: 60 }}"
+      uswds="true"
     >
       <h3 slot="headline">
         {{ serviceTaxonomy.name }}
@@ -32,11 +36,13 @@
           <div>{{ localServiceDescription }}</div>
         {% endif %}
 
-        <div
-          data-widget-type="facility-appointment-wait-times-widget"
-          data-facility="{{ fieldFacilityLocatorApiId | widgetFacilityDetail | escape }}"
-          data-service="{{ serviceTaxonomy | healthServiceApiId | escape }}"
-        ></div>
+        {% if fieldFacilityLocatorApiId contains "vha_" %}
+          <div
+            data-widget-type="facility-appointment-wait-times-widget"
+            data-facility="{{ fieldFacilityLocatorApiId | widgetFacilityDetail | escape }}"
+            data-service="{{ serviceTaxonomy | healthServiceApiId | escape }}"
+          ></div>
+        {% endif %}
 
         {% if healthService.fieldBody.processed %}
           <div>{{ healthService.fieldBody.processed | replace: 'h3', 'h4' }}</div>

@@ -10,8 +10,6 @@ const locationListingPage = `
     ${entityElementsFromPages}
     title
     entityId
-    fieldIntroText
-    fieldMetaTags
     fieldOffice {
       targetId
       entity {
@@ -37,9 +35,15 @@ const locationListingPage = `
                     }
                   }
                 }
+                fieldSupplementalStatusMoreI {
+                  value
+                  format
+                  processed
+                }
               }
             }
           }
+          fieldVamcEhrSystem
           fieldVaHealthConnectPhone
           ${healthCareLocalFacilities}
           fieldOtherVaLocations

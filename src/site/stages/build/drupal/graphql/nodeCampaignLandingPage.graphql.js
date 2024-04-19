@@ -75,6 +75,40 @@ const nodeCampaignLandingPage = `
         }
       }
     }
+    fieldClpReusableQA {
+      entity {
+        entityType
+        entityBundle
+        entityId
+        ... on ParagraphQAGroup {
+          fieldSectionHeader
+          fieldRichWysiwyg {
+            processed
+          }
+          fieldAccordionDisplay
+          queryFieldQAs {
+            entities {
+              entityId
+              entityLabel
+              entityBundle
+              ... on NodeQA {
+                fieldAnswer {
+                  entity {
+                    entityBundle
+                    entityId
+                    ... on ParagraphRichTextCharLimit1000 {
+                      fieldWysiwyg {
+                        processed
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     fieldClpResources {
       entity {
         entityType
@@ -240,7 +274,7 @@ const nodeCampaignLandingPage = `
         entityId
         ... on MediaImage {
           image {
-            derivative(style: VIEWPORTWIDTH) {
+            derivative(style: _11SQUARELARGE) {
               height
               url
               width

@@ -9,12 +9,14 @@
       <div class="usa-width-three-fourths">
         <article class="usa-content va-l-facility-detail vads-u-padding-bottom--0">
           {% if title != empty %}
-            <h1 aria-describedby="vet-center-title">{{ title }}</h1>
             {% if fieldOfficialName and title != fieldOfficialName %}
-              <p id="vet-center-title" class="field-official-name vads-u-line-height--4 vads-u-font-family--sans vads-u-font-size--lg
-              vads-u-font-weight--bold vads-u-padding-bottom--0p5">
+              <h1 aria-describedby="vet-center-title">{{ title }}</h1>
+
+              <p id="vet-center-title" class="field-official-name vads-u-line-height--4 vads-u-font-family--serif vads-u-font-size--lg vads-u-font-weight--bold vads-u-padding-bottom--0p5">
                 Also called the {{fieldOfficialName}}
               </p>
+            {% else %}
+            <h1>{{ title }}</h1>
             {% endif %}
           {% elsif fieldOfficialName != empty %}
             <h1>{{ fieldOfficialName}}</h1>
@@ -71,13 +73,8 @@
                         }
                       }
                     </script>
-                    <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
-                      Main Location</h3>
-                    <div data-widget-type="expandable-operating-status-{{ fieldFacilityLocatorApiId }}"
-                         facilityId="{{ fieldFacilityLocatorApiId }}"
-                         status="{{ fieldOperatingStatusFacility }}"
-                         info="{{ fieldOperatingStatusMoreInfo }}">
-                    </div>
+                    <h3 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">Main Location</h3>
+                    {% include "src/site/includes/operating_status_expandable_alert.liquid" %}
                     <div class="vads-u-margin-bottom--3">
                       <address>
                         <div>{{ fieldAddress.addressLine1 }}</div>
@@ -88,20 +85,23 @@
                         {{ fieldAddress.administrativeArea }}
                         {{ fieldAddress.postalCode }}
                       </address>
-                      <div>
-                        <a onclick="recordEvent({ event: 'directions-link-click', 'vet-center-facility-name': '{{ entityLabel }}'});"
-                           href="https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}"
-                           aria-label="Directions to {{ entityLabel }} on Google Maps"
-                        >
-                          Directions (Google Maps)
-                        </a>
-                      </div>
+
+                      {% capture fullAddress %}
+                        {{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea}} {{ fieldAddress.postalCode }}
+                      {% endcapture %}
+                      {% include "src/site/includes/directions-google-maps.liquid" with
+                        directionsLinkTitle = entityLabel
+                        directionsLinkAddress = fullAddress
+                        directionsLinkOnClickPropName = "vet-center-facility-name"
+                        directionsLinkOnClickPropValue = entityLabel
+                      %}
                     </div>
                     <h4 class="vads-u-font-size--lg vads-u-margin-top--0 vads-u-line-height--1 vads-u-margin-bottom--1">
                       Direct line</h4>
                     <div class="vads-u-margin-bottom--3">
                       <div class="main-phone vads-u-margin-bottom--1">
-                        </strong><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+                        {% assign phoneNumber = fieldPhoneNumber | separatePhoneNumberExtension %}
+                        <va-telephone contact="{{phoneNumber.phoneNumber}}" extension="{{phoneNumber.extension}}"></va-telephone>
                       </div>
                     </div>
 
@@ -125,8 +125,7 @@
               <p class="vads-u-margin-bottom--0 vads-u-line-height--4">Vet Centers are community based to be more
                 accessible in areas where you live.
               </p>
-              <a href="{{ entityUrl.path }}/locations">View more {{ entityLabel }}
-                  locations</a>
+              <va-link href="{{ entityUrl.path }}/locations" text="View more {{ entityLabel }} locations"></va-link>
             </div>
           </div>
 
@@ -149,19 +148,23 @@
             <p> Click on a topic for more details. </p>
             <div class="vads-u-margin-bottom--3">
               <va-accordion bordered
-                            id="prepare-for-your-visit-accordion-{{ entity.entity.fieldHeader }}">
+                id="prepare-for-your-visit-accordion-{{ entity.entity.fieldHeader }}"
+                uswds>
                 {% for entity in fieldPrepareForVisit %}
                   <va-accordion-item
-                      id="prepare-for-your-visit-accordion-item-{{ entity.entity.fieldHeader }}"
-                      header="{{ entity.entity.fieldHeader }}" level="3">
+                    class="va-accordion-item"
+                    id="prepare-for-your-visit-accordion-item-{{ entity.entity.fieldHeader | hashReference: 60  }}"
+                    header="{{ entity.entity.fieldHeader }}" level="3"
+                    uswds
+                  >
                     {{ entity.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
                   </va-accordion-item>
                 {% endfor %}
               </va-accordion>
             </div>
           {% endif %}
-
-          {% assign allFeaturedContent = fieldCcVetCenterFeaturedCon | appendCentralizedFeaturedContent: fieldVetCenterFeatureContent %}
+          {% comment %} fieldVetCenterFeatureContent is an array almost in the right format {% endcomment %}
+          {% assign allFeaturedContent = fieldCcVetCenterFeaturedCon | appendCentralizedFeaturedContent: fieldVetCenterFeatureContent, "prepend" %}
           <h2 id="in-the-spot-light" class="vads-u-margin-top--0 vads-u-font-size--lg
           small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight at {{ entityLabel }} </h2>
             <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
@@ -240,7 +243,7 @@
             </div>
           {% endif %}
           <va-back-to-top></va-back-to-top>
-    <!-- Last updated & feedback button -->
+          <!-- Last updated & feedback button -->
           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
       </div>

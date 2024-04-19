@@ -13,91 +13,35 @@ env:
   VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
-  NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+  NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
   BUILDTYPE: vagovprod
   DEPLOY_BUCKET: content.www.va.gov
   DRUPAL_ADDRESS: https://prod.cms.va.gov
   INSTANCE_TYPE: m6i.4xlarge
-  MAXIMUM_HEAP: 5000
+  MAXIMUM_HEAP: 8192
+  # secrets.ACTIONS_RUNNER_DEBUG is set to 'true' when re-running a workflow with debug.
+  ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
 jobs:
-  start-runner:
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+  validate-build-status:
+    name: Validate Build Status
+    runs-on: [self-hosted, asg]
     outputs:
-      label: ${{ steps.start-ec2-runner.outputs.label }}
-      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
+      TAG: ${{ steps.get-latest-release.outputs.tag_name }}
       APPROX_WORKFLOW_START_TIME: ${{ steps.export-approx-workflow-start-time.outputs.APPROX_WORKFLOW_START_TIME }}
     timeout-minutes: 15
 
     steps:
       - name: Export approximate workflow start time
         id: export-approx-workflow-start-time
-        run: echo ::set-output name=APPROX_WORKFLOW_START_TIME::$(date +"%s")
+        run: echo APPROX_WORKFLOW_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Get latest GHA Runner AMI ID
-        run: |
-          echo "RUNNER_AMI_ID=$(aws ec2 describe-images \
-          --owners 008577686731 \
-          --filters "Name=state,Values=available" "Name=name,Values=platform-gha-runner-ubuntu*" \
-          --query 'sort_by(Images,&CreationDate)[-1].ImageId' \
-          --output text)" >> $GITHUB_ENV
-
-      - name: Get Subnet with the most free IPs # We will run these in the dsva-vagov-utility-2x subnet, so filter for those
-        run: |
-          echo "SUBNET_ID=$(aws ec2 describe-subnets \
-          --filters "Name=tag:Name,Values=dsva-vagov-utility-subnet-2*" \
-          --query 'sort_by(Subnets,&AvailableIpAddressCount)[-1].SubnetId' \
-          --output text)" >> $GITHUB_ENV
-
-      - name: Start EC2 Runner
-        id: start-ec2-runner
-        uses: department-of-veterans-affairs/ec2-github-runner@main
-        with:
-          mode: start
-          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          ec2-image-id: ${{ env.RUNNER_AMI_ID }}
-          ec2-instance-type: ${{ env.INSTANCE_TYPE }}
-          subnet-id: ${{ env.SUBNET_ID }}
-          security-group-id: sg-0e23b56be3798e3a1
-          max_attempts: 3
-          aws-resource-tags: >
-            [
-              {"Key": "Name", "Value": "dsva-vagov-content-build-gha-runner"},
-              {"Key": "project", "Value": "vagov"},
-              {"Key": "office", "Value": "dsva"},
-              {"Key": "application", "Value": "gha-runner"},
-              {"Key": "VAECID", "Value": "AWG20180517003"},
-              {"Key": "environment", "Value": "utility"}
-            ]
-
-  validate-build-status:
-    name: Validate Build Status
-    runs-on: ${{ needs.start-runner.outputs.label }}
-    needs: start-runner
-    outputs:
-      REF: ${{ steps.get-latest-release.outputs.target_commitish }}
-      TAG: ${{ steps.get-latest-release.outputs.tag_name }}
-    timeout-minutes: 15
-
-    steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
 
       - name: Notify CMS - Starting
         uses: ./.github/workflows/authenticated-cms-request
@@ -118,26 +62,23 @@ jobs:
 
       - name: Get latest release
         id: get-latest-release
-        uses: gregziegan/fetch-latest-release@v2.0.0
+        uses: ./.github/workflows/fetch-latest-release
 
       - name: Validate build status
         run: node ./script/github-actions/validate-build-status.js ${{ steps.get-latest-release.outputs.target_commitish }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  notify-start:
-    name: Notify Start
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+  notify-start-slack:
+    name: Notify Start (Slack)
+    runs-on: [self-hosted, asg]
     needs: validate-build-status
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
         continue-on-error: true
         with:
           payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
@@ -147,11 +88,10 @@ jobs:
 
   build:
     name: Build
-    runs-on: ${{ needs.start-runner.outputs.label }}
+    runs-on: [self-hosted, asg]
     needs:
-      - start-runner
       - validate-build-status
-    timeout-minutes: 45
+    timeout-minutes: 60
     defaults:
       run:
         working-directory: content-build
@@ -163,33 +103,34 @@ jobs:
       CONTENT_BUILD_END_TIME: ${{ steps.export-content-build-end.outputs.CONTENT_BUILD_END_TIME }}
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
+      ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
+      BROKEN_LINK_COUNT: ${{ steps.get-broken-link-info.outputs.BROKEN_LINK_COUNT || 0 }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
-
     steps:
       - name: Export build start time
         id: export-build-start-time
-        run: echo ::set-output name=BUILD_START_TIME::$(date +"%s")
+        run: echo BUILD_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Checkout vagov-content
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           repository: department-of-veterans-affairs/vagov-content
           path: vagov-content
 
       - name: Checkout content-build
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           path: content-build
           ref: ${{ needs.validate-build-status.outputs.REF }}
 
       - name: Get Node version
         id: get-node-version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_OUTPUT
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
@@ -198,7 +139,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: |
             .cache/yarn
@@ -207,7 +148,7 @@ jobs:
           restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-on-demand-runner-
 
       - name: Install dependencies
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
           command: cd content-build && yarn install --frozen-lockfile --prefer-offline
           max_attempts: 3
@@ -220,31 +161,31 @@ jobs:
 
       - name: Export content build start time
         id: export-content-build-start-time
-        run: echo ::set-output name=CONTENT_BUILD_START_TIME::$(date +"%s")
+        run: echo CONTENT_BUILD_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Get buildtime
         id: buildtime
         run: |
           BUILDTIME=$(date +%s)
-          echo ::set-output name=buildtime::$BUILDTIME
+          echo buildtime=$BUILDTIME >> $GITHUB_OUTPUT
           echo "${{ env.BUILDTYPE }}_buildtime=$BUILDTIME" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: set Drupal prod password
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
           env_variable_name: DRUPAL_PASSWORD
 
       - name: set Drupal prod username
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
@@ -257,24 +198,31 @@ jobs:
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/inprogress
           method: GET
 
+      - name: Get verbose level
+        if: ${{ env.ACTIONS_RUNNER_DEBUG == 'true' }}
+        run: echo "VERBOSE_BUILD= --verbose" >> $GITHUB_ENV
+
       - name: Build
-        run: NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy --verbose | tee build-output.txt
+        run: |
+          set -eo pipefail
+          NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy ${{env.VERBOSE_BUILD}} | tee build-output.txt
         timeout-minutes: 40
         env:
           NODE_ENV: production
+          DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
       - name: Export content build end time
         id: export-content-build-end
-        run: echo ::set-output name=CONTENT_BUILD_END_TIME::$(date +"%s")
+        run: echo CONTENT_BUILD_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
       - name: Export gql query duration
         id: export-gql-query-duration
-        run: echo ::set-output name=GQL_QUERY_DURATION::$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+')
+        run: echo GQL_QUERY_DURATION=$(cat build-output.txt | grep -oP 'queries in \d+s' | grep -oP '\d+') >> $GITHUB_OUTPUT
 
       - name: Export gql page count
         id: export-gql-page-count
-        run: echo ::set-output name=GQL_PAGE_COUNT::$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+')
+        run: echo GQL_PAGE_COUNT=$(cat build-output.txt | grep -oP 'with \d+ pages' | grep -oP '\d+') >> $GITHUB_OUTPUT
 
       - name: Set vars for CMS-triggered runs
         if: ${{ github.event_name == 'repository_dispatch' }}
@@ -292,7 +240,7 @@ jobs:
           jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Get Datadog api key from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
@@ -309,7 +257,7 @@ jobs:
         run: node ./script/github-actions/check-broken-links-blocks.js ${{ env.BUILDTYPE }}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -317,28 +265,28 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Slack app token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_socket_token
           env_variable_name: SLACK_APP_TOKEN
 
       - name: Get Slack bot token
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /devops/github_actions_slack_bot_user_token
           env_variable_name: SLACK_BOT_TOKEN
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -353,7 +301,7 @@ jobs:
         run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
 
       - name: Notify content broken links channel about broken links
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
         id: notify-content-broken-links
         if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
         continue-on-error: true
@@ -384,51 +332,32 @@ jobs:
       - name: Compress build
         run: tar -C build/${{ env.BUILDTYPE }} -cf ${{ env.BUILDTYPE }}.tar.bz2 .
 
-      - name: Persist prearchived build
-        run: |
-          mkdir -p /tmp/${{ github.run_id }}
-          rm -rf /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}
-          mv ${{ env.BUILDTYPE }}.tar.bz2 /tmp/${{ github.run_id }}
-
       - name: Export build end time
         id: export-build-end-time
-        run: echo ::set-output name=BUILD_END_TIME::$(date +"%s")
+        run: echo BUILD_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
-
-  archive:
-    name: Archive
-    runs-on: ${{ needs.start-runner.outputs.label }}
-    needs:
-      - start-runner
-      - validate-build-status
-      - build
-    outputs:
-      ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
-    timeout-minutes: 15
-
-    steps:
-      - name: Restore ${{ env.BUILDTYPE }} build
+      # Archive build by uploading it to S3
+      - name: Show build archive size
         run: |
-          mv /tmp/${{ github.run_id }}/${{ env.BUILDTYPE }}.tar.bz2 .
           df -h
           du -h ${{ env.BUILDTYPE }}.tar.bz2
 
       - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -442,41 +371,37 @@ jobs:
 
       - name: Export archive end time
         id: export-archive-end-time
-        run: echo ::set-output name=ARCHIVE_END_TIME::$(date +"%s")
+        run: echo ARCHIVE_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
   deploy:
     name: Deploy
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted, asg]
     needs:
       - validate-build-status
       - build
-      - archive
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
     timeout-minutes: 15
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
 
       - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -509,33 +434,26 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           url: ${{ env.DRUPAL_ADDRESS }}/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovprod_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
+        # A failure here should not prevent the workflow from continuing.
+        continue-on-error: true
 
       - name: Export deploy end time
         id: export-deploy-end-time
-        run: echo ::set-output name=DEPLOY_END_TIME::$(date +"%s")
+        run: echo DEPLOY_END_TIME=$(date +"%s") >> $GITHUB_OUTPUT
 
   notify-success:
     name: Notify Success
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted, asg]
     needs:
       - validate-build-status
       - deploy
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
 
       - name: Notify CMS - Ready
         uses: ./.github/workflows/authenticated-cms-request
@@ -545,23 +463,88 @@ jobs:
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/ready
           method: GET
 
-  notify-failure:
-    name: Notify Failure
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
-    if: |
-      (failure() && needs.deploy.result != 'success')
-    needs: deploy
+  notify-success-slack:
+    name: Notify Success (Slack)
+    runs-on: [self-hosted, asg]
+    needs:
+      - validate-build-status
+      - deploy
 
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Notify Slack
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
+        continue-on-error: true
+        with:
+          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  notify-success-datadog:
+    name: Notify Success (Datadog)
+    runs-on: [self-hosted, asg]
+    needs:
+      - validate-build-status
+      - deploy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
+
+      - name: Get Datadog token from Parameter Store
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Build JSON object
+        run: |
+          jq --null-input '{}' | \
+          jq '.title = "VA.gov CMS content release was successful"' | \
+          jq '.text = "VA.gov Content release ${{github.run_id}} completed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.date_happened = now' | \
+          jq '.aggregation_key = "content release ${{github.run_id}}"' | \
+          jq '.tags[0] = "project:vagov"' | \
+          jq '.tags[1] = "repo:content-build"' | \
+          jq '.tags[2] = "workflow:content-release"' | \
+          jq '.tags[3] = "env:${{env.DEPLOY_ENV}}"' | \
+          jq '.tags[5] = "status:${{needs.deploy.result}}"' | \
+          jq '.tags[6] = "trigger:${{env.BUILD_TRIGGER}}"' | \
+          jq '.alert_type = "success"' > event.json
+
+      - name: Send event to Datadog
+        run: |
+          curl -X POST "https://api.ddog-gov.com/api/v1/events" \
+          -H "Content-Type: text/json" \
+          -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
+          -d @- < event.json
+
+  notify-failure:
+    name: Notify Failure
+    runs-on: [self-hosted, asg]
+    if: |
+      (failure() && needs.deploy.result != 'success')
+    needs: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Wait for the CMS to be ready
+        uses: ./.github/workflows/wait-for-cms-ready
 
       - name: Notify CMS - Error
         uses: ./.github/workflows/authenticated-cms-request
@@ -571,8 +554,57 @@ jobs:
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/error
           method: GET
 
+  notify-failure-slack:
+    name: Notify Failure (Slack)
+    runs-on: [self-hosted, asg]
+    if: |
+      (failure() && needs.deploy.result != 'success')
+    needs: deploy
+    steps:
+      - name: Notify Slack
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4
+        continue-on-error: true
+        with:
+          payload: >
+            {
+              "attachments": [
+                {
+                  "color": "#2EB67D",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": ":bangbang: <!subteam^S010U41C30V|cms-helpdesk> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  notify-failure-datadog:
+    name: Notify Failure (Datadog)
+    runs-on: [self-hosted, asg]
+    if: |
+      (failure() && needs.deploy.result != 'success')
+    needs: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
       - name: Get Datadog token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
@@ -601,20 +633,16 @@ jobs:
 
   record-metrics:
     name: Record metrics in Datadog
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
+    runs-on: [self-hosted, asg]
     needs:
-      - start-runner
       - build
-      - archive
       - deploy
+      - validate-build-status
     env:
       METRIC_NAMESPACE: dsva_vagov.content_build
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Get current timestamp
         run: echo "NOW=$(date +"%s")" >> $GITHUB_ENV
@@ -627,12 +655,12 @@ jobs:
 
       - name: Calculate durations
         run: |
-          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.start-runner.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "SETUP_DURATION=$(expr ${{needs.build.outputs.BUILD_START_TIME}} - ${{needs.validate-build-status.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
           echo "BUILD_DURATION=$(expr ${{needs.build.outputs.BUILD_END_TIME}} - ${{needs.build.outputs.BUILD_START_TIME}})" >> $GITHUB_ENV
           echo "CONTENT_BUILD_DURATION=$(expr ${{needs.build.outputs.CONTENT_BUILD_END_TIME}} - ${{needs.build.outputs.CONTENT_BUILD_START_TIME}})" >> $GITHUB_ENV
-          echo "ARCHIVE_DURATION=$(expr ${{needs.archive.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
-          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.archive.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
-          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.start-runner.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
+          echo "ARCHIVE_DURATION=$(expr ${{needs.build.outputs.ARCHIVE_END_TIME}} - ${{needs.build.outputs.BUILD_END_TIME}})" >> $GITHUB_ENV
+          echo "DEPLOY_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.build.outputs.ARCHIVE_END_TIME}})" >> $GITHUB_ENV
+          echo "OVERALL_DURATION=$(expr ${{needs.deploy.outputs.DEPLOY_END_TIME}} - ${{needs.validate-build-status.outputs.APPROX_WORKFLOW_START_TIME}})" >> $GITHUB_ENV
 
       - name: Build JSON object
         run: |
@@ -653,26 +681,28 @@ jobs:
           jq '.series[6].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
           jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
           jq '.series[7].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
+          jq '.series[8].metric = "${{env.METRIC_NAMESPACE}}.build.broken-links.count"' | \
+          jq '.series[8].points[0] = [${{env.NOW}}, ${{needs.build.outputs.BROKEN_LINK_COUNT}}]' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \
           jq '.series[].tags[3] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get Datadog api key from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
       - name: Get Datadog app key from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY
@@ -683,37 +713,3 @@ jobs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
-
-  stop-runner:
-    name: Stop on-demand-runner
-    needs:
-      - start-runner
-      - deploy
-      - record-metrics
-    runs-on: ubuntu-latest
-    if: ${{ always() }} # Even if an error happened, let's stop the runner
-    env:
-      INSTANCE_TYPE: c5.4xlarge
-    timeout-minutes: 15
-
-    steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get bot token from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
-        with:
-          ssm_parameter: /devops/VA_VSP_BOT_GITHUB_TOKEN
-          env_variable_name: VA_VSP_BOT_GITHUB_TOKEN
-
-      - name: Stop Runner
-        uses: department-of-veterans-affairs/ec2-github-runner@main
-        with:
-          mode: stop
-          github-token: ${{ env.VA_VSP_BOT_GITHUB_TOKEN }}
-          label: ${{ needs.start-runner.outputs.label }}
-          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}

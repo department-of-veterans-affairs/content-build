@@ -10,6 +10,10 @@ class="vads-u-margin-top--{{topMargin}} vads-u-margin-bottom--{{bottomMargin}} v
 			'covid-status-heading':  '{{ fieldSupplementalStatus.entity.fieldStatusId }}',
 		});"
 	>
-		{{ fieldSupplementalStatus.entity.description.processed }}
+		{% if fieldSupplementalStatusMoreI.processed %}
+			{{ fieldSupplementalStatusMoreI.processed }}
+		{% else %}
+			{{ fieldSupplementalStatus.entity.description.processed }}
+		{% endif %}
 	</va-alert-expandable>
 {% endif %}

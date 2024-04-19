@@ -14,21 +14,24 @@ const params = {
   workflow_id: 'continuous-integration.yml',
   branch: 'main',
 };
+function getLatestRunNumber() {
+  octokit.rest.actions
+    .listWorkflowRuns(params)
+    .then(response => {
+      if (response.status !== 200) {
+        throw new Error(
+          `Response ${response.status} from ${response.url}. Aborting.`,
+        );
+      }
+      return response.data;
+    })
+    .then(({ workflow_runs }) => {
+      if (workflow_runs.length === 0) {
+        throw new Error('No workflows found. Aborting.');
+      }
 
-return octokit.rest.actions
-  .listWorkflowRuns(params)
-  .then(response => {
-    if (response.status !== 200) {
-      throw new Error(
-        `Response ${response.status} from ${response.url}. Aborting.`,
-      );
-    }
-    return response.data;
-  })
-  .then(({ workflow_runs }) => {
-    if (workflow_runs.length === 0) {
-      throw new Error('No workflows found. Aborting.');
-    }
+      console.log(workflow_runs[0].run_number);
+    });
+}
 
-    console.log(workflow_runs[0].run_number);
-  });
+getLatestRunNumber();

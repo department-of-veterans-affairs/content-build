@@ -4,12 +4,11 @@ const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
-const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
-const stagingSurveys = require('./medalliaStagingSurveys.json');
-const prodSurveys = require('./medalliaProdSurveys.json');
+const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
+const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
 
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
@@ -179,8 +178,18 @@ module.exports = function registerFilters() {
       '113332',
       '7153',
       '37238',
+      '5697',
+      '101671',
     ];
-    return targetH3IDs.includes(id);
+    const targetH5IDs = ['112021'];
+
+    if (targetH3IDs.includes(id)) {
+      return 'h3';
+    }
+    if (targetH5IDs.includes(id)) {
+      return 'h5';
+    }
+    return 'h4';
   };
 
   liquid.filters.dateFromUnix = (dt, format, tz = 'America/New_York') => {
@@ -268,14 +277,35 @@ module.exports = function registerFilters() {
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
     const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
-    if (data) {
-      return data.replace(
-        replacePattern,
-        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
-      );
+
+    if (!data?.match(replacePattern)) {
+      return data;
     }
 
-    return data;
+    return data.replace(
+      replacePattern,
+      '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
+    );
+  };
+
+  liquid.filters.separatePhoneNumberExtension = phoneNumber => {
+    if (!phoneNumber) {
+      return null;
+    }
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const match = phoneRegex.exec(phoneNumber);
+    if (!match || !match[1] || !match[2] || !match[3]) {
+      // Short number or not a normal format
+      return { phoneNumber, extension: '' };
+    }
+    const phone = match[1] + match[2] + match[3];
+    // optional extension matching x1234 (match 4) or ext1234 (match 5)
+    const extension = match[4] || match[5] || '';
+
+    return {
+      phoneNumber: phone,
+      extension,
+    };
   };
 
   liquid.filters.trackLinks = (html, eventDataString) => {
@@ -515,12 +545,65 @@ module.exports = function registerFilters() {
       : null;
   };
 
-  liquid.filters.featureSingleValueFieldLink = fieldLink => {
-    if (fieldLink && cmsFeatureFlags.FEATURE_SINGLE_VALUE_FIELD_LINK) {
-      return fieldLink[0];
-    }
+  liquid.filters.orderFieldLocalHealthCareServices = healthServicesArray => {
+    const sortHealthServiceAlphabetically = (a, b) => {
+      if (
+        a.entity.fieldFacilityLocation.entity.title <
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return -1;
+      }
+      if (
+        a.entity.fieldFacilityLocation.entity.title >
+        b.entity.fieldFacilityLocation.entity.title
+      ) {
+        return 1;
+      }
 
-    return fieldLink;
+      return 0;
+    };
+
+    const services = healthServicesArray.reduce(
+      (acc, healthService) => {
+        if (!healthService.entity?.fieldFacilityLocation?.entity) {
+          return acc;
+        }
+
+        const facility = healthService.entity.fieldFacilityLocation.entity;
+
+        if (facility.fieldMainLocation) {
+          acc.mainClinics.push(healthService);
+        } else if (facility.fieldMobile) {
+          acc.mobileClinics.push(healthService);
+        } else if (
+          facility.fieldFacilityClassification === '7' || // Community Living Centers (CLCs)
+          facility.fieldFacilityClassification === '8' // Domiliciary Residential Rehabilitation Treatment Programs (DOMs)
+        ) {
+          acc.CLCsAndDOMs.push(healthService);
+        } else {
+          acc.alphaClinics.push(healthService);
+        }
+
+        return acc;
+      },
+      {
+        mainClinics: [],
+        alphaClinics: [],
+        CLCsAndDOMs: [],
+        mobileClinics: [],
+      },
+    );
+
+    return [
+      ...services.mainClinics.sort(sortHealthServiceAlphabetically),
+      ...services.alphaClinics.sort(sortHealthServiceAlphabetically),
+      ...services.CLCsAndDOMs.sort(sortHealthServiceAlphabetically),
+      ...services.mobileClinics.sort(sortHealthServiceAlphabetically),
+    ];
+  };
+
+  liquid.filters.localHealthCareServiceIsMentalHealth = healthServiceName => {
+    return healthServiceName.toLowerCase().includes('mental health');
   };
 
   liquid.filters.accessibleNumber = data => {
@@ -531,6 +614,10 @@ module.exports = function registerFilters() {
         .replace(/ -/g, '.');
     }
     return null;
+  };
+
+  liquid.filters.removeDashes = data => {
+    return data?.replace?.(/-/g, '') || null;
   };
 
   liquid.filters.deriveLastBreadcrumbFromPath = (
@@ -734,10 +821,19 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    const audiences = [
-      fieldAudienceBeneficiares?.entity,
-      fieldNonBeneficiares?.entity,
-    ]
+    let beneficiaresAudiences = [];
+    if (
+      fieldAudienceBeneficiares &&
+      !Array.isArray(fieldAudienceBeneficiares)
+    ) {
+      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
+    } else if (fieldAudienceBeneficiares) {
+      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+        audience => audience?.entity,
+      );
+    }
+
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
@@ -750,6 +846,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.replace = (string, oldVal, newVal) => {
+    if (!string) return null;
     const regex = new RegExp(oldVal, 'g');
     return string.replace(regex, newVal);
   };
@@ -787,16 +884,197 @@ module.exports = function registerFilters() {
     });
   };
 
+  /**
+    * Converts a string to camel case and removes a prefix
+    @param {string} prefix - prefix to be removed - make empty string not to change string
+    @param {string} string - string to be converted
+  */
+  liquid.filters.trimAndCamelCase = (toRemove, string) => {
+    if (!string || typeof string !== 'string') return null;
+    const trimmedString = string.replace(toRemove, '');
+    return _.camelCase(trimmedString);
+  };
+  /**
+   *
+   * @param {Object} object Object of arrays
+   * @param {Array} array
+   * @param {string} keyField key for object e.g. "fieldServiceNameAndDescripti.entity.fieldVbaTypeOfCare"
+   * @returns {Object} Object with value inserted into keyField
+   */
+  function processVbaObjectHelper(object, arrayOfServices, typeOfOffice) {
+    if (!object || !typeOfOffice || !Array.isArray(arrayOfServices))
+      return object;
+    const objectCopy = { ...object };
+    const visibleArray = arrayOfServices.filter(
+      o => o?.fieldServiceNameAndDescripti?.entity?.fieldShowForVbaFacilities,
+    );
+    for (const el of visibleArray) {
+      const {
+        fieldVbaTypeOfCare,
+        name,
+      } = el.fieldServiceNameAndDescripti.entity;
+      const key = liquid.filters.trimAndCamelCase('vba_', fieldVbaTypeOfCare);
+
+      const indexOfFacilityService =
+        typeOfOffice === 'regionalService'
+          ? object[key].findIndex(
+              service =>
+                service.facilityService?.fieldServiceNameAndDescripti.entity
+                  .name === name,
+            )
+          : -1;
+      if (indexOfFacilityService !== -1) {
+        objectCopy[key][indexOfFacilityService][typeOfOffice] = el;
+      } else {
+        objectCopy[key].push({
+          [typeOfOffice]: el,
+        });
+      }
+    }
+    return objectCopy;
+  }
+  liquid.filters.processVbaServices = (serviceRegions, offices) => {
+    const hasServiceRegions =
+      Array.isArray(serviceRegions) && serviceRegions.length !== 0;
+    const hasOffices = Array.isArray(offices) && offices.length !== 0;
+    let accordions = {
+      veteranBenefits: [],
+      familyMemberCaregiverBenefits: [],
+      serviceMemberBenefits: [],
+      otherServices: [],
+    };
+    if (hasOffices) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        offices,
+        'facilityService',
+      );
+    }
+    if (hasServiceRegions) {
+      accordions = processVbaObjectHelper(
+        accordions,
+        serviceRegions,
+        'regionalService',
+      );
+    }
+    return accordions;
+  };
+
+  liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
+    if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)
+      return null;
+
+    const processed = {
+      links: {},
+      sectionHeader: '',
+    };
+    const { fetched } = fieldCcGetUpdatesFromVba;
+    processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value || '';
+    for (const link of fetched.fieldLinks) {
+      if (link.url.path.startsWith('/')) {
+        processed.links.news = {
+          title: link.title,
+          uri: link.url.path,
+        };
+      } else {
+        // may throw if we get something that's not a URL in the data
+        const url = new URL(link.url.path);
+        const hostnameParts = url.hostname.split('.');
+        // just retrieving the domain part i.e. facebook/flickr/twitter
+        processed.links[hostnameParts.slice(-2, -1)[0]] = {
+          title: link.title,
+          uri: link.url.path,
+        };
+      }
+    }
+    // example:
+    // processed = {sectionHeader: "Veteran Benefits Administration", links:{ news: { uri: '', title: '' }, flickr: { uri: '', title: '' } }}
+    return processed;
+  };
+
+  // Processes the necessary components to display the Centralized Content
+  // of Can't Find Benefits. It is not the same as the other centralized content
+  // since the url path is necessary
+  liquid.filters.processfieldCcCantFindBenefits = field => {
+    if (!field || !field.fetched) return null;
+
+    const processed = {
+      fieldCta: {},
+      fieldSectionHeader: '',
+      fieldDescription: '',
+    };
+    processed.fieldSectionHeader =
+      field.fetched.fieldSectionHeader?.[0]?.value || '';
+
+    const ctaEntity = field.fetched.fieldCta[0].entity;
+    processed.fieldCta.label = ctaEntity.fieldButtonLabel?.[0]?.value || '';
+    processed.fieldCta.link = ctaEntity.fieldButtonLink?.[0]?.url.path || '';
+
+    processed.fieldDescription = field.fetched.fieldDescription?.[0]?.processed;
+    return processed;
+  };
+
+  liquid.filters.processWysiwygSimple = field => {
+    if (!field?.fetched?.fieldWysiwyg?.length) return null;
+    return field.fetched.fieldWysiwyg[0]?.value || '';
+  };
+
+  liquid.filters.processFieldPhoneNumbersParagraph = fields => {
+    if (!fields?.length) return null; // no phone numbers
+    // Should only have 1 phone number
+    const field = fields[0];
+    if (!field.entity) return null; // error in paragraph
+    const { entity } = field;
+    return {
+      label: entity.fieldPhoneLabel,
+      contact: entity.fieldPhoneNumber,
+      extension: entity.fieldPhoneExtension,
+      numberType: entity.fieldPhoneNumberType,
+    };
+  };
+
+  liquid.filters.processCcFeatured = fieldFeaturedCc => {
+    if (!fieldFeaturedCc?.fetched) return null;
+    const { fetched } = fieldFeaturedCc;
+    return {
+      fieldSectionHeader: fetched.fieldSectionHeader[0].value,
+      fieldDescription: fetched.fieldDescription[0].value,
+      fieldCta: {
+        label: fetched.fieldCta[0].entity.fieldButtonLabel[0].value,
+        uri: fetched.fieldCta[0].entity.fieldButtonLink[0].url.path,
+      },
+    };
+  };
+
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
     // Converts all complex key/value pairs in obj to simple strings
     // e.g. key: [{ value: 'foo' }] => key: 'foo'
-    const flattenArrayValues = obj => {
+    // Recursion is used to flatten pairs in entity objects deeper in the data
+    const flattenArrayValues = (obj, flattenContentType) => {
+      const isEntityArray = a => {
+        const uniqKeyValues = a.filter((item, pos) => a.indexOf(item) === pos);
+        return uniqKeyValues.length === 1 && uniqKeyValues[0] === 'entity';
+      };
+
       const newObj = {};
       for (const [key] of Object.entries(obj)) {
-        if (Array.isArray(obj[key]) && obj[key][0]?.value) {
+        if (
+          Array.isArray(obj[key]) &&
+          obj[key][0]?.value &&
+          (Object.keys(obj[key][0]).length === 1 ||
+            flattenContentType === 'react_widget')
+        ) {
           newObj[key] = obj[key][0].value;
+        } else if (
+          Array.isArray(obj[key]) &&
+          isEntityArray(obj[key].map(objKey => Object.keys(objKey)[0]))
+        ) {
+          // Recursively flattens nested entity arrays
+          newObj[key] = obj[key].map(nestedObj => {
+            return { entity: flattenArrayValues(nestedObj.entity) };
+          });
         } else {
           newObj[key] = obj[key];
         }
@@ -848,7 +1126,7 @@ module.exports = function registerFilters() {
         };
       }
       case 'react_widget': {
-        const normalizedData = flattenArrayValues(entity);
+        const normalizedData = flattenArrayValues(entity, 'react_widget');
         if (!normalizedData.fieldErrorMessage.value) {
           return {
             ...normalizedData,
@@ -879,12 +1157,58 @@ module.exports = function registerFilters() {
     return he.encode(string, { useNamedReferences: true });
   };
 
+  // fieldCcBenefitsHotline is odd because it has no entity
+  liquid.filters.processCentralizedBenefitsHotline = fieldCcBenefitsHotline => {
+    if (!fieldCcBenefitsHotline || !fieldCcBenefitsHotline.fetched) {
+      return null;
+    }
+    const processedFetched = {};
+    for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
+      if (value?.length > 0) {
+        processedFetched[key] = value[0]?.value || '';
+      }
+    }
+    return processedFetched;
+  };
+  liquid.filters.shimNonFetchedFeaturedToFetchedFeaturedContent = featuredContentEntity => {
+    if (
+      !featuredContentEntity ||
+      !featuredContentEntity.fieldDescription ||
+      !featuredContentEntity.fieldSectionHeader
+    ) {
+      return null;
+    }
+    const {
+      fieldDescription,
+      fieldSectionHeader,
+      fieldCta,
+    } = featuredContentEntity;
+    const updatedCta = [];
+    if (
+      fieldCta?.entity?.fieldButtonLink &&
+      fieldCta?.entity?.fieldButtonLabel
+    ) {
+      updatedCta.push({
+        entity: {
+          fieldButtonLabel: [{ value: fieldCta.entity.fieldButtonLabel }],
+          fieldButtonLink: [fieldCta.entity.fieldButtonLink],
+        },
+      });
+    }
+    const fetched = {
+      fieldDescription: [fieldDescription],
+      fieldSectionHeader: [{ value: fieldSectionHeader }],
+      fieldCta: updatedCta,
+    };
+    return { fetched };
+  };
   // fieldCcVetCenterFeaturedCon data structure is different
   // from objects inside fieldVetCenterFeatureContent. Recreates the array
   // with the expected structure so that it can be directly passed inside the template
   liquid.filters.appendCentralizedFeaturedContent = (
     ccFeatureContent,
     featureContentArray,
+    placement = 'prepend',
   ) => {
     if (!ccFeatureContent || !ccFeatureContent.fetched) {
       return featureContentArray;
@@ -900,9 +1224,9 @@ module.exports = function registerFilters() {
     const featureContentObj = {
       entity: {
         fieldDescription: {
-          processed: fieldDescription[0]?.processed,
+          processed: fieldDescription[0]?.processed || '',
         },
-        fieldSectionHeader: fieldSectionHeader[0]?.value,
+        fieldSectionHeader: fieldSectionHeader[0]?.value || '',
       },
     };
 
@@ -914,39 +1238,22 @@ module.exports = function registerFilters() {
       const buttonFeatured = {
         entity: {
           fieldButtonLink: {
-            uri: fieldCta[0]?.entity.fieldButtonLink[0].uri,
+            uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
+            url: {
+              path: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
+            },
           },
-          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0].value,
+          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
     }
-    return [featureContentObj, ...featureContentArray];
+    return placement === 'append'
+      ? [...featureContentArray, featureContentObj] // append -- VBA
+      : [featureContentObj, ...featureContentArray]; // prepend -- VetCenter - default
   };
 
-  liquid.filters.filterPastEvents = data => {
-    if (!data) return null;
-    const currentTimestamp = new Date().getTime();
-    return data.filter(event => {
-      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
-        event.fieldDatetimeRangeTimezone[0]
-          ? event.fieldDatetimeRangeTimezone[0]
-          : event.fieldDatetimeRangeTimezone,
-      );
-      return mostRecentEvent.value * 1000 < currentTimestamp;
-    });
-  };
-
-  liquid.filters.filterUpcomingEvents = data => {
-    if (!data) return null;
-    const currentTimestamp = new Date().getTime();
-    return data.filter(event => {
-      const mostRecentEvent = liquid.filters.deriveMostRecentDate(
-        event.fieldDatetimeRangeTimezone,
-      );
-      return mostRecentEvent?.value * 1000 >= currentTimestamp;
-    });
-  };
+  liquid.filters.filterUpcomingEvents = filterUpcomingEvents;
 
   //* Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
   //* Also sorts press releases (fieldReleaseDate) from newest to oldest.
@@ -968,92 +1275,29 @@ module.exports = function registerFilters() {
     });
   };
 
-  //* paginatePages has limitations, it is not yet fully operational.
-  liquid.filters.paginatePages = (page, items, aria) => {
-    const perPage = 10;
+  //* Filters and Sorts event dates (fieldDatetimeRangeTimezone) starting with the most upcoming event.
+  liquid.filters.filterAndSortEvents = data => {
+    if (!data) return null;
+    const currentTimestamp = moment().unix();
 
-    const ariaLabel = aria ? ` of ${aria}` : '';
+    const filteredEvents = data.filter(event => {
+      const occurrenceArray = event.fieldDatetimeRangeTimezone.map(
+        occurrence => {
+          return occurrence.value;
+        },
+      );
+      const futureOccurrences = occurrenceArray.filter(
+        occurrence => occurrence >= currentTimestamp,
+      );
 
-    const paginationPath = pageNum => {
-      return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
-    };
+      return futureOccurrences.length > 0;
+    });
 
-    const pageReturn = [];
-
-    if (items.length > 0) {
-      const pagedEntities = _.chunk(items, perPage);
-
-      for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-        let pagedPage = { ...page };
-        if (pageNum > 0) {
-          pagedPage = set(
-            'entityUrl.path',
-            `${page.entityUrl.path}${paginationPath(pageNum)}`,
-            page,
-          );
-        }
-
-        pagedPage.pagedItems = pagedEntities[pageNum];
-        const innerPages = [];
-
-        if (pagedEntities.length > 0) {
-          // add page numbers
-          const numPageLinks = 3;
-          let start;
-          let length;
-          if (pagedEntities.length <= numPageLinks) {
-            start = 0;
-            length = pagedEntities.length;
-          } else {
-            length = numPageLinks;
-
-            if (pageNum + numPageLinks > pagedEntities.length) {
-              start = pagedEntities.length - numPageLinks;
-            } else {
-              start = pageNum;
-            }
-          }
-
-          for (let num = start; num < start + length; num++) {
-            innerPages.push({
-              href:
-                num === pageNum
-                  ? null
-                  : `${page.entityUrl.path}${paginationPath(num)}`,
-              label: num + 1,
-              class: num === pageNum ? 'va-pagination-active' : '',
-            });
-          }
-
-          pagedPage.paginator = {
-            ariaLabel,
-            prev:
-              pageNum > 0
-                ? `${page.entityUrl.path}${paginationPath(pageNum - 1)}`
-                : null,
-            inner: innerPages,
-            next:
-              pageNum < pagedEntities.length - 1
-                ? `${page.entityUrl.path}${paginationPath(pageNum + 1)}`
-                : null,
-          };
-          pageReturn.push(pagedPage);
-        }
-      }
-    }
-
-    if (!pageReturn[0]) {
-      return {};
-    }
-
-    return {
-      pagedItems: pageReturn[0].pagedItems,
-      paginator: pageReturn[0].paginator,
-    };
-  };
-
-  liquid.filters.isFirstPage = paginator => {
-    return !paginator || paginator.prev === null;
+    return liquid.filters.sortByDateKey(
+      filteredEvents,
+      'fieldDatetimeRangeTimezone',
+      false,
+    );
   };
 
   liquid.filters.hasContentAtPath = (rootArray, path) => {
@@ -1296,54 +1540,86 @@ module.exports = function registerFilters() {
     return languages[language][whichNode];
   };
 
-  // Sets the value at path of object. If a portion of path doesn't exist, it's created.
-  const setData = (data, path, value) => {
-    return _.set(data, path, value);
+  // Recursive function to filter sidebar data per the following rules:
+  //  - If menu item's linked entity is published, always show
+  //  - If menu item's linked entity is draft, show only on preview
+  //  - If menu item's linked entity is archived, never show
+  liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
+    if (!sidebarData?.links || sidebarData?.links?.length === 0) {
+      return sidebarData;
+    }
+
+    const hasLinkedEntity = link => link?.entity?.linkedEntity;
+    const isLinkedEntityPublished = link =>
+      link?.entity?.linkedEntity?.entityPublished || false;
+    const isLinkedEntityDraft = link =>
+      link?.entity?.linkedEntity?.moderationState === 'draft' || false;
+
+    const filteredLinks = sidebarData.links
+      .filter(link => {
+        // if there's no linked entity, this is a header; it'll have children so keep it
+        if (!hasLinkedEntity(link)) {
+          return true;
+        }
+
+        // if there is a linked entity, keep it only if it should be kept per rules above
+        if (
+          isLinkedEntityPublished(link) ||
+          (isLinkedEntityDraft(link) && isPreview)
+        ) {
+          return true;
+        }
+
+        return false;
+      })
+      .map(link => {
+        // recursively call this function to filter children
+        return liquid.filters.filterSidebarData(link, isPreview);
+      });
+
+    return {
+      ...sidebarData,
+      links: filteredLinks,
+    };
   };
 
-  // If preview mode, filter facilities to show published and draft facilities.
-  // If NOT in preview mode, filter facilities to only show published facilities.
-  liquid.filters.filterSidebarData = (sidebarData, isPreview = false) => {
-    if (!sidebarData || !sidebarData.links[0]?.links) return null;
+  liquid.filters.topTaskLovellComp = (
+    linkType,
+    basePath,
+    buildtype,
+    fieldAdministration,
+    fieldVamcEhrSystem,
+    fieldRegionPage,
+    fieldOffice,
+  ) => {
+    const isNotProd = buildtype !== 'vagovprod';
+    const flag =
+      fieldVamcEhrSystem ||
+      fieldOffice?.entity?.fieldVamcEhrSystem ||
+      fieldRegionPage?.entity?.fieldVamcEhrSystem ||
+      '';
+    const isPageLovell = fieldAdministration?.entity.entityId === '1039';
 
-    const findLocationsArr = () => {
-      const servicesAndLocationsObj = _.find(sidebarData.links[0].links, [
-        'label',
-        'SERVICES AND LOCATIONS',
-      ]);
-      if (servicesAndLocationsObj && servicesAndLocationsObj.links) {
-        const locationsObj = _.find(servicesAndLocationsObj.links, [
-          'label',
-          'Locations',
-        ]);
-        if (locationsObj && locationsObj.links.length) {
-          return locationsObj.links;
-        }
-        return null;
+    if (flag === 'cerner' || (flag === 'cerner_staged' && isNotProd)) {
+      if (linkType === 'make-an-appointment' && isPageLovell) {
+        return {
+          text: 'MHS Genesis Patient Portal',
+          url: 'https://my.mhsgenesis.health.mil/',
+        };
       }
-      return null;
+    } else if (linkType === 'make-an-appointment') {
+      // If we remove this eslint complains of the nested if, so
+      // keeping this as a placeholder for future other linktypes for the MHS Genesis site (e.g. Pharmacy)
+      return {
+        text: 'Make an appointment',
+        url: `/${basePath}/make-an-appointment`,
+      };
+    }
+    // fallback as default
+    return {
+      text: 'Make an appointment',
+      url: `/${basePath}/make-an-appointment`,
     };
-
-    const locationsArr = findLocationsArr();
-    const locationsPath = 'links[0]links[0]links[1]links';
-
-    if (isPreview && locationsArr) {
-      const publishedAndDraftFacilities = liquid.filters.rejectBy(
-        locationsArr,
-        'entity.linkedEntity.moderationState',
-        'archived',
-      );
-      return setData(sidebarData, locationsPath, publishedAndDraftFacilities);
-    }
-    if (!isPreview && locationsArr) {
-      const publishedFacilities = liquid.filters.rejectBy(
-        locationsArr,
-        'entity.linkedEntity.entityPublished',
-        false,
-      );
-      return setData(sidebarData, locationsPath, publishedFacilities);
-    }
-    return sidebarData;
   };
 
   liquid.filters.topTaskUrl = (flag, path, buildtype) => {
@@ -1395,35 +1671,7 @@ module.exports = function registerFilters() {
     return moment().unix();
   };
 
-  liquid.filters.deriveMostRecentDate = (
-    fieldDatetimeRangeTimezone,
-    now = moment().unix(), // This is done so that we can mock the current time in tests.
-  ) => {
-    // Escape early if no fieldDatetimeRangeTimezone was passed.
-    if (!fieldDatetimeRangeTimezone) return fieldDatetimeRangeTimezone;
-
-    // Return back fieldDatetimeRangeTimezone if it is already a singular most recent date.
-    if (!_.isArray(fieldDatetimeRangeTimezone)) {
-      return fieldDatetimeRangeTimezone;
-    }
-
-    // Return back fieldDatetimeRangeTimezone's first item if it only has 1 item.
-    if (fieldDatetimeRangeTimezone?.length === 1) {
-      return fieldDatetimeRangeTimezone[0];
-    }
-
-    // Derive date times relative to now.
-    const dates = _.sortBy(fieldDatetimeRangeTimezone, 'endValue');
-    const futureDates = _.filter(dates, date => date?.endValue - now > 0);
-
-    // Return the most recent past date if there are no future dates.
-    if (_.isEmpty(futureDates)) {
-      return dates[dates?.length - 1];
-    }
-
-    // Return the most recent future date if there are future dates.
-    return futureDates[0];
-  };
+  liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
 
   // Given an array of services provided at a facility,
   // return a flattened array of service locations that
@@ -1457,6 +1705,7 @@ module.exports = function registerFilters() {
         entityUrl: facility?.entityUrl,
         fieldAddress: facility?.fieldAddress,
         fieldOfficeHours: facility?.fieldOfficeHours,
+        fieldPhoneNumber: facility?.fieldPhoneNumber,
         locations: liquid.filters.serviceLocationsAtFacilityByServiceType(
           facility?.reverseFieldFacilityLocationNode?.entities || [],
           serviceType,
@@ -1485,22 +1734,68 @@ module.exports = function registerFilters() {
     return `${formattedStartsAt} – ${formattedEndsAt} ${endsAtTimezone}`;
   };
 
+  liquid.filters.organizeSatelliteVetCenters = centers => {
+    const { outstations, CAPs } = centers.reduce(
+      (acc, center) => {
+        if (center.entityBundle === 'vet_center_outstation') {
+          acc.outstations.push(center);
+        } else if (center.entityBundle === 'vet_center_cap') {
+          acc.CAPs.push(center);
+        }
+        return acc;
+      },
+      {
+        outstations: [],
+        CAPs: [],
+      },
+    );
+
+    return [
+      ...liquid.filters.sortObjectsBy(outstations, 'title'),
+      ...liquid.filters.sortObjectsBy(CAPs, 'title'),
+    ];
+  };
+
   liquid.filters.dynamicVetCenterHoursKey = forloopindex => {
     return `vetCenterHoursKey_${forloopindex}`;
   };
 
   liquid.filters.getSurvey = (buildtype, url) => {
-    if (
-      buildtype === 'localhost' ||
-      buildtype === 'vagovstaging' ||
-      buildtype === 'vagovdev'
-    ) {
-      return stagingSurveys[url] ? stagingSurveys[url] : 11;
+    const surveyData = medalliaSurveys;
+    const defaultStagingSurvey = SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY;
+    const defaultProdSurvey = SURVEY_NUMBERS.DEFAULT_PROD_SURVEY;
+    const isStaging = ['localhost', 'vagovstaging', 'vagovdev'].includes(
+      buildtype,
+    );
+    const effectiveBuildType = isStaging ? 'staging' : 'production';
+
+    if (typeof url !== 'string' || url === null) {
+      return isStaging ? defaultStagingSurvey : defaultProdSurvey;
     }
-    if (buildtype === 'vagovprod') {
-      return prodSurveys[url] ? prodSurveys[url] : 17;
+    // Check if the URL exists in the main custom survey URL object
+    if (url in surveyData.urls) {
+      const surveyInfo = surveyData.urls[url];
+      // Return the survey ID for the effective build type, or the default based on the build type
+      return (
+        surveyInfo[effectiveBuildType] ||
+        (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+      );
     }
-    return null;
+    // Check if the URL matches any subpaths
+    for (const [subpath, surveyInfo] of Object.entries(
+      surveyData.urlsWithSubPaths,
+    )) {
+      if (url.startsWith(subpath)) {
+        // Return the survey ID for the effective build type, or the default based on the build type
+        return (
+          surveyInfo[effectiveBuildType] ||
+          (isStaging ? defaultStagingSurvey : defaultProdSurvey)
+        );
+      }
+    }
+
+    // If no URL match is found, return the default survey number based on the build type
+    return isStaging ? defaultStagingSurvey : defaultProdSurvey;
   };
 
   liquid.filters.officeHoursDayFormatter = (day, short = true) => {
@@ -1549,7 +1844,7 @@ module.exports = function registerFilters() {
         return '00:00:00';
       }
     }
-    if (time === null) {
+    if (time === null || parseInt(time, 10) === -1) {
       return '';
     }
     return moment(time, 'Hmm').format('HH:mm:ss');
@@ -1581,5 +1876,28 @@ module.exports = function registerFilters() {
       ...formattedData.filter(a => a.day !== 0),
       ...formattedData.filter(a => a.day === 0),
     ];
+  };
+
+  liquid.filters.shouldShowMobileAppPromoBanner = currentPath => {
+    const urlsForBanner = [
+      '/health-care/refill-track-prescriptions',
+      '/health-care/secure-messaging',
+      '/health-care/get-medical-records',
+      '/disability/view-disability-rating',
+      '/claim-or-appeal-status',
+      '/disability/upload-supporting-evidence',
+      '/records/download-va-letters',
+      '/va-payment-history',
+      '/change-direct-deposit',
+    ];
+
+    return urlsForBanner.includes(currentPath);
+  };
+
+  liquid.filters.useTelephoneWebComponent = telephone => {
+    if (/[a-zA-Z+]/.test(telephone)) {
+      return false;
+    }
+    return true;
   };
 };

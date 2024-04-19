@@ -1,0 +1,24 @@
+{% comment %}
+parameters:
+directionsLinkTitle
+directionsLinkAddress
+directionsLinkOnClickPropName
+directionsLinkOnClickPropValue
+{% endcomment %}
+
+{% assign onClick = "" %}
+{% if directionsLinkOnClickPropName != empty and directionsLinkOnClickPropValue != empty %}
+  {% capture onClick %}
+    onclick="recordEvent({ event: 'directions-link-click', '{{ directionsLinkOnClickPropName }}': '{{ directionsLinkOnClickPropValue }}'});"
+  {% endcapture %}
+{% endif %}
+
+<div>
+  <a
+    {{ onClick | strip }}
+    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
+    target="_blank">
+    Get directions on Google Maps
+    <span class="sr-only">to {{ directionsLinkTitle | strip }}</span>
+  </a>
+</div>

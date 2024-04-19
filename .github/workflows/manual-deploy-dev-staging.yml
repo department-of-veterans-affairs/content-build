@@ -35,42 +35,42 @@ jobs:
         id: set-output
         run: |
           if [[ ${{ github.event.inputs.deploy_environment }} == 'dev' ]]; then
-            echo ::set-output name=environment::{\"include\":[${{env.dev}}]}
+            echo environment={\"include\":[${{env.dev}}]} >> $GITHUB_OUTPUT
           elif [[ ${{ github.event.inputs.deploy_environment }} == 'staging' ]]; then
-            echo ::set-output name=environment::{\"include\":[${{env.staging}}]}
+            echo environment={\"include\":[${{env.staging}}]} >> $GITHUB_OUTPUT
           else
-            echo ::set-output name=environment::{\"include\":[${{env.dev}},${{env.staging}}]}
+            echo environment={\"include\":[${{env.dev}},${{env.staging}}]} >> $GITHUB_OUTPUT
           fi
 
   deploy:
     name: Deploy
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     needs: set-environment
     strategy:
       matrix: ${{ fromJson(needs.set-environment.outputs.environment) }}
 
     env:
-      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/VA-Internal-S2-RCA1-v1.cer.pem
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Configure AWS credentials (1)
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: marvinpinto/action-inject-ssm-secrets@v1.2.1
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
 
       - name: Configure AWS Credentials (2)
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2.0.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -79,12 +79,12 @@ jobs:
           role-duration-seconds: 900
           role-session-name: vsp-frontendteam-githubaction
 
-      - name: Deploy 
+      - name: Deploy
         run: ./script/github-actions/deploy.sh -s $SRC -d $DEST -v
         env:
           SRC: s3://vetsgov-website-builds-s3-upload/content-build/${{ github.event.inputs.commit_sha }}/${{ matrix.environment }}.tar.bz2
           DEST: s3://${{ matrix.bucket }}
-  
+
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
@@ -93,10 +93,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@main
+        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
         continue-on-error: true
         with:
           attachments: '[{"mrkdwn_in": ["text"], "color": "#D33834", "text": "content-build manual dev/staging deploy failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}]'

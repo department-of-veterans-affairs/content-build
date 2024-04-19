@@ -1,6 +1,6 @@
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
-{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true deriveBreadcrumbsFromUrl = true %}
+{% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
 
 <div id="content" class="interior">
     <main class="va-l-detail-page va-facility-page">
@@ -66,9 +66,9 @@
                                         {% case a.entityBundle %}
                                         {% when 'document' %}
                                             <a href="{{ a.fieldDocument.entity.url }}" download>{{ a.name }}</a>
-                                        {% when a.entityBundle === 'image' %}
+                                        {% when 'image' %}
                                             <a href="{{ a.image.url }}" download>{{ a.name }}</a>
-                                        {% when a.entityBundle === 'video' %}
+                                        {% when 'video' %}
                                             <a href="{{ a.fieldMediaVideoEmbedField }}">{{ a.name }}</a>
                                         {%  endcase %}
                                     </li>
@@ -82,9 +82,8 @@
                     <section class="vads-u-margin-bottom--3">
                         {{ fieldOffice.entity.fieldPressReleaseBlurb.processed }}
                     </section>
-                    {% assign index = entityUrl.breadcrumb.length | minus: 1 %}
                     <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-                       href="{{ entityUrl.breadcrumb | getValueFromArrayObjPath: index, 'url.path' }}">See all news releases</a>
+                       href="{{ fieldListing.entity.entityUrl.path }}">See all news releases</a>
                 </article>
                 <!-- Last updated & feedback button-->
                   {% include "src/site/includes/above-footer-elements.drupal.liquid" %}

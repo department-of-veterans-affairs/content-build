@@ -1,0 +1,19 @@
+<div class="feature featured-content-list-item vads-u-flex--fill vads-u-padding-y--1p5 vads-u-padding-x--1p5 vads-u-margin-bottom--0 medium-screen:vads-u-margin-bottom--2">
+    {% if entity.fieldSectionHeader != empty %}
+        <h3 class="force-small-header vads-u-margin-bottom--2">{{ entity.fieldSectionHeader }}</h3>
+        <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary">
+    {% endif %}
+    {% if entity.fieldDescription %}
+        <div id="featured-content-description{{ entity.fieldSectionHeader }}}}">
+            {{ entity.fieldDescription.processed | drupalToVaPath | phoneLinks }}
+        </div>
+    {% endif %}
+    {% if entity.fieldCta.entity.fieldButtonLink.url.path %}
+        <p class="vads-u-padding-top--1">
+            <va-link 
+                href="{{ entity.fieldCta.entity.fieldButtonLink.url.path }}" 
+                text="{{ entity.fieldCta.entity.fieldButtonLabel }}" 
+            ></va-link>
+        </p>
+    {% endif %}
+</div>

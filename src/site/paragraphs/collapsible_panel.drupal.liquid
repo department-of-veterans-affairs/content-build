@@ -28,6 +28,7 @@
     data-multiselectable="{{ entity.fieldCollapsiblePanelMulti }}"
 >
     <va-accordion
+        uswds
         {% if entity.fieldCollapsiblePanelBordered %}
             bordered
         {% endif %}
@@ -35,7 +36,7 @@
     {% assign collapsibleHeaderH3 = entity.entityId | filterCollapsibleHeaderLevels %}
 
     {% if collapsibleHeaderH3 %}
-        {% assign panelHeaderLevel = 'h3' %}
+        {% assign panelHeaderLevel = collapsibleHeaderH3 %}
     {% else %}
         {% assign panelHeaderLevel = 'h4' %}
     {% endif %}
@@ -44,7 +45,8 @@
             {% assign item = accordionItem.entity %}
             {% assign id = item.entityId %}
             <va-accordion-item
-              id="{{item.fieldTitle | hashReference: 30 }}-{{id}}"
+              class="va-accordion-item"
+              id="{{item.fieldTitle | hashReference: 60 }}-{{id}}"
             >
 
                 <{{ panelHeaderLevel }} slot="headline">
