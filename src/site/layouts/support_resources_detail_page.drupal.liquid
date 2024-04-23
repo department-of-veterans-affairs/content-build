@@ -28,20 +28,15 @@
               {% include "src/site/paragraphs/alert_single.drupal.liquid" with entity = fieldAlertSingle.entity %}
             {% endif %}
 
-            <!-- Buttons -->
-            <ul class="vads-u-margin-y--3 usa-unstyled-list">
-              {% for fieldButton in fieldButtons %}
-                <li class="vads-u-margin-bottom--2">
-                  {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
-                </li>
-              {% endfor %}
-            </ul>
+            <!-- CTA list -->
+            {% if fieldButtons.length %}
+              {% include "src/site/includes/support_resources_cta_list.drupal.liquid" %}
+            {% endif %}
 
             <!-- TOC -->
             {% if fieldTableOfContentsBoolean %}
               <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
             {% endif %}
-
 
             <!-- Content blocks -->
             {% for block in fieldContentBlock %}
@@ -58,17 +53,9 @@
               {% endif %}
             {% endfor %}
 
-
-
-            <!-- Repeated buttons -->
-            {% if fieldButtonsRepeat %}
-              <ul class="vads-u-margin-top--3 usa-unstyled-list">
-                {% for fieldButton in fieldButtons %}
-                  <li class="vads-u-margin-bottom--2">
-                    {% include "src/site/paragraphs/action_link.drupal.liquid" with entity = fieldButton.entity %}
-                  </li>
-                {% endfor %}
-              </ul>
+            <!-- Repeated CTA list -->
+            {% if fieldButtons.length and fieldButtonsRepeat %}
+              {% include "src/site/includes/support_resources_cta_list.drupal.liquid" %}
             {% endif %}
           </article>
 
