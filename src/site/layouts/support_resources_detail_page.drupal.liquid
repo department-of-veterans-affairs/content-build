@@ -28,8 +28,8 @@
               {% include "src/site/paragraphs/alert_single.drupal.liquid" with entity = fieldAlertSingle.entity %}
             {% endif %}
 
+            <!-- CTA list -->
             {% if fieldButtons.length %}
-              <!-- CTA list -->
               {% include "src/site/includes/support_resources_cta_list.drupal.liquid" %}
             {% endif %}
 
@@ -53,8 +53,8 @@
               {% endif %}
             {% endfor %}
 
+            <!-- Repeated CTA list -->
             {% if fieldButtons.length and fieldButtonsRepeat %}
-              <!-- Repeated CTA list -->
               {% include "src/site/includes/support_resources_cta_list.drupal.liquid" %}
             {% endif %}
           </article>
