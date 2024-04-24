@@ -1732,7 +1732,7 @@
     "rootUrl": "/supporting-forms-for-claims/request-priority-processing-form-20-10207",
     "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
