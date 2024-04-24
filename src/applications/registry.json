@@ -1164,7 +1164,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeFeedbackButton": true,
+      "includeFeedbackButton": false,
       "includeBreadcrumbs": false,
       "noNavOrLogin": true,
       "noMegamenu": true,
@@ -1178,7 +1178,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeFeedbackButton": true,
+      "includeFeedbackButton": false,
       "includeBreadcrumbs": false,
       "noNavOrLogin": true,
       "noMegamenu": true,
@@ -1192,7 +1192,7 @@
     "rootUrl": "/my-health/appointment-travel-claim",
     "template": {
       "layout": "page-react.html",
-      "includeFeedbackButton": true,
+      "includeFeedbackButton": false,
       "includeBreadcrumbs": false,
       "noNavOrLogin": true,
       "noMegamenu": true,
@@ -1361,6 +1361,17 @@
     "productId": "c054e1e8-7be2-11ed-a1eb-0242ac120002",
     "template": {
       "vagovprod": true,
+      "layout": "page-react.html",
+      "private": true
+    }
+  },
+  {
+    "appName": "MHV Medical Records isolated app test",
+    "entryName": "medical-records-test",
+    "rootUrl": "/my-health/medical-records-test",
+    "productId": "33f531eb-ed52-4e7f-a6ae-f9ff78de939f",
+    "template": {
+      "vagovprod": false,
       "layout": "page-react.html",
       "private": true
     }
@@ -1732,7 +1743,7 @@
     "rootUrl": "/supporting-forms-for-claims/request-priority-processing-form-20-10207",
     "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1741,7 +1752,7 @@
           "path": "supporting-forms-for-claims"
         },
         {
-          "name": "Request priority processing for an existing claim",
+          "name": "Request priority processing",
           "path": "supporting-forms-for-claims/request-priority-processing-form-20-10207"
         }
       ]
@@ -1804,7 +1815,7 @@
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
     "template": {
       "vagovprod": false,
-      "layout": "accredited-representative-portal.html"
+      "layout": "page-react.html"
     }
   },
   {
@@ -1822,6 +1833,16 @@
     "entryName": "10-7959f-1-FMP",
     "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Foreign Medical Program Cover Sheet",
+    "entryName": "fmp-cover-sheet",
+    "rootUrl": "/\tivc-champva/10-7959f-2",
+    "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
