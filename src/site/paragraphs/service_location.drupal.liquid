@@ -1,16 +1,11 @@
-<div class="
+<div 
   {% if typeOfLocation != "nonclinical" %}
-  vads-u-margin-y--2 
-  vads-u-border--1px vads-u-padding-x--2
-  {% else %}
-  vads-u-margin-top--6
-  vads-u-margin-bottom--0
+  class="vads-u-border--1px vads-u-padding-x--2 vads-u-padding-bottom--2 vads-u-margin-y--2"
   {% endif %}
-  vads-u-padding-bottom--2
-  ">
+  >
   {% assign serviceLocationH = serviceLocationSubHeaderLevel %}
   {% if serviceHeader %}
-    <h{{serviceLocationH}} class="vads-u-margin-top--2 vads-u-margin-bottom--0">
+    <h{{serviceLocationH}} class="vads-u-margin-bottom--0">
       {{ serviceHeader }}
     </h{{serviceLocationH}}>
     {% comment %} Because serviceHeader should be lowest h-level of section {% endcomment %}
