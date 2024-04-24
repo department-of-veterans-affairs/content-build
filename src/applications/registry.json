@@ -1183,8 +1183,7 @@
       "noNavOrLogin": true,
       "noMegamenu": true,
       "minimalFooter": true
-    },
-    "useLocalStylesAndComponents": true
+    }
   },
   {
     "appName": "Travel Claim",
