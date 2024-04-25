@@ -37,10 +37,10 @@
             {% case single.fieldOfficeVisits %}
               {% when "yes_appointment_only" %}
                 Visit our office, by appointment only
+              {% when "yes_walk_in_visits_only" %}
+                Visit our office, walk-in visits only
               {% when "yes_with_or_without_appointment" %}
                 Visit our office, with or without an appointment
-              {% when "yes_first_come_first_served_basis" %}
-                Visit our office, first come, first served
             {% endcase %}
           </p>
         </div>
@@ -56,7 +56,14 @@
       {% if single.fieldVirtualSupport and single.fieldVirtualSupport != "no" %}
         <div data-testid="service-location-virtual-support">
           <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
-            <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Schedule a virtual appointment
+            {% case single.fieldVirtualSupport %}
+              {% when "yes_appointment_only" %}
+                <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Virtual visits by appointment only
+              {% when "yes_veterans_can_call" %}
+                <i class="fas fa-phone vads-u-margin-right--0p5" aria-hidden="true"></i> Call at your convenience
+              {% when "virtual_visits_may_be_available" %}
+                <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Virtual visits may be available
+            {% endcase %}
           </p>
         </div>
       {% endif %}

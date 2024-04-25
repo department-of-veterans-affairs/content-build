@@ -1695,17 +1695,24 @@ module.exports = function registerFilters() {
       fieldApptIntroTextType: introTextType,
       fieldApptIntroTextCustom: introTextCustom,
     } = serviceLocation;
-    const yesConditions = [
-      'yes_appointment_only',
+    const baseYesConditions = ['yes_appointment_only'];
+    const yesOffice = [
+      ...baseYesConditions,
+      'yes_walk_in_visits_only',
       'yes_with_or_without_appointment',
+    ];
+    const yesVirtual = [
+      ...baseYesConditions,
+      'yes_veterans_can_call',
+      'virtual_visits_may_be_available',
     ];
     const noVisitsAndCustomIntro =
       !officeVisits && introTextType === 'customize_text' && introTextCustom;
     const noVisitsAndDefaultInto =
       !officeVisits && introTextType === 'use_default_text';
     return (
-      yesConditions.includes(virtualSupport) ||
-      yesConditions.includes(officeVisits) ||
+      yesVirtual.includes(virtualSupport) ||
+      yesOffice.includes(officeVisits) ||
       noVisitsAndCustomIntro ||
       noVisitsAndDefaultInto
     );
