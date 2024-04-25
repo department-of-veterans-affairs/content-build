@@ -7,9 +7,9 @@
 {% endif %}
 
 {% if serviceLocationAddress.fieldClinicName or hasAddress or serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
-<div class="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-top--2">
+<div class="vads-u-display--flex vads-u-flex-direction--column">
   {% if serviceLocationAddress.fieldClinicName %}
-    <h{{ serviceLocationAddressHeaderLevel }} class="vads-u-margin-top--0">
+    <h{{ serviceLocationAddressHeaderLevel }}>
       {{ serviceLocationAddress.fieldClinicName }}
     </h{{ serviceLocationAddressHeaderLevel }}>
   {% elsif serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
