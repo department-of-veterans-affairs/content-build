@@ -1714,6 +1714,13 @@ module.exports = function registerFilters() {
       .filter(facility => facility.locations.length > 0);
   };
 
+  liquid.filters.isPastEvent = fieldDatetimeRangeTimezone => {
+    const startsAtUnixInSeconds = fieldDatetimeRangeTimezone?.value;
+    const todayInSeconds = Math.floor(Date.now() / 1000);
+
+    return startsAtUnixInSeconds < todayInSeconds;
+  }
+
   liquid.filters.deriveFormattedTimestamp = fieldDatetimeRangeTimezone => {
     const startsAtUnix = fieldDatetimeRangeTimezone?.value;
     const endsAtUnix = fieldDatetimeRangeTimezone?.endValue;

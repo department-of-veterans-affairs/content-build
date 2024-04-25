@@ -254,10 +254,17 @@
             >
               <!-- Recurring events list. -->
               {% for recurringEventDatetimeRangeTimezone in fieldDatetimeRangeTimezone %}
+                {% assign isPastEvent = recurringEventDatetimeRangeTimezone | isPastEvent %}
                 <div class="recurring-event {% if forloop.index > 6 %}vads-u-display--none{% endif %} vads-u-margin-bottom--2">
                   <p class="vads-u-margin--0">
                     {{ recurringEventDatetimeRangeTimezone | deriveFormattedTimestamp }}
                   </p>
+                  {% if isPastEvent %}
+                    <p>
+                      <va-icon icon="calendar_today" size={4} />
+                      This is a past event
+                    </p>
+                  {% endif %}
                   <va-link
                     calendar
                     class="recurrent-event "
