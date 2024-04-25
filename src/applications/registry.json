@@ -1825,5 +1825,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Form VA21a",
+    "entryName": "form21a",
+    "rootUrl": "/form21a",
+    "productId": "b2af760c-d89d-40ef-b5ce-8b2e1860cba6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
