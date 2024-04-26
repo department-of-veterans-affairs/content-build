@@ -1183,8 +1183,7 @@
       "noNavOrLogin": true,
       "noMegamenu": true,
       "minimalFooter": true
-    },
-    "useLocalStylesAndComponents": true
+    }
   },
   {
     "appName": "Travel Claim",
@@ -1822,6 +1821,16 @@
     "entryName": "10-7959f-1-FMP",
     "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21-4138 Statement in Support of a Claim",
+    "entryName": "4138-ss",
+    "rootUrl": "/supporting-forms-for-claims/support-statement-21-4138",
+    "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
