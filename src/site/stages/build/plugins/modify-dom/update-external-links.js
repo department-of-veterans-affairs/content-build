@@ -33,7 +33,7 @@ module.exports = {
         const relAttr = link.attr('rel');
         const targetAttr = link.attr('target');
         const hrefAttr = link.attr('href') || '';
-        const hrefAttrHost = new URL(hrefAttr).hostname;
+        const hrefAttrHost = new URL(hrefAttr.trim()).hostname;
 
         // We want to make sure links that open in a new tab
         // always have noopener, but data-allow-opener is an
