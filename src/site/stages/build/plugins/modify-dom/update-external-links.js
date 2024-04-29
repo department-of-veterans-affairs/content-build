@@ -33,6 +33,7 @@ module.exports = {
         const relAttr = link.attr('rel');
         const targetAttr = link.attr('target');
         const hrefAttr = link.attr('href') || '';
+        const hrefAttrHost = new URL(hrefAttr).host;
 
         // We want to make sure links that open in a new tab
         // always have noopener, but data-allow-opener is an
@@ -52,7 +53,8 @@ module.exports = {
         if (
           typeof link.attr('data-same-tab') === 'undefined' &&
           !isNonVADomainThatOpensInSameTab(hrefAttr) &&
-          ((!hrefAttr.includes('va.gov') && !hrefAttr.includes('vets.gov')) ||
+          ((!hrefAttrHost.includes('va.gov') &&
+            !hrefAttrHost.includes('vets.gov')) ||
             isVADomainThatOpensInNewTab(hrefAttr)) &&
           !targetAttr &&
           targetAttr !== '_blank'

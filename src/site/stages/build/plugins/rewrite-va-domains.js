@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign, no-continue */
+const { escapeRegExp } = require('lodash');
 const { sleep } = require('../../../../../script/utils');
 
 function createRedirects(options) {
@@ -12,7 +13,7 @@ function createRedirects(options) {
         const file = files[fileName];
         let contents = file.contents.toString();
         options.domainReplacements.forEach(domain => {
-          const regex = new RegExp(domain.from, 'g');
+          const regex = new RegExp(escapeRegExp(domain.from), 'g');
           contents = contents.replace(regex, domain.to);
         });
 
