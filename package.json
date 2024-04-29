@@ -150,7 +150,7 @@
     "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sonarjs": "^0.10.0",
-    "eslint-plugin-unicorn": "^36.0.0",
+    "eslint-plugin-unicorn": "^49.0.0",
     "express-history-api-fallback": "^2.0.0",
     "fast-xml-parser": "^3.19.0",
     "find": "^0.3.0",
@@ -268,6 +268,7 @@
     "tar-fs/tar-stream/bl": "^4.0.3",
     "**/minimist": "^1.2.6",
     "**/uglify-js": "^2.2.24",
-    "**/ansi-regex": "^4.1.1"
+    "**/ansi-regex": "^4.1.1",
+    "**/@babel/core": "^7.23.2"
   }
 }
