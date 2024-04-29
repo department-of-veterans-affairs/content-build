@@ -52,14 +52,14 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
     'Content-Type': 'application/json',
   };
   const agent = new SocksProxyAgent('socks://127.0.0.1:2001');
-  const addressHost = new URL(address).host;
+  const addressHost = new URL(address).hostname;
 
   return {
     // We have to point to aws urls on Jenkins, so the only
     // time we'll be using cms.va.gov addresses is locally,
     // when we need a proxy
     usingProxy:
-      addressHost.includes('cms.va.gov') && !buildOptions['no-drupal-proxy'],
+      addressHost.match(/cms\.va\.gov$/) && !buildOptions['no-drupal-proxy'],
 
     getSiteUri() {
       return address;
