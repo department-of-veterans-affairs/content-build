@@ -10,6 +10,12 @@
       id="vba-regional-facilities-accordion-{{ vbaTitle | hashReference: 60 }}"
       data-testid="vba-accordion-{{vbaTitle}}">
       {% for entity in vbaServices %}
+        <script>
+          console.log('entity for {{ vbaTitle }}');
+          console.log({{ entity | json }});
+          console.log('-----');
+        </script>
+
         {% if entity.facilityService %}
           {% capture entityId %}{{ entity.facilityService.fieldServiceNameAndDescripti.entity.entityId | hashReference: 60 }}-{{ entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}{% endcapture %}
         {% else %}

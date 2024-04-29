@@ -22,16 +22,16 @@ const registerLiquidFilters = require('../../filters/liquid');
 const { getDrupalContent } = require('./drupal/metalsmith-drupal');
 const addDrupalPrefix = require('./plugins/add-drupal-prefix');
 const checkCollections = require('./plugins/check-collections');
-const downloadAssets = require('./plugins/download-assets');
+// const downloadAssets = require('./plugins/download-assets');
 // const readAssetsFromDisk = require('./plugins/read-assets-from-disk');
-const createDrupalDebugPage = require('./plugins/create-drupal-debug');
+// const createDrupalDebugPage = require('./plugins/create-drupal-debug');
 const createEnvironmentFilter = require('./plugins/create-environment-filter');
 const { createHeaderFooterData } = require('./plugins/create-header-footer');
 const createOutreachAssetsData = require('./plugins/create-outreach-assets-data');
 const createResourcesAndSupportWebsiteSection = require('./plugins/create-resources-and-support-section');
-const createSitemaps = require('./plugins/create-sitemaps');
+// const createSitemaps = require('./plugins/create-sitemaps');
 const createSymlink = require('./plugins/create-symlink');
-const downloadDrupalAssets = require('./plugins/download-drupal-assets');
+// const downloadDrupalAssets = require('./plugins/download-drupal-assets');
 const generateStaticDataFiles = require('./plugins/generate-static-data-files');
 const getFilesToUpdate = require('./plugins/get-files-to-update');
 const ignoreAssets = require('./plugins/ignore-assets');
@@ -39,7 +39,7 @@ const leftRailNavResetLevels = require('./plugins/left-rail-nav-reset-levels');
 const modifyDom = require('./plugins/modify-dom');
 const rewriteDrupalPages = require('./plugins/rewrite-drupal-pages');
 const rewriteVaDomains = require('./plugins/rewrite-va-domains');
-const updateRobots = require('./plugins/update-robots');
+// const updateRobots = require('./plugins/update-robots');
 const addDirectoryFiles = require('./plugins/add-directory-files');
 const runNextBuild = require('./plugins/run-next-build');
 
@@ -245,11 +245,11 @@ function build(BUILD_OPTIONS) {
     'Rewrite VA domains for the buildtype',
   );
   smith.use(rewriteDrupalPages(BUILD_OPTIONS), 'Rewrite Drupal pages');
-  smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
-  smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
-  smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
-  smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
-  smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
+  // smith.use(createDrupalDebugPage(BUILD_OPTIONS), 'Create Drupal debug page');
+  // smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');
+  // smith.use(downloadAssets(BUILD_OPTIONS), 'Download application assets');
+  // smith.use(createSitemaps(BUILD_OPTIONS), 'Create sitemap');
+  // smith.use(updateRobots(BUILD_OPTIONS), 'Update robots.txt');
 
   smith.use(
     modifyDom(BUILD_OPTIONS),

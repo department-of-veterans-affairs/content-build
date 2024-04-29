@@ -211,6 +211,12 @@
 
           {% assign allVbaServices = reverseFieldVbaRegionFacilityListNode.entities | processVbaServices: reverseFieldOfficeNode.entities %}
 
+          <script>
+            console.log('allVbaServices');
+            console.log({{ allVbaServices | json }});
+            console.log('-----');
+          </script>
+
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Veteran benefits"
             vbaServices = allVbaServices.veteranBenefits
