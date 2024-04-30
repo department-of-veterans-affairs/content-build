@@ -1628,7 +1628,7 @@
     "rootUrl": "/ds-v3-playground",
     "productId": "63fa0a80-e79d-47e7-9cce-e03a8edb2535",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
