@@ -1827,6 +1827,16 @@
     }
   },
   {
+    "appName": "10-7959a CHAMPVA Claim Form",
+    "entryName": "10-7959a",
+    "rootUrl": "/ivc-champva/10-7959a",
+    "productId": "e6afb103-521b-46a2-b29c-245f6c95d3af",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "21-4138 Statement in Support of a Claim",
     "entryName": "4138-ss",
     "rootUrl": "/supporting-forms-for-claims/support-statement-21-4138",
