@@ -128,7 +128,7 @@
               <h2>Emergency information</h2>
 
               {% if fieldOperatingStatusEmergInf.processed %}
-                <div>{{ fieldOperatingStatusEmergInf.processed }}</div>
+                <div>{{ fieldOperatingStatusEmergInf.processed | phoneLinks }}</div>
               {% endif %}
               {% if fieldLinks.0.uri %}
                 <h3 class="vads-u-margin-top--3 vads-u-margin-bottom--2 ">Local emergency resources</h3>

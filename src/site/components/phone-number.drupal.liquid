@@ -14,6 +14,9 @@
       contact="{{ partialPhoneNumber | removeDashes }}"
       extension="{{ partialPhoneExtension | default: '' }}"
       message-aria-describedby="{{ phoneLabel | default: 'Phone' }}"
+      {% if fax %}not-clickable{% endif %}
+      {% if sms %}sms{% endif %}
+      {% if tty %}tty{% endif %}
     />
   </div>
 {% endif %}

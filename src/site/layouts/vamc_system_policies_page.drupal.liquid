@@ -27,9 +27,9 @@
             contentType = fieldCcTopOfPageContent.fetchedBundle
           %}
 
-          {{ fieldVamcVisitationPolicy.processed }}
+          {{ fieldVamcVisitationPolicy.processed | phoneLinks }}
 
-          {{ fieldVamcOtherPolicies.processed }}
+          {{ fieldVamcOtherPolicies.processed | phoneLinks }}
 
           {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcGenVisitationPolicy.fetched

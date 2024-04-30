@@ -276,7 +276,7 @@ module.exports = function registerFilters() {
 
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
-    const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
+    const replacePattern = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
 
     if (!data?.match(replacePattern)) {
       return data;
@@ -284,10 +284,34 @@ module.exports = function registerFilters() {
 
     return data.replace(
       replacePattern,
-      '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
+      `<va-telephone contact="$1-$2-$3" extension="$4$5"></va-telephone>`,
     );
   };
+  /**
+   * @param {string} phoneNumber a string of a phone number, can be a short number or a long number, however a short number or a number with alphabetic characters will generate a <a> tag instead of a <va-telephone> tag
+   * @param {string} attributes a string of attributes like "not-clickable" or "tty" or "sms" or some combination space separated
+   * @returns string of html that is either a <va-telephone> tag or an <a> tag
+   */
+  liquid.filters.processPhoneToVaTelephoneOrFallback = (
+    phoneNumber = '',
+    attributes = '',
+    describedBy = '',
+  ) => {
+    if (!phoneNumber) {
+      return null;
+    }
+    const separated = liquid.filters.separatePhoneNumberExtension(phoneNumber);
+    // if you pass in a phone number that has alphabetic characters in it, va-telephone will not render it
+    // so fallback to just rendering the phone number as passed in as text
 
+    return separated.processed
+      ? `<va-telephone contact="${separated.phoneNumber}" extension="${
+          separated.extension
+        }" ${attributes || ''} ${
+          describedBy ? `message-aria-describedby="${describedBy}"` : ''
+        }></va-telephone>`
+      : `<a href="tel:${phoneNumber}">${phoneNumber}</a>`;
+  };
   liquid.filters.separatePhoneNumberExtension = phoneNumber => {
     if (!phoneNumber) {
       return null;
@@ -296,7 +320,7 @@ module.exports = function registerFilters() {
     const match = phoneRegex.exec(phoneNumber);
     if (!match || !match[1] || !match[2] || !match[3]) {
       // Short number or not a normal format
-      return { phoneNumber, extension: '' };
+      return { phoneNumber, extension: '', processed: false };
     }
     const phone = match[1] + match[2] + match[3];
     // optional extension matching x1234 (match 4) or ext1234 (match 5)
@@ -305,6 +329,7 @@ module.exports = function registerFilters() {
     return {
       phoneNumber: phone,
       extension,
+      processed: true,
     };
   };
 

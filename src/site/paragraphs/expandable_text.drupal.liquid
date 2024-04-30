@@ -15,9 +15,9 @@ Example data:
     {% if entity.fieldWysiwyg %}
         <div>
             {% if entity.fieldWysiwyg.processed %}
-                {{ entity.fieldWysiwyg.processed }}
+                {{ entity.fieldWysiwyg.processed | phoneLinks }}
             {% elsif entity.fieldWysiwyg.0.processed %}
-                {{ entity.fieldWysiwyg.0.processed }}
+                {{ entity.fieldWysiwyg.0.processed | phoneLinks }}
             {% endif %}
         </div>
     {% endif %}
