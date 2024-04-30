@@ -24,10 +24,11 @@
                                 Print
                             </button>
                             {% if fieldPdfVersion != empty and fieldPdfVersion.entity != empty %}
-                                <a href="{{ fieldPdfVersion.entity.fieldDocument.entity.url }}" download>
-                                    <i class="fa fa-download vads-u-padding-right--1"></i>
-                                    Download press release (PDF)
-                                </a>
+                                <va-link
+                                    href="{{ fieldPdfVersion.entity.fieldDocument.entity.url }}"
+                                    download
+                                    text="Download press release (PDF)"
+                                />
                             {% endif %}
                         </div>
                         <p class="va-introtext vads-u-font-size--lg vads-u-margin-top--3">{{ fieldAddress.locality }}
@@ -46,8 +47,8 @@
                                         <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.title }}{% if c.fieldDescription != empty %}, {{ c.fieldDescription }} {% endif %}</p>
                                         <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.fieldPhoneNumber }}</p>
                                         {% if c.fieldEmailAddress != empty %}
-                                            <p class="vads-u-margin-top--1 vads-u-margin-bottom--0"><a
-                                                        href="mailto:{{ c.fieldEmailAddress }}">{{ c.fieldEmailAddress }}</a>
+                                            <p class="vads-u-margin-top--1 vads-u-margin-bottom--0"><va-link
+                                                        href="mailto:{{ c.fieldEmailAddress }}" text="{{ c.fieldEmailAddress }}" />
                                             </p>
                                         {% endif %}
                                     </div>
@@ -65,11 +66,11 @@
                                     <li class="vads-u-margin-bottom--1">
                                         {% case a.entityBundle %}
                                         {% when 'document' %}
-                                            <a href="{{ a.fieldDocument.entity.url }}" download>{{ a.name }}</a>
+                                            <va-link href="{{ a.fieldDocument.entity.url }}" download text="{{ a.name }}" />
                                         {% when 'image' %}
-                                            <a href="{{ a.image.url }}" download>{{ a.name }}</a>
+                                            <va-link href="{{ a.image.url }}" download text="{{ a.name }}" />
                                         {% when 'video' %}
-                                            <a href="{{ a.fieldMediaVideoEmbedField }}">{{ a.name }}</a>
+                                            <va-link href="{{ a.image.url }}" text="{{ a.name }}" />
                                         {%  endcase %}
                                     </li>
                                 </ul>
@@ -82,8 +83,8 @@
                     <section class="vads-u-margin-bottom--3">
                         {{ fieldOffice.entity.fieldPressReleaseBlurb.processed }}
                     </section>
-                    <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-                       href="{{ fieldListing.entity.entityUrl.path }}">See all news releases</a>
+                    <va-link active onClick="recordEvent({ event: 'nav-secondary-button-click' });"
+                       href="{{ fieldListing.entity.entityUrl.path }}" text="See all news releases" />
                 </article>
                 <!-- Last updated & feedback button-->
                   {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
