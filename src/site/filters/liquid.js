@@ -305,24 +305,24 @@ module.exports = function registerFilters() {
     // so fallback to just rendering the phone number as passed in as text
 
     return separated.processed
-      ? `<va-telephone contact="${separated.phoneNumber}" extension="${
-          separated.extension
-        }" ${attributes || ''} ${
-          describedBy ? `message-aria-describedby="${describedBy}"` : ''
+      ? `<va-telephone contact="${separated.phoneNumber}"${
+          separated.extension ? ` extension="${separated.extension}"` : ''
+        }${attributes ? ` ${attributes}` : ''}${
+          describedBy ? ` message-aria-describedby="${describedBy}"` : ''
         }></va-telephone>`
-      : `<a href="tel:${phoneNumber}">${phoneNumber}</a>`;
+      : `<a href="tel:+1${phoneNumber}">${phoneNumber}</a>`;
   };
   liquid.filters.separatePhoneNumberExtension = phoneNumber => {
     if (!phoneNumber) {
       return null;
     }
-    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/i;
     const match = phoneRegex.exec(phoneNumber);
     if (!match || !match[1] || !match[2] || !match[3]) {
       // Short number or not a normal format
       return { phoneNumber, extension: '', processed: false };
     }
-    const phone = match[1] + match[2] + match[3];
+    const phone = `${match[1]}-${match[2]}-${match[3]}`;
     // optional extension matching x1234 (match 4) or ext1234 (match 5)
     const extension = match[4] || match[5] || '';
 
