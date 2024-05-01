@@ -212,6 +212,7 @@
             ],
             "title": "Major Brent Taylor Vet Center Outstation",
             "entityBundle": "vet_center_outstation",
+            "status": false,
             "fieldFacilityLocatorApiId": "vc_5141OS",
             "fieldOfficialName": "Major Brent Taylor Vet Center Outstation",
             "fieldOperatingStatusFacility": "normal",

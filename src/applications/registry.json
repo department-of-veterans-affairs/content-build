@@ -1628,7 +1628,7 @@
     "rootUrl": "/ds-v3-playground",
     "productId": "63fa0a80-e79d-47e7-9cce-e03a8edb2535",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1827,11 +1827,31 @@
     }
   },
   {
+    "appName": "10-7959a CHAMPVA Claim Form",
+    "entryName": "10-7959a",
+    "rootUrl": "/ivc-champva/10-7959a",
+    "productId": "e6afb103-521b-46a2-b29c-245f6c95d3af",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "21-4138 Statement in Support of a Claim",
     "entryName": "4138-ss",
     "rootUrl": "/supporting-forms-for-claims/support-statement-21-4138",
     "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
     "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Foreign Medical Program Cover",
+    "entryName": "fmp-cover-sheet",
+    "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
+    "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
+     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
