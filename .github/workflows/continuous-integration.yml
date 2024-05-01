@@ -306,7 +306,7 @@ jobs:
             node_modules
 
       - name: Update browserslist
-        run: npx update-browserslist-db@1.0.13
+        run: yarn exec -- browserslist --update-db
 
       - name: Annotate ESLint results
         run: yarn run eslint --ext .js --ext .jsx  --format ./script/github-actions/eslint-annotation-format.js .
