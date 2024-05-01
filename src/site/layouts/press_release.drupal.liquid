@@ -27,7 +27,8 @@
                                 <va-link
                                     href="{{ fieldPdfVersion.entity.fieldDocument.entity.url }}"
                                     download
-                                    text="Download press release (PDF)"
+                                    filetype="PDF"
+                                    text="Download press release"
                                 />
                             {% endif %}
                         </div>
@@ -66,11 +67,11 @@
                                     <li class="vads-u-margin-bottom--1">
                                         {% case a.entityBundle %}
                                         {% when 'document' %}
-                                            <va-link href="{{ a.fieldDocument.entity.url }}" download text="{{ a.name }}" />
+                                            <va-link filetype="PDF" href="{{ a.fieldDocument.entity.url }}" download text="{{ a.name }}" />
                                         {% when 'image' %}
-                                            <va-link href="{{ a.image.url }}" download text="{{ a.name }}" />
+                                            <va-link filetype="JPG" href="{{ a.image.url }}" download text="Download {{ a.name }}" />
                                         {% when 'video' %}
-                                            <va-link href="{{ a.image.url }}" text="{{ a.name }}" />
+                                            <va-link href="{{ a.fieldMediaVideoEmbedField }}" text="{{ a.name }}" />
                                         {%  endcase %}
                                     </li>
                                 </ul>
