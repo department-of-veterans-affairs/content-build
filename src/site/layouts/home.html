@@ -10,22 +10,26 @@
 
       <!-- top row -->
       <div class="hub-links-row">
-      {% for card in cards %}
+        {% for card in cards %}
         <div class="hub-links-container" data-e2e="bucket">
-          <h2 class="heading-level-3 vads-u-margin-top--0"><i class="icon-large-baseline icon-heading hub-icon-{{card.hub}} hub-color-{{card.hub}} vads-u-margin-right--0p5"></i>{{ card.heading }}</h2>
+          <h2 class="heading-level-3 vads-u-margin-top--0"><i
+              class="icon-large-baseline icon-heading hub-icon-{{card.hub}} hub-color-{{card.hub}} vads-u-margin-right--0p5"></i>{{
+            card.heading }}</h2>
           <ul class="hub-links-list vads-u-margin-bottom--0">
             {% assign parentCard = card %}
 
             {% for link in card.links %}
-              <li><a data-nav-path="{{parentCard.heading}}->{% if link.nav_path != empty %}{{link.nav_path}}{% else %}{{ link.title }}{% endif %}" href="{{link.url}}">{{link.title}}</a></li>
+            <li><a
+                data-nav-path="{{parentCard.heading}}->{% if link.nav_path != empty %}{{link.nav_path}}{% else %}{{ link.title }}{% endif %}"
+                href="{{link.url}}">{{link.title}}</a></li>
             {% endfor %}
           </ul>
         </div>
         {% if card.end_row == true and forloop.last != true %}
-        </div>
-        <div class="hub-links-row">
+      </div>
+      <div class="hub-links-row">
         {% endif %}
-      {% endfor %}
+        {% endfor %}
       </div>
     </div>
 
@@ -37,16 +41,18 @@
   <section>
     <section id="homepage-benefits">
       <div class="usa-grid usa-grid-full homepage-benefits-row">
-      {% for hub in hubs %}
+        {% for hub in hubs %}
         <div class="usa-width-one-third" data-e2e="hub">
-          <h3 class="heading-level-4"><a href="{{ hub.url }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i class="icon-small icon-heading hub-icon-{{hub.hub}} hub-background-{{hub.hub}} white vads-u-margin-right--0p5"></i>{{hub.heading}}</a></h4>
-          <p class="vads-u-margin-top--0">{{hub.description}}</p>
+          <h3 class="heading-level-4"><a href="{{ hub.url }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i
+                class="icon-small icon-heading hub-icon-{{hub.hub}} hub-background-{{hub.hub}} white vads-u-margin-right--0p5"></i>{{hub.heading}}</a>
+            </h4>
+            <p class="vads-u-margin-top--0">{{hub.description}}</p>
         </div>
         {% if hub.end_row == true and forloop.last != true %}
-        </div>
-        <div class="usa-grid usa-grid-full homepage-benefits-row">
+      </div>
+      <div class="usa-grid usa-grid-full homepage-benefits-row">
         {% endif %}
-      {% endfor %}
+        {% endfor %}
       </div>
     </section>
 
@@ -65,7 +71,8 @@
         </div>
 
         <div class="usa-width-one-third">
-          <button onclick="recordEvent({ event: 'nav-main-vcl' });" class="homepage-button vcl va-overlay-trigger" data-show="#modal-crisisline">
+          <button onclick="recordEvent({ event: 'nav-main-vcl' });" class="homepage-button vcl va-overlay-trigger"
+            data-show="#modal-crisisline">
             <div class="icon-wrapper vcl"></div>
             <div class="button-inner">
               <span>Talk to a Veterans Crisis Line responder now</span>
@@ -74,7 +81,8 @@
         </div>
 
         <div class="usa-width-one-third" id="myva-login">
-          <button onclick="recordEvent({ event: 'nav-main-sign-in' });" class="homepage-button signin-signup-modal-trigger">
+          <button onclick="recordEvent({ event: 'nav-main-sign-in' });"
+            class="homepage-button signin-signup-modal-trigger">
             <div class="icon-wrapper">
               <i class="fas fa-user-circle homepage-button-icon"></i>
             </div>
@@ -86,35 +94,34 @@
 
       </div>
     </section>
-  </div>
-
-  <section class="usa-grid usa-grid-full">
-    <div class="va-h-ruled--stars"></div>
-  </section>
-
-
-  <section id="homepage-news">
-
-    <div class="usa-grid usa-grid-full">
-    {% for story in news %}
-      <div class="usa-width-one-third homepage-news-story" data-e2e="news">
-        <div class="homepage-image-wrapper">
-          <img class="lazy" width="552" data-src="{{ story.img }}" alt="{{ story.alt }}"/>
-        </div>
-        <h4 class="homepage-news-story-title"><a class="no-external-icon" href="{{ story.href }}"
-          onClick="recordEvent({ event: 'nav-footer-news-story' });"/>{{ story.title }}</a></h4>
-        <p class="homepage-news-story-desc">{{ story.description }}</p>
-      </div>
-      {% if hub.end_row == true and forloop.last != true %}
-      </div>
-      <div class="usa-grid usa-grid-full">
-      {% endif %}
-    {% endfor %}
     </div>
 
-  </section>
+    <section class="usa-grid usa-grid-full">
+      <div class="va-h-ruled--stars"></div>
+    </section>
 
-  <div data-widget-type="shifted-vets-banner"></div>
+
+    <section id="homepage-news">
+
+      <div class="usa-grid usa-grid-full">
+        {% for story in news %}
+        <div class="usa-width-one-third homepage-news-story" data-e2e="news">
+          <div class="homepage-image-wrapper">
+            <img class="lazy" width="552" data-src="{{ story.img }}" alt="{{ story.alt }}" />
+          </div>
+          <h4 class="homepage-news-story-title"><a class="no-external-icon" href="{{ story.href }}"
+              onClick="recordEvent({ event: 'nav-footer-news-story' });" />{{ story.title }}</a></h4>
+          <p class="homepage-news-story-desc">{{ story.description }}</p>
+        </div>
+        {% if hub.end_row == true and forloop.last != true %}
+      </div>
+      <div class="usa-grid usa-grid-full">
+        {% endif %}
+        {% endfor %}
+      </div>
+
+    </section>
+
 
 </main> <!-- end #content -->
 
@@ -129,7 +136,7 @@
       // Check to see if we found the hub link.
       if (hubLinksList[i]) {
         // Add a click handler to the hub link to track clicks in analytics.
-        hubLinksList[i].addEventListener('click', function(event) {
+        hubLinksList[i].addEventListener('click', function (event) {
           recordEvent({
             event: 'nav-zone-one',
             'nav-path': event ? event.target.dataset.navPath : null,

@@ -125,7 +125,10 @@ const vbaFacilityFragment = `
             }
           }
           reverseFieldOfficeNode(
-            filter: {conditions: [{field: "type", value: ["vba_facility_service"]}]}
+            filter: {conditions: [
+              {field: "type", value: ["vba_facility_service"]},
+              {field: "status", value: ["1"]}
+            ]}
           ) {
             entities {
               ... on NodeVbaFacilityService {
@@ -229,7 +232,11 @@ const vbaFacilityFragment = `
               }
             }
           }
-          reverseFieldVbaRegionFacilityListNode {
+          reverseFieldVbaRegionFacilityListNode (
+            filter: {conditions: [
+              {field: "status", value: ["1"]}
+            ]}
+          ){
             count
             entities {
               entityId
