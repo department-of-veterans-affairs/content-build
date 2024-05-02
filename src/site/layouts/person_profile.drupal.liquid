@@ -83,12 +83,12 @@
 
                         {% if fieldPhotoAllowHiresDownload and fieldMedia %}
                             <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2" id="download-full-size-photo-link">
-                                <va-link href="{{ fieldMedia.hiRes.image.derivative.url }}" download text="Download full size photo" />
+                                <va-link filetype="JPG" href="{{ fieldMedia.hiRes.image.derivative.url }}" download text="Download full size photo" />
                             </div>
                         {% endif %}
                         {% if fieldCompleteBiography %}
                             <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2">
-                                <va-link href="{{ fieldCompleteBiography.entity.url }}" download text="Download full bio (PDF)" />
+                                <va-link filetype="PDF" href="{{ fieldCompleteBiography.entity.url }}" download text="Download full bio" />
                             </div>
                         {% endif %}
                     {% endif %}
