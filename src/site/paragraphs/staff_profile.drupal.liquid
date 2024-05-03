@@ -53,7 +53,7 @@
         vads-u-font-weight--normal
         vads-u-margin--0
         vads-u-margin-bottom--1">
-          <b>Phone:</b> {{ bio.fieldPhoneNumber | processPhoneToVaTelephoneOrFallback :  '', '' }}
+          <strong>Phone:</strong> {{ bio.fieldPhoneNumber | processPhoneToVaTelephoneOrFallback :  '', '' }}
         </p>
       {% endif %}
       {% if bio.fieldEmailAddress %}
