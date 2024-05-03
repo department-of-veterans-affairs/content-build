@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign, no-continue */
+const { escapeRegExp } = require('lodash');
 
 function rewriteAWSUrls(options) {
   return (files, metalsmith, done) => {
@@ -10,7 +11,10 @@ function rewriteAWSUrls(options) {
         .forEach(fileName => {
           const file = files[fileName];
           let contents = file.contents.toString();
-          const regex = new RegExp(options['drupal-address'], 'g');
+          const regex = new RegExp(
+            escapeRegExp(options['drupal-address']),
+            'g',
+          );
           contents = contents.replace(regex, file.drupalSite);
 
           file.contents = Buffer.from(contents);
