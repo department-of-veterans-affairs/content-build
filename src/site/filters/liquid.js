@@ -1900,4 +1900,12 @@ module.exports = function registerFilters() {
     }
     return true;
   };
+
+  liquid.filters.replaceQuotesForFacilityName = name => {
+    if (!name.includes('"') || !name) {
+      return name;
+    }
+
+    return `${name.replace('"', '&#8220;')}`;
+  };
 };
