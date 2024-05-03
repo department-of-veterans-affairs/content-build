@@ -13,7 +13,7 @@
     <va-telephone
       contact="{{ partialPhoneNumber | removeDashes }}"
       extension="{{ partialPhoneExtension | default: '' }}"
-      {% if !fax %}message-aria-describedby="{{ phoneLabel | default: 'Phone' }}"{% endif  %}
+      {% if !fax %}message-aria-describedby="{{ phoneLabel | default: 'Phone' }}"{% endif %}
       {% if fax %}not-clickable{% endif %}
       {% if sms %}sms{% endif %}
       {% if tty %}tty{% endif %}
