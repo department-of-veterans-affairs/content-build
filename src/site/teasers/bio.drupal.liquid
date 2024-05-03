@@ -49,13 +49,11 @@ Example data:
     {% endif %}
     <div>
         {% if node.entityUrl.path != empty and node.fieldIntroText and node.fieldBody.processed %}
-            <a class="
-                vads-u-font-family--serif
-                vads-u-font-weight--bold
-                vads-u-display--block
-                vads-u-margin-bottom--1
-                vads-u-font-size--lg"
-               href="{{ node.entityUrl.path }}">{{ node.fieldNameFirst }} {{ node.fieldLastName }} {{ node.fieldSuffix }}</a>
+            <va-link
+                class="vads-u-display--block vads-u-margin-bottom--1 vads-u-font-family--serif vads-u-font-weight--bold vads-u-font-size--lg"
+                href="{{ node.entityUrl.path }}"
+                text="{{ node.fieldNameFirst }} {{ node.fieldLastName }} {{ node.fieldSuffix }}"
+            ></va-link>
         {% else %}
             <span class="
                 vads-u-font-family--serif
@@ -102,8 +100,8 @@ Example data:
         vads-u-margin-bottom--0
         vads-u-font-size--base
         medium-screen:vads-u-font-size--lg">
-               <b>Email:</b> <a target="blank"
-                          href="{{ node.fieldEmailAddress }}">{{ node.fieldEmailAddress }}</a>
+               <b>Email:</b> 
+               <va-link type="email" href="mailto:{{ node.fieldEmailAddress }}" text="{{ node.fieldEmailAddress }}"></va-link>
             </p>
         {% endif %}
     </div>

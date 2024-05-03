@@ -58,9 +58,7 @@
                             vads-u-margin--0
                             vads-u-margin-bottom--0p5
                             vads-u-font-weight--regular">
-                                <span class="vads-u-font-weight--bold">Email:</span> <a target="blank"
-                                    href="mailto:{{ fieldEmailAddress }}">{{ fieldEmailAddress }}</a>
-                            </p>
+                                <span class="vads-u-font-weight--bold">Email:</span> <va-link type="email" href="mailto:{{ fieldEmailAddress }}" text="{{ fieldEmailAddress }}"></va-link></p>
                             {% endif %}
                             {% if fieldPhoneNumber %}
                             <p class="
@@ -73,7 +71,6 @@
                         </div>
                     </div>
 
-
                     {% if fieldCompleteBiographyCreate %}
                         <div class="va-introtext vads-u-margin-bottom--2">
                             <p class="va-introtext vads-u-margin-bottom--0">{{ fieldIntroText }}</p>
@@ -85,14 +82,12 @@
 
                         {% if fieldPhotoAllowHiresDownload and fieldMedia %}
                             <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2" id="download-full-size-photo-link">
-                                <i class="va-c-social-icon fas fa-download" aria-hidden="true"></i> <a href="{{ fieldMedia.hiRes.image.derivative.url }}"
-                                    download>Download full size photo</a>
+                                <va-link filetype="JPG" href="{{ fieldMedia.hiRes.image.derivative.url }}" download text="Download full size photo" />
                             </div>
                         {% endif %}
                         {% if fieldCompleteBiography %}
                             <div class="vads-u-align-content--flex-end va-c-margin-top--auto vads-u-margin-bottom--2">
-                                <i class="va-c-social-icon fas fa-download"></i> <a href="{{ fieldCompleteBiography.entity.url }}"
-                                    download>Download full bio (PDF)</a>
+                                <va-link filetype="PDF" href="{{ fieldCompleteBiography.entity.url }}" download text="Download full bio" />
                             </div>
                         {% endif %}
                     {% endif %}
