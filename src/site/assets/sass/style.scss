@@ -23,7 +23,14 @@
   margin: 2em auto;
 }
 
+.homepage-email-update-wrapper {
+  .homepage-email-input::part(form-header) {
+    font-size: 2rem;
+  }
+}
+
 // START: Styles for mobile app promo banner
+
 .smartbanner {
   position: absolute;
   top: 0;

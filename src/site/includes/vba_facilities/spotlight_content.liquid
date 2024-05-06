@@ -8,16 +8,12 @@
             {{ entity.fieldDescription.processed | drupalToVaPath | phoneLinks }}
         </div>
     {% endif %}
-    {% if entity.fieldCta.entity.fieldButtonLink %}
-        {% if entity.fieldCta.entity.fieldButtonLink.url %}
-            <div class="vads-u-padding-top--1">
-                <p>
-                    <va-link 
-                        href="{{ entity.fieldCta.entity.fieldButtonLink.url }}" 
-                        text="{{ entity.fieldCta.entity.fieldButtonLabel }}" 
-                    ></va-link>
-                </p>
-            </div>
-        {% endif %}
+    {% if entity.fieldCta.entity.fieldButtonLink.url.path %}
+        <p class="vads-u-padding-top--1">
+            <va-link 
+                href="{{ entity.fieldCta.entity.fieldButtonLink.url.path }}" 
+                text="{{ entity.fieldCta.entity.fieldButtonLabel }}" 
+            ></va-link>
+        </p>
     {% endif %}
 </div>

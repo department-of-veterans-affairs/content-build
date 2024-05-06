@@ -80,9 +80,13 @@
               {{ fieldVaFormUsage.processed }}
             </div>
           {% endif %}
+
+          <h3 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h3>
         {% endif %}
 
-        <h3 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h3>
+        {% if !fieldVaFormUsage %}
+          <h2 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h2>
+        {% endif %}
         <a
           href="{{ fieldVaFormUrl.uri }}"
           target="_blank"
