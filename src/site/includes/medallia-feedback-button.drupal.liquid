@@ -15,9 +15,9 @@ Feedback
 <button 
   {% capture surveyPath %}
     {% if template == 'education-sco' %}
-      /school-administrators
+      "/school-administrators"
     {% else %}
-      {{ entityUrl.path }}
+      {{ entityUrl.path }} 
     {% endif %}
   {% endcapture %}
   onclick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: surveyPath }})"   
