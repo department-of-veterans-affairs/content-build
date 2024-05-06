@@ -1239,9 +1239,7 @@ module.exports = function registerFilters() {
         entity: {
           fieldButtonLink: {
             uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
-            url: {
-              path: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
-            },
+            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
           },
           fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
@@ -1760,7 +1758,7 @@ module.exports = function registerFilters() {
     return `vetCenterHoursKey_${forloopindex}`;
   };
 
-  liquid.filters.getSurvey = (buildtype, originalUrl) => {
+  liquid.filters.getSurvey = (buildtype, url) => {
     const surveyData = medalliaSurveys;
     const defaultStagingSurvey = SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY;
     const defaultProdSurvey = SURVEY_NUMBERS.DEFAULT_PROD_SURVEY;
@@ -1768,17 +1766,10 @@ module.exports = function registerFilters() {
       buildtype,
     );
     const effectiveBuildType = isStaging ? 'staging' : 'production';
-    // Check if originalUrl is a valid string
-    if (typeof originalUrl !== 'string' || originalUrl === null) {
+
+    if (typeof url !== 'string' || url === null) {
       return isStaging ? defaultStagingSurvey : defaultProdSurvey;
     }
-
-    // Ensure URL ends without a slash for consistent matching
-    const url =
-      originalUrl.charAt(originalUrl.length - 1) === '/'
-        ? originalUrl.slice(0, -1)
-        : originalUrl;
-
     // Check if the URL exists in the main custom survey URL object
     if (url in surveyData.urls) {
       const surveyInfo = surveyData.urls[url];

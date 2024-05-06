@@ -1,5 +1,10 @@
 <button 
-  onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: entityUrl.path || window.location.pathname }})"   
+{% case template %}
+  {% when 'education-sco' %}
+    onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: "/school-administrators" }})"   
+  {% else %}
+    onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: entityUrl.path }})"   
+{% endcase %}
   type="button"
   class="feedback-button usa-button"
   id="mdFormButton"
