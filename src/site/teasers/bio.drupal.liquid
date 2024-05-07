@@ -91,8 +91,7 @@ Example data:
         vads-u-margin--0
         vads-u-margin-bottom--1
         vads-u-font-size--base">
-            <b>Phone:</b> <a
-                href="tel:{{ node.fieldPhoneNumber }}">{{ node.fieldPhoneNumber }}</a>
+            <strong>Phone:</strong> {{ node.fieldPhoneNumber |  processPhoneToVaTelephoneOrFallback :  '', '' }}
         </p>
         {% endif %}
         {% if node.fieldEmailAddress %}
