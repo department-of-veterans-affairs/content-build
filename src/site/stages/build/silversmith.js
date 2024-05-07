@@ -4,7 +4,7 @@ const Metalsmith = require('metalsmith');
 const chalk = require('chalk');
 const AsciiTable = require('ascii-table');
 const path = require('path');
-const fs = require('fs');
+const fs = require('graceful-fs');
 
 const metalsmithTimgingData = {};
 
@@ -177,19 +177,9 @@ module.exports = () => {
   smith.startGarbageCollection = function startGarbageCollection() {
     if (global.gc) {
       garbageCollectionInterval = setInterval(() => {
-        let memBefore = null;
-        try {
-          memBefore = process.memoryUsage();
-        } catch (e) {
-          console.error('Error getting memBefore memory usage:', e);
-        }
+        const memBefore = process.memoryUsage();
         global.gc();
-        let memAfter = null;
-        try {
-          memAfter = process.memoryUsage();
-        } catch (e) {
-          console.error('Error getting memAfter memory usage:', e);
-        }
+        const memAfter = process.memoryUsage();
         if (global.verbose) printGarbageCollectionStats(memBefore, memAfter);
       }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
     } else {
