@@ -26,9 +26,13 @@ describe('Vet Center Locations Operating Status', () => {
   });
 
   it('should not render a normal operating status for satellite', async () => {
+    const updatedNormalFixture = { ...fixture };
+    updatedNormalFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusFacility =
+      'normal';
+    updatedNormalFixture.fieldOffice.entity.reverseFieldOfficeNode.entities[0].fieldOperatingStatusMoreInfo = null;
     const rendered = await renderHTML(
       'src/site/layouts/vet_center_locations_list.drupal.liquid',
-      fixture,
+      updatedNormalFixture,
     );
     const operatingStatus = queryAllByTestId(
       rendered,
