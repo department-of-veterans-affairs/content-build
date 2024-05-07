@@ -55,7 +55,7 @@
                       class="facility-title-width vads-u-font-weight--bold"
                       onclick="recordEvent({'event':'nav-health-care-facility-status-click'});"
                       href="{{ status.entity.entityUrl.path }}"
-                      text="{{ status.entity.title }}"
+                      text="{{ status.entity.title | encode }}"
                     />
                   </dt>
                   <dd class="vads-l-col--12 medium-screen:vads-l-col--7 medium-screen:vads-u-border-top--1px vads-u-border-color--gray-light">
