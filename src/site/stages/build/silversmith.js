@@ -177,9 +177,19 @@ module.exports = () => {
   smith.startGarbageCollection = function startGarbageCollection() {
     if (global.gc) {
       garbageCollectionInterval = setInterval(() => {
-        const memBefore = process.memoryUsage();
+        let memBefore = null;
+        try {
+          memBefore = process.memoryUsage();
+        } catch (e) {
+          console.error('Error getting memBefore memory usage:', e);
+        }
         global.gc();
-        const memAfter = process.memoryUsage();
+        let memAfter = null;
+        try {
+          memAfter = process.memoryUsage();
+        } catch (e) {
+          console.error('Error getting memAfter memory usage:', e);
+        }
         if (global.verbose) printGarbageCollectionStats(memBefore, memAfter);
       }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
     } else {
