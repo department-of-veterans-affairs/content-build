@@ -43,7 +43,7 @@
               <h3>
                 Phone
               </h3>
-              <p><a href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+              <p>{{ fieldPhoneNumber | processPhoneToVaTelephoneOrFallback :  '', '' }}
               </p>
             {% endif %}
             <div class="vads-u-margin-bottom--3">

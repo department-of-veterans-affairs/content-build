@@ -27,10 +27,12 @@ VA.gov contains many pages that include content generated from a Drupal-based co
 When testing changes to static pages, or to see what your application looks like
 on VA.gov, follow the sections below to build these static pages.
 
+**Note**: Fetching content from Drupal requires SOCKS to be set up and running. Run `vtk socks on` in your terminal before attempting to pull any Drupal content for content-build.
+
 #### Prepare Your Environment Settings
 
 The Content-Build can pull fresh content directly from Drupal endpoints. To do this the request for content must be authenticated. 
-If pulling fresh content you must ensure that these command line arguments or environmnet variables are set:
+If pulling fresh content you must ensure that these command line arguments or environment variables are set:
 
 | Command Line Argument | Environment Variables | Purpose |
 | ---- | ----------- | ----------- |
@@ -45,7 +47,7 @@ Authentication credentials are stored in a local .gitignore'd file `.env`. An ex
 File contents:
 ```
 # .env file contents
-DRUPAL_ADDRESS=https://content-build-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+DRUPAL_ADDRESS=https://cms-8ry6zt2asg946vdfuiryyamuc9gkuyzc.demo.cms.va.gov/
 DRUPAL_USERNAME=content_build_api
 DRUPAL_PASSWORD=drupal8
 ```
@@ -88,6 +90,71 @@ of the content** with the following:
 ```sh
 yarn fetch-drupal-cache
 ```
+
+#### Troubleshooting
+The [vagov-content](https://github.com/department-of-veterans-affairs/vagov-content) repository sits adjacent to `content-build` in the same way that `vets-website` does. The markdown files in `vagov-content` are pulled in during the build process. If a markdown file is present in `vagov-content`, but the template was deleted in `content-build`, you'll see a build error that reads something like this:
+
+```
+[Error: ENOENT: no such file or directory, open '{file path on your local machine}']
+```
+
+If this happens to you, make sure you have the latest from the `vagov-content` on your local machine, and try building `content-build` again.
+
+## Optimizing Build Time
+Another method to optimize your build / watch time for content-build is to ignore templates and assets that you do not need for local testing. For instance, if you are only working on Campaign Landing Pages, you can skip building a lot of the other content types (such as Resources & Support pages and Events). If you do not need to pull any Drupal assets (such as images), you can skip that step too. This will tremendously speed up your build time.
+
+1. Open `src/site/stages/build/drupal/individual-queries.js`
+2. Find the `getNodeQueries` function
+3. Comment out any content types you will not need (leaving in basic page / landing page queries just in case). If you're working on Campaign Landing Pages, your function might look like this:
+
+```
+function getNodeQueries(entityCounts) {
+  return {
+    ...getNodePageQueries(entityCounts),
+    GetNodeLandingPages,
+    // ...getNodeVaFormQueries(entityCounts),
+    // ...getNodeHealthCareRegionPageQueries(entityCounts),
+    // ...getNodePersonProfileQueries(entityCounts),
+    // ...getNodeOfficeQueries(entityCounts),
+    // ...getNodeHealthCareLocalFacilityPageQueries(entityCounts),
+    // ...getNodeHealthServicesListingPageQueries(entityCounts),
+    // ...getNewsStoryQueries(entityCounts),
+    // ...getPressReleaseQueries(entityCounts),
+    // GetNodePressReleaseListingPages,
+    // ...getNodeEventListingQueries(entityCounts),
+    // ...getNodeEventQueries(entityCounts),
+    // ...getVaPoliceQueries(entityCounts),
+    // GetNodeStoryListingPages,
+    // GetNodeLocationsListingPages,
+    // GetNodeLeadershipListingPages,
+    // GetNodeVamcOperatingStatusAndAlerts,
+    // GetNodePublicationListingPages,
+    // ...getNodeHealthCareRegionDetailPageQueries(entityCounts),
+    // ...getNodeQaQueries(entityCounts),
+    // GetNodeMultipleQaPages,
+    // GetNodeStepByStep,
+    // GetNodeMediaListImages,
+    // GetNodeChecklist,
+    // GetNodeMediaListVideos,
+    // GetNodeSupportResourcesDetailPage,
+    GetNodeBasicLandingPage,
+    GetCampaignLandingPages,
+    // ...getVetCenterQueries(entityCounts),
+    // ...getVbaFacilityQueries(entityCounts),
+    // GetVetCenterLocations,
+    // GetPolicyPages,
+    // GetBillingAndInsurancePages,
+    // GetRegisterForCarePages,
+    // GetMedicalRecordsOfficePages,
+  };
+}
+```
+
+4. Open `src/site/stages/build/index.js`
+5. Find this line: `smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');` and comment it out
+6. Delete your `.cache/localhost/drupal/pages.json` file
+7. Make sure you are running SOCKS (`vtk socks on`)
+8. Run `yarn build --pull-drupal && yarn watch` in your terminal to get the dev server running with your new template selections
 
 ## Working in GitHub Codespaces
 

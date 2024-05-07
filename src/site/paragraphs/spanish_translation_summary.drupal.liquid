@@ -21,7 +21,7 @@
     <span class="additional-info-title">{{ entity.fieldTextExpander }}</span>
     <span id="spanishhelptext-{{ entity.entityId }}">
       <div class="additional-info-content">
-        {{ entity.fieldWysiwyg.processed }}
+        {{ entity.fieldWysiwyg.processed | phoneLinks }}
       </div>
     </span>
   </div>

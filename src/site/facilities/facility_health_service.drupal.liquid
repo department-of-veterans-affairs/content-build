@@ -45,7 +45,7 @@
         {% endif %}
 
         {% if healthService.fieldBody.processed %}
-          <div>{{ healthService.fieldBody.processed | replace: 'h3', 'h4' }}</div>
+          <div>{{ healthService.fieldBody.processed | replace: 'h3', 'h4' | phoneLinks }}</div>
         {% endif %}
       </div>
     </va-accordion-item>
