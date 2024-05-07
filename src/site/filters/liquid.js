@@ -1900,9 +1900,4 @@ module.exports = function registerFilters() {
     }
     return true;
   };
-
-  liquid.filters.replaceQuotesForFacilityName = name => {
-    console.log('name: ', name, typeof name);
-    return name.replace('"', "'").replace('"', "'");
-  };
 };
