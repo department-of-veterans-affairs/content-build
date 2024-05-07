@@ -94,7 +94,7 @@
 							<b>Fax your signed form to</b>
 						</p>
 						<p>
-							<a href="tel:{{fieldFaxNumber}}">{{fieldFaxNumber}}</a>
+							{{ fieldFaxNumber | processPhoneToVaTelephoneOrFallback: 'not-clickable', '' }}
 						</p>
 					{% endif %}
 
