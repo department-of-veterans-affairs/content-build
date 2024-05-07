@@ -1902,10 +1902,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.replaceQuotesForFacilityName = name => {
-    if (!name.includes('"') || !name) {
-      return name;
-    }
-
-    return `${name.replace('"', '&#8220;')}`;
+    console.log('name: ', name, typeof name);
+    return name.replace('"', "'").replace('"', "'");
   };
 };
