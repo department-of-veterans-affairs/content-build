@@ -529,7 +529,7 @@ function compilePage(page, contentData) {
   }
 
   // Add last modified date for Sitemap.
-  if (page.fieldLastSavedByAnEditor || page.changed) {
+  if (pageCompiled && (page.fieldLastSavedByAnEditor || page.changed)) {
     pageCompiled.stats = {
       mtime: new Date((page.fieldLastSavedByAnEditor ?? page.changed) * 1000),
     };
