@@ -1,8 +1,8 @@
-<div 
+<div
   {% if typeOfLocation != "nonclinical" %}
-  class="vads-u-border--1px vads-u-padding-x--2 vads-u-padding-bottom--2 vads-u-margin-y--2"
+    class="vads-u-border--1px vads-u-padding-x--2 vads-u-padding-bottom--2 vads-u-margin-y--2"
   {% endif %}
-  >
+>
   {% assign serviceLocationH = serviceLocationSubHeaderLevel %}
   {% if serviceHeader %}
     <h{{serviceLocationH}} class="vads-u-margin-bottom--0">
@@ -114,7 +114,7 @@
   {% elsif fieldPhoneNumber %}
     {% assign serviceLocationMainNumber = fieldPhoneNumber %}
   {% endif %}
-  
+
   {% comment %} if there is a main phone number and it should be used for appointments {% endcomment %}
   {% if serviceLocationMainNumber and single.fieldUseFacilityPhoneNumber %}
     <div data-testid="service-location-main-facility-phone">
@@ -146,13 +146,19 @@
       data-testid="service-location-action-link-online"
       class="vads-u-margin-top--2 vads-u-margin-bottom--1"
     >
-      <a class="vads-c-action-link--blue" href="/health-care/schedule-view-va-appointments">
+      {% if typeOfLocation == "vba" %}
+        {% assign scheduleAppointmentLink = "https://va.my.site.com/VAVERA/s/" %}
+      {% else %}
+        {% assign scheduleAppointmentLink = "/health-care/schedule-view-va-appointments" %}
+      {% endif %}
+
+      <a class="vads-c-action-link--blue" href="{{ scheduleAppointmentLink }}">
         Schedule an appointment online
       </a>
     </div>
   {% endif %}
 
-  
+
 
   {% comment %} Includes header for clinic name {% endcomment %}
   {% if single.fieldServiceLocationAddress.entity %}
