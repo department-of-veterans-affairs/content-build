@@ -1,18 +1,3 @@
-{% comment %} <button 
-{% case template %}
-  {% when 'education-sco' %}
-    onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: "/school-administrators" }})"   
-  {% else %}
-    onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: entityUrl.path }})"   
-{% endcase %}
-  type="button"
-  class="feedback-button usa-button"
-  id="mdFormButton"
-  aria-label="give feedback"
->
-Feedback
-</button> {% endcomment %}
-
 <button 
   {% if entityUrl.path %}
     onClick="KAMPYLE_ONSITE_SDK.showForm('{{ buildtype | getSurvey: entityUrl.path }}')"   
