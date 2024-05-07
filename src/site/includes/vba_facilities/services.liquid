@@ -43,8 +43,9 @@
           {% assign regionalServiceDescription = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldRegionalServiceDescripti %}
         {% endif %}
 
+        {% assign onlineSelfService = false %}
         {% if entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
-          {% assign onlineSelfService = entity.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
+          {% assign onlineSelfService = entity.facilityService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
         {% elsif entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
           {% assign onlineSelfService = entity.regionalService.fieldServiceNameAndDescripti.entity.fieldOnlineSelfService %}
         {% endif %}
@@ -68,7 +69,7 @@
             <p>{{ vbaServiceDescription | drupalToVaPath | phoneLinks }}</p>
           {% endif %}
 
-          {% if onlineSelfService.url %}
+          {% if onlineSelfService.title and onlineSelfService.url.path %}
             <h4>
               Manage your benefits online
             </h4>
