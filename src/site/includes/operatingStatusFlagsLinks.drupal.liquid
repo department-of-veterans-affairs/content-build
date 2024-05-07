@@ -1,5 +1,5 @@
 {% if fieldOperatingStatusFacility == 'notice' %}
-  <va-alert status="info" visible>
+  <va-alert status="info" slim visible>
     <va-link
       active
       class="operating-status-link"
@@ -11,7 +11,7 @@
     />
   </va-alert>
 {% elsif fieldOperatingStatusFacility == 'limited' %}
-  <va-alert status="warning" visible>
+  <va-alert status="warning" slim visible>
     <va-link
       active
       class="operating-status-link"
@@ -23,7 +23,7 @@
     />
   </va-alert>
 {% elsif fieldOperatingStatusFacility == 'closed' %}
-  <va-alert status="error" visible>
+  <va-alert status="error" slim visible>
     <va-link
       active
       class="operating-status-link"
