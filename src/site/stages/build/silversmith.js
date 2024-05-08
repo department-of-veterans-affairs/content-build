@@ -192,7 +192,8 @@ module.exports = () => {
         } catch (e) {
           console.error('Error getting memAfter memory usage:', e);
         }
-        if (global.verbose) printGarbageCollectionStats(memBefore, memAfter);
+        if (global.verbose && memBefore && memAfter)
+          printGarbageCollectionStats(memBefore, memAfter);
       }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
     } else {
       throw new Error(
