@@ -31,11 +31,17 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
               {% assign is_social_media_links = true %}
             {% endif %}
 
+            {% assign is_call_us = false %}
+            {% if subs.subhead == 'Call us' %}
+              {% assign is_call_us = true %}
+            {% endif %}
 
             {% for link in subs.links %}
               {% if link.url != empty %}
                 {% if navPath == 'Connect with us' %}
                 <li>
+                {% elseif is_call_us %}
+                <li class="vads-u-margin-bottom--2 vads-u-margin-top--0">
                 {% else %}
                 <li class="vads-u-margin-bottom--0 vads-u-margin-top--0">
                 {% endif %}
