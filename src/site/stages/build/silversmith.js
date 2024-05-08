@@ -4,7 +4,7 @@ const Metalsmith = require('metalsmith');
 const chalk = require('chalk');
 const AsciiTable = require('ascii-table');
 const path = require('path');
-const fs = require('graceful-fs');
+const fs = require('fs');
 
 const metalsmithTimgingData = {};
 
@@ -177,9 +177,21 @@ module.exports = () => {
   smith.startGarbageCollection = function startGarbageCollection() {
     if (global.gc) {
       garbageCollectionInterval = setInterval(() => {
-        const memBefore = process.memoryUsage();
+        // https://www.npmjs.com/package/graceful-fs#sync-methods
+        // graceful-fs patches fs, but cannot patch sync methods like process.memoryUsage uses
+        let memBefore = null;
+        try {
+          memBefore = process.memoryUsage();
+        } catch (e) {
+          console.error('Error getting memBefore memory usage:', e);
+        }
         global.gc();
-        const memAfter = process.memoryUsage();
+        let memAfter = null;
+        try {
+          memAfter = process.memoryUsage();
+        } catch (e) {
+          console.error('Error getting memAfter memory usage:', e);
+        }
         if (global.verbose) printGarbageCollectionStats(memBefore, memAfter);
       }, GARBAGE_COLLECTION_FREQUENCY_SECONDS * 1000);
     } else {
