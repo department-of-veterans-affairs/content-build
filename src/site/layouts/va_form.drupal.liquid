@@ -96,16 +96,10 @@
           lang="{{ fieldVaFormLanguage }}"
           >
             <va-icon
-              class="vads-u-color--link"
+              class="vads-u-margin-right--0p5"
               icon="file_download"
-              size="4"
-              aria-hidden="true"
+              size="3"
             ></va-icon>
-            <i
-              aria-hidden="true"
-              class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-              role="presentation"
-            > </i>
           {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
           {{ translatedDownloadText }} (PDF)
         </a>
@@ -162,10 +156,11 @@
                   data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
                   lang="{{ vaForm.entity.fieldVaFormLanguage }}"
                   >
-                    <i
-                      aria-hidden="true"
-                      class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                    > </i>
+                    <va-icon
+                      class="vads-u-margin-right--0p5"
+                      icon="file_download"
+                      size="3"
+                    ></va-icon>
                     {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}
                     {{ translatedDownloadText }} (PDF)
                 </a>
