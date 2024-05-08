@@ -177,6 +177,8 @@ module.exports = () => {
   smith.startGarbageCollection = function startGarbageCollection() {
     if (global.gc) {
       garbageCollectionInterval = setInterval(() => {
+        // https://www.npmjs.com/package/graceful-fs#sync-methods
+        // graceful-fs patches fs, but cannot patch sync methods like process.memoryUsage uses
         let memBefore = null;
         try {
           memBefore = process.memoryUsage();
