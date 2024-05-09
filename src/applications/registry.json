@@ -1847,9 +1847,22 @@
     "entryName": "fmp-cover-sheet",
     "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
-     "template": {
+    "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21P-0969 Income and Asset Statement Form",
+    "entryName": "income-and-asset-statement",
+    "rootUrl": "/income-and-asset-statement-form-21p-0969",
+    "template": {
+      "title": "VA Form 21P-0969",
+      "heading": "Income and Asset Statement Form",
+      "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true
     }
   }
 ]
