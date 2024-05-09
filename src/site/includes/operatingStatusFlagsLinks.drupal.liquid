@@ -1,8 +1,7 @@
 {% if fieldOperatingStatusFacility == 'notice' %}
   <va-alert status="info" slim visible>
     <va-link
-      active
-      class="operating-status-link"
+      class="vads-u-font-weight--bold operating-status-link"
       onclick="recordEvent({
       'event': 'nav-info-box-click',
       'infoBoxText': 'Facility notice'});"
@@ -13,8 +12,7 @@
 {% elsif fieldOperatingStatusFacility == 'limited' %}
   <va-alert status="warning" slim visible>
     <va-link
-      active
-      class="operating-status-link"
+      class="vads-u-font-weight--bold operating-status-link"
       onclick="recordEvent({
       'event': 'nav-info-box-click',
       'infoBoxText': 'Facility limited'});"
@@ -25,8 +23,7 @@
 {% elsif fieldOperatingStatusFacility == 'closed' %}
   <va-alert status="error" slim visible>
     <va-link
-      active
-      class="operating-status-link"
+      class="vads-u-font-weight--bold operating-status-link"
       onclick="recordEvent({
       'event': 'nav-info-box-click',
       'infoBoxText': 'Facility closed'});"
