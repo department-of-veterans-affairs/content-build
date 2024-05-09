@@ -1925,4 +1925,92 @@ module.exports = function registerFilters() {
     }
     return true;
   };
+
+  // In some instances, we get a dynamic hub name from Drupal
+  // In order to use a <va-icon>, we need to map the hub name from Drupal
+  // to its hub icon in the Design System (https://design.va.gov/foundation/icons)
+  // This filter gives us a <va-icon> pointing to the correct hub icon
+  //
+  // Visual example: /initiatives/vote/ under "Learn more about related VA benefits"
+  liquid.filters.getHubIcon = (hub, iconSize, iconClasses) => {
+    const hubIcons = {
+      'health-care': {
+        icon: 'medical_services',
+        backgroundColor: 'hub-health-care',
+      },
+      careers: {
+        icon: 'work',
+        backgroundColor: 'hub-careers',
+      },
+      'life-insurance': {
+        icon: 'shield',
+        backgroundColor: 'hub-life-insurance',
+      },
+      'service-member': {
+        icon: 'flag',
+        backgroundColor: 'hub-service-member',
+      },
+      disability: {
+        icon: 'description',
+        backgroundColor: 'hub-disability',
+      },
+      pension: {
+        icon: 'handshake',
+        backgroundColor: 'hub-pension',
+      },
+      burials: {
+        icon: 'star',
+        backgroundColor: 'hub-burials',
+      },
+      'family-member': {
+        icon: 'groups',
+        backgroundColor: 'hub-family-member',
+      },
+      education: {
+        icon: 'school',
+        backgroundColor: 'hub-education',
+      },
+      housing: {
+        icon: 'home',
+        backgroundColor: 'hub-housing',
+      },
+      records: {
+        icon: 'identification',
+        backgroundColor: 'hub-records',
+      },
+      'va-dept-info': {
+        icon: 'location_city',
+        backgroundColor: 'primary-dark',
+      },
+    };
+
+    if (!hub || !hubIcons[hub]) {
+      return null;
+    }
+
+    const hubData = hubIcons[hub];
+
+    return `
+      <va-icon
+        icon="${hubData.icon}"
+        size="${iconSize}"
+        class="icon-small white hub-icon vads-u-background-color--${hubData.backgroundColor} vads-u-display--flex vads-u-align-items--center vads-u-justify-content--center ${iconClasses}"
+      ></va-icon>
+    `;
+  };
+
+  liquid.filters.formatSocialPlatform = platform => {
+    const twitterString = platform.match(/twitter/i);
+    const youTubeString = platform.match(/youtube/i);
+
+    if (twitterString) {
+      return platform.replace(twitterString, 'X (formerly Twitter)');
+    }
+
+    if (youTubeString) {
+      return platform.replace(youTubeString, 'YouTube');
+    }
+
+    return platform;
+  };
 };
