@@ -331,6 +331,7 @@ const nodeEventWithoutBreadcrumbs = `
               entityBundle
               entityId
               ... on NodeOffice {
+                title
                 fieldBody {
                   value
                   format
