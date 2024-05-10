@@ -104,13 +104,15 @@
           {{ translatedDownloadText }} (PDF)
         </a>
 
-        <div
-          aria-label="Form Upload"
-          data-widget-type="form-upload"
-          data-has-online-tool="{% if fieldVaFormToolUrl %}true{% else %}false{% endif %}"
-          data-form-number="{{ fieldVaFormNumber }}"
-          role="region"
-        ></div>
+        {% if fieldVaFormUpload %}
+          <div
+            aria-label="Form Upload"
+            data-widget-type="form-upload"
+            data-has-online-tool="{% if fieldVaFormToolUrl %}true{% else %}false{% endif %}"
+            data-form-number="{{ fieldVaFormNumber }}"
+            role="region"
+          ></div>
+        {% endif %}
 
         {% if fieldAlert.length %}
           {% for alert in fieldAlert %}
