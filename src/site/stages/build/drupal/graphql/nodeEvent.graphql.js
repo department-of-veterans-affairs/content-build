@@ -132,6 +132,7 @@ const nodeEvent = `
               entityBundle
               entityId
               ... on NodeOffice {
+                title
                 fieldBody {
                   value
                   format
@@ -158,6 +159,7 @@ const nodeEvent = `
               entityBundle
               entityId
               ... on NodeOffice {
+                title
                 fieldBody {
                   value
                   format
@@ -358,6 +360,7 @@ const nodeEventWithoutBreadcrumbs = `
               entityBundle
               entityId
               ... on NodeOffice {
+                title
                 fieldBody {
                   value
                   format
