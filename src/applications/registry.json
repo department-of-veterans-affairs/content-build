@@ -1818,7 +1818,17 @@
     "entryName": "fmp-cover-sheet",
     "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
-     "template": {
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Fill out your form to appoint a VA accredited representative or VSO",
+    "entryName": "appoint-a-representative",
+    "rootUrl": "/get-help-from-accredited-representative/appoint-rep",
+    "productId": "ded52e11-c5f2-493d-b7bb-ce9c630b38f3",
+    "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
