@@ -1,3 +1,4 @@
+{% assign hasAddress = false %}
 {% if serviceLocationAddress.fieldUseFacilityAddress and facilityAddress %}
   {% assign hasAddress = true %}
   {% assign addressData = facilityAddress %}
