@@ -21,19 +21,19 @@
 
   
   {% if hasAddress %}
-    {% if addressData.addressLine1 %}
+    {% if addressData.addressLine1 and not serviceLocationAddress.fieldUseFacilityAddress %}
       <span class="vads-u-margin-bottom--0">
         {{ addressData.addressLine1 }}
       </span>
     {% endif %}
 
-    {% if addressData.addressLine2 %}
+    {% if addressData.addressLine2 and not serviceLocationAddress.fieldUseFacilityAddress %}
       <span class="vads-u-margin-bottom--0">
         {{ addressData.addressLine2 }}
       </span>
     {% endif %}
 
-    {% if addressData.locality %}
+    {% if addressData.locality and not serviceLocationAddress.fieldUseFacilityAddress %}
       {% if addressData.administrativeArea%}
         {% if addressData.postalCode %}
           <span class="vads-u-margin-bottom--0">
