@@ -4,8 +4,12 @@
       <!-- Derive most recent date -->
       {% assign now = '' | currentTime %}
       {% assign mostRecentDate = mostRecentDate | deriveMostRecentDate: now %}
+      <va-icon
+      class="va-c-social-icon vads-u-margin-right--0p5"
+      icon="calendar_today" 
+      size="3"
+    /></va-icon>   
       <va-link
-        calendar
         data-description="{{ fieldDescription }}"
         data-end="{{ mostRecentDate.endValue }}"
         data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
@@ -18,8 +22,12 @@
     </li>
 
     <li class="vads-u-margin-bottom--2p5">
-      <i aria-hidden="true" class="va-c-social-icon fab fa-facebook vads-u-margin-right--0p5" role="presentation"></i>
-      <va-link
+      <va-icon
+        class="va-c-social-icon vads-u-margin-right--0p5"
+        icon="facebook" 
+        size="3"
+      /></va-icon>      
+    <va-link
         class="va-js-share-link"
         href="https://www.facebook.com/sharer/sharer.php?href={{ hostUrl }}{{ entityUrl.path }}"
         text="Share on Facebook"
@@ -27,7 +35,11 @@
     </li>
 
     <li>
-      <i aria-hidden="true" class="va-c-social-icon fab fa-twitter vads-u-margin-right--0p5" role="presentation"></i>
+      <va-icon
+        class="va-c-social-icon vads-u-margin-right--0p5"
+        icon="twitter" 
+        size="3"
+      /></va-icon>       
       <va-link
         class="va-js-share-link"
         href="https://twitter.com/intent/tweet?text={{ title }}&url={{ hostUrl }}{{ entityUrl.path }}"
