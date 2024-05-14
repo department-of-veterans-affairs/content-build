@@ -1,3 +1,13 @@
+{% assign hasAddress = false %}
+{% if serviceLocationAddress.fieldUseFacilityAddress and facilityAddress %}
+  {% assign hasAddress = true %}
+  {% assign addressData = facilityAddress %}
+{% elsif location.entity.fieldServiceLocationAddress %}
+  {% assign hasAddress = true %}
+  {% assign addressData = location.entity.fieldServiceLocationAddress.entity.fieldAddress %}
+{% endif %}
+
+{% if serviceLocationAddress.fieldClinicName or hasAddress or serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
 <div class="vads-u-display--flex vads-u-flex-direction--column">
   {% if serviceLocationAddress.fieldClinicName %}
     <h{{ serviceLocationAddressHeaderLevel }}>
@@ -9,34 +19,32 @@
     </h{{ serviceLocationAddressHeaderLevel }}>
   {% endif %}
 
-  {% comment %}
-    Include street address only if fieldUseFacilityAddress is false
-  {% endcomment %}
-  {% if serviceLocationAddress.fieldUseFacilityAddress == false %}
-    {% if serviceLocationAddress.fieldAddress.addressLine1 %}
+  
+  {% if hasAddress %}
+    {% if addressData.addressLine1 %}
       <span class="vads-u-margin-bottom--0">
-        {{ serviceLocationAddress.fieldAddress.addressLine1 }}
+        {{ addressData.addressLine1 }}
       </span>
     {% endif %}
 
-    {% if serviceLocationAddress.fieldAddress.addressLine2 %}
+    {% if addressData.addressLine2 %}
       <span class="vads-u-margin-bottom--0">
-        {{ serviceLocationAddress.fieldAddress.addressLine2 }}
+        {{ addressData.addressLine2 }}
       </span>
     {% endif %}
 
-    {% if serviceLocationAddress.fieldAddress.locality %}
-      {% if serviceLocationAddress.fieldAddress.administrativeArea%}
-        {% if serviceLocationAddress.fieldAddress.postalCode %}
+    {% if addressData.locality %}
+      {% if addressData.administrativeArea%}
+        {% if addressData.postalCode %}
           <span class="vads-u-margin-bottom--0">
-            {{ serviceLocationAddress.fieldAddress.locality }},
-            {{ serviceLocationAddress.fieldAddress.administrativeArea }}
-            {{ serviceLocationAddress.fieldAddress.postalCode }}
+            {{ addressData.locality }},
+            {{ addressData.administrativeArea }}
+            {{ addressData.postalCode }}
           </span>
         {% endif %}
       {% endif %}
     {% endif %}
-  {% endif %}
+  {% endif %} {% comment %} hasAddress {% endcomment %}
 
   {% comment %}
     Always include building, wing, floor, etc.
@@ -45,6 +53,7 @@
     <span class="vads-u-margin-bottom--0">
       {{ serviceLocationAddress.fieldBuildingNameNumber }}
     </span>
+    {% assign marginTop = 0 %}
   {% endif %}
 
   {% if serviceLocationAddress.fieldWingFloorOrRoomNumber %}

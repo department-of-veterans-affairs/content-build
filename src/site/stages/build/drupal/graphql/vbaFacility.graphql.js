@@ -2,6 +2,7 @@ const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 const draftContentOverride = process.env.UNPUBLISHED_CONTENT === 'true';
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
+const appointmentServiceLocationItems = require('./file-fragments/appointmentServiceLocationItems.graphql');
 
 const vbaFacilityFragment = `
       fragment vbaFacilityFragment on NodeVbaFacility {
@@ -147,6 +148,7 @@ const vbaFacilityFragment = `
                       id
                       entityId
                       fieldHours
+                      ${appointmentServiceLocationItems}
                       fieldOfficeHours {
                         starthours
                         endhours
@@ -279,6 +281,7 @@ const vbaFacilityFragment = `
                     ... on ParagraphServiceLocation {
                       id
                       entityId
+                      ${appointmentServiceLocationItems}
                       fieldHours
                       fieldAdditionalHoursInfo
                       fieldOfficeHours {

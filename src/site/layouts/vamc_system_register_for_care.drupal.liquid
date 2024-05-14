@@ -33,6 +33,7 @@
             {% assign registerForCareFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Register for care' %}
             {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
               facilities = registerForCareFacilities
+              nonClinicalHeaderLevel = 3
             %}
           {% endif %}
 
