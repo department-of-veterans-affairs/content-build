@@ -5,7 +5,9 @@
         <span class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}.</span>
     {% endif %}
 
-	{% if !hours.starthours && !hours.endhours && !hours.comment %}
+	{% if hours.starthours == hours.endhours and hours.starthours == 0 and !hours.comment %}
+		Open 24 hours
+	{% elsif !hours.starthours && !hours.endhours && !hours.comment %}
         Closed
 	{% else %}
 		{% if hours.starthours && hours.starthours != -1 %}
