@@ -10,11 +10,19 @@
 	{% elsif !hours.starthours && !hours.endhours && !hours.comment %}
         Closed
 	{% else %}
-		{% if hours.starthours && hours.starthours != -1 %}
+		{% if hours.starthours == 0 %}
+		midnight to
+		{% elsif hours.starthours == 1200 %}
+		noon to 
+		{% elsif hours.starthours && hours.starthours != -1 %}
 			{{ hours.starthours | officeHoursTimeFormatter}}
 			to
 		{% endif %}
-		{% if hours.endhours && hours.endhours != -1 %}
+		{% if hours.endhours == 0 %}
+		  midnight
+		{% elsif hours.endhours == 1200 %}
+			noon
+		{% elsif hours.endhours && hours.endhours != -1 %}
 			{{ hours.endhours | officeHoursTimeFormatter}}
 		{% endif %}
     {% endif %}
