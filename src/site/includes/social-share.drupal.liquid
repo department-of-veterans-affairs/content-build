@@ -4,11 +4,6 @@
       <!-- Derive most recent date -->
       {% assign now = '' | currentTime %}
       {% assign mostRecentDate = mostRecentDate | deriveMostRecentDate: now %}
-      <va-icon
-      class="va-c-social-icon vads-u-margin-right--0p5"
-      icon="calendar_today" 
-      size="3"
-    /></va-icon>   
       <va-link
         data-description="{{ fieldDescription }}"
         data-end="{{ mostRecentDate.endValue }}"
@@ -18,6 +13,7 @@
         href="{{ entityUrl.path }}"
         id="add-to-calendar-link"
         text="Add to Calendar"
+        calendar
       />
     </li>
 
@@ -37,13 +33,13 @@
     <li>
       <va-icon
         class="va-c-social-icon vads-u-margin-right--0p5"
-        icon="twitter" 
+        icon="x" 
         size="3"
       /></va-icon>       
       <va-link
         class="va-js-share-link"
         href="https://twitter.com/intent/tweet?text={{ title }}&url={{ hostUrl }}{{ entityUrl.path }}"
-        text="Share on Twitter"
+        text="Share on X (formerly Twitter)"
       />
     </li>
   </ul>
