@@ -1409,6 +1409,16 @@
     }
   },
   {
+    "appName": "Form Upload Flow",
+    "entryName": "form-upload-flow",
+    "rootUrl": "/form-upload",
+    "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Submit a lay or witness statement to support a VA claim",
     "entryName": "10210-lay-witness-statement",
     "rootUrl": "/supporting-forms-for-claims/lay-witness-statement-form-21-10210",
