@@ -3077,3 +3077,29 @@ describe('officeHoursDataFormat', () => {
     expect(liquid.filters.officeHoursDataFormat(data).length, 7);
   });
 });
+
+describe('formatSocialPlatform', () => {
+  it('should properly format a twitter platform', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration twitter'),
+    ).to.equal('Veterans Administration X (formerly Twitter)');
+  });
+
+  it('should properly format a youtube platform', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration Youtube'),
+    ).to.equal('Veterans Administration YouTube');
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration youtube'),
+    ).to.equal('Veterans Administration YouTube');
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration YOUTUBE'),
+    ).to.equal('Veterans Administration YouTube');
+  });
+
+  it('should return a non-youtube platform without formatting', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration Instagram'),
+    ).to.equal('Veterans Administration Instagram');
+  });
+});
