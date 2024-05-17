@@ -73,13 +73,13 @@
               <div data-template="includes/social-share" id="va-c-social-share">
                 <ul class="usa-unstyled-list" role="list">
                   <li class="vads-u-margin-bottom--2p5">
-                    <i class="va-c-social-icon fab fa-facebook vads-u-margin-right--0p5" aria-hidden="true"></i>
+                    <va-icon icon="facebook" size="3" class="vads-u-color--link-default"></va-icon>
                     <va-link class="va-js-share-link" href="https://www.facebook.com/sharer/sharer.php?href={{ hostUrl }}{{ entityUrl.path }}" text="Share on Facebook">
                     </va-link>
                   </li>
                   <li>
-                    <i class="va-c-social-icon fab fa-twitter vads-u-margin-right--0p5" aria-hidden="true"></i>
-                    <va-link class="va-js-share-link" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ hostUrl }}{{ entityUrl.path }}" text="Share on Twitter">
+                    <va-icon icon="x" size="3" class="vads-u-color--link-default"></va-icon>
+                    <va-link class="va-js-share-link" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ hostUrl }}{{ entityUrl.path }}" text="Share on X (formerly Twitter)">
                     </va-link>
                   </li>
                 </ul>
@@ -536,7 +536,7 @@
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  <i aria-hidden="true" class="fas fa-envelope vads-u-padding-right--1"></i>
+                  <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}
                 </a>
               </div>
@@ -553,8 +553,8 @@
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  <i aria-hidden="true" class="fab fa-twitter vads-u-padding-right--1"></i>
-                  {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Twitter
+                  <va-icon icon="x" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
+                  {{ fieldRelatedOffice.entity.fieldExternalLink.title }} X (formerly Twitter)
                 </a>
               </div>
             </div>
@@ -570,7 +570,7 @@
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                <i aria-hidden="true" class="fab fa-facebook vads-u-padding-right--1"></i>
+                  <va-icon icon="facebook" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Facebook
                 </a>
               </div>
@@ -587,7 +587,7 @@
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  <i aria-hidden="true" class="fab fa-youtube vads-u-padding-right--1"></i>
+                  <va-icon icon="youtube" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube
                 </a>
               </div>
@@ -604,7 +604,7 @@
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  <i aria-hidden="true" class="fab fa-linkedin vads-u-padding-right--1"></i>
+                  <va-icon icon="linkedin" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Linkedin
                 </a>
               </div>
@@ -621,7 +621,7 @@
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  <i aria-hidden="true" class="fab fa-instagram vads-u-padding-right--1"></i>
+                  <va-icon icon="instagram" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Instagram
                 </a>
               </div>
@@ -646,15 +646,11 @@
         <div class="vads-l-row medium-screen:vads-u-margin-x--neg6">
           {% for benefitCategory in fieldBenefitCategories %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--6 {% if !forloop.first %}vads-u-margin-top--2 medium-screen:vads-u-margin-top--0{% endif %}">
-              <div class="medium-screen:vads-u-margin-x--6">
+              <div class="medium-screen:vads-u-margin-left--6 medium-screen:vads-u-margin-right--5">
                 <div class="vads-u-display--flex vads-u-align-items--center">
-                  <i
-                    aria-hidden="true"
-                    class="vads-u-flex--auto icon-small white vads-u-margin-right--1 hub-icon-{{ benefitCategory.entity.fieldTitleIcon }} hub-background-{{ benefitCategory.entity.fieldTitleIcon }}"
-                  ></i>
+                  {{ benefitCategory.entity.fieldTitleIcon | getHubIcon: '3', 'vads-u-margin-right--1' }}
                   <h3 class="vads-u-margin--0 vads-u-font-size--h4">
                   <va-link
-                    class="vads-u-flex--1"
                     disable-analytics
                     onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'VA Benefits', 'clp-section-title': 'Learn more about related VA benefits', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ benefitCategory.entity.title | encode }}' });"
                     href="{{ benefitCategory.entity.entityUrl.path }}"
