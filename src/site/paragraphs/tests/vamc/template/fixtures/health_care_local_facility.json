@@ -1,0 +1,654 @@
+{
+  "entityBundle": "health_care_local_facility",
+  "entityId": "2263",
+  "entityPublished": true,
+  "title": "Washington VA Medical Center",
+  "vid": 841445,
+  "fieldFacilityLocatorApiId": "vha_688",
+  "fieldIntroText": "Our hospital provides primary care and specialty health services, including bariatric surgery, mental health care, palliative and hospice care, suicide prevention, women’s health care, and more. Below, you’ll find our address and hours, parking and transportation information, and the other health services we offer at Washington DC VA Medical Center. ",
+  "fieldSupplementalStatus": null,
+  "fieldSupplementalStatusMoreI": null,
+  "fieldOperatingStatusFacility": "normal",
+  "fieldAddress": {
+    "addressLine1": "50 Irving Street, Northwest",
+    "locality": "Washington",
+    "administrativeArea": "DC",
+    "postalCode": "20422-0001"
+  },
+  "fieldPhoneNumber": "202-745-8000",
+  "fieldMentalHealthPhone": "202-745-8000, ext. 58156",
+  "fieldOfficeHours": [
+    {
+      "day": 0,
+      "starthours": null,
+      "endhours": null,
+      "comment": "24/7"
+    },
+    {
+      "day": 1,
+      "starthours": null,
+      "endhours": null,
+      "comment": "24/7"
+    },
+    {
+      "day": 2,
+      "starthours": null,
+      "endhours": null,
+      "comment": "24/7"
+    },
+    {
+      "day": 3,
+      "starthours": null,
+      "endhours": null,
+      "comment": "24/7"
+    },
+    {
+      "day": 4,
+      "starthours": null,
+      "endhours": null,
+      "comment": "24/7"
+    },
+    {
+      "day": 5,
+      "starthours": null,
+      "endhours": null,
+      "comment": "24/7"
+    },
+    {
+      "day": 6,
+      "starthours": null,
+      "endhours": null,
+      "comment": "24/7"
+    }
+  ],
+  "fieldMainLocation": true,
+  "fieldLocalHealthCareService": [
+    {
+      "entity": {
+        "status": true,
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "fieldOnlineSchedulingAvail": "yes",
+              "fieldUseFacilityPhoneNumber": false,
+              "fieldOtherPhoneNumbers": [
+                {
+                  "entity": {
+                    "fieldPhoneNumber": "202-745-8000",
+                    "fieldPhoneNumberType": "tel",
+                    "fieldPhoneExtension": "option 2",
+                    "fieldPhoneLabel": "COVID-19 appointment line "
+                  }
+                }
+              ],
+              "fieldOfficeVisits": "yes_appointment_only",
+              "fieldApptIntroTextType": "customize_text",
+              "fieldApptIntroTextCustom": "COVID-19 vaccine appointments are available at your primary care clinic. A primary care clinic will be assigned if you do not already have one. Call 202-745-8000, option 2, to schedule an appointment. ",
+              "status": true,
+              "fieldServiceLocationAddress": {
+                "entity": {
+                  "fieldUseFacilityAddress": true,
+                  "fieldClinicName": null,
+                  "fieldBuildingNameNumber": null,
+                  "fieldWingFloorOrRoomNumber": null,
+                  "fieldAddress": {
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "additionalName": null,
+                    "administrativeArea": "",
+                    "postalCode": "",
+                    "locality": "",
+                    "organization": null,
+                    "dependentLocality": null,
+                    "countryCode": "US",
+                    "sortingCode": null
+                  }
+                }
+              },
+              "fieldEmailContacts": [],
+              "fieldOfficeHours": [
+                {
+                  "day": 1,
+                  "starthours": 800,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 2,
+                  "starthours": 800,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 3,
+                  "starthours": 800,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 4,
+                  "starthours": 800,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 5,
+                  "starthours": 800,
+                  "endhours": 1600,
+                  "comment": ""
+                }
+              ],
+              "fieldHours": "2",
+              "fieldAdditionalHoursInfo": null,
+              "fieldPhone": [],
+              "fieldUseMainFacilityPhone": true
+            }
+          }
+        ],
+        "fieldReferralRequired": "0",
+        "fieldAdministration": {
+          "entity": {
+            "name": "VA Washington DC health care",
+            "entityId": "214"
+          }
+        },
+        "fieldRegionalHealthService": {
+          "entity": {
+            "status": true,
+            "entityBundle": "regional_health_care_service_des",
+            "fieldBody": {
+              "processed": "<ul>\n<li>COVID-19 vaccines for eligible Veterans and staff</li>\n</ul>\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"1e5280a8-9a24-4b0b-806c-81d4e676b865\" href=\"/washington-dc-health-care/programs/covid-19-vaccines\" title=\"COVID-19 vaccines\">Learn more about COVID-19 vaccines at VA</a></p>\n"
+            },
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "entityId": "321",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": "coronavirus, COVID-19",
+                "name": "COVID-19 vaccines",
+                "description": {
+                  "processed": "We offer COVID-19 vaccines to all Veterans enrolled in VA health care. This includes Veterans who live or travel outside of the U.S. and are eligible for the VA Foreign Medical Program."
+                },
+                "fieldTricareDescription": "We offer COVID-19 vaccines to TRICARE enrollees and DoD employees. ",
+                "parent": [
+                  {
+                    "entity": null
+                  }
+                ],
+                "fieldHealthServiceApiId": "covid19Vaccine"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "status": true,
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "fieldOnlineSchedulingAvail": "yes",
+              "fieldUseFacilityPhoneNumber": false,
+              "fieldOtherPhoneNumbers": [
+                {
+                  "entity": {
+                    "fieldPhoneNumber": "202-745-8000",
+                    "fieldPhoneNumberType": "tel",
+                    "fieldPhoneExtension": "58270",
+                    "fieldPhoneLabel": "Audiology and Speeh Clinic"
+                  }
+                }
+              ],
+              "fieldOfficeVisits": "yes_with_or_without_appointment",
+              "fieldApptIntroTextType": "customize_text",
+              "fieldApptIntroTextCustom": "Speech and specialized audiology appointments require referrals. Walk-in hearing aid assistance is available daily from 10 a.m. to 4 p.m. Call to schedule all other appointments at this clinic. ",
+              "status": true,
+              "fieldServiceLocationAddress": {
+                "entity": {
+                  "fieldUseFacilityAddress": true,
+                  "fieldClinicName": "Audiology and Speech Clinic",
+                  "fieldBuildingNameNumber": "Building 6",
+                  "fieldWingFloorOrRoomNumber": "Room 1H-100",
+                  "fieldAddress": {
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "additionalName": null,
+                    "administrativeArea": "",
+                    "postalCode": "",
+                    "locality": "",
+                    "organization": null,
+                    "dependentLocality": null,
+                    "countryCode": "US",
+                    "sortingCode": null
+                  }
+                }
+              },
+              "fieldEmailContacts": [],
+              "fieldOfficeHours": [
+                {
+                  "day": 1,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 2,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 3,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 4,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 5,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                }
+              ],
+              "fieldHours": "2",
+              "fieldAdditionalHoursInfo": null,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "fieldPhoneExtension": "58270",
+                    "fieldPhoneLabel": "Audiology and Speech Clinic",
+                    "fieldPhoneNumber": "202-745-8000",
+                    "fieldPhoneNumberType": "tel"
+                  }
+                }
+              ],
+              "fieldUseMainFacilityPhone": false
+            }
+          }
+        ],
+        "fieldReferralRequired": "not_applicable",
+        "fieldAdministration": {
+          "entity": {
+            "name": "VA Washington DC health care",
+            "entityId": "214"
+          }
+        },
+        "fieldRegionalHealthService": {
+          "entity": {
+            "status": true,
+            "entityBundle": "regional_health_care_service_des",
+            "fieldBody": {
+              "processed": "<p>Our Audiology and Speech Pathology clinic provides diagnostic and rehabilitative services, VA compensation and pension examinations, and screening for employee hearing conservation. We offer a full range of audiology and speech pathology services like:</p>\n<ul>\n<li>Hearing and balance evaluations</li>\n<li>Selection, management, and repair of hearing aids and assistive listening device assessments</li>\n<li>Evaluation, programming, and management of cochlear implants and bone-anchored implants</li>\n<li>Evaluation and treatment for auditory processing disorder</li>\n<li>Services that help with speech, language, fluency, voice, cognitive communication, swallowing, stuttering, and laryngectomy (surgical removal of the larynx, which contains your vocal cords)</li>\n</ul>\n<p>To reach the Audiology and Speech clinic, call 202-745-8000, ext. 58270.</p>\n<p><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"938ea13f-7872-41bc-8efe-9482713387f9\" href=\"/health-care/order-hearing-aid-batteries-and-accessories\" title=\"Order hearing aid batteries and accessories from VA\">Learn more about VA hearing aids</a></p>\n"
+            },
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "entityId": "33",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Hearing, speech, and balance",
+                "fieldCommonlyTreatedCondition": "tinnitus, vertigo, hearing loss, vestibular conditions, swallowing conditions",
+                "name": "Audiology and speech",
+                "description": {
+                  "processed": "We diagnose and treat conditions affecting your hearing, speech&nbsp;or balance. These include hearing loss, tinnitus (noise or ringing the ears) &amp; dizziness—also speech, language, voice&nbsp;or swallowing disorders."
+                },
+                "fieldTricareDescription": null,
+                "parent": [
+                  {
+                    "entity": null
+                  }
+                ],
+                "fieldHealthServiceApiId": "audiology"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "status": false,
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "fieldOnlineSchedulingAvail": "yes",
+              "fieldUseFacilityPhoneNumber": false,
+              "fieldOtherPhoneNumbers": [
+                {
+                  "entity": {
+                    "fieldPhoneNumber": "202-745-8000",
+                    "fieldPhoneNumberType": "tel",
+                    "fieldPhoneExtension": "54535",
+                    "fieldPhoneLabel": "Allergy Clinic "
+                  }
+                }
+              ],
+              "fieldOfficeVisits": "yes_appointment_only",
+              "fieldApptIntroTextType": "use_default_text",
+              "fieldApptIntroTextCustom": null,
+              "status": true,
+              "fieldServiceLocationAddress": {
+                "entity": {
+                  "fieldUseFacilityAddress": true,
+                  "fieldClinicName": "Allergy Clinic",
+                  "fieldBuildingNameNumber": "Main Building ",
+                  "fieldWingFloorOrRoomNumber": "4th Floor, Room 4E-225",
+                  "fieldAddress": {
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "additionalName": null,
+                    "administrativeArea": "",
+                    "postalCode": "",
+                    "locality": "",
+                    "organization": null,
+                    "dependentLocality": null,
+                    "countryCode": "US",
+                    "sortingCode": null
+                  }
+                }
+              },
+              "fieldEmailContacts": [],
+              "fieldOfficeHours": [
+                {
+                  "day": 1,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 2,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 3,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 4,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 5,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                }
+              ],
+              "fieldHours": "2",
+              "fieldAdditionalHoursInfo": null,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "fieldPhoneExtension": "54535",
+                    "fieldPhoneLabel": "Allergy Clinic ",
+                    "fieldPhoneNumber": "202-745-8000",
+                    "fieldPhoneNumberType": "tel"
+                  }
+                }
+              ],
+              "fieldUseMainFacilityPhone": true
+            }
+          }
+        ],
+        "fieldReferralRequired": "1",
+        "fieldAdministration": {
+          "entity": {
+            "name": "VA Washington DC health care",
+            "entityId": "214"
+          }
+        },
+        "fieldRegionalHealthService": {
+          "entity": {
+            "status": true,
+            "entityBundle": "regional_health_care_service_des",
+            "fieldBody": {
+              "processed": "<p>We help Veterans on their recovery journey through outpatient and inpatient services. Our residential facility helps Veterans deal with substance abuse, homelessness, mental health, and unemployment through its 24-hour therapeutic and educational programs like:</p>\n<ul>\n<li>Rehabilitation</li>\n<li>Health maintenance</li>\n<li>Community support</li>\n</ul>\n<p><a href=\"https://www.mentalhealth.va.gov/res-vatreatmentprograms.asp\">Learn more about our VA treatment programs</a></p>\n"
+            },
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "entityId": "47",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Drug and alcohol treatment and rehabilitation",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Addiction and substance use care",
+                "description": {
+                  "processed": "We can help you overcome substance use problems from unhealthy alcohol use to life-threatening addiction. We match our services—like counseling, group therapy or medication—to your specific needs."
+                },
+                "fieldTricareDescription": null,
+                "parent": [
+                  {
+                    "entity": null
+                  }
+                ],
+                "fieldHealthServiceApiId": "addiction"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "status": true,
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "fieldOnlineSchedulingAvail": "no",
+              "fieldUseFacilityPhoneNumber": true,
+              "fieldOtherPhoneNumbers": [],
+              "fieldOfficeVisits": "yes_appointment_only",
+              "fieldApptIntroTextType": "remove_text",
+              "fieldApptIntroTextCustom": null,
+              "status": true,
+              "fieldServiceLocationAddress": {
+                "entity": {
+                  "fieldUseFacilityAddress": true,
+                  "fieldClinicName": null,
+                  "fieldBuildingNameNumber": null,
+                  "fieldWingFloorOrRoomNumber": null,
+                  "fieldAddress": {
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "additionalName": null,
+                    "administrativeArea": "",
+                    "postalCode": "",
+                    "locality": "",
+                    "organization": null,
+                    "dependentLocality": null,
+                    "countryCode": "US",
+                    "sortingCode": null
+                  }
+                }
+              },
+              "fieldEmailContacts": [],
+              "fieldOfficeHours": [],
+              "fieldHours": "1",
+              "fieldAdditionalHoursInfo": null,
+              "fieldPhone": [],
+              "fieldUseMainFacilityPhone": true
+            }
+          }
+        ],
+        "fieldReferralRequired": "not_applicable",
+        "fieldAdministration": {
+          "entity": {
+            "name": "VA Washington DC health care",
+            "entityId": "214"
+          }
+        },
+        "fieldRegionalHealthService": {
+          "entity": {
+            "status": true,
+            "entityBundle": "regional_health_care_service_des",
+            "fieldBody": {
+              "processed": "<p>Our specially trained doctors, called anesthesiologists and certified nurses, called Nurse Anesthetists, can help with your care before, during, and after surgery. They will develop a plan for your care and safety, provide medicine to keep you comfortable during your operation, and help you manage your pain after surgery. Our services include:</p>\n\n<ul>\n\t<li>General anesthesia (intravenous drugs, inhaled gasses, or some combination) to keep you pain-free and in a sleep-like state during surgery or other medical procedures</li>\n\t<li>Regional anesthesia (injecting numbing drugs around nerves) to control pain in specific parts of your body during or after surgery</li>\n\t<li>Monitoring your breathing and vital body functions while you’re under anesthesia</li>\n\t<li>Working with the rest of your care team to manage your pain medications after your operation</li>\n\t<li>Coordinating care with your other health care professionals to facilitate a smooth transition from hospital to home</li>\n</ul>"
+            },
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "entityId": "107",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": null,
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Anesthesia",
+                "description": {
+                  "processed": "The anesthesia service works to keep you comfortable, safe&nbsp;and pain-free during surgical or screening procedures."
+                },
+                "fieldTricareDescription": null,
+                "parent": [
+                  {
+                    "entity": null
+                  }
+                ],
+                "fieldHealthServiceApiId": "anesthesia"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "entity": {
+        "status": true,
+        "fieldServiceLocation": [
+          {
+            "entity": {
+              "fieldOnlineSchedulingAvail": "yes",
+              "fieldUseFacilityPhoneNumber": false,
+              "fieldOtherPhoneNumbers": [
+                {
+                  "entity": {
+                    "fieldPhoneNumber": "202-745-8000",
+                    "fieldPhoneNumberType": "tel",
+                    "fieldPhoneExtension": "57937",
+                    "fieldPhoneLabel": "Gynecology "
+                  }
+                }
+              ],
+              "fieldOfficeVisits": "yes_appointment_only",
+              "fieldApptIntroTextType": "use_default_text",
+              "fieldApptIntroTextCustom": null,
+              "status": true,
+              "fieldServiceLocationAddress": {
+                "entity": {
+                  "fieldUseFacilityAddress": true,
+                  "fieldClinicName": "Women's Health Clinic ",
+                  "fieldBuildingNameNumber": null,
+                  "fieldWingFloorOrRoomNumber": null,
+                  "fieldAddress": {
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "additionalName": null,
+                    "administrativeArea": "",
+                    "postalCode": "",
+                    "locality": "",
+                    "organization": null,
+                    "dependentLocality": null,
+                    "countryCode": "US",
+                    "sortingCode": null
+                  }
+                }
+              },
+              "fieldEmailContacts": [],
+              "fieldOfficeHours": [
+                {
+                  "day": 1,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 2,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 3,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 4,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                },
+                {
+                  "day": 5,
+                  "starthours": 730,
+                  "endhours": 1600,
+                  "comment": ""
+                }
+              ],
+              "fieldHours": "2",
+              "fieldAdditionalHoursInfo": null,
+              "fieldPhone": [
+                {
+                  "entity": {
+                    "fieldPhoneExtension": "57937",
+                    "fieldPhoneLabel": "Gynecology ",
+                    "fieldPhoneNumber": "202-745-8000",
+                    "fieldPhoneNumberType": "tel"
+                  }
+                }
+              ],
+              "fieldUseMainFacilityPhone": false
+            }
+          }
+        ],
+        "fieldReferralRequired": "0",
+        "fieldAdministration": {
+          "entity": {
+            "name": "VA Washington DC health care",
+            "entityId": "214"
+          }
+        },
+        "fieldRegionalHealthService": {
+          "entity": {
+            "status": true,
+            "entityBundle": "regional_health_care_service_des",
+            "fieldBody": {
+              "processed": "<p>Our gynecologists focus on the female reproductive system and provide services that include:</p>\n<ul>\n<li>Mammograms for breast cancer, screenings for sexually transmitted disease, and Pap tests for cervical cancer</li>\n<li>Counseling and treatment for contraception, pregnancy, and infertility</li>\n<li>Osteoporosis screening for brittle bones</li>\n<li>Exams for abnormal uterine bleeding, pelvic pain, or various cancers</li>\n<li>Primary care checkups</li>\n</ul>\n<p>To schedule an appointment with gynecology, call 202-745-8000, ext. 57937.</p>\n"
+            },
+            "fieldServiceNameAndDescripti": {
+              "entity": {
+                "entityId": "100",
+                "entityBundle": "health_care_service_taxonomy",
+                "fieldAlsoKnownAs": "Reproductive and maternal health, women's health",
+                "fieldCommonlyTreatedCondition": null,
+                "name": "Gynecology",
+                "description": {
+                  "processed": "Our specialists offer reproductive health care services for women Veterans, including contraception, pregnancy care and fertility treatment."
+                },
+                "fieldTricareDescription": "Our specialists offer reproductive health care services, including contraception, pregnancy care, and fertility treatment.",
+                "parent": [
+                  {
+                    "entity": null
+                  }
+                ],
+                "fieldHealthServiceApiId": "gynecology"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "fieldAdministration": {
+    "entity": {
+      "entityId": "214"
+    }
+  }
+}

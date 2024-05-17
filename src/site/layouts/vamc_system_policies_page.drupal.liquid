@@ -27,9 +27,9 @@
             contentType = fieldCcTopOfPageContent.fetchedBundle
           %}
 
-          {{ fieldVamcVisitationPolicy.processed }}
+          {{ fieldVamcVisitationPolicy.processed | phoneLinks }}
 
-          {{ fieldVamcOtherPolicies.processed }}
+          {{ fieldVamcOtherPolicies.processed | phoneLinks }}
 
           {% include "src/site/includes/centralized-content.drupal.liquid" with
             entity = fieldCcGenVisitationPolicy.fetched
@@ -40,8 +40,9 @@
             entity = fieldCcBottomOfPageContent.fetched
             contentType = fieldCcBottomOfPageContent.fetchedBundle
           %}
+          <va-back-to-top></va-back-to-top>
         </article>
-    <!-- Last updated & feedback button-->
+        <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
     </div>

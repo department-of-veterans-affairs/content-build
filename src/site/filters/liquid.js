@@ -276,7 +276,7 @@ module.exports = function registerFilters() {
 
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
-    const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
+    const replacePattern = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
 
     if (!data?.match(replacePattern)) {
       return data;
@@ -284,27 +284,52 @@ module.exports = function registerFilters() {
 
     return data.replace(
       replacePattern,
-      '<va-telephone target="_blank" href="tel:$1-$2" contact="$1-$2"></va-telephone>',
+      `<va-telephone contact="$1-$2-$3" extension="$4$5"></va-telephone>`,
     );
   };
+  /**
+   * @param {string} phoneNumber a string of a phone number, can be a short number or a long number, however a short number or a number with alphabetic characters will generate a <a> tag instead of a <va-telephone> tag
+   * @param {string} attributes a string of attributes like "not-clickable" or "tty" or "sms" or some combination space separated
+   * @returns string of html that is either a <va-telephone> tag or an <a> tag
+   */
+  liquid.filters.processPhoneToVaTelephoneOrFallback = (
+    phoneNumber = '',
+    attributes = '',
+    describedBy = '',
+  ) => {
+    if (!phoneNumber) {
+      return null;
+    }
+    const separated = liquid.filters.separatePhoneNumberExtension(phoneNumber);
+    // if you pass in a phone number that has alphabetic characters in it, va-telephone will not render it
+    // so fallback to just rendering the phone number as passed in as text
 
+    return separated.processed
+      ? `<va-telephone contact="${separated.phoneNumber}"${
+          separated.extension ? ` extension="${separated.extension}"` : ''
+        }${attributes ? ` ${attributes}` : ''}${
+          describedBy ? ` message-aria-describedby="${describedBy}"` : ''
+        }></va-telephone>`
+      : `<a href="tel:+1${phoneNumber}">${phoneNumber}</a>`;
+  };
   liquid.filters.separatePhoneNumberExtension = phoneNumber => {
     if (!phoneNumber) {
       return null;
     }
-    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/i;
     const match = phoneRegex.exec(phoneNumber);
     if (!match || !match[1] || !match[2] || !match[3]) {
       // Short number or not a normal format
-      return { phoneNumber, extension: '' };
+      return { phoneNumber, extension: '', processed: false };
     }
-    const phone = match[1] + match[2] + match[3];
+    const phone = `${match[1]}-${match[2]}-${match[3]}`;
     // optional extension matching x1234 (match 4) or ext1234 (match 5)
     const extension = match[4] || match[5] || '';
 
     return {
       phoneNumber: phone,
       extension,
+      processed: true,
     };
   };
 
@@ -959,6 +984,20 @@ module.exports = function registerFilters() {
     }
     return accordions;
   };
+  liquid.filters.shouldShowIconDiv = (
+    fieldOfficeVisits,
+    fieldVirtualSupport,
+    fieldReferralRequired,
+  ) => {
+    if (
+      (fieldOfficeVisits && fieldOfficeVisits !== 'no') ||
+      (fieldVirtualSupport && fieldVirtualSupport !== 'no') ||
+      fieldReferralRequired
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
     if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)
@@ -1239,9 +1278,7 @@ module.exports = function registerFilters() {
         entity: {
           fieldButtonLink: {
             uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
-            url: {
-              path: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
-            },
+            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
           },
           fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
@@ -1673,6 +1710,37 @@ module.exports = function registerFilters() {
 
   liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
 
+  // from the matrix of when to show Service Location Appointments header and text
+  liquid.filters.shouldShowServiceLocationAppointments = serviceLocation => {
+    const {
+      fieldVirtualSupport: virtualSupport,
+      fieldOfficeVisits: officeVisits,
+      fieldApptIntroTextType: introTextType,
+      fieldApptIntroTextCustom: introTextCustom,
+    } = serviceLocation;
+    const baseYesConditions = ['yes_appointment_only'];
+    const yesOffice = [
+      ...baseYesConditions,
+      'yes_walk_in_visits_only',
+      'yes_with_or_without_appointment',
+    ];
+    const yesVirtual = [
+      ...baseYesConditions,
+      'yes_veterans_can_call',
+      'virtual_visits_may_be_available',
+    ];
+    const noVisitsAndCustomIntro =
+      !officeVisits && introTextType === 'customize_text' && introTextCustom;
+    const noVisitsAndDefaultInto =
+      !officeVisits && introTextType === 'use_default_text';
+    return (
+      yesVirtual.includes(virtualSupport) ||
+      yesOffice.includes(officeVisits) ||
+      noVisitsAndCustomIntro ||
+      noVisitsAndDefaultInto
+    );
+  };
+
   // Given an array of services provided at a facility,
   // return a flattened array of service locations that
   // offer service of type `serviceType`
@@ -1899,5 +1967,93 @@ module.exports = function registerFilters() {
       return false;
     }
     return true;
+  };
+
+  // In some instances, we get a dynamic hub name from Drupal
+  // In order to use a <va-icon>, we need to map the hub name from Drupal
+  // to its hub icon in the Design System (https://design.va.gov/foundation/icons)
+  // This filter gives us a <va-icon> pointing to the correct hub icon
+  //
+  // Visual example: /initiatives/vote/ under "Learn more about related VA benefits"
+  liquid.filters.getHubIcon = (hub, iconSize, iconClasses) => {
+    const hubIcons = {
+      'health-care': {
+        icon: 'medical_services',
+        backgroundColor: 'hub-health-care',
+      },
+      careers: {
+        icon: 'work',
+        backgroundColor: 'hub-careers',
+      },
+      'life-insurance': {
+        icon: 'shield',
+        backgroundColor: 'hub-life-insurance',
+      },
+      'service-member': {
+        icon: 'flag',
+        backgroundColor: 'hub-service-member',
+      },
+      disability: {
+        icon: 'description',
+        backgroundColor: 'hub-disability',
+      },
+      pension: {
+        icon: 'handshake',
+        backgroundColor: 'hub-pension',
+      },
+      burials: {
+        icon: 'star',
+        backgroundColor: 'hub-burials',
+      },
+      'family-member': {
+        icon: 'groups',
+        backgroundColor: 'hub-family-member',
+      },
+      education: {
+        icon: 'school',
+        backgroundColor: 'hub-education',
+      },
+      housing: {
+        icon: 'home',
+        backgroundColor: 'hub-housing',
+      },
+      records: {
+        icon: 'identification',
+        backgroundColor: 'hub-records',
+      },
+      'va-dept-info': {
+        icon: 'location_city',
+        backgroundColor: 'primary-dark',
+      },
+    };
+
+    if (!hub || !hubIcons[hub]) {
+      return null;
+    }
+
+    const hubData = hubIcons[hub];
+
+    return `
+      <va-icon
+        icon="${hubData.icon}"
+        size="${iconSize}"
+        class="icon-small white hub-icon vads-u-background-color--${hubData.backgroundColor} vads-u-display--flex vads-u-align-items--center vads-u-justify-content--center ${iconClasses}"
+      ></va-icon>
+    `;
+  };
+
+  liquid.filters.formatSocialPlatform = platform => {
+    const twitterString = platform.match(/twitter/i);
+    const youTubeString = platform.match(/youtube/i);
+
+    if (twitterString) {
+      return platform.replace(twitterString, 'X (formerly Twitter)');
+    }
+
+    if (youTubeString) {
+      return platform.replace(youTubeString, 'YouTube');
+    }
+
+    return platform;
   };
 };

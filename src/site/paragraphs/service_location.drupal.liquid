@@ -1,69 +1,242 @@
-{% include "src/site/facilities/service_address.drupal.liquid" with
-  serviceLocationAddress = single.fieldServiceLocationAddress.entity
-  serviceLocationAddressHeaderLevel = serviceLocationSubHeaderLevel
-%}
+<div
+  {% if typeOfLocation != "nonclinical" %}
+    class="vads-u-border--1px vads-u-padding-x--2 vads-u-padding-bottom--2 vads-u-margin-y--2"
+  {% endif %}
+>
+  {% assign serviceLocationH = serviceLocationSubHeaderLevel %}
+  {% if serviceHeader %}
+    <h{{serviceLocationH}} class="vads-u-margin-bottom--0">
+      {{ serviceHeader }}
+    </h{{serviceLocationH}}>
+    {% comment %} Because serviceHeader should be lowest h-level of section {% endcomment %}
+    {% assign serviceLocationH = serviceLocationH | plus: 1 %}
+    {% assign hasPriorParagraph = true %}
+  {% endif %}
 
-{% comment %}
-  single.fieldHours values:
-  - 0 = Use facility hours
-  - 1 = Do not specify hours
-  - 2 = Display specific hours
-{% endcomment %}
+  {% if serviceDescription %}
+    <p
+      id="vba-service-body-{{ entityId }}"
+      class="vads-u-margin-top--2 vads-u-margin-bottom--0"
+    >
+      {{ serviceDescription | drupalToVaPath | phoneLinks }}
+    </p>
+    {% assign hasPriorParagraph = true %}
+  {% endif %}
 
-{% if single.fieldHours != "1" %}
-  <h{{ serviceLocationSubHeaderLevel }} data-template="paragraphs/service_location">Hours</h{{ serviceLocationSubHeaderLevel }}>
-{% endif %}
 
-{% case single.fieldHours %}
-  {% when '2' %}
-    {% if single.fieldOfficeHours %}
-      {% include "src/site/includes/hours.liquid" with allHours = single.fieldOfficeHours headerType = 'included' %}
-    {% endif %}
-  {% when '0' %}
-    {% if fieldOfficeHours %}
-      {% include "src/site/includes/hours.liquid" with allHours = fieldOfficeHours headerType = 'included' %}
-    {% endif %}
-{% endcase %}
+  {% comment %}
+    possibly values for fieldOfficeVists
+      no
+      yes_appointment_only
+      yes_walk_in_visits_only
+      yes_with_or_without_appointment
+  {% endcomment %}
+  {% assign showIconDiv = single.fieldOfficeVisits | shouldShowIconDiv: single.fieldVirtualSupport, fieldReferralRequired  %}
+  {% if showIconDiv %}
+    <div class="vads-u-padding-top--1">
+      {% if single.fieldOfficeVisits and single.fieldOfficeVisits != "no" %}
+        <div data-testid="service-location-field-office-visits">
+          <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
+            <i class="fas fa-building vads-u-margin-right--0p5" aria-hidden="true"></i>
+            {% case single.fieldOfficeVisits %}
+              {% when "yes_appointment_only" %}
+                Visit our office, by appointment only
+              {% when "yes_walk_in_visits_only" %}
+                Visit our office, walk-in visits only
+              {% when "yes_with_or_without_appointment" %}
+                Visit our office, with or without an appointment
+            {% endcase %}
+          </p>
+        </div>
+      {% endif %}
 
-{% if single.fieldAdditionalHoursInfo %}
-  <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
-{% endif %}
+      {% comment %}
+        possibly values for fieldVirtualSupport
+          value: 'no'
+          value: yes_appointment_only
+          value: yes_veterans_can_call
+          value: virtual_visits_may_be_available
+      {% endcomment %}
+      {% if single.fieldVirtualSupport and single.fieldVirtualSupport != "no" %}
+        <div data-testid="service-location-virtual-support">
+          <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
+            {% case single.fieldVirtualSupport %}
+              {% when "yes_appointment_only" %}
+                <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Virtual visits by appointment only
+              {% when "yes_veterans_can_call" %}
+                <i class="fas fa-phone vads-u-margin-right--0p5" aria-hidden="true"></i> Call at your convenience
+              {% when "virtual_visits_may_be_available" %}
+                <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Virtual visits may be available
+            {% endcase %}
+          </p>
+        </div>
+      {% endif %}
 
-{% comment %}
+      {% assign SL_OMIT_REFERRAL_OR_WALKIN = "not_applicable, unknown, 2" %}
+
+      {% if fieldReferralRequired %}
+        {% unless SL_OMIT_REFERRAL_OR_WALKIN contains fieldReferralRequired %}
+          <p class="vads-u-margin-top--1 vads-u-margin-bottom-0">
+            {% case fieldReferralRequired %}
+              {% when "1" %}
+                <i class="fas fa-check-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is required
+              {% when "0" %}
+                <i class="fas fa-times-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is not required
+            {% endcase %}
+          </p>
+        {% endunless %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% assign showAppointments = single | shouldShowServiceLocationAppointments  %}
+  {% if showAppointments %}
+    <div>
+      <h{{serviceLocationH}} class="vads-u-margin-top--2 vads-u-line-height--1" data-testid="service-location-appoinments-header">Appointments</h{{serviceLocationH}} >
+      {% if single.fieldApptIntroTextType != 'remove_text' %}
+        {% if single.fieldApptIntroTextType == 'customize_text' and single.fieldApptIntroTextCustom != empty  %}
+          <p data-testid="service-location-custom-text" class="vads-u-margin-bottom--0">{{ single.fieldApptIntroTextCustom | drupalToVaPath | phoneLinks }}</p>
+        {% elsif single.fieldApptIntroTextType == 'use_default_text' %}
+          <p data-testid="service-location-default-text" class="vads-u-margin-bottom--0">
+            Contact us to schedule, reschedule, or cancel your appointment. If a referral is required,
+            you’ll need to contact your primary care provider first.
+          </p>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% comment %}
   Conditionally display facility phone number
-{% endcomment %}
+  {% endcomment %}
+  {% if isMentalHealthService and fieldMentalHealthPhone %}
+    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+  {% elsif fieldPhoneNumber %}
+    {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+  {% endif %}
 
-{% if isMentalHealthService and fieldMentalHealthPhone %}
-  {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
-{% else %}
-  {% assign serviceLocationMainNumber = fieldPhoneNumber %}
-{% endif %}
+  {% comment %} if there is a main phone number and it should be used for appointments {% endcomment %}
+  {% if serviceLocationMainNumber and single.fieldUseFacilityPhoneNumber %}
+    <div data-testid="service-location-main-facility-phone">
+      {% include "src/site/components/phone-number.drupal.liquid" with
+            phoneNumber = serviceLocationMainNumber
+            phoneLabel = 'Main Phone'
+            phoneHeaderLevel = serviceLocationH
+          %}
+    </div>
+  {% endif %}
+  {% if single.fieldOtherPhoneNumbers.length > 0 %}
+    {% comment %} other phone numbers {% endcomment %}
+    <div class="vads-u-display--flex vads-u-flex-direction--column" data-template="facilities/health_care_local_health_service" data-testid="service-location-show-other-phone-numbers" >
+      {% for number in single.fieldOtherPhoneNumbers %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+          phoneNumber = number.entity.fieldPhoneNumber
+          phoneExtension = number.entity.fieldPhoneExtension
+          phoneLabel = number.entity.fieldPhoneLabel
+          phoneHeaderLevel = serviceLocationH
+        %}
+      {% endfor %}
+    </div>
+  {% endif %}
 
-{% if serviceLocationMainNumber and single.fieldUseMainFacilityPhone %}
-  {% include "src/site/components/phone-number.drupal.liquid" with
-    phoneNumber = serviceLocationMainNumber
-    phoneLabel = 'Main Phone'
-    phoneHeaderLevel = serviceLocationSubHeaderLevel
-  %}
-{% endif %}
 
-{% comment %}
-  Display each additional phone number provided
-{% endcomment %}
-{% include "src/site/components/phone.drupal.liquid" with
-  numbers = single.fieldPhone
-  phoneHeaderLevel = serviceLocationSubHeaderLevel
-%}
 
-{% if single.fieldEmailContacts %}
-  {% for email in single.fieldEmailContacts %}
-    <p class="vads-u-margin-y--1" data-template="paragraphs/service_location">
-    {% if email.entity.fieldEmailLabel %}
-      <h{{ serviceLocationSubHeaderLevel }}>{{ email.entity.fieldEmailLabel }} </h{{ serviceLocationSubHeaderLevel }}>
-    {% endif %}
-    <a aria-label="{{ email.entity.fieldEmailAddress }}"
-        data-template="paragraphs/service_location"
-        href="mailto:{{ email.entity.fieldEmailAddress }}">{{ email.entity.fieldEmailAddress }}
-    </a>
-  {% endfor %}
-{% endif %}
+  {% if single.fieldOnlineSchedulingAvail == "yes" %}
+    <div
+      data-testid="service-location-action-link-online"
+      class="vads-u-margin-top--2 vads-u-margin-bottom--1"
+    >
+      {% if typeOfLocation == "vba" %}
+        {% assign scheduleAppointmentLink = "https://va.my.site.com/VAVERA/s/" %}
+      {% else %}
+        {% assign scheduleAppointmentLink = "/health-care/schedule-view-va-appointments" %}
+      {% endif %}
+
+      <a class="vads-c-action-link--blue" href="{{ scheduleAppointmentLink }}">
+        Schedule an appointment online
+      </a>
+    </div>
+  {% endif %}
+
+
+
+  {% comment %} Includes header for clinic name {% endcomment %}
+  {% if single.fieldServiceLocationAddress.entity %}
+    {% include "src/site/facilities/service_address.drupal.liquid" with
+      serviceLocationAddress = single.fieldServiceLocationAddress.entity
+      serviceLocationAddressHeaderLevel = serviceLocationH
+    %}
+  {% endif %}
+
+  {% if single.fieldUseMainFacilityPhone and serviceLocationMainNumber %}
+    {% comment %}
+      Display the main facility phone number
+    {% endcomment %}
+    <div data-testid="service-location-main-facility-phone-for-contact">
+      {% include "src/site/components/phone-number.drupal.liquid" with
+        phoneNumber = serviceLocationMainNumber
+        phoneLabel = 'Main Phone'
+        phoneHeaderLevel = serviceLocationH
+      %}
+    </div>
+  {% endif %}
+  {% if single.fieldPhone.length > 0 %}
+    {% comment %}
+      Display each additional contact phone number provided
+    {% endcomment %}
+    <div class="vads-u-display--flex vads-u-flex-direction--column" data-testid="service-location-show-contact-phone-numbers">
+      {% for number in single.fieldPhone %}
+        {% include "src/site/components/phone-number.drupal.liquid" with
+            phoneNumber = number.entity.fieldPhoneNumber
+            phoneExtension = number.entity.fieldPhoneExtension
+            phoneLabel = number.entity.fieldPhoneLabel
+            phoneHeaderLevel = serviceLocationH
+        %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if single.fieldEmailContacts %}
+    {% for email in single.fieldEmailContacts %}
+      <p class="vads-u-margin-y--1" data-template="paragraphs/service_location" data-testid="service-location-email-contact">
+        {% if email.entity.fieldEmailLabel %}
+          <h{{ serviceLocationH }}>{{ email.entity.fieldEmailLabel }}</h{{ serviceLocationH }}>
+        {% endif %}
+        <a aria-label="{{ email.entity.fieldEmailAddress }}"
+            data-template="paragraphs/service_location"
+            href="mailto:{{ email.entity.fieldEmailAddress }}">{{ email.entity.fieldEmailAddress }}
+        </a>
+      </p>
+    {% endfor %}
+  {% endif %}
+
+  {% comment %}
+    single.fieldHours values:
+    - 0 = Use facility hours
+    - 1 = Do not specify hours
+    - 2 = Display specific hours
+  {% endcomment %}
+
+  {% if single.fieldHours != "1" %}
+    <h{{ serviceLocationH }} data-template="paragraphs/service_location" data-testid="service-location-field-hours">Service Hours</h{{ serviceLocationH }}>
+  {% endif %}
+  {% if single.fieldHours != empty %}
+    <div class="vads-u-margin-bottom--0">
+      {% case single.fieldHours %}
+        {% when '2' %}
+          {% if single.fieldOfficeHours %}
+            {% include "src/site/includes/hours.liquid" with allHours = single.fieldOfficeHours headerType = 'included' %}
+          {% endif %}
+        {% when '0' %}
+          <p class="vads-u-margin-y--0" data-testid="service-location-field-hours-same-as-facility" >
+            The service hours are the same as our facility hours.
+          </p>
+      {% endcase %}
+    </div>
+  {% endif %}
+  {% if single.fieldAdditionalHoursInfo %}
+    <p class="vads-u-margin-bottom--0">
+      <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
+    </p>
+  {% endif %}
+</div>

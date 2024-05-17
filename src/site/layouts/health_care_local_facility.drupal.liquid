@@ -109,23 +109,19 @@
                       {% if fieldPhoneNumber %}
                         <div class="main-phone vads-u-margin-bottom--1">
                           <strong>Main phone:
-                          </strong><a
-                              href="tel:{{ fieldPhoneNumber }}">{{ fieldPhoneNumber }}</a>
+                          </strong> {{ fieldPhoneNumber | processPhoneToVaTelephoneOrFallback :  '', 'Main phone' }}
                         </div>
                       {% endif %}
                       {% if fieldRegionPage.entity.fieldVaHealthConnectPhone %}
                         <div class="vads-u-margin-bottom--1">
-                          <strong>VA health connect:</strong>
-                          <a href="tel:{{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}">
-                              {{ fieldRegionPage.entity.fieldVaHealthConnectPhone }}
-                          </a>
+                          <strong>VA health connect:
+                          </strong> {{ fieldRegionPage.entity.fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback :  '', 'VA health connect' }}
                         </div>
                       {% endif %}
                       {% if fieldMentalHealthPhone %}
                         <div class="mental-health-care-phone"><strong>Mental
                             health care:
-                          </strong><a
-                              href="tel:{{ fieldMentalHealthPhone }}">{{ fieldMentalHealthPhone }}</a>
+                          </strong> {{ fieldMentalHealthPhone | processPhoneToVaTelephoneOrFallback :  '', 'Mental health care' }}
                         </div>
                       {% endif %}
                     </div>
@@ -204,6 +200,7 @@
                       locations = localService.entity.fieldServiceLocation
                       localServiceDescription = localService.entity.fieldBody.processed
                       fieldFacilityLocatorApiId = fieldFacilityLocatorApiId
+                      fieldReferralRequired = localService.entity.fieldReferralRequired
                   %}
 
                 {% endif %}

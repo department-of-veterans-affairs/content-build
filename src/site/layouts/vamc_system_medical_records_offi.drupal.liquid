@@ -48,6 +48,7 @@
 						<h3>Release of Information office locations</h3>
 						{% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
               facilities = medicalRecordsFacilities
+              nonClinicalHeaderLevel = 4
             %}
 					{% endif %}
 
@@ -93,7 +94,7 @@
 							<b>Fax your signed form to</b>
 						</p>
 						<p>
-							<a href="tel:{{fieldFaxNumber}}">{{fieldFaxNumber}}</a>
+							{{ fieldFaxNumber | processPhoneToVaTelephoneOrFallback: 'not-clickable', '' }}
 						</p>
 					{% endif %}
 
@@ -115,10 +116,10 @@
                 contentType = fieldCcRelatedLinks.fetchedBundle
             %}
 					</div>
-
+          <va-back-to-top></va-back-to-top>
+					<!-- Last updated & feedback button-->
+					{% include "src/site/includes/above-footer-elements.drupal.liquid" %}
 				</article>
-				<!-- Last updated & feedback button-->
-				{% include "src/site/includes/above-footer-elements.drupal.liquid" %}
 			</div>
 		</div>
 	</main>
