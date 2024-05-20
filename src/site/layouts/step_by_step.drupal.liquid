@@ -118,5 +118,9 @@
   </main>
 </div>
 
+{% if decisionReviewRum %}
+  {% include "src/site/includes/decision-reviews-rum.html" %}
+{% endif %}
+
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
