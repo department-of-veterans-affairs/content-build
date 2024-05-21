@@ -24,36 +24,33 @@
     {% if entity.fieldMedia.entity.entityBundle == 'image' %}
 
         {% assign url = entity.fieldMedia.entity.image.url %}
-
-        <a class="file-download-with-icon" target="_blank"
-           href="{{url}}" download="{{url}}">
-            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download" role="img"></i>
-            {{entity.fieldTitle}} ({{url | fileExt | upcase}})
-        </a>
+        <va-link
+            download="{{url}}"
+            href="{{url}}"
+            text="{{entity.fieldTitle}} ({{url | fileExt | upcase}})"
+        ></va-link>
     {% endif %}
 
     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
         {% assign url = entity.fieldMedia.entity.fieldDocument.entity.url %}
         {% assign extension = url | fileExt %}
-        <a
-            class="file-download-with-icon"
-            target="_blank"
-            href="{{url}}"
+        <va-link
             download="{{url | fileDisplayName}}"
-            {% if extension == 'pdf' %}
-                type="application/{{extension}}"
-            {% endif %}
-        >
-            <i class="fas fa-download vads-u-margin--0p5" aria-label="Download" role="img"></i>
-            {{entity.fieldTitle}} ({{extension | upcase}})
-        </a>
+            href="{{url}}"
+            text="{{entity.fieldTitle}} ({{extension | upcase}})"
+        ></va-link>
     {% endif %}
 
     {% if entity.fieldMedia.entity.entityBundle == 'video' %}
-        <a class="video-link" target="_blank"
-           href="{{entity.fieldMedia.entity.fieldMediaVideoEmbedField}}">
-            <i class="fas fa-play-circle vads-u-margin--0p5" aria-hidden="true" role="img"></i>{{entity.fieldTitle}}
-        </a>
+        <va-icon
+            class="vads-u-color--link-default"
+            icon="youtube"
+            size="3"
+            ></va-icon>
+        <va-link
+            href="{{entity.fieldMedia.entity.fieldMediaVideoEmbedField}}"
+            text="{{entity.fieldTitle}}"
+        ></va-link>
     {% endif %}
 </div>
 
