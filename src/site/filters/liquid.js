@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Node modules.
 const _ = require('lodash');
 const converter = require('number-to-words');
@@ -690,6 +691,54 @@ module.exports = function registerFilters() {
     }
 
     return filteredCrumbs;
+  };
+
+  liquid.filters.formatForBreadcrumbs = (
+    breadcrumbs,
+    currentTitle,
+    currentPath,
+    hideHome,
+    customHomeText,
+  ) => {
+    // Remove "empty path" breadcrumbs
+    const filteredCrumbs = breadcrumbs.filter(
+      ({ url: { path } }) => path !== '' && path !== null,
+    );
+
+    // Determine if other breadcrumbs, if any, use React Router
+    const isRouted = breadcrumbs.some(({ url: { routed } }) => routed === true);
+
+    // Add current title and path to end of breadcrumbs array
+    filteredCrumbs.push({
+      url: { path: currentPath, routed: isRouted },
+      text: currentTitle,
+    });
+
+    // Remove duplicate paths and handle custom home text
+    const pathsFound = [];
+    const reducedCrumbs = filteredCrumbs.reduce((acc, crumb) => {
+      const crumbClone = { ...crumb };
+
+      if (pathsFound.indexOf(crumb.url.path) === -1) {
+        if (crumb.url.path === '/' && !hideHome && customHomeText) {
+          crumbClone.text = customHomeText;
+        }
+
+        pathsFound.push(crumb.url.path);
+        acc.push(crumbClone);
+      }
+
+      return acc;
+    }, []);
+
+    // Re-map path, routed, and text to href, isRouterLink, and label
+    const newBC = reducedCrumbs.map(({ url: { path, routed }, text }) => ({
+      href: path,
+      isRouterLink: routed,
+      label: text,
+    }));
+
+    return JSON.stringify(JSON.stringify(newBC));
   };
 
   // used to get a base url path of a health care region from entityUrl.path
