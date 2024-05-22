@@ -1,3 +1,5 @@
+const appointmentServiceLocationItems = require('../file-fragments/appointmentServiceLocationItems.graphql');
+
 /*
  *
  * A service location for a facility service.
@@ -7,6 +9,7 @@ module.exports = `
   fieldServiceLocation {
     entity {
       ... on ParagraphServiceLocation {
+        ${appointmentServiceLocationItems}
         status
         fieldServiceLocationAddress {
           entity {
