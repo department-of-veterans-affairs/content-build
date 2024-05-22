@@ -2,7 +2,7 @@
   {% assign nonClinicalSubHeaderLevel = nonClinicalHeaderLevel | plus: 1 %}
   {% for facility in facilities %}
     <h{{nonClinicalHeaderLevel}}>
-      <va-link href="{{ facility.entityUrl.path }}" text="{{ facility.entityLabel }}"></va-link>
+      <va-link href="{{ facility.entityUrl.path }}" text="{{ facility.entityLabel | encode }}"></va-link>
     </h{{nonClinicalHeaderLevel}}>
 
     {% comment %}
