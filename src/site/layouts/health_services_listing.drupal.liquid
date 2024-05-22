@@ -32,13 +32,12 @@
 
           {% if fieldFeaturedContentHealthser %}
           <section class="featured-services" id="featured-services">
-            <h3>In the spotlight at {{ facilitySidebar.name }}</h3>
-            <ul
-              class="usa-grid usa-grid-full vads-u-margin-top--3 vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+            <h2>In the spotlight at {{ facilitySidebar.name }}</h2>
+            <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4">
               {% for featuredService in fieldFeaturedContentHealthser %}
               {% include "src/site/paragraphs/link_teaser_featured_content.drupal.liquid" with linkTeaser = featuredService.entity %}
               {% endfor %}
-            </ul>
+            </div>
           </section>
           {% endif %}
 
@@ -78,9 +77,11 @@
           {% if clinicalHealthServices.length == 0 %}
             <div>No health services at this time.</div>
           {% endif %}
+            <va-back-to-top></va-back-to-top>
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
           <!-- Last updated & feedback button-->
-          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+
       </div>
     </div>
   </main>
