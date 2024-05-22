@@ -805,6 +805,128 @@ describe('deriveLastBreadcrumbFromPath', () => {
   });
 });
 
+describe('formatForBreadcrumbs', () => {
+  it('returns breadcrumbs formatted for va-breadcrumbs', () => {
+    // Create "original" crumbs and current title and path
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = '/resources';
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support"}]',
+      ),
+    );
+  });
+
+  it('removes duplicate paths', () => {
+    // Create "original" crumbs
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+      {
+        url: {
+          path: '/resources',
+          routed: false,
+        },
+        text: 'Resources and Support',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = '/resources';
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support"}]',
+      ),
+    );
+  });
+
+  it('removes items with empty paths', () => {
+    // Create "original" crumbs
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+      {
+        url: {
+          path: '',
+          routed: false,
+        },
+        text: 'Somewhere Else',
+      },
+      {
+        url: {
+          path: '/resources',
+          routed: false,
+        },
+        text: 'Resources and Support',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = '/resources';
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support"}]',
+      ),
+    );
+  });
+});
+
 describe('deriveCLPTotalSections', () => {
   it('returns back max sections when everything is rendered', () => {
     expect(
