@@ -40,6 +40,18 @@
   }
 }
 
+.social-links {
+  &:last-child.vads-u-margin-bottom--2 {
+    margin-bottom: 0 !important;
+  }
+}
+
+.other-services-links {
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 // START: Styles for mobile app promo banner
 
 .smartbanner {

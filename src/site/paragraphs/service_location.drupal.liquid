@@ -1,8 +1,9 @@
-<div
-  {% if typeOfLocation != "nonclinical" %}
-    class="vads-u-border--1px vads-u-padding-x--2 vads-u-padding-bottom--2 vads-u-margin-y--2"
-  {% endif %}
->
+{% if typeOfLocation == "nonclinical" %}
+<div>
+{% else %}
+<va-card class="vads-u-margin-y--2">
+{% endif %}
+
   {% assign serviceLocationH = serviceLocationSubHeaderLevel %}
   {% if serviceHeader %}
     <h{{serviceLocationH}} class="vads-u-margin-bottom--0">
@@ -33,11 +34,19 @@
   {% endcomment %}
   {% assign showIconDiv = single.fieldOfficeVisits | shouldShowIconDiv: single.fieldVirtualSupport, fieldReferralRequired  %}
   {% if showIconDiv %}
-    <div class="vads-u-padding-top--1">
+    <div
+      {% if typeOfLocation == "nonclinical" %}
+      class="vads-u-padding-top--1
+      {% endif %}
+    >
       {% if single.fieldOfficeVisits and single.fieldOfficeVisits != "no" %}
         <div data-testid="service-location-field-office-visits">
-          <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
-            <i class="fas fa-building vads-u-margin-right--0p5" aria-hidden="true"></i>
+          <p class="vads-u-margin-top--0 vads-u-margin-bottom--0">
+            <va-icon
+              class="vads-u-margin-right--0p5"
+              icon="location_city"
+              size="3"
+            ></va-icon>
             {% case single.fieldOfficeVisits %}
               {% when "yes_appointment_only" %}
                 Visit our office, by appointment only
@@ -62,11 +71,26 @@
           <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
             {% case single.fieldVirtualSupport %}
               {% when "yes_appointment_only" %}
-                <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Virtual visits by appointment only
+                <va-icon
+                  class="vads-u-margin-right--0p5"
+                  icon="calendar_today"
+                  size="3"
+                ></va-icon>
+                 Virtual visits by appointment only
               {% when "yes_veterans_can_call" %}
-                <i class="fas fa-phone vads-u-margin-right--0p5" aria-hidden="true"></i> Call at your convenience
+                <va-icon
+                  class="vads-u-margin-right--0p5"
+                  icon="phone"
+                  size="3"
+                ></va-icon>
+                 Call at your convenience
               {% when "virtual_visits_may_be_available" %}
-                <i class="fas fa-calendar vads-u-margin-right--0p5" aria-hidden="true"></i> Virtual visits may be available
+                <va-icon
+                  class="vads-u-margin-right--0p5"
+                  icon="calendar_today"
+                  size="3"
+                ></va-icon>
+                 Virtual visits may be available
             {% endcase %}
           </p>
         </div>
@@ -79,9 +103,19 @@
           <p class="vads-u-margin-top--1 vads-u-margin-bottom-0">
             {% case fieldReferralRequired %}
               {% when "1" %}
-                <i class="fas fa-check-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is required
+                <va-icon
+                  class="vads-u-margin-right--0p5"
+                  icon="check_circle"
+                  size="3"
+                ></va-icon>
+                 A referral is required
               {% when "0" %}
-                <i class="fas fa-times-circle vads-u-margin-right--0p5" aria-hidden="true"></i> A referral is not required
+                <va-icon
+                  class="vads-u-margin-right--0p5"
+                  icon="cancel"
+                  size="3"
+                ></va-icon>
+                 A referral is not required
             {% endcase %}
           </p>
         {% endunless %}
@@ -202,10 +236,12 @@
         {% if email.entity.fieldEmailLabel %}
           <h{{ serviceLocationH }}>{{ email.entity.fieldEmailLabel }}</h{{ serviceLocationH }}>
         {% endif %}
-        <a aria-label="{{ email.entity.fieldEmailAddress }}"
-            data-template="paragraphs/service_location"
-            href="mailto:{{ email.entity.fieldEmailAddress }}">{{ email.entity.fieldEmailAddress }}
-        </a>
+        <va-link
+          aria-label="{{ email.entity.fieldEmailAddress }}"
+          data-template="paragraphs/service_location"
+          href="mailto:{{ email.entity.fieldEmailAddress }}"
+          text="{{ email.entity.fieldEmailAddress }}"
+        </va-link>
       </p>
     {% endfor %}
   {% endif %}
@@ -239,4 +275,8 @@
       <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>
     </p>
   {% endif %}
+{% if typeOfLocation == "nonclinical" %}
 </div>
+{% else %}
+</va-card>
+{% endif %}
