@@ -1409,6 +1409,16 @@
     }
   },
   {
+    "appName": "Form Upload Flow",
+    "entryName": "form-upload-flow",
+    "rootUrl": "/form-upload",
+    "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Submit a lay or witness statement to support a VA claim",
     "entryName": "10210-lay-witness-statement",
     "rootUrl": "/supporting-forms-for-claims/lay-witness-statement-form-21-10210",
@@ -1716,7 +1726,7 @@
   {
     "appName": "Verify Your Enrollment",
     "entryName": "verify-your-enrollment",
-    "rootUrl": "/education/verify-your-enrollment",
+    "rootUrl": "/education/verify-school-enrollment/mgib-enrollments",
     "productId": "90b61c25-80ce-444f-89fb-eb186b52bfe6",
     "template": {
       "vagovprod": false,
@@ -1776,7 +1786,7 @@
   {
     "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
     "entryName": "10-7959C",
-    "rootUrl": "/ivc-champva/10-7959C",
+    "rootUrl": "/health-care/champva/other-insurance-form-10-7959c",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": false,
@@ -1806,7 +1816,7 @@
   {
     "appName": "21-4138 Statement in Support of a Claim",
     "entryName": "4138-ss",
-    "rootUrl": "/supporting-forms-for-claims/support-statement-21-4138",
+    "rootUrl": "/supporting-forms-for-claims/statement-to-support-claim-form-21-4138",
     "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
     "template": {
       "vagovprod": false,
@@ -1831,6 +1841,19 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21P-0969 Income and Asset Statement Form",
+    "entryName": "income-and-asset-statement",
+    "rootUrl": "/income-and-asset-statement-form-21p-0969",
+    "template": {
+      "title": "VA Form 21P-0969",
+      "heading": "Income and Asset Statement Form",
+      "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true
     }
   }
 ]

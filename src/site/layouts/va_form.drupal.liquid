@@ -95,14 +95,24 @@
           data-form-number="{{ fieldVaFormNumber }}"
           lang="{{ fieldVaFormLanguage }}"
           >
-            <i
-              aria-hidden="true"
-              class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-              role="presentation"
-            > </i>
+            <va-icon
+              class="vads-u-margin-right--0p5"
+              icon="file_download"
+              size="3"
+            ></va-icon>
           {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
           {{ translatedDownloadText }} (PDF)
         </a>
+
+        {% if fieldVaFormUpload %}
+          <div
+            aria-label="Form Upload"
+            data-widget-type="form-upload"
+            data-has-online-tool="{% if fieldVaFormToolUrl %}true{% else %}false{% endif %}"
+            data-form-number="{{ fieldVaFormNumber }}"
+            role="region"
+          ></div>
+        {% endif %}
 
         {% if fieldAlert.length %}
           {% for alert in fieldAlert %}
@@ -156,10 +166,11 @@
                   data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
                   lang="{{ vaForm.entity.fieldVaFormLanguage }}"
                   >
-                    <i
-                      aria-hidden="true"
-                      class="fas fa-download fa-lg vads-u-margin-right--1 va-form-layout--remove-pointer-events"
-                    > </i>
+                    <va-icon
+                      class="vads-u-margin-right--0p5"
+                      icon="file_download"
+                      size="3"
+                    ></va-icon>
                     {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}
                     {{ translatedDownloadText }} (PDF)
                 </a>

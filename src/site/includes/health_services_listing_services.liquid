@@ -1,9 +1,9 @@
 {% assign servicesList = clinicalHealthServices | filterBy: "fieldServiceNameAndDescripti.entity.fieldServiceTypeOfCare", typeOfCare, false %}
-{% assign servicesListOrderedByName = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.name"%}
+{% assign servicesListOrderedByName = servicesList | sortObjectsBy: "fieldServiceNameAndDescripti.entity.name" %}
 
 {% if servicesListOrderedByName.length > 0 %}
   <section data-label="{{typeOfCare}}">
-    <h2>{{typeOfCare}}</h2>
+    <h2>{{ typeOfCare }}</h2>
     <div class="service-accordion-output">
       <va-accordion bordered uswds="true">
       {% for service in servicesListOrderedByName %}
