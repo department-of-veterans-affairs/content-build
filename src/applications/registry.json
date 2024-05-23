@@ -1820,7 +1820,15 @@
     "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "minimalHeader": {
+        "title": "Submit a statement to support a claim",
+        "subtitle": "Statement in support of a claim (VA Form 21-4138)",
+        "disableHeadings": true,
+        "excludePaths": [
+          "/introduction"
+        ]
+      }
     }
   },
   {

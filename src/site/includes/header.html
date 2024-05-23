@@ -162,7 +162,11 @@
   {{ google_analytics_noscript }}
   <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
-  <!-- Header -->
+  {% if minimalHeader %}
+    {%include "src/site/includes/header-minimal.html"%}
+  {% endif %}
+
+  <!-- Header Default-->
   <header class="header" role="banner">
     <!-- Mobile Layout -->
     <div

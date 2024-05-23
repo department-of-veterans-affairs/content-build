@@ -1,0 +1,20 @@
+<!-- Header Minimal -->
+<div
+  id="minimal-header"
+  class="vads-u-display--none vads-u-background-color--primary-darkest"
+  {% if minimalHeader.excludePaths %}
+    data-exclude-paths="{{ minimalHeader.excludePaths | json | escape }}"
+  {% endif %}
+>
+  <va-header-minimal
+    {% if minimalHeader.title %}
+      header="{{ minimalHeader.title }}"
+    {% endif %}
+    {% if minimalHeader.subtitle %}
+      subheader="{{ minimalHeader.subtitle }}"
+    {% endif %}
+    {% if minimalHeader.disableHeadings %}
+      disable-headings="{{ minimalHeader.disableHeadings }}"
+    {% endif %}
+  ></va-header-minimal>
+</div>
