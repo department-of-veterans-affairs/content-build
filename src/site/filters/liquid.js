@@ -705,12 +705,9 @@ module.exports = function registerFilters() {
       ({ url: { path } }) => path !== '' && path !== null,
     );
 
-    // Determine if other breadcrumbs, if any, use React Router
-    const isRouted = breadcrumbs.some(({ url: { routed } }) => routed === true);
-
     // Add current title and path to end of breadcrumbs array
     filteredCrumbs.push({
-      url: { path: currentPath, routed: isRouted },
+      url: { path: currentPath, routed: false },
       text: currentTitle,
     });
 
@@ -731,10 +728,10 @@ module.exports = function registerFilters() {
       return acc;
     }, []);
 
-    // Re-map path, routed, and text to href, isRouterLink, and label
-    const newBC = reducedCrumbs.map(({ url: { path, routed }, text }) => ({
+    // Re-map path and text to href and label
+    const newBC = reducedCrumbs.map(({ url: { path }, text }) => ({
       href: path,
-      isRouterLink: routed,
+      isRouterLink: false,
       label: text,
     }));
 
