@@ -905,7 +905,7 @@ describe('formatForBreadcrumbs', () => {
       },
     ];
     const currentTitle = 'Resources and Support';
-    const currentPath = '/resources';
+    const currentPath = null;
     const hideHome = null;
     const customHomeText = null;
 

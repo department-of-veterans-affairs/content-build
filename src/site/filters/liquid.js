@@ -706,10 +706,12 @@ module.exports = function registerFilters() {
     );
 
     // Add current title and path to end of breadcrumbs array
-    filteredCrumbs.push({
-      url: { path: currentPath, routed: false },
-      text: currentTitle,
-    });
+    if (currentPath) {
+      filteredCrumbs.push({
+        url: { path: currentPath, routed: false },
+        text: currentTitle,
+      });
+    }
 
     // Remove duplicate paths and handle custom home text
     const pathsFound = [];
