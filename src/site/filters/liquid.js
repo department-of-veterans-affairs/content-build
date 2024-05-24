@@ -2023,7 +2023,7 @@ module.exports = function registerFilters() {
       },
       'va-dept-info': {
         icon: 'location_city',
-        backgroundColor: 'primary-dark',
+        backgroundColor: 'primary-darker',
       },
     };
 
@@ -2037,7 +2037,7 @@ module.exports = function registerFilters() {
       <va-icon
         icon="${hubData.icon}"
         size="${iconSize}"
-        class="icon-small white hub-icon vads-u-background-color--${hubData.backgroundColor} vads-u-display--flex vads-u-align-items--center vads-u-justify-content--center ${iconClasses}"
+        class="hub-icon vads-u-color--white vads-u-background-color--${hubData.backgroundColor} vads-u-display--flex vads-u-align-items--center vads-u-justify-content--center ${iconClasses}"
       ></va-icon>
     `;
   };
