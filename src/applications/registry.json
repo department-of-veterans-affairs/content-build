@@ -1834,6 +1834,16 @@
     }
   },
   {
+    "appName": "Fill out your form to appoint a VA accredited representative or VSO",
+    "entryName": "appoint-a-representative",
+    "rootUrl": "/get-help-from-accredited-representative/appoint-rep",
+    "productId": "ded52e11-c5f2-493d-b7bb-ce9c630b38f3",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "21P-0969 Income and Asset Statement Form",
     "entryName": "income-and-asset-statement",
     "rootUrl": "/income-and-asset-statement-form-21p-0969",
