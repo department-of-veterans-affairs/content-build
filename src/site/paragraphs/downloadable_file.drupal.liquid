@@ -27,6 +27,7 @@
         <va-link
             download="{{url}}"
             href="{{url}}"
+            filetype="{{ fileExt }}"
             text="{{entity.fieldTitle}} ({{url | fileExt | upcase}})"
         ></va-link>
     {% endif %}
@@ -37,6 +38,7 @@
         <va-link
             download="{{url | fileDisplayName}}"
             href="{{url}}"
+            filetype="{{ externsion }}"
             text="{{entity.fieldTitle}} ({{extension | upcase}})"
         ></va-link>
     {% endif %}
