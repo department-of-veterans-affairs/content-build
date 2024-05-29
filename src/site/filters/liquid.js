@@ -287,6 +287,7 @@ module.exports = function registerFilters() {
       `<va-telephone contact="$1-$2-$3" extension="$4$5"></va-telephone>`,
     );
   };
+
   /**
    * @param {string} phoneNumber a string of a phone number, can be a short number or a long number, however a short number or a number with alphabetic characters will generate a <a> tag instead of a <va-telephone> tag
    * @param {string} attributes a string of attributes like "not-clickable" or "tty" or "sms" or some combination space separated
@@ -297,9 +298,12 @@ module.exports = function registerFilters() {
     attributes = '',
     describedBy = '',
   ) => {
+    const internationalPattern = /\(?(\+1)\)?[- ]?/gi;
+
     if (!phoneNumber) {
       return null;
     }
+
     const separated = liquid.filters.separatePhoneNumberExtension(phoneNumber);
     // if you pass in a phone number that has alphabetic characters in it, va-telephone will not render it
     // so fallback to just rendering the phone number as passed in as text
@@ -309,6 +313,8 @@ module.exports = function registerFilters() {
           separated.extension ? ` extension="${separated.extension}"` : ''
         }${attributes ? ` ${attributes}` : ''}${
           describedBy ? ` message-aria-describedby="${describedBy}"` : ''
+        }${
+          phoneNumber.match(internationalPattern) ? ` international` : ''
         }></va-telephone>`
       : `<a href="tel:+1${phoneNumber}">${phoneNumber}</a>`;
   };
@@ -1975,7 +1981,7 @@ module.exports = function registerFilters() {
   // This filter gives us a <va-icon> pointing to the correct hub icon
   //
   // Visual example: /initiatives/vote/ under "Learn more about related VA benefits"
-  liquid.filters.getHubIcon = (hub, iconSize, iconClasses) => {
+  liquid.filters.getHubIcon = (hub, iconSize, iconClasses = '') => {
     const hubIcons = {
       'health-care': {
         icon: 'medical_services',

@@ -5,8 +5,8 @@
 
         {% for link in sidebar.links %}
             {% if forloop.first == true %}
-                <div class="left-side-nav-title">
-                    <i class="icon-small white hub-icon-{{ fieldTitleIcon }} hub-background-{{ fieldTitleIcon }}"></i>
+                <div class="vads-u-display--flex vads-u-align-items--center left-side-nav-title">
+                    {{ fieldTitleIcon | getHubIcon: '3', 'vads-u-margin-right--1' }}
                     <h4>{{ link.label }}</h4>
                 </div>
 
