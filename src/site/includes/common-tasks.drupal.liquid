@@ -23,22 +23,26 @@
                 {% for link in searchLinks %}
                   {% if link.url.path and link.label %}
                     <li>
-                      <i role="presentation" class="fas fa-arrow-right vads-u-color--link-default vads-u-margin-right--1"></i>
-                        <va-link
-                          disable-analytics
-                          onclick="recordMultipleEvents([
-                            {
-                              event: 'nav-zone-one',
-                              'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
-                              'click-text': '{{ link.label | strip }}',
-                            },
-                            { 
-                              event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
-                            }
-                          ]);"
-                          href="{{ link.url.path }}"
-                          text="{{ link.label }}" 
-                        />
+                      <va-icon
+                        icon="arrow_forward"
+                        class="vads-u-color--link-default vads-u-margin-right--1"
+                        size="3"
+                      ></va-icon>
+                      <va-link
+                        disable-analytics
+                        onclick="recordMultipleEvents([
+                          {
+                            event: 'nav-zone-one',
+                            'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
+                            'click-text': '{{ link.label | strip }}',
+                          },
+                          { 
+                            event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
+                          }
+                        ]);"
+                        href="{{ link.url.path }}"
+                        text="{{ link.label }}" 
+                      />
                     </li>
                   {% endif %}
                 {% endfor %}
