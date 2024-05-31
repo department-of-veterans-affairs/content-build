@@ -1133,9 +1133,10 @@
       "layout": "page-react.html",
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
-      "noNavOrLogin": true,
-      "noMegamenu": true,
-      "minimalFooter": true
+      "minimalFooter": true,
+      "minimalHeader": {
+        "disableHeadings": true
+      }
     }
   },
   {
@@ -1147,9 +1148,10 @@
       "layout": "page-react.html",
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
-      "noNavOrLogin": true,
-      "noMegamenu": true,
-      "minimalFooter": true
+      "minimalFooter": true,
+      "minimalHeader": {
+        "disableHeadings": true
+      }
     }
   },
   {
@@ -1160,9 +1162,10 @@
       "layout": "page-react.html",
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
-      "noNavOrLogin": true,
-      "noMegamenu": true,
       "minimalFooter": true,
+      "minimalHeader": {
+        "disableHeadings": true
+      },
       "vagovprod": false
     }
   },
