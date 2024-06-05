@@ -7,8 +7,8 @@
     <div class="usa-grid usa-grid-full">
       <article class="usa-width-two-thirds">
         {% if fieldTitleIcon %}
-          <div class="inline hub-main-icon">
-            <i aria-hidden="true" class="icon-large white hub-icon-{{ fieldTitleIcon }} hub-background-{{ fieldTitleIcon }}"></i>
+          <div class="inline hub-main-icon vads-u-margin-right--1 vads-u-margin-bottom--1">
+            {{ fieldTitleIcon | getHubIcon: '3' }}
           </div>
 
           <div class="inline hub-main-title">
@@ -162,7 +162,6 @@
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <va-link 
                   disable-analytics
-                  class="vads-u-text-decoration--underline" 
                   href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
                   onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
                   text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
@@ -173,19 +172,16 @@
 
               <section>
                 <h3 class="vads-u-font-size--h4">Get updates</h3>
-                  <ul class="va-nav-linkslist-list social">
-                    <li>
-                      <i aria-hidden="true" class="va-c-social-icon fas fa-envelope vads-u-padding-right--1"></i>
-                      <va-link 
-                        disable-analytics
-                        class="vads-u-text-decoration--underline" 
-                        href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" 
-                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
-                        text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
-                        >
-                      </va-link>
-                    </li>
-                </ul>
+                  <p>
+                    <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
+                    <va-link 
+                      disable-analytics
+                      href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" 
+                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
+                      text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
+                      >
+                    </va-link>
+                  </p>
               </section>
 
               <section>
@@ -196,44 +192,28 @@
 
                   {% for socialPlatform in socialPlatforms %}
                     {% assign socialLink = socialLinks | get: socialPlatform  %}
+                    {% assign platform = socialPlatform | capitalize %}
+                    
+                    {% if socialPlatform == "twitter" %}
+                      {% assign socialIcon = "x" %}
+                    {% else %}
+                      {% assign socialIcon = socialPlatform %}
+                    {% endif %}
+
                     {% if socialLink.value %}
-                      {% if socialPlatform = "youtube_channel" %}
-                        <li>
-                          <i aria-hidden="true" class="va-c-social-icon fab fa-youtube vads-u-padding-right--1"></i>
-                          <va-link 
-                            disable-analytics
-                            class="vads-u-text-decoration--underline" 
-                            href="http://youtube.com/channel/{{ socialLink.value }}" 
-                            onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
-                            text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | remove: '_' | capitalize }}"
-                          >
-                          </va-link>
-                        </li>
-                      {% elsif socialPlatform == "youtube" %}
-                        <li>
-                          <i aria-hidden="true" class="va-c-social-icon fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
-                          <va-link 
-                            disable-analytics
-                            class="vads-u-text-decoration--underline" 
-                            href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
-                            onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
-                            text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube"
-                          >
-                          </va-link>
-                        </li>
-                      {% else %}
-                        <li>
-                          <i aria-hidden="true" class="va-c-social-icon fab fa-{{ socialPlatform }} vads-u-padding-right--1"></i>
-                          <va-link 
-                            disable-analytics
-                            class="vads-u-text-decoration--underline" 
-                            href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
-                            onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });" 
-                            text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ socialPlatform | capitalize }}"
-                          >
-                          </va-link>
-                        </li>
-                      {% endif %}
+                      <li>
+                        <va-icon
+                          icon="{{ socialIcon }}"
+                          size="3"
+                          class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
+                        <va-link 
+                          disable-analytics
+                          href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
+                          onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });" 
+                          text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ platform | formatSocialPlatform }}"
+                        >
+                        </va-link>
+                      </li>
                     {% endif %}
                   {% endfor %}
                 </ul>

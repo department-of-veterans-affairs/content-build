@@ -1,23 +1,23 @@
-<div class="feature featured-content-list-item vads-u-flex--fill vads-u-padding-y--1p5 vads-u-padding-x--1p5 vads-u-margin-bottom--0 medium-screen:vads-u-margin-bottom--2">
-    {% if entity.fieldSectionHeader != empty %}
-        <h3 class="force-small-header vads-u-margin-bottom--2">{{ entity.fieldSectionHeader }}</h3>
-        <hr class="featured-content-hr vads-u-margin-y--1p5 vads-u-border-color--primary">
-    {% endif %}
-    {% if entity.fieldDescription %}
-        <div id="featured-content-description{{ entity.fieldSectionHeader }}}}">
-            {{ entity.fieldDescription.processed | drupalToVaPath | phoneLinks }}
-        </div>
-    {% endif %}
-    {% if entity.fieldCta.entity.fieldButtonLink %}
-        {% assign fieldButtonUri = entity.fieldCta.entity.fieldButtonLink.uri | hasCharacterOtherThanSpace %}
-        {% assign fieldButtonUrl = entity.fieldCta.entity.fieldButtonLink.url.path | hasCharacterOtherThanSpace %}
-        {% if fieldButtonUrl %}
-            {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.url.path %}
-        {% elsif fieldButtonUri %}
-            {% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.uri %}
-        {% endif %}
-        {% if fieldUrl %}
-            <va-link active href="{{ fieldUrl }}" text="{{entity.fieldCta.entity.fieldButtonLabel}}"></va-link>
-        {% endif %}
-    {% endif %}
-</div>
+<va-card class="vads-u-flex--fill vads-u-margin-bottom--2 vads-u-margin-right--0 medium-screen:vads-u-margin-x--0p5 spotlight-card">
+	{% if entity.fieldSectionHeader != empty %}
+		<h3 class="vads-u-margin-top--0">{{ entity.fieldSectionHeader }}</h3>
+{% endif %}
+{% if entity.fieldDescription %}
+		<div id="featured-content-description{{ entity.fieldSectionHeader }}}}">
+				{{ entity.fieldDescription.processed | drupalToVaPath | phoneLinks }}
+		</div>
+	{% endif %}
+	{% if entity.fieldCta.entity.fieldButtonLink %}
+		{% assign fieldButtonUri = entity.fieldCta.entity.fieldButtonLink.uri | hasCharacterOtherThanSpace %}
+		{% assign fieldButtonUrl = entity.fieldCta.entity.fieldButtonLink.url.path | hasCharacterOtherThanSpace %}
+		{% if fieldButtonUrl %}
+				{% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.url.path %}
+		{% elsif fieldButtonUri %}
+				{% assign fieldUrl = entity.fieldCta.entity.fieldButtonLink.uri %}
+		{% endif %}
+		{% if fieldUrl %}
+				<va-link active href="{{ fieldUrl }}" text="{{entity.fieldCta.entity.fieldButtonLabel}}"></va-link>
+		{% endif %}
+	{% endif %}
+</va-card>
+

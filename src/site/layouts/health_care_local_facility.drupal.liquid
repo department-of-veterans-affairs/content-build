@@ -28,7 +28,7 @@
             {% include "src/site/facilities/facilities_health_services_buttons.drupal.liquid" with path = basePath %}
           </div>
 
-          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding--0"></va-on-this-page>
+          <va-on-this-page></va-on-this-page>
 
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">Location and
             contact information</h2>
@@ -115,7 +115,7 @@
                       {% if fieldRegionPage.entity.fieldVaHealthConnectPhone %}
                         <div class="vads-u-margin-bottom--1">
                           <strong>VA health connect:
-                          </strong> {{ fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback :  '', 'VA health connect' }}
+                          </strong> {{ fieldRegionPage.entity.fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback :  '', 'VA health connect' }}
                         </div>
                       {% endif %}
                       {% if fieldMentalHealthPhone %}
@@ -146,7 +146,7 @@
                   class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
               <p>Click on a topic for more details.</p>
-              <va-accordion section-heading="Prepare for your visit" bordered uswds="true">
+              <va-accordion section-heading="Prepare for your visit" bordered>
                 {% for accordionItem in fieldLocationServices %}
                   {% assign item = accordionItem.entity %}
                   {% comment %}
@@ -158,7 +158,6 @@
                     level="3"
                     data-label="{{ item.fieldTitle }}"
                     id="{{ item.fieldTitle | hashReference: 60 }}"
-                    uswds="true"
                   >
                     <div id="{{ item.entityBundle }}-{{ item.entityId }}">
                       {% include "src/site/paragraphs/wysiwyg.drupal.liquid" entity = item %}
@@ -187,7 +186,7 @@
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
 
-              <va-accordion bordered uswds="true">
+              <va-accordion bordered>
               {% for localService in localHealthServices %}
                 {% assign serviceSection = localService.entity.fieldAdministration.entity %}
                 {% assign localHealthService = localService.entity | featureFieldRegionalHealthService %}
@@ -200,6 +199,7 @@
                       locations = localService.entity.fieldServiceLocation
                       localServiceDescription = localService.entity.fieldBody.processed
                       fieldFacilityLocatorApiId = fieldFacilityLocatorApiId
+                      fieldReferralRequired = localService.entity.fieldReferralRequired
                   %}
 
                 {% endif %}
@@ -225,10 +225,11 @@
                     fieldInstagram = fieldRegionPage.entity.fieldInstagram
                     fieldFlickr = fieldRegionPage.entity.fieldFlickr
           %}
-  <!-- Last updated & feedback button-->
-        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+        
+          <va-back-to-top></va-back-to-top>
+          <!-- Last updated & feedback button-->
+          {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
-
       </div>
     </div>
   </main>

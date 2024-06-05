@@ -11,7 +11,10 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
     <va-accordion-item level="3" open="true" header="{{ group.heading }}">
       {% if group.url != empty %}
       <h4 class='va-nav-linkslist-list'>
-        <a href="{{group.url}}">{{group.admin}}</a>
+        <va-link
+          href="{{group.url}}"
+          text="{{group.admin}}"
+        ></va-link>
       </h4>
       {% endif %}
 
@@ -31,38 +34,85 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
               {% assign is_social_media_links = true %}
             {% endif %}
 
+            {% assign is_call_us = false %}
+            {% if subs.subhead == 'Call us' %}
+              {% assign is_call_us = true %}
+            {% endif %}
 
             {% for link in subs.links %}
               {% if link.url != empty %}
                 {% if navPath == 'Connect with us' %}
                 <li>
+                {% elseif is_call_us %}
+                <li class="vads-u-margin-bottom--2 vads-u-margin-top--0">
                 {% else %}
                 <li class="vads-u-margin-bottom--0 vads-u-margin-top--0">
                 {% endif %}
-                    <a href="{{link.url}}"
-                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
-                      {% if link.external == true %}
-                        target="_blank" rel="noopener noreferrer"
-                      {% else %}
-                        target="_self"
-                      {% endif %}
-                      >
-                      {% if link.icon != empty %}
-                        {% if is_social_media_links %}
-                          <i class="fab {{link.icon}} social-icon vads-u-padding-right--1"></i>
-                        {% else %}
-                          <i class="fas {{link.icon}} social-icon vads-u-padding-right--1"></i>
-                        {% endif %}
-                      {% endif %}
 
-                      {% if link.label != empty %}
-                        {{link.label}}
-                      {% else %}
-                        <span>{{link.title}}</span><br>
-                        <span>{{link.number}}</span>
-                      {% endif %}
-                    </a>
+                {% if is_social_media_links %}
+                  {% if link.icon == "fa-twitter" %}
+                    <va-icon
+                      class="vads-u-color--link-default vads-u-margin-right--0p5"
+                      icon="x"
+                      size="3"
+                    /></va-icon>
+                    <va-link
+                      href="{{link.url}}"
+                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
+                      text="{{ link.title }}"
+                    ></va-link>
+                  {% elsif link.icon == "fa-youtube" %}
+                    <va-icon
+                      class="vads-u-color--link-default vads-u-margin-right--0p5"
+                      icon="youtube"
+                      size="3"
+                    /></va-icon>
+                    <va-link
+                      href="{{link.url}}"
+                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
+                      text="{{ link.title }}"
+                    ></va-link>
+                  {% else %}
+                    {% if link.icon == "fa-facebook" %}
+                      {% assign socialIcon = "facebook" %}
+                    {% elsif link.icon == "fa-instagram" %}
+                      {% assign socialIcon = "instagram" %}
+                    {% elsif link.icon == "fa-flickr" %}
+                      {% assign socialIcon = "flickr" %}
+                    {% endif %}
+                    <div>
+                      <va-icon
+                        class="vads-u-color--link-default vads-u-margin-right--0p5"
+                        icon="{{ socialIcon }}"
+                        size="3"
+                      /></va-icon>
+                      <va-link
+                        href="{{link.url}}"
+                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
+                        text="{{ link.title }}"
+                      ></va-link>
+                    </div>
+                    {% endif %}
+                  </li>
+                {% else %}
+                  {% if link.label != empty %}
+                    {% assign linkLabel = link.label %}
+                  {% else %}
+                    {% assign linkLabel = link.title %}
+                  {% endif %}
+
+                  <va-link
+                    disable-analytics
+                    href="{{link.url}}"
+                    onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
+                    text="{{ linkLabel }}"
+                  ></va-link>
+                  {% if link.number %}
+                    <br />
+                    {{ link.number | processPhoneToVaTelephoneOrFallback }}
+                  {% endif %}
                 </li>
+                {% endif %}
               {% else %}
                 {% if forloop.first == true %}
                 <li class="vads-u-margin-top--0">

@@ -13,8 +13,8 @@
       {% for hub in hubs %}
         {% if hub.url.path and hub.label and hub.entity.fieldLinkSummary and hub.entity.fieldIcon %}
         <div class="usa-width-one-third" data-e2e="hub" data-entity-id="{{ forloop.index }}">
-          <h3 class="heading-level-4">
-            <i aria-hidden="true" class="icon-small icon-heading hub-icon-{{ hub.entity.fieldIcon }} hub-background-{{ hub.entity.fieldIcon }} white vads-u-margin-right--1"></i>
+          <h3 class="heading-level-4 vads-u-display--flex vads-u-align-items--center">
+            {{ hub.entity.fieldIcon | getHubIcon: '3', 'vads-u-margin-right--1' }}
             <va-link
               disable-analytics
               href="{{ hub.url.path }}"

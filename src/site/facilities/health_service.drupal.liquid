@@ -33,19 +33,11 @@
                             {% assign facility = location.entity.fieldFacilityLocation.entity %}
                             {% if location.entity.status and facility != empty %}
                                 <li class="vads-u-margin-bottom--2">
-                                    <a
-                                        onclick='recordEvent(
-                                            {
-                                                "event": "nav-accordion-link-click",
-                                                "accordion-parent-label": "{{ serviceTaxonomy.name | escape }}",
-                                                "accordion-child-label": "{{ serviceTaxonomy.fieldAlsoKnownAs | escape }}",
-                                                "accordion-section-label": "{{ sectionName | escape }}"
-
-                                            })'
+                                    <va-link
                                         href="{{ facility.entityUrl.path }}"
+                                        text="{{ facility.title }}"
                                     >
-                                        {{ facility.title }}
-                                    </a>
+                                    </va-link>
                                 </li>
                             {% endif %}
                         {% endfor %}

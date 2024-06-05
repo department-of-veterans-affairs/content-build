@@ -73,10 +73,16 @@
     {% endfor %}
   {% endif %}
 
+  {% if typeOfLocation == "vba" %}
+    {% assign scheduleAppointmentLink = "https://va.my.site.com/VAVERA/s/" %}
+  {% else %}
+    {% assign scheduleAppointmentLink = "/health-care/schedule-view-va-appointments" %}
+  {% endif %}
+
   <div class="vads-u-margin-bottom--3">
     <a
       class="vads-c-action-link--blue"
-      href="/health-care/schedule-view-va-appointments"
+      href="{{ scheduleAppointmentLink }}"
       onclick="recordEvent(
         {
           'event': 'vba-regional-facility-service-location-schedule-appointment',

@@ -20,7 +20,7 @@
             </p>
           </div>
 
-          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+          <va-on-this-page></va-on-this-page>
 
           <div class="usa-content">
             {% if fieldCcAboveTopOfPage.fetched.fieldWysiwyg.0.processed %}
@@ -63,6 +63,7 @@
           {% assign billingAndInsuranceFacilities = fieldOffice.entity.reverseFieldRegionPageNode.entities | healthCareRegionNonClinicalServiceLocationsByType: 'Billing and insurance' %}
           {% include "src/site/facilities/vha_facility_nonclinical_services.drupal.liquid" with
               facilities = billingAndInsuranceFacilities
+              nonClinicalHeaderLevel = 3
             %}
           {% endif %}
 
@@ -76,9 +77,10 @@
               contentType = fieldCcRelatedLinks.fetchedBundle
             %}
           </div>
-        </article>
-        <!-- Last updated & feedback button -->
+          <va-back-to-top></va-back-to-top>
+          <!-- Last updated & feedback button -->
           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+        </article>
       </div>
     </div>
   </main>
