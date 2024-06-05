@@ -201,7 +201,7 @@
 
         <!-- CTA -->
         {% if fieldLink or fieldEventCta or fieldAdditionalInformationAbo %}
-          <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--1 vads-u-padding-x--1p5">
+          <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--1 vads-u-padding-x--1p5 medium-screen:vads-u-padding--0">
             {% if start_timestamp < current_timestamp %}
               <p class="vads-u-margin--0 vads-u-color--secondary vads-u-font-weight--bold">This event already happened.</p>
             {% else %}
@@ -306,65 +306,29 @@
 </div>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
+  function onShowAllRecurringEventsClick() {
+    // Derive recurring event items.
+    var recurringEventItems = document.querySelectorAll('.recurring-event');
+    // Show all recurring events.
+    for (var index = 0; index < recurringEventItems.length; index++) {
+      if (recurringEventItems[index]) {
+        recurringEventItems[index].classList.remove('vads-u-display--none');
+      }
+    }
+    // Hide the show all recurring events button.
+    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+    // Hide the button if we find it.
+    if (showAllRecurringEventsButton) {
+      showAllRecurringEventsButton.classList.add('vads-u-display--none');
+    }
+  }
 
-  function onExpandRecurringEventsClick() {
-  var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-                var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
-                var recurringEvents = document.getElementById('recurring-events');
+  var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
 
-                // Escape early if we are not able to find the elements.
-                if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
-                  return;
-                }
-
-                // Toggle the bottom borders of the button.
-                if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
-                  expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
-                  expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
-                } else {
-                  expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
-                  expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
-                }
-
-                // Toggle the visibility of the recurring events.
-                recurringEvents.classList.toggle('vads-u-display--none');
-                recurringEvents.classList.toggle('vads-u-display--flex');
-
-                // Toggle the icon.
-                expandRecurringEventsIcon.classList.toggle('fa-plus');
-                expandRecurringEventsIcon.classList.toggle('fa-minus');
-              }
-
-              function onShowAllRecurringEventsClick() {
-                // Derive recurring event items.
-                var recurringEventItems = document.querySelectorAll('.recurring-event');
-
-                // Show all recurring events.
-                for (var index = 0; index < recurringEventItems.length; index++) {
-                  if (recurringEventItems[index]) {
-                    recurringEventItems[index].classList.remove('vads-u-display--none');
-                  }
-                }
-
-                // Hide the show all recurring events button.
-                var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-
-                // Hide the button if we find it.
-                if (showAllRecurringEventsButton) {
-                  showAllRecurringEventsButton.classList.add('vads-u-display--none');
-                }
-              }
-
-
-              var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-              if (expandRecurringEventsButton) {
-                expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
-              }
-
-              var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-              if (showAllRecurringEventsButton) {
-                showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
-              }</script>
+  if (showAllRecurringEventsButton) {
+    showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
+  }
+</script>
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
