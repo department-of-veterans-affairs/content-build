@@ -288,34 +288,11 @@
             </va-accordion-item>
           </va-accordion>
         {% endif %}
-
-        {% comment %}
-          An Outreach event will have an entity ID of 7.
-
-          A VAMC event will have an entity ID other than 7 (usually between 300-400).
-
-          A VAMC event that is also published to the Outreach Calendar will have a `true`
-          value for fieldPublishToOutreachCal (and Outreach only events will also).
-        {% endcomment %}
-
-        {% assign eventEntityId = fieldAdministration.entity.entityId %}
-        {% assign publishInOutreachCal = fieldPublishToOutreachCal %}
-
-        <!-- Get VAMC location -->
-        <script>
-
-        </script>
-
-        <!-- See more events (VAMC only) -->
-        {% if eventEntityId != '7' and !publishInOutreachCal %}
-        {% assign breadcrumbs = entityUrl.breadcrumb | deriveLastBreadcrumbFromPath: title, entityUrl.path, replaceLastItem %}
-        <script>
-          const breadcrumbsHere = '{{ breadcrumbs }}';
-          console.log('BREADCRUMBS HERE: ', JSON.stringify(breadcrumbsHere));
-        </script>
-        {% assign vamcLocation = breadcrumbs[1].text %}
         
+        {% assign vamcLocation = fieldListing.entity.fieldOffice.entity.title %}
 
+        <!-- See more events for VAMC only -->
+        {% if fieldAdministration.entity.entityId != '7' %}
           <va-link
             active
             href="{{ fieldListing.entity.entityUrl.path }}"
@@ -324,8 +301,7 @@
           ></va-link>
         {% endif %}
 
-        <!-- See more events (Outreach only, or VAMC/Outreach) -->
-        {% if publishInOutreachCal %}
+        <!-- See more nationwide events -->
           <va-link
             active
             class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
