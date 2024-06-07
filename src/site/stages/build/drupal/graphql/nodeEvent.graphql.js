@@ -131,6 +131,9 @@ const nodeEvent = `
               entityType
               entityBundle
               entityId
+              ... on Node {
+                title
+              }
               ... on NodeOffice {
                 title
                 fieldBody {
@@ -158,6 +161,9 @@ const nodeEvent = `
               entityType
               entityBundle
               entityId
+              ... on Node {
+                title
+              }
               ... on NodeOffice {
                 title
                 fieldBody {
@@ -332,6 +338,9 @@ const nodeEventWithoutBreadcrumbs = `
               entityType
               entityBundle
               entityId
+              ... on Node {
+                title
+              }
               ... on NodeOffice {
                 title
                 fieldBody {
@@ -359,6 +368,9 @@ const nodeEventWithoutBreadcrumbs = `
               entityType
               entityBundle
               entityId
+              ... on Node {
+                title
+              }
               ... on NodeOffice {
                 title
                 fieldBody {
