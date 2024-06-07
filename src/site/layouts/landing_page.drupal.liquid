@@ -134,13 +134,7 @@
                 <ul class="va-nav-linkslist-list links">
                   {% for link in fieldLinks %}
                     <li>
-                      <va-link
-                        disable-analytics 
-                        href="{{ link.url.path }}" 
-                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Not a Veteran?' });" 
-                        text="{{ link.title }}"
-                      >
-                      </va-link>
+                      <va-link href="{{ link.url.path }}" text="{{ link.title }}" />
                     </li>
                   {% endfor %}
                 </ul>
@@ -161,12 +155,9 @@
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <va-link 
-                  disable-analytics
-                  href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
-                  onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
-                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
-                  >
-                  </va-link>
+                    href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
+                    text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
+                  />
                 </h3>
               {% endif %}
 
@@ -175,12 +166,9 @@
                   <p>
                     <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
                     <va-link 
-                      disable-analytics
                       href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" 
-                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
                       text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
-                      >
-                    </va-link>
+                    />
                   </p>
               </section>
 
@@ -207,9 +195,7 @@
                           size="3"
                           class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
                         <va-link 
-                          disable-analytics
                           href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
-                          onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });" 
                           text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ platform | formatSocialPlatform }}"
                         >
                         </va-link>
