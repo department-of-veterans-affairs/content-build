@@ -459,7 +459,12 @@
           <div class="vads-l-col--12 medium-screen:vads-l-col--8">
             <!-- Title -->
             <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin-bottom--0">FAQ</p>
-            <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
+
+            {% if fieldClpReusableQA and fieldClpReusableQA.entity.fieldSectionHeader %}
+              <h2 class="vads-u-margin-top--0">{{ fieldClpReusableQA.entity.fieldSectionHeader }}</h2>
+            {% else %}
+              <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
+            {% endif %}
 
             <!-- Page-specific Questions/Answers -->
             <va-accordion bordered uswds>
@@ -480,18 +485,65 @@
                   </va-accordion-item>
                 {% endif %}
               {% endfor %}
-            </va-accordion>
 
-            <!-- Reusable QAs -->
-            {% for reusableQA in fieldClpReusableQA %}
-              {% if reusableQA.entity.entityBundle == "q_a_group" %}
-                {% if reusableQA.entity.fieldAccordionDisplay %}
-                  {% include "src/site/paragraphs/q_a_group_collapsible_content_clp.drupal.liquid" with entity = reusableQA.entity %}
-                {% else %}
-                  {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = reusableQA.entity %}
-                {% endif %}  
+              <!-- Reusable QAs -->
+              {% if fieldClpReusableQA %}
+                {% assign questions = fieldClpReusableQA.entity.queryFieldQAs %}
+
+                {% if fieldClpReusableQA.entity.entityBundle == "q_a_group" %}
+                  {% if fieldClpReusableQA.entity.fieldAccordionDisplay %}
+                    {% for item in questions %}
+                      {% assign id = item.entityId %}
+
+                      <va-accordion-item
+                        class="va-accordion-item"
+                        header="{{ item.entityLabel }}"
+                        id="{{ item.entityLabel | hashReference: 60 }}"
+                        {% if level %}
+                          level="{{ level }}"
+                          {% else %}
+                          level=3
+                        {% endif %}
+                      >
+                        <div
+                          id={{ id }}
+                          data-template="paragraphs/q_a.collapsible_panel__qa"
+                          data-entity-id="{{ id }}"
+                          data-analytics-faq-section="{{ fieldClpReusableQA.entity.fieldSectionHeader | escape }}"
+                          data-analytics-faq-text="{{ item.entityLabel | escape }}"
+                        >
+                          <div id="{{ item.entityBundle }}-{{ id }}">
+                            {% for answer in item.fieldAnswer %}
+                              {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
+                              {% include {{ bundleComponent }} with entity = answer.entity %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </va-accordion-item>
+                    {% endfor %}
+                  {% else %}
+                    {% assign entity = fieldClpReusableQA.entity %}
+                    {% assign fieldQAs = entity.queryFieldQAs.entities %}
+    
+                    <!-- Optional QA Group Introduction -->
+                    {% if entity.fieldRichWysiwyg.processed %}
+                        {{ entity.fieldRichWysiwyg.processed }}
+                    {% endif %}
+                                  
+                    {% for fieldQA in fieldQAs %}
+                      <h3>{{ fieldQA.entityLabel }}</h3>
+                        {% if fieldQA.fieldAnswer %}
+                          {% assign fieldAnswer = fieldQA.fieldAnswer %}
+                          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                          {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                          {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                        {% endif %}
+                      </ul>
+                    {% endfor %}
+                  {% endif %}
+                {% endif %}
               {% endif %}
-            {% endfor %}
+            </va-accordion>
           </div>
         </div>
 
