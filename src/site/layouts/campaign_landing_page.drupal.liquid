@@ -488,7 +488,7 @@
 
               <!-- Reusable QAs -->
               {% if fieldClpReusableQA %}
-                {% assign questions = fieldClpReusableQA.entity.queryFieldQAs %}
+                {% assign questions = fieldClpReusableQA.entity.queryFieldQAs.entities %}
 
                 {% if fieldClpReusableQA.entity.entityBundle == "q_a_group" %}
                   {% if fieldClpReusableQA.entity.fieldAccordionDisplay %}
