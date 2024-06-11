@@ -461,10 +461,12 @@
             <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin-bottom--0">FAQ</p>
 
             {% if fieldClpReusableQA and fieldClpReusableQA.entity.fieldSectionHeader %}
-              <h2 class="vads-u-margin-top--0">{{ fieldClpReusableQA.entity.fieldSectionHeader }}</h2>
+              {% assign sectionHeader = fieldClpReusableQA.entity.fieldSectionHeader %}
             {% else %}
-              <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
+              {% assign sectionHeader = "Frequently asked questions" %}
             {% endif %}
+
+            <h2 class="vads-u-margin-top--0">{{ sectionHeader }}</h2>
 
             <!-- Page-specific Questions/Answers -->
             <va-accordion bordered uswds>
@@ -496,27 +498,21 @@
                       {% assign id = item.entityId %}
 
                       <va-accordion-item
+                        bordered
                         class="va-accordion-item"
                         header="{{ item.entityLabel }}"
                         id="{{ item.entityLabel | hashReference: 60 }}"
-                        {% if level %}
-                          level="{{ level }}"
-                          {% else %}
-                          level=3
-                        {% endif %}
+                        level=3
                       >
                         <div
                           id={{ id }}
-                          data-template="paragraphs/q_a.collapsible_panel__qa"
                           data-entity-id="{{ id }}"
-                          data-analytics-faq-section="{{ fieldClpReusableQA.entity.fieldSectionHeader | escape }}"
+                          data-analytics-faq-section="{{ sectionHeader | escape }}"
                           data-analytics-faq-text="{{ item.entityLabel | escape }}"
                         >
                           <div id="{{ item.entityBundle }}-{{ id }}">
-                            {% for answer in item.fieldAnswer %}
-                              {% assign bundleComponent = "src/site/paragraphs/" | append: answer.entity.entityBundle | append: ".drupal.liquid" %}
-                              {% include {{ bundleComponent }} with entity = answer.entity %}
-                            {% endfor %}
+                            {% assign bundleComponent = "src/site/paragraphs/" | append: item.fieldAnswer.entity.entityBundle | append: ".drupal.liquid" %}
+                            {% include {{ bundleComponent }} with entity = item.fieldAnswer.entity %}
                           </div>
                         </div>
                       </va-accordion-item>
