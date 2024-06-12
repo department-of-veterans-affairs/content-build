@@ -290,23 +290,23 @@
         {% endif %}
         
         {% assign vamcLocation = fieldListing.entity.fieldOffice.entity.title %}
+        <h2 class="vads-u-font-size--h3 vads-u-margin-bottom--0">Other VA events</h2>
 
         <!-- See more events for VAMC only -->
         {% if fieldAdministration.entity.entityId != '7' %}
           <va-link
-            active
+            class="vads-u-margin-top--2"
             href="{{ fieldListing.entity.entityUrl.path }}"
             onclick="recordEvent({ event: 'nav-secondary-button-click' });"
-            text="Want to see more events offered at {{ vamcLocation }}?"
+            text="Browse the {{ vamcLocation }} events calendar"
           ></va-link>
         {% endif %}
 
         <!-- See more nationwide events -->
           <va-link
-            active
             class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
             href="/outreach-and-events/events/"
-            text="Want to see more events offered by the VA across the country?"
+            text="Browse the VA outreach events calendar"
           ></va-link>
         {% endif %}
 
