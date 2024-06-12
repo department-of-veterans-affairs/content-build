@@ -130,7 +130,7 @@ const vbaFacilityFragment = `
               {field: "type", value: ["vba_facility_service"]},
               {field: "status", value: ["1"]}
             ]},
-            limit: 100
+            limit: 500
           ) {
             entities {
               ... on NodeVbaFacilityService {
@@ -239,7 +239,7 @@ const vbaFacilityFragment = `
             filter: {conditions: [
               {field: "status", value: ["1"]}
             ]},
-            limit: 100
+            limit: 500
           ){
             count
             entities {
