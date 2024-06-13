@@ -2,93 +2,105 @@
   <h2 class="vads-u-margin-bottom--2">Get updates from {{ regionNickname }}</h2>
   <div class="va-c-list-link-teasers usa-grid usa-grid-full">
     {% if fieldGovdeliveryIdEmerg != empty or fieldNews != empty %}
-      <div class="usa-width-one-half social-links">
+      <div class="usa-width-one-half">
         {% if fieldNews != empty %}
-          <div class="social-links-email vads-u-margin-bottom--2">
-            <a
-              class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
-              rel="noreferrer"
-              href="{{ fieldNews.uri }}">
-              <i class="fas fa-envelope vads-u-margin-right--1" aria-hidden="true"></i>
-              <span class="vads-u-text-decoration--underline">{{ fieldNews.title }}</span>
-            </a>
+          <div class="vads-u-display--flex vads-u-align-items--flex-start vads-u-margin-bottom--2">
+            <va-icon
+              icon="mail"
+              size="3"
+              class="vads-u-color--link-default vads-u-margin-right--1"></va-icon>
+            <va-link 
+              href="{{ fieldNews.uri }}" 
+              text="{{ fieldNews.title }}"
+            >
+            </va-link>
           </div>
         {% endif %}
 
         {% if fieldGovdeliveryIdEmerg != empty %}
-          <div class="social-links-email vads-u-margin-bottom--2">
-            <a
-              class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
-              rel="noreferrer"
-              href="https://public.govdelivery.com/accounts/USVHA/subscriber/new?topic_id={{ fieldGovdeliveryIdEmerg }}">
-              <i class="fas fa-envelope vads-u-margin-right--1" aria-hidden="true"></i>
-              <span class="vads-u-text-decoration--underline">Subscribe to {{ regionNickname }} emergency notifications</span>
-            </a>
+          <div class="vads-u-display--flex vads-u-align-items--flex-start vads-u-margin-bottom--2">
+            <va-icon
+              icon="mail"
+              size="3"
+              class="vads-u-color--link-default vads-u-margin-right--1"></va-icon>
+            <va-link 
+              href="https://public.govdelivery.com/accounts/USVHA/subscriber/new?topic_id={{ fieldGovdeliveryIdEmerg }}" 
+              text="Subscribe to {{ regionNickname }} emergency notifications"
+            >
+            </va-link>
           </div>
         {% endif %}
         {% if fieldFacebook != empty %}
-          <div class="social-links social-links-facebook vads-u-padding-bottom--2">
-            <a
-              class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
-              rel="noreferrer"
-              href="{{ fieldFacebook.uri }}">
-              <i class="fab fa-facebook-square vads-u-margin-right--1" aria-hidden="true"></i>
-              <span class="vads-u-text-decoration--underline">{{ fieldFacebook.title }}</span>
-            </a>
+          <div class="vads-u-display--flex vads-u-align-items--flex-start vads-u-margin-bottom--2">
+            <va-icon
+              icon="facebook"
+              size="3"
+              class="vads-u-color--link-default vads-u-margin-right--1"></va-icon>
+            <va-link 
+              href="{{ fieldFacebook.uri }}" 
+              text="{{ fieldFacebook.title }}"
+            >
+            </va-link>
           </div>
         {% endif %}
       </div>
     {% endif %}
 
     {% if fieldFacebook != empty | | fieldTwitter != empty | | fieldFlickr != empty | | fieldInstagram != empty %}
-      <div class="usa-width-one-half social-links">
+      <div class="usa-width-one-half">
         <div class="">
-
-
           {% if fieldTwitter != empty %}
-            <div class="social-links social-links-twitter vads-u-margin-bottom--2">
-              <a
-                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
-                rel="noreferrer"
-                href="{{ fieldTwitter.uri }}">
-                <i class="fab fa-twitter vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
-                <span class="vads-u-text-decoration--underline">{{ fieldTwitter.title }}</span>
-              </a>
+            <div class="vads-u-display--flex vads-u-align-items--flex-start vads-u-margin-bottom--2">
+              <va-icon
+                icon="x"
+                size="3"
+                class="vads-u-color--link-default vads-u-margin-right--1"></va-icon>
+              <va-link 
+                href="{{ fieldTwitter.uri }}" 
+                text="{{ fieldTwitter.title }}"
+              >
+              </va-link>
             </div>
           {% endif %}
           {% if fieldFlickr != empty %}
-            <div class="social-links social-links-flickr vads-u-margin-bottom--2">
-              <a
-                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
-                rel="noreferrer"
-                href="{{ fieldFlickr.uri }}">
-                <i class="fab fa-flickr vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
-                <span class="vads-u-text-decoration--underline">{{ fieldFlickr.title }}</span>
-              </a>
+            <div class="vads-u-display--flex vads-u-align-items--flex-start vads-u-margin-bottom--2">
+              <va-icon
+                icon="flickr"
+                size="3"
+                class="vads-u-color--link-default vads-u-margin-right--1"></va-icon>
+              <va-link 
+                href="{{ fieldFlickr.uri }}" 
+                text="{{ fieldFlickr.title }}"
+              >
+              </va-link>
             </div>
           {% endif %}
 
           {% if fieldInstagram != empty %}
-            <div class="social-links social-links-instagram vads-u-margin-bottom--2">
-              <a
-                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
-                rel="noreferrer"
-                href="{{ fieldInstagram.uri }}">
-                <i class="fab fa-instagram vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
-                <span class="vads-u-text-decoration--underline">{{ fieldInstagram.title }}</span>
-              </a>
+            <div class="vads-u-display--flex vads-u-align-items--flex-start vads-u-margin-bottom--2">
+              <va-icon
+                icon="instagram"
+                size="3"
+                class="vads-u-color--link-default vads-u-margin-right--1"></va-icon>
+              <va-link 
+                href="{{ fieldInstagram.uri }}" 
+                text="{{ fieldInstagram.title }}"
+              >
+              </va-link>
             </div>
           {% endif %}
 
           {% if fieldYoutube != empty %}
-            <div class="social-links social-links-youtube vads-u-margin-bottom--2">
-              <a
-                class="vads-u-display--flex vads-u-align-items--baseline vads-u-text-decoration--none"
-                rel="noreferrer"
-                href="{{ fieldYoutube.uri }}">
-                <i class="fab fa-youtube vads-u-text-decoration--none vads-u-margin-right--1" aria-hidden="true"></i>
-                <span class="vads-u-text-decoration--underline">{{ fieldYoutube.title }}</span>
-              </a>
+            <div class="vads-u-display--flex vads-u-align-items--flex-start vads-u-margin-bottom--2">
+              <va-icon
+                icon="youtube"
+                size="3"
+                class="vads-u-color--link-default vads-u-margin-right--1"></va-icon>
+              <va-link 
+                href="{{ fieldYoutube.uri }}" 
+                text="{{ fieldYoutube.title }}"
+              >
+              </va-link>
             </div>
           {% endif %}
         </div>
