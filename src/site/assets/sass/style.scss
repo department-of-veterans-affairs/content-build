@@ -50,6 +50,9 @@
 .spotlight-card {
   min-width: 30%;
   word-wrap: break-word;
+  va-link {
+    text-wrap: nowrap;
+  }
 }
 
 // START: Styles for mobile app promo banner
