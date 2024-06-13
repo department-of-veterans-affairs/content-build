@@ -179,6 +179,33 @@
     }
   },
   {
+    "appName": "10-10CG",
+    "entryName": "1010cg-application-caregiver-assistance",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
+    "template": {
+      "title": "Caregiver Application for Benefits",
+      "vagovprod": true,
+      "vagovstaging": true,
+      "vagovdev": true,
+      "localhost": true,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "family-and-caregiver-benefits",
+          "name": "Family and caregiver benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/health-and-disability",
+          "name": "Health and disability benefits for family and caregivers"
+        },
+        {
+          "path": "family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
+          "name": "Apply for the Program of Comprehensive Assistance for Family Caregivers"
+        }
+      ]
+    }
+  },
+  {
     "appName": "Terms of use",
     "entryName": "terms-of-use",
     "rootUrl": "/terms-of-use",
