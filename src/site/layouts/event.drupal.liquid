@@ -293,7 +293,8 @@
         <h2 class="vads-u-font-size--h3 vads-u-margin-bottom--0">Other VA events</h2>
 
         <!-- See more events for VAMC only -->
-        {% if fieldAdministration.entity.entityId != '7' %}
+        <!-- Includes a check for a proper VAMC location; some events might have "Outreach and events" selected for this field -->
+        {% if fieldAdministration.entity.entityId != '7' and vamcLocation != 'Outreach and events' %}
           <va-link
             class="vads-u-display--block vads-u-margin-top--2"
             href="{{ fieldListing.entity.entityUrl.path }}"
