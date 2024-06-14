@@ -468,6 +468,11 @@
 
             <h2 class="vads-u-margin-top--0">{{ sectionHeader }}</h2>
 
+            <!-- Optional QA Group Introduction -->
+            {% if fieldClpReusableQA and fieldClpReusableQA.entity.fieldRichWysiwyg.processed %}
+                {{ fieldClpReusableQA.entity.fieldRichWysiwyg.processed }}
+            {% endif %}
+
             <!-- Page-specific Questions/Answers -->
             <va-accordion bordered uswds>
               {% for faqParagraph in fieldClpFaqParagraphs %}
@@ -520,11 +525,6 @@
                   {% else %}
                     {% assign entity = fieldClpReusableQA.entity %}
                     {% assign fieldQAs = entity.queryFieldQAs.entities %}
-    
-                    <!-- Optional QA Group Introduction -->
-                    {% if entity.fieldRichWysiwyg.processed %}
-                        {{ entity.fieldRichWysiwyg.processed }}
-                    {% endif %}
                                   
                     {% for fieldQA in fieldQAs %}
                       <h3>{{ fieldQA.entityLabel }}</h3>
