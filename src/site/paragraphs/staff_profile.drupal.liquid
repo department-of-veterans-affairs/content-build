@@ -5,9 +5,9 @@
        class="vads-u-display--flex vads-u-margin-bottom--4 vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
     <div
         class="vads-u-flex--auto medium-screen:vads-u-margin-right--3 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--0">
-      {% if bio.fieldMedia == emtpy %}
+      {% if bio.fieldMedia != emtpy %}
         <div class="circular-profile-image bio-paragraph-image vads-u-position--relative vads-u-background-color--gray-lightest vads-u-display--block">
-            <div class="circular-profile-missing-icon"><va-icon size="9" icon="person"></va-icon></div>
+            <div class="circular-profile-missing-icon"><va-icon size="5" icon="person"></va-icon></div>
         </div>
       {% else %}
         {% assign image = bio.fieldMedia.entity.image %}
