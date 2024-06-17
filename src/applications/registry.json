@@ -179,6 +179,33 @@
     }
   },
   {
+    "appName": "10-10CG",
+    "entryName": "1010cg-application-caregiver-assistance",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
+    "template": {
+      "title": "Caregiver Application for Benefits",
+      "vagovprod": true,
+      "vagovstaging": true,
+      "vagovdev": true,
+      "localhost": true,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "family-and-caregiver-benefits",
+          "name": "Family and caregiver benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/health-and-disability",
+          "name": "Health and disability benefits for family and caregivers"
+        },
+        {
+          "path": "family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
+          "name": "Apply for the Program of Comprehensive Assistance for Family Caregivers"
+        }
+      ]
+    }
+  },
+  {
     "appName": "Terms of use",
     "entryName": "terms-of-use",
     "rootUrl": "/terms-of-use",
@@ -846,11 +873,11 @@
     }
   },
   {
-    "appName": "Apply for Personalized Career Planning and Guidance with VA Form 25-8832",
+    "appName": "Apply for Personalized Career Planning and Guidance with VA Form 27-8832",
     "entryName": "25-8832-planning-and-career-guidance",
     "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-25-8832",
     "template": {
-      "title": "Personalized Career Planning and Guidance Chapter 36 Form 25-8832",
+      "title": "Personalized Career Planning and Guidance Chapter 36 Form 27-8832",
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
@@ -865,7 +892,7 @@
         },
         {
           "path": "careers-employment/education-and-career-counseling/apply-career-guidance-form-25-8832/introduction",
-          "name": "Apply for Personalized Career Planning and Guidance Form 25‑8832"
+          "name": "Apply for Personalized Career Planning and Guidance Form 27‑8832"
         }
       ]
     }
@@ -1840,6 +1867,33 @@
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true
+    }
+  },
+  {
+    "appName": "Apply to become a VA accredited attorney or claims agent",
+    "entryName": "21a",
+    "rootUrl": "/accreditation/attorney-claims-agent-form-21a",
+    "productId": "55b00994-6f3c-4527-98be-5a90e37eec01",
+    "template": {
+      "vagovprod": false,
+      "title": "Apply to become a VA accredited attorney or claims agent",
+      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)",
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": ""
+        },
+        {
+          "name": "VA accreditation representatives",
+          "path": "accreditation"
+        },
+        {
+          "name": "Apply to become a VA accredited attorney or claims agent",
+          "path": "accreditation/attorney-claims-agent-form-21a"
+        }
+      ]
     }
   }
 ]
