@@ -303,10 +303,9 @@
                   aria-label="Download {{ resource.entity.name }} PDF"
                   download
                   href="{{ resource.entity.fieldMediaExternalFile.uri }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Downloadable resources', 'clp-section-title': '{{ fieldClpResourcesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': 'Download {{ resource.entity.name | encode }}' });"
+                  text="Download (PDF)"
                 >
-                Download (PDF)
-                </va-link>
+              </va-link>
               </div>
             </div>
           {% endfor %}
