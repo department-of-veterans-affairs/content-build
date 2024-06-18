@@ -17,6 +17,7 @@ const nodeEvent = `
     entityBundle
     entityId
     entityPublished
+    fieldLastSavedByAnEditor
     entityMetatags {
       __typename
       key
@@ -237,6 +238,7 @@ const nodeEventWithoutBreadcrumbs = `
     entityBundle
     entityId
     entityPublished
+    fieldLastSavedByAnEditor
     entityMetatags {
       __typename
       key
