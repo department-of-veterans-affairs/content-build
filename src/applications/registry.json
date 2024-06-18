@@ -1569,7 +1569,7 @@
     "rootUrl": "/my-health/medical-records/summaries-and-notes/visit-summary",
     "productId": "e5bd4cff-77b1-4d56-ab8e-a66c9c2667ab",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "private": true
     }
