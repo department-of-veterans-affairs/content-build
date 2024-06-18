@@ -288,16 +288,29 @@
             </va-accordion-item>
           </va-accordion>
         {% endif %}
+        
+        {% assign vamcLocation = fieldListing.entity.fieldOffice.entity.title %}
+        <h2 class="vads-u-font-size--h3 vads-u-margin-bottom--0">Other VA events</h2>
 
-        <!-- See more events. -->
-        <va-link
-          active
-          class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
-          disable-analytics
-          href="{{ fieldListing.entity.entityUrl.path }}"
-          onclick="recordEvent({ event: 'nav-secondary-button-click' });"
-          text="See more events"
-        ></va-link>
+        <!-- See more events for VAMC only -->
+        <!-- Includes a check for a proper VAMC location; some events might have "Outreach and events" selected for this field -->
+        {% if fieldAdministration.entity.entityId != '7' and vamcLocation != 'Outreach and events' %}
+          <va-link
+            class="vads-u-display--block vads-u-margin-top--2"
+            href="{{ fieldListing.entity.entityUrl.path }}"
+            onclick="recordEvent({ event: 'nav-secondary-button-click' });"
+            text="Browse the {{ vamcLocation }} events calendar"
+          ></va-link>
+        {% endif %}
+
+        <!-- See more nationwide events -->
+          <va-link
+            class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
+            href="/outreach-and-events/events/"
+            text="Browse the VA outreach events calendar"
+          ></va-link>
+        {% endif %}
+
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
