@@ -114,9 +114,7 @@
               />
               <h3 class="vads-u-padding-x--2 vads-u-margin-top--2">
                 <va-link
-                  disable-analytics
                   href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'What you can do', 'clp-section-title': '{{ fieldClpWhatYouCanDoHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ promo.entity.fieldPromoLink.entity.fieldLink.title | encode }}' });"
                   text="{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}"
                 ></va-link>
               </h3>
@@ -174,11 +172,8 @@
             {% if fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path and fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel %}
               <p>
                 <va-link
-                  disable-analytics
                   class="vads-c-action-link--blue"
                   href="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path }}"
-                  disable-analytics
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Video', 'clp-section-title': '{{ fieldClpVideoPanelHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel | encode }}' });"
                   text="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel | strip }}"
                   >
                 </va-link>
@@ -201,9 +196,7 @@
               {{ fieldClpSpotlightIntroText }}
               {% if fieldClpSpotlightCta.entity.fieldButtonLink.url.path and fieldClpSpotlightCta.entity.fieldButtonLabel %}
                 <va-link
-                  disable-analytics
                   href="{{ fieldClpSpotlightCta.entity.fieldButtonLink.url.path }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpSpotlightCta.entity.fieldButtonLabel | encode }}' });"
                   text="{{ fieldClpSpotlightCta.entity.fieldButtonLabel }}"
                 ></va-link>
               {% endif %}
@@ -217,9 +210,7 @@
                 <div class="vads-u-padding--2">
                   <h3 class="vads-u-margin-top--0">
                     <va-link
-                      disable-analytics
                       href="{{ linkTeaser.entity.fieldLink.uri }}"
-                      onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ linkTeaser.entity.fieldLink.title | encode }}' });"
                       text="{{ linkTeaser.entity.fieldLink.title }}"
                       ></va-link>
                   </h3>
@@ -261,9 +252,7 @@
                     <div class="vads-u-margin-top--2 medium-screen:vads-u-margin-top--0">
                       <h3 class="vads-u-margin-top--0">
                         <va-link
-                          disable-analytics
                           href="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.uri }}"
-                          onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Stories', 'clp-section-title': '{{ fieldClpStoriesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title | encode }}' });"
                           text="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title }}"
                         ></va-link>
                       </h3>
@@ -362,9 +351,7 @@
                 <h3 class="vads-u-margin-top--0">
                   {% if eventReference.entity.entityUrl.path and eventReference.entity.title %}
                     <va-link
-                      disable-analytics
                       href="{{ eventReference.entity.entityUrl.path }}"
-                      onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.title | encode }}' });"
                       text="{{ eventReference.entity.title }}"
                     ></va-link>
                   {% elsif %}
@@ -699,8 +686,6 @@
                   {{ benefitCategory.entity.fieldTitleIcon | getHubIcon: '3', 'vads-u-margin-right--1' }}
                   <h3 class="vads-u-margin--0 vads-u-font-size--h4">
                   <va-link
-                    disable-analytics
-                    onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'VA Benefits', 'clp-section-title': 'Learn more about related VA benefits', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ benefitCategory.entity.title | encode }}' });"
                     href="{{ benefitCategory.entity.entityUrl.path }}"
                     text="{{ benefitCategory.entity.title }}"
                   >
