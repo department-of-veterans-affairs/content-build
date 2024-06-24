@@ -46,7 +46,7 @@ Used to display a side navigation bar of pages in a collection.
             {% unless relatedPages.metadata.name == page.display_title or relatedPages.metadata.name == page.title or page.hideFromSidebar %}
               <li {% if page.path == path %}class="active-level"{% endif %}>
                 {% if page.href != empty %}
-                  <a href="{{ page.href }}"{% if page.target != empty %}target="{{page.target}}"{% endif %} onClick="recordEvent({ event: 'nav-sidenav' });">
+                  <a href="{{ page.href }}" onClick="recordEvent({ event: 'nav-sidenav' });">
                     {% if page.display_title != empty %}
                       {{ page.display_title }}
                     {% else %}
@@ -70,7 +70,7 @@ Used to display a side navigation bar of pages in a collection.
                       {% unless cpage.hideFromSidebar %}
                         <li {% if cpage.path == path %}class="active-level"{% endif %}>
                           {% if cpage.href != empty %}
-                            <a href="{{ cpage.href }}"{% if cpage.target != empty %}target="{{cpage.target}}"{% endif %} onClick="recordEvent({ event: 'nav-sidenav' });">
+                            <a href="{{ cpage.href }}" onClick="recordEvent({ event: 'nav-sidenav' });">
                               {% if cpage.display_title != empty %}
                                 {{ cpage.display_title }}
                               {% else %}

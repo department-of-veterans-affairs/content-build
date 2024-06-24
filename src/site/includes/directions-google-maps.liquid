@@ -16,8 +16,7 @@ directionsLinkOnClickPropValue
 <div>
   <a
     {{ onClick | strip }}
-    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
-    target="_blank">
+    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}">
     Get directions on Google Maps
     <span class="sr-only">to {{ directionsLinkTitle | strip }}</span>
   </a>

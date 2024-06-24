@@ -269,8 +269,6 @@
                 class="vads-c-action-link--blue"
                 href="{{ fieldClpStoriesCta.entity.fieldButtonLink.url }}"
                 onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Stories', 'clp-section-title': '{{ fieldClpStoriesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpStoriesCta.entity.fieldButtonLabel | encode }}' });"
-                rel="noreferrer noopener"
-                target="_blank"
               >
                 See more stories
               </a>
@@ -394,8 +392,6 @@
                         <a
                           href="{{ eventReference.entity.fieldFacilityLocation.entity.entityUrl.path }}"
                           onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.fieldFacilityLocation.entity.title | encode }}' });"
-                          rel="noreferrer noopener"
-                          target="_blank"
                         >
                           {{ eventReference.entity.fieldFacilityLocation.entity.title }}
                         </a>
@@ -406,8 +402,6 @@
                         <a
                           href="{{ eventReference.entity.fieldLink.uri }}"
                           onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.fieldEventCta | encode }}' });"
-                          rel="noreferrer noopener"
-                          target="_blank"
                         >
                           {{ eventReference.entity.fieldEventCta }}
                         </a>
@@ -565,11 +559,9 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }} (opens in a new tab)"
+                  aria-label="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
                   href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title | encode }}' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
                 >
                   <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}
@@ -582,11 +574,9 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Twitter, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                  aria-label="Twitter, {{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
                   href="https://twitter.com/{{ socialLinksObject.twitter.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Twitter' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
                 >
                   <va-icon icon="x" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} X (formerly Twitter)
@@ -599,11 +589,9 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Facebook, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                  aria-label="Facebook, {{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
                   href="https://facebook.com/{{ socialLinksObject.facebook.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Facebook' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
                 >
                   <va-icon icon="facebook" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Facebook
@@ -616,11 +604,9 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="YouTube, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                  aria-label="YouTube, {{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
                   href="https://youtube.com/{{ socialLinksObject.youtube.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} YouTube' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
                 >
                   <va-icon icon="youtube" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube
@@ -633,11 +619,9 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Linkedin, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                  aria-label="Linkedin, {{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
                   href="https://linkedin.com/{{ socialLinksObject.linkedin.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Linkedin' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
                 >
                   <va-icon icon="linkedin" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Linkedin
@@ -650,11 +634,9 @@
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <a
-                  aria-label="Instagram, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                  aria-label="Instagram, {{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
                   href="https://instagram.com/{{ socialLinksObject.instagram.value }}"
                   onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Instagram' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
                 >
                   <va-icon icon="instagram" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                   {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Instagram
