@@ -7,12 +7,9 @@
     <div class="usa-grid usa-grid-full">
       <article class="usa-width-two-thirds">
         {% if fieldTitleIcon %}
-          <div class="inline hub-main-icon vads-u-margin-right--1 vads-u-margin-bottom--1">
-            {{ fieldTitleIcon | getHubIcon: '3' }}
-          </div>
-
-          <div class="inline hub-main-title">
-            <h1>{{ title }}</h1>
+          <div class="medium-screen:vads-u-display--flex vads-u-margin-y--1 vads-u-align-items--flex-start">
+            <span class="vads-u-margin-top--1">{{ fieldTitleIcon | getHubIcon: '3' }}</span>
+            <h1 class="vads-u-margin-top--1 medium-screen:vads-u-margin-left--1 medium-screen:vads-u-margin-y--0">{{ title }}</h1>
           </div>
         {% else %}
           <h1>{{ title }}</h1>
