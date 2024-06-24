@@ -201,9 +201,6 @@
             {% for localSpotlight in fieldLocalSpotlight %}
               {% assign spotlightContentAll = localSpotlight.entity | shimNonFetchedFeaturedToFetchedFeaturedContent | appendCentralizedFeaturedContent: spotlightContentAll, "append" %}
             {% endfor %}
-            <script>
-              console.log({{ spotlightContentAll | json }})
-            </script>
             {% for spotlightContent in spotlightContentAll %}
               {% if spotlightContent.entity %}
                 {% include "src/site/includes/vba_facilities/spotlight_content.liquid" with
