@@ -1284,7 +1284,10 @@ module.exports = function registerFilters() {
         entity: {
           fieldButtonLink: {
             uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
-            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
+            url:
+              fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path ||
+              fieldCta[0]?.entity.fieldButtonLink[0]?.url ||
+              '',
           },
           fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
