@@ -22,19 +22,11 @@
               type="email"
               use-forms-pattern="single"
             /></va-text-input>
-            <button
-              onclick="recordMultipleEvents([
-                { 
-                  event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Sign up',  
-                },
-                { event: 'homepage-email-sign-up', action: 'Homepage email sign up' }
-                ]);"
-              type="submit"
-              class="vads-u-width--full
-                    medium-screen:vads-u-width--auto
-                    vads-u-display--block vads-u-margin-bottom--2">
-              Sign up
-            </button>
+            <va-button
+              submit
+              class="vads-u-width--full medium-screen:vads-u-width--auto vads-u-display--block vads-u-margin-top--1 vads-u-margin-bottom--2"
+              text="Sign up"
+            />
           </form>
         </div>
       </div>
