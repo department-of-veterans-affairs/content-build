@@ -7,8 +7,11 @@
             {{ entity.fieldDescription.processed | drupalToVaPath | phoneLinks }}
         </div>
     {% endif %}
-    {% if entity.fieldCta.entity.fieldButtonLink.url.path %}
-        <va-link active href="{{ entity.fieldCta.entity.fieldButtonLink.url.path }}"  text="{{ entity.fieldCta.entity.fieldButtonLabel }}" ></va-link>
-
+    {% if entity.fieldCta.entity.fieldButtonLink.url %}
+        {% if entity.fieldCta.entity.fieldButtonLink.url.path %}
+        <va-link active href="{{ entity.fieldCta.entity.fieldButtonLink.url.path }}" text="{{ entity.fieldCta.entity.fieldButtonLabel }}" ></va-link>
+        {% else %}
+        <va-link active href="{{ entity.fieldCta.entity.fieldButtonLink.url }}" text="{{ entity.fieldCta.entity.fieldButtonLabel }}"></va-link>
+        {% endif %}
     {% endif %}
 </va-card>
