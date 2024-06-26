@@ -32,21 +32,20 @@ if (window.DD_RUM && window.location?.hostname === 'www.va.gov') {
       site: 'ddog-gov.com',
       env: 'production',
       version: '1.0.0',
-      service: 'benefits--???',
-      clientToken: '<CLIENT_TOKEN>',
-      applicationId: '<APPLICATION_ID>',
+      service: 'benefits-decision-review-static-pages',
+      clientToken: 'pub17c22ff5e9e7e51f7ac28b828741e21a',
+      applicationId: '133801ec-0b13-4a6f-9689-bd937a1ddf27',
 
-      sessionSampleRate: conditionalSampleRate,
-      sessionReplaySampleRate: conditionalReplaySampleRate,
+      sessionSampleRate: 10, // {% if decisionReviewRum %}
+      sessionReplaySampleRate: 20,
 
       trackInteractions: true,
       trackUserInteractions: true,
-      trackFrustrations: true,
       trackResources: true,
       trackLongTasks: true,
 
       // https://docs.datadoghq.com/real_user_monitoring/session_replay/browser/privacy_options/
-      defaultPrivacyLevel: 'mask-user-input', // 'allow',
+      defaultPrivacyLevel: 'mask-user-input',
     });
     window.DD_RUM.startSessionReplayRecording();
   }
