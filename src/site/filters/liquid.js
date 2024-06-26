@@ -603,7 +603,7 @@ module.exports = function registerFilters() {
           acc.mobileClinics.push(healthService);
         } else if (
           facility.fieldFacilityClassification === '7' || // Community Living Centers (CLCs)
-          facility.fieldFacilityClassification === '8' // Domiliciary Residential Rehabilitation Treatment Programs (DOMs)
+          facility.fieldFacilityClassification === '8' // Domiciliary Residential Rehabilitation Treatment Programs (DOMs)
         ) {
           acc.CLCsAndDOMs.push(healthService);
         } else {
@@ -716,9 +716,13 @@ module.exports = function registerFilters() {
     // Remove duplicate paths and handle custom home text
     const pathsFound = [];
     const reducedCrumbs = filteredCrumbs.reduce((acc, crumb) => {
-      const crumbClone = { ...crumb };
-
+      // Check if we've seen this path before (skip if it is a duplicate)
       if (pathsFound.indexOf(crumb.url.path) === -1) {
+        // Make a copy of the crumb so we can safely alter it (eslint thing)
+        const crumbClone = { ...crumb };
+
+        // If this crumb points towards the home page and there is custom home text
+        // then apply the custom home text
         if (crumb.url.path === '/' && !hideHome && customHomeText) {
           crumbClone.text = customHomeText;
         }
@@ -730,13 +734,23 @@ module.exports = function registerFilters() {
       return acc;
     }, []);
 
-    // Re-map path and text to href and label
-    const newBC = reducedCrumbs.map(({ url: { path }, text }) => ({
-      href: path,
-      isRouterLink: false,
-      label: text,
-    }));
+    // Re-map path and text to href and label, add lang
+    const newBC = reducedCrumbs.map(({ url: { path }, text }) => {
+      // Set language to Spanish if "-esp" is at the end of the url,
+      // or Tagalog if "-tag" is at the end of the url
+      let lang = 'en-US';
+      if (path.endsWith('-esp')) lang = 'es';
+      if (path.endsWith('-tag')) lang = 'tl';
 
+      return {
+        href: path,
+        isRouterLink: false,
+        label: text,
+        lang,
+      };
+    });
+
+    // Run JSON.stringify twice in order to make Liquid engine happy
     return JSON.stringify(JSON.stringify(newBC));
   };
 
@@ -854,7 +868,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.formatSeconds = rawSeconds => {
-    // Dates need milliseconds, so mulitply by 1000.
+    // Dates need milliseconds, so multiply by 1000.
     const date = new Date(rawSeconds * 1000);
 
     // Derive digits.
@@ -884,8 +898,8 @@ module.exports = function registerFilters() {
     const {
       entity: {
         fieldTopics = [],
-        fieldAudienceBeneficiares,
-        fieldNonBeneficiares,
+        fieldAudienceBeneficiaries,
+        fieldNonBeneficiaries,
       },
     } = fieldTags;
 
@@ -894,19 +908,19 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    let beneficiaresAudiences = [];
+    let beneficiariesAudiences = [];
     if (
-      fieldAudienceBeneficiares &&
-      !Array.isArray(fieldAudienceBeneficiares)
+      fieldAudienceBeneficiaries &&
+      !Array.isArray(fieldAudienceBeneficiaries)
     ) {
-      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
-    } else if (fieldAudienceBeneficiares) {
-      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+      beneficiariesAudiences = [fieldAudienceBeneficiaries?.entity];
+    } else if (fieldAudienceBeneficiaries) {
+      beneficiariesAudiences = fieldAudienceBeneficiaries.map(
         audience => audience?.entity,
       );
     }
 
-    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
+    const audiences = [fieldNonBeneficiaries?.entity, ...beneficiariesAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
