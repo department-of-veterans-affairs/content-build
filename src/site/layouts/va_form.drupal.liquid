@@ -89,7 +89,6 @@
         {% endif %}
         <a
           href="{{ fieldVaFormUrl.uri }}"
-          target="_blank"
           download
           data-widget-type="find-va-forms-pdf-download-helper"
           data-form-number="{{ fieldVaFormNumber }}"
@@ -129,13 +128,12 @@
         {% if fieldVaFormToolUrl %}
           <h3 data-testid="va_form--online-tool">Online tool</h3>
           <p>{{ fieldVaFormToolIntro }}</p>
-          <a
-            class="vads-c-action-link--blue"
+          <va-link-action
             href="{{ fieldVaFormToolUrl.uri }}"
-            onclick="recordEvent({ event: 'cta-primary-button-click' });"
+            text="Go to the online tool"
+            type="secondary"
           >
-            Go to the online tool
-          </a>
+          </va-link-action>
         {% endif %}
 
 
@@ -160,7 +158,6 @@
 
                 <a
                   href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
-                  target="_blank"
                   download
                   data-widget-type="find-va-forms-pdf-download-helper"
                   data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
