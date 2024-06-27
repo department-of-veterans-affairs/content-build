@@ -132,8 +132,12 @@
           <p data-testid="service-location-custom-text" class="vads-u-margin-bottom--0">{{ single.fieldApptIntroTextCustom | drupalToVaPath | phoneLinks }}</p>
         {% elsif single.fieldApptIntroTextType == 'use_default_text' %}
           <p data-testid="service-location-default-text" class="vads-u-margin-bottom--0">
-            Contact us to schedule, reschedule, or cancel your appointment. If a referral is required,
-            you’ll need to contact your primary care provider first.
+            {% if typeOfLocation == "vba" %}
+              Contact us to schedule, reschedule, or cancel your appointment.
+            {% else %}
+              Contact us to schedule, reschedule, or cancel your appointment. If a referral is required,
+              you’ll need to contact your primary care provider first.
+            {% endif %}
           </p>
         {% endif %}
       {% endif %}

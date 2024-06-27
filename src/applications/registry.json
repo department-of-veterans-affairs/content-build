@@ -1529,19 +1529,6 @@
     }
   },
   {
-    "appName": "Mock Form - Alternate header - 21-0845 Authorization to Disclose Personal Information to a Third Party",
-    "entryName": "mock-alternate-header-0845",
-    "rootUrl": "/authorization-to-disclose-alternate",
-    "productId": "f1075156-0d85-4a0e-bce6-3f053b6243b5",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html",
-      "noNavOrLogin": true,
-      "noMegamenu": true,
-      "minimalFooter": true
-    }
-  },
-  {
     "appName": "Sign VA claim forms as an alternate signer",
     "entryName": "21-0972-alternate-signer",
     "rootUrl": "/supporting-forms-for-claims/alternate-signer-form-21-0972",
