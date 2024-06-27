@@ -55,12 +55,12 @@
                 {% include "src/site/paragraphs/q_a_group_collapsible_content.drupal.liquid" with entity = block.entity %}
               {% else %}
                 {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = block.entity %}
-              {% endif %}  
+              {% endif %}
             {% else %}
               {% assign bundleComponent = "src/site/paragraphs/" | append: block.entity.entityBundle %}
               {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
               {% include {{ bundleComponentWithExtension }} with entity = block.entity %}
-            {% endif %}  
+            {% endif %}
           {% endfor %}
           {% if fieldRelatedLinks != empty %}
             <div class="row">
@@ -82,6 +82,9 @@
   </div>
 </div>
 
+{% if decisionReviewRum %}
+  {% include "src/site/includes/decision-reviews-rum.html" %}
+{% endif %}
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
