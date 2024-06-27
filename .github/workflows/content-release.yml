@@ -331,7 +331,9 @@ jobs:
       
       - name: Copy sitemap
         run: |
+          ls 
           cd build
+          ls
           cp sitemap.xml sitemap-cb.xml
 
 
