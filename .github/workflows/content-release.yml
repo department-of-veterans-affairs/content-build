@@ -328,6 +328,12 @@ jobs:
 
       - name: Prearchive
         run: node ./script/prearchive.js --buildtype=${{ env.BUILDTYPE }}
+      
+      - name: Copy sitemap
+        run: |
+          cd build
+          cp sitemap.xml sitemap-cb.xml
+
 
       - name: Compress build
         run: tar -C build/${{ env.BUILDTYPE }} -cf ${{ env.BUILDTYPE }}.tar.bz2 .
