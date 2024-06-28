@@ -332,7 +332,7 @@ jobs:
       - name: Copy sitemap
         run: |
           ls 
-          cd build
+          cd build/${{ env.BUILDTYPE }}
           ls
           cp sitemap.xml sitemap-cb.xml
 
