@@ -83,7 +83,7 @@ jobs:
             git tag v0.0.$next_patch ${{ steps.get-current-ref.outputs.REF }} && git push --no-verify origin v0.0.$next_patch
 
       - name: Create release
-        uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e # v1.12.0
+        uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5 # v1.14.0
         with:
           tag: v0.0.${{ env.new_patch }}
           name: content-build/v0.0.${{ env.new_patch }}
