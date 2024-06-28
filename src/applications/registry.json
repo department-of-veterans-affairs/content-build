@@ -271,6 +271,37 @@
     }
   },
   {
+    "appName": "21P-530EZ Burials benefits form",
+    "entryName": "burials-ez",
+    "rootUrl": "/burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
+    "template": {
+      "title": "Apply for Burial Benefits (VA Form 21P-530EZ)",
+      "display_title": "Apply Now",
+      "layout": "page-react.html",
+      "description": "Use VA Form 21P-530EZ to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
+      "order": 1,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "/",
+          "name": "Home"
+        },
+        {
+          "path": "burials-memorials/",
+          "name": "Burials and memorials"
+        },
+        {
+          "path": "burials-memorials/veterans-burial-allowance",
+          "name": "Burial allowance"
+        },
+        {
+          "path": "burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
+          "name": "Apply for burial benefits"
+        }
+      ]
+    }
+  },
+  {
     "appName": "1010ez Health Care Application form",
     "entryName": "hca",
     "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
