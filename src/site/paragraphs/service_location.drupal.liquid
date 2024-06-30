@@ -6,7 +6,7 @@
 
   {% assign serviceLocationH = serviceLocationSubHeaderLevel %}
   {% if serviceHeader %}
-    <h{{serviceLocationH}} class="vads-u-margin-bottom--0">
+    <h{{serviceLocationH}} class="vads-u-margin-y--0">
       {{ serviceHeader }}
     </h{{serviceLocationH}}>
     {% comment %} Because serviceHeader should be lowest h-level of section {% endcomment %}
@@ -35,11 +35,9 @@
   {% assign showIconDiv = single.fieldOfficeVisits | shouldShowIconDiv: single.fieldVirtualSupport, fieldReferralRequired  %}
   {% if showIconDiv %}
     <div
-      {% if typeOfLocation == "nonclinical" %}
-      class="vads-u-padding-top--1
-      {% endif %}
+      class="vads-u-padding-top--1"
     >
-      {% if single.fieldOfficeVisits and single.fieldOfficeVisits != "no" %}
+      {% if single.fieldOfficeVisits and single.fieldOfficeVisits != "no" and single.fieldOfficeVisits != "null" %}
         <div data-testid="service-location-field-office-visits">
           <p class="vads-u-margin-top--0 vads-u-margin-bottom--0">
             <va-icon
@@ -66,7 +64,7 @@
           value: yes_veterans_can_call
           value: virtual_visits_may_be_available
       {% endcomment %}
-      {% if single.fieldVirtualSupport and single.fieldVirtualSupport != "no" %}
+      {% if single.fieldVirtualSupport and single.fieldVirtualSupport != "no" and single.fieldVirtualSupport != "null" %}
         <div data-testid="service-location-virtual-support">
           <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
             {% case single.fieldVirtualSupport %}
@@ -123,12 +121,43 @@
     </div>
   {% endif %}
 
-  {% assign showAppointments = single | shouldShowServiceLocationAppointments  %}
-  {% if showAppointments %}
+  
+  {% comment %} 
+  Determines if the intro text is to be shown
+  {% endcomment %}
+  {% assign shouldShowIntroText = single.fieldApptIntroTextType | shouldShowIntroText: single.fieldApptIntroTextCustom %}
+  
+  {% if isMentalHealthService and fieldMentalHealthPhone %}
+    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+  {% elsif fieldPhoneNumber %}
+    {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+  {% endif %}
+  
+  {% comment %}
+  Conditionally display facility main/mh phone number
+  {% endcomment %}
+  {% assign showMainNumberForAppointments = 2 | andFn: serviceLocationMainNumber, single.fieldUseFacilityPhoneNumber %}
+  
+  {% comment %} 
+  Show other appointment phone numbers
+  {% endcomment %}
+  {% assign hasAppointmentPhoneNumbers = single.fieldOtherPhoneNumbers | size | gt: 0  %}
+  
+  {% comment %} 
+  Whether to show online scheduling link for either VBA or VAMC
+  {% endcomment %}
+  {% assign showOnlineScheduleLink = single.fieldOnlineSchedulingAvail == "yes" %}
+
+  {% assign shouldShowAppointmentsHeader =  4 | orFn:shouldShowIntroText, hasAppointmentPhoneNumbers, showMainNumberForAppointments, showOnlineScheduleLink %}
+
+  {% if shouldShowAppointmentsHeader %}
+    <h{{serviceLocationH}} data-testid="service-location-appoinments-header">Appointments</h{{serviceLocationH}}>
+  {% endif %}
+
+  {% if shouldShowIntroText %}
     <div>
-      <h{{serviceLocationH}} class="vads-u-margin-top--2 vads-u-line-height--1" data-testid="service-location-appoinments-header">Appointments</h{{serviceLocationH}} >
       {% if single.fieldApptIntroTextType != 'remove_text' %}
-        {% if single.fieldApptIntroTextType == 'customize_text' and single.fieldApptIntroTextCustom != empty  %}
+        {% if single.fieldApptIntroTextType == 'customize_text' %}
           <p data-testid="service-location-custom-text" class="vads-u-margin-bottom--0">{{ single.fieldApptIntroTextCustom | drupalToVaPath | phoneLinks }}</p>
         {% elsif single.fieldApptIntroTextType == 'use_default_text' %}
           <p data-testid="service-location-default-text" class="vads-u-margin-bottom--0">
@@ -144,17 +173,10 @@
     </div>
   {% endif %}
 
-  {% comment %}
-  Conditionally display facility phone number
-  {% endcomment %}
-  {% if isMentalHealthService and fieldMentalHealthPhone %}
-    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
-  {% elsif fieldPhoneNumber %}
-    {% assign serviceLocationMainNumber = fieldPhoneNumber %}
-  {% endif %}
+
 
   {% comment %} if there is a main phone number and it should be used for appointments {% endcomment %}
-  {% if serviceLocationMainNumber and single.fieldUseFacilityPhoneNumber %}
+  {% if showMainNumberForAppointments %}
     <div data-testid="service-location-main-facility-phone">
       {% include "src/site/components/phone-number.drupal.liquid" with
             phoneNumber = serviceLocationMainNumber
@@ -163,7 +185,8 @@
           %}
     </div>
   {% endif %}
-  {% if single.fieldOtherPhoneNumbers.length > 0 %}
+
+  {% if hasAppointmentPhoneNumbers %}
     {% comment %} other phone numbers {% endcomment %}
     <div class="vads-u-display--flex vads-u-flex-direction--column" data-template="facilities/health_care_local_health_service" data-testid="service-location-show-other-phone-numbers" >
       {% include "src/site/components/phone.drupal.liquid" with
@@ -173,9 +196,7 @@
     </div>
   {% endif %}
 
-
-
-  {% if single.fieldOnlineSchedulingAvail == "yes" %}
+  {% if showOnlineScheduleLink %}
     <div
       data-testid="service-location-action-link-online"
       class="vads-u-margin-top--2 vads-u-margin-bottom--1"
@@ -204,7 +225,7 @@
 
   {% if single.fieldUseMainFacilityPhone and serviceLocationMainNumber %}
     {% comment %}
-      Display the main facility phone number
+      Display the main facility phone contact number
     {% endcomment %}
     <div data-testid="service-location-main-facility-phone-for-contact">
       {% include "src/site/components/phone-number.drupal.liquid" with
@@ -266,6 +287,7 @@
       {% endcase %}
     </div>
   {% endif %}
+  
   {% if single.fieldAdditionalHoursInfo %}
     <p class="vads-u-margin-bottom--0">
       <span data-template="paragraphs/service_location"><i>{{ single.fieldAdditionalHoursInfo }}</i></span>

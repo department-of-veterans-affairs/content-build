@@ -996,8 +996,12 @@ module.exports = function registerFilters() {
     fieldReferralRequired,
   ) => {
     if (
-      (fieldOfficeVisits && fieldOfficeVisits !== 'no') ||
-      (fieldVirtualSupport && fieldVirtualSupport !== 'no') ||
+      (fieldOfficeVisits &&
+        fieldOfficeVisits !== 'no' &&
+        fieldOfficeVisits !== 'null') ||
+      (fieldVirtualSupport &&
+        fieldVirtualSupport !== 'no' &&
+        fieldVirtualSupport !== 'null') ||
       fieldReferralRequired
     ) {
       return true;
@@ -1090,7 +1094,15 @@ module.exports = function registerFilters() {
       },
     };
   };
+  // Because an ambiguous array items always provides all the items in the array and the context, exports, etc as well
+  // We use the first item as a source of truth for how many elements to assess
+  liquid.filters.andFn = (nItems, ...arr) =>
+    arr.slice(0, nItems).every(a => !!a);
+  liquid.filters.orFn = (nItems, ...arr) => arr.slice(0, nItems).some(a => !!a);
 
+  liquid.filters.gt = (a, b) => Number(a) > Number(b);
+  liquid.filters.lt = (a, b) => Number(a) < Number(b);
+  liquid.filters.gte = (a, b) => Number(a) >= Number(b);
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
@@ -1718,36 +1730,39 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
+  liquid.filters.shouldShowIntroText = (introTextType, introTextCustom) => {
+    if (introTextType === 'remove_text') return false;
+    if (
+      introTextType === 'default_text' ||
+      (introTextType === 'customize_text' && introTextCustom)
+    )
+      return true;
+    // just in case there's a new or data value like "null" that sometimes happens in drupal
+    return false;
+  };
 
   // from the matrix of when to show Service Location Appointments header and text
   liquid.filters.shouldShowServiceLocationAppointments = serviceLocation => {
     const {
       fieldVirtualSupport: virtualSupport,
       fieldOfficeVisits: officeVisits,
-      fieldApptIntroTextType: introTextType,
-      fieldApptIntroTextCustom: introTextCustom,
     } = serviceLocation;
-    const baseYesConditions = ['yes_appointment_only'];
-    const yesOffice = [
-      ...baseYesConditions,
-      'yes_walk_in_visits_only',
-      'yes_with_or_without_appointment',
-    ];
-    const yesVirtual = [
-      ...baseYesConditions,
-      'yes_veterans_can_call',
-      'virtual_visits_may_be_available',
-    ];
-    const noVisitsAndCustomIntro =
-      !officeVisits && introTextType === 'customize_text' && introTextCustom;
-    const noVisitsAndDefaultInto =
-      !officeVisits && introTextType === 'use_default_text';
-    return (
-      yesVirtual.includes(virtualSupport) ||
-      yesOffice.includes(officeVisits) ||
-      noVisitsAndCustomIntro ||
-      noVisitsAndDefaultInto
-    );
+    // Hide? if no selection made for either virtual or office visits
+    if (!virtualSupport && !officeVisits) return false;
+    // Show if either virtual or office visits is yes_appointment_only
+    if (
+      virtualSupport === 'yes_appointment_only' ||
+      officeVisits === 'yes_appointment_only'
+    ) {
+      return true;
+    }
+    if (
+      virtualSupport === 'virtual_visits_may_be_available' ||
+      officeVisits === 'yes_with_or_without_appointment'
+    ) {
+      return true;
+    }
+    return false;
   };
 
   // Given an array of services provided at a facility,
