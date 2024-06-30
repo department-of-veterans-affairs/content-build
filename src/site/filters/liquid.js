@@ -1733,7 +1733,7 @@ module.exports = function registerFilters() {
   liquid.filters.shouldShowIntroText = (introTextType, introTextCustom) => {
     if (introTextType === 'remove_text') return false;
     if (
-      introTextType === 'default_text' ||
+      introTextType === 'use_default_text' ||
       (introTextType === 'customize_text' && introTextCustom)
     )
       return true;
