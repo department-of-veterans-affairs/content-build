@@ -3103,3 +3103,33 @@ describe('formatSocialPlatform', () => {
     ).to.equal('Veterans Administration Instagram');
   });
 });
+
+describe('runOrFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [false, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+});
+
+describe('runAndFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [true, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
+  });
+});

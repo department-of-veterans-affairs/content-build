@@ -1100,8 +1100,11 @@ module.exports = function registerFilters() {
   // Because an ambiguous array items always provides all the items in the array and the context, exports, etc as well
   // We use the first item as a source of truth for how many elements to assess
   liquid.filters.andFn = (nItems, ...arr) =>
-    arr.slice(0, nItems).every(a => !!a);
-  liquid.filters.orFn = (nItems, ...arr) => arr.slice(0, nItems).some(a => !!a);
+    (arr?.length || -1) >= nItems
+      ? arr.slice(0, nItems).every(a => !!a)
+      : false;
+  liquid.filters.orFn = (nItems, ...arr) =>
+    (arr?.length || -1) >= nItems ? arr.slice(0, nItems).some(a => !!a) : false;
 
   liquid.filters.gt = (a, b) => Number(a) > Number(b);
   liquid.filters.lt = (a, b) => Number(a) < Number(b);
