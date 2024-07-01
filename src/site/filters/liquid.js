@@ -1002,7 +1002,10 @@ module.exports = function registerFilters() {
       (fieldVirtualSupport &&
         fieldVirtualSupport !== 'no' &&
         fieldVirtualSupport !== 'null') ||
-      fieldReferralRequired
+      (fieldReferralRequired &&
+        fieldReferralRequired !== 'not_applicable' &&
+        fieldReferralRequired !== 'unknown' &&
+        fieldReferralRequired !== '2')
     ) {
       return true;
     }
