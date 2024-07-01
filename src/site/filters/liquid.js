@@ -730,6 +730,38 @@ module.exports = function registerFilters() {
   // sort a list of objects by a certain property in the object
   liquid.filters.sortObjectsBy = (entities, path) => _.sortBy(entities, path);
 
+  // VBA facilities have accordions with headers that can come from two different
+  // object keys depending on the type of service (facilityService or regionalService)
+  // This sorts alphabetically regardless of key
+  liquid.filters.sortObjectsWithConditionalKeys = entities => {
+    const getFieldToCompare = obj => {
+      let serviceDetails = obj;
+
+      if (obj?.facilityService) {
+        serviceDetails = obj.facilityService;
+      } else if (obj?.regionalService) {
+        serviceDetails = obj.regionalService;
+      }
+
+      return serviceDetails.fieldServiceNameAndDescripti.entity.name;
+    };
+
+    return entities.sort((a, b) => {
+      const name1 = getFieldToCompare(a);
+      const name2 = getFieldToCompare(b);
+
+      if (name1 < name2) {
+        return -1;
+      }
+
+      if (name1 > name2) {
+        return 1;
+      }
+
+      return 0;
+    });
+  };
+
   liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
 
   // get a value from a path of an object in an array

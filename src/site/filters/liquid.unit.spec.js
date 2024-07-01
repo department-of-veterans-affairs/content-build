@@ -1470,6 +1470,92 @@ describe('sortObjectsBy', () => {
   });
 });
 
+describe('sortObjectsWithConditionalKeys', () => {
+  const objectsToSort = [
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+  ];
+
+  const sortedObjects = [
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+  ];
+
+  it('sorts objects alphabetically by key', () => {
+    expect(
+      liquid.filters.sortObjectsWithConditionalKeys(objectsToSort),
+    ).to.deep.equal(sortedObjects);
+  });
+});
+
 describe('concat', () => {
   it('concatenates all arrays passed as arguments', () => {
     const a1 = [];
