@@ -1742,7 +1742,7 @@
     "rootUrl": "/education/verify-school-enrollment/mgib-enrollments",
     "productId": "90b61c25-80ce-444f-89fb-eb186b52bfe6",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
