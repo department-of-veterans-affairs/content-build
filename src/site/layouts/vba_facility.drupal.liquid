@@ -211,7 +211,6 @@
           </div>
 
           {% assign allVbaServices = reverseFieldVbaRegionFacilityListNode.entities | processVbaServices: reverseFieldOfficeNode.entities %}
-
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Veteran benefits"
             vbaServices = allVbaServices.veteranBenefits
