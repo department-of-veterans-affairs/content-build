@@ -161,8 +161,9 @@ const vbaFacilityFragment = `
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
-                            id
                             fieldPhoneNumber
+                            fieldPhoneNumberType
+                            fieldPhoneExtension
                             fieldPhoneLabel
                           }
                         }
@@ -297,7 +298,6 @@ const vbaFacilityFragment = `
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
-                            id
                             fieldPhoneNumberType
                             fieldPhoneNumber
                             fieldPhoneExtension
