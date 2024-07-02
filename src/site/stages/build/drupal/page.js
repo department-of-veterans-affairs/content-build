@@ -329,6 +329,7 @@ function compilePage(page, contentData) {
       pensionBenefitsHubQuery: pensionHubSidebarNav = {},
       promoBanners,
       recordsBenefitsHubQuery: recordsHubSidebarNav = {},
+      familyAndCaregiverBenefitsQuery: familyAndCaregiverBenefitsSidebarNav = {},
     },
   } = contentData;
 
@@ -350,6 +351,7 @@ function compilePage(page, contentData) {
     pensionHubSidebarNav,
     recordsHubSidebarNav,
     decisionReviewsSidebarNav,
+    familyAndCaregiverBenefitsSidebarNav,
   ];
   let sidebarNavItems;
 
