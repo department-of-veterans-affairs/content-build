@@ -1769,7 +1769,9 @@ module.exports = function registerFilters() {
 
   liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
   liquid.filters.shouldShowIntroText = (introTextType, introTextCustom) => {
-    if (introTextType === 'remove_text') return false;
+    if (introTextType === 'remove_text') {
+      return false;
+    }
     if (
       introTextType === 'use_default_text' ||
       (introTextType === 'customize_text' && introTextCustom)
@@ -1786,7 +1788,9 @@ module.exports = function registerFilters() {
       fieldOfficeVisits: officeVisits,
     } = serviceLocation;
     // Hide? if no selection made for either virtual or office visits
-    if (!virtualSupport && !officeVisits) return false;
+    if (!virtualSupport && !officeVisits) {
+      return false;
+    }
     // Show if either virtual or office visits is yes_appointment_only
     if (
       virtualSupport === 'yes_appointment_only' ||
