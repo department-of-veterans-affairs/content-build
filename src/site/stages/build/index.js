@@ -93,6 +93,55 @@ function build(BUILD_OPTIONS) {
   }
 
   smith.use(generateStaticDataFiles(BUILD_OPTIONS), 'Build static data files');
+
+  // Liquid substitution must occur before markdown is run otherwise markdown will escape the
+  // bits of liquid commands (eg., quotes) and break things.
+  //
+  // Unfortunately this must come before permalinks and navigation because of limitation in both
+  // modules regarding what files they understand. The consequence here is that liquid templates
+  // *within* a single file do NOT have access to the final path that they will be rendered under
+  // or any other metadata added by the permalinks() and navigation() filters.
+  //
+  // Thus far this has not been a problem because the only references to such paths are in the
+  // includes which are handled by the layout module. The layout module, luckily, can be run
+  // near the end of the filter chain and therefore has access to all the metadata.
+  //
+  // If this becomes a barrier in the future, permalinks should be patched to understand
+  // translating .md files which would allow inPlace() and markdown() to be moved under the
+  // permalinks() and navigation() filters making the variable stores uniform between inPlace()
+  // and layout().
+  smith.use(
+    inPlace({ engine: 'liquid', pattern: '*.{md,html}' }),
+    'Plug the content into the templates',
+  );
+  smith.use(
+    markdown({
+      typographer: true,
+      html: true,
+    }),
+    'Translate the markdown to html',
+  );
+
+  // Responsible for create permalink structure. Most commonly used change foo.md to foo/index.html.
+  //
+  // This must come before navigation module, otherwise breadcrumbs will see the wrong URLs.
+  //
+  // It also must come AFTER the markdown() module because it only recognizes .html files. See
+  // comment above the inPlace() module for explanation of effects on the metadata().
+
+  smith.use(
+    permalinks({
+      relative: false,
+      linksets: [
+        {
+          match: { collection: 'posts' },
+          pattern: ':date/:slug',
+        },
+      ],
+    }),
+    'Add permalinks and change foo.md to foo/index.html',
+  );
+
   smith.use(getDrupalContent(BUILD_OPTIONS), 'Get Drupal content');
 
   // For CMS testing, we only need to ensure that the graphql queries run. We
@@ -142,53 +191,6 @@ function build(BUILD_OPTIONS) {
   smith.use(assets(BUILD_OPTIONS.contentAssets), 'Add content assets');
 
   // smith.use(cspHash({ pattern: ['js/*.js', 'generated/*.css', 'generated/*.js'] }))
-
-  // Liquid substitution must occur before markdown is run otherwise markdown will escape the
-  // bits of liquid commands (eg., quotes) and break things.
-  //
-  // Unfortunately this must come before permalinks and navigation because of limitation in both
-  // modules regarding what files they understand. The consequence here is that liquid templates
-  // *within* a single file do NOT have access to the final path that they will be rendered under
-  // or any other metadata added by the permalinks() and navigation() filters.
-  //
-  // Thus far this has not been a problem because the only references to such paths are in the
-  // includes which are handled by the layout module. The layout module, luckily, can be run
-  // near the end of the filter chain and therefore has access to all the metadata.
-  //
-  // If this becomes a barrier in the future, permalinks should be patched to understand
-  // translating .md files which would allow inPlace() and markdown() to be moved under the
-  // permalinks() and navigation() filters making the variable stores uniform between inPlace()
-  // and layout().
-  smith.use(
-    inPlace({ engine: 'liquid', pattern: '*.{md,html}' }),
-    'Plug the content into the templates',
-  );
-  smith.use(
-    markdown({
-      typographer: true,
-      html: true,
-    }),
-    'Translate the markdown to html',
-  );
-
-  // Responsible for create permalink structure. Most commonly used change foo.md to foo/index.html.
-  //
-  // This must come before navigation module, otherwise breadcrumbs will see the wrong URLs.
-  //
-  // It also must come AFTER the markdown() module because it only recognizes .html files. See
-  // comment above the inPlace() module for explanation of effects on the metadata().
-  smith.use(
-    permalinks({
-      relative: false,
-      linksets: [
-        {
-          match: { collection: 'posts' },
-          pattern: ':date/:slug',
-        },
-      ],
-    }),
-    'Add permalinks and change foo.md to foo/index.html',
-  );
 
   smith.use(createHeaderFooterData(BUILD_OPTIONS), 'Create header and footer');
 
