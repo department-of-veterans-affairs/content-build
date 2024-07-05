@@ -251,7 +251,7 @@
     }
   }
 }
-
+// fix for sidenav btn
 .va-sidenav-btn-close {
   background-size: 0.625rem 0.625rem;
   background-color: transparent;
@@ -262,6 +262,12 @@
   padding: 1.375rem;
   margin: 0;
   width: .625rem;
+}
+
+@media (min-width: 767px) {
+  .va-sidenav-btn-close {
+    display: none;
+  }
 }
 
 // END: Styles for mobile app promo banner  
