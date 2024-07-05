@@ -404,6 +404,15 @@
     }
   },
   {
+    "appName": "Order hearing aid batteries and accessories",
+    "entryName": "order-form-2346",
+    "rootUrl": "/health-care/order-hearing-aid-batteries-and-accessories/order-form-2346",
+    "template": {
+      "layout": "page-react.html",
+      "vagovprod": true
+    }
+  },
+  {
     "appName": "Request for Higher-Level Review",
     "entryName": "0996-higher-level-review",
     "rootUrl": "/decision-reviews/higher-level-review/request-higher-level-review-form-20-0996",
