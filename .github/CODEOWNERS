@@ -42,7 +42,9 @@ src/site/layouts/leadership_listing*.drupal.liquid @department-of-veterans-affai
 src/site/layouts/news_story.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/layouts/person_profile.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/layouts/press_release.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/story.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/press_releases_listing.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/regional_health_care_service_des.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/layouts/story_listing.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/layouts/tests/vamc* @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/layouts/vamc*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
 src/site/stages/build/drupal/static-data-files/vaPoliceData @department-of-veterans-affairs/vfs-facilities-frontend
@@ -59,19 +61,26 @@ src/site/layouts/vet_center*.drupal.liquid @department-of-veterans-affairs/vfs-f
 src/site/layouts/tests/vet_center* @department-of-veterans-affairs/vfs-facilities-frontend
 
 # Public Websites
+src/site/blocks @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/basic_landing_page.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/campaign_landing_page.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/checklist.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/event* @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/ap-admins
 src/site/layouts/faq*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/full_width_banner_alert.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/home* @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/landing_page.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/media_list*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/office.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/outreach_asset.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/page* @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/publication_listing.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/q_a.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/layouts/step_by_step.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/support*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/layouts/va_form.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/navigation/sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/paragraphs @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/tests/home @department-of-veterans-affairs/vfs-public-websites-frontend
 
 
