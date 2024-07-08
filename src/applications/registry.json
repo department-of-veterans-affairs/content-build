@@ -158,29 +158,6 @@
   {
     "appName": "10-10CG",
     "entryName": "1010cg-application-caregiver-assistance",
-    "rootUrl": "/family-member-benefits/apply-for-caregiver-assistance-form-10-10cg",
-    "template": {
-      "title": "Caregiver Application for Benefits",
-      "vagovprod": true,
-      "vagovstaging": true,
-      "vagovdev": true,
-      "localhost": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "family-member-benefits/comprehensive-assistance-for-family-caregivers",
-          "name": "Family member benefits"
-        },
-        {
-          "path": "family-member-benefits/apply-for-caregiver-assistance-form-10-10cg",
-          "name": "Apply for the Program of Comprehensive Assistance for Family Caregivers"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "10-10CG",
-    "entryName": "1010cg-application-caregiver-assistance",
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
     "template": {
       "title": "Caregiver Application for Benefits",
@@ -271,6 +248,37 @@
     }
   },
   {
+    "appName": "21P-530EZ Burials benefits form",
+    "entryName": "burials-ez",
+    "rootUrl": "/burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
+    "template": {
+      "title": "Apply for Burial Benefits (VA Form 21P-530EZ)",
+      "display_title": "Apply Now",
+      "layout": "page-react.html",
+      "description": "Use VA Form 21P-530EZ to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
+      "order": 1,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "/",
+          "name": "Home"
+        },
+        {
+          "path": "burials-memorials/",
+          "name": "Burials and memorials"
+        },
+        {
+          "path": "burials-memorials/veterans-burial-allowance",
+          "name": "Burial allowance"
+        },
+        {
+          "path": "burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
+          "name": "Apply for burial benefits"
+        }
+      ]
+    }
+  },
+  {
     "appName": "1010ez Health Care Application form",
     "entryName": "hca",
     "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
@@ -307,8 +315,12 @@
       "private": true,
       "breadcrumbs_override": [
         {
+          "name": "VA.gov home",
+          "path": ""
+        },
+        {
           "path": "my-health/",
-          "name": "My Health"
+          "name": "My HealtheVet"
         },
         {
           "path": "my-health/update-benefits-information-form-10-10ezr",
@@ -1196,16 +1208,6 @@
     }
   },
   {
-    "appName": "Search Representative",
-    "entryFile": "./app-entry.jsx",
-    "entryName": "search-representative",
-    "rootUrl": "/view-change-representative/search",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "Apply for Specially Adapted Housing Grant",
     "entryName": "sahg",
     "rootUrl": "/specially-adapted-housing-grant",
@@ -1721,7 +1723,7 @@
     "rootUrl": "/education/verify-school-enrollment/mgib-enrollments",
     "productId": "90b61c25-80ce-444f-89fb-eb186b52bfe6",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1748,7 +1750,7 @@
   {
     "appName": "10-10d Application for CHAMPVA benefits",
     "entryName": "10-10D",
-    "rootUrl": "/health-care/champva/apply-form-10-10d",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-form-10-10d",
     "productId": "c485d6da-8094-433d-9cd3-3d31e7813650",
     "template": {
       "vagovprod": false,

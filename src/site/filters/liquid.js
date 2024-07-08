@@ -730,6 +730,38 @@ module.exports = function registerFilters() {
   // sort a list of objects by a certain property in the object
   liquid.filters.sortObjectsBy = (entities, path) => _.sortBy(entities, path);
 
+  // VBA facilities have accordions with headers that can come from two different
+  // object keys depending on the type of service (facilityService or regionalService)
+  // This sorts alphabetically regardless of key
+  liquid.filters.sortObjectsWithConditionalKeys = entities => {
+    const getFieldToCompare = obj => {
+      let serviceDetails = obj;
+
+      if (obj?.facilityService) {
+        serviceDetails = obj.facilityService;
+      } else if (obj?.regionalService) {
+        serviceDetails = obj.regionalService;
+      }
+
+      return serviceDetails.fieldServiceNameAndDescripti.entity.name;
+    };
+
+    return entities.sort((a, b) => {
+      const name1 = getFieldToCompare(a);
+      const name2 = getFieldToCompare(b);
+
+      if (name1 < name2) {
+        return -1;
+      }
+
+      if (name1 > name2) {
+        return 1;
+      }
+
+      return 0;
+    });
+  };
+
   liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
 
   // get a value from a path of an object in an array
@@ -996,9 +1028,16 @@ module.exports = function registerFilters() {
     fieldReferralRequired,
   ) => {
     if (
-      (fieldOfficeVisits && fieldOfficeVisits !== 'no') ||
-      (fieldVirtualSupport && fieldVirtualSupport !== 'no') ||
-      fieldReferralRequired
+      (fieldOfficeVisits &&
+        fieldOfficeVisits !== 'no' &&
+        fieldOfficeVisits !== 'null') ||
+      (fieldVirtualSupport &&
+        fieldVirtualSupport !== 'no' &&
+        fieldVirtualSupport !== 'null') ||
+      (fieldReferralRequired &&
+        fieldReferralRequired !== 'not_applicable' &&
+        fieldReferralRequired !== 'unknown' &&
+        fieldReferralRequired !== '2')
     ) {
       return true;
     }
@@ -1090,7 +1129,18 @@ module.exports = function registerFilters() {
       },
     };
   };
+  // Because an ambiguous array items always provides all the items in the array and the context, exports, etc as well
+  // We use the first item as a source of truth for how many elements to assess
+  liquid.filters.andFn = (nItems, ...arr) =>
+    (arr?.length || -1) >= nItems
+      ? arr.slice(0, nItems).every(a => !!a)
+      : false;
+  liquid.filters.orFn = (nItems, ...arr) =>
+    (arr?.length || -1) >= nItems ? arr.slice(0, nItems).some(a => !!a) : false;
 
+  liquid.filters.gt = (a, b) => Number(a) > Number(b);
+  liquid.filters.lt = (a, b) => Number(a) < Number(b);
+  liquid.filters.gte = (a, b) => Number(a) >= Number(b);
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
@@ -1718,36 +1768,43 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
+  liquid.filters.shouldShowIntroText = (introTextType, introTextCustom) => {
+    if (introTextType === 'remove_text') {
+      return false;
+    }
+    if (
+      introTextType === 'use_default_text' ||
+      (introTextType === 'customize_text' && introTextCustom)
+    )
+      return true;
+    // just in case there's a new or data value like "null" that sometimes happens in drupal
+    return false;
+  };
 
   // from the matrix of when to show Service Location Appointments header and text
   liquid.filters.shouldShowServiceLocationAppointments = serviceLocation => {
     const {
       fieldVirtualSupport: virtualSupport,
       fieldOfficeVisits: officeVisits,
-      fieldApptIntroTextType: introTextType,
-      fieldApptIntroTextCustom: introTextCustom,
     } = serviceLocation;
-    const baseYesConditions = ['yes_appointment_only'];
-    const yesOffice = [
-      ...baseYesConditions,
-      'yes_walk_in_visits_only',
-      'yes_with_or_without_appointment',
-    ];
-    const yesVirtual = [
-      ...baseYesConditions,
-      'yes_veterans_can_call',
-      'virtual_visits_may_be_available',
-    ];
-    const noVisitsAndCustomIntro =
-      !officeVisits && introTextType === 'customize_text' && introTextCustom;
-    const noVisitsAndDefaultInto =
-      !officeVisits && introTextType === 'use_default_text';
-    return (
-      yesVirtual.includes(virtualSupport) ||
-      yesOffice.includes(officeVisits) ||
-      noVisitsAndCustomIntro ||
-      noVisitsAndDefaultInto
-    );
+    // Hide? if no selection made for either virtual or office visits
+    if (!virtualSupport && !officeVisits) {
+      return false;
+    }
+    // Show if either virtual or office visits is yes_appointment_only
+    if (
+      virtualSupport === 'yes_appointment_only' ||
+      officeVisits === 'yes_appointment_only'
+    ) {
+      return true;
+    }
+    if (
+      virtualSupport === 'virtual_visits_may_be_available' ||
+      officeVisits === 'yes_with_or_without_appointment'
+    ) {
+      return true;
+    }
+    return false;
   };
 
   // Given an array of services provided at a facility,
