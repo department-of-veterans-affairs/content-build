@@ -1644,9 +1644,9 @@
     }
   },
   {
-    "appName": "Appeals Testing",
-    "entryName": "appeals-testing",
-    "rootUrl": "/decision-reviews/appeals-testing",
+    "appName": "Appeals NOD layout testing",
+    "entryName": "nod-new",
+    "rootUrl": "/decision-reviews/testing/nod-new",
     "productId": "5dd32517-00fd-4e97-afed-e6db1f1f54f9",
     "template": {
       "layout": "page-react.html",
@@ -1660,9 +1660,9 @@
     }
   },
   {
-    "appName": "Submitted Appeals view & download",
-    "entryName": "submitted-appeal",
-    "rootUrl": "/decision-reviews/submitted-appeal",
+    "appName": "Appeals download",
+    "entryName": "download",
+    "rootUrl": "/decision-reviews/testing/download",
     "productId": "8057a5e9-196a-462f-9bc3-3bd1d199892c",
     "template": {
       "layout": "page-react.html",
