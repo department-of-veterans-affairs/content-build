@@ -250,7 +250,7 @@
   {
     "appName": "21P-530EZ Burials benefits form",
     "entryName": "burials-ez",
-    "rootUrl": "/burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
+    "rootUrl": "/burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
     "template": {
       "title": "Apply for Burial Benefits (VA Form 21P-530EZ)",
       "display_title": "Apply Now",
@@ -269,10 +269,10 @@
         },
         {
           "path": "burials-memorials/veterans-burial-allowance",
-          "name": "Burial allowance"
+          "name": "Veterans burial allowance"
         },
         {
-          "path": "burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
+          "path": "burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
           "name": "Apply for burial benefits"
         }
       ]
