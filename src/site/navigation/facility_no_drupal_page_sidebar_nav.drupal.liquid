@@ -28,25 +28,27 @@
       <a href="{{ deepLinksObj.parent.url.path }}">{{ deepLinksObj.parent.label }}</a>
     </div>
 
-    <ul class="usa-sidenav-list">
-      {% for link in deepLinks %}
-      <li {% if entityUrl.path == link.url.path %} class="active-level" {% endif %}>
-        <a {% if entityUrl.path == link.url.path %} class="usa-current" {% endif %}
-          href="{{ link.url.path }}" onClick="recordEvent({ event: 'nav-sidenav' });">{{ link.label }}</a>
-        {% if link.links.length %}
-          <ul class="usa-sidenav-sub_list">
-            {% for link in link.links %}
-              <li>
-                <a {% if entityUrl.path == link.url.path %} class="usa-current" {% endif %}
-                  href="{{ link.url.path }}" onClick="recordEvent({ event: 'nav-sidenav' });">{{ link.label }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-          </li>
-        {% else %}
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+    {% if deepLinks.length %}
+      <ul class="usa-sidenav-list">
+        {% for link in deepLinks %}
+        <li {% if entityUrl.path == link.url.path %} class="active-level" {% endif %}>
+          <a {% if entityUrl.path == link.url.path %} class="usa-current" {% endif %}
+            href="{{ link.url.path }}" onClick="recordEvent({ event: 'nav-sidenav' });">{{ link.label }}</a>
+          {% if link.links.length %}
+            <ul class="usa-sidenav-sub_list">
+              {% for link in link.links %}
+                <li>
+                  <a {% if entityUrl.path == link.url.path %} class="usa-current" {% endif %}
+                    href="{{ link.url.path }}" onClick="recordEvent({ event: 'nav-sidenav' });">{{ link.label }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+            </li>
+          {% else %}
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
   </div>
 </nav>
