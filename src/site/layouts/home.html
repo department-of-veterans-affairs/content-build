@@ -12,8 +12,7 @@
       <div class="hub-links-row">
         {% for card in cards %}
         <div class="hub-links-container" data-e2e="bucket">
-          <h2 class="heading-level-3 vads-u-margin-top--0"><i
-              class="icon-large-baseline icon-heading hub-icon-{{card.hub}} hub-color-{{card.hub}} vads-u-margin-right--0p5"></i>{{
+          <h2 class="heading-level-3 vads-u-margin-top--0">{{
             card.heading }}</h2>
           <ul class="hub-links-list vads-u-margin-bottom--0">
             {% assign parentCard = card %}
@@ -43,8 +42,7 @@
       <div class="usa-grid usa-grid-full homepage-benefits-row">
         {% for hub in hubs %}
         <div class="usa-width-one-third" data-e2e="hub">
-          <h3 class="heading-level-4"><a href="{{ hub.url }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i
-                class="icon-small icon-heading hub-icon-{{hub.hub}} hub-background-{{hub.hub}} white vads-u-margin-right--0p5"></i>{{hub.heading}}</a>
+          <h3 class="heading-level-4"><a href="{{ hub.url }}" onclick="recordEvent({ event: 'nav-linkslist' });">{{hub.heading}}</a>
             </h4>
             <p class="vads-u-margin-top--0">{{hub.description}}</p>
         </div>
@@ -61,7 +59,7 @@
         <div class="usa-width-one-third">
           <a href="/find-locations/" onclick="recordEvent({ event: 'nav-main-health' });" class="homepage-button">
             <div class="icon-wrapper">
-              <i class="fa fa-map-marker-alt homepage-button-icon"></i>
+              <va-icon icon="location_on" size="3" class="homepage-button-icon"></va-icon>
             </div>
             <!-- div required for alignment -->
             <div class="button-inner">
@@ -84,7 +82,7 @@
           <button onclick="recordEvent({ event: 'nav-main-sign-in' });"
             class="homepage-button signin-signup-modal-trigger">
             <div class="icon-wrapper">
-              <i class="fas fa-user-circle homepage-button-icon"></i>
+              <va-icon icon="account_circle" size="3" class="homepage-button-icon"></va-icon>
             </div>
             <div class="button-inner">
               <span>Sign in or create an account to use more tools</span>
@@ -109,7 +107,7 @@
           <div class="homepage-image-wrapper">
             <img class="lazy" width="552" data-src="{{ story.img }}" alt="{{ story.alt }}" />
           </div>
-          <h4 class="homepage-news-story-title"><a class="no-external-icon" href="{{ story.href }}"
+          <h4 class="homepage-news-story-title"><a href="{{ story.href }}"
               onClick="recordEvent({ event: 'nav-footer-news-story' });" />{{ story.title }}</a></h4>
           <p class="homepage-news-story-desc">{{ story.description }}</p>
         </div>

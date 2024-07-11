@@ -7,12 +7,9 @@
     <div class="usa-grid usa-grid-full">
       <article class="usa-width-two-thirds">
         {% if fieldTitleIcon %}
-          <div class="inline hub-main-icon vads-u-margin-right--1 vads-u-margin-bottom--1">
-            {{ fieldTitleIcon | getHubIcon: '3' }}
-          </div>
-
-          <div class="inline hub-main-title">
-            <h1>{{ title }}</h1>
+          <div class="medium-screen:vads-u-display--flex vads-u-margin-y--1 vads-u-align-items--flex-start">
+            <span class="vads-u-margin-top--1">{{ fieldTitleIcon | getHubIcon: '3' }}</span>
+            <h1 class="vads-u-margin-top--1 medium-screen:vads-u-margin-left--1 medium-screen:vads-u-margin-y--0">{{ title }}</h1>
           </div>
         {% else %}
           <h1>{{ title }}</h1>
@@ -23,7 +20,7 @@
         </div>
 
         {% if fieldSpokes != empty and fieldSpokes.length > 1 %}
-          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+          <va-on-this-page></va-on-this-page>
         {% endif %}
 
         {% if fieldAlert.length %}
@@ -134,13 +131,7 @@
                 <ul class="va-nav-linkslist-list links">
                   {% for link in fieldLinks %}
                     <li>
-                      <va-link
-                        disable-analytics 
-                        href="{{ link.url.path }}" 
-                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Not a Veteran?' });" 
-                        text="{{ link.title }}"
-                      >
-                      </va-link>
+                      <va-link href="{{ link.url.path }}" text="{{ link.title }}" />
                     </li>
                   {% endfor %}
                 </ul>
@@ -161,12 +152,9 @@
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <va-link 
-                  disable-analytics
-                  href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
-                  onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
-                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
-                  >
-                  </va-link>
+                    href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
+                    text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
+                  />
                 </h3>
               {% endif %}
 
@@ -175,12 +163,9 @@
                   <p>
                     <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
                     <va-link 
-                      disable-analytics
                       href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" 
-                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });"
                       text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
-                      >
-                    </va-link>
+                    />
                   </p>
               </section>
 
@@ -207,9 +192,7 @@
                           size="3"
                           class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
                         <va-link 
-                          disable-analytics
-                          href="{{"http://{{ socialPlatform }}.com/{{ socialLink.value }}"}}" 
-                          onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Connect with us' });" 
+                          href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
                           text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ platform | formatSocialPlatform }}"
                         >
                         </va-link>

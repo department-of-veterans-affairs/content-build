@@ -34,7 +34,7 @@
             {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath buttonType = 'vba'%}
           </div>
 
-          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+          <va-on-this-page></va-on-this-page>
 
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
             Location and contact information
@@ -211,7 +211,6 @@
           </div>
 
           {% assign allVbaServices = reverseFieldVbaRegionFacilityListNode.entities | processVbaServices: reverseFieldOfficeNode.entities %}
-
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Veteran benefits"
             vbaServices = allVbaServices.veteranBenefits
@@ -295,7 +294,7 @@
 
           <p>
             <va-link
-              href="/find-locations"
+              href="/find-locations?facilityType=benefits"
               text="Find a VA benefits location"
               onclick="recordEvent(
                 {

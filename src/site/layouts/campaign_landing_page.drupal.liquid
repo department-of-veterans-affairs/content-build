@@ -16,13 +16,12 @@
               <p class="va-introtext vads-u-color--white">{{ fieldHeroBlurb }}</p>
 
               {% if fieldPrimaryCallToAction %}
-                <a
-                  class="vads-c-action-link--white vads-u-margin-top--2"
+                <va-link-action
+                  class="vads-u-margin-top--2"
                   href="{{ fieldPrimaryCallToAction.entity.fieldButtonLink.url.path }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'hero', 'clp-section-title': '{{ title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldPrimaryCallToAction.entity.fieldButtonLabel | encode }}' });"
-                >
-                  {{ fieldPrimaryCallToAction.entity.fieldButtonLabel }}
-                </a>
+                  type="reverse"
+                  text="{{ fieldPrimaryCallToAction.entity.fieldButtonLabel }}"
+                />
               {% endif %}
             </div>
             <div class="vads-u-display--none small-desktop-screen:vads-u-display--block">
@@ -43,13 +42,11 @@
             <h2 class="vads-u-margin--0 vads-u-margin-bottom--2">Why this matters to you</h2>
             <p class="va-introtext vads-u-margin-top--0 vads-u-margin-bottom--2">{{ fieldClpWhyThisMatters }}</p>
             {% if fieldSecondaryCallToAction %}
-              <a
-                class="vads-c-action-link--blue"
+              <va-link-action
                 href="{{ fieldSecondaryCallToAction.entity.fieldButtonLink.url.path }}"
-                onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Why this matters to you', 'clp-section-title': '{{ fieldClpWhyThisMatters | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldSecondaryCallToAction.entity.fieldButtonLabel | encode }}' });"
-              >
-                {{ fieldSecondaryCallToAction.entity.fieldButtonLabel | strip }}
-              </a>
+                type="secondary"
+                text="{{ fieldSecondaryCallToAction.entity.fieldButtonLabel | strip }}"
+              />
             {% endif %}
           </div><!-- /Content -->
 
@@ -114,9 +111,7 @@
               />
               <h3 class="vads-u-padding-x--2 vads-u-margin-top--2">
                 <va-link
-                  disable-analytics
                   href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'What you can do', 'clp-section-title': '{{ fieldClpWhatYouCanDoHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ promo.entity.fieldPromoLink.entity.fieldLink.title | encode }}' });"
                   text="{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}"
                 ></va-link>
               </h3>
@@ -174,11 +169,8 @@
             {% if fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path and fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel %}
               <p>
                 <va-link
-                  disable-analytics
                   class="vads-c-action-link--blue"
                   href="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path }}"
-                  disable-analytics
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Video', 'clp-section-title': '{{ fieldClpVideoPanelHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel | encode }}' });"
                   text="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel | strip }}"
                   >
                 </va-link>
@@ -201,9 +193,7 @@
               {{ fieldClpSpotlightIntroText }}
               {% if fieldClpSpotlightCta.entity.fieldButtonLink.url.path and fieldClpSpotlightCta.entity.fieldButtonLabel %}
                 <va-link
-                  disable-analytics
                   href="{{ fieldClpSpotlightCta.entity.fieldButtonLink.url.path }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpSpotlightCta.entity.fieldButtonLabel | encode }}' });"
                   text="{{ fieldClpSpotlightCta.entity.fieldButtonLabel }}"
                 ></va-link>
               {% endif %}
@@ -217,9 +207,7 @@
                 <div class="vads-u-padding--2">
                   <h3 class="vads-u-margin-top--0">
                     <va-link
-                      disable-analytics
                       href="{{ linkTeaser.entity.fieldLink.uri }}"
-                      onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Spotlight', 'clp-section-title': '{{ fieldClpSpotlightHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ linkTeaser.entity.fieldLink.title | encode }}' });"
                       text="{{ linkTeaser.entity.fieldLink.title }}"
                       ></va-link>
                   </h3>
@@ -261,9 +249,7 @@
                     <div class="vads-u-margin-top--2 medium-screen:vads-u-margin-top--0">
                       <h3 class="vads-u-margin-top--0">
                         <va-link
-                          disable-analytics
                           href="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.uri }}"
-                          onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Stories', 'clp-section-title': '{{ fieldClpStoriesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title | encode }}' });"
                           text="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title }}"
                         ></va-link>
                       </h3>
@@ -275,16 +261,12 @@
             {% endif %}
 
             <!-- Call to action -->
-            {% if fieldClpStoriesCta.entity.fieldButtonLink.url %}
-              <a
-                class="vads-c-action-link--blue"
-                href="{{ fieldClpStoriesCta.entity.fieldButtonLink.url }}"
-                onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Stories', 'clp-section-title': '{{ fieldClpStoriesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpStoriesCta.entity.fieldButtonLabel | encode }}' });"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                See more stories
-              </a>
+            {% if fieldClpStoriesCta.uri %}
+              <va-link-action
+                href="{{ fieldClpStoriesCta.uri }}"
+                type="secondary"
+                text="See more stories"
+              />
             {% endif %}
           </div>
         </div>
@@ -326,13 +308,11 @@
         {% if fieldClpResourcesCta.entity.fieldButtonLink and fieldClpResourcesCta.entity.fieldButtonLabel %}
           <div class="vads-l-row">
             <div class="vads-u-col--12">
-              <a
-                class="vads-c-action-link--blue"
+              <va-link-action
                 href="{{ fieldClpResourcesCta.entity.fieldButtonLink.url.path }}"
-                onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Downloadable resources', 'clp-section-title': '{{ fieldClpResourcesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpResourcesCta.entity.fieldButtonLabel | encode }}' });"
-              >
-                {{ fieldClpResourcesCta.entity.fieldButtonLabel | strip }}
-              </a>
+                type="secondary"
+                text="{{ fieldClpResourcesCta.entity.fieldButtonLabel | strip }}"
+              />
             </div>
           </div>
         {% endif %}
@@ -362,9 +342,7 @@
                 <h3 class="vads-u-margin-top--0">
                   {% if eventReference.entity.entityUrl.path and eventReference.entity.title %}
                     <va-link
-                      disable-analytics
                       href="{{ eventReference.entity.entityUrl.path }}"
-                      onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.title | encode }}' });"
                       text="{{ eventReference.entity.title }}"
                     ></va-link>
                   {% elsif %}
@@ -404,42 +382,31 @@
                     <div class="vads-u-display--flex vads-u-flex-direction--column">
                       <!-- Facility link -->
                       {% if eventReference.entity.fieldFacilityLocation.entity.entityUrl.path and eventReference.entity.fieldFacilityLocation.entity.title %}
-                        <a
+                        <va-link
                           href="{{ eventReference.entity.fieldFacilityLocation.entity.entityUrl.path }}"
-                          onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.fieldFacilityLocation.entity.title | encode }}' });"
-                          rel="noreferrer noopener"
-                          target="_blank"
-                        >
-                          {{ eventReference.entity.fieldFacilityLocation.entity.title }}
-                        </a>
+                          text="{{ eventReference.entity.fieldFacilityLocation.entity.title }}"
+                        />
                       {% endif %}
 
                       <!-- Event link -->
                       {% if eventReference.entity.fieldLink.uri and eventReference.entity.fieldEventCta %}
-                        <a
+                        <va-link
                           href="{{ eventReference.entity.fieldLink.uri }}"
-                          onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.fieldEventCta | encode }}' });"
-                          rel="noreferrer noopener"
-                          target="_blank"
-                        >
-                          {{ eventReference.entity.fieldEventCta }}
-                        </a>
+                          text="{{ eventReference.entity.fieldEventCta }}"
+                        />
                       {% endif %}
-
 
                       <!-- Online event link -->
-                      {% if eventReference.entity.fieldUrlOfAnOnlineEvent.uri %}
-                        <a
-                          href="{{ eventReference.entity.fieldUrlOfAnOnlineEvent.uri }}"
-                          onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Events', 'clp-section-title': '{{ fieldClpEventsHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ eventReference.entity.fieldUrlOfAnOnlineEvent.uri | encode }}' });"
-                        >
-                      {% endif %}
-                        <!-- Event address -->
-                        {% if eventReference.entity.fieldLocationHumanreadable != empty %}
+                      {% if eventReference.entity.fieldLocationHumanreadable != empty %}
+                        {% if eventReference.entity.fieldUrlOfAnOnlineEvent.uri %}
+                          <va-link
+                            href="{{ eventReference.entity.fieldUrlOfAnOnlineEvent.uri }}"
+                            text="{{ eventReference.entity.fieldLocationHumanreadable }}"
+                          />
+                        {% else %}
+                          <!-- Event address -->
                           <p class="vads-u-margin--0">{{ eventReference.entity.fieldLocationHumanreadable }}</p>
                         {% endif %}
-                      {% if eventReference.entity.fieldUrlOfAnOnlineEvent.uri %}
-                        </a>
                       {% endif %}
                     </div>
                   </div>
@@ -459,7 +426,19 @@
           <div class="vads-l-col--12 medium-screen:vads-l-col--8">
             <!-- Title -->
             <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin-bottom--0">FAQ</p>
-            <h2 class="vads-u-margin-top--0">Frequently asked questions</h2>
+
+            {% if fieldClpReusableQA and fieldClpReusableQA.entity.fieldSectionHeader %}
+              {% assign sectionHeader = fieldClpReusableQA.entity.fieldSectionHeader %}
+            {% else %}
+              {% assign sectionHeader = "Frequently asked questions" %}
+            {% endif %}
+
+            <h2 class="vads-u-margin-top--0">{{ sectionHeader }}</h2>
+
+            <!-- Optional QA Group Introduction -->
+            {% if fieldClpReusableQA and fieldClpReusableQA.entity.fieldRichWysiwyg.processed %}
+                {{ fieldClpReusableQA.entity.fieldRichWysiwyg.processed }}
+            {% endif %}
 
             <!-- Page-specific Questions/Answers -->
             <va-accordion bordered uswds>
@@ -480,31 +459,66 @@
                   </va-accordion-item>
                 {% endif %}
               {% endfor %}
-            </va-accordion>
 
-            <!-- Reusable QAs -->
-            {% for reusableQA in fieldClpReusableQA %}
-              {% if reusableQA.entity.entityBundle == "q_a_group" %}
-                {% if reusableQA.entity.fieldAccordionDisplay %}
-                  {% include "src/site/paragraphs/q_a_group_collapsible_content.drupal.liquid" with entity = reusableQA.entity %}
-                {% else %}
-                  {% include "src/site/paragraphs/q_a_group_content.drupal.liquid" with entity = reusableQA.entity %}
-                {% endif %}  
+              <!-- Reusable QAs -->
+              {% if fieldClpReusableQA %}
+                {% assign questions = fieldClpReusableQA.entity.queryFieldQAs.entities %}
+
+                {% if fieldClpReusableQA.entity.entityBundle == "q_a_group" %}
+                  {% if fieldClpReusableQA.entity.fieldAccordionDisplay %}
+                    {% for item in questions %}
+                      {% assign id = item.entityId %}
+
+                      <va-accordion-item
+                        bordered
+                        class="va-accordion-item"
+                        header="{{ item.entityLabel }}"
+                        id="{{ item.entityLabel | hashReference: 60 }}"
+                        level=3
+                      >
+                        <div
+                          id={{ id }}
+                          data-entity-id="{{ id }}"
+                          data-analytics-faq-section="{{ sectionHeader | escape }}"
+                          data-analytics-faq-text="{{ item.entityLabel | escape }}"
+                        >
+                          <div id="{{ item.entityBundle }}-{{ id }}">
+                            {% assign bundleComponent = "src/site/paragraphs/" | append: item.fieldAnswer.entity.entityBundle | append: ".drupal.liquid" %}
+                            {% include {{ bundleComponent }} with entity = item.fieldAnswer.entity %}
+                          </div>
+                        </div>
+                      </va-accordion-item>
+                    {% endfor %}
+                  {% else %}
+                    {% assign entity = fieldClpReusableQA.entity %}
+                    {% assign fieldQAs = entity.queryFieldQAs.entities %}
+                                  
+                    {% for fieldQA in fieldQAs %}
+                      <h3>{{ fieldQA.entityLabel }}</h3>
+                        {% if fieldQA.fieldAnswer %}
+                          {% assign fieldAnswer = fieldQA.fieldAnswer %}
+                          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldAnswer.entity.entityBundle %}
+                          {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+                          {% include {{ bundleComponentWithExtension }} with entity = fieldAnswer.entity %}
+                        {% endif %}
+                      </ul>
+                    {% endfor %}
+                  {% endif %}
+                {% endif %}
               {% endif %}
-            {% endfor %}
+            </va-accordion>
           </div>
         </div>
 
         {% if fieldClpFaqCta.entity.fieldButtonLink.url.path and fieldClpFaqCta.entity.fieldButtonLabel %}
           <div class="vads-l-row">
             <div class="vads-u-col--12">
-              <a
-                class="vads-c-action-link--blue"
+              <va-link-action
+                class="vads-u-margin-top--1"
                 href="{{ fieldClpFaqCta.entity.fieldButtonLink.url.path }}"
-                onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'FAQ', 'clp-section-title': 'Frequently asked questions', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldClpFaqCta.entity.fieldButtonLabel | encode }}' });"
-              >
-                {{ fieldClpFaqCta.entity.fieldButtonLabel | strip }}
-              </a>
+                type="secondary"
+                text="{{ fieldClpFaqCta.entity.fieldButtonLabel | strip }}"
+              />
             </div>
           </div>
         {% endif %}
@@ -529,16 +543,11 @@
           {% if fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path and fieldRelatedOffice.entity.fieldEmailUpdatesLink.title %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
-                <a
-                  aria-label="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }} (opens in a new tab)"
+                <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
+                <va-link
                   href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title | encode }}' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
-                  {{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}
-                </a>
+                  text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
+                />
               </div>
             </div>
           {% endif %}
@@ -546,16 +555,11 @@
           {% if socialLinksObject.twitter.value %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
-                <a
-                  aria-label="Twitter, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                <va-icon icon="x" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
+                <va-link
                   href="https://twitter.com/{{ socialLinksObject.twitter.value }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Twitter' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <va-icon icon="x" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
-                  {{ fieldRelatedOffice.entity.fieldExternalLink.title }} X (formerly Twitter)
-                </a>
+                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} X (formerly Twitter)"
+                />
               </div>
             </div>
           {% endif %}
@@ -563,16 +567,11 @@
           {% if socialLinksObject.facebook.value %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
-                <a
-                  aria-label="Facebook, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                <va-icon icon="facebook" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
+                <va-link
                   href="https://facebook.com/{{ socialLinksObject.facebook.value }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Facebook' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <va-icon icon="facebook" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
-                  {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Facebook
-                </a>
+                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} Facebook"
+                />
               </div>
             </div>
           {% endif %}
@@ -580,16 +579,11 @@
           {% if socialLinksObject.youtube.value %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
-                <a
-                  aria-label="YouTube, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                <va-icon icon="youtube" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
+                <va-link
                   href="https://youtube.com/{{ socialLinksObject.youtube.value }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} YouTube' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <va-icon icon="youtube" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
-                  {{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube
-                </a>
+                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube"
+                />
               </div>
             </div>
           {% endif %}
@@ -597,16 +591,11 @@
           {% if socialLinksObject.linkedin.value %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
-                <a
-                  aria-label="Linkedin, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                <va-icon icon="linkedin" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
+                <va-link
                   href="https://linkedin.com/{{ socialLinksObject.linkedin.value }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Linkedin' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <va-icon icon="linkedin" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
-                  {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Linkedin
-                </a>
+                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} LinkedIn"
+                />
               </div>
             </div>
           {% endif %}
@@ -614,16 +603,11 @@
           {% if socialLinksObject.instagram.value %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
-                <a
-                  aria-label="Instagram, {{ fieldRelatedOffice.entity.fieldExternalLink.title }} (opens in a new tab)"
+                <va-icon icon="instagram" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
+                <va-link
                   href="https://instagram.com/{{ socialLinksObject.instagram.value }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Connect with us', 'clp-section-title': 'Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ fieldRelatedOffice.entity.fieldExternalLink.title | encode }} Instagram' });"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <va-icon icon="instagram" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
-                  {{ fieldRelatedOffice.entity.fieldExternalLink.title }} Instagram
-                </a>
+                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} Instagram"
+                />
               </div>
             </div>
           {% endif %}
@@ -651,8 +635,6 @@
                   {{ benefitCategory.entity.fieldTitleIcon | getHubIcon: '3', 'vads-u-margin-right--1' }}
                   <h3 class="vads-u-margin--0 vads-u-font-size--h4">
                   <va-link
-                    disable-analytics
-                    onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'VA Benefits', 'clp-section-title': 'Learn more about related VA benefits', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': '{{ benefitCategory.entity.title | encode }}' });"
                     href="{{ benefitCategory.entity.entityUrl.path }}"
                     text="{{ benefitCategory.entity.title }}"
                   >

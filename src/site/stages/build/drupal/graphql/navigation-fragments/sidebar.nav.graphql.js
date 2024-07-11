@@ -126,6 +126,11 @@ if (cmsFeatureFlags.FEATURE_ALL_HUB_SIDE_NAVS && hubNavNames !== null) {
     decisionReviewsHubQuery: ${queryFilter('decision-reviews-benefits-h')} {
       ${SIDEBAR_QUERY}
     }
+    familyAndCaregiverBenefitsQuery: ${queryFilter(
+      'family-and-caregiver-benefits',
+    )} {
+      ${SIDEBAR_QUERY}
+    }
 `;
 }
 

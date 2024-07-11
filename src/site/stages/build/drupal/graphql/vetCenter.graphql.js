@@ -25,6 +25,7 @@ const vetCenterFragment = `
         fieldFacilityLocatorApiId
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
+        fieldLastSavedByAnEditor
         fieldVetCenterFeatureContent {
            entity {
                 ... on ParagraphFeaturedContent {

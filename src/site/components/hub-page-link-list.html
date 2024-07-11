@@ -24,7 +24,7 @@ each link
   <ul id="{{ hublink.id }}" class="hub-page-link-list">
   {% for link in hublink.links %}
     <li class="hub-page-link-list__item">
-        <a href="{{ link.url }}" class="no-external-icon" {% if link.target %} target="{{ link.target }}" {% endif %} />
+        <a href="{{ link.url }}" />
         <span class="hub-page-link-list__header">
          {{ link.label }}
           <img class="all-link-arrow" src="/img/arrow-right-blue.svg" alt="right-arrow" />
