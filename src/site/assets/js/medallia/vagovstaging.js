@@ -32,7 +32,7 @@
   };
 
   document.addEventListener('DOMContentLoaded', init);
-})()
+})();
 
 const SURVEY_NUMBERS = {
   DEFAULT_STAGING_SURVEY: 11,
