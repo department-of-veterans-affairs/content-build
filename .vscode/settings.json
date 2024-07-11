@@ -1,0 +1,8 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": ["registry.json"],
+            "url": "./src/applications/registry-schema.json"
+        }
+    ]
+}

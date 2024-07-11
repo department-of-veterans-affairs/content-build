@@ -89,7 +89,6 @@
         {% endif %}
         <a
           href="{{ fieldVaFormUrl.uri }}"
-          target="_blank"
           download
           data-widget-type="find-va-forms-pdf-download-helper"
           data-form-number="{{ fieldVaFormNumber }}"
@@ -103,6 +102,16 @@
           {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
           {{ translatedDownloadText }} (PDF)
         </a>
+
+        {% if fieldVaFormUpload %}
+          <div
+            aria-label="Form Upload"
+            data-widget-type="form-upload"
+            data-has-online-tool="{% if fieldVaFormToolUrl %}true{% else %}false{% endif %}"
+            data-form-number="{{ fieldVaFormNumber }}"
+            role="region"
+          ></div>
+        {% endif %}
 
         {% if fieldAlert.length %}
           {% for alert in fieldAlert %}
@@ -119,13 +128,12 @@
         {% if fieldVaFormToolUrl %}
           <h3 data-testid="va_form--online-tool">Online tool</h3>
           <p>{{ fieldVaFormToolIntro }}</p>
-          <a
-            class="vads-c-action-link--blue"
+          <va-link-action
             href="{{ fieldVaFormToolUrl.uri }}"
-            onclick="recordEvent({ event: 'cta-primary-button-click' });"
+            text="Go to the online tool"
+            type="secondary"
           >
-            Go to the online tool
-          </a>
+          </va-link-action>
         {% endif %}
 
 
@@ -150,7 +158,6 @@
 
                 <a
                   href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
-                  target="_blank"
                   download
                   data-widget-type="find-va-forms-pdf-download-helper"
                   data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
@@ -185,9 +192,7 @@
                   <li>
                     <h3 class="vads-u-font-size--h4">
                       <va-link
-                        disable-analytics
                         href="{{ vaFormLinkTeaser.entity.fieldLink.url.path }}"
-                        onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': '{{ vaFormLinkTeaser.entity.fieldLink.title | escape }}', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
                         text="{{ vaFormLinkTeaser.entity.fieldLink.title }}"
                       />
                     </h3>
@@ -199,9 +204,7 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <va-link
-                      disable-analytics
                       href="/change-direct-deposit"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your direct deposit information', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
                       text="Change your direct deposit information"
                     />
                   </h3>
@@ -210,9 +213,7 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <va-link
-                      disable-analytics
                       href="/change-address"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Change your address', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
                       text="Change your address"
                     />
                   </h3>
@@ -221,9 +222,7 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <va-link
-                      disable-analytics
                       href="/records/get-military-service-records/"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Request your military records, including DD214', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
                       text="Request your military records, including DD214"
                     />
                   </h3>
@@ -232,9 +231,7 @@
                 <li>
                   <h3 class="vads-u-font-size--h4">
                     <va-link
-                      disable-analytics
                       href="/records/"
-                      onclick="recordEvent({ event: 'nav-linkslist', 'links-list-header': 'Get your VA records and documents online', 'links-list-section-header': '{{ linkTeasersHeader | escape }}' })"
                       text="Get your VA records and documents online"
                     />
                   </h3>

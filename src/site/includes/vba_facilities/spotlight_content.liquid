@@ -1,4 +1,4 @@
-<va-card class="vads-u-flex--fill vads-u-margin-bottom--2 vads-u-margin-right--0 medium-screen:vads-u-margin-x--0p5">
+<va-card class="vads-u-flex--fill vads-u-margin-bottom--2 vads-u-margin-right--0 medium-screen:vads-u-margin-x--0p5 spotlight-card">
     {% if entity.fieldSectionHeader != empty %}
         <h3 class="vads-u-margin-top--0">{{ entity.fieldSectionHeader }}</h3>
     {% endif %}
@@ -7,8 +7,11 @@
             {{ entity.fieldDescription.processed | drupalToVaPath | phoneLinks }}
         </div>
     {% endif %}
-    {% if entity.fieldCta.entity.fieldButtonLink.url.path %}
-        <va-link active href="{{ entity.fieldCta.entity.fieldButtonLink.url.path }}"  text="{{ entity.fieldCta.entity.fieldButtonLabel }}" ></va-link>
-
+    {% if entity.fieldCta.entity.fieldButtonLink.url %}
+        {% if entity.fieldCta.entity.fieldButtonLink.url.path %}
+        <va-link active href="{{ entity.fieldCta.entity.fieldButtonLink.url.path }}" text="{{ entity.fieldCta.entity.fieldButtonLabel }}" ></va-link>
+        {% else %}
+        <va-link active href="{{ entity.fieldCta.entity.fieldButtonLink.url }}" text="{{ entity.fieldCta.entity.fieldButtonLabel }}"></va-link>
+        {% endif %}
     {% endif %}
 </va-card>

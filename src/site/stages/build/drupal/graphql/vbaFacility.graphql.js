@@ -129,7 +129,8 @@ const vbaFacilityFragment = `
             filter: {conditions: [
               {field: "type", value: ["vba_facility_service"]},
               {field: "status", value: ["1"]}
-            ]}
+            ]},
+            limit: 500
           ) {
             entities {
               ... on NodeVbaFacilityService {
@@ -160,8 +161,9 @@ const vbaFacilityFragment = `
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
-                            id
                             fieldPhoneNumber
+                            fieldPhoneNumberType
+                            fieldPhoneExtension
                             fieldPhoneLabel
                           }
                         }
@@ -237,7 +239,8 @@ const vbaFacilityFragment = `
           reverseFieldVbaRegionFacilityListNode (
             filter: {conditions: [
               {field: "status", value: ["1"]}
-            ]}
+            ]},
+            limit: 500
           ){
             count
             entities {
@@ -295,7 +298,6 @@ const vbaFacilityFragment = `
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
-                            id
                             fieldPhoneNumberType
                             fieldPhoneNumber
                             fieldPhoneExtension

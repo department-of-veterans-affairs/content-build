@@ -6,17 +6,17 @@
     }
 {% endcomment %}
 {% if paragraph != empty %}
-  <section data-template="paragraphs/list_of_link_teasers_facility" data-entity-id="{{ paragraph.entityId }}" class="feature vads-u-padding-x--2 small-screen:vads-u-padding-x--4 vads-u-padding-top--3 vads-u-padding-bottom--2">
-    <h2 class="vads-u-margin-bottom--2 vads-u-font-size--h3">
+  <section data-template="paragraphs/list_of_link_teasers_facility" data-entity-id="{{ paragraph.entityId }}" class="vads-u-background-color--gray-lightest vads-u-padding--2p5">
+    <h2 class="vads-u-margin-top--0 vads-u-margin-bottom--2 vads-u-font-size--h3 vads-u-padding-bottom--0p5 vads-u-border-bottom--1px vads-u-border-color--gray-light">
         {% if regionNickname != empty %}
-            In the spotlight at {{ regionNickname }}
+            Other services at {{ regionNickname }}
         {% else %}
             {{ paragraph.fieldTitle }}
         {% endif %}
     </h2>
 
     <div class="va-c-list-link-teasers">
-      <div class="usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+      <div class="usa-grid usa-grid-full">
         {% assign linkTeasers = paragraph.fieldVaParagraphs %}
         {% comment %}
             Max number of links allowed = 8
@@ -38,21 +38,20 @@
         {% endif %}
         {% for linkTeaser in linkTeasers %}
           {% assign link = linkTeaser.entity.fieldLink %}
-
-          {% assign everyStartItem = forloop.index | genericModulo: linkWrapperStartIndex %}
-          {% assign everyEndItem = forloop.index | genericModulo: linkWrapperEndIndex %}
-          {% if forloop.first || everyStartItem == 0 %}
-            <div class="usa-width-one-half vads-u-display--flex vads-u-flex-direction--column">
-            {% endif %}
-            <a onclick="recordEvent({ event: 'nav-featured-content-link-click', 'featured-content-header': '{{ paragraph.fieldTitle }}', 'featured-content-click-label': '{{ link.title }}' });" 
-                class="link-teaser vads-u-margin-bottom--2"
-                href="{{ link.url.path }}"
-            >
-              {{ link.title }}
-            </a>
-            {% if forloop.last || everyEndItem == 0 %}
-            </div>
+          {% if forloop.last == true %}
+            {% assign spacing = "" %}
+          {% else %}
+            {% assign spacing = " vads-u-margin-bottom--2" %}
           {% endif %}
+
+          <va-link
+            disable-analytics
+            onclick="recordEvent({ event: 'nav-featured-content-link-click', 'featured-content-header': '{{ paragraph.fieldTitle }}', 'featured-content-click-label': '{{ link.title }}' });" 
+            class="other-services-links vads-u-display--block{{ spacing }}"
+            href="{{ link.url.path }}"
+            text="{{ link.title }}"
+          >
+          </va-link>
         {% endfor %}
       </div>
     </div>

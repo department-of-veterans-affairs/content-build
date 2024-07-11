@@ -1592,6 +1592,92 @@ describe('sortObjectsBy', () => {
   });
 });
 
+describe('sortObjectsWithConditionalKeys', () => {
+  const objectsToSort = [
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+  ];
+
+  const sortedObjects = [
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+  ];
+
+  it('sorts objects alphabetically by key', () => {
+    expect(
+      liquid.filters.sortObjectsWithConditionalKeys(objectsToSort),
+    ).to.deep.equal(sortedObjects);
+  });
+});
+
 describe('concat', () => {
   it('concatenates all arrays passed as arguments', () => {
     const a1 = [];
@@ -3197,5 +3283,61 @@ describe('officeHoursDataFormat', () => {
   it('when given a full week always returns a full week', () => {
     const data = vetCenterHoursData.completeWeek;
     expect(liquid.filters.officeHoursDataFormat(data).length, 7);
+  });
+});
+
+describe('formatSocialPlatform', () => {
+  it('should properly format a twitter platform', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration twitter'),
+    ).to.equal('Veterans Administration X (formerly Twitter)');
+  });
+
+  it('should properly format a youtube platform', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration Youtube'),
+    ).to.equal('Veterans Administration YouTube');
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration youtube'),
+    ).to.equal('Veterans Administration YouTube');
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration YOUTUBE'),
+    ).to.equal('Veterans Administration YouTube');
+  });
+
+  it('should return a non-youtube platform without formatting', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration Instagram'),
+    ).to.equal('Veterans Administration Instagram');
+  });
+});
+
+describe('runOrFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [false, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+});
+
+describe('runAndFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [true, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
   });
 });

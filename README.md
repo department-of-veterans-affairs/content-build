@@ -64,6 +64,8 @@ If you do need to pull content from https://prod.cms.va.gov please contact
 
 `yarn build` (fetches the latest content cache from S3 by default when cache is empty)
 
+**Note**: running `yarn build` on `main` can take upwards of 8 hours. There are many Drupal assets to fetch and many templates to build. See **Optimizing Build Time** below to cut down on this time dramatically and only build the templates/assets you need for your development work.
+
 - use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access). Add `--use-cached-assets` to skip asset download
 - creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
 - run once to build the static HTML files

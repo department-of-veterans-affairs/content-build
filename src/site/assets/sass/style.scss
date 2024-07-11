@@ -1,22 +1,22 @@
 // Add CSS and imports here.
 .feedback-button {
   background-color: var(color-primary);
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1;
   margin-right: 0;
-  margin-top: 0.5rem;
+  margin-top: 0.3125rem;
   height: 44px;
   width: 133px;
 }
 
 .above-footer-elements-container {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5625rem;
 }
 
 .last-updated {
   margin-top: 0;
-  padding-top: 1.25rem;
+  padding-top: 0.78125rem;
 }
 
 .va-table-margin {
@@ -25,12 +25,46 @@
 
 .homepage-email-update-wrapper {
   .homepage-email-input::part(form-header) {
-    font-size: 2rem;
+    font-size: 1.25rem;
+  }
+}
+
+.hub-icon {
+  border-radius: 50%;
+  height: 40px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+}
+
+.social-links {
+  &:last-child.vads-u-margin-bottom--2 {
+    margin-bottom: 0 !important;
+  }
+}
+
+.other-services-links {
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.spotlight-card {
+  min-width: 30%;
+  word-wrap: break-word;
+}
+
+// START: Styles for mobile app promo banner
+#alert-with-additional-info {
+
+  *:first-child,
+  *:last-child {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
   }
 }
 
 // START: Styles for mobile app promo banner
-
 .smartbanner {
   position: absolute;
   top: 0;
@@ -215,6 +249,24 @@
     .smartbanner__button__label:hover {
       background: #2ac7e1;
     }
+  }
+}
+// fix for sidenav btn
+.va-sidenav-btn-close {
+  background-size: 0.625rem 0.625rem;
+  background-color: transparent;
+  height: 1.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.375rem;
+  margin: 0;
+  width: .625rem;
+}
+
+@media (min-width: 767px) {
+  .va-sidenav-btn-close {
+    display: none;
   }
 }
 

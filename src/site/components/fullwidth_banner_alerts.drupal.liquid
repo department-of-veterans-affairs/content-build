@@ -22,56 +22,53 @@
     {% endif %}
   {% endfor %}
   {% if outputStatus == true %}
-    <div data-template="components/fullwidth_banner_alerts" data-entity-id="{{ entity.entityId }}"
-         aria-labelledby="usa-alert-header-text-{{ entity.entityId }}"
-         class="usa-alert-full-width dismissable-option-header usa-alert-full-width-{{ alertType }}"
-         id="usa-alert-full-width-{{ entity.entityId }}" role="region">
-      <div class="usa-alert usa-alert-{{ alertType }}" role="alert">
-        {% if entity.fieldAlertDismissable == true %}
-          <button id="usa-alert-dismiss-{{ entity.entityId }}"
-                  class="va-alert-close usa-alert-dismiss"
-                  data-parentwrap="usa-alert-full-width-{{ entity.entityId }}"
-                  data-frequency="once" aria-label="Close notification">
-            <i aria-hidden="true" class="fas fa-times-circle"></i>
-          </button>
+    <div
+      data-template="components/fullwidth_banner_alerts"
+      data-entity-id="{{ entity.entityId }}"
+      aria-labelledby="{{ entity.title }}"
+    >
+      <va-banner
+        type="{{ alertType }}"
+        {% if entity.fieldAlertDismissable == "dismiss" %}
+        show-close
         {% endif %}
-        <div class="usa-alert-body">
-          <h3 class="usa-alert-heading" id="usa-alert-header-text-{{ entity.entityId }}">
-            {{ entity.title }}
-          </h3>
-          <div class="additional-info-content usa-alert-text">
-            {% capture eventData %}
-              {
-              "event": "nav-alert-box-link-click",
-              "alert-box-status": "{{ alertType }}",
-              "alert-box-headline": "{{ entity.title | escape }}",
-              "alert-box-headline-level": "3",
-              "alert-box-background-only": "false",
-              "alert-box-closeable": "false"
-              }
-            {% endcapture %}
-            {{ entity.fieldBody.processed | trackLinks: eventData }}
-            {% if entity.fieldAlertOperatingStatusCta == true and statusUrl.length %}
-              <p>
-                <a href="{{ statusUrl }}" onclick="recordEvent({
-                    'event':'nav-warning-alert-box-content-link-click',
-                    'alertBoxHeading': '{{ entity.title }}'
-                    });">Get updates on affected services and facilities</a>
-              </p>
-            {% endif %}
-            {% if entity.fieldAlertEmailUpdatesButton == true and emailUpdates.length %}
-              <p>
-                <a href="{{ emailUpdates }}">Subscribe
-                  to email updates</a>
-              </p>
-            {% endif %}
-            {% if entity.fieldAlertFindFacilitiesCta == true %}
-              <p>
-                <a href="/find-locations">Find other VA facilities near you</a>
-              </p>
-            {% endif %}
-          </div>
-        </div>
+        headline="{{ entity.title }}"
+      >
+      <div>
+        {% capture eventData %}
+          {
+          "event": "nav-alert-box-link-click",
+          "alert-box-status": "{{ alertType }}",
+          "alert-box-headline": "{{ entity.title | escape }}",
+          "alert-box-headline-level": "3",
+          "alert-box-background-only": "false",
+          "alert-box-closeable": "false"
+          }
+        {% endcapture %}
+        {{ entity.fieldBody.processed | trackLinks: eventData }}
+        {% if entity.fieldAlertOperatingStatusCta == true and statusUrl.length %}
+          <p>
+            <va-link
+              disable-analytics
+              href="{{ statusUrl }}"
+              onclick="recordEvent({
+                'event':'nav-warning-alert-box-content-link-click',
+                'alertBoxHeading': '{{ entity.title }}'
+              });"
+              text="Get updates on affected services and facilities"
+            ></va-link>
+          </p>
+        {% endif %}
+        {% if entity.fieldAlertEmailUpdatesButton == true and emailUpdates.length %}
+          <p>
+            <va-link href="{{ emailUpdates }}" text="Subscribe to email updates"></va-link>
+          </p>
+        {% endif %}
+        {% if entity.fieldAlertFindFacilitiesCta == true %}
+          <p>
+            <va-link href="/find-locations" text="Find other VA facilities near you"></va-link>
+          </p>
+        {% endif %}
       </div>
     </div>
   {% endif %}

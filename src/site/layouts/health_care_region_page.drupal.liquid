@@ -41,13 +41,15 @@
                     entity = main
                     fieldVaHealthConnectPhone = fieldVaHealthConnectPhone
             %}
-            {% endfor %} <a
+            {% endfor %} <va-link
+              active
+              disable-analytics
               onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-              class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md"
-              href="{{ entityUrl.path }}/locations">
-              See all locations <i
-                class="fa fa-chevron-right va-l-font-size--12px">&nbsp;</i>
-            </a>
+              class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
+              href="{{ entityUrl.path }}/locations"
+              text="See all locations"
+            >
+            </va-link>
           </section>
 
           <!-- "Manage your health online" section -->
@@ -59,77 +61,87 @@
             {% else %}
               <h3>Manage your health online</h3>
             {% endif %}
-            <div
-              class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
-              <div
-                class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+            <div class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
+              <div class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="medication"
+                  ></va-icon>
+                  <va-link
+                    disable-analytics
+                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class=" fa fa-prescription-bottle vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Refill and track
-                      your prescriptions<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
+                    text="Refill and track your prescriptions"
+                  ></va-link>
                 </div>
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="chat"
+                  ></va-icon>
+                  <va-link
+                    disable-analytics
+                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="far fa-comments vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Send a secure
-                      message to your health care team<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
+                    text="Send a secure message to your health care team"
+                  ></va-link>
                 </div>
-                <div
-                  class="vads-facility-hub-cta vads-u-border-color--primary-alt-light medium-screen:vads-u-border-bottom--1px">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                <div class="vads-facility-hub-cta vads-u-border-color--primary-alt-light medium-screen:vads-u-border-bottom--1px vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="event_available"
+                  ></va-icon>
+                  <va-link
+                    disable-analytics
+                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="far fa-calendar-check vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Schedule and manage
-                      health appointments<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
+                    text="Schedule and manage health appointments"
+                  ></va-link>
                 </div>
               </div>
               <div>
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="note_add"
+                  ></va-icon>
+                  <va-link
+                    disable-analytics
+                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="fa fa-file-medical vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Download your VA
-                      medical records (Blue Button)<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
+                    text="Download your VA medical records (Blue Button)"
+                  ></va-link>
                 </div>
-                <div class="vads-facility-hub-cta">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="assignment"
+                  ></va-icon>
+                  <va-link
+                    disable-analytics
+                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/", buildtype }}"
-                    class="top-task-link vads-u-height--full vads-u-width--full">
-                    <i
-                      class="fa fa-clipboard-list vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">View your lab and
-                      test results<i
-                        class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
+                    text="View your lab and test results"
+                  ></va-link>
                 </div>
-                <div
-                  class="vads-facility-hub-cta vads-facility-hub-cta-last-line vads-u-border-top--1px vads-u-border-color--primary-alt-light">
-                  <a onClick="recordEvent({ event: 'cta-hub-link-click' });"
+                <div class="vads-facility-hub-cta vads-facility-hub-cta-last-line vads-u-border-top--1px vads-u-border-color--primary-alt-light vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="hearing_disabled"
+                  ></va-icon>
+                  <va-link
+                    disable-analytics
+                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="/health-care/order-hearing-aid-batteries-and-accessories/"
-                    class="vads-u-height--full vads-u-width--full">
-                    <i
-                      class="fa fa-deaf vads-facility-hub-cta-circle">&nbsp;</i>
-                    <span class="vads-facility-hub-cta-label">Order hearing aid batteries <br/> and accessories<i class="fa fa-chevron-right vads-facility-hub-cta-arrow">&nbsp;</i></span>
-                  </a>
+                    text="Order hearing aid batteries and accessories"
+                  ></va-link>
                 </div>
               </div>
             </div>
@@ -158,12 +170,15 @@
             {% assign node = story %}
             {% include "src/site/teasers/news_story.drupal.liquid" with node = story %}
             {% endfor %}
-            <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-              class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md vads-u-margin--0"
-              href="{{ entityUrl.path }}/stories">
-              See all stories <i
-                class="fa fa-chevron-right va-l-font-size--12px"></i>
-            </a>
+            <va-link
+              active
+              disable-analytics
+              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
+              class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
+              href="{{ entityUrl.path }}/stories"
+              text="See all stories"
+            >
+            </va-link>
           </section>
           {% endif %}
 
@@ -177,12 +192,15 @@
                 {% assign node = event %}
                 {% include "src/site/teasers/event.drupal.liquid" %}
               {% endfor %}
-            <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-              class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md vads-u-margin--0"
-              href="{{ entityUrl.path }}/events">
-              See all events <i
-                class="fa fa-chevron-right va-l-font-size--12px"></i>
-            </a>
+            <va-link
+              active
+              disable-analytics
+              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
+              class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
+              href="{{ entityUrl.path }}/events"
+              text="See all events"
+            >
+            </va-link>
           </section>
           {% elsif eventTeasersAll.entities.0.reverseFieldListingNode.entities.length %}
           {% assign upcomingEvents = eventTeasersAll.entities.0.reverseFieldListingNode.entities %}
@@ -195,15 +213,19 @@
               {% assign node = event %}
               {% include "src/site/teasers/event.drupal.liquid" %}
             {% endfor %}
-            <a onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-              class="usa-button usa-button-secondary vads-facility-hub-button vads-u-width--full medium-screen:vads-u-width--auto vads-u-font-size--md vads-u-margin--0"
-              href="{{ entityUrl.path }}/events">
-              See all events <i class="fa fa-chevron-right va-l-font-size--12px" aria-hidden="true"></i>
-            </a>
+            <va-link
+              active
+              disable-analytics
+              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
+              class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
+              href="{{ entityUrl.path }}/events"
+              text="See all events"
+            >
+            </va-link>
           </section>
           {% endif %}
           {% include "src/site/facilities/facility_social_links.drupal.liquid" with regionNickname = title %}
-
+          <va-back-to-top></va-back-to-top>
         </article>
             <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}

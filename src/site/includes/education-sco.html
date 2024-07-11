@@ -10,16 +10,9 @@ Education SCO (Merger)
          <div class="vads-l-col--12 medium-screen:vads-u-padding-x--2p5 medium-screen:vads-l-col--8">
         <article class="new-grid">
           <div class="medium-screen:vads-u-display--flex">
-            {% if hub != empty %}
-            <div class="hub-main-icon vads-u-margin-right--1p5 vads-u-margin-top--1">
-              <i class="icon-large white hub-icon-{{hub}} hub-background-{{hub}}"></i>
-            </div>
-            {% endif %}
-            <div class="hub-main-title">
-              <h1>
-              {{ heading }}
-              </h1>
-            </div>
+            <h1>
+            {{ heading }}
+            </h1>
           </div>
           {{ contents }}
 
@@ -31,7 +24,7 @@ Education SCO (Merger)
           {% if crosslinks != empty %}
             {% include "src/site/components/merger-crosslinks.html" %}
           {% endif %}
-          
+
         <!-- Last updated & feedback button -->
           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
