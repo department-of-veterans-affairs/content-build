@@ -1,18 +1,38 @@
-(function () {
-  if (window.KAMPYLE_ONSITE_SDK) {
-      onsiteLoaded();
-  } else {
-      window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
-  }
-})()
+// (function () {
+//   if (window.KAMPYLE_ONSITE_SDK) {
+//       onsiteLoaded();
+//   } else {
+//       window.addEventListener('neb_OnsiteLoaded', onsiteLoaded);
+//   }
+// })()
 
-function onsiteLoaded() {
-  const surveyNumber = getSurvey(window.dataLayer[1].environment, window.location.pathname);
-  var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
-    if (neb_status === true) {
-      console.log(`survey number ${surveyNumber} has loaded`)
-  }
-}
+// function onsiteLoaded() {
+//   const surveyNumber = getSurvey(window.dataLayer[1].environment, window.location.pathname);
+//   var neb_status = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
+//     if (neb_status === true) {
+//       console.log(`survey number ${surveyNumber} has loaded`)
+//   }
+// }
+(function () {
+  const handleOnsiteLoaded = () => {
+    const surveyNumber = getSurvey(window.dataLayer[1].environment, window.location.pathname);
+    const nebStatus = KAMPYLE_ONSITE_SDK.loadForm(surveyNumber);
+    if (nebStatus) {
+      console.log(`Survey number ${surveyNumber} has loaded`);
+    }
+  };
+
+  const init = () => {
+    if (window.KAMPYLE_ONSITE_SDK) {
+      handleOnsiteLoaded();
+    } else {
+      window.addEventListener('neb_OnsiteLoaded', handleOnsiteLoaded);
+      console.warn('KAMPYLE_ONSITE_SDK not available at initialization.');
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', init);
+})()
 
 const SURVEY_NUMBERS = {
   DEFAULT_STAGING_SURVEY: 11,
