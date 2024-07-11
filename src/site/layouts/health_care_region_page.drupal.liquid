@@ -57,9 +57,9 @@
           {% if fieldAdministration.entity.entityId != '1039' %}
           <section>
             {% if fieldAdministration.entity.entityId == '1040' %}
-              <h3>Manage your VA health online</h3>
+              <h2>Manage your VA health online</h2>
             {% else %}
-              <h3>Manage your health online</h3>
+              <h2>Manage your health online</h2>
             {% endif %}
             <div class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
               <div class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
@@ -102,6 +102,18 @@
                     text="Schedule and manage health appointments"
                   ></va-link>
                 </div>
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="chat"
+                  ></va-icon>
+                  <va-link
+                    aria-hidden="true"
+                    href="https://mobile.va.gov/app/va-health-chat"
+                    text="Download VA Health Chat"
+                  ></va-link>
+                </div>
               </div>
               <div>
                 <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
@@ -141,6 +153,18 @@
                     onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="/health-care/order-hearing-aid-batteries-and-accessories/"
                     text="Order hearing aid batteries and accessories"
+                  ></va-link>
+                </div>
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="phone"
+                  ></va-icon>
+                  <va-link
+                    aria-hidden="true"
+                    href="https://www.va.gov/health/connect-to-va-care/index.asp"
+                    text="Connect to VA care"
                   ></va-link>
                 </div>
               </div>
