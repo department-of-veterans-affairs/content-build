@@ -834,7 +834,7 @@ describe('formatForBreadcrumbs', () => {
     // Verify that the output matches expectations
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"Home"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support"}]',
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
       ),
     );
   });
@@ -874,7 +874,7 @@ describe('formatForBreadcrumbs', () => {
     // Verify that the output matches expectations
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"Home"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support"}]',
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
       ),
     );
   });
@@ -921,7 +921,7 @@ describe('formatForBreadcrumbs', () => {
     // Verify that the output matches expectations
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"Home"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support"}]',
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
       ),
     );
   });

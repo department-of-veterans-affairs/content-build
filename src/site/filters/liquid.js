@@ -706,6 +706,9 @@ module.exports = function registerFilters() {
     hideHome,
     customHomeText,
   ) => {
+    // return early if no breadcrumbs
+    if (!breadcrumbs) return '';
+
     // Remove "empty path" breadcrumbs
     const filteredCrumbs = breadcrumbs.filter(
       ({ url: { path } }) => path !== '' && path !== null,
@@ -936,8 +939,8 @@ module.exports = function registerFilters() {
     const {
       entity: {
         fieldTopics = [],
-        fieldAudienceBeneficiaries,
-        fieldNonBeneficiaries,
+        fieldAudienceBeneficiares,
+        fieldNonBeneficiares,
       },
     } = fieldTags;
 
@@ -948,17 +951,17 @@ module.exports = function registerFilters() {
 
     let beneficiariesAudiences = [];
     if (
-      fieldAudienceBeneficiaries &&
-      !Array.isArray(fieldAudienceBeneficiaries)
+      fieldAudienceBeneficiares &&
+      !Array.isArray(fieldAudienceBeneficiares)
     ) {
-      beneficiariesAudiences = [fieldAudienceBeneficiaries?.entity];
-    } else if (fieldAudienceBeneficiaries) {
-      beneficiariesAudiences = fieldAudienceBeneficiaries.map(
+      beneficiariesAudiences = [fieldAudienceBeneficiares?.entity];
+    } else if (fieldAudienceBeneficiares) {
+      beneficiariesAudiences = fieldAudienceBeneficiares.map(
         audience => audience?.entity,
       );
     }
 
-    const audiences = [fieldNonBeneficiaries?.entity, ...beneficiariesAudiences]
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiariesAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
