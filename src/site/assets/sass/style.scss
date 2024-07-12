@@ -55,13 +55,13 @@
 }
 
 .health-online-desktop-link {
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     display: none !important;
   }
 }
 
 .health-online-mobile-link {
-  @media (min-width: 767px) {
+  @media (min-width: 768px) {
     display: none !important;
   }
 }
