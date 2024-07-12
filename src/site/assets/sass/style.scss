@@ -54,6 +54,18 @@
   word-wrap: break-word;
 }
 
+.health-online-desktop-link {
+  @media (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.health-online-mobile-link {
+  @media (min-width: 767px) {
+    display: none !important;
+  }
+}
+
 // START: Styles for mobile app promo banner
 #alert-with-additional-info {
 
