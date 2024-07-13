@@ -1,13 +1,13 @@
 {% assign hasAddress = false %}
 {% if serviceLocationAddress.fieldUseFacilityAddress and facilityAddress %}
-  {% assign hasAddress = true %}
   {% assign addressData = facilityAddress %}
-{% elsif location.entity.fieldServiceLocationAddress %}
   {% assign hasAddress = true %}
-  {% assign addressData = location.entity.fieldServiceLocationAddress.entity.fieldAddress %}
+{% elsif serviceLocationAddress %}
+  {% assign addressData = serviceLocationAddress.fieldAddress %}
+  {% assign hasAddress = true %}
 {% endif %}
 
-{% if serviceLocationAddress.fieldClinicName or hasAddress or serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
+{% if hasAddress or addressData.fieldClinicName or addressData.fieldBuildingNameNumber or addressData.fieldWingFloorOrRoomNumber %}
 <div class="vads-u-display--flex vads-u-flex-direction--column">
   {% if serviceLocationAddress.fieldClinicName %}
     <h{{ serviceLocationAddressHeaderLevel }}>
@@ -16,25 +16,25 @@
   {% elsif serviceLocationAddress.fieldBuildingNameNumber or serviceLocationAddress.fieldWingFloorOrRoomNumber %}
     <h{{ serviceLocationAddressHeaderLevel }}>
       Location
-    </h{{ serviceLocationAddressHeaderLevel }}>
+      </h{{ serviceLocationAddressHeaderLevel }}>
   {% endif %}
 
   
   {% if hasAddress %}
-    {% if addressData.addressLine1 and not serviceLocationAddress.fieldUseFacilityAddress %}
+    {% if addressData.addressLine1 and serviceLocationAddress.fieldUseFacilityAddress != true %}
       <span class="vads-u-margin-bottom--0">
         {{ addressData.addressLine1 }}
       </span>
     {% endif %}
 
-    {% if addressData.addressLine2 and not serviceLocationAddress.fieldUseFacilityAddress %}
+    {% if addressData.addressLine2 and serviceLocationAddress.fieldUseFacilityAddress != true %}
       <span class="vads-u-margin-bottom--0">
         {{ addressData.addressLine2 }}
       </span>
     {% endif %}
 
-    {% if addressData.locality and not serviceLocationAddress.fieldUseFacilityAddress %}
-      {% if addressData.administrativeArea%}
+    {% if addressData.locality and serviceLocationAddress.fieldUseFacilityAddress != true %}
+      {% if addressData.administrativeArea %}
         {% if addressData.postalCode %}
           <span class="vads-u-margin-bottom--0">
             {{ addressData.locality }},

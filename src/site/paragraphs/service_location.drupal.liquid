@@ -219,9 +219,6 @@
   {% endif %}
 
 
-  <script>
-    console.log({{ single.fieldServiceLocationAddress.entity | json }})
-  </script>
   {% comment %} Includes header for clinic name {% endcomment %}
   {% if single.fieldServiceLocationAddress.entity %}
     {% include "src/site/facilities/service_address.drupal.liquid" with
