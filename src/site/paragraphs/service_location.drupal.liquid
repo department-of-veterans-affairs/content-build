@@ -219,7 +219,6 @@
   {% endif %}
 
 
-
   {% comment %} Includes header for clinic name {% endcomment %}
   {% if single.fieldServiceLocationAddress.entity %}
     {% include "src/site/facilities/service_address.drupal.liquid" with
@@ -260,11 +259,10 @@
           <h{{ serviceLocationH }}>{{ email.entity.fieldEmailLabel }}</h{{ serviceLocationH }}>
         {% endif %}
         <va-link
-          aria-label="{{ email.entity.fieldEmailAddress }}"
           data-template="paragraphs/service_location"
           href="mailto:{{ email.entity.fieldEmailAddress }}"
           text="{{ email.entity.fieldEmailAddress }}"
-        </va-link>
+        ></va-link>
       </p>
     {% endfor %}
   {% endif %}
