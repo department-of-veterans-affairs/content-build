@@ -404,14 +404,6 @@ const nodeEventWithoutBreadcrumbs = `
               width
             }
           }
-          thumbnail {
-            alt
-            height
-            targetId
-            title
-            url
-            width
-          }
         }
       }
     }
