@@ -196,6 +196,14 @@ const nodeEvent = `
               width
             }
           }
+          thumbnail {
+            alt
+            height
+            targetId
+            title
+            url
+            width
+          }
         }
       }
     }
@@ -395,6 +403,14 @@ const nodeEventWithoutBreadcrumbs = `
               url
               width
             }
+          }
+          thumbnail {
+            alt
+            height
+            targetId
+            title
+            url
+            width
           }
         }
       }
