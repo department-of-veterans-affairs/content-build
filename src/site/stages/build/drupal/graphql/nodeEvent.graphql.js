@@ -196,14 +196,6 @@ const nodeEvent = `
               width
             }
           }
-          thumbnail {
-            alt
-            height
-            targetId
-            title
-            url
-            width
-          }
         }
       }
     }
