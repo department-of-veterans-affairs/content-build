@@ -146,7 +146,11 @@
   {% comment %} 
   Whether to show online scheduling link for either VBA or VAMC
   {% endcomment %}
-  {% assign showOnlineScheduleLink = single.fieldOnlineSchedulingAvail == "yes" %}
+  {% if single.fieldOnlineSchedulingAvail == "yes" %}
+    {% assign showOnlineScheduleLink = true %}
+  {% else %}
+    {% assign showOnlineScheduleLink = false %}
+  {% endif %}
 
   {% assign shouldShowAppointmentsHeader =  4 | orFn:shouldShowIntroText, hasAppointmentPhoneNumbers, showMainNumberForAppointments, showOnlineScheduleLink %}
 
