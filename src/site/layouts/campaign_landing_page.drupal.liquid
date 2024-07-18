@@ -110,10 +110,15 @@
                 width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}"
               />
               <h3 class="vads-u-padding-x--2 vads-u-margin-top--2">
-                <va-link
-                  href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
-                  text="{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}"
-                ></va-link>
+                {% assign fieldButtonUrl = promo.entityfieldPromoLink.entity.fieldLink.url.path | hasCharacterOtherThanSpace %}
+                {% if fieldButtonUrl %}
+                  {% assign fieldUrl = promo.entity.fieldPromoLink.entity.fieldLink.url.path %}
+                {% elsif fieldButtonUri %}
+                  {% assign fieldUrl = promo.entity.fieldPromoLink.entity.fieldLink.uri %}
+                {% endif %}
+                {% if fieldUrl %}
+                  <va-link active href="{{ fieldUrl }}" text="{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}"></va-link>
+                {% endif %}
               </h3>
               <p class="vads-u-margin-bottom--2 vads-u-margin-top--1 vads-u-padding-x--2">
                 {{ promo.entity.fieldPromoLink.entity.fieldLinkSummary }}
