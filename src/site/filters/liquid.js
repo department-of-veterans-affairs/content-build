@@ -2122,4 +2122,14 @@ module.exports = function registerFilters() {
 
     return platform;
   };
+
+  liquid.filters.determineFieldLink = fieldLink => {
+    if (!_.isEmpty(fieldLink?.url?.path)) {
+      return fieldLink.url.path;
+    }
+    if (!_.isEmpty(fieldLink?.uri)) {
+      return fieldLink.uri;
+    }
+    return null;
+  };
 };
