@@ -145,7 +145,7 @@
               <h2 id="prepare-for-your-visit"
                   class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
-              <p>Click on a topic for more details.</p>
+              <p>Select a topic to learn more.</p>
               <va-accordion section-heading="Prepare for your visit" bordered>
                 {% for accordionItem in fieldLocationServices %}
                   {% assign item = accordionItem.entity %}
@@ -180,8 +180,7 @@
           {% if fieldLocalHealthCareService != empty and fieldLocalHealthCareService.length %}
             <h2 id="health-care-offered-here"
                 class="vads-u-font-size--xl vads-u-margin-top--5">Health services offered here</h2>
-            <p>Click on a service for more details like location, contact, and appointment
-              information.</p>
+            <p>Select a topic to learn more.</p>
             <section class="local-health-services" id="local-health-services" data-label="Health services">
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}

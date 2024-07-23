@@ -1898,13 +1898,19 @@
     }
   }, 
   {
-    "appName": "22-10282 IBM Skillsbuild Training Program Intake Application",
-    "entryName": "10282-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/10282",
-    "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
+    "appName": "Resources for schools",
+    "entryName": "sco",
+    "rootUrl": "/education/school-administrators",
+    "productId": "40938a35-1cfa-4808-917b-37e0baec6a7c",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "22-10282 IBM Skillsbuild Training Program Intake Application",
+    "entryName": "10282-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/10282",
+    "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
   }
 ]

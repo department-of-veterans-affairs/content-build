@@ -6,9 +6,9 @@ Social Media - R. Rail
 See https://help.shopify.com/themes/liquid/tags/theme-tags#include
 {% endcomment %}
 
-  <va-accordion bordered multi class="social" uswds="false">
+  <va-accordion bordered multi class="social">
   {% for group in social %}
-    <va-accordion-item level="3" open="true" header="{{ group.heading }}">
+    <va-accordion-item level="3" open="true" bordered header="{{ group.heading }}">
       {% if group.url != empty %}
       <h4 class='va-nav-linkslist-list'>
         <va-link
