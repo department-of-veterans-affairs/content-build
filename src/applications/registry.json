@@ -1344,7 +1344,7 @@
     "rootUrl": "/housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555",
     "productId": "49929be5-0c92-42f2-b122-3cb426f691d4",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1644,9 +1644,9 @@
     }
   },
   {
-    "appName": "Appeals Testing",
-    "entryName": "appeals-testing",
-    "rootUrl": "/decision-reviews/appeals-testing",
+    "appName": "Appeals NOD layout testing",
+    "entryName": "nod-new",
+    "rootUrl": "/decision-reviews/testing/nod-new",
     "productId": "5dd32517-00fd-4e97-afed-e6db1f1f54f9",
     "template": {
       "layout": "page-react.html",
@@ -1660,13 +1660,25 @@
     }
   },
   {
-    "appName": "Submitted Appeals view & download",
-    "entryName": "submitted-appeal",
-    "rootUrl": "/decision-reviews/submitted-appeal",
+    "appName": "Appeals download",
+    "entryName": "download",
+    "rootUrl": "/decision-reviews/testing/download",
     "productId": "8057a5e9-196a-462f-9bc3-3bd1d199892c",
     "template": {
       "layout": "page-react.html",
       "description": "Show submitted appeal data for print & download",
+      "vagovprod": false
+    }
+  },
+  {
+    "appName": "HLR testing",
+    "entryFile": "./form-entry.jsx",
+    "entryName": "hlr-testing",
+    "rootUrl": "/decision-reviews/testing/hlr",
+    "productId": "32de6df6-8818-4fc8-b179-5d05ccb2db19",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Test changes to HLR form",
       "vagovprod": false
     }
   },
@@ -1738,7 +1750,7 @@
     }
   },
   {
-    "appName": "Beneficiary Travel",
+    "appName": "Check Your Travel Reimbursement Claim Status",
     "entryName": "travel-pay",
     "rootUrl": "/my-health/travel-claim-status",
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
@@ -1780,7 +1792,7 @@
   {
     "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
     "entryName": "10-7959C",
-    "rootUrl": "/health-care/champva/other-insurance-form-10-7959c",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/other-insurance-form-10-7959c",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": false,
@@ -1800,7 +1812,7 @@
   {
     "appName": "10-7959a CHAMPVA Claim Form",
     "entryName": "10-7959a",
-    "rootUrl": "/ivc-champva/10-7959a",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/file-champva-claim-10-7959a",
     "productId": "e6afb103-521b-46a2-b29c-245f6c95d3af",
     "template": {
       "vagovprod": false,
