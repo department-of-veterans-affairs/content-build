@@ -6,18 +6,11 @@ directionsLinkOnClickPropName
 directionsLinkOnClickPropValue
 {% endcomment %}
 
-{% assign onClick = "" %}
-{% if directionsLinkOnClickPropName != empty and directionsLinkOnClickPropValue != empty %}
-  {% capture onClick %}
-    onclick="recordEvent({ event: 'directions-link-click', '{{ directionsLinkOnClickPropName }}': '{{ directionsLinkOnClickPropValue }}'});"
-  {% endcapture %}
-{% endif %}
-
 <div>
-  <a
-    {{ onClick | strip }}
-    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}">
-    Get directions on Google Maps
-    <span class="sr-only">to {{ directionsLinkTitle | strip }}</span>
-  </a>
+  <va-link
+    aria-label="to {{ directionsLinkTitle | strip }}"
+    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
+    text="Get directions on Google Maps"
+  />
+  </va-link>
 </div>
