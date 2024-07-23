@@ -2,8 +2,7 @@ name: 'Send GHA metrics to Datadog'
 on:
   workflow_run:
     workflows:
-#      - 'Content Release'
-      - '**'
+      - 'Content Release'
     types:
       - completed
 jobs:
