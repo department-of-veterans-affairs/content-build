@@ -1339,10 +1339,10 @@
   dependencies:
     minimist "^1.2.6"
 
-"@department-of-veterans-affairs/web-components@^10.0.2":
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-10.0.2.tgz#3c266fbb80d8e25604bf4f1dc4c4237562a4af81"
-  integrity sha512-GGdqfk+LFrNlgjIE0hKI737JLHsrkXd5SS7J7l6Xac/42gcGI1TTVbYnAq9DTQI8dotJlzbag1Up8IkfhhpJ8w==
+"@department-of-veterans-affairs/web-components@^11.2.4":
+  version "11.2.4"
+  resolved "https://registry.npmjs.org/@department-of-veterans-affairs/web-components/-/web-components-11.2.4.tgz#158fa086f5b1e1434074da24272857ccdafa11df"
+  integrity sha512-+4kb8NUO1lMjoue/7n0Xj1p5BqTxglUQcW4OlEE1I3D/TC9dziQaLqQlt037b6y4AUg6D6JBVvttWVudQ2jEMg==
   dependencies:
     "@department-of-veterans-affairs/css-library" "^0.8.1"
     "@stencil/core" "^2.19.2"
