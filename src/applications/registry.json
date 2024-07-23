@@ -1344,7 +1344,7 @@
     "rootUrl": "/housing-assistance/disability-housing-grants/apply-for-grant-form-26-4555",
     "productId": "49929be5-0c92-42f2-b122-3cb426f691d4",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1750,7 +1750,7 @@
     }
   },
   {
-    "appName": "Beneficiary Travel",
+    "appName": "Check Your Travel Reimbursement Claim Status",
     "entryName": "travel-pay",
     "rootUrl": "/my-health/travel-claim-status",
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
@@ -1792,7 +1792,7 @@
   {
     "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
     "entryName": "10-7959C",
-    "rootUrl": "/health-care/champva/other-insurance-form-10-7959c",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/other-insurance-form-10-7959c",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": false,
@@ -1898,13 +1898,19 @@
     }
   }, 
   {
-    "appName": "22-10282 IBM Skillsbuild Training Program Intake Application",
-    "entryName": "10282-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/10282",
-    "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
+    "appName": "Resources for schools",
+    "entryName": "sco",
+    "rootUrl": "/education/school-administrators",
+    "productId": "40938a35-1cfa-4808-917b-37e0baec6a7c",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "22-10282 IBM Skillsbuild Training Program Intake Application",
+    "entryName": "10282-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/10282",
+    "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
   }
 ]
