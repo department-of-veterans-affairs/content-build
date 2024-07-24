@@ -1912,5 +1912,9 @@
     "entryName": "10282-edu-benefits",
     "rootUrl": "/education/apply-for-education-benefits/10282",
     "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
