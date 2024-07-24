@@ -1266,6 +1266,18 @@
     }
   },
   {
+    "appName": "Mock Form AE Design Patterns",
+    "entryFile": "./app-entry.jsx",
+    "entryName": "mock-form-ae-design-patterns",
+    "rootUrl": "/mock-form-ae-design-patterns",
+    "template": {
+      "vagovprod": false,
+      "vagovstaging": true,
+      "includeBreadcrumbs": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Combined Debt Portal",
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-va-debt/summary",
