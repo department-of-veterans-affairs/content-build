@@ -339,7 +339,7 @@
       "breadcrumbs_override": [
         {
           "name": "VA.gov home",
-          "path": ""
+          "path": "/"
         },
         {
           "path": "my-health/",
