@@ -22,13 +22,6 @@
           {% if fieldPromoHeadline and fieldLink.url.path %}
             <h3 class="vads-u-font-family--serif vads-u-margin-top--0 vads-u-font-size--xl">
               <va-link
-                onclick="recordMultipleEvents([
-                  {
-                    event: 'nav-zone-one',
-                      'click-text': '{{ fieldPromoHeadline }}',
-                  },
-                  { event: 'homepage-news-promo-title-click', action: 'Homepage News Promo - {{ fieldPromoHeadline }} - Title' }
-                ]);"
                 href="{{ fieldLink.url.path }}"
                 text="{{ fieldPromoHeadline | encode }}"
                 reverse
@@ -42,37 +35,17 @@
               {{ fieldPromoText }}
             {% endif %}
             {% if fieldLinkLabel and fieldLink.url.path %}
-              {% comment %}
-                We can convert this link to <va-link> when DST has addressed screen reader text with va-links
-                https://github.com/department-of-veterans-affairs/vets-design-system-documentation/issues/1644
-              {% endcomment %}
-              <a
-                onclick="recordMultipleEvents([
-                  {
-                    event: 'nav-zone-one',
-                      'click-text': '{{ fieldLinkLabel | strip }}',
-                  },
-                  { event: 'homepage-news-promo-click', action: 'Homepage news promo - {{  fieldPromoHeadline }} - CTA' }
-                ]);"
-                href="{{ fieldLink.url.path }}" class="vads-u-color--white">
-                {{fieldLinkLabel}}
-                <span class="sr-only">
-                  about {{fieldPromoHeadline}}
-                </span>
-              </a>
+              <va-link
+                reverse
+                label="{{fieldLinkLabel}} about {{fieldPromoHeadline}}"
+                href="{{ fieldLink.url.path }}"
+                text="{{fieldLinkLabel}}"
+              /></va-link>
             {% endif %}
           </p>
 
           <div>
             <va-link
-              onclick="recordMultipleEvents([
-                {
-                  event: 'nav-zone-one',
-                  'nav-path': '->{% if fieldLink.url.path != empty %}{{ fieldLink.url.path }}{% else %}{{ fieldLinkLabel }}{% endif %}',
-                  'click-text': 'More VA news',
-                },
-                { event: 'homepage-news-promo-more-news-click', action: 'Homepage news promo - More VA News' }
-              ]);"
               href="https://news.va.gov/"
               text="More VA news"
               active
