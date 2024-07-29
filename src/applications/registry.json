@@ -250,7 +250,7 @@
   {
     "appName": "21P-530EZ Burials benefits form",
     "entryName": "burials-ez",
-    "rootUrl": "/burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
+    "rootUrl": "/burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
     "template": {
       "title": "Apply for Burial Benefits (VA Form 21P-530EZ)",
       "display_title": "Apply Now",
@@ -269,11 +269,11 @@
         },
         {
           "path": "burials-memorials/veterans-burial-allowance",
-          "name": "Burial allowance"
+          "name": "Veterans burial allowance and transportation benefits"
         },
         {
-          "path": "burials-memorials/veterans-burial-allowance/apply-for-burial-benefits",
-          "name": "Apply for burial benefits"
+          "path": "burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
+          "name": "Apply for a Veterans burial allowance and transportation benefits"
         }
       ]
     }
@@ -1266,6 +1266,18 @@
     }
   },
   {
+    "appName": "Mock Form AE Design Patterns",
+    "entryFile": "./app-entry.jsx",
+    "entryName": "mock-form-ae-design-patterns",
+    "rootUrl": "/mock-form-ae-design-patterns",
+    "template": {
+      "vagovprod": false,
+      "vagovstaging": true,
+      "includeBreadcrumbs": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Combined Debt Portal",
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-va-debt/summary",
@@ -1918,10 +1930,10 @@
     }
   },
   {
-    "appName": "22-10216 5% Exemption Request From 85/15 Reporting Requirement General Information",
-    "entryName": "10216-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/10216",
-    "productId": "db0db964-89ef-4e80-a469-499b7db330cd",
+    "appName": "Form Renderer",
+    "entryName": "form-renderer",
+    "rootUrl": "/digital-form",
+    "productId": "8e41524c-d835-476c-ba0f-040037380911",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -1932,6 +1944,16 @@
     "entryName": "10215-edu-benefits",
     "rootUrl": "/education/apply-for-education-benefits/application/10215",
     "productId": "e02407c0-753b-486d-8122-af5c73a4e983",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "22-10216 5% Exemption Request From 85/15 Reporting Requirement General Information",
+    "entryName": "10216-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/10216",
+    "productId": "db0db964-89ef-4e80-a469-499b7db330cd",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
