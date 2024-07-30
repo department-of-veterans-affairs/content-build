@@ -13,6 +13,9 @@ describe('digitalForm fragment', () => {
   });
 
   describe('chapter fragments', () => {
-    it('imports the nameAndDateOfBirth fragment');
+    it('imports the nameAndDateOfBirth fragment', () => {
+      expect(digitalForm).to.have.string('fragment nameAndDateOfBirth');
+      expect(digitalForm).to.have.string('...nameAndDateOfBirth');
+    });
   });
 });
