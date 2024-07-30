@@ -1,5 +1,5 @@
-import digitalForm from './fragments/digitalForm.graphql';
-import { postProcessDigitalForm } from './postProcessDigitalForm';
+const digitalForm = require('./fragments/digitalForm.graphql');
+const { postProcessDigitalForm } = require('./postProcessDigitalForm');
 
 const query = `
   ${digitalForm}

@@ -1,4 +1,4 @@
-import nameAndDateOfBirth from './nameAndDateOfBirth.graphql';
+const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
 
 /*
  *
