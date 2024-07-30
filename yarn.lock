@@ -1339,10 +1339,10 @@
   dependencies:
     minimist "^1.2.6"
 
-"@department-of-veterans-affairs/web-components@^11.2.4":
-  version "11.2.4"
-  resolved "https://registry.npmjs.org/@department-of-veterans-affairs/web-components/-/web-components-11.2.4.tgz#158fa086f5b1e1434074da24272857ccdafa11df"
-  integrity sha512-+4kb8NUO1lMjoue/7n0Xj1p5BqTxglUQcW4OlEE1I3D/TC9dziQaLqQlt037b6y4AUg6D6JBVvttWVudQ2jEMg==
+"@department-of-veterans-affairs/web-components@^11.2.5":
+  version "11.2.9"
+  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-11.2.9.tgz#10f4ec73f5d177c1864a116386334748c2e39bcb"
+  integrity sha512-Kl7zCoxuheC/EYdM0D3N2X4cC7Kjd1eq6ZaX525BAiRJlxKhIpqhZzJfbXkQw0SrX8voLrA0Ab74KFcZjgRV3A==
   dependencies:
     "@department-of-veterans-affairs/css-library" "^0.8.1"
     "@stencil/core" "^2.19.2"
@@ -11703,6 +11703,7 @@ string-argv@0.3.1:
   integrity sha512-a1uQGz7IyVy9YwhqjZIZu1c8JO8dNIe20xBmSS6qu9kv++k3JGzCVmprbNN5Kn+BgzD5E7YYwg1CcjuJMRNsvg==
 
 "string-width-cjs@npm:string-width@^4.2.0", "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.2.3:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
