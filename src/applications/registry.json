@@ -1938,5 +1938,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Add Disability Testing",
+    "entryName": "add-disability-testing",
+    "rootUrl": "/add-disability-testing",
+    "productId": "f5cc8799-eefd-489d-a90c-02e791b0a014",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
