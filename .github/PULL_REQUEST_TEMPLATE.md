@@ -59,12 +59,6 @@ _Note: This field is mandatory for UI changes (non-component work should NOT hav
 
 - [ ] Did you login to a local build and verify all authenticated routes work as expected with a test user
 
-### :warning: Team Sites (only applies to modifications made to the VA.gov header) :warning:
-
-- [ ] The header does not contain any web-components
-- [ ] I used the [proxy-rewrite steps](https://github.com/department-of-veterans-affairs/vets-website/tree/main/src/applications/proxy-rewrite#local-dev) to test the injected header scenario
-- [ ] I reached out in the `#sitewide-public-websites` Slack channel for questions
-
 ## Requested Feedback
 
 (OPTIONAL) _What should the reviewers know in addition to the above. Is there anything specific you wish the reviewer to assist with. Do you have any concerns with this PR, why?_
