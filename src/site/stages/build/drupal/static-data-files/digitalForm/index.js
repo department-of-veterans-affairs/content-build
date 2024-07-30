@@ -1,4 +1,5 @@
 import digitalForm from './fragments/digitalForm.graphql';
+import { postProcessDigitalForm } from './postProcessDigitalForm';
 
 const query = `
   ${digitalForm}
@@ -19,4 +20,7 @@ const query = `
   }
 `;
 
-module.exports = { query };
+module.exports = {
+  query,
+  postProcess: postProcessDigitalForm,
+};

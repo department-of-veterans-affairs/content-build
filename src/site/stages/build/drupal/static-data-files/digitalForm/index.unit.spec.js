@@ -1,7 +1,7 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 
 import { expect } from 'chai';
-import { query } from './index';
+import { query, postProcess } from './index';
 
 describe('digitalForm', () => {
   describe('query', () => {
@@ -15,6 +15,8 @@ describe('digitalForm', () => {
   });
 
   describe('postProcess', () => {
-    it('imports postProcessDigitalForm');
+    it('imports postProcessDigitalForm', () => {
+      expect(() => postProcess('test result')).to.not.throw();
+    });
   });
 });
