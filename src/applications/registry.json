@@ -1938,5 +1938,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Designation Of Certifying Official(S)",
+    "entryName": "8794-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/8794",
+    "productId": "bc4e797d-2a35-40f2-b072-66962e75fe89",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
