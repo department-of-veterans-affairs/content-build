@@ -1,4 +1,8 @@
+import digitalForm from './fragments/digitalForm.graphql';
+
 const query = `
+  ${digitalForm}
+
   query ($onlyPublishedContent: Boolean!) {
     nodeQuery(
       filter: {
@@ -9,6 +13,7 @@ const query = `
       }
     ) {
       entities {
+        ... digitalForm
       }
     }
   }

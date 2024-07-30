@@ -8,7 +8,10 @@ describe('digitalForm', () => {
     it('returns digital_form entities', () => {
       expect(query).to.have.string('digital_form');
     });
-    it('imports the digitalForm fragment');
+    it('imports the digitalForm fragment', () => {
+      expect(query).to.have.string('fragment digitalForm');
+      expect(query).to.have.string('... digitalForm');
+    });
   });
 
   describe('postProcess', () => {
