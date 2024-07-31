@@ -68,18 +68,17 @@ describe('postProcessDigitalForm', () => {
       },
     },
   };
-  let parsedResult;
+  let processedResult;
 
   beforeEach(() => {
-    const processedResult = postProcessDigitalForm(queryResult);
-    parsedResult = JSON.parse(processedResult);
+    processedResult = postProcessDigitalForm(queryResult);
   });
 
   it('returns a normalized JSON object', () => {
-    const testForm = parsedResult[1];
+    const testForm = processedResult[1];
     const testChapter = testForm.chapters[1];
 
-    expect(parsedResult.length).to.eq(2);
+    expect(processedResult.length).to.eq(2);
     expect(testForm.id).to.eq(71004);
     expect(testForm.title).to.eq('Form with Two Steps');
     expect(testForm.subTitle).to.eq('VA Form 222222');
@@ -94,7 +93,7 @@ describe('postProcessDigitalForm', () => {
 
   context('with a Name and Date of Birth step', () => {
     it('includes the appropriate fields', () => {
-      const { additionalFields } = parsedResult[1].chapters[1];
+      const { additionalFields } = processedResult[1].chapters[1];
 
       expect(additionalFields.includeDateOfBirth).to.eq(false);
     });
