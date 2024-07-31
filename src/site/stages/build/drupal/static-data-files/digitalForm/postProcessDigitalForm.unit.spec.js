@@ -80,11 +80,15 @@ describe('postProcessDigitalForm', () => {
 
   it('returns a normalized JSON object', () => {
     const testForm = parsedResult[1];
+    const testChapter = testForm.chapters[1];
 
     expect(parsedResult.length).to.eq(2);
     expect(testForm.id).to.eq(71004);
     expect(testForm.title).to.eq('Form with Two Steps');
     expect(testForm.subTitle).to.eq('VA Form 222222');
     expect(testForm.ombNumber).to.eq('1212-1212');
+    expect(testForm.chapters.length).to.eq(2);
+    expect(testChapter.id).to.eq(157907);
+    expect(testChapter.chapterTitle).to.eq('Second Step');
   });
 });
