@@ -84,5 +84,6 @@ describe('postProcessDigitalForm', () => {
     expect(parsedResult.length).to.eq(2);
     expect(testForm.id).to.eq(71004);
     expect(testForm.title).to.eq('Form with Two Steps');
+    expect(testForm.subTitle).to.eq('VA Form 222222');
   });
 });

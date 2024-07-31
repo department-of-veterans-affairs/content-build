@@ -1,9 +1,11 @@
 const extractForms = resultObject => resultObject.data.nodeQuery.entities;
+const formatSubTitle = formNumber => `VA Form ${formNumber}`;
 
 const normalizeForm = form => {
   return {
     id: form.nid,
     title: form.entityLabel,
+    subTitle: formatSubTitle(form.fieldVaFormNumber),
   };
 };
 
