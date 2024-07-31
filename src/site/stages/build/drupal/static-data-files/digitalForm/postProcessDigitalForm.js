@@ -6,6 +6,7 @@ const normalizeForm = form => {
     id: form.nid,
     title: form.entityLabel,
     subTitle: formatSubTitle(form.fieldVaFormNumber),
+    ombNumber: form.fieldOmbNumber,
   };
 };
 
