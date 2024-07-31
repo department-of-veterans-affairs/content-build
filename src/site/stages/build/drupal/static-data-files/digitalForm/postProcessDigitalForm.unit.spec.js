@@ -90,5 +90,16 @@ describe('postProcessDigitalForm', () => {
     expect(testForm.chapters.length).to.eq(2);
     expect(testChapter.id).to.eq(157907);
     expect(testChapter.chapterTitle).to.eq('Second Step');
+    expect(testChapter.type).to.eq('digital_form_name_and_date_of_bi');
+    expect(testChapter.pageTitle).to.eq('Name and Date of Birth');
+    expect(Object.keys(testChapter.additionalFields).length).to.eq(1);
+  });
+
+  context('with a Name and Date of Birth step', () => {
+    it('includes the appropriate fields', () => {
+      const { additionalFields } = parsedResult[1].chapters[1];
+
+      expect(additionalFields.includeDateOfBirth).to.eq(false);
+    });
   });
 });
