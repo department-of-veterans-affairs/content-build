@@ -5,72 +5,69 @@ import { expect } from 'chai';
 const { postProcessDigitalForm } = require('./postProcessDigitalForm');
 
 describe('postProcessDigitalForm', () => {
-  const queryResult = `
-{
-  "data": {
-    "nodeQuery": {
-      "entities": [
-        {
-          "nid": 71002,
-          "entityLabel": "Form with One Step",
-          "fieldVaFormNumber": "11111",
-          "fieldOmbNumber": "1111-1111",
-          "fieldChapters": [
-            {
-              "entity": {
-                "entityId": "157904",
-                "type": {
-                  "entity": {
-                    "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Name and Date of Birth"
-                  }
+  const queryResult = {
+    data: {
+      nodeQuery: {
+        entities: [
+          {
+            nid: 71002,
+            entityLabel: 'Form with One Step',
+            fieldVaFormNumber: '11111',
+            fieldOmbNumber: '1111-1111',
+            fieldChapters: [
+              {
+                entity: {
+                  entityId: '157904',
+                  type: {
+                    entity: {
+                      entityId: 'digital_form_name_and_date_of_bi',
+                      entityLabel: 'Name and Date of Birth',
+                    },
+                  },
+                  fieldTitle: 'The Only Step',
+                  fieldIncludeDateOfBirth: true,
                 },
-                "fieldTitle": "The Only Step",
-                "fieldIncludeDateOfBirth": true
-              }
-            }
-          ]
-        },
-        {
-          "nid": 71004,
-          "entityLabel": "Form with Two Steps",
-          "fieldVaFormNumber": "222222",
-          "fieldOmbNumber": "1212-1212",
-          "fieldChapters": [
-            {
-              "entity": {
-                "entityId": "157906",
-                "type": {
-                  "entity": {
-                    "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Name and Date of Birth"
-                  }
+              },
+            ],
+          },
+          {
+            nid: 71004,
+            entityLabel: 'Form with Two Steps',
+            fieldVaFormNumber: '222222',
+            fieldOmbNumber: '1212-1212',
+            fieldChapters: [
+              {
+                entity: {
+                  entityId: '157906',
+                  type: {
+                    entity: {
+                      entityId: 'digital_form_name_and_date_of_bi',
+                      entityLabel: 'Name and Date of Birth',
+                    },
+                  },
+                  fieldTitle: 'First Step',
+                  fieldIncludeDateOfBirth: true,
                 },
-                "fieldTitle": "First Step",
-                "fieldIncludeDateOfBirth": true
-              }
-            },
-            {
-              "entity": {
-                "entityId": "157907",
-                "type": {
-                  "entity": {
-                    "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Name and Date of Birth"
-                  }
+              },
+              {
+                entity: {
+                  entityId: '157907',
+                  type: {
+                    entity: {
+                      entityId: 'digital_form_name_and_date_of_bi',
+                      entityLabel: 'Name and Date of Birth',
+                    },
+                  },
+                  fieldTitle: 'Second Step',
+                  fieldIncludeDateOfBirth: false,
                 },
-                "fieldTitle": "Second Step",
-                "fieldIncludeDateOfBirth": false
-              }
-            }
-          ]
-        }
-      ]
-    }
-  }
-}
-    `;
-
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
   let parsedResult;
 
   beforeEach(() => {

@@ -36,8 +36,8 @@ const normalizeForm = form => {
 const normalizeForms = forms => forms.map(form => normalizeForm(form));
 
 const postProcessDigitalForm = queryResult => {
-  const resultObject = JSON.parse(queryResult);
-  const forms = extractForms(resultObject);
+  // queryResult was already parsed by graphQLApiClient
+  const forms = extractForms(queryResult);
   const normalizedForms = normalizeForms(forms);
 
   return JSON.stringify(normalizedForms);
