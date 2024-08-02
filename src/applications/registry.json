@@ -1940,6 +1940,26 @@
     }
   },
   {
+    "appName": "22-10215 Statement of Assurance of Compliance with 85 Percent Enrollment Ratios",
+    "entryName": "10215-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/10215",
+    "productId": "e02407c0-753b-486d-8122-af5c73a4e983",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "22-10216 5% Exemption Request From 85/15 Reporting Requirement General Information",
+    "entryName": "10216-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/10216",
+    "productId": "db0db964-89ef-4e80-a469-499b7db330cd",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Mock form minimal header",
     "entryName": "mock-form-minimal-header",
     "rootUrl": "/mock-form-minimal-header",
