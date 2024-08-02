@@ -86,8 +86,11 @@
                     <section class="vads-u-margin-bottom--3">
                         {{ fieldOffice.entity.fieldPressReleaseBlurb.processed }}
                     </section>
-                    <va-link active onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-                       href="{{ fieldListing.entity.entityUrl.path }}" text="See all news releases" />
+                    <va-link
+                        active
+                        href="{{ fieldListing.entity.entityUrl.path }}"
+                        text="See all news releases" 
+                    />
                 </article>
                 <!-- Last updated & feedback button-->
                   {% include "src/site/includes/above-footer-elements.drupal.liquid" %}

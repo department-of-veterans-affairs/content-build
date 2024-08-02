@@ -61,7 +61,7 @@
         {% endif %}
 
         <va-accordion bordered uswds>
-          <va-accordion-item 
+          <va-accordion-item
             class="va-accordion-item"
             level="2"
             open="true"
@@ -101,7 +101,7 @@
                         </a>
                       {% elsif service.fieldLink.url.path %}
                         <a
-                          href="{{ service.fieldLink.url.path }}" 
+                          href="{{ service.fieldLink.url.path }}"
                           onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': 'Ask questions' });"
                         >
                         <span>{{ service.title }}</span>
@@ -151,8 +151,8 @@
               id="{{ fieldRelatedOffice.entity.fieldExternalLink.title | hashReference: 60 }}">
               {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
-                  <va-link 
-                    href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}" 
+                  <va-link
+                    href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}"
                     text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
                   />
                 </h3>
@@ -162,8 +162,8 @@
                 <h3 class="vads-u-font-size--h4">Get updates</h3>
                   <p>
                     <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
-                    <va-link 
-                      href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}" 
+                    <va-link
+                      href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}"
                       text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
                     />
                   </p>
@@ -178,7 +178,7 @@
                   {% for socialPlatform in socialPlatforms %}
                     {% assign socialLink = socialLinks | get: socialPlatform  %}
                     {% assign platform = socialPlatform | capitalize %}
-                    
+
                     {% if socialPlatform == "twitter" %}
                       {% assign socialIcon = "x" %}
                     {% else %}
@@ -191,8 +191,8 @@
                           icon="{{ socialIcon }}"
                           size="3"
                           class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
-                        <va-link 
-                          href="http://{{ socialPlatform }}.com/{{ socialLink.value }}" 
+                        <va-link
+                          href="http://{{ socialPlatform }}.com/{{ socialLink.value }}"
                           text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ platform | formatSocialPlatform }}"
                         >
                         </va-link>
@@ -213,6 +213,10 @@
   {% include "src/site/includes/veteran-banner.html" %}
   </main>
 </div>
+
+{% if decisionReviewRum %}
+  {% include "src/site/includes/decision-reviews-rum.html" %}
+{% endif %}
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}
