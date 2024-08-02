@@ -333,6 +333,9 @@ function compilePage(page, contentData) {
     },
   } = contentData;
 
+  // Get feature flags.
+  const { cmsFeatureFlags } = global;
+
   // Get page owner
   let owner;
   if (page.fieldAdministration && page.fieldAdministration.entity) {
@@ -519,6 +522,7 @@ function compilePage(page, contentData) {
         banners,
         promoBanners,
         ...pageId,
+        decisionReviewRum: cmsFeatureFlags.FEATURE_DECISION_REVIEW_RUM,
       };
       break;
   }
