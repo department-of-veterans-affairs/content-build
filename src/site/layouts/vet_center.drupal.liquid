@@ -166,7 +166,7 @@
           {% comment %} fieldVetCenterFeatureContent is an array almost in the right format {% endcomment %}
           {% assign allFeaturedContent = fieldCcVetCenterFeaturedCon | appendCentralizedFeaturedContent: fieldVetCenterFeatureContent, "prepend" %}
           <h2 id="in-the-spot-light" class="vads-u-margin-top--0 vads-u-font-size--lg
-          small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight at {{ entityLabel }} </h2>
+          small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight</h2>
             <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
               {% for entity in allFeaturedContent %}
                 {% include "src/site/includes/vet_centers/featured_content.liquid" with
