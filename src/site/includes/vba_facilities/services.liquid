@@ -87,15 +87,7 @@
                 active
                 href="{{ onlineSelfService.url.path }}"
                 text="{{ onlineSelfService.title }}"
-                onclick="recordEvent(
-                  {
-                    'event': 'vba-regional-facility-services-manage-benefits-online',
-                    'vba-regional-facility-name': '{{ facilityName }}',
-                    'accordion-parent-label': '{{ entityName }}',
-                    'link-label': '{{ onlineSelfService.title }}'
-                  }
-                )"
-              >
+              ></va-link>
             </p>
           {% endif %}
 

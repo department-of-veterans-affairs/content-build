@@ -116,14 +116,7 @@
                               contact="{{ vbaFacilityMainPhone.phoneNumber }}"
                               extension="{{ vbaFacilityMainPhone.extension }}"
                               message-aria-describedby="Main Phone"
-                              onclick="recordEvent(
-                                {
-                                  'event': 'vba-regional-facility-vba-facility-main-phone-number',
-                                  'vba-regional-facility-name': '{{ entityLabel }}',
-                                  'link-label': 'Main Phone'
-                                }
-                              )"
-                            />
+                            ></va-telephone>
                           </p>
                         </div>
                       {% endif %}
@@ -136,14 +129,7 @@
                               contact="{{ benefitsHotline.fieldPhoneNumber }}"
                               extension="{{ benefitsHotline.fieldPhoneExtension }}"
                               message-aria-describedby="VA benefits hotline"
-                              onclick="recordEvent(
-                                {
-                                  'event': 'vba-regional-facility-vba-facility-va-benefits-online',
-                                  'vba-regional-facility-name': '{{ entityLabel }}',
-                                  'link-label': 'VA benefits hotline'
-                                }
-                              )"
-                            />
+                            ></va-telephone>
                           </p>
                         </div>
                       {% endif %}
@@ -254,7 +240,7 @@
                 <va-link
                   href="{{ cantFindBenefits.fieldCta.link }}"
                   text="{{ cantFindBenefits.fieldCta.label }}"
-                />
+                ></va-link>
               </div>
             </va-alert>
           {% endif %}
@@ -292,14 +278,7 @@
             <va-link
               href="/find-locations?facilityType=benefits"
               text="Find a VA benefits location"
-              onclick="recordEvent(
-                {
-                  'event': 'vba-regional-facility-vba-facility-find-VA-benefits-location',
-                  'vba-regional-facility-name': '{{ entityLabel }}',
-                  'link-label': 'Find a VA benefits location'
-                }
-              )"
-            >
+            ></va-link>
           </p>
           <va-back-to-top></va-back-to-top>
           <!-- Last updated & feedback button-->
