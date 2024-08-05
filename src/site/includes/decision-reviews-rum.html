@@ -1,53 +1,56 @@
+<!-- src url from https://docs.datadoghq.com/real_user_monitoring/browser/setup/#cdn-sync -->
 <script
   nonce="**CSP_NONCE**"
   type="text/javascript"
   defer
-  src="https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js"
+  src="https://www.datadoghq-browser-agent.com/datadog-rum-v5.js"
 ></script>
 <script nonce="**CSP_NONCE**" type="text/javascript">
-// All of the page urls we want to monitor include www.va.gov (production only)
-if (window.DD_RUM && window.location?.hostname === 'www.va.gov') {
-  /**
-   * Unauthenticated Static pages may be crawled by bots, so we won't initialize
-   * RUM sessions. The following code is from DataDog:
-   * https://docs.datadoghq.com/real_user_monitoring/guide/identify-bots-in-the-ui
-   */
-  // regex patterns to identify known bot instances (5/2024):
-  const botPattern = '(googlebot\/|bot|Googlebot-Mobile|Googlebot-Image|Google favicon|Mediapartners-Google|bingbot|slurp|java|wget|curl|Commons-HttpClient|Python-urllib|libwww|httpunit|nutch|phpcrawl|msnbot|jyxobot|FAST-WebCrawler|FAST Enterprise Crawler|biglotron|teoma|convera|seekbot|gigablast|exabot|ngbot|ia_archiver|GingerCrawler|webmon |httrack|webcrawler|grub.org|UsineNouvelleCrawler|antibot|netresearchserver|speedy|fluffy|bibnum.bnf|findlink|msrbot|panscient|yacybot|AISearchBot|IOI|ips-agent|tagoobot|MJ12bot|dotbot|woriobot|yanga|buzzbot|mlbot|yandexbot|purebot|Linguee Bot|Voyager|CyberPatrol|voilabot|baiduspider|citeseerxbot|spbot|twengabot|postrank|turnitinbot|scribdbot|page2rss|sitebot|linkdex|Adidxbot|blekkobot|ezooms|dotbot|Mail.RU_Bot|discobot|heritrix|findthatfile|europarchive.org|NerdByNature.Bot|sistrix crawler|ahrefsbot|Aboundex|domaincrawler|wbsearchbot|summify|ccbot|edisterbot|seznambot|ec2linkfinder|gslfbot|aihitbot|intelium_bot|facebookexternalhit|yeti|RetrevoPageAnalyzer|lb-spider|sogou|lssbot|careerbot|wotbox|wocbot|ichiro|DuckDuckBot|lssrocketcrawler|drupact|webcompanycrawler|acoonbot|openindexspider|gnam gnam spider|web-archive-net.com.bot|backlinkcrawler|coccoc|integromedb|content crawler spider|toplistbot|seokicks-robot|it2media-domain-crawler|ip-web-crawler.com|siteexplorer.info|elisabot|proximic|changedetection|blexbot|arabot|WeSEE:Search|niki-bot|CrystalSemanticsBot|rogerbot|360Spider|psbot|InterfaxScanBot|Lipperhey SEO Service|CC Metadata Scaper|g00g1e.net|GrapeshotCrawler|urlappendbot|brainobot|fr-crawler|binlar|SimpleCrawler|Livelapbot|Twitterbot|cXensebot|smtbot|bnf.fr_bot|A6-Indexer|ADmantX|Facebot|Twitterbot|OrangeBot|memorybot|AdvBot|MegaIndex|SemanticScholarBot|ltx71|nerdybot|xovibot|BUbiNG|Qwantify|archive.org_bot|Applebot|TweetmemeBot|crawler4j|findxbot|SemrushBot|yoozBot|lipperhey|y!j-asr|Domain Re-Animator Bot|AddThis)';
-  const regex = new RegExp(botPattern, 'i');
+window.addEventListener('load', () => {
+  // All of the page urls we want to monitor include www.va.gov (production only)
+  if (window.DD_RUM && window.location?.hostname === 'www.va.gov') {
+    /**
+     * Unauthenticated Static pages may be crawled by bots, so we won't initialize
+     * RUM sessions. The following code is from DataDog:
+     * https://docs.datadoghq.com/real_user_monitoring/guide/identify-bots-in-the-ui
+     */
+    // regex patterns to identify known bot instances (5/2024):
+    const botPattern = '(googlebot\/|bot|Googlebot-Mobile|Googlebot-Image|Google favicon|Mediapartners-Google|bingbot|slurp|java|wget|curl|Commons-HttpClient|Python-urllib|libwww|httpunit|nutch|phpcrawl|msnbot|jyxobot|FAST-WebCrawler|FAST Enterprise Crawler|biglotron|teoma|convera|seekbot|gigablast|exabot|ngbot|ia_archiver|GingerCrawler|webmon |httrack|webcrawler|grub.org|UsineNouvelleCrawler|antibot|netresearchserver|speedy|fluffy|bibnum.bnf|findlink|msrbot|panscient|yacybot|AISearchBot|IOI|ips-agent|tagoobot|MJ12bot|dotbot|woriobot|yanga|buzzbot|mlbot|yandexbot|purebot|Linguee Bot|Voyager|CyberPatrol|voilabot|baiduspider|citeseerxbot|spbot|twengabot|postrank|turnitinbot|scribdbot|page2rss|sitebot|linkdex|Adidxbot|blekkobot|ezooms|dotbot|Mail.RU_Bot|discobot|heritrix|findthatfile|europarchive.org|NerdByNature.Bot|sistrix crawler|ahrefsbot|Aboundex|domaincrawler|wbsearchbot|summify|ccbot|edisterbot|seznambot|ec2linkfinder|gslfbot|aihitbot|intelium_bot|facebookexternalhit|yeti|RetrevoPageAnalyzer|lb-spider|sogou|lssbot|careerbot|wotbox|wocbot|ichiro|DuckDuckBot|lssrocketcrawler|drupact|webcompanycrawler|acoonbot|openindexspider|gnam gnam spider|web-archive-net.com.bot|backlinkcrawler|coccoc|integromedb|content crawler spider|toplistbot|seokicks-robot|it2media-domain-crawler|ip-web-crawler.com|siteexplorer.info|elisabot|proximic|changedetection|blexbot|arabot|WeSEE:Search|niki-bot|CrystalSemanticsBot|rogerbot|360Spider|psbot|InterfaxScanBot|Lipperhey SEO Service|CC Metadata Scaper|g00g1e.net|GrapeshotCrawler|urlappendbot|brainobot|fr-crawler|binlar|SimpleCrawler|Livelapbot|Twitterbot|cXensebot|smtbot|bnf.fr_bot|A6-Indexer|ADmantX|Facebot|Twitterbot|OrangeBot|memorybot|AdvBot|MegaIndex|SemanticScholarBot|ltx71|nerdybot|xovibot|BUbiNG|Qwantify|archive.org_bot|Applebot|TweetmemeBot|crawler4j|findxbot|SemrushBot|yoozBot|lipperhey|y!j-asr|Domain Re-Animator Bot|AddThis)';
+    const regex = new RegExp(botPattern, 'i');
 
-  // Don't initialize RUM if a bot is crawling the page
-  const isBot = regex.test(navigator.userAgent);
+    // Don't initialize RUM if a bot is crawling the page
+    const isBot = regex.test(navigator.userAgent);
 
-  /**
-   * Initialize DataDog Real User Monitoring (RUM) sessions
-   * https://docs.datadoghq.com/real_user_monitoring/browser/#cdn-sync
-   */
-  if (
-    !isBot &&
-    // is DataDog is already initialized?
-    !window.DD_RUM?.getInitConfiguration()
-  ) {
-    window.DD_RUM.init({
-      site: 'ddog-gov.com',
-      env: 'production',
-      version: '1.0.0',
-      service: 'benefits-decision-review-static-pages',
-      clientToken: 'pub17c22ff5e9e7e51f7ac28b828741e21a',
-      applicationId: '133801ec-0b13-4a6f-9689-bd937a1ddf27',
+    /**
+     * Initialize DataDog Real User Monitoring (RUM) sessions
+     * https://docs.datadoghq.com/real_user_monitoring/browser/#cdn-sync
+     */
+    if (
+      !isBot &&
+      // is DataDog is already initialized?
+      !window.DD_RUM?.getInitConfiguration()
+    ) {
+      window.DD_RUM.init({
+        site: 'ddog-gov.com',
+        env: 'production',
+        version: '1.0.0',
+        service: 'benefits-decision-review-static-pages',
+        clientToken: 'pub17c22ff5e9e7e51f7ac28b828741e21a',
+        applicationId: '133801ec-0b13-4a6f-9689-bd937a1ddf27',
 
-      sessionSampleRate: 10, // {% if decisionReviewRum %}
-      sessionReplaySampleRate: 20,
+        sessionSampleRate: 10, // {% if decisionReviewRum %}
+        sessionReplaySampleRate: 20,
 
-      trackInteractions: true,
-      trackUserInteractions: true,
-      trackResources: true,
-      trackLongTasks: true,
+        trackInteractions: true,
+        trackUserInteractions: true,
+        trackResources: true,
+        trackLongTasks: true,
 
-      // https://docs.datadoghq.com/real_user_monitoring/session_replay/browser/privacy_options/
-      defaultPrivacyLevel: 'mask-user-input',
-    });
-    window.DD_RUM.startSessionReplayRecording();
+        // https://docs.datadoghq.com/real_user_monitoring/session_replay/browser/privacy_options/
+        defaultPrivacyLevel: 'mask-user-input',
+      });
+      window.DD_RUM.startSessionReplayRecording();
+    }
   }
-}
+});
 </script>
