@@ -8,9 +8,10 @@ directionsLinkOnClickPropValue
 
 <div>
   <va-link
-    label="Get directions on Google Maps to {{ directionsLinkTitle | strip }}"
+    {% if directionsLinkTitle != empty %}
+      label="Get directions on Google Maps to {{ directionsLinkTitle | strip }}"
+    {% endif %}
     href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
     text="Get directions on Google Maps"
-  />
-  </va-link>
+/></va-link>
 </div>
