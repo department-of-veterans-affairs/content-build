@@ -7,18 +7,11 @@ directionsLinkOnClickPropValue
 {% endcomment %}
 
 <div>
-  {% if directionsLinkTitle != empty %}
-    <va-link
+  <va-link
+    {% if directionsLinkTitle != empty %}
       label="Get directions on Google Maps to {{ directionsLinkTitle | strip }}"
-      href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
-      text="Get directions on Google Maps"
-    />
-    </va-link>
-  {% else %}
-    <va-link
-      href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
-      text="Get directions on Google Maps"
-    />
-    </va-link>
-  {% endif %}
+    {% endif %}
+    href="https://maps.google.com?saddr=Current+Location&amp;daddr={{ directionsLinkAddress | strip }}"
+    text="Get directions on Google Maps"
+/></va-link>
 </div>
