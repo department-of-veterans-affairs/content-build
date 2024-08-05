@@ -1,0 +1,21 @@
+<!-- Section header -->
+<h3>{{ vaParagraph.entity.fieldSectionHeader }}</h3>
+<ul class="usa-unstyled-list" role="list">
+  <!-- Links -->
+  {% for fieldLink in vaParagraph.entity.fieldLinks %}
+    <li class="vads-u-padding-y--1">
+      <va-link href="{{ fieldLink.url.path }}" text="{{ fieldLink.title }}"></va-link>
+    </li>
+  {% endfor %}
+
+  <!-- See more articles link -->
+  {% if vaParagraph.entity.fieldLink.url.path %}
+    <li class="vads-u-padding-y--1">
+      <va-link
+        active
+        href="{{ vaParagraph.entity.fieldLink.url.path }}"
+        text="{{ vaParagraph.entity.fieldLink.title }}"
+      ></va-link>
+    </li>
+  {% endif %}
+</ul>
