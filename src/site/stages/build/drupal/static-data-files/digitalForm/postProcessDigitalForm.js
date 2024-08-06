@@ -1,5 +1,36 @@
 const { logDrupal } = require('../../utilities-drupal');
 
+const formatChapter = ({ id, chapterTitle, pageTitle }) => {
+  const formattedChapter = {};
+  const pages = {};
+
+  pages[id] = {
+    path: id,
+    title: pageTitle,
+  };
+
+  formattedChapter[id] = {
+    title: chapterTitle,
+    pages,
+  };
+
+  return formattedChapter;
+};
+const formatSubTitle = formNumber => `VA Form ${formNumber}`;
+
+const createFormConfig = ({ id, formId, title, ombNumber, chapters }) => {
+  return {
+    id,
+    ombNumber,
+    formConfig: {
+      chapters: chapters.map(chapter => formatChapter(chapter)),
+      formId,
+      title,
+      subTitle: formatSubTitle(formId),
+    },
+  };
+};
+
 const extractAdditionalFields = entity => {
   const additionalFields = {};
 
@@ -13,7 +44,7 @@ const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
 
 const normalizeChapter = ({ entity }) => {
   return {
-    id: parseInt(entity.entityId, 10),
+    id: entity.entityId,
     chapterTitle: entity.fieldTitle,
     type: entity.type.entity.entityId,
     pageTitle: entity.type.entity.entityLabel,
