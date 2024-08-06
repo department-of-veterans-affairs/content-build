@@ -1,5 +1,5 @@
 const {
-  query: quertyDigitalForm,
+  query: queryDigitalForms,
   postProcess: postProcessDigitalForm,
 } = require('./digitalForm');
 const {
@@ -37,7 +37,7 @@ const DATA_FILES = [
   {
     description: 'Digital Forms',
     filename: 'digital-forms.json',
-    query: quertyDigitalForm,
+    query: queryDigitalForms,
     queryType: 'graphql',
     postProcess: postProcessDigitalForm,
   },
