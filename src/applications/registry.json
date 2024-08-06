@@ -1658,7 +1658,7 @@
   {
     "appName": "Appeals NOD layout testing",
     "entryName": "nod-new",
-    "rootUrl": "/decision-reviews/testing/nod-new",
+    "rootUrl": "/decision-reviews/test-nod",
     "productId": "5dd32517-00fd-4e97-afed-e6db1f1f54f9",
     "template": {
       "layout": "page-react.html",
@@ -1674,7 +1674,7 @@
   {
     "appName": "Appeals download",
     "entryName": "download",
-    "rootUrl": "/decision-reviews/testing/download",
+    "rootUrl": "/decision-reviews/test-download",
     "productId": "8057a5e9-196a-462f-9bc3-3bd1d199892c",
     "template": {
       "layout": "page-react.html",
@@ -1686,11 +1686,22 @@
     "appName": "HLR testing",
     "entryFile": "./form-entry.jsx",
     "entryName": "hlr-testing",
-    "rootUrl": "/decision-reviews/testing/hlr",
+    "rootUrl": "/decision-reviews/test-hlr",
     "productId": "32de6df6-8818-4fc8-b179-5d05ccb2db19",
     "template": {
       "layout": "page-react.html",
       "description": "Test changes to HLR form",
+      "vagovprod": false
+    }
+  },
+  {
+    "appName": "SC testing",
+    "entryName": "sc-testing",
+    "rootUrl": "/decision-reviews/test-sc",
+    "productId": "4f623c79-478c-4d64-868a-54f06df113a6",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Test changes to Supplemental Claim form",
       "vagovprod": false
     }
   },
