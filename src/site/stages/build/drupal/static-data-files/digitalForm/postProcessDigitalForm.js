@@ -19,16 +19,13 @@ const normalizeChapter = ({ entity }) => {
   };
 };
 
-const normalizeChapters = chapters =>
-  chapters.map(chapter => normalizeChapter(chapter));
-
 const normalizeForm = form => {
   return {
     cmsId: form.nid,
     formId: form.fieldVaFormNumber,
     title: form.entityLabel,
     ombNumber: form.fieldOmbNumber,
-    chapters: normalizeChapters(form.fieldChapters),
+    chapters: form.fieldChapters.map(normalizeChapter),
   };
 };
 
