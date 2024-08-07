@@ -8,7 +8,6 @@ const extractAdditionalFields = entity => {
   return additionalFields;
 };
 const extractForms = resultObject => resultObject.data.nodeQuery.entities;
-const formatSubTitle = formNumber => `VA Form ${formNumber}`;
 
 const normalizeChapter = ({ entity }) => {
   return {
@@ -28,7 +27,6 @@ const normalizeForm = form => {
     cmsId: form.nid,
     formId: form.fieldVaFormNumber,
     title: form.entityLabel,
-    subTitle: formatSubTitle(form.fieldVaFormNumber),
     ombNumber: form.fieldOmbNumber,
     chapters: normalizeChapters(form.fieldChapters),
   };
