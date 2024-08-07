@@ -32,14 +32,12 @@ const normalizeForm = form => {
   };
 };
 
-const normalizeForms = forms => forms.map(form => normalizeForm(form));
-
 const postProcessDigitalForm = queryResult => {
   // queryResult was already parsed by graphQLApiClient
   const forms = extractForms(queryResult);
 
   // will be turned into JSON by writeProcessedDataFilesToCache
-  return normalizeForms(forms);
+  return forms.map(normalizeForm);
 };
 
 module.exports.postProcessDigitalForm = postProcessDigitalForm;
