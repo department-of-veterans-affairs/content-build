@@ -25,7 +25,8 @@ const normalizeChapters = chapters =>
 
 const normalizeForm = form => {
   return {
-    id: form.nid,
+    cmsId: form.nid,
+    formId: form.fieldVaFormNumber,
     title: form.entityLabel,
     subTitle: formatSubTitle(form.fieldVaFormNumber),
     ombNumber: form.fieldOmbNumber,
