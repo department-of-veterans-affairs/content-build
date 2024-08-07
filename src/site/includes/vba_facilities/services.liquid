@@ -1,10 +1,12 @@
 {% if vbaServices.length > 0 %}
   {% assign alphaVbaServices = vbaServices | sortObjectsWithConditionalKeys %}
 
-  <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
+  <h2>
     {{ vbaTitle }}
   </h2>
-
+  <p>
+    Select a topic to learn more.
+  </p>
   <div class="vads-u-margin-bottom--3">
     <va-accordion
       uswds
@@ -85,15 +87,7 @@
                 active
                 href="{{ onlineSelfService.url.path }}"
                 text="{{ onlineSelfService.title }}"
-                onclick="recordEvent(
-                  {
-                    'event': 'vba-regional-facility-services-manage-benefits-online',
-                    'vba-regional-facility-name': '{{ facilityName }}',
-                    'accordion-parent-label': '{{ entityName }}',
-                    'link-label': '{{ onlineSelfService.title }}'
-                  }
-                )"
-              >
+              ></va-link>
             </p>
           {% endif %}
 

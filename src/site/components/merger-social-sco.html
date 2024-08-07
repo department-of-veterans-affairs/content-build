@@ -6,129 +6,98 @@ Social Media - R. Rail
 See https://help.shopify.com/themes/liquid/tags/theme-tags#include
 {% endcomment %}
 
-  <va-accordion bordered multi class="social" uswds="false">
+<va-accordion bordered multi class="social">
   {% for group in social %}
-    <va-accordion-item level="3" open="true" header="{{ group.heading }}">
-      {% if group.url != empty %}
-      <h4 class='va-nav-linkslist-list'>
-        <va-link
-          href="{{group.url}}"
-          text="{{group.admin}}"
-        ></va-link>
-      </h4>
+  <va-accordion-item level="3" open="true" bordered header="{{ group.heading }}">
+    {% if group.url != empty %}
+    <h4 class='va-nav-linkslist-list'>
+      <va-link href="{{group.url}}" text="{{group.admin}}"></va-link>
+    </h4>
+    {% endif %}
+
+    {% if group.subsections.length > 0 %}
+
+    {% assign navPath = group.heading %}
+
+    {% for subs in group.subsections %}
+
+    <section>
+      {% if subs.subhead != empty %}
+      <h4>{{ subs.subhead }}</h4>
       {% endif %}
+      <ul class="va-nav-linkslist-list social">
+        {% assign is_social_media_links = false %}
+        {% if subs.subhead == 'Follow us' %}
+        {% assign is_social_media_links = true %}
+        {% endif %}
 
-      {% if group.subsections.length > 0 %}
+        {% assign is_call_us = false %}
+        {% if subs.subhead == 'Call us' %}
+        {% assign is_call_us = true %}
+        {% endif %}
 
-        {% assign navPath = group.heading %}
-
-        {% for subs in group.subsections %}
-
-        <section>
-          {% if subs.subhead != empty %}
-          <h4>{{ subs.subhead }}</h4>
+        {% for link in subs.links %}
+        {% if link.url != empty %}
+        {% if navPath == 'Connect with us' %}
+        <li>
+          {% elseif is_call_us %}
+        <li class="vads-u-margin-bottom--2 vads-u-margin-top--0">
+          {% else %}
+        <li class="vads-u-margin-bottom--0 vads-u-margin-top--0">
           {% endif %}
-          <ul class="va-nav-linkslist-list social">
-            {% assign is_social_media_links = false %}
-            {% if subs.subhead == 'Follow us' %}
-              {% assign is_social_media_links = true %}
-            {% endif %}
 
-            {% assign is_call_us = false %}
-            {% if subs.subhead == 'Call us' %}
-              {% assign is_call_us = true %}
-            {% endif %}
+          {% if is_social_media_links %}
+          {% if link.icon == "fa-twitter" %}
+          <va-icon class="vads-u-color--link-default vads-u-margin-right--0p5" icon="x" size="3"></va-icon>
+          <va-link href="{{link.url}}" text="{{ link.title }}" />
+          {% elsif link.icon == "fa-youtube" %}
+          <va-icon class="vads-u-color--link-default vads-u-margin-right--0p5" icon="youtube" size="3"></va-icon>
+          <va-link href="{{link.url}}" text="{{ link.title }}" />
+          {% else %}
+          {% if link.icon == "fa-facebook" %}
+          {% assign socialIcon = "facebook" %}
+          {% elsif link.icon == "fa-instagram" %}
+          {% assign socialIcon = "instagram" %}
+          {% elsif link.icon == "fa-flickr" %}
+          {% assign socialIcon = "flickr" %}
+          {% endif %}
+          <div>
+            <va-icon class="vads-u-color--link-default vads-u-margin-right--0p5" icon="{{ socialIcon }}"
+              size="3" /></va-icon>
+            <va-link href="{{link.url}}" text="{{ link.title }}"></va-link>
+          </div>
+          {% endif %}
+        </li>
+        {% else %}
+        {% if link.label != empty %}
+        {% assign linkLabel = link.label %}
+        {% else %}
+        {% assign linkLabel = link.title %}
+        {% endif %}
 
-            {% for link in subs.links %}
-              {% if link.url != empty %}
-                {% if navPath == 'Connect with us' %}
-                <li>
-                {% elseif is_call_us %}
-                <li class="vads-u-margin-bottom--2 vads-u-margin-top--0">
-                {% else %}
-                <li class="vads-u-margin-bottom--0 vads-u-margin-top--0">
-                {% endif %}
-
-                {% if is_social_media_links %}
-                  {% if link.icon == "fa-twitter" %}
-                    <va-icon
-                      class="vads-u-color--link-default vads-u-margin-right--0p5"
-                      icon="x"
-                      size="3"
-                    /></va-icon>
-                    <va-link
-                      href="{{link.url}}"
-                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
-                      text="{{ link.title }}"
-                    ></va-link>
-                  {% elsif link.icon == "fa-youtube" %}
-                    <va-icon
-                      class="vads-u-color--link-default vads-u-margin-right--0p5"
-                      icon="youtube"
-                      size="3"
-                    /></va-icon>
-                    <va-link
-                      href="{{link.url}}"
-                      onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
-                      text="{{ link.title }}"
-                    ></va-link>
-                  {% else %}
-                    {% if link.icon == "fa-facebook" %}
-                      {% assign socialIcon = "facebook" %}
-                    {% elsif link.icon == "fa-instagram" %}
-                      {% assign socialIcon = "instagram" %}
-                    {% elsif link.icon == "fa-flickr" %}
-                      {% assign socialIcon = "flickr" %}
-                    {% endif %}
-                    <div>
-                      <va-icon
-                        class="vads-u-color--link-default vads-u-margin-right--0p5"
-                        icon="{{ socialIcon }}"
-                        size="3"
-                      /></va-icon>
-                      <va-link
-                        href="{{link.url}}"
-                        onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
-                        text="{{ link.title }}"
-                      ></va-link>
-                    </div>
-                    {% endif %}
-                  </li>
-                {% else %}
-                  {% if link.label != empty %}
-                    {% assign linkLabel = link.label %}
-                  {% else %}
-                    {% assign linkLabel = link.title %}
-                  {% endif %}
-
-                  <va-link
-                    disable-analytics
-                    href="{{link.url}}"
-                    onclick="recordEvent({ 'event': 'nav-hub-rail', 'nav-path': '{{ navPath }}' });"
-                    text="{{ linkLabel }}"
-                  ></va-link>
-                  {% if link.number %}
-                    <br />
-                    {{ link.number | processPhoneToVaTelephoneOrFallback }}
-                  {% endif %}
-                </li>
-                {% endif %}
-              {% else %}
-                {% if forloop.first == true %}
-                <li class="vads-u-margin-top--0">
-                {% else %}
-                <li>
-                {% endif %}
-                  {{link.title}}
-                </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        </section>
-
+        <va-link href="{{link.url}}" text="{{ linkLabel }}"></va-link>
+        {% if link.number %}
+        <br />
+        {{ link.number | processPhoneToVaTelephoneOrFallback }}
+        {% endif %}
+        </li>
+        {% endif %}
+        {% else %}
+        {% if forloop.first == true %}
+        <li class="vads-u-margin-top--0">
+          {% else %}
+        <li>
+          {% endif %}
+          {{link.title}}
+        </li>
+        {% endif %}
         {% endfor %}
+      </ul>
+    </section>
 
-      {% endif %}
-    </va-accordion-item>
     {% endfor %}
-  </va-accordion>
+
+    {% endif %}
+  </va-accordion-item>
+  {% endfor %}
+</va-accordion>
