@@ -1,5 +1,19 @@
 **Note**: Delete the description statements, complete each step. **None are optional**, but can be justified as to why they cannot be completed as written. Provide known gaps to testing that may raise the risk of merging to production.
 
+## Are you removing or changing a registry.json `entryName` in this PR?
+- [ ] No, I'm not changing any `entryName`s (skip to Summary and delete the rest of this section)
+- [ ] Yes, I'm removing or changing an `entryName`
+
+If you are:
+1. **Deleting an entryName**: First search [vets-website](https://github.com/department-of-veterans-affairs/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that removes those references, if any.
+   - _Add the link to your merged vets-website PR here_
+
+2. **Changing an entryName**: First search [vets-website](https://github.com/department-of-veterans-affairs/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that updates those references, if any.
+   - _Add the link to your merged vets-website PR here_
+  
+_**If you do not do this, other applications will break!**_
+
+
 ## Summary
 
 - _(Summarize the changes that have been made to the platform)_
