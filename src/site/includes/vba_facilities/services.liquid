@@ -64,7 +64,7 @@
           uswds
           bordered
           class="va-accordion-item"
-          id="vba-service-item-{{ entityId }}"
+          id="{{ entityName | hashReference: 60 }}"
           header="{{ entityName }}"
           data-label="{{ entityName }}"
           data-template="vba_facilities/services"
