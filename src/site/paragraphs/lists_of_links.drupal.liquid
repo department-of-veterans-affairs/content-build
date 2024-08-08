@@ -1,94 +1,29 @@
 <!-- Section header -->
 <h2 data-template="paragraphs/lists_of_links">{{ entity.fieldSectionHeader }}</h2>
 
+{% assign formattedVaParagraphs = entity.fieldVaParagraphs | formatVaParagraphs %}
+  
 <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row medium-screen:vads-u-flex-wrap--wrap" data-template="paragraphs/lists_of_links">
-  {% assign formattedVaParagraphs = entity.fieldVaParagraphs | formatVaParagraphs %}
-
-  <!-- Categories -->
   {% for vaParagraph in formattedVaParagraphs %}
-    {% if forloop.index <= 6 %}
-      <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-l-col--3 medium-screen:vads-u-margin-right--8">
-        <!-- Section header -->
-        <h3>{{ vaParagraph.entity.fieldSectionHeader }}</h3>
+    <div class="vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-l-col--3 medium-screen:vads-u-margin-right--8">
+      <h3>{{ vaParagraph.entity.fieldSectionHeader }}</h3>
+      <ul class="usa-unstyled-list" role="list">
+        {% for fieldLink in vaParagraph.entity.fieldLinks %}
+          <li class="vads-u-padding-y--1">
+            <va-link href="{{ fieldLink.url.path }}" text="{{ fieldLink.title }}"></va-link>
+          </li>
+        {% endfor %}
 
-        <ul class="usa-unstyled-list" role="list">
-          <!-- Links -->
-          {% for fieldLink in vaParagraph.entity.fieldLinks %}
-            <li class="vads-u-padding-y--1">
-              <va-link href="{{ fieldLink.url.path }}" text="{{ fieldLink.title }}"></va-link>
-            </li>
-          {% endfor %}
-
-          <!-- See more articles link -->
-          {% if vaParagraph.entity.fieldLink.url.path %}
-            <li class="vads-u-padding-y--1">
-              <va-link active href="{{ vaParagraph.entity.fieldLink.url.path }}" text="{{ vaParagraph.entity.fieldLink.title }}">
-              </va-link>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    {% endif %}
-  {% endfor %}
-
-  <!-- Extra Categories -->
-  {% for vaParagraph in formattedVaParagraphs %}
-    {% if forloop.index > 6 %}
-      <div
-        aria-hidden="true"
-        class="vads-u-display--none vads-u-flex-direction--column medium-screen:vads-l-col--3 medium-screen:vads-u-margin-right--8"
-        data-hidden-lists_of_links-entity-id="{{ entity.entityId }}"
-      >
-        <!-- Section header -->
-        <h3>{{ vaParagraph.entity.fieldSectionHeader }}</h3>
-
-        <ul class="usa-unstyled-list" role="list">
-          <!-- Links -->
-          {% for fieldLink in vaParagraph.entity.fieldLinks %}
-            <li class="vads-u-padding-y--1">
-              <va-link href="{{ fieldLink.url.path }}" text="{{ fieldLink.title }}"></va-link>
-            </li>
-          {% endfor %}
-
-          <!-- See more articles link -->
-          {% if vaParagraph.entity.fieldLink.url.path %}
-            <li class="vads-u-padding-y--1">
-              <va-link active href="{{ vaParagraph.entity.fieldLink.url.path }}" text="{{ vaParagraph.entity.fieldLink.title }}"></va-link>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    {% endif %}
+        {% if vaParagraph.entity.fieldLink.url.path %}
+          <li class="vads-u-padding-y--1">
+            <va-link
+              active
+              href="{{ vaParagraph.entity.fieldLink.url.path }}"
+              text="{{ vaParagraph.entity.fieldLink.title }}"
+            ></va-link>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
   {% endfor %}
 </div>
-
-{% if formattedVaParagraphs.length > 6 %}
-  <script nonce="**CSP_NONCE**" type="text/javascript">
-    function onShowAllTopics() {
-      // Derive the extra paragraphs element.
-      var extraParagraphsElements = document.querySelectorAll('[data-hidden-lists_of_links-entity-id="{{ entity.entityId }}"]');
-
-      // Show the remaining categories.
-      extraParagraphsElements.forEach(function(extraParagraphsElement) {
-        extraParagraphsElement.setAttribute('aria-hidden', 'false');
-        extraParagraphsElement.className = extraParagraphsElement.className.replace(/vads-u-display--none/, 'vads-u-display--flex');
-      })
-
-      // Derive the show all topics button element.
-      var showAllTopicsElement = document.querySelector('[data-show-all-topics-button-lists_of_links-entity-id="{{ entity.entityId }}"]');
-
-      // We don't need the Show all topics button anymore, so hide it.
-      showAllTopicsElement.setAttribute('aria-hidden', 'true');
-      showAllTopicsElement.className = showAllTopicsElement.className.replace('vads-u-display--flex', 'vads-u-display--none');
-    }
-  </script>
-
-  <div aria-hidden="false" class="vads-u-display--flex vads-u-justify-content--center vads-u-margin-top--3" data-show-all-topics-button-lists_of_links-entity-id="{{ entity.entityId }}">
-    <va-button
-      disable-analytics
-      onclick="onShowAllTopics()" 
-      text="Show all topics"
-      uswds
-    ></button>
-  </div>
-{% endif %}
