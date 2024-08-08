@@ -1,3 +1,5 @@
+const { logDrupal } = require('../../utilities-drupal');
+
 const extractAdditionalFields = entity => {
   const additionalFields = {};
 
@@ -7,7 +9,7 @@ const extractAdditionalFields = entity => {
 
   return additionalFields;
 };
-const extractForms = resultObject => resultObject.data.nodeQuery.entities;
+const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
 
 const normalizeChapter = ({ entity }) => {
   return {
@@ -19,22 +21,32 @@ const normalizeChapter = ({ entity }) => {
   };
 };
 
-const normalizeForm = form => {
-  return {
-    cmsId: form.nid,
-    formId: form.fieldVaFormNumber,
-    title: form.entityLabel,
-    ombNumber: form.fieldOmbNumber,
-    chapters: form.fieldChapters.map(normalizeChapter),
-  };
+const normalizeForm = (form, logger = logDrupal) => {
+  try {
+    return {
+      cmsId: form.nid,
+      formId: form.fieldVaFormNumber,
+      title: form.entityLabel,
+      ombNumber: form.fieldOmbNumber,
+      chapters: form.fieldChapters.map(normalizeChapter),
+    };
+  } catch (error) {
+    logger(`There was an error with this form: ${error}`);
+    return {};
+  }
 };
 
-const postProcessDigitalForm = queryResult => {
+const postProcessDigitalForm = (queryResult, logger = logDrupal) => {
   // queryResult was already parsed by graphQLApiClient
   const forms = extractForms(queryResult);
 
   // will be turned into JSON by writeProcessedDataFilesToCache
-  return forms.map(normalizeForm);
+  if (forms) {
+    return forms.map(form => normalizeForm(form, logger));
+  }
+
+  logger(`Malformed result query: ${queryResult}`);
+  return [];
 };
 
 module.exports.postProcessDigitalForm = postProcessDigitalForm;
