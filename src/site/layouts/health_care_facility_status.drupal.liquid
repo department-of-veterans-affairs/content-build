@@ -19,22 +19,15 @@
                             {{office.title}}
                         </h2>
                             {% if office.fieldOperatingStatusFacility == 'normal' %}
-                            <span
-                                class="operating-status usa-alert usa-alert-success background-color-only vads-u-margin-top--1 vads-u-padding--1p5">
-                                <b><i class="fa fa-info-circle" aria-hidden="true"></i> Normal services and hours</b>
-                            </span>
+                                    Normal services and hours
                             {% elsif office.fieldOperatingStatusFacility == 'limited' %}
-
-                            <span
-                                class="operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--1 vads-u-padding--1p5">
-                                <b><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Limited services and hours</b>
-                            </span>
-
+                                <va-alert slim="true" status="warning">
+                                    Limited services and hours
+                                </va-alert>
                             {% elsif office.fieldOperatingStatusFacility == 'closed' %}
-                            <span
-                                class="operating-status usa-alert usa-alert-error background-color-only vads-u-margin-top--1 vads-u-padding--1p5">
-                                <b><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Facility Closed</b>
-                            </span>
+                                <va-alert slim="true" status="error">
+                                    Facility closed
+                                </va-alert>
                             {% endif %}
                         {% endfor %}
                     </section>

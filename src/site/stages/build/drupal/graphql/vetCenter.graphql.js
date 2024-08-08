@@ -25,6 +25,7 @@ const vetCenterFragment = `
         fieldFacilityLocatorApiId
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
+        fieldLastSavedByAnEditor
         fieldVetCenterFeatureContent {
            entity {
                 ... on ParagraphFeaturedContent {
@@ -41,6 +42,9 @@ const vetCenterFragment = `
                      ... on ParagraphButton {
                         fieldButtonLink {
                             uri
+                            url {
+                              path
+                            }
                             title
                             options
                         }

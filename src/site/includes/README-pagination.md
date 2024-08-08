@@ -10,7 +10,7 @@ There are two types of pagination methods that we know of. For Resources & Suppo
 
 ## Code implementation summary
 
-Before the `updateCurrentPage` event handler is fired, we first select the `<va-pagination>` parent element, and set its `page` attribute based on the landing URL. `<va-pagination>`'s `page` attribute sets the active page number on the component.
+Before the `updateCurrentPage` event handler is fired, we first take the total number of pages passed in by the template and set the `pages` on the `<va-pagination>` parent element. Then we set its `page` attribute based on the landing URL. `<va-pagination>`'s `page` attribute sets the active page number on the component.
 
 When the `updateCurrentPage` event handler is fired, we grab the page number that was clicked (`newPage`) and couple that with the landing URL to form the next page to display.
 

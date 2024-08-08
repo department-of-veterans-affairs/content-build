@@ -2,6 +2,7 @@ const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
 const draftContentOverride = process.env.UNPUBLISHED_CONTENT === 'true';
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
+const appointmentServiceLocationItems = require('./file-fragments/appointmentServiceLocationItems.graphql');
 
 const vbaFacilityFragment = `
       fragment vbaFacilityFragment on NodeVbaFacility {
@@ -125,7 +126,11 @@ const vbaFacilityFragment = `
             }
           }
           reverseFieldOfficeNode(
-            filter: {conditions: [{field: "type", value: ["vba_facility_service"]}]}
+            filter: {conditions: [
+              {field: "type", value: ["vba_facility_service"]},
+              {field: "status", value: ["1"]}
+            ]},
+            limit: 500
           ) {
             entities {
               ... on NodeVbaFacilityService {
@@ -144,6 +149,7 @@ const vbaFacilityFragment = `
                       id
                       entityId
                       fieldHours
+                      ${appointmentServiceLocationItems}
                       fieldOfficeHours {
                         starthours
                         endhours
@@ -155,8 +161,9 @@ const vbaFacilityFragment = `
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
-                            id
                             fieldPhoneNumber
+                            fieldPhoneNumberType
+                            fieldPhoneExtension
                             fieldPhoneLabel
                           }
                         }
@@ -229,7 +236,12 @@ const vbaFacilityFragment = `
               }
             }
           }
-          reverseFieldVbaRegionFacilityListNode {
+          reverseFieldVbaRegionFacilityListNode (
+            filter: {conditions: [
+              {field: "status", value: ["1"]}
+            ]},
+            limit: 500
+          ){
             count
             entities {
               entityId
@@ -272,6 +284,7 @@ const vbaFacilityFragment = `
                     ... on ParagraphServiceLocation {
                       id
                       entityId
+                      ${appointmentServiceLocationItems}
                       fieldHours
                       fieldAdditionalHoursInfo
                       fieldOfficeHours {
@@ -285,7 +298,6 @@ const vbaFacilityFragment = `
                       fieldPhone {
                         entity {
                           ... on ParagraphPhoneNumber {
-                            id
                             fieldPhoneNumberType
                             fieldPhoneNumber
                             fieldPhoneExtension

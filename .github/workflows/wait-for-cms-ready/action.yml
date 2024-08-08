@@ -13,7 +13,7 @@ inputs:
   timeout:
     description: How long should we wait for the cms to be ready (in seconds)
     required: false
-    default: '1800'
+    default: '4200'
 
 runs:
   using: composite

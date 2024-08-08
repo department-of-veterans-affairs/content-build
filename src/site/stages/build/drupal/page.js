@@ -329,8 +329,12 @@ function compilePage(page, contentData) {
       pensionBenefitsHubQuery: pensionHubSidebarNav = {},
       promoBanners,
       recordsBenefitsHubQuery: recordsHubSidebarNav = {},
+      familyAndCaregiverBenefitsQuery: familyAndCaregiverBenefitsSidebarNav = {},
     },
   } = contentData;
+
+  // Get feature flags.
+  const { cmsFeatureFlags } = global;
 
   // Get page owner
   let owner;
@@ -350,6 +354,7 @@ function compilePage(page, contentData) {
     pensionHubSidebarNav,
     recordsHubSidebarNav,
     decisionReviewsSidebarNav,
+    familyAndCaregiverBenefitsSidebarNav,
   ];
   let sidebarNavItems;
 
@@ -517,6 +522,7 @@ function compilePage(page, contentData) {
         banners,
         promoBanners,
         ...pageId,
+        decisionReviewRum: cmsFeatureFlags.FEATURE_DECISION_REVIEW_RUM,
       };
       break;
   }
@@ -526,6 +532,13 @@ function compilePage(page, contentData) {
       pageCompiled,
       allTaxonomies,
     );
+  }
+
+  // Add last modified date for Sitemap.
+  if (pageCompiled && (page.fieldLastSavedByAnEditor || page.changed)) {
+    pageCompiled.stats = {
+      mtime: new Date((page.fieldLastSavedByAnEditor ?? page.changed) * 1000),
+    };
   }
 
   return pageCompiled;

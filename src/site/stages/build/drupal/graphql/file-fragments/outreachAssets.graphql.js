@@ -11,6 +11,7 @@ const outreachAssets = `
         changed
         fieldFormat
         fieldDescription
+        fieldLastSavedByAnEditor
         fieldListing {
           targetId
         }

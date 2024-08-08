@@ -95,6 +95,7 @@
   <script nonce="**CSP_NONCE**" defer data-entry-name="vendor.js"></script>
   <script nonce="**CSP_NONCE**" defer data-entry-name="{{ entryname | default: 'static-pages' }}.js"></script>
   <script nonce="**CSP_NONCE**" defer data-entry-name="runtime.js"></script>
+
   <!--
   We participate in the US government’s analytics program. See the data at analytics.usa.gov.
   https://github.com/digital-analytics-program/gov-wide-code
@@ -162,8 +163,12 @@
   {{ google_analytics_noscript }}
   <a class="show-on-focus" href="#content" onclick="focusContent(event)">Skip to Content</a>
 
-  <!-- Header -->
-  <header class="header" role="banner">
+  {% if minimalHeader %}
+    {%include "src/site/includes/header-minimal.html"%}
+  {% endif %}
+
+  <!-- Header Default-->
+  <header class="header" role="banner" id="header-default">
     <!-- Mobile Layout -->
     <div
       data-widget-type="header"

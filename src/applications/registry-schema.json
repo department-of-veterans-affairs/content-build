@@ -1,0 +1,132 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "appName": {
+                "type": "string"
+            },
+            "entryName": {
+                "type": "string"
+            },
+            "entryFile": {
+                "type": "string"
+            },
+            "productId": {
+                "type": "string"
+            },
+            "rootUrl": {
+                "type": "string"
+            },
+            "template": {
+                "type": "object",
+                "properties": {
+                    "breadcrumbs_override": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "collection": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "display_title": {
+                        "type": "string"
+                    },
+                    "heading": {
+                        "type": "string"
+                    },
+                    "hideFromSidebar": {
+                        "type": "boolean"
+                    },
+                    "includeBreadcrumbs": {
+                        "type": "boolean"
+                    },
+                    "includeFeedbackButton": {
+                        "type": "boolean"
+                    },
+                    "keywords": {
+                        "type": "string"
+                    },
+                    "layout": {
+                        "type": "string"
+                    },
+                    "loadingMessage": {
+                        "type": "string"
+                    },
+                    "localhost": {
+                        "type": "boolean"
+                    },
+                    "minimalFooter": {
+                        "type": "boolean"
+                    },
+                    "minimalHeader": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "disableHeadings": {
+                                "type": "boolean"
+                            },
+                            "excludePaths": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "subtitle": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "noHeader": {
+                        "type": "boolean"
+                    },
+                    "noMegamenu": {
+                        "type": "boolean"
+                    },
+                    "noNavOrLogin": {
+                        "type": "boolean"
+                    },
+                    "order": {
+                        "type": "number"
+                    },
+                    "private": {
+                        "type": "boolean"
+                    },
+                    "spoke": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "vagovdev": {
+                        "type": "boolean"
+                    },
+                    "vagovprod": {
+                        "type": "boolean"
+                    },
+                    "vagovstaging": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}

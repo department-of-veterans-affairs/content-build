@@ -23,7 +23,6 @@
           {% if vaParagraph.entity.fieldLink.url.path %}
             <li class="vads-u-padding-y--1">
               <va-link active href="{{ vaParagraph.entity.fieldLink.url.path }}" text="{{ vaParagraph.entity.fieldLink.title }}">
-                <i class="fa fa-chevron-right vads-u-padding-left--0p5 vads-u-font-size--sm" aria-hidden="true" role="presentation"></i>
               </va-link>
             </li>
           {% endif %}
@@ -85,6 +84,11 @@
   </script>
 
   <div aria-hidden="false" class="vads-u-display--flex vads-u-justify-content--center vads-u-margin-top--3" data-show-all-topics-button-lists_of_links-entity-id="{{ entity.entityId }}">
-    <va-button onclick="onShowAllTopics()" text="Show all topics" uswds></button>
+    <va-button
+      disable-analytics
+      onclick="onShowAllTopics()" 
+      text="Show all topics"
+      uswds
+    ></button>
   </div>
 {% endif %}

@@ -23,7 +23,10 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
     {% if group.heading != empty %}
       <section class="hub-promo-text">
         <h4 class="heading">
-            <a onClick="recordEvent({ event: 'nav-hub-promo' });" href="{{group.url}}">{{ group.heading }}</a>
+            <va-link
+              href="{{group.url}}"
+              text="{{ group.heading }}"
+            ></va-link>
         </h4>
     {% endif %}
 

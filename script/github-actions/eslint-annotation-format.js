@@ -1,9 +1,9 @@
-module.exports = function(results) {
+module.exports = results => {
   const resultsArr = results || [];
 
   const summary = resultsArr.reduce(
-    function(seq, current) {
-      current.messages.forEach(function(msg) {
+    (seq, current) => {
+      current.messages.forEach(msg => {
         const logMessage = {
           filePath: current.filePath,
           message: msg.message,
@@ -31,7 +31,7 @@ module.exports = function(results) {
   if (summary.errors.length > 0 || summary.warnings.length > 0) {
     output = summary.errors
       .concat(summary.warnings)
-      .map(function(msg) {
+      .map(msg => {
         const filePath = msg.filePath
           .split('/')
           .splice(6)

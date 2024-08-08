@@ -18,7 +18,7 @@ env:
   DEPLOY_BUCKET: content.www.va.gov
   DRUPAL_ADDRESS: https://prod.cms.va.gov
   INSTANCE_TYPE: m6i.4xlarge
-  MAXIMUM_HEAP: 6000
+  MAXIMUM_HEAP: 8192
   # secrets.ACTIONS_RUNNER_DEBUG is set to 'true' when re-running a workflow with debug.
   ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
@@ -91,7 +91,7 @@ jobs:
     runs-on: [self-hosted, asg]
     needs:
       - validate-build-status
-    timeout-minutes: 60
+    timeout-minutes: 70
     defaults:
       run:
         working-directory: content-build
@@ -206,7 +206,7 @@ jobs:
         run: |
           set -eo pipefail
           NODE_OPTIONS=--max-old-space-size=${{ env.MAXIMUM_HEAP }} yarn build:content_release --buildtype=${{ env.BUILDTYPE }} --asset-source=local --drupal-address=${{ env.DRUPAL_ADDRESS }} --drupal-user=${{ env.DRUPAL_USERNAME }} --drupal-password="${{ env.DRUPAL_PASSWORD }}" --pull-drupal --drupal-max-parallel-requests=15 --no-drupal-proxy ${{env.VERBOSE_BUILD}} | tee build-output.txt
-        timeout-minutes: 40
+        timeout-minutes: 50
         env:
           NODE_ENV: production
           DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
@@ -368,6 +368,17 @@ jobs:
 
       - name: Upload build
         run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
+      
+      - name: Delete build
+        run: rm ${{ env.BUILDTYPE }}.tar.bz2 
+
+      - name: Debug filesystem size
+        run: |
+          pwd
+          du -a . | sort -n -r | head -n 10
+          du -a /home/runner/ | sort -n -r | head -n 10
+          find /home/runner/ -type f -printf '%s %p\n' | sort -nr | head
+
 
       - name: Export archive end time
         id: export-archive-end-time
@@ -381,9 +392,17 @@ jobs:
       - build
     outputs:
       DEPLOY_END_TIME: ${{ steps.export-deploy-end-time.outputs.DEPLOY_END_TIME }}
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
+
+      - name: Debug filesystem size
+        run: |
+          pwd
+          du -a . | sort -n -r | head -n 10
+          du -a /home/runner/ | sort -n -r | head -n 10
+          find /home/runner/ -type f -printf '%s %p\n' | sort -nr | head
+          
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 

@@ -18,6 +18,7 @@ const bannerAlerts = `
         fieldAlertEmailUpdatesButton
         fieldAlertInheritanceSubpages
         fieldOperatingStatusSendemail
+        fieldLastSavedByAnEditor
         fieldBannerAlertSituationinfo {
           processed
         }

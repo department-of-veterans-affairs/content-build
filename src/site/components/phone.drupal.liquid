@@ -8,7 +8,7 @@
           phoneExtension = number.fieldPhoneExtension
           phoneLabel = number.fieldPhoneLabel | default: 'Phone'
           phoneHeaderLevel = phoneHeaderLevel
-        %}
+          %}
       {% endfor %}
     {% endif %}
 
@@ -19,6 +19,7 @@
           phoneExtension = number.fieldPhoneExtension
           phoneLabel = number.fieldPhoneLabel | default: 'Fax'
           phoneHeaderLevel = phoneHeaderLevel
+          fax = true
         %}
       {% endfor %}
     {% endif %}
@@ -30,6 +31,7 @@
           phoneExtension = number.fieldPhoneExtension
           phoneLabel = number.fieldPhoneLabel | default: 'SMS'
           phoneHeaderLevel = phoneHeaderLevel
+          sms = true
         %}
       {% endfor %}
     {% endif %}
@@ -41,6 +43,7 @@
           phoneExtension = number.fieldPhoneExtension
           phoneLabel = number.fieldPhoneLabel | default: 'TTY'
           phoneHeaderLevel = phoneHeaderLevel
+          tty = true
         %}
       {% endfor %}
     {% endif %}

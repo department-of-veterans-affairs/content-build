@@ -30,9 +30,6 @@
 <!-- Promo Banners -->
 {% for promoBanner in visiblePromoBanners %}
   <va-promo-banner
-    onclick="recordEvent({ event: 'promo-banner-event', 'promo-banner-action': 'Footer alert - {{promoBanner.title}}'})"
-    aria-label="{{ promoBanner.title }}"
-    role="region"
     data-template="components/banners.drupal.liquid"
     id="{{ promoBanner.entityId }}"
     href="{{ promoBanner.fieldLink.url.path }}"

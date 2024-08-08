@@ -22,7 +22,7 @@
     {% endif %}
     headline="{{ alertTitle }}">
     <p className="vads-u-margin-y--0">
-      {{ alertContent }}
+      {{ alertContent | phoneLinks }}
     </p>
   </va-banner>
 {% endif %}

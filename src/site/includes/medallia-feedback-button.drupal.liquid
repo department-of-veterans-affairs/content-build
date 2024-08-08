@@ -1,8 +1,13 @@
 <button 
-  onClick="KAMPYLE_ONSITE_SDK.showForm({{ buildtype | getSurvey: entityUrl.path }})"   
+  {% if entityUrl.path %}
+    onClick="KAMPYLE_ONSITE_SDK.showForm('{{ buildtype | getSurvey: entityUrl.path }}')"   
+  {% elsif template == 'education-sco' %}
+    onClick="KAMPYLE_ONSITE_SDK.showForm('{{ buildtype | getSurvey: "/school-administrators" }}')"   
+  {% endif %}
   type="button"
   class="feedback-button usa-button"
   id="mdFormButton"
-  aria-label="give feedback">
-  Feedback
+  aria-label="give feedback"
+>
+Feedback
 </button>

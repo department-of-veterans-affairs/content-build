@@ -1,0 +1,7 @@
+<script nonce="**CSP_NONCE**" type="text/javascript">
+    window.mainVBAPhone = {{ mainPhone | json }};
+    window.mainVBAAddress = {{ mainAddress | json }};
+    window.mainVBAFacilityApiId = {{ mainFacilityApiId | json }};
+</script>
+{% comment %}sattelite-vet-centers will be used by the nearbyVetCenter widget for deduping{% endcomment %}
+<div data-widget-type="va-location-nearby"></div>

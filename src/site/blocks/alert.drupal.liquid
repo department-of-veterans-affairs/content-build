@@ -25,15 +25,11 @@
         NOTE: .additional-info-container is a class utilized by
         createAdditionalInfoWidget.js to add toggle functionality to info alerts
       {% endcomment %}
-      <div data-alert-box-title="{{ alert.fieldAlertTitle }}" data-label="{{ alert.fieldAlertContent.entity.fieldTextExpander }}" class="form-expanding-group borderless-alert additional-info-container">
-        <div class="additional-info-title">
-          {{ alert.fieldAlertContent.entity.fieldTextExpander }}
-        </div>
-
-        {% if alert.fieldAlertContent.entity.fieldWysiwyg %}
-          <div class="additional-info-content usa-alert-text" hidden>{{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}</div>
-        {% endif %}
-      </div>
+      {% if alert.fieldAlertContent.entity.fieldWysiwyg %}
+        <va-additional-info id="alert-with-additional-info" disable-border="true" trigger="{{ alert.fieldAlertContent.entity.fieldTextExpander }}">
+          <div>{{ alert.fieldAlertContent.entity.fieldWysiwyg.processed }}</div>
+        </va-additional-info>
+      {% endif %}
     {% endif %}
   </va-alert>
 {% endif %}

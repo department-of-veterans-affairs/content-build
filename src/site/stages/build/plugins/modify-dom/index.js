@@ -4,7 +4,6 @@ const cheerio = require('cheerio');
 const { sleep } = require('../../../../../../script/utils');
 const addNonceToScripts = require('./add-nonce-to-scripts');
 const processEntryNames = require('./process-entry-names');
-const updateExternalLinks = require('./update-external-links');
 const addSubheadingsIds = require('./add-id-to-subheadings');
 const checkBrokenLinks = require('./check-broken-links');
 const injectAxeCore = require('./inject-axe-core');
@@ -15,7 +14,6 @@ const getDomModifiers = BUILD_OPTIONS => {
   if (BUILD_OPTIONS.liquidUnitTestingFramework) {
     return [
       processEntryNames,
-      updateExternalLinks,
       addSubheadingsIds,
       injectAxeCore,
       addLangToMain,
@@ -26,7 +24,6 @@ const getDomModifiers = BUILD_OPTIONS => {
   return [
     addNonceToScripts,
     processEntryNames,
-    updateExternalLinks,
     addSubheadingsIds,
     checkBrokenLinks,
     injectAxeCore,

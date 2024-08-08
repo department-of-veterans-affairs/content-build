@@ -1,5 +1,5 @@
 <div class="vads-u-margin-bottom--3">
-    <va-accordion bordered id="{{ idService }}-accordion-{{ entity.entity.fieldServiceNameAndDescripti.entity.name }}" uswds="false">
+    <va-accordion bordered id="{{ idService }}-accordion-{{ entity.entity.fieldServiceNameAndDescripti.entity.name }}" uswds>
       {% for entity in services %}
         {% assign idService = entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterTypeOfCare %}
             <va-accordion-item
@@ -7,7 +7,9 @@
                     id="{{ idService }}-item-{{ entity.entity.fieldServiceNameAndDescripti.entity.name | hashReference: 60 }}"
                     header="{{ entity.entity.fieldServiceNameAndDescripti.entity.name }}"
                     subheader="{{ entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterFriendlyName }}"
-                    level="3">
+                    level="3"
+                    uswds
+                    >
                 {% if entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterComConditions != empty %}
                     <p>{{ entity.entity.fieldServiceNameAndDescripti.entity.fieldVetCenterComConditions }}</p>
                 {% endif %}

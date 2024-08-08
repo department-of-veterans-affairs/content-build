@@ -8,6 +8,7 @@ const vaFormFragment = `
 fragment vaFormPage on NodeVaForm {
   ${entityElementsFromPages}
   changed
+  fieldVaFormUpload
   fieldVaFormName
   fieldVaFormTitle
   fieldVaFormType

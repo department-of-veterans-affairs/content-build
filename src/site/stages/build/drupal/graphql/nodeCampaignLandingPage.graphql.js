@@ -154,6 +154,9 @@ const nodeCampaignLandingPage = `
         ... on ParagraphLinkTeaser {
           fieldLink {
             uri
+            url {
+              path
+            }
             title
           }
           fieldLinkSummary
@@ -179,6 +182,9 @@ const nodeCampaignLandingPage = `
               ... on ParagraphLinkTeaser {
                 fieldLink {
                   uri
+                  url {
+                    path
+                  }
                   title
                 }
                 fieldLinkSummary
@@ -257,6 +263,9 @@ const nodeCampaignLandingPage = `
                 fieldLink {
                   uri
                   title
+                  url {
+                    path
+                  }
                 }
                 fieldLinkSummary
               }

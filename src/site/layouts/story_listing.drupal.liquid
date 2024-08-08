@@ -30,6 +30,7 @@
           {% include "src/site/includes/pagination.drupal.liquid" with 
             entityUrl = entityUrl.path
             pagePrefix = true
+            totalPages = allNewsStoryTeasers.entities.length
           %}
         </article>
         <!--Last updated & feedback button-->

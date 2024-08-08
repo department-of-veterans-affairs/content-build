@@ -1,8 +1,6 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
-import _ from 'lodash';
 import liquid from 'tinyliquid';
 import { expect, assert } from 'chai';
-import eventListingMockData from '../layouts/tests/vamc/fixtures/eventListingMockData.json';
 import featuredContentData from '../layouts/tests/vet_center/template/fixtures/featuredContentData.json';
 import pressReleasesMockData from '../layouts/tests/vamc/fixtures/pressReleasesMockData.json';
 import registerFilters from './liquid';
@@ -307,54 +305,6 @@ describe('sortByDateKey', () => {
         title: 'Women Veterans resource fair spotlights VA and community care',
       },
     ]);
-  });
-});
-
-describe('paginatePages', () => {
-  it('passing in less than 10 events', () => {
-    const slicedEventListingMockData = _.cloneDeep(eventListingMockData);
-
-    slicedEventListingMockData.reverseFieldListingNode.entities = slicedEventListingMockData.reverseFieldListingNode.entities.slice(
-      0,
-      -6,
-    );
-
-    const result = liquid.filters.paginatePages(
-      slicedEventListingMockData,
-      slicedEventListingMockData.reverseFieldListingNode.entities,
-    );
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator.next).to.be.null;
-  });
-
-  it('passing in more than 10 events', () => {
-    const result = liquid.filters.paginatePages(
-      eventListingMockData,
-      eventListingMockData.reverseFieldListingNode.entities,
-      'event',
-    );
-
-    const expected = {
-      ariaLabel: ' of event',
-      prev: null,
-      inner: [
-        {
-          href: null,
-          label: 1,
-          class: 'va-pagination-active',
-        },
-        {
-          href: '/pittsburgh-health-care/events/page-2',
-          label: 2,
-          class: '',
-        },
-      ],
-      next: '/pittsburgh-health-care/events/page-2',
-    };
-
-    expect(result.pagedItems.length).to.be.below(11);
-    expect(result.paginator).to.deep.equal(expected);
   });
 });
 
@@ -855,6 +805,128 @@ describe('deriveLastBreadcrumbFromPath', () => {
   });
 });
 
+describe('formatForBreadcrumbs', () => {
+  it('returns breadcrumbs formatted for va-breadcrumbs', () => {
+    // Create "original" crumbs and current title and path
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = '/resources';
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
+      ),
+    );
+  });
+
+  it('removes duplicate paths', () => {
+    // Create "original" crumbs
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+      {
+        url: {
+          path: '/resources',
+          routed: false,
+        },
+        text: 'Resources and Support',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = '/resources';
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
+      ),
+    );
+  });
+
+  it('removes items with empty paths', () => {
+    // Create "original" crumbs
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+      {
+        url: {
+          path: '',
+          routed: false,
+        },
+        text: 'Somewhere Else',
+      },
+      {
+        url: {
+          path: '/resources',
+          routed: false,
+        },
+        text: 'Resources and Support',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = null;
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
+      ),
+    );
+  });
+});
+
 describe('deriveCLPTotalSections', () => {
   it('returns back max sections when everything is rendered', () => {
     expect(
@@ -1311,33 +1383,55 @@ describe('trackLinks', () => {
     expect(liquid.filters.trackLinks(html, eventData)).to.equal(expected);
   });
 });
-
+describe('processPhoneToVaTelephoneOrFallback', () => {
+  it('returns a phone number wrapped in a va-telephone component with no extension attribute if it is a valid phone number with no extension', () => {
+    const phoneNumber = '123-456-7890';
+    const expected = `<va-telephone contact="${phoneNumber}"></va-telephone>`;
+    expect(
+      liquid.filters.processPhoneToVaTelephoneOrFallback(phoneNumber),
+    ).to.equal(expected);
+  });
+  it('returns a phone number wrapped in a va-telephone component with an extension if it is a valid phone number with extension', () => {
+    const phoneNumber = '123-456-7890, ext. 3204';
+    const expected = `<va-telephone contact="123-456-7890" extension="3204"></va-telephone>`;
+    expect(
+      liquid.filters.processPhoneToVaTelephoneOrFallback(phoneNumber),
+    ).to.equal(expected);
+  });
+  it('retuns an anchor tag with a tel prefixed phone number when the number cannot be used in a va-telephone component', () => {
+    const phoneNumber = '123-VET-VETS';
+    const expected = `<a href="tel:+1123-VET-VETS">123-VET-VETS</a>`;
+    expect(
+      liquid.filters.processPhoneToVaTelephoneOrFallback(phoneNumber),
+    ).to.equal(expected);
+  });
+});
 describe('phoneLinks', () => {
   it('wraps text phone numbers in a link', () => {
     const text = 'Here is a phone number: 123-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890" extension=""></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with parentheses around the area code', () => {
     const text = 'Here is a phone number: (123)-456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890" extension=""></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with space after the area code', () => {
     const text = 'Here is a phone number: (123) 456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890" extension=""></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('wraps phone numbers with no dash or space after the area code', () => {
     const text = 'Here is a phone number: (123)456-7890. Pretty cool!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a phone number: <va-telephone contact="123-456-7890" extension=""></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
@@ -1345,15 +1439,87 @@ describe('phoneLinks', () => {
     const text =
       'Here is a phone number: (123)-456-7890. And (1111) more: 890-456-1234. Noice!';
     const expected =
-      'Here is a phone number: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. ' +
-      'And (1111) more: <a target="_blank" href="tel:890-456-1234">890-456-1234</a>. Noice!';
+      'Here is a phone number: <va-telephone contact="123-456-7890" extension=""></va-telephone>. ' +
+      'And (1111) more: <va-telephone contact="890-456-1234" extension=""></va-telephone>. Noice!';
     expect(liquid.filters.phoneLinks(text)).to.equal(expected);
   });
 
   it('does not double-wrap phone numbers', () => {
     const html =
-      'Here is a <a href="test">phone number</a>: <a target="_blank" href="tel:123-456-7890">123-456-7890</a>. Pretty cool!';
+      'Here is a <va-telephone href="test" extension="">phone number</va-telephone>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
     expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+
+  it('does not double-wrap phone numbers in va-telephone components', () => {
+    const html =
+      'Here is a <a href="test">phone number</a>: <va-telephone contact="123-456-7890"></va-telephone>. Pretty cool!';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+
+  it('properly returns the data when a phone number is not in it', () => {
+    const html =
+      'Here is some completely unrelated stuff <h4> with no phone numbers </h4> and just <p> some basic text</p> blah';
+    expect(liquid.filters.phoneLinks(html)).to.equal(html);
+  });
+});
+
+describe('separatePhoneNumberExtension similar to functioning on Vets-website', () => {
+  it('processes a phone number with an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '123-456-7890 x1234';
+    const expected = {
+      phoneNumber: '123-456-7890',
+      extension: '1234',
+      processed: true,
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('processes a phone number with parentheses an extension and returns an object with the phone number and extension', () => {
+    const phoneNumber = '(123) 456-7890 x1234';
+    const expected = {
+      phoneNumber: '123-456-7890',
+      extension: '1234',
+      processed: true,
+    };
+    expect(
+      liquid.filters.separatePhoneNumberExtension(phoneNumber),
+    ).to.deep.equal(expected);
+  });
+  it('should process phone number strings into phone and extension', () => {
+    const phoneNumber = '800-827-1000';
+    const extension = '123';
+    const phoneConditions = [
+      '',
+      'x',
+      ' ext ',
+      ' ext. ',
+      ' x. ',
+      ', x',
+      ', ext',
+      ', ext.',
+      ', ext. ',
+    ]
+      // For all cases except the first, concatenate the phoneNumber, extension separator, and extension
+      .map((e, i) => (i === 0 ? phoneNumber : phoneNumber + e + extension));
+    for (let i = 0; i < phoneConditions.length; i += 1) {
+      const processed = liquid.filters.separatePhoneNumberExtension(
+        phoneConditions[i],
+      );
+      if (i === 0) {
+        expect(processed).to.deep.equal({
+          phoneNumber,
+          extension: '',
+          processed: true,
+        });
+      } else {
+        expect(processed).to.deep.equal({
+          phoneNumber,
+          extension,
+          processed: true,
+        });
+      }
+    }
   });
 });
 
@@ -1423,6 +1589,92 @@ describe('sortObjectsBy', () => {
     expect(liquid.filters.sortObjectsBy(objectsToSort, 'title')).to.deep.equal(
       sortedObjects,
     );
+  });
+});
+
+describe('sortObjectsWithConditionalKeys', () => {
+  const objectsToSort = [
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+  ];
+
+  const sortedObjects = [
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+  ];
+
+  it('sorts objects alphabetically by key', () => {
+    expect(
+      liquid.filters.sortObjectsWithConditionalKeys(objectsToSort),
+    ).to.deep.equal(sortedObjects);
   });
 });
 
@@ -3031,5 +3283,61 @@ describe('officeHoursDataFormat', () => {
   it('when given a full week always returns a full week', () => {
     const data = vetCenterHoursData.completeWeek;
     expect(liquid.filters.officeHoursDataFormat(data).length, 7);
+  });
+});
+
+describe('formatSocialPlatform', () => {
+  it('should properly format a twitter platform', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration twitter'),
+    ).to.equal('Veterans Administration X (formerly Twitter)');
+  });
+
+  it('should properly format a youtube platform', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration Youtube'),
+    ).to.equal('Veterans Administration YouTube');
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration youtube'),
+    ).to.equal('Veterans Administration YouTube');
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration YOUTUBE'),
+    ).to.equal('Veterans Administration YouTube');
+  });
+
+  it('should return a non-youtube platform without formatting', () => {
+    expect(
+      liquid.filters.formatSocialPlatform('Veterans Administration Instagram'),
+    ).to.equal('Veterans Administration Instagram');
+  });
+});
+
+describe('runOrFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [false, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+});
+
+describe('runAndFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [true, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
   });
 });

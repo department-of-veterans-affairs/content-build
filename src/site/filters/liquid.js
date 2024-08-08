@@ -1,10 +1,10 @@
+// @ts-nocheck
 // Node modules.
 const _ = require('lodash');
 const converter = require('number-to-words');
 const he = require('he');
 const liquid = require('tinyliquid');
 const moment = require('moment-timezone');
-const set = require('lodash/fp/set');
 // Relative imports.
 const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
@@ -277,34 +277,66 @@ module.exports = function registerFilters() {
 
   liquid.filters.phoneLinks = data => {
     // Change phone to tap to dial.
-    const replacePattern = /\(?(\d{3})\)?[- ]?(\d{3}-\d{4})(?!([^<]*>)|(((?!<a).)*<\/a>))/g;
-    if (data) {
-      return data.replace(
-        replacePattern,
-        '<a target="_blank" href="tel:$1-$2">$1-$2</a>',
-      );
+    const replacePattern = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/gi;
+
+    if (!data?.match(replacePattern)) {
+      return data;
     }
 
-    return data;
+    return data.replace(
+      replacePattern,
+      `<va-telephone contact="$1-$2-$3" extension="$4$5"></va-telephone>`,
+    );
   };
 
-  liquid.filters.separatePhoneNumberExtension = phoneNumber => {
+  /**
+   * @param {string} phoneNumber a string of a phone number, can be a short number or a long number, however a short number or a number with alphabetic characters will generate a <a> tag instead of a <va-telephone> tag
+   * @param {string} attributes a string of attributes like "not-clickable" or "tty" or "sms" or some combination space separated
+   * @returns string of html that is either a <va-telephone> tag or an <a> tag
+   */
+  liquid.filters.processPhoneToVaTelephoneOrFallback = (
+    phoneNumber = '',
+    attributes = '',
+    describedBy = '',
+  ) => {
+    const internationalPattern = /\(?(\+1)\)?[- ]?/gi;
+
     if (!phoneNumber) {
       return null;
     }
 
-    if (!phoneNumber.includes(', ext. ')) {
-      return {
-        phoneNumber,
-        extension: null,
-      };
-    }
+    const separated = liquid.filters.separatePhoneNumberExtension(phoneNumber);
+    // if you pass in a phone number that has alphabetic characters in it, va-telephone will not render it
+    // so fallback to just rendering the phone number as passed in as text
 
-    const splitNumber = phoneNumber.split(', ext. ');
+    return separated.processed
+      ? `<va-telephone contact="${separated.phoneNumber}"${
+          separated.extension ? ` extension="${separated.extension}"` : ''
+        }${attributes ? ` ${attributes}` : ''}${
+          describedBy ? ` message-aria-describedby="${describedBy}"` : ''
+        }${
+          phoneNumber.match(internationalPattern) ? ` international` : ''
+        }></va-telephone>`
+      : `<a href="tel:+1${phoneNumber}">${phoneNumber}</a>`;
+  };
+  liquid.filters.separatePhoneNumberExtension = phoneNumber => {
+    if (!phoneNumber) {
+      return null;
+    }
+    const phoneRegex = /\(?(\d{3})\)?[- ]*(\d{3})[- ]*(\d{4}),?(?: ?x\.? ?(\d*)| ?ext\.? ?(\d*))?(?!([^<]*>)|(((?!<v?a).)*<\/v?a.*>))/i;
+    const match = phoneRegex.exec(phoneNumber);
+    if (!match || !match[1] || !match[2] || !match[3]) {
+      // Short number or not a normal format
+      return { phoneNumber, extension: '', processed: false };
+    }
+    const phone = `${match[1]}-${match[2]}-${match[3]}`;
+    // optional extension matching x1234 (match 4) or ext1234 (match 5)
+    const extension = match[4] || match[5] || '';
 
     return {
-      phoneNumber: splitNumber[0],
-      extension: splitNumber[1],
+      phoneNumber: phone,
+      extension,
+      processed: true,
     };
   };
 
@@ -577,7 +609,7 @@ module.exports = function registerFilters() {
           acc.mobileClinics.push(healthService);
         } else if (
           facility.fieldFacilityClassification === '7' || // Community Living Centers (CLCs)
-          facility.fieldFacilityClassification === '8' // Domiliciary Residential Rehabilitation Treatment Programs (DOMs)
+          facility.fieldFacilityClassification === '8' // Domiciliary Residential Rehabilitation Treatment Programs (DOMs)
         ) {
           acc.CLCsAndDOMs.push(healthService);
         } else {
@@ -667,6 +699,70 @@ module.exports = function registerFilters() {
     return filteredCrumbs;
   };
 
+  liquid.filters.formatForBreadcrumbs = (
+    breadcrumbs,
+    currentTitle,
+    currentPath,
+    hideHome,
+    customHomeText,
+  ) => {
+    // return early if no breadcrumbs
+    if (!breadcrumbs) return '';
+
+    // Remove "empty path" breadcrumbs
+    const filteredCrumbs = breadcrumbs.filter(
+      ({ url: { path } }) => path !== '' && path !== null,
+    );
+
+    // Add current title and path to end of breadcrumbs array
+    if (currentPath) {
+      filteredCrumbs.push({
+        url: { path: currentPath, routed: false },
+        text: currentTitle,
+      });
+    }
+
+    // Remove duplicate paths and handle custom home text
+    const pathsFound = [];
+    const reducedCrumbs = filteredCrumbs.reduce((acc, crumb) => {
+      // Check if we've seen this path before (skip if it is a duplicate)
+      if (pathsFound.indexOf(crumb.url.path) === -1) {
+        // Make a copy of the crumb so we can safely alter it (eslint thing)
+        const crumbClone = { ...crumb };
+
+        // If this crumb points towards the home page and there is custom home text
+        // then apply the custom home text
+        if (crumb.url.path === '/' && !hideHome && customHomeText) {
+          crumbClone.text = customHomeText;
+        }
+
+        pathsFound.push(crumb.url.path);
+        acc.push(crumbClone);
+      }
+
+      return acc;
+    }, []);
+
+    // Re-map path and text to href and label, add lang
+    const newBC = reducedCrumbs.map(({ url: { path }, text }) => {
+      // Set language to Spanish if "-esp" is at the end of the url,
+      // or Tagalog if "-tag" is at the end of the url
+      let lang = 'en-US';
+      if (path.endsWith('-esp')) lang = 'es';
+      if (path.endsWith('-tag')) lang = 'tl';
+
+      return {
+        href: path,
+        isRouterLink: false,
+        label: text,
+        lang,
+      };
+    });
+
+    // Run JSON.stringify twice in order to make Liquid engine happy
+    return JSON.stringify(JSON.stringify(newBC));
+  };
+
   // used to get a base url path of a health care region from entityUrl.path
   liquid.filters.regionBasePath = path => path.split('/')[1];
 
@@ -698,6 +794,38 @@ module.exports = function registerFilters() {
 
   // sort a list of objects by a certain property in the object
   liquid.filters.sortObjectsBy = (entities, path) => _.sortBy(entities, path);
+
+  // VBA facilities have accordions with headers that can come from two different
+  // object keys depending on the type of service (facilityService or regionalService)
+  // This sorts alphabetically regardless of key
+  liquid.filters.sortObjectsWithConditionalKeys = entities => {
+    const getFieldToCompare = obj => {
+      let serviceDetails = obj;
+
+      if (obj?.facilityService) {
+        serviceDetails = obj.facilityService;
+      } else if (obj?.regionalService) {
+        serviceDetails = obj.regionalService;
+      }
+
+      return serviceDetails.fieldServiceNameAndDescripti.entity.name;
+    };
+
+    return entities.sort((a, b) => {
+      const name1 = getFieldToCompare(a);
+      const name2 = getFieldToCompare(b);
+
+      if (name1 < name2) {
+        return -1;
+      }
+
+      if (name1 > name2) {
+        return 1;
+      }
+
+      return 0;
+    });
+  };
 
   liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
 
@@ -781,7 +909,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.formatSeconds = rawSeconds => {
-    // Dates need milliseconds, so mulitply by 1000.
+    // Dates need milliseconds, so multiply by 1000.
     const date = new Date(rawSeconds * 1000);
 
     // Derive digits.
@@ -821,19 +949,19 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    let beneficiaresAudiences = [];
+    let beneficiariesAudiences = [];
     if (
       fieldAudienceBeneficiares &&
       !Array.isArray(fieldAudienceBeneficiares)
     ) {
-      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
+      beneficiariesAudiences = [fieldAudienceBeneficiares?.entity];
     } else if (fieldAudienceBeneficiares) {
-      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+      beneficiariesAudiences = fieldAudienceBeneficiares.map(
         audience => audience?.entity,
       );
     }
 
-    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiariesAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
@@ -959,6 +1087,27 @@ module.exports = function registerFilters() {
     }
     return accordions;
   };
+  liquid.filters.shouldShowIconDiv = (
+    fieldOfficeVisits,
+    fieldVirtualSupport,
+    fieldReferralRequired,
+  ) => {
+    if (
+      (fieldOfficeVisits &&
+        fieldOfficeVisits !== 'no' &&
+        fieldOfficeVisits !== 'null') ||
+      (fieldVirtualSupport &&
+        fieldVirtualSupport !== 'no' &&
+        fieldVirtualSupport !== 'null') ||
+      (fieldReferralRequired &&
+        fieldReferralRequired !== 'not_applicable' &&
+        fieldReferralRequired !== 'unknown' &&
+        fieldReferralRequired !== '2')
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   liquid.filters.processCentralizedUpdatesVBA = fieldCcGetUpdatesFromVba => {
     if (!fieldCcGetUpdatesFromVba || !fieldCcGetUpdatesFromVba.fetched)
@@ -969,7 +1118,7 @@ module.exports = function registerFilters() {
       sectionHeader: '',
     };
     const { fetched } = fieldCcGetUpdatesFromVba;
-    processed.sectionHeader = fetched.fieldSectionHeader[0].value;
+    processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value || '';
     for (const link of fetched.fieldLinks) {
       if (link.url.path.startsWith('/')) {
         processed.links.news = {
@@ -1003,19 +1152,20 @@ module.exports = function registerFilters() {
       fieldSectionHeader: '',
       fieldDescription: '',
     };
-    processed.fieldSectionHeader = field.fetched.fieldSectionHeader[0].value;
+    processed.fieldSectionHeader =
+      field.fetched.fieldSectionHeader?.[0]?.value || '';
 
     const ctaEntity = field.fetched.fieldCta[0].entity;
-    processed.fieldCta.label = ctaEntity.fieldButtonLabel[0].value;
-    processed.fieldCta.link = ctaEntity.fieldButtonLink[0].url.path;
+    processed.fieldCta.label = ctaEntity.fieldButtonLabel?.[0]?.value || '';
+    processed.fieldCta.link = ctaEntity.fieldButtonLink?.[0]?.url.path || '';
 
-    processed.fieldDescription = field.fetched.fieldDescription[0].processed;
+    processed.fieldDescription = field.fetched.fieldDescription?.[0]?.processed;
     return processed;
   };
 
   liquid.filters.processWysiwygSimple = field => {
     if (!field?.fetched?.fieldWysiwyg?.length) return null;
-    return field.fetched.fieldWysiwyg[0].value;
+    return field.fetched.fieldWysiwyg[0]?.value || '';
   };
 
   liquid.filters.processFieldPhoneNumbersParagraph = fields => {
@@ -1044,7 +1194,18 @@ module.exports = function registerFilters() {
       },
     };
   };
+  // Because an ambiguous array items always provides all the items in the array and the context, exports, etc as well
+  // We use the first item as a source of truth for how many elements to assess
+  liquid.filters.andFn = (nItems, ...arr) =>
+    (arr?.length || -1) >= nItems
+      ? arr.slice(0, nItems).every(a => !!a)
+      : false;
+  liquid.filters.orFn = (nItems, ...arr) =>
+    (arr?.length || -1) >= nItems ? arr.slice(0, nItems).some(a => !!a) : false;
 
+  liquid.filters.gt = (a, b) => Number(a) > Number(b);
+  liquid.filters.lt = (a, b) => Number(a) < Number(b);
+  liquid.filters.gte = (a, b) => Number(a) >= Number(b);
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
@@ -1163,7 +1324,9 @@ module.exports = function registerFilters() {
     }
     const processedFetched = {};
     for (const [key, value] of Object.entries(fieldCcBenefitsHotline.fetched)) {
-      processedFetched[key] = value[0].value;
+      if (value?.length > 0) {
+        processedFetched[key] = value[0]?.value || '';
+      }
     }
     return processedFetched;
   };
@@ -1221,9 +1384,9 @@ module.exports = function registerFilters() {
     const featureContentObj = {
       entity: {
         fieldDescription: {
-          processed: fieldDescription[0]?.processed,
+          processed: fieldDescription[0]?.processed || '',
         },
-        fieldSectionHeader: fieldSectionHeader[0]?.value,
+        fieldSectionHeader: fieldSectionHeader[0]?.value || '',
       },
     };
 
@@ -1235,10 +1398,13 @@ module.exports = function registerFilters() {
       const buttonFeatured = {
         entity: {
           fieldButtonLink: {
-            uri: fieldCta[0]?.entity.fieldButtonLink[0].uri,
-            url: fieldCta[0]?.entity.fieldButtonLink[0].url?.path,
+            uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
+            url:
+              fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path ||
+              fieldCta[0]?.entity.fieldButtonLink[0]?.url ||
+              '',
           },
-          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0].value,
+          fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
       };
       featureContentObj.entity.fieldCta = buttonFeatured;
@@ -1293,94 +1459,6 @@ module.exports = function registerFilters() {
       'fieldDatetimeRangeTimezone',
       false,
     );
-  };
-
-  //* paginatePages has limitations, it is not yet fully operational.
-  liquid.filters.paginatePages = (page, items, aria) => {
-    const perPage = 10;
-    const ariaLabel = aria ? ` of ${aria}` : '';
-
-    const paginationPath = pageNum => {
-      return pageNum === 0 ? '' : `/page-${pageNum + 1}`;
-    };
-
-    const pageReturn = [];
-
-    if (items.length > 0) {
-      const pagedEntities = _.chunk(items, perPage);
-
-      for (let pageNum = 0; pageNum < pagedEntities.length; pageNum++) {
-        let pagedPage = { ...page };
-
-        if (pageNum > 0) {
-          pagedPage = set(
-            'entityUrl.path',
-            `${page.entityUrl.path}${paginationPath(pageNum)}`,
-            page,
-          );
-        }
-
-        pagedPage.pagedItems = pagedEntities[pageNum];
-        const innerPages = [];
-
-        if (pagedEntities.length > 0) {
-          // add page numbers
-          const numPageLinks = 3;
-          let start;
-          let length;
-          if (pagedEntities.length <= numPageLinks) {
-            start = 0;
-            length = pagedEntities.length;
-          } else {
-            length = numPageLinks;
-
-            if (pageNum + numPageLinks > pagedEntities.length) {
-              start = pagedEntities.length - numPageLinks;
-            } else {
-              start = pageNum;
-            }
-          }
-
-          for (let num = start; num < start + length; num++) {
-            innerPages.push({
-              href:
-                num === pageNum
-                  ? null
-                  : `${page.entityUrl.path}${paginationPath(num)}`,
-              label: num + 1,
-              class: num === pageNum ? 'va-pagination-active' : '',
-            });
-          }
-
-          pagedPage.paginator = {
-            ariaLabel,
-            prev:
-              pageNum > 0
-                ? `${page.entityUrl.path}${paginationPath(pageNum - 1)}`
-                : null,
-            inner: innerPages,
-            next:
-              pageNum < pagedEntities.length - 1
-                ? `${page.entityUrl.path}${paginationPath(pageNum + 1)}`
-                : null,
-          };
-          pageReturn.push(pagedPage);
-        }
-      }
-    }
-
-    if (!pageReturn[0]) {
-      return {};
-    }
-
-    return {
-      pagedItems: pageReturn[0].pagedItems,
-      paginator: pageReturn[0].paginator,
-    };
-  };
-
-  liquid.filters.isFirstPage = paginator => {
-    return !paginator || paginator.prev === null;
   };
 
   liquid.filters.hasContentAtPath = (rootArray, path) => {
@@ -1755,6 +1833,44 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
+  liquid.filters.shouldShowIntroText = (introTextType, introTextCustom) => {
+    if (introTextType === 'remove_text') {
+      return false;
+    }
+    if (
+      introTextType === 'use_default_text' ||
+      (introTextType === 'customize_text' && introTextCustom)
+    )
+      return true;
+    // just in case there's a new or data value like "null" that sometimes happens in drupal
+    return false;
+  };
+
+  // from the matrix of when to show Service Location Appointments header and text
+  liquid.filters.shouldShowServiceLocationAppointments = serviceLocation => {
+    const {
+      fieldVirtualSupport: virtualSupport,
+      fieldOfficeVisits: officeVisits,
+    } = serviceLocation;
+    // Hide? if no selection made for either virtual or office visits
+    if (!virtualSupport && !officeVisits) {
+      return false;
+    }
+    // Show if either virtual or office visits is yes_appointment_only
+    if (
+      virtualSupport === 'yes_appointment_only' ||
+      officeVisits === 'yes_appointment_only'
+    ) {
+      return true;
+    }
+    if (
+      virtualSupport === 'virtual_visits_may_be_available' ||
+      officeVisits === 'yes_with_or_without_appointment'
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   // Given an array of services provided at a facility,
   // return a flattened array of service locations that
@@ -1982,5 +2098,103 @@ module.exports = function registerFilters() {
       return false;
     }
     return true;
+  };
+
+  // In some instances, we get a dynamic hub name from Drupal
+  // In order to use a <va-icon>, we need to map the hub name from Drupal
+  // to its hub icon in the Design System (https://design.va.gov/foundation/icons)
+  // This filter gives us a <va-icon> pointing to the correct hub icon
+  //
+  // Visual example: /initiatives/vote/ under "Learn more about related VA benefits"
+  liquid.filters.getHubIcon = (hub, iconSize, iconClasses = '') => {
+    const hubIcons = {
+      'health-care': {
+        icon: 'medical_services',
+        backgroundColor: 'hub-health-care',
+      },
+      careers: {
+        icon: 'work',
+        backgroundColor: 'hub-careers',
+      },
+      'life-insurance': {
+        icon: 'shield',
+        backgroundColor: 'hub-life-insurance',
+      },
+      'service-member': {
+        icon: 'flag',
+        backgroundColor: 'hub-service-member',
+      },
+      disability: {
+        icon: 'description',
+        backgroundColor: 'hub-disability',
+      },
+      pension: {
+        icon: 'handshake',
+        backgroundColor: 'hub-pension',
+      },
+      burials: {
+        icon: 'star',
+        backgroundColor: 'hub-burials',
+      },
+      'family-member': {
+        icon: 'groups',
+        backgroundColor: 'hub-family-member',
+      },
+      education: {
+        icon: 'school',
+        backgroundColor: 'hub-education',
+      },
+      housing: {
+        icon: 'home',
+        backgroundColor: 'hub-housing',
+      },
+      records: {
+        icon: 'identification',
+        backgroundColor: 'hub-records',
+      },
+      'va-dept-info': {
+        icon: 'location_city',
+        backgroundColor: 'primary-darker',
+      },
+    };
+
+    if (!hub || !hubIcons[hub]) {
+      return null;
+    }
+
+    const hubData = hubIcons[hub];
+
+    return `
+      <va-icon
+        icon="${hubData.icon}"
+        size="${iconSize}"
+        class="hub-icon vads-u-color--white vads-u-background-color--${hubData.backgroundColor} vads-u-display--flex vads-u-align-items--center vads-u-justify-content--center ${iconClasses}"
+      ></va-icon>
+    `;
+  };
+
+  liquid.filters.formatSocialPlatform = platform => {
+    const twitterString = platform.match(/twitter/i);
+    const youTubeString = platform.match(/youtube/i);
+
+    if (twitterString) {
+      return platform.replace(twitterString, 'X (formerly Twitter)');
+    }
+
+    if (youTubeString) {
+      return platform.replace(youTubeString, 'YouTube');
+    }
+
+    return platform;
+  };
+
+  liquid.filters.determineFieldLink = fieldLink => {
+    if (!_.isEmpty(fieldLink?.url?.path)) {
+      return fieldLink.url.path;
+    }
+    if (!_.isEmpty(fieldLink?.uri)) {
+      return fieldLink.uri;
+    }
+    return null;
   };
 };

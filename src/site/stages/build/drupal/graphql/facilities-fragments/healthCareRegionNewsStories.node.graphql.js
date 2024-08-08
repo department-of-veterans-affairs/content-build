@@ -9,6 +9,7 @@ const NEWS_STORIES_RESULTS = `
       title
       fieldFeatured
       fieldIntroText
+      fieldLastSavedByAnEditor
       fieldMedia {
         entity {
           ... on MediaImage {

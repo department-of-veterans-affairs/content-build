@@ -31,6 +31,7 @@ yalc.lock
 package-lock.json
 src/applications/
 !src/applications/registry.json
+!src/applications/registry-schema.json
 temp
 /tmp
 dump.rdb
@@ -48,6 +49,8 @@ all-links.csv
 
 # Track shared IDE config
 !.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/README.md
 
 # Ignore the hashed build files for comparison
 standaloneContentBuildHash.txt
