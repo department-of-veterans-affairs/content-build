@@ -2,7 +2,6 @@
 
 import { expect } from 'chai';
 import sinon from 'sinon';
-import drupalUtils from '../../utilities-drupal';
 
 const { postProcessDigitalForm } = require('./postProcessDigitalForm');
 
@@ -106,13 +105,10 @@ describe('postProcessDigitalForm', () => {
   context('with a malformed query result', () => {
     let queryResult;
     let processedResult;
+    let logger;
 
     beforeEach(() => {
-      sinon.stub(drupalUtils, 'logDrupal');
-    });
-
-    afterEach(() => {
-      drupalUtils.logDrupal.restore();
+      logger = sinon.spy();
     });
 
     context('when the entire query is bad', () => {
@@ -120,14 +116,11 @@ describe('postProcessDigitalForm', () => {
         queryResult = {
           wrongKey: 'oops! bad data!',
         };
-        processedResult = postProcessDigitalForm(
-          queryResult,
-          drupalUtils.logDrupal,
-        );
+        processedResult = postProcessDigitalForm(queryResult, logger);
       });
 
       it('logs the error', () => {
-        expect(drupalUtils.logDrupal.calledOnce).to.eq(true);
+        expect(logger.calledOnce).to.eq(true);
       });
 
       it('returns an empty array', () => {
@@ -172,14 +165,11 @@ describe('postProcessDigitalForm', () => {
             },
           },
         };
-        processedResult = postProcessDigitalForm(
-          queryResult,
-          drupalUtils.logDrupal,
-        );
+        processedResult = postProcessDigitalForm(queryResult, logger);
       });
 
       it('logs the error', () => {
-        expect(drupalUtils.logDrupal.calledOnce).to.eq(true);
+        expect(logger.calledOnce).to.eq(true);
       });
 
       it('returns the other forms', () => {
