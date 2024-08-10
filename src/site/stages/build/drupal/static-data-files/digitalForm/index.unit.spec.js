@@ -16,7 +16,37 @@ describe('digitalForm', () => {
 
   describe('postProcess', () => {
     it('imports postProcessDigitalForm', () => {
-      expect(() => postProcess('test result')).to.not.throw();
+      const queryResult = {
+        data: {
+          nodeQuery: {
+            entities: [
+              {
+                nid: 71002,
+                entityLabel: 'Form with One Step',
+                fieldVaFormNumber: '11111',
+                fieldOmbNumber: '1111-1111',
+                fieldChapters: [
+                  {
+                    entity: {
+                      entityId: '157904',
+                      type: {
+                        entity: {
+                          entityId: 'digital_form_name_and_date_of_bi',
+                          entityLabel: 'Name and Date of Birth',
+                        },
+                      },
+                      fieldTitle: 'The Only Step',
+                      fieldIncludeDateOfBirth: true,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      };
+
+      expect(() => postProcess(queryResult)).to.not.throw();
     });
   });
 });
