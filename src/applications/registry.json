@@ -1597,8 +1597,7 @@
     "template": {
       "title": "PACT Act",
       "layout": "page-react.html",
-      "description": "PACT Act application",
-      "vagovprod": false
+      "description": "PACT Act application"
     }
   },
   {
