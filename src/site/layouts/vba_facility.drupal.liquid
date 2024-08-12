@@ -163,7 +163,7 @@
                 {% for prepareObj in fieldPrepareForVisit %}
                   <va-accordion-item uswds
                     class="va-accordion-item"
-                    id="vba-service-item-{{ prepareObj.entity.id }}"
+                    id="{{ prepareObj.entity.fieldHeader | hashReference: 60 }}"
                     header="{{ prepareObj.entity.fieldHeader }}"
                     level="3">
                     {{ prepareObj.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
