@@ -94,22 +94,20 @@
         {% if !fieldVaFormUsage %}
           <h2 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h2>
         {% endif %}
-        <a
-          href="{{ fieldVaFormUrl.uri }}"
-          download
-          data-widget-type="find-va-forms-pdf-download-helper"
-          data-form-number="{{ fieldVaFormNumber }}"
-          lang="{{ fieldVaFormLanguage }}"
+        <div id="main-download-container">
+          <button
+            class="va-button-link vads-u-display--flex vads-u-align-items--center"
+            data-widget-type="find-va-forms-pdf-download-helper"
+            data-href="{{ fieldVaFormUrl.uri }}"
+            data-form-number="{{ fieldVaFormNumber }}"
+            id="main-download-button"
+            lang="{{ fieldVaFormLanguage }}"
           >
-            <va-icon
-              class="vads-u-margin-right--0p5"
-              icon="file_download"
-              size="3"
-            ></va-icon>
-          {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
-          {{ translatedDownloadText }} (PDF)
-        </a>
-
+            {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
+            <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
+            {{ translatedDownloadText }} (PDF)
+          </button>
+        </div>
         {% if fieldVaFormUpload %}
           <div
             aria-label="Form Upload"
@@ -162,22 +160,17 @@
                   </p>
 
                 {{ vaForm.entity.fieldVaFormUsage.processed }}
-
-                <a
-                  href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
-                  download
+                <button
+                  class="va-button-link vads-u-display--flex vads-u-align-items--center"
                   data-widget-type="find-va-forms-pdf-download-helper"
+                  data-href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
                   data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
+                  id="{{ fieldVaFormNumber }}-download-button-{{ vaForm.entity.fieldVaFormLanguage }}"
                   lang="{{ vaForm.entity.fieldVaFormLanguage }}"
-                  >
-                    <va-icon
-                      class="vads-u-margin-right--0p5"
-                      icon="file_download"
-                      size="3"
-                    ></va-icon>
-                    {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}
-                    {{ translatedDownloadText }} (PDF)
-                </a>
+                >
+                  {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}                  <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
+                  {{ translatedDownloadText }} (PDF)
+                </button>
               </li>
             {% endfor %}
             </ul>
