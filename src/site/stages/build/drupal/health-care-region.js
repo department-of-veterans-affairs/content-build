@@ -286,7 +286,6 @@ function addPager(page, files, field, template, aria) {
 module.exports = {
   createHealthCareRegionListPages,
   createPastEventListPages,
-  addGetUpdatesFields,
   addPager,
   compileEventListingPage,
 };
