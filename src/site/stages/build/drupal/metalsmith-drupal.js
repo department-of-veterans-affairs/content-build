@@ -14,7 +14,6 @@ const { compilePage, createFileObj } = require('./page');
 const {
   createHealthCareRegionListPages,
   createPastEventListPages,
-  addGetUpdatesFields,
   addPager,
   compileEventListingPage,
 } = require('./health-care-region');
@@ -73,15 +72,11 @@ function pipeDrupalPagesIntoMetalsmith(contentData, files) {
 
     switch (page.entityBundle) {
       case 'health_care_local_facility':
-        addGetUpdatesFields(pageCompiled, pages);
-        break;
       case 'health_care_region_detail_page':
       case 'vamc_system_policies_page':
       case 'vamc_system_billing_insurance':
       case 'vamc_system_register_for_care':
       case 'vamc_system_medical_records_offi':
-        addGetUpdatesFields(pageCompiled, pages);
-        break;
       case 'event_listing':
         compileEventListingPage(pageCompiled);
         addPager(
