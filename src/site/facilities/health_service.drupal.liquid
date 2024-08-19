@@ -15,9 +15,9 @@
             </h3>
             <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
                 {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
-                    <div class="vads-u-margin-bottom--2">
-                        <span class="vads-u-font-style--italic">Common conditions: </span>{{ serviceTaxonomy.fieldCommonlyTreatedCondition }}
-                    </div>
+                    <p class="vads-u-margin-bottom--2">
+                        Common conditions: {{ serviceTaxonomy.fieldCommonlyTreatedCondition }}
+                    </p>
                 {% endif %}
                 {% if section.name == "Lovell - TRICARE" and serviceTaxonomy.fieldTricareDescription %}
                     <description>{{ serviceTaxonomy.fieldTricareDescription | phoneLinks }}</description>
