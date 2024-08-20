@@ -11,7 +11,7 @@
 
   {% assign crumbs = crumbs | formatForBreadcrumbs: title, entityUrl.path, hideHomeBreadcrumb, customHomeCrumbText  %}
 
-  <va-breadcrumbs wrapping />
+  <va-breadcrumbs class="row" wrapping />
 
   <script>
     const bcComponent = document.querySelector('va-breadcrumbs');
