@@ -1869,10 +1869,10 @@
   {
     "appName": "Resources for schools",
     "entryName": "sco",
-    "rootUrl": "/education/school-administrators",
+    "rootUrl": "/school-administrators/",
     "productId": "40938a35-1cfa-4808-917b-37e0baec6a7c",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
