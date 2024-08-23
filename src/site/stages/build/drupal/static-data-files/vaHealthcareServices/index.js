@@ -77,6 +77,7 @@ const postProcess = queryResult => {
         reverseFieldServiceNameAndDescriptiNode.count, // i=9
       ];
     });
+  // descending sort by frequency of use
   taxonomies.sort((a, b) => b[9] - a[9]);
   return taxonomies;
 };
