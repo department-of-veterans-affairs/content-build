@@ -1339,13 +1339,13 @@
   dependencies:
     minimist "^1.2.6"
 
-"@department-of-veterans-affairs/web-components@^11.2.5":
-  version "11.2.9"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-11.2.9.tgz#10f4ec73f5d177c1864a116386334748c2e39bcb"
-  integrity sha512-Kl7zCoxuheC/EYdM0D3N2X4cC7Kjd1eq6ZaX525BAiRJlxKhIpqhZzJfbXkQw0SrX8voLrA0Ab74KFcZjgRV3A==
+"@department-of-veterans-affairs/web-components@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.npmjs.org/@department-of-veterans-affairs/web-components/-/web-components-14.0.0.tgz#54938f9b89aa1f10ce15253ae5557620d0fbc813"
+  integrity sha512-h4fgnzSa34YPENnXgSFpF84dI2aSGOo/WdZjPdVmHKnVy52LebC7Lr/Sla7bzWctpy23ST+bIrZdevBIQLrh6g==
   dependencies:
     "@department-of-veterans-affairs/css-library" "^0.8.1"
-    "@stencil/core" "^2.19.2"
+    "@stencil/core" "^3.2.1"
     aria-hidden "^1.1.3"
     body-scroll-lock "^4.0.0-beta.0"
     chromatic "^11.0.4"
@@ -1773,10 +1773,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@stencil/core@^2.19.2":
-  version "2.22.3"
-  resolved "https://registry.npmjs.org/@stencil/core/-/core-2.22.3.tgz#83987e20bba855c450f6d6780e3a20192603f13f"
-  integrity sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==
+"@stencil/core@^3.2.1":
+  version "3.4.2"
+  resolved "https://registry.npmjs.org/@stencil/core/-/core-3.4.2.tgz#57ce7f71fe18c2ec0967821bec667fc453cca962"
+  integrity sha512-FAUhUVaakCy29nU2GwO/HQBRV1ihPRvncz3PUc8oR+UJLAxGabTmP8PLY7wvHfbw+Cvi4VXfJFTBvdfDu6iKPQ==
 
 "@testing-library/cypress@^8.0.3":
   version "8.0.3"
