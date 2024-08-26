@@ -1,3 +1,5 @@
+const { JSDOM } = require('jsdom');
+
 const query = `
 query {
   taxonomyTermQuery(
@@ -17,6 +19,13 @@ query {
         fieldShowForVbaFacilities
         fieldShowForVamcFacilities
         fieldTricareSpecificService
+        description {
+          processed
+        }
+        descriptionOfTaxonomyTermHealthCareServiceTaxonomy {
+          processed
+        }
+        fieldTricareDescription
         reverseFieldServiceNameAndDescriptiNode {
           count
         }
@@ -25,6 +34,12 @@ query {
   }
 }
 `;
+
+function decodeEntities(str) {
+  // this prevents any overhead from creating the object each time
+  const dom = new JSDOM(`<!DOCTYPE html><body>${str}</body>`);
+  return dom.window.document.body.textContent || '';
+}
 
 const postProcess = queryResult => {
   // [{
@@ -36,8 +51,11 @@ const postProcess = queryResult => {
   //   fieldShowForVetCenters: true,
   //   fieldShowForVbaFacilities: true,
   //   fieldShowForVamcFacilities: false,
-  //   fieldTricareSpecificService: false
-  //   reverseFieldServiceNameAndDescriptiNode: { count: 0 }
+  //   fieldTricareSpecificService: false,
+  //   reverseFieldServiceNameAndDescriptiNode: { count: 0 },
+  //   description: 'description',
+  //   descriptionOfTaxonomyTermHealthCareServiceTaxonomy: 'descriptionOfTaxonomyTermHealthCareServiceTaxonomy',
+  //   fieldTricareDescription: 'fieldTricareDescription'
   // }]
   // GraphQL query filter is pretty bad, so we'll do the filtering here (can't do a successful nested OR on the show for VetCenter,VAMC,VBA fields - it returns 3 elements)
   // 1. Filter out services that are false for fieldShowForVetCenters, fieldShowForVbaFacilities, and fieldShowForVamcFacilities
@@ -63,6 +81,9 @@ const postProcess = queryResult => {
         fieldShowForVamcFacilities,
         fieldTricareSpecificService,
         reverseFieldServiceNameAndDescriptiNode,
+        description,
+        descriptionOfTaxonomyTermHealthCareServiceTaxonomy,
+        fieldTricareDescription,
       } = service;
       return [
         name,
@@ -75,6 +96,11 @@ const postProcess = queryResult => {
         fieldShowForVamcFacilities,
         fieldTricareSpecificService,
         reverseFieldServiceNameAndDescriptiNode.count, // i=9
+        decodeEntities(description?.processed || ''),
+        decodeEntities(
+          descriptionOfTaxonomyTermHealthCareServiceTaxonomy?.processed || '',
+        ),
+        decodeEntities(fieldTricareDescription || ''),
       ];
     });
   // descending sort by frequency of use
