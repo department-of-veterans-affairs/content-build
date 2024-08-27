@@ -4,7 +4,7 @@ const query = `
 query {
   taxonomyTermQuery(
     offset: 0
-    filter: {conditions: [{field: "vid", value: ["health_care_service_taxonomy"]}]}
+    filter: {conditions: [{field: "vid", value: ["health_care_service_taxonomy"]}, {field: "status", value: ["1"]}]}
     limit: 1000
   ) {
     count
@@ -20,9 +20,6 @@ query {
         fieldShowForVamcFacilities
         fieldTricareSpecificService
         description {
-          processed
-        }
-        descriptionOfTaxonomyTermHealthCareServiceTaxonomy {
           processed
         }
         fieldTricareDescription
@@ -54,7 +51,6 @@ const postProcess = queryResult => {
   //   fieldTricareSpecificService: false,
   //   reverseFieldServiceNameAndDescriptiNode: { count: 0 },
   //   description: 'description',
-  //   descriptionOfTaxonomyTermHealthCareServiceTaxonomy: 'descriptionOfTaxonomyTermHealthCareServiceTaxonomy',
   //   fieldTricareDescription: 'fieldTricareDescription'
   // }]
   // GraphQL query filter is pretty bad, so we'll do the filtering here (can't do a successful nested OR on the show for VetCenter,VAMC,VBA fields - it returns 3 elements)
@@ -82,7 +78,6 @@ const postProcess = queryResult => {
         fieldTricareSpecificService,
         reverseFieldServiceNameAndDescriptiNode,
         description,
-        descriptionOfTaxonomyTermHealthCareServiceTaxonomy,
         fieldTricareDescription,
       } = service;
       return [
@@ -97,9 +92,6 @@ const postProcess = queryResult => {
         fieldTricareSpecificService,
         reverseFieldServiceNameAndDescriptiNode.count, // i=9
         decodeEntities(description?.processed || ''),
-        decodeEntities(
-          descriptionOfTaxonomyTermHealthCareServiceTaxonomy?.processed || '',
-        ),
         decodeEntities(fieldTricareDescription || ''),
       ];
     });
