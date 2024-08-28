@@ -4,6 +4,11 @@ const {
 } = require('./vamcEhrSystem');
 
 const {
+  query: queryVaHealthcareServices,
+  postProcess: postProcessVaHealthcareServices,
+} = require('./vaHealthcareServices');
+
+const {
   query: queryVamcFacilitySupplementalStatus,
   postProcess: postProcessVamcFacilitySupplementalStatus,
 } = require('./vamcFacilitySupplementalStatus');
@@ -36,6 +41,13 @@ const DATA_FILES = [
     query: queryVamcEhrSystem,
     queryType: 'graphql',
     postProcess: postProcessVamcEhrSystem,
+  },
+  {
+    description: 'VA Healthcare Services',
+    filename: 'va-healthcare-services.json',
+    query: queryVaHealthcareServices,
+    queryType: 'graphql',
+    postProcess: postProcessVaHealthcareServices,
   },
   {
     description: 'VAMC Facility Supplemental Status',

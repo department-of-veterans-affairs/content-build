@@ -68,9 +68,7 @@ const writeProcessedDataFilesToBuild = (
 
 const writeProcessedDataFileToCache = async (path, filename, data) => {
   const filenameWithPath = `${path}/${filename}`;
-  fs.outputJSON(filenameWithPath, data, {
-    spaces: 2,
-  });
+  fs.outputJSON(filenameWithPath, data);
 };
 
 const writeProcessedDataFilesToCache = (
