@@ -13,6 +13,10 @@ module.exports = `
     entityLabel
     fieldVaFormNumber
     fieldOmbNumber
+    fieldRespondentBurden
+    fieldExpirationDate {
+      value
+    }
     fieldChapters {
       entity {
         entityId
