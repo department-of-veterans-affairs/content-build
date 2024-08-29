@@ -149,6 +149,15 @@ const getVetCenterSlice = (operationName, offset, limit) => {
     query GetVetCenters${
       !draftContentOverride ? '($onlyPublishedContent: Boolean!)' : ''
     } {
+      mediaQuery(filter:{conditions:{field:"mid", value:["35232"]}}){
+        entities{
+          ... on MediaImage {
+            image {
+              url
+            }
+          }
+        }
+      }
       nodeQuery(
         limit: ${limit}
         offset: ${offset}    
