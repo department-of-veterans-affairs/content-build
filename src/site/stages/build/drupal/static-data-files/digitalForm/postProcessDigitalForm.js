@@ -11,6 +11,11 @@ const extractAdditionalFields = entity => {
 };
 const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
 
+const formatDate = dateString =>
+  // Depending on what time zone our servers operate on, we may need to adjust
+  // this offset.
+  new Date(Date.parse(`${dateString}T04:00-05:00`)).toLocaleDateString();
+
 const normalizeChapter = ({ entity }) => {
   return {
     id: parseInt(entity.entityId, 10),
@@ -27,7 +32,11 @@ const normalizeForm = (form, logger = logDrupal) => {
       cmsId: form.nid,
       formId: form.fieldVaFormNumber,
       title: form.entityLabel,
-      ombNumber: form.fieldOmbNumber,
+      ombInfo: {
+        expDate: formatDate(form.fieldExpirationDate.value),
+        ombNumber: form.fieldOmbNumber,
+        resBurden: form.fieldRespondentBurden,
+      },
       chapters: form.fieldChapters.map(normalizeChapter),
     };
   } catch (error) {
