@@ -21,7 +21,7 @@
           {% elsif fieldOfficialName != empty %}
             <h1>{{ fieldOfficialName}}</h1>
           {% endif %}
-          <p class="vads-u-padding-y--1p5 vads-u-margin-y--0"><img src="{{ banner.image.url }}" alt="{{ banner.image.alt | escape }}" /></p>
+          <p class="vads-u-padding-y--1p5 vads-u-margin-y--0"><img src="{{ banner.image.derivative.url }}" alt="{{ banner.image.alt | escape }}" /></p>
           {% if fieldIntroText != empty %}
             <div class="va-introtext">
               <p>{{ fieldIntroText }}</p>
