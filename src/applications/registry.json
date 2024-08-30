@@ -1872,7 +1872,7 @@
     "rootUrl": "/school-administrators",
     "productId": "40938a35-1cfa-4808-917b-37e0baec6a7c",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html"
     }
   },
