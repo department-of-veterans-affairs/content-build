@@ -763,6 +763,46 @@ module.exports = function registerFilters() {
     return JSON.stringify(JSON.stringify(newBC));
   };
 
+  liquid.filters.formatForBreadcrumbsHTML = breadcrumbs => {
+    // return early if no breadcrumbs
+    if (!breadcrumbs) return '';
+
+    // Remove "empty path" breadcrumbs
+    const filteredCrumbs = breadcrumbs.filter(
+      ({ path }) => path !== '' && path !== null,
+    );
+
+    const mappedCrumbs = filteredCrumbs.map(crumb => {
+      const { name, path, children } = crumb;
+      const { display_title: displayTitle, title } = children
+        ? children[0].file
+        : {};
+      // Assigns the first non-null value, defaulting back to the original name
+      let label = displayTitle || title || name;
+
+      // Replace hyphens in the label with spaces
+      label = label.replace('-', ' ');
+
+      // Capitalize the first letter of the label
+      label = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
+
+      // Set language to Spanish if "-esp" is at the end of the url,
+      // or Tagalog if "-tag" is at the end of the url
+      let lang = 'en-US';
+      if (path.endsWith('-esp')) lang = 'es';
+      if (path.endsWith('-tag')) lang = 'tl';
+
+      return {
+        href: `/${path}`,
+        isRouterLink: false,
+        label,
+        lang,
+      };
+    });
+
+    return JSON.stringify(JSON.stringify(mappedCrumbs));
+  };
+
   // used to get a base url path of a health care region from entityUrl.path
   liquid.filters.regionBasePath = path => path.split('/')[1];
 
