@@ -7,6 +7,8 @@ const mediaFragment = `
           title
           derivative(style: _72MEDIUMTHUMBNAIL) {
             url
+            width
+            height
           }
         }
       }
