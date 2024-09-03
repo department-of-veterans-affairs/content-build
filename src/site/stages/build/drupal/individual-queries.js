@@ -151,7 +151,6 @@ function getNodeQueries(entityCounts) {
 function nonNodeQueries() {
   // Get current feature flags
   const { cmsFeatureFlags } = global;
-  const { GetVetCenterCCMedia } = require('./graphql/vetCenterCCMedia.graphql');
   const { getEntityQueueByName } = require('./graphql/entityQueue.graphql');
   const GetEntityQueueStagedContent = getEntityQueueByName('staged_content');
 
@@ -205,7 +204,6 @@ function nonNodeQueries() {
     GetHomepage,
     GetMenuLinks,
     GetTaxonomies,
-    GetVetCenterCCMedia,
   };
 
   if (cmsFeatureFlags.FEATURE_ALL_HUB_SIDE_NAVS) {
