@@ -34,7 +34,7 @@
                             {% if location.entity.status and facility != empty %}
                                 <li class="vads-u-margin-bottom--2">
                                     <va-link
-                                        href="{{ facility.entityUrl.path }}"
+                                        href="{{ facility.entityUrl.path }}/#{{serviceTaxonomy.name | hashReference: 60}}"
                                         text="{{ facility.title }}"
                                     >
                                     </va-link>
