@@ -110,10 +110,10 @@
                 width="{{ promo.entity.fieldImage.entity.thumbnail.derivative.width }}"
               />
               <h3 class="vads-u-padding-x--2 vads-u-margin-top--2">
-                {% assign fieldUrl = promo.entity.fieldPromoLink.entity.fieldLink | determineFieldLink %}
-                {% if fieldUrl %}
-                  <va-link active href="{{ fieldUrl }}" text="{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}"></va-link>
-                {% endif %}
+                <va-link
+                  href="{{ promo.entity.fieldPromoLink.entity.fieldLink.uri }}"
+                  text="{{ promo.entity.fieldPromoLink.entity.fieldLink.title }}"
+                ></va-link>
               </h3>
               <p class="vads-u-margin-bottom--2 vads-u-margin-top--1 vads-u-padding-x--2">
                 {{ promo.entity.fieldPromoLink.entity.fieldLinkSummary }}
@@ -206,10 +206,10 @@
               <div class="vads-u-background-color--gray-light-alt vads-u-height--full medium-screen:vads-u-margin-x--1 medium-screen:vads-u-margin-y--0">
                 <div class="vads-u-padding--2">
                   <h3 class="vads-u-margin-top--0">
-                    {% assign fieldUrl = linkTeaser.entity.fieldLink | determineFieldLink %}
-                    {% if fieldUrl %}
-                      <va-link active href="{{ fieldUrl }}" text="{{ linkTeaser.entity.fieldLink.title }}"></va-link>
-                    {% endif %}
+                    <va-link
+                      href="{{ linkTeaser.entity.fieldLink.uri }}"
+                      text="{{ linkTeaser.entity.fieldLink.title }}"
+                      ></va-link>
                   </h3>
                   <p class="vads-u-margin-top--1">{{ linkTeaser.entity.fieldLinkSummary }}</p>
                 </div>
@@ -248,10 +248,10 @@
                     {% endif %}
                     <div class="vads-u-margin-top--2 medium-screen:vads-u-margin-top--0">
                       <h3 class="vads-u-margin-top--0">
-                        {% assign fieldUrl =  storyTeaser.entity.fieldLinkTeaser.entity.fieldLink | determineFieldLink %}
-                        {% if fieldUrl %}
-                          <va-link active href="{{ fieldUrl }}" text="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title }}"></va-link>
-                        {% endif %}
+                        <va-link
+                          href="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.uri }}"
+                          text="{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLink.title }}"
+                        ></va-link>
                       </h3>
                       <p>{{ storyTeaser.entity.fieldLinkTeaser.entity.fieldLinkSummary }}</p>
                     </div>
@@ -341,7 +341,6 @@
                 <!-- Title -->
                 <h3 class="vads-u-margin-top--0">
                   {% if eventReference.entity.entityUrl.path and eventReference.entity.title %}
-
                     <va-link
                       href="{{ eventReference.entity.entityUrl.path }}"
                       text="{{ eventReference.entity.title }}"
@@ -391,10 +390,10 @@
 
                       <!-- Event link -->
                       {% if eventReference.entity.fieldLink.uri and eventReference.entity.fieldEventCta %}
-                        {% assign fieldUrl = eventReference.entity.fieldLink| determineFieldLink %}
-                        {% if fieldUrl %}
-                          <va-link active href="{{ fieldUrl }}" text="{{ eventReference.entity.fieldEventCta }}"></va-link>
-                        {% endif %}
+                        <va-link
+                          href="{{ eventReference.entity.fieldLink.uri }}"
+                          text="{{ eventReference.entity.fieldEventCta }}"
+                        />
                       {% endif %}
 
                       <!-- Online event link -->
@@ -648,7 +647,22 @@
           {% endfor %}
         </div>
         <va-back-to-top></va-back-to-top>
-        {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
+        <div class="usa-grid usa-grid-full">
+          <div class="last-updated vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+            <div class="vads-u-display--flex above-footer-elements-container">
+              <div class="vads-u-flex--auto">
+                <span class="vads-u-text-align--justify">
+                  {% include "src/site/includes/last-updated.drupal.liquid" %}
+                </span>
+              </div>
+              <div class="vads-u-flex--1 vads-u-text-align--right">
+                <span class="vads-u-text-align--right">
+                    {% include "src/site/includes/medallia-feedback-button.drupal.liquid" %}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     {% endif %}
     <!--/  VA Benefits -->
