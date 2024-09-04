@@ -151,6 +151,7 @@ function getNodeQueries(entityCounts) {
 function nonNodeQueries() {
   // Get current feature flags
   const { cmsFeatureFlags } = global;
+
   const { getEntityQueueByName } = require('./graphql/entityQueue.graphql');
   const GetEntityQueueStagedContent = getEntityQueueByName('staged_content');
 

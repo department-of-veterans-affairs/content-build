@@ -398,6 +398,7 @@ function getDrupalContent(buildOptions) {
 
       // Lovell specific data bifurcation
       processLovellPages(drupalData);
+
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);
