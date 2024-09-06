@@ -11,10 +11,11 @@ const extractAdditionalFields = entity => {
 };
 const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
 
-const formatDate = dateString =>
-  // Depending on what time zone our servers operate on, we may need to adjust
-  // this offset.
-  new Date(Date.parse(`${dateString}T04:00-05:00`)).toLocaleDateString();
+const formatDate = dateString => {
+  const removeLeadingZero = s => s.replace(/^0+/, '');
+  const [year, month, day] = dateString.split('-');
+  return `${removeLeadingZero(month)}/${removeLeadingZero(day)}/${year}`;
+};
 
 const normalizeChapter = ({ entity }) => {
   return {

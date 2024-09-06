@@ -33,6 +33,8 @@ describe('postProcessDigitalForm', () => {
   };
 
   context('with a well-formed query result', () => {
+    const expDate = '2027-01-29';
+
     const twoStepEntity = {
       nid: 71004,
       entityLabel: 'Form with Two Steps',
@@ -40,7 +42,7 @@ describe('postProcessDigitalForm', () => {
       fieldOmbNumber: '1212-1212',
       fieldRespondentBurden: 30,
       fieldExpirationDate: {
-        value: '2027-01-29',
+        value: expDate,
       },
       fieldChapters: [
         {
@@ -103,9 +105,8 @@ describe('postProcessDigitalForm', () => {
 
     it('includes an OMB info object', () => {
       const { ombInfo } = processedResult[1];
-      const formattedDate = new Date(
-        Date.parse(`${twoStepEntity.fieldExpirationDate.value}T04:00-05:00`),
-      ).toLocaleDateString();
+      // expDate is 2027-01-29
+      const formattedDate = '1/29/2027';
 
       expect(ombInfo.ombNumber).to.eq(twoStepEntity.fieldOmbNumber);
       expect(ombInfo.expDate).to.eq(formattedDate);
