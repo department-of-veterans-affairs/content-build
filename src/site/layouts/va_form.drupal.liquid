@@ -2,7 +2,7 @@
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" %}
 
-<div id="content" class="interior">
+<div id="content">
   <main class="va-l-detail-page">
     <div class="usa-grid usa-grid-full">
 
@@ -70,9 +70,9 @@
         </dl>
 
         {% if fieldVaFormUsage %}
-          <h2 class="vads-u-margin-top--4" data-testid="va_form--when-to-use-this-form-header">When to use this form</h3>
+          <h2 class="vads-u-margin-top--4">When to use this form</h3>
           {% if fieldVaFormLanguage %}
-            <div data-testid="va_form--when-to-use-this-form-text" lang="{{ fieldVaFormLanguage }}">
+            <div lang="{{ fieldVaFormLanguage }}">
               {{ fieldVaFormUsage.processed }}
             </div>
           {% else %}
@@ -82,32 +82,53 @@
           {% endif %}
 
           {% if fieldVaFormUpload %}
-            <h3 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Download form</h3>
+            <h3 class="vads-u-margin-bottom--2">Download form</h3>
             <p class="vads-u-margin-bottom--2">
               Download this PDF form and fill it out. Then submit your completed form on this page. Or you can print the form and mail it to the address listed on the form.
             </p>
           {% else %}
-            <h3 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h3>
+            <h3 class="vads-u-margin-bottom--2">Downloadable PDF</h3>
           {% endif %}
         {% endif %}
 
         {% if !fieldVaFormUsage %}
-          <h2 class="vads-u-margin-bottom--2" data-testid="va_form--downloadable-pdf">Downloadable PDF</h2>
+          <h2 class="vads-u-margin-bottom--2">Downloadable PDF</h2>
         {% endif %}
-        <div id="main-download-container">
-          <button
-            class="va-button-link vads-u-display--flex vads-u-align-items--center"
-            data-widget-type="find-va-forms-pdf-download-helper"
-            data-href="{{ fieldVaFormUrl.uri }}"
+
+        {% assign showFindFormsPDFModal = featureFindFormsPDFModal %}
+
+        {% if showFindFormsPDFModal %}
+          <div id="main-download-container">
+            <button
+              class="va-button-link vads-u-display--flex vads-u-align-items--center"
+              data-widget-type="find-va-forms-pdf-download-helper"
+              data-href="{{ fieldVaFormUrl.uri }}"
+              data-form-number="{{ fieldVaFormNumber }}"
+              id="main-download-button"
+              lang="{{ fieldVaFormLanguage }}"
+            >
+              {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
+              <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
+              {{ translatedDownloadText }} (PDF)
+            </button>
+          </div>
+        {% else %}
+          <a
+            href="{{ fieldVaFormUrl.uri }}"
+            download
             data-form-number="{{ fieldVaFormNumber }}"
-            id="main-download-button"
             lang="{{ fieldVaFormLanguage }}"
           >
+              <va-icon
+                class="vads-u-margin-right--0p5"
+                icon="file_download"
+                size="3"
+              ></va-icon>
             {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
-            <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
             {{ translatedDownloadText }} (PDF)
-          </button>
-        </div>
+          </a>
+        {% endif %}
+
         {% if fieldVaFormUpload %}
           <div
             aria-label="Form Upload"
@@ -131,7 +152,7 @@
         {% endif %}
 
         {% if fieldVaFormToolUrl %}
-          <h3 data-testid="va_form--online-tool">Online tool</h3>
+          <h3>Online tool</h3>
           <p>{{ fieldVaFormToolIntro }}</p>
           <va-link-action
             href="{{ fieldVaFormToolUrl.uri }}"
@@ -141,39 +162,32 @@
           </va-link-action>
         {% endif %}
 
-
         {% if fieldVaFormRelatedForms.length > 0 %}
           <section>
-            <h2 data-testid="va_form--related-forms-and-instructions">Related forms and instructions</h2>
-            <ul class="usa-unstyled-list" role="list">
-            {% for vaForm in fieldVaFormRelatedForms %}
-              <li id="{{ fieldVaFormNumber }}-download-button-{{ vaForm.entity.fieldVaFormLanguage }}-parent">
-                {% if vaForm.entity.entityUrl.path and vaForm.entity.entityPublished %}
-                  <a href="{{ vaForm.entity.entityUrl.path }}">
-                    <h3 class="vads-u-display--inline-block vads-u-text-decoration--underline">VA Form {{ vaForm.entity.fieldVaFormNumber }}</h3>
-                  </a>
-                {% else %}
-                  <h3 class="vads-u-display--inline-block">VA Form {{ vaForm.entity.fieldVaFormNumber }}</h3>
-                {% endif %}
-                <p class="vads-u-margin-top--0 vads-u-font-size--h4 vads-u-font-weight--bold">
-                  <dfn class="vads-u-visibility--screen-reader">Form name:</dfn> {{ vaForm.entity.fieldVaFormName }}
-                </p>
-
-                {{ vaForm.entity.fieldVaFormUsage.processed }}
-                <button
-                  class="va-button-link vads-u-display--flex vads-u-align-items--center"
-                  data-widget-type="find-va-forms-pdf-download-helper"
-                  data-href="{{ vaForm.entity.fieldVaFormUrl.uri }}"
-                  data-form-number="{{ vaForm.entity.fieldVaFormNumber }}"
-                  id="{{ fieldVaFormNumber }}-download-button-{{ vaForm.entity.fieldVaFormLanguage }}"
-                  lang="{{ vaForm.entity.fieldVaFormLanguage }}"
-                >
-                  {% assign translatedDownloadText = vaForm.entity.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.entity.fieldVaFormNumber %}                  <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
-                  {{ translatedDownloadText }} (PDF)
-                </button>
-              </li>
-            {% endfor %}
-            </ul>
+            <h2>Related forms and instructions</h2>
+            {% if fieldVaFormRelatedForms.length > 1 %}
+              <ul class="usa-unstyled-list" role="list">
+                {% for vaForm in fieldVaFormRelatedForms %}
+                  <li id="{{ fieldVaFormNumber }}-download-button-{{ vaForm.entity.fieldVaFormLanguage }}-parent">
+                    {% include "src/site/components/va_related_form.drupal.liquid" with
+                      vaForm = vaForm.entity
+                      fieldVaFormNumber = fieldVaFormNumber
+                      translatedDownloadText = translatedDownloadText
+                    %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% elsif fieldVaFormRelatedForms.length == 1 %}
+              <div id="{{ fieldVaFormNumber }}-download-button-{{ vaForm.entity.fieldVaFormLanguage }}-parent">
+                {% for vaForm in fieldVaFormRelatedForms %}
+                  {% include "src/site/components/va_related_form.drupal.liquid" with
+                    vaForm = vaForm.entity
+                    fieldVaFormNumber = fieldVaFormNumber
+                    translatedDownloadText = translatedDownloadText
+                  %}
+                {% endfor %}
+              </div>
+            {% endif %}
           </section>
         {% endif %}
 
