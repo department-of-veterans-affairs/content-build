@@ -116,6 +116,7 @@ const vetCenterFragment = `
         }        
         fieldHealthServices {
           entity {
+            status
             ... on NodeVetCenterFacilityHealthServi {
              fieldBody {
                 processed

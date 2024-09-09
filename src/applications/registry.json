@@ -194,60 +194,6 @@
     }
   },
   {
-    "appName": "21P-530 Burials benefits form",
-    "entryName": "burials",
-    "rootUrl": "/burials-and-memorials/application/530",
-    "template": {
-      "title": "Apply for Burial Benefits (VA Form 21P-530)",
-      "display_title": "Apply Now",
-      "layout": "page-react.html",
-      "description": "Use VA Form 21P-530 to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
-      "order": 1,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "burials-memorials/",
-          "name": "Burials and memorials"
-        },
-        {
-          "path": "burials-memorials/veterans-burial-allowance",
-          "name": "Burial allowance"
-        },
-        {
-          "path": "burials-and-memorials/application/530",
-          "name": "Apply for burial benefits"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "21P-530 Burials benefits form",
-    "entryName": "burials-v2",
-    "rootUrl": "/burials-and-memorials-v2/application/530",
-    "template": {
-      "title": "Apply for Burial Benefits (VA Form 21P-530)",
-      "display_title": "Apply Now",
-      "layout": "page-react.html",
-      "description": "Use VA Form 21P-530 to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
-      "order": 1,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "burials-memorials/",
-          "name": "Burials and memorials"
-        },
-        {
-          "path": "burials-memorials/veterans-burial-allowance",
-          "name": "Burial allowance"
-        },
-        {
-          "path": "burials-and-memorials/application/530",
-          "name": "Apply for burial benefits"
-        }
-      ]
-    }
-  },
-  {
     "appName": "21P-530EZ Burials benefits form",
     "entryName": "burials-ez",
     "rootUrl": "/burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
@@ -1237,6 +1183,18 @@
     }
   },
   {
+    "appName": "Mock Form AE Design Patterns",
+    "entryFile": "./app-entry.jsx",
+    "entryName": "mock-form-ae-design-patterns",
+    "rootUrl": "/mock-form-ae-design-patterns",
+    "template": {
+      "vagovprod": false,
+      "vagovstaging": true,
+      "includeBreadcrumbs": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Combined Debt Portal",
     "entryName": "combined-debt-portal",
     "rootUrl": "/manage-va-debt/summary",
@@ -1617,7 +1575,7 @@
   {
     "appName": "Appeals NOD layout testing",
     "entryName": "nod-new",
-    "rootUrl": "/decision-reviews/testing/nod-new",
+    "rootUrl": "/decision-reviews/test-nod",
     "productId": "5dd32517-00fd-4e97-afed-e6db1f1f54f9",
     "template": {
       "layout": "page-react.html",
@@ -1633,7 +1591,7 @@
   {
     "appName": "Appeals download",
     "entryName": "download",
-    "rootUrl": "/decision-reviews/testing/download",
+    "rootUrl": "/decision-reviews/test-download",
     "productId": "8057a5e9-196a-462f-9bc3-3bd1d199892c",
     "template": {
       "layout": "page-react.html",
@@ -1645,11 +1603,22 @@
     "appName": "HLR testing",
     "entryFile": "./form-entry.jsx",
     "entryName": "hlr-testing",
-    "rootUrl": "/decision-reviews/testing/hlr",
+    "rootUrl": "/decision-reviews/test-hlr",
     "productId": "32de6df6-8818-4fc8-b179-5d05ccb2db19",
     "template": {
       "layout": "page-react.html",
       "description": "Test changes to HLR form",
+      "vagovprod": false
+    }
+  },
+  {
+    "appName": "SC testing",
+    "entryName": "sc-testing",
+    "rootUrl": "/decision-reviews/test-sc",
+    "productId": "4f623c79-478c-4d64-868a-54f06df113a6",
+    "template": {
+      "layout": "page-react.html",
+      "description": "Test changes to Supplemental Claim form",
       "vagovprod": false
     }
   },
@@ -1726,7 +1695,7 @@
     "rootUrl": "/my-health/travel-claim-status",
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1771,7 +1740,7 @@
     }
   },
   {
-    "appName": "Foreign Medical Program (FMP) Registration Form",
+    "appName": "Register for the Foreign Medical Program (FMP)",
     "entryName": "10-7959f-1-FMP",
     "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
@@ -1871,10 +1840,10 @@
   {
     "appName": "Resources for schools",
     "entryName": "sco",
-    "rootUrl": "/education/school-administrators",
+    "rootUrl": "/school-administrators",
     "productId": "40938a35-1cfa-4808-917b-37e0baec6a7c",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1893,6 +1862,75 @@
     "entryName": "form-renderer",
     "rootUrl": "/digital-form",
     "productId": "8e41524c-d835-476c-ba0f-040037380911",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "22-10215 Statement of Assurance of Compliance with 85 Percent Enrollment Ratios",
+    "entryName": "10215-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/10215",
+    "productId": "e02407c0-753b-486d-8122-af5c73a4e983",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "22-10216 5% Exemption Request From 85/15 Reporting Requirement General Information",
+    "entryName": "10216-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/10216",
+    "productId": "db0db964-89ef-4e80-a469-499b7db330cd",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Mock form minimal header",
+    "entryName": "mock-form-minimal-header",
+    "rootUrl": "/mock-form-minimal-header",
+    "productId": "d8d2c26c-6107-4917-8cf6-7002dfe1f1e5",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "minimalHeader": {
+        "title": "Explore pattern demonstrations in our sample form",
+        "subtitle": "Mock Form Minimal Header",
+        "disableHeadings": true,
+        "excludePaths": [
+          "/introduction",
+          "/confirmation"
+        ]
+      }
+    }
+  },
+  {
+    "appName": "Conflicting Interests Certification For Proprietary Schools",
+    "entryName": "1919-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/1919",
+    "productId": "b13f499a-24f7-4ff7-bf94-8c0dbe38a0e1",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Designation Of Certifying Official(s)",
+    "entryName": "8794-edu-benefits",
+    "rootUrl": "/education/apply-for-education-benefits/application/8794",
+    "productId": "bc4e797d-2a35-40f2-b072-66962e75fe89",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Benefit Eligibility Questionnaire",
+    "entryName": "benefit-eligibility-questionnaire",
+    "rootUrl": "/benefit-eligibility-questionnaire",
+    "productId": "87f2c91f-46c3-4461-8890-3636130af4ab",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"

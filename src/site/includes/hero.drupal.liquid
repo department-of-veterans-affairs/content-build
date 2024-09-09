@@ -24,10 +24,11 @@
             </p>
 
             {% if fieldPromoCta.entity.fieldButtonLabel and fieldPromoCta.entity.fieldButtonLink.url.path %}
-              <a onclick="recordEvent({ event: 'homepage-benefit-link-click', action: 'Homepage benefit promo - {{fieldPromoCta.entity.fieldButtonLabel}}' })"
-                class="vads-c-action-link--white" href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}">
-                  {{fieldPromoCta.entity.fieldButtonLabel}}
-              </a>
+              <va-link-action
+                type="reverse"
+                href="{{ fieldPromoCta.entity.fieldButtonLink.url.path }}"
+                text="{{fieldPromoCta.entity.fieldButtonLabel}}"
+              ></va-link-action>
             {% endif %}
           </div>
         </div>
@@ -36,12 +37,6 @@
         <!-- start second column for  bplogin card -->
         <script>
         function openLoginModal() {
-          // Uncomment custom event and delete generic event once analytics team has implemented
-          // recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
-          recordMultipleEvents([
-            { event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': '{{ createAccountBlock.entityLabel }}'  },
-            { event: "homepage-create-account", action: "{{ createAccountBlock.fieldPrimaryCtaButtonText }}" }
-          ]);
           const params = (new URL(document.location)).searchParams;
           params.set("next", "loginModal")
           document.location = "?" + params.toString();
@@ -56,16 +51,13 @@
                 {{ createAccountBlock.fieldCtaSummaryText }}
               </h2>
               <va-button
-                disable-analytics
                 class="vads-u-margin-bottom--3"
                 text="{{ createAccountBlock.fieldPrimaryCtaButtonText }}"
                 onclick="openLoginModal()"
               ></va-button>
               {% for link in createAccountBlock.fieldRelatedInfoLinks %}
                 <va-link
-                  disable-analytics
                   href="{{ link.url.path }}"
-                  onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'secondary', 'button-click-label': '{{ link.title }}',  });"
                   text="{{ link.title }}"
                 ></va-link>
               {% endfor %}
@@ -91,34 +83,25 @@
               <h2 class="vads-u-color--white vads-u-font-size--lg small-desktop-screen:vads-u-font-size--xl">
                 Access and manage your VA benefits and health care
               </h2>
-              <a
-                onclick="recordEvent({ event: 'cta-button-click', 'button-type': 'secondary', 'button-click-label': 'Learn how an account helps you',  });"
-                class="vads-u-color--white vads-u-display--block vads-u-font-weight--normal"
+              <va-link
+                reverse
+                class="vads-u-display--block vads-u-font-weight--normal"
                 href="/resources/creating-an-account-for-vagov/"
-              >
-                Learn how an account helps you
-              </a>
+                text="Learn how an account helps you"
+              ></va-link>
               <script>
               function openLoginModal() {
-                // Uncomment custom event and delete generic event once analytics team has implemented
-                // recordEvent({ event: "homepage-create-account", action: "Homepage Create Account CTA" });
-                recordMultipleEvents([
-                  { event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': '{{ createAccountBlock.entityLabel }}'  },
-                  { event: "homepage-create-account", action: "{{ createAccountBlock.fieldPrimaryCtaButtonText }}" }
-                ]);
                 const params = (new URL(document.location)).searchParams;
                 params.set("next", "loginModal")
                 document.location = "?" + params.toString();
               }
               </script>
-              <button
-                class="vads-u-background-color--white vads-u-color--primary"
+              <va-button
+                class="vads-u-margin-top--2"
                 onclick="openLoginModal()"
                 text="Create an account"
-                type="button"
-              >
-                Create an account
-              </button>
+                secondary
+              ></va-button>
             </div>
         </div>
         <!-- end first column -->

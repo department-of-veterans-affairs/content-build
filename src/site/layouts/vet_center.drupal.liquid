@@ -21,7 +21,10 @@
           {% elsif fieldOfficialName != empty %}
             <h1>{{ fieldOfficialName}}</h1>
           {% endif %}
-
+          <img src="/img/vet-centers/vet-center-banner.jpg" 
+               alt="Small group of diverse Veterans talking and smiling with a Vet center counselor, American flag in the background." 
+               width="1000" height="287" class="vads-u-padding-y--1p5" 
+          />
           {% if fieldIntroText != empty %}
             <div class="va-introtext">
               <p>{{ fieldIntroText }}</p>
@@ -166,7 +169,7 @@
           {% comment %} fieldVetCenterFeatureContent is an array almost in the right format {% endcomment %}
           {% assign allFeaturedContent = fieldCcVetCenterFeaturedCon | appendCentralizedFeaturedContent: fieldVetCenterFeatureContent, "prepend" %}
           <h2 id="in-the-spot-light" class="vads-u-margin-top--0 vads-u-font-size--lg
-          small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight at {{ entityLabel }} </h2>
+          small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight</h2>
             <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
               {% for entity in allFeaturedContent %}
                 {% include "src/site/includes/vet_centers/featured_content.liquid" with
@@ -174,7 +177,8 @@
                 %}
               {% endfor %}
             </div>
-            {% for healthService in fieldHealthServices %}
+            {% assign publishedHealthServices = fieldHealthServices | filterBy: "entity.status", true %}
+            {% for healthService in publishedHealthServices %}
               <script type="application/ld+json">
                 {
                   "@context": "https://schema.org",
@@ -219,17 +223,17 @@
             {% endfor %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "counseling"
           %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "referral"
           %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "other"
           %}
 

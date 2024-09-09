@@ -8,7 +8,7 @@
 
   <div data-template="teasers/event_featured">
     <{{header}} class="vads-u-margin-top--0 vad-u-margin-bottom-1 vads-u-font-size--md medium-screen:vads-u-font-size--lg">
-      <a href="{{ node.entityUrl.path }}">{{ node.title }}</a>
+      <va-link href="{{ node.entityUrl.path }}" text="{{ node.title | encode }}"></va-link>
     </{{header}}>
     <p class="vads-u-margin-bottom--1p5 vads-u-margin-top--0">
       {{ node.fieldDescription | truncatewords: 60, "..." }}</p>
@@ -42,7 +42,7 @@
         </div>
         <div class="usa-width-five-sixths">
           <p class="vads-u-margin-top--0 vads-u-margin-bottom--1">
-            <a onclick="recordEvent({ event: 'nav-featured-content-link-click' });" href="{{ node.fieldFacilityLocation.entity.entityUrl.path }}">{{ node.fieldFacilityLocation.entity.title }}</a>
+            <va-link href="{{ node.fieldFacilityLocation.entity.entityUrl.path }}" text="{{ node.fieldFacilityLocation.entity.title | encode }}"></va-link>
           </p>
           {% if node.fieldLocationHumanreadable != empty %}
             <span>{{ node.fieldLocationHumanreadable }}</span>

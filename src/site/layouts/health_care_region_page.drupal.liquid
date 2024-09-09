@@ -41,10 +41,9 @@
                     entity = main
                     fieldVaHealthConnectPhone = fieldVaHealthConnectPhone
             %}
-            {% endfor %} <va-link
+            {% endfor %} 
+            <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/locations"
               text="See all locations"
@@ -70,8 +69,6 @@
                     icon="pill"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/", buildtype }}"
                     text="Refill and track your prescriptions"
                   ></va-link>
@@ -83,8 +80,6 @@
                     icon="forum"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/", buildtype }}"
                     text="Send a secure message to your health care team"
                   ></va-link>
@@ -96,8 +91,6 @@
                     icon="event_available"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", buildtype }}"
                     text="Schedule and manage health appointments"
                   ></va-link>
@@ -122,8 +115,6 @@
                     icon="note_add"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/", buildtype }}"
                     text="Download your VA medical records (Blue Button)"
                   ></va-link>
@@ -135,8 +126,6 @@
                     icon="assignment"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/", buildtype }}"
                     text="View your lab and test results"
                   ></va-link>
@@ -148,8 +137,6 @@
                     icon="hearing_disabled"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="/health-care/order-hearing-aid-batteries-and-accessories/"
                     text="Order hearing aid batteries and accessories"
                   ></va-link>
@@ -205,8 +192,6 @@
             {% endfor %}
             <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/stories"
               text="See all stories"
@@ -227,8 +212,6 @@
               {% endfor %}
             <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/events"
               text="See all events"
@@ -248,8 +231,6 @@
             {% endfor %}
             <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/events"
               text="See all events"

@@ -64,7 +64,7 @@
           uswds
           bordered
           class="va-accordion-item"
-          id="vba-service-item-{{ entityId }}"
+          id="{{ entityName | hashReference: 60 }}"
           header="{{ entityName }}"
           data-label="{{ entityName }}"
           data-template="vba_facilities/services"
@@ -87,15 +87,7 @@
                 active
                 href="{{ onlineSelfService.url.path }}"
                 text="{{ onlineSelfService.title }}"
-                onclick="recordEvent(
-                  {
-                    'event': 'vba-regional-facility-services-manage-benefits-online',
-                    'vba-regional-facility-name': '{{ facilityName }}',
-                    'accordion-parent-label': '{{ entityName }}',
-                    'link-label': '{{ onlineSelfService.title }}'
-                  }
-                )"
-              >
+              ></va-link>
             </p>
           {% endif %}
 

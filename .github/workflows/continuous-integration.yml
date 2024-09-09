@@ -14,6 +14,10 @@ env:
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   INSTANCE_TYPE: m5.4xlarge
+  # Sandbox Drupal address, username, and password is used on branches other than main.
+  DRUPAL_ADDRESS: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
+  # This is a test credential and is not used on any production instances.
+  DRUPAL_PASSWORD: drupal8
 
 concurrency:
   group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
@@ -34,10 +38,6 @@ jobs:
       vagovstaging_buildtime: ${{ env.vagovstaging_buildtime }}
 
     env:
-      # Sandbox Drupal address, username, and password is used on branches other than main.
-      DRUPAL_ADDRESS: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
-      # This is a test credential and is not used on any production instances.
-      DRUPAL_PASSWORD: drupal8
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
 
     strategy:
@@ -682,15 +682,16 @@ jobs:
           DEST: s3://${{ matrix.bucket }}
 
       - name: Wait for the CMS to be ready
+        if: ${{ matrix.environment == 'vagovstaging' }}
         uses: ./.github/workflows/wait-for-cms-ready
         with:
-          base_url: https://staging.cms.va.gov
+          base_url: ${{ env.DRUPAL_ADDRESS }}
 
       - name: CMS GovDelivery callback
         if: ${{ matrix.environment == 'vagovstaging' }}
         uses: fjogeleit/http-request-action@e8dd067b83c3ab0774c76bf065b1c4f11c7e45ba # v1.14.0
         with:
-          url: https://staging.cms.va.gov/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
+          url: ${{ env.DRUPAL_ADDRESS }}/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
           username: api
           password: ${{ env.CALLBACK_TOKEN }}
