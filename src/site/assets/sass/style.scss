@@ -1,6 +1,8 @@
+@import "~@department-of-veterans-affairs/css-library/dist/stylesheets/mixins";
+
 // Add CSS and imports here.
 .feedback-button {
-  background-color: var(color-primary);
+  background-color: var(--vads-color-primary);
   font-size: 1rem;
   font-weight: 700;
   line-height: 1;
@@ -287,4 +289,208 @@
   }
 }
 
-// END: Styles for mobile app promo banner  
+// END: Styles for mobile app promo banner
+
+.bio-paragraph-image {
+  border-radius: 50%;
+  position: relative;
+  height: 110px;
+  width: 110px;
+}
+
+.va-facility-page {
+  .va-address-block {
+    margin-left: 0.625rem;
+    border-left: none;
+  }
+}
+
+.media-list-images {
+  @media (min-width: var(--small-screen)) {
+    max-width: 50%;
+  }
+}
+
+.va-c-position-top-right-corner {
+  right: 0;
+  top: 0;
+}
+
+.va-c-margin-top--auto {
+  margin-top: auto;
+}
+
+// Campaign Landing Pages
+.va-c-blue-line {
+  width: 40px;
+}
+
+.va-c-blue-line--large {
+  width: 50px;
+}
+
+.va-u-background--gradient-blue {
+  @include linear-gradient-background(var(--vads-color-primary), var(--vads-color-primary-darker));
+}
+
+.va-c-video {
+  max-width: 560px;
+}
+
+.event-detail-img {
+  width: 100%;
+  height: 28%;
+  object-fit: cover;
+}
+
+// The below styles are still used in home.html, which is the legacy home page
+// so technically these are "unused" but the template still exists so the styles will until it goes away
+.homepage-hub {
+  @include linear-gradient-background(var(--vads-color-primary), var(--vads-color-primary-darker));
+  padding-top: 1.5em;
+
+  @include media(var(--medium-screen)) {
+    padding-top: 3em;
+  }
+}
+
+.homepage-hub-container {
+  max-width: 62.5rem;
+
+  @include media(var(--medium-screen)) {
+    margin: auto;
+    width: 85%;
+  }
+
+  @include media(var(--large-screen)) {
+    margin: auto;
+    width: 64%;
+  }
+}
+
+.homepage-image-wrapper {
+  width: 100%;
+  height: 0;
+  padding-bottom: 65%;
+  /* You define this doing height / width * 100% */
+  position: relative;
+
+  > .lazy {
+    width: 100%;
+    position: absolute;
+  }
+}
+
+.homepage-news-story-title {
+  margin-top: 1em;
+  margin-bottom: 0;
+
+  @include media(var(--medium-screen)) {
+    margin-top: 1.5em;
+    margin-bottom: inherit;
+  }
+}
+
+.homepage-news-story-desc {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+
+  @include media(var(--medium-screen)) {
+    margin-bottom: inherit;
+  }
+}
+
+.homepage-news-story {
+  margin-bottom: 2em;
+
+  @include media(var(--medium-screen)) {
+    margin-bottom: 0em;
+  }
+}
+
+.homepage-button {
+  width: 100%;
+  height: 85px;
+  padding: 0;
+  margin: 0 0 16px;
+  display: inline-block;
+  color: var(--vads-color-white);
+  background-color: var(--vads-color-primary);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  transition-property: background-color;
+
+  &:hover,
+  &:active {
+    background-color: var(--vads-color-primary-dark);
+    outline-offset: 2px;
+
+    .icon-wrapper {
+      background-color: var(--vads-color-primary-darker);
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:visited {
+    color: var(--vads-color-white);
+    text-decoration: none;
+    outline-offset: 2px;
+  }
+
+  &.vcl {
+    background-color: var(--vads-color-secondary-dark);
+
+    &:hover,
+    &:active {
+      background-color: var(--vads-color-secondary-darkest);
+      outline-offset: 2px;
+
+      .icon-wrapper {
+        background-color: var(--vads-color-secondary-dark);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .icon-wrapper {
+    width: 55px;
+    height: 100%;
+    float: left;
+    background-color: var(--vads-color-primary-dark);
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    transition-property: background-color;
+
+    &.vcl {
+      content: "";
+      background: url(../img/VCL-icon-white.svg) no-repeat;
+      background-size: 2em auto;
+      background-position: center;
+      background-color: var(--vads-color-secondary-darkest);
+    }
+  }
+
+  .button-inner {
+    margin-left: 55px;
+    height: 100%;
+    padding: 1em;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+// end home.html styles

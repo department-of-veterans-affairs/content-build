@@ -207,6 +207,7 @@
   },
   "private": true,
   "dependencies": {
+    "@department-of-veterans-affairs/css-library": "^0.9.8",
     "@department-of-veterans-affairs/vagov-platform": "^0.0.1",
     "aws-sdk": "^2.1441.0",
     "blob-polyfill": "^4.0.20200601",

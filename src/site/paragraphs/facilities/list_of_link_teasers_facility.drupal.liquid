@@ -15,34 +15,33 @@
         {% endif %}
     </h2>
 
-    <div>
-      <div class="usa-grid usa-grid-full">
-        {% assign linkTeasers = paragraph.fieldVaParagraphs %}
-        {% comment %}
-            Max number of links allowed = 8
-        {% endcomment %}
-        {% if linkTeasers.length > 8 %}
-          {% assign linkTeasers = linkTeasers | sliceArray: 0, 8 %}
+    <div class="usa-grid usa-grid-full">
+      {% assign linkTeasers = paragraph.fieldVaParagraphs %}
+      {% comment %}
+          Max number of links allowed = 8
+      {% endcomment %}
+      {% if linkTeasers.length > 8 %}
+        {% assign linkTeasers = linkTeasers | sliceArray: 0, 8 %}
+      {% endif %}
+      
+      {% comment %}
+          If there are less than or exactly 6 links, 3 items per column
+          If there are more than 6 links, 4 items per column
+      {% endcomment %}
+      {% if linkTeasers.length > 6 %}
+        {% assign linkWrapperStartIndex = 5 %}
+        {% assign linkWrapperEndIndex = 4 %}
+      {%  else %}
+        {% assign linkWrapperStartIndex = 4 %}
+        {% assign linkWrapperEndIndex = 3 %}
+      {% endif %}
+      {% for linkTeaser in linkTeasers %}
+        {% assign link = linkTeaser.entity.fieldLink %}
+        {% if forloop.last == true %}
+          {% assign spacing = "" %}
+        {% else %}
+          {% assign spacing = " vads-u-margin-bottom--2" %}
         {% endif %}
-        
-        {% comment %}
-            If there are less than or exactly 6 links, 3 items per column
-            If there are more than 6 links, 4 items per column
-        {% endcomment %}
-        {% if linkTeasers.length > 6 %}
-          {% assign linkWrapperStartIndex = 5 %}
-          {% assign linkWrapperEndIndex = 4 %}
-        {%  else %}
-          {% assign linkWrapperStartIndex = 4 %}
-          {% assign linkWrapperEndIndex = 3 %}
-        {% endif %}
-        {% for linkTeaser in linkTeasers %}
-          {% assign link = linkTeaser.entity.fieldLink %}
-          {% if forloop.last == true %}
-            {% assign spacing = "" %}
-          {% else %}
-            {% assign spacing = " vads-u-margin-bottom--2" %}
-          {% endif %}
 
           <va-link
             class="other-services-links vads-u-display--block{{ spacing }}"
