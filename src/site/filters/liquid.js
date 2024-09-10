@@ -673,26 +673,20 @@ module.exports = function registerFilters() {
     return breadcrumbs;
   };
 
-  liquid.filters.deriveLcBreadcrumbs = (
-    breadcrumbs,
-    string,
-    currentPath,
-    pageTitle,
-  ) => {
+  liquid.filters.deriveLcBreadcrumbs = breadcrumbs => {
     // Remove any resources crumb - we don't want the drupal page title.
     const filteredCrumbs = breadcrumbs.filter(
       crumb => crumb.url.path !== '/resources',
     );
-    // Add the resources crumb with the correct crumb title.
-    filteredCrumbs.push({
-      url: { path: '/resources', routed: false },
-      text: 'Resources and support',
-    });
 
-    if (pageTitle) {
-      filteredCrumbs.push({
-        url: { path: currentPath, routed: true },
-        text: string,
+    const firstBreadcrumbIsHome =
+      breadcrumbs?.[0].text.toLowerCase() === 'home';
+
+    if (firstBreadcrumbIsHome) {
+      // Add the resources crumb with the correct crumb title after "home"
+      filteredCrumbs.splice(1, 0, {
+        url: { path: '/resources', routed: false },
+        text: 'Resources and support',
       });
     }
 
