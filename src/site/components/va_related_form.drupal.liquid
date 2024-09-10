@@ -11,19 +11,23 @@
 
 {{ vaForm.fieldVaFormUsage.processed }}
 
-{% if featureFindFormsPDFModal %}
-  <button
-    class="va-button-link vads-u-display--flex vads-u-align-items--center"
-    data-widget-type="find-va-forms-pdf-download-helper"
-    data-href="{{ vaForm.fieldVaFormUrl.uri }}"
-    data-form-number="{{ vaForm.fieldVaFormNumber }}"
-    id="{{ fieldVaFormNumber }}-download-button-{{ vaForm.fieldVaFormLanguage }}"
-    lang="{{ vaForm.fieldVaFormLanguage }}"
-  >
-    {% assign translatedDownloadText = vaForm.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.fieldVaFormNumber %}
-    <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
-    {{ translatedDownloadText }} (PDF)
-  </button>
+{% assign showPDFModal = ''| featureFindFormsPDFModal %}
+
+{% if showPDFModal %}
+  <div id="{{ vaForm.fieldVaFormNumber }}-download-button-{{ vaForm.fieldVaFormLanguage }}-parent">
+    <button
+      class="va-button-link vads-u-display--flex vads-u-align-items--center"
+      data-widget-type="find-va-forms-pdf-download-helper"
+      data-href="{{ vaForm.fieldVaFormUrl.uri }}"
+      data-form-number="{{ vaForm.fieldVaFormNumber }}"
+      id="{{ vaForm.fieldVaFormNumber }}-download-button-{{ vaForm.fieldVaFormLanguage }}"
+      lang="{{ vaForm.fieldVaFormLanguage }}"
+    >
+      {% assign translatedDownloadText = vaForm.fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', vaForm.fieldVaFormNumber %}
+      <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
+      {{ translatedDownloadText }} (PDF)
+    </button>
+  </div>
 {% else %}
   <a
     href="{{ vaForm.fieldVaFormUrl.uri }}"

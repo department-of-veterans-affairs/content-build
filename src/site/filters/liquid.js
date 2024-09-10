@@ -2193,6 +2193,6 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.featureFindFormsPDFModal = () => {
-    return cmsFeatureFlags?.FEATURE_FIND_FORMS_MODAL;
+    return cmsFeatureFlags.FEATURE_FIND_FORMS_MODAL;
   };
 };

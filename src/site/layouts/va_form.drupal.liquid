@@ -95,9 +95,9 @@
           <h2 class="vads-u-margin-bottom--2">Downloadable PDF</h2>
         {% endif %}
 
-        {% assign showFindFormsPDFModal = featureFindFormsPDFModal %}
+        {% assign showPDFModal = ''| featureFindFormsPDFModal %}
 
-        {% if showFindFormsPDFModal %}
+        {% if showPDFModal %}
           <div id="main-download-container">
             <button
               class="va-button-link vads-u-display--flex vads-u-align-items--center"
@@ -178,15 +178,13 @@
                 {% endfor %}
               </ul>
             {% elsif fieldVaFormRelatedForms.length == 1 %}
-              <div id="{{ fieldVaFormNumber }}-download-button-{{ vaForm.entity.fieldVaFormLanguage }}-parent">
-                {% for vaForm in fieldVaFormRelatedForms %}
-                  {% include "src/site/components/va_related_form.drupal.liquid" with
-                    vaForm = vaForm.entity
-                    fieldVaFormNumber = fieldVaFormNumber
-                    translatedDownloadText = translatedDownloadText
-                  %}
-                {% endfor %}
-              </div>
+              {% for vaForm in fieldVaFormRelatedForms %}
+                {% include "src/site/components/va_related_form.drupal.liquid" with
+                  vaForm = vaForm.entity
+                  fieldVaFormNumber = fieldVaFormNumber
+                  translatedDownloadText = translatedDownloadText
+                %}
+              {% endfor %}
             {% endif %}
           </section>
         {% endif %}
