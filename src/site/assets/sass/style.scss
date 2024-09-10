@@ -1,6 +1,6 @@
 @import "~@department-of-veterans-affairs/css-library/dist/stylesheets/mixins";
+@import "~@department-of-veterans-affairs/css-library/dist/stylesheets/base/va";
 
-// Add CSS and imports here.
 .feedback-button {
   background-color: var(--vads-color-primary);
   font-size: 1rem;
@@ -341,6 +341,418 @@
   width: 100%;
   height: 28%;
   object-fit: cover;
+}
+
+.duotone {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+}
+
+.duotone::before,
+.duotone::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.duotone::before {
+  mix-blend-mode: color;
+}
+
+.duotone::after {
+  mix-blend-mode: screen;
+}
+
+/* The brightest duo-tone color */
+.darken::before {
+  background-color: var(--vads-color-primary-darker);
+}
+
+/* The darkest duo-tone color */
+.lighten::after {
+  background-color: var(--vads-color-black);
+}
+
+.vads-facility-hub-cta-circle {
+  border-radius: 50%;
+  padding: 6px;
+}
+
+.vads-facility-hub-cta-last-line {
+  border-bottom: 1px solid var(--vads-color-primary-alt-light);
+}
+
+.vads-facility-hub-cta {
+  border-top: 1px solid var(--vads-color-primary-alt-light);
+  height: 73px;
+  position: relative;
+
+  & > a {
+    text-decoration: none;
+    display: inline-block;
+  }
+}
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+
+  .duotone::before,
+  .duotone::after {
+    width: 0%;
+    height: 0%;
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+
+  /* Cheat to restrict to IE Edge CSS styles. */
+  .duotone::before,
+  .duotone::after {
+    width: 0%;
+    height: 0%;
+  }
+}
+
+// There are styles in our sidebar styles that set a small
+// amount of padding on the grid for detail pages, which we
+// are overriding for WBC with no padding
+.va-l-detail-page > .usa-grid-full {
+  padding-right: inherit;
+  padding-left: inherit;
+}
+
+.va-sidebarnav.new-grid {
+  width: 100% !important;
+}
+
+.va-nav-breadcrumbs.new-grid,
+article.new-grid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: var(--xsmall-screen)) and (max-width: var(--medium-screen - 1)) {
+
+  .va-nav-breadcrumbs.new-grid,
+  article.new-grid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: var(--large-screen)) {
+
+  .va-nav-breadcrumbs.new-grid,
+  article.new-grid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.footer {
+  color: var(--vads-color-white);
+  margin: 0 auto;
+  background: var(--vads-color-primary-darker);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 50vh 0 50vh var(--vads-color-primary-darker);
+
+  @include media(var(--medium-screen)) {
+    flex-wrap: nowrap;
+  }
+
+  .va-flex {
+    flex-wrap: wrap;
+    padding-left: 0.5859375rem;
+
+    @include media(var(--medium-screen)) {
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+.homepage-hero__wrapper.fallback {
+  background: linear-gradient(to right,
+      var(--vads-color-primary) 30%,
+      var(--vads-color-primary-dark) 60%,
+      var(--vads-color-primary-darker));
+
+  .homepage-hero__create-account {
+    margin: 0 !important;
+  }
+
+  h1 {
+    margin: 28px 0 16px 0;
+    max-width: 228px;
+
+    @media screen and (max-width: 539px) {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  h2 {
+    margin: 0 0 12px 0;
+
+    @media screen and (max-width: 539px) {
+      max-width: 85%;
+    }
+  }
+
+  a {
+    margin-bottom: 20px;
+  }
+
+  img {
+    display: inline-block;
+    height: 327px;
+    width: 33.3%;
+    object-fit: cover;
+
+    @media screen and (max-width: 1007px) {
+      width: 50%;
+      object-position: top;
+
+      &:last-child {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      width: 100%;
+
+      &:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+
+  button {
+    margin: 0 0 30px 0;
+  }
+
+  .homepage-hero-first-column {
+    width: 100%;
+    max-width: 400px;
+    padding-left: 17px;
+
+    @media screen and (max-width: 899px) {
+      max-width: 345px;
+    }
+
+    @media screen and (max-width: 767px) {
+      max-width: 60%;
+      padding-left: 12px;
+    }
+
+    @media screen and (max-width: 539px) {
+      max-width: 100%;
+      padding-right: 9px !important;
+    }
+  }
+
+  .homepage-hero-second-column {
+    padding-right: 17px;
+
+    @media screen and (max-width: 1007px) {
+      width: 60%;
+    }
+
+    @media screen and (max-width: 899px) {
+      width: 100%;
+    }
+
+    @media screen and (max-width: 767px) {
+      width: 40%;
+      padding-right: 9px;
+    }
+
+    @media screen and (max-width: 539px) {
+      display: none;
+    }
+  }
+}
+
+// The !importants here are due to the
+// usa-grid padding 0 rule
+.homepage-benefits-row {
+  padding-bottom: 1.5em;
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+
+  @include media(var(--medium-screen)) {
+    padding-bottom: 3em;
+  }
+}
+
+.va-c-facility-hours-list {
+  list-style-type: none;
+  padding: 0;
+  columns: 1;
+  -webkit-columns: 1;
+  -moz-columns: 1;
+  list-style-position: inside;
+}
+
+.inline-table-helper {
+  display: inline-table;
+}
+
+.homepage-blog {
+  &__image {
+    height: 100%;
+
+    // remove when moving away from prototype image
+    &.demo-image-adjustments {
+      overflow: hidden;
+
+      img {
+        transform: scale(170%) translateY(-35px);
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+
+      @media (min-width: var(--small-screen)) {
+        height: 100%;
+      }
+    }
+  }
+}
+
+a.operating-status-link {
+  color: initial;
+  display: inline-block;
+  font-weight: 700;
+}
+
+.operating-status-flag {
+  width: 286px;
+  height: 40px;
+  transition: background 0.25s;
+}
+
+.operating-status-flag .os-icon {
+  padding-right: 7px;
+}
+
+.operating-status-flag .os-chevron-right {
+  font-size: 12px;
+}
+
+.operating-status-flag-notice:hover {
+  background: rgba(155, 218, 241, 0.7);
+}
+
+.operating-status-flag-warning:hover {
+  background: rgba(250, 217, 128, 0.7);
+}
+
+.operating-status-flag-error:hover {
+  background: rgba(229, 147, 147, 0.7)
+}
+
+.operating-status-flag-notice:active {
+  background: rgba(155, 218, 241, 1);
+}
+
+.operating-status-flag-warning:active {
+  background: rgba(250, 217, 128, 1);
+}
+
+.operating-status-flag-error:active {
+  background: rgba(229, 147, 147, 1)
+}
+
+.va-c-social-icon {
+  color: var(--vads-color-link);
+}
+
+@media print {
+  .va-hide-on-print-view {
+    display: none;
+  }
+}
+
+/* DO NOT REMOVE w/o DS REVIEW: solves !important conflict*/
+button.vads-u-background-color--gray-lightest,
+.va-hide-on-print-view button.vads-u-background-color--gray-lightest:hover {
+  background-color: var(--vads-color-base-lightest);
+  color: var(--vads-color-primary-dark);
+}
+
+/* ^^^ DO NOT REMOVE w/o DS REVIEW: solves !important conflict*/
+
+.va-notice--banner {
+  margin: 0;
+  background: #f0f0f0;
+  padding: 0;
+  font-weight: 400;
+
+  .usa-banner-inner {
+    padding-left: 1.5rem;
+  }
+
+  .usa-banner-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .va-notice--banner-inner {
+    margin: auto;
+    max-width: 97.5rem;
+    position: relative;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    background-image: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  @media screen and (min-width: 1008px) {
+    .usa-banner-inner {
+      padding-left: 0;
+    }
+  }
+}
+
+.menu-rule {
+  border-bottom: 1px solid var(--vads-color-white);
+  margin-left: -0.55em;
+  padding-bottom: 1em;
+  padding-right: 1.2em;
+}
+
+@media (min-width: var(--xsmall-screen)) and (max-width: (var(--medium-screen - 1))) {
+  .menu-rule {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.va-crisis-line-container {
+  position: relative;
+  margin: auto;
+  background-color: var(--vads-color-secondary-darkest);
+
+  @include media(var(--small-desktop-screen)) {
+    max-width: 975px;
+    background-color: transparent;
+  }
 }
 
 // The below styles are still used in home.html, which is the legacy home page

@@ -1,7 +1,7 @@
 <!-- Search and Common tasks hub on home page -->
 
 <!-- Hub Content -->
-<div class="homepage-common-tasks__wrapper" data-e2e="common">
+<div data-e2e="common">
   <div class="vads-l-grid-container vads-u-padding-x--0 homepage-common-tasks">
     <div class="vads-l-row">
       <!-- start first column-->
@@ -17,7 +17,7 @@
           <h3 class="vads-u-color--gray-dark vads-u-font-family--serif">
             Other search tools
           </h3>
-          <div class="homepage-common-tasks__search-tools">
+          <div>
             <ul class="vads-u-padding-left--0" role="list">
               {% if searchLinks %}
                 {% for link in searchLinks %}
@@ -48,7 +48,7 @@
           <h2 class="vads-u-color--gray-dark vads-u-font-family--serif">
             Top pages
           </h2>
-          <ul class="homepage-common-tasks__list vads-u-padding-left--0 " role="list">
+          <ul vads-u-padding-left--0" role="list">
             {% if popularLinks %}
               {% for link in popularLinks%}
                 {% if link.url.path and link.label %}
