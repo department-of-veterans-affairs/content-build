@@ -755,6 +755,10 @@ button.vads-u-background-color--gray-lightest,
   }
 }
 
+.arp-footer-hidden {
+  display: none;
+}
+
 // The below styles are still used in home.html, which is the legacy home page
 // so technically these are "unused" but the template still exists so the styles will until it goes away
 .homepage-hub {
