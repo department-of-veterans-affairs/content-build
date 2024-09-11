@@ -9,7 +9,7 @@
       <h1 class="heading-level-2 homepage-heading">{{ heading }}</h1>
 
       <!-- top row -->
-      <div class="hub-links-row">
+      <div>
         {% for card in cards %}
         <div class="hub-links-container" data-e2e="bucket">
           <h2 class="heading-level-3 vads-u-margin-top--0">{{
@@ -26,7 +26,7 @@
         </div>
         {% if card.end_row == true and forloop.last != true %}
       </div>
-      <div class="hub-links-row">
+      <div>
         {% endif %}
         {% endfor %}
       </div>
@@ -42,7 +42,8 @@
       <div class="usa-grid usa-grid-full homepage-benefits-row">
         {% for hub in hubs %}
         <div class="usa-width-one-third" data-e2e="hub">
-          <h3 class="heading-level-4"><a href="{{ hub.url }}" onclick="recordEvent({ event: 'nav-linkslist' });">{{hub.heading}}</a>
+          <h3 class="heading-level-4"><a href="{{ hub.url }}"
+              onclick="recordEvent({ event: 'nav-linkslist' });">{{hub.heading}}</a>
             </h4>
             <p class="vads-u-margin-top--0">{{hub.description}}</p>
         </div>

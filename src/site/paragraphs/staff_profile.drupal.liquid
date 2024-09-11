@@ -24,7 +24,7 @@
             vads-u-margin-bottom--0
             vads-u-font-size--md">
           {% if bio.fieldCompleteBiographyCreate %}
-          <a class="bioLink" href="{{ bio.entityUrl.path }}">{{ bio.fieldNameFirst }}
+          <a href="{{ bio.entityUrl.path }}">{{ bio.fieldNameFirst }}
             {{ bio.fieldLastName }} {{ bio.fieldSuffix }}</a>
           {% else %}
             {{ bio.fieldNameFirst }} {{ bio.fieldLastName }} {{ bio.fieldSuffix }}

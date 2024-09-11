@@ -43,7 +43,7 @@
          </div>
       {% endif %}
       {% if entity.fieldMentalHealthPhone %}
-        <div class="mental-health-care-phone">
+        <div>
           <strong>Mental health care:</strong> {{ entity.fieldMentalHealthPhone | processPhoneToVaTelephoneOrFallback : '', 'Mental health care' }}
         </div>
       {% endif %}
