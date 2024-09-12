@@ -474,35 +474,6 @@
     }
   },
   {
-    "appName": "22-1990E Education benefits form",
-    "entryName": "1990e-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/1990E",
-    "template": {
-      "title": "Apply For Education Benefits",
-      "heading": "Apply for education benefits",
-      "display_title": "Apply to use transferred benefits",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "order": 4,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/1990E"
-        }
-      ]
-    }
-  },
-  {
     "appName": "22-10203 Education benefits form",
     "entryName": "10203-edu-benefits",
     "rootUrl": "/education/other-va-education-benefits/stem-scholarship/apply-for-scholarship-form-22-10203",
@@ -1010,31 +981,6 @@
       "layout": "page-react.html",
       "title": "Ask VA Integration Project",
       "description": "Ask VA (AVA) is an online portal that allows veterans, caregivers, and supporting personnel in education, debt, loans, etc. to submit questions to VA and receive a secure message response."
-    }
-  },
-  {
-    "appName": "Veteran Rapid Retraining Assistance Program (VRRAP)",
-    "entryName": "1990s-edu-benefits",
-    "rootUrl": "/education/other-va-education-benefits/veteran-rapid-retraining-assistance/apply-for-vrrap-form-22-1990s",
-    "template": {
-      "title": "Apply for the Veteran Rapid Retraining Assistance Program (VRRAP)",
-      "heading": "Apply for the Veteran Rapid Retraining Assistance Program (VRRAP)",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "Other VA education benefits",
-          "path": "education/other-va-education-benefits/"
-        },
-        {
-          "name": "Apply for VRRAP VA Form 22 1990s",
-          "path": "education/other-va-education-benefits/veteran-rapid-retraining-assistance/apply-for-vrrap-form-22-1990s"
-        }
-      ]
     }
   },
   {
@@ -1755,7 +1701,9 @@
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
     "template": {
       "vagovprod": false,
-      "layout": "accredited-representative-portal.html"
+      "layout": "accredited-representative-portal.html",
+      "title": "Apply to become a VA accredited attorney or claims agent",
+      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)"
     }
   },
   {
@@ -1837,33 +1785,6 @@
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true
-    }
-  },
-  {
-    "appName": "Apply to become a VA accredited attorney or claims agent",
-    "entryName": "21a",
-    "rootUrl": "/accreditation/attorney-claims-agent-form-21a",
-    "productId": "55b00994-6f3c-4527-98be-5a90e37eec01",
-    "template": {
-      "vagovprod": false,
-      "title": "Apply to become a VA accredited attorney or claims agent",
-      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Home",
-          "path": ""
-        },
-        {
-          "name": "VA accreditation representatives",
-          "path": "accreditation"
-        },
-        {
-          "name": "Apply to become a VA accredited attorney or claims agent",
-          "path": "accreditation/attorney-claims-agent-form-21a"
-        }
-      ]
     }
   },
   {
