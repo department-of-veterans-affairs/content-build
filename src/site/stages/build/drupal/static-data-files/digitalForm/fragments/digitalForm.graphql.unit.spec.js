@@ -8,8 +8,13 @@ describe('digitalForm fragment', () => {
     expect(digitalForm).to.have.string('nid');
     expect(digitalForm).to.have.string('entityLabel');
     expect(digitalForm).to.have.string('fieldVaFormNumber');
-    expect(digitalForm).to.have.string('fieldOmbNumber');
     expect(digitalForm).to.have.string('fieldChapters');
+  });
+
+  it('include OMB info', () => {
+    expect(digitalForm).to.have.string('fieldOmbNumber');
+    expect(digitalForm).to.have.string('fieldRespondentBurden');
+    expect(digitalForm).to.have.string('fieldExpirationDate');
   });
 
   describe('chapter fragments', () => {
