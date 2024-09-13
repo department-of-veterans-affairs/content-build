@@ -464,108 +464,6 @@ article.new-grid {
   }
 }
 
-.homepage-hero__wrapper.fallback {
-  background: linear-gradient(to right,
-      var(--vads-color-primary) 30%,
-      var(--vads-color-primary-dark) 60%,
-      var(--vads-color-primary-darker));
-
-  .homepage-hero__create-account {
-    margin: 0 !important;
-  }
-
-  h1 {
-    margin: 28px 0 16px 0;
-    max-width: 228px;
-
-    @media screen and (max-width: 539px) {
-      max-width: 100%;
-      width: 100%;
-    }
-  }
-
-  h2 {
-    margin: 0 0 12px 0;
-
-    @media screen and (max-width: 539px) {
-      max-width: 85%;
-    }
-  }
-
-  a {
-    margin-bottom: 20px;
-  }
-
-  img {
-    display: inline-block;
-    height: 327px;
-    width: 33.3%;
-    object-fit: cover;
-
-    @media screen and (max-width: 1007px) {
-      width: 50%;
-      object-position: top;
-
-      &:last-child {
-        display: none;
-      }
-    }
-
-    @media screen and (max-width: 767px) {
-      width: 100%;
-
-      &:nth-child(2) {
-        display: none;
-      }
-    }
-  }
-
-  button {
-    margin: 0 0 30px 0;
-  }
-
-  .homepage-hero-first-column {
-    width: 100%;
-    max-width: 400px;
-    padding-left: 17px;
-
-    @media screen and (max-width: 899px) {
-      max-width: 345px;
-    }
-
-    @media screen and (max-width: 767px) {
-      max-width: 60%;
-      padding-left: 12px;
-    }
-
-    @media screen and (max-width: 539px) {
-      max-width: 100%;
-      padding-right: 9px !important;
-    }
-  }
-
-  .homepage-hero-second-column {
-    padding-right: 17px;
-
-    @media screen and (max-width: 1007px) {
-      width: 60%;
-    }
-
-    @media screen and (max-width: 899px) {
-      width: 100%;
-    }
-
-    @media screen and (max-width: 767px) {
-      width: 40%;
-      padding-right: 9px;
-    }
-
-    @media screen and (max-width: 539px) {
-      display: none;
-    }
-  }
-}
-
 // The !importants here are due to the
 // usa-grid padding 0 rule
 .homepage-benefits-row {
@@ -861,12 +759,58 @@ button.vads-u-background-color--gray-lightest,
 
 // The below styles are still used in home.html, which is the legacy home page
 // so technically these are "unused" but the template still exists so the styles will until it goes away
+.homepage-heading {
+  color: var(--vads-color-white);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1em;
+
+  @include media($medium-screen) {
+    margin-bottom: 1.5em;
+  }
+}
+
 .homepage-hub {
   @include linear-gradient-background(var(--vads-color-primary), var(--vads-color-primary-darker));
   padding-top: 1.5em;
 
   @include media(var(--medium-screen)) {
     padding-top: 3em;
+  }
+
+  .hub-links-container {
+    flex: 1;
+  }
+
+  .hub-links-list {
+    padding-right: 5px;
+    padding-left: 0.625rem;
+    list-style: none;
+  }
+}
+
+.hub-links {
+  &-row {
+    display: flex;
+    flex-direction: column;
+
+    @include media($medium-screen) {
+      flex-direction: row;
+    }
+  }
+
+  &-container {
+    background-color: var(--vads-color-white);
+    margin: 0 0.5em 0.5em;
+    padding: 1.5em 1.5em 2.125em 1.5em;
+
+    @include media($medium-screen) {
+      margin: 0 21px 21px 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }
 
@@ -922,6 +866,52 @@ button.vads-u-background-color--gray-lightest,
   @include media(var(--medium-screen)) {
     margin-bottom: 0em;
   }
+}
+
+#homepage-benefits {
+  padding-top: 1.5em;
+
+  @include media($medium-screen) {
+    padding-top: 3em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
+#homepage-popular {
+  padding-top: 3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+
+  @include media($medium-screen) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  @include media($large-screen) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+#homepage-news {
+  padding: 3em 0.5em;
+
+  @include media($medium-screen) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  @include media($large-screen) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+#homepage-benefits,
+#homepage-news {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 // end home.html styles
