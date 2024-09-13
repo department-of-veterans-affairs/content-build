@@ -270,6 +270,12 @@
   }
 }
 
+.facilities_health_service {
+  button.usa-button {
+    margin-bottom: 0;
+  }
+}
+
 // fix for sidenav btn
 .va-sidenav-btn-close {
   background-size: 0.625rem 0.625rem;
@@ -395,6 +401,13 @@
   }
 }
 
+.usa-grid > :last-child,
+.usa-grid-full > :last-child {
+  &.half-em-bottom-margin {
+    margin-bottom: 0.5em;
+  }
+}
+
 @media all and (-ms-high-contrast: none),
 (-ms-high-contrast: active) {
 
@@ -448,28 +461,6 @@ article.new-grid {
   article.new-grid {
     padding-left: 0;
     padding-right: 0;
-  }
-}
-
-.footer {
-  color: var(--vads-color-white);
-  margin: 0 auto;
-  background: var(--vads-color-primary-darker);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 50vh 0 50vh var(--vads-color-primary-darker);
-
-  @include media(var(--medium-screen)) {
-    flex-wrap: nowrap;
-  }
-
-  .va-flex {
-    flex-wrap: wrap;
-    padding-left: 0.5859375rem;
-
-    @include media(var(--medium-screen)) {
-      flex-wrap: nowrap;
-    }
   }
 }
 
@@ -755,9 +746,118 @@ button.vads-u-background-color--gray-lightest,
   }
 }
 
-.arp-footer-hidden {
-  display: none;
+.bio-image {
+  max-height: 178px;
 }
+
+// Begin publication_listing.drupal.liquid styles
+.outreach-asset-form-filters {
+  background: var(--vads-color-base-lightest);
+}
+
+.asset-component-library {
+  .asset-card {
+    height: 388px;
+    float: left;
+    display: none;
+
+    @media (min-width: $medium-screen) {
+      height: 184px;
+    }
+
+    @media (min-width: $large-screen) {
+      height: 388px;
+
+      &.large-screen\:vads-l-col--6 {
+        max-width: 48.35%;
+      }
+    }
+
+    .card-inside-wrap {
+      background: var(--vads-color-base-lightest);
+      height: 100%;
+    }
+
+    &.show-type {
+      display: block;
+
+      &.hide-topic {
+        display: none;
+      }
+
+      &.pager-hide {
+        display: none;
+      }
+    }
+
+    &.show-topic {
+      display: block;
+
+      &.hide-type {
+        display: none;
+      }
+
+      &.pager-hide {
+        display: none;
+      }
+
+      @media (min-width: $medium-screen) {
+        height: 100%;
+      }
+
+      @media (min-width: $large-screen) {
+        height: 388px;
+      }
+
+    }
+
+    &.hide-topic {
+      display: none;
+    }
+
+    &.hide-type {
+      display: none;
+    }
+
+    .asset-head-wrap {
+      height: 148px;
+      width: 100%;
+      overflow: hidden;
+      background-size: contain;
+
+      img {
+        margin: 0;
+        display: block;
+        width: 100%;
+        height: 148px;
+        object-fit: cover;
+      }
+    }
+
+    .asset-body-wrap {
+      height: 214px;
+
+      @media (min-width: $medium-screen) {
+        height: 100%;
+      }
+
+      @media (min-width: $large-screen) {
+        height: 214px;
+      }
+
+      .asset-category-text,
+      .asset-filetype-text {
+        padding-bottom: 12px;
+      }
+
+      .capitalize-first {
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
+// end publication_listing.drupal.liquid styles
 
 // The below styles are still used in home.html, which is the legacy home page
 // so technically these are "unused" but the template still exists so the styles will until it goes away
@@ -821,91 +921,6 @@ button.vads-u-background-color--gray-lightest,
 
   @include media(var(--medium-screen)) {
     margin-bottom: 0em;
-  }
-}
-
-.homepage-button {
-  width: 100%;
-  height: 85px;
-  padding: 0;
-  margin: 0 0 16px;
-  display: inline-block;
-  color: var(--vads-color-white);
-  background-color: var(--vads-color-primary);
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: 700;
-  line-height: 16px;
-  text-align: center;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-
-  transition-duration: 0.3s;
-  transition-timing-function: ease-in-out;
-  transition-property: background-color;
-
-  &:hover,
-  &:active {
-    background-color: var(--vads-color-primary-dark);
-    outline-offset: 2px;
-
-    .icon-wrapper {
-      background-color: var(--vads-color-primary-darker);
-    }
-  }
-
-  &:hover,
-  &:focus,
-  &:visited {
-    color: var(--vads-color-white);
-    text-decoration: none;
-    outline-offset: 2px;
-  }
-
-  &.vcl {
-    background-color: var(--vads-color-secondary-dark);
-
-    &:hover,
-    &:active {
-      background-color: var(--vads-color-secondary-darkest);
-      outline-offset: 2px;
-
-      .icon-wrapper {
-        background-color: var(--vads-color-secondary-dark);
-        outline-offset: 2px;
-      }
-    }
-  }
-
-  .icon-wrapper {
-    width: 55px;
-    height: 100%;
-    float: left;
-    background-color: var(--vads-color-primary-dark);
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-
-    transition-duration: 0.3s;
-    transition-timing-function: ease-in-out;
-    transition-property: background-color;
-
-    &.vcl {
-      content: "";
-      background: url(../img/VCL-icon-white.svg) no-repeat;
-      background-size: 2em auto;
-      background-position: center;
-      background-color: var(--vads-color-secondary-darkest);
-    }
-  }
-
-  .button-inner {
-    margin-left: 55px;
-    height: 100%;
-    padding: 1em;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 }
 
