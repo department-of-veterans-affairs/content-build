@@ -726,6 +726,18 @@
     }
   },
   {
+    "appName": "Sign-in changes reminder",
+    "entryName": "sign-in-changes",
+    "rootUrl": "/sign-in-changes-reminder",
+    "template": {
+      "title": "Sign-in changes reminder",
+      "layout": "page-react.html",
+      "description": "Learn more about the changes coming to sign-in",
+      "keywords": "Sign-in changes, identity verification, verify",
+      "vagovprod": false
+    }
+  },
+  {
     "appName": "GI Bill Comparison Tool",
     "entryName": "gi",
     "rootUrl": "/education/gi-bill-comparison-tool",
