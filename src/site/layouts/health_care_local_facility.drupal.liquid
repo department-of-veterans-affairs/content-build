@@ -40,10 +40,6 @@
             <div
                 class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
               <div>
-<<<<<<< HEAD
-                <div>
-=======
->>>>>>> b8e79f3b0 (VACMS-18765 Cross-repository style cleanup)
 
                 {% if fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
                   <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
@@ -51,40 +47,6 @@
                   </div>
                 {% endif %}
 
-<<<<<<< HEAD
-                  <section>
-                    <script type="application/ld+json">
-                      {
-                        "@context": "https://schema.org",
-                        "@type": "Place",
-                        "address": {
-                          "@type": "PostalAddress",
-                          "streetAddress": "{{ fieldAddress.addressLine1 }}",
-                          "addressLocality": "{{ fieldAddress.locality }}",
-                          "addressRegion": "{{ fieldAddress.administrativeArea }}",
-                          "postalCode": "{{ fieldAddress.postalCode }}"
-                        },
-                        "name": "{{ title }}",
-                        "telephone": "{{ fieldPhoneNumber }}",
-                        "openingHoursSpecification": [
-                          {% for hours in fieldOfficeHours %}
-                            {
-                              "@type": "OpeningHoursSpecification",
-                              "dayOfWeek": "https://schema.org/{{ hours.day | officeHoursDayFormatter: false }}",
-                              "opens": "{{ hours.starthours | deriveTimeForJSONLD: 'starthours', hours.comment }}",
-                              "closes": "{{ hours.endhours | deriveTimeForJSONLD: 'endhours', hours.comment }}"
-                            }{% if !forloop.last %},{% endif %}
-                          {% endfor %}
-                        ],
-                        "hasMap": "https://maps.google.com?saddr=Current+Location&daddr={{ fieldAddress.addressLine1 }}, {{ fieldAddress.locality }}, {{ fieldAddress.postalCode }}",
-                        "image": ["{{ fieldMedia.entity.image.derivative.url }}"],
-                        "branchCode": "{{ fieldFacilityLocatorApiId }}",
-                        "geo": {
-                          "@type": "GeoCoordinates",
-                          "latitude": "{{ fieldGeolocation.lat }}",
-                          "longitude": "{{ fieldGeolocation.lon }}"
-                        }
-=======
                 <section>
                   <script type="application/ld+json">
                     {
@@ -116,7 +78,6 @@
                         "@type": "GeoCoordinates",
                         "latitude": "{{ fieldGeolocation.lat }}",
                         "longitude": "{{ fieldGeolocation.lon }}"
->>>>>>> b8e79f3b0 (VACMS-18765 Cross-repository style cleanup)
                       }
                     }
                   </script>
