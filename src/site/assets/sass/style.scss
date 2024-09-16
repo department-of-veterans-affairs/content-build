@@ -317,11 +317,6 @@
   }
 }
 
-.va-c-position-top-right-corner {
-  right: 0;
-  top: 0;
-}
-
 .va-c-margin-top--auto {
   margin-top: auto;
 }
@@ -478,15 +473,6 @@ article.new-grid {
   }
 }
 
-.va-c-facility-hours-list {
-  list-style-type: none;
-  padding: 0;
-  columns: 1;
-  -webkit-columns: 1;
-  -moz-columns: 1;
-  list-style-position: inside;
-}
-
 .inline-table-helper {
   display: inline-table;
 }
@@ -562,10 +548,6 @@ a.operating-status-link {
   background: rgba(229, 147, 147, 1)
 }
 
-.va-c-social-icon {
-  color: var(--vads-color-link);
-}
-
 @media print {
   .va-hide-on-print-view {
     display: none;
@@ -581,71 +563,20 @@ button.vads-u-background-color--gray-lightest,
 
 /* ^^^ DO NOT REMOVE w/o DS REVIEW: solves !important conflict*/
 
-.va-notice--banner {
-  margin: 0;
-  background: #f0f0f0;
-  padding: 0;
-  font-weight: 400;
-
-  .usa-banner-inner {
-    padding-left: 1.5rem;
-  }
-
-  .usa-banner-content {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .va-notice--banner-inner {
-    margin: auto;
-    max-width: 97.5rem;
-    position: relative;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  a {
-    background-image: none;
-    color: inherit;
-    padding: 0;
-  }
-
-  @media screen and (min-width: 1008px) {
-    .usa-banner-inner {
-      padding-left: 0;
-    }
-  }
-}
-
-.menu-rule {
-  border-bottom: 1px solid var(--vads-color-white);
-  margin-left: -0.55em;
-  padding-bottom: 1em;
-  padding-right: 1.2em;
-}
-
-@media (min-width: var(--xsmall-screen)) and (max-width: (var(--medium-screen - 1))) {
-  .menu-rule {
-    border-bottom: 0;
-    padding-bottom: 0;
-  }
-}
-
-.va-crisis-line-container {
-  position: relative;
-  margin: auto;
-  background-color: var(--vads-color-secondary-darkest);
-
-  @include media(var(--small-desktop-screen)) {
-    max-width: 975px;
-    background-color: transparent;
-  }
-}
-
 .bio-image {
   max-height: 178px;
+}
+
+#no-results {
+  display: none;
+}
+
+.va-sidebarnav .left-side-nav-title h4 {
+  width: 100%;
+}
+
+.person-profile-detail-page-image {
+  max-height: 227px;
 }
 
 // Begin publication_listing.drupal.liquid styles
@@ -659,11 +590,48 @@ button.vads-u-background-color--gray-lightest,
     float: left;
     display: none;
 
-    @media (min-width: $medium-screen) {
+    @media (min-width: var(--medium-screen)) {
       height: 184px;
     }
 
-    @media (min-width: $large-screen) {
+    /*
+    Currently, necessary combination of classes in formation
+    is not available to accomplish styling / layout
+    needed for card tablet view (i.e., adding one class might
+    cover one scenario, however, it would result in a new styling issue).
+    Only way to accomplish everything required is with this method.
+    */
+    @media (min-width: var(--medium-screen)) and (max-width: var(--large-screen)) {
+      .asset-card {
+        &.medium-card-utility {
+          margin-bottom: 25px;
+          min-height: 0;
+
+          .medium-head-utility {
+            background: none;
+            max-width: none;
+            display: block;
+            float: left;
+            width: 33%;
+            height: 100%;
+
+            img {
+              height: 110px;
+            }
+          }
+
+          .medium-body-utility {
+            float: right;
+            display: block;
+            width: 66%;
+            background: none;
+            padding-top: 0 !important;
+          }
+        }
+      }
+    }
+
+    @media (min-width: var(--large-screen)) {
       height: 388px;
 
       &.large-screen\:vads-l-col--6 {
@@ -699,11 +667,11 @@ button.vads-u-background-color--gray-lightest,
         display: none;
       }
 
-      @media (min-width: $medium-screen) {
+      @media (min-width: var(--medium-screen)) {
         height: 100%;
       }
 
-      @media (min-width: $large-screen) {
+      @media (min-width: var(--large-screen)) {
         height: 388px;
       }
 
@@ -735,11 +703,11 @@ button.vads-u-background-color--gray-lightest,
     .asset-body-wrap {
       height: 214px;
 
-      @media (min-width: $medium-screen) {
+      @media (min-width: var(--medium-screen)) {
         height: 100%;
       }
 
-      @media (min-width: $large-screen) {
+      @media (min-width: var(--large-screen)) {
         height: 214px;
       }
 
@@ -757,6 +725,81 @@ button.vads-u-background-color--gray-lightest,
 
 // end publication_listing.drupal.liquid styles
 
+.no-left-button-right-radius-treatment {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.no-right-button-left-radius-treatment {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.no-p-bottom-margin p {
+  margin-bottom: 0;
+}
+
+.sidenav-previous-page {
+  font-size: 15px;
+  padding-bottom: 12px;
+
+  @media (min-width: var(--xsmall-screen)) and (max-width: var(--medium-screen)) {
+    margin-left: 15px;
+  }
+
+  a {
+    &::before {
+      content: " \2039 ";
+      display: inline-block;
+      padding: 0 0.35em 0 0;
+    }
+  }
+}
+
+.va-c-facility-sidebar {
+  .usa-sidenav-sub_list {
+    a.usa-current {
+      margin-left: 0 !important;
+    }
+  }
+
+  a + .usa-sidenav-sub_list,
+  li > .usa-sidenav-sub_list {
+    display: none;
+  }
+
+  a.usa-current + .usa-sidenav-sub_list,
+  .usa-sidenav-sub_list + a.usa-current,
+  li.active-level > .usa-sidenav-sub_list {
+    display: block;
+  }
+
+  &.va-sidebarnav {
+    h4 {
+      width: 100%;
+    }
+  }
+}
+
+.va-drupal-sidebarnav {
+  .usa-sidenav-sub_list {
+    a.usa-current {
+      margin-left: 0 !important;
+    }
+  }
+
+  a + .usa-sidenav-sub_list,
+  li > .usa-sidenav-sub_list {
+    display: none;
+  }
+
+  a.usa-current + .usa-sidenav-sub_list,
+  .usa-sidenav-sub_list + a.usa-current,
+  li.active-level > .usa-sidenav-sub_list {
+    display: block;
+  }
+}
+
 // The below styles are still used in home.html, which is the legacy home page
 // so technically these are "unused" but the template still exists so the styles will until it goes away
 .homepage-heading {
@@ -765,7 +808,7 @@ button.vads-u-background-color--gray-lightest,
   margin-top: 0;
   margin-bottom: 1em;
 
-  @include media($medium-screen) {
+  @include media(var(--medium-screen)) {
     margin-bottom: 1.5em;
   }
 }
@@ -794,7 +837,7 @@ button.vads-u-background-color--gray-lightest,
     display: flex;
     flex-direction: column;
 
-    @include media($medium-screen) {
+    @include media(var(--medium-screen)) {
       flex-direction: row;
     }
   }
@@ -804,7 +847,7 @@ button.vads-u-background-color--gray-lightest,
     margin: 0 0.5em 0.5em;
     padding: 1.5em 1.5em 2.125em 1.5em;
 
-    @include media($medium-screen) {
+    @include media(var(--medium-screen)) {
       margin: 0 21px 21px 0;
 
       &:last-child {
@@ -871,7 +914,7 @@ button.vads-u-background-color--gray-lightest,
 #homepage-benefits {
   padding-top: 1.5em;
 
-  @include media($medium-screen) {
+  @include media(var(--medium-screen)) {
     padding-top: 3em;
     padding-left: 1em;
     padding-right: 1em;
@@ -883,12 +926,12 @@ button.vads-u-background-color--gray-lightest,
   padding-left: 0.5em;
   padding-right: 0.5em;
 
-  @include media($medium-screen) {
+  @include media(var(--medium-screen)) {
     padding-left: 1em;
     padding-right: 1em;
   }
 
-  @include media($large-screen) {
+  @include media(var(--large-screen)) {
     padding-left: 0;
     padding-right: 0;
   }
@@ -897,12 +940,12 @@ button.vads-u-background-color--gray-lightest,
 #homepage-news {
   padding: 3em 0.5em;
 
-  @include media($medium-screen) {
+  @include media(var(--medium-screen)) {
     padding-left: 1em;
     padding-right: 1em;
   }
 
-  @include media($large-screen) {
+  @include media(var(--large-screen)) {
     padding-left: 0;
     padding-right: 0;
   }
