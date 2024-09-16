@@ -81,14 +81,10 @@ describe('postProcessDigitalForm', () => {
         },
       },
     };
-    let processedResult;
-
-    beforeEach(() => {
-      processedResult = postProcessDigitalForm(queryResult);
-    });
 
     it('returns a normalized JSON object', () => {
-      const testForm = processedResult[1];
+      const processedResult = postProcessDigitalForm(queryResult);
+      const [, testForm] = processedResult;
       const testChapter = testForm.chapters[1];
 
       expect(processedResult.length).to.eq(2);
@@ -104,7 +100,8 @@ describe('postProcessDigitalForm', () => {
     });
 
     it('includes an OMB info object', () => {
-      const { ombInfo } = processedResult[1];
+      const [, testForm] = postProcessDigitalForm(queryResult);
+      const { ombInfo } = testForm;
       // expDate is 2027-01-29
       const formattedDate = '1/29/2027';
 
@@ -115,9 +112,42 @@ describe('postProcessDigitalForm', () => {
 
     context('with a Name and Date of Birth step', () => {
       it('includes the appropriate fields', () => {
-        const { additionalFields } = processedResult[1].chapters[1];
+        const [, testForm] = postProcessDigitalForm(queryResult);
+        const { additionalFields } = testForm.chapters[1];
 
         expect(additionalFields.includeDateOfBirth).to.eq(false);
+      });
+    });
+
+    context('with an Identification Information step', () => {
+      let additionalFields;
+
+      beforeEach(() => {
+        twoStepEntity.fieldChapters.push({
+          entity: {
+            entityId: '160594',
+            type: {
+              entity: {
+                entityId: 'digital_form_identification_info',
+                entityLabel: 'Identification Information',
+              },
+            },
+            fieldTitle: 'Identification information',
+            fieldIncludeVeteranSService: true,
+          },
+        });
+        const [, testForm] = postProcessDigitalForm(queryResult);
+        [{ additionalFields }] = testForm.chapters.filter(
+          chapter => chapter.type === 'digital_form_identification_info',
+        );
+      });
+
+      it('includes appropriate fields', () => {
+        expect(additionalFields.includeServiceNumber).to.eq(true);
+      });
+
+      it('does not include inappropriate fields', () => {
+        expect(additionalFields.includeDateOfBirth).to.eq(undefined);
       });
     });
   });

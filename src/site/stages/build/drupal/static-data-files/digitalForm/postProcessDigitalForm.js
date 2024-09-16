@@ -2,9 +2,12 @@ const { logDrupal } = require('../../utilities-drupal');
 
 const extractAdditionalFields = entity => {
   const additionalFields = {};
+  const { entityId } = entity.type.entity;
 
-  if (entity.type.entity.entityId === 'digital_form_name_and_date_of_bi') {
+  if (entityId === 'digital_form_name_and_date_of_bi') {
     additionalFields.includeDateOfBirth = entity.fieldIncludeDateOfBirth;
+  } else if (entityId === 'digital_form_identification_info') {
+    additionalFields.includeServiceNumber = entity.fieldIncludeVeteranSService;
   }
 
   return additionalFields;
