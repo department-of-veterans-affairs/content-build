@@ -1,5 +1,5 @@
-import identificationInformation from './identificationInformation.graphql';
-import nameAndDateOfBirth from './nameAndDateOfBirth.graphql';
+const identificationInformation = require('./identificationInformation.graphql');
+const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
 
 /*
  *
