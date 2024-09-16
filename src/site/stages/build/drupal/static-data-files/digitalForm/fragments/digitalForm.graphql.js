@@ -1,4 +1,5 @@
-const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
+import identificationInformation from './identificationInformation.graphql';
+import nameAndDateOfBirth from './nameAndDateOfBirth.graphql';
 
 /*
  *
@@ -6,6 +7,7 @@ const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
  *
  */
 module.exports = `
+  ${identificationInformation}
   ${nameAndDateOfBirth}
 
   fragment digitalForm on NodeDigitalForm {
@@ -26,6 +28,7 @@ module.exports = `
             entityLabel
           }
         }
+        ...identificationInformation
         ...nameAndDateOfBirth
       }
     }

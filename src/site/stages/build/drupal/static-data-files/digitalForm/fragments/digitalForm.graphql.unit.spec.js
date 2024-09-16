@@ -18,6 +18,11 @@ describe('digitalForm fragment', () => {
   });
 
   describe('chapter fragments', () => {
+    it('imports the identificationInformation fragment', () => {
+      expect(digitalForm).to.have.string('fragment identificationInformation');
+      expect(digitalForm).to.have.string('...identificationInformation');
+    });
+
     it('imports the nameAndDateOfBirth fragment', () => {
       expect(digitalForm).to.have.string('fragment nameAndDateOfBirth');
       expect(digitalForm).to.have.string('...nameAndDateOfBirth');
