@@ -6,7 +6,7 @@
   {% endif %}
 
   {% if constructLcBreadcrumbs == true %}
-    {% assign crumbs = entityUrl.breadcrumb | deriveLcBreadcrumbs: title, entityUrl.path, titleInclude %}
+    {% assign crumbs = entityUrl.breadcrumb | deriveLcBreadcrumbs %}
   {% endif %}
 
   {% assign crumbs = crumbs | formatForBreadcrumbs: title, entityUrl.path, hideHomeBreadcrumb, customHomeCrumbText  %}
@@ -15,6 +15,7 @@
 
   <script>
     const bcComponent = document.querySelector('va-breadcrumbs');
+
     if (bcComponent) {
       bcComponent.setAttribute('breadcrumb-list', {{ crumbs }});
     }
