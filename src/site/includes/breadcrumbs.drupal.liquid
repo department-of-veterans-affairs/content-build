@@ -1,4 +1,4 @@
-<div class="va-nav-breadcrumbs" data-template="includes/breadcrumbs">
+<div class="vads-u-padding-x--1p5" data-template="includes/breadcrumbs">
   {% assign crumbs = entityUrl.breadcrumb %}
 
   {% if deriveBreadcrumbsFromUrl == true %}
@@ -6,15 +6,16 @@
   {% endif %}
 
   {% if constructLcBreadcrumbs == true %}
-    {% assign crumbs = entityUrl.breadcrumb | deriveLcBreadcrumbs: title, entityUrl.path, titleInclude %}
+    {% assign crumbs = entityUrl.breadcrumb | deriveLcBreadcrumbs %}
   {% endif %}
 
   {% assign crumbs = crumbs | formatForBreadcrumbs: title, entityUrl.path, hideHomeBreadcrumb, customHomeCrumbText  %}
 
-  <va-breadcrumbs class="row va-nav-breadcrumbs-list columns" wrapping />
+  <va-breadcrumbs class="row" wrapping />
 
   <script>
     const bcComponent = document.querySelector('va-breadcrumbs');
+
     if (bcComponent) {
       bcComponent.setAttribute('breadcrumb-list', {{ crumbs }});
     }

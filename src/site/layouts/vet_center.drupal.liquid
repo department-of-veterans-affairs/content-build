@@ -21,7 +21,10 @@
           {% elsif fieldOfficialName != empty %}
             <h1>{{ fieldOfficialName}}</h1>
           {% endif %}
-
+          <img src="/img/vet-centers/vet-center-banner.jpg" 
+               alt="Small group of diverse Veterans talking and smiling with a Vet center counselor, American flag in the background." 
+               width="1000" height="287" class="vads-u-padding-y--1p5" 
+          />
           {% if fieldIntroText != empty %}
             <div class="va-introtext">
               <p>{{ fieldIntroText }}</p>
@@ -174,7 +177,8 @@
                 %}
               {% endfor %}
             </div>
-            {% for healthService in fieldHealthServices %}
+            {% assign publishedHealthServices = fieldHealthServices | filterBy: "entity.status", true %}
+            {% for healthService in publishedHealthServices %}
               <script type="application/ld+json">
                 {
                   "@context": "https://schema.org",
@@ -219,17 +223,17 @@
             {% endfor %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "counseling"
           %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "referral"
           %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "other"
           %}
 
