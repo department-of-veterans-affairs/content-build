@@ -1327,6 +1327,15 @@
     "@uswds/uswds" "^3.8.1"
     rimraf "^5.0.5"
 
+"@department-of-veterans-affairs/css-library@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/css-library/-/css-library-0.11.1.tgz#6f00091e90a3476dc90ff99e80a0d8eca7edae1f"
+  integrity sha512-OAwcKvEE62shIXutqqadAQ1VyE0oADLfybgSzKr4W5d6uUVRR5cu8zUx0aztZSGJj11yUcsgrWxnq3O0MEgZ0A==
+  dependencies:
+    "@divriots/style-dictionary-to-figma" "^0.4.0"
+    "@uswds/uswds" "^3.8.1"
+    rimraf "^5.0.5"
+
 "@department-of-veterans-affairs/eslint-plugin@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/eslint-plugin/-/eslint-plugin-1.1.0.tgz#fcfb3651485aaddb66f1f46f227b670b2adce7da"

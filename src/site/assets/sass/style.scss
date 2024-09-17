@@ -381,10 +381,6 @@
   padding: 6px;
 }
 
-.vads-facility-hub-cta-last-line {
-  border-bottom: 1px solid var(--vads-color-primary-alt-light);
-}
-
 .vads-facility-hub-cta {
   border-top: 1px solid var(--vads-color-primary-alt-light);
   height: 73px;
@@ -421,6 +417,10 @@
     width: 0%;
     height: 0%;
   }
+}
+
+.when-where-width {
+  width: 45px;
 }
 
 // There are styles in our sidebar styles that set a small
@@ -567,21 +567,18 @@ button.vads-u-background-color--gray-lightest,
   max-height: 178px;
 }
 
-#no-results {
-  display: none;
-}
-
-.va-sidebarnav .left-side-nav-title h4 {
-  width: 100%;
-}
-
 .person-profile-detail-page-image {
   max-height: 227px;
 }
 
 // Begin publication_listing.drupal.liquid styles
+
 .outreach-asset-form-filters {
   background: var(--vads-color-base-lightest);
+}
+
+.va-sidebarnav .left-side-nav-title h4 {
+  width: 100%;
 }
 
 .asset-component-library {
@@ -592,43 +589,6 @@ button.vads-u-background-color--gray-lightest,
 
     @media (min-width: var(--medium-screen)) {
       height: 184px;
-    }
-
-    /*
-    Currently, necessary combination of classes in formation
-    is not available to accomplish styling / layout
-    needed for card tablet view (i.e., adding one class might
-    cover one scenario, however, it would result in a new styling issue).
-    Only way to accomplish everything required is with this method.
-    */
-    @media (min-width: var(--medium-screen)) and (max-width: var(--large-screen)) {
-      .asset-card {
-        &.medium-card-utility {
-          margin-bottom: 25px;
-          min-height: 0;
-
-          .medium-head-utility {
-            background: none;
-            max-width: none;
-            display: block;
-            float: left;
-            width: 33%;
-            height: 100%;
-
-            img {
-              height: 110px;
-            }
-          }
-
-          .medium-body-utility {
-            float: right;
-            display: block;
-            width: 66%;
-            background: none;
-            padding-top: 0 !important;
-          }
-        }
-      }
     }
 
     @media (min-width: var(--large-screen)) {
@@ -711,6 +671,7 @@ button.vads-u-background-color--gray-lightest,
         height: 214px;
       }
 
+      .asset-body-text,
       .asset-category-text,
       .asset-filetype-text {
         padding-bottom: 12px;
@@ -718,6 +679,53 @@ button.vads-u-background-color--gray-lightest,
 
       .capitalize-first {
         text-transform: capitalize;
+      }
+    }
+  }
+
+  .va-c-margin-top--auto {
+    margin-top: auto;
+  }
+}
+
+#no-results {
+  display: none;
+}
+
+/*
+Currently, necessary combination of classes in formation
+is not available to accomplish styling / layout
+needed for card tablet view (i.e., adding one class might
+cover one scenario, however, it would result in a new styling issue).
+Only way to accomplish everything required is with this method.
+*/
+@media (min-width: 768px) and (max-width: 1201px) {
+
+  // @media (min-width: var(--medium-screen)) and (max-width: var(--large-screen)) {
+  .asset-card {
+    &.medium-card-utility {
+      margin-bottom: 25px;
+      min-height: 0;
+
+      .medium-head-utility {
+        background: none;
+        max-width: none;
+        display: block;
+        float: left;
+        width: 33%;
+        height: 100%;
+
+        img {
+          height: 110px;
+        }
+      }
+
+      .medium-body-utility {
+        float: right;
+        display: block;
+        width: 66%;
+        background: none;
+        padding-top: 0 !important;
       }
     }
   }
