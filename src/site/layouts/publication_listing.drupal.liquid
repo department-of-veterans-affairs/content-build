@@ -14,18 +14,18 @@
             <div class="vads-l-grid-container--full">
               <div class="va-introtext">
                 {% if fieldIntroText %}
-                <p class="library-show" id="office-benefits-description">
+                <p id="office-benefits-description">
                   {{ fieldIntroText }}
                 </p>
                 {% endif %}
               </div>
             </div>
             <div
-              class="vads-l-grid-container--full asset-component-library library-show"
+              class="vads-l-grid-container--full asset-component-library"
               id="search-entry">
 
               <form
-                class="usa-form outreach-asset-form-filters library-show vads-u-max-width--100 vads-u-padding-y--3 vads-u-padding-x--1p5 vads-u-margin-bottom--2">
+                class="usa-form outreach-asset-form-filters vads-u-max-width--100 vads-u-padding-y--3 vads-u-padding-x--1p5 vads-u-margin-bottom--2">
                 <div class="vads-l-row vads-u-justify-content--space-between">
                   <div class="vads-l-col--12
                                 medium-screen:vads-l-col--12
@@ -72,7 +72,6 @@
                   aria-live="polite"
                   aria-atomic="true"
                   id="pager-focus"
-                  class="break-div"
                   role="status"
                   tabindex="-1"
                   >
@@ -181,15 +180,13 @@
                   medium-body-utility
                   large-screen:vads-l-col--12">
                     <i>{{firstTopicCategory.entity.name}}</i>
-                    <h2 class="asset-body-header
-                    vads-u-margin-y--1
-                    vads-u-font-size--lg">
+                    <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">
                       {{entity.title| truncate: 36}}</h2>
                     <div class="asset-body-text">
                       {{entity.fieldDescription | truncate: 81 }}</div>
 
 
-                    <div class="asset-download-trigger va-c-margin-top--auto vads-u-margin-bottom--3
+                    <div class="va-c-margin-top--auto vads-u-margin-bottom--3
                   medium-screen:vads-u-margin-bottom--0
                   large-screen:vads-u-margin-bottom--3">
                       {% if entity.fieldMedia.entity.entityBundle == 'document' %}
@@ -247,7 +244,7 @@
             </div>
 
             <!-- Pagination -->
-            <div class="va-pagination library-show" id="va-pager-div">
+            <div class="va-pagination" id="va-pager-div">
               <span class="va-pagination-prev">
                 <a
                   href="#pager-previous-click"
@@ -269,7 +266,7 @@
               </span>
             </div>
 
-            <div class="library-show" id="no-results">
+            <div id="no-results">
               <div>
                 <p><b>Select a different topic or file type</b></p>
               </div>
