@@ -1,5 +1,15 @@
-@import "~@department-of-veterans-affairs/css-library/dist/stylesheets/mixins";
-@import "~@department-of-veterans-affairs/css-library/dist/stylesheets/base/va";
+@mixin linear-gradient-background($from, $to) {
+  background: $from;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, $from 0%, $to 63%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, $from 0%, $to 63%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, $from 0%, $to 63%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$from, endColorstr=$to, GradientType=0);
+  /* IE6-9 */
+}
 
 .feedback-button {
   background-color: var(--vads-color-primary);
@@ -468,7 +478,7 @@ article.new-grid {
     padding-bottom: 0;
   }
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     padding-bottom: 3em;
   }
 }
@@ -816,7 +826,7 @@ Only way to accomplish everything required is with this method.
   margin-top: 0;
   margin-bottom: 1em;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     margin-bottom: 1.5em;
   }
 }
@@ -825,7 +835,7 @@ Only way to accomplish everything required is with this method.
   @include linear-gradient-background(var(--vads-color-primary), var(--vads-color-primary-darker));
   padding-top: 1.5em;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     padding-top: 3em;
   }
 
@@ -845,7 +855,7 @@ Only way to accomplish everything required is with this method.
     display: flex;
     flex-direction: column;
 
-    @include media(var(--medium-screen)) {
+    @media (min-width: var(--medium-screen)) {
       flex-direction: row;
     }
   }
@@ -855,7 +865,7 @@ Only way to accomplish everything required is with this method.
     margin: 0 0.5em 0.5em;
     padding: 1.5em 1.5em 2.125em 1.5em;
 
-    @include media(var(--medium-screen)) {
+    @media (min-width: var(--medium-screen)) {
       margin: 0 21px 21px 0;
 
       &:last-child {
@@ -868,12 +878,12 @@ Only way to accomplish everything required is with this method.
 .homepage-hub-container {
   max-width: 62.5rem;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     margin: auto;
     width: 85%;
   }
 
-  @include media(var(--large-screen)) {
+  @media (min-width: var(--large-screen)) {
     margin: auto;
     width: 64%;
   }
@@ -896,7 +906,7 @@ Only way to accomplish everything required is with this method.
   margin-top: 1em;
   margin-bottom: 0;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     margin-top: 1.5em;
     margin-bottom: inherit;
   }
@@ -906,7 +916,7 @@ Only way to accomplish everything required is with this method.
   margin-top: 0.5em;
   margin-bottom: 0;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     margin-bottom: inherit;
   }
 }
@@ -914,7 +924,7 @@ Only way to accomplish everything required is with this method.
 .homepage-news-story {
   margin-bottom: 2em;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     margin-bottom: 0em;
   }
 }
@@ -922,7 +932,7 @@ Only way to accomplish everything required is with this method.
 #homepage-benefits {
   padding-top: 1.5em;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     padding-top: 3em;
     padding-left: 1em;
     padding-right: 1em;
@@ -934,12 +944,12 @@ Only way to accomplish everything required is with this method.
   padding-left: 0.5em;
   padding-right: 0.5em;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     padding-left: 1em;
     padding-right: 1em;
   }
 
-  @include media(var(--large-screen)) {
+  @media (min-width: var(--large-screen)) {
     padding-left: 0;
     padding-right: 0;
   }
@@ -948,12 +958,12 @@ Only way to accomplish everything required is with this method.
 #homepage-news {
   padding: 3em 0.5em;
 
-  @include media(var(--medium-screen)) {
+  @media (min-width: var(--medium-screen)) {
     padding-left: 1em;
     padding-right: 1em;
   }
 
-  @include media(var(--large-screen)) {
+  @media (min-width: var(--large-screen)) {
     padding-left: 0;
     padding-right: 0;
   }
