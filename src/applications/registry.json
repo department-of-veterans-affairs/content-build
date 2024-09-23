@@ -604,7 +604,7 @@
   {
     "appName": "22-5490 Education benefits form",
     "entryName": "5490-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/5490",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-dea-fry-form-22-5490",
     "template": {
       "title": "Apply For Education Benefits",
       "heading": "Apply for education benefits",
@@ -612,22 +612,7 @@
       "layout": "page-react.html",
       "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
       "order": 3,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/5490"
-        }
-      ]
+      "hideFromSidebar": true
     }
   },
   {
