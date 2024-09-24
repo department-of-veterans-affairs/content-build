@@ -11,6 +11,16 @@
     }
   },
   {
+    "appName": "Duplicate ProductID app",
+    "entryName": "benefit-eligibility-questionnaire2",
+    "rootUrl": "/benefit-eligibility-questionnaire2",
+    "productId": "87f2c91f-46c3-4461-8890-3636130af4ab",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Verify identity",
     "entryName": "verify",
     "rootUrl": "/verify",
@@ -1719,9 +1729,7 @@
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
         "disableHeadings": true,
-        "excludePaths": [
-          "/introduction"
-        ]
+        "excludePaths": ["/introduction"]
       }
     }
   },
@@ -1821,10 +1829,7 @@
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
         "disableHeadings": true,
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
+        "excludePaths": ["/introduction", "/confirmation"]
       }
     }
   },
@@ -1856,6 +1861,17 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "New Screener",
+    "entryName": "covid19screen",
+    "rootUrl": "/covid19screen",
+    "template": {
+      "title": "COVID-19 screening tool",
+      "layout": "page-react.html",
+      "private": true,
+      "vagovprod": true
     }
   },
   {
