@@ -244,6 +244,26 @@ jobs:
           payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
           channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
+  validate-registry:
+    name: Validate App Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Install dependencies
+        uses: ./.github/workflows/install
+        timeout-minutes: 30
+        with:
+          key: ${{ hashFiles('yarn.lock') }}
+          yarn_cache_folder: .cache/yarn
+          path: |
+            .cache/yarn
+            node_modules
+
+      - name: Run registry validation
+        run: yarn validate:registry
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
