@@ -1,8 +1,8 @@
 <li>
     {% if headerType == 'clinical' or boldDay == true %}
-        <b class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}:</b>
+        <b>{{ hours.day | officeHoursDayFormatter }}:</b>
     {% else %}
-        <span class="abbrv-day">{{ hours.day | officeHoursDayFormatter }}.</span>
+        <span>{{ hours.day | officeHoursDayFormatter }}.</span>
     {% endif %}
 
 	{% if hours.starthours == hours.endhours and hours.starthours == 0 and !hours.comment %}
