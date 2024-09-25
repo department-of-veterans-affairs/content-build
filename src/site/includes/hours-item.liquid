@@ -1,30 +1,32 @@
 <li>
     {% if headerType == 'clinical' or boldDay == true %}
-        <b>{{ hours.day | officeHoursDayFormatter }}:</b>
+        <b class="abbreviated-day">{{ hours.day | officeHoursDayFormatter }}:</b>
     {% else %}
-        <span>{{ hours.day | officeHoursDayFormatter }}.</span>
+        <span class="abbreviated-day">{{ hours.day | officeHoursDayFormatter }}.</span>
     {% endif %}
-
-	{% if hours.starthours == hours.endhours and hours.starthours == 0 and !hours.comment %}
-		Open 24 hours
-	{% elsif !hours.starthours && !hours.endhours && !hours.comment %}
-        Closed
-	{% else %}
-		{% if hours.starthours == 0 %}
-		midnight to
-		{% elsif hours.starthours == 1200 %}
-		noon to 
-		{% elsif hours.starthours && hours.starthours != -1 %}
-			{{ hours.starthours | officeHoursTimeFormatter}}
-			to
+	
+	<span>
+		{% if hours.starthours == hours.endhours and hours.starthours == 0 and !hours.comment %}
+			Open 24 hours
+		{% elsif !hours.starthours && !hours.endhours && !hours.comment %}
+					Closed
+		{% else %}
+			{% if hours.starthours == 0 %}
+			midnight to
+			{% elsif hours.starthours == 1200 %}
+			noon to 
+			{% elsif hours.starthours && hours.starthours != -1 %}
+				{{ hours.starthours | officeHoursTimeFormatter}}
+				to
+			{% endif %}
+			{% if hours.endhours == 0 %}
+				midnight
+			{% elsif hours.endhours == 1200 %}
+				noon
+			{% elsif hours.endhours && hours.endhours != -1 %}
+				{{ hours.endhours | officeHoursTimeFormatter}}
+			{% endif %}
 		{% endif %}
-		{% if hours.endhours == 0 %}
-		  midnight
-		{% elsif hours.endhours == 1200 %}
-			noon
-		{% elsif hours.endhours && hours.endhours != -1 %}
-			{{ hours.endhours | officeHoursTimeFormatter}}
-		{% endif %}
-    {% endif %}
-	{{ hours.comment }}
+		{{ hours.comment }}
+	</span>
 </li>
