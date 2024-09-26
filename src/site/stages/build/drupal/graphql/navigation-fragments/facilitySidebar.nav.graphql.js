@@ -139,6 +139,8 @@ const FACILITY_MENU_NAMES = [
   'va-spokane-health-care',
   'va-walla-walla-health-care',
   // VISN 21
+  'manila-va-clinic',
+  'manila-va-system',
   'va-central-california-health-car',
   'va-northern-california-health-ca',
   'va-pacific-islands-health-care',
