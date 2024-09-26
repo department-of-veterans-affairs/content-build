@@ -766,11 +766,16 @@ module.exports = function registerFilters() {
       ({ path }) => path !== '' && path !== null,
     );
 
+    // Add "Home" path since it's not included by default
+    filteredCrumbs.unshift({
+      path: '',
+      name: 'VA.gov home',
+    });
+
     const mappedCrumbs = filteredCrumbs.map(crumb => {
       const { name, path, children } = crumb;
-      const { display_title: displayTitle, title } = children
-        ? children[0].file
-        : {};
+      const { display_title: displayTitle, title } =
+        (children && children[0]?.file) ?? {};
       // Assigns the first non-null value, defaulting back to the original name
       let label = displayTitle || title || name;
 
