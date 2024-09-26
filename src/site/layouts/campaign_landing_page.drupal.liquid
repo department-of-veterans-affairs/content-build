@@ -8,9 +8,9 @@
     <!-- Hero-->
     <div class="va-u-background--gradiant-blue">
       <div class="vads-l-grid-container vads-u-padding-x--4 large-screen:vads-u-padding-x--0">
-        <div class="vads-l-col--12 small-screen:vads-l-col--10 medium-screen:vads-l-col--8 small-desktop-screen:vads-l-col--12">
-          <div class="vads-u-display--flex small-desktop-screen:vads-l-row">
-            <div class="vads-l-col--12 small-desktop-screen:vads-l-col--6 vads-u-padding-top--4 vads-u-padding-bottom--6 small-desktop-screen:vads-u-padding-right--4">
+        <div class="vads-l-col--12 small-screen:vads-l-col--10 medium-screen:vads-l-col--8 desktop:vads-l-col--12">
+          <div class="vads-u-display--flex desktop:vads-l-row">
+            <div class="vads-l-col--12 desktop:vads-l-col--6 vads-u-padding-top--4 vads-u-padding-bottom--6 desktop:vads-u-padding-right--4">
               <h1 class="vads-u-color--white">{{ title }}</h1>
               <hr class="va-c-blue-line--large vads-u-border-color--primary-alt vads-u-border--2px vads-u-margin-y--2" />
               <p class="va-introtext vads-u-color--white">{{ fieldHeroBlurb }}</p>
@@ -24,7 +24,7 @@
                 />
               {% endif %}
             </div>
-            <div class="vads-u-display--none small-desktop-screen:vads-u-display--block">
+            <div class="vads-u-display--none desktop:vads-u-display--block">
               <img alt="" src="{{ fieldHeroImage.entity.image.derivative.url }}">
             </div>
           </div>

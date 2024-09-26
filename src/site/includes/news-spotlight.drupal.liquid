@@ -4,7 +4,7 @@
     <div class="vads-l-row">
       <!-- start first column-->
       <div
-        class="vads-l-col--12 vads-u-display--none small-desktop-screen:vads-u-display--block medium-screen:vads-l-col--4">
+        class="vads-l-col--12 vads-u-display--none desktop:vads-u-display--block medium-screen:vads-l-col--4">
         <div class="homepage-blog__image">
           {% if fieldImage.entity.image.derivative.url and fieldImage.entity.image.alt %}
             <img class="lazy" src="{{ fieldImage.entity.image.derivative.url }}" alt="" />
@@ -16,7 +16,7 @@
       <!-- start second column -->
       <div class="vads-l-col--12 medium-screen:vads-l-col--8">
         <div
-          class="vads-u-padding--2p5 small-desktop-screen:vads-u-padding--6 small-desktop-screen:vads-u-padding-right--0 vads-u-color--white">
+          class="vads-u-padding--2p5 desktop:vads-u-padding--6 desktop:vads-u-padding-right--0 vads-u-color--white">
           <h2 class="vads-u-font-size--base vads-u-margin-top--0 vads-u-font-weight--normal vads-u-font-family--sans">VA
             NEWS</h2>
           {% if fieldPromoHeadline and fieldLink.url.path %}
@@ -29,8 +29,8 @@
             </h3>
           {% endif %}
 
-          <p class="vads-u-padding-right--0 small-desktop-screen:vads-u-padding-right--8
-                    vads-u-margin-bottom--3 small-desktop-screen:vads-u-margin-bottom--6">
+          <p class="vads-u-padding-right--0 desktop:vads-u-padding-right--8
+                    vads-u-margin-bottom--3 desktop:vads-u-margin-bottom--6">
             {% if fieldPromoText %}
               {{ fieldPromoText }}
             {% endif %}
