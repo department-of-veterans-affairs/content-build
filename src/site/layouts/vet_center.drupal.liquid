@@ -12,7 +12,7 @@
             {% if fieldOfficialName and title != fieldOfficialName %}
               <h1 aria-describedby="vet-center-title">{{ title }}</h1>
 
-              <p id="vet-center-title" class="field-official-name vads-u-line-height--4 vads-u-font-family--serif vads-u-font-size--lg vads-u-font-weight--bold vads-u-padding-bottom--0p5">
+              <p id="vet-center-title" class="vads-u-line-height--4 vads-u-font-family--serif vads-u-font-size--lg vads-u-font-weight--bold vads-u-padding-bottom--0p5">
                 Also called the {{fieldOfficialName}}
               </p>
             {% else %}
@@ -21,7 +21,10 @@
           {% elsif fieldOfficialName != empty %}
             <h1>{{ fieldOfficialName}}</h1>
           {% endif %}
-
+          <img src="/img/vet-centers/vet-center-banner.jpg" 
+               alt="Small group of diverse Veterans talking and smiling with a Vet center counselor, American flag in the background." 
+               width="1000" height="287" class="vads-u-padding-y--1p5" 
+          />
           {% if fieldIntroText != empty %}
             <div class="va-introtext">
               <p>{{ fieldIntroText }}</p>
@@ -38,8 +41,8 @@
             <div class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
 
               <div>
-                <div class="vads-c-facility-detail">
-                  <section class="vads-facility-detail">
+                <div>
+                  <section>
                     <script type="application/ld+json">
                       {
                         "@context": "https://schema.org",

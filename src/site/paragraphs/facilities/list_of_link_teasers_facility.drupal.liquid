@@ -15,7 +15,7 @@
         {% endif %}
     </h2>
 
-    <div class="va-c-list-link-teasers">
+    <div>
       <div class="usa-grid usa-grid-full">
         {% assign linkTeasers = paragraph.fieldVaParagraphs %}
         {% comment %}
@@ -45,8 +45,6 @@
           {% endif %}
 
           <va-link
-            disable-analytics
-            onclick="recordEvent({ event: 'nav-featured-content-link-click', 'featured-content-header': '{{ paragraph.fieldTitle }}', 'featured-content-click-label': '{{ link.title }}' });" 
             class="other-services-links vads-u-display--block{{ spacing }}"
             href="{{ link.url.path }}"
             text="{{ link.title }}"

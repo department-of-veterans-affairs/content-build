@@ -49,6 +49,10 @@
   }
 }
 
+.break-word-wrap {
+  word-wrap: break-word;
+}
+
 .spotlight-card {
   min-width: 30%;
   word-wrap: break-word;
@@ -263,6 +267,7 @@
     }
   }
 }
+
 // fix for sidenav btn
 .va-sidenav-btn-close {
   background-size: 0.625rem 0.625rem;

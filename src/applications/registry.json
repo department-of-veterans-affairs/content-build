@@ -474,35 +474,6 @@
     }
   },
   {
-    "appName": "22-1990E Education benefits form",
-    "entryName": "1990e-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/1990E",
-    "template": {
-      "title": "Apply For Education Benefits",
-      "heading": "Apply for education benefits",
-      "display_title": "Apply to use transferred benefits",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "order": 4,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/1990E"
-        }
-      ]
-    }
-  },
-  {
     "appName": "22-10203 Education benefits form",
     "entryName": "10203-edu-benefits",
     "rootUrl": "/education/other-va-education-benefits/stem-scholarship/apply-for-scholarship-form-22-10203",
@@ -603,32 +574,6 @@
     }
   },
   {
-    "appName": "22-1990N Education benefits form",
-    "entryName": "1990n-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/1990N",
-    "template": {
-      "title": "Apply For Education Benefits",
-      "heading": "Apply for education benefits",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/1990N"
-        }
-      ]
-    }
-  },
-  {
     "appName": "22-1995 Education benefits form",
     "entryName": "1995-edu-benefits",
     "rootUrl": "/education/apply-for-education-benefits/application/1995",
@@ -659,7 +604,7 @@
   {
     "appName": "22-5490 Education benefits form",
     "entryName": "5490-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/5490",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-dea-fry-form-22-5490",
     "template": {
       "title": "Apply For Education Benefits",
       "heading": "Apply for education benefits",
@@ -667,22 +612,7 @@
       "layout": "page-react.html",
       "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
       "order": 3,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/5490"
-        }
-      ]
+      "hideFromSidebar": true
     }
   },
   {
@@ -752,6 +682,18 @@
       "title": "Auth",
       "layout": "page-react.html",
       "loadingMessage": "Please wait while we log you in."
+    }
+  },
+  {
+    "appName": "Sign-in changes reminder",
+    "entryName": "sign-in-changes",
+    "rootUrl": "/sign-in-changes-reminder",
+    "template": {
+      "title": "Sign-in changes reminder",
+      "layout": "page-react.html",
+      "description": "Learn more about the changes coming to sign-in",
+      "keywords": "Sign-in changes, identity verification, verify",
+      "vagovprod": false
     }
   },
   {
@@ -1010,31 +952,6 @@
       "layout": "page-react.html",
       "title": "Ask VA Integration Project",
       "description": "Ask VA (AVA) is an online portal that allows veterans, caregivers, and supporting personnel in education, debt, loans, etc. to submit questions to VA and receive a secure message response."
-    }
-  },
-  {
-    "appName": "Veteran Rapid Retraining Assistance Program (VRRAP)",
-    "entryName": "1990s-edu-benefits",
-    "rootUrl": "/education/other-va-education-benefits/veteran-rapid-retraining-assistance/apply-for-vrrap-form-22-1990s",
-    "template": {
-      "title": "Apply for the Veteran Rapid Retraining Assistance Program (VRRAP)",
-      "heading": "Apply for the Veteran Rapid Retraining Assistance Program (VRRAP)",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "Other VA education benefits",
-          "path": "education/other-va-education-benefits/"
-        },
-        {
-          "name": "Apply for VRRAP VA Form 22 1990s",
-          "path": "education/other-va-education-benefits/veteran-rapid-retraining-assistance/apply-for-vrrap-form-22-1990s"
-        }
-      ]
     }
   },
   {
@@ -1755,7 +1672,9 @@
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
     "template": {
       "vagovprod": false,
-      "layout": "accredited-representative-portal.html"
+      "layout": "accredited-representative-portal.html",
+      "title": "Apply to become a VA accredited attorney or claims agent",
+      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)"
     }
   },
   {
@@ -1769,12 +1688,12 @@
     }
   },
   {
-    "appName": "Foreign Medical Program (FMP) Registration Form",
+    "appName": "Register for the Foreign Medical Program (FMP)",
     "entryName": "10-7959f-1-FMP",
     "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1840,40 +1759,14 @@
     }
   },
   {
-    "appName": "Apply to become a VA accredited attorney or claims agent",
-    "entryName": "21a",
-    "rootUrl": "/accreditation/attorney-claims-agent-form-21a",
-    "productId": "55b00994-6f3c-4527-98be-5a90e37eec01",
-    "template": {
-      "vagovprod": false,
-      "title": "Apply to become a VA accredited attorney or claims agent",
-      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)",
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Home",
-          "path": ""
-        },
-        {
-          "name": "VA accreditation representatives",
-          "path": "accreditation"
-        },
-        {
-          "name": "Apply to become a VA accredited attorney or claims agent",
-          "path": "accreditation/attorney-claims-agent-form-21a"
-        }
-      ]
-    }
-  },
-  {
     "appName": "Resources for schools",
     "entryName": "sco",
-    "rootUrl": "/education/school-administrators",
+    "rootUrl": "/school-administrators",
     "productId": "40938a35-1cfa-4808-917b-37e0baec6a7c",
     "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "lastupdate": "2024-09-17"
     }
   },
   {
@@ -1950,6 +1843,26 @@
     "entryName": "8794-edu-benefits",
     "rootUrl": "/education/apply-for-education-benefits/application/8794",
     "productId": "bc4e797d-2a35-40f2-b072-66962e75fe89",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Benefit Eligibility Questionnaire",
+    "entryName": "benefit-eligibility-questionnaire",
+    "rootUrl": "/benefit-eligibility-questionnaire",
+    "productId": "87f2c91f-46c3-4461-8890-3636130af4ab",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Survivor and Dependent Benefits 22-5490",
+    "entryName": "survivor-dependent-education-benefit-22-5490",
+    "rootUrl": "/education/survivor-dependent-education-benefit-22-5490",
+    "productId": "5544d590-0b67-48b1-a312-824c98d367ae",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
