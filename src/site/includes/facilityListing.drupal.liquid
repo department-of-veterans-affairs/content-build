@@ -1,5 +1,5 @@
 <div data-template="includes/facilityListing"
-     class="region-list usa-width-one-whole vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--4 medium-screen:vads-u-margin-bottom--5">
+     class="region-list usa-width-one-whole vads-u-display--flex vads-u-flex-direction--column mobile-lg:vads-u-flex-direction--row facility vads-u-margin-bottom--4 medium-screen:vads-u-margin-bottom--5">
   <section class="region-grid vads-u-margin-right--2">
 
     {% assign facilityName = entity.title | encode %}
@@ -51,7 +51,7 @@
   </section>
   {% if entity.fieldMedia and entity.fieldMedia.entity.image.alt and entity.fieldMedia.entity.image.derivative.url and entity.entityUrl.path %}
     <section-image
-        class="region-grid usa-width-one-half vads-u-order--first small-screen:vads-u-order--initial vads-u-margin-bottom--2">
+        class="region-grid usa-width-one-half vads-u-order--first mobile-lg:vads-u-order--initial vads-u-margin-bottom--2">
       <a href="{{ entity.entityUrl.path }}"
          aria-label="{{ entity.fieldMedia.entity.image.alt }}">
         {% include src/site/components/image.drupal.liquid with
