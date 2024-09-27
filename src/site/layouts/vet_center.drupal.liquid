@@ -175,6 +175,7 @@
                 {% include "src/site/includes/vet_centers/featured_content.liquid" with
                     entity = entity.entity
                 %}
+                
               {% endfor %}
             </div>
             {% assign publishedHealthServices = fieldHealthServices | filterBy: "entity.status", true %}
