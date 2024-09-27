@@ -5,22 +5,22 @@ Education SCO (Merger)
 {% endcomment %}
 
 <main>
-    <div class="vads-l-grid-container large-screen:vads-u-padding-x--0">
-      <div class="vads-l-row medium-screen:vads-u-margin-x--neg2p5">
-         <div class="vads-l-col--12 medium-screen:vads-u-padding-x--2p5 medium-screen:vads-l-col--8">
+  <div class="vads-l-grid-container desktop-lg:vads-u-padding-x--0">
+    <div class="vads-l-row medium-screen:vads-u-margin-x--neg2p5">
+      <div class="vads-l-col--12 medium-screen:vads-u-padding-x--2p5 medium-screen:vads-l-col--8">
         <article class="new-grid">
           <div class="medium-screen:vads-u-display--flex">
             <h1>
-            {{ heading }}
+              {{ heading }}
             </h1>
           </div>
           {{ contents }}
 
           {% if hublinks != empty %}
-            {% include "src/site/components/hub-page-link-list.html" %}
+          {% include "src/site/components/hub-page-link-list.html" %}
           {% endif %}
 
-        <!-- Last updated & feedback button -->
+          <!-- Last updated & feedback button -->
           {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
         </article>
       </div>
@@ -28,19 +28,19 @@ Education SCO (Merger)
       <div class="vads-l-col--12 medium-screen:vads-u-padding-x--2p5 medium-screen:vads-l-col--4" id="hub-rail">
 
         {% if administration != empty %}
-          {% include "src/site/components/merger-administration.html" %}
+        {% include "src/site/components/merger-administration.html" %}
         {% endif %}
 
         {% if promo != empty %}
-          {% include "src/site/components/merger-promo.html" %}
+        {% include "src/site/components/merger-promo.html" %}
         {% endif %}
 
         {% if social != empty %}
-          {% include "src/site/components/merger-social-sco.html" %}
+        {% include "src/site/components/merger-social-sco.html" %}
         {% endif %}
 
         {% if mobile != empty %}
-          {% include "src/site/components/merger-mobile.html" %}
+        {% include "src/site/components/merger-mobile.html" %}
         {% endif %}
 
       </div>
