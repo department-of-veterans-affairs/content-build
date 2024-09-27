@@ -9,8 +9,8 @@ const SURVEY_NUMBERS = {
   SCHOOL_ADMINISTRATORS_STAGING: 37,
   HEALTH_CARE_PROD: 17,
   HEALTH_CARE_STAGING: 41,
-  VISIT_SUMMARY_PROD: 17,
-  VISIT_SUMMARY_STAGING: 41,
+  AFTER_VISIT_SUMMARY_PROD: 17,
+  AFTER_VISIT_SUMMARY_STAGING: 55,
 };
 
 const medalliaSurveys = {
@@ -34,8 +34,8 @@ const medalliaSurveys = {
       staging: SURVEY_NUMBERS.HEALTH_CARE_STAGING,
     },
     '/my-health/medical-records/summaries-and-notes/visit-summary': {
-      production: SURVEY_NUMBERS.VISIT_SUMMARY_PROD,
-      staging: SURVEY_NUMBERS.VISIT_SUMMARY_STAGING,
+      production: SURVEY_NUMBERS.AFTER_VISIT_SUMMARY_PROD,
+      staging: SURVEY_NUMBERS.AFTER_VISIT_SUMMARY_STAGING,
     },
   },
 };
