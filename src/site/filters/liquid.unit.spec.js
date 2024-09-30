@@ -3150,7 +3150,7 @@ describe('getSurvey', () => {
         'vagovdev',
         '/my-health/medical-records/summaries-and-notes/visit-summary',
       ),
-    ).to.equal(41);
+    ).to.equal(55);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
@@ -3159,7 +3159,7 @@ describe('getSurvey', () => {
         'vagovdev',
         '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
       ),
-    ).to.equal(41);
+    ).to.equal(55);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
