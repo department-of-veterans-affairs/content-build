@@ -11,6 +11,12 @@ const extractAdditionalFields = entity => {
 };
 const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
 
+const formatDate = dateString => {
+  const removeLeadingZero = s => s.replace(/^0+/, '');
+  const [year, month, day] = dateString.split('-');
+  return `${removeLeadingZero(month)}/${removeLeadingZero(day)}/${year}`;
+};
+
 const normalizeChapter = ({ entity }) => {
   return {
     id: parseInt(entity.entityId, 10),
@@ -27,7 +33,11 @@ const normalizeForm = (form, logger = logDrupal) => {
       cmsId: form.nid,
       formId: form.fieldVaFormNumber,
       title: form.entityLabel,
-      ombNumber: form.fieldOmbNumber,
+      ombInfo: {
+        expDate: formatDate(form.fieldExpirationDate.value),
+        ombNumber: form.fieldOmbNumber,
+        resBurden: form.fieldRespondentBurden,
+      },
       chapters: form.fieldChapters.map(normalizeChapter),
     };
   } catch (error) {
