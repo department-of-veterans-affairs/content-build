@@ -27,17 +27,23 @@
     }
 {% endcomment %}
 <div class="va-table-margin">
-    <va-table data-template="paragraphs/table" data-entity-id="{{ entity.entityId }}" role="table" table-title="{{ entity.fieldTable.caption }}">
+    <va-table
+        data-template="paragraphs/table"
+        data-entity-id="{{ entity.entityId }}"
+        table-title="{{ entity.fieldTable.caption }}"
+        table-type="bordered"
+        uswds
+    >
         {% assign colLabels = entity.fieldTable.value.0  %}
         {% for value in entity.fieldTable.value %}
             {% if forloop.first == true %}
-                <va-table-row slot="headers" key="header">
+                <va-table-row>
                     {% for column in value %}
                         {% if column == "" or column == nil %}
-                        <span role="columnheader"> </span>
-                    {% else %}
-                        <span role="columnheader" scope="col">{{ column }}</span>
-                    {% endif %}
+                            <span> </span>
+                        {% else %}
+                            <span scope="col">{{ column }}</span>
+                        {% endif %}
                     {% endfor %}
                 </va-table-row>
             {% else %}
