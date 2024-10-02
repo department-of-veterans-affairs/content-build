@@ -533,34 +533,6 @@
     }
   },
   {
-    "appName": "22-5495 Education benefits form",
-    "entryName": "5495-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/5495",
-    "template": {
-      "title": "Dependents Request For Change",
-      "heading": "Dependents request for change",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "order": 2,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "Change your GI Bill school or program",
-          "path": "education/change-gi-bill-benefits/"
-        },
-        {
-          "name": "Change your dependent benefits VA Form 22-5495",
-          "path": "education/apply-for-education-benefits/application/5495/"
-        }
-      ]
-    }
-  },
-  {
     "appName": "GI Bill School Feedback Tool",
     "entryName": "feedback-tool",
     "rootUrl": "/education/submit-school-feedback",
@@ -604,7 +576,7 @@
   {
     "appName": "22-5490 Education benefits form",
     "entryName": "5490-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/5490",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-dea-fry-form-22-5490",
     "template": {
       "title": "Apply For Education Benefits",
       "heading": "Apply for education benefits",
@@ -612,22 +584,7 @@
       "layout": "page-react.html",
       "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
       "order": 3,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/5490"
-        }
-      ]
+      "hideFromSidebar": true
     }
   },
   {
@@ -1708,7 +1665,7 @@
     "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1780,7 +1737,8 @@
     "productId": "40938a35-1cfa-4808-917b-37e0baec6a7c",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "lastupdate": "2024-09-17"
     }
   },
   {

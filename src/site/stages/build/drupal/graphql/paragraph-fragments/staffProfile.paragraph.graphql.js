@@ -17,6 +17,7 @@ module.exports = `
         fieldDescription
         fieldEmailAddress
         fieldPhoneNumber
+        fieldCompleteBiographyCreate
         fieldIntroText
         fieldBody {
           processed

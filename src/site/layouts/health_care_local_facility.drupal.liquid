@@ -34,13 +34,13 @@
             contact information</h2>
 
           <div
-              class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
+              class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column mobile-lg:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
 
 
             <div
                 class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
               <div>
-                <div class="vads-c-facility-detail">
+                <div>
 
                   {% if fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
                     <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
@@ -48,7 +48,7 @@
                     </div>
                   {% endif %}
 
-                  <section class="vads-facility-detail">
+                  <section>
                     <script type="application/ld+json">
                       {
                         "@context": "https://schema.org",
@@ -119,7 +119,7 @@
                         </div>
                       {% endif %}
                       {% if fieldMentalHealthPhone %}
-                        <div class="mental-health-care-phone"><strong>Mental
+                        <div><strong>Mental
                             health care:
                           </strong> {{ fieldMentalHealthPhone | processPhoneToVaTelephoneOrFallback :  '', 'Mental health care' }}
                         </div>
@@ -143,7 +143,7 @@
           {% unless difference contains '-' %}
             <section class="vads-u-margin-bottom--4" data-label="Prepare for your visit">
               <h2 id="prepare-for-your-visit"
-                  class="vads-u-margin-top--0 vads-u-font-size--lg small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">
+                  class="vads-u-margin-top--0 vads-u-font-size--lg mobile-lg:vads-u-font-size--xl vads-u-margin-bottom--2">
                 Prepare for your visit</h2>
               <p>Select a topic to learn more.</p>
               <va-accordion section-heading="Prepare for your visit" bordered>
@@ -181,7 +181,7 @@
             <h2 id="health-care-offered-here"
                 class="vads-u-font-size--xl vads-u-margin-top--5">Health services offered here</h2>
             <p>Select a topic to learn more.</p>
-            <section class="local-health-services" id="local-health-services" data-label="Health services">
+            <section id="local-health-services" data-label="Health services">
 
               {% assign localHealthServices = fieldLocalHealthCareService | sortObjectsBy: 'entity.fieldRegionalHealthService.entity.fieldServiceNameAndDescripti.entity.name' %}
 

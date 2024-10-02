@@ -3,7 +3,7 @@
 {% endif %}
 {% assign isStoriesPage = entityUrl.path | isPage: "stories" %}
 
-<div data-template="teasers/news_story_page_feature" id="featured-content-{{ node.entityId }}" class="featured-story usa-grid usa-grid-full vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-border-left--7px vads-u-border-color--primary-alt-lightest">
+<div data-template="teasers/news_story_page_feature" id="featured-content-{{ node.entityId }}" class="usa-grid usa-grid-full vads-u-margin-bottom--3 medium-screen:vads-u-margin-bottom--4 vads-u-display--flex vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-border-left--7px vads-u-border-color--primary-alt-lightest">
     <div class="usa-width-one-half medium-screen:vads-u-padding-left--2">
         <{{ header }} class="vads-u-font-size--md medium-screen:vads-u-font-size--lg vads-u-margin-top--0 medium-screen:vads-u-margin-bottom--0p5">
             <va-link href="{{ node.entityUrl.path }}" text="{{ node.title | encode }}"></va-link>

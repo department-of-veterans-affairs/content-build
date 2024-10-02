@@ -57,13 +57,8 @@
           {% if fieldVaFormRevisionDate or fieldVaFormIssueDate %}
             <div>
               <dd>
-                <dfn class="vads-u-font-weight--bold vads-u-display--inline">Form last updated:</dfn>
-                {% assign revisionDateIsLatestUpdate = fieldVaFormRevisionDate.value | isLaterThan: fieldVaFormIssueDate.value %}
-                {% if revisionDateIsLatestUpdate %}
-                  {{ fieldVaFormRevisionDate.value | formatDate: 'MMMM YYYY' }}
-                {% else %}
-                  {{ fieldVaFormIssueDate.value | formatDate: 'MMMM YYYY' }}
-                {% endif %}
+                <dfn class="vads-u-font-weight--bold vads-u-display--inline">Form revision date:</dfn>
+                {{ fieldVaFormRevisionDate.value | formatDate: 'MMMM YYYY' }}
               </dd>
             </div>
           {% endif %}
