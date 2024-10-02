@@ -907,7 +907,7 @@
     }
   },
   {
-    "appName": "Virtual Agent",
+    "appName": "VA Chatbot",
     "entryName": "virtual-agent",
     "rootUrl": "contact-us/virtual-agent",
     "template": {
