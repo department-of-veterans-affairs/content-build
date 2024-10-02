@@ -773,17 +773,19 @@ module.exports = function registerFilters() {
     });
 
     const mappedCrumbs = filteredCrumbs.map(crumb => {
-      const { name, path, children } = crumb;
+      const { path, children } = crumb;
+      let { name } = crumb;
+
+      // Replace hyphens in the name with spaces
+      name = name.replace('-', ' ');
+
+      // Capitalize the first letter of the name
+      name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
       const { display_title: displayTitle, title } =
         (children && children[0]?.file) ?? {};
       // Assigns the first non-null value, defaulting back to the original name
-      let label = displayTitle || title || name;
-
-      // Replace hyphens in the label with spaces
-      label = label.replace('-', ' ');
-
-      // Capitalize the first letter of the label
-      label = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
+      const label = displayTitle || title || name;
 
       // Set language to Spanish if "-esp" is at the end of the url,
       // or Tagalog if "-tag" is at the end of the url
