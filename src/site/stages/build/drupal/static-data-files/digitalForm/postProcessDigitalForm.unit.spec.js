@@ -119,6 +119,30 @@ describe('postProcessDigitalForm', () => {
       });
     });
 
+    context('with an Address step', () => {
+      it('includes appropriate fields', () => {
+        twoStepEntity.fieldChapters.push({
+          entity: {
+            entityId: '161344',
+            type: {
+              entity: {
+                entityId: 'digital_form_address',
+                entityLabel: 'Digital Form: Address',
+              },
+            },
+            fieldTitle: 'Generated Address',
+            fieldMilitaryAddressCheckbox: false,
+          },
+        });
+        const [, testForm] = postProcessDigitalForm(queryResult);
+        const [{ additionalFields }] = testForm.chapters.filter(
+          chapter => chapter.type === 'digital_form_address',
+        );
+
+        expect(additionalFields.militaryAddressCheckbox).to.eq(false);
+      });
+    });
+
     context('with an Identification Information step', () => {
       let additionalFields;
 
