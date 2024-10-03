@@ -998,9 +998,7 @@
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
       "minimalFooter": true,
-      "minimalHeader": {
-        "disableHeadings": true
-      }
+      "minimalHeader": true
     }
   },
   {
@@ -1013,9 +1011,7 @@
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
       "minimalFooter": true,
-      "minimalHeader": {
-        "disableHeadings": true
-      }
+      "minimalHeader": true
     }
   },
   {
@@ -1027,9 +1023,7 @@
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
       "minimalFooter": true,
-      "minimalHeader": {
-        "disableHeadings": true
-      },
+      "minimalHeader": true,
       "vagovprod": false
     }
   },
@@ -1690,7 +1684,6 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "disableHeadings": true,
         "excludePaths": [
           "/introduction"
         ]
@@ -1792,7 +1785,6 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "disableHeadings": true,
         "excludePaths": [
           "/introduction",
           "/confirmation"
