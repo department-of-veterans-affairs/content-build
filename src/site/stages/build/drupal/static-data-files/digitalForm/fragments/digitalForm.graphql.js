@@ -1,3 +1,4 @@
+const address = require('./address.graphql');
 const identificationInformation = require('./identificationInformation.graphql');
 const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
 
@@ -7,6 +8,7 @@ const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
  *
  */
 module.exports = `
+  ${address}
   ${identificationInformation}
   ${nameAndDateOfBirth}
 
@@ -28,6 +30,7 @@ module.exports = `
             entityLabel
           }
         }
+        ...address
         ...identificationInformation
         ...nameAndDateOfBirth
       }
