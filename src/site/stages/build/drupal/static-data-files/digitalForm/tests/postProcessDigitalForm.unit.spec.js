@@ -2,96 +2,29 @@
 
 import { expect } from 'chai';
 import sinon from 'sinon';
+import queryResult from './fixtures/queryResult.json';
 
 const { postProcessDigitalForm } = require('../postProcessDigitalForm');
 
 describe('postProcessDigitalForm', () => {
-  const oneStepEntity = {
-    nid: 71002,
-    entityLabel: 'Form with One Step',
-    fieldVaFormNumber: '11111',
-    fieldOmbNumber: '1111-1111',
-    fieldRespondentBurden: 48,
-    fieldExpirationDate: {
-      value: '2025-06-11',
-    },
-    fieldChapters: [
-      {
-        entity: {
-          entityId: '157904',
-          type: {
-            entity: {
-              entityId: 'digital_form_name_and_date_of_bi',
-              entityLabel: 'Name and Date of Birth',
-            },
-          },
-          fieldTitle: 'The Only Step',
-          fieldIncludeDateOfBirth: true,
-        },
-      },
-    ],
-  };
+  const [oneStepEntity, twoStepEntity] = queryResult.data.nodeQuery.entities;
 
   context('with a well-formed query result', () => {
-    const expDate = '2027-01-29';
+    let testForm;
 
-    const twoStepEntity = {
-      nid: 71004,
-      entityLabel: 'Form with Two Steps',
-      fieldVaFormNumber: '222222',
-      fieldOmbNumber: '1212-1212',
-      fieldRespondentBurden: 30,
-      fieldExpirationDate: {
-        value: expDate,
-      },
-      fieldChapters: [
-        {
-          entity: {
-            entityId: '157906',
-            type: {
-              entity: {
-                entityId: 'digital_form_name_and_date_of_bi',
-                entityLabel: 'Name and Date of Birth',
-              },
-            },
-            fieldTitle: 'First Step',
-            fieldIncludeDateOfBirth: true,
-          },
-        },
-        {
-          entity: {
-            entityId: '157907',
-            type: {
-              entity: {
-                entityId: 'digital_form_name_and_date_of_bi',
-                entityLabel: 'Name and Date of Birth',
-              },
-            },
-            fieldTitle: 'Second Step',
-            fieldIncludeDateOfBirth: false,
-          },
-        },
-      ],
-    };
-
-    const queryResult = {
-      data: {
-        nodeQuery: {
-          entities: [oneStepEntity, twoStepEntity],
-        },
-      },
-    };
+    beforeEach(() => {
+      [, testForm] = postProcessDigitalForm(queryResult);
+    });
 
     it('returns a normalized JSON object', () => {
-      const processedResult = postProcessDigitalForm(queryResult);
-      const [, testForm] = processedResult;
       const testChapter = testForm.chapters[1];
 
-      expect(processedResult.length).to.eq(2);
       expect(testForm.cmsId).to.eq(71004);
       expect(testForm.formId).to.eq('222222');
       expect(testForm.title).to.eq('Form with Two Steps');
-      expect(testForm.chapters.length).to.eq(2);
+      expect(testForm.chapters.length).to.eq(
+        twoStepEntity.fieldChapters.length,
+      );
       expect(testChapter.id).to.eq(157907);
       expect(testChapter.chapterTitle).to.eq('Second Step');
       expect(testChapter.type).to.eq('digital_form_name_and_date_of_bi');
@@ -100,9 +33,8 @@ describe('postProcessDigitalForm', () => {
     });
 
     it('includes an OMB info object', () => {
-      const [, testForm] = postProcessDigitalForm(queryResult);
       const { ombInfo } = testForm;
-      // expDate is 2027-01-29
+      // towStepEntity.fieldExpirationDate is 2027-01-29
       const formattedDate = '1/29/2027';
 
       expect(ombInfo.ombNumber).to.eq(twoStepEntity.fieldOmbNumber);
@@ -112,7 +44,6 @@ describe('postProcessDigitalForm', () => {
 
     context('with a Name and Date of Birth step', () => {
       it('includes the appropriate fields', () => {
-        const [, testForm] = postProcessDigitalForm(queryResult);
         const { additionalFields } = testForm.chapters[1];
 
         expect(additionalFields.includeDateOfBirth).to.eq(false);
@@ -121,20 +52,6 @@ describe('postProcessDigitalForm', () => {
 
     context('with an Address step', () => {
       it('includes appropriate fields', () => {
-        twoStepEntity.fieldChapters.push({
-          entity: {
-            entityId: '161344',
-            type: {
-              entity: {
-                entityId: 'digital_form_address',
-                entityLabel: 'Digital Form: Address',
-              },
-            },
-            fieldTitle: 'Generated Address',
-            fieldMilitaryAddressCheckbox: false,
-          },
-        });
-        const [, testForm] = postProcessDigitalForm(queryResult);
         const [{ additionalFields }] = testForm.chapters.filter(
           chapter => chapter.type === 'digital_form_address',
         );
@@ -147,20 +64,6 @@ describe('postProcessDigitalForm', () => {
       let additionalFields;
 
       beforeEach(() => {
-        twoStepEntity.fieldChapters.push({
-          entity: {
-            entityId: '160594',
-            type: {
-              entity: {
-                entityId: 'digital_form_identification_info',
-                entityLabel: 'Identification Information',
-              },
-            },
-            fieldTitle: 'Identification information',
-            fieldIncludeVeteranSService: true,
-          },
-        });
-        const [, testForm] = postProcessDigitalForm(queryResult);
         [{ additionalFields }] = testForm.chapters.filter(
           chapter => chapter.type === 'digital_form_identification_info',
         );
@@ -177,7 +80,7 @@ describe('postProcessDigitalForm', () => {
   });
 
   context('with a malformed query result', () => {
-    let queryResult;
+    let badQueryResult;
     let processedResult;
     let logger;
 
@@ -187,10 +90,10 @@ describe('postProcessDigitalForm', () => {
 
     context('when the entire query is bad', () => {
       beforeEach(() => {
-        queryResult = {
+        badQueryResult = {
           wrongKey: 'oops! bad data!',
         };
-        processedResult = postProcessDigitalForm(queryResult, logger);
+        processedResult = postProcessDigitalForm(badQueryResult, logger);
       });
 
       it('logs the error', () => {
@@ -204,7 +107,7 @@ describe('postProcessDigitalForm', () => {
 
     context('when only one form is malformed', () => {
       beforeEach(() => {
-        queryResult = {
+        badQueryResult = {
           data: {
             nodeQuery: {
               entities: [
@@ -219,7 +122,7 @@ describe('postProcessDigitalForm', () => {
             },
           },
         };
-        processedResult = postProcessDigitalForm(queryResult, logger);
+        processedResult = postProcessDigitalForm(badQueryResult, logger);
       });
 
       it('logs the error', () => {
