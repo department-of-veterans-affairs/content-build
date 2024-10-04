@@ -37,6 +37,10 @@ const medalliaSurveys = {
       production: SURVEY_NUMBERS.VISIT_SUMMARY_PROD,
       staging: SURVEY_NUMBERS.VISIT_SUMMARY_STAGING,
     },
+    '/resources': {
+      production: SURVEY_NUMBERS.DEFAULT_PROD_SURVEY,
+      staging: SURVEY_NUMBERS.DEFAULT_STAGING_SURVEY,
+    },
   },
 };
 
