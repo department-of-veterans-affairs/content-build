@@ -70,6 +70,15 @@
   }
 }
 
+.abbreviated-day {
+  width: 35px;
+  margin-right: 0;
+
+  @media screen and (min-width: 481px) {
+    margin-right: 5px;
+  }
+}
+
 // START: Styles for mobile app promo banner
 #alert-with-additional-info {
 

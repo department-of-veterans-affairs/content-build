@@ -9,16 +9,16 @@
   The classes below control visibility of each of the templates in landing_page.drupal.liquid only. This should not affect any other templates where the right column is not present.
 {% endcomment %}
 
-{% assign classes = 'last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0' %}
+{% assign classes = 'last-updated usa-content vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0' %}
 
 {% if responsiveLayout == 'desktop' %}
-  {% assign classes = 'last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0 vads-u-display--none medium-screen:vads-u-display--block' %}
+  {% assign classes = 'last-updated usa-content vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0 vads-u-display--none medium-screen:vads-u-display--block' %}
 {% elsif responsiveLayout == 'mobile' %}
-  {% assign classes = 'last-updated usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0 medium-screen:vads-u-display--none' %}
+  {% assign classes = 'last-updated usa-content vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0 medium-screen:vads-u-display--none' %}
 {% endif %}
 
 <div class="{{ classes }}">
-  <div class="small-screen:vads-u-display--flex above-footer-elements-container">
+  <div class="mobile-lg:vads-u-display--flex above-footer-elements-container">
     <div class="vads-u-flex--auto">
       <span class="vads-u-text-align--justify">
         {% include "src/site/includes/last-updated.drupal.liquid" %}
