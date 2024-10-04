@@ -4,10 +4,20 @@ const extractAdditionalFields = entity => {
   const additionalFields = {};
   const { entityId } = entity.type.entity;
 
-  if (entityId === 'digital_form_name_and_date_of_bi') {
-    additionalFields.includeDateOfBirth = entity.fieldIncludeDateOfBirth;
-  } else if (entityId === 'digital_form_identification_info') {
-    additionalFields.includeServiceNumber = entity.fieldIncludeVeteranSService;
+  switch (entityId) {
+    case 'digital_form_address':
+      additionalFields.militaryAddressCheckbox =
+        entity.fieldMilitaryAddressCheckbox;
+      break;
+    case 'digital_form_name_and_date_of_bi':
+      additionalFields.includeDateOfBirth = entity.fieldIncludeDateOfBirth;
+      break;
+    case 'digital_form_identification_info':
+      additionalFields.includeServiceNumber =
+        entity.fieldIncludeVeteranSService;
+      break;
+    default:
+      break;
   }
 
   return additionalFields;
