@@ -1,7 +1,7 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 
 import { expect } from 'chai';
-import identificationInformation from './identificationInformation.graphql';
+import identificationInformation from '../../fragments/identificationInformation.graphql';
 
 describe('identificationInformation fragment', () => {
   it('includes fieldTitle', () => {

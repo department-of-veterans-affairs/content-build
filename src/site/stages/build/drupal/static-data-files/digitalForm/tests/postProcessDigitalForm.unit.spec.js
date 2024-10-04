@@ -3,7 +3,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-const { postProcessDigitalForm } = require('./postProcessDigitalForm');
+const { postProcessDigitalForm } = require('../postProcessDigitalForm');
 
 describe('postProcessDigitalForm', () => {
   const oneStepEntity = {

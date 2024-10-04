@@ -1,7 +1,7 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 
 import { expect } from 'chai';
-import digitalForm from './digitalForm.graphql';
+import digitalForm from '../../fragments/digitalForm.graphql';
 
 describe('digitalForm fragment', () => {
   it('includes form fields', () => {

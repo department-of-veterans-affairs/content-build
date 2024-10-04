@@ -1,7 +1,7 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 
 import { expect } from 'chai';
-import address from './address.graphql';
+import address from '../../fragments/address.graphql';
 
 describe('address fragment', () => {
   it('includes fieldTitle', () => {
