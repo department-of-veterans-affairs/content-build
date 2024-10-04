@@ -35,7 +35,7 @@ const normalizeChapter = ({ entity }) => {
     id: parseInt(entity.entityId, 10),
     chapterTitle: entity.fieldTitle,
     type: entity.type.entity.entityId,
-    pageTitle: entity.type.entity.entityLabel,
+    pageTitle: entity.type.entity.entityLabel.replace('Digital Form: ', ''),
     additionalFields: extractAdditionalFields(entity),
   };
 };

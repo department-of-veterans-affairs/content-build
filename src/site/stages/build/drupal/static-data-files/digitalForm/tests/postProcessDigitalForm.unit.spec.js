@@ -28,7 +28,6 @@ describe('postProcessDigitalForm', () => {
       expect(testChapter.id).to.eq(157907);
       expect(testChapter.chapterTitle).to.eq('Second Step');
       expect(testChapter.type).to.eq('digital_form_name_and_date_of_bi');
-      expect(testChapter.pageTitle).to.eq('Name and Date of Birth');
       expect(Object.keys(testChapter.additionalFields).length).to.eq(1);
     });
 
@@ -42,39 +41,47 @@ describe('postProcessDigitalForm', () => {
       expect(ombInfo.resBurden).to.eq(twoStepEntity.fieldRespondentBurden);
     });
 
-    context('with a Name and Date of Birth step', () => {
-      it('includes the appropriate fields', () => {
-        const { additionalFields } = testForm.chapters[1];
+    it('removes the "Digital Form" prefix', () => {
+      const [, testChapter] = testForm.chapters;
 
-        expect(additionalFields.includeDateOfBirth).to.eq(false);
-      });
+      expect(testChapter.pageTitle).to.eq('Name and Date of Birth');
     });
 
-    context('with an Address step', () => {
-      it('includes appropriate fields', () => {
-        const [{ additionalFields }] = testForm.chapters.filter(
-          chapter => chapter.type === 'digital_form_address',
-        );
-
-        expect(additionalFields.militaryAddressCheckbox).to.eq(false);
-      });
-    });
-
-    context('with an Identification Information step', () => {
+    describe('additionalFields', () => {
       let additionalFields;
 
-      beforeEach(() => {
-        [{ additionalFields }] = testForm.chapters.filter(
-          chapter => chapter.type === 'digital_form_identification_info',
-        );
+      context('with a Name and Date of Birth step', () => {
+        it('includes the appropriate fields', () => {
+          additionalFields = testForm.chapters[1].additionalFields;
+
+          expect(additionalFields.includeDateOfBirth).to.eq(false);
+        });
       });
 
-      it('includes appropriate fields', () => {
-        expect(additionalFields.includeServiceNumber).to.eq(true);
+      context('with an Address step', () => {
+        it('includes appropriate fields', () => {
+          [{ additionalFields }] = testForm.chapters.filter(
+            chapter => chapter.type === 'digital_form_address',
+          );
+
+          expect(additionalFields.militaryAddressCheckbox).to.eq(false);
+        });
       });
 
-      it('does not include inappropriate fields', () => {
-        expect(additionalFields.includeDateOfBirth).to.eq(undefined);
+      context('with an Identification Information step', () => {
+        beforeEach(() => {
+          [{ additionalFields }] = testForm.chapters.filter(
+            chapter => chapter.type === 'digital_form_identification_info',
+          );
+        });
+
+        it('includes appropriate fields', () => {
+          expect(additionalFields.includeServiceNumber).to.eq(true);
+        });
+
+        it('does not include inappropriate fields', () => {
+          expect(additionalFields.includeDateOfBirth).to.eq(undefined);
+        });
       });
     });
   });

@@ -18,7 +18,7 @@
                 "type": {
                   "entity": {
                     "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Name and Date of Birth"
+                    "entityLabel": "Digital Form: Name and Date of Birth"
                   }
                 },
                 "fieldTitle": "The Only Step",
@@ -43,7 +43,7 @@
                 "type": {
                   "entity": {
                     "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Name and Date of Birth"
+                    "entityLabel": "Digital Form: Name and Date of Birth"
                   }
                 },
                 "fieldTitle": "First Step",
@@ -56,7 +56,7 @@
                 "type": {
                   "entity": {
                     "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Name and Date of Birth"
+                    "entityLabel": "Digital Form: Name and Date of Birth"
                   }
                 },
                 "fieldTitle": "Second Step",
@@ -82,7 +82,7 @@
                 "type": {
                   "entity": {
                     "entityId": "digital_form_identification_info",
-                    "entityLabel": "Identification Information"
+                    "entityLabel": "Digital Form: Identification Information"
                   }
                 },
                 "fieldTitle": "Identification information",
