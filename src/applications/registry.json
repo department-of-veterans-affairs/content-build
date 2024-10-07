@@ -787,46 +787,6 @@
     }
   },
   {
-    "appName": "Coronavirus Research - Volunteer",
-    "entryName": "coronavirus-research",
-    "rootUrl": "/coronavirus-research/volunteer",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "coronavirus-research/",
-          "name": "Participating in coronavirus research at VA"
-        },
-        {
-          "path": "coronavirus-research/volunteer/",
-          "name": "Sign up to volunteer"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "Coronavirus Research - Update",
-    "entryName": "coronavirus-research-update",
-    "rootUrl": "/coronavirus-research/volunteer/update",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "coronavirus-research/",
-          "name": "Participating in coronavirus research at VA"
-        },
-        {
-          "path": "coronavirus-research/volunteer/update/",
-          "name": "Update your information"
-        }
-      ]
-    }
-  },
-  {
     "appName": "Ask a Question",
     "entryName": "ask-a-question",
     "rootUrl": "/ask-a-question",
