@@ -533,34 +533,6 @@
     }
   },
   {
-    "appName": "22-5495 Education benefits form",
-    "entryName": "5495-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/5495",
-    "template": {
-      "title": "Dependents Request For Change",
-      "heading": "Dependents request for change",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "order": 2,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "Change your GI Bill school or program",
-          "path": "education/change-gi-bill-benefits/"
-        },
-        {
-          "name": "Change your dependent benefits VA Form 22-5495",
-          "path": "education/apply-for-education-benefits/application/5495/"
-        }
-      ]
-    }
-  },
-  {
     "appName": "GI Bill School Feedback Tool",
     "entryName": "feedback-tool",
     "rootUrl": "/education/submit-school-feedback",
@@ -604,7 +576,7 @@
   {
     "appName": "22-5490 Education benefits form",
     "entryName": "5490-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/5490",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-dea-fry-form-22-5490",
     "template": {
       "title": "Apply For Education Benefits",
       "heading": "Apply for education benefits",
@@ -612,22 +584,7 @@
       "layout": "page-react.html",
       "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
       "order": 3,
-      "hideFromSidebar": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/5490"
-        }
-      ]
+      "hideFromSidebar": true
     }
   },
   {
@@ -830,46 +787,6 @@
     }
   },
   {
-    "appName": "Coronavirus Research - Volunteer",
-    "entryName": "coronavirus-research",
-    "rootUrl": "/coronavirus-research/volunteer",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "coronavirus-research/",
-          "name": "Participating in coronavirus research at VA"
-        },
-        {
-          "path": "coronavirus-research/volunteer/",
-          "name": "Sign up to volunteer"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "Coronavirus Research - Update",
-    "entryName": "coronavirus-research-update",
-    "rootUrl": "/coronavirus-research/volunteer/update",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "coronavirus-research/",
-          "name": "Participating in coronavirus research at VA"
-        },
-        {
-          "path": "coronavirus-research/volunteer/update/",
-          "name": "Update your information"
-        }
-      ]
-    }
-  },
-  {
     "appName": "Ask a Question",
     "entryName": "ask-a-question",
     "rootUrl": "/ask-a-question",
@@ -1041,9 +958,7 @@
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
       "minimalFooter": true,
-      "minimalHeader": {
-        "disableHeadings": true
-      }
+      "minimalHeader": true
     }
   },
   {
@@ -1056,9 +971,7 @@
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
       "minimalFooter": true,
-      "minimalHeader": {
-        "disableHeadings": true
-      }
+      "minimalHeader": true
     }
   },
   {
@@ -1070,9 +983,7 @@
       "includeFeedbackButton": true,
       "includeBreadcrumbs": false,
       "minimalFooter": true,
-      "minimalHeader": {
-        "disableHeadings": true
-      },
+      "minimalHeader": true,
       "vagovprod": false
     }
   },
@@ -1708,7 +1619,7 @@
     "rootUrl": "/health-care/foreign-medical-program/register-form-10-7959f-1",
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1733,7 +1644,6 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "disableHeadings": true,
         "excludePaths": [
           "/introduction"
         ]
@@ -1835,7 +1745,6 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "disableHeadings": true,
         "excludePaths": [
           "/introduction",
           "/confirmation"
