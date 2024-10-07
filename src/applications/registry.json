@@ -1791,5 +1791,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Welcome VA Setup Review Information Form",
+    "entryName": "welcome-va-setup-review-information",
+    "rootUrl": "/my-va/welcome-va-setup/review-information",
+    "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
