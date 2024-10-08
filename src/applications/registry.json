@@ -787,46 +787,6 @@
     }
   },
   {
-    "appName": "Coronavirus Research - Volunteer",
-    "entryName": "coronavirus-research",
-    "rootUrl": "/coronavirus-research/volunteer",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "coronavirus-research/",
-          "name": "Participating in coronavirus research at VA"
-        },
-        {
-          "path": "coronavirus-research/volunteer/",
-          "name": "Sign up to volunteer"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "Coronavirus Research - Update",
-    "entryName": "coronavirus-research-update",
-    "rootUrl": "/coronavirus-research/volunteer/update",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "coronavirus-research/",
-          "name": "Participating in coronavirus research at VA"
-        },
-        {
-          "path": "coronavirus-research/volunteer/update/",
-          "name": "Update your information"
-        }
-      ]
-    }
-  },
-  {
     "appName": "Ask a Question",
     "entryName": "ask-a-question",
     "rootUrl": "/ask-a-question",
@@ -1827,6 +1787,16 @@
     "entryName": "survivor-dependent-education-benefit-22-5490",
     "rootUrl": "/education/survivor-dependent-education-benefit-22-5490",
     "productId": "5544d590-0b67-48b1-a312-824c98d367ae",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Welcome VA Setup Review Information Form",
+    "entryName": "welcome-va-setup-review-information",
+    "rootUrl": "/my-va/welcome-va-setup/review-information",
+    "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
