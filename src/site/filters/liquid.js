@@ -780,7 +780,7 @@ module.exports = function registerFilters() {
       name = name.replace('-', ' ');
 
       // Capitalize the first letter of the name
-      name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+      name = name.charAt(0).toUpperCase() + name.slice(1);
 
       const { display_title: displayTitle, title } =
         (children && children[0]?.file) ?? {};
