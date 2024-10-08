@@ -140,6 +140,9 @@ const vetCenterFragment = `
             }
           }
         }
+        fieldMissionExplainer {
+          fetched
+        }
       }`;
 
 const getVetCenterSlice = (operationName, offset, limit) => {
