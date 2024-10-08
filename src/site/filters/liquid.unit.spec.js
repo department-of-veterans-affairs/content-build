@@ -945,7 +945,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Verify output
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"Va.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your va disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with va form 21 686c","lang":"en-US"}]',
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21 686C","lang":"en-US"}]',
       ),
     );
   });
@@ -970,7 +970,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Verify output
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"Va.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your va disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with va form 21 686c","lang":"en-US"}]',
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21 686C","lang":"en-US"}]',
       ),
     );
   });
@@ -1005,7 +1005,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Verify output
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"Va.gov home","lang":"en-US"},{"href":"/cerner-staging","isRouterLink":false,"label":"Cerner","lang":"en-US"},{"href":"/cerner-staging/appointments","isRouterLink":false,"label":"Cerner appointments","lang":"en-US"}]',
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/cerner-staging","isRouterLink":false,"label":"Cerner","lang":"en-US"},{"href":"/cerner-staging/appointments","isRouterLink":false,"label":"Cerner appointments","lang":"en-US"}]',
       ),
     );
   });
