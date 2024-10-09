@@ -1,6 +1,7 @@
 const address = require('./address.graphql');
 const identificationInformation = require('./identificationInformation.graphql');
 const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
+const phoneAndEmail = require('./phoneAndEmail.graphql');
 
 /*
  *
@@ -11,6 +12,7 @@ module.exports = `
   ${address}
   ${identificationInformation}
   ${nameAndDateOfBirth}
+  ${phoneAndEmail}
 
   fragment digitalForm on NodeDigitalForm {
     nid
@@ -33,6 +35,7 @@ module.exports = `
         ...address
         ...identificationInformation
         ...nameAndDateOfBirth
+        ...phoneAndEmail
       }
     }
   }
