@@ -7,7 +7,7 @@ import queryResult from './fixtures/queryResult.json';
 const { postProcessDigitalForm } = require('../postProcessDigitalForm');
 
 describe('postProcessDigitalForm', () => {
-  const [oneStepEntity, twoStepEntity] = queryResult.data.nodeQuery.entities;
+  const [oneStepEntity, manyStepEntity] = queryResult.data.nodeQuery.entities;
 
   context('with a well-formed query result', () => {
     let testForm;
@@ -21,9 +21,9 @@ describe('postProcessDigitalForm', () => {
 
       expect(testForm.cmsId).to.eq(71004);
       expect(testForm.formId).to.eq('222222');
-      expect(testForm.title).to.eq('Form with Two Steps');
+      expect(testForm.title).to.eq(manyStepEntity.entityLabel);
       expect(testForm.chapters.length).to.eq(
-        twoStepEntity.fieldChapters.length,
+        manyStepEntity.fieldChapters.length,
       );
       expect(testChapter.id).to.eq(157907);
       expect(testChapter.chapterTitle).to.eq('Second Step');
@@ -36,9 +36,9 @@ describe('postProcessDigitalForm', () => {
       // towStepEntity.fieldExpirationDate is 2027-01-29
       const formattedDate = '1/29/2027';
 
-      expect(ombInfo.ombNumber).to.eq(twoStepEntity.fieldOmbNumber);
+      expect(ombInfo.ombNumber).to.eq(manyStepEntity.fieldOmbNumber);
       expect(ombInfo.expDate).to.eq(formattedDate);
-      expect(ombInfo.resBurden).to.eq(twoStepEntity.fieldRespondentBurden);
+      expect(ombInfo.resBurden).to.eq(manyStepEntity.fieldRespondentBurden);
     });
 
     it('removes the "Digital Form" prefix', () => {
@@ -48,39 +48,20 @@ describe('postProcessDigitalForm', () => {
     });
 
     describe('additionalFields', () => {
-      let additionalFields;
+      [
+        ['digital_form_address', 'militaryAddressCheckbox', false],
+        ['digital_form_identification_info', 'includeServiceNumber', true],
+        ['digital_form_name_and_date_of_bi', 'includeDateOfBirth', true],
+        ['digital_form_phone_and_email', 'includeEmail', false],
+      ].forEach(([type, additionalField, value]) => {
+        context(`with a ${type} step`, () => {
+          it('includes the appropriate additional fields', () => {
+            const { additionalFields } = testForm.chapters.find(
+              chapter => chapter.type === type,
+            );
 
-      context('with a Name and Date of Birth step', () => {
-        it('includes the appropriate fields', () => {
-          additionalFields = testForm.chapters[1].additionalFields;
-
-          expect(additionalFields.includeDateOfBirth).to.eq(false);
-        });
-      });
-
-      context('with an Address step', () => {
-        it('includes appropriate fields', () => {
-          [{ additionalFields }] = testForm.chapters.filter(
-            chapter => chapter.type === 'digital_form_address',
-          );
-
-          expect(additionalFields.militaryAddressCheckbox).to.eq(false);
-        });
-      });
-
-      context('with an Identification Information step', () => {
-        beforeEach(() => {
-          [{ additionalFields }] = testForm.chapters.filter(
-            chapter => chapter.type === 'digital_form_identification_info',
-          );
-        });
-
-        it('includes appropriate fields', () => {
-          expect(additionalFields.includeServiceNumber).to.eq(true);
-        });
-
-        it('does not include inappropriate fields', () => {
-          expect(additionalFields.includeDateOfBirth).to.eq(undefined);
+            expect(additionalFields[additionalField]).to.eq(value);
+          });
         });
       });
     });
