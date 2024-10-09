@@ -1,26 +1,28 @@
 const { logDrupal } = require('../../utilities-drupal');
 
 const extractAdditionalFields = entity => {
-  const additionalFields = {};
   const { entityId } = entity.type.entity;
 
   switch (entityId) {
     case 'digital_form_address':
-      additionalFields.militaryAddressCheckbox =
-        entity.fieldMilitaryAddressCheckbox;
-      break;
-    case 'digital_form_name_and_date_of_bi':
-      additionalFields.includeDateOfBirth = entity.fieldIncludeDateOfBirth;
-      break;
+      return {
+        militaryAddressCheckbox: entity.fieldMilitaryAddressCheckbox,
+      };
     case 'digital_form_identification_info':
-      additionalFields.includeServiceNumber =
-        entity.fieldIncludeVeteranSService;
-      break;
+      return {
+        includeServiceNumber: entity.fieldIncludeVeteranSService,
+      };
+    case 'digital_form_name_and_date_of_bi':
+      return {
+        includeDateOfBirth: entity.fieldIncludeDateOfBirth,
+      };
+    case 'digital_form_phone_and_email':
+      return {
+        includeEmail: entity.fieldIncludeEmail,
+      };
     default:
-      break;
+      return {};
   }
-
-  return additionalFields;
 };
 const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
 
