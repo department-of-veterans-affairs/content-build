@@ -773,8 +773,11 @@ module.exports = function registerFilters() {
     });
 
     const mappedCrumbs = filteredCrumbs.map(crumb => {
-      const { path, children } = crumb;
-      let { name } = crumb;
+      const {
+        path,
+        children,
+      } = /** @type {{path: string, children: array}} */ (crumb);
+      let { name } = /** @type {{name: string}} */ (crumb);
 
       // Replace hyphens in the name with spaces
       name = name.replace('-', ' ');
