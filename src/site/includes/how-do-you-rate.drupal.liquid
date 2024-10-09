@@ -1,27 +1,23 @@
 
 {% assign ratingOptionsQuestion = "How do you rate your experience on this page?" %}
 
-{% if buildtype !== 'vagovprod' or isPreview %}
 <div  class="vads-u-padding-top--3 vads-u-padding-bottom--1 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0">
   <va-radio
   id="rating-radio"
   label="{{ ratingOptionsQuestion }}"
   label-header-level="2"
-  uswds
   error=""
   >
     <va-radio-option
       id="good"
       label="Good"
       name="rating"
-      uswds
       value="Good"
     ></va-radio-option>
     <va-radio-option
       id="bad"
       label="Bad"
       name="rating"
-      uswds
       value="Bad"
     ></va-radio-option>
   </va-radio>
@@ -32,22 +28,26 @@
       class="vads-u-width--full medium-screen:vads-u-width--auto vads-u-margin--0 vads-u-margin-top--2p5"
       id="rating-submit"
       onclick="onRatingSubmit()"
-      uswds
       text="Submit feedback"
     >
     </va-button>
   </div>
 
-  <!-- Thank you message -->
-  <p aria-hidden="true" id="thank-you-message" class="vads-u-display--none vads-u-margin--0">Thank you for your feedback.</p>
+  <p
+    aria-hidden="true"
+    id="thank-you-message"
+    class="vads-u-display--none vads-u-margin--0"
+  >
+    Want to share more feedback? We'll use it to keep improving VA.gov for all Veterans and their families.
+    <button 
+      onClick="KAMPYLE_ONSITE_SDK.showForm('{{ buildtype | getSurvey: entityUrl.path }}')"   
+      type="button"
+      class="va-button-link"
+    >
+      Complete our 3-question survey.
+    </button>
+  </p>
 </div>
-
-
-
-{% else %}
-  <div data-widget-type="how-do-you-rate"></div>
-
-{% endif %}
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
   function deriveOptionLabel(goodChecked, badChecked) {
