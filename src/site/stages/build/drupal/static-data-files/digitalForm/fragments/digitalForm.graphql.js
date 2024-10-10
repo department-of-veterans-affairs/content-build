@@ -1,3 +1,5 @@
+const address = require('./address.graphql');
+const identificationInformation = require('./identificationInformation.graphql');
 const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
 
 /*
@@ -6,6 +8,8 @@ const nameAndDateOfBirth = require('./nameAndDateOfBirth.graphql');
  *
  */
 module.exports = `
+  ${address}
+  ${identificationInformation}
   ${nameAndDateOfBirth}
 
   fragment digitalForm on NodeDigitalForm {
@@ -13,6 +17,10 @@ module.exports = `
     entityLabel
     fieldVaFormNumber
     fieldOmbNumber
+    fieldRespondentBurden
+    fieldExpirationDate {
+      value
+    }
     fieldChapters {
       entity {
         entityId
@@ -22,6 +30,8 @@ module.exports = `
             entityLabel
           }
         }
+        ...address
+        ...identificationInformation
         ...nameAndDateOfBirth
       }
     }

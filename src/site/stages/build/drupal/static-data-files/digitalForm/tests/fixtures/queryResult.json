@@ -1,0 +1,97 @@
+{
+  "data": {
+    "nodeQuery": {
+      "entities": [
+        {
+          "nid": 71002,
+          "entityLabel": "Form with One Step",
+          "fieldVaFormNumber": "11111",
+          "fieldOmbNumber": "1111-1111",
+          "fieldRespondentBurden": 48,
+          "fieldExpirationDate": {
+            "value": "2025-06-11"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "157904",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_name_and_date_of_bi",
+                    "entityLabel": "Digital Form: Name and Date of Birth"
+                  }
+                },
+                "fieldTitle": "The Only Step",
+                "fieldIncludeDateOfBirth": true
+              }
+            }
+          ]
+        },
+        {
+          "nid": 71004,
+          "entityLabel": "Form with Two Steps",
+          "fieldVaFormNumber": "222222",
+          "fieldOmbNumber": "1212-1212",
+          "fieldRespondentBurden": 30,
+          "fieldExpirationDate": {
+            "value": "2027-01-29"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "157906",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_name_and_date_of_bi",
+                    "entityLabel": "Digital Form: Name and Date of Birth"
+                  }
+                },
+                "fieldTitle": "First Step",
+                "fieldIncludeDateOfBirth": true
+              }
+            },
+            {
+              "entity": {
+                "entityId": "157907",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_name_and_date_of_bi",
+                    "entityLabel": "Digital Form: Name and Date of Birth"
+                  }
+                },
+                "fieldTitle": "Second Step",
+                "fieldIncludeDateOfBirth": false
+              }
+            },
+            {
+              "entity": {
+                "entityId": "161344",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_address",
+                    "entityLabel": "Digital Form: Address"
+                  }
+                },
+                "fieldTitle": "Generated Address",
+                "fieldMilitaryAddressCheckbox": false
+              }
+            },
+            {
+              "entity": {
+                "entityId": "160594",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_identification_info",
+                    "entityLabel": "Digital Form: Identification Information"
+                  }
+                },
+                "fieldTitle": "Identification information",
+                "fieldIncludeVeteranSService": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

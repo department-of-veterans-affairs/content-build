@@ -2,21 +2,40 @@ const { logDrupal } = require('../../utilities-drupal');
 
 const extractAdditionalFields = entity => {
   const additionalFields = {};
+  const { entityId } = entity.type.entity;
 
-  if (entity.type.entity.entityId === 'digital_form_name_and_date_of_bi') {
-    additionalFields.includeDateOfBirth = entity.fieldIncludeDateOfBirth;
+  switch (entityId) {
+    case 'digital_form_address':
+      additionalFields.militaryAddressCheckbox =
+        entity.fieldMilitaryAddressCheckbox;
+      break;
+    case 'digital_form_name_and_date_of_bi':
+      additionalFields.includeDateOfBirth = entity.fieldIncludeDateOfBirth;
+      break;
+    case 'digital_form_identification_info':
+      additionalFields.includeServiceNumber =
+        entity.fieldIncludeVeteranSService;
+      break;
+    default:
+      break;
   }
 
   return additionalFields;
 };
 const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
 
+const formatDate = dateString => {
+  const removeLeadingZero = s => s.replace(/^0+/, '');
+  const [year, month, day] = dateString.split('-');
+  return `${removeLeadingZero(month)}/${removeLeadingZero(day)}/${year}`;
+};
+
 const normalizeChapter = ({ entity }) => {
   return {
     id: parseInt(entity.entityId, 10),
     chapterTitle: entity.fieldTitle,
     type: entity.type.entity.entityId,
-    pageTitle: entity.type.entity.entityLabel,
+    pageTitle: entity.type.entity.entityLabel.replace('Digital Form: ', ''),
     additionalFields: extractAdditionalFields(entity),
   };
 };
@@ -27,7 +46,11 @@ const normalizeForm = (form, logger = logDrupal) => {
       cmsId: form.nid,
       formId: form.fieldVaFormNumber,
       title: form.entityLabel,
-      ombNumber: form.fieldOmbNumber,
+      ombInfo: {
+        expDate: formatDate(form.fieldExpirationDate.value),
+        ombNumber: form.fieldOmbNumber,
+        resBurden: form.fieldRespondentBurden,
+      },
       chapters: form.fieldChapters.map(normalizeChapter),
     };
   } catch (error) {
