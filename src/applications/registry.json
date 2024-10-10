@@ -867,7 +867,7 @@
     }
   },
   {
-    "appName": "Virtual Agent",
+    "appName": "VA Chatbot",
     "entryName": "virtual-agent",
     "rootUrl": "contact-us/virtual-agent",
     "template": {
@@ -1577,7 +1577,7 @@
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-form-10-10d",
     "productId": "c485d6da-8094-433d-9cd3-3d31e7813650",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
