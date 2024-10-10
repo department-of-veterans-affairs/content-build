@@ -757,6 +757,56 @@ module.exports = function registerFilters() {
     return JSON.stringify(JSON.stringify(newBC));
   };
 
+  liquid.filters.formatForBreadcrumbsHTML = breadcrumbs => {
+    // return early if no breadcrumbs
+    if (!breadcrumbs) return '';
+
+    // Remove "empty path" breadcrumbs
+    const filteredCrumbs = breadcrumbs.filter(
+      ({ path }) => path !== '' && path !== null,
+    );
+
+    // Add "Home" path since it's not included by default
+    filteredCrumbs.unshift({
+      path: '',
+      name: 'VA.gov home',
+    });
+
+    const mappedCrumbs = filteredCrumbs.map(crumb => {
+      const {
+        path,
+        children,
+      } = /** @type {{path: string, children: array}} */ (crumb);
+      let { name } = /** @type {{name: string}} */ (crumb);
+
+      // Replace hyphens in the name with spaces
+      name = name.replace('-', ' ');
+
+      // Capitalize the first letter of the name
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+
+      const { display_title: displayTitle, title } =
+        (children && children[0]?.file) ?? {};
+      // Assigns the first non-null value, defaulting back to the original name
+      const label = displayTitle || title || name;
+
+      // Set language to Spanish if "-esp" is at the end of the url,
+      // or Tagalog if "-tag" is at the end of the url
+      let lang = 'en-US';
+      if (path.endsWith('-esp')) lang = 'es';
+      if (path.endsWith('-tag')) lang = 'tl';
+
+      return {
+        href: `/${path}`,
+        isRouterLink: false,
+        label,
+        lang,
+      };
+    });
+
+    return JSON.stringify(JSON.stringify(mappedCrumbs));
+  };
+
   // used to get a base url path of a health care region from entityUrl.path
   liquid.filters.regionBasePath = path => path.split('/')[1];
 
