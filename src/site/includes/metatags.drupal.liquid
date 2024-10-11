@@ -129,6 +129,10 @@
   {% elsif fieldIntroText %}
     {% assign description = fieldIntroText.processed | strip_html %}
   {% endif %}
+  {% elsif entityUrl.path = '/' %}
+    {% assign description = 'Welcome to the official website of the U.S. Department of Veterans Affairs. Discover, apply for, and manage your VA benefits and care.' %}
+  {% endif %}
+  entityUrl.path
 
   <!-- Add meta description tags. -->
   {% if description %}
