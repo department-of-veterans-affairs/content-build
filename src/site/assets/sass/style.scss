@@ -71,8 +71,9 @@
 }
 
 .abbreviated-day {
-  width: 35px;
+  display: inline-block;
   margin-right: 0;
+  width: 2.5em;
 
   @media screen and (min-width: 481px) {
     margin-right: 5px;
