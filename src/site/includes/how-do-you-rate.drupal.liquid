@@ -33,11 +33,11 @@
     </va-button>
   </div>
 
-  <div id="thank-you-message-box">
-    <p
+  <p
     aria-hidden="true"
     id="thank-you-message"
     class="vads-u-display--none vads-u-margin--0"
+     tabindex="-1"
   >
     Want to share more feedback? We'll use it to keep improving VA.gov for all Veterans and their families.
     <button 
@@ -48,8 +48,6 @@
       Complete our 3-question survey.
     </button>
   </p>
-  </div>
-
 </div>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
@@ -77,7 +75,6 @@
     var ratingRadioElement = document.getElementById("rating-radio");
     var submitButton = document.getElementById("rating-submit");
     var thankYouMessageElement = document.getElementById("thank-you-message");
-    var thankYouMessageBox = document.getElementById("thank-you-message-box");
     var badElement = document.getElementById('badinput');
     var goodElement = document.getElementById('goodinput');
 
@@ -119,7 +116,7 @@
       thankYouMessageElement.setAttribute('aria-hidden', 'false');
       thankYouMessageElement.setAttribute('aria-live', 'assertive');
       thankYouMessageElement.className = thankYouMessageElement.className.replace('vads-u-display--none', 'vads-u-display--block');
-      thankYouMessageBox.focus();
+      thankYouMessageElement.focus();
     }
   }
 
