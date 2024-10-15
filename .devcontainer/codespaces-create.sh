@@ -10,7 +10,7 @@ nvm use --delete-prefix
 printf "\n\n##### Downloading content repo #####\n"
 yarn install-repos
 
-# Build vets-website
+# Build vets-website?
 set -e
 cd ../vets-website && yarn install --production=false --prefer-offline && yarn build -- --buildtype=localhost --api=https://staging-api.va.gov --host="${CODESPACE_NAME}-3002.githubpreview.dev/" --port=3002
 
