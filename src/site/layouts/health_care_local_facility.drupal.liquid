@@ -118,11 +118,15 @@
                           </strong> {{ fieldRegionPage.entity.fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback :  '', 'VA health connect' }}
                         </div>
                       {% endif %}
-                      {% if fieldMentalHealthPhone %}
-                        <div><strong>Mental
-                            health care:
-                          </strong> {{ fieldMentalHealthPhone | processPhoneToVaTelephoneOrFallback :  '', 'Mental health care' }}
-                        </div>
+                      {% if fieldTelephone %}
+                      <div>
+                        {% include "src/site/components/phone-number-no-header.drupal.liquid" with
+                            phoneNumber = fieldTelephone.entity.fieldPhoneNumber
+                            phoneExtension = fieldTelephone.entity.fieldPhoneExtension
+                            phoneNumberType = fieldTelephone.entity.fieldPhoneNumberType
+                            phoneLabel = fieldTelephone.entity.fieldPhoneLabel | default: 'Mental health care'
+                        %}  
+                      </div>
                       {% endif %}
                     </div>
                     {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'clinical' %}

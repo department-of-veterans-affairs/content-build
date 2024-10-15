@@ -1,0 +1,18 @@
+{% if phoneNumber %}
+  {% if phoneExtension %}
+    {% assign partialPhoneNumber = phoneNumber %}
+    {% assign partialPhoneExtension = phoneExtension %}
+  {% else %}
+    {% assign separatedPhoneNumber = phoneNumber | separatePhoneNumberExtension %}
+    {% assign partialPhoneNumber = separatedPhoneNumber.phoneNumber %}
+    {% assign partialPhoneExtension = separatedPhoneNumber.extension %}
+  {% endif %}
+  <va-telephone
+    contact="{{ partialPhoneNumber | removeDashes }}"
+    extension="{{ partialPhoneExtension | default: '' }}"
+    {% if !fax %}message-aria-describedby="{{ phoneLabel | default: 'Phone' }}"{% endif %}
+    {% if fax %}not-clickable{% endif %}
+    {% if sms %}sms{% endif %}
+    {% if tty %}tty{% endif %}
+  />
+{% endif %}

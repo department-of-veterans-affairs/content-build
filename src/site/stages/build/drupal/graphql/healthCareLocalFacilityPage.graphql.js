@@ -57,7 +57,18 @@ const healthCareLocalFacilityPageFragment = `
       lon
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
+    fieldTelephone {
+        ... on FieldNodeHealthCareLocalFacilityFieldTelephone {
+            entity {
+              ... on ParagraphPhoneNumber {
+                fieldPhoneNumber
+                fieldPhoneLabel
+                fieldPhoneExtension
+                fieldPhoneNumberType
+              }
+            }
+        }
+    }
     fieldOfficeHours {
       day
       starthours

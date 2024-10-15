@@ -56,7 +56,18 @@ const FACILITIES_RESULTS = `
       postalCode
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
+    fieldTelephone {
+        ... on FieldNodeHealthCareLocalFacilityFieldTelephone {
+            entity {
+              ... on ParagraphPhoneNumber {
+                fieldPhoneNumber
+                fieldPhoneLabel
+                fieldPhoneExtension
+                fieldPhoneNumberType
+              }
+            }
+        }
+    }
     fieldOfficeHours {
       day
       starthours

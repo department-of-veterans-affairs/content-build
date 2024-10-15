@@ -127,8 +127,9 @@
   {% endcomment %}
   {% assign shouldShowIntroText = single.fieldApptIntroTextType | shouldShowIntroText: single.fieldApptIntroTextCustom %}
   
-  {% if isMentalHealthService and fieldMentalHealthPhone %}
-    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+  {% if isMentalHealthService and fieldTelephone %}
+    {% assign serviceLocationMainNumber = fieldTelephone.entity.fieldPhoneNumber %}
+    {% assign serviceLocationMainExt = fieldTelephone.entity.fieldPhoneExtension %}
   {% elsif fieldPhoneNumber %}
     {% assign serviceLocationMainNumber = fieldPhoneNumber %}
   {% endif %}
@@ -189,6 +190,7 @@
     <div data-testid="service-location-main-facility-phone">
       {% include "src/site/components/phone-number.drupal.liquid" with
             phoneNumber = serviceLocationMainNumber
+            phoneExtension = serviceLocationMainExt
             phoneLabel = 'Main Phone'
             phoneHeaderLevel = serviceLocationH
           %}
@@ -238,6 +240,7 @@
     <div data-testid="service-location-main-facility-phone-for-contact">
       {% include "src/site/components/phone-number.drupal.liquid" with
         phoneNumber = serviceLocationMainNumber
+        phoneExtension = serviceLocationMainExt
         phoneLabel = 'Main Phone'
         phoneHeaderLevel = serviceLocationH
       %}
