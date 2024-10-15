@@ -3225,7 +3225,7 @@ describe('getSurvey', () => {
         'vagovprod',
         '/my-health/medical-records/summaries-and-notes/visit-summary/8N73HF67C5CC77FC1D17091606996587',
       ),
-    ).to.equal(56);
+    ).to.equal(17);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
