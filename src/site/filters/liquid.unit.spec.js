@@ -927,6 +927,90 @@ describe('formatForBreadcrumbs', () => {
   });
 });
 
+describe('formatForBreadcrumbsHTML', () => {
+  it('returns breadcrumbs formatted for va-breadcrumbs', () => {
+    // Define original breadcrumbs
+    const originalCrumbs = [
+      {
+        path: 'view-change-dependents/',
+        name: 'View or change dependents on your VA disability benefits',
+      },
+      {
+        path: 'view-change-dependents/add-remove-form-21-686c-v2/',
+        name: 'Add or remove dependents with VA Form 21-686C',
+      },
+    ];
+    // Process through filter
+    const output = liquid.filters.formatForBreadcrumbsHTML(originalCrumbs);
+    // Verify output
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21 686C","lang":"en-US"}]',
+      ),
+    );
+  });
+  it('removes items with empty paths', () => {
+    // Define original breadcrumbs
+    const originalCrumbs = [
+      {
+        path: 'view-change-dependents/',
+        name: 'View or change dependents on your VA disability benefits',
+      },
+      {
+        path: null,
+        name: 'This path does not exist',
+      },
+      {
+        path: 'view-change-dependents/add-remove-form-21-686c-v2/',
+        name: 'Add or remove dependents with VA Form 21-686C',
+      },
+    ];
+    // Process through filter
+    const output = liquid.filters.formatForBreadcrumbsHTML(originalCrumbs);
+    // Verify output
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21 686C","lang":"en-US"}]',
+      ),
+    );
+  });
+  it('correctly shows display_title or title if provided instead of default name', () => {
+    const originalCrumbs = [
+      {
+        name: 'cerner-staging',
+        path: 'cerner-staging',
+        children: [
+          {
+            file: {
+              // eslint-disable-next-line camelcase
+              display_title: 'Cerner',
+            },
+          },
+        ],
+      },
+      {
+        name: 'appointments',
+        path: 'cerner-staging/appointments',
+        children: [
+          {
+            file: {
+              title: 'Cerner appointments',
+            },
+          },
+        ],
+      },
+    ];
+    // Process through filter
+    const output = liquid.filters.formatForBreadcrumbsHTML(originalCrumbs);
+    // Verify output
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/cerner-staging","isRouterLink":false,"label":"Cerner","lang":"en-US"},{"href":"/cerner-staging/appointments","isRouterLink":false,"label":"Cerner appointments","lang":"en-US"}]',
+      ),
+    );
+  });
+});
+
 describe('deriveCLPTotalSections', () => {
   it('returns back max sections when everything is rendered', () => {
     expect(
@@ -3139,7 +3223,7 @@ describe('getSurvey', () => {
     expect(
       liquid.filters.getSurvey(
         'vagovprod',
-        '/my-health/medical-records/summaries-and-notes/visit-summary/64545443',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/8N73HF67C5CC77FC1D17091606996587',
       ),
     ).to.equal(17);
   });
@@ -3150,16 +3234,16 @@ describe('getSurvey', () => {
         'vagovdev',
         '/my-health/medical-records/summaries-and-notes/visit-summary',
       ),
-    ).to.equal(41);
+    ).to.equal(55);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
     expect(
       liquid.filters.getSurvey(
         'vagovdev',
-        '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/7A54CF67C5CC77FC1D17091606991561',
       ),
-    ).to.equal(41);
+    ).to.equal(55);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
