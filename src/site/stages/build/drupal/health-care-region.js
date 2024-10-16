@@ -194,8 +194,10 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
  */
 function addGetUpdatesFields(page, pages) {
   const regionPageUrlPath = page.entityUrl.breadcrumb[1]?.url?.path;
-
-  if (!regionPageUrlPath) {
+  if (
+    !regionPageUrlPath &&
+    page.entityUrl.breadcrumb[1]?.text !== 'Manila VA Clinic'
+  ) {
     throw new Error(
       `CMS error while building breadcrumbs: "${page.entityUrl.path}" is missing reference to a parent or grandparent.`,
     );
