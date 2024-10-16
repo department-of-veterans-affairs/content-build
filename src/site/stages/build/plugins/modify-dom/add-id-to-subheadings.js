@@ -49,7 +49,7 @@ module.exports = {
         const isInAlert = parent.hasClass('usa-alert-body');
         const isAccordion = parent.hasClass('va-accordion-item');
         const isHeaderExcluded =
-          parent.getAttribute('data-header-id-excluded') === 'true';
+          parent.attr('data-header-id-excluded') === 'true';
 
         // skip heading if it already has an id
         // skip heading if it's in an accordion button or an alert
