@@ -29,7 +29,7 @@
         },
         {
           "nid": 71004,
-          "entityLabel": "Form with Two Steps",
+          "entityLabel": "Form with Many Steps",
           "fieldVaFormNumber": "222222",
           "fieldOmbNumber": "1212-1212",
           "fieldRespondentBurden": 30,
@@ -87,6 +87,19 @@
                 },
                 "fieldTitle": "Identification information",
                 "fieldIncludeVeteranSService": true
+              }
+            },
+            {
+              "entity": {
+                "entityId": "161351",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_phone_and_email",
+                    "entityLabel": "Digital Form: Phone and email address"
+                  }
+                },
+                "fieldTitle": "Generated Phone",
+                "fieldIncludeEmail": false
               }
             }
           ]
