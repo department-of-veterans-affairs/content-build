@@ -10,20 +10,11 @@ const {
   getNodeHealthCareRegionPageQueries,
 } = require('./graphql/healthCareRegionPage.graphql');
 
-const {
-  getNodeHealthCareRegionPageQueries: getNodeHealthCareRegionPagePhoneParasQueries,
-} = require('./graphql/healthCareRegionPagePhoneParas.graphql');
-
 const { getNodeOfficeQueries } = require('./graphql/nodeOffice.graphql');
 
 const {
   getNodeHealthCareLocalFacilityPageQueries,
 } = require('./graphql/healthCareLocalFacilityPage.graphql');
-
-const {
-  getNodeHealthCareLocalFacilityPageQueries: getNodeHealthCareLocalFacilityPagePhoneParasQueries,
-} = require('./graphql/healthCareLocalFacilityPagePhoneParas.graphql');
-
 const {
   getNodeHealthServicesListingPageQueries,
 } = require('./graphql/healthServicesListingPage.graphql');
@@ -51,9 +42,6 @@ const {
 const {
   GetNodeLocationsListingPages,
 } = require('./graphql/locationsListingPage.graphql');
-const {
-  GetNodeLocationsListingPagesPhoneParas,
-} = require('./graphql/locationsListingPagePhoneParas.graphql');
 const {
   GetNodeLeadershipListingPages,
 } = require('./graphql/leadershipListingPage.graphql');
@@ -118,25 +106,14 @@ const {
 } = require('./graphql/locationsOperatingStatus.graphql');
 
 function getNodeQueries(entityCounts) {
-  const { cmsFeatureFlags } = global;
-  const NodeLocationsListingPages = cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1
-    ? GetNodeLocationsListingPagesPhoneParas
-    : GetNodeLocationsListingPages;
-  const getNodeHealthCareRegionPageQs = cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1
-    ? getNodeHealthCareRegionPagePhoneParasQueries
-    : getNodeHealthCareRegionPageQueries;
-  const getNodeHealthCareLocalFacilityPageQs = cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1
-    ? getNodeHealthCareLocalFacilityPagePhoneParasQueries
-    : getNodeHealthCareLocalFacilityPageQueries;
-
   return {
     ...getNodePageQueries(entityCounts),
     GetNodeLandingPages,
     ...getNodeVaFormQueries(entityCounts),
-    ...getNodeHealthCareRegionPageQs(entityCounts),
+    ...getNodeHealthCareRegionPageQueries(entityCounts),
     ...getNodePersonProfileQueries(entityCounts),
     ...getNodeOfficeQueries(entityCounts),
-    ...getNodeHealthCareLocalFacilityPageQs(entityCounts),
+    ...getNodeHealthCareLocalFacilityPageQueries(entityCounts),
     ...getNodeHealthServicesListingPageQueries(entityCounts),
     ...getNewsStoryQueries(entityCounts),
     ...getPressReleaseQueries(entityCounts),
@@ -145,7 +122,7 @@ function getNodeQueries(entityCounts) {
     ...getNodeEventQueries(entityCounts),
     ...getVaPoliceQueries(entityCounts),
     GetNodeStoryListingPages,
-    GetNodeLocationsListingPages: NodeLocationsListingPages,
+    GetNodeLocationsListingPages,
     GetNodeLeadershipListingPages,
     GetNodeVamcOperatingStatusAndAlerts,
     GetNodePublicationListingPages,

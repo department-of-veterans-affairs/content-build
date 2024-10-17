@@ -42,7 +42,7 @@
            <strong>VA health connect:</strong> {{ fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback : '',  'VA health connect' }}
          </div>
       {% endif %}
-      {% if enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 and entity.fieldTelephone %}
+      {% if entity.fieldTelephone %}
         <div>
           {% include "src/site/components/phone-number-no-header.drupal.liquid" with
             phoneNumber = entity.fieldTelephone.entity.fieldPhoneNumber

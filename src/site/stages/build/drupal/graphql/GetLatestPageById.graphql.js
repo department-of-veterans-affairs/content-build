@@ -2,15 +2,12 @@
 const bioPage = require('./bioPage.graphql');
 const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
-// const healthCareLocalFacilityPagePhoneParas = require('./healthCareLocalFacilityPagePhoneParas.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const healthCareRegionPage = require('./healthCareRegionPage.graphql');
-// const healthCareRegionPagePhoneParas = require('./healthCareRegionPagePhoneParas.graphql');
 const healthServicesListingPage = require('./healthServicesListingPage.graphql');
 const landingPage = require('./landingPage.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
 const locationsListingPage = require('./locationsListingPage.graphql');
-// const locationsListingPagePhoneParas = require('./locationsListingPagePhoneParas.graphql');
 const newsStoryPage = require('./newStoryPage.graphql');
 const nodeBasicLandingPage = require('./nodeBasicLandingPage.graphql');
 const nodeCampaignLandingPage = require('./nodeCampaignLandingPage.graphql');
