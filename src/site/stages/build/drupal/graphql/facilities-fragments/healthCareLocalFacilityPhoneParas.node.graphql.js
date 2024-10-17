@@ -1,3 +1,5 @@
+const mhTelephonePara = require('../paragraph-fragments/mhTelephone.paragraph.graphql');
+
 /**
  * The 'Health Care Local Facility' bundle of the 'Content' entity type.
  */
@@ -56,7 +58,7 @@ const FACILITIES_RESULTS = `
       postalCode
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
+    ${mhTelephonePara}
     fieldOfficeHours {
       day
       starthours

@@ -118,15 +118,24 @@
                           </strong> {{ fieldRegionPage.entity.fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback :  '', 'VA health connect' }}
                         </div>
                       {% endif %}
-                      {% if fieldTelephone %}
-                      <div>
-                        {% include "src/site/components/phone-number-no-header.drupal.liquid" with
-                            phoneNumber = fieldTelephone.entity.fieldPhoneNumber
-                            phoneExtension = fieldTelephone.entity.fieldPhoneExtension
-                            phoneNumberType = fieldTelephone.entity.fieldPhoneNumberType
-                            phoneLabel = fieldTelephone.entity.fieldPhoneLabel | default: 'Mental health care'
-                        %}  
-                      </div>
+                      {% if enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}  
+                        {% if fieldTelephone %}
+                          <div>
+                            {% include "src/site/components/phone-number-no-header.drupal.liquid" with
+                              phoneNumber = fieldTelephone.entity.fieldPhoneNumber
+                              phoneExtension = fieldTelephone.entity.fieldPhoneExtension
+                              phoneNumberType = fieldTelephone.entity.fieldPhoneNumberType
+                              phoneLabel = fieldTelephone.entity.fieldPhoneLabel | default: 'Mental health care'
+                            %}
+                          </div>
+                        {% endif %}
+                      {% elsif fieldMentalHealthPhone %}
+                        <div>
+                          {% include "src/site/components/phone-number-no-header.drupal.liquid" with
+                            phoneNumber = fieldMentalHealthPhone
+                            phoneLabel = 'Mental health care'
+                          %}
+                        </div>
                       {% endif %}
                     </div>
                     {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'clinical' %}

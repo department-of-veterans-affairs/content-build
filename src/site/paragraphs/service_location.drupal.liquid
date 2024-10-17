@@ -130,10 +130,12 @@
   {% if isMentalHealthService and fieldTelephone %}
     {% assign serviceLocationMainNumber = fieldTelephone.entity.fieldPhoneNumber %}
     {% assign serviceLocationMainExt = fieldTelephone.entity.fieldPhoneExtension %}
+  {% elsif isMentalHealthService and fieldMentalHealthPhone %}
+    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
   {% elsif fieldPhoneNumber %}
     {% assign serviceLocationMainNumber = fieldPhoneNumber %}
   {% endif %}
-  
+
   {% comment %}
   Conditionally display facility main/mh phone number
   {% endcomment %}

@@ -2,11 +2,12 @@ const fragments = require('./fragments.graphql');
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const socialMediaFields = require('./facilities-fragments/healthCareSocialMedia.fields.graphql');
 const serviceLocation = require('./paragraph-fragments/serviceLocation.paragraph.graphql');
+const mhTelephonePara = require('./paragraph-fragments/mhTelephone.paragraph.graphql');
 const appointmentItems = require('./file-fragments/appointmentItems.graphql');
 
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
-const healthCareLocalFacilityPageFragment = `
+const healthCareLocalFacilityPageFragmentPhoneParas = `
   fragment healthCareLocalFacilityPage on NodeHealthCareLocalFacility {
     ${entityElementsFromPages}
     changed
@@ -57,7 +58,7 @@ const healthCareLocalFacilityPageFragment = `
       lon
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
+    ${mhTelephonePara}
     fieldOfficeHours {
       day
       starthours
@@ -179,7 +180,7 @@ function getNodeHealthCareLocalFacilityPagesSlice(
   return `
     ${fragments.listOfLinkTeasers}
     ${fragments.linkTeaser}
-    ${healthCareLocalFacilityPageFragment}
+    ${healthCareLocalFacilityPageFragmentPhoneParas}
 
     query ${operationName}($onlyPublishedContent: Boolean!) {
       nodeQuery(
@@ -210,6 +211,6 @@ function getNodeHealthCareLocalFacilityPageQueries(entityCounts) {
 }
 
 module.exports = {
-  fragment: healthCareLocalFacilityPageFragment,
+  fragment: healthCareLocalFacilityPageFragmentPhoneParas,
   getNodeHealthCareLocalFacilityPageQueries,
 };

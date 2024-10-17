@@ -16,12 +16,14 @@ const nodeEvent = require('./nodeEvent.graphql');
 const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav.graphql');
 const faqMultipleQaPage = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
+const healthCareLocalFacilityPagePhoneParas = require('./healthCareLocalFacilityPagePhoneParas.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const healthServicesListingPage = require('./healthServicesListingPage.graphql');
 const homePageQuery = require('./homePage.graphql');
 const icsFileQuery = require('./file-fragments/ics.file.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
 const locationListingPage = require('./locationsListingPage.graphql');
+const locationListingPagePhoneParas = require('./locationsListingPagePhoneParas.graphql');
 const mediaListImages = require('./nodeMediaListImages.graphql');
 const mediaListVideos = require('./nodeMediaListVideos.graphql');
 const menuLinksQuery = require('./navigation-fragments/menuLinks.nav.graphql');
@@ -62,13 +64,19 @@ queryParamToBeChanged.forEach(param => {
 const regex = new RegExp(`${regString}`, 'g');
 
 const buildQuery = () => {
+  const healthCareLocalFacilityPageFragment = cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1
+    ? healthCareLocalFacilityPagePhoneParas.fragment
+    : healthCareLocalFacilityPage.fragment;
+  const locationListingPageFragment = cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1
+    ? locationListingPagePhoneParas.fragment
+    : locationListingPage.fragment;
   const nodeContentFragments = `
   ${ALL_FRAGMENTS}
   ${landingPage.fragment}
   ${page.fragment}
   ${healthCareRegionPage.fragment}
   ${vbaFacility.fragment}
-  ${healthCareLocalFacilityPage.fragment}
+  ${healthCareLocalFacilityPageFragment}
   ${healthCareRegionDetailPage.fragment}
   ${pressReleasePage.fragment}
   ${vamcOperatingStatusAndAlerts.fragment}
@@ -84,7 +92,7 @@ const buildQuery = () => {
   ${leadershipListingPage.fragment}
   ${healthServicesListingPage.fragment}
   ${pressReleasesListingPage.fragment}
-  ${locationListingPage.fragment}
+  ${locationListingPageFragment}}
   ${qaPage.fragment}
   ${faqMultipleQaPage.fragment}
   ${stepByStepPage.fragment}
