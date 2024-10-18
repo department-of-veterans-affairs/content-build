@@ -1,0 +1,15 @@
+{% if phoneNumber %}
+  {% assign sms = false %}
+  {% assign tty = false %}
+  {% assign fax = false %}
+  
+  {% if phoneNumberType == 'sms' %}
+    {% assign sms =  true%}
+  {% elsif phoneNumberType == 'tty' %}
+    {% assign tty = true %}
+  {% elsif phoneNumberType == 'fax' %}
+    {% assign fax = true %}
+  {% endif %}
+  
+  <strong>{{ phoneLabel | default: 'Phone' }}: </strong> {% include "src/site/components/phone-number-base.drupal.liquid" %}
+{% endif %}

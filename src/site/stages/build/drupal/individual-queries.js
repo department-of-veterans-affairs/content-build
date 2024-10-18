@@ -15,7 +15,6 @@ const { getNodeOfficeQueries } = require('./graphql/nodeOffice.graphql');
 const {
   getNodeHealthCareLocalFacilityPageQueries,
 } = require('./graphql/healthCareLocalFacilityPage.graphql');
-
 const {
   getNodeHealthServicesListingPageQueries,
 } = require('./graphql/healthServicesListingPage.graphql');
@@ -43,7 +42,6 @@ const {
 const {
   GetNodeLocationsListingPages,
 } = require('./graphql/locationsListingPage.graphql');
-
 const {
   GetNodeLeadershipListingPages,
 } = require('./graphql/leadershipListingPage.graphql');
