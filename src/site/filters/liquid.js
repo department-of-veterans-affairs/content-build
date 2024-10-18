@@ -779,8 +779,8 @@ module.exports = function registerFilters() {
       } = /** @type {{path: string, children: array}} */ (crumb);
       let { name } = /** @type {{name: string}} */ (crumb);
 
-      // Replace hyphens in the name with spaces
-      name = name.replace('-', ' ');
+      // // Replace hyphens in the name with spaces
+      // name = name.replace('-', ' '); // commenting this out to ensure proper functionality
 
       // Capitalize the first letter of the name
       name = name.charAt(0).toUpperCase() + name.slice(1);
