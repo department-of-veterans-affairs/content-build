@@ -402,7 +402,7 @@
         },
         {
           "path": "burials-and-memorials/pre-need/form-10007-apply-for-eligibility/",
-          "name": "Pre&#8211;need eligibility determination"
+          "name": "Pre-need eligibility determination"
         }
       ]
     }
@@ -1190,7 +1190,7 @@
           "path": "supporting-forms-for-claims"
         },
         {
-          "name": "Authorize the release of non&#8208;VA medical information to VA",
+          "name": "Authorize the release of non-VA medical information to VA",
           "path": "supporting-forms-for-claims/release-information-to-va-form-21-4142"
         }
       ]
@@ -1644,9 +1644,7 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": [
-          "/introduction"
-        ]
+        "excludePaths": ["/introduction"]
       }
     }
   },
@@ -1745,10 +1743,7 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
+        "excludePaths": ["/introduction", "/confirmation"]
       }
     }
   },
