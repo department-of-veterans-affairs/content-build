@@ -130,10 +130,15 @@
   {% if isMentalHealthService and fieldTelephone %}
     {% assign serviceLocationMainNumber = fieldTelephone.entity.fieldPhoneNumber %}
     {% assign serviceLocationMainExt = fieldTelephone.entity.fieldPhoneExtension %}
+    {% assign serviceLocationMainPhoneType = fieldTelephone.entity.fieldPhoneNumberType %}
   {% elsif isMentalHealthService and fieldMentalHealthPhone %}
     {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+    {% assign serviceLocationMainExt = "" %}
+    {% assign serviceLocationMainPhoneType = "tel" %}
   {% elsif fieldPhoneNumber %}
     {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+    {% assign serviceLocationMainExt = "" %}
+    {% assign serviceLocationMainPhoneType = "tel" %}
   {% endif %}
 
   {% comment %}
@@ -193,6 +198,7 @@
       {% include "src/site/components/phone-number.drupal.liquid" with
             phoneNumber = serviceLocationMainNumber
             phoneExtension = serviceLocationMainExt
+            phoneType = serviceLocationMainPhoneType
             phoneLabel = 'Main Phone'
             phoneHeaderLevel = serviceLocationH
           %}
@@ -243,6 +249,7 @@
       {% include "src/site/components/phone-number.drupal.liquid" with
         phoneNumber = serviceLocationMainNumber
         phoneExtension = serviceLocationMainExt
+        phoneType = serviceLocationMainPhoneType
         phoneLabel = 'Main Phone'
         phoneHeaderLevel = serviceLocationH
       %}
