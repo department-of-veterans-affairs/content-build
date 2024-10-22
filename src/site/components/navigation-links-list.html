@@ -46,15 +46,12 @@ See https://help.shopify.com/themes/liquid/tags/theme-tags#include
         {% for link in group.links %}
           {% if link.url != empty %}
             <li>
-              <a href="{{link.url}}" onClick="recordEvent({ event: 'nav-linkslist' });">
               {% if link.title != empty %}
-                <h4 class="va-nav-linkslist-title">{{ link.title }}</h4>
+                <va-link href="{{link.url}}" text="{{ link.title }}"></va-link>
               {% endif %}
-
               {% if link.description != empty %}
-                <p class="va-nav-linkslist-description">{{ link.description }}</p>
+                <va-link href="{{link.url}}" text="{{ link.description }}"></va-link>
               {% endif %}
-              </a>
             </li>
           {% endif %}
         {% endfor %}
