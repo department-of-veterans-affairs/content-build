@@ -86,11 +86,23 @@ Example data:
             {{ node.fieldOffice.entity.entityLabel }}
         </p>
         {% endif %}
-        {% if node.fieldPhoneNumber %}
+        {% if node.fieldTelephone %}
+          <p class="
+            vads-u-margin--0
+            vads-u-margin-bottom--1
+            vads-u-font-size--base">
+                {% include "src/site/components/phone-number-no-header.drupal.liquid" with 
+                    phoneNumber = node.fieldTelephone.entity.fieldPhoneNumber
+                    phoneExtension = node.fieldTelephone.entity.fieldPhoneExtension
+                    phoneNumberType = node.fieldTelephone.entity.fieldPhoneNumberType
+                    phoneLabel = node.fieldTelephone.entity.fieldPhoneLabel 
+                %}
+          </p>
+        {% elsif node.fieldPhoneNumber %}
         <p class="
-        vads-u-margin--0
-        vads-u-margin-bottom--1
-        vads-u-font-size--base">
+          vads-u-margin--0
+          vads-u-margin-bottom--1
+          vads-u-font-size--base">
             <strong>Phone:</strong> {{ node.fieldPhoneNumber |  processPhoneToVaTelephoneOrFallback :  '', '' }}
         </p>
         {% endif %}
