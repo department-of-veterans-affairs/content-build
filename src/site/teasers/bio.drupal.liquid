@@ -86,7 +86,7 @@ Example data:
             {{ node.fieldOffice.entity.entityLabel }}
         </p>
         {% endif %}
-        {% if node.fieldTelephone %}
+        {% if node.fieldTelephone and cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
           <p class="
             vads-u-margin--0
             vads-u-margin-bottom--1
@@ -98,7 +98,7 @@ Example data:
                     phoneLabel = node.fieldTelephone.entity.fieldPhoneLabel 
                 %}
           </p>
-        {% elsif node.fieldPhoneNumber %}
+        {% elsif node.fieldPhoneNumber and !cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
         <p class="
           vads-u-margin--0
           vads-u-margin-bottom--1
