@@ -127,11 +127,11 @@
   {% endcomment %}
   {% assign shouldShowIntroText = single.fieldApptIntroTextType | shouldShowIntroText: single.fieldApptIntroTextCustom %}
   
-  {% if isMentalHealthService and fieldTelephone %}
+  {% if isMentalHealthService and fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
     {% assign serviceLocationMainNumber = fieldTelephone.entity.fieldPhoneNumber %}
     {% assign serviceLocationMainExt = fieldTelephone.entity.fieldPhoneExtension %}
     {% assign serviceLocationMainPhoneType = fieldTelephone.entity.fieldPhoneNumberType %}
-  {% elsif isMentalHealthService and fieldMentalHealthPhone %}
+  {% elsif isMentalHealthService and fieldMentalHealthPhone and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
     {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
     {% assign serviceLocationMainExt = "" %}
     {% assign serviceLocationMainPhoneType = "tel" %}
