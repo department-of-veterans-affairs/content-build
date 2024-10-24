@@ -47,7 +47,7 @@
           {{ bio.fieldOffice.entity.entityLabel }}
         </p>
       {% endif %}
-      {% if bio.fieldTelephone and cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
+      {% if bio.fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
         <p class="
         vads-u-font-weight--normal
         vads-u-margin--0
@@ -59,7 +59,7 @@
             phoneLabel = bio.fieldTelephone.entity.fieldPhoneLabel
         %}
         </p>
-      {% elsif bio.fieldPhoneNumber and !cmsFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
+      {% elsif bio.fieldPhoneNumber and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
         <p class="
         vads-u-font-weight--normal
         vads-u-margin--0
