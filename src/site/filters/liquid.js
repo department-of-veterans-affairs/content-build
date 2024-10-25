@@ -2241,8 +2241,4 @@ module.exports = function registerFilters() {
     }
     return null;
   };
-
-  liquid.filters.featureFindFormsPDFModal = () => {
-    return cmsFeatureFlags.FEATURE_FIND_FORMS_MODAL;
-  };
 };
