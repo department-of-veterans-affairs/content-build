@@ -68,6 +68,7 @@
       </span>
       {% if entity.fieldErrorMessage != empty %}
         <div class="usa-alert usa-alert-error sip-application-error vads-u-display--none" aria-hidden="true">
+          <va-icon icon="error" size="3" class="os-icon vads-u-color--error"></va-icon>
           <div class="usa-alert-body">
             {{ entity.fieldErrorMessage.value }}
           </div>

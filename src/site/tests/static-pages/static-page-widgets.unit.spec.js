@@ -17,6 +17,7 @@ const widgetContent = `
      <a class="vads-c-action-link--green" href="/pension/application/527EZ">Apply for Veterans Pension Benefits</a>
     </span>
     <div class="usa-alert usa-alert-error sip-application-error vads-u-display--none" aria-hidden="true">
+     <va-icon icon="error" size={3} className="vads-u-color--error" />
      <div class="usa-alert-body">
      <strong>We’re sorry. Something went wrong when we tried to load your saved application.</strong><br>Please try refreshing your browser in a few minutes.
    </div>
