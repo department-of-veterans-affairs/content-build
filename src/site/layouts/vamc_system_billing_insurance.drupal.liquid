@@ -39,7 +39,16 @@
                 immunizations.
               </p>
             {% endif %}
-            {% if fieldPhoneNumber %}
+            {% if fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
+                {% include "src/site/components/phone-number.drupal.liquid" with 
+                  phoneHeaderLevel = 3
+                  useParagraph = true 
+                  phoneNumber = fieldTelephone.entity.fieldPhoneNumber
+                  phoneExtension = fieldTelephone.entity.fieldPhoneExtension
+                  phoneNumberType = fieldTelephone.entity.fieldPhoneNumberType
+                  phoneLabel = fieldTelephone.entity.fieldPhoneLabel
+                %}
+            {% elsif fieldPhoneNumber and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
               <h3>
                 Phone
               </h3>
