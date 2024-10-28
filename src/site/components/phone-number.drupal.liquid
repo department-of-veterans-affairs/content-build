@@ -10,7 +10,15 @@
     {% assign tty = true %}
   {% endif %}
   <h{{ phoneHeaderLevel }}>{{ phoneLabel | default: 'Phone' }}</h{{ phoneHeaderLevel }}>
-  <div>
+  {% if useParagraph %}
+    <p>
+  {% else %}
+    <div>
+  {% endif %}
     {% include "src/site/components/phone-number-base.drupal.liquid" %}
-  </div>
+  {% if useParagraph %}
+    </p>
+  {% else %}
+    </div>
+  {% endif %}
 {% endif %}

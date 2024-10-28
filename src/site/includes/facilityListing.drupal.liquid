@@ -42,7 +42,7 @@
            <strong>VA health connect:</strong> {{ fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback : '',  'VA health connect' }}
          </div>
       {% endif %}
-      {% if entity.fieldTelephone %}
+      {% if entity.fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
         <div>
           {% include "src/site/components/phone-number-no-header.drupal.liquid" with
             phoneNumber = entity.fieldTelephone.entity.fieldPhoneNumber
@@ -51,7 +51,7 @@
             phoneLabel = entity.fieldTelephone.entity.fieldPhoneLabel | default: 'Mental health care'
           %}
         </div>
-      {% elsif entity.fieldMentalHealthPhone %}
+      {% elsif entity.fieldMentalHealthPhone and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
         <div>
           {% include "src/site/components/phone-number-no-header.drupal.liquid" with
             phoneNumber = entity.fieldMentalHealthPhone

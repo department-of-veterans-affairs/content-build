@@ -3,5 +3,6 @@ module.exports = `
     fieldPhoneLabel
     fieldPhoneNumber
     fieldPhoneExtension
+    fieldPhoneNumberType
   }
 `;
