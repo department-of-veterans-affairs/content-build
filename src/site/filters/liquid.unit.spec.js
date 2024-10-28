@@ -945,7 +945,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Verify output
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21 686C","lang":"en-US"}]',
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
       ),
     );
   });
@@ -970,7 +970,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Verify output
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21 686C","lang":"en-US"}]',
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
       ),
     );
   });
@@ -3225,7 +3225,7 @@ describe('getSurvey', () => {
         'vagovprod',
         '/my-health/medical-records/summaries-and-notes/visit-summary/8N73HF67C5CC77FC1D17091606996587',
       ),
-    ).to.equal(56);
+    ).to.equal(17);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
