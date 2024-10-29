@@ -58,7 +58,7 @@ const billingAndInsuranceFragment = `
 const GetBillingAndInsurancePages = `
   ${phoneNumberParagraphGraphql}
   ${billingAndInsuranceFragment}
-  
+
   query GetBillingAndInsurancePages($onlyPublishedContent: Boolean!) {
     nodeQuery(limit: 500, filter: {
       conditions: [
