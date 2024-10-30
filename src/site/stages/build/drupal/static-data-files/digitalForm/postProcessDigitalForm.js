@@ -32,14 +32,25 @@ const formatDate = dateString => {
   return `${removeLeadingZero(month)}/${removeLeadingZero(day)}/${year}`;
 };
 
+const stripPrefix = label => label.replace('Digital Form: ', '');
+
 const normalizeChapter = ({ entity }) => {
-  return {
+  const type = entity.type.entity.entityId;
+  const initialChapter = {
     id: parseInt(entity.entityId, 10),
-    chapterTitle: entity.fieldTitle,
-    type: entity.type.entity.entityId,
-    pageTitle: entity.type.entity.entityLabel.replace('Digital Form: ', ''),
+    pageTitle: stripPrefix(entity.type.entity.entityLabel),
     additionalFields: extractAdditionalFields(entity),
+    type,
   };
+
+  if (type === 'digital_form_your_personal_info') {
+    return {
+      ...initialChapter,
+      chapterTitle: stripPrefix(entity.type.entity.entityLabel),
+    };
+  }
+
+  return { ...initialChapter, chapterTitle: entity.fieldTitle };
 };
 
 const normalizeForm = (form, logger = logDrupal) => {
