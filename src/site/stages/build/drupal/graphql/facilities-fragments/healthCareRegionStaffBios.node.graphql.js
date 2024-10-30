@@ -1,5 +1,3 @@
-const personTelephoneParagraphGraphql = require('../paragraph-fragments/personTelephone.paragraph.graphql');
-
 /**
  * Associated person profiles on the healthcare region node
  */
@@ -13,7 +11,6 @@ const PERSON_PROFILE_RESULTS = `
       fieldSuffix
       fieldEmailAddress
       fieldPhoneNumber
-      ${personTelephoneParagraphGraphql}
       fieldDescription
       fieldOffice {
         entity {

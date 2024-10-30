@@ -262,6 +262,7 @@ app.get('/preview', async (req, res, next) => {
     }
 
     const [drupalData, fileManifest] = await fetchAllPageData(req.query.nodeId);
+
     const smith = await createPipeline({
       ...options,
       drupalData,

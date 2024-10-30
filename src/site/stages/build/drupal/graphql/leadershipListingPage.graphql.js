@@ -3,8 +3,6 @@
  * Example: /pittsburgh-health-care/events/example-event
  */
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
-const personTelephoneParagraphGraphql = require('./paragraph-fragments/personTelephone.paragraph.graphql');
-const { phoneNumber } = require('./fragments.graphql');
 
 const leadershipListingPage = `
   fragment leadershipListingPage on NodeLeadershipListing {
@@ -19,7 +17,6 @@ const leadershipListingPage = `
         ... on NodePersonProfile {
           title
           fieldPhoneNumber
-          ${personTelephoneParagraphGraphql}
           entityPublished
           fieldNameFirst
           fieldLastName
@@ -131,8 +128,7 @@ const leadershipListingPage = `
 const GetNodeLeadershipListingPages = `
 
   ${leadershipListingPage}
-  ${phoneNumber}
-  
+
   query GetNodeLeadershipListingPages($onlyPublishedContent: Boolean!) {
     nodeQuery(limit: 500, filter: {
       conditions: [

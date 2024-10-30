@@ -48,18 +48,7 @@
                                 {% if c != empty %}
                                     <div>
                                         <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.title }}{% if c.fieldDescription != empty %}, {{ c.fieldDescription }} {% endif %}</p>
-                                        {% if c.fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
-                                            <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
-                                                {% include "src/site/components/phone-number-no-header.drupal.liquid" with 
-                                                    phoneNumber = c.fieldTelephone.entity.fieldPhoneNumber
-                                                    phoneExtension = c.fieldTelephone.entity.fieldPhoneExtension
-                                                    phoneNumberType = c.fieldTelephone.entity.fieldPhoneNumberType
-                                                    phoneLabel = c.fieldTelephone.entity.fieldPhoneLabel
-                                                %}
-                                            </p>
-                                        {% elsif c.fieldPhoneNumber and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
-                                            <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.fieldPhoneNumber }}</p>
-                                        {% endif %}
+                                        <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.fieldPhoneNumber }}</p>
                                         {% if c.fieldEmailAddress != empty %}
                                             <p class="vads-u-margin-top--1 vads-u-margin-bottom--0"><va-link
                                                         href="mailto:{{ c.fieldEmailAddress }}" text="{{ c.fieldEmailAddress }}" />
