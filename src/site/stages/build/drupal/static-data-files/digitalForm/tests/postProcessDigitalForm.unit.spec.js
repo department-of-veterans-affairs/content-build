@@ -69,6 +69,7 @@ describe('postProcessDigitalForm', () => {
 
     describe('Your personal information', () => {
       let ypiChapter;
+      const queryYpi = manyStepEntity.fieldChapters[0].entity;
 
       beforeEach(() => {
         ypiChapter = testForm.chapters.find(
@@ -80,10 +81,25 @@ describe('postProcessDigitalForm', () => {
         expect(ypiChapter.chapterTitle).to.eq('Your personal information');
       });
 
-      it('includes a Name and Date of Birth page');
-      it('includes an Identification information page');
-      it('includes the includeDateOfBirth key');
-      it('includes the includeServiceNumber key');
+      it('includes a Name and Date of Birth page', () => {
+        const nameAndDateOfBirth = ypiChapter.pages[0];
+        const queryNdob = queryYpi.fieldNameAndDateOfBirth.entity;
+
+        expect(nameAndDateOfBirth.pageTitle).to.eq(queryNdob.fieldTitle);
+        expect(nameAndDateOfBirth.includeDateOfBirth).to.eq(
+          queryNdob.fieldIncludeDateOfBirth,
+        );
+      });
+
+      it('includes an Identification information page', () => {
+        const identificationInformation = ypiChapter.pages[1];
+        const queryIi = queryYpi.fieldIdentificationInformation.entity;
+
+        expect(identificationInformation.pageTitle).to.eq(queryIi.fieldTitle);
+        expect(identificationInformation.includeServiceNumber).to.eq(
+          queryIi.fieldIncludeVeteranSService,
+        );
+      });
     });
   });
 
