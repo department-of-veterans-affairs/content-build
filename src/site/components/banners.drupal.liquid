@@ -18,16 +18,10 @@
 {% endfor %}
 
 <!-- Situation Updates banner -->
-<div
-  data-widget-type="situation-updates-banner"
-  role="region"
-></div>
+<div data-widget-type="situation-updates-banner"></div>
 
 <!-- Maintenance banner -->
-<div
-  data-widget-type="maintenance-banner"
-  role="region"
-></div>
+<div data-widget-type="maintenance-banner"></div>
 
 <!-- Derive visible promo banners. -->
 {% assign visiblePromoBanners = promoBanners.entities | deriveVisibleBanners: entityUrl.path %}
