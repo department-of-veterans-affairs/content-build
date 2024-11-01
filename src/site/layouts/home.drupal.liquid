@@ -18,13 +18,7 @@
     </div>
   </div>
 
-  {% assign showEmailReactWidget = '' | featureEmailUpdateWidget %}
-
-  {% if showEmailReactWidget %}
-    <div data-widget-type="homepage-email-signup"></div>
-  {% else %}
-    {% include "src/site/includes/email-update-signup.drupal.liquid" %}
-  {% endif %}
+  {% include "src/site/includes/email-update-signup.drupal.liquid" %}
 </main> <!-- end #content -->
 
 

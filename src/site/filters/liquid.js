@@ -2242,7 +2242,7 @@ module.exports = function registerFilters() {
     return null;
   };
 
-  liquid.filters.featureEmailUpdateWidget = () => {
+  liquid.filters.showExistingEmailForm = () => {
     return cmsFeatureFlags.FEATURE_EMAIL_UPDATE_WIDGET;
   };
 };
