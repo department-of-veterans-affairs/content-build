@@ -14,15 +14,25 @@
           "fieldChapters": [
             {
               "entity": {
-                "entityId": "157904",
+                "entityId": "162008",
                 "type": {
                   "entity": {
-                    "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Digital Form: Name and Date of Birth"
+                    "entityId": "digital_form_your_personal_info",
+                    "entityLabel": "Digital Form: Your personal information"
                   }
                 },
-                "fieldTitle": "The Only Step",
-                "fieldIncludeDateOfBirth": true
+                "fieldNameAndDateOfBirth": {
+                  "entity": {
+                    "fieldTitle": "Name",
+                    "fieldIncludeDateOfBirth": true
+                  }
+                },
+                "fieldIdentificationInformation": {
+                  "entity": {
+                    "fieldTitle": "Identification information",
+                    "fieldIncludeVeteranSService": false
+                  }
+                }
               }
             }
           ]
@@ -39,28 +49,25 @@
           "fieldChapters": [
             {
               "entity": {
-                "entityId": "157906",
+                "entityId": "162008",
                 "type": {
                   "entity": {
-                    "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Digital Form: Name and Date of Birth"
+                    "entityId": "digital_form_your_personal_info",
+                    "entityLabel": "Digital Form: Your personal information"
                   }
                 },
-                "fieldTitle": "First Step",
-                "fieldIncludeDateOfBirth": true
-              }
-            },
-            {
-              "entity": {
-                "entityId": "157907",
-                "type": {
+                "fieldNameAndDateOfBirth": {
                   "entity": {
-                    "entityId": "digital_form_name_and_date_of_bi",
-                    "entityLabel": "Digital Form: Name and Date of Birth"
+                    "fieldTitle": "Name and Date of Birth",
+                    "fieldIncludeDateOfBirth": true
                   }
                 },
-                "fieldTitle": "Second Step",
-                "fieldIncludeDateOfBirth": false
+                "fieldIdentificationInformation": {
+                  "entity": {
+                    "fieldTitle": "Identification information",
+                    "fieldIncludeVeteranSService": false
+                  }
+                }
               }
             },
             {
@@ -74,19 +81,6 @@
                 },
                 "fieldTitle": "Generated Address",
                 "fieldMilitaryAddressCheckbox": false
-              }
-            },
-            {
-              "entity": {
-                "entityId": "160594",
-                "type": {
-                  "entity": {
-                    "entityId": "digital_form_identification_info",
-                    "entityLabel": "Digital Form: Identification Information"
-                  }
-                },
-                "fieldTitle": "Identification information",
-                "fieldIncludeVeteranSService": true
               }
             },
             {

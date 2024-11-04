@@ -18,16 +18,13 @@ describe('digitalForm fragment', () => {
   });
 
   describe('chapter fragments', () => {
-    [
-      'address',
-      'identificationInformation',
-      'nameAndDateOfBirth',
-      'phoneAndEmail',
-    ].forEach(fragment => {
-      it(`imports the ${fragment} fragment`, () => {
-        expect(digitalForm).to.have.string(`fragment ${fragment}`);
-        expect(digitalForm).to.have.string(`...${fragment}`);
-      });
-    });
+    ['address', 'phoneAndEmail', 'yourPersonalInformation'].forEach(
+      fragment => {
+        it(`imports the ${fragment} fragment`, () => {
+          expect(digitalForm).to.have.string(`fragment ${fragment}`);
+          expect(digitalForm).to.have.string(`...${fragment}`);
+        });
+      },
+    );
   });
 });

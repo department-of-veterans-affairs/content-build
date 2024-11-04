@@ -8,14 +8,6 @@ const extractAdditionalFields = entity => {
       return {
         militaryAddressCheckbox: entity.fieldMilitaryAddressCheckbox,
       };
-    case 'digital_form_identification_info':
-      return {
-        includeServiceNumber: entity.fieldIncludeVeteranSService,
-      };
-    case 'digital_form_name_and_date_of_bi':
-      return {
-        includeDateOfBirth: entity.fieldIncludeDateOfBirth,
-      };
     case 'digital_form_phone_and_email':
       return {
         includeEmail: entity.fieldIncludeEmail,
@@ -32,13 +24,42 @@ const formatDate = dateString => {
   return `${removeLeadingZero(month)}/${removeLeadingZero(day)}/${year}`;
 };
 
+const stripPrefix = label => label.replace('Digital Form: ', '');
+
 const normalizeChapter = ({ entity }) => {
-  return {
+  const type = entity.type.entity.entityId;
+  const initialChapter = {
     id: parseInt(entity.entityId, 10),
-    chapterTitle: entity.fieldTitle,
-    type: entity.type.entity.entityId,
-    pageTitle: entity.type.entity.entityLabel.replace('Digital Form: ', ''),
+    type,
+  };
+
+  if (type === 'digital_form_your_personal_info') {
+    const identificationInformation =
+      entity.fieldIdentificationInformation.entity;
+    const nameAndDateOfBirth = entity.fieldNameAndDateOfBirth.entity;
+
+    return {
+      ...initialChapter,
+      chapterTitle: stripPrefix(entity.type.entity.entityLabel),
+      pages: [
+        {
+          pageTitle: nameAndDateOfBirth.fieldTitle,
+          includeDateOfBirth: nameAndDateOfBirth.fieldIncludeDateOfBirth,
+        },
+        {
+          pageTitle: identificationInformation.fieldTitle,
+          includeServiceNumber:
+            identificationInformation.fieldIncludeVeteranSService,
+        },
+      ],
+    };
+  }
+
+  return {
+    ...initialChapter,
     additionalFields: extractAdditionalFields(entity),
+    chapterTitle: entity.fieldTitle,
+    pageTitle: stripPrefix(entity.type.entity.entityLabel),
   };
 };
 

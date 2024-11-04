@@ -17,6 +17,7 @@ describe('postProcessDigitalForm', () => {
     });
 
     it('returns a normalized JSON object', () => {
+      const queryChapter = manyStepEntity.fieldChapters[1].entity;
       const testChapter = testForm.chapters[1];
 
       expect(testForm.cmsId).to.eq(71004);
@@ -25,9 +26,9 @@ describe('postProcessDigitalForm', () => {
       expect(testForm.chapters.length).to.eq(
         manyStepEntity.fieldChapters.length,
       );
-      expect(testChapter.id).to.eq(157907);
-      expect(testChapter.chapterTitle).to.eq('Second Step');
-      expect(testChapter.type).to.eq('digital_form_name_and_date_of_bi');
+      expect(testChapter.id).to.eq(Number(queryChapter.entityId));
+      expect(testChapter.chapterTitle).to.eq(queryChapter.fieldTitle);
+      expect(testChapter.type).to.eq(queryChapter.type.entity.entityId);
       expect(Object.keys(testChapter.additionalFields).length).to.eq(1);
     });
 
@@ -44,14 +45,12 @@ describe('postProcessDigitalForm', () => {
     it('removes the "Digital Form" prefix', () => {
       const [, testChapter] = testForm.chapters;
 
-      expect(testChapter.pageTitle).to.eq('Name and Date of Birth');
+      expect(testChapter.pageTitle).to.eq('Address');
     });
 
     describe('additionalFields', () => {
       [
         ['digital_form_address', 'militaryAddressCheckbox', false],
-        ['digital_form_identification_info', 'includeServiceNumber', true],
-        ['digital_form_name_and_date_of_bi', 'includeDateOfBirth', true],
         ['digital_form_phone_and_email', 'includeEmail', false],
       ].forEach(([type, additionalField, value]) => {
         context(`with a ${type} step`, () => {
@@ -63,6 +62,41 @@ describe('postProcessDigitalForm', () => {
             expect(additionalFields[additionalField]).to.eq(value);
           });
         });
+      });
+    });
+
+    describe('Your personal information', () => {
+      let ypiChapter;
+      const queryYpi = manyStepEntity.fieldChapters[0].entity;
+
+      beforeEach(() => {
+        ypiChapter = testForm.chapters.find(
+          chapter => chapter.type === 'digital_form_your_personal_info',
+        );
+      });
+
+      it('includes the correct chapter title', () => {
+        expect(ypiChapter.chapterTitle).to.eq('Your personal information');
+      });
+
+      it('includes a Name and Date of Birth page', () => {
+        const nameAndDateOfBirth = ypiChapter.pages[0];
+        const queryNdob = queryYpi.fieldNameAndDateOfBirth.entity;
+
+        expect(nameAndDateOfBirth.pageTitle).to.eq(queryNdob.fieldTitle);
+        expect(nameAndDateOfBirth.includeDateOfBirth).to.eq(
+          queryNdob.fieldIncludeDateOfBirth,
+        );
+      });
+
+      it('includes an Identification information page', () => {
+        const identificationInformation = ypiChapter.pages[1];
+        const queryIi = queryYpi.fieldIdentificationInformation.entity;
+
+        expect(identificationInformation.pageTitle).to.eq(queryIi.fieldTitle);
+        expect(identificationInformation.includeServiceNumber).to.eq(
+          queryIi.fieldIncludeVeteranSService,
+        );
       });
     });
   });
