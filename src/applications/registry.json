@@ -1619,7 +1619,9 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": ["/introduction"]
+        "excludePaths": [
+          "/introduction"
+        ]
       }
     }
   },
@@ -1708,7 +1710,10 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": ["/introduction", "/confirmation"]
+        "excludePaths": [
+          "/introduction",
+          "/confirmation"
+        ]
       }
     }
   },
@@ -1775,6 +1780,16 @@
           "name": "Add your contact information"
         }
       ]
+    }
+  },
+  {
+    "appName": "Employment History Questionnaire",
+    "entryName": "21-4140-ehq",
+    "rootUrl": "/employment-history-questionnaire-form-21-4140",
+    "productId": "2e00cd49-14e2-4eb0-a3c6-5bc92c9e4618",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
     }
   }
 ]
