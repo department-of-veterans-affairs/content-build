@@ -80,10 +80,16 @@ const postProcess = queryResult => {
         description,
         fieldTricareDescription,
       } = service;
+
+      const processedCommon =
+        fieldCommonlyTreatedCondition
+          ?.split(',')
+          .map(condition => condition.trim()) || [];
+
       return [
         name,
         fieldAlsoKnownAs,
-        fieldCommonlyTreatedCondition,
+        processedCommon,
         fieldHealthServiceApiId,
         fieldServiceTypeOfCare,
         fieldShowForVetCenters,
