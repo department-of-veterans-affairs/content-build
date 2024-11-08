@@ -261,8 +261,8 @@
       "private": true,
       "breadcrumbs_override": [
         {
-          "name": "VA.gov home",
-          "path": ""
+          "path": "/",
+          "name": "VA.gov home"
         },
         {
           "path": "my-health/",
