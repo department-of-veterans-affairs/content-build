@@ -18,7 +18,7 @@ describe('digitalForm fragment', () => {
   });
 
   describe('chapter fragments', () => {
-    ['address', 'phoneAndEmail', 'yourPersonalInformation'].forEach(
+    ['address', 'listLoop', 'phoneAndEmail', 'yourPersonalInformation'].forEach(
       fragment => {
         it(`imports the ${fragment} fragment`, () => {
           expect(digitalForm).to.have.string(`fragment ${fragment}`);
