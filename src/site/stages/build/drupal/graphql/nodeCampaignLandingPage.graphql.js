@@ -323,9 +323,9 @@ const nodeCampaignLandingPage = `
         ... button
       }
     }
-    fieldRelatedOffice {
+    fieldConnectWithUs {
       entity {
-        ... on NodeOffice {
+        ... on BlockConnectWithUs {
           fieldExternalLink {
             url {
               path

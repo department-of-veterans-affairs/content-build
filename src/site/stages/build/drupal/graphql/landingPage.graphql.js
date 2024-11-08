@@ -58,9 +58,9 @@ const landingPageFragment = `
       date
     }
     fieldTeaserText
-    fieldRelatedOffice {
+    fieldConnectWithUs {
       entity {
-        ... on NodeOffice {
+        ... on BlockConnectWithUs {
           fieldExternalLink {
             url {
               path
