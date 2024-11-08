@@ -51,6 +51,7 @@ describe('postProcessDigitalForm', () => {
     describe('additionalFields', () => {
       [
         ['digital_form_address', 'militaryAddressCheckbox', false],
+        ['digital_form_list_loop', 'optional', false],
         ['digital_form_phone_and_email', 'includeEmail', false],
       ].forEach(([type, additionalField, value]) => {
         context(`with a ${type} step`, () => {
