@@ -1,4 +1,9 @@
 const {
+  query: queryDigitalForms,
+  postProcess: postProcessDigitalForm,
+} = require('./digitalForm');
+
+const {
   query: queryVamcEhrSystem,
   postProcess: postProcessVamcEhrSystem,
 } = require('./vamcEhrSystem');
@@ -35,6 +40,13 @@ const DATA_FILE_PATH = 'data/cms';
  * }
  */
 const DATA_FILES = [
+  {
+    description: 'Digital Forms',
+    filename: 'digital-forms.json',
+    query: queryDigitalForms,
+    queryType: 'graphql',
+    postProcess: postProcessDigitalForm,
+  },
   {
     description: 'VAMC EHR System',
     filename: 'vamc-ehr.json',

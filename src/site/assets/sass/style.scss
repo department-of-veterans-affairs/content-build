@@ -49,6 +49,10 @@
   }
 }
 
+.break-word-wrap {
+  word-wrap: break-word;
+}
+
 .spotlight-card {
   min-width: 30%;
   word-wrap: break-word;
@@ -63,6 +67,23 @@
 .health-online-mobile-link {
   @media (min-width: 768px) {
     display: none !important;
+  }
+}
+
+.abbreviated-day {
+  display: inline-block;
+  margin-right: 0;
+  width: 2.5em;
+
+  @media screen and (min-width: 481px) {
+    margin-right: 5px;
+  }
+}
+
+.homepage-email-update-wrapper {
+  .veteran-banner-container {
+    max-width: 80rem;
+    margin: 0 auto;
   }
 }
 
@@ -263,6 +284,7 @@
     }
   }
 }
+
 // fix for sidenav btn
 .va-sidenav-btn-close {
   background-size: 0.625rem 0.625rem;

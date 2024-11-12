@@ -75,25 +75,32 @@
                         "type": "boolean"
                     },
                     "minimalHeader": {
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                            "disableHeadings": {
+                        "oneOf": [
+                            {
                                 "type": "boolean"
                             },
-                            "excludePaths": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
+                            {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "enableHeadings": {
+                                        "type": "boolean"
+                                    },
+                                    "excludePaths": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "subtitle": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    }
                                 }
-                            },
-                            "subtitle": {
-                                "type": "string"
-                            },
-                            "title": {
-                                "type": "string"
                             }
-                        }
+                        ]
                     },
                     "noHeader": {
                         "type": "boolean"

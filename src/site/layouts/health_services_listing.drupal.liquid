@@ -15,7 +15,7 @@
             {{title}}</h1>
           <div class="va-introtext">
             {% if fieldIntroText %}
-              <p class="events-show" id="office-events-description">
+              <p id="office-events-description">
                 {{ fieldIntroText }}
               </p>
             {% endif %}
@@ -31,7 +31,7 @@
           <va-on-this-page></va-on-this-page>
 
           {% if fieldFeaturedContentHealthser %}
-          <section class="featured-services" id="featured-services">
+          <section id="featured-services">
             <h2>In the spotlight</h2>
             <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4">
               {% for featuredService in fieldFeaturedContentHealthser %}

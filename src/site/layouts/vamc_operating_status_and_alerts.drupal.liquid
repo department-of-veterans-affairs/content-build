@@ -45,7 +45,7 @@
           {% endif %}
 
           {% if fieldFacilityOperatingStatus.0.entity %}
-            <section class="operating-statuses clearfix" id="operating-statuses">
+            <section class="clearfix" id="operating-statuses">
               <h2>Facility operating statuses</h2>
               <dl class="vads-l-grid-container vads-u-padding-x--0 vads-l-row vads-u-border-bottom--1px vads-u-border-color--gray-light">
                 {% for status in fieldFacilityOperatingStatus %}
@@ -58,12 +58,12 @@
                     />
                   </dt>
                   <dd class="vads-l-col--12 medium-screen:vads-l-col--7 medium-screen:vads-u-border-top--1px vads-u-border-color--gray-light">
-                    <div class="operating-status-info vads-u-padding-y--1p5 vads-u-padding-x--0">
+                    <div class="vads-u-padding-y--1p5 vads-u-padding-x--0">
                       {% if status.entity.fieldOperatingStatusFacility == 'notice' %}
                         <va-alert slim status="info" visible>Facility notice</va-alert>
 
                       {% elsif status.entity.fieldOperatingStatusFacility == 'normal' %}
-                        <span class="operating-status normal-hours vads-u-margin-top--1p5 vads-u-display--block">
+                        <span class="operating-status vads-u-margin-top--1p5 vads-u-display--block">
                           Normal services and hours
                         </span>
 
@@ -87,7 +87,7 @@
           {% endif %}
 
           {% if fieldLink.0.uri or fieldOperatingStatusEmergInf.processed %}
-            <section class="emergency-resources clearfix" id="emergency-resources">
+            <section class="clearfix" id="emergency-resources">
               <h2>Emergency information</h2>
 
               {% if fieldOperatingStatusEmergInf.processed %}

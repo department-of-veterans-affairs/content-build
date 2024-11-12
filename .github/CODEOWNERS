@@ -83,6 +83,13 @@ src/site/navigation/sidebar_nav.drupal.liquid @department-of-veterans-affairs/vf
 src/site/paragraphs @department-of-veterans-affairs/vfs-public-websites-frontend
 src/site/tests/home @department-of-veterans-affairs/vfs-public-websites-frontend
 
+# Platform Design System
+src/site/includes/footer.html @department-of-veterans-affairs/platform-design-system-fe
+src/site/includes/header-minimal.html @department-of-veterans-affairs/platform-design-system-fe
+src/site/includes/header.html @department-of-veterans-affairs/platform-design-system-fe
+src/site/includes/top-nav.html @department-of-veterans-affairs/platform-design-system-fe
+src/site/includes/usa-website-header.html @department-of-veterans-affairs/platform-design-system-fe
+
 
 # GraphQL Queries
 src/site/stages/build/drupal @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/cms-infrastructure

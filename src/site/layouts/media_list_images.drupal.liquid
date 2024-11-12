@@ -12,7 +12,7 @@
             {% include "src/site/includes/support_resources_search_bar.drupal.liquid" %}
           </div>
 
-          <article class="vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+          <article class="vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0">
             <!-- Title -->
             <h1>{{ title }}</h1>
 
@@ -64,7 +64,7 @@
                           {% if mediaImage.entity.image.url == empty %}
                             <img
                               alt="{{ alt }}"
-                              class="alt-text-container vads-u-background-color--gray-lightest vads-u-display--block vads-u-border--1px vads-u-border-color--gray-light"
+                              class="vads-u-background-color--gray-lightest vads-u-display--block vads-u-border--1px vads-u-border-color--gray-light"
                               height="{{ mediaImage.entity.image.height }}"
                               width="{{ mediaImage.entity.image.width }}"
                             />
@@ -115,7 +115,7 @@
                                 {% if remainingImage.entity.image.url == empty %}
                                   <img
                                     alt="{{ alt }}"
-                                    class="alt-text-container vads-u-background-color--gray-lightest vads-u-display--block vads-u-border--1px vads-u-border-color--gray-light"
+                                    class="vads-u-background-color--gray-lightest vads-u-display--block vads-u-border--1px vads-u-border-color--gray-light"
                                     height="{{ remainingImage.entity.image.height }}"
                                     width="{{ remainingImage.entity.image.width }}"
                                   />
