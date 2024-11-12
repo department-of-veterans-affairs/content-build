@@ -8,6 +8,10 @@ const extractAdditionalFields = entity => {
       return {
         militaryAddressCheckbox: entity.fieldMilitaryAddressCheckbox,
       };
+    case 'digital_form_list_loop':
+      return {
+        optional: entity.fieldOptional,
+      };
     case 'digital_form_phone_and_email':
       return {
         includeEmail: entity.fieldIncludeEmail,

@@ -95,6 +95,19 @@
                 "fieldTitle": "Generated Phone",
                 "fieldIncludeEmail": false
               }
+            },
+            {
+              "entity": {
+                "entityId": "162026",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_list_loop",
+                    "entityLabel": "Digital Form: List & Loop"
+                  }
+                },
+                "fieldTitle": "Generated List & Loop",
+                "fieldOptional": false
+              }
             }
           ]
         }

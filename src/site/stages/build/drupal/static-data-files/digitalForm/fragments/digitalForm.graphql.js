@@ -1,6 +1,7 @@
 const address = require('./address.graphql');
 const phoneAndEmail = require('./phoneAndEmail.graphql');
 const yourPersonalInformation = require('./yourPersonalInformation.graphql');
+const listLoop = require('./listLoop.graphql');
 
 /*
  *
@@ -9,6 +10,7 @@ const yourPersonalInformation = require('./yourPersonalInformation.graphql');
  */
 module.exports = `
   ${address}
+  ${listLoop}
   ${phoneAndEmail}
   ${yourPersonalInformation}
 
@@ -31,6 +33,7 @@ module.exports = `
           }
         }
         ...address
+        ...listLoop
         ...phoneAndEmail
         ...yourPersonalInformation
       }
