@@ -1703,16 +1703,6 @@
     }
   },
   {
-    "appName": "Form Renderer",
-    "entryName": "form-renderer",
-    "rootUrl": "/digital-form",
-    "productId": "8e41524c-d835-476c-ba0f-040037380911",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "22-10215 Statement of Assurance of Compliance with 85 Percent Enrollment Ratios",
     "entryName": "10215-edu-benefits",
     "rootUrl": "/education/apply-for-education-benefits/application/10215",
