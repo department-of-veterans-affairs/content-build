@@ -60,7 +60,7 @@ const landingPageFragment = `
     fieldTeaserText
     fieldConnectWithUs {
       entity {
-        ... on BlockConnectWithUs {
+        ... on BlockContentConnectWithUs {
           fieldExternalLink {
             url {
               path

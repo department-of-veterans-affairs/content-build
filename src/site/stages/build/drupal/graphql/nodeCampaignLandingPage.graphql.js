@@ -325,7 +325,7 @@ const nodeCampaignLandingPage = `
     }
     fieldConnectWithUs {
       entity {
-        ... on BlockConnectWithUs {
+        ... on BlockContentConnectWithUs {
           fieldExternalLink {
             url {
               path
