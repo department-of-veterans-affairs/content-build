@@ -1,19 +1,43 @@
 {% if fieldOperatingStatusFacility == 'notice' %}
-    <span class="operating-status-flag operating-status-flag-notice operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
-      <va-icon icon="info" size="3" class="os-icon"></va-icon>
-        Facility notice
-      <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
-    </span>
-    {% elsif fieldOperatingStatusFacility == 'limited' %}
-    <span class="operating-status-flag operating-status-flag-warning operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
-      <va-icon icon="warning" size="3" class="os-icon"></va-icon>
-        Limited services and hours
-      <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
-    </span>
-    {% elsif fieldOperatingStatusFacility == 'closed' %}
-    <span class="operating-status-flag operating-status-flag-error operating-status usa-alert usa-alert-error background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
-      <va-icon icon="error" size="3" class="os-icon"></va-icon>
-        Facility Closed
-      <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
-    </span>
+  <span class="operating-status-flag operating-status-flag-notice operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
+    <va-icon icon="info" size="3" class="os-icon"></va-icon>
+      Facility notice
+    <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
+  </span>
+{% elsif fieldOperatingStatusFacility == 'limited' %}
+  <span class="operating-status-flag operating-status-flag-warning operating-status usa-alert usa-alert-info background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
+    <va-icon icon="info" size="3" class="os-icon"></va-icon>
+      Limited services and hours
+    <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
+  </span>
+{% elsif fieldOperatingStatusFacility == 'temporary_closure' %}
+  <span class="operating-status-flag operating-status-flag-warning operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
+    <va-icon icon="warning" size="3" class="os-icon"></va-icon>
+      Temporary facility closure
+    <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
+  </span>
+{% elsif fieldOperatingStatusFacility == 'temporary_location' %}
+  <span class="operating-status-flag operating-status-flag-warning operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
+    <va-icon icon="warning" size="3" class="os-icon"></va-icon>
+      Temporary location
+    <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
+  </span>
+{% elsif fieldOperatingStatusFacility == 'virtual_care' %}
+  <span class="operating-status-flag operating-status-flag-warning operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
+    <va-icon icon="warning" size="3" class="os-icon"></va-icon>
+      Virtual care only
+    <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
+  </span>
+{% elsif fieldOperatingStatusFacility == 'coming_soon' %}
+  <span class="operating-status-flag operating-status-flag-warning operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
+    <va-icon icon="warning" size="3" class="os-icon"></va-icon>
+      Coming soon
+    <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
+  </span>
+{% elsif fieldOperatingStatusFacility == 'closed' %}
+  <span class="operating-status-flag operating-status-flag-warning operating-status usa-alert usa-alert-warning background-color-only vads-u-margin-top--1 vads-u-padding-y--1 vads-u-padding-x--1p5">
+    <va-icon icon="warning" size="3" class="os-icon"></va-icon>
+      Facility Closed
+    <va-icon icon="chevron_right" size="3" class="os-chevron-right vads-u-padding-left--0p5"></va-icon>
+  </span>
 {% endif %}

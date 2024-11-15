@@ -6,14 +6,26 @@
   {% endif %}
   {% case fieldOperatingStatusFacility %}
   {% when 'limited' %}
-    {% assign status = "warning" %}
+    {% assign status = "info" %}
     {% assign trigger = "Limited services and hours" %}
   {% when 'closed' %}
-    {% assign status = "error" %}
+    {% assign status = "warning" %}
     {% assign trigger = "Facility Closed" %}
   {% when 'notice' %}
     {% assign status = "info" %}
     {% assign trigger = "Facility notice" %}
+  {% when 'temporary_closure' %}
+    {% assign status = "warning" %}
+    {% assign trigger = "Temporary facility closure" %}
+  {% when 'temporary_location' %}
+    {% assign status = "warning" %}
+    {% assign trigger = "Temporary location" %}
+  {% when 'virtual_care' %}
+    {% assign status = "warning" %}
+    {% assign trigger = "Virtual care only" %}
+  {% when 'coming_soon' %}
+    {% assign status = "warning" %}
+    {% assign trigger = "Coming soon" %}
   {% endcase %}
   {% if status and fieldOperatingStatusMoreInfo and fieldOperatingStatusMoreInfo != blank %}
     <div class="vads-u-margin-bottom--1">

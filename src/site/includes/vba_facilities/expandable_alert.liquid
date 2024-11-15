@@ -7,11 +7,27 @@
 {% elsif fieldOperatingStatusFacility == 'limited' %}
   {% assign showVBAExpandableAlert = true %}
   {% assign VBAExpandableAlertTrigger = 'Limited services and hours' %}
-  {% assign VBAExpandableAlertStatus = 'warning' %}
+  {% assign VBAExpandableAlertStatus = 'info' %}
 {% elsif fieldOperatingStatusFacility == 'closed' %}
   {% assign showVBAExpandableAlert = true %}
   {% assign VBAExpandableAlertTrigger = 'Facility Closed' %}
-  {% assign VBAExpandableAlertStatus = 'error' %}
+  {% assign VBAExpandableAlertStatus = 'warning' %}
+{% elsif fieldOperatingStatusFacility == 'temporary_closure' %}
+  {% assign showVBAExpandableAlert = true %}
+  {% assign VBAExpandableAlertTrigger = 'Temporary facility closure' %}
+  {% assign VBAExpandableAlertStatus = 'warning' %}
+{% elsif fieldOperatingStatusFacility == 'temporary_location' %}
+  {% assign showVBAExpandableAlert = true %}
+  {% assign VBAExpandableAlertTrigger = 'Temporary location' %}
+  {% assign VBAExpandableAlertStatus = 'warning' %}
+{% elsif fieldOperatingStatusFacility == 'virtual_care' %}
+  {% assign showVBAExpandableAlert = true %}
+  {% assign VBAExpandableAlertTrigger = 'Virtual care only' %}
+  {% assign VBAExpandableAlertStatus = 'warning' %}
+{% elsif fieldOperatingStatusFacility == 'coming_soon' %}
+  {% assign showVBAExpandableAlert = true %}
+  {% assign VBAExpandableAlertTrigger = 'Coming soon' %}
+  {% assign VBAExpandableAlertStatus = 'warning' %}
 {% endif %}
 
 {% if showVBAExpandableAlert %}
