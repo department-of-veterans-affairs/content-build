@@ -355,9 +355,9 @@
     "template": {
       "title": "Track Claims",
       "layout": "page-react.html",
-      "description": "Track the status of your VA claims and appeals.",
-      "useLocalStylesAndComponents": true
-    }
+      "description": "Track the status of your VA claims and appeals."
+    },
+    "useLocalStylesAndComponents": true
   },
   {
     "appName": "Letters",
