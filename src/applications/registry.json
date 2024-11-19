@@ -1758,7 +1758,22 @@
     "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "",
+          "name": "Va.gov home"
+        },
+        {
+          "path": "my-va",
+          "name": "My VA"
+        },
+        {
+          "path": "welcome-va-setup/review-information/contact-information",
+          "name": "Add your contact information"
+        }
+      ]
     }
   }
 ]
