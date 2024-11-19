@@ -507,32 +507,6 @@
     }
   },
   {
-    "appName": "Opt Out of Sharing VA Education Benefits Information",
-    "entryName": "0993-edu-benefits",
-    "rootUrl": "/education/opt-out-information-sharing/opt-out-form-0993",
-    "template": {
-      "title": "Opt Out Of Sharing VA Education Benefits Information",
-      "heading": "Opt out of sharing VA education benefits information",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "education/",
-          "name": "Education and training"
-        },
-        {
-          "path": "education/opt-out-information-sharing/",
-          "name": "Opt out of information sharing"
-        },
-        {
-          "path": "education/opt-out-information-sharing/opt-out-form-0993",
-          "name": "Opt out of sharing your information with schools"
-        }
-      ]
-    }
-  },
-  {
     "appName": "GI Bill School Feedback Tool",
     "entryName": "feedback-tool",
     "rootUrl": "/education/submit-school-feedback",
@@ -1055,7 +1029,7 @@
     }
   },
   {
-    "appName": "Mock Form AE Design Patterns",
+    "appName": "Authenticated Experience Design Patterns",
     "entryFile": "./app-entry.jsx",
     "entryName": "mock-form-ae-design-patterns",
     "rootUrl": "/mock-form-ae-design-patterns",
@@ -1784,7 +1758,22 @@
     "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "",
+          "name": "Va.gov home"
+        },
+        {
+          "path": "my-va",
+          "name": "My VA"
+        },
+        {
+          "path": "welcome-va-setup/review-information/contact-information",
+          "name": "Add your contact information"
+        }
+      ]
     }
   }
 ]
