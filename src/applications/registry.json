@@ -356,7 +356,8 @@
       "title": "Track Claims",
       "layout": "page-react.html",
       "description": "Track the status of your VA claims and appeals."
-    }
+    },
+    "useLocalStylesAndComponents": true
   },
   {
     "appName": "Letters",
@@ -502,32 +503,6 @@
         {
           "name": "Apply for the Rogers STEM Scholarship",
           "path": "education/other-va-education-benefits/stem-scholarship/apply-for-scholarship-form-22-10203"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "Opt Out of Sharing VA Education Benefits Information",
-    "entryName": "0993-edu-benefits",
-    "rootUrl": "/education/opt-out-information-sharing/opt-out-form-0993",
-    "template": {
-      "title": "Opt Out Of Sharing VA Education Benefits Information",
-      "heading": "Opt out of sharing VA education benefits information",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "education/",
-          "name": "Education and training"
-        },
-        {
-          "path": "education/opt-out-information-sharing/",
-          "name": "Opt out of information sharing"
-        },
-        {
-          "path": "education/opt-out-information-sharing/opt-out-form-0993",
-          "name": "Opt out of sharing your information with schools"
         }
       ]
     }
@@ -1055,7 +1030,7 @@
     }
   },
   {
-    "appName": "Mock Form AE Design Patterns",
+    "appName": "Authenticated Experience Design Patterns",
     "entryFile": "./app-entry.jsx",
     "entryName": "mock-form-ae-design-patterns",
     "rootUrl": "/mock-form-ae-design-patterns",
@@ -1644,7 +1619,9 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": ["/introduction"]
+        "excludePaths": [
+          "/introduction"
+        ]
       }
     }
   },
@@ -1733,7 +1710,10 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": ["/introduction", "/confirmation"]
+        "excludePaths": [
+          "/introduction",
+          "/confirmation"
+        ]
       }
     }
   },
@@ -1782,6 +1762,31 @@
     "entryName": "welcome-va-setup-review-information",
     "rootUrl": "/my-va/welcome-va-setup/review-information",
     "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "",
+          "name": "Va.gov home"
+        },
+        {
+          "path": "my-va",
+          "name": "My VA"
+        },
+        {
+          "path": "welcome-va-setup/review-information/contact-information",
+          "name": "Add your contact information"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Employment Questionnaire",
+    "entryName": "21-4140-eq",
+    "rootUrl": "/employment-questionnaire-form-21-4140",
+    "productId": "2e00cd49-14e2-4eb0-a3c6-5bc92c9e4618",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
