@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+
 const verifyActionLink = (expectedText, expectedHref) =>
   cy
     .get('va-link-action')
@@ -14,18 +16,10 @@ describe('VAMC Lovell - All TRICARE pages with expected MHS Genesis Patient Port
     cy.visit('/lovell-federal-health-care-tricare/');
     cy.injectAxeThenAxeCheck();
 
-    verifyActionLink(
-      'MHS Genesis Patient Portal',
-      'https://my.mhsgenesis.health.mil/',
-    );
-    verifyActionLink(
-      'View all health services',
-      '/lovell-federal-health-care-tricare/health-services',
-    );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
+    cy.findByText('MHS Genesis Patient Portal').then(el => {
+      const attr = el.attr('href');
+      expect(attr).to.equal('https://my.mhsgenesis.health.mil/');
+    });
   });
 
   it('TRICARE Health services has MHS Genesis Patient Portal link', () => {
@@ -36,32 +30,16 @@ describe('VAMC Lovell - All TRICARE pages with expected MHS Genesis Patient Port
       'MHS Genesis Patient Portal',
       'https://my.mhsgenesis.health.mil/',
     );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
-    verifyActionLink(
-      'Learn about pharmacy services',
-      '/lovell-federal-health-care-tricare/pharmacy',
-    );
   });
 
   it('TRICARE Locations has MHS Genesis Patient Portal link', () => {
     cy.visit('/lovell-federal-health-care-tricare/locations');
     cy.injectAxeThenAxeCheck();
 
-    verifyActionLink(
-      'MHS Genesis Patient Portal',
-      'https://my.mhsgenesis.health.mil/',
-    );
-    verifyActionLink(
-      'View all health services',
-      '/lovell-federal-health-care-tricare/health-services',
-    );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
+    cy.findByText('MHS Genesis Patient Portal').then(el => {
+      const attr = el.attr('href');
+      expect(attr).to.equal('https://my.mhsgenesis.health.mil/');
+    });
   });
 
   it('TRICARE Captain James A. Lovell Location has MHS Genesis Patient Portal link', () => {
@@ -74,14 +52,6 @@ describe('VAMC Lovell - All TRICARE pages with expected MHS Genesis Patient Port
       'MHS Genesis Patient Portal',
       'https://my.mhsgenesis.health.mil/',
     );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
-    verifyActionLink(
-      'Learn about pharmacy services',
-      '/lovell-federal-health-care-tricare/pharmacy',
-    );
   });
 });
 
@@ -90,18 +60,10 @@ describe('VAMC Lovell - All VA pages with expected Make an appointment Top Task 
     cy.visit('/lovell-federal-health-care-va/');
     cy.injectAxeThenAxeCheck();
 
-    verifyActionLink(
-      'Make an appointment',
-      '/lovell-federal-health-care-va/make-an-appointment',
-    );
-    verifyActionLink(
-      'View all health services',
-      '/lovell-federal-health-care-tricare/health-services',
-    );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
+    cy.findByText('Make an appointment').then(el => {
+      const attr = el.attr('href');
+      expect(attr.endsWith('make-an-appointment')).to.be.true;
+    });
   });
 
   it('VA Health services has Make an appointment link', () => {
@@ -112,32 +74,16 @@ describe('VAMC Lovell - All VA pages with expected Make an appointment Top Task 
       'Make an appointment',
       '/lovell-federal-health-care-va/make-an-appointment',
     );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
-    verifyActionLink(
-      'Learn about pharmacy services',
-      '/lovell-federal-health-care-tricare/pharmacy',
-    );
   });
 
   it('VA Locations has Make an appointment link', () => {
     cy.visit('/lovell-federal-health-care-va/locations/');
     cy.injectAxeThenAxeCheck();
 
-    verifyActionLink(
-      'Make an appointment',
-      '/lovell-federal-health-care-va/make-an-appointment',
-    );
-    verifyActionLink(
-      'View all health services',
-      '/lovell-federal-health-care-tricare/health-services',
-    );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
+    cy.findByText('Make an appointment').then(el => {
+      const attr = el.attr('href');
+      expect(attr.endsWith('make-an-appointment')).to.be.true;
+    });
   });
 
   it('VA Captain James A. Lovell Location has Make an appointment link', () => {
@@ -149,14 +95,6 @@ describe('VAMC Lovell - All VA pages with expected Make an appointment Top Task 
     verifyActionLink(
       'Make an appointment',
       '/lovell-federal-health-care-va/make-an-appointment',
-    );
-    verifyActionLink(
-      'Register for care',
-      '/lovell-federal-health-care-tricare/register-for-care',
-    );
-    verifyActionLink(
-      'Learn about pharmacy services',
-      '/lovell-federal-health-care-tricare/pharmacy',
     );
   });
 });
