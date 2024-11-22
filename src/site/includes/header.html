@@ -73,10 +73,10 @@
 
   <!-- CSS -->
   {% comment %}
-  Apps that opt out of the site-wide stylesheet must include a smaller subset of styles
-  in their application bundle
-{% endcomment %}
-{% unless useLocalStylesAndComponents %}
+   Apps that opt out of the site-wide stylesheet must include a smaller subset of styles
+   in their application bundle
+ {% endcomment %}
+ {% unless useLocalStylesAndComponents %}
   <link rel="stylesheet" data-entry-name="style.css">
   {% endunless %}
   <link rel="stylesheet" data-entry-content="content-build.css">
