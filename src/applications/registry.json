@@ -1791,5 +1791,17 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Demo: File for disability compensation - New conditions",
+    "entryName": "new-conditions",
+    "rootUrl": "/user-testing/new-conditions",
+    "productId": "0db1a222-9d73-4c26-9966-75283e6510a1",
+    "template": {
+      "vagovprod": false,
+      "title": "Demo: File for disability compensation - New conditions",
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true
+    }
   }
 ]
