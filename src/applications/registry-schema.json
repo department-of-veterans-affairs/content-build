@@ -20,9 +20,6 @@
             "rootUrl": {
                 "type": "string"
             },
-            "useLocalStylesAndComponents": {
-                "type": "boolean"
-            },
             "template": {
                 "type": "object",
                 "properties": {
