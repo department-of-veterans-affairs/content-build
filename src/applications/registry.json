@@ -1788,10 +1788,10 @@
     }
   },
   {
-    "appName": "Health Care Supply Reordering",
+    "appName": "Order Medical Supplies",
     "entryName": "mhv-supply-reordering",
     "rootUrl": "/my-health/order-supplies",
-    "productId": "117b6d8a-a2e9-4b4e-a9a1-8f2ceb0c17ea",
+    "productId": "9f2025da-09d6-469f-8d6e-811e7afa7582",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
