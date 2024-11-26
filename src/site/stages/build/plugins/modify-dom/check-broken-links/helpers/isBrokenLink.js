@@ -33,7 +33,8 @@ function isBrokenLink(link, pagePath, allPaths) {
   if (!path.extname(filePath)) {
     filePath = path.join(filePath, 'index.html');
   }
-
+  // eslint-disable-next-line no-console
+  console.log(filePath);
   return !allPaths.has(filePath);
 }
 
