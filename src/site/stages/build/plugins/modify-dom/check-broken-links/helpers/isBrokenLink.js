@@ -28,7 +28,7 @@ function isBrokenLink(link, pagePath, allPaths) {
   let filePath = decodeURIComponent(parsed.pathname);
 
   // Check for link destinations we are not testing.
-  for (let i = 0; i < IGNORE_PATTERNS; i += 1) {
+  for (let i = 0; i < IGNORE_PATTERNS.length; i += 1) {
     if (filePath.match(IGNORE_PATTERNS[i])) {
       // eslint-disable-next-line no-console
       console.log(filePath);
