@@ -140,7 +140,7 @@
           {% endif %}
 
         <!-- Connect with us -->
-        {% if fieldRelatedOffice != empty and fieldRelatedOffice.entity.fieldExternalLink.title != "Records benefits hub" %}
+        {% if fieldConnectWithUs != empty and fieldConnectWithUs.entity.fieldExternalLink.title != "Records benefits hub" %}
             <va-accordion-item
               class="va-accordion-item"
               level="2"
@@ -148,12 +148,12 @@
               bordered
               uswds
               open="true"
-              id="{{ fieldRelatedOffice.entity.fieldExternalLink.title | hashReference: 60 }}">
-              {% if fieldRelatedOffice.entity.fieldExternalLink.url.path != empty %}
+              id="{{ fieldConnectWithUs.entity.fieldExternalLink.title | hashReference: 60 }}">
+              {% if fieldConnectWithUs.entity.fieldExternalLink.url.path != empty %}
                 <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
                   <va-link
-                    href="{{ fieldRelatedOffice.entity.fieldExternalLink.url.path }}"
-                    text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }}"
+                    href="{{ fieldConnectWithUs.entity.fieldExternalLink.url.path }}"
+                    text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }}"
                   />
                 </h3>
               {% endif %}
@@ -163,8 +163,8 @@
                   <p>
                     <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
                     <va-link
-                      href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}"
-                      text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
+                      href="{{ fieldConnectWithUs.entity.fieldEmailUpdatesLink.url.path }}"
+                      text="{{ fieldConnectWithUs.entity.fieldEmailUpdatesLink.title }}"
                     />
                   </p>
               </section>
@@ -172,7 +172,7 @@
               <section>
                 <h3 class="vads-u-font-size--h4">Follow us</h3>
                 <ul class="va-nav-linkslist-list social">
-                  {% assign socialLinks =  fieldRelatedOffice.entity.fieldSocialMediaLinks.platformValues | jsonToObj %}
+                  {% assign socialLinks =  fieldConnectWithUs.entity.fieldSocialMediaLinks.platformValues | jsonToObj %}
                   {% assign socialPlatforms = socialLinks | keys %}
 
                   {% for socialPlatform in socialPlatforms %}
@@ -193,7 +193,7 @@
                           class="vads-u-color--link-default vads-u-padding-right--0p5"></va-icon>
                         <va-link
                           href="http://{{ socialPlatform }}.com/{{ socialLink.value }}"
-                          text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} {{ platform | formatSocialPlatform }}"
+                          text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }} {{ platform | formatSocialPlatform }}"
                         >
                         </va-link>
                       </li>

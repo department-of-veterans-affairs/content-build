@@ -411,12 +411,12 @@
   {
     "appName": "Post 9/11 GI Bill Status",
     "entryName": "post-911-gib-status",
-    "rootUrl": "/education/gi-bill/post-9-11/ch-33-benefit/status",
+    "rootUrl": "/education/check-remaining-post-9-11-gi-bill-benefits/status",
     "template": {
       "layout": "page-react.html",
-      "title": "Check Your Post-9/11 GI Bill Benefits Status",
-      "heading": "Check your Post-9/11 GI Bill benefits status",
-      "display_title": "Check Post-9/11 GI Bill benefits",
+      "title": "Check your remaining Post-9/11 GI Bill benefits",
+      "heading": "Check your remaining Post-9/11 GI Bill benefits",
+      "display_title": "Check your remaining Post-9/11 GI Bill benefits",
       "collection": "education",
       "spoke": "Manage benefits",
       "order": 2,
@@ -429,20 +429,8 @@
           "name": "Education and training"
         },
         {
-          "path": "education/about-gi-bill-benefits/",
-          "name": "GI Bill"
-        },
-        {
-          "path": "education/about-gi-bill-benefits/post-9-11/",
-          "name": "Post-9/11 GI Bill"
-        },
-        {
-          "path": "education/gi-bill/post-9-11/ch-33-benefit/",
-          "name": "Check Post-9/11 GI Bill benefits"
-        },
-        {
-          "path": "education/gi-bill/post-9-11/ch-33-benefit/status",
-          "name": "Post-9/11 GI Bill Statement of Benefits"
+          "path": "education/check-remaining-post-9-11-gi-bill-benefits/status",
+          "name": "Check your remaining Post-9/11 GI Bill benefits"
         }
       ]
     }
@@ -1739,8 +1727,8 @@
   },
   {
     "appName": "Discover Your Benefits",
-    "entryName": "benefit-eligibility-questionnaire",
-    "rootUrl": "/benefit-eligibility-questionnaire",
+    "entryName": "discover-your-benefits",
+    "rootUrl": "/discover-your-benefits",
     "productId": "87f2c91f-46c3-4461-8890-3636130af4ab",
     "template": {
       "vagovprod": false,
