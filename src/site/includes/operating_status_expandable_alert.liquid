@@ -37,8 +37,21 @@
         class="vads-u-margin-y--0 vamc-facility-expandable-alert"
         style="max-width: 303px;"
       >
-        <p>{{ fieldOperatingStatusMoreInfo | drupalToVaPath | phoneLinks | newline_to_br }}</p>
+          <p>{{ fieldOperatingStatusMoreInfo | drupalToVaPath | phoneLinks | newline_to_br }}</p>
       </va-alert-expandable>
+    </div>
+  {% elsif status %}
+    <div class="vads-u-margin-bottom--1">
+      <va-alert
+        id="operating-status-nonexp-{{ operatingStatusId }}"
+        data-testid="operating-status-nonexp-{{ operatingStatusId }}"
+        status="{{ status }}"
+        class="vads-u-margin-y--0"
+        slim        
+        style="max-width: 303px;"
+      >
+        <p class="vads-u-margin-y--0 vads-u-padding-y--0 vads-u-font-weight--bold">{{ trigger }}</p>
+      </va-alert>
     </div>
   {% endif %}
 {% endif %}
