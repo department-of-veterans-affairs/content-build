@@ -127,12 +127,20 @@
   {% endcomment %}
   {% assign shouldShowIntroText = single.fieldApptIntroTextType | shouldShowIntroText: single.fieldApptIntroTextCustom %}
   
-  {% if isMentalHealthService and fieldMentalHealthPhone %}
+  {% if isMentalHealthService and fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
+    {% assign serviceLocationMainNumber = fieldTelephone.entity.fieldPhoneNumber %}
+    {% assign serviceLocationMainExt = fieldTelephone.entity.fieldPhoneExtension %}
+    {% assign serviceLocationMainPhoneType = fieldTelephone.entity.fieldPhoneNumberType %}
+  {% elsif isMentalHealthService and fieldMentalHealthPhone and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
     {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+    {% assign serviceLocationMainExt = "" %}
+    {% assign serviceLocationMainPhoneType = "tel" %}
   {% elsif fieldPhoneNumber %}
     {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+    {% assign serviceLocationMainExt = "" %}
+    {% assign serviceLocationMainPhoneType = "tel" %}
   {% endif %}
-  
+
   {% comment %}
   Conditionally display facility main/mh phone number
   {% endcomment %}
@@ -189,6 +197,8 @@
     <div data-testid="service-location-main-facility-phone">
       {% include "src/site/components/phone-number.drupal.liquid" with
             phoneNumber = serviceLocationMainNumber
+            phoneExtension = serviceLocationMainExt
+            phoneType = serviceLocationMainPhoneType
             phoneLabel = 'Main Phone'
             phoneHeaderLevel = serviceLocationH
           %}
@@ -238,6 +248,8 @@
     <div data-testid="service-location-main-facility-phone-for-contact">
       {% include "src/site/components/phone-number.drupal.liquid" with
         phoneNumber = serviceLocationMainNumber
+        phoneExtension = serviceLocationMainExt
+        phoneType = serviceLocationMainPhoneType
         phoneLabel = 'Main Phone'
         phoneHeaderLevel = serviceLocationH
       %}

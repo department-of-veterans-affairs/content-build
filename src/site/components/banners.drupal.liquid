@@ -17,12 +17,11 @@
   >{{ banner.body.processed }}</va-banner>
 {% endfor %}
 
+<!-- Situation Updates banner -->
+<div data-widget-type="situation-updates-banner"></div>
+
 <!-- Maintenance banner -->
-<div
-  aria-label="Maintenance banner"
-  data-widget-type="maintenance-banner"
-  role="region"
-></div>
+<div data-widget-type="maintenance-banner"></div>
 
 <!-- Derive visible promo banners. -->
 {% assign visiblePromoBanners = promoBanners.entities | deriveVisibleBanners: entityUrl.path %}

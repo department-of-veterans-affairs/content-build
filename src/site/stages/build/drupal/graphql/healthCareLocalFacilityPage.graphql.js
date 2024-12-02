@@ -3,6 +3,7 @@ const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const socialMediaFields = require('./facilities-fragments/healthCareSocialMedia.fields.graphql');
 const serviceLocation = require('./paragraph-fragments/serviceLocation.paragraph.graphql');
 const appointmentItems = require('./file-fragments/appointmentItems.graphql');
+const mhTelephonePara = require('./paragraph-fragments/mhTelephone.paragraph.graphql');
 
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 
@@ -58,6 +59,7 @@ const healthCareLocalFacilityPageFragment = `
     }
     fieldPhoneNumber
     fieldMentalHealthPhone
+    ${mhTelephonePara}
     fieldOfficeHours {
       day
       starthours

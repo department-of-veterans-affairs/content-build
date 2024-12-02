@@ -34,7 +34,7 @@ const medalliaSurveys = {
       staging: SURVEY_NUMBERS.HEALTH_CARE_STAGING,
     },
     '/my-health/medical-records/summaries-and-notes/visit-summary': {
-      production: SURVEY_NUMBERS.DEFAULT_PROD_SURVEY,
+      production: SURVEY_NUMBERS.AFTER_VISIT_SUMMARY_PROD,
       staging: SURVEY_NUMBERS.AFTER_VISIT_SUMMARY_STAGING,
     },
     '/resources': {
