@@ -260,6 +260,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
+            /github/home/.cache/Cypress
 
       - name: Run registry validation
         run: yarn validate:registry
@@ -280,6 +281,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
+            /github/home/.cache/Cypress
 
       - name: Create test results folder
         run: mkdir -p test-results
@@ -324,6 +326,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
+            /github/home/.cache/Cypress
 
       - name: Update browserslist
         run: yarn exec -- browserslist --update-db
@@ -347,6 +350,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
+            /github/home/.cache/Cypress
 
       - name: Audit dependencies
         run: yarn security-check
@@ -367,6 +371,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
+            /github/home/.cache/Cypress
 
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
@@ -637,6 +642,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
+            /github/home/.cache/Cypress
 
       - name: Set output of latest_run_number
         id: latest-run-number
@@ -748,6 +754,7 @@ jobs:
           path: |
             ~/.cache/yarn
             node_modules
+            /github/home/.cache/Cypress
 
       - name: Trigger Jenkins pipeline
         run: node script/github-actions/trigger-jenkins.js
