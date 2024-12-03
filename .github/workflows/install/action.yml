@@ -37,22 +37,18 @@ runs:
       run: npm i -g yarn@1.19.1
 
     - name: Cache dependencies
-      # if: ${{ inputs.path && inputs.path != null }}
       id: cache-dependencies
       uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
       with:
         path: ${{ inputs.path }}
         key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.key }}
+        restore-keys: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.restore-keys }}
 
     - name: Install dependencies
       uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
       with:
-        command: |
-          yarn install --frozen-lockfile --prefer-offline --production=false
-          npx cypress install
-          npx cypress --version
+        command: yarn install --frozen-lockfile --prefer-offline --production=false
         max_attempts: 3
         timeout_minutes: 7
       env:
         YARN_CACHE_FOLDER: ${{ inputs.yarn_cache_folder }}
-        CYPRESS_INSTALL_BINARY: https://vetsgov-website-builds-s3-upload.s3.us-gov-west-1.amazonaws.com/artifacts/cypress/13.3.0.zip
