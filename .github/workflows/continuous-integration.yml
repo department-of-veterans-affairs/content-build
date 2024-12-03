@@ -416,10 +416,10 @@ jobs:
       - name: Install dependencies
         uses: ./.github/workflows/install
         timeout-minutes: 30
-        with:
-          key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: .cache/yarn
-          path: .cache
+        # with:
+        #   key: ${{ hashFiles('yarn.lock') }}
+        #   yarn_cache_folder: .cache/yarn
+        #   path: .cache
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
