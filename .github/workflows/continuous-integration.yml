@@ -257,11 +257,7 @@ jobs:
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-            /github/home/.cache/Cypress
-
+          path: .cache
       - name: Run registry validation
         run: yarn validate:registry
 
@@ -278,10 +274,7 @@ jobs:
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-            /github/home/.cache/Cypress
+          path: .cache
 
       - name: Create test results folder
         run: mkdir -p test-results
@@ -323,10 +316,7 @@ jobs:
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-            /github/home/.cache/Cypress
+          path: .cache
 
       - name: Update browserslist
         run: yarn exec -- browserslist --update-db
@@ -347,10 +337,7 @@ jobs:
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-            /github/home/.cache/Cypress
+          path: .cache
 
       - name: Audit dependencies
         run: yarn security-check
@@ -368,10 +355,7 @@ jobs:
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-            /github/home/.cache/Cypress
+          path: .cache
 
       - name: Fetch Drupal cache
         run: yarn fetch-drupal-cache
@@ -433,13 +417,9 @@ jobs:
         uses: ./.github/workflows/install
         timeout-minutes: 30
         with:
-          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: on-demand-runner-cypress-
+          key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            /github/home/.cache/Cypress
-            **/node_modules
+          path: .cache
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
@@ -639,10 +619,7 @@ jobs:
         with:
           key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
-          path: |
-            .cache/yarn
-            node_modules
-            /github/home/.cache/Cypress
+          path: .cache
 
       - name: Set output of latest_run_number
         id: latest-run-number
@@ -750,11 +727,8 @@ jobs:
         timeout-minutes: 30
         with:
           key: ${{ hashFiles('yarn.lock') }}
-          yarn_cache_folder: ~/.cache/yarn
-          path: |
-            ~/.cache/yarn
-            node_modules
-            /github/home/.cache/Cypress
+          yarn_cache_folder: .cache/yarn
+          path: .cache
 
       - name: Trigger Jenkins pipeline
         run: node script/github-actions/trigger-jenkins.js
