@@ -37,9 +37,9 @@ runs:
       run: npm i -g yarn@1.19.1
 
     - name: Cache dependencies
+      if: ${{ inputs.path && inputs.path != null }}
       id: cache-dependencies
       uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
-      if: ${{ inputs.path !== null }}
       with:
         path: ${{ inputs.path }}
         key: ${{ steps.get-node-version.outputs.NODE_VERSION }}-${{ inputs.key }}
