@@ -97,6 +97,77 @@
   }
 }
 
+//===== Playbook
+
+// ToDo: It appears that the page-playbook.html template that uses this class is no longer used, can we remove the template and the following classes?
+.va-nav-breadcrumbs--playbook {
+  background: none;
+  margin: 0 0 1em 0;
+  padding: 0;
+
+  h2 {
+    font-size: 1em;
+  }
+
+  li {
+    text-transform: none;
+    margin: 0.25em 0;
+    padding: 0.1em;
+    display: inline-block;
+    line-height: 1.15em;
+    vertical-align: middle;
+    font-size: 1.35em;
+
+    &:hover {
+      border-bottom: none;
+      text-decoration: none;
+    }
+  }
+
+  a {
+    border-bottom: 3px solid var(--vads-color-white);
+    text-decoration: none !important;
+    color: var(--vads-color-white);
+    &:hover {
+      text-decoration: none;
+      background: var(--color-link-default-hover);
+      border-bottom: 3px solid var(--vads-color-warning);
+    }
+  }
+}
+
+.va-nav-breadcrumbs--playbook {
+  .parent {
+    padding-top: 0.5em;
+    margin: 0 0 0.75em 0;
+  
+    &:after {
+      content: " › ";
+      display: inline-block;
+      color: var(--vads-color-white);
+      padding: 0 0.5em;
+    }
+  }
+  
+  .active {
+    background: var(--vads-color-warning);
+    color: var(--vads-color-black);
+    font: 400 1.35em / 1.15em var(--font-family-serif);
+    margin: 0.5em 0;
+    padding: 0.2em;
+  
+    @media (min-width: 768px) {
+      font-size: 1.8em;
+    }
+  
+    &:before {
+      content: "";
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
 // START: Styles for mobile app promo banner
 .smartbanner {
   position: absolute;

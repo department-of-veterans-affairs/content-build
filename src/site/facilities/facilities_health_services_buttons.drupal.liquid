@@ -2,14 +2,23 @@
     This is used for Facility details pages and (A-Z) Health Services page
 {% endcomment %}
 <div data-template="facilities/facilities_health_services_buttons">
-    <div>
-        {% assign topTask = "make-an-appointment" | topTaskLovellComp: path, buildtype, fieldAdministration, fieldVamcEhrSystem, fieldRegionPage, fieldOffice %}
-        <a class="vads-c-action-link--blue" href="{{topTask.url}}">{{topTask.text}}</a>
-    </div>
-    <div class="vads-u-margin-y--2">
-        <a class="vads-c-action-link--blue" href="/{{ path }}/register-for-care">Register for care</a>
-    </div>
-    <div>
-        <a class="vads-c-action-link--blue" href="/{{ path }}/pharmacy">Pharmacy</a>
-    </div>
+  {% assign topTask = "make-an-appointment" | topTaskLovellComp: path, buildtype, fieldAdministration, fieldVamcEhrSystem, fieldRegionPage, fieldOffice %}
+  <va-link-action
+    class="vads-u-display--block"
+    href="{{topTask.url}}"
+    text="{{topTask.text}}"
+    type="secondary"
+  ></va-link-action>  
+  <va-link-action
+    class="vads-u-display--block"
+    href="/{{ path }}/register-for-care"
+    text="Register for care"
+    type="secondary"
+  ></va-link-action>   
+  <va-link-action
+    class="vads-u-display--block"
+    href="/{{ path }}/pharmacy"
+    text="Learn about pharmacy services"
+    type="secondary"
+  ></va-link-action>   
 </div>
