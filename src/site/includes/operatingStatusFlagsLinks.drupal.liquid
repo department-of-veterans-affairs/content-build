@@ -7,15 +7,35 @@
     />
   </va-alert>
 {% elsif fieldOperatingStatusFacility == 'limited' %}
-  <va-alert status="warning" slim visible>
+  <va-alert status="info" slim visible>
     <va-link
       class="vads-u-font-weight--bold operating-status-link"
       href="{{ facilitySidebar.links.0.url.path }}/operating-status"
       text="Limited services and hours"
     />
   </va-alert>
+{% elsif fieldOperatingStatusFacility == 'temporary_closure' %}
+    <va-alert status="warning" slim visible>
+      <va-link class="vads-u-font-weight--bold operating-status-link"
+        href="{{ facilitySidebar.links.0.url.path }}/operating-status" text="Temporary facility closure" />
+    </va-alert>
+{% elsif fieldOperatingStatusFacility == 'temporary_location' %}
+    <va-alert status="warning" slim visible>
+      <va-link class="vads-u-font-weight--bold operating-status-link"
+        href="{{ facilitySidebar.links.0.url.path }}/operating-status" text="Temporary location" />
+    </va-alert>
+{% elsif fieldOperatingStatusFacility == 'virtual_care' %}
+    <va-alert status="warning" slim visible>
+      <va-link class="vads-u-font-weight--bold operating-status-link"
+        href="{{ facilitySidebar.links.0.url.path }}/operating-status" text="Virtual care only" />
+    </va-alert>
+{% elsif fieldOperatingStatusFacility == 'coming_soon' %}
+    <va-alert status="warning" slim visible>
+      <va-link class="vads-u-font-weight--bold operating-status-link"
+        href="{{ facilitySidebar.links.0.url.path }}/operating-status" text="Coming soon" />
+    </va-alert>
 {% elsif fieldOperatingStatusFacility == 'closed' %}
-  <va-alert status="error" slim visible>
+  <va-alert status="warning" slim visible>
     <va-link
       class="vads-u-font-weight--bold operating-status-link"
       href="{{ facilitySidebar.links.0.url.path }}/operating-status"
