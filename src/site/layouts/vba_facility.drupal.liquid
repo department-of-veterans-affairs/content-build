@@ -43,11 +43,7 @@
               <div>
                 <div>
 
-                  {% if fieldOperatingStatusMoreInfo and fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
-                    <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
-                      {% include "src/site/includes/vba_facilities/expandable_alert.liquid" %}
-                    </div>
-                  {% endif %}
+                {% include "src/site/includes/vba_facilities/expandable_alert.liquid" %}
 
                   <section>
                     <script type="application/ld+json">
