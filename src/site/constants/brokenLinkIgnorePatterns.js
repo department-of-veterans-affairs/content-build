@@ -18,7 +18,7 @@
 
   */
 const IGNORE_PATTERNS = [
-  /\/events\//, // This ignores all links to Event and Event Listing pages.
+  /\/events($|\/)?/, // This ignores all links to Event and Event Listing pages.
 ];
 
 module.exports = {
