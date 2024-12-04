@@ -51,9 +51,9 @@ describe('Vet Center Locations Operating Status', () => {
     );
     const operatingStatus = queryAllByTestId(
       rendered,
-      'operating-status-vc_5141OS',
+      'operating-status-nonexp-vc_5141OS',
     );
-    expect(operatingStatus).to.be.empty;
+    expect(operatingStatus).to.have.lengthOf(1);
   });
 
   it('should render a limited operating status when has status and more info', async () => {
