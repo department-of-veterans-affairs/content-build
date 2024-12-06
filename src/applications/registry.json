@@ -1741,7 +1741,7 @@
     "rootUrl": "/education/survivor-dependent-education-benefit-22-5490",
     "productId": "5544d590-0b67-48b1-a312-824c98d367ae",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
