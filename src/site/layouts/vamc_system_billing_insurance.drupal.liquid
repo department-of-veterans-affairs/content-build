@@ -39,7 +39,7 @@
                 immunizations.
               </p>
             {% endif %}
-            {% if fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
+            {% if fieldTelephone %}
                 {% include "src/site/components/phone-number.drupal.liquid" with 
                   phoneHeaderLevel = 3
                   useParagraph = true 
@@ -48,12 +48,6 @@
                   phoneType = fieldTelephone.entity.fieldPhoneNumberType
                   phoneLabel = fieldTelephone.entity.fieldPhoneLabel
                 %}
-            {% elsif fieldPhoneNumber and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
-              <h3>
-                Phone
-              </h3>
-              <p>{{ fieldPhoneNumber | processPhoneToVaTelephoneOrFallback :  '', '' }}
-              </p>
             {% endif %}
             <div class="vads-u-margin-bottom--3">
               {% include 'src/site/includes/hours.liquid' with allHours = fieldOfficeHours headerType = 'small' %}
