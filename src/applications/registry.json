@@ -206,10 +206,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "/",
-          "name": "Home"
-        },
-        {
           "path": "burials-memorials/",
           "name": "Burials and memorials"
         },
@@ -1607,9 +1603,7 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": [
-          "/introduction"
-        ]
+        "excludePaths": ["/introduction"]
       }
     }
   },
@@ -1698,10 +1692,7 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
+        "excludePaths": ["/introduction", "/confirmation"]
       }
     }
   },
