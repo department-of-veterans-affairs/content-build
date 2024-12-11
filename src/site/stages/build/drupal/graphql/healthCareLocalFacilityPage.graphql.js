@@ -58,7 +58,6 @@ const healthCareLocalFacilityPageFragment = `
       lon
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
     ${mhTelephonePara}
     fieldOfficeHours {
       day
