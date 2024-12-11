@@ -628,7 +628,7 @@
       "layout": "page-react.html",
       "description": "Learn more about the changes coming to sign-in",
       "keywords": "Sign-in changes, identity verification, verify",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
