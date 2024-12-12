@@ -12,7 +12,6 @@ const PERSON_PROFILE_RESULTS = `
       fieldLastName
       fieldSuffix
       fieldEmailAddress
-      fieldPhoneNumber
       ${personTelephoneParagraphGraphql}
       fieldDescription
       fieldOffice {

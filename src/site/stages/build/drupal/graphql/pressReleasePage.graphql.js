@@ -37,7 +37,6 @@ const pressReleaseFragment = `
         ...on NodePersonProfile {
           title
           fieldDescription
-          fieldPhoneNumber
           ${personTelephoneParagraphGraphql}
           fieldEmailAddress
         }

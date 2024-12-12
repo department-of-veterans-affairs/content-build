@@ -18,7 +18,6 @@ module.exports = `
         fieldSuffix
         fieldDescription
         fieldEmailAddress
-        fieldPhoneNumber
         ${personTelephoneParagraphGraphql}
         fieldCompleteBiographyCreate
         fieldIntroText

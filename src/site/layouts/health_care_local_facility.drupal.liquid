@@ -118,21 +118,13 @@
                           </strong> {{ fieldRegionPage.entity.fieldVaHealthConnectPhone | processPhoneToVaTelephoneOrFallback :  '', 'VA health connect' }}
                         </div>
                       {% endif %}
-                      {% if fieldTelephone and enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
+                      {% if fieldTelephone %}
                         <div>
                           {% include "src/site/components/phone-number-no-header.drupal.liquid" with
                             phoneNumber = fieldTelephone.entity.fieldPhoneNumber
                             phoneExtension = fieldTelephone.entity.fieldPhoneExtension
                             phoneNumberType = fieldTelephone.entity.fieldPhoneNumberType
                             phoneLabel = fieldTelephone.entity.fieldPhoneLabel | default: 'Mental health care'
-                          %}
-                        </div>
-                      {% elsif fieldMentalHealthPhone and !enabledFeatureFlags.FEATURE_TELEPHONE_MIGRATION_V1 %}
-                        <div>
-                          {% include "src/site/components/phone-number-no-header.drupal.liquid" with
-                            phoneNumber = fieldMentalHealthPhone
-                            phoneLabel = 'Mental health care'
-                            phoneNumberType = 'tel'
                           %}
                         </div>
                       {% endif %}
