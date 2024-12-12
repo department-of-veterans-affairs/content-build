@@ -1,8 +1,5 @@
 const path = require('path');
 const url = require('url');
-const {
-  IGNORE_PATTERNS,
-} = require('../../../../../../constants/brokenLinkIgnorePatterns');
 
 /**
  * Validates an HREF/SRC value
@@ -27,13 +24,6 @@ function isBrokenLink(link, pagePath, allPaths) {
 
   let filePath = decodeURIComponent(parsed.pathname);
 
-  // Check for link destinations we are not testing.
-  for (let i = 0; i < IGNORE_PATTERNS.length; i += 1) {
-    if (filePath.match(IGNORE_PATTERNS[i])) {
-      return false;
-    }
-  }
-
   if (path.isAbsolute(filePath)) {
     filePath = path.join('.', filePath);
   } else {
@@ -43,6 +33,7 @@ function isBrokenLink(link, pagePath, allPaths) {
   if (!path.extname(filePath)) {
     filePath = path.join(filePath, 'index.html');
   }
+
   return !allPaths.has(filePath);
 }
 

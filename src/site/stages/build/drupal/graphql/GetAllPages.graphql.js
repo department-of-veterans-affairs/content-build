@@ -115,7 +115,8 @@ const buildQuery = () => {
         ... nodeOffice
         ... bioPage
         ... benefitListingPage
-
+        ... nodeEventListing
+        ... nodeEvent
         ... storyListingPage
         ... leadershipListingPage
         ... pressReleasesListingPage
