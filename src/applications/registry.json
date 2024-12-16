@@ -1521,9 +1521,9 @@
     }
   },
   {
-    "appName": "Check Your Travel Reimbursement Claim Status",
+    "appName": "Travel Pay",
     "entryName": "travel-pay",
-    "rootUrl": "/my-health/travel-claim-status",
+    "rootUrl": "/my-health/travel-pay",
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
     "template": {
       "vagovprod": true,
