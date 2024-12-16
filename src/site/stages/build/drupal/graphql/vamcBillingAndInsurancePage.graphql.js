@@ -12,7 +12,6 @@ const billingAndInsuranceFragment = `
     entityUrl {
       path
     }
-    fieldPhoneNumber
     fieldTelephone {
       ... on FieldNodeVamcSystemBillingInsuranceFieldTelephone {
         entity {

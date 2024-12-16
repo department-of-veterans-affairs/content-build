@@ -15,7 +15,6 @@ const personProfileFragment = `
     fieldSuffix
     fieldDescription
     fieldEmailAddress
-    fieldPhoneNumber
     ${personTelephone}
     fieldCompleteBiographyCreate
     fieldCompleteBiography { entity { url } }
