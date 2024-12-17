@@ -3,56 +3,50 @@
   Also used for VBA with parameter
 {% endcomment %}
 <div data-template="facilities/main_buttons">
-  <div>
-    {% if buttonType == 'vba' %}
-      <va-link-action
-        class="vads-u-display--block"
-        href="https://va.my.site.com/VAVERA/s/"
-        text="Make an appointment"
-        type="secondary"
-      ></va-link-action>
-    {% else %}
-      {% assign topTask = "make-an-appointment" | topTaskLovellComp: path, buildtype, fieldAdministration, fieldVamcEhrSystem, fieldRegionPage, fieldOffice %}
-      <va-link-action
-        class="vads-u-display--block"
-        href="{{topTask.url}}"
-        text="{{topTask.text}}"
-        type="secondary"
-      ></va-link-action>
-    {% endif %}
-  </div>
-  <div class="vads-u-margin-y--2">
-    {% if buttonType == 'vba' %}
-      <va-link-action
-        class="vads-u-display--block"
-        href="https://ask.va.gov"
-        text="Ask a benefit question"
-        type="secondary"
-      ></va-link-action>
-    {% else %}
-      <va-link-action
-        class="vads-u-display--block"
-        href="/{{ path }}/health-services"
-        text="View all health services"
-        type="secondary"
-      ></va-link-action> 
-    {% endif %}
-  </div>
-  <div>
-    {% if buttonType == 'vba' %}
-      <va-link-action
-        class="vads-u-display--block"
-        href="/claim-or-appeal-status"
-        text="Check a claim status"
-        type="secondary"
-      ></va-link-action>
-    {% else %}
-      <va-link-action
-        class="vads-u-display--block"
-        href="/{{ path }}/register-for-care"
-        text="Register for care"
-        type="secondary"
-      ></va-link-action>
-    {% endif %}
-  </div>
+  {% if buttonType == 'vba' %}
+    <va-link-action
+      class="vads-u-display--block"
+      href="https://va.my.site.com/VAVERA/s/"
+      text="Make an appointment"
+      type="secondary"
+    ></va-link-action>
+  {% else %}
+    {% assign topTask = "make-an-appointment" | topTaskLovellComp: path, buildtype, fieldAdministration, fieldVamcEhrSystem, fieldRegionPage, fieldOffice %}
+    <va-link-action
+      class="vads-u-display--block"
+      href="{{topTask.url}}"
+      text="{{topTask.text}}"
+      type="secondary"
+    ></va-link-action>
+  {% endif %}
+  {% if buttonType == 'vba' %}
+    <va-link-action
+      class="vads-u-display--block"
+      href="https://ask.va.gov"
+      text="Ask a benefit question"
+      type="secondary"
+    ></va-link-action>
+  {% else %}
+    <va-link-action
+      class="vads-u-display--block"
+      href="/{{ path }}/health-services"
+      text="View all health services"
+      type="secondary"
+    ></va-link-action> 
+  {% endif %}
+  {% if buttonType == 'vba' %}
+    <va-link-action
+      class="vads-u-display--block"
+      href="/claim-or-appeal-status"
+      text="Check a claim status"
+      type="secondary"
+    ></va-link-action>
+  {% else %}
+    <va-link-action
+      class="vads-u-display--block"
+      href="/{{ path }}/register-for-care"
+      text="Register for care"
+      type="secondary"
+    ></va-link-action>
+  {% endif %}
 </div>
