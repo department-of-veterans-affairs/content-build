@@ -51,8 +51,26 @@ function downloadAndExtractFile(url, dest) {
             new Error(`HTTP error fetching archive: ${response.statusCode}`),
           );
         } else {
+          const totalSize = parseInt(response.headers['content-length'], 10);
+          let downloadedSize = 0;
+
+          response.on('data', chunk => {
+            downloadedSize += chunk.length;
+            const percentage = ((downloadedSize / totalSize) * 100).toFixed(2);
+            // Clear line and move cursor to beginning
+            process.stdout.write(
+              `\rDownloading: ${percentage}% (${(
+                downloadedSize / 1048576
+              ).toFixed(2)}MB/${(totalSize / 1048576).toFixed(2)}MB)`,
+            );
+          });
+
           response.pipe(tar.extract({ C: dest }));
-          response.on('finish', resolve);
+
+          response.on('end', () => {
+            process.stdout.write('\n'); // New line after download completes
+            resolve();
+          });
         }
       })
       .on('error', err => {
@@ -64,20 +82,30 @@ function downloadAndExtractFile(url, dest) {
 
 async function fetchCache() {
   global.buildtype = options.buildtype;
+  console.log('Buildtype:', options.buildtype);
+
   const cacheEnv =
     options.buildtype === ENVIRONMENTS.LOCALHOST
       ? ENVIRONMENTS.VAGOVDEV
       : options.buildtype;
-  const cacheKey = await getDrupalCacheKey(cacheEnv);
-  const fullCacheUrl = `${cacheUrl}/${cacheKey}.tar.bz2`;
+  console.log('Cache environment:', cacheEnv);
 
+  const cacheKey = await getDrupalCacheKey(cacheEnv);
+  console.log('Cache key:', cacheKey);
+
+  const fullCacheUrl = `${cacheUrl}/${cacheKey}.tar.bz2`;
+  console.log('Attempting to download from:', fullCacheUrl);
+
+  console.log('Creating directory:', cacheDirectory);
   fs.ensureDirSync(cacheDirectory);
 
   try {
+    console.log('Starting download...');
     await downloadAndExtractFile(fullCacheUrl, cacheDirectory);
     console.log(`Downloaded ${fullCacheUrl}`);
     console.log(`Cache stored in ${cacheDirectory}`);
   } catch (e) {
+    console.error(`Error details:`, e);
     console.log(
       `Error fetching/extracting cached content ${fullCacheUrl}: ${e}`,
     );
