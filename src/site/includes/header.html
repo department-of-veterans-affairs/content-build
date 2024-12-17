@@ -180,13 +180,13 @@
     {% include "src/site/components/banners.drupal.liquid" %}
   </header>
 
-  {% if enabledFeatureFlags.FEATURE_BANNER_USE_ALTERNATIVE_BANNERS %}
-    <!-- Situation Updates banner -->
-    <div data-widget-type="situation-updates-banner"></div>
-  {% else %}
+  <!-- Situation Updates banner -->
+  <div data-widget-type="situation-updates-banner"></div>
+
+  {% unless enabledFeatureFlags.FEATURE_BANNER_USE_ALTERNATIVE_BANNERS %}
     <!-- Fullwidth banner alerts -->
     {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
-  {% endif %}
+  {% endunless %}
   
   <script nonce="**CSP_NONCE**" type="text/javascript">
     {% include "src/site/assets/js/skip-link-focus.js" %}
