@@ -1793,5 +1793,18 @@
       "layout": "page-react.html",
       "includeBreadcrumbs": true
     }
+  },
+  {
+    "appName": "Dispute your VA debt",
+    "entryName": "dispute-debt",
+    "rootUrl": "/manage-va-debt/dispute-debt",
+    "productId": "908a02e6-c63d-42e0-87f9-ed208e47034e",
+    "template": {
+      "vagovprod": false,
+      "vagovstaging": true,
+      "vagovdev": true,
+      "localhost": true,
+      "layout": "page-react.html"
+    }
   }
 ]
