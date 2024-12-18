@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 const verifyActionLink = (expectedText, expectedHref) =>
   cy
     .get('va-link-action')
@@ -16,10 +14,10 @@ describe('VAMC Lovell - All TRICARE pages with expected MHS Genesis Patient Port
     cy.visit('/lovell-federal-health-care-tricare/');
     cy.injectAxeThenAxeCheck();
 
-    cy.findByText('MHS Genesis Patient Portal').then(el => {
-      const attr = el.attr('href');
-      expect(attr).to.equal('https://my.mhsgenesis.health.mil/');
-    });
+    verifyActionLink(
+      'MHS Genesis Patient Portal',
+      'https://my.mhsgenesis.health.mil/',
+    );
   });
 
   it('TRICARE Health services has MHS Genesis Patient Portal link', () => {
@@ -36,10 +34,10 @@ describe('VAMC Lovell - All TRICARE pages with expected MHS Genesis Patient Port
     cy.visit('/lovell-federal-health-care-tricare/locations');
     cy.injectAxeThenAxeCheck();
 
-    cy.findByText('MHS Genesis Patient Portal').then(el => {
-      const attr = el.attr('href');
-      expect(attr).to.equal('https://my.mhsgenesis.health.mil/');
-    });
+    verifyActionLink(
+      'MHS Genesis Patient Portal',
+      'https://my.mhsgenesis.health.mil/',
+    );
   });
 
   it('TRICARE Captain James A. Lovell Location has MHS Genesis Patient Portal link', () => {
@@ -60,10 +58,10 @@ describe('VAMC Lovell - All VA pages with expected Make an appointment Top Task 
     cy.visit('/lovell-federal-health-care-va/');
     cy.injectAxeThenAxeCheck();
 
-    cy.findByText('Make an appointment').then(el => {
-      const attr = el.attr('href');
-      expect(attr.endsWith('make-an-appointment')).to.be.true;
-    });
+    verifyActionLink(
+      'Make an appointment',
+      '/lovell-federal-health-care-va/make-an-appointment',
+    );
   });
 
   it('VA Health services has Make an appointment link', () => {
@@ -80,10 +78,10 @@ describe('VAMC Lovell - All VA pages with expected Make an appointment Top Task 
     cy.visit('/lovell-federal-health-care-va/locations/');
     cy.injectAxeThenAxeCheck();
 
-    cy.findByText('Make an appointment').then(el => {
-      const attr = el.attr('href');
-      expect(attr.endsWith('make-an-appointment')).to.be.true;
-    });
+    verifyActionLink(
+      'Make an appointment',
+      '/lovell-federal-health-care-va/make-an-appointment',
+    );
   });
 
   it('VA Captain James A. Lovell Location has Make an appointment link', () => {
