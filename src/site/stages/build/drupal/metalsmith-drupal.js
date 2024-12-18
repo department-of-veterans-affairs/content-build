@@ -399,6 +399,8 @@ function getDrupalContent(buildOptions) {
       // Lovell specific data bifurcation
       processLovellPages(drupalData);
 
+      // TODO: This may be the right spot to process Manila VAMC data
+
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
       addHomeContent(drupalData, files, metalsmith, buildOptions);
