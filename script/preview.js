@@ -284,6 +284,9 @@ app.get('/preview', async (req, res, next) => {
 
     drupalData.data.nodeQuery = drupalData.data.nodes;
     processLovellPages(drupalData);
+
+    // TODO: This may be the right spot to process Manila VAMC data
+
     const pageIndex = req.query?.lovellVariant === 'va' ? 1 : 0;
 
     const drupalPage = drupalData.data.nodes.entities[pageIndex];
