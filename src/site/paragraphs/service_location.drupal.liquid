@@ -222,9 +222,12 @@
         {% assign scheduleAppointmentLink = "/health-care/schedule-view-va-appointments" %}
       {% endif %}
 
-      <a class="vads-c-action-link--blue" href="{{ scheduleAppointmentLink }}">
-        Schedule an appointment online
-      </a>
+      <va-link-action
+        class="vads-u-display--block"
+        href="{{ scheduleAppointmentLink }}"
+        text="Schedule an appointment online"
+        type="secondary"
+      ></va-link-action>
     </div>
   {% endif %}
 
