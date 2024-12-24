@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 function getManilaClinicUrl(path) {
-  return path.replace(/manila-va-system/i, 'manila-va-clinic');
+  return typeof path === 'string'
+    ? path.replace(/manila-va-system/i, 'manila-va-clinic')
+    : path;
 }
 
 function isManilaVAClinicPage(page) {
