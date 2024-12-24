@@ -2,6 +2,11 @@ name: Daily Production Release
 
 on:
   workflow_dispatch:
+    inputs:
+      override_code_freeze:
+        type: boolean
+        description: "Override code freeze and create production tag"
+        default: false
   schedule:
     - cron: 0 16 * * 1-5
 
@@ -15,9 +20,21 @@ env:
   DSVA_SCHEDULE_ENABLED: true
 
 jobs:
+  holiday-checker:
+    runs-on: ubuntu-latest
+    outputs:
+      is_holiday: ${{ steps.holiday-check.outputs.is_holiday }}
+    steps:
+      - name: Check if today is a holiday
+        id: holiday-check
+        uses: department-of-veterans-affairs/vsp-github-actions/holiday-checker@main
   create-release:
     name: Create Release
+    needs: holiday-checker
     runs-on: ubuntu-latest
+    # Do not run the workflow during VA holidays unless we explicitly override it.
+    if: >
+      (needs.holiday-checker.outputs.is_holiday == 'false' || (inputs && inputs.override_code_freeze))
     outputs:
       RELEASE_NAME: ${{ steps.export-release-name.outputs.RELEASE_NAME }}
 
