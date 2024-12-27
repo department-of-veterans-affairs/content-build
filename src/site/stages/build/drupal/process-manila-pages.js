@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+const MANILA_VA_CLINIC_ENTITY_ID = '1187';
+
 function getManilaClinicUrl(path) {
   return typeof path === 'string'
     ? path.replace(/manila-va-system/i, 'manila-va-clinic')
@@ -6,7 +8,9 @@ function getManilaClinicUrl(path) {
 }
 
 function isManilaVAClinicPage(page) {
-  return page?.fieldAdministration?.entity?.entityId === '1187';
+  return (
+    page?.fieldAdministration?.entity?.entityId === MANILA_VA_CLINIC_ENTITY_ID
+  );
 }
 
 function updateManilaSystemLinks(page) {
