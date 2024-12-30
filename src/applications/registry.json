@@ -225,7 +225,7 @@
     "entryName": "hca",
     "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
     "template": {
-      "title": "Apply for Health Care",
+      "title": "Apply for VA health care",
       "display_title": "Apply Now",
       "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
       "body_class": "page-healthcare",
