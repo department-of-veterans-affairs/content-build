@@ -251,6 +251,7 @@
     "entryName": "ezr",
     "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
     "template": {
+      "title": "Update your VA health benefits information",
       "layout": "page-react.html",
       "vagovprod": true,
       "includeBreadcrumbs": true,
