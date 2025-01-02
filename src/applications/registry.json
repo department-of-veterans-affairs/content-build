@@ -1623,7 +1623,7 @@
     "rootUrl": "/get-help-from-accredited-representative/appoint-rep",
     "productId": "ded52e11-c5f2-493d-b7bb-ce9c630b38f3",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
