@@ -24,6 +24,7 @@ const { addHubIconField } = require('./benefit-hub');
 const { addHomeContent } = require('./home');
 
 const { processLovellPages } = require('./process-lovell-pages');
+const { processManilaPages } = require('./process-manila-pages');
 
 const DRUPAL_CACHE_FILENAME = 'drupal/pages.json';
 const DRUPAL_HUB_NAV_FILENAME = 'hubNavNames.json';
@@ -398,6 +399,8 @@ function getDrupalContent(buildOptions) {
 
       // Lovell specific data bifurcation
       processLovellPages(drupalData);
+      // Manila specific data bifurcation
+      processManilaPages(drupalData);
 
       pipeDrupalPagesIntoMetalsmith(drupalData, files);
       await createReactPages(files, drupalData);
