@@ -26,6 +26,9 @@ const createMetalSmithSymlink = require('../src/site/stages/build/plugins/create
 const {
   processLovellPages,
 } = require('../src/site/stages/build/drupal/process-lovell-pages');
+const {
+  processManilaPages,
+} = require('../src/site/stages/build/drupal/process-manila-pages');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
@@ -284,6 +287,8 @@ app.get('/preview', async (req, res, next) => {
 
     drupalData.data.nodeQuery = drupalData.data.nodes;
     processLovellPages(drupalData);
+    processManilaPages(drupalData);
+
     const pageIndex = req.query?.lovellVariant === 'va' ? 1 : 0;
 
     const drupalPage = drupalData.data.nodes.entities[pageIndex];
