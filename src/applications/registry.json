@@ -997,7 +997,7 @@
     "entryName": "dhp-consent-flow",
     "rootUrl": "/health-care/connected-devices",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "title": "Connected Devices"
     }
