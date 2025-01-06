@@ -91,26 +91,6 @@ const CountEntityTypes = `
     count
   }
 
-  eventListing: nodeQuery(
-    filter: {
-      conditions: [
-        {field: "status", value: ["1"]},
-        {field: "type", value: ["event_listing"]}
-      ]}
-  	) {
-    count
-  }
-
-  event: nodeQuery(
-    filter: {
-      conditions: [
-        {field: "status", value: ["1"]},
-        {field: "type", value: ["event"]}
-      ]}
-  	) {
-    count
-  }
-
   healthCareRegionDetailPage: nodeQuery(
     filter: {
       conditions: [

@@ -206,10 +206,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "/",
-          "name": "Home"
-        },
-        {
           "path": "burials-memorials/",
           "name": "Burials and memorials"
         },
@@ -229,7 +225,7 @@
     "entryName": "hca",
     "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
     "template": {
-      "title": "Apply for Health Care",
+      "title": "Apply for VA health care",
       "display_title": "Apply Now",
       "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
       "body_class": "page-healthcare",
@@ -255,6 +251,7 @@
     "entryName": "ezr",
     "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
     "template": {
+      "title": "Update your VA health benefits information",
       "layout": "page-react.html",
       "vagovprod": true,
       "includeBreadcrumbs": true,
@@ -628,7 +625,7 @@
       "layout": "page-react.html",
       "description": "Learn more about the changes coming to sign-in",
       "keywords": "Sign-in changes, identity verification, verify",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
@@ -1525,9 +1522,9 @@
     }
   },
   {
-    "appName": "Check Your Travel Reimbursement Claim Status",
+    "appName": "Travel Pay",
     "entryName": "travel-pay",
-    "rootUrl": "/my-health/travel-claim-status",
+    "rootUrl": "/my-health/travel-pay",
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
     "template": {
       "vagovprod": true,
@@ -1607,9 +1604,7 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": [
-          "/introduction"
-        ]
+        "excludePaths": ["/introduction"]
       }
     }
   },
@@ -1619,7 +1614,7 @@
     "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1654,7 +1649,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "lastupdate": "2024-09-17"
+      "lastupdate": "2024-12-10"
     }
   },
   {
@@ -1698,10 +1693,7 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
+        "excludePaths": ["/introduction", "/confirmation"]
       }
     }
   },
@@ -1738,7 +1730,7 @@
   {
     "appName": "Survivor and Dependent Benefits 22-5490",
     "entryName": "survivor-dependent-education-benefit-22-5490",
-    "rootUrl": "/education/survivor-dependent-education-benefit-22-5490",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-for-dea-fry-form-22-5490",
     "productId": "5544d590-0b67-48b1-a312-824c98d367ae",
     "template": {
       "vagovprod": true,
