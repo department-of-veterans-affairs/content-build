@@ -33,6 +33,15 @@
             </dt>
           </div>
 
+          {% if fieldVaFormRevisionDate or fieldVaFormIssueDate %}
+            <div>
+              <dd>
+                <dfn class="vads-u-font-weight--bold vads-u-display--inline">Form revision date:</dfn>
+                {{ fieldVaFormRevisionDate.value | formatDate: 'MMMM YYYY' }}
+              </dd>
+            </div>
+          {% endif %}
+
           <div class="vads-u-margin-y--1">
             <dd>
               <dfn class="vads-u-font-weight--bold vads-u-display--inline">Related to:</dfn>
@@ -53,15 +62,7 @@
               {% endcase %}
             </dd>
           </div>
-
-          {% if fieldVaFormRevisionDate or fieldVaFormIssueDate %}
-            <div>
-              <dd>
-                <dfn class="vads-u-font-weight--bold vads-u-display--inline">Form revision date:</dfn>
-                {{ fieldVaFormRevisionDate.value | formatDate: 'MMMM YYYY' }}
-              </dd>
-            </div>
-          {% endif %}
+          
         </dl>
 
         {% if fieldVaFormUsage %}
