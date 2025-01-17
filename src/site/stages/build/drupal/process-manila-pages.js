@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+const { ENTITY_BUNDLES } = require('../../../constants/content-modeling');
+
 const MANILA_VA_CLINIC_ENTITY_ID = '1187';
 
 function getManilaClinicUrl(path) {
@@ -9,7 +11,14 @@ function getManilaClinicUrl(path) {
 
 function isManilaVAClinicPage(page) {
   return (
-    page?.fieldAdministration?.entity?.entityId === MANILA_VA_CLINIC_ENTITY_ID
+    page.fieldAdministration?.entity?.entityId === MANILA_VA_CLINIC_ENTITY_ID
+  );
+}
+
+function isManillaVaRegionHomepage(page) {
+  return (
+    isManilaVAClinicPage(page) &&
+    page.entityBundle === ENTITY_BUNDLES.HEALTH_CARE_REGION_PAGE
   );
 }
 
@@ -28,14 +37,14 @@ function updateManilaSystemLinks(page) {
   }
 
   // Update field office links
-  if (page?.fieldOffice?.entity?.entityUrl) {
+  if (page.fieldOffice?.entity?.entityUrl) {
     page.fieldOffice.entity.entityUrl.path = getManilaClinicUrl(
       page.fieldOffice.entity.entityUrl.path,
     );
   }
 
   // Update any listing page links
-  if (page?.fieldListing?.entity?.entityUrl) {
+  if (page.fieldListing?.entity?.entityUrl) {
     page.fieldListing.entity.entityUrl.path = getManilaClinicUrl(
       page.fieldListing.entity.entityUrl.path,
     );
@@ -53,6 +62,10 @@ function processManilaPages(drupalData) {
       if (isManilaVAClinicPage(page)) {
         acc.manilaVAClinicPages.push(page);
       } else {
+        // Federal Region Homepage should not be created for Manila VA Clinic
+        if (isManillaVaRegionHomepage(page)) {
+          return acc;
+        }
         acc.otherPages.push(page);
       }
 
