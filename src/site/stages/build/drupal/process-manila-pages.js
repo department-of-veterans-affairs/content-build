@@ -11,25 +11,25 @@ function getManilaClinicUrl(path) {
 
 function isManilaVAClinicPage(page) {
   return (
-    page.fieldAdministration?.entity?.entityId === MANILA_VA_CLINIC_ENTITY_ID
+    page?.fieldAdministration?.entity?.entityId === MANILA_VA_CLINIC_ENTITY_ID
   );
 }
 
 function isManillaVaRegionHomepage(page) {
   return (
     isManilaVAClinicPage(page) &&
-    page.entityBundle === ENTITY_BUNDLES.HEALTH_CARE_REGION_PAGE
+    page?.entityBundle === ENTITY_BUNDLES.HEALTH_CARE_REGION_PAGE
   );
 }
 
 function updateManilaSystemLinks(page) {
   // Update main URL path
-  if (page.entityUrl?.path) {
+  if (page?.entityUrl?.path) {
     page.entityUrl.path = getManilaClinicUrl(page.entityUrl.path);
   }
 
   // Update breadcrumb links
-  if (page.entityUrl?.breadcrumb) {
+  if (page?.entityUrl?.breadcrumb) {
     page.entityUrl.breadcrumb = page.entityUrl.breadcrumb.map(crumb => ({
       ...crumb,
       url: crumb.url ? getManilaClinicUrl(crumb.url) : crumb.url,
@@ -37,14 +37,14 @@ function updateManilaSystemLinks(page) {
   }
 
   // Update field office links
-  if (page.fieldOffice?.entity?.entityUrl) {
+  if (page?.fieldOffice?.entity?.entityUrl) {
     page.fieldOffice.entity.entityUrl.path = getManilaClinicUrl(
       page.fieldOffice.entity.entityUrl.path,
     );
   }
 
   // Update any listing page links
-  if (page.fieldListing?.entity?.entityUrl) {
+  if (page?.fieldListing?.entity?.entityUrl) {
     page.fieldListing.entity.entityUrl.path = getManilaClinicUrl(
       page.fieldListing.entity.entityUrl.path,
     );
