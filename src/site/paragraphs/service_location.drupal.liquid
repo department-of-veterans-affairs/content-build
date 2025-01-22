@@ -127,12 +127,16 @@
   {% endcomment %}
   {% assign shouldShowIntroText = single.fieldApptIntroTextType | shouldShowIntroText: single.fieldApptIntroTextCustom %}
   
-  {% if isMentalHealthService and fieldMentalHealthPhone %}
-    {% assign serviceLocationMainNumber = fieldMentalHealthPhone %}
+  {% if isMentalHealthService and fieldTelephone %}
+    {% assign serviceLocationMainNumber = fieldTelephone.entity.fieldPhoneNumber %}
+    {% assign serviceLocationMainExt = fieldTelephone.entity.fieldPhoneExtension %}
+    {% assign serviceLocationMainPhoneType = fieldTelephone.entity.fieldPhoneNumberType %}
   {% elsif fieldPhoneNumber %}
     {% assign serviceLocationMainNumber = fieldPhoneNumber %}
+    {% assign serviceLocationMainExt = "" %}
+    {% assign serviceLocationMainPhoneType = "tel" %}
   {% endif %}
-  
+
   {% comment %}
   Conditionally display facility main/mh phone number
   {% endcomment %}
@@ -189,6 +193,8 @@
     <div data-testid="service-location-main-facility-phone">
       {% include "src/site/components/phone-number.drupal.liquid" with
             phoneNumber = serviceLocationMainNumber
+            phoneExtension = serviceLocationMainExt
+            phoneType = serviceLocationMainPhoneType
             phoneLabel = 'Main Phone'
             phoneHeaderLevel = serviceLocationH
           %}
@@ -216,9 +222,12 @@
         {% assign scheduleAppointmentLink = "/health-care/schedule-view-va-appointments" %}
       {% endif %}
 
-      <a class="vads-c-action-link--blue" href="{{ scheduleAppointmentLink }}">
-        Schedule an appointment online
-      </a>
+      <va-link-action
+        class="vads-u-display--block"
+        href="{{ scheduleAppointmentLink }}"
+        text="Schedule an appointment online"
+        type="secondary"
+      ></va-link-action>
     </div>
   {% endif %}
 
@@ -238,6 +247,8 @@
     <div data-testid="service-location-main-facility-phone-for-contact">
       {% include "src/site/components/phone-number.drupal.liquid" with
         phoneNumber = serviceLocationMainNumber
+        phoneExtension = serviceLocationMainExt
+        phoneType = serviceLocationMainPhoneType
         phoneLabel = 'Main Phone'
         phoneHeaderLevel = serviceLocationH
       %}

@@ -169,12 +169,12 @@
             <!-- Call to action -->
             {% if fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path and fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel %}
               <p>
-                <va-link
-                  class="vads-c-action-link--blue"
+                <va-link-action
+                  class="vads-u-display--block"
                   href="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path }}"
                   text="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel | strip }}"
-                  >
-                </va-link>
+                  type="secondary"
+                ></va-link-action>
               </p>
             {% endif %}
           </div>
@@ -529,26 +529,26 @@
     <!--/  FAQs -->
 
     <!-- Connect with us -->
-    {% if fieldRelatedOffice.entity.fieldExternalLink.title %}
-      {% assign socialLinksObject = fieldRelatedOffice.entity.fieldSocialMediaLinks.platformValues | jsonToObj %}
+    {% if fieldConnectWithUs.entity.fieldExternalLink.title %}
+      {% assign socialLinksObject = fieldConnectWithUs.entity.fieldSocialMediaLinks.platformValues | jsonToObj %}
       <div class="vads-l-grid-container vads-u-padding-y--3 vads-u-padding-x--4 desktop-lg:vads-u-padding-x--0">
         <div class="vads-l-row">
           <!-- CONTENT -->
           <div class="vads-l-col--12 medium-screen:vads-l-col--9">
             <!-- Title -->
             <p class="va-u-text-transform--uppercase vads-u-color--gray-medium vads-u-font-size--sm vads-u-margin-bottom--0">Connect with us</p>
-            <h2 class="vads-u-margin-top--0">Get updates from {{ fieldRelatedOffice.entity.fieldExternalLink.title }}</h2>
+            <h2 class="vads-u-margin-top--0">Get updates from {{ fieldConnectWithUs.entity.fieldExternalLink.title }}</h2>
           </div>
         </div>
 
         <div class="vads-l-row medium-screen:vads-u-margin-x--neg1">
-          {% if fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path and fieldRelatedOffice.entity.fieldEmailUpdatesLink.title %}
+          {% if fieldConnectWithUs.entity.fieldEmailUpdatesLink.url.path and fieldConnectWithUs.entity.fieldEmailUpdatesLink.title %}
             <div class="vads-l-col--12 medium-screen:vads-l-col--4">
               <div class="vads-u-margin-y--1 medium-screen:vads-u-margin-x--1">
                 <va-icon icon="mail" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                 <va-link
-                  href="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.url.path }}"
-                  text="{{ fieldRelatedOffice.entity.fieldEmailUpdatesLink.title }}"
+                  href="{{ fieldConnectWithUs.entity.fieldEmailUpdatesLink.url.path }}"
+                  text="{{ fieldConnectWithUs.entity.fieldEmailUpdatesLink.title }}"
                 />
               </div>
             </div>
@@ -560,7 +560,7 @@
                 <va-icon icon="x" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                 <va-link
                   href="https://twitter.com/{{ socialLinksObject.twitter.value }}"
-                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} X (formerly Twitter)"
+                  text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }} X (formerly Twitter)"
                 />
               </div>
             </div>
@@ -572,7 +572,7 @@
                 <va-icon icon="facebook" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                 <va-link
                   href="https://facebook.com/{{ socialLinksObject.facebook.value }}"
-                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} Facebook"
+                  text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }} Facebook"
                 />
               </div>
             </div>
@@ -584,7 +584,7 @@
                 <va-icon icon="youtube" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                 <va-link
                   href="https://youtube.com/{{ socialLinksObject.youtube.value }}"
-                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} YouTube"
+                  text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }} YouTube"
                 />
               </div>
             </div>
@@ -596,7 +596,7 @@
                 <va-icon icon="linkedin" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                 <va-link
                   href="https://linkedin.com/{{ socialLinksObject.linkedin.value }}"
-                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} LinkedIn"
+                  text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }} LinkedIn"
                 />
               </div>
             </div>
@@ -608,7 +608,7 @@
                 <va-icon icon="instagram" size="3" class="vads-u-color--link-default vads-u-padding-right--1"></va-icon>
                 <va-link
                   href="https://instagram.com/{{ socialLinksObject.instagram.value }}"
-                  text="{{ fieldRelatedOffice.entity.fieldExternalLink.title }} Instagram"
+                  text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }} Instagram"
                 />
               </div>
             </div>

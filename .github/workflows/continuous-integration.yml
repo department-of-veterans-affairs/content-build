@@ -393,20 +393,20 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: [self-hosted, asg]
+    runs-on: ubuntu-16-cores-latest
     needs:
       - login-to-amazon-ecr
       - build
     timeout-minutes: 30
     container:
-      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/cypress-io:node16.13.2-chrome100-ff98
+      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/dsva/cypress-io/cypress/browsers:node16.16.0-chrome107-ff107-edge
       credentials:
         username: ${{ needs.login-to-amazon-ecr.outputs.docker_username }}
         password: ${{ needs.login-to-amazon-ecr.outputs.docker_password }}
-      options: --user 1001:1001
-      volumes:
-        - /usr/local/share:/share
-        - /etc/ssl/certs:/etc/ssl/certs
+      # options: --user 1001:1001
+      # volumes:
+      #   - /usr/local/share:/share
+      #   - /etc/ssl/certs:/etc/ssl/certs
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
@@ -428,13 +428,12 @@ jobs:
         uses: ./.github/workflows/install
         timeout-minutes: 30
         with:
-          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: on-demand-runner-cypress-
+          key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             /github/home/.cache/Cypress
-            **/node_modules
+            node_modules
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &

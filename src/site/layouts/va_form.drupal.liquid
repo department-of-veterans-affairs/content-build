@@ -33,6 +33,15 @@
             </dt>
           </div>
 
+          {% if fieldVaFormRevisionDate or fieldVaFormIssueDate %}
+            <div>
+              <dd>
+                <dfn class="vads-u-font-weight--bold vads-u-display--inline">Form revision date:</dfn>
+                {{ fieldVaFormRevisionDate.value | formatDate: 'MMMM YYYY' }}
+              </dd>
+            </div>
+          {% endif %}
+
           <div class="vads-u-margin-y--1">
             <dd>
               <dfn class="vads-u-font-weight--bold vads-u-display--inline">Related to:</dfn>
@@ -53,15 +62,7 @@
               {% endcase %}
             </dd>
           </div>
-
-          {% if fieldVaFormRevisionDate or fieldVaFormIssueDate %}
-            <div>
-              <dd>
-                <dfn class="vads-u-font-weight--bold vads-u-display--inline">Form revision date:</dfn>
-                {{ fieldVaFormRevisionDate.value | formatDate: 'MMMM YYYY' }}
-              </dd>
-            </div>
-          {% endif %}
+          
         </dl>
 
         {% if fieldVaFormUsage %}
@@ -90,39 +91,20 @@
           <h2 class="vads-u-margin-bottom--2">Downloadable PDF</h2>
         {% endif %}
 
-        {% assign showPDFModal = ''| featureFindFormsPDFModal %}
-
-        {% if showPDFModal %}
-          <div id="main-download-container">
-            <button
-              class="va-button-link vads-u-display--flex vads-u-align-items--center"
-              data-widget-type="find-va-forms-pdf-download-helper"
-              data-href="{{ fieldVaFormUrl.uri }}"
-              data-form-number="{{ fieldVaFormNumber }}"
-              id="main-download-button"
-              lang="{{ fieldVaFormLanguage }}"
-            >
-              {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
-              <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
-              {{ translatedDownloadText }} (PDF)
-            </button>
-          </div>
-        {% else %}
-          <a
-            href="{{ fieldVaFormUrl.uri }}"
-            download
+        <div id="main-download-container">
+          <button
+            class="va-button-link vads-u-display--flex vads-u-align-items--center"
+            data-widget-type="find-va-forms-pdf-download-helper"
+            data-href="{{ fieldVaFormUrl.uri }}"
             data-form-number="{{ fieldVaFormNumber }}"
+            id="main-download-button"
             lang="{{ fieldVaFormLanguage }}"
           >
-              <va-icon
-                class="vads-u-margin-right--0p5"
-                icon="file_download"
-                size="3"
-              ></va-icon>
             {% assign translatedDownloadText = fieldVaFormLanguage | deriveLanguageTranslation: 'downloadVaForm', fieldVaFormNumber %}
+            <va-icon class="vads-u-margin-right--0p5" icon="file_download" size="3"></va-icon>
             {{ translatedDownloadText }} (PDF)
-          </a>
-        {% endif %}
+          </button>
+        </div>
 
         {% if fieldVaFormUpload %}
           <div

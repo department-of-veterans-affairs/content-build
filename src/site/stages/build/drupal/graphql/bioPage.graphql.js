@@ -4,6 +4,8 @@
  */
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
+const { phoneNumber } = require('./fragments.graphql');
+const personTelephone = require('./paragraph-fragments/personTelephone.paragraph.graphql');
 
 const personProfileFragment = `
   fragment bioPage on NodePersonProfile {
@@ -13,7 +15,7 @@ const personProfileFragment = `
     fieldSuffix
     fieldDescription
     fieldEmailAddress
-    fieldPhoneNumber
+    ${personTelephone}
     fieldCompleteBiographyCreate
     fieldCompleteBiography { entity { url } }
     fieldOffice {
@@ -73,6 +75,7 @@ const personProfileFragment = `
 
 function getNodePersonProfilesSlice(operationName, offset, limit) {
   return `
+    ${phoneNumber}
     ${personProfileFragment}
 
     query ${operationName}($onlyPublishedContent: Boolean!) {

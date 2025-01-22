@@ -87,6 +87,7 @@ const healthCareRegionDetailPage = `
 
 function getNodeHealthCareRegionDetailPageSlice(operationName, offset, limit) {
   return `
+    ${fragments.phoneNumber}
     ${fragments.wysiwyg}
     ${fragments.staffProfile}
     ${fragments.collapsiblePanel}

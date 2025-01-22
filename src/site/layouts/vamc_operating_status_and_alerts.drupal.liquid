@@ -25,12 +25,11 @@
             <div class="usa-grid usa-grid-full vads-u-margin-y--1p5">
               <div class="vads-l-row">
                 <div class="vads-u-margin-right--2p5">
-                  <a
-                    class="vads-u-margin-top--1 vads-u-margin--0 vads-c-action-link--green"
+                  <va-link-action
+                    class="vads-u-display--block"
                     href="{{ fieldOffice.entity.fieldLinkFacilityEmergList.url.path }}"
-                  >
-                    Subscribe to emergency notifications
-                  </a>
+                    text="Subscribe to emergency notifications"
+                  ></va-link-action>
                 </div>
               </div>
             </div>
@@ -68,11 +67,24 @@
                         </span>
 
                       {% elsif status.entity.fieldOperatingStatusFacility == 'limited' %}
-                        <va-alert slim status="warning" visible>Limited services and hours</va-alert>
+                        <va-alert slim status="info" visible>Limited services and hours</va-alert>
 
                       {% elsif status.entity.fieldOperatingStatusFacility == 'closed' %}
-                        <va-alert slim status="error" visible>Facility Closed</va-alert>
+                        <va-alert slim status="warning" visible>Facility Closed</va-alert>
+                      
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'temporary_closure' %}
+                        <va-alert slim status="warning" visible>Temporary facility closure</va-alert>
+
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'temporary_location' %}
+                        <va-alert slim status="warning" visible>Temporary location</va-alert>
+
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'virtual_care' %}
+                        <va-alert slim status="warning" visible>Virtual care only</va-alert>
+
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'coming_soon' %}
+                        <va-alert slim status="warning" visible>Coming soon</va-alert>
                       {% endif %}
+
 
                       {% if status.entity.fieldOperatingStatusMoreInfo  and status.entity.fieldOperatingStatusFacility != 'normal' %}
                         <div class="vads-u-margin-top--1p5">

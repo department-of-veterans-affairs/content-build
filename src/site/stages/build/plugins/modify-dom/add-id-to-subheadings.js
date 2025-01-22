@@ -48,6 +48,8 @@ module.exports = {
         const isInAccordionButton = parent.hasClass('usa-accordion-button');
         const isInAlert = parent.hasClass('usa-alert-body');
         const isAccordion = parent.hasClass('va-accordion-item');
+        const isHeaderExcluded =
+          parent.attr('data-header-id-excluded') === 'true';
 
         // skip heading if it already has an id
         // skip heading if it's in an accordion button or an alert
@@ -55,7 +57,8 @@ module.exports = {
           !heading.attr('id') &&
           !isInAccordionButton &&
           !isInAlert &&
-          !isAccordion
+          !isAccordion &&
+          !isHeaderExcluded
         ) {
           const headingID = createUniqueId(heading, headingOptions);
           heading.attr('id', headingID);

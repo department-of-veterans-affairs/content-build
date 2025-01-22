@@ -18,11 +18,7 @@
 {% endfor %}
 
 <!-- Maintenance banner -->
-<div
-  aria-label="Maintenance banner"
-  data-widget-type="maintenance-banner"
-  role="region"
-></div>
+<div data-widget-type="maintenance-banner"></div>
 
 <!-- Derive visible promo banners. -->
 {% assign visiblePromoBanners = promoBanners.entities | deriveVisibleBanners: entityUrl.path %}
