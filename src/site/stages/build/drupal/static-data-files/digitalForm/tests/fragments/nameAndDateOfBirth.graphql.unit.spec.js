@@ -1,7 +1,7 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 
 import { expect } from 'chai';
-import nameAndDateOfBirth from './nameAndDateOfBirth.graphql';
+import nameAndDateOfBirth from '../../fragments/nameAndDateOfBirth.graphql';
 
 describe('nameAndDateOfBirth fragment', () => {
   it('includes fieldTitle', () => {
