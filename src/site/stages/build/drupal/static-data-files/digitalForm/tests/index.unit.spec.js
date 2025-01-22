@@ -9,9 +9,14 @@ describe('digitalForm', () => {
     it('returns digital_form entities', () => {
       expect(query).to.have.string('digital_form');
     });
+
     it('imports the digitalForm fragment', () => {
       expect(query).to.have.string('fragment digitalForm');
       expect(query).to.have.string('... digitalForm');
+    });
+
+    it('disables status filtering in non-prod environments', () => {
+      expect(query).to.not.have.string('field: "status"');
     });
   });
 
