@@ -1,10 +1,17 @@
 <nav data-template="navigation/sidebar_nav" aria-label="Secondary" id="va-detailpage-sidebar" data-drupal-sidebar="true" class="va-drupal-sidebarnav usa-width-one-fourth va-sidebarnav">
-<div aria-modal="true" aria-labelledby="sidebar_header">
-    <dialog>
+<dialog aria-modal="true" aria-labelledby="sidebar_header" id="sidebar-dialog">
         <button class="va-sidenav-btn-close va-sidebarnav-close" type="button" aria-label="Close this menu">
             <va-icon icon="close" size="3" class="vads-u-color--gray-dark"></va-icon>
         </button>
         <script>
+            const dialog = document.getElementById('sidebar-dialog');
+            const openBtn = document.getElementById("open-sidebar-dialog")
+
+            openBtn.addEventListener('click', () => {
+                dialog.showModal();
+            });
+
+
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape') {
                     const sidebar = document.getElementById('va-detailpage-sidebar');
@@ -117,5 +124,4 @@
         {% endfor %}
 
     </dialog>
-    </div>
 </nav>
