@@ -160,7 +160,7 @@
     "entryName": "1010cg-application-caregiver-assistance",
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
     "template": {
-      "title": "Caregiver Application for Benefits",
+      "title": "Apply for the Program of Comprehensive Assistance for Family Caregivers",
       "vagovprod": true,
       "vagovstaging": true,
       "vagovdev": true,
@@ -1723,7 +1723,7 @@
     "rootUrl": "/discover-your-benefits",
     "productId": "87f2c91f-46c3-4461-8890-3636130af4ab",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
