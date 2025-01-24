@@ -8,6 +8,7 @@
           "fieldVaFormNumber": "11111",
           "fieldOmbNumber": "1111-1111",
           "fieldRespondentBurden": 48,
+          "moderationState": "published",
           "fieldExpirationDate": {
             "value": "2025-06-11"
           },
@@ -43,6 +44,7 @@
           "fieldVaFormNumber": "222222",
           "fieldOmbNumber": "1212-1212",
           "fieldRespondentBurden": 30,
+          "moderationState": "published",
           "fieldExpirationDate": {
             "value": "2027-01-29"
           },
@@ -106,6 +108,33 @@
                   }
                 },
                 "fieldTitle": "Generated List & Loop",
+                "fieldOptional": false
+              }
+            }
+          ]
+        },
+        {
+          "nid": 76371,
+          "entityLabel": "Draft form",
+          "fieldVaFormNumber": "abcdefg",
+          "fieldOmbNumber": "1234-7890",
+          "fieldRespondentBurden": 7,
+          "moderationState": "draft",
+          "status": false,
+          "fieldExpirationDate": {
+            "value": "2025-12-28"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "172718",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_list_loop",
+                    "entityLabel": "Digital Form: List & Loop"
+                  }
+                },
+                "fieldTitle": "Multiple draft responses",
                 "fieldOptional": false
               }
             }

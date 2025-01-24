@@ -72,6 +72,7 @@ const normalizeForm = (form, logger = logDrupal) => {
     return {
       cmsId: form.nid,
       formId: form.fieldVaFormNumber,
+      moderationState: form.moderationState,
       title: form.entityLabel,
       ombInfo: {
         expDate: formatDate(form.fieldExpirationDate.value),
