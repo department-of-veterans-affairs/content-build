@@ -9,6 +9,7 @@ describe('digitalForm fragment', () => {
     expect(digitalForm).to.have.string('entityLabel');
     expect(digitalForm).to.have.string('fieldVaFormNumber');
     expect(digitalForm).to.have.string('fieldChapters');
+    expect(digitalForm).to.have.string('moderationState');
   });
 
   it('include OMB info', () => {

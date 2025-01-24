@@ -20,6 +20,7 @@ module.exports = `
     fieldVaFormNumber
     fieldOmbNumber
     fieldRespondentBurden
+    moderationState
     fieldExpirationDate {
       value
     }
