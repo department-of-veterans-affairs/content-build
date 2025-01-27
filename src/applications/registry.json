@@ -836,13 +836,13 @@
     }
   },
   {
-    "appName": "Ask VA Integration Project",
-    "entryName": "ask-va-too",
-    "rootUrl": "/contact-us/ask-va-too",
+    "appName": "Ask VA",
+    "entryName": "ask-va",
+    "rootUrl": "/contact-us/ask-va",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "title": "Ask VA Integration Project",
+      "title": "Ask VA",
       "description": "Ask VA (AVA) is an online portal that allows veterans, caregivers, and supporting personnel in education, debt, loans, etc. to submit questions to VA and receive a secure message response."
     }
   },
@@ -950,7 +950,7 @@
   {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
-    "rootUrl": "/education/apply-for-benefits-form-22-1990",
+    "rootUrl": "/education/apply-for-gi-bill-form-22-1990",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html"
@@ -1059,7 +1059,7 @@
   {
     "appName": "Apply to use transferred education benefits",
     "entryName": "toe",
-    "rootUrl": "/education/survivor-dependent-benefits/apply-for-transferred-benefits-form-22-1990e",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/transferred-gi-bill-benefits/apply-form-22-1990e",
     "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
     "template": {
       "vagovprod": true,
@@ -1179,7 +1179,7 @@
   {
     "appName": "Form Upload Flow",
     "entryName": "form-upload-flow",
-    "rootUrl": "/form-upload",
+    "rootUrl": "/find-forms/upload",
     "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
     "template": {
       "vagovprod": false,
@@ -1655,7 +1655,7 @@
   {
     "appName": "22-10282 IBM Skillsbuild Training Program Intake Application",
     "entryName": "10282-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/10282",
+    "rootUrl": "/education/other-va-education-benefits/ibm-skillsbuild-program/apply-form-22-10282",
     "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
     "template": {
       "vagovprod": false,
@@ -1694,7 +1694,8 @@
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
         "excludePaths": ["/introduction", "/confirmation"]
-      }
+      },
+      "minimalFooter": true
     }
   },
   {
