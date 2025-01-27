@@ -29,7 +29,7 @@ jobs:
 
       - name: Trigger Preview server deployment job in Jenkins
         id: trigger-preview-request
-        uses: fjogeleit/http-request-action@e8dd067b83c3ab0774c76bf065b1c4f11c7e45ba # v1.14.0
+        uses: fjogeleit/http-request-action@23ad54bcd1178fcff6a0d17538fa09de3a7f0a4d # v1.16.4
         with:
           url: 'http://jenkins.vfs.va.gov/job/deploys/job/content-preview-auto-deploy/build'
           method: 'POST'
