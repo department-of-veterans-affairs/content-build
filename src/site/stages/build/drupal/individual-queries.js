@@ -30,12 +30,6 @@ const {
 } = require('./graphql/pressReleasesListingPage.graphql');
 
 const {
-  getNodeEventListingQueries,
-} = require('./graphql/nodeEventListing.graphql');
-
-const { getNodeEventQueries } = require('./graphql/nodeEvent.graphql');
-
-const {
   GetNodeStoryListingPages,
 } = require('./graphql/storyListingPage.graphql');
 
@@ -118,8 +112,6 @@ function getNodeQueries(entityCounts) {
     ...getNewsStoryQueries(entityCounts),
     ...getPressReleaseQueries(entityCounts),
     GetNodePressReleaseListingPages,
-    ...getNodeEventListingQueries(entityCounts),
-    ...getNodeEventQueries(entityCounts),
     ...getVaPoliceQueries(entityCounts),
     GetNodeStoryListingPages,
     GetNodeLocationsListingPages,

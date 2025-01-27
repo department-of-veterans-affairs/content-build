@@ -18,7 +18,6 @@ const leadershipListingPage = `
       entity {
         ... on NodePersonProfile {
           title
-          fieldPhoneNumber
           ${personTelephoneParagraphGraphql}
           entityPublished
           fieldNameFirst

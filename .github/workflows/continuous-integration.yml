@@ -393,20 +393,20 @@ jobs:
 
   cypress-tests:
     name: Cypress E2E Tests
-    runs-on: [self-hosted, asg]
+    runs-on: ubuntu-16-cores-latest
     needs:
       - login-to-amazon-ecr
       - build
     timeout-minutes: 30
     container:
-      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/cypress-io:node16.13.2-chrome100-ff98
+      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/dsva/cypress-io/cypress/browsers:node16.16.0-chrome107-ff107-edge
       credentials:
         username: ${{ needs.login-to-amazon-ecr.outputs.docker_username }}
         password: ${{ needs.login-to-amazon-ecr.outputs.docker_password }}
-      options: --user 1001:1001
-      volumes:
-        - /usr/local/share:/share
-        - /etc/ssl/certs:/etc/ssl/certs
+      # options: --user 1001:1001
+      # volumes:
+      #   - /usr/local/share:/share
+      #   - /etc/ssl/certs:/etc/ssl/certs
 
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
@@ -428,13 +428,12 @@ jobs:
         uses: ./.github/workflows/install
         timeout-minutes: 30
         with:
-          key: on-demand-runner-cypress-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: on-demand-runner-cypress-
+          key: ${{ hashFiles('yarn.lock') }}
           yarn_cache_folder: .cache/yarn
           path: |
             .cache/yarn
             /github/home/.cache/Cypress
-            **/node_modules
+            node_modules
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
@@ -451,21 +450,21 @@ jobs:
           report_paths: 'test-results/e2e-test-output-*.xml'
 
       - name: Archive Cypress test videos
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         if: ${{ failure() }}
         with:
           name: cypress-video-artifacts
           path: cypress/videos
 
       - name: Archive Cypress test screenshots
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         if: ${{ failure() }}
         with:
           name: cypress-screenshot-artifacts
           path: cypress/screenshots
 
       - name: Archive Mochawesome test results
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         if: ${{ always() }}
         with:
           name: cypress-mochawesome-test-results
@@ -535,7 +534,7 @@ jobs:
         working-directory: testing-tools-team-dashboard-data
 
       - name: Download Mochawesome test results
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         with:
           name: cypress-mochawesome-test-results
           path: testing-tools-team-dashboard-data/src/testing-reports/data
@@ -574,7 +573,7 @@ jobs:
 
       - name: Download video artifacts
         if: ${{ needs.cypress-tests.result == 'failure' }}
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         with:
           name: cypress-video-artifacts
           path: testing-tools-team-dashboard-data/testing-reports/videos/${{ env.UUID }}

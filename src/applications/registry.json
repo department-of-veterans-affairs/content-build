@@ -160,7 +160,7 @@
     "entryName": "1010cg-application-caregiver-assistance",
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
     "template": {
-      "title": "Caregiver Application for Benefits",
+      "title": "Apply for the Program of Comprehensive Assistance for Family Caregivers",
       "vagovprod": true,
       "vagovstaging": true,
       "vagovdev": true,
@@ -206,10 +206,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "/",
-          "name": "Home"
-        },
-        {
           "path": "burials-memorials/",
           "name": "Burials and memorials"
         },
@@ -229,7 +225,7 @@
     "entryName": "hca",
     "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
     "template": {
-      "title": "Apply for Health Care",
+      "title": "Apply for VA health care",
       "display_title": "Apply Now",
       "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
       "body_class": "page-healthcare",
@@ -255,6 +251,7 @@
     "entryName": "ezr",
     "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
     "template": {
+      "title": "Update your VA health benefits information",
       "layout": "page-react.html",
       "vagovprod": true,
       "includeBreadcrumbs": true,
@@ -356,7 +353,8 @@
       "title": "Track Claims",
       "layout": "page-react.html",
       "description": "Track the status of your VA claims and appeals."
-    }
+    },
+    "useLocalStylesAndComponents": true
   },
   {
     "appName": "Letters",
@@ -410,12 +408,12 @@
   {
     "appName": "Post 9/11 GI Bill Status",
     "entryName": "post-911-gib-status",
-    "rootUrl": "/education/gi-bill/post-9-11/ch-33-benefit/status",
+    "rootUrl": "/education/check-remaining-post-9-11-gi-bill-benefits/status",
     "template": {
       "layout": "page-react.html",
-      "title": "Check Your Post-9/11 GI Bill Benefits Status",
-      "heading": "Check your Post-9/11 GI Bill benefits status",
-      "display_title": "Check Post-9/11 GI Bill benefits",
+      "title": "Check your remaining Post-9/11 GI Bill benefits",
+      "heading": "Check your remaining Post-9/11 GI Bill benefits",
+      "display_title": "Check your remaining Post-9/11 GI Bill benefits",
       "collection": "education",
       "spoke": "Manage benefits",
       "order": 2,
@@ -428,20 +426,8 @@
           "name": "Education and training"
         },
         {
-          "path": "education/about-gi-bill-benefits/",
-          "name": "GI Bill"
-        },
-        {
-          "path": "education/about-gi-bill-benefits/post-9-11/",
-          "name": "Post-9/11 GI Bill"
-        },
-        {
-          "path": "education/gi-bill/post-9-11/ch-33-benefit/",
-          "name": "Check Post-9/11 GI Bill benefits"
-        },
-        {
-          "path": "education/gi-bill/post-9-11/ch-33-benefit/status",
-          "name": "Post-9/11 GI Bill Statement of Benefits"
+          "path": "education/check-remaining-post-9-11-gi-bill-benefits/status",
+          "name": "Check your remaining Post-9/11 GI Bill benefits"
         }
       ]
     }
@@ -502,32 +488,6 @@
         {
           "name": "Apply for the Rogers STEM Scholarship",
           "path": "education/other-va-education-benefits/stem-scholarship/apply-for-scholarship-form-22-10203"
-        }
-      ]
-    }
-  },
-  {
-    "appName": "Opt Out of Sharing VA Education Benefits Information",
-    "entryName": "0993-edu-benefits",
-    "rootUrl": "/education/opt-out-information-sharing/opt-out-form-0993",
-    "template": {
-      "title": "Opt Out Of Sharing VA Education Benefits Information",
-      "heading": "Opt out of sharing VA education benefits information",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "education/",
-          "name": "Education and training"
-        },
-        {
-          "path": "education/opt-out-information-sharing/",
-          "name": "Opt out of information sharing"
-        },
-        {
-          "path": "education/opt-out-information-sharing/opt-out-form-0993",
-          "name": "Opt out of sharing your information with schools"
         }
       ]
     }
@@ -665,7 +625,7 @@
       "layout": "page-react.html",
       "description": "Learn more about the changes coming to sign-in",
       "keywords": "Sign-in changes, identity verification, verify",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
@@ -876,13 +836,13 @@
     }
   },
   {
-    "appName": "Ask VA Integration Project",
-    "entryName": "ask-va-too",
-    "rootUrl": "/contact-us/ask-va-too",
+    "appName": "Ask VA",
+    "entryName": "ask-va",
+    "rootUrl": "/contact-us/ask-va",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "title": "Ask VA Integration Project",
+      "title": "Ask VA",
       "description": "Ask VA (AVA) is an online portal that allows veterans, caregivers, and supporting personnel in education, debt, loans, etc. to submit questions to VA and receive a secure message response."
     }
   },
@@ -990,7 +950,7 @@
   {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
-    "rootUrl": "/education/apply-for-benefits-form-22-1990",
+    "rootUrl": "/education/apply-for-gi-bill-form-22-1990",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html"
@@ -1055,7 +1015,7 @@
     }
   },
   {
-    "appName": "Mock Form AE Design Patterns",
+    "appName": "Authenticated Experience Design Patterns",
     "entryFile": "./app-entry.jsx",
     "entryName": "mock-form-ae-design-patterns",
     "rootUrl": "/mock-form-ae-design-patterns",
@@ -1099,7 +1059,7 @@
   {
     "appName": "Apply to use transferred education benefits",
     "entryName": "toe",
-    "rootUrl": "/education/survivor-dependent-benefits/apply-for-transferred-benefits-form-22-1990e",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/transferred-gi-bill-benefits/apply-form-22-1990e",
     "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
     "template": {
       "vagovprod": true,
@@ -1219,7 +1179,7 @@
   {
     "appName": "Form Upload Flow",
     "entryName": "form-upload-flow",
-    "rootUrl": "/form-upload",
+    "rootUrl": "/find-forms/upload",
     "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
     "template": {
       "vagovprod": false,
@@ -1562,9 +1522,9 @@
     }
   },
   {
-    "appName": "Check Your Travel Reimbursement Claim Status",
+    "appName": "Travel Pay",
     "entryName": "travel-pay",
-    "rootUrl": "/my-health/travel-claim-status",
+    "rootUrl": "/my-health/travel-pay",
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
     "template": {
       "vagovprod": true,
@@ -1656,7 +1616,7 @@
     "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1666,7 +1626,7 @@
     "rootUrl": "/get-help-from-accredited-representative/appoint-rep",
     "productId": "ded52e11-c5f2-493d-b7bb-ce9c630b38f3",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1691,13 +1651,13 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "lastupdate": "2024-09-17"
+      "lastupdate": "2024-12-10"
     }
   },
   {
     "appName": "22-10282 IBM Skillsbuild Training Program Intake Application",
     "entryName": "10282-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/10282",
+    "rootUrl": "/education/other-va-education-benefits/ibm-skillsbuild-program/apply-form-22-10282",
     "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
     "template": {
       "vagovprod": false,
@@ -1764,21 +1724,21 @@
   },
   {
     "appName": "Discover Your Benefits",
-    "entryName": "benefit-eligibility-questionnaire",
-    "rootUrl": "/benefit-eligibility-questionnaire",
+    "entryName": "discover-your-benefits",
+    "rootUrl": "/discover-your-benefits",
     "productId": "87f2c91f-46c3-4461-8890-3636130af4ab",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
   {
     "appName": "Survivor and Dependent Benefits 22-5490",
     "entryName": "survivor-dependent-education-benefit-22-5490",
-    "rootUrl": "/education/survivor-dependent-education-benefit-22-5490",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-for-dea-fry-form-22-5490",
     "productId": "5544d590-0b67-48b1-a312-824c98d367ae",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1787,6 +1747,41 @@
     "entryName": "welcome-va-setup-review-information",
     "rootUrl": "/my-va/welcome-va-setup/review-information",
     "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "",
+          "name": "Va.gov home"
+        },
+        {
+          "path": "my-va",
+          "name": "My VA"
+        },
+        {
+          "path": "welcome-va-setup/review-information/contact-information",
+          "name": "Add your contact information"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Employment Questionnaire",
+    "entryName": "21-4140-eq",
+    "rootUrl": "/employment-questionnaire-form-21-4140",
+    "productId": "2e00cd49-14e2-4eb0-a3c6-5bc92c9e4618",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Order Medical Supplies",
+    "entryName": "mhv-supply-reordering",
+    "rootUrl": "/my-health/order-supplies",
+    "productId": "9f2025da-09d6-469f-8d6e-811e7afa7582",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -1800,6 +1795,18 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Demo: File for disability compensation - New conditions",
+    "entryName": "new-conditions",
+    "rootUrl": "/user-testing/new-conditions",
+    "productId": "0db1a222-9d73-4c26-9966-75283e6510a1",
+    "template": {
+      "vagovprod": false,
+      "title": "Demo: File for disability compensation - New conditions",
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true
     }
   }
 ]
