@@ -1644,7 +1644,9 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": ["/introduction"]
+        "excludePaths": [
+          "/introduction"
+        ]
       }
     }
   },
@@ -1733,7 +1735,10 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": ["/introduction", "/confirmation"]
+        "excludePaths": [
+          "/introduction",
+          "/confirmation"
+        ]
       }
     }
   },
@@ -1782,6 +1787,16 @@
     "entryName": "welcome-va-setup-review-information",
     "rootUrl": "/my-va/welcome-va-setup/review-information",
     "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "1330M2 Apply for a medallion in a private cemetery",
+    "entryName": "1330m2-medallions",
+    "rootUrl": "/burials-memorials/memorial-items/headstones-markers-medallions-approver/request-medallion-form-40-1330m2",
+    "productId": "5639df80-378c-4570-8211-472d7deaa28f",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
