@@ -1695,11 +1695,9 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
-      }
+        "excludePaths": ["/introduction", "/confirmation"]
+      },
+      "minimalFooter": true
     }
   },
   {
