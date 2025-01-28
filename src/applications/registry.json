@@ -1695,11 +1695,9 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
-      }
+        "excludePaths": ["/introduction", "/confirmation"]
+      },
+      "minimalFooter": true
     }
   },
   {
@@ -1807,6 +1805,16 @@
       "title": "Demo: File for disability compensation - New conditions",
       "layout": "page-react.html",
       "includeBreadcrumbs": true
+    }
+  },
+  {
+    "appName": "1330M Apply for a medallion in a private cemetery",
+    "entryName": "1330m-medallions",
+    "rootUrl": "/burials-memorials/memorial-items/headstones-markers-medallions/request-medallion-form-40-1330m",
+    "productId": "fac2cf8d-b64d-42ea-985b-af1790a30266",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
     }
   }
 ]
