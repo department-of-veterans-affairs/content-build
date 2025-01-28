@@ -23,6 +23,7 @@ describe('postProcessDigitalForm', () => {
       expect(testForm.cmsId).to.eq(71004);
       expect(testForm.formId).to.eq('222222');
       expect(testForm.title).to.eq(manyStepEntity.entityLabel);
+      expect(testForm.moderationState).to.eq(manyStepEntity.moderationState);
       expect(testForm.chapters.length).to.eq(
         manyStepEntity.fieldChapters.length,
       );
