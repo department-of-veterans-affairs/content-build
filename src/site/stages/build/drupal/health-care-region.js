@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const moment = require('moment');
 const liquid = require('tinyliquid');
+const { logDrupal: log } = require('./utilities-drupal');
 const {
   createEntityUrlObj,
   createFileObj,
@@ -198,11 +199,11 @@ function addGetUpdatesFields(page, pages) {
     !regionPageUrlPath &&
     page.entityUrl.breadcrumb[1]?.text !== 'Manila VA Clinic'
   ) {
-    throw new Error(
-      `CMS error while building breadcrumbs: "${page.entityUrl.path}" is missing reference to a parent or grandparent.`,
+    log(
+      `WARNING: CMS error while building breadcrumbs: "${page.entityUrl.path}" is missing reference to a parent or grandparent.`,
     );
   }
-
+  // If regionPageUrlPath is empty, this will simply not find a region page, and this function will complete.
   const regionPage = pages.find(p => p.entityUrl.path === regionPageUrlPath);
 
   if (regionPage) {
