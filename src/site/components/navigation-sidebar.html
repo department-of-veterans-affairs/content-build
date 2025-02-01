@@ -33,35 +33,26 @@ Used to display a side navigation bar of pages in a collection.
       {% endif %}
 
         <div class="sidenav-previous-page">
-          <a href="/{{previous.path}}">
-            {% if previous.display_title != empty %}
-              {{previous.display_title}}
-            {% else %}
-              {{previous.title}}
-            {% endif %}
-          </a>
+          <va-link 
+            href="/{{ previous.path }}" 
+            text="{{ previous.display_title if previous.display_title != empty else previous.title }}">
+          </va-link>
         </div>
         <ul class="usa-sidenav-list">
           {% for page in relatedPages %}
             {% unless relatedPages.metadata.name == page.display_title or relatedPages.metadata.name == page.title or page.hideFromSidebar %}
               <li {% if page.path == path %}class="active-level"{% endif %}>
                 {% if page.href != empty %}
-                  <a href="{{ page.href }}" onClick="recordEvent({ event: 'nav-sidenav' });">
-                    {% if page.display_title != empty %}
-                      {{ page.display_title }}
-                    {% else %}
-                      {{ page.title }}
-                    {% endif %}
-                  </a>
+                  <va-link 
+                    href="{{ page.href }}" 
+                    text="{{ page.display_title if page.display_title != empty else page.title }}">
+                  </va-link>
                 {% else %}
-                  <a {% if page.path == path %}class="usa-current"{% endif %}
-                      href="/{{ page.path }}" onClick="recordEvent({ event: 'nav-sidenav' });">
-                    {% if page.display_title != empty %}
-                      {{ page.display_title }}
-                    {% else %}
-                      {{ page.title }}
-                    {% endif %}
-                  </a>
+                  <va-link 
+                    {% if page.path == path %}class="usa-current"{% endif %} 
+                    href="/{{ page.path }}" 
+                    text="{{ page.display_title if page.display_title != empty else page.title }}">
+                  </va-link>
                 {% endif %}
                 {% if page.children != empty and path contains page.path %}
                   {% assign childPages = collections | get: page.children %}
@@ -70,22 +61,17 @@ Used to display a side navigation bar of pages in a collection.
                       {% unless cpage.hideFromSidebar %}
                         <li {% if cpage.path == path %}class="active-level"{% endif %}>
                           {% if cpage.href != empty %}
-                            <a href="{{ cpage.href }}" onClick="recordEvent({ event: 'nav-sidenav' });">
-                              {% if cpage.display_title != empty %}
-                                {{ cpage.display_title }}
-                              {% else %}
-                                {{ cpage.title }}
-                              {% endif %}
+                          <va-link 
+                            href="{{ cpage.href }}" 
+                            text="{{ cpage.display_title if cpage.display_title != empty else cpage.title }}">
+                          </va-link>
                             </a>
                           {% else %}
-                            <a {% if cpage.path == path %}class="usa-current"{% endif %}
-                                href="/{{ cpage.path }}" onClick="recordEvent({ event: 'nav-sidenav' });">
-                              {% if cpage.display_title != empty %}
-                                {{ cpage.display_title }}
-                              {% else %}
-                                {{ cpage.title }}
-                              {% endif %}
-                            </a>
+                          <va-link 
+                            {% if cpage.path == path %}class="usa-current"{% endif %} 
+                            href="/{{ cpage.path }}" 
+                            text="{{ cpage.display_title if cpage.display_title != empty else cpage.title }}" >
+                          </va-link>
                           {% endif %}
                         </li>
                       {% endunless %}
