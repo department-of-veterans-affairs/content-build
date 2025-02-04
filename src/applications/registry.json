@@ -1786,6 +1786,16 @@
     }
   },
   {
+    "appName": "1330M2 Apply for a medallion in a private cemetery",
+    "entryName": "1330m2-medallions",
+    "rootUrl": "/burials-memorials/memorial-items/headstones-markers-medallions-approver/request-medallion-form-40-1330m2",
+    "productId": "5639df80-378c-4570-8211-472d7deaa28f",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Demo: File for disability compensation - New conditions",
     "entryName": "new-conditions",
     "rootUrl": "/user-testing/new-conditions",
