@@ -169,12 +169,12 @@
             <!-- Call to action -->
             {% if fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path and fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel %}
               <p>
-                <va-link
-                  class="vads-c-action-link--blue"
+                <va-link-action
+                  class="vads-u-display--block"
                   href="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLink.url.path }}"
                   text="{{ fieldClpVideoPanelMoreVideo.entity.fieldButtonLabel | strip }}"
-                  >
-                </va-link>
+                  type="secondary"
+                ></va-link-action>
               </p>
             {% endif %}
           </div>

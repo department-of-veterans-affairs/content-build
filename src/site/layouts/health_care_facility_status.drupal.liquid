@@ -21,12 +21,32 @@
                             {% if office.fieldOperatingStatusFacility == 'normal' %}
                                     Normal services and hours
                             {% elsif office.fieldOperatingStatusFacility == 'limited' %}
-                                <va-alert slim="true" status="warning">
+                                <va-alert slim="true" status="info">
                                     Limited services and hours
                                 </va-alert>
                             {% elsif office.fieldOperatingStatusFacility == 'closed' %}
-                                <va-alert slim="true" status="error">
+                                <va-alert slim="true" status="warning">
                                     Facility closed
+                                </va-alert>
+                            {% elsif office.fieldOperatingStatusFacility == 'notice' %}
+                                <va-alert slim="true" status="info">
+                                    Facility notice
+                                </va-alert>
+                            {% elsif office.fieldOperatingStatusFacility == 'temporary_closure' %}
+                                <va-alert slim="true" status="warning">
+                                    Temporary facility closure
+                                </va-alert>
+                            {% elsif office.fieldOperatingStatusFacility == 'temporary_location' %}
+                                <va-alert slim="true" status="warning">
+                                    Temporary location
+                                </va-alert>
+                            {% elsif office.fieldOperatingStatusFacility == 'virtual_care' %}
+                                <va-alert slim="true" status="warning">
+                                    Virtual care only
+                                </va-alert>
+                            {% elsif office.fieldOperatingStatusFacility == 'coming_soon' %}
+                                <va-alert slim="true" status="warning">
+                                    Coming soon
                                 </va-alert>
                             {% endif %}
                         {% endfor %}

@@ -69,7 +69,6 @@
   <link rel="preload" href="/generated/sourcesanspro-bold-webfont.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/generated/sourcesanspro-regular-webfont.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/generated/bitter-bold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/generated/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- CSS -->
   <link rel="stylesheet" data-entry-name="style.css">
@@ -180,8 +179,13 @@
     {% include "src/site/components/banners.drupal.liquid" %}
   </header>
 
-  <!-- Fullwidth banner alerts -->
-  {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
+  <!-- Situation Updates banner -->
+  <div data-widget-type="situation-updates-banner"></div>
+
+  {% unless enabledFeatureFlags.FEATURE_BANNER_USE_ALTERNATIVE_BANNERS %}
+    <!-- Fullwidth banner alerts -->
+    {% include "src/site/components/fullwidth_banner_alerts.drupal.liquid" %}
+  {% endunless %}
 
   <script nonce="**CSP_NONCE**" type="text/javascript">
     {% include "src/site/assets/js/skip-link-focus.js" %}

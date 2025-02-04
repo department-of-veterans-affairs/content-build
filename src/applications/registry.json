@@ -160,7 +160,7 @@
     "entryName": "1010cg-application-caregiver-assistance",
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/comprehensive-assistance-for-family-caregivers/apply-form-10-10cg",
     "template": {
-      "title": "Caregiver Application for Benefits",
+      "title": "Apply for the Program of Comprehensive Assistance for Family Caregivers",
       "vagovprod": true,
       "vagovstaging": true,
       "vagovdev": true,
@@ -206,10 +206,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "/",
-          "name": "Home"
-        },
-        {
           "path": "burials-memorials/",
           "name": "Burials and memorials"
         },
@@ -229,7 +225,7 @@
     "entryName": "hca",
     "rootUrl": "/health-care/apply-for-health-care-form-10-10ez",
     "template": {
-      "title": "Apply for Health Care",
+      "title": "Apply for VA health care",
       "display_title": "Apply Now",
       "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
       "body_class": "page-healthcare",
@@ -255,6 +251,7 @@
     "entryName": "ezr",
     "rootUrl": "/my-health/update-benefits-information-form-10-10ezr",
     "template": {
+      "title": "Update your VA health benefits information",
       "layout": "page-react.html",
       "vagovprod": true,
       "includeBreadcrumbs": true,
@@ -628,7 +625,7 @@
       "layout": "page-react.html",
       "description": "Learn more about the changes coming to sign-in",
       "keywords": "Sign-in changes, identity verification, verify",
-      "vagovprod": false
+      "vagovprod": true
     }
   },
   {
@@ -839,13 +836,13 @@
     }
   },
   {
-    "appName": "Ask VA Integration Project",
-    "entryName": "ask-va-too",
-    "rootUrl": "/contact-us/ask-va-too",
+    "appName": "Ask VA",
+    "entryName": "ask-va",
+    "rootUrl": "/contact-us/ask-va",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "title": "Ask VA Integration Project",
+      "title": "Ask VA",
       "description": "Ask VA (AVA) is an online portal that allows veterans, caregivers, and supporting personnel in education, debt, loans, etc. to submit questions to VA and receive a secure message response."
     }
   },
@@ -953,7 +950,7 @@
   {
     "appName": "My Education Benefits",
     "entryName": "1990ez-edu-benefits",
-    "rootUrl": "/education/apply-for-benefits-form-22-1990",
+    "rootUrl": "/education/apply-for-gi-bill-form-22-1990",
     "template": {
       "vagovprod": true,
       "layout": "page-react.html"
@@ -1001,7 +998,7 @@
     "entryName": "dhp-consent-flow",
     "rootUrl": "/health-care/connected-devices",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "title": "Connected Devices"
     }
@@ -1062,7 +1059,7 @@
   {
     "appName": "Apply to use transferred education benefits",
     "entryName": "toe",
-    "rootUrl": "/education/survivor-dependent-benefits/apply-for-transferred-benefits-form-22-1990e",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/transferred-gi-bill-benefits/apply-form-22-1990e",
     "productId": "1d535d31-c2d8-46c1-8994-a42e0860204c",
     "template": {
       "vagovprod": true,
@@ -1182,7 +1179,7 @@
   {
     "appName": "Form Upload Flow",
     "entryName": "form-upload-flow",
-    "rootUrl": "/form-upload",
+    "rootUrl": "/find-forms/upload",
     "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
     "template": {
       "vagovprod": false,
@@ -1525,9 +1522,9 @@
     }
   },
   {
-    "appName": "Check Your Travel Reimbursement Claim Status",
+    "appName": "Travel Pay",
     "entryName": "travel-pay",
-    "rootUrl": "/my-health/travel-claim-status",
+    "rootUrl": "/my-health/travel-pay",
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
     "template": {
       "vagovprod": true,
@@ -1619,7 +1616,7 @@
     "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1629,7 +1626,7 @@
     "rootUrl": "/get-help-from-accredited-representative/appoint-rep",
     "productId": "ded52e11-c5f2-493d-b7bb-ce9c630b38f3",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1654,13 +1651,13 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "lastupdate": "2024-09-17"
+      "lastupdate": "2024-12-10"
     }
   },
   {
     "appName": "22-10282 IBM Skillsbuild Training Program Intake Application",
     "entryName": "10282-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/10282",
+    "rootUrl": "/education/other-va-education-benefits/ibm-skillsbuild-program/apply-form-22-10282",
     "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
     "template": {
       "vagovprod": false,
@@ -1698,11 +1695,9 @@
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
-      }
+        "excludePaths": ["/introduction", "/confirmation"]
+      },
+      "minimalFooter": true
     }
   },
   {
@@ -1731,24 +1726,24 @@
     "rootUrl": "/discover-your-benefits",
     "productId": "87f2c91f-46c3-4461-8890-3636130af4ab",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
   {
     "appName": "Survivor and Dependent Benefits 22-5490",
     "entryName": "survivor-dependent-education-benefit-22-5490",
-    "rootUrl": "/education/survivor-dependent-education-benefit-22-5490",
+    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-for-dea-fry-form-22-5490",
     "productId": "5544d590-0b67-48b1-a312-824c98d367ae",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
   {
     "appName": "Welcome VA Setup Review Information Form",
     "entryName": "welcome-va-setup-review-information",
-    "rootUrl": "/my-va/welcome-va-setup/review-information",
+    "rootUrl": "/my-va/welcome-va-setup",
     "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
     "template": {
       "vagovprod": false,
@@ -1781,6 +1776,26 @@
     }
   },
   {
+    "appName": "Order Medical Supplies",
+    "entryName": "mhv-supply-reordering",
+    "rootUrl": "/my-health/order-supplies",
+    "productId": "9f2025da-09d6-469f-8d6e-811e7afa7582",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "1330M2 Apply for a medallion in a private cemetery",
+    "entryName": "1330m2-medallions",
+    "rootUrl": "/burials-memorials/memorial-items/headstones-markers-medallions-approver/request-medallion-form-40-1330m2",
+    "productId": "5639df80-378c-4570-8211-472d7deaa28f",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Demo: File for disability compensation - New conditions",
     "entryName": "new-conditions",
     "rootUrl": "/user-testing/new-conditions",
@@ -1790,6 +1805,29 @@
       "title": "Demo: File for disability compensation - New conditions",
       "layout": "page-react.html",
       "includeBreadcrumbs": true
+    }
+  },
+  {
+    "appName": "1330M Apply for a medallion in a private cemetery",
+    "entryName": "1330m-medallions",
+    "rootUrl": "/burials-memorials/memorial-items/headstones-markers-medallions/request-medallion-form-40-1330m",
+    "productId": "fac2cf8d-b64d-42ea-985b-af1790a30266",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Dispute your VA debt",
+    "entryName": "dispute-debt",
+    "rootUrl": "/manage-va-debt/dispute-debt",
+    "productId": "908a02e6-c63d-42e0-87f9-ed208e47034e",
+    "template": {
+      "vagovprod": false,
+      "vagovstaging": true,
+      "vagovdev": true,
+      "localhost": true,
+      "layout": "page-react.html"
     }
   }
 ]

@@ -57,7 +57,6 @@ const FACILITIES_RESULTS = `
       postalCode
     }
     fieldPhoneNumber
-    fieldMentalHealthPhone
     ${mhTelephonePara}
     fieldOfficeHours {
       day

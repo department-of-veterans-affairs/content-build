@@ -1,47 +1,5 @@
 <div class="homepage-email-update-wrapper vads-u-background-color--primary-alt-lightest vads-u-padding-x--2p5 vads-u-padding-top--2p5">
-  {% assign shouldShowExistingEmailForm = '' | showExistingEmailForm %}
-
-  {% if shouldShowExistingEmailForm %}
-  <div class="vads-u-display--flex vads-u-justify-content--center">
-    <div class="vads-u-margin-top--2p5 medium-screen:vads-u-margin-top--0">
-      <form
-        action="https://public.govdelivery.com/accounts/USVACHOOSE/subscribers/qualify"
-        accept-charset="UTF-8"
-        method="post"
-      >
-        <input type="hidden" name="utf8" value="✓">
-        <input type="hidden" name="category_id" id="category_id_top" value="USVACHOOSE_C1">
-        <input type="hidden" name="email" id="homepage-hidden-email" value="">
-        <va-text-input
-          autocomplete="email"
-          class="vads-u-width--full medium-screen:vads-u-width-auto homepage-email-input"
-          form-heading="Sign up to get the latest VA updates"
-          form-heading-level="2"
-          id="homepage-email-signup-input"
-          inputmode="email"
-          label="Email Address"
-          type="email"
-          use-forms-pattern="single"
-        /></va-text-input>
-        <button
-          onclick="recordMultipleEvents([
-            { 
-              event: 'cta-button-click', 'button-type': 'primary', 'button-click-label': 'Sign up',  
-            },
-            { event: 'homepage-email-sign-up', action: 'Homepage email sign up' }
-            ]);"
-          type="submit"
-          class="vads-u-width--full
-                medium-screen:vads-u-width--auto
-                vads-u-display--block vads-u-margin-bottom--2">
-          Sign up
-        </button>
-      </form>
-    </div>
-  </div>
-  {% else %}
-    <div data-widget-type="homepage-email-signup"></div>
-  {% endif %}
+  <div data-widget-type="homepage-email-signup"></div>
   <div id="vets-banner-1" class="vads-u-display--none medium-screen:vads-u-display--block">
     <div class="veteran-banner-container vads-u-margin-y--0 vads-u-margin-x--auto">
       <picture>

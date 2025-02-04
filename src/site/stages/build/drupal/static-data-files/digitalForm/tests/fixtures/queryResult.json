@@ -1,0 +1,146 @@
+{
+  "data": {
+    "nodeQuery": {
+      "entities": [
+        {
+          "nid": 71002,
+          "entityLabel": "Form with One Step",
+          "fieldVaFormNumber": "11111",
+          "fieldOmbNumber": "1111-1111",
+          "fieldRespondentBurden": 48,
+          "moderationState": "published",
+          "fieldExpirationDate": {
+            "value": "2025-06-11"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "162008",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_your_personal_info",
+                    "entityLabel": "Digital Form: Your personal information"
+                  }
+                },
+                "fieldNameAndDateOfBirth": {
+                  "entity": {
+                    "fieldTitle": "Name",
+                    "fieldIncludeDateOfBirth": true
+                  }
+                },
+                "fieldIdentificationInformation": {
+                  "entity": {
+                    "fieldTitle": "Identification information",
+                    "fieldIncludeVeteranSService": false
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "nid": 71004,
+          "entityLabel": "Form with Many Steps",
+          "fieldVaFormNumber": "222222",
+          "fieldOmbNumber": "1212-1212",
+          "fieldRespondentBurden": 30,
+          "moderationState": "published",
+          "fieldExpirationDate": {
+            "value": "2027-01-29"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "162008",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_your_personal_info",
+                    "entityLabel": "Digital Form: Your personal information"
+                  }
+                },
+                "fieldNameAndDateOfBirth": {
+                  "entity": {
+                    "fieldTitle": "Name and Date of Birth",
+                    "fieldIncludeDateOfBirth": true
+                  }
+                },
+                "fieldIdentificationInformation": {
+                  "entity": {
+                    "fieldTitle": "Identification information",
+                    "fieldIncludeVeteranSService": false
+                  }
+                }
+              }
+            },
+            {
+              "entity": {
+                "entityId": "161344",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_address",
+                    "entityLabel": "Digital Form: Address"
+                  }
+                },
+                "fieldTitle": "Generated Address",
+                "fieldMilitaryAddressCheckbox": false
+              }
+            },
+            {
+              "entity": {
+                "entityId": "161351",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_phone_and_email",
+                    "entityLabel": "Digital Form: Phone and email address"
+                  }
+                },
+                "fieldTitle": "Generated Phone",
+                "fieldIncludeEmail": false
+              }
+            },
+            {
+              "entity": {
+                "entityId": "162026",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_list_loop",
+                    "entityLabel": "Digital Form: List & Loop"
+                  }
+                },
+                "fieldTitle": "Generated List & Loop",
+                "fieldOptional": false
+              }
+            }
+          ]
+        },
+        {
+          "nid": 76371,
+          "entityLabel": "Draft form",
+          "fieldVaFormNumber": "abcdefg",
+          "fieldOmbNumber": "1234-7890",
+          "fieldRespondentBurden": 7,
+          "moderationState": "draft",
+          "status": false,
+          "fieldExpirationDate": {
+            "value": "2025-12-28"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "172718",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_list_loop",
+                    "entityLabel": "Digital Form: List & Loop"
+                  }
+                },
+                "fieldTitle": "Multiple draft responses",
+                "fieldOptional": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
