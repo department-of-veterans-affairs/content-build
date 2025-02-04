@@ -139,7 +139,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: |
             .cache/yarn
@@ -367,9 +367,9 @@ jobs:
 
       - name: Upload build
         run: aws s3 cp ${{ env.BUILDTYPE }}.tar.bz2 s3://vetsgov-website-builds-s3-upload/content-build/${{needs.validate-build-status.outputs.REF}}/${{ env.BUILDTYPE }}.tar.bz2 --acl public-read --region us-gov-west-1 --no-progress
-      
+
       - name: Delete build
-        run: rm ${{ env.BUILDTYPE }}.tar.bz2 
+        run: rm ${{ env.BUILDTYPE }}.tar.bz2
 
       - name: Debug filesystem size
         run: |
@@ -401,7 +401,7 @@ jobs:
           du -a . | sort -n -r | head -n 10
           du -a /home/runner/ | sort -n -r | head -n 10
           find /home/runner/ -type f -printf '%s %p\n' | sort -nr | head
-          
+
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
