@@ -60,12 +60,13 @@ function processManilaPages(drupalData) {
   } = drupalData.data.nodeQuery.entities.reduce(
     (acc, page) => {
       if (isManilaVAClinicPage(page)) {
-        acc.manilaVAClinicPages.push(page);
-      } else {
         // Federal Region Homepage should not be created for Manila VA Clinic
         if (isManillaVaRegionHomepage(page)) {
           return acc;
         }
+
+        acc.manilaVAClinicPages.push(page);
+      } else {
         acc.otherPages.push(page);
       }
 
