@@ -27,7 +27,7 @@
     {% endif %}
 
     {% if healthService.fieldLocalHealthCareService.length > 0 %}
-      <h4 class="vads-u-font-size--h3">Available at these {{ regionOrOffice }} locations</h3>
+      <h4 class="vads-u-font-size--h3">Available at these locations</h3>
       <ul class="usa-unstyled-list" role="list">
         {% assign orderedHealthServices = healthService.fieldLocalHealthCareService | orderFieldLocalHealthCareServices %}
 
