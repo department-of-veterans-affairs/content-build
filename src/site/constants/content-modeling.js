@@ -10,7 +10,7 @@ const ENTITY_BUNDLES = {
   EVENT: 'event',
   FAQ_MULTIPLE_Q_A: 'faq_multiple_q_a',
   FULL_WIDTH_BANNER_ALERT: 'full_width_banner_alert',
-  HEALTH_CARE_FACILITY_STATUS: 'health_care_facility_status',
+  // HEALTH_CARE_FACILITY_STATUS: 'health_care_facility_status',
   HEALTH_CARE_LOCAL_FACILITY: 'health_care_local_facility',
   HEALTH_CARE_LOCAL_HEALTH_SERVICE: 'health_care_local_health_service',
   HEALTH_CARE_REGION_DETAIL_PAGE: 'health_care_region_detail_page',
