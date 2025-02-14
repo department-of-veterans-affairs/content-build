@@ -534,46 +534,6 @@
     }
   },
   {
-    "appName": "22-5490 Education benefits form",
-    "entryName": "5490-edu-benefits",
-    "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-dea-fry-form-22-5490",
-    "template": {
-      "title": "Apply For Education Benefits",
-      "heading": "Apply for education benefits",
-      "display_title": "Apply for dependent benefits",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "order": 3,
-      "hideFromSidebar": true
-    }
-  },
-  {
-    "appName": "22-1990 Education benefits form",
-    "entryName": "1990-edu-benefits",
-    "rootUrl": "/education/apply-for-education-benefits/application/1990",
-    "template": {
-      "title": "Apply For Education Benefits",
-      "heading": "Apply for education benefits",
-      "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Education and training",
-          "path": "education/"
-        },
-        {
-          "name": "How to apply",
-          "path": "education/how-to-apply/"
-        },
-        {
-          "name": "Apply for education benefits",
-          "path": "education/apply-for-education-benefits/application/1990"
-        }
-      ]
-    }
-  },
-  {
     "appName": "22-0994 Education benefits form",
     "entryName": "0994-edu-benefits",
     "rootUrl": "/education/about-gi-bill-benefits/how-to-use-benefits/vettec-high-tech-program/apply-for-vettec-form-22-0994",
@@ -998,7 +958,7 @@
     "entryName": "dhp-consent-flow",
     "rootUrl": "/health-care/connected-devices",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "title": "Connected Devices"
     }
@@ -1594,7 +1554,7 @@
     }
   },
   {
-    "appName": "21-4138 Statement in Support of a Claim",
+    "appName": "Submit a statement to support a claim",
     "entryName": "4138-ss",
     "rootUrl": "/supporting-forms-for-claims/statement-to-support-claim-form-21-4138",
     "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
@@ -1604,9 +1564,7 @@
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": [
-          "/introduction"
-        ]
+        "excludePaths": ["/introduction", "/confirmation"]
       }
     }
   },
@@ -1746,7 +1704,7 @@
     "rootUrl": "/my-va/welcome-va-setup",
     "productId": "c1a00d88-ead0-46d4-94ab-e72baba100c6",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1780,6 +1738,16 @@
     "entryName": "mhv-supply-reordering",
     "rootUrl": "/my-health/order-supplies",
     "productId": "9f2025da-09d6-469f-8d6e-811e7afa7582",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "1330M2 Apply for a medallion in a private cemetery",
+    "entryName": "1330m2-medallions",
+    "rootUrl": "/burials-memorials/memorial-items/headstones-markers-medallions-approver/request-medallion-form-40-1330m2",
+    "productId": "5639df80-378c-4570-8211-472d7deaa28f",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
