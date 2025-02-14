@@ -1,7 +1,14 @@
+{% assign exclude_paths = minimalExcludePaths %}
+{% if minimalFooter and minimalFooter.excludePaths %}
+  {% assign exclude_paths = minimalFooter.excludePaths %}
+{% endif %}
 <footer class="footer">
   <div
     id="footerNav"
     data-minimal-footer="{% if minimalFooter %}true{% else %}false{% endif %}"
+    {% if exclude_paths %}
+      data-minimal-exclude-paths="{{ exclude_paths | json | escape }}"
+    {% endif %}
   ></div>
 </footer>
 <div id="logout-modal-root"></div>
