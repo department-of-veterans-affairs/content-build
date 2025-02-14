@@ -75,24 +75,56 @@
                         "type": "boolean"
                     },
                     "minimalFooter": {
-                        "type": "boolean"
-                    },
-                    "minimalHeader": {
                         "oneOf": [
                             {
+                                "default": false,
                                 "type": "boolean"
                             },
                             {
                                 "type": "object",
                                 "additionalProperties": false,
                                 "properties": {
-                                    "enableHeadings": {
+                                    "enabled": {
+                                        "default": true,
                                         "type": "boolean"
                                     },
                                     "excludePaths": {
+                                        "default": ["/introduction", "/confirmation"],
                                         "type": "array",
                                         "items": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "pattern": "^/.*"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "minimalHeader": {
+                        "oneOf": [
+                            {
+                                "default": false,
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "enabled": {
+                                        "default": true,
+                                        "type": "boolean"
+                                    },
+                                    "enableHeadings": {
+                                        "description": "Enables use of heading tags in the minimal header instead of <div> tags",
+                                        "default": false,
+                                        "type": "boolean"
+                                    },
+                                    "excludePaths": {
+                                        "default": ["/introduction", "/confirmation"],
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "pattern": "^/.*"
                                         }
                                     },
                                     "subtitle": {

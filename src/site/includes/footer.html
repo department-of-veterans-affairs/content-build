@@ -1,7 +1,7 @@
 <footer class="footer">
   <div
     id="footerNav"
-    data-minimal-footer="{% if minimalFooter %}true{% else %}false{% endif %}"
+    data-minimal-footer="{{ minimalFooter | default: false | json | escape }}"
   ></div>
 </footer>
 <div id="logout-modal-root"></div>
