@@ -6,7 +6,7 @@ const liquid = require('tinyliquid');
 const { logDrupal: log } = require('./utilities-drupal');
 const {
   createEntityUrlObj,
-  // createFileObj,
+  createFileObj,
   paginatePages,
   updateEntityUrlObj,
   generateBreadCrumbs,
@@ -111,28 +111,28 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
   const sidebar = page.facilitySidebar;
 
   // Create the top-level facilities status page for Health Care Regions
-  // const statusEntityUrl = createEntityUrlObj(drupalPagePath);
-  // const statusObj = {
-  //   mainFacilities: page.reverseFieldRegionPageNode,
-  //   facilitySidebar: sidebar,
-  //   entityUrl: statusEntityUrl,
-  //   alert: page.alert,
-  //   title: page.title,
-  // };
+  const statusEntityUrl = createEntityUrlObj(drupalPagePath);
+  const statusObj = {
+    mainFacilities: page.reverseFieldRegionPageNode,
+    facilitySidebar: sidebar,
+    entityUrl: statusEntityUrl,
+    alert: page.alert,
+    title: page.title,
+  };
 
-  // const statusPage = updateEntityUrlObj(
-  //   statusObj,
-  //   drupalPagePath,
-  //   'Operating status',
-  // );
-  // const statusPath = statusPage.entityUrl.path;
-  // statusPage.regionOrOffice = page.title;
-  // statusPage.entityUrl = generateBreadCrumbs(statusPath);
+  const statusPage = updateEntityUrlObj(
+    statusObj,
+    drupalPagePath,
+    'Operating status',
+  );
+  const statusPath = statusPage.entityUrl.path;
+  statusPage.regionOrOffice = page.title;
+  statusPage.entityUrl = generateBreadCrumbs(statusPath);
 
-  // files[`${drupalPagePath}/status/index.html`] = createFileObj(
-  //   statusPage,
-  //   'health_care_facility_status.drupal.liquid',
-  // );
+  files[`${drupalPagePath}/status/index.html`] = createFileObj(
+    statusPage,
+    'health_care_facility_status.drupal.liquid',
+  );
 
   // Press Release listing page
   const prEntityUrl = createEntityUrlObj(drupalPagePath);
