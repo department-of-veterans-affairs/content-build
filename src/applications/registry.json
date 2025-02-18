@@ -1790,17 +1790,8 @@
   },
   {
     "appName": "Representative Form Upload",
-    "entryName": "representative-form-upload2",
-    "rootUrl": "/representative/representative-form-upload",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "Representative Form Upload",
     "entryName": "representative-form-upload",
-    "rootUrl": "/representative-form-upload",
+    "rootUrl": "/representative/representative-form-upload",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
