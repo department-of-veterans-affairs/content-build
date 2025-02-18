@@ -95,9 +95,9 @@ const {
   GetVetCenterLocations,
 } = require('./graphql/vetCenterLocations.graphql');
 
-// const {
-//   GetLocationsOperatingStatus,
-// } = require('./graphql/locationsOperatingStatus.graphql');
+const {
+  GetLocationsOperatingStatus,
+} = require('./graphql/locationsOperatingStatus.graphql');
 
 function getNodeQueries(entityCounts) {
   return {
@@ -180,7 +180,7 @@ function nonNodeQueries() {
 
   const componentQueries = {
     GetEntityQueueStagedContent,
-    // GetLocationsOperatingStatus,
+    GetLocationsOperatingStatus,
     GetIcsFiles,
     GetSidebars,
     ...VaFacilitySidebars,
