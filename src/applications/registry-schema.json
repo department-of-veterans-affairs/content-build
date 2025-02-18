@@ -74,12 +74,39 @@
                     "localhost": {
                         "type": "boolean"
                     },
+                    "minimalExcludePaths": {
+                        "description": "Paths to exclude from both minimal header and footer",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "pattern": "^/.*"
+                        }
+                    },
                     "minimalFooter": {
-                        "type": "boolean"
+                        "oneOf": [
+                            {
+                                "default": false,
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "excludePaths": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "pattern": "^/.*"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
                     },
                     "minimalHeader": {
                         "oneOf": [
                             {
+                                "default": false,
                                 "type": "boolean"
                             },
                             {
@@ -87,12 +114,15 @@
                                 "additionalProperties": false,
                                 "properties": {
                                     "enableHeadings": {
+                                        "description": "Enables use of heading tags in the minimal header instead of <div> tags",
+                                        "default": false,
                                         "type": "boolean"
                                     },
                                     "excludePaths": {
                                         "type": "array",
                                         "items": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "pattern": "^/.*"
                                         }
                                     },
                                     "subtitle": {
