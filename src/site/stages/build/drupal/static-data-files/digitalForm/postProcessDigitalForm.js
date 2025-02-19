@@ -1,4 +1,5 @@
 const { logDrupal } = require('../../utilities-drupal');
+const { stripPrefix } = require('./utils');
 
 const extractAdditionalFields = entity => {
   const { entityId } = entity.type.entity;
@@ -27,8 +28,6 @@ const formatDate = dateString => {
   const [year, month, day] = dateString.split('-');
   return `${removeLeadingZero(month)}/${removeLeadingZero(day)}/${year}`;
 };
-
-const stripPrefix = label => label.replace('Digital Form: ', '');
 
 const normalizeChapter = ({ entity }) => {
   const type = entity.type.entity.entityId;
