@@ -1,5 +1,5 @@
 const { logDrupal } = require('../../utilities-drupal');
-const { stripPrefix } = require('./utils');
+const { stripPrefix, formatDate } = require('./utils');
 
 const extractAdditionalFields = entity => {
   const { entityId } = entity.type.entity;
@@ -22,12 +22,6 @@ const extractAdditionalFields = entity => {
   }
 };
 const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;
-
-const formatDate = dateString => {
-  const removeLeadingZero = s => s.replace(/^0+/, '');
-  const [year, month, day] = dateString.split('-');
-  return `${removeLeadingZero(month)}/${removeLeadingZero(day)}/${year}`;
-};
 
 const normalizeChapter = ({ entity }) => {
   const type = entity.type.entity.entityId;
