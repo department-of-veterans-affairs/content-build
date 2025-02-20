@@ -28,34 +28,42 @@ const normalizeChapter = ({ entity }) => {
     type,
   };
 
-  if (type === 'digital_form_your_personal_info') {
-    const identificationInformation =
-      entity.fieldIdentificationInformation.entity;
-    const nameAndDateOfBirth = entity.fieldNameAndDateOfBirth.entity;
+  switch (type) {
+    case 'digital_form_your_personal_info': {
+      const identificationInformation =
+        entity.fieldIdentificationInformation.entity;
+      const nameAndDateOfBirth = entity.fieldNameAndDateOfBirth.entity;
 
-    return {
-      ...initialChapter,
-      chapterTitle: stripPrefix(entity.type.entity.entityLabel),
-      pages: [
-        {
-          pageTitle: nameAndDateOfBirth.fieldTitle,
-          includeDateOfBirth: nameAndDateOfBirth.fieldIncludeDateOfBirth,
-        },
-        {
-          pageTitle: identificationInformation.fieldTitle,
-          includeServiceNumber:
-            identificationInformation.fieldIncludeVeteranSService,
-        },
-      ],
-    };
+      return {
+        ...initialChapter,
+        chapterTitle: stripPrefix(entity.type.entity.entityLabel),
+        pages: [
+          {
+            pageTitle: nameAndDateOfBirth.fieldTitle,
+            includeDateOfBirth: nameAndDateOfBirth.fieldIncludeDateOfBirth,
+          },
+          {
+            pageTitle: identificationInformation.fieldTitle,
+            includeServiceNumber:
+              identificationInformation.fieldIncludeVeteranSService,
+          },
+        ],
+      };
+    }
+    case 'digital_form_custom_step':
+      return {
+        ...initialChapter,
+        chapterTitle: entity.fieldTitle,
+        pages: entity.fieldDigitalFormPages,
+      };
+    default:
+      return {
+        ...initialChapter,
+        additionalFields: extractAdditionalFields(entity),
+        chapterTitle: entity.fieldTitle,
+        pageTitle: stripPrefix(entity.type.entity.entityLabel),
+      };
   }
-
-  return {
-    ...initialChapter,
-    additionalFields: extractAdditionalFields(entity),
-    chapterTitle: entity.fieldTitle,
-    pageTitle: stripPrefix(entity.type.entity.entityLabel),
-  };
 };
 
 module.exports = { normalizeChapter };

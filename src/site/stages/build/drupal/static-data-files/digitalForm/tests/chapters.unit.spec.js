@@ -77,8 +77,22 @@ describe('digitalForm chapters', () => {
   });
 
   describe('Custom Step', () => {
-    it('includes the correct step title');
-    it('includes the correct number of pages');
+    const queryChapter = queryForm.fieldChapters.find(
+      chapter =>
+        chapter.entity.type.entity.entityId === 'digital_form_custom_step',
+    );
+    const queryEntity = queryChapter.entity;
+    const normalizedChapter = normalizeChapter(queryChapter);
+
+    it('includes the correct step title', () => {
+      expect(normalizedChapter.chapterTitle).to.eq(queryEntity.fieldTitle);
+    });
+
+    it('includes the correct number of pages', () => {
+      expect(normalizedChapter.pages.length).to.eq(
+        queryEntity.fieldDigitalFormPages.length,
+      );
+    });
 
     describe('Custom Step page', () => {
       it('includes the correct page title');
