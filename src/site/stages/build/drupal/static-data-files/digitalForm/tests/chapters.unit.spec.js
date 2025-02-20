@@ -81,8 +81,10 @@ describe('digitalForm chapters', () => {
       chapter =>
         chapter.entity.type.entity.entityId === 'digital_form_custom_step',
     );
-    const queryEntity = queryChapter.entity;
     const normalizedChapter = normalizeChapter(queryChapter);
+    const normalizedPage = normalizedChapter.pages[0];
+    const queryEntity = queryChapter.entity;
+    const queryPage = queryEntity.fieldDigitalFormPages[0].entity;
 
     it('includes the correct step title', () => {
       expect(normalizedChapter.chapterTitle).to.eq(queryEntity.fieldTitle);
@@ -95,9 +97,21 @@ describe('digitalForm chapters', () => {
     });
 
     describe('Custom Step page', () => {
-      it('includes the correct page title');
-      it('includes the correct body text');
-      it('include the correct number of components');
+      it('includes the correct page title', () => {
+        expect(normalizedPage.pageTitle).to.eq(queryPage.fieldTitle);
+      });
+
+      it('includes the correct body text', () => {
+        expect(normalizedPage.bodyText).to.eq(
+          queryPage.fieldDigitalFormBodyText,
+        );
+      });
+
+      it('include the correct number of components', () => {
+        expect(normalizedPage.components.length).to.eq(
+          queryPage.fieldDigitalFormComponents.length,
+        );
+      });
     });
 
     describe('Text Input component', () => {
