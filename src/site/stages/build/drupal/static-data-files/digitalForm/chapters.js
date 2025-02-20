@@ -56,7 +56,14 @@ const normalizeChapter = ({ entity }) => {
         chapterTitle: entity.fieldTitle,
         pages: entity.fieldDigitalFormPages.map(({ entity: pageEntity }) => ({
           bodyText: pageEntity.fieldDigitalFormBodyText,
-          components: pageEntity.fieldDigitalFormComponents,
+          components: pageEntity.fieldDigitalFormComponents.map(
+            ({ entity: componentEntity }) => ({
+              hint: componentEntity.fieldDigitalFormHintText,
+              label: componentEntity.fieldDigitalFormLabel,
+              required: componentEntity.fieldDigitalFormRequired,
+              type: componentEntity.type.entity.entityId,
+            }),
+          ),
           pageTitle: pageEntity.fieldTitle,
         })),
       };

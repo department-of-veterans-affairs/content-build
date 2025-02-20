@@ -115,9 +115,32 @@ describe('digitalForm chapters', () => {
     });
 
     describe('Text Input component', () => {
-      it('includes the label');
-      it('includes the hint text');
-      it('indicates whether the component is required');
+      const normalizedComponent = normalizedPage.components[0];
+      const queryComponent = queryPage.fieldDigitalFormComponents[0].entity;
+
+      it('has the correct type', () => {
+        expect(normalizedComponent.type).to.eq(
+          queryComponent.type.entity.entityId,
+        );
+      });
+
+      it('includes the label', () => {
+        expect(normalizedComponent.label).to.eq(
+          queryComponent.fieldDigitalFormLabel,
+        );
+      });
+
+      it('includes the hint text', () => {
+        expect(normalizedComponent.hint).to.eq(
+          queryComponent.fieldDigitalFormHintText,
+        );
+      });
+
+      it('indicates whether the component is required', () => {
+        expect(normalizedComponent.required).to.eq(
+          queryComponent.fieldDigitalFormRequired,
+        );
+      });
     });
   });
 });
