@@ -26,6 +26,7 @@ src/site/filters @department-of-veterans-affairs/vfs-public-websites-frontend @d
 
 # Accredited representative
 src/site/layouts/accredited-representative-portal.html @department-of-veterans-affairs/benefits-accredited-rep-facing-engineers
+src/site/includes/accredited-representative-portal/head.html @department-of-veterans-affairs/benefits-accredited-rep-facing-engineers
 
 # Facility Locator and VAMC pages
 ## Multiple Facility types
