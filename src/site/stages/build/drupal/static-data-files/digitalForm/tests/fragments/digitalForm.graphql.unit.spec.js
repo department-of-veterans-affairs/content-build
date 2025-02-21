@@ -19,13 +19,17 @@ describe('digitalForm fragment', () => {
   });
 
   describe('chapter fragments', () => {
-    ['address', 'listLoop', 'phoneAndEmail', 'yourPersonalInformation'].forEach(
-      fragment => {
-        it(`imports the ${fragment} fragment`, () => {
-          expect(digitalForm).to.have.string(`fragment ${fragment}`);
-          expect(digitalForm).to.have.string(`...${fragment}`);
-        });
-      },
-    );
+    [
+      'address',
+      'customStep',
+      'listLoop',
+      'phoneAndEmail',
+      'yourPersonalInformation',
+    ].forEach(fragment => {
+      it(`imports the ${fragment} fragment`, () => {
+        expect(digitalForm).to.have.string(`fragment ${fragment}`);
+        expect(digitalForm).to.have.string(`...${fragment}`);
+      });
+    });
   });
 });
