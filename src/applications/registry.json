@@ -1527,7 +1527,7 @@
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/submit-other-insurance-form-10-7959c",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
