@@ -6,7 +6,7 @@ const liquid = require('tinyliquid');
 const { logDrupal: log } = require('./utilities-drupal');
 const {
   createEntityUrlObj,
-  createFileObj,
+  // createFileObj,
   paginatePages,
   updateEntityUrlObj,
   generateBreadCrumbs,
@@ -129,10 +129,10 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
   statusPage.regionOrOffice = page.title;
   statusPage.entityUrl = generateBreadCrumbs(statusPath);
 
-  files[`${drupalPagePath}/status/index.html`] = createFileObj(
-    statusPage,
-    'health_care_facility_status.drupal.liquid',
-  );
+  // files[`${drupalPagePath}/status/index.html`] = createFileObj(
+  //   statusPage,
+  //   'health_care_facility_status.drupal.liquid',
+  // );
 
   // Press Release listing page
   const prEntityUrl = createEntityUrlObj(drupalPagePath);
