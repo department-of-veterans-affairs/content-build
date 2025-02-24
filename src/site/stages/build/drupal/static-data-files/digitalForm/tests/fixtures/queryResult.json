@@ -110,6 +110,92 @@
                 "fieldTitle": "Generated List & Loop",
                 "fieldOptional": false
               }
+            },
+            {
+              "entity": {
+                "entityId": "172736",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_custom_step",
+                    "entityLabel": "Digital Form: Custom Step"
+                  }
+                },
+                "fieldTitle": "Generated Custom Step",
+                "fieldDigitalFormPages": [
+                  {
+                    "entity": {
+                      "entityId": "172734",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "Generated custom page",
+                      "fieldDigitalFormBodyText": "My custom body text",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "172737",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "My custom text input",
+                            "fieldDigitalFormHintText": "This is optional hint text",
+                            "fieldDigitalFormRequired": true
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "172735",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "An additional page",
+                      "fieldDigitalFormBodyText": "With additonal body text",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "172738",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "A text input with no hint text",
+                            "fieldDigitalFormHintText": null,
+                            "fieldDigitalFormRequired": true
+                          }
+                        },
+                        {
+                          "entity": {
+                            "entityId": "172739",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "An optional text input",
+                            "fieldDigitalFormHintText": "This input is not required",
+                            "fieldDigitalFormRequired": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
