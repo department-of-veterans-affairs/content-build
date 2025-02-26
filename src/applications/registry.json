@@ -1142,7 +1142,7 @@
     "rootUrl": "/find-forms/upload",
     "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1518,18 +1518,16 @@
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
     "template": {
       "vagovprod": false,
-      "layout": "accredited-representative-portal.html",
-      "title": "Apply to become a VA accredited attorney or claims agent",
-      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)"
+      "layout": "accredited-representative-portal.html"
     }
   },
   {
     "appName": "10-7959C CHAMPVA Other Health Insurance Certification form",
     "entryName": "10-7959C",
-    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/other-insurance-form-10-7959c",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/submit-other-insurance-form-10-7959c",
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1561,11 +1559,12 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
-        "subtitle": "Statement in support of a claim (VA Form 21-4138)",
-        "excludePaths": ["/introduction", "/confirmation"]
-      }
+        "subtitle": "Statement in support of a claim (VA Form 21-4138)"
+      },
+      "minimalFooter": true
     }
   },
   {
@@ -1650,10 +1649,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
-        "subtitle": "Mock Form Minimal Header",
-        "excludePaths": ["/introduction", "/confirmation"]
+        "subtitle": "Mock Form Minimal Header"
       },
       "minimalFooter": true
     }
