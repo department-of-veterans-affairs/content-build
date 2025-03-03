@@ -120,6 +120,8 @@
   <meta name="twitter:site" content="@DeptVetAffairs">
 
   <!-- Derive the meta description. -->
+  {% assign description = entityUrl.path | assignHardcodedMetaDescription %}
+
   {% if fieldClinicalHealthServi %}
     {% assign description = fieldClinicalHealthServi.processed | strip_html %}
   {% elsif fieldPressReleaseBlurb %}
@@ -131,6 +133,8 @@
   {% elsif entityUrl.path == '/' %}
     {% assign description = 'Welcome to the official website of the U.S. Department of Veterans Affairs. Discover, apply for, and manage your VA benefits and care.' %}
   {% endif %}
+
+  
 
   <!-- Add meta description tags. -->
   {% if description %}

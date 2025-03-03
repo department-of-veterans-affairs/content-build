@@ -2241,4 +2241,23 @@ module.exports = function registerFilters() {
     }
     return null;
   };
+
+  liquid.filters.assignHardcodedMetaDescription = url => {
+    if (!url) {
+      return null;
+    }
+
+    const META_DESCRIPTIONS = {
+      '/policies':
+        'Find VA policies on privacy and patient rights, family rights, visitation, and more.',
+    };
+
+    for (const [endOfPath, content] of Object.entries(META_DESCRIPTIONS)) {
+      if (url?.endsWith(endOfPath)) {
+        return content;
+      }
+    }
+
+    return null;
+  };
 };
