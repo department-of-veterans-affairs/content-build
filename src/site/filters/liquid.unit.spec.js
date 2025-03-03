@@ -3425,3 +3425,46 @@ describe('runAndFnConditions', () => {
     expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
   });
 });
+
+describe('assignHardcodedMetaDescription', () => {
+  it('should return the correct description when a matching path is given', () => {
+    expect(
+      liquid.filters.assignHardcodedMetaDescription(
+        '/minneapolis-health-care/policies',
+      ),
+    ).to.equal(
+      'Find VA policies on privacy and patient rights, family rights, visitation, and more.',
+    );
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription('')).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(
+      liquid.filters.assignHardcodedMetaDescription('/minneapolis-health-care'),
+    ).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription(null)).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription(undefined)).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription('/resources')).to.be
+      .null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(
+      liquid.filters.assignHardcodedMetaDescription(
+        '/minneapolis-health-care/policies-for-something-else',
+      ),
+    ).to.be.null;
+  });
+});
