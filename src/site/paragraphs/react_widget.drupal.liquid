@@ -29,9 +29,14 @@
     }
 
 {% endcomment %}
-
+  
   {% if entity.fieldCtaWidget %}
-      <div data-template="paragraphs/react_widget" data-entity-id="{{ entity.entityId }}" class="cta-widget" data-widget-type="cta" data-app-id="{{ entity.fieldWidgetType }}"></div>
+      {% if entity.fieldWidgetType == 'health-records' and fieldOffice.entity.fieldVamcEhrSystem != 'cerner' %} 
+      {% assign appId = 'modern-get-medical-records-page' %}
+      {% else %}
+      {% assign appId = entity.fieldWidgetType %}
+      {% endif %}
+      <div data-template="paragraphs/react_widget" data-entity-id="{{ entity.entityId }}" class="cta-widget" data-widget-type="cta" data-app-id="{{ appId }}"></div>
   {% else %}
     <div
       data-template="paragraphs/react_widget"

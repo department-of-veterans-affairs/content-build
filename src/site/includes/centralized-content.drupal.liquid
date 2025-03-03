@@ -5,7 +5,6 @@
   so we use the processCentralizedContent filter function to normalize the data,
   allowing our standard templates to display it.
 {% endcomment %}
-
 {% assign bundleComponent = "src/site/paragraphs/" | append: contentType %}
 {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
 {% assign processedEntity = entity | processCentralizedContent: contentType %}
