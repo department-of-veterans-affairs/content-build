@@ -1,5 +1,25 @@
 **Note**: Delete the description statements, complete each step. **None are optional**, but can be justified as to why they cannot be completed as written. Provide known gaps to testing that may raise the risk of merging to production.
 
+## Summary
+
+- _(Summarize the changes that have been made to the platform)_
+- _(If bug, how to reproduce)_
+- _(What is the solution, why is this the solution)_
+- _(Which team do you work for, does your team own the maintenance of this component?)_
+- _(If using a flipper, what is the end date of the flipper being required/success criteria being targeted)_
+
+### Generated summary
+(Select this text, hit the Copilot button, and select "Generate".)
+
+## Related issue(s)
+
+- _Link to ticket created in va.gov-team repo_
+department-of-veterans-affairs/va.gov-team#0000
+- _Link to previous change of the code/bug (if applicable)_
+department-of-veterans-affairs/vets-website#0000
+- _Link to epic if not included in ticket_
+department-of-veterans-affairs/va.gov-team#0000
+
 ## Are you removing or changing a registry.json `entryName` in this PR?
 - [ ] No, I'm not changing any `entryName`s (skip to Summary and delete the rest of this section)
 - [ ] Yes, I'm removing or changing an `entryName`
@@ -12,24 +32,6 @@ If you are:
    - _Add the link to your merged vets-website PR here_
   
 _**If you do not do this, other applications will break!**_
-
-
-## Summary
-
-- _(Summarize the changes that have been made to the platform)_
-- _(If bug, how to reproduce)_
-- _(What is the solution, why is this the solution)_
-- _(Which team do you work for, does your team own the maintenance of this component?)_
-- _(If using a flipper, what is the end date of the flipper being required/success criteria being targeted)_
-
-## Related issue(s)
-
-- _Link to ticket created in va.gov-team repo_
-department-of-veterans-affairs/va.gov-team#0000
-- _Link to previous change of the code/bug (if applicable)_
-department-of-veterans-affairs/vets-website#0000
-- _Link to epic if not included in ticket_
-department-of-veterans-affairs/va.gov-team#0000
 
 ## Testing done
 
