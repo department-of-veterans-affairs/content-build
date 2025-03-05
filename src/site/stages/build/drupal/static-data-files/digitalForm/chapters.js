@@ -64,6 +64,7 @@ const normalizeChapter = ({ entity }) => {
               type: componentEntity.type.entity.entityId,
             }),
           ),
+          id: pageEntity.entityId,
           pageTitle: pageEntity.fieldTitle,
         })),
       };

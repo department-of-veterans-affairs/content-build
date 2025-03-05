@@ -97,6 +97,10 @@ describe('digitalForm chapters', () => {
     });
 
     describe('Custom Step page', () => {
+      it('includes the entity ID', () => {
+        expect(normalizedPage.id).to.eq(queryPage.entityId);
+      });
+
       it('includes the correct page title', () => {
         expect(normalizedPage.pageTitle).to.eq(queryPage.fieldTitle);
       });
