@@ -14,4 +14,9 @@ describe('page fragment', () => {
     expect(page).to.have.string('fragment textInput');
     expect(page).to.have.string('...textInput');
   });
+
+  it('imports the textArea fragment', () => {
+    expect(page).to.have.string('fragment textArea');
+    expect(page).to.have.string('...textArea');
+  });
 });

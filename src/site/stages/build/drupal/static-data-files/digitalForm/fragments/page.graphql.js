@@ -1,3 +1,4 @@
+const textArea = require('./textArea.graphql');
 const textInput = require('./textInput.graphql');
 
 /*
@@ -6,6 +7,7 @@ const textInput = require('./textInput.graphql');
  *
  */
 module.exports = `
+${textArea}
 ${textInput}
 
 fragment page on ParagraphDigitalFormPage {
@@ -20,6 +22,7 @@ fragment page on ParagraphDigitalFormPage {
           entityLabel
         }
       }
+      ...textArea
       ...textInput
     }
   }
