@@ -15,6 +15,9 @@ module.exports = `
   entity {
     entityId
     entityLabel
+    ... on NodeHealthCareRegionPage {
+        fieldVamcEhrSystem
+    }
     reverseFieldRegionPageNode(
       limit: 50,
       filter: {
