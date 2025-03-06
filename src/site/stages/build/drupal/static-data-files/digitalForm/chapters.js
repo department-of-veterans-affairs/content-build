@@ -21,57 +21,64 @@ const extractAdditionalFields = entity => {
   }
 };
 
+const initialChapter = entity => ({
+  id: parseInt(entity.entityId, 10),
+  type: entity.type.entity.entityId,
+});
+
+const customStepChapter = entity => ({
+  ...initialChapter(entity),
+  chapterTitle: entity.fieldTitle,
+  pages: entity.fieldDigitalFormPages.map(({ entity: pageEntity }) => ({
+    bodyText: pageEntity.fieldDigitalFormBodyText,
+    components: pageEntity.fieldDigitalFormComponents.map(
+      ({ entity: componentEntity }) => ({
+        hint: componentEntity.fieldDigitalFormHintText,
+        id: componentEntity.entityId,
+        label: componentEntity.fieldDigitalFormLabel,
+        required: componentEntity.fieldDigitalFormRequired,
+        type: componentEntity.type.entity.entityId,
+      }),
+    ),
+    id: pageEntity.entityId,
+    pageTitle: pageEntity.fieldTitle,
+  })),
+});
+
+const ypiChapter = entity => {
+  const identificationInformation =
+    entity.fieldIdentificationInformation.entity;
+  const nameAndDateOfBirth = entity.fieldNameAndDateOfBirth.entity;
+
+  return {
+    ...initialChapter(entity),
+    chapterTitle: stripPrefix(entity.type.entity.entityLabel),
+    pages: [
+      {
+        pageTitle: nameAndDateOfBirth.fieldTitle,
+        includeDateOfBirth: nameAndDateOfBirth.fieldIncludeDateOfBirth,
+      },
+      {
+        pageTitle: identificationInformation.fieldTitle,
+        includeServiceNumber:
+          identificationInformation.fieldIncludeVeteranSService,
+      },
+    ],
+  };
+};
+
 const normalizeChapter = ({ entity }) => {
   const type = entity.type.entity.entityId;
-  const initialChapter = {
-    id: parseInt(entity.entityId, 10),
-    type,
-  };
 
   switch (type) {
     case 'digital_form_your_personal_info': {
-      const identificationInformation =
-        entity.fieldIdentificationInformation.entity;
-      const nameAndDateOfBirth = entity.fieldNameAndDateOfBirth.entity;
-
-      return {
-        ...initialChapter,
-        chapterTitle: stripPrefix(entity.type.entity.entityLabel),
-        pages: [
-          {
-            pageTitle: nameAndDateOfBirth.fieldTitle,
-            includeDateOfBirth: nameAndDateOfBirth.fieldIncludeDateOfBirth,
-          },
-          {
-            pageTitle: identificationInformation.fieldTitle,
-            includeServiceNumber:
-              identificationInformation.fieldIncludeVeteranSService,
-          },
-        ],
-      };
+      return ypiChapter(entity);
     }
     case 'digital_form_custom_step':
-      return {
-        ...initialChapter,
-        chapterTitle: entity.fieldTitle,
-        pages: entity.fieldDigitalFormPages.map(({ entity: pageEntity }) => ({
-          bodyText: pageEntity.fieldDigitalFormBodyText,
-          components: pageEntity.fieldDigitalFormComponents.map(
-            ({ entity: componentEntity }) => ({
-              hint: componentEntity.fieldDigitalFormHintText,
-              id: componentEntity.entityId,
-              label: componentEntity.fieldDigitalFormLabel,
-              required: componentEntity.fieldDigitalFormRequired,
-              type: componentEntity.type.entity.entityId,
-            }),
-          ),
-          id: pageEntity.entityId,
-          pageTitle: pageEntity.fieldTitle,
-        })),
-      };
+      return customStepChapter(entity);
     default:
       return {
-        ...initialChapter,
+        ...initialChapter(entity),
         additionalFields: extractAdditionalFields(entity),
         chapterTitle: entity.fieldTitle,
         pageTitle: stripPrefix(entity.type.entity.entityLabel),
