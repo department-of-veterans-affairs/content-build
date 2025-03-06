@@ -12,4 +12,4 @@ To contribute to this repository please follow the instructions on our platform 
 - [Frontend workflow](https://depo-platform-documentation.scrollhelp.site/developer-docs/Frontend-workflow.1846083611.html)
 - [Resolving critical issues](https://depo-platform-documentation.scrollhelp.site/developer-docs/Resolving-critical-issues.1846182121.html)
 
-Alternatively, you can contribute by [submitting an issue](https://github.com/department-of-veterans-affairs/content-build/issues/new/choose) to this repository outlining your request.
+Alternatively, you can contribute by [submitting an issue](https://github.com/department-of-veterans-affairs/va.gov-cms/issues/new/choose) to the CMS Team issue queue outlining your request.
