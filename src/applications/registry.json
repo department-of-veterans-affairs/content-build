@@ -1517,7 +1517,7 @@
     "rootUrl": "/representative",
     "productId": "89100c00-5b5f-46fd-bd98-d3b35f220958",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "accredited-representative-portal.html"
     }
   },
