@@ -116,6 +116,12 @@ describe('digitalForm chapters', () => {
           queryPage.fieldDigitalFormComponents.length,
         );
       });
+
+      it('includes an ID for components', () => {
+        expect(normalizedPage.components[0].id).to.eq(
+          queryPage.fieldDigitalFormComponents[0].entity.entityId,
+        );
+      });
     });
 
     describe('Text Input component', () => {

@@ -59,6 +59,7 @@ const normalizeChapter = ({ entity }) => {
           components: pageEntity.fieldDigitalFormComponents.map(
             ({ entity: componentEntity }) => ({
               hint: componentEntity.fieldDigitalFormHintText,
+              id: componentEntity.entityId,
               label: componentEntity.fieldDigitalFormLabel,
               required: componentEntity.fieldDigitalFormRequired,
               type: componentEntity.type.entity.entityId,
