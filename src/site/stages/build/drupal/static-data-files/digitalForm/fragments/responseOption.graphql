@@ -8,7 +8,7 @@
  *
  */
 module.exports = `
-fragment textInput on ParagraphDigitalFormTextInput {
+fragment responseOption on ParagraphDigitalFormResponseOption {
   fieldDigitalFormLabel
   fieldDigitalFormDescription
 }
