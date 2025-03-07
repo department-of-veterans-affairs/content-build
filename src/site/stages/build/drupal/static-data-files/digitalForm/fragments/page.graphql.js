@@ -1,4 +1,5 @@
 const date = require('./date.graphql');
+const radioButton = require('./radioButton.graphql');
 const textArea = require('./textArea.graphql');
 const textInput = require('./textInput.graphql');
 
@@ -9,6 +10,7 @@ const textInput = require('./textInput.graphql');
  */
 module.exports = `
 ${date}
+${radioButton}
 ${textArea}
 ${textInput}
 
@@ -25,6 +27,7 @@ fragment page on ParagraphDigitalFormPage {
         }
       }
       ...date
+      ...radioButton
       ...textArea
       ...textInput
     }
