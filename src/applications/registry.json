@@ -1688,6 +1688,16 @@
     }
   },
   {
+    "appName": "Discover Your Benefits - All Benefits",
+    "entryName": "discover-your-benefits-all-benefits",
+    "rootUrl": "/discover-your-benefits/all-benefits",
+    "productId": "0dc5a0e6-e22e-4729-9fd6-2d234af94c0b",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Survivor and Dependent Benefits 22-5490",
     "entryName": "survivor-dependent-education-benefit-22-5490",
     "rootUrl": "/family-and-caregiver-benefits/education-and-careers/apply-for-dea-fry-form-22-5490",
