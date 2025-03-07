@@ -1,3 +1,4 @@
+const date = require('./date.graphql');
 const textArea = require('./textArea.graphql');
 const textInput = require('./textInput.graphql');
 
@@ -7,6 +8,7 @@ const textInput = require('./textInput.graphql');
  *
  */
 module.exports = `
+${date}
 ${textArea}
 ${textInput}
 
@@ -22,6 +24,7 @@ fragment page on ParagraphDigitalFormPage {
           entityLabel
         }
       }
+      ...date
       ...textArea
       ...textInput
     }

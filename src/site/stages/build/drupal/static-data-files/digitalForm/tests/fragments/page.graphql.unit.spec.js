@@ -19,4 +19,9 @@ describe('page fragment', () => {
     expect(page).to.have.string('fragment textArea');
     expect(page).to.have.string('...textArea');
   });
+
+  it('imports the date fragment', () => {
+    expect(page).to.have.string('fragment date');
+    expect(page).to.have.string('...date');
+  });
 });
