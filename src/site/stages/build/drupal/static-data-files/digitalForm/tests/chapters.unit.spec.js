@@ -2,7 +2,7 @@
 
 import { expect } from 'chai';
 import queryResult from './fixtures/queryResult.json';
-import { normalizeChapter } from '../chapters';
+import { normalizeChapter, normalizeComponent } from '../chapters';
 
 describe('digitalForm chapters', () => {
   const queryForm = queryResult.data.nodeQuery.entities[1];
@@ -124,32 +124,56 @@ describe('digitalForm chapters', () => {
       });
     });
 
-    describe('Text Input component', () => {
-      const normalizedComponent = normalizedPage.components[0];
-      const queryComponent = queryPage.fieldDigitalFormComponents[0].entity;
+    describe('normalizeComponent', () => {
+      context('with a Text Input component', () => {
+        const queryComponent = queryPage.fieldDigitalFormComponents[0].entity;
+        const normalizedComponent = normalizeComponent(queryComponent);
 
-      it('has the correct type', () => {
-        expect(normalizedComponent.type).to.eq(
-          queryComponent.type.entity.entityId,
-        );
+        it('has the correct fields', () => {
+          expect(normalizedComponent.type).to.eq(
+            queryComponent.type.entity.entityId,
+          );
+          expect(normalizedComponent.label).to.eq(
+            queryComponent.fieldDigitalFormLabel,
+          );
+          expect(normalizedComponent.hint).to.eq(
+            queryComponent.fieldDigitalFormHintText,
+          );
+          expect(normalizedComponent.required).to.eq(
+            queryComponent.fieldDigitalFormRequired,
+          );
+        });
       });
 
-      it('includes the label', () => {
-        expect(normalizedComponent.label).to.eq(
-          queryComponent.fieldDigitalFormLabel,
-        );
-      });
+      context('with a Text Area component', () => {
+        const queryComponent = {
+          entityId: '172747',
+          type: {
+            entity: {
+              entityId: 'digital_form_text_area',
+              entityLabel: 'Digital Form: Text Area Component',
+            },
+          },
+          fieldDigitalFormLabel: 'Custom text area',
+          fieldDigitalFormHintText: null,
+          fieldDigitalFormRequired: false,
+        };
+        const normalizedComponent = normalizeComponent(queryComponent);
 
-      it('includes the hint text', () => {
-        expect(normalizedComponent.hint).to.eq(
-          queryComponent.fieldDigitalFormHintText,
-        );
-      });
-
-      it('indicates whether the component is required', () => {
-        expect(normalizedComponent.required).to.eq(
-          queryComponent.fieldDigitalFormRequired,
-        );
+        it('has the correct fields', () => {
+          expect(normalizedComponent.type).to.eq(
+            queryComponent.type.entity.entityId,
+          );
+          expect(normalizedComponent.label).to.eq(
+            queryComponent.fieldDigitalFormLabel,
+          );
+          expect(normalizedComponent.hint).to.eq(
+            queryComponent.fieldDigitalFormHintText,
+          );
+          expect(normalizedComponent.required).to.eq(
+            queryComponent.fieldDigitalFormRequired,
+          );
+        });
       });
     });
   });

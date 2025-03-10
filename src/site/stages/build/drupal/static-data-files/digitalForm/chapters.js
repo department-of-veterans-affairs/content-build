@@ -26,19 +26,21 @@ const initialChapter = entity => ({
   type: entity.type.entity.entityId,
 });
 
+const normalizeComponent = entity => ({
+  hint: entity.fieldDigitalFormHintText,
+  id: entity.entityId,
+  label: entity.fieldDigitalFormLabel,
+  required: entity.fieldDigitalFormRequired,
+  type: entity.type.entity.entityId,
+});
+
 const customStepChapter = entity => ({
   ...initialChapter(entity),
   chapterTitle: entity.fieldTitle,
   pages: entity.fieldDigitalFormPages.map(({ entity: pageEntity }) => ({
     bodyText: pageEntity.fieldDigitalFormBodyText,
     components: pageEntity.fieldDigitalFormComponents.map(
-      ({ entity: componentEntity }) => ({
-        hint: componentEntity.fieldDigitalFormHintText,
-        id: componentEntity.entityId,
-        label: componentEntity.fieldDigitalFormLabel,
-        required: componentEntity.fieldDigitalFormRequired,
-        type: componentEntity.type.entity.entityId,
-      }),
+      ({ entity: componentEntity }) => normalizeComponent(componentEntity),
     ),
     id: pageEntity.entityId,
     pageTitle: pageEntity.fieldTitle,
@@ -86,4 +88,4 @@ const normalizeChapter = ({ entity }) => {
   }
 };
 
-module.exports = { normalizeChapter };
+module.exports = { normalizeChapter, normalizeComponent };
