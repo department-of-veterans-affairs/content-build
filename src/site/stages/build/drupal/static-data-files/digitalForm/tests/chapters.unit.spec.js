@@ -175,6 +175,44 @@ describe('digitalForm chapters', () => {
           );
         });
       });
+
+      context('with a Date component', () => {
+        const queryComponent = {
+          entityId: '172741',
+          type: {
+            entity: {
+              entityId: 'digital_form_date_component',
+              entityLabel: 'Digital Form: Date Component',
+            },
+          },
+          fieldDigitalFormLabel: 'My custom date component',
+          fieldDigitalFormHintText: null,
+          fieldDigitalFormRequired: false,
+          fieldDigitalFormDateFormat: 'month_year',
+        };
+        const normalizedComponent = normalizeComponent(queryComponent);
+
+        it('has the correct fields', () => {
+          expect(normalizedComponent.type).to.eq(
+            queryComponent.type.entity.entityId,
+          );
+          expect(normalizedComponent.label).to.eq(
+            queryComponent.fieldDigitalFormLabel,
+          );
+          expect(normalizedComponent.hint).to.eq(
+            queryComponent.fieldDigitalFormHintText,
+          );
+          expect(normalizedComponent.required).to.eq(
+            queryComponent.fieldDigitalFormRequired,
+          );
+        });
+
+        it('includes the date format', () => {
+          expect(normalizedComponent.dateFormat).to.eq(
+            queryComponent.fieldDigitalFormDateFormat,
+          );
+        });
+      });
     });
   });
 });
