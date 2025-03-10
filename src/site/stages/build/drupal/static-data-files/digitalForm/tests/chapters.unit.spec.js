@@ -290,6 +290,69 @@ describe('digitalForm chapters', () => {
           );
         });
       });
+
+      context('with a checkbox component', () => {
+        const queryComponent = {
+          entityId: '172746',
+          type: {
+            entity: {
+              entityId: 'digital_form_checkbox',
+              entityLabel: 'Digital Form: Checkbox Component',
+            },
+          },
+          fieldDigitalFormLabel: 'My custom checkbox',
+          fieldDigitalFormHintText: null,
+          fieldDigitalFormRequired: false,
+          fieldDfResponseOptions: [
+            {
+              entity: {
+                entityId: '172745',
+                type: {
+                  entity: {
+                    entityLabel: 'Digital Form: Response Option',
+                    entityId: 'digital_form_response_option',
+                  },
+                },
+                fieldDigitalFormLabel: 'I agree to all these things',
+                fieldDigitalFormDescription: null,
+              },
+            },
+          ],
+        };
+        const normalizedComponent = normalizeComponent(queryComponent);
+
+        it('has the correct fields', () => {
+          expect(normalizedComponent.type).to.eq(
+            queryComponent.type.entity.entityId,
+          );
+          expect(normalizedComponent.label).to.eq(
+            queryComponent.fieldDigitalFormLabel,
+          );
+          expect(normalizedComponent.hint).to.eq(
+            queryComponent.fieldDigitalFormHintText,
+          );
+          expect(normalizedComponent.required).to.eq(
+            queryComponent.fieldDigitalFormRequired,
+          );
+        });
+
+        it('includes response options', () => {
+          expect(normalizedComponent.responseOptions.length).to.eq(
+            queryComponent.fieldDfResponseOptions.length,
+          );
+
+          const normalizedOption = normalizedComponent.responseOptions[0];
+          const queryOption = queryComponent.fieldDfResponseOptions[0].entity;
+
+          expect(normalizedOption.id).to.eq(queryOption.entityId);
+          expect(normalizedOption.label).to.eq(
+            queryOption.fieldDigitalFormLabel,
+          );
+          expect(normalizedOption.description).to.eq(
+            queryOption.fieldDigitalFormDescription,
+          );
+        });
+      });
     });
   });
 });

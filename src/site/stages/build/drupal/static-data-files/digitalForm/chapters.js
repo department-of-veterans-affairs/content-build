@@ -37,26 +37,27 @@ const normalizeComponent = entity => {
     type,
   };
 
-  if (type === 'digital_form_date_component') {
-    return {
-      ...defaultComponent,
-      dateFormat: entity.fieldDigitalFormDateFormat,
-    };
+  switch (type) {
+    case 'digital_form_date_component':
+      return {
+        ...defaultComponent,
+        dateFormat: entity.fieldDigitalFormDateFormat,
+      };
+    case 'digital_form_radio_button':
+    case 'digital_form_checkbox':
+      return {
+        ...defaultComponent,
+        responseOptions: entity.fieldDfResponseOptions.map(
+          ({ entity: optionEntity }) => ({
+            id: optionEntity.entityId,
+            label: optionEntity.fieldDigitalFormLabel,
+            description: optionEntity.fieldDigitalFormDescription,
+          }),
+        ),
+      };
+    default:
+      return defaultComponent;
   }
-  if (type === 'digital_form_radio_button') {
-    return {
-      ...defaultComponent,
-      responseOptions: entity.fieldDfResponseOptions.map(
-        ({ entity: optionEntity }) => ({
-          id: optionEntity.entityId,
-          label: optionEntity.fieldDigitalFormLabel,
-          description: optionEntity.fieldDigitalFormDescription,
-        }),
-      ),
-    };
-  }
-
-  return defaultComponent;
 };
 
 const customStepChapter = entity => ({
