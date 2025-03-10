@@ -11,7 +11,7 @@ const responseOption = require('./responseOption.graphql');
 module.exports = `
 ${responseOption}
 
-fragment radioButton on ParagraphDigitalFormCheckbox {
+fragment checkbox on ParagraphDigitalFormCheckbox {
   fieldDigitalFormLabel
   fieldDigitalFormHintText
   fieldDigitalFormRequired

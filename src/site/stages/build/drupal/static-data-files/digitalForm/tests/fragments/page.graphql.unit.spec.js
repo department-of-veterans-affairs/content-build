@@ -29,4 +29,9 @@ describe('page fragment', () => {
     expect(page).to.have.string('fragment radioButton');
     expect(page).to.have.string('...radioButton');
   });
+
+  it('imports the checkbox fragment', () => {
+    expect(page).to.have.string('fragment checkbox');
+    expect(page).to.have.string('...checkbox');
+  });
 });
