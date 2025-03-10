@@ -7,7 +7,7 @@
  *
  */
 module.exports = `
-fragment date on ParagraphDigitalFormTextInput {
+fragment date on ParagraphDigitalFormDateComponent {
   fieldDigitalFormLabel
   fieldDigitalFormHintText
   fieldDigitalFormRequired
