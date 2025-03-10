@@ -34,4 +34,8 @@ describe('page fragment', () => {
     expect(page).to.have.string('fragment checkbox');
     expect(page).to.have.string('...checkbox');
   });
+
+  it('imports the responseOption fragment', () => {
+    expect(page).to.have.string('fragment responseOption');
+  });
 });

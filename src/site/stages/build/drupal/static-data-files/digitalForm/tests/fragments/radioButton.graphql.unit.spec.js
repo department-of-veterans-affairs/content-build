@@ -11,8 +11,7 @@ describe('radioButton fragment', () => {
     expect(radioButton).to.have.string('fieldDfResponseOptions');
   });
 
-  it('imports the textInput fragment', () => {
-    expect(radioButton).to.have.string('fragment responseOption');
+  it('calls the responseOption fragment', () => {
     expect(radioButton).to.have.string('...responseOption');
   });
 });

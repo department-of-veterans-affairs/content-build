@@ -1,5 +1,3 @@
-const responseOption = require('./responseOption.graphql');
-
 /*
  *
  * The "Checkbox" Digital Form component.
@@ -9,8 +7,6 @@ const responseOption = require('./responseOption.graphql');
  *
  */
 module.exports = `
-${responseOption}
-
 fragment checkbox on ParagraphDigitalFormCheckbox {
   fieldDigitalFormLabel
   fieldDigitalFormHintText

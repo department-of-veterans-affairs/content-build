@@ -11,8 +11,7 @@ describe('checkbox fragment', () => {
     expect(checkbox).to.have.string('fieldDfResponseOptions');
   });
 
-  it('imports the textInput fragment', () => {
-    expect(checkbox).to.have.string('fragment responseOption');
+  it('calls the responseOption fragment', () => {
     expect(checkbox).to.have.string('...responseOption');
   });
 });
