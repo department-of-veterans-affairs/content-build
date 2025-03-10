@@ -43,6 +43,18 @@ const normalizeComponent = entity => {
       dateFormat: entity.fieldDigitalFormDateFormat,
     };
   }
+  if (type === 'digital_form_radio_button') {
+    return {
+      ...defaultComponent,
+      responseOptions: entity.fieldDfResponseOptions.map(
+        ({ entity: optionEntity }) => ({
+          id: optionEntity.entityId,
+          label: optionEntity.fieldDigitalFormLabel,
+          description: optionEntity.fieldDigitalFormDescription,
+        }),
+      ),
+    };
+  }
 
   return defaultComponent;
 };
