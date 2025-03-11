@@ -134,6 +134,10 @@
     </style>
   {% endif %}
 
+  {% if entityUrl.path contains 'family-caregiver-benefits' and enabledFeatureFlags.FEATURE_RUM_FAMILY_CAREGIVER_HUB %}
+    {% include "src/site/includes/datadog_rum/family-caregiver-benefit-hub.html" %}
+  {% endif %}
+
 </head>
 
 <body class="{{ body_class }} merger">
