@@ -10,16 +10,16 @@ There are several repositories that contain the code and content used to build V
 
 Once you have the site set up locally, these are some common commands you might find useful:
 
-| I want to...                        | Then you should...                                                             |
-| ----------------------------------- | ------------------------------------------------------------------------------ |
-| fetch all dependencies              | `yarn install`. Run this any time `package.json` changes                       |
-| build static HTML pages             | `yarn build`                                                                   |
-| run the dev server                  | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server    |
-| watch for template/css changes      | `yarn watch`. Runs the dev server while watching for changes                   |
-| build CSS                           | `yarn build:webpack`. Runs the webpack                                         |
-| watch for CSS changes               | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
-| build in codespaces                 | `yarn build:codespaces`. Build with codespace options                          |
-| watch in codespaces                 | `yarn watch:codespaces`. Watch with codespace options                          |
+| I want to...                   | Then you should...                                                             |
+| ------------------------------ | ------------------------------------------------------------------------------ |
+| fetch all dependencies         | `yarn install`. Run this any time `package.json` changes                       |
+| build static HTML pages        | `yarn build`                                                                   |
+| run the dev server             | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server    |
+| watch for template/css changes | `yarn watch`. Runs the dev server while watching for changes                   |
+| build CSS                      | `yarn build:webpack`. Runs the webpack                                         |
+| watch for CSS changes          | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
+| build in codespaces            | `yarn build:codespaces`. Build with codespace options                          |
+| watch in codespaces            | `yarn watch:codespaces`. Watch with codespace options                          |
 
 ### Building static content
 
@@ -31,20 +31,21 @@ on VA.gov, follow the sections below to build these static pages.
 
 #### Prepare Your Environment Settings
 
-The Content-Build can pull fresh content directly from Drupal endpoints. To do this the request for content must be authenticated. 
+The Content-Build can pull fresh content directly from Drupal endpoints. To do this the request for content must be authenticated.
 If pulling fresh content you must ensure that these command line arguments or environment variables are set:
 
-| Command Line Argument | Environment Variables | Purpose |
-| ---- | ----------- | ----------- |
-| `--drupal-user` | DRUPAL_USERNAME | Name of Drupal user that can read content. |
-| `--drupal-password` | DRUPAL_PASSWORD | Password of Drupal user that can read content.  |
-| `--drupal-address` | DRUPAL_ADDDRESS | Drupal Endpoint to pull content from. |
+| Command Line Argument | Environment Variables | Purpose                                        |
+| --------------------- | --------------------- | ---------------------------------------------- |
+| `--drupal-user`       | DRUPAL_USERNAME       | Name of Drupal user that can read content.     |
+| `--drupal-password`   | DRUPAL_PASSWORD       | Password of Drupal user that can read content. |
+| `--drupal-address`    | DRUPAL_ADDDRESS       | Drupal Endpoint to pull content from.          |
 
 Authentication credentials are stored in a local .gitignore'd file `.env`. An example file is provided to get you started:
 
 `cp .env.example .env`
 
 File contents:
+
 ```
 # .env file contents
 DRUPAL_ADDRESS=https://cms-8ry6zt2asg946vdfuiryyamuc9gkuyzc.demo.cms.va.gov/
@@ -58,7 +59,6 @@ In most cases, these values will be all you need to run a content build with fre
 
 If you do need to pull content from https://prod.cms.va.gov please contact
 [#cms-support](https://dsva.slack.com/archives/CDHBKAL9W) and request a user with permissions to read the Drupal Content API. You will need to use your assigned credentials to access Production.
-
 
 #### Build static pages using the following commands:
 
@@ -94,6 +94,7 @@ yarn fetch-drupal-cache
 ```
 
 #### Troubleshooting
+
 The [vagov-content](https://github.com/department-of-veterans-affairs/vagov-content) repository sits adjacent to `content-build` in the same way that `vets-website` does. The markdown files in `vagov-content` are pulled in during the build process. If a markdown file is present in `vagov-content`, but the template was deleted in `content-build`, you'll see a build error that reads something like this:
 
 ```
@@ -103,6 +104,7 @@ The [vagov-content](https://github.com/department-of-veterans-affairs/vagov-cont
 If this happens to you, make sure you have the latest from the `vagov-content` on your local machine, and try building `content-build` again.
 
 ## Optimizing Build Time
+
 Another method to optimize your build / watch time for content-build is to ignore templates and assets that you do not need for local testing. For instance, if you are only working on Campaign Landing Pages, you can skip building a lot of the other content types (such as Resources & Support pages and Events). If you do not need to pull any Drupal assets (such as images), you can skip that step too. This will tremendously speed up your build time.
 
 1. Open `src/site/stages/build/drupal/individual-queries.js`
@@ -189,23 +191,23 @@ yarn test:unit src/site/filters/**/*.spec.js
 After a while, you may run into a less common task. We have a lot of commands
 for doing very specific things.
 
-| I want to...                                                                                                | Then you should...                                                                                                                                                                                                           |
-| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| build the production site (dev features disabled).                                                          | `NODE_ENV=production yarn build --buildtype vagovprod`                                                                                                                                                                       |
-| fetch the latest content cache from S3                                                                      | `yarn fetch-drupal-cache` (does not require SOCKS proxy access)                                                                                                                                                              |
-| reset local environment (clean out node modules and runs npm install)                                       | `yarn reset:env`                                                                                                                                                                                                             |
-| run the site so that devices on your local network can access it                                            | `yarn watch --env.host 0.0.0.0 --env.public 198.162.x.x:3001` Note that we use CORS to limit what hosts can access different APIs, so accessing with a `192.168.x.x` address may run into problems                           |
-| run all unit tests and watch                                                                                | `yarn test:watch`                                                                                                                                                                                                            |
-| run only E2E tests (headless)                                                                               | Make sure the site is running locally (`yarn watch`) and run the tests with `yarn cy:run`                                                                                                                                  |
-| run E2E tests in the browser                                                                                | `yarn cy:open`                                                                                                                                                                                                     |
-| run all linters                                                                                             | `yarn lint`                                                                                                                                                                                                                  |
-| run only javascript linter                                                                                  | `yarn lint:js`                                                                                                                                                                                                               |
-| run lint on JS and fix anything that changed                                                                | `yarn lint:js:changed:fix`                                                                                                                                                                                                   |
-| run visual regression testing                                                                               | Start the site. Generate your baseline image set using `yarn test:visual:baseline`. Make your changes. Then run `yarn test:visual`.                                                                                          |
-| test for broken links                                                                                       | Build the site. Broken Link Checking is done via a Metalsmith plugin during build. Note that it only runs on _build_ not watch.                                                                                              |
-| add new npm modules                                                                                         | `yarn add my-module`. Use the `--dev` flag for modules that are build or test related.                                                                                                                                       |
-| get the latest json schema                                                                                  | `yarn update:schema`. This updates our [vets-json-schema](https://github.com/department-of-veterans-affairs/vets-json-schema) vets-json-schema https://github.com/department-of-veterans-affairs/ to the most recent commit. |
-| check test coverage                                                                                         | `yarn test:coverage`                                                                                                                                                                                                         |
+| I want to...                                                          | Then you should...                                                                                                                                                                                                           |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| build the production site (dev features disabled).                    | `NODE_ENV=production yarn build --buildtype vagovprod`                                                                                                                                                                       |
+| fetch the latest content cache from S3                                | `yarn fetch-drupal-cache` (does not require SOCKS proxy access)                                                                                                                                                              |
+| reset local environment (clean out node modules and runs npm install) | `yarn reset:env`                                                                                                                                                                                                             |
+| run the site so that devices on your local network can access it      | `yarn watch --env.host 0.0.0.0 --env.public 198.162.x.x:3001` Note that we use CORS to limit what hosts can access different APIs, so accessing with a `192.168.x.x` address may run into problems                           |
+| run all unit tests and watch                                          | `yarn test:watch`                                                                                                                                                                                                            |
+| run only E2E tests (headless)                                         | Make sure the site is running locally (`yarn watch`) and run the tests with `yarn cy:run`                                                                                                                                    |
+| run E2E tests in the browser                                          | `yarn cy:open`                                                                                                                                                                                                               |
+| run all linters                                                       | `yarn lint`                                                                                                                                                                                                                  |
+| run only javascript linter                                            | `yarn lint:js`                                                                                                                                                                                                               |
+| run lint on JS and fix anything that changed                          | `yarn lint:js:changed:fix`                                                                                                                                                                                                   |
+| run visual regression testing                                         | Start the site. Generate your baseline image set using `yarn test:visual:baseline`. Make your changes. Then run `yarn test:visual`.                                                                                          |
+| test for broken links                                                 | Build the site. Broken Link Checking is done via a Metalsmith plugin during build. Note that it only runs on _build_ not watch.                                                                                              |
+| add new npm modules                                                   | `yarn add my-module`. Use the `--dev` flag for modules that are build or test related.                                                                                                                                       |
+| get the latest json schema                                            | `yarn update:schema`. This updates our [vets-json-schema](https://github.com/department-of-veterans-affairs/vets-json-schema) vets-json-schema https://github.com/department-of-veterans-affairs/ to the most recent commit. |
+| check test coverage                                                   | `yarn test:coverage`                                                                                                                                                                                                         |
 
 ## Supported Browsers
 
@@ -218,5 +220,8 @@ for doing very specific things.
 | Firefox                   | 52              | _Latest version with >0.5% of traffic_ |
 
 ## Not a member of the repository and want to be added?
+
 - If you're on a VA.gov Platform team, contact your Program Manager.
 - If you're on a VFS team, you must complete [Platform Orientation](https://depo-platform-documentation.scrollhelp.site/getting-started/platform-orientation) to be added to this repository. This includes completing your Platform Orientation ticket(s) in GitHub.
+
+test
