@@ -26,5 +26,7 @@
     hiddenEmailSignupInput.setAttribute('value', event?.target?.value || '');
   };
 
-  emailSignupInput.addEventListener('input', setHiddenEmailInputValue);
+  if (emailSignupInput) {
+    emailSignupInput.addEventListener('input', setHiddenEmailInputValue);
+  }
 </script>
