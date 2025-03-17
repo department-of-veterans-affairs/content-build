@@ -1,3 +1,8 @@
+const checkbox = require('./checkbox.graphql');
+const date = require('./date.graphql');
+const radioButton = require('./radioButton.graphql');
+const responseOption = require('./responseOption.graphql');
+const textArea = require('./textArea.graphql');
 const textInput = require('./textInput.graphql');
 
 /*
@@ -6,6 +11,11 @@ const textInput = require('./textInput.graphql');
  *
  */
 module.exports = `
+${checkbox}
+${date}
+${radioButton}
+${responseOption}
+${textArea}
 ${textInput}
 
 fragment page on ParagraphDigitalFormPage {
@@ -20,6 +30,10 @@ fragment page on ParagraphDigitalFormPage {
           entityLabel
         }
       }
+      ...checkbox
+      ...date
+      ...radioButton
+      ...textArea
       ...textInput
     }
   }
