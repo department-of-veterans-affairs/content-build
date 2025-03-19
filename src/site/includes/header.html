@@ -134,7 +134,8 @@
     </style>
   {% endif %}
 
-  {% if entityUrl.path contains 'family-and-caregiver-benefits' %}
+  {% if entityUrl.path contains 'family-and-caregiver-benefits' and buildtype == "vagovprod" %}
+   <!-- DD_RUM family-caregiver-benefit -->
     {% include "src/site/includes/datadog_rum/family-caregiver-benefit-hub.html" %}
   {% endif %}
 </head>
