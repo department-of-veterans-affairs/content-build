@@ -8,7 +8,7 @@ on:
         description: "Override code freeze and create production tag"
         default: false
   schedule:
-    - cron: 0 16 * * 1-5
+    - cron: 0 15 * * 1-5
 
 concurrency:
   group: daily-prod-release

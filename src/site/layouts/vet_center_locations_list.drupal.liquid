@@ -56,8 +56,15 @@
               %}
             {% endfor %}
 
-            {% assign mobileVetCenters = fieldNearbyMobileVetCenters | getValuesForPath: 'entity' | concat: fieldOffice.entity.reverseFieldOfficeNode.entities | filterBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
-            {% for mobileVetCenter in mobileVetCenters %}
+            {% assign mainMVC = fieldOffice.entity.reverseFieldOfficeNode.entities | filterBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
+            {% for mobileVetCenter in mainMVC %}
+            {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
+              vetCenter = mobileVetCenter
+              mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
+            {% endfor %}
+
+            {% assign nearbyMVC = fieldNearbyMobileVetCenters | getValuesForPath: 'entity' | filterBy: 'entityBundle', 'vet_center_mobile_vet_center' | sortObjectsBy: 'title' %}
+            {% for mobileVetCenter in nearbyMVC %}
               {% include "src/site/includes/vet_centers/address_phone_image.liquid" with
                   vetCenter = mobileVetCenter
                   mainVetCenterPhone = fieldOffice.entity.fieldPhoneNumber %}
