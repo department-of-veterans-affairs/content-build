@@ -17,14 +17,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  const emailSignupInput = document.querySelector('#homepage-email-signup-input');
-  const hiddenEmailSignupInput = document.querySelector('#homepage-hidden-email');
-
-  const setHiddenEmailInputValue = event => {
-    hiddenEmailSignupInput.setAttribute('value', event?.target?.value || '');
-  };
-
-  emailSignupInput.addEventListener('input', setHiddenEmailInputValue);
-</script>
