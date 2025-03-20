@@ -6,15 +6,16 @@
     window.DD_RUM && window.DD_RUM.init({
       clientToken: 'pubd7a6c99934887d257e49455e667b1bcd',
       applicationId: '8eb3ffe5-db3c-49a4-88d8-506ca2f9babd',
-      // `site` refers to the Datadog site parameter of your organization
-      // see https://docs.datadoghq.com/getting_started/site/
       site: 'ddog-gov.com',
       service: 'family-and-caregiver-benefit-hub',
-      env: '<ENV_NAME>',
-      // Specify a version number to identify the deployed version of your application in Datadog
-      // version: '1.0.0',
+      env: 'vagovprod',
+      version: '1.0.1',
       sessionSampleRate: 100,
-      sessionReplaySampleRate: 20,
+      sessionReplaySampleRate: 10,
+      trackUserInteractions: true,
+      trackViewsManually: true,
+      trackResources: true,
+      trackLongTasks: true,
       defaultPrivacyLevel: 'mask-user-input',
     });
 </script>
