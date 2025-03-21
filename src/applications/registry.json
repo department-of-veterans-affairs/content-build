@@ -1796,5 +1796,32 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "21a Apply to become a VA-accredited attorney or claims agent",
+    "entryName": "representative-21a",
+    "rootUrl": "/representative/accreditation/attorney-claims-agent-form-21a",
+    "productId": "3daec032-fd6a-41de-94fd-9c5db96c79bf",
+    "template": {
+      "vagovprod": false,
+      "title": "Apply to become a VA accredited attorney or claims agent",
+      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)",
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": ""
+        },
+        {
+          "name": "VA accreditation representatives",
+          "path": "accreditation"
+        },
+        {
+          "name": "Apply to become a VA accredited attorney or claims agent",
+          "path": "accreditation/attorney-claims-agent-form-21a"
+        }
+      ]
+    }
   }
 ]
