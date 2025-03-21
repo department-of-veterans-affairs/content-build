@@ -134,10 +134,10 @@
     </style>
   {% endif %}
 
-  {% if entityUrl.path contains 'family-and-caregiver-benefits' and enabledFeatureFlags.FEATURE_RUM_FAMILY_CAREGIVER_HUB %}
+  {% if entityUrl.path contains 'family-and-caregiver-benefits' and buildtype == "vagovprod" %}
+   <!-- DD_RUM family-caregiver-benefit -->
     {% include "src/site/includes/datadog_rum/family-caregiver-benefit-hub.html" %}
   {% endif %}
-
 </head>
 
 <body class="{{ body_class }} merger">
@@ -194,6 +194,7 @@
   <script nonce="**CSP_NONCE**" type="text/javascript">
     {% include "src/site/assets/js/skip-link-focus.js" %}
   </script>
+  
 
 <script  type="text/javascript" defer>
   window.onload = function() {
