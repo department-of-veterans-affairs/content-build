@@ -1,4 +1,9 @@
 <!-- src url from https://docs.datadoghq.com/real_user_monitoring/browser/setup/#cdn-sync -->
+<!--
+  *********
+  Disabling until we figure out how to ensure that only desired pages are
+  monitored
+  *********
 <script
   nonce="**CSP_NONCE**"
   type="text/javascript"
@@ -38,8 +43,8 @@ window.addEventListener('load', () => {
         clientToken: 'pub17c22ff5e9e7e51f7ac28b828741e21a',
         applicationId: '133801ec-0b13-4a6f-9689-bd937a1ddf27',
 
-        sessionSampleRate: 10, // {% if decisionReviewRum %}
-        sessionReplaySampleRate: 20,
+        sessionSampleRate: 1, // {% if decisionReviewRum %}
+        sessionReplaySampleRate: 1,
 
         trackInteractions: true,
         trackUserInteractions: true,
@@ -54,3 +59,4 @@ window.addEventListener('load', () => {
   }
 });
 </script>
+-->
