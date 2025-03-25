@@ -19,6 +19,8 @@ module.exports = `
   fragment digitalForm on NodeDigitalForm {
     nid
     entityLabel
+    fieldDigitalFormWhatToKnow
+    fieldIntroText
     fieldVaFormNumber
     fieldOmbNumber
     fieldRespondentBurden
