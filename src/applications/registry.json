@@ -716,16 +716,6 @@
     }
   },
   {
-    "appName": "eFolders",
-    "entryName": "my-documents",
-    "rootUrl": "/my-documents",
-    "template": {
-      "title": "My Documents",
-      "layout": "page-react.html",
-      "vagovprod": false
-    }
-  },
-  {
     "appName": "Financial Status Report",
     "entryName": "request-debt-help-form-5655",
     "rootUrl": "/manage-va-debt/request-debt-help-form-5655",
