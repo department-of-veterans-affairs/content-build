@@ -97,7 +97,11 @@ Example data:
                     phoneNumberType = node.fieldTelephone.entity.fieldPhoneNumberType
                     phoneLabel = node.fieldTelephone.entity.fieldPhoneLabel 
                 %}
-          </p>
+          </p>,
+          (<va-telephone
+              tty
+              contact="711"
+        ></va-telephone>)
         {% endif %}
         {% if node.fieldEmailAddress %}
             <p class="

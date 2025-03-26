@@ -112,7 +112,11 @@
                               contact="{{ vbaFacilityMainPhone.phoneNumber }}"
                               extension="{{ vbaFacilityMainPhone.extension }}"
                               message-aria-describedby="Main Phone"
-                            ></va-telephone>
+                            ></va-telephone>,
+                            (<va-telephone
+                                tty
+                                contact="711"
+                          ></va-telephone>)
                           </p>
                         </div>
                       {% endif %}
