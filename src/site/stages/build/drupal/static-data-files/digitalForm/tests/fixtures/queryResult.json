@@ -41,9 +41,16 @@
         {
           "nid": 71004,
           "entityLabel": "Form with Many Steps",
+          "fieldIntroText":
+            "This form has many steps and is used primarily to test post-processing of Digital Forms.",
           "fieldVaFormNumber": "222222",
           "fieldOmbNumber": "1212-1212",
           "fieldRespondentBurden": 30,
+          "fieldDigitalFormWhatToKnow": [
+            "A form will have What to Know bullets.",
+            "It can have as many as five bullets.",
+            "But it can also have less."
+          ],
           "moderationState": "published",
           "fieldExpirationDate": {
             "value": "2027-01-29"

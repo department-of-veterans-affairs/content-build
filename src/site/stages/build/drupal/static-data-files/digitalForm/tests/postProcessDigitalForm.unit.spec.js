@@ -30,6 +30,14 @@ describe('postProcessDigitalForm', () => {
       expect(testChapter.id).to.eq(Number(queryChapter.entityId));
     });
 
+    it('includes Introduction Page fields', () => {
+      expect(testForm.introParagraph).to.eq(manyStepEntity.fieldIntroText);
+      expect(testForm.whatToKnowBullets.length).to.eq(3);
+      expect(testForm.whatToKnowBullets[1]).to.eq(
+        manyStepEntity.fieldDigitalFormWhatToKnow[1],
+      );
+    });
+
     it('includes an OMB info object', () => {
       const { ombInfo } = testForm;
       // towStepEntity.fieldExpirationDate is 2027-01-29
