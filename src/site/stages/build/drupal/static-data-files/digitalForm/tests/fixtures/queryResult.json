@@ -7,6 +7,7 @@
           "entityLabel": "Form with One Step",
           "fieldVaFormNumber": "11111",
           "fieldOmbNumber": "1111-1111",
+          "fieldPlainLanguageTitle": "Single step form",
           "fieldRespondentBurden": 48,
           "moderationState": "published",
           "fieldExpirationDate": {
@@ -41,6 +42,7 @@
         {
           "nid": 71004,
           "entityLabel": "Form with Many Steps",
+          "fieldPlainLanguageTitle": "Multi step form",
           "fieldVaFormNumber": "222222",
           "fieldOmbNumber": "1212-1212",
           "fieldRespondentBurden": 30,
@@ -202,6 +204,7 @@
         {
           "nid": 76371,
           "entityLabel": "Draft form",
+          "fieldPlainLanguageTitle": "A draft form",
           "fieldVaFormNumber": "abcdefg",
           "fieldOmbNumber": "1234-7890",
           "fieldRespondentBurden": 7,

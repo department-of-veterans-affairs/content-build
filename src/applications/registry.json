@@ -1719,6 +1719,7 @@
     "productId": "2e00cd49-14e2-4eb0-a3c6-5bc92c9e4618",
     "template": {
       "vagovprod": false,
+      "title": "Provide your employment history and related loss of income",
       "layout": "page-react.html"
     }
   },
