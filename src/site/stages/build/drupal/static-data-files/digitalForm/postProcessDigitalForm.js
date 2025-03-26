@@ -12,6 +12,7 @@ const normalizeForm = (form, logger = logDrupal) => {
       introParagraph: form.fieldIntroText,
       moderationState: form.moderationState,
       title: form.entityLabel,
+      plainLanguageHeader: form.fieldPlainLanguageTitle,
       ombInfo: {
         expDate: formatDate(form.fieldExpirationDate.value),
         ombNumber: form.fieldOmbNumber,

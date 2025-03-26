@@ -8,6 +8,7 @@ describe('digitalForm fragment', () => {
     expect(digitalForm).to.have.string('nid');
     expect(digitalForm).to.have.string('entityLabel');
     expect(digitalForm).to.have.string('fieldDigitalFormWhatToKnow');
+    expect(digitalForm).to.have.string('fieldPlainLanguageTitle');
     expect(digitalForm).to.have.string('fieldVaFormNumber');
     expect(digitalForm).to.have.string('fieldChapters');
     expect(digitalForm).to.have.string('fieldIntroText');

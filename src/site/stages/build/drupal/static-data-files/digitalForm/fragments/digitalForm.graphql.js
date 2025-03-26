@@ -21,6 +21,7 @@ module.exports = `
     entityLabel
     fieldDigitalFormWhatToKnow
     fieldIntroText
+    fieldPlainLanguageTitle
     fieldVaFormNumber
     fieldOmbNumber
     fieldRespondentBurden
