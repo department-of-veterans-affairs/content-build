@@ -27,7 +27,11 @@
             {% if phoneNumber %}
               <div class="vads-u-margin-bottom--4" id="field-phone-numbers">
                 {% include "src/site/includes/va_police/contact_section.liquid" with
-                  phoneNumber = phoneNumber %}
+                  phoneNumber = phoneNumber %},
+                  (<va-telephone
+                      tty
+                      contact="711"
+                ></va-telephone>)
               </div>
             {% endif %}
           {% endif %}
