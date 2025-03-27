@@ -1464,7 +1464,7 @@
   {
     "appName": "40-10007 Burial pre-need eligibility determination",
     "entryName": "pre-need-integration",
-    "rootUrl": "/burials-and-memorials/pre-need-integration",
+    "rootUrl": "/burials-memorials/pre-need/form-10007-apply-for-eligibility",
     "productId": "e5593a96-1ba0-476c-9033-31ab963436c6",
     "template": {
       "vagovprod": false,
