@@ -1417,17 +1417,13 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Records",
-          "path": "records"
-        },
-        {
-          "name": "Request personal records",
-          "path": "records/request-personal-records-form-20-10206"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Request personal records",
+        "subtitle": "Freedom of Information Act (FOIA) or Privacy Act (PA) Request (VA Form 20-10206)"
+      }
     }
   },
   {
