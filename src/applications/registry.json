@@ -725,17 +725,11 @@
       "vagovstaging": true,
       "vagovdev": true,
       "localhost": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "manage-va-debt",
-          "name": " Manage VA debt"
-        },
-        {
-          "path": "manage-va-debt/request-debt-help-form-5655",
-          "name": "Request help with VA debt"
-        }
-      ]
+      "minimalHeader": {
+        "title": "Submit a statement to support a claim",
+        "subtitle": "Statement in support of a claim (VA Form 21-4138)",
+        "excludePaths": ["/introduction", "/confirmation"]
+      }
     }
   },
   {
