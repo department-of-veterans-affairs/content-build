@@ -141,6 +141,7 @@ const FACILITY_MENU_NAMES = [
   // VISN 21
   'manila-va-clinic',
   'va-central-california-health-car',
+  'va-manila-health-care',
   'va-northern-california-health-ca',
   'va-pacific-islands-health-care',
   'va-palo-alto-health-care',
