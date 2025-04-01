@@ -1719,6 +1719,7 @@
     "productId": "2e00cd49-14e2-4eb0-a3c6-5bc92c9e4618",
     "template": {
       "vagovprod": false,
+      "title": "Provide your employment history and related loss of income",
       "layout": "page-react.html"
     }
   },
@@ -1743,13 +1744,13 @@
     }
   },
   {
-    "appName": "Demo: File for disability compensation - New conditions",
+    "appName": "Demo: File for disability compensation - Conditions",
     "entryName": "new-conditions",
-    "rootUrl": "/user-testing/new-conditions",
+    "rootUrl": "/user-testing/conditions",
     "productId": "0db1a222-9d73-4c26-9966-75283e6510a1",
     "template": {
       "vagovprod": false,
-      "title": "Demo: File for disability compensation - New conditions",
+      "title": "Demo: File for disability compensation - Conditions",
       "layout": "page-react.html",
       "includeBreadcrumbs": true
     }
@@ -1785,6 +1786,33 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21a Apply to become a VA-accredited attorney or claims agent",
+    "entryName": "representative-21a",
+    "rootUrl": "/representative/accreditation/attorney-claims-agent-form-21a",
+    "productId": "3daec032-fd6a-41de-94fd-9c5db96c79bf",
+    "template": {
+      "vagovprod": false,
+      "title": "Apply to become a VA accredited attorney or claims agent",
+      "description": "Apply to become a VA accredited attorney or claims agent (VA Form 21a)",
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": ""
+        },
+        {
+          "name": "VA accreditation representatives",
+          "path": "accreditation"
+        },
+        {
+          "name": "Apply to become a VA accredited attorney or claims agent",
+          "path": "accreditation/attorney-claims-agent-form-21a"
+        }
+      ]
     }
   }
 ]

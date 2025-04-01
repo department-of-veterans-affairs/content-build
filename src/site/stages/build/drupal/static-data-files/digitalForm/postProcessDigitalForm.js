@@ -11,6 +11,7 @@ const normalizeForm = (form, logger = logDrupal) => {
       formId: form.fieldVaFormNumber,
       moderationState: form.moderationState,
       title: form.entityLabel,
+      plainLanguageHeader: form.fieldPlainLanguageTitle,
       ombInfo: {
         expDate: formatDate(form.fieldExpirationDate.value),
         ombNumber: form.fieldOmbNumber,
