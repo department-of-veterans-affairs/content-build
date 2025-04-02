@@ -9,6 +9,7 @@ const normalizeForm = (form, logger = logDrupal) => {
     return {
       cmsId: form.nid,
       formId: form.fieldVaFormNumber,
+      introParagraph: form.fieldIntroText,
       moderationState: form.moderationState,
       title: form.entityLabel,
       plainLanguageHeader: form.fieldPlainLanguageTitle,
@@ -17,6 +18,7 @@ const normalizeForm = (form, logger = logDrupal) => {
         ombNumber: form.fieldOmbNumber,
         resBurden: form.fieldRespondentBurden,
       },
+      whatToKnowBullets: form.fieldDigitalFormWhatToKnow,
       chapters: form.fieldChapters.map(normalizeChapter),
     };
   } catch (error) {
