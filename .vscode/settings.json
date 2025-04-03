@@ -4,5 +4,8 @@
             "fileMatch": ["registry.json"],
             "url": "./src/applications/registry-schema.json"
         }
-    ]
+    ],
+    "files.associations": {
+        "*.html": "liquid"
+    }
 }

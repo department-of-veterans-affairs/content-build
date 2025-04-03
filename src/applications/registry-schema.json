@@ -4,6 +4,10 @@
     "items": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+            "entryName",
+            "rootUrl"
+        ],
         "properties": {
             "appName": {
                 "type": "string"
