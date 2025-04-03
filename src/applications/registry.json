@@ -1691,6 +1691,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
+      "title": "Add your contact information",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
