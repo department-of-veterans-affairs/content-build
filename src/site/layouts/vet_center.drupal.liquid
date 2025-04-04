@@ -112,7 +112,11 @@
                     <div class="vads-u-margin-bottom--3">
                       <div class="main-phone vads-u-margin-bottom--1">
                         {% assign phoneNumber = fieldPhoneNumber | separatePhoneNumberExtension %}
-                        <va-telephone contact="{{phoneNumber.phoneNumber}}" extension="{{phoneNumber.extension}}"></va-telephone>
+                        <va-telephone contact="{{phoneNumber.phoneNumber}}" extension="{{phoneNumber.extension}}"></va-telephone>,
+                        (<va-telephone
+                            tty
+                            contact="711"
+                      ></va-telephone>)
                       </div>
                     </div>
 
