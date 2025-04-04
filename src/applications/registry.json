@@ -1545,7 +1545,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1556,7 +1559,7 @@
   {
     "appName": "Foreign Medical Program Cover",
     "entryName": "fmp-cover-sheet",
-    "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
+    "rootUrl": "/health-care/file-foreign-medical-program/file-claim-form-10-7959f-2",
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
     "template": {
       "vagovprod": true,
@@ -1635,7 +1638,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1776,7 +1782,10 @@
       "minimalHeader": {
         "title": "Dispute Debt",
         "subtitle": "",
-        "excludePaths": ["/introduction", "/confirmation"]
+        "excludePaths": [
+          "/introduction",
+          "/confirmation"
+        ]
       }
     }
   },
