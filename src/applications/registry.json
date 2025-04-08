@@ -1417,21 +1417,17 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "name": "Records",
-          "path": "records"
-        },
-        {
-          "name": "Request personal records",
-          "path": "records/request-personal-records-form-20-10206"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Request personal records",
+        "subtitle": "Freedom of Information Act (FOIA) or Privacy Act (PA) Request (VA Form 20-10206)"
+      }
     }
   },
   {
-    "appName": "Request priority processing",
+    "appName": "Request priority processing for an existing claim",
     "entryName": "10207-pp",
     "rootUrl": "/supporting-forms-for-claims/request-priority-processing-form-20-10207",
     "productId": "9dec5d52-551b-4210-bce9-46fc495ffac8",
@@ -1464,7 +1460,7 @@
   {
     "appName": "40-10007 Burial pre-need eligibility determination",
     "entryName": "pre-need-integration",
-    "rootUrl": "/burials-and-memorials/pre-need-integration",
+    "rootUrl": "/burials-memorials/pre-need/form-10007-apply-for-eligibility",
     "productId": "e5593a96-1ba0-476c-9033-31ab963436c6",
     "template": {
       "vagovprod": false,
@@ -1537,7 +1533,7 @@
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/file-champva-claim-10-7959a",
     "productId": "e6afb103-521b-46a2-b29c-245f6c95d3af",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1549,7 +1545,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1560,7 +1559,7 @@
   {
     "appName": "Foreign Medical Program Cover",
     "entryName": "fmp-cover-sheet",
-    "rootUrl": "/health-care/foreign-medical-program/file-claim-form-10-7959f-2",
+    "rootUrl": "/health-care/file-foreign-medical-program/file-claim-form-10-7959f-2",
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
     "template": {
       "vagovprod": true,
@@ -1639,7 +1638,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1695,6 +1697,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
+      "title": "Add your contact information",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
@@ -1775,7 +1778,15 @@
       "vagovstaging": true,
       "vagovdev": true,
       "localhost": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "minimalHeader": {
+        "title": "Dispute Debt",
+        "subtitle": "",
+        "excludePaths": [
+          "/introduction",
+          "/confirmation"
+        ]
+      }
     }
   },
   {
