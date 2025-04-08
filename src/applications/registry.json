@@ -1825,5 +1825,14 @@
         }
       ]
     }
+  },
+  {
+    "appName": "Representative Form Upload",
+    "entryName": "representative-form-upload",
+    "rootUrl": "/representative/representative-form-upload",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
