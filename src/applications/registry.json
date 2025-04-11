@@ -1522,7 +1522,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1612,7 +1615,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1753,7 +1759,10 @@
       "minimalHeader": {
         "title": "Dispute Debt",
         "subtitle": "",
-        "excludePaths": ["/introduction", "/confirmation"]
+        "excludePaths": [
+          "/introduction",
+          "/confirmation"
+        ]
       }
     }
   },
