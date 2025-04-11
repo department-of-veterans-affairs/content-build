@@ -46,32 +46,6 @@
     }
   },
   {
-    "appName": "21-527EZ pension benefits form",
-    "entryName": "pensions",
-    "rootUrl": "/pension/application/527EZ",
-    "template": {
-      "title": "Apply For Pension Benefits",
-      "heading": "Apply for pension benefits",
-      "display_title": "Apply now",
-      "description": "Submit your VA pension application (VA Form 21P-527EZ) online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back later to finish filling it out.",
-      "layout": "page-react.html",
-      "spoke": "Get benefits",
-      "collection": "pension",
-      "order": 3,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "pension/",
-          "name": "Pension benefits"
-        },
-        {
-          "path": "pension/application/527EZ",
-          "name": "Apply for Veterans Pension benefits"
-        }
-      ]
-    }
-  },
-  {
     "appName": "VA Online Scheduling",
     "entryName": "vaos",
     "rootUrl": "/my-health/appointments",
@@ -1548,10 +1522,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1641,10 +1612,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1785,10 +1753,7 @@
       "minimalHeader": {
         "title": "Dispute Debt",
         "subtitle": "",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
+        "excludePaths": ["/introduction", "/confirmation"]
       }
     }
   },
