@@ -82,46 +82,16 @@ describe('digitalForm chapters', () => {
         chapter.entity.type.entity.entityId === 'digital_form_custom_step',
     );
     const normalizedChapter = normalizeChapter(queryChapter);
-    const normalizedPage = normalizedChapter.pages[0];
     const queryEntity = queryChapter.entity;
-    const queryPage = queryEntity.fieldDigitalFormPages[0].entity;
 
     it('includes the correct step title', () => {
       expect(normalizedChapter.chapterTitle).to.eq(queryEntity.fieldTitle);
     });
 
-    it('includes the correct number of pages', () => {
-      expect(normalizedChapter.pages.length).to.eq(
-        queryEntity.fieldDigitalFormPages.length,
+    it('includes a normalized page', () => {
+      expect(normalizedChapter.pages[0].id).to.eq(
+        queryEntity.fieldDigitalFormPages[0].entity.entityId,
       );
-    });
-
-    describe('Custom Step page', () => {
-      it('includes the entity ID', () => {
-        expect(normalizedPage.id).to.eq(queryPage.entityId);
-      });
-
-      it('includes the correct page title', () => {
-        expect(normalizedPage.pageTitle).to.eq(queryPage.fieldTitle);
-      });
-
-      it('includes the correct body text', () => {
-        expect(normalizedPage.bodyText).to.eq(
-          queryPage.fieldDigitalFormBodyText,
-        );
-      });
-
-      it('include the correct number of components', () => {
-        expect(normalizedPage.components.length).to.eq(
-          queryPage.fieldDigitalFormComponents.length,
-        );
-      });
-
-      it('includes an ID for components', () => {
-        expect(normalizedPage.components[0].id).to.eq(
-          queryPage.fieldDigitalFormComponents[0].entity.entityId,
-        );
-      });
     });
   });
 });

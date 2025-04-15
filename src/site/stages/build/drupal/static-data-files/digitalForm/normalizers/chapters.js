@@ -1,5 +1,5 @@
-const { normalizeComponent } = require('./components');
 const { stripPrefix } = require('../utils');
+const { normalizePages } = require('./pages');
 
 const extractAdditionalFields = entity => {
   const { entityId } = entity.type.entity;
@@ -30,14 +30,7 @@ const initialChapter = entity => ({
 const customStepChapter = entity => ({
   ...initialChapter(entity),
   chapterTitle: entity.fieldTitle,
-  pages: entity.fieldDigitalFormPages.map(({ entity: pageEntity }) => ({
-    bodyText: pageEntity.fieldDigitalFormBodyText,
-    components: pageEntity.fieldDigitalFormComponents.map(
-      ({ entity: componentEntity }) => normalizeComponent(componentEntity),
-    ),
-    id: pageEntity.entityId,
-    pageTitle: pageEntity.fieldTitle,
-  })),
+  pages: normalizePages(entity.fieldDigitalFormPages),
 });
 
 const ypiChapter = entity => {
@@ -81,4 +74,4 @@ const normalizeChapter = ({ entity }) => {
   }
 };
 
-module.exports = { normalizeChapter, normalizeComponent };
+module.exports = { normalizeChapter };
