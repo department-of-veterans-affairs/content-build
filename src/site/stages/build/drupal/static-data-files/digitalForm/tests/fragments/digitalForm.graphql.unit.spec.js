@@ -25,6 +25,7 @@ describe('digitalForm fragment', () => {
     [
       'address',
       'customStep',
+      'employmentHistory',
       'listLoop',
       'phoneAndEmail',
       'yourPersonalInformation',
