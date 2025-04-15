@@ -16,7 +16,6 @@ describe('listLoop fragment', () => {
   });
 
   it('imports the page fragment', () => {
-    expect(listLoop).to.have.string('fragment page');
     expect(listLoop).to.have.string('...page');
   });
 });
