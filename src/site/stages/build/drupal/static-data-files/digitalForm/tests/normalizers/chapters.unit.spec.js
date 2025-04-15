@@ -1,8 +1,8 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 
 import { expect } from 'chai';
-import queryResult from './fixtures/queryResult.json';
-import { normalizeChapter } from '../chapters';
+import queryResult from '../fixtures/queryResult.json';
+import { normalizeChapter } from '../../normalizers/chapters';
 
 describe('digitalForm chapters', () => {
   const queryForm = queryResult.data.nodeQuery.entities[1];

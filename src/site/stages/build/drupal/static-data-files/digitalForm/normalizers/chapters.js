@@ -1,5 +1,5 @@
-const { normalizeComponent } = require('./normalizers/components');
-const { stripPrefix } = require('./utils');
+const { normalizeComponent } = require('./components');
+const { stripPrefix } = require('../utils');
 
 const extractAdditionalFields = entity => {
   const { entityId } = entity.type.entity;
