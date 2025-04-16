@@ -9,10 +9,6 @@ const extractAdditionalFields = entity => {
       return {
         militaryAddressCheckbox: entity.fieldMilitaryAddressCheckbox,
       };
-    case 'digital_form_list_loop':
-      return {
-        optional: entity.fieldOptional,
-      };
     case 'digital_form_phone_and_email':
       return {
         includeEmail: entity.fieldIncludeEmail,
@@ -31,6 +27,17 @@ const customStepChapter = entity => ({
   ...initialChapter(entity),
   chapterTitle: entity.fieldTitle,
   pages: normalizePages(entity.fieldDigitalFormPages),
+});
+
+const listLoopChapter = entity => ({
+  ...initialChapter(entity),
+  chapterTitle: entity.fieldTitle,
+  itemNameLabel: entity.fieldItemNameLabel,
+  maxItems: entity.fieldListLoopMaxItems,
+  nounPlural: entity.fieldListLoopNounPlural,
+  nounSingular: entity.fieldListLoopNounSingular,
+  optional: entity.fieldOptional,
+  sectionIntro: entity.fieldSectionIntro,
 });
 
 const ypiChapter = entity => {
@@ -64,6 +71,8 @@ const normalizeChapter = ({ entity }) => {
     }
     case 'digital_form_custom_step':
       return customStepChapter(entity);
+    case 'digital_form_list_loop':
+      return listLoopChapter(entity);
     default:
       return {
         ...initialChapter(entity),

@@ -29,7 +29,6 @@ describe('digitalForm chapters', () => {
   describe('additionalFields', () => {
     [
       ['digital_form_address', 'militaryAddressCheckbox', false],
-      ['digital_form_list_loop', 'optional', false],
       ['digital_form_phone_and_email', 'includeEmail', false],
     ].forEach(([type, additionalField, value]) => {
       context(`with a ${type} step`, () => {
@@ -93,5 +92,36 @@ describe('digitalForm chapters', () => {
         queryEntity.fieldDigitalFormPages[0].entity.entityId,
       );
     });
+  });
+
+  describe('List & Loop', () => {
+    const queryChapter = queryForm.fieldChapters.find(
+      chapter =>
+        chapter.entity.type.entity.entityId === 'digital_form_list_loop',
+    );
+    const normalizedChapter = normalizeChapter(queryChapter);
+    const queryEntity = queryChapter.entity;
+
+    it('includes the correct fields', () => {
+      expect(normalizedChapter.chapterTitle).to.eq(queryEntity.fieldTitle);
+      expect(normalizedChapter.optional).to.eq(queryEntity.fieldOptional);
+      expect(normalizedChapter.sectionIntro).to.eq(
+        queryEntity.fieldSectionIntro,
+      );
+      expect(normalizedChapter.itemNameLabel).to.eq(
+        queryEntity.fieldItemNameLabel,
+      );
+      expect(normalizedChapter.maxItems).to.eq(
+        queryEntity.fieldListLoopMaxItems,
+      );
+      expect(normalizedChapter.nounSingular).to.eq(
+        queryEntity.fieldListLoopNounSingular,
+      );
+      expect(normalizedChapter.nounPlural).to.eq(
+        queryEntity.fieldListLoopNounPlural,
+      );
+    });
+
+    it('includes a normalized page');
   });
 });
