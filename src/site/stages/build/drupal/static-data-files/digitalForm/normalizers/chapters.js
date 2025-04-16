@@ -37,6 +37,7 @@ const listLoopChapter = entity => ({
   nounPlural: entity.fieldListLoopNounPlural,
   nounSingular: entity.fieldListLoopNounSingular,
   optional: entity.fieldOptional,
+  pages: normalizePages(entity.fieldDigitalFormPages),
   sectionIntro: entity.fieldSectionIntro,
 });
 

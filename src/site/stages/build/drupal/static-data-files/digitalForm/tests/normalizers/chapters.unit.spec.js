@@ -122,6 +122,10 @@ describe('digitalForm chapters', () => {
       );
     });
 
-    it('includes a normalized page');
+    it('includes a normalized page', () => {
+      expect(normalizedChapter.pages[0].id).to.eq(
+        queryEntity.fieldDigitalFormPages[0].entity.entityId,
+      );
+    });
   });
 });
