@@ -15,4 +15,8 @@ describe('textInput fragment', () => {
   it('includes fieldDigitalFormRequired', () => {
     expect(textInput).to.have.string('fieldDigitalFormRequired');
   });
+
+  it('includes fieldListLoopSummaryCard', () => {
+    expect(textInput).to.have.string('fieldListLoopSummaryCard');
+  });
 });
