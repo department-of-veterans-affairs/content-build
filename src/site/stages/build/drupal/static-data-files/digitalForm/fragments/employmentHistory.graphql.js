@@ -4,7 +4,7 @@
  *
  */
 module.exports = `
-fragment employmentHistory on ParagraphDigitalFormListLoop {
+fragment employmentHistory on ParagraphListLoopEmploymentHistory {
   fieldTitle
 }
 `;
