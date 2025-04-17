@@ -27,6 +27,11 @@ const normalizeComponent = entity => {
           }),
         ),
       };
+    case 'digital_form_text_input':
+      return {
+        ...defaultComponent,
+        summaryCard: entity.fieldListLoopSummaryCard,
+      };
     default:
       return defaultComponent;
   }

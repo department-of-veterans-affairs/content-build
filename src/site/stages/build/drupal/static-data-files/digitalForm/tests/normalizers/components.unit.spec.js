@@ -16,6 +16,7 @@ describe('normalizeComponent', () => {
       fieldDigitalFormLabel: 'My custom text input',
       fieldDigitalFormHintText: 'This is optional hint text',
       fieldDigitalFormRequired: true,
+      fieldListLoopSummaryCard: true,
     };
     const normalizedComponent = normalizeComponent(queryComponent);
 
@@ -31,6 +32,9 @@ describe('normalizeComponent', () => {
       );
       expect(normalizedComponent.required).to.eq(
         queryComponent.fieldDigitalFormRequired,
+      );
+      expect(normalizedComponent.summaryCard).to.eq(
+        queryComponent.fieldListLoopSummaryCard,
       );
     });
   });
