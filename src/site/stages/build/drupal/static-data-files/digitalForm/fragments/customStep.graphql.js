@@ -1,5 +1,3 @@
-const page = require('./page.graphql');
-
 /*
  *
  * The "Single Response" Digital Form pattern.
@@ -9,8 +7,6 @@ const page = require('./page.graphql');
  *
  */
 module.exports = `
-${page}
-
 fragment customStep on ParagraphDigitalFormCustomStep {
   fieldTitle
   fieldDigitalFormPages {

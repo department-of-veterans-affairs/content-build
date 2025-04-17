@@ -19,4 +19,8 @@ describe('date fragment', () => {
   it('includes fieldDigitalFormDateFormat', () => {
     expect(date).to.have.string('fieldDigitalFormDateFormat');
   });
+
+  it('includes fieldListLoopSummaryCard', () => {
+    expect(date).to.have.string('fieldListLoopSummaryCard');
+  });
 });

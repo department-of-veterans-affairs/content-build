@@ -1,5 +1,5 @@
 const { logDrupal } = require('../../utilities-drupal');
-const { normalizeChapter } = require('./chapters');
+const { normalizeChapter } = require('./normalizers/chapters');
 const { formatDate } = require('./utils');
 
 const extractForms = resultObject => resultObject?.data?.nodeQuery?.entities;

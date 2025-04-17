@@ -1,5 +1,7 @@
 const address = require('./address.graphql');
 const customStep = require('./customStep.graphql');
+const employmentHistory = require('./employmentHistory.graphql');
+const page = require('./page.graphql');
 const phoneAndEmail = require('./phoneAndEmail.graphql');
 const yourPersonalInformation = require('./yourPersonalInformation.graphql');
 const listLoop = require('./listLoop.graphql');
@@ -12,7 +14,9 @@ const listLoop = require('./listLoop.graphql');
 module.exports = `
   ${address}
   ${customStep}
+  ${employmentHistory}
   ${listLoop}
+  ${page}
   ${phoneAndEmail}
   ${yourPersonalInformation}
 
@@ -40,6 +44,7 @@ module.exports = `
         }
         ...address
         ...customStep
+        ...employmentHistory
         ...listLoop
         ...phoneAndEmail
         ...yourPersonalInformation

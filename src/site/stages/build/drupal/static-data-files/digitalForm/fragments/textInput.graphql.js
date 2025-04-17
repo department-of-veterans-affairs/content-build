@@ -11,5 +11,6 @@ fragment textInput on ParagraphDigitalFormTextInput {
   fieldDigitalFormLabel
   fieldDigitalFormHintText
   fieldDigitalFormRequired
+  fieldListLoopSummaryCard
 }
   `;

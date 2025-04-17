@@ -107,17 +107,195 @@
                 "fieldIncludeEmail": false
               }
             },
-            {
+             {
               "entity": {
-                "entityId": "162026",
+                "entityId": "176042",
                 "type": {
                   "entity": {
                     "entityId": "digital_form_list_loop",
                     "entityLabel": "Digital Form: List & Loop"
                   }
                 },
-                "fieldTitle": "Generated List & Loop",
-                "fieldOptional": false
+                "fieldTitle": "Custom List & Loop Example",
+                "fieldOptional": true,
+                "fieldSectionIntro": null,
+                "fieldItemNameLabel": "Name of example",
+                "fieldListLoopMaxItems": 9,
+                "fieldListLoopNounPlural": "examples",
+                "fieldListLoopNounSingular": "example",
+                "fieldDigitalFormPages": [
+                  {
+                    "entity": {
+                      "entityId": "176031",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What is the date of this example?",
+                      "fieldDigitalFormBodyText": "This could be a date in the past, the current date, or a date in the future.",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176030",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_date_component",
+                                "entityLabel": "Digital Form: Date Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Example date",
+                            "fieldDigitalFormHintText": "The date in month/year format.",
+                            "fieldDigitalFormRequired": true,
+                            "fieldDigitalFormDateFormat": "month_year"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "176033",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What is a nickname for this example?",
+                      "fieldDigitalFormBodyText": null,
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176032",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Nickname",
+                            "fieldDigitalFormHintText": "Something catchy and memorable",
+                            "fieldDigitalFormRequired": true
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "176035",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What is the meat of this example?",
+                      "fieldDigitalFormBodyText": "Briefly describe what happened in this example.",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176034",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_area",
+                                "entityLabel": "Digital Form: Text Area Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Explanation",
+                            "fieldDigitalFormHintText": null,
+                            "fieldDigitalFormRequired": true
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "176041",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What companies were involved?",
+                      "fieldDigitalFormBodyText": null,
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176040",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_checkbox",
+                                "entityLabel": "Digital Form: Checkbox Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Select the companies involved in this example",
+                            "fieldDigitalFormHintText": null,
+                            "fieldDigitalFormRequired": false,
+                            "fieldDfResponseOptions": [
+                              {
+                                "entity": {
+                                  "entityId": "176036",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Startup company",
+                                  "fieldDigitalFormDescription": "The plucky startup"
+                                }
+                              },
+                              {
+                                "entity": {
+                                  "entityId": "176037",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Fortune 500 Company",
+                                  "fieldDigitalFormDescription": "A huge, publicly listed company"
+                                }
+                              },
+                              {
+                                "entity": {
+                                  "entityId": "176038",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Medium Sized Business, LLC",
+                                  "fieldDigitalFormDescription": null
+                                }
+                              },
+                              {
+                                "entity": {
+                                  "entityId": "176039",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Individual Small Business Owner",
+                                  "fieldDigitalFormDescription": "They do their best"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             },
             {
@@ -221,17 +399,17 @@
             "value": "2025-12-28"
           },
           "fieldChapters": [
+
             {
               "entity": {
-                "entityId": "172718",
+                "entityId": "176029",
                 "type": {
                   "entity": {
-                    "entityId": "digital_form_list_loop",
-                    "entityLabel": "Digital Form: List & Loop"
+                    "entityId": "list_loop_employment_history",
+                    "entityLabel": "List & Loop: Employment History"
                   }
                 },
-                "fieldTitle": "Multiple draft responses",
-                "fieldOptional": false
+                "fieldTitle": "Veteran's employment history"
               }
             }
           ]
