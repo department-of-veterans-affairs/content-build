@@ -83,6 +83,7 @@ describe('normalizeComponent', () => {
       fieldDigitalFormHintText: null,
       fieldDigitalFormRequired: false,
       fieldDigitalFormDateFormat: 'month_year',
+      fieldListLoopSummaryCard: false,
     };
     const normalizedComponent = normalizeComponent(queryComponent);
 
@@ -98,6 +99,9 @@ describe('normalizeComponent', () => {
       );
       expect(normalizedComponent.required).to.eq(
         queryComponent.fieldDigitalFormRequired,
+      );
+      expect(normalizedComponent.summaryCard).to.eq(
+        queryComponent.fieldListLoopSummaryCard,
       );
     });
 

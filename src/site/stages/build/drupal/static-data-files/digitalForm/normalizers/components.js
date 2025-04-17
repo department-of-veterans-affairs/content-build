@@ -13,6 +13,7 @@ const normalizeComponent = entity => {
     case 'digital_form_date_component':
       return {
         ...defaultComponent,
+        summaryCard: entity.fieldListLoopSummaryCard,
         dateFormat: entity.fieldDigitalFormDateFormat,
       };
     case 'digital_form_radio_button':
