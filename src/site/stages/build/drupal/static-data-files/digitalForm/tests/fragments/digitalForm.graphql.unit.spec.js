@@ -25,6 +25,7 @@ describe('digitalForm fragment', () => {
     [
       'address',
       'customStep',
+      'employmentHistory',
       'listLoop',
       'phoneAndEmail',
       'yourPersonalInformation',
@@ -33,6 +34,10 @@ describe('digitalForm fragment', () => {
         expect(digitalForm).to.have.string(`fragment ${fragment}`);
         expect(digitalForm).to.have.string(`...${fragment}`);
       });
+    });
+
+    it('imports the page fragment', () => {
+      expect(digitalForm).to.have.string('fragment page');
     });
   });
 });

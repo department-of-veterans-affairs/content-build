@@ -1,4 +1,5 @@
-const { stripPrefix } = require('./utils');
+const { stripPrefix } = require('../utils');
+const { normalizePages } = require('./pages');
 
 const extractAdditionalFields = entity => {
   const { entityId } = entity.type.entity;
@@ -7,10 +8,6 @@ const extractAdditionalFields = entity => {
     case 'digital_form_address':
       return {
         militaryAddressCheckbox: entity.fieldMilitaryAddressCheckbox,
-      };
-    case 'digital_form_list_loop':
-      return {
-        optional: entity.fieldOptional,
       };
     case 'digital_form_phone_and_email':
       return {
@@ -26,51 +23,22 @@ const initialChapter = entity => ({
   type: entity.type.entity.entityId,
 });
 
-const normalizeComponent = entity => {
-  const type = entity.type.entity.entityId;
-
-  const defaultComponent = {
-    hint: entity.fieldDigitalFormHintText,
-    id: entity.entityId,
-    label: entity.fieldDigitalFormLabel,
-    required: entity.fieldDigitalFormRequired,
-    type,
-  };
-
-  switch (type) {
-    case 'digital_form_date_component':
-      return {
-        ...defaultComponent,
-        dateFormat: entity.fieldDigitalFormDateFormat,
-      };
-    case 'digital_form_radio_button':
-    case 'digital_form_checkbox':
-      return {
-        ...defaultComponent,
-        responseOptions: entity.fieldDfResponseOptions.map(
-          ({ entity: optionEntity }) => ({
-            id: optionEntity.entityId,
-            label: optionEntity.fieldDigitalFormLabel,
-            description: optionEntity.fieldDigitalFormDescription,
-          }),
-        ),
-      };
-    default:
-      return defaultComponent;
-  }
-};
-
 const customStepChapter = entity => ({
   ...initialChapter(entity),
   chapterTitle: entity.fieldTitle,
-  pages: entity.fieldDigitalFormPages.map(({ entity: pageEntity }) => ({
-    bodyText: pageEntity.fieldDigitalFormBodyText,
-    components: pageEntity.fieldDigitalFormComponents.map(
-      ({ entity: componentEntity }) => normalizeComponent(componentEntity),
-    ),
-    id: pageEntity.entityId,
-    pageTitle: pageEntity.fieldTitle,
-  })),
+  pages: normalizePages(entity.fieldDigitalFormPages),
+});
+
+const listLoopChapter = entity => ({
+  ...initialChapter(entity),
+  chapterTitle: entity.fieldTitle,
+  itemNameLabel: entity.fieldItemNameLabel,
+  maxItems: entity.fieldListLoopMaxItems,
+  nounPlural: entity.fieldListLoopNounPlural,
+  nounSingular: entity.fieldListLoopNounSingular,
+  optional: entity.fieldOptional,
+  pages: normalizePages(entity.fieldDigitalFormPages),
+  sectionIntro: entity.fieldSectionIntro,
 });
 
 const ypiChapter = entity => {
@@ -104,6 +72,8 @@ const normalizeChapter = ({ entity }) => {
     }
     case 'digital_form_custom_step':
       return customStepChapter(entity);
+    case 'digital_form_list_loop':
+      return listLoopChapter(entity);
     default:
       return {
         ...initialChapter(entity),
@@ -114,4 +84,4 @@ const normalizeChapter = ({ entity }) => {
   }
 };
 
-module.exports = { normalizeChapter, normalizeComponent };
+module.exports = { normalizeChapter };

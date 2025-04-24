@@ -10,5 +10,22 @@ module.exports = `
 fragment listLoop on ParagraphDigitalFormListLoop {
   fieldTitle
   fieldOptional
+  fieldSectionIntro
+  fieldItemNameLabel
+  fieldListLoopMaxItems
+  fieldListLoopNounPlural
+  fieldListLoopNounSingular
+  fieldDigitalFormPages {
+    entity {
+      entityId
+      type {
+        entity {
+          entityId
+          entityLabel
+        }
+      }
+      ...page
+    }
+  }
 }
 `;

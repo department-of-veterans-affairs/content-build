@@ -10,7 +10,6 @@ describe('customStep fragment', () => {
   });
 
   it('imports the page fragment', () => {
-    expect(customStep).to.have.string('fragment page');
     expect(customStep).to.have.string('...page');
   });
 });

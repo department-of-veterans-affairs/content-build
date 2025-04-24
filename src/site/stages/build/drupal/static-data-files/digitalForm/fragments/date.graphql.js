@@ -12,5 +12,6 @@ fragment date on ParagraphDigitalFormDateComponent {
   fieldDigitalFormHintText
   fieldDigitalFormRequired
   fieldDigitalFormDateFormat
+  fieldListLoopSummaryCard
 }
   `;
