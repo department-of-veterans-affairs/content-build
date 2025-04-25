@@ -1802,5 +1802,25 @@
         }
       ]
     }
+  },
+  {
+    "appName": "10-10d Extended",
+    "entryName": "10-10d-extended",
+    "rootUrl": "/ivc-champva/10-10d-extended",
+    "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "10-10d Extended",
+        "subtitle": "CHAMPVA application (includes 10-7959c) (VA Form 10-10D-EXTENDED)"
+      }
+    }
   }
 ]
