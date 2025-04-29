@@ -1,0 +1,32 @@
+name: 'Send GHA metrics to Datadog'
+on:
+  workflow_run:
+    workflows:
+      - 'Content Release'
+    types:
+      - completed
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@4fc4975a852c8cd99761e2de1f4ba73402e44dd9 # v4.0.3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-gov-west-1
+
+      - name: Get Datadog api key from Parameter Store
+        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        with:
+          ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
+          env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
+
+      - name: Send GitHub Actions metrics to DataDog
+        uses: int128/datadog-actions-metrics@432f143460957c07e730f9f082af7d5063e99f84 # v1.88.0
+        with:
+          datadog-api-key: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}
+          collect-job-metrics: true
+          collect-step-metrics: true
+          datadog-site: ddog-gov.com

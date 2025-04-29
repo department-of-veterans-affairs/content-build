@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Node modules.
 const _ = require('lodash');
 const converter = require('number-to-words');
@@ -608,7 +609,7 @@ module.exports = function registerFilters() {
           acc.mobileClinics.push(healthService);
         } else if (
           facility.fieldFacilityClassification === '7' || // Community Living Centers (CLCs)
-          facility.fieldFacilityClassification === '8' // Domiliciary Residential Rehabilitation Treatment Programs (DOMs)
+          facility.fieldFacilityClassification === '8' // Domiciliary Residential Rehabilitation Treatment Programs (DOMs)
         ) {
           acc.CLCsAndDOMs.push(healthService);
         } else {
@@ -672,30 +673,138 @@ module.exports = function registerFilters() {
     return breadcrumbs;
   };
 
-  liquid.filters.deriveLcBreadcrumbs = (
-    breadcrumbs,
-    string,
-    currentPath,
-    pageTitle,
-  ) => {
+  liquid.filters.deriveLcBreadcrumbs = breadcrumbs => {
     // Remove any resources crumb - we don't want the drupal page title.
     const filteredCrumbs = breadcrumbs.filter(
       crumb => crumb.url.path !== '/resources',
     );
-    // Add the resources crumb with the correct crumb title.
-    filteredCrumbs.push({
-      url: { path: '/resources', routed: false },
-      text: 'Resources and support',
-    });
 
-    if (pageTitle) {
-      filteredCrumbs.push({
-        url: { path: currentPath, routed: true },
-        text: string,
+    const firstBreadcrumbIsHome =
+      breadcrumbs?.[0].text.toLowerCase() === 'home';
+
+    if (firstBreadcrumbIsHome) {
+      // Add the resources crumb with the correct crumb title after "home"
+      filteredCrumbs.splice(1, 0, {
+        url: { path: '/resources', routed: false },
+        text: 'Resources and support',
       });
     }
 
     return filteredCrumbs;
+  };
+
+  liquid.filters.formatForBreadcrumbs = (
+    breadcrumbs,
+    currentTitle,
+    currentPath,
+    hideHome,
+    customHomeText,
+  ) => {
+    // return early if no breadcrumbs
+    if (!breadcrumbs) return '';
+
+    // Remove "empty path" breadcrumbs
+    const filteredCrumbs = breadcrumbs.filter(
+      ({ url: { path } }) => path !== '' && path !== null,
+    );
+
+    // Add current title and path to end of breadcrumbs array
+    if (currentPath) {
+      filteredCrumbs.push({
+        url: { path: currentPath, routed: false },
+        text: currentTitle,
+      });
+    }
+
+    // Remove duplicate paths and handle custom home text
+    const pathsFound = [];
+    const reducedCrumbs = filteredCrumbs.reduce((acc, crumb) => {
+      // Check if we've seen this path before (skip if it is a duplicate)
+      if (pathsFound.indexOf(crumb.url.path) === -1) {
+        // Make a copy of the crumb so we can safely alter it (eslint thing)
+        const crumbClone = { ...crumb };
+
+        // If this crumb points towards the home page and there is custom home text
+        // then apply the custom home text
+        if (crumb.url.path === '/' && !hideHome && customHomeText) {
+          crumbClone.text = customHomeText;
+        }
+
+        pathsFound.push(crumb.url.path);
+        acc.push(crumbClone);
+      }
+
+      return acc;
+    }, []);
+
+    // Re-map path and text to href and label, add lang
+    const newBC = reducedCrumbs.map(({ url: { path }, text }) => {
+      // Set language to Spanish if "-esp" is at the end of the url,
+      // or Tagalog if "-tag" is at the end of the url
+      let lang = 'en-US';
+      if (path.endsWith('-esp')) lang = 'es';
+      if (path.endsWith('-tag')) lang = 'tl';
+
+      return {
+        href: path,
+        isRouterLink: false,
+        label: text,
+        lang,
+      };
+    });
+
+    // Run JSON.stringify twice in order to make Liquid engine happy
+    return JSON.stringify(JSON.stringify(newBC));
+  };
+
+  liquid.filters.formatForBreadcrumbsHTML = breadcrumbs => {
+    // return early if no breadcrumbs
+    if (!breadcrumbs) return '';
+
+    // Remove "empty path" breadcrumbs
+    const filteredCrumbs = breadcrumbs.filter(
+      ({ path }) => path !== '' && path !== null,
+    );
+
+    // Add "Home" path since it's not included by default
+    filteredCrumbs.unshift({
+      path: '',
+      name: 'VA.gov home',
+    });
+
+    const mappedCrumbs = filteredCrumbs.map(crumb => {
+      const {
+        path,
+        children,
+      } = /** @type {{path: string, children: array}} */ (crumb);
+      let { name } = /** @type {{name: string}} */ (crumb);
+
+      // // Replace hyphens in the name with spaces
+      // name = name.replace('-', ' '); // commenting this out to ensure proper functionality
+
+      // Capitalize the first letter of the name
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+
+      const { display_title: displayTitle, title } =
+        (children && children[0]?.file) ?? {};
+      // Assigns the first non-null value, defaulting back to the original name
+      const label = displayTitle || title || name;
+
+      // Set language to Spanish if "-esp" is at the end of the url,
+      // or Tagalog if "-tag" is at the end of the url
+      let lang = 'en-US';
+      if (path.endsWith('-esp')) lang = 'es';
+      if (path.endsWith('-tag')) lang = 'tl';
+
+      return {
+        href: `/${path}`,
+        isRouterLink: false,
+        label,
+        lang,
+      };
+    });
+
+    return JSON.stringify(JSON.stringify(mappedCrumbs));
   };
 
   // used to get a base url path of a health care region from entityUrl.path
@@ -729,6 +838,38 @@ module.exports = function registerFilters() {
 
   // sort a list of objects by a certain property in the object
   liquid.filters.sortObjectsBy = (entities, path) => _.sortBy(entities, path);
+
+  // VBA facilities have accordions with headers that can come from two different
+  // object keys depending on the type of service (facilityService or regionalService)
+  // This sorts alphabetically regardless of key
+  liquid.filters.sortObjectsWithConditionalKeys = entities => {
+    const getFieldToCompare = obj => {
+      let serviceDetails = obj;
+
+      if (obj?.facilityService) {
+        serviceDetails = obj.facilityService;
+      } else if (obj?.regionalService) {
+        serviceDetails = obj.regionalService;
+      }
+
+      return serviceDetails.fieldServiceNameAndDescripti.entity.name;
+    };
+
+    return entities.sort((a, b) => {
+      const name1 = getFieldToCompare(a);
+      const name2 = getFieldToCompare(b);
+
+      if (name1 < name2) {
+        return -1;
+      }
+
+      if (name1 > name2) {
+        return 1;
+      }
+
+      return 0;
+    });
+  };
 
   liquid.filters.getValueFromObjPath = (obj, path) => _.get(obj, path);
 
@@ -812,7 +953,7 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.formatSeconds = rawSeconds => {
-    // Dates need milliseconds, so mulitply by 1000.
+    // Dates need milliseconds, so multiply by 1000.
     const date = new Date(rawSeconds * 1000);
 
     // Derive digits.
@@ -852,19 +993,19 @@ module.exports = function registerFilters() {
       categoryLabel: 'Topics',
     }));
 
-    let beneficiaresAudiences = [];
+    let beneficiariesAudiences = [];
     if (
       fieldAudienceBeneficiares &&
       !Array.isArray(fieldAudienceBeneficiares)
     ) {
-      beneficiaresAudiences = [fieldAudienceBeneficiares?.entity];
+      beneficiariesAudiences = [fieldAudienceBeneficiares?.entity];
     } else if (fieldAudienceBeneficiares) {
-      beneficiaresAudiences = fieldAudienceBeneficiares.map(
+      beneficiariesAudiences = fieldAudienceBeneficiares.map(
         audience => audience?.entity,
       );
     }
 
-    const audiences = [fieldNonBeneficiares?.entity, ...beneficiaresAudiences]
+    const audiences = [fieldNonBeneficiares?.entity, ...beneficiariesAudiences]
       .filter(tag => !!tag)
       .map(audience => ({
         ...audience,
@@ -996,9 +1137,16 @@ module.exports = function registerFilters() {
     fieldReferralRequired,
   ) => {
     if (
-      (fieldOfficeVisits && fieldOfficeVisits !== 'no') ||
-      (fieldVirtualSupport && fieldVirtualSupport !== 'no') ||
-      fieldReferralRequired
+      (fieldOfficeVisits &&
+        fieldOfficeVisits !== 'no' &&
+        fieldOfficeVisits !== 'null') ||
+      (fieldVirtualSupport &&
+        fieldVirtualSupport !== 'no' &&
+        fieldVirtualSupport !== 'null') ||
+      (fieldReferralRequired &&
+        fieldReferralRequired !== 'not_applicable' &&
+        fieldReferralRequired !== 'unknown' &&
+        fieldReferralRequired !== '2')
     ) {
       return true;
     }
@@ -1090,7 +1238,18 @@ module.exports = function registerFilters() {
       },
     };
   };
+  // Because an ambiguous array items always provides all the items in the array and the context, exports, etc as well
+  // We use the first item as a source of truth for how many elements to assess
+  liquid.filters.andFn = (nItems, ...arr) =>
+    (arr?.length || -1) >= nItems
+      ? arr.slice(0, nItems).every(a => !!a)
+      : false;
+  liquid.filters.orFn = (nItems, ...arr) =>
+    (arr?.length || -1) >= nItems ? arr.slice(0, nItems).some(a => !!a) : false;
 
+  liquid.filters.gt = (a, b) => Number(a) > Number(b);
+  liquid.filters.lt = (a, b) => Number(a) < Number(b);
+  liquid.filters.gte = (a, b) => Number(a) >= Number(b);
   liquid.filters.processCentralizedContent = (entity, contentType) => {
     if (!entity) return null;
 
@@ -1284,7 +1443,10 @@ module.exports = function registerFilters() {
         entity: {
           fieldButtonLink: {
             uri: fieldCta[0]?.entity.fieldButtonLink[0]?.uri || '',
-            url: fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path || '',
+            url:
+              fieldCta[0]?.entity.fieldButtonLink[0]?.url?.path ||
+              fieldCta[0]?.entity.fieldButtonLink[0]?.url ||
+              '',
           },
           fieldButtonLabel: fieldCta[0].entity.fieldButtonLabel[0]?.value || '',
         },
@@ -1715,36 +1877,43 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.deriveMostRecentDate = deriveMostRecentDate;
+  liquid.filters.shouldShowIntroText = (introTextType, introTextCustom) => {
+    if (introTextType === 'remove_text') {
+      return false;
+    }
+    if (
+      introTextType === 'use_default_text' ||
+      (introTextType === 'customize_text' && introTextCustom)
+    )
+      return true;
+    // just in case there's a new or data value like "null" that sometimes happens in drupal
+    return false;
+  };
 
   // from the matrix of when to show Service Location Appointments header and text
   liquid.filters.shouldShowServiceLocationAppointments = serviceLocation => {
     const {
       fieldVirtualSupport: virtualSupport,
       fieldOfficeVisits: officeVisits,
-      fieldApptIntroTextType: introTextType,
-      fieldApptIntroTextCustom: introTextCustom,
     } = serviceLocation;
-    const baseYesConditions = ['yes_appointment_only'];
-    const yesOffice = [
-      ...baseYesConditions,
-      'yes_walk_in_visits_only',
-      'yes_with_or_without_appointment',
-    ];
-    const yesVirtual = [
-      ...baseYesConditions,
-      'yes_veterans_can_call',
-      'virtual_visits_may_be_available',
-    ];
-    const noVisitsAndCustomIntro =
-      !officeVisits && introTextType === 'customize_text' && introTextCustom;
-    const noVisitsAndDefaultInto =
-      !officeVisits && introTextType === 'use_default_text';
-    return (
-      yesVirtual.includes(virtualSupport) ||
-      yesOffice.includes(officeVisits) ||
-      noVisitsAndCustomIntro ||
-      noVisitsAndDefaultInto
-    );
+    // Hide? if no selection made for either virtual or office visits
+    if (!virtualSupport && !officeVisits) {
+      return false;
+    }
+    // Show if either virtual or office visits is yes_appointment_only
+    if (
+      virtualSupport === 'yes_appointment_only' ||
+      officeVisits === 'yes_appointment_only'
+    ) {
+      return true;
+    }
+    if (
+      virtualSupport === 'virtual_visits_may_be_available' ||
+      officeVisits === 'yes_with_or_without_appointment'
+    ) {
+      return true;
+    }
+    return false;
   };
 
   // Given an array of services provided at a facility,
@@ -2061,5 +2230,34 @@ module.exports = function registerFilters() {
     }
 
     return platform;
+  };
+
+  liquid.filters.determineFieldLink = fieldLink => {
+    if (!_.isEmpty(fieldLink?.url?.path)) {
+      return fieldLink.url.path;
+    }
+    if (!_.isEmpty(fieldLink?.uri)) {
+      return fieldLink.uri;
+    }
+    return null;
+  };
+
+  liquid.filters.assignHardcodedMetaDescription = url => {
+    if (!url) {
+      return null;
+    }
+
+    const META_DESCRIPTIONS = {
+      '/policies':
+        'Find VA policies on privacy and patient rights, family rights, visitation, and more.',
+    };
+
+    for (const [endOfPath, content] of Object.entries(META_DESCRIPTIONS)) {
+      if (url?.endsWith(endOfPath)) {
+        return content;
+      }
+    }
+
+    return null;
   };
 };

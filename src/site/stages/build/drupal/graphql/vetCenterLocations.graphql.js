@@ -20,6 +20,7 @@ fragment vetCenterLocationsFragment on NodeVetCenterLocationsList {
   entityBundle
   entityLabel
   fieldIntroText
+  fieldLastSavedByAnEditor
   fieldNearbyMobileVetCenters {
     entity {
       ... on NodeVetCenter {

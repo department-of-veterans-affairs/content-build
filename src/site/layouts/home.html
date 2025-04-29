@@ -9,11 +9,10 @@
       <h1 class="heading-level-2 homepage-heading">{{ heading }}</h1>
 
       <!-- top row -->
-      <div class="hub-links-row">
+      <div>
         {% for card in cards %}
         <div class="hub-links-container" data-e2e="bucket">
-          <h2 class="heading-level-3 vads-u-margin-top--0"><i
-              class="icon-large-baseline icon-heading hub-icon-{{card.hub}} hub-color-{{card.hub}} vads-u-margin-right--0p5"></i>{{
+          <h2 class="heading-level-3 vads-u-margin-top--0">{{
             card.heading }}</h2>
           <ul class="hub-links-list vads-u-margin-bottom--0">
             {% assign parentCard = card %}
@@ -27,7 +26,7 @@
         </div>
         {% if card.end_row == true and forloop.last != true %}
       </div>
-      <div class="hub-links-row">
+      <div>
         {% endif %}
         {% endfor %}
       </div>
@@ -43,8 +42,8 @@
       <div class="usa-grid usa-grid-full homepage-benefits-row">
         {% for hub in hubs %}
         <div class="usa-width-one-third" data-e2e="hub">
-          <h3 class="heading-level-4"><a href="{{ hub.url }}" onclick="recordEvent({ event: 'nav-linkslist' });"><i
-                class="icon-small icon-heading hub-icon-{{hub.hub}} hub-background-{{hub.hub}} white vads-u-margin-right--0p5"></i>{{hub.heading}}</a>
+          <h3 class="heading-level-4"><a href="{{ hub.url }}"
+              onclick="recordEvent({ event: 'nav-linkslist' });">{{hub.heading}}</a>
             </h4>
             <p class="vads-u-margin-top--0">{{hub.description}}</p>
         </div>
@@ -109,7 +108,7 @@
           <div class="homepage-image-wrapper">
             <img class="lazy" width="552" data-src="{{ story.img }}" alt="{{ story.alt }}" />
           </div>
-          <h4 class="homepage-news-story-title"><a class="no-external-icon" href="{{ story.href }}"
+          <h4 class="homepage-news-story-title"><a href="{{ story.href }}"
               onClick="recordEvent({ event: 'nav-footer-news-story' });" />{{ story.title }}</a></h4>
           <p class="homepage-news-story-desc">{{ story.description }}</p>
         </div>

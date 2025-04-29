@@ -7,7 +7,7 @@
       <!-- start first column-->
       <div class="vads-l-col--12 medium-screen:vads-l-col--6 vads-u-background-color--white ">
         <div
-          class="vads-u-margin-x--2 medium-desktop-screen:vads-u-margin-x--0 small-desktop-screen:vads-u-padding-right--9 vads-u-padding-bottom--5">
+          class="vads-u-margin-x--2 medium-desktop-screen:vads-u-margin-x--0 desktop:vads-u-padding-right--9 vads-u-padding-bottom--5">
           <h2 class="vads-u-color--gray-dark vads-u-font-family--serif" id="search-tools-header">
             Search
           </h2>
@@ -29,20 +29,9 @@
                         size="3"
                       ></va-icon>
                       <va-link
-                        disable-analytics
-                        onclick="recordMultipleEvents([
-                          {
-                            event: 'nav-zone-one',
-                            'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
-                            'click-text': '{{ link.label | strip }}',
-                          },
-                          { 
-                            event: 'homepage-search-tools-click', action: 'Other search tools - {{link.label}}' 
-                          }
-                        ]);"
                         href="{{ link.url.path }}"
                         text="{{ link.label }}" 
-                      />
+                      ></va-link>
                     </li>
                   {% endif %}
                 {% endfor %}
@@ -65,19 +54,9 @@
                 {% if link.url.path and link.label %}
                   <li>
                       <va-link
-                        disable-analytics
-                        onclick="recordMultipleEvents([
-                          {
-                          event: 'nav-zone-one',
-                          'nav-path': '->{% if link.url.path != empty %}{{ link.url.path }}{% else %}{{ link.label }}{% endif %}',
-                          'click-text': '{{ link.label | strip }}',
-                          },
-                          { 
-                            event: 'homepage-popular-links-click', action: 'Top Pages - {{link.label}}' }
-                        ]);"
                         href="{{ link.url.path }}"
                         text="{{ link.label }}"
-                      />
+                      ></va-link>
                   </li>
                 {% endif %}
               {% endfor %}

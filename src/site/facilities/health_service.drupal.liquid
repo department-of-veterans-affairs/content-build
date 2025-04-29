@@ -1,52 +1,55 @@
-        {% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
-        <va-accordion-item
-            {% if serviceTaxonomy.fieldAlsoKnownAs %}
-                subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
-                data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
-            {% endif %}
-            class="va-accordion-item"
-            data-label="{{ serviceTaxonomy.name }}"
-            data-template="facilities/health_service"
-            id="item-{{ serviceTaxonomy.name | hashReference: 60 }}"
-            uswds="true"
-        >
-            <h3 slot="headline">
-                {{ serviceTaxonomy.name }}
-            </h3>
-            <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
-                {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
-                    <div class="vads-u-margin-bottom--2">
-                        <span class="vads-u-font-style--italic">Common conditions: </span>{{ serviceTaxonomy.fieldCommonlyTreatedCondition }}
-                    </div>
-                {% endif %}
-                {% if section.name == "Lovell - TRICARE" and serviceTaxonomy.fieldTricareDescription %}
-                    <description>{{ serviceTaxonomy.fieldTricareDescription | phoneLinks }}</description>
-                {% elsif serviceTaxonomy.description.processed  %}
-                    <description>{{ serviceTaxonomy.description.processed | phoneLinks }}</description>
-                {% endif %}
+{% assign serviceTaxonomy = healthService.fieldServiceNameAndDescripti.entity %}
+<va-accordion-item
+  {% if serviceTaxonomy.fieldAlsoKnownAs %}
+    subheader="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
+    data-childlabel="{{ serviceTaxonomy.fieldAlsoKnownAs }}"
+  {% endif %}
+  class="va-accordion-item"
+  data-label="{{ serviceTaxonomy.name }}"
+  data-template="facilities/health_service"
+  id="item-{{ serviceTaxonomy.name | hashReference: 60 }}"
+  uswds="true"
+>
+  <h3 slot="headline">
+    {{ serviceTaxonomy.name }}
+  </h3>
+  <div id="{{ serviceTaxonomy.entityBundle }}-{{ serviceTaxonomy.entityId }}">
+    {% if serviceTaxonomy.fieldCommonlyTreatedCondition %}
+      <p class="vads-u-margin-bottom--2">
+        Common conditions: {{ serviceTaxonomy.fieldCommonlyTreatedCondition }}
+      </p>
+    {% endif %}
 
-                {% if healthService.fieldLocalHealthCareService.length > 0 %}
-                    <h3>Available at these {{ regionOrOffice }} locations</h3>
-                    <ul class="usa-unstyled-list" role="list">
-                        {% assign orderedHealthServices = healthService.fieldLocalHealthCareService | orderFieldLocalHealthCareServices %}
-                        {% for location in orderedHealthServices %}
-                            {% assign facility = location.entity.fieldFacilityLocation.entity %}
-                            {% if location.entity.status and facility != empty %}
-                                <li class="vads-u-margin-bottom--2">
-                                    <va-link
-                                        href="{{ facility.entityUrl.path }}"
-                                        text="{{ facility.title }}"
-                                    >
-                                    </va-link>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+    {% if section.name == "Lovell - TRICARE" and serviceTaxonomy.fieldTricareDescription %}
+      <description>{{ serviceTaxonomy.fieldTricareDescription | phoneLinks }}</description>
+    {% elsif serviceTaxonomy.description.processed  %}
+      <description>{{ serviceTaxonomy.description.processed | phoneLinks }}</description>
+    {% endif %}
 
-                {% if healthService.fieldBody.processed %}
-                    <h3>Care we provide at {{ fieldOffice.entity.entityLabel }}</h3>
-                    <description>{{ healthService.fieldBody.processed | phoneLinks }}</description>
-                {% endif %}
-            </div>
-        </va-accordion-item>
+    {% if healthService.fieldLocalHealthCareService.length > 0 %}
+      <h4 class="vads-u-font-size--h3">Available at these locations</h3>
+      <ul class="usa-unstyled-list" role="list">
+        {% assign orderedHealthServices = healthService.fieldLocalHealthCareService | orderFieldLocalHealthCareServices %}
+
+        {% for location in orderedHealthServices %}
+          {% assign facility = location.entity.fieldFacilityLocation.entity %}
+
+          {% if location.entity.status and facility != empty %}
+            <li class="vads-u-margin-bottom--2">
+              <va-link
+                  href="{{ facility.entityUrl.path }}/#{{serviceTaxonomy.name | hashReference: 60}}"
+                  text="{{ facility.title }}"
+              >
+              </va-link>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if healthService.fieldBody.processed %}
+      <h4 class="vads-u-font-size--h3">Care we provide at {{ fieldOffice.entity.entityLabel }}</h3>
+      <description>{{ healthService.fieldBody.processed | phoneLinks }}</description>
+    {% endif %}
+  </div>
+</va-accordion-item>

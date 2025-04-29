@@ -1,3 +1,5 @@
+const personTelephoneParagraphGraphql = require('./personTelephone.paragraph.graphql');
+
 /**
  * A Drupal paragraph containing rich text.
  *
@@ -16,7 +18,8 @@ module.exports = `
         fieldSuffix
         fieldDescription
         fieldEmailAddress
-        fieldPhoneNumber
+        ${personTelephoneParagraphGraphql}
+        fieldCompleteBiographyCreate
         fieldIntroText
         fieldBody {
           processed

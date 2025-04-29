@@ -16,12 +16,9 @@
           <h3 class="heading-level-4 vads-u-display--flex vads-u-align-items--center">
             {{ hub.entity.fieldIcon | getHubIcon: '3', 'vads-u-margin-right--1' }}
             <va-link
-              disable-analytics
               href="{{ hub.url.path }}"
-              onclick="recordEvent({ event: 'nav-linkslist', action: 'Benefit hub - {{ hub.label }}' });"
               text="{{ hub.label }}"
-            >
-            </va-link>
+            ></va-link>
           </h3>
           <p class="vads-u-margin-top--0">{{ hub.entity.fieldLinkSummary }}</p>
         </div> 

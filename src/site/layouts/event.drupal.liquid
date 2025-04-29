@@ -1,3 +1,8 @@
+{% comment %}
+This template is no longer used to build production content.
+Please make any changes you need in Next Build.
+{% endcomment %}
+
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with deriveBreadcrumbsFromUrl = true replaceLastItem = true %}
@@ -12,7 +17,7 @@
         {% include 'src/site/navigation/facility_sidebar_nav.drupal.liquid' with sidebarData = facilitySidebar %}
       {% endunless %}
 
-      <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 large-screen:vads-u-padding-x--0 vads-u-padding-bottom--2">
+      <div class="vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1p5 desktop-lg:vads-u-padding-x--0 vads-u-padding-bottom--2">
         {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
          entityUrl = entityUrl %}
 
@@ -201,7 +206,7 @@
 
         <!-- CTA -->
         {% if fieldLink or fieldEventCta or fieldAdditionalInformationAbo %}
-          <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--1 vads-u-padding-x--1p5">
+          <div class="registration vads-u-margin-top--4 vads-u-margin-bottom--1 vads-u-padding-x--1p5 medium-screen:vads-u-padding--0">
             {% if start_timestamp < current_timestamp %}
               <p class="vads-u-margin--0 vads-u-color--secondary vads-u-font-weight--bold">This event already happened.</p>
             {% else %}
@@ -263,7 +268,6 @@
                   </p>
                   <va-link
                     calendar
-                    class="recurrent-event "
                     data-description="{{ fieldDescription }}"
                     data-end="{{ recurringEventDatetimeRangeTimezone.endValue }}"
                     data-location="{{ fieldAddress.addressLine1 }} {{ fieldAddress.locality }}, {{ fieldAddress.administrativeArea }}"
@@ -288,16 +292,28 @@
             </va-accordion-item>
           </va-accordion>
         {% endif %}
+        
+        {% assign vamcLocation = fieldListing.entity.fieldOffice.entity.title %}
+        <h2 class="vads-u-font-size--h3 vads-u-margin-bottom--0">Other VA events</h2>
 
-        <!-- See more events. -->
-        <va-link
-          active
-          class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
-          disable-analytics
-          href="{{ fieldListing.entity.entityUrl.path }}"
-          onclick="recordEvent({ event: 'nav-secondary-button-click' });"
-          text="See more events"
-        ></va-link>
+        <!-- See more events for VAMC only -->
+        <!-- Includes a check for a proper VAMC location; some events might have "Outreach and events" selected for this field -->
+        {% if fieldAdministration.entity.entityId != '7' and vamcLocation != 'Outreach and events' %}
+          <va-link
+            class="vads-u-display--block vads-u-margin-top--2"
+            href="{{ fieldListing.entity.entityUrl.path }}"
+            text="Browse the {{ vamcLocation }} events calendar"
+          ></va-link>
+        {% endif %}
+
+        <!-- See more nationwide events -->
+          <va-link
+            class="vads-u-padding-bottom--3 vads-u-margin-top--2 vads-u-display--block"
+            href="/outreach-and-events/events/"
+            text="Browse the VA outreach events calendar"
+          ></va-link>
+        {% endif %}
+
         <!-- Last updated & feedback button-->
         {% include "src/site/includes/above-footer-elements.drupal.liquid" %}
       </div>
@@ -306,65 +322,29 @@
 </div>
 
 <script nonce="**CSP_NONCE**" type="text/javascript">
+  function onShowAllRecurringEventsClick() {
+    // Derive recurring event items.
+    var recurringEventItems = document.querySelectorAll('.recurring-event');
+    // Show all recurring events.
+    for (var index = 0; index < recurringEventItems.length; index++) {
+      if (recurringEventItems[index]) {
+        recurringEventItems[index].classList.remove('vads-u-display--none');
+      }
+    }
+    // Hide the show all recurring events button.
+    var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
+    // Hide the button if we find it.
+    if (showAllRecurringEventsButton) {
+      showAllRecurringEventsButton.classList.add('vads-u-display--none');
+    }
+  }
 
-  function onExpandRecurringEventsClick() {
-  var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-                var expandRecurringEventsIcon = document.getElementById('expand-recurring-events-icon');
-                var recurringEvents = document.getElementById('recurring-events');
+  var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
 
-                // Escape early if we are not able to find the elements.
-                if (!expandRecurringEventsButton || !expandRecurringEventsIcon || !recurringEvents) {
-                  return;
-                }
-
-                // Toggle the bottom borders of the button.
-                if (expandRecurringEventsButton.style.borderBottomLeftRadius === '0px') {
-                  expandRecurringEventsButton.style.borderBottomLeftRadius = '5px';
-                  expandRecurringEventsButton.style.borderBottomRightRadius = '5px';
-                } else {
-                  expandRecurringEventsButton.style.borderBottomLeftRadius = '0px';
-                  expandRecurringEventsButton.style.borderBottomRightRadius = '0px';
-                }
-
-                // Toggle the visibility of the recurring events.
-                recurringEvents.classList.toggle('vads-u-display--none');
-                recurringEvents.classList.toggle('vads-u-display--flex');
-
-                // Toggle the icon.
-                expandRecurringEventsIcon.classList.toggle('fa-plus');
-                expandRecurringEventsIcon.classList.toggle('fa-minus');
-              }
-
-              function onShowAllRecurringEventsClick() {
-                // Derive recurring event items.
-                var recurringEventItems = document.querySelectorAll('.recurring-event');
-
-                // Show all recurring events.
-                for (var index = 0; index < recurringEventItems.length; index++) {
-                  if (recurringEventItems[index]) {
-                    recurringEventItems[index].classList.remove('vads-u-display--none');
-                  }
-                }
-
-                // Hide the show all recurring events button.
-                var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-
-                // Hide the button if we find it.
-                if (showAllRecurringEventsButton) {
-                  showAllRecurringEventsButton.classList.add('vads-u-display--none');
-                }
-              }
-
-
-              var expandRecurringEventsButton = document.getElementById('expand-recurring-events');
-              if (expandRecurringEventsButton) {
-                expandRecurringEventsButton.addEventListener('click', onExpandRecurringEventsClick);
-              }
-
-              var showAllRecurringEventsButton = document.getElementById('show-all-recurring-events');
-              if (showAllRecurringEventsButton) {
-                showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
-              }</script>
+  if (showAllRecurringEventsButton) {
+    showAllRecurringEventsButton.addEventListener('click', onShowAllRecurringEventsClick);
+  }
+</script>
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

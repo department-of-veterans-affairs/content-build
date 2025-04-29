@@ -25,6 +25,7 @@ const vetCenterFragment = `
         fieldFacilityLocatorApiId
         fieldOperatingStatusFacility
         fieldOperatingStatusMoreInfo
+        fieldLastSavedByAnEditor
         fieldVetCenterFeatureContent {
            entity {
                 ... on ParagraphFeaturedContent {
@@ -115,6 +116,7 @@ const vetCenterFragment = `
         }        
         fieldHealthServices {
           entity {
+            status
             ... on NodeVetCenterFacilityHealthServi {
              fieldBody {
                 processed
@@ -137,6 +139,9 @@ const vetCenterFragment = `
               }
             }
           }
+        }
+        fieldMissionExplainer {
+          fetched
         }
       }`;
 

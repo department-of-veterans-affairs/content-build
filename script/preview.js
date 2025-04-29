@@ -262,7 +262,6 @@ app.get('/preview', async (req, res, next) => {
     }
 
     const [drupalData, fileManifest] = await fetchAllPageData(req.query.nodeId);
-
     const smith = await createPipeline({
       ...options,
       drupalData,
@@ -285,6 +284,7 @@ app.get('/preview', async (req, res, next) => {
 
     drupalData.data.nodeQuery = drupalData.data.nodes;
     processLovellPages(drupalData);
+
     const pageIndex = req.query?.lovellVariant === 'va' ? 1 : 0;
 
     const drupalPage = drupalData.data.nodes.entities[pageIndex];

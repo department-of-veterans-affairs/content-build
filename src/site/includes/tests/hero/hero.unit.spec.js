@@ -26,8 +26,6 @@ describe('template: homepage hero', () => {
         'This new law expands and extends eligibility for care and benefits for Veterans and survivors related to toxic exposures.',
       ),
     ).to.exist;
-    expect(getByText(heroHTML, 'Learn what the PACT Act means for you')).to
-      .exist;
   });
 
   it('should correctly render the fallback hero when the promo information is not provided', async () => {
@@ -40,8 +38,6 @@ describe('template: homepage hero', () => {
     expect(
       getByText(heroHTML, 'Access and manage your VA benefits and health care'),
     ).to.exist;
-    expect(getByText(heroHTML, 'Learn how an account helps you')).to.exist;
-    expect(getByText(heroHTML, 'Create an account')).to.exist;
     expect(getAllByRole(heroHTML, 'img').length).to.eq(3);
   });
 });

@@ -3,9 +3,9 @@
 const _ = require('lodash');
 const moment = require('moment');
 const liquid = require('tinyliquid');
+const { logDrupal: log } = require('./utilities-drupal');
 const {
   createEntityUrlObj,
-  createFileObj,
   paginatePages,
   updateEntityUrlObj,
   generateBreadCrumbs,
@@ -109,30 +109,6 @@ function compileEventListingPage(page) {
 function createHealthCareRegionListPages(page, drupalPagePath, files) {
   const sidebar = page.facilitySidebar;
 
-  // Create the top-level facilities status page for Health Care Regions
-  const statusEntityUrl = createEntityUrlObj(drupalPagePath);
-  const statusObj = {
-    mainFacilities: page.reverseFieldRegionPageNode,
-    facilitySidebar: sidebar,
-    entityUrl: statusEntityUrl,
-    alert: page.alert,
-    title: page.title,
-  };
-
-  const statusPage = updateEntityUrlObj(
-    statusObj,
-    drupalPagePath,
-    'Operating status',
-  );
-  const statusPath = statusPage.entityUrl.path;
-  statusPage.regionOrOffice = page.title;
-  statusPage.entityUrl = generateBreadCrumbs(statusPath);
-
-  files[`${drupalPagePath}/status/index.html`] = createFileObj(
-    statusPage,
-    'health_care_facility_status.drupal.liquid',
-  );
-
   // Press Release listing page
   const prEntityUrl = createEntityUrlObj(drupalPagePath);
   const prObj = {
@@ -194,13 +170,15 @@ function createHealthCareRegionListPages(page, drupalPagePath, files) {
  */
 function addGetUpdatesFields(page, pages) {
   const regionPageUrlPath = page.entityUrl.breadcrumb[1]?.url?.path;
-
-  if (!regionPageUrlPath) {
-    throw new Error(
-      `CMS error while building breadcrumbs: "${page.entityUrl.path}" is missing reference to a parent or grandparent.`,
+  if (
+    !regionPageUrlPath &&
+    page.entityUrl.breadcrumb[1]?.text !== 'Manila VA Clinic'
+  ) {
+    log(
+      `WARNING: CMS error while building breadcrumbs: "${page.entityUrl.path}" is missing reference to a parent or grandparent.`,
     );
   }
-
+  // If regionPageUrlPath is empty, this will simply not find a region page, and this function will complete.
   const regionPage = pages.find(p => p.entityUrl.path === regionPageUrlPath);
 
   if (regionPage) {

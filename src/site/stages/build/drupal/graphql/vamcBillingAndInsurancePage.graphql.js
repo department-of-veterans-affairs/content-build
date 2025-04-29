@@ -1,5 +1,6 @@
 const healthCareRegionNonClinicialServices = require('./facilities-fragments/healthCareRegionNonClinicialServices.node.graphql');
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
+const phoneNumberParagraphGraphql = require('./paragraph-fragments/phoneNumber.paragraph.graphql');
 
 const billingAndInsuranceFragment = `
   fragment billingAndInsuranceFragment on NodeVamcSystemBillingInsurance {
@@ -11,7 +12,13 @@ const billingAndInsuranceFragment = `
     entityUrl {
       path
     }
-    fieldPhoneNumber
+    fieldTelephone {
+      ... on FieldNodeVamcSystemBillingInsuranceFieldTelephone {
+        entity {
+          ... phoneNumber
+        }
+      }
+    }
     fieldOfficeHours {
       day
       starthours
@@ -48,6 +55,7 @@ const billingAndInsuranceFragment = `
 `;
 
 const GetBillingAndInsurancePages = `
+  ${phoneNumberParagraphGraphql}
   ${billingAndInsuranceFragment}
 
   query GetBillingAndInsurancePages($onlyPublishedContent: Boolean!) {

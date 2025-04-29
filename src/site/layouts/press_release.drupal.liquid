@@ -17,12 +17,14 @@
                         <h1 class="vads-u-margin-bottom--2p5">{{ title }}</h1>
                         <p class="vads-u-margin-bottom--0p5">PRESS RELEASE</p>
                         <p class="vads-u-font-weight--bold vads-u-margin-bottom--3 vads-u-margin-top--0">{{ fieldReleaseDate.value | formatDate: 'MMMM D, YYYY' }}</p>
-                        <div>
-                            <button type="button" class="vads-u-margin-right--4 va-button-link"
-                                    onclick="window.print(); return false;">
-                                <i class="fa fa-print vads-u-padding-right--1"></i>
-                                Print
-                            </button>
+                        <div class="va-flex vads-u-flex-direction--column  mobile:vads-u-flex-direction--row mobile:vads-u-align-items--center mobile:vads-u-padding-bottom--4 ">
+                            <div>
+                                <va-button class="vads-u-padding-bottom--2 mobile:vads-u-padding-bottom--0  vads-u-margin-right--2"
+                                    onclick="window.print(); return false;"
+                                    text="Print"
+                                    secondary >
+                                </va-button>
+                            </div>
                             {% if fieldPdfVersion != empty and fieldPdfVersion.entity != empty %}
                                 <va-link
                                     href="{{ fieldPdfVersion.entity.fieldDocument.entity.url }}"
@@ -46,7 +48,16 @@
                                 {% if c != empty %}
                                     <div>
                                         <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.title }}{% if c.fieldDescription != empty %}, {{ c.fieldDescription }} {% endif %}</p>
-                                        <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.fieldPhoneNumber }}</p>
+                                        {% if c.fieldTelephone %}
+                                            <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
+                                                {% include "src/site/components/phone-number-no-header.drupal.liquid" with 
+                                                    phoneNumber = c.fieldTelephone.entity.fieldPhoneNumber
+                                                    phoneExtension = c.fieldTelephone.entity.fieldPhoneExtension
+                                                    phoneNumberType = c.fieldTelephone.entity.fieldPhoneNumberType
+                                                    phoneLabel = c.fieldTelephone.entity.fieldPhoneLabel
+                                                %}
+                                            </p>
+                                        {% endif %}
                                         {% if c.fieldEmailAddress != empty %}
                                             <p class="vads-u-margin-top--1 vads-u-margin-bottom--0"><va-link
                                                         href="mailto:{{ c.fieldEmailAddress }}" text="{{ c.fieldEmailAddress }}" />
@@ -84,8 +95,11 @@
                     <section class="vads-u-margin-bottom--3">
                         {{ fieldOffice.entity.fieldPressReleaseBlurb.processed }}
                     </section>
-                    <va-link active onClick="recordEvent({ event: 'nav-secondary-button-click' });"
-                       href="{{ fieldListing.entity.entityUrl.path }}" text="See all news releases" />
+                    <va-link
+                        active
+                        href="{{ fieldListing.entity.entityUrl.path }}"
+                        text="See all news releases" 
+                    />
                 </article>
                 <!-- Last updated & feedback button-->
                   {% include "src/site/includes/above-footer-elements.drupal.liquid" %}

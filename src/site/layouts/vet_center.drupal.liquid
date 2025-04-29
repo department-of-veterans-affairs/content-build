@@ -12,7 +12,7 @@
             {% if fieldOfficialName and title != fieldOfficialName %}
               <h1 aria-describedby="vet-center-title">{{ title }}</h1>
 
-              <p id="vet-center-title" class="field-official-name vads-u-line-height--4 vads-u-font-family--serif vads-u-font-size--lg vads-u-font-weight--bold vads-u-padding-bottom--0p5">
+              <p id="vet-center-title" class="vads-u-line-height--4 vads-u-font-family--serif vads-u-font-size--lg vads-u-font-weight--bold vads-u-padding-bottom--0p5">
                 Also called the {{fieldOfficialName}}
               </p>
             {% else %}
@@ -21,6 +21,10 @@
           {% elsif fieldOfficialName != empty %}
             <h1>{{ fieldOfficialName}}</h1>
           {% endif %}
+          <img src="/img/vet-centers/vet-center-banner.jpg" 
+               alt="Small group of diverse Veterans talking and smiling with a Vet center counselor, American flag in the background." 
+               width="1000" height="287" class="vads-u-padding-y--1p5" 
+          />
 
           {% if fieldIntroText != empty %}
             <div class="va-introtext">
@@ -28,18 +32,25 @@
             </div>
           {% endif %}
 
-          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+          {% if fieldMissionExplainer.fetched %}
+            <va-summary-box class="vads-u-margin-bottom--4 medium-screen:vads-u-margin-bottom--0" data-header-id-excluded="true">
+              <h2 slot="headline">{{ fieldMissionExplainer.fetched.fieldMagicheadHeading.0.value  }}</h2>
+              {{ fieldMissionExplainer.fetched.fieldMagicheadBody.0.value }}
+            </va-summary-box>
+          {% endif %}
+
+          <va-on-this-page></va-on-this-page>
 
           <h2 id="locations-and-contact-information" class="vads-u-line-height--1 vads-u-margin-bottom--3 vads-u-font-size--lg
-          small-screen:vads-u-font-size--xl">Locations and contact information</h2>
+          mobile-lg:vads-u-font-size--xl">Locations and contact information</h2>
 
           <div class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column
-          small-screen:vads-u-flex-direction--row facility">
+          mobile-lg:vads-u-flex-direction--row facility">
             <div class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
 
               <div>
-                <div class="vads-c-facility-detail">
-                  <section class="vads-facility-detail">
+                <div>
+                  <section>
                     <script type="application/ld+json">
                       {
                         "@context": "https://schema.org",
@@ -144,8 +155,8 @@
 
           {% if fieldPrepareForVisit.length > 0 %}
             <h2 id="prepare-for-your-visit" class="vads-u-margin-top--0 vads-u-font-size--lg
-          small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">Prepare for your visit</h2>
-            <p> Click on a topic for more details. </p>
+          mobile-lg:vads-u-font-size--xl vads-u-margin-bottom--2">Prepare for your visit</h2>
+            <p>Select a topic to learn more.</p>
             <div class="vads-u-margin-bottom--3">
               <va-accordion bordered
                 id="prepare-for-your-visit-accordion-{{ entity.entity.fieldHeader }}"
@@ -166,15 +177,17 @@
           {% comment %} fieldVetCenterFeatureContent is an array almost in the right format {% endcomment %}
           {% assign allFeaturedContent = fieldCcVetCenterFeaturedCon | appendCentralizedFeaturedContent: fieldVetCenterFeatureContent, "prepend" %}
           <h2 id="in-the-spot-light" class="vads-u-margin-top--0 vads-u-font-size--lg
-          small-screen:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight at {{ entityLabel }} </h2>
+          mobile-lg:vads-u-font-size--xl vads-u-margin-bottom--2">In the spotlight</h2>
             <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
               {% for entity in allFeaturedContent %}
                 {% include "src/site/includes/vet_centers/featured_content.liquid" with
                     entity = entity.entity
                 %}
+                
               {% endfor %}
             </div>
-            {% for healthService in fieldHealthServices %}
+            {% assign publishedHealthServices = fieldHealthServices | filterBy: "entity.status", true %}
+            {% for healthService in publishedHealthServices %}
               <script type="application/ld+json">
                 {
                   "@context": "https://schema.org",
@@ -219,17 +232,17 @@
             {% endfor %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "counseling"
           %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "referral"
           %}
 
           {% include "src/site/includes/vet_centers/health_services.liquid" with
-              fieldHealthServices
+              fieldHealthServices = publishedHealthServices
               typeOfCare = "other"
           %}
 

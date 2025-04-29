@@ -16,7 +16,7 @@
             {% include "src/site/includes/support_resources_search_bar.drupal.liquid" %}
           </div>
 
-          <article class="usa-content vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+          <article class="usa-content vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0">
             <!-- Title -->
             <h1>{{ title }}</h1>
 
@@ -35,7 +35,7 @@
 
             <!-- TOC -->
             {% if fieldTableOfContentsBoolean %}
-              <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+              <va-on-this-page></va-on-this-page>
             {% endif %}
 
             <!-- Content blocks -->
@@ -88,6 +88,10 @@
     </div>
   </main>
 </div>
+
+{% if decisionReviewRum %}
+  {% include "src/site/includes/decision-reviews-rum.html" %}
+{% endif %}
 
 {% include "src/site/includes/footer.html" %}
 {% include "src/site/includes/debug.drupal.liquid" %}

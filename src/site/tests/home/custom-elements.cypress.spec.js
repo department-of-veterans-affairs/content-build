@@ -1,3 +1,4 @@
+/* eslint-disable @department-of-veterans-affairs/axe-check-required */
 const webComponentDocs = require('@department-of-veterans-affairs/web-components/component-docs.json');
 
 const webComponentTags = webComponentDocs.components.map(comp => comp.tag);

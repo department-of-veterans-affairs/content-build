@@ -16,6 +16,7 @@ banners: nodeQuery(filter: { conditions: [{ field: "status", value: "1", operato
       fieldDismissibleOption
       fieldTargetPaths
       title
+      fieldLastSavedByAnEditor
     }
   }
 }

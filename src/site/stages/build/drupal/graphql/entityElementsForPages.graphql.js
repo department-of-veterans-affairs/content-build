@@ -7,6 +7,7 @@ module.exports = `
     entityPublished
     title
     vid
+    fieldLastSavedByAnEditor
     entityUrl {
       ... on EntityCanonicalUrl {
         breadcrumb {

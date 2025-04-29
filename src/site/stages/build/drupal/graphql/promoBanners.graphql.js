@@ -9,6 +9,7 @@ const promoBanners = `
       entityId
       entityPublished
       title
+      fieldLastSavedByAnEditor
       fieldLink {
         url {
           path

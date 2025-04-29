@@ -1,3 +1,8 @@
+{% comment %}
+This template is no longer used to build production content.
+Please make any changes you need in Next Build.
+{% endcomment %}
+
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" %}
@@ -17,7 +22,7 @@
 				<h1 id="article-heading">{{ title }}</h1>
 				<div class="va-introtext">
 					{% if fieldIntroText %}
-						<p class="events-show" id="office-events-description">
+						<p id="office-events-description">
 							{{ fieldIntroText }}
 						</p>
 					{% endif %}
@@ -30,7 +35,7 @@
 	</main>
 </div>
 <div class="usa-grid usa-grid-full">
-	<div class="last-updated vads-u-padding-x--1 large-screen:vads-u-padding-x--0">
+	<div class="last-updated vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0">
 	  <div class="vads-u-display--flex above-footer-elements-container">
 		<div class="vads-u-flex--1 vads-u-text-align--right">
 		  <span class="vads-u-text-align--right">

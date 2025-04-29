@@ -1,0 +1,420 @@
+{
+  "data": {
+    "nodeQuery": {
+      "entities": [
+        {
+          "nid": 71002,
+          "entityLabel": "Form with One Step",
+          "fieldVaFormNumber": "11111",
+          "fieldOmbNumber": "1111-1111",
+          "fieldPlainLanguageTitle": "Single step form",
+          "fieldRespondentBurden": 48,
+          "moderationState": "published",
+          "fieldExpirationDate": {
+            "value": "2025-06-11"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "162008",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_your_personal_info",
+                    "entityLabel": "Digital Form: Your personal information"
+                  }
+                },
+                "fieldNameAndDateOfBirth": {
+                  "entity": {
+                    "fieldTitle": "Name",
+                    "fieldIncludeDateOfBirth": true
+                  }
+                },
+                "fieldIdentificationInformation": {
+                  "entity": {
+                    "fieldTitle": "Identification information",
+                    "fieldIncludeVeteranSService": false
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "nid": 71004,
+          "entityLabel": "Form with Many Steps",
+          "fieldIntroText":
+            "This form has many steps and is used primarily to test post-processing of Digital Forms.",
+          "fieldPlainLanguageTitle": "Multi step form",
+          "fieldVaFormNumber": "222222",
+          "fieldOmbNumber": "1212-1212",
+          "fieldRespondentBurden": 30,
+          "fieldDigitalFormWhatToKnow": [
+            "A form will have What to Know bullets.",
+            "It can have as many as five bullets.",
+            "But it can also have less."
+          ],
+          "moderationState": "published",
+          "fieldExpirationDate": {
+            "value": "2027-01-29"
+          },
+          "fieldChapters": [
+            {
+              "entity": {
+                "entityId": "162008",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_your_personal_info",
+                    "entityLabel": "Digital Form: Your personal information"
+                  }
+                },
+                "fieldNameAndDateOfBirth": {
+                  "entity": {
+                    "fieldTitle": "Name and Date of Birth",
+                    "fieldIncludeDateOfBirth": true
+                  }
+                },
+                "fieldIdentificationInformation": {
+                  "entity": {
+                    "fieldTitle": "Identification information",
+                    "fieldIncludeVeteranSService": false
+                  }
+                }
+              }
+            },
+            {
+              "entity": {
+                "entityId": "161344",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_address",
+                    "entityLabel": "Digital Form: Address"
+                  }
+                },
+                "fieldTitle": "Generated Address",
+                "fieldMilitaryAddressCheckbox": false
+              }
+            },
+            {
+              "entity": {
+                "entityId": "161351",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_phone_and_email",
+                    "entityLabel": "Digital Form: Phone and email address"
+                  }
+                },
+                "fieldTitle": "Generated Phone",
+                "fieldIncludeEmail": false
+              }
+            },
+             {
+              "entity": {
+                "entityId": "176042",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_list_loop",
+                    "entityLabel": "Digital Form: List & Loop"
+                  }
+                },
+                "fieldTitle": "Custom List & Loop Example",
+                "fieldOptional": true,
+                "fieldSectionIntro": null,
+                "fieldItemNameLabel": "Name of example",
+                "fieldListLoopMaxItems": 9,
+                "fieldListLoopNounPlural": "examples",
+                "fieldListLoopNounSingular": "example",
+                "fieldDigitalFormPages": [
+                  {
+                    "entity": {
+                      "entityId": "176031",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What is the date of this example?",
+                      "fieldDigitalFormBodyText": "This could be a date in the past, the current date, or a date in the future.",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176030",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_date_component",
+                                "entityLabel": "Digital Form: Date Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Example date",
+                            "fieldDigitalFormHintText": "The date in month/year format.",
+                            "fieldDigitalFormRequired": true,
+                            "fieldDigitalFormDateFormat": "month_year"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "176033",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What is a nickname for this example?",
+                      "fieldDigitalFormBodyText": null,
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176032",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Nickname",
+                            "fieldDigitalFormHintText": "Something catchy and memorable",
+                            "fieldDigitalFormRequired": true
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "176035",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What is the meat of this example?",
+                      "fieldDigitalFormBodyText": "Briefly describe what happened in this example.",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176034",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_area",
+                                "entityLabel": "Digital Form: Text Area Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Explanation",
+                            "fieldDigitalFormHintText": null,
+                            "fieldDigitalFormRequired": true
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "176041",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "What companies were involved?",
+                      "fieldDigitalFormBodyText": null,
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "176040",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_checkbox",
+                                "entityLabel": "Digital Form: Checkbox Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "Select the companies involved in this example",
+                            "fieldDigitalFormHintText": null,
+                            "fieldDigitalFormRequired": false,
+                            "fieldDfResponseOptions": [
+                              {
+                                "entity": {
+                                  "entityId": "176036",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Startup company",
+                                  "fieldDigitalFormDescription": "The plucky startup"
+                                }
+                              },
+                              {
+                                "entity": {
+                                  "entityId": "176037",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Fortune 500 Company",
+                                  "fieldDigitalFormDescription": "A huge, publicly listed company"
+                                }
+                              },
+                              {
+                                "entity": {
+                                  "entityId": "176038",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Medium Sized Business, LLC",
+                                  "fieldDigitalFormDescription": null
+                                }
+                              },
+                              {
+                                "entity": {
+                                  "entityId": "176039",
+                                  "type": {
+                                    "entity": {
+                                      "entityLabel": "Digital Form: Response Option",
+                                      "entityId": "digital_form_response_option"
+                                    }
+                                  },
+                                  "fieldDigitalFormLabel": "Individual Small Business Owner",
+                                  "fieldDigitalFormDescription": "They do their best"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "entityId": "172736",
+                "type": {
+                  "entity": {
+                    "entityId": "digital_form_custom_step",
+                    "entityLabel": "Digital Form: Custom Step"
+                  }
+                },
+                "fieldTitle": "Generated Custom Step",
+                "fieldDigitalFormPages": [
+                  {
+                    "entity": {
+                      "entityId": "172734",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "Generated custom page",
+                      "fieldDigitalFormBodyText": "My custom body text",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "172737",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "My custom text input",
+                            "fieldDigitalFormHintText": "This is optional hint text",
+                            "fieldDigitalFormRequired": true
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "entity": {
+                      "entityId": "172735",
+                      "type": {
+                        "entity": {
+                          "entityId": "digital_form_page",
+                          "entityLabel": "Digital Form: Page"
+                        }
+                      },
+                      "fieldTitle": "An additional page",
+                      "fieldDigitalFormBodyText": "With additonal body text",
+                      "fieldDigitalFormComponents": [
+                        {
+                          "entity": {
+                            "entityId": "172738",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "A text input with no hint text",
+                            "fieldDigitalFormHintText": null,
+                            "fieldDigitalFormRequired": true
+                          }
+                        },
+                        {
+                          "entity": {
+                            "entityId": "172739",
+                            "type": {
+                              "entity": {
+                                "entityId": "digital_form_text_input",
+                                "entityLabel": "Digital Form: Text Input Component"
+                              }
+                            },
+                            "fieldDigitalFormLabel": "An optional text input",
+                            "fieldDigitalFormHintText": "This input is not required",
+                            "fieldDigitalFormRequired": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "nid": 76371,
+          "entityLabel": "Draft form",
+          "fieldPlainLanguageTitle": "A draft form",
+          "fieldVaFormNumber": "abcdefg",
+          "fieldOmbNumber": "1234-7890",
+          "fieldRespondentBurden": 7,
+          "moderationState": "draft",
+          "status": false,
+          "fieldExpirationDate": {
+            "value": "2025-12-28"
+          },
+          "fieldChapters": [
+
+            {
+              "entity": {
+                "entityId": "176029",
+                "type": {
+                  "entity": {
+                    "entityId": "list_loop_employment_history",
+                    "entityLabel": "List & Loop: Employment History"
+                  }
+                },
+                "fieldTitle": "Veteran's employment history"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

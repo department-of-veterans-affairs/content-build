@@ -32,6 +32,7 @@ const vamcRegisterForCarePages = require('./vamcRegisterForCarePage.graphql');
 const vetCenterLocations = require('./vetCenterLocations.graphql');
 const vetCenters = require('./vetCenter.graphql');
 const vbaFacilities = require('./vbaFacility.graphql');
+const vamcPolicePages = require('./vaPolice.graphql');
 const { ALL_FRAGMENTS } = require('./fragments.graphql');
 
 // String Helpers
@@ -79,6 +80,7 @@ module.exports = `
   ${vamcRegisterForCarePages.fragment}
   ${vamcMedicalRecordsOfficePages.fragment}
   ${vamcBillingAndInsurancePages.fragment}
+  ${vamcPolicePages.fragment}
   ${leadershipListingPage.fragment}
   ${locationsListingPage.fragment}
 
@@ -122,6 +124,7 @@ module.exports = `
         ... billingAndInsuranceFragment
         ... leadershipListingPage
         ... locationListingPage
+        ... vaPoliceFragment
       }
     }
   }

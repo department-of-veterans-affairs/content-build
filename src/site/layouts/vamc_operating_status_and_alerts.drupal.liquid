@@ -25,18 +25,17 @@
             <div class="usa-grid usa-grid-full vads-u-margin-y--1p5">
               <div class="vads-l-row">
                 <div class="vads-u-margin-right--2p5">
-                  <a
-                    class="vads-u-margin-top--1 vads-u-margin--0 vads-c-action-link--green"
+                  <va-link-action
+                    class="vads-u-display--block"
                     href="{{ fieldOffice.entity.fieldLinkFacilityEmergList.url.path }}"
-                  >
-                    Subscribe to emergency notifications
-                  </a>
+                    text="Subscribe to emergency notifications"
+                  ></va-link-action>
                 </div>
               </div>
             </div>
           {% endif %}
           <section class="table-of-contents" class="vads-u-margin-bottom--5">
-	          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0" />
+	          <va-on-this-page />
           </section>
 
           {% assign situationUpdates = fieldBannerAlert | hasContentAtPath: 'entity.fieldSituationUpdates' %}
@@ -45,7 +44,7 @@
           {% endif %}
 
           {% if fieldFacilityOperatingStatus.0.entity %}
-            <section class="operating-statuses clearfix" id="operating-statuses">
+            <section class="clearfix" id="operating-statuses">
               <h2>Facility operating statuses</h2>
               <dl class="vads-l-grid-container vads-u-padding-x--0 vads-l-row vads-u-border-bottom--1px vads-u-border-color--gray-light">
                 {% for status in fieldFacilityOperatingStatus %}
@@ -53,27 +52,39 @@
                   <dt class="vads-l-col--12 medium-screen:vads-l-col--5 vads-u-margin--0 vads-u-padding-y--3 vads-u-display--flex operating-status-title vads-u-border-top--1px vads-u-border-color--gray-light">
                     <va-link
                       class="facility-title-width vads-u-font-weight--bold"
-                      onclick="recordEvent({'event':'nav-health-care-facility-status-click'});"
                       href="{{ status.entity.entityUrl.path }}"
                       text="{{ status.entity.title | encode }}"
                     />
                   </dt>
                   <dd class="vads-l-col--12 medium-screen:vads-l-col--7 medium-screen:vads-u-border-top--1px vads-u-border-color--gray-light">
-                    <div class="operating-status-info vads-u-padding-y--1p5 vads-u-padding-x--0">
+                    <div class="vads-u-padding-y--1p5 vads-u-padding-x--0">
                       {% if status.entity.fieldOperatingStatusFacility == 'notice' %}
                         <va-alert slim status="info" visible>Facility notice</va-alert>
 
                       {% elsif status.entity.fieldOperatingStatusFacility == 'normal' %}
-                        <span class="operating-status normal-hours vads-u-margin-top--1p5 vads-u-display--block">
+                        <span class="operating-status vads-u-margin-top--1p5 vads-u-display--block">
                           Normal services and hours
                         </span>
 
                       {% elsif status.entity.fieldOperatingStatusFacility == 'limited' %}
-                        <va-alert slim status="warning" visible>Limited services and hours</va-alert>
+                        <va-alert slim status="info" visible>Limited services and hours</va-alert>
 
                       {% elsif status.entity.fieldOperatingStatusFacility == 'closed' %}
-                        <va-alert slim status="error" visible>Facility Closed</va-alert>
+                        <va-alert slim status="warning" visible>Facility Closed</va-alert>
+                      
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'temporary_closure' %}
+                        <va-alert slim status="warning" visible>Temporary facility closure</va-alert>
+
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'temporary_location' %}
+                        <va-alert slim status="warning" visible>Temporary location</va-alert>
+
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'virtual_care' %}
+                        <va-alert slim status="warning" visible>Virtual care only</va-alert>
+
+                      {% elsif status.entity.fieldOperatingStatusFacility == 'coming_soon' %}
+                        <va-alert slim status="warning" visible>Coming soon</va-alert>
                       {% endif %}
+
 
                       {% if status.entity.fieldOperatingStatusMoreInfo  and status.entity.fieldOperatingStatusFacility != 'normal' %}
                         <div class="vads-u-margin-top--1p5">
@@ -88,7 +99,7 @@
           {% endif %}
 
           {% if fieldLink.0.uri or fieldOperatingStatusEmergInf.processed %}
-            <section class="emergency-resources clearfix" id="emergency-resources">
+            <section class="clearfix" id="emergency-resources">
               <h2>Emergency information</h2>
 
               {% if fieldOperatingStatusEmergInf.processed %}

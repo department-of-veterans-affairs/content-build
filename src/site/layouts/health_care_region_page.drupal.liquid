@@ -17,7 +17,7 @@
 
           <div
             class="duotone darken lighten medium-screen:vads-u-margin-bottom--0p5">
-            <img class="system-img" src="{{ image.derivative.url }}" aria-hidden="true" role="presentation" alt="" width="100%">
+            <img src="{{ image.derivative.url }}" aria-hidden="true" role="presentation" alt="" width="100%">
           </div>
 
           <div
@@ -41,10 +41,9 @@
                     entity = main
                     fieldVaHealthConnectPhone = fieldVaHealthConnectPhone
             %}
-            {% endfor %} <va-link
+            {% endfor %} 
+            <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/locations"
               text="See all locations"
@@ -57,9 +56,9 @@
           {% if fieldAdministration.entity.entityId != '1039' %}
           <section>
             {% if fieldAdministration.entity.entityId == '1040' %}
-              <h3>Manage your VA health online</h3>
+              <h2>Manage your VA health online</h2>
             {% else %}
-              <h3>Manage your health online</h3>
+              <h2>Manage your health online</h2>
             {% endif %}
             <div class="vads-u-display--flex medium-screen:vads-u-flex-direction--row vads-u-flex-direction--column">
               <div class="vads-u-margin-right--0 medium-screen:vads-u-margin-right--3">
@@ -67,11 +66,9 @@
                   <va-icon
                     class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
                     size="3"
-                    icon="medication"
+                    icon="pill"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "refill-track-prescriptions/", buildtype }}"
                     text="Refill and track your prescriptions"
                   ></va-link>
@@ -80,11 +77,9 @@
                   <va-icon
                     class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
                     size="3"
-                    icon="chat"
+                    icon="forum"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "secure-messaging/", buildtype }}"
                     text="Send a secure message to your health care team"
                   ></va-link>
@@ -96,10 +91,19 @@
                     icon="event_available"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "schedule-view-va-appointments/", buildtype }}"
                     text="Schedule and manage health appointments"
+                  ></va-link>
+                </div>
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center health-online-desktop-link">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="chat"
+                  ></va-icon>
+                  <va-link
+                    href="https://mobile.va.gov/app/va-health-chat"
+                    text="Download VA Health Chat"
                   ></va-link>
                 </div>
               </div>
@@ -111,8 +115,6 @@
                     icon="note_add"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "get-medical-records/", buildtype }}"
                     text="Download your VA medical records (Blue Button)"
                   ></va-link>
@@ -124,8 +126,6 @@
                     icon="assignment"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="{{ fieldVamcEhrSystem | topTaskUrl: "view-test-and-lab-results/", buildtype }}"
                     text="View your lab and test results"
                   ></va-link>
@@ -137,10 +137,30 @@
                     icon="hearing_disabled"
                   ></va-icon>
                   <va-link
-                    disable-analytics
-                    onClick="recordEvent({ event: 'cta-hub-link-click' });"
                     href="/health-care/order-hearing-aid-batteries-and-accessories/"
                     text="Order hearing aid batteries and accessories"
+                  ></va-link>
+                </div>
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center health-online-mobile-link">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="chat"
+                  ></va-icon>
+                  <va-link
+                    href="https://mobile.va.gov/app/va-health-chat"
+                    text="Download VA Health Chat"
+                  ></va-link>
+                </div>
+                <div class="vads-facility-hub-cta vads-u-display--flex vads-u-align-items--center">
+                  <va-icon
+                    class="vads-u-color--link-default vads-facility-hub-cta-circle vads-u-margin-right--1"
+                    size="3"
+                    icon="phone"
+                  ></va-icon>
+                  <va-link
+                    href="https://www.va.gov/health/connect-to-va-care/index.asp"
+                    text="Connect to VA care"
                   ></va-link>
                 </div>
               </div>
@@ -172,8 +192,6 @@
             {% endfor %}
             <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/stories"
               text="See all stories"
@@ -194,8 +212,6 @@
               {% endfor %}
             <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/events"
               text="See all events"
@@ -215,8 +231,6 @@
             {% endfor %}
             <va-link
               active
-              disable-analytics
-              onClick="recordEvent({ event: 'nav-secondary-button-click' });"
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
               href="{{ entityUrl.path }}/events"
               text="See all events"

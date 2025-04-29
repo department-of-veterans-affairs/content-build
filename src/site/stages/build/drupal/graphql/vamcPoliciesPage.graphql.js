@@ -4,6 +4,7 @@ const policiesPageFragment = `
     status
     changed    
     entityBundle
+    fieldLastSavedByAnEditor
     entityUrl {
       path
     }    

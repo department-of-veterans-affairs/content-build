@@ -35,7 +35,9 @@ describe('Static Data Files Test', () => {
     cy.readFile('cypress/downloads/vamc-system.json').should('exist');
   });
   it('has the VAMC Police JSON static file', () => {
+    // relative to current working directory
     cy.deleteFileOrDir('../cypress/downloads/vamc-police.json');
+    // relative to the cy task
     cy.fileOrDirExists('cypress/downloads/vamc-police.json').should(
       'eq',
       false,
@@ -46,5 +48,20 @@ describe('Static Data Files Test', () => {
       'vamc-police.json',
     );
     cy.readFile('cypress/downloads/vamc-police.json').should('exist');
+  });
+  it('has the VA Healthcare Services JSON static file', () => {
+    cy.deleteFileOrDir('../cypress/downloads/va-healthcare-services.json');
+    cy.fileOrDirExists('cypress/downloads/va-healthcare-services.json').should(
+      'eq',
+      false,
+    );
+    cy.downloadFile(
+      'http://localhost:3002/data/cms/va-healthcare-services.json',
+      '../cypress/downloads',
+      'va-healthcare-services.json',
+    );
+    cy.readFile('cypress/downloads/va-healthcare-services.json').should(
+      'exist',
+    );
   });
 });

@@ -8,6 +8,9 @@
 - _(Which team do you work for, does your team own the maintenance of this component?)_
 - _(If using a flipper, what is the end date of the flipper being required/success criteria being targeted)_
 
+### Generated summary
+(Select this text, hit the Copilot button, and select "Generate".)
+
 ## Related issue(s)
 
 - _Link to ticket created in va.gov-team repo_
@@ -16,6 +19,19 @@ department-of-veterans-affairs/va.gov-team#0000
 department-of-veterans-affairs/vets-website#0000
 - _Link to epic if not included in ticket_
 department-of-veterans-affairs/va.gov-team#0000
+
+## Are you removing or changing a registry.json `entryName` in this PR?
+- [ ] No, I'm not changing any `entryName`s (skip to Summary and delete the rest of this section)
+- [ ] Yes, I'm removing or changing an `entryName`
+
+If you are:
+1. **Deleting an entryName**: First search [vets-website](https://github.com/department-of-veterans-affairs/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that removes those references, if any.
+   - _Add the link to your merged vets-website PR here_
+
+2. **Changing an entryName**: First search [vets-website](https://github.com/department-of-veterans-affairs/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that updates those references, if any.
+   - _Add the link to your merged vets-website PR here_
+  
+_**If you do not do this, other applications will break!**_
 
 ## Testing done
 
@@ -58,12 +74,6 @@ _Note: This field is mandatory for UI changes (non-component work should NOT hav
 ### Authentication
 
 - [ ] Did you login to a local build and verify all authenticated routes work as expected with a test user
-
-### :warning: Team Sites (only applies to modifications made to the VA.gov header) :warning:
-
-- [ ] The header does not contain any web-components
-- [ ] I used the [proxy-rewrite steps](https://github.com/department-of-veterans-affairs/vets-website/tree/main/src/applications/proxy-rewrite#local-dev) to test the injected header scenario
-- [ ] I reached out in the `#sitewide-public-websites` Slack channel for questions
 
 ## Requested Feedback
 

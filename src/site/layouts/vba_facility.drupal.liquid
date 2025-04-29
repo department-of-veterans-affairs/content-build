@@ -16,10 +16,6 @@
 
       <div class="usa-width-three-fourths">
         <article class="usa-content va-l-facility-detail">
-          {% include "src/site/includes/lovell-switch-link.drupal.liquid" with
-            entityUrl = entityUrl
-          %}
-
           <h1>{{ title }}</h1>
 
           {% if fieldCcVbaFacilityOverview %}
@@ -34,26 +30,22 @@
             {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath buttonType = 'vba'%}
           </div>
 
-          <va-on-this-page class="vads-u-margin-left--1 vads-u-margin-bottom--0 vads-u-padding-bottom--0"></va-on-this-page>
+          <va-on-this-page></va-on-this-page>
 
           <h2 class="vads-u-line-height--1 vads-u-margin-bottom--3">
             Location and contact information
           </h2>
 
           <div
-              class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column small-screen:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
+              class="region-list usa-grid usa-grid-full vads-u-display--flex vads-u-flex-direction--column mobile-lg:vads-u-flex-direction--row facility vads-u-margin-bottom--2p5 vads-u-margin-bottom--4">
             <div
                 class="usa-width-two-thirds vads-u-display--block vads-u-width--full">
               <div>
-                <div class="vads-c-facility-detail">
+                <div>
 
-                  {% if fieldOperatingStatusMoreInfo and fieldOperatingStatusFacility and fieldOperatingStatusFacility != 'normal' %}
-                    <div class="vads-u-display--inline-block vads-u-margin-bottom--1">
-                      {% include "src/site/includes/vba_facilities/expandable_alert.liquid" %}
-                    </div>
-                  {% endif %}
+                {% include "src/site/includes/vba_facilities/expandable_alert.liquid" %}
 
-                  <section class="vads-facility-detail">
+                  <section>
                     <script type="application/ld+json">
                       {
                         "@context": "https://schema.org",
@@ -120,14 +112,7 @@
                               contact="{{ vbaFacilityMainPhone.phoneNumber }}"
                               extension="{{ vbaFacilityMainPhone.extension }}"
                               message-aria-describedby="Main Phone"
-                              onclick="recordEvent(
-                                {
-                                  'event': 'vba-regional-facility-vba-facility-main-phone-number',
-                                  'vba-regional-facility-name': '{{ entityLabel }}',
-                                  'link-label': 'Main Phone'
-                                }
-                              )"
-                            />
+                            ></va-telephone>
                           </p>
                         </div>
                       {% endif %}
@@ -140,14 +125,7 @@
                               contact="{{ benefitsHotline.fieldPhoneNumber }}"
                               extension="{{ benefitsHotline.fieldPhoneExtension }}"
                               message-aria-describedby="VA benefits hotline"
-                              onclick="recordEvent(
-                                {
-                                  'event': 'vba-regional-facility-vba-facility-va-benefits-online',
-                                  'vba-regional-facility-name': '{{ entityLabel }}',
-                                  'link-label': 'VA benefits hotline'
-                                }
-                              )"
-                            />
+                            ></va-telephone>
                           </p>
                         </div>
                       {% endif %}
@@ -181,7 +159,7 @@
                 {% for prepareObj in fieldPrepareForVisit %}
                   <va-accordion-item uswds
                     class="va-accordion-item"
-                    id="vba-service-item-{{ prepareObj.entity.id }}"
+                    id="{{ prepareObj.entity.fieldHeader | hashReference: 60 }}"
                     header="{{ prepareObj.entity.fieldHeader }}"
                     level="3">
                     {{ prepareObj.entity.fieldRichWysiwyg.processed | drupalToVaPath | phoneLinks }}
@@ -192,7 +170,7 @@
           {% endif %}
 
           <h2 class="vads-u-line-height--2 vads-u-margin-bottom--3">
-            In the spotlight at {{ entityLabel }}
+            In the spotlight
           </h2>
 
           <div id="field-vet-center-feature-content" class="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--4 ">
@@ -211,7 +189,6 @@
           </div>
 
           {% assign allVbaServices = reverseFieldVbaRegionFacilityListNode.entities | processVbaServices: reverseFieldOfficeNode.entities %}
-
           {% include "src/site/includes/vba_facilities/services.liquid" with
             vbaTitle = "Veteran benefits"
             vbaServices = allVbaServices.veteranBenefits
@@ -259,7 +236,7 @@
                 <va-link
                   href="{{ cantFindBenefits.fieldCta.link }}"
                   text="{{ cantFindBenefits.fieldCta.label }}"
-                />
+                ></va-link>
               </div>
             </va-alert>
           {% endif %}
@@ -295,16 +272,9 @@
 
           <p>
             <va-link
-              href="/find-locations"
+              href="/find-locations?facilityType=benefits"
               text="Find a VA benefits location"
-              onclick="recordEvent(
-                {
-                  'event': 'vba-regional-facility-vba-facility-find-VA-benefits-location',
-                  'vba-regional-facility-name': '{{ entityLabel }}',
-                  'link-label': 'Find a VA benefits location'
-                }
-              )"
-            >
+            ></va-link>
           </p>
           <va-back-to-top></va-back-to-top>
           <!-- Last updated & feedback button-->

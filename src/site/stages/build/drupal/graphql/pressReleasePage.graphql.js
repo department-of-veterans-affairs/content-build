@@ -1,5 +1,7 @@
 const { generatePaginatedQueries } = require('../individual-queries-helpers');
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
+const { phoneNumber } = require('./fragments.graphql');
+const personTelephoneParagraphGraphql = require('./paragraph-fragments/personTelephone.paragraph.graphql');
 
 const pressReleaseFragment = `
   fragment pressReleasePage on NodePressRelease {
@@ -35,7 +37,7 @@ const pressReleaseFragment = `
         ...on NodePersonProfile {
           title
           fieldDescription
-          fieldPhoneNumber
+          ${personTelephoneParagraphGraphql}
           fieldEmailAddress
         }
       }
@@ -88,7 +90,7 @@ const pressReleaseFragment = `
 
 const getPressReleaseSlice = (operationName, offset, limit) => {
   return `
-
+    ${phoneNumber}
     ${pressReleaseFragment}
 
     query GetNodePressRelease($onlyPublishedContent: Boolean!) {

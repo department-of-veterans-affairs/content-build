@@ -805,6 +805,212 @@ describe('deriveLastBreadcrumbFromPath', () => {
   });
 });
 
+describe('formatForBreadcrumbs', () => {
+  it('returns breadcrumbs formatted for va-breadcrumbs', () => {
+    // Create "original" crumbs and current title and path
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = '/resources';
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
+      ),
+    );
+  });
+
+  it('removes duplicate paths', () => {
+    // Create "original" crumbs
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+      {
+        url: {
+          path: '/resources',
+          routed: false,
+        },
+        text: 'Resources and Support',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = '/resources';
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
+      ),
+    );
+  });
+
+  it('removes items with empty paths', () => {
+    // Create "original" crumbs
+    const originalCrumbs = [
+      {
+        url: {
+          path: '/',
+          routed: false,
+        },
+        text: 'Home',
+      },
+      {
+        url: {
+          path: '',
+          routed: false,
+        },
+        text: 'Somewhere Else',
+      },
+      {
+        url: {
+          path: '/resources',
+          routed: false,
+        },
+        text: 'Resources and Support',
+      },
+    ];
+    const currentTitle = 'Resources and Support';
+    const currentPath = null;
+    const hideHome = null;
+    const customHomeText = null;
+
+    // Pass original crumbs and current title and path to filter
+    const output = liquid.filters.formatForBreadcrumbs(
+      originalCrumbs,
+      currentTitle,
+      currentPath,
+      hideHome,
+      customHomeText,
+    );
+
+    // Verify that the output matches expectations
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"Home","lang":"en-US"},{"href":"/resources","isRouterLink":false,"label":"Resources and Support","lang":"en-US"}]',
+      ),
+    );
+  });
+});
+
+describe('formatForBreadcrumbsHTML', () => {
+  it('returns breadcrumbs formatted for va-breadcrumbs', () => {
+    // Define original breadcrumbs
+    const originalCrumbs = [
+      {
+        path: 'view-change-dependents/',
+        name: 'View or change dependents on your VA disability benefits',
+      },
+      {
+        path: 'view-change-dependents/add-remove-form-21-686c-v2/',
+        name: 'Add or remove dependents with VA Form 21-686C',
+      },
+    ];
+    // Process through filter
+    const output = liquid.filters.formatForBreadcrumbsHTML(originalCrumbs);
+    // Verify output
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
+      ),
+    );
+  });
+  it('removes items with empty paths', () => {
+    // Define original breadcrumbs
+    const originalCrumbs = [
+      {
+        path: 'view-change-dependents/',
+        name: 'View or change dependents on your VA disability benefits',
+      },
+      {
+        path: null,
+        name: 'This path does not exist',
+      },
+      {
+        path: 'view-change-dependents/add-remove-form-21-686c-v2/',
+        name: 'Add or remove dependents with VA Form 21-686C',
+      },
+    ];
+    // Process through filter
+    const output = liquid.filters.formatForBreadcrumbsHTML(originalCrumbs);
+    // Verify output
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
+      ),
+    );
+  });
+  it('correctly shows display_title or title if provided instead of default name', () => {
+    const originalCrumbs = [
+      {
+        name: 'cerner-staging',
+        path: 'cerner-staging',
+        children: [
+          {
+            file: {
+              // eslint-disable-next-line camelcase
+              display_title: 'Cerner',
+            },
+          },
+        ],
+      },
+      {
+        name: 'appointments',
+        path: 'cerner-staging/appointments',
+        children: [
+          {
+            file: {
+              title: 'Cerner appointments',
+            },
+          },
+        ],
+      },
+    ];
+    // Process through filter
+    const output = liquid.filters.formatForBreadcrumbsHTML(originalCrumbs);
+    // Verify output
+    expect(output).to.eq(
+      JSON.stringify(
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/cerner-staging","isRouterLink":false,"label":"Cerner","lang":"en-US"},{"href":"/cerner-staging/appointments","isRouterLink":false,"label":"Cerner appointments","lang":"en-US"}]',
+      ),
+    );
+  });
+});
+
 describe('deriveCLPTotalSections', () => {
   it('returns back max sections when everything is rendered', () => {
     expect(
@@ -1467,6 +1673,92 @@ describe('sortObjectsBy', () => {
     expect(liquid.filters.sortObjectsBy(objectsToSort, 'title')).to.deep.equal(
       sortedObjects,
     );
+  });
+});
+
+describe('sortObjectsWithConditionalKeys', () => {
+  const objectsToSort = [
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+  ];
+
+  const sortedObjects = [
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Disability compensation',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Home loans',
+          },
+        },
+      },
+    },
+    {
+      facilityService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'Homeless Veteran Care',
+          },
+        },
+      },
+    },
+    {
+      regionalService: {
+        fieldServiceNameAndDescripti: {
+          entity: {
+            name: 'VetSuccess on Campus',
+          },
+        },
+      },
+    },
+  ];
+
+  it('sorts objects alphabetically by key', () => {
+    expect(
+      liquid.filters.sortObjectsWithConditionalKeys(objectsToSort),
+    ).to.deep.equal(sortedObjects);
   });
 });
 
@@ -2931,9 +3223,9 @@ describe('getSurvey', () => {
     expect(
       liquid.filters.getSurvey(
         'vagovprod',
-        '/my-health/medical-records/summaries-and-notes/visit-summary/64545443',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/8N73HF67C5CC77FC1D17091606996587',
       ),
-    ).to.equal(17);
+    ).to.equal(56);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
@@ -2942,16 +3234,16 @@ describe('getSurvey', () => {
         'vagovdev',
         '/my-health/medical-records/summaries-and-notes/visit-summary',
       ),
-    ).to.equal(41);
+    ).to.equal(55);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
     expect(
       liquid.filters.getSurvey(
         'vagovdev',
-        '/my-health/medical-records/summaries-and-notes/visit-summary/45234363',
+        '/my-health/medical-records/summaries-and-notes/visit-summary/7A54CF67C5CC77FC1D17091606991561',
       ),
-    ).to.equal(41);
+    ).to.equal(55);
   });
 
   it('returns correct survey ID for subpath URL match in staging', () => {
@@ -3101,5 +3393,78 @@ describe('formatSocialPlatform', () => {
     expect(
       liquid.filters.formatSocialPlatform('Veterans Administration Instagram'),
     ).to.equal('Veterans Administration Instagram');
+  });
+});
+
+describe('runOrFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [false, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.orFn(3, ...testingParams)).to.be.false;
+  });
+});
+
+describe('runAndFnConditions', () => {
+  it('should return true for the first 3 parameters', () => {
+    const testingParams = [true, 'a', 1, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.true;
+  });
+  it('should return false for the first 3 parameters', () => {
+    const testingParams = [true, false, false, true, {}, { a: 1 }];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
+  });
+  it('should return false for the first n parameters when list is empty', () => {
+    const testingParams = [];
+    expect(liquid.filters.andFn(3, ...testingParams)).to.be.false;
+  });
+});
+
+describe('assignHardcodedMetaDescription', () => {
+  it('should return the correct description when a matching path is given', () => {
+    expect(
+      liquid.filters.assignHardcodedMetaDescription(
+        '/minneapolis-health-care/policies',
+      ),
+    ).to.equal(
+      'Find VA policies on privacy and patient rights, family rights, visitation, and more.',
+    );
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription('')).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(
+      liquid.filters.assignHardcodedMetaDescription('/minneapolis-health-care'),
+    ).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription(null)).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription(undefined)).to.be.null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(liquid.filters.assignHardcodedMetaDescription('/resources')).to.be
+      .null;
+  });
+
+  it('should return null if a matching path is not given', () => {
+    expect(
+      liquid.filters.assignHardcodedMetaDescription(
+        '/minneapolis-health-care/policies-for-something-else',
+      ),
+    ).to.be.null;
   });
 });

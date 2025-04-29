@@ -5,11 +5,10 @@
        class="vads-u-display--flex vads-u-margin-bottom--4 vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
     <div
         class="vads-u-flex--auto medium-screen:vads-u-margin-right--3 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--0">
-      {% if bio.fieldMedia == emtpy %}
-        <span
-            class="circular-profile-image bio-paragraph-image vads-u-position--relative vads-u-background-color--gray-lightest vads-u-display--block">
-      <span class="fas fa-user circular-profile-missing-icon"></span>
-    </span>
+      {% if bio.fieldMedia == empty %}
+        <div class="circular-profile-image bio-paragraph-image vads-u-position--relative vads-u-background-color--gray-lightest vads-u-display--block">
+            <div class="circular-profile-missing-icon"><va-icon size="6" icon="person"></va-icon></div>
+        </div>
       {% else %}
         {% assign image = bio.fieldMedia.entity.image %}
         <img class="circular-profile-image bio-paragraph-image" src="{{ image.derivative.url }}" alt="{{ image.alt }}"
@@ -25,7 +24,7 @@
             vads-u-margin-bottom--0
             vads-u-font-size--md">
           {% if bio.fieldCompleteBiographyCreate %}
-          <a class="bioLink" href="{{ bio.entityUrl.path }}">{{ bio.fieldNameFirst }}
+          <a href="{{ bio.entityUrl.path }}">{{ bio.fieldNameFirst }}
             {{ bio.fieldLastName }} {{ bio.fieldSuffix }}</a>
           {% else %}
             {{ bio.fieldNameFirst }} {{ bio.fieldLastName }} {{ bio.fieldSuffix }}
@@ -48,12 +47,17 @@
           {{ bio.fieldOffice.entity.entityLabel }}
         </p>
       {% endif %}
-      {% if bio.fieldPhoneNumber %}
+      {% if bio.fieldTelephone %}
         <p class="
         vads-u-font-weight--normal
         vads-u-margin--0
         vads-u-margin-bottom--1">
-          <strong>Phone:</strong> {{ bio.fieldPhoneNumber | processPhoneToVaTelephoneOrFallback :  '', '' }}
+        {% include "src/site/components/phone-number-no-header.drupal.liquid" with 
+            phoneNumber = bio.fieldTelephone.entity.fieldPhoneNumber
+            phoneExtension = bio.fieldTelephone.entity.fieldPhoneExtension
+            phoneNumberType = bio.fieldTelephone.entity.fieldPhoneNumberType
+            phoneLabel = bio.fieldTelephone.entity.fieldPhoneLabel
+        %}
         </p>
       {% endif %}
       {% if bio.fieldEmailAddress %}

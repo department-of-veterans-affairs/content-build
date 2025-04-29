@@ -17,6 +17,7 @@ const nodeEvent = `
     entityBundle
     entityId
     entityPublished
+    fieldLastSavedByAnEditor
     entityMetatags {
       __typename
       key
@@ -125,13 +126,47 @@ const nodeEvent = `
         }
         ... on NodeEventListing {
           fieldDescription
+        fieldIntroText
+        fieldOffice {
+            entity {
+              entityType
+              entityBundle
+              entityId
+              ... on Node {
+                title
+              }
+              ... on NodeOffice {
+                title
+                fieldBody {
+                  value
+                  format
+                  processed
+                }
+                fieldDescription
+              }
+            }
+          }
+        }
+      }
+    }
+    fieldAdditionalListings {
+      entity {
+        entityBundle
+        entityId
+        entityType
+        ... on NodeEventListing {
+          fieldDescription
           fieldIntroText
           fieldOffice {
             entity {
               entityType
               entityBundle
               entityId
+              ... on Node {
+                title
+              }
               ... on NodeOffice {
+                title
                 fieldBody {
                   value
                   format
@@ -161,18 +196,11 @@ const nodeEvent = `
               width
             }
           }
-          thumbnail {
-            alt
-            height
-            targetId
-            title
-            url
-            width
-          }
         }
       }
     }
     fieldOrder
+    fieldPublishToOutreachCal
     fieldUrlOfAnOnlineEvent {
       uri
       title
@@ -202,6 +230,7 @@ const nodeEventWithoutBreadcrumbs = `
     entityBundle
     entityId
     entityPublished
+    fieldLastSavedByAnEditor
     entityMetatags {
       __typename
       key
@@ -303,7 +332,11 @@ const nodeEventWithoutBreadcrumbs = `
               entityType
               entityBundle
               entityId
+              ... on Node {
+                title
+              }
               ... on NodeOffice {
+                title
                 fieldBody {
                   value
                   format
@@ -329,7 +362,11 @@ const nodeEventWithoutBreadcrumbs = `
               entityType
               entityBundle
               entityId
+              ... on Node {
+                title
+              }
               ... on NodeOffice {
+                title
                 fieldBody {
                   value
                   format
@@ -359,18 +396,11 @@ const nodeEventWithoutBreadcrumbs = `
               width
             }
           }
-          thumbnail {
-            alt
-            height
-            targetId
-            title
-            url
-            width
-          }
         }
       }
     }
     fieldOrder
+    fieldPublishToOutreachCal
     fieldUrlOfAnOnlineEvent {
       uri
       title
