@@ -1830,6 +1830,7 @@
     "productId": "00647aa4-fea2-4d95-b03f-1b40d87c1257",
     "template": {
       "vagovprod": false,
+      "title": "A sandbox for the Form Builder tool",
       "layout": "page-react.html"
     }
   }
