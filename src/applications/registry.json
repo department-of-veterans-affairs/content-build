@@ -298,15 +298,6 @@
     }
   },
   {
-    "appName": "Order hearing aid batteries and accessories",
-    "entryName": "order-form-2346",
-    "rootUrl": "/health-care/order-hearing-aid-batteries-and-accessories/order-form-2346",
-    "template": {
-      "layout": "page-react.html",
-      "vagovprod": true
-    }
-  },
-  {
     "appName": "Request for Higher-Level Review",
     "entryName": "0996-higher-level-review",
     "rootUrl": "/decision-reviews/higher-level-review/request-higher-level-review-form-20-0996",
@@ -1821,6 +1812,17 @@
         "title": "10-10d Extended",
         "subtitle": "CHAMPVA application (includes 10-7959c) (VA Form 10-10D-EXTENDED)"
       }
+    }
+  },
+  {
+    "appName": "12-3456 Form Builder Sandbox",
+    "entryName": "12-3456",
+    "rootUrl": "/form-builder-sandbox-12-3456",
+    "productId": "00647aa4-fea2-4d95-b03f-1b40d87c1257",
+    "template": {
+      "vagovprod": false,
+      "title": "A sandbox for the Form Builder tool",
+      "layout": "page-react.html"
     }
   }
 ]
