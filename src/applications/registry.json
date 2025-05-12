@@ -1747,6 +1747,15 @@
     }
   },
   {
+    "appName": "Representative Form Upload",
+    "entryName": "representative-form-upload",
+    "rootUrl": "representative-form-upload",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "New 28-1900 Veteran Readiness",
     "entryName": "new-28-1900-chapter-31",
     "rootUrl": "/temporary/apply-vre-form-28-1900",
