@@ -261,18 +261,7 @@
     "rootUrl": "/view-change-dependents/add-remove-form-21-686c-v2",
     "template": {
       "layout": "page-react.html",
-      "vagovprod": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "view-change-dependents/",
-          "name": "View or change dependents on your VA disability benefits"
-        },
-        {
-          "path": "view-change-dependents/add-remove-form-21-686c-v2/",
-          "name": "Add or remove dependents on VA benefits"
-        }
-      ]
+      "vagovprod": true
     }
   },
   {
