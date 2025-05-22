@@ -1420,6 +1420,7 @@
     "rootUrl": "/burials-memorials/pre-need-eligibility/apply-for-eligibility-form-40-10007",
     "productId": "e5593a96-1ba0-476c-9033-31ab963436c6",
     "template": {
+      "title": "Apply for Pre-need Eligibility Determination",
       "vagovprod": false,
       "layout": "page-react.html"
     }
