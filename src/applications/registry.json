@@ -1539,8 +1539,12 @@
     "rootUrl": "/income-and-asset-statement-form-21p-0969",
     "template": {
       "title": "VA Form 21P-0969",
-      "heading": "Income and Asset Statement Form",
       "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Income and Asset Statement Form",
+        "subtitle": "(VA Form 21P-0969)"
+      },
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": true
