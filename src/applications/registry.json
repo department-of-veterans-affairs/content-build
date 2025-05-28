@@ -269,7 +269,7 @@
   {
     "appName": "686C-674-v2",
     "entryName": "686C-674-v2",
-    "rootUrl": "/view-change-dependents/add-remove-form-21-686c-v2",
+    "rootUrl": "/view-change-dependents/add-remove-form-21-686c-674",
     "template": {
       "layout": "page-react.html",
       "vagovprod": true
