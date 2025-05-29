@@ -276,6 +276,16 @@
     }
   },
   {
+    "appName": "21-0538 Dependents verification form",
+    "entryName": "0538-dependents-verification",
+    "rootUrl": "/view-change-dependents/verify-dependents-form-21-0538",
+    "productId": "34b9f018-c72d-4788-9cce-b73c8f234116",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "21-526EZ disability compensation claim form",
     "entryName": "526EZ-all-claims",
     "rootUrl": "/disability/file-disability-claim-form-21-526ez",
@@ -1821,16 +1831,6 @@
     "template": {
       "vagovprod": false,
       "layout": "accredited-representative-portal.html"
-    }
-  },
-  {
-    "appName": "21-0538 Dependents verification",
-    "entryName": "0538-dependents-verification",
-    "rootUrl": "/verify-dependents",
-    "productId": "34b9f018-c72d-4788-9cce-b73c8f234116",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
     }
   }
 ]
