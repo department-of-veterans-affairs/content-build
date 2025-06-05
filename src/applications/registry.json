@@ -269,7 +269,7 @@
   {
     "appName": "686C-674-v2",
     "entryName": "686C-674-v2",
-    "rootUrl": "/view-change-dependents/add-remove-form-21-686c-v2",
+    "rootUrl": "/view-change-dependents/add-remove-form-21-686c-674",
     "template": {
       "layout": "page-react.html",
       "vagovprod": true
@@ -1427,9 +1427,10 @@
   {
     "appName": "40-10007 Burial pre-need eligibility determination",
     "entryName": "pre-need-integration",
-    "rootUrl": "/burials-memorials/pre-need/form-10007-apply-for-eligibility",
+    "rootUrl": "/burials-memorials/pre-need-eligibility/apply-for-eligibility-form-40-10007",
     "productId": "e5593a96-1ba0-476c-9033-31ab963436c6",
     "template": {
+      "title": "Apply for Pre-need Eligibility Determination",
       "vagovprod": false,
       "layout": "page-react.html"
     }
@@ -1549,11 +1550,19 @@
     "rootUrl": "/income-and-asset-statement-form-21p-0969",
     "template": {
       "title": "VA Form 21P-0969",
-      "heading": "Income and Asset Statement Form",
       "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Income and Asset Statement Form",
+        "subtitle": "(VA Form 21P-0969)"
+      },
       "vagovprod": false,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true
+      "layout": "page-react.html"
     }
   },
   {

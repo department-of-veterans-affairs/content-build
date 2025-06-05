@@ -1330,10 +1330,10 @@
   dependencies:
     minimist "^1.2.6"
 
-"@department-of-veterans-affairs/web-components@18.1.3":
-  version "18.1.3"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-18.1.3.tgz#e21808d2d5ff7e765387bfc68948cd980e3d1883"
-  integrity sha512-3IjTnY/mk0l3gSWfoN+WmDmSIDG3IimVIdPy9yb4B9Tdh2DKzSagyV9A5Q2U+BzrbhQPIQU6RDXIaWKHBoc4QQ==
+"@department-of-veterans-affairs/web-components@18.3.0":
+  version "18.3.0"
+  resolved "https://registry.npmjs.org/@department-of-veterans-affairs/web-components/-/web-components-18.3.0.tgz#40b361b0455bfca7858dc00c3d75578dca4c5bc3"
+  integrity sha512-8Y+ZvLRZlJXMaJP4vbMvehTkgIIfpiM4BmW9xh+0vlmKfl3rqy3BlnIw5ZHzxIs/mTVl+d6mlrVDbez2Kc1VrQ==
   dependencies:
     "@stencil/core" "4.20.0"
     aria-hidden "^1.1.3"
@@ -1341,6 +1341,7 @@
     chromatic "^11.0.4"
     classnames "^2.3.1"
     intersection-observer "^0.12.0"
+    libphonenumber-js "^1.12.7"
 
 "@discoveryjs/json-ext@^0.5.0":
   version "0.5.5"
@@ -7541,6 +7542,11 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+libphonenumber-js@^1.12.7:
+  version "1.12.8"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.12.8.tgz#20e5b57f24e60359d795e2fa2ee185776331e34f"
+  integrity sha512-f1KakiQJa9tdc7w1phC2ST+DyxWimy9c3g3yeF+84QtEanJr2K77wAmBPP22riU05xldniHsvXuflnLZ4oysqA==
 
 libxmljs2@^0.28.0:
   version "0.28.0"
