@@ -20,3 +20,5 @@ Disallow: /covid19screen
 
 # sitemap index
 Sitemap: https://www.va.gov/sitemap_index.xml
+Sitemap: https://www.va.gov/sitemap.xml
+Sitemap: https://www.va.gov/sitemap-nb.xml
