@@ -3,7 +3,7 @@ const libxmljs2 = require('libxmljs2');
 const fetch = require('node-fetch');
 
 const SITEMAP_URL = `http://${process.env.WEB_HOST || 'localhost'}:${process.env
-  .WEB_PORT || 3001}/sitemap.xml`;
+  .WEB_PORT || 3001}/sitemap-cb.xml`;
 const SITEMAP_LOC_NS = 'http://www.sitemaps.org/schemas/sitemap/0.9';
 
 const langs = ['espanol'];
