@@ -9,6 +9,7 @@ function createSitemaps(BUILD_OPTIONS) {
     omitIndex: true,
     modifiedProperty: 'stats.mtime',
     lastmod: now,
+    output: 'sitemap-cb.xml',
   };
 
   return (files, metalsmith, done) => {

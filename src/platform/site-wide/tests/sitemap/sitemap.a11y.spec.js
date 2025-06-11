@@ -4,7 +4,7 @@ const { normal } = require('../../../testing/e2e/timeouts');
 
 const step = Number(Cypress.env('STEP'));
 const data = fetch(
-  `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap.xml`,
+  `http://localhost:${Cypress.env('CONTENT_BUILD_PORT')}/sitemap-cb.xml`,
 ).text();
 const urls = xml
   .parse(data)
