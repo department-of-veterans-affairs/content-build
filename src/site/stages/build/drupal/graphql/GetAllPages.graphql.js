@@ -9,7 +9,6 @@ const bannerAlertsQuery = require('./bannerAlerts.graphql');
 const bannersQuery = require('./banners.graphql');
 const basicLandingPage = require('./nodeBasicLandingPage.graphql');
 const benefitListingPage = require('./benefitListingPage.graphql');
-const bioPage = require('./bioPage.graphql');
 const checklistPage = require('./nodeChecklist.graphql');
 const nodeEventListing = require('./nodeEventListing.graphql');
 const nodeEvent = require('./nodeEvent.graphql');
