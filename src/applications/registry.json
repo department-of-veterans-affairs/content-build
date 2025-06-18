@@ -1772,7 +1772,22 @@
     "productId": "7fec94cf-e9f7-44c9-963a-97593f3c9e3f",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "careers-employment",
+          "name": "Careers and employment"
+        },
+        {
+          "path": "careers-employment/vocational-rehabilitation",
+          "name": "Veteran Readiness and Employment"
+        },
+        {
+          "path": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
+          "name": "Apply for Veteran Readiness and Employment (VR&E)"
+        }
+      ]
     }
   },
   {
