@@ -41,16 +41,6 @@ const CountEntityTypes = `
     count
   }
 
-  newsStories: nodeQuery(
-    filter: {
-      conditions: [
-        {field: "status", value: ["1"]},
-        {field: "type", value: ["news_story"]}
-      ]}
-  	) {
-    count
-  }
-
   pressReleases: nodeQuery(
     filter: {
       conditions: [
