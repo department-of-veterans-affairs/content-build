@@ -20,6 +20,7 @@
 const IGNORE_PATTERNS = [
   /\/events($|\/)?/, // This ignores all links to Event and Event Listing pages.
   /\/staff-profiles($|\/)?/, // This ignores all links to Staff Profile pages.
+  /\/stories($|\/)?/, // This ignores all links to Stories pages.
 ];
 
 module.exports = {
