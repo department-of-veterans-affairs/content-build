@@ -635,7 +635,9 @@ module.exports = function registerFilters() {
   };
 
   liquid.filters.localHealthCareServiceIsMentalHealth = healthServiceName => {
-    return healthServiceName.toLowerCase().includes('mental health');
+    return (
+      healthServiceName?.toLowerCase?.().includes('mental health') || false
+    );
   };
 
   liquid.filters.accessibleNumber = data => {
