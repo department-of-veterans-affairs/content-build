@@ -1754,15 +1754,7 @@
       "vagovstaging": true,
       "vagovdev": true,
       "localhost": true,
-      "layout": "page-react.html",
-      "minimalHeader": {
-        "title": "Dispute Debt",
-        "subtitle": "",
-        "excludePaths": [
-          "/introduction",
-          "/confirmation"
-        ]
-      }
+      "layout": "page-react.html"
     }
   },
   {
