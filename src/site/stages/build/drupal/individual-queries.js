@@ -26,10 +26,6 @@ const {
 } = require('./graphql/pressReleasesListingPage.graphql');
 
 const {
-  GetNodeStoryListingPages,
-} = require('./graphql/storyListingPage.graphql');
-
-const {
   GetNodeLocationsListingPages,
 } = require('./graphql/locationsListingPage.graphql');
 const {
@@ -107,7 +103,6 @@ function getNodeQueries(entityCounts) {
     ...getPressReleaseQueries(entityCounts),
     GetNodePressReleaseListingPages,
     ...getVaPoliceQueries(entityCounts),
-    GetNodeStoryListingPages,
     GetNodeLocationsListingPages,
     GetNodeLeadershipListingPages,
     GetNodeVamcOperatingStatusAndAlerts,
