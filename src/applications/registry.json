@@ -1750,7 +1750,7 @@
     "rootUrl": "/manage-va-debt/dispute-debt",
     "productId": "908a02e6-c63d-42e0-87f9-ed208e47034e",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "vagovstaging": true,
       "vagovdev": true,
       "localhost": true,
