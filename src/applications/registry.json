@@ -1602,7 +1602,7 @@
     "rootUrl": "/school-administrators/35-percent-exemption",
     "productId": "db0db964-89ef-4e80-a469-499b7db330cd",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
