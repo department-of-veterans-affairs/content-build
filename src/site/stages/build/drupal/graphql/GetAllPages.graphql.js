@@ -109,7 +109,6 @@ const buildQuery = () => {
         ... healthCareRegionPage
         ... healthCareLocalFacilityPage
         ... healthCareRegionDetailPage
-        ... pressReleasePage
         ... vamcOperatingStatusAndAlerts
         ... nodeOffice
         ... benefitListingPage

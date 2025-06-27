@@ -41,16 +41,6 @@ const CountEntityTypes = `
     count
   }
 
-  pressReleases: nodeQuery(
-    filter: {
-      conditions: [
-        {field: "status", value: ["1"]},
-        {field: "type", value: ["press_release"]}
-      ]}
-  	) {
-    count
-  }
-
   healthCareLocalFacility: nodeQuery(
     filter: {
       conditions: [
