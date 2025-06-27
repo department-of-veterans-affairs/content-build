@@ -1,3 +1,7 @@
+{% comment %}
+This template is no longer used to build production content.
+Please make any changes you need in Next Build.
+{% endcomment %}
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
@@ -50,7 +54,7 @@
                                         <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">{{ c.title }}{% if c.fieldDescription != empty %}, {{ c.fieldDescription }} {% endif %}</p>
                                         {% if c.fieldTelephone %}
                                             <p class="vads-u-margin-top--1 vads-u-margin-bottom--0">
-                                                {% include "src/site/components/phone-number-no-header.drupal.liquid" with 
+                                                {% include "src/site/components/phone-number-no-header.drupal.liquid" with
                                                     phoneNumber = c.fieldTelephone.entity.fieldPhoneNumber
                                                     phoneExtension = c.fieldTelephone.entity.fieldPhoneExtension
                                                     phoneNumberType = c.fieldTelephone.entity.fieldPhoneNumberType
@@ -98,7 +102,7 @@
                     <va-link
                         active
                         href="{{ fieldListing.entity.entityUrl.path }}"
-                        text="See all news releases" 
+                        text="See all news releases"
                     />
                 </article>
                 <!-- Last updated & feedback button-->
