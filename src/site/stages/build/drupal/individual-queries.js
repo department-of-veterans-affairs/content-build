@@ -18,10 +18,6 @@ const {
 } = require('./graphql/healthServicesListingPage.graphql');
 
 const {
-  GetNodePressReleaseListingPages,
-} = require('./graphql/pressReleasesListingPage.graphql');
-
-const {
   GetNodeLocationsListingPages,
 } = require('./graphql/locationsListingPage.graphql');
 const {
@@ -96,7 +92,6 @@ function getNodeQueries(entityCounts) {
     ...getNodeOfficeQueries(entityCounts),
     ...getNodeHealthCareLocalFacilityPageQueries(entityCounts),
     ...getNodeHealthServicesListingPageQueries(entityCounts),
-    GetNodePressReleaseListingPages,
     ...getVaPoliceQueries(entityCounts),
     GetNodeLocationsListingPages,
     GetNodeLeadershipListingPages,
