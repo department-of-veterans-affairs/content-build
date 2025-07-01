@@ -113,7 +113,6 @@ const buildQuery = () => {
         ... nodeOffice
         ... benefitListingPage
         ... leadershipListingPage
-        ... pressReleasesListingPage
         ... healthServicesListingPage
         ... locationListingPage
         ... vaFormPage
