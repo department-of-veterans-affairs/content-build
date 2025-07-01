@@ -1834,5 +1834,15 @@
       "vagovprod": false,
       "layout": "accredited-representative-portal.html"
     }
+  },
+  {
+    "appName": "10297",
+    "entryName": "10297-edu-benefits",
+    "rootUrl": "/education/apply-for-high-technology-veterans-education/application/10297",
+    "productId": "0bc94734-cf5d-458e-b490-bb01428350f3",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
