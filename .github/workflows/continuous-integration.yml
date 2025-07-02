@@ -73,8 +73,13 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Setup Yarn
-        run: npm i -g yarn@4.9.2
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Enable and update yarn
+        run: |
+          corepack prepare yarn@stable --activate
+          yarn set version stable
 
       - name: Cache dependencies
         id: cache-dependencies
