@@ -94,7 +94,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
+          command: cd content-build && yarn install --immutable
           max_attempts: 3
           timeout_minutes: 7
         env:
@@ -534,7 +534,7 @@ jobs:
 
       # TODO: Potentially use install composite
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline --production=false
+        run: yarn install --immutable --production=false
         env:
           YARN_CACHE_FOLDER: .cache/yarn
         working-directory: testing-tools-team-dashboard-data
