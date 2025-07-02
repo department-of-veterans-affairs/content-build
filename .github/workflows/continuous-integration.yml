@@ -20,8 +20,8 @@ env:
   DRUPAL_PASSWORD: drupal8
 
 concurrency:
-  group: ${{ github.ref != 'refs/heads/main' && github.ref || github.sha }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  group: only-one-ci-on-main
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -755,7 +755,7 @@ jobs:
   notify-failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && (failure() || cancelled()) }}
+    if: ${{ github.ref == 'refs/heads/main' && (failure()) }}
     needs: deploy
 
     steps:
