@@ -134,8 +134,13 @@ jobs:
         with:
           node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
-      - name: Setup Yarn
-        run: npm i -g yarn@1.19.1
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Enable and update yarn
+        run: |
+          corepack prepare yarn@stable --activate
+          yarn set version stable
 
       - name: Cache dependencies
         id: cache-dependencies
@@ -150,7 +155,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
+          command: cd content-build && yarn install --immutable
           max_attempts: 3
           timeout_minutes: 7
         env:
