@@ -1751,10 +1751,19 @@
     "productId": "908a02e6-c63d-42e0-87f9-ed208e47034e",
     "template": {
       "vagovprod": true,
-      "vagovstaging": true,
-      "vagovdev": true,
-      "localhost": true,
-      "layout": "page-react.html"
+      "title": "Dispute your VA debt",         
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "manage-va-debt",
+          "name": "Manage your VA debt"
+        },
+        {
+          "path": "manage-va-debt/dispute-debt", 
+          "name": "Dispute your VA debt"
+        }
+      ]
     }
   },
   {
