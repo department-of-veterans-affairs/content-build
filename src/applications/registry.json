@@ -46,7 +46,7 @@
     }
   },
   {
-    "appName": "VA Online Scheduling",
+    "appName": "Appointments",
     "entryName": "vaos",
     "rootUrl": "/my-health/appointments",
     "template": {
@@ -1751,7 +1751,7 @@
     "productId": "908a02e6-c63d-42e0-87f9-ed208e47034e",
     "template": {
       "vagovprod": true,
-      "title": "Dispute your VA debt",         
+      "title": "Dispute your VA debt",
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1760,7 +1760,7 @@
           "name": "Manage your VA debt"
         },
         {
-          "path": "manage-va-debt/dispute-debt", 
+          "path": "manage-va-debt/dispute-debt",
           "name": "Dispute your VA debt"
         }
       ]
