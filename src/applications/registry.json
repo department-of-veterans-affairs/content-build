@@ -1592,7 +1592,7 @@
     "rootUrl": "/school-administrators/85-15-rule-enrollment-ratio",
     "productId": "e02407c0-753b-486d-8122-af5c73a4e983",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
