@@ -112,7 +112,6 @@ const buildQuery = () => {
         ... vamcOperatingStatusAndAlerts
         ... nodeOffice
         ... benefitListingPage
-        ... leadershipListingPage
         ... healthServicesListingPage
         ... locationListingPage
         ... vaFormPage

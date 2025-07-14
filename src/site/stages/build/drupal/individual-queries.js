@@ -20,9 +20,6 @@ const {
 const {
   GetNodeLocationsListingPages,
 } = require('./graphql/locationsListingPage.graphql');
-const {
-  GetNodeLeadershipListingPages,
-} = require('./graphql/leadershipListingPage.graphql');
 
 const {
   GetNodeVamcOperatingStatusAndAlerts,
@@ -94,7 +91,6 @@ function getNodeQueries(entityCounts) {
     ...getNodeHealthServicesListingPageQueries(entityCounts),
     ...getVaPoliceQueries(entityCounts),
     GetNodeLocationsListingPages,
-    GetNodeLeadershipListingPages,
     GetNodeVamcOperatingStatusAndAlerts,
     GetNodePublicationListingPages,
     ...getNodeHealthCareRegionDetailPageQueries(entityCounts),
