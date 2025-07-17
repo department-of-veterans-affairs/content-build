@@ -23,6 +23,7 @@ const IGNORE_PATTERNS = [
   /\/staff-profiles($|\/)?/, // This ignores all links to Staff Profile pages.
   /\/stories($|\/)?/, // This ignores all links to Stories and Story Listing pages.
   /\/leadership-listings($|\/)?/, // This ignores all links to Leadership Listing pages.
+  /\/va-police($|\/)?/, // This ignores all links to VA Police pages.
 ];
 
 module.exports = {
