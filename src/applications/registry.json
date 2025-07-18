@@ -1840,7 +1840,7 @@
     "entryName": "representative-form-upload",
     "rootUrl": "/representative/representative-form-upload",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "accredited-representative-portal.html"
     }
   },
