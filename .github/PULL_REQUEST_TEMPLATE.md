@@ -1,5 +1,9 @@
 **Note**: Delete the description statements, complete each step. **None are optional**, but can be justified as to why they cannot be completed as written. Provide known gaps to testing that may raise the risk of merging to production.
 
+<!--
+Note: Github Copilot will be added as a PR reviewer automatically. Please pay attention to its suggestions, but use your judgement when deciding whether to incorporate them.
+-->
+
 ## Summary
 
 - _(Summarize the changes that have been made to the platform)_
