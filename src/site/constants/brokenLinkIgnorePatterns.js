@@ -22,6 +22,7 @@ const IGNORE_PATTERNS = [
   /\/news-releases($|\/)?/, // This ignores all links to News Release and News Release Listing pages.
   /\/staff-profiles($|\/)?/, // This ignores all links to Staff Profile pages.
   /\/stories($|\/)?/, // This ignores all links to Stories and Story Listing pages.
+  /\/leadership($|\/)?/, // This ignores all links to Leadership Listing pages.
 ];
 
 module.exports = {
