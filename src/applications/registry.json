@@ -1573,7 +1573,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "lastupdate": "2025-06-16"
+      "lastupdate": "2025-07-15"
     }
   },
   {
@@ -1840,7 +1840,7 @@
     "entryName": "representative-form-upload",
     "rootUrl": "/representative/representative-form-upload",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "accredited-representative-portal.html"
     }
   },

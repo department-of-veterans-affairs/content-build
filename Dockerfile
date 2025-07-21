@@ -10,6 +10,12 @@ RUN groupadd -g $userid vets-website \
 ENV YARN_VERSION 1.19.1
 ENV NODE_ENV production
 
+# Fix for Debian Buster EOL - use archive repositories
+RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list && \
+    echo "Acquire::Check-Valid-Until \"false\";" > /etc/apt/apt.conf.d/100disablechecks
+
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
   gconf-service libasound2 libatk1.0-0 libc6 libcairo2 \
   libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 \
