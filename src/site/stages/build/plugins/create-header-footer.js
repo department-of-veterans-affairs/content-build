@@ -3,24 +3,22 @@ const jsesc = require('jsesc');
 const hardCodedFooterData = require('../../../../platform/static-data/footer-links.json');
 
 const {
-  convertLinkToAbsolute,
+  convertLinkToRelative,
+  formatLink,
+  relativeLinkHosts,
   formatHeaderData: convertDrupalHeaderData,
 } = require('../drupal/menus');
 
-const formatLink = (link, linkIndex, columnId, hostUrl) => {
-  return {
-    column: columnId,
-    href: convertLinkToAbsolute(hostUrl, link?.url?.path),
-    order: linkIndex + 1,
-    target: null,
-    title: link?.label,
-  };
-};
-
 const formatColumn = (data, columnId, hostUrl) => {
-  return data?.links?.map((link, linkIndex) =>
-    formatLink(link, linkIndex, columnId, hostUrl),
-  );
+  return data?.links?.map((link, linkIndex) => {
+    return {
+      column: columnId,
+      href: formatLink(link?.url?.path, hostUrl),
+      order: linkIndex + 1,
+      target: null,
+      title: link?.label,
+    };
+  });
 };
 
 const formatFooterColumns = (data, hostUrl) => {
@@ -55,10 +53,24 @@ function createHeaderFooterData(buildOptions) {
         hostUrl,
       ) || [];
 
+    // Transform hardCodedFooterData hrefs to relative if needed
+    let transformedHardCodedFooterData = hardCodedFooterData;
+    if (relativeLinkHosts.includes(hostUrl)) {
+      transformedHardCodedFooterData = hardCodedFooterData.map(item => {
+        // Only transform if href starts with https://www.va.gov
+        if (item.href && item.href.startsWith('https://www.va.gov')) {
+          return {
+            ...item,
+            href: convertLinkToRelative(item.href),
+          };
+        }
+        return item;
+      });
+    }
     const footerData = [
       ...bottomRailFooterData,
       ...footerColumnsData,
-      ...hardCodedFooterData,
+      ...transformedHardCodedFooterData,
     ];
 
     const headerFooter = {
