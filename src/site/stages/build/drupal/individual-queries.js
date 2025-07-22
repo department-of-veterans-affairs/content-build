@@ -71,7 +71,6 @@ const {
 
 const { getVetCenterQueries } = require('./graphql/vetCenter.graphql');
 const { getVbaFacilityQueries } = require('./graphql/vbaFacility.graphql');
-const { getVaPoliceQueries } = require('./graphql/vaPolice.graphql');
 const {
   GetVetCenterLocations,
 } = require('./graphql/vetCenterLocations.graphql');
@@ -89,7 +88,6 @@ function getNodeQueries(entityCounts) {
     ...getNodeOfficeQueries(entityCounts),
     ...getNodeHealthCareLocalFacilityPageQueries(entityCounts),
     ...getNodeHealthServicesListingPageQueries(entityCounts),
-    ...getVaPoliceQueries(entityCounts),
     GetNodeLocationsListingPages,
     GetNodeVamcOperatingStatusAndAlerts,
     GetNodePublicationListingPages,
