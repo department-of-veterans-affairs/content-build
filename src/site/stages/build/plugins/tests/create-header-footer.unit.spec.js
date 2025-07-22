@@ -9,14 +9,14 @@ describe('footer utilities', () => {
       {
         label: 'Accessibility',
         url: {
-          path: 'https://www.va.gov/accessibility-at-va',
+          path: '/accessibility-at-va',
         },
       },
       {
         label: 'Civil Rights',
         url: {
           path:
-            'https://www.va.gov/resources/your-civil-rights-and-how-to-file-a-discrimination-complaint/',
+            '/resources/your-civil-rights-and-how-to-file-a-discrimination-complaint/',
         },
       },
       {
@@ -37,13 +37,13 @@ describe('footer utilities', () => {
           {
             label: 'Homeless Veterans',
             url: {
-              path: 'https://www.va.gov/homeless/',
+              path: '/homeless/',
             },
           },
           {
             label: 'Women Veterans',
             url: {
-              path: 'https://www.va.gov/womenvet/',
+              path: '/womenvet/',
             },
           },
           {
@@ -98,7 +98,7 @@ describe('footer utilities', () => {
       ).to.deep.equal([
         {
           column: 'bottom_rail',
-          href: 'https://www.va.gov/accessibility-at-va',
+          href: '/accessibility-at-va',
           order: 1,
           target: null,
           title: 'Accessibility',
@@ -106,14 +106,14 @@ describe('footer utilities', () => {
         {
           column: 'bottom_rail',
           href:
-            'https://www.va.gov/resources/your-civil-rights-and-how-to-file-a-discrimination-complaint/',
+            '/resources/your-civil-rights-and-how-to-file-a-discrimination-complaint/',
           order: 2,
           target: null,
           title: 'Civil Rights',
         },
         {
           column: 'bottom_rail',
-          href: 'https://www.va.gov/link-test-1',
+          href: '/link-test-1',
           order: 3,
           target: null,
           title: 'Partial Link Test',
@@ -128,49 +128,49 @@ describe('footer utilities', () => {
         ).to.deep.equal([
           {
             column: 1,
-            href: 'https://www.va.gov/homeless/',
+            href: '/homeless/',
             order: 1,
             target: null,
             title: 'Homeless Veterans',
           },
           {
             column: 1,
-            href: 'https://www.va.gov/womenvet/',
+            href: '/womenvet/',
             order: 2,
             target: null,
             title: 'Women Veterans',
           },
           {
             column: 1,
-            href: 'https://www.va.gov/link-test-2',
+            href: '/link-test-2',
             order: 3,
             target: null,
             title: 'Partial Link Test',
           },
           {
             column: 2,
-            href: 'https://www.va.gov/find-forms',
+            href: '/find-forms',
             order: 1,
             target: null,
             title: 'VA forms',
           },
           {
             column: 2,
-            href: 'https://www.va.gov/jobs',
+            href: '/jobs',
             order: 2,
             target: null,
             title: 'Careers at VA',
           },
           {
             column: 2,
-            href: 'https://www.va.gov/outreach-and-events/outreach-materials',
+            href: '/outreach-and-events/outreach-materials',
             order: 3,
             target: null,
             title: 'VA outreach materials',
           },
           {
             column: 3,
-            href: 'https://www.va.gov/link-test-3',
+            href: '/link-test-3',
             order: 1,
             target: null,
             title: 'Partial Link Test',
