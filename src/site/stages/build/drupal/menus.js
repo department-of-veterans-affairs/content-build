@@ -34,7 +34,7 @@ const relativeLinkHosts = [
   'https://www.va.gov',
   'https://staging.va.gov',
   'https://dev.va.gov',
-  'http://localhost:3002', // For local development, this is used to test relative links
+  // 'http://localhost:3002', // For local development, this is used to test relative links
 ];
 
 const formatLink = (pathName, hostUrl) => {
