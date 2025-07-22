@@ -34,6 +34,7 @@ const relativeLinkHosts = [
   'https://www.va.gov',
   'https://staging.va.gov',
   'https://dev.va.gov',
+  'http://localhost:3002', // For local development, this is used to test relative links
 ];
 
 const formatLink = (pathName, hostUrl) => {
@@ -41,7 +42,14 @@ const formatLink = (pathName, hostUrl) => {
   // If the hostUrl is in the relativeLinkHosts array, return a relative link; otherwise, convert to absolute.
   if (
     relativeLinkHosts.includes(hostUrl) &&
-    pathName.includes(relativeLinkHosts[0])
+    (() => {
+      try {
+        const parsedUrl = new URL(pathName);
+        return parsedUrl.host === relativeLinkHosts[0].split('://')[1];
+      } catch (e) {
+        return false; // If pathName is not a valid URL, treat it as invalid
+      }
+    })()
   ) {
     href = convertLinkToRelative(pathName);
   } else if (relativeLinkHosts.includes(hostUrl)) {

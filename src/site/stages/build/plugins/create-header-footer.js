@@ -57,12 +57,19 @@ function createHeaderFooterData(buildOptions) {
     let transformedHardCodedFooterData = hardCodedFooterData;
     if (relativeLinkHosts.includes(hostUrl)) {
       transformedHardCodedFooterData = hardCodedFooterData.map(item => {
-        // Only transform if href starts with https://www.va.gov
-        if (item.href && item.href.startsWith(relativeLinkHosts[0])) {
-          return {
-            ...item,
-            href: convertLinkToRelative(item.href),
-          };
+        // Only transform if href has the exact host www.va.gov
+        if (item.href) {
+          try {
+            const parsedUrl = new URL(item.href);
+            if (parsedUrl.host === relativeLinkHosts[0].split('://')[1]) {
+              return {
+                ...item,
+                href: convertLinkToRelative(item.href),
+              };
+            }
+          } catch (error) {
+            // Invalid URL, skip transformation
+          }
         }
         return item;
       });
