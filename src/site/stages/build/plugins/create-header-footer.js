@@ -58,7 +58,7 @@ function createHeaderFooterData(buildOptions) {
     if (relativeLinkHosts.includes(hostUrl)) {
       transformedHardCodedFooterData = hardCodedFooterData.map(item => {
         // Only transform if href starts with https://www.va.gov
-        if (item.href && item.href.startsWith('https://www.va.gov')) {
+        if (item.href && item.href.startsWith(relativeLinkHosts[0])) {
           return {
             ...item,
             href: convertLinkToRelative(item.href),

@@ -41,7 +41,7 @@ const formatLink = (pathName, hostUrl) => {
   // If the hostUrl is in the relativeLinkHosts array, return a relative link; otherwise, convert to absolute.
   if (
     relativeLinkHosts.includes(hostUrl) &&
-    pathName.includes('https://www.va.gov')
+    pathName.includes(relativeLinkHosts[0])
   ) {
     href = convertLinkToRelative(pathName);
   } else if (relativeLinkHosts.includes(hostUrl)) {
