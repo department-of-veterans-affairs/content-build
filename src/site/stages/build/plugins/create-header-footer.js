@@ -6,6 +6,7 @@ const {
   convertLinkToRelative,
   formatLink,
   relativeLinkHosts,
+  isMatchingVaGovHost,
   formatHeaderData: convertDrupalHeaderData,
 } = require('../drupal/menus');
 
@@ -58,18 +59,11 @@ function createHeaderFooterData(buildOptions) {
     if (relativeLinkHosts.includes(hostUrl)) {
       transformedHardCodedFooterData = hardCodedFooterData.map(item => {
         // Only transform if href has the exact host www.va.gov
-        if (item.href) {
-          try {
-            const parsedUrl = new URL(item.href);
-            if (parsedUrl.host === relativeLinkHosts[0].split('://')[1]) {
-              return {
-                ...item,
-                href: convertLinkToRelative(item.href),
-              };
-            }
-          } catch (error) {
-            // Invalid URL, skip transformation
-          }
+        if (item.href && isMatchingVaGovHost(item.href)) {
+          return {
+            ...item,
+            href: convertLinkToRelative(item.href),
+          };
         }
         return item;
       });
