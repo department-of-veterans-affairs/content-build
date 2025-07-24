@@ -281,7 +281,7 @@
     "rootUrl": "/view-change-dependents/verify-dependents-form-21-0538",
     "productId": "34b9f018-c72d-4788-9cce-b73c8f234116",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
