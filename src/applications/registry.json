@@ -1852,5 +1852,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Decision Reviews Onramp Tool",
+    "entryName": "onramp",
+    "rootUrl": "/decision-reviews/onramp-to-dr",
+    "productId": "76fd4ae2-68e4-45b5-bec2-71bffbc34462",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
