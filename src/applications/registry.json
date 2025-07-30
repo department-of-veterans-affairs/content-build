@@ -605,30 +605,6 @@
     }
   },
   {
-    "appName": "28-1900 Veteran Readiness",
-    "entryName": "28-1900-chapter-31",
-    "rootUrl": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "careers-employment",
-          "name": "Careers and employment"
-        },
-        {
-          "path": "careers-employment/vocational-rehabilitation",
-          "name": "Veteran Readiness and Employment"
-        },
-        {
-          "path": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
-          "name": "Apply for Veteran Readiness and Employment Form 28‑1900"
-        }
-      ]
-    }
-  },
-  {
     "appName": "Apply for Personalized Career Planning and Guidance with VA Form 27-8832",
     "entryName": "25-8832-planning-and-career-guidance",
     "rootUrl": "/careers-employment/education-and-career-counseling/apply-career-guidance-form-25-8832",
@@ -1756,9 +1732,9 @@
     }
   },
   {
-    "appName": "New 28-1900 Veteran Readiness",
+    "appName": "28-1900 Veteran Readiness",
     "entryName": "new-28-1900-chapter-31",
-    "rootUrl": "/temporary/apply-vre-form-28-1900",
+    "rootUrl": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
     "productId": "7fec94cf-e9f7-44c9-963a-97593f3c9e3f",
     "template": {
       "vagovprod": false,
