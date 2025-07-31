@@ -14,6 +14,51 @@ function convertLinkToAbsolute(hostUrl, pathName) {
   return url.href;
 }
 
+function convertLinkToRelative(pathName) {
+  // If pathName is already a relative path, just return it
+  if (pathName.startsWith('/')) {
+    return pathName;
+  }
+
+  // If pathName is an absolute URL, convert to relative
+  try {
+    const url = new URL(pathName);
+    return url.pathname + url.search + url.hash;
+  } catch (e) {
+    // If pathName is not a valid URL, return as is
+    return pathName;
+  }
+}
+
+const relativeLinkHosts = [
+  'https://www.va.gov',
+  'https://staging.va.gov',
+  'https://dev.va.gov',
+  // 'http://localhost:3002', // For local www.va.gov development, this is used to test relative links
+];
+
+const isMatchingVaGovHost = pathName => {
+  try {
+    const parsedUrl = new URL(pathName);
+    return parsedUrl.host === relativeLinkHosts[0].split('://')[1];
+  } catch (e) {
+    return false; // If pathName is not a valid URL, treat it as invalid
+  }
+};
+
+const formatLink = (pathName, hostUrl) => {
+  let href;
+  // If the hostUrl is in the relativeLinkHosts array, return a relative link; otherwise, convert to absolute.
+  if (relativeLinkHosts.includes(hostUrl) && isMatchingVaGovHost(pathName)) {
+    href = convertLinkToRelative(pathName);
+  } else if (relativeLinkHosts.includes(hostUrl)) {
+    href = pathName;
+  } else {
+    href = convertLinkToAbsolute(hostUrl, pathName);
+  }
+  return href;
+};
+
 /**
  * Perform a topological sort on the flat list of menu links
  * so that we get back a sorted tree of all links.
@@ -290,7 +335,7 @@ function formatHeaderData(buildOptions, contentData) {
 
     // If this top-level item has a link, add it.
     if (link.link.url.path !== '') {
-      linkObj.href = convertLinkToAbsolute(hostUrl, link.link.url.path);
+      linkObj.href = formatLink(link.link.url.path, hostUrl);
     }
 
     // If we have children, add in menuSections.
@@ -342,4 +387,11 @@ function formatHeaderData(buildOptions, contentData) {
   return headerData;
 }
 
-module.exports = { convertLinkToAbsolute, formatHeaderData };
+module.exports = {
+  convertLinkToAbsolute,
+  convertLinkToRelative,
+  formatLink,
+  relativeLinkHosts,
+  isMatchingVaGovHost,
+  formatHeaderData,
+};
