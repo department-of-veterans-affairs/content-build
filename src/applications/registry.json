@@ -281,7 +281,7 @@
     "rootUrl": "/view-change-dependents/verify-dependents-form-21-0538",
     "productId": "34b9f018-c72d-4788-9cce-b73c8f234116",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -987,17 +987,6 @@
     "productId": "95453f74-9e08-4bd0-902a-938836bde1d0",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html",
-      "private": true
-    }
-  },
-  {
-    "appName": "MHV Secure Messaging - OH Pilot",
-    "entryName": "mhv-secure-messaging-pilot",
-    "rootUrl": "/my-health/secure-messages-pilot",
-    "productId": "802ebe63-66e9-4ab1-82cd-bbf45d2db91f",
-    "template": {
-      "vagovprod": false,
       "layout": "page-react.html",
       "private": true
     }
@@ -1859,6 +1848,16 @@
     "entryName": "new-chapter-36-form",
     "rootUrl": "/temporary/apply-career-guidance-form-27-8832",
     "productId": "7636cb12-cc78-451b-ae8e-34e1eda87049",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Decision Reviews Onramp Tool",
+    "entryName": "onramp",
+    "rootUrl": "/decision-reviews/onramp-to-dr",
+    "productId": "76fd4ae2-68e4-45b5-bec2-71bffbc34462",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
