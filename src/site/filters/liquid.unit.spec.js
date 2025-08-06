@@ -932,11 +932,11 @@ describe('formatForBreadcrumbsHTML', () => {
     // Define original breadcrumbs
     const originalCrumbs = [
       {
-        path: 'view-change-dependents/',
+        path: 'manage-dependents/',
         name: 'View or change dependents on your VA disability benefits',
       },
       {
-        path: 'view-change-dependents/add-remove-form-21-686c-v2/',
+        path: 'manage-dependents/add-remove-form-21-686c-674/',
         name: 'Add or remove dependents with VA Form 21-686C',
       },
     ];
@@ -945,7 +945,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Verify output
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/manage-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/manage-dependents/add-remove-form-21-686c-674/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
       ),
     );
   });
@@ -953,7 +953,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Define original breadcrumbs
     const originalCrumbs = [
       {
-        path: 'view-change-dependents/',
+        path: 'manage-dependents/',
         name: 'View or change dependents on your VA disability benefits',
       },
       {
@@ -961,7 +961,7 @@ describe('formatForBreadcrumbsHTML', () => {
         name: 'This path does not exist',
       },
       {
-        path: 'view-change-dependents/add-remove-form-21-686c-v2/',
+        path: 'manage-dependents/add-remove-form-21-686c-674/',
         name: 'Add or remove dependents with VA Form 21-686C',
       },
     ];
@@ -970,7 +970,7 @@ describe('formatForBreadcrumbsHTML', () => {
     // Verify output
     expect(output).to.eq(
       JSON.stringify(
-        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/view-change-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/view-change-dependents/add-remove-form-21-686c-v2/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
+        '[{"href":"/","isRouterLink":false,"label":"VA.gov home","lang":"en-US"},{"href":"/manage-dependents/","isRouterLink":false,"label":"View or change dependents on your VA disability benefits","lang":"en-US"},{"href":"/manage-dependents/add-remove-form-21-686c-674/","isRouterLink":false,"label":"Add or remove dependents with VA Form 21-686C","lang":"en-US"}]',
       ),
     );
   });
