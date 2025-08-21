@@ -325,7 +325,7 @@
     "entryName": "letters",
     "rootUrl": "/records/download-va-letters/letters",
     "template": {
-      "title": "Download VA Letters and Documents",
+      "title": "Your VA benefit letters and documents",
       "entryname": "letters",
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
