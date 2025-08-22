@@ -661,7 +661,7 @@
       "includeBreadcrumbs": true,
       "vagovprod": true,
       "layout": "page-react.html",
-      "title": "View Payments",
+      "title": "Your VA payments",
       "breadcrumbs_override": [
         {
           "path": "va-payment-history",
