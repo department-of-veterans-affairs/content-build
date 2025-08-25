@@ -118,7 +118,7 @@
       ]
     }
   },
-    {
+  {
     "appName": "View Dependents new-url",
     "entryName": "dependents-view-dependents-new-url",
     "rootUrl": "/manage-dependents/view",
@@ -316,7 +316,7 @@
       "vagovprod": true
     }
   },
-    {
+  {
     "appName": "686C-674-v2-new-url",
     "entryName": "686C-674-v2-new-url",
     "rootUrl": "/manage-dependents/add-remove-form-21-686c-674",
