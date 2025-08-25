@@ -129,7 +129,7 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "manage-dependents",
+          "path": "manage-dependents/",
           "name": "View or change dependents on your VA disability benefits"
         },
         {
