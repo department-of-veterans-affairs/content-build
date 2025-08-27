@@ -11,6 +11,7 @@ Disallow: /analytics-opt-out.html
 Disallow: /cgi-bin/
 Disallow: /drupal
 Disallow: /covid19screen
+Disallow: /sitemap.xml
 
 # disallow WIP VAMCs
 # make sure to add a trailing slash at the end of the path
