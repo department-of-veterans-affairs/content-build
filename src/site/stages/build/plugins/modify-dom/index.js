@@ -5,7 +5,6 @@ const { sleep } = require('../../../../../../script/utils');
 const addNonceToScripts = require('./add-nonce-to-scripts');
 const processEntryNames = require('./process-entry-names');
 const addSubheadingsIds = require('./add-id-to-subheadings');
-const checkBrokenLinks = require('./check-broken-links');
 const injectAxeCore = require('./inject-axe-core');
 const addLangToMain = require('./add-lang-to-main');
 const forceCorrectAccordionHeaders = require('./force-correct-accordion-headers');
@@ -25,7 +24,6 @@ const getDomModifiers = BUILD_OPTIONS => {
     addNonceToScripts,
     processEntryNames,
     addSubheadingsIds,
-    checkBrokenLinks,
     injectAxeCore,
     addLangToMain,
     forceCorrectAccordionHeaders,

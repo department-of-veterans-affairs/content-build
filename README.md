@@ -31,7 +31,7 @@ on VA.gov, follow the sections below to build these static pages.
 
 #### Prepare Your Environment Settings
 
-The Content-Build can pull fresh content directly from Drupal endpoints. To do this the request for content must be authenticated. 
+The Content-Build can pull fresh content directly from Drupal endpoints. To do this the request for content must be authenticated.
 If pulling fresh content you must ensure that these command line arguments or environment variables are set:
 
 | Command Line Argument | Environment Variables | Purpose |
@@ -202,7 +202,6 @@ for doing very specific things.
 | run only javascript linter                                                                                  | `yarn lint:js`                                                                                                                                                                                                               |
 | run lint on JS and fix anything that changed                                                                | `yarn lint:js:changed:fix`                                                                                                                                                                                                   |
 | run visual regression testing                                                                               | Start the site. Generate your baseline image set using `yarn test:visual:baseline`. Make your changes. Then run `yarn test:visual`.                                                                                          |
-| test for broken links                                                                                       | Build the site. Broken Link Checking is done via a Metalsmith plugin during build. Note that it only runs on _build_ not watch.                                                                                              |
 | add new npm modules                                                                                         | `yarn add my-module`. Use the `--dev` flag for modules that are build or test related.                                                                                                                                       |
 | get the latest json schema                                                                                  | `yarn update:schema`. This updates our [vets-json-schema](https://github.com/department-of-veterans-affairs/vets-json-schema) vets-json-schema https://github.com/department-of-veterans-affairs/ to the most recent commit. |
 | check test coverage                                                                                         | `yarn test:coverage`                                                                                                                                                                                                         |

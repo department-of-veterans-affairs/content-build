@@ -11,7 +11,6 @@ concurrency:
 env:
   CMS_NOTIFICATIONS_SLACK: CJT90C0UT # cms-notifications
   VFS_PLATFORM_BUILDS_SLACK: C0MQ281DJ # vfs-platform-builds
-  BROKEN_LINKS_SLACK: C030F5WV2TF # content-broken-links
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
   BUILDTYPE: vagovprod
@@ -104,7 +103,6 @@ jobs:
       GQL_QUERY_DURATION: ${{ steps.export-gql-query-duration.outputs.GQL_QUERY_DURATION }}
       GQL_PAGE_COUNT: ${{ steps.export-gql-page-count.outputs.GQL_PAGE_COUNT }}
       ARCHIVE_END_TIME: ${{ steps.export-archive-end-time.outputs.ARCHIVE_END_TIME }}
-      BROKEN_LINK_COUNT: ${{ steps.get-broken-link-info.outputs.BROKEN_LINK_COUNT || 0 }}
     env:
       CHROMEDRIVER_FILEPATH: /usr/local/share/chrome_driver/chromedriver
     steps:
@@ -250,66 +248,6 @@ jobs:
           -H "Content-Type: text/json" \
           -H "DD-API-KEY: ${{ env.GHA_CONTENT_BUILD_DATADOG_API_KEY }}" \
           -d @- < metrics.json
-
-      - name: Check broken links
-        id: get-broken-link-info
-        run: node ./script/github-actions/check-broken-links-blocks.js ${{ env.BUILDTYPE }}
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@4fc4975a852c8cd99761e2de1f4ba73402e44dd9 # v4.0.3
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-
-      - name: Get Slack app token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_socket_token
-          env_variable_name: SLACK_APP_TOKEN
-
-      - name: Get Slack bot token
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /devops/github_actions_slack_bot_user_token
-          env_variable_name: SLACK_BOT_TOKEN
-
-      - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
-          env_variable_name: AWS_FRONTEND_NONPROD_ROLE
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@4fc4975a852c8cd99761e2de1f4ba73402e44dd9 # v4.0.3
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-gov-west-1
-          role-to-assume: ${{ env.AWS_FRONTEND_NONPROD_ROLE }}
-          role-duration-seconds: 900
-          role-session-name: vsp-frontendteam-githubaction
-
-      - name: Upload broken links file
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        run: aws s3 cp ./logs/${{ env.BUILDTYPE }}-broken-links.json s3://vetsgov-website-builds-s3-upload/broken-link-reports/${{ env.BUILDTYPE }}-broken-links.json --acl public-read --region us-gov-west-1
-
-      - name: Notify content broken links channel about broken links
-        uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
-        id: notify-content-broken-links
-        if: ${{ steps.get-broken-link-info.outputs.UPLOAD_AND_NOTIFY == '1' && always() }}
-        continue-on-error: true
-        env:
-          SSL_CERT_DIR: /etc/ssl/certs
-          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
-        with:
-          payload: ${{ steps.get-broken-link-info.outputs.SLACK_BLOCKS }}
-          channel-id: ${{ env.BROKEN_LINKS_SLACK }}
 
       - name: Generate build details
         run: |
@@ -699,8 +637,6 @@ jobs:
           jq '.series[6].points[0] = [${{env.NOW}}, ${{env.DEPLOY_DURATION}}]' | \
           jq '.series[7].metric = "${{env.METRIC_NAMESPACE}}.overall.duration"' | \
           jq '.series[7].points[0] = [${{env.NOW}}, ${{env.OVERALL_DURATION}}]' | \
-          jq '.series[8].metric = "${{env.METRIC_NAMESPACE}}.build.broken-links.count"' | \
-          jq '.series[8].points[0] = [${{env.NOW}}, ${{needs.build.outputs.BROKEN_LINK_COUNT}}]' | \
           jq '.series[].tags[0] = "env:${{env.DEPLOY_ENV}}"' | \
           jq '.series[].tags[1] = "build_number:${{github.run_number}}"' | \
           jq '.series[].tags[2] = "status:${{needs.deploy.result}}"' | \

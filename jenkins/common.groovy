@@ -104,65 +104,6 @@ def setup() {
   }
 }
 
-// Upload the broken links file to S3 so Drupal can fetch it and notify editors
-def uploadBrokenLinksFile(String brokenLinksFile, String envName) {
-  def s3Url = "s3://vetsgov-website-builds-s3-upload/broken-link-reports/${envName}-broken-links.json"
-  sh "aws s3 cp ${brokenLinksFile} ${s3Url} --acl public-read --region us-gov-west-1 --quiet"
-
-  echo "Uploaded broken links file for ${envName}"
-}
-
-def checkForBrokenLinks(String buildLogPath, String envName, Boolean contentOnlyBuild) {
-  def brokenLinksFile = "${WORKSPACE}/content-build/logs/${envName}-broken-links.json"
-
-  if (fileExists(brokenLinksFile)) {
-    def rawJsonFile = readFile(brokenLinksFile);
-    def brokenLinks = new groovy.json.JsonSlurper().parseText(rawJsonFile);
-    def maxBrokenLinks = 10
-    def color = 'warning'
-    // When broken links are reported in a content-only deployment the branch returns null
-    def source = env.BRANCH_NAME == null ? 'a content-only deployment' : env.BRANCH_NAME;
-
-    if (brokenLinks.isHomepageBroken || brokenLinks.brokenLinksCount > maxBrokenLinks) {
-      color = 'danger'
-    }
-
-    def heading = "@cms-helpdesk ${brokenLinks.brokenLinksCount} broken links found in the `${envName}` build in `${source}`\n\n${env.RUN_DISPLAY_URL}\n\n"
-    def message = "${heading}\n${brokenLinks.summary}".stripMargin()
-
-    echo "${brokenLinks.brokenLinksCount} broken links found"
-    echo message
-
-    if (!IS_PROD_BRANCH && !contentOnlyBuild) {
-      // Ignore the results of the broken link checker unless
-      // we are running either on the main branch or during
-      // a Content Release. This way, if there is a broken link,
-      // feature branches aren't affected, so VFS teams can
-      // continue merging.
-      return;
-    }
-
-    // Unset brokenLinks now that we're done with this, because Jenkins may temporarily
-    // freeze (through serialization) this pipeline while uploading the broken links file
-    // or sending the Slack message. brokenLinks is an instance of JSONObject, which
-    // cannot be serialized by default.
-    brokenLinks = null
-
-    uploadBrokenLinksFile(brokenLinksFile, envName)
-
-    slackSend(
-      message: message,
-      color: color,
-      failOnError: true,
-      channel: 'vfs-platform-builds'
-    )
-
-    if (color == 'danger') {
-      throw new Exception('Broken links found')
-    }
-  }
-}
-
 def build(String ref, dockerContainer, String assetSource, String envName, Boolean useCache, Boolean contentOnlyBuild, String buildPath) {
   def long buildtime = System.currentTimeMillis() / 1000L;
   def buildDetails = buildDetails(envName, ref, buildtime)
@@ -199,10 +140,6 @@ def build(String ref, dockerContainer, String assetSource, String envName, Boole
       def buildLogPath = "${buildPath}/${envName}-build.log"
 
       sh "cd ${buildPath} && jenkins/build.sh --envName ${envName} --assetSource ${assetSource} --drupalAddress ${drupalAddress} --drupalMaxParallelRequests ${drupalMaxParallelRequests} ${drupalMode} ${noDrupalProxy} --buildLog ${buildLogPath} --verbose ${localhostBuild}"
-
-      if (envName == 'vagovprod') {
-        checkForBrokenLinks(buildLogPath, envName, contentOnlyBuild)
-      }
 
       sh "cd ${buildPath} && echo \"${buildDetails}\" > build/${envName}/BUILD.txt"
     }
