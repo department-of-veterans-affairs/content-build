@@ -1554,7 +1554,7 @@
         "title": "Pension or DIC Income and Asset Statement",
         "subtitle": "(VA Form 21P-0969)"
       },
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
