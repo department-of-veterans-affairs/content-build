@@ -4,10 +4,6 @@ const { getNodePageQueries } = require('./graphql/page.graphql');
 const { GetNodeLandingPages } = require('./graphql/landingPage.graphql');
 const { getNodeVaFormQueries } = require('./graphql/vaFormPage.graphql');
 
-const {
-  getNodeHealthCareRegionPageQueries,
-} = require('./graphql/healthCareRegionPage.graphql');
-
 const { getNodeOfficeQueries } = require('./graphql/nodeOffice.graphql');
 
 const {
@@ -84,7 +80,6 @@ function getNodeQueries(entityCounts) {
     ...getNodePageQueries(entityCounts),
     GetNodeLandingPages,
     ...getNodeVaFormQueries(entityCounts),
-    ...getNodeHealthCareRegionPageQueries(entityCounts),
     ...getNodeOfficeQueries(entityCounts),
     ...getNodeHealthCareLocalFacilityPageQueries(entityCounts),
     ...getNodeHealthServicesListingPageQueries(entityCounts),
