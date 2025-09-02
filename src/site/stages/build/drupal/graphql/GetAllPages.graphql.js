@@ -106,7 +106,6 @@ const buildQuery = () => {
       entities {
         ... landingPage
         ... page
-        ... healthCareRegionPage
         ... healthCareLocalFacilityPage
         ... healthCareRegionDetailPage
         ... vamcOperatingStatusAndAlerts

@@ -1,3 +1,8 @@
+{% comment %}
+This template is no longer used to build production content.
+Please make any changes you need in Next Build.
+{% endcomment %}
+
 {% include "src/site/includes/header.html" %}
 {% include "src/site/includes/preview-edit.drupal.liquid" %}
 {% include "src/site/includes/breadcrumbs.drupal.liquid" with hideHomeBreadcrumb = true %}
@@ -41,7 +46,7 @@
                     entity = main
                     fieldVaHealthConnectPhone = fieldVaHealthConnectPhone
             %}
-            {% endfor %} 
+            {% endfor %}
             <va-link
               active
               class="vads-u-font-size--md vads-u-display--block vads-u-width--full"
@@ -220,7 +225,7 @@
           </section>
           {% elsif eventTeasersAll.entities.0.reverseFieldListingNode.entities.length %}
           {% assign upcomingEvents = eventTeasersAll.entities.0.reverseFieldListingNode.entities %}
-          {% assign sortedEvents = upcomingEvents | filterAndSortEvents %}         
+          {% assign sortedEvents = upcomingEvents | filterAndSortEvents %}
           <section>
             <h2
               class="vads-u-margin-top--4 vads-u-margin-bottom--2 medium-screen:vads-u-margin-bottom--2p5">

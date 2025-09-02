@@ -36,10 +36,8 @@ const testForLovellSidebar = (section, url = '/') => {
   });
 };
 
-describe('Lovell Tricare - Main Page', () => testForLovellSidebar('tricare'));
 describe('Lovell Tricare - About Page', () =>
   testForLovellSidebar('tricare', '/about-us/'));
 
-describe('Lovell VA - Main Page', () => testForLovellSidebar('va'));
 describe('Lovell VA - About Page', () =>
   testForLovellSidebar('va', '/about-us/'));
