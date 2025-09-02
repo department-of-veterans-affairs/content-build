@@ -112,7 +112,6 @@ const buildQuery = () => {
         ... nodeOffice
         ... benefitListingPage
         ... healthServicesListingPage
-        ... locationListingPage
         ... vaFormPage
         ... nodeQa
         ... faqMultipleQA
