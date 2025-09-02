@@ -10,7 +10,6 @@ const verifyActionLink = (expectedText, expectedHref) =>
     .and('include', expectedHref);
 
 describe('VAMC Lovell - All TRICARE pages with expected MHS Genesis Patient Portal Top Task have it', () => {
-
   it('TRICARE Health services has MHS Genesis Patient Portal link', () => {
     cy.visit('/lovell-federal-health-care-tricare/health-services');
     cy.injectAxeThenAxeCheck();
@@ -45,7 +44,6 @@ describe('VAMC Lovell - All TRICARE pages with expected MHS Genesis Patient Port
 });
 
 describe('VAMC Lovell - All VA pages with expected Make an appointment Top Task have it', () => {
-
   it('VA Health services has Make an appointment link', () => {
     cy.visit('/lovell-federal-health-care-va/health-services/');
     cy.injectAxeThenAxeCheck();
