@@ -1887,5 +1887,16 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Interstitial: Confirm contact email address",
+    "entryName": "confirm-contact-email-interstitial",
+    "rootUrl": "/sign-in-confirm-contact-email",
+    "productId": "",
+    "template": {
+      "title": "Confirm contact email address",
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
