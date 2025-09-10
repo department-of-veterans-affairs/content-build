@@ -1500,6 +1500,16 @@
     }
   },
   {
+    "appName": "File a CHAMPVA claim",
+    "entryName": "10-7959a",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/file-champva-claim-10-7959a",
+    "productId": "e6afb103-521b-46a2-b29c-245f6c95d3af",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Submit a statement to support a claim",
     "entryName": "4138-ss",
     "rootUrl": "/supporting-forms-for-claims/submit-statement-form-21-4138",
