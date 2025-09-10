@@ -1886,5 +1886,25 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Income Verification for Disability Benefits",
+    "entryName": "21-4140",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/employment-questionnaire-form-21-4140",
+    "productId": "29ecf573-2e8d-428c-a9ac-6f667561f69a",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Income Verification for Disability Benefits",
+        "subtitle": "disability benefits (VA Form 21-4140)"
+      }
+    }
   }
 ]
