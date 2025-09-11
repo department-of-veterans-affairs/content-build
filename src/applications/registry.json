@@ -1909,5 +1909,16 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Sign In Confirm Contact Email",
+    "entryName": "confirm-contact-email",
+    "rootUrl": "/sign-in-confirm-contact-email",
+    "productId": "ad06fcf8-da87-4a7a-9efc-258b57ae944d",
+    "template": {
+      "title": "Confirm contact email address",
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
