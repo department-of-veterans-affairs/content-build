@@ -1909,5 +1909,25 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Form New App 1 Page",
+    "entryName": "form-new-app-1-page",
+    "rootUrl": "/form-new-app-1-page",
+    "productId": "e02cb8e9-83ae-46a2-b429-c894a2b0eca0",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Form New App 1 Page",
+        "subtitle": "benefits (VA Form 34-343)"
+      }
+    }
   }
 ]
