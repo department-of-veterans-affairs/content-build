@@ -605,7 +605,7 @@
     }
   },
   {
-    "appName": "28-1900 Veteran Readiness",
+    "appName": "Apply for Veteran Readiness and Employment (VR&E)",
     "entryName": "28-1900-chapter-31",
     "rootUrl": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
     "template": {
@@ -1492,7 +1492,7 @@
   {
     "appName": "File a CHAMPVA claim",
     "entryName": "10-7959a",
-    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/file-champva-claim-10-7959a",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/file-champva-claim-10-7959a",
     "productId": "e6afb103-521b-46a2-b29c-245f6c95d3af",
     "template": {
       "vagovprod": true,
@@ -1525,7 +1525,19 @@
     "productId": "66edb145-7655-4137-a74d-dfb20f4e752a",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "File a Foreign Medical Program (FMP) claim",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "health-care",
+          "name": "Health care"
+        },
+        {
+          "path": "health-care/file-foreign-medical-program-claim",
+          "name": "File a Foreign Medical Program (FMP) claim"
+        }
+      ]
     }
   },
   {
@@ -1801,7 +1813,7 @@
   {
     "appName": "10-10d Extended",
     "entryName": "10-10d-extended",
-    "rootUrl": "/ivc-champva/10-10d-extended",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-champva-form-10-10d",
     "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
     "template": {
       "vagovprod": false,
@@ -1861,7 +1873,7 @@
   {
     "appName": "Decision Reviews Onramp Tool",
     "entryName": "onramp",
-    "rootUrl": "/decision-reviews/onramp-to-dr",
+    "rootUrl": "/decision-reviews/explore-disability-claim-decision-review-options",
     "productId": "76fd4ae2-68e4-45b5-bec2-71bffbc34462",
     "template": {
       "vagovprod": false,
