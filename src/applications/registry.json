@@ -1901,7 +1901,7 @@
       "layout": "page-react.html"
     }
   },
-    {
+  {
     "appName": "Apply for burial in a VA national cemetery",
     "entryName": "40-xxxx-ton",
     "rootUrl": "/burials-and-memorials/time-of-need",
@@ -1970,6 +1970,26 @@
           "name": "Marital Status Questionnaire for DIC Recipients"
         }
       ]
+    }
+  },
+  {
+    "appName": "Income Verification for Disability Benefits",
+    "entryName": "21-4140-income-verification",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/employment-questionnaire-form-21-4140",
+    "productId": "4eb7d93c-8fd8-49d1-b1f9-8ac4ca4e6ebb",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Income Verification for Disability Benefits",
+        "subtitle": "Employment Questionnaire (VA Form 21-4140)"
+      }
     }
   }
 ]
