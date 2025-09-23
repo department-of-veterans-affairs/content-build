@@ -1900,7 +1900,7 @@
       "layout": "page-react.html"
     }
   },
-    {
+  {
     "appName": "Apply for burial in a VA national cemetery",
     "entryName": "40-xxxx-ton",
     "rootUrl": "/burials-and-memorials/time-of-need",
@@ -1908,6 +1908,26 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21P-8416 Medical expense report form",
+    "entryName": "medical-expense-report",
+    "rootUrl": "/pension/medical-expense-report-form-21p-8416",
+    "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "21P-8416 Medical expense report form",
+        "subtitle": "Medical expense (VA Form 21P-8416)"
+      }
     }
   }
 ]
