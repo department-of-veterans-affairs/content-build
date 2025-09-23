@@ -2052,5 +2052,26 @@
         }
       ]
     }
+  },
+  {
+    "appName": "534EZ Survivors benefits",
+    "entryName": "survivors-benefits",
+    "rootUrl": "/supporting-forms-for-claims/apply-form-21p-534ez",
+    "productId": "51601cf6-a6ff-4621-ac50-f12c37e5193e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims/",
+          "name": "Supporting forms for VA claims"
+        },
+        {
+          "path": "supporting-forms-for-claims/apply-form-21p-534ezs",
+          "name": "Survivors benefits"
+        }
+      ]
+    }
   }
 ]
