@@ -1909,5 +1909,25 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "534EZ Survivors benefits",
+    "entryName": "survivors-benefits",
+    "rootUrl": "/supporting-forms-for-claims/apply-form-21p-534ez",
+    "productId": "51601cf6-a6ff-4621-ac50-f12c37e5193e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "534EZ Survivors benefits",
+        "subtitle": "benefits (VA Form 21P-534EZ)"
+      }
+    }
   }
 ]
