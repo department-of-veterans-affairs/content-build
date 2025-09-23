@@ -1929,5 +1929,26 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "Marital Status Questionnaire for DIC Recipients",
+    "entryName": "21p-0537",
+    "rootUrl": "/supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
+    "template": {
+      "title": "Marital Status Questionnaire for DIC Recipients",
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims",
+          "name": "Supporting forms for VA claims"
+        },
+        {
+          "path": "supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
+          "name": "Marital Status Questionnaire for DIC Recipients"
+        }
+      ]
+    }
   }
 ]
