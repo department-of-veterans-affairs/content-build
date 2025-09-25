@@ -1909,5 +1909,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "21-2680 House Bound Status",
+    "entryName": "21-2680-house-bound-status",
+    "rootUrl": "/21-2680-house-bound-status",
+    "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
