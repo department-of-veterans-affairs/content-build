@@ -1910,5 +1910,46 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "21-2680 House Bound Status",
+    "entryName": "21-2680-house-bound-status",
+    "rootUrl": "/21-2680-house-bound-status",
+    "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21-4192 Employment Information",
+    "entryName": "21-4192-employment-information",
+    "rootUrl": "/21-4192-employment-information",
+    "productId": "c61b0c39-7177-4340-9820-955c959b7f5b",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Marital Status Questionnaire for DIC Recipients",
+    "entryName": "21p-0537",
+    "rootUrl": "/supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
+    "template": {
+      "title": "Marital Status Questionnaire for DIC Recipients",
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims",
+          "name": "Supporting forms for VA claims"
+        },
+        {
+          "path": "supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
+          "name": "Marital Status Questionnaire for DIC Recipients"
+        }
+      ]
+    }
   }
 ]
