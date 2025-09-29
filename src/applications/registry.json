@@ -1942,6 +1942,16 @@
     }
   },
   {
+    "appName": "21-0779 Nursing Home Information",
+    "entryName": "21-0779-nursing-home-information",
+    "rootUrl": "/21-0779-nursing-home-information",
+    "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Marital Status Questionnaire for DIC Recipients",
     "entryName": "21p-0537",
     "rootUrl": "/supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
