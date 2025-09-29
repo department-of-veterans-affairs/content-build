@@ -1818,6 +1818,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
+      "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
       "minimalExcludePaths": [
         "/introduction",
@@ -1825,8 +1826,8 @@
       ],
       "minimalFooter": true,
       "minimalHeader": {
-        "title": "10-10d Extended",
-        "subtitle": "CHAMPVA application (includes 10-7959c) (VA Form 10-10D-EXTENDED)"
+        "title": "Apply for CHAMPVA benefits",
+        "subtitle": "Application for CHAMPVA benefits (VA Forms 10-10d and 10-7959c)"
       }
     }
   },
@@ -1933,7 +1934,7 @@
   {
     "appName": "21-0779 Nursing Home Information",
     "entryName": "21-0779-nursing-home-information",
-    "rootUrl": "/benefits-optimization-aquia/21-0779-nursing-home-information",
+    "rootUrl": "/21-0779-nursing-home-information",
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
       "vagovprod": false,
