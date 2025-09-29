@@ -1918,16 +1918,17 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
-      "minimalFooter": true,
-      "minimalHeader": {
-        "title": "21P-8416 Medical expense report form",
-        "subtitle": "Medical expense (VA Form 21P-8416)"
-      }
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "pension/",
+          "name": "Pension benefits"
+        },
+        {
+          "path": "pension/medical-expense-report-form-21p-8416",
+          "name": "Report medical expenses"
+        }
+      ]
     }
   }
 ]
