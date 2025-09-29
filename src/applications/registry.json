@@ -1918,16 +1918,17 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
-      "minimalFooter": true,
-      "minimalHeader": {
-        "title": "534EZ Survivors benefits",
-        "subtitle": "benefits (VA Form 21P-534EZ)"
-      }
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims/",
+          "name": "Supporting forms for VA claims"
+        },
+        {
+          "path": "supporting-forms-for-claims/apply-form-21p-534ezs",
+          "name": "Survivors benefits"
+        }
+      ]
     }
   }
 ]
