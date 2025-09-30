@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "gov.va.mobileapp",
+      "sha256_cert_fingerprints":
+      ["04:0F:38:7B:1B:F0:11:D7:4D:2B:C4:B0:EC:AC:9C:A8:95:B9:7C:83:8E:B4:10:CF:EA:6A:C8:E4:E6:86:7A:25"]
+    }
+  }
+]
