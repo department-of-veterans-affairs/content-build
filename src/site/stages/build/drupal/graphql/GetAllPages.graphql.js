@@ -122,7 +122,6 @@ const buildQuery = () => {
         ... nodeBasicLandingPage
         ... nodeCampaignLandingPage
         ... policiesPageFragment
-        ... vbaFacilityFragment
       }
     }`;
 
