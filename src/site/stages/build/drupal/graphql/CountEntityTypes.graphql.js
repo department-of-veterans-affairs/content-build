@@ -21,26 +21,6 @@ const CountEntityTypes = `
     count
   }
 
-  vetCenters: nodeQuery(
-    filter: {
-      conditions: [
-        {field: "status", value: ["1"]},
-        {field: "type", value: ["vet_center"]}
-      ]}
-  	) {
-    count
-  }
-
-  vbaFacilities: nodeQuery(
-    filter: {
-      conditions: [
-        {field: "status", value: ["1"]},
-        {field: "type", value: ["vba_facility"]}
-      ]}
-  	) {
-    count
-  }
-
   healthServicesListing: nodeQuery(
     filter: {
       conditions: [
