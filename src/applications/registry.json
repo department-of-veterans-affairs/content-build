@@ -1993,6 +1993,47 @@
     }
   },
   {
+    "appName": "Apply for additional compensation based on inability to work",
+    "entryName": "21-8940",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-form-21-8940",
+    "productId": "549889a3-855d-409c-bb8d-bed6bc851c95",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Apply for additional compensation based on inability to work",
+        "subtitle": "increased compensation based on unemployability (VA Form 21-8940)"
+      }
+    }
+  },
+  {
+    "appName": "21P-8416 Medical expense report form".,
+    "entryName": "medical-expense-report",
+    "rootUrl": "/pension/medical-expense-report-form-21p-8416",
+    "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "pension/",
+          "name": "Pension benefits"
+        },
+        {
+          "path": "pension/medical-expense-report-form-21p-8416",
+          "name": "Report medical expenses"
+        }
+      ]
+    }
+  },
+  {
     "appName": "VRE CH31 Eligibility & Entitlement",
     "entryName": "ch31-eligibility-entitlement",
     "rootUrl": "/careers-employment/your-vre-eligibility",
