@@ -1,8 +1,3 @@
-## Notice about main branch
-Until further notice, the main branch of this repo is locked. Pull requests should be made against the [integration-202510](https://github.com/department-of-veterans-affairs/content-build/tree/integration-202510) branch. 
-
-Merges to the main branch for critical bugs or security updates are allowed. Please contact CMS Team in the [#platform-cms-team](https://dsva.slack.com/archives/CT4GZBM8F) channel if you need assistance. 
-
 **Note**: Delete the description statements, complete each step. **None are optional**, but can be justified as to why they cannot be completed as written. Provide known gaps to testing that may raise the risk of merging to production.
 
 <!--
