@@ -1376,10 +1376,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Request personal records",
@@ -1436,6 +1433,16 @@
     "productId": "1e585463-5625-4868-b5f5-58ee0490ea28",
     "template": {
       "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Complex Claim Form Prototype",
+    "entryName": "complex-claim-form-prototype",
+    "rootUrl": "/my-health/travel-pay/complex-claim-form-prototype",
+    "productId": "da3475de-75d7-4fd1-bebe-cf6cdbecee46",
+    "template": {
+      "vagovprod": false,
       "layout": "page-react.html"
     }
   },
@@ -1507,10 +1514,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1558,10 +1562,7 @@
       "title": "VA Form 21P-0969",
       "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Pension or DIC Income and Asset Statement",
@@ -1620,10 +1621,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1820,10 +1818,7 @@
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for CHAMPVA benefits",
@@ -1981,10 +1976,7 @@
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Income Verification for Disability Benefits",
