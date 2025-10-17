@@ -2068,8 +2068,29 @@
           "name": "Supporting forms for VA claims"
         },
         {
-          "path": "supporting-forms-for-claims/apply-form-21p-534ezs",
+          "path": "supporting-forms-for-claims/apply-form-21p-534ez",
           "name": "Survivors benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "VRE CH31 Eligibility & Entitlement",
+    "entryName": "ch31-eligibility-entitlement",
+    "rootUrl": "/careers-employment/your-vre-eligibility",
+    "productId": "6f0fff93-4ba6-4500-8eda-c1500c433c67",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "careers-employment/",
+          "name": "Careers and employment"
+        },
+        {
+          "path": "careers-employment/your-vre-eligibility",
+          "name": "Your VR&E eligibility and benefits"
         }
       ]
     }
