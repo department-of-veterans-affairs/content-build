@@ -1496,7 +1496,27 @@
     "productId": "e6afb103-521b-46a2-b29c-245f6c95d3af",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "File a CHAMPVA claim",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "family-and-caregiver-benefits",
+          "name": "Family and caregiver benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/health-and-disability",
+          "name": "Health and disability benefits for family and caregivers"
+        },
+        {
+          "path": "family-and-caregiver-benefits/health-and-disability/champva",
+          "name": "CHAMPVA benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/health-and-disability/champva/file-champva-claim-10-7959a",
+          "name": "File a CHAMPVA claim"
+        }
+      ]
     }
   },
   {
@@ -1818,6 +1838,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
+      "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
       "minimalExcludePaths": [
         "/introduction",
@@ -1825,8 +1846,8 @@
       ],
       "minimalFooter": true,
       "minimalHeader": {
-        "title": "10-10d Extended",
-        "subtitle": "CHAMPVA application (includes 10-7959c) (VA Form 10-10D-EXTENDED)"
+        "title": "Apply for CHAMPVA benefits",
+        "subtitle": "VA Forms 10-10d and 10-7959c"
       }
     }
   },
@@ -1911,13 +1932,194 @@
     }
   },
   {
+<<<<<<< HEAD
     "appName": "10278",
     "entryName": "10278-edu-benefits",
     "rootUrl": "/education/10278",
     "productId": "67338352-0c30-4eaf-9392-1a5da78d51c8",
+=======
+    "appName": "21-2680 House Bound Status",
+    "entryName": "21-2680-house-bound-status",
+    "rootUrl": "/21-2680-house-bound-status",
+    "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
+>>>>>>> main
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
+<<<<<<< HEAD
+=======
+  },
+  {
+    "appName": "21-4192 Employment Information",
+    "entryName": "21-4192-employment-information",
+    "rootUrl": "/21-4192-employment-information",
+    "productId": "c61b0c39-7177-4340-9820-955c959b7f5b",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21P-530a Interment Allowance",
+    "entryName": "21p-530a-interment-allowance",
+    "rootUrl": "/21p-530a-interment-allowance",
+    "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21-0779 Nursing Home Information",
+    "entryName": "21-0779-nursing-home-information",
+    "rootUrl": "/21-0779-nursing-home-information",
+    "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Marital Status Questionnaire for DIC Recipients",
+    "entryName": "21p-0537",
+    "rootUrl": "/supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
+    "template": {
+      "title": "Marital Status Questionnaire for DIC Recipients",
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims",
+          "name": "Supporting forms for VA claims"
+        },
+        {
+          "path": "supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
+          "name": "Marital Status Questionnaire for DIC Recipients"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Submit Employment Questionnaire",
+    "entryName": "21-4140-income-verification",
+    "rootUrl": "/disability/verify-individual-unemployability-status/submit-employment-questionnaire-form-21-4140",
+    "productId": "4eb7d93c-8fd8-49d1-b1f9-8ac4ca4e6ebb",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Income Verification for Disability Benefits",
+        "subtitle": "Employment Questionnaire (VA Form 21-4140)"
+      }
+    }
+  },
+  {
+    "appName": "Apply for additional compensation based on inability to work",
+    "entryName": "21-8940",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-form-21-8940",
+    "productId": "549889a3-855d-409c-bb8d-bed6bc851c95",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Apply for additional compensation based on inability to work",
+        "subtitle": "increased compensation based on unemployability (VA Form 21-8940)"
+      }
+    }
+  },
+  {
+    "appName": "Submit Medical Expenses To Support A Pension or DIC Claim",
+    "entryName": "medical-expense-report",
+    "rootUrl": "/supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
+    "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims/",
+          "name": "Supporting forms for VA claims"
+        },
+        {
+          "path": "supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
+          "name": "Submit medical expenses to support a pension or DIC claim"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "534EZ Survivors benefits",
+    "entryName": "survivors-benefits",
+    "rootUrl": "/supporting-forms-for-claims/apply-form-21p-534ez",
+    "productId": "51601cf6-a6ff-4621-ac50-f12c37e5193e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims/",
+          "name": "Supporting forms for VA claims"
+        },
+        {
+          "path": "supporting-forms-for-claims/apply-form-21p-534ez",
+          "name": "Survivors benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "VRE CH31 Eligibility & Entitlement",
+    "entryName": "ch31-eligibility-entitlement",
+    "rootUrl": "/careers-employment/your-vre-eligibility",
+    "productId": "6f0fff93-4ba6-4500-8eda-c1500c433c67",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "careers-employment/",
+          "name": "Careers and employment"
+        },
+        {
+          "path": "careers-employment/your-vre-eligibility",
+          "name": "Your VR&E eligibility and benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Application for Accrued Amounts Due a Deceased Beneficiary",
+    "entryName": "21P-601",
+    "rootUrl": "/supporting-forms-for-claims/accrued-benefits-application-21p-601",
+    "template": {
+      "title": "Application for Accrued Amounts Due a Deceased Beneficiary",
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims/accrued-benefits-application-21p-601",
+          "name": "Application for Accrued Amounts Due a Deceased Beneficiary"
+        }
+      ]
+    }
+>>>>>>> main
   }
 ]

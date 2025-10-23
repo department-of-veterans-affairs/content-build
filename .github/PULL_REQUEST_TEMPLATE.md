@@ -34,7 +34,7 @@ If you are:
 
 2. **Changing an entryName**: First search [vets-website](https://github.com/department-of-veterans-affairs/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that updates those references, if any.
    - _Add the link to your merged vets-website PR here_
-  
+
 _**If you do not do this, other applications will break!**_
 
 ## Testing done
