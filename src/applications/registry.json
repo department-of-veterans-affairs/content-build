@@ -1900,11 +1900,21 @@
       "layout": "page-react.html"
     }
   },
-    {
+  {
     "appName": "Apply for burial in a VA national cemetery",
     "entryName": "40-xxxx-ton",
     "rootUrl": "/burials-and-memorials/time-of-need",
     "productId": "ca34c8b1-8938-4fa2-bd69-cc28db76df44",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "10278",
+    "entryName": "10278-edu-benefits",
+    "rootUrl": "/education/10278",
+    "productId": "67338352-0c30-4eaf-9392-1a5da78d51c8",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
