@@ -1932,16 +1932,6 @@
     }
   },
   {
-    "appName": "10278",
-    "entryName": "10278-edu-benefits",
-    "rootUrl": "/education/10278",
-    "productId": "67338352-0c30-4eaf-9392-1a5da78d51c8",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "21-2680 House Bound Status",
     "entryName": "21-2680-house-bound-status",
     "rootUrl": "/21-2680-house-bound-status",
