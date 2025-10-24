@@ -1934,11 +1934,34 @@
   {
     "appName": "21-2680 House Bound Status",
     "entryName": "21-2680-house-bound-status",
-    "rootUrl": "/21-2680-house-bound-status",
+    "rootUrl": "/pension/aid-attendance-housebound/apply-form-21-2680",
     "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": "/"
+        },
+        {
+          "name": "Pension benefits",
+          "path": "/pension/"
+        },
+        {
+          "name": "VA Aid and Attendance benefits and Housebound allowance",
+          "path": "/pension/aid-attendance-housebound/"
+        },
+        {
+          "name": "Apply for Aid and Attendance benefits or Housebound allowance",
+          "path": "/pension/aid-attendance-housebound/apply-form-21-2680"
+        }
+      ],
+      "minimalHeader": {
+        "title": "Apply for housebound status or aid and attendance",
+        "subtitle": "(VA Form 21-2680)"
+      }
     }
   },
   {
@@ -1948,7 +1971,11 @@
     "productId": "c61b0c39-7177-4340-9820-955c959b7f5b",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "minimalHeader": {
+        "title": "Request for employment information",
+        "subtitle": "(VA Form 21-4192)"
+      }
     }
   },
   {
@@ -1958,7 +1985,11 @@
     "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "minimalHeader": {
+        "title": "Apply for a Veterans burial allowance",
+        "subtitle": "(VA Form 21P-530a)"
+      }
     }
   },
   {
@@ -1968,7 +1999,11 @@
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "minimalHeader": {
+        "title": "Submit nursing home information to support a claim",
+        "subtitle": "(VA Form 21-0779)"
+      }
     }
   },
   {
