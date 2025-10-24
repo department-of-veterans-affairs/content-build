@@ -1954,7 +1954,7 @@
   {
     "appName": "21-4192 Employment Information",
     "entryName": "21-4192-employment-information",
-    "rootUrl": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192/",
     "productId": "c61b0c39-7177-4340-9820-955c959b7f5b",
     "template": {
       "vagovprod": false,
@@ -1994,7 +1994,7 @@
   {
     "appName": "21-0779 Nursing Home Information",
     "entryName": "21-0779-nursing-home-information",
-    "rootUrl": "/supporting-forms-for-claims/nursing-home-information-form-21-0779",
+    "rootUrl": "/supporting-forms-for-claims/aid-attendance-housebound",
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
       "vagovprod": false,
