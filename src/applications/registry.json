@@ -1942,20 +1942,16 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
-        },
-        {
           "name": "Pension benefits",
-          "path": "/pension/"
+          "path": "pension/"
         },
         {
           "name": "VA Aid and Attendance benefits and Housebound allowance",
-          "path": "/pension/aid-attendance-housebound/"
+          "path": "pension/aid-attendance-housebound/"
         },
         {
           "name": "Apply for Aid and Attendance benefits or Housebound allowance",
-          "path": "/pension/aid-attendance-housebound/apply-form-21-2680"
+          "path": "pension/aid-attendance-housebound/apply-form-21-2680"
         }
       ],
       "minimalHeader": {
@@ -1975,28 +1971,24 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
-        },
-        {
           "name": "Disability benefits",
-          "path": "/disability/"
+          "path": "disability/"
         },
         {
           "name": "Eligibility",
-          "path": "/disability/eligibility/"
+          "path": "disability/eligibility/"
         },
         {
           "name": "Special claims",
-          "path": "/disability/eligibility/special-claims/"
+          "path": "disability/eligibility/special-claims/"
         },
         {
           "name": "Individual Unemployability if you can't work",
-          "path": "/disability/eligibility/special-claims/unemployability/"
+          "path": "disability/eligibility/special-claims/unemployability/"
         },
         {
           "name": "Submit employment information in connection with claim for Individual Unemployability",
-          "path": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
+          "path": "disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
         }
       ],
       "minimalHeader": {
@@ -2013,6 +2005,21 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Burials and memorials",
+          "path": "burials-memorials/"
+        },
+        {
+          "name": "Burial allowance",
+          "path": "burials-memorials/veterans-burial-allowance/"
+        },
+        {
+          "name": "Apply for burial benefits",
+          "path": "21p-530a-interment-allowance"
+        }
+      ],
       "minimalHeader": {
         "title": "Apply for a Veterans burial allowance",
         "subtitle": "(VA Form 21P-530a)"
@@ -2030,16 +2037,12 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
-        },
-        {
           "name": "Supporting forms for claims",
-          "path": "/supporting-forms-for-claims/"
+          "path": "supporting-forms-for-claims/"
         },
         {
           "name": "Submit nursing home information to support a claim",
-          "path": "/supporting-forms-for-claims/nursing-home-information-form-21-0779"
+          "path": "supporting-forms-for-claims/nursing-home-information-form-21-0779"
         }
       ],
       "minimalHeader": {
