@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["W2VK9K4NG2.gov.va.vamobileapp"],
+        "appIDs": ["93B5WX72RE.gov.va.vamobileapp"],
         "components": [
           {
             "/": "/my-health/appointments/past",
@@ -10,13 +10,13 @@
           },
           {
             "/": "/my-health/appointments",
-            "comment": "Matches any URL with a path that starts with /my-health/appointments/ and send to the mobile app."
+            "comment": "Matches any URL with a path that starts with /my-health/appointments and send to the mobile app."
           }
         ]
       }
     ]
   },
   "webcredentials": {
-    "apps": [ "W2VK9K4NG2.gov.va.vamobileapp" ]
+    "apps": ["93B5WX72RE.gov.va.vamobileapp"]
   }
 }
