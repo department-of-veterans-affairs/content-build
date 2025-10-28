@@ -2115,9 +2115,9 @@
     }
   },
   {
-    "appName": "534EZ Survivors benefits",
+    "appName": "Apply For DIC, Survivors Pension, Or Accrued Benefits Online",
     "entryName": "survivors-benefits",
-    "rootUrl": "/supporting-forms-for-claims/apply-form-21p-534ez",
+    "rootUrl": "/family-and-caregiver-benefits/survivor-compensation/apply-for-dic-survivors-pension-accrued-benefits-form-21p-534ez",
     "productId": "51601cf6-a6ff-4621-ac50-f12c37e5193e",
     "template": {
       "vagovprod": false,
@@ -2125,12 +2125,16 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "supporting-forms-for-claims/",
-          "name": "Supporting forms for VA claims"
+          "path": "family-and-caregiver-benefits/",
+          "name": "VA Benefits For Family and Caregivers"
         },
         {
-          "path": "supporting-forms-for-claims/apply-form-21p-534ez",
-          "name": "Survivors benefits"
+          "path": "family-and-caregiver-benefits/survivor-compensation/",
+          "name": "Survivors Pension, DIC, and accrued benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation/apply-for-dic-survivors-pension-accrued-benefits-form-21p-534ez",
+          "name": "Apply for DIC, Survivors Pension, or accrued benefits online"
         }
       ]
     }
