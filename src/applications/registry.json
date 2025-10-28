@@ -1957,11 +1957,7 @@
           "name": "Apply for Aid and Attendance benefits or Housebound allowance",
           "path": "/pension/aid-attendance-housebound/apply-form-21-2680"
         }
-      ],
-      "minimalHeader": {
-        "title": "Apply for housebound status or aid and attendance",
-        "subtitle": "(VA Form 21-2680)"
-      }
+      ]
     }
   },
   {
@@ -1998,11 +1994,7 @@
           "name": "Submit employment information in connection with claim for Individual Unemployability",
           "path": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
         }
-      ],
-      "minimalHeader": {
-        "title": "Request for employment information",
-        "subtitle": "(VA Form 21-4192)"
-      }
+      ]
     }
   },
   {
@@ -2012,11 +2004,7 @@
     "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html",
-      "minimalHeader": {
-        "title": "Apply for a Veterans burial allowance",
-        "subtitle": "(VA Form 21P-530a)"
-      }
+      "layout": "page-react.html"
     }
   },
   {
@@ -2041,11 +2029,7 @@
           "name": "Submit nursing home information to support a claim",
           "path": "/supporting-forms-for-claims/nursing-home-information-form-21-0779"
         }
-      ],
-      "minimalHeader": {
-        "title": "Submit nursing home information to support a claim",
-        "subtitle": "(VA Form 21-0779)"
-      }
+      ]
     }
   },
   {
