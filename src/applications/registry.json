@@ -2122,7 +2122,8 @@
   {
     "appName": "Application for Accrued Amounts Due a Deceased Beneficiary",
     "entryName": "21P-601",
-    "rootUrl": "/supporting-forms-for-claims/accrued-benefits-application-21p-601",
+    "rootUrl": "/family-and-caregiver-benefits/survivor-compensation/apply-for-accrued-benefits-form-21p-601",
+    "productId": "3448217b-9694-4de4-8819-d34ee071035d",
     "template": {
       "title": "Application for Accrued Amounts Due a Deceased Beneficiary",
       "layout": "page-react.html",
@@ -2130,7 +2131,15 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "supporting-forms-for-claims/accrued-benefits-application-21p-601",
+          "path": "family-and-caregiver-benefits",
+          "name": "Family and caregiver benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation",
+          "name": "Survivor compensation"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation/apply-for-accrued-benefits-form-21p-601",
           "name": "Application for Accrued Amounts Due a Deceased Beneficiary"
         }
       ]
