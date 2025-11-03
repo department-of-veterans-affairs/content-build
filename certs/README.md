@@ -10,4 +10,4 @@ VA-Internal-S2-RCA-combined.pem contains the following certs (as of 2023-01-19):
 * VA-Internal-S2-RCA2.pem
 
 
-Used in [the Drupal client](https://github.com/department-of-veterans-affairs/vets-website/blob/main/src/site/stages/build/drupal/api.js)'s `proxyFetch` function when connected to the VA Network.
+Used in [the Drupal client](https://github.com/department-of-veterans-affairs/vets-website/blob/main/src/site/stages/build/drupal/api.js)'s `proxyFetch` function when using a local VA CMS instance.

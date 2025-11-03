@@ -27,7 +27,7 @@ VA.gov contains many pages that include content generated from a Drupal-based co
 When testing changes to static pages, or to see what your application looks like
 on VA.gov, follow the sections below to build these static pages.
 
-**Note**: Fetching content from Drupal requires VA Network to be set up and running.
+**Note**: Fetching content from Drupal requires a local VA CMS instance to be set up and running.
 
 #### Prepare Your Environment Settings
 
@@ -86,8 +86,7 @@ If you do need to pull content from https://prod.cms.va.gov please contact
 - You can run this concurrently with `yarn watch`. It adds local routes needed to preview Drupal nodes
   (e.g. `/preview?nodeId=XX`).
 
-If you do not have access to the VA Network, you can **fetch the latest cached version
-of the content** with the following:
+If you do not have a local VA CMS instance, you can **fetch the latest cached version of the content** with the following:
 
 ```sh
 yarn fetch-drupal-cache
@@ -155,7 +154,7 @@ function getNodeQueries(entityCounts) {
 4. Open `src/site/stages/build/index.js`
 5. Find this line: `smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');` and comment it out
 6. Delete your `.cache/localhost/drupal/pages.json` file
-7. Make sure you are connected to VA Network
+7. Make sure you have a local VA CMS instance running.
 8. Run `yarn build --pull-drupal && yarn watch` in your terminal to get the dev server running with your new template selections
 
 ## Working in GitHub Codespaces

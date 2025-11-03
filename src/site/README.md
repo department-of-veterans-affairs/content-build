@@ -305,7 +305,7 @@ This approach is recommended if you are making heavy changes to a template or ar
 1. Determine the `entityId` of a page that uses the template you are editing.
     - If you are interested in templating against a page already published, you can find its `entityId` by navigating to the page on the website (dev, staging, or prod will all work) and inspecting its DOM. At the top of the DOM should be a comment containing its `entityId`.
     - If you are interested in templating against a page that has not been published, you can look up an `entityId` of that page-type using the [GraphQL Explorer](https://prod.cms.va.gov/graphql/explorer). See the section below for an example.
-1. Start the preview server via `yarn preview`. You must be connected to VA Network.
+1. Start the preview server via `yarn preview`. You must have a local VA CMS instance running.
 1. Navigated to `http://localhost:3001/preview?nodeId=${YOUR_ENTITY_ID}`
 1. After making a change to the template, stop your preview server and start it again. There is no hot reload for the preview server. Fortunately, it is lightweight enough to be quick to stop and start.
 
