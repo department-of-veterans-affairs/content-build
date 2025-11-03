@@ -27,7 +27,7 @@ VA.gov contains many pages that include content generated from a Drupal-based co
 When testing changes to static pages, or to see what your application looks like
 on VA.gov, follow the sections below to build these static pages.
 
-**Note**: Fetching content from Drupal requires SOCKS to be set up and running. Run `vtk socks on` in your terminal before attempting to pull any Drupal content for content-build.
+**Note**: Fetching content from Drupal requires VA Network to be set up and running.
 
 #### Prepare Your Environment Settings
 
@@ -66,7 +66,7 @@ If you do need to pull content from https://prod.cms.va.gov please contact
 
 **Note**: running `yarn build` on `main` can take upwards of 8 hours. There are many Drupal assets to fetch and many templates to build. See **Optimizing Build Time** below to cut down on this time dramatically and only build the templates/assets you need for your development work.
 
-- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires SOCKS proxy access). Add `--use-cached-assets` to skip asset download
+- use `--pull-drupal` to fetch fresh content from Drupal if needed (requires VA Network access). Add `--use-cached-assets` to skip asset download
 - creates symlink to `../vets-website/build/localhost/generated` by default, allowing access to app bundles (use `--apps-directory-name` to change the default apps directory name; e.g. `--apps-directory-name application`)
 - run once to build the static HTML files
 - need to run this again when adding new templates based on new Drupal entities
@@ -86,7 +86,7 @@ If you do need to pull content from https://prod.cms.va.gov please contact
 - You can run this concurrently with `yarn watch`. It adds local routes needed to preview Drupal nodes
   (e.g. `/preview?nodeId=XX`).
 
-If you do not have access to the SOCKS proxy, you can **fetch the latest cached version
+If you do not have access to the VA Network, you can **fetch the latest cached version
 of the content** with the following:
 
 ```sh
@@ -155,7 +155,7 @@ function getNodeQueries(entityCounts) {
 4. Open `src/site/stages/build/index.js`
 5. Find this line: `smith.use(downloadDrupalAssets(BUILD_OPTIONS), 'Download Drupal assets');` and comment it out
 6. Delete your `.cache/localhost/drupal/pages.json` file
-7. Make sure you are running SOCKS (`vtk socks on`)
+7. Make sure you are connected to VA Network
 8. Run `yarn build --pull-drupal && yarn watch` in your terminal to get the dev server running with your new template selections
 
 ## Working in GitHub Codespaces
@@ -192,7 +192,7 @@ for doing very specific things.
 | I want to...                                                                                                | Then you should...                                                                                                                                                                                                           |
 | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | build the production site (dev features disabled).                                                          | `NODE_ENV=production yarn build --buildtype vagovprod`                                                                                                                                                                       |
-| fetch the latest content cache from S3                                                                      | `yarn fetch-drupal-cache` (does not require SOCKS proxy access)                                                                                                                                                              |
+| fetch the latest content cache from S3                                                                      | `yarn fetch-drupal-cache` (does not require VA Network access)                                                                                                                                                              |
 | reset local environment (clean out node modules and runs npm install)                                       | `yarn reset:env`                                                                                                                                                                                                             |
 | run the site so that devices on your local network can access it                                            | `yarn watch --env.host 0.0.0.0 --env.public 198.162.x.x:3001` Note that we use CORS to limit what hosts can access different APIs, so accessing with a `192.168.x.x` address may run into problems                           |
 | run all unit tests and watch                                                                                | `yarn test:watch`                                                                                                                                                                                                            |
