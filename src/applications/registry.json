@@ -1922,6 +1922,17 @@
     }
   },
   {
+    "appName": "Sign In Confirm Contact Email",
+    "entryName": "confirm-contact-email",
+    "rootUrl": "/sign-in-confirm-contact-email",
+    "productId": "ad06fcf8-da87-4a7a-9efc-258b57ae944d",
+    "template": {
+      "title": "Confirm contact email address",
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "Apply for burial in a VA national cemetery",
     "entryName": "40-xxxx-ton",
     "rootUrl": "/burials-and-memorials/time-of-need",
@@ -1972,28 +1983,37 @@
     }
   },
   {
-    "appName": "Marital Status Questionnaire for DIC Recipients",
+    "appName": "verify-marital-status-21p-0537",
     "entryName": "21p-0537",
-    "rootUrl": "/supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
+    "rootUrl": "/family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation/verify-marital-status-21p-0537",
+    "productId": "05ad9d11-65a6-4495-96c1-7100bcb87c78",
     "template": {
-      "title": "Marital Status Questionnaire for DIC Recipients",
+      "title": "Verify marital status for DIC benefits",
       "layout": "page-react.html",
       "vagovprod": false,
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "supporting-forms-for-claims",
-          "name": "Supporting forms for VA claims"
+          "path": "family-and-caregiver-benefits",
+          "name": "Family and caregiver benefits"
         },
         {
-          "path": "supporting-forms-for-claims/marital-status-questionnaire-21p-0537",
-          "name": "Marital Status Questionnaire for DIC Recipients"
+          "path": "family-and-caregiver-benefits/survivor-compensation",
+          "name": "Survivor compensation"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation",
+          "name": "Dependency and indemnity compensation"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation/verify-marital-status-21p-0537",
+          "name": "Verify marital status for DIC benefits"
         }
       ]
     }
   },
   {
-    "appName": "Income Verification for Disability Benefits",
+    "appName": "Submit Employment Questionnaire",
     "entryName": "21-4140-income-verification",
     "rootUrl": "/disability/eligibility/special-claims/unemployability/employment-questionnaire-form-21-4140",
     "productId": "4eb7d93c-8fd8-49d1-b1f9-8ac4ca4e6ebb",
@@ -2033,9 +2053,9 @@
     }
   },
   {
-    "appName": "21P-8416 Medical expense report form",
+    "appName": "Submit Medical Expenses To Support A Pension or DIC Claim",
     "entryName": "medical-expense-report",
-    "rootUrl": "/pension/medical-expense-report-form-21p-8416",
+    "rootUrl": "/supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
     "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
     "template": {
       "vagovprod": false,
@@ -2043,12 +2063,75 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "pension/",
-          "name": "Pension benefits"
+          "path": "supporting-forms-for-claims/",
+          "name": "Supporting forms for VA claims"
         },
         {
-          "path": "pension/medical-expense-report-form-21p-8416",
-          "name": "Report medical expenses"
+          "path": "supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
+          "name": "Submit medical expenses to support a pension or DIC claim"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Apply For DIC, Survivors Pension, Or Accrued Benefits Online",
+    "entryName": "survivors-benefits",
+    "rootUrl": "/family-and-caregiver-benefits/survivor-compensation/apply-for-dic-survivors-pension-accrued-benefits-form-21p-534ez",
+    "productId": "51601cf6-a6ff-4621-ac50-f12c37e5193e",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "family-and-caregiver-benefits/",
+          "name": "VA Benefits For Family and Caregivers"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation/",
+          "name": "Survivors Pension, DIC, and accrued benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation/apply-for-dic-survivors-pension-accrued-benefits-form-21p-534ez",
+          "name": "Apply for DIC, Survivors Pension, or accrued benefits online"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "VRE CH31 Eligibility & Entitlement",
+    "entryName": "ch31-eligibility-entitlement",
+    "rootUrl": "/careers-employment/your-vre-eligibility",
+    "productId": "6f0fff93-4ba6-4500-8eda-c1500c433c67",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "careers-employment/",
+          "name": "Careers and employment"
+        },
+        {
+          "path": "careers-employment/your-vre-eligibility",
+          "name": "Your VR&E eligibility and benefits"
+        }
+      ]
+    }
+  },
+  {
+    "appName": "Application for Accrued Amounts Due a Deceased Beneficiary",
+    "entryName": "21P-601",
+    "rootUrl": "/supporting-forms-for-claims/accrued-benefits-application-21p-601",
+    "template": {
+      "title": "Application for Accrued Amounts Due a Deceased Beneficiary",
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "path": "supporting-forms-for-claims/accrued-benefits-application-21p-601",
+          "name": "Application for Accrued Amounts Due a Deceased Beneficiary"
         }
       ]
     }
