@@ -1945,41 +1945,113 @@
   {
     "appName": "21-2680 House Bound Status",
     "entryName": "21-2680-house-bound-status",
-    "rootUrl": "/21-2680-house-bound-status",
+    "rootUrl": "/pension/aid-attendance-housebound/apply-form-21-2680",
     "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": "/"
+        },
+        {
+          "name": "Pension benefits",
+          "path": "/pension/"
+        },
+        {
+          "name": "VA Aid and Attendance benefits and Housebound allowance",
+          "path": "/pension/aid-attendance-housebound/"
+        },
+        {
+          "name": "Apply for Aid and Attendance benefits or Housebound allowance",
+          "path": "/pension/aid-attendance-housebound/apply-form-21-2680"
+        }
+      ]
     }
   },
   {
     "appName": "21-4192 Employment Information",
     "entryName": "21-4192-employment-information",
-    "rootUrl": "/21-4192-employment-information",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192",
     "productId": "c61b0c39-7177-4340-9820-955c959b7f5b",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": "/"
+        },
+        {
+          "name": "Disability benefits",
+          "path": "/disability/"
+        },
+        {
+          "name": "Eligibility",
+          "path": "/disability/eligibility/"
+        },
+        {
+          "name": "Special claims",
+          "path": "/disability/eligibility/special-claims/"
+        },
+        {
+          "name": "Individual Unemployability if you can't work",
+          "path": "/disability/eligibility/special-claims/unemployability/"
+        },
+        {
+          "name": "Submit employment information in connection with claim for Individual Unemployability",
+          "path": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
+        }
+      ]
     }
   },
   {
-    "appName": "21P-530a Interment Allowance",
+    "appName": "Submit a state or tribal organization request for interment allowance",
     "entryName": "21p-530a-interment-allowance",
-    "rootUrl": "/21p-530a-interment-allowance",
+    "rootUrl": "/submit-state-interment-allowance-form-21p-530a",
     "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "VA.gov home",
+          "path": ""
+        },
+        {
+          "name": "Submit a state or tribal organization request for interment allowance",
+          "path": "submit-state-interment-allowance-form-21p-530a"
+        }
+      ]
     }
   },
   {
     "appName": "21-0779 Nursing Home Information",
     "entryName": "21-0779-nursing-home-information",
-    "rootUrl": "/21-0779-nursing-home-information",
+    "rootUrl": "/supporting-forms-for-claims/aid-attendance-housebound",
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Home",
+          "path": "/"
+        },
+        {
+          "name": "Supporting forms for claims",
+          "path": "/supporting-forms-for-claims/"
+        },
+        {
+          "name": "Submit nursing home information to support a claim",
+          "path": "/supporting-forms-for-claims/aid-attendance-housebound"
+        }
+      ]
     }
   },
   {
