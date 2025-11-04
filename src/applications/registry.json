@@ -1998,7 +1998,7 @@
     }
   },
   {
-    "appName": "21P-530a Interment Allowance",
+    "appName": "Submit a state or tribal organization request for interment allowance",
     "entryName": "21p-530a-interment-allowance",
     "rootUrl": "/submit-state-interment-allowance-form-21p-530a",
     "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
@@ -2008,20 +2008,12 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
+          "name": "VA.gov home",
+          "path": ""
         },
         {
-          "name": "Burials and memorials",
-          "path": "/burials-memorials/"
-        },
-        {
-          "name": "Burial allowance",
-          "path": "/burials-memorials/veterans-burial-allowance/"
-        },
-        {
-          "name": "Apply for burial benefits",
-          "path": "/submit-state-interment-allowance-form-21p-530a"
+          "name": "Submit a state or tribal organization request for interment allowance",
+          "path": "submit-state-interment-allowance-form-21p-530a"
         }
       ]
     }
