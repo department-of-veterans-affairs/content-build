@@ -2142,6 +2142,7 @@
     "rootUrl": "/my-health/medications-refills",
     "template": {
       "title": "Refill prescriptions",
+      "vagovprod": false,
       "layout": "page-react.html",
       "skeleton": "mhv-medications-refills/components/MedicationsRefillPage.Skeleton.html"
     }

@@ -19,7 +19,10 @@ function loadSkeletons() {
     // Load skeletons for apps that have skeleton property in template
     for (const app of appRegistry) {
       if (app.template && app.template.skeleton) {
-        const skeletonPath = path.join(vetsWebsiteAppsDir, app.template.skeleton);
+        const skeletonPath = path.join(
+          vetsWebsiteAppsDir,
+          app.template.skeleton,
+        );
 
         if (fs.existsSync(skeletonPath)) {
           const html = fs.readFileSync(skeletonPath, 'utf8');
