@@ -2135,5 +2135,15 @@
         }
       ]
     }
+  },
+  {
+    "appName": "MHV Medications Refills",
+    "entryName": "medications-refills",
+    "rootUrl": "/my-health/medications-refills",
+    "template": {
+      "title": "Refill prescriptions",
+      "layout": "page-react.html",
+      "skeleton": "mhv-medications-refills/components/MedicationsRefillPage.Skeleton.html"
+    }
   }
 ]
