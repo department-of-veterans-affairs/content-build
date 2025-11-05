@@ -2132,15 +2132,15 @@
       "breadcrumbs_override": [
         {
           "path": "family-and-caregiver-benefits",
-          "name": "Family and caregiver benefits"
+          "name": "VA Benefits For Family and Caregivers"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation",
-          "name": "Survivor compensation"
+          "name": "Survivors Pension, DIC, and accrued benefits"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation/apply-for-accrued-benefits-form-21p-601",
-          "name": "Application for Accrued Amounts Due a Deceased Beneficiary"
+          "name": "Apply for accrued benefits online"
         }
       ]
     }
