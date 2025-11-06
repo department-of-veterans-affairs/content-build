@@ -2176,7 +2176,7 @@
     "rootUrl": "/careers-employment/your-vre-eligibility",
     "productId": "6f0fff93-4ba6-4500-8eda-c1500c433c67",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
