@@ -1928,20 +1928,16 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
-        },
-        {
           "name": "Pension benefits",
-          "path": "/pension/"
+          "path": "pension/"
         },
         {
           "name": "VA Aid and Attendance benefits and Housebound allowance",
-          "path": "/pension/aid-attendance-housebound/"
+          "path": "pension/aid-attendance-housebound/"
         },
         {
           "name": "Apply for Aid and Attendance benefits or Housebound allowance",
-          "path": "/pension/aid-attendance-housebound/apply-form-21-2680"
+          "path": "pension/aid-attendance-housebound/apply-form-21-2680"
         }
       ]
     }
@@ -1957,28 +1953,24 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
-        },
-        {
           "name": "Disability benefits",
-          "path": "/disability/"
+          "path": "disability"
         },
         {
           "name": "Eligibility",
-          "path": "/disability/eligibility/"
+          "path": "disability/eligibility"
         },
         {
           "name": "Special claims",
-          "path": "/disability/eligibility/special-claims/"
+          "path": "disability/eligibility/special-claims"
         },
         {
           "name": "Individual Unemployability if you can't work",
-          "path": "/disability/eligibility/special-claims/unemployability/"
+          "path": "disability/eligibility/special-claims/unemployability"
         },
         {
           "name": "Submit employment information in connection with claim for Individual Unemployability",
-          "path": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
+          "path": "disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
         }
       ]
     }
@@ -1994,10 +1986,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "VA.gov home",
-          "path": ""
-        },
-        {
           "name": "Submit a state or tribal organization request for interment allowance",
           "path": "submit-state-interment-allowance-form-21p-530a"
         }
@@ -2007,7 +1995,7 @@
   {
     "appName": "21-0779 Nursing Home Information",
     "entryName": "21-0779-nursing-home-information",
-    "rootUrl": "/supporting-forms-for-claims/aid-attendance-housebound",
+    "rootUrl": "/supporting-forms-for-claims/submit-nursing-home-information-form-21-0779",
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
       "vagovprod": false,
@@ -2015,16 +2003,12 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
         },
         {
-          "name": "Supporting forms for claims",
-          "path": "/supporting-forms-for-claims/"
-        },
-        {
-          "name": "Submit nursing home information to support a claim",
-          "path": "/supporting-forms-for-claims/aid-attendance-housebound"
+          "name": "Submit nursing home information in connection with claim for Aid and Attendance",
+          "path": "supporting-forms-for-claims/submit-nursing-home-information-form-21-0779"
         }
       ]
     }
