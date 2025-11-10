@@ -1498,25 +1498,16 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "title": "File a CHAMPVA claim",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "family-and-caregiver-benefits",
-          "name": "Family and caregiver benefits"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability",
-          "name": "Health and disability benefits for family and caregivers"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability/champva",
-          "name": "CHAMPVA benefits"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability/champva/file-champva-claim-10-7959a",
-          "name": "File a CHAMPVA claim"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "File a CHAMPVA claim",
+        "subtitle": "VA Form 10-7959a"
+      }
     }
   },
   {
