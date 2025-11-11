@@ -2,7 +2,10 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["93B5WX72RE.gov.va.vamobileapp"],
+        "appIDs": [
+          "93B5WX72RE.gov.va.vamobileapp",
+          "W2VK9K4NG2.gov.va.vamobileapp"
+        ],
         "components": [
           {
             "/": "/my-health/appointments/past",
@@ -17,6 +20,9 @@
     ]
   },
   "webcredentials": {
-    "apps": ["93B5WX72RE.gov.va.vamobileapp"]
+    "apps": [
+      "93B5WX72RE.gov.va.vamobileapp",
+      "W2VK9K4NG2.gov.va.vamobileapp"
+    ]
   }
 }
