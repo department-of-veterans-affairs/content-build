@@ -1811,7 +1811,7 @@
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-champva-form-10-10d",
     "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
