@@ -2175,5 +2175,15 @@
         }
       ]
     }
+  },
+  {
+    "appName": "0976",
+    "entryName": "0976-edu-benefits",
+    "rootUrl": "/education/0976",
+    "productId": "33766335-1941-479b-a3a0-36b05ef39fa7",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
