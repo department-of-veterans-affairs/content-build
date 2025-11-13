@@ -1498,25 +1498,16 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "title": "File a CHAMPVA claim",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "family-and-caregiver-benefits",
-          "name": "Family and caregiver benefits"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability",
-          "name": "Health and disability benefits for family and caregivers"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability/champva",
-          "name": "CHAMPVA benefits"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability/champva/file-champva-claim-10-7959a",
-          "name": "File a CHAMPVA claim"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "File a CHAMPVA claim",
+        "subtitle": "VA Form 10-7959a"
+      }
     }
   },
   {
@@ -1811,7 +1802,7 @@
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-champva-form-10-10d",
     "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
@@ -1928,20 +1919,16 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
-        },
-        {
           "name": "Pension benefits",
-          "path": "/pension/"
+          "path": "pension/"
         },
         {
           "name": "VA Aid and Attendance benefits and Housebound allowance",
-          "path": "/pension/aid-attendance-housebound/"
+          "path": "pension/aid-attendance-housebound/"
         },
         {
           "name": "Apply for Aid and Attendance benefits or Housebound allowance",
-          "path": "/pension/aid-attendance-housebound/apply-form-21-2680"
+          "path": "pension/aid-attendance-housebound/apply-form-21-2680"
         }
       ]
     }
@@ -1957,28 +1944,24 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
-        },
-        {
           "name": "Disability benefits",
-          "path": "/disability/"
+          "path": "disability"
         },
         {
           "name": "Eligibility",
-          "path": "/disability/eligibility/"
+          "path": "disability/eligibility"
         },
         {
           "name": "Special claims",
-          "path": "/disability/eligibility/special-claims/"
+          "path": "disability/eligibility/special-claims"
         },
         {
           "name": "Individual Unemployability if you can't work",
-          "path": "/disability/eligibility/special-claims/unemployability/"
+          "path": "disability/eligibility/special-claims/unemployability"
         },
         {
           "name": "Submit employment information in connection with claim for Individual Unemployability",
-          "path": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
+          "path": "disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
         }
       ]
     }
@@ -1994,10 +1977,6 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "VA.gov home",
-          "path": ""
-        },
-        {
           "name": "Submit a state or tribal organization request for interment allowance",
           "path": "submit-state-interment-allowance-form-21p-530a"
         }
@@ -2007,7 +1986,7 @@
   {
     "appName": "21-0779 Nursing Home Information",
     "entryName": "21-0779-nursing-home-information",
-    "rootUrl": "/supporting-forms-for-claims/aid-attendance-housebound",
+    "rootUrl": "/supporting-forms-for-claims/submit-nursing-home-information-form-21-0779",
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
       "vagovprod": false,
@@ -2015,16 +1994,12 @@
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "name": "Home",
-          "path": "/"
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
         },
         {
-          "name": "Supporting forms for claims",
-          "path": "/supporting-forms-for-claims/"
-        },
-        {
-          "name": "Submit nursing home information to support a claim",
-          "path": "/supporting-forms-for-claims/aid-attendance-housebound"
+          "name": "Submit nursing home information in connection with claim for Aid and Attendance",
+          "path": "supporting-forms-for-claims/submit-nursing-home-information-form-21-0779"
         }
       ]
     }
@@ -2172,7 +2147,7 @@
     "rootUrl": "/family-and-caregiver-benefits/survivor-compensation/apply-for-accrued-benefits-form-21p-601",
     "productId": "3448217b-9694-4de4-8819-d34ee071035d",
     "template": {
-      "title": "Application for Accrued Amounts Due a Deceased Beneficiary",
+      "title": "Apply for accrued benefits online",
       "layout": "page-react.html",
       "vagovprod": false,
       "includeBreadcrumbs": true,
@@ -2190,6 +2165,16 @@
           "name": "Apply for accrued benefits online"
         }
       ]
+    }
+  },
+  {
+    "appName": "0976",
+    "entryName": "0976-edu-benefits",
+    "rootUrl": "/education/0976",
+    "productId": "33766335-1941-479b-a3a0-36b05ef39fa7",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
     }
   },
   {
