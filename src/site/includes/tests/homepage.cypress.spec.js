@@ -60,15 +60,16 @@ describe('home page', () => {
       verifyElement('.header');
 
       const header = () => cy.get('.header');
-
       header()
         .scrollIntoView()
         .within(() => {
           verifyElement('.va-header-logo-wrapper');
           verifyElement('.sitewide-search-drop-down-panel-button');
-          verifyLinkWithoutSelector(1, 'Contact us', '/contact-us');
+          verifyLinkWithoutSelector(6, 'Contact us', '/contact-us');
           verifyElement('.sign-in-nav');
-          verifyElement('.va-crisis-line');
+          const crisisLineModal = () => cy.get('va-crisis-line-modal');
+          const crisisLineButton = crisisLineModal().find('button');
+          crisisLineButton.should('exist').should('be.visible');
         });
 
       // Hero =======================================================
