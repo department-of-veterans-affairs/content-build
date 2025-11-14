@@ -2168,6 +2168,17 @@
     }
   },
   {
+    "appName": "MHV Medications Refills",
+    "entryName": "medications-refills",
+    "rootUrl": "/medication-refills",
+    "template": {
+      "title": "Refill prescriptions",
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "skeleton": "mhv-medications-refills/components/MedicationsRefillPage.Skeleton.html"
+    }
+  },
+  {
     "appName": "0976",
     "entryName": "0976-edu-benefits",
     "rootUrl": "/education/0976",
