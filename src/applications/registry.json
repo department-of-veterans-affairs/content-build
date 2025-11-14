@@ -2170,7 +2170,7 @@
   {
     "appName": "MHV Medications Refills",
     "entryName": "medications-refills",
-    "rootUrl": "/my-health/medications-refills",
+    "rootUrl": "/medication-refills",
     "template": {
       "title": "Refill prescriptions",
       "vagovprod": false,
