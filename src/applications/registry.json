@@ -2186,5 +2186,15 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+    "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
+    "entryName": "0803-edu-benefits",
+    "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-0803",
+    "productId": "388b3d12-ccd3-45f8-b986-d563070aad57",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
