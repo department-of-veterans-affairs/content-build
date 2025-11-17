@@ -2135,5 +2135,15 @@
         }
       ]
     }
+  },
+  {
+    "appName": "sign-in-health-portal",
+    "entryName": "sign-in-health-portal",
+    "rootUrl": "/sign-in-health-portal",
+    "productId": "9f231c06-f144-4aba-b572-7639b291cbaa",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
