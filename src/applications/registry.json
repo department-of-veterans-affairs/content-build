@@ -2173,7 +2173,7 @@
     "rootUrl": "/sign-in-health-portal",
     "productId": "9f231c06-f144-4aba-b572-7639b291cbaa",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
