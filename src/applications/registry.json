@@ -2025,6 +2025,26 @@
     }
   },
   {
+    "appName": "Submit Employment Questionnaire",
+    "entryName": "21-4140",
+    "rootUrl": "/disability/verify-individual-unemployability-status/submit-employment-questionnaire-form-21-4140/",
+    "productId": "4eb7d93c-8fd8-49d1-b1f9-8ac4ca4e6ebb",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Income Verification for Disability Benefits",
+        "subtitle": "Employment Questionnaire (VA Form 21-4140)"
+      }
+    }
+  },
+  {
     "appName": "Apply for additional compensation based on inability to work",
     "entryName": "21-8940",
     "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-unemployability-compensation-form-21-8940",
