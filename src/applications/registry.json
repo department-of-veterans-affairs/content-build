@@ -1848,16 +1848,6 @@
     }
   },
   {
-    "appName": "Personalized Career Planning and Guidance/Chapter 36 (VA Form 27-8832)",
-    "entryName": "new-chapter-36-form",
-    "rootUrl": "/temporary/apply-career-guidance-form-27-8832",
-    "productId": "7636cb12-cc78-451b-ae8e-34e1eda87049",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "Decision Reviews Onramp Tool",
     "entryName": "onramp",
     "rootUrl": "/decision-reviews/explore-disability-claim-decision-review-options",
@@ -1903,6 +1893,16 @@
     "entryName": "40-xxxx-ton",
     "rootUrl": "/burials-and-memorials/time-of-need",
     "productId": "ca34c8b1-8938-4fa2-bd69-cc28db76df44",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Authorization to Disclose Personal Information",
+    "entryName": "10278-edu-benefits",
+    "rootUrl": "/education/10278",
+    "productId": "67338352-0c30-4eaf-9392-1a5da78d51c8",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -2036,8 +2036,8 @@
   },
   {
     "appName": "Submit Employment Questionnaire",
-    "entryName": "21-4140-income-verification",
-    "rootUrl": "/disability/eligibility/special-claims/unemployability/employment-questionnaire-form-21-4140",
+    "entryName": "21-4140",
+    "rootUrl": "/disability/verify-individual-unemployability-status/submit-employment-questionnaire-form-21-4140/",
     "productId": "4eb7d93c-8fd8-49d1-b1f9-8ac4ca4e6ebb",
     "template": {
       "vagovprod": false,
@@ -2057,7 +2057,7 @@
   {
     "appName": "Apply for additional compensation based on inability to work",
     "entryName": "21-8940",
-    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-form-21-8940",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-unemployability-compensation-form-21-8940",
     "productId": "549889a3-855d-409c-bb8d-bed6bc851c95",
     "template": {
       "vagovprod": false,
