@@ -2168,6 +2168,16 @@
     }
   },
   {
+    "appName": "Sign-in Health Portal",
+    "entryName": "sign-in-health-portal",
+    "rootUrl": "/sign-in-health-portal",
+    "productId": "9f231c06-f144-4aba-b572-7639b291cbaa",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "0976",
     "entryName": "0976-edu-benefits",
     "rootUrl": "/education/0976",
