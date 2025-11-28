@@ -2194,17 +2194,7 @@
     "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
-      "minimalFooter": true,
-      "minimalHeader": {
-        "title": "22-0803 Request for reimbursement of licensing or certification test fees",
-        "subtitle": "education benefits (VA Form 22-0803)"
-      }
+      "layout": "page-react.html"
     }
   }
 ]
