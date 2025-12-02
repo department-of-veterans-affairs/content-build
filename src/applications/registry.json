@@ -1648,7 +1648,7 @@
     "rootUrl": "/school-administrators/report-conflicting-interests",
     "productId": "b13f499a-24f7-4ff7-bf94-8c0dbe38a0e1",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1863,7 +1863,7 @@
     "rootUrl": "/school-administrators/submit-yellow-ribbon-program-agreement-form-22-0839",
     "productId": "27f9178f-3aa0-41cb-904d-d5a2326b0b4c",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html"
     }
   },
