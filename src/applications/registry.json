@@ -1476,7 +1476,18 @@
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "Submit other health insurance",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Submit other health insurance",
+        "subtitle": "VA Form 10-7959c"
+      }
     }
   },
   {
