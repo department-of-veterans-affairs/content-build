@@ -1498,25 +1498,16 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "title": "File a CHAMPVA claim",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "family-and-caregiver-benefits",
-          "name": "Family and caregiver benefits"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability",
-          "name": "Health and disability benefits for family and caregivers"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability/champva",
-          "name": "CHAMPVA benefits"
-        },
-        {
-          "path": "family-and-caregiver-benefits/health-and-disability/champva/file-champva-claim-10-7959a",
-          "name": "File a CHAMPVA claim"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "File a CHAMPVA claim",
+        "subtitle": "VA Form 10-7959a"
+      }
     }
   },
   {
@@ -1793,31 +1784,6 @@
     }
   },
   {
-    "appName": "New 28-1900 Veteran Readiness",
-    "entryName": "new-28-1900-chapter-31",
-    "rootUrl": "/temporary/apply-vre-form-28-1900",
-    "productId": "7fec94cf-e9f7-44c9-963a-97593f3c9e3f",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "careers-employment",
-          "name": "Careers and employment"
-        },
-        {
-          "path": "careers-employment/vocational-rehabilitation",
-          "name": "Veteran Readiness and Employment"
-        },
-        {
-          "path": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
-          "name": "Apply for Veteran Readiness and Employment (VR&E)"
-        }
-      ]
-    }
-  },
-  {
     "appName": "21a Apply to become a VA-accredited attorney or claims agent",
     "entryName": "representative-21a",
     "rootUrl": "/representative/accreditation/attorney-claims-agent-form-21a",
@@ -1836,7 +1802,7 @@
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-champva-form-10-10d",
     "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
@@ -1876,16 +1842,6 @@
     "entryName": "10297-edu-benefits",
     "rootUrl": "/education/other-va-education-benefits/vet-tec-2/apply-for-program-form-22-10297",
     "productId": "0bc94734-cf5d-458e-b490-bb01428350f3",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "Personalized Career Planning and Guidance/Chapter 36 (VA Form 27-8832)",
-    "entryName": "new-chapter-36-form",
-    "rootUrl": "/temporary/apply-career-guidance-form-27-8832",
-    "productId": "7636cb12-cc78-451b-ae8e-34e1eda87049",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -1943,43 +1899,109 @@
     }
   },
   {
-    "appName": "21-2680 House Bound Status",
-    "entryName": "21-2680-house-bound-status",
-    "rootUrl": "/21-2680-house-bound-status",
-    "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
+    "appName": "Authorize VA to Disclose Personal Information to a Third Party for Education Benefits",
+    "entryName": "10278-edu-benefits",
+    "rootUrl": "/education/disclose-information-to-third-party/authorize-disclosure-form-22-10278",
+    "productId": "67338352-0c30-4eaf-9392-1a5da78d51c8",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "21-2680 House Bound Status",
+    "entryName": "21-2680-house-bound-status",
+    "rootUrl": "/pension/aid-attendance-housebound/apply-form-21-2680",
+    "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Pension benefits",
+          "path": "pension/"
+        },
+        {
+          "name": "VA Aid and Attendance benefits and Housebound allowance",
+          "path": "pension/aid-attendance-housebound/"
+        },
+        {
+          "name": "Apply for Aid and Attendance benefits or Housebound allowance",
+          "path": "pension/aid-attendance-housebound/apply-form-21-2680"
+        }
+      ]
     }
   },
   {
     "appName": "21-4192 Employment Information",
     "entryName": "21-4192-employment-information",
-    "rootUrl": "/21-4192-employment-information",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192",
     "productId": "c61b0c39-7177-4340-9820-955c959b7f5b",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Disability benefits",
+          "path": "disability"
+        },
+        {
+          "name": "Eligibility",
+          "path": "disability/eligibility"
+        },
+        {
+          "name": "Special claims",
+          "path": "disability/eligibility/special-claims"
+        },
+        {
+          "name": "Individual Unemployability if you can't work",
+          "path": "disability/eligibility/special-claims/unemployability"
+        },
+        {
+          "name": "Submit employment information in connection with claim for Individual Unemployability",
+          "path": "disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192"
+        }
+      ]
     }
   },
   {
-    "appName": "21P-530a Interment Allowance",
+    "appName": "Submit a state or tribal organization request for interment allowance",
     "entryName": "21p-530a-interment-allowance",
-    "rootUrl": "/21p-530a-interment-allowance",
+    "rootUrl": "/submit-state-interment-allowance-form-21p-530a",
     "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Submit a state or tribal organization request for interment allowance",
+          "path": "submit-state-interment-allowance-form-21p-530a"
+        }
+      ]
     }
   },
   {
     "appName": "21-0779 Nursing Home Information",
     "entryName": "21-0779-nursing-home-information",
-    "rootUrl": "/21-0779-nursing-home-information",
+    "rootUrl": "/supporting-forms-for-claims/submit-nursing-home-information-form-21-0779",
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Supporting forms for VA claims",
+          "path": "supporting-forms-for-claims"
+        },
+        {
+          "name": "Submit nursing home information in connection with claim for Aid and Attendance",
+          "path": "supporting-forms-for-claims/submit-nursing-home-information-form-21-0779"
+        }
+      ]
     }
   },
   {
@@ -2014,8 +2036,8 @@
   },
   {
     "appName": "Submit Employment Questionnaire",
-    "entryName": "21-4140-income-verification",
-    "rootUrl": "/disability/eligibility/special-claims/unemployability/employment-questionnaire-form-21-4140",
+    "entryName": "21-4140",
+    "rootUrl": "/disability/verify-individual-unemployability-status/submit-employment-questionnaire-form-21-4140/",
     "productId": "4eb7d93c-8fd8-49d1-b1f9-8ac4ca4e6ebb",
     "template": {
       "vagovprod": false,
@@ -2035,7 +2057,7 @@
   {
     "appName": "Apply for additional compensation based on inability to work",
     "entryName": "21-8940",
-    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-form-21-8940",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-unemployability-compensation-form-21-8940",
     "productId": "549889a3-855d-409c-bb8d-bed6bc851c95",
     "template": {
       "vagovprod": false,
@@ -2104,7 +2126,7 @@
     "rootUrl": "/careers-employment/your-vre-eligibility",
     "productId": "6f0fff93-4ba6-4500-8eda-c1500c433c67",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -2122,18 +2144,57 @@
   {
     "appName": "Application for Accrued Amounts Due a Deceased Beneficiary",
     "entryName": "21P-601",
-    "rootUrl": "/supporting-forms-for-claims/accrued-benefits-application-21p-601",
+    "rootUrl": "/family-and-caregiver-benefits/survivor-compensation/apply-for-accrued-benefits-form-21p-601",
+    "productId": "3448217b-9694-4de4-8819-d34ee071035d",
     "template": {
-      "title": "Application for Accrued Amounts Due a Deceased Beneficiary",
+      "title": "Apply for accrued benefits online",
       "layout": "page-react.html",
       "vagovprod": false,
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
-          "path": "supporting-forms-for-claims/accrued-benefits-application-21p-601",
-          "name": "Application for Accrued Amounts Due a Deceased Beneficiary"
+          "path": "family-and-caregiver-benefits",
+          "name": "VA Benefits For Family and Caregivers"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation",
+          "name": "Survivors Pension, DIC, and accrued benefits"
+        },
+        {
+          "path": "family-and-caregiver-benefits/survivor-compensation/apply-for-accrued-benefits-form-21p-601",
+          "name": "Apply for accrued benefits online"
         }
       ]
+    }
+  },
+  {
+    "appName": "Sign-in Health Portal",
+    "entryName": "sign-in-health-portal",
+    "rootUrl": "/sign-in-health-portal",
+    "productId": "9f231c06-f144-4aba-b572-7639b291cbaa",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "0976",
+    "entryName": "0976-edu-benefits",
+    "rootUrl": "/education/0976",
+    "productId": "33766335-1941-479b-a3a0-36b05ef39fa7",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "VA Solid Start",
+    "entryName": "vass",
+    "rootUrl": "/service-member/benefits/solid-start/schedule",
+    "productId": "b4e39943-c5e7-497a-ad26-8a1b9342cb97",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
     }
   }
 ]
