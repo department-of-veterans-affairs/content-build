@@ -84,7 +84,7 @@ fragment vaFormPage on NodeVaForm {
       ... linkTeaser
     }
   }
-  fieldVaReactWidget {
+  fieldVaFormReactWidget {
     entity {
       entityType
       entityBundle
