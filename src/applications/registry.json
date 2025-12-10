@@ -1899,9 +1899,9 @@
     }
   },
   {
-    "appName": "Authorization to Disclose Personal Information",
+    "appName": "Authorize VA to Disclose Personal Information to a Third Party for Education Benefits",
     "entryName": "10278-edu-benefits",
-    "rootUrl": "/education/10278",
+    "rootUrl": "/education/disclose-information-to-third-party/authorize-disclosure-form-22-10278",
     "productId": "67338352-0c30-4eaf-9392-1a5da78d51c8",
     "template": {
       "vagovprod": false,
@@ -2165,6 +2165,16 @@
           "name": "Apply for accrued benefits online"
         }
       ]
+    }
+  },
+  {
+    "appName": "Sign-in Health Portal",
+    "entryName": "sign-in-health-portal",
+    "rootUrl": "/sign-in-health-portal",
+    "productId": "9f231c06-f144-4aba-b572-7639b291cbaa",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
     }
   },
   {
