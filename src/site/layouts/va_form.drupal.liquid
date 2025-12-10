@@ -139,6 +139,13 @@
           </va-link-action>
         {% endif %}
 
+        <!-- React widget -->
+        {% if fieldVaReactWidget %}
+          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldVaReactWidget.entity.entityBundle %}
+          {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
+          {% include {{ bundleComponentWithExtension }} with entity = fieldVaReactWidget.entity %}
+        {% endif %}
+
         {% if fieldVaFormRelatedForms.length > 0 %}
           <section>
             <h2>Related forms and instructions</h2>
