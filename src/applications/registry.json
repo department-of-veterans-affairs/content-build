@@ -2198,6 +2198,17 @@
     }
   },
   {
+    "appName": "22-10272 Application for reimbursement of preparatory (prep) course for licensing or a certification test",
+    "entryName": "10272-edu-benefits",
+    "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-10272",
+    "productId": "97ac427e-8a1d-4d9c-8a2f-83d20b68ab09",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false
+    }
+   },
+   {
     "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
     "entryName": "0803-edu-benefits",
     "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-0803",
