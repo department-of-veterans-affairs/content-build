@@ -21,16 +21,6 @@ const CountEntityTypes = `
     count
   }
 
-  healthServicesListing: nodeQuery(
-    filter: {
-      conditions: [
-        {field: "status", value: ["1"]},
-        {field: "type", value: ["health_services_listing"]}
-      ]}
-  	) {
-    count
-  }
-
   healthCareRegionDetailPage: nodeQuery(
     filter: {
       conditions: [
