@@ -55,10 +55,6 @@ const {
 } = require('./graphql/vamcBillingAndInsurancePage.graphql');
 
 const {
-  GetVetCenterLocations,
-} = require('./graphql/vetCenterLocations.graphql');
-
-const {
   GetLocationsOperatingStatus,
 } = require('./graphql/locationsOperatingStatus.graphql');
 
@@ -80,7 +76,6 @@ function getNodeQueries(entityCounts) {
     GetNodeSupportResourcesDetailPage,
     GetNodeBasicLandingPage,
     GetCampaignLandingPages,
-    GetVetCenterLocations,
     GetPolicyPages,
     GetBillingAndInsurancePages,
     GetRegisterForCarePages,
