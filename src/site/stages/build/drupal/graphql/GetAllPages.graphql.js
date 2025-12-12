@@ -17,7 +17,6 @@ const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav
 const faqMultipleQaPage = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
-// const healthServicesListingPage = require('./healthServicesListingPage.graphql'); In next-build now
 const homePageQuery = require('./homePage.graphql');
 const icsFileQuery = require('./file-fragments/ics.file.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');

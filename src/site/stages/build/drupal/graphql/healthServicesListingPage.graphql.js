@@ -1,3 +1,6 @@
+// This file is no longer used to build production content.
+// Please make any changes you need in Next Build.
+
 /**
  * An event detail page
  * Example: /pittsburgh-health-care/events/example-event
