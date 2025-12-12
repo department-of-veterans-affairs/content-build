@@ -4,7 +4,6 @@ const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const healthCareRegionPage = require('./healthCareRegionPage.graphql');
-const healthServicesListingPage = require('./healthServicesListingPage.graphql');
 const landingPage = require('./landingPage.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
 const locationsListingPage = require('./locationsListingPage.graphql');
