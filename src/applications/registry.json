@@ -1476,7 +1476,18 @@
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "Submit other health insurance",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Submit other health insurance",
+        "subtitle": "VA Form 10-7959c"
+      }
     }
   },
   {
@@ -2216,6 +2227,26 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Mock Form with Prefill",
+    "entryName": "mock-form-prefill",
+    "rootUrl": "/mock-form-prefill",
+    "productId": "0290e36a-cd62-47db-ba4a-32af2ee7ae37",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Mock Form with Prefill",
+        "subtitle": "mock prefill testing (VA Form FORM_MOCK_PREFILL)"
+      }
     }
   }
 ]
