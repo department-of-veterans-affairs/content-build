@@ -28,6 +28,11 @@
   {% assign alertType = "info" %}
 {% endif %}
 
+{% assign headingLevel = entity.fieldAlertHeadingLevel %}
+{% if headingLevel == null or headingLevel == empty %}
+  {% assign headingLevel = "2" %}
+{% endif %}
+
 {% if entity.fieldAlertBlockReference.length > 0 or entity.fieldAlertBlockReference.entity %}
   {% assign alertBlock = entity.fieldAlertBlockReference.entity %}
   {% include "src/site/blocks/alert.drupal.liquid" with alert = alertBlock %}
@@ -41,9 +46,9 @@
     data-test-id="alert-{{ entity.targetId }}"
     uswds
   >
-    <h2 slot="headline" class="vads-u-font-size--h3">
+    <h{{ headingLevel }} slot="headline" class="vads-u-font-size--h3">
       {{ entity.fieldAlertHeading }}
-    </h2>
+    </h{{ headingLevel }}>
 
     {% for paragraph in entity.fieldVaParagraphs %}
       {% assign bundleComponent = "src/site/paragraphs/" | append: paragraph.entity.entityBundle | append: ".drupal.liquid" %}

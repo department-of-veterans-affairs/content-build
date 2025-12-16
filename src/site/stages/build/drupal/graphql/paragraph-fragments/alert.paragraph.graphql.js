@@ -8,6 +8,7 @@ module.exports = `
       entityId
       fieldAlertType
       fieldAlertHeading
+      fieldAlertHeadingLevel
       fieldVaParagraphs {
         entity {
           ... on ParagraphWysiwyg {
