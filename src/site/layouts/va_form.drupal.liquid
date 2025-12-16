@@ -141,9 +141,9 @@
 
         <!-- React widget -->
         {% if fieldVaFormReactWidget %}
-          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldVaReactWidget.entity.entityBundle %}
+          {% assign bundleComponent = "src/site/paragraphs/" | append: fieldVaFormReactWidget.entity.entityBundle %}
           {% assign bundleComponentWithExtension = bundleComponent | append: ".drupal.liquid" %}
-          {% include {{ bundleComponentWithExtension }} with entity = fieldVaReactWidget.entity %}
+          {% include {{ bundleComponentWithExtension }} with entity = fieldVaFormReactWidget.entity %}
         {% endif %}
 
         {% if fieldVaFormRelatedForms.length > 0 %}
