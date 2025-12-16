@@ -1659,7 +1659,7 @@
     "rootUrl": "/school-administrators/report-conflicting-interests",
     "productId": "b13f499a-24f7-4ff7-bf94-8c0dbe38a0e1",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
