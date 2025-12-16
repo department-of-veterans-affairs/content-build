@@ -4,7 +4,6 @@ const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const healthCareRegionPage = require('./healthCareRegionPage.graphql');
-const healthServicesListingPage = require('./healthServicesListingPage.graphql');
 const landingPage = require('./landingPage.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
 const locationsListingPage = require('./locationsListingPage.graphql');
@@ -25,11 +24,9 @@ const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
 const storyListingPage = require('./storyListingPage.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
 const vamcBillingAndInsurancePages = require('./vamcBillingAndInsurancePage.graphql');
-const vamcMedicalRecordsOfficePages = require('./vamcMedicalRecordsOfficePage.graphql');
 const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const vamcRegisterForCarePages = require('./vamcRegisterForCarePage.graphql');
-const vetCenterLocations = require('./vetCenterLocations.graphql');
 const vetCenters = require('./vetCenter.graphql');
 const vbaFacilities = require('./vbaFacility.graphql');
 const vamcPolicePages = require('./vaPolice.graphql');
@@ -53,7 +50,6 @@ module.exports = `
   ${healthCareRegionPage.fragment}
   ${healthCareLocalFacilityPage.fragment}
   ${healthCareRegionDetailPage.fragment}
-  ${healthServicesListingPage.fragment}
   ${pressReleasePage.fragment}
   ${pressReleasesListingPage.fragment}
   ${vamcOperatingStatusAndAlerts.fragment}
@@ -75,10 +71,8 @@ module.exports = `
   ${nodeCampaignLandingPage.fragment}
   ${vetCenters.fragment}
   ${vbaFacilities.fragment}
-  ${vetCenterLocations.fragment}
   ${vamcPolicyPages.fragment}
   ${vamcRegisterForCarePages.fragment}
-  ${vamcMedicalRecordsOfficePages.fragment}
   ${vamcBillingAndInsurancePages.fragment}
   ${vamcPolicePages.fragment}
   ${leadershipListingPage.fragment}
@@ -96,7 +90,6 @@ module.exports = `
         ... healthCareRegionPage
         ... healthCareLocalFacilityPage
         ... healthCareRegionDetailPage
-        ... healthServicesListingPage
         ... storyListingPage
         ... newsStoryPage
         ... pressReleasePage
@@ -117,10 +110,8 @@ module.exports = `
         ... nodeCampaignLandingPage
         ... vetCenterFragment
         ... vbaFacilityFragment
-        ... vetCenterLocationsFragment
         ... policiesPageFragment
         ... registerForCareFragment
-        ... medicalRecordsOfficeFragment
         ... billingAndInsuranceFragment
         ... leadershipListingPage
         ... locationListingPage
