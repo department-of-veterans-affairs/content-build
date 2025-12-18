@@ -531,7 +531,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": ":bangbang: <!subteam^S010U41C30V|cms-helpdesk> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed."
+                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed."
                       }
                     }
                   ]
