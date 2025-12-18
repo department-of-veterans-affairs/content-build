@@ -38,7 +38,6 @@ const storyListingPage = require('./storyListingPage.graphql');
 const supportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.graphql');
 const taxonomiesQuery = require('./taxonomy-fragments/GetTaxonomies.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
-const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const { ALL_FRAGMENTS } = require('./fragments.graphql');
 
@@ -70,7 +69,6 @@ const buildQuery = () => {
   ${healthCareLocalFacilityPage.fragment}
   ${healthCareRegionDetailPage.fragment}
   ${pressReleasePage.fragment}
-  ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
   ${nodeEvent.fragment}
   ${nodeEvent.fragmentWithoutBreadcrumbs}
@@ -105,7 +103,6 @@ const buildQuery = () => {
         ... landingPage
         ... page
         ... healthCareRegionDetailPage
-        ... vamcOperatingStatusAndAlerts
         ... nodeOffice
         ... benefitListingPage
         ... vaFormPage
