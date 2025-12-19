@@ -2079,7 +2079,7 @@
     "rootUrl": "/supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
     "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
