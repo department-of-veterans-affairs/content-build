@@ -1366,7 +1366,8 @@
       "includeBreadcrumbs": false,
       "minimalExcludePaths": [
         "/introduction",
-        "/confirmation"
+        "/confirmation",
+        "/form-saved"
       ],
       "minimalFooter": true,
       "minimalHeader": {
