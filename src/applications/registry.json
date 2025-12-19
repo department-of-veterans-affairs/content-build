@@ -247,26 +247,6 @@
     }
   },
   {
-    "appName": "686C-674",
-    "entryName": "686C-674",
-    "rootUrl": "/manage-dependents/add-remove-form-21-686c",
-    "template": {
-      "layout": "page-react.html",
-      "vagovprod": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "manage-dependents/",
-          "name": "Manage dependents for disability, pension, or DIC benefits"
-        },
-        {
-          "path": "manage-dependents/add-remove-form-21-686c/",
-          "name": "Add or remove dependents with VA Form 21-686C"
-        }
-      ]
-    }
-  },
-  {
     "appName": "686C-674-v2",
     "entryName": "686C-674-v2",
     "rootUrl": "/manage-dependents/add-remove-form-21-686c-674",
