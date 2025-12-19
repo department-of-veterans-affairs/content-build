@@ -1086,7 +1086,7 @@
   {
     "appName": "Form Upload Flow",
     "entryName": "form-upload-flow",
-    "rootUrl": "/find-forms/upload",
+    "rootUrl": "/forms/upload",
     "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
     "template": {
       "vagovprod": true,
@@ -1476,7 +1476,18 @@
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "Submit other health insurance",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Submit other health insurance",
+        "subtitle": "VA Form 10-7959c"
+      }
     }
   },
   {
@@ -1648,7 +1659,7 @@
     "rootUrl": "/school-administrators/report-conflicting-interests",
     "productId": "b13f499a-24f7-4ff7-bf94-8c0dbe38a0e1",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1850,7 +1861,7 @@
   {
     "appName": "Decision Reviews Onramp Tool",
     "entryName": "onramp",
-    "rootUrl": "/decision-reviews/explore-disability-claim-decision-review-options",
+    "rootUrl": "/decision-reviews/explore-disability-claim-options",
     "productId": "76fd4ae2-68e4-45b5-bec2-71bffbc34462",
     "template": {
       "vagovprod": false,
@@ -2012,7 +2023,7 @@
     "template": {
       "title": "Verify marital status for DIC benefits",
       "layout": "page-react.html",
-      "vagovprod": false,
+      "vagovprod": true,
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
@@ -2149,7 +2160,7 @@
     "template": {
       "title": "Apply for accrued benefits online",
       "layout": "page-react.html",
-      "vagovprod": false,
+      "vagovprod": true,
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
@@ -2195,6 +2206,47 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "22-10272 Application for reimbursement of preparatory (prep) course for licensing or a certification test",
+    "entryName": "10272-edu-benefits",
+    "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-10272",
+    "productId": "97ac427e-8a1d-4d9c-8a2f-83d20b68ab09",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false
+    }
+   },
+   {
+    "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
+    "entryName": "0803-edu-benefits",
+    "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-0803",
+    "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Mock Form with Prefill",
+    "entryName": "mock-form-prefill",
+    "rootUrl": "/mock-form-prefill",
+    "productId": "0290e36a-cd62-47db-ba4a-32af2ee7ae37",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Mock Form with Prefill",
+        "subtitle": "mock prefill testing (VA Form FORM_MOCK_PREFILL)"
+      }
     }
   }
 ]

@@ -17,7 +17,6 @@ const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav
 const faqMultipleQaPage = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
-const healthServicesListingPage = require('./healthServicesListingPage.graphql');
 const homePageQuery = require('./homePage.graphql');
 const icsFileQuery = require('./file-fragments/ics.file.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
@@ -82,7 +81,6 @@ const buildQuery = () => {
   ${nodeEventListing.fragment}
   ${storyListingPage.fragment}
   ${leadershipListingPage.fragment}
-  ${healthServicesListingPage.fragment}
   ${pressReleasesListingPage.fragment}
   ${locationListingPage.fragment}
   ${qaPage.fragment}
@@ -110,7 +108,6 @@ const buildQuery = () => {
         ... vamcOperatingStatusAndAlerts
         ... nodeOffice
         ... benefitListingPage
-        ... healthServicesListingPage
         ... vaFormPage
         ... nodeQa
         ... faqMultipleQA
