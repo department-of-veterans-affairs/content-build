@@ -23,7 +23,6 @@ const pressReleasePage = require('./pressReleasePage.graphql');
 const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
 const storyListingPage = require('./storyListingPage.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
-const vamcBillingAndInsurancePages = require('./vamcBillingAndInsurancePage.graphql');
 const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 const vetCenters = require('./vetCenter.graphql');
 const vbaFacilities = require('./vbaFacility.graphql');
@@ -69,7 +68,6 @@ module.exports = `
   ${nodeCampaignLandingPage.fragment}
   ${vetCenters.fragment}
   ${vbaFacilities.fragment}
-  ${vamcBillingAndInsurancePages.fragment}
   ${vamcPolicePages.fragment}
   ${leadershipListingPage.fragment}
   ${locationsListingPage.fragment}
@@ -106,7 +104,6 @@ module.exports = `
         ... nodeCampaignLandingPage
         ... vetCenterFragment
         ... vbaFacilityFragment
-        ... billingAndInsuranceFragment
         ... leadershipListingPage
         ... locationListingPage
         ... vaPoliceFragment
