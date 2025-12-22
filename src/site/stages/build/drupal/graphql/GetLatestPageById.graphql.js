@@ -23,8 +23,6 @@ const pressReleasePage = require('./pressReleasePage.graphql');
 const pressReleasesListingPage = require('./pressReleasesListingPage.graphql');
 const storyListingPage = require('./storyListingPage.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
-const vamcBillingAndInsurancePages = require('./vamcBillingAndInsurancePage.graphql');
-const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
 const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const vamcRegisterForCarePages = require('./vamcRegisterForCarePage.graphql');
 const vetCenters = require('./vetCenter.graphql');
@@ -52,7 +50,6 @@ module.exports = `
   ${healthCareRegionDetailPage.fragment}
   ${pressReleasePage.fragment}
   ${pressReleasesListingPage.fragment}
-  ${vamcOperatingStatusAndAlerts.fragment}
   ${storyListingPage.fragment}
   ${newsStoryPage.fragment}
   ${nodeEvent.fragment}
@@ -73,7 +70,6 @@ module.exports = `
   ${vbaFacilities.fragment}
   ${vamcPolicyPages.fragment}
   ${vamcRegisterForCarePages.fragment}
-  ${vamcBillingAndInsurancePages.fragment}
   ${vamcPolicePages.fragment}
   ${leadershipListingPage.fragment}
   ${locationsListingPage.fragment}
@@ -94,7 +90,6 @@ module.exports = `
         ... newsStoryPage
         ... pressReleasePage
         ... pressReleasesListingPage
-        ... vamcOperatingStatusAndAlerts
         ... nodeEvent
         ... nodeEventListing
         ... bioPage
@@ -112,7 +107,6 @@ module.exports = `
         ... vbaFacilityFragment
         ... policiesPageFragment
         ... registerForCareFragment
-        ... billingAndInsuranceFragment
         ... leadershipListingPage
         ... locationListingPage
         ... vaPoliceFragment
