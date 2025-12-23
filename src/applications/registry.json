@@ -1991,5 +1991,17 @@
         "subtitle": "Employment Questionnaire (VA Form 21-4140)"
       }
     }
+  },
+  {
+  "appName": "form-renderer",
+  "entryName": "form-renderer",
+  "rootUrl": "/form-renderer",
+  "template": {
+    "title": "hello",
+    "layout": "page-react.html",
+    "description": "A new application!",
+    "keywords": "not required, but good practice for public apps",
+    "vagovprod": false
   }
+}
 ]
