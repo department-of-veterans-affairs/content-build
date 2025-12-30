@@ -39,7 +39,6 @@ const supportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.gra
 const taxonomiesQuery = require('./taxonomy-fragments/GetTaxonomies.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
 const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
-const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const { ALL_FRAGMENTS } = require('./fragments.graphql');
 
 // Get current feature flags
@@ -92,7 +91,6 @@ const buildQuery = () => {
   ${supportResourcesDetailPage.fragment}
   ${basicLandingPage.fragment}
   ${nodeCampaignLandingPage.fragment}
-  ${vamcPolicyPages.fragment}
 `;
 
   const nodeQuery = `
@@ -118,7 +116,6 @@ const buildQuery = () => {
         ... nodeSupportResourcesDetailPage
         ... nodeBasicLandingPage
         ... nodeCampaignLandingPage
-        ... policiesPageFragment
       }
     }`;
 
