@@ -2016,15 +2016,15 @@
       "breadcrumbs_override": [
         {
           "path": "family-and-caregiver-benefits",
-          "name": "Family and caregiver benefits"
+          "name": "VA Benefits For Family and Caregivers"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation",
-          "name": "Survivor compensation"
+          "name": "Survivors Pension and DIC"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation",
-          "name": "Dependency and indemnity compensation"
+          "name": "About VA DIC For Spouses, Dependents, and Parents"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation/verify-marital-status-21p-0537",
