@@ -41,7 +41,6 @@ const {
   GetCampaignLandingPages,
 } = require('./graphql/nodeCampaignLandingPage.graphql');
 
-const { GetPolicyPages } = require('./graphql/vamcPoliciesPage.graphql');
 const {
   GetRegisterForCarePages,
 } = require('./graphql/vamcRegisterForCarePage.graphql');
@@ -72,7 +71,6 @@ function getNodeQueries(entityCounts) {
     GetNodeSupportResourcesDetailPage,
     GetNodeBasicLandingPage,
     GetCampaignLandingPages,
-    GetPolicyPages,
     GetBillingAndInsurancePages,
     GetRegisterForCarePages,
   };
