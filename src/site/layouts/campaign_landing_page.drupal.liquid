@@ -297,7 +297,6 @@
                   download
                   text="Download {{ resource.entity.name }} PDF"
                   href="{{ resource.entity.fieldMediaExternalFile.uri }}"
-                  onclick="recordEvent({ 'event': 'clp-link-click', 'clp-section-category': 'Downloadable resources', 'clp-section-title': '{{ fieldClpResourcesHeader | encode }}', 'clp-total-sections': '{{ clpTotalSections }}', 'clp-click-label': 'Download {{ resource.entity.name | encode }}' });"
                 >
                 Download (PDF)
               </a>
