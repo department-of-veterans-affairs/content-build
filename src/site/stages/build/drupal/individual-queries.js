@@ -41,7 +41,6 @@ const {
   GetCampaignLandingPages,
 } = require('./graphql/nodeCampaignLandingPage.graphql');
 
-
 const {
   GetBillingAndInsurancePages,
 } = require('./graphql/vamcBillingAndInsurancePage.graphql');
