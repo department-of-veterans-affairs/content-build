@@ -83,6 +83,13 @@
                   </span>
                 </div>
               </div>
+              
+              <!-- Debug: Log filtering process -->
+              <script>
+                console.log('=== FILTERING DEBUG ===');
+                console.log('Starting to filter assets...');
+              </script>
+              
               {% assign even = true %}
               {% assign filteredCount = 0 %}
               {% for entity in outreachAssetsDataArray.entities %}
@@ -242,11 +249,48 @@
               {% assign even = true %}
               {% endif %}
               {% endfor %}
+              
+              <!-- Debug: End of loop -->
+              <script>
+                console.log('Finished filtering. Total matched:', {{ filteredCount }});
+                console.log('=== END FILTERING DEBUG ===');
+              </script>
 
             </div>
 
+            <!-- Pagination Debug -->
+            <script>
+              console.log('=== PAGINATION DEBUG ===');
+              console.log('Filtered Count:', {{ filteredCount }});
+              console.log('Entity URL:', '{{ entityUrl.path }}');
+              console.log('Total Assets:', {{ outreachAssetsDataArray.entities.size }});
+              console.log('Current Entity ID:', '{{ entityId }}');
+              
+              // Check if va-pagination element exists
+              const paginationElement = document.querySelector('va-pagination');
+              console.log('va-pagination element found:', !!paginationElement);
+              
+              if (paginationElement) {
+                console.log('va-pagination attributes:');
+                console.log('  - pages:', paginationElement.getAttribute('pages'));
+                console.log('  - page:', paginationElement.getAttribute('page'));
+                console.log('  - max-page-list-length:', paginationElement.getAttribute('max-page-list-length'));
+                console.log('  - uswds:', paginationElement.getAttribute('uswds'));
+              } else {
+                console.error('va-pagination element NOT found in DOM!');
+              }
+              
+              // Check calculated pages
+              const calculatedPages = Math.ceil({{ filteredCount }} / 10);
+              console.log('Calculated pages (filteredCount / 10):', calculatedPages);
+              
+              // Log if pagination should show
+              console.log('Should pagination show?', {{ filteredCount }} > 10);
+              console.log('=== END DEBUG ===');
+            </script>
+
             <!-- Pagination -->
-            {% include "src/site/includes/pagination.drupal.liquid" with totalPages = filteredCount, entityUrl = entityUrl.path %}
+            {% include "src/site/includes/pagination.drupal.liquid" with totalPages = outreachAssetsDataArray.entities.length, entityUrl = entityUrl.path %}
 
             <div id="no-results">
               <div>
