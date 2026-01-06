@@ -84,9 +84,11 @@
                 </div>
               </div>
               {% assign even = true %}
+              {% assign filteredCount = 0 %}
               {% for entity in outreachAssetsDataArray.entities %}
-              {% if entity.fieldListing.targetId == entityId %}
-              {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
+                {% if entity.fieldListing.targetId == entityId %}
+                  {% assign filteredCount = filteredCount | plus: 1 %}
+                  {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
               <div data-topic="{{topicsString}}"
                 data-type="{{entity.fieldFormat}}" data-number={{forloop.index}}
                 class="vads-l-col--12
@@ -244,29 +246,7 @@
             </div>
 
             <!-- Pagination -->
-            <div class="va-pagination" id="va-pager-div" style="display: none;">
-              <span class="va-pagination-prev">
-                <a
-                  href="#pager-previous-click"
-                  id="pager-previous-click"
-                  aria-label="Load previous page"
-                >
-                  Prev
-                </a>
-              </span>
-              <div id="pager-nums-insert" class="va-pagination-inner"></div>
-              <span class="va-pagination-next">
-                <a
-                  href="#pager-next-click"
-                  id="pager-next-click"
-                  aria-label="Load next page"
-                >
-                  Next
-                </a>
-              </span>
-            </div>
-            {% include "src/site/includes/pagination.drupal.liquid" with totalPages = outreachAssetsDataArray.entities.size, entityUrl = entityUrl.path %}
-
+            {% include "src/site/includes/pagination.drupal.liquid" with totalPages = filteredCount, entityUrl = entityUrl.path %}
 
             <div id="no-results">
               <div>
