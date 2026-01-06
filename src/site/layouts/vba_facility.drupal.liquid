@@ -28,18 +28,11 @@
             class="usa-grid usa-grid-full vads-u-margin-top--1p5 vads-u-margin-bottom--3">
             {% assign basePath = entityUrl.path | regionBasePath %}
               entityUrl.path: {{entityUrl.path}}
-            {% if 'manila' in entityUrl.path|render|render  %}
-              <p>render 1 works <p/>
-            {% else %}
-              {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath buttonType = 'vba'%}
-            {% endif %}
-            {% if 'manila' in entityUrl.path  %}
-               <p>render 2 works <p/>
-            {% else %}
-              {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath buttonType = 'vba'%}
-            {% endif %}
-
+            {% if entityUrl.path contains 'manila' or if entityUrl.path contains 'Manila' or if entityUrl.path contains 'MANILA' %}
             {% include "src/site/facilities/main_buttons_manila.drupal.liquid" with path = basePath buttonType = 'vba'%}
+            {% else %}
+              {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath buttonType = 'vba'%}
+            {% endif %}
 
           </div>
 
