@@ -14,7 +14,7 @@ env:
   CONTENT_BUILD_CHANNEL_ID: C02VD909V08 #status-content-build
   INSTANCE_TYPE: m5.4xlarge
   # Sandbox Drupal address, username, and password is used on branches other than main.
-  DRUPAL_ADDRESS: https://mirror.cms.va.gov
+  DRUPAL_ADDRESS: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
   # This is a test credential and is not used on any production instances.
   DRUPAL_PASSWORD: drupal8
 
@@ -45,9 +45,9 @@ jobs:
         buildtype: [vagovdev, vagovstaging, vagovprod]
         include:
           - buildtype: vagovdev
-            drupal-address: https://mirror.cms.va.gov
+            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovstaging
-            drupal-address: https://mirror.cms.va.gov
+            drupal-address: https://main-medc0xjkxm4jmpzxl3tfbcs7qcddsivh.ci.cms.va.gov
           - buildtype: vagovprod
             drupal-address: https://prod.cms.va.gov
 
