@@ -292,6 +292,7 @@
             <!-- Pagination -->
             {% include "src/site/includes/pagination.drupal.liquid" with
                totalPages = outreachAssetsDataArray.entities.length
+               pagePrefix = true
                entityUrl = entityUrl.path
             %}
 
