@@ -290,7 +290,10 @@
             </script>
 
             <!-- Pagination -->
-            {% include "src/site/includes/pagination.drupal.liquid" with totalPages = outreachAssetsDataArray.entities.length, entityUrl = entityUrl.path %}
+            {% include "src/site/includes/pagination.drupal.liquid" with
+               totalPages = outreachAssetsDataArray.entities.length
+               entityUrl = entityUrl.path
+            %}
 
             <div id="no-results">
               <div>
