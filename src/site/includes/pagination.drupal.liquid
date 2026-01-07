@@ -2,17 +2,7 @@
   See README-pagination.md for details about this template
 {% endcomment %}
 
-<!-- Pagination Include Debug -->
-<script>
-  console.log('=== PAGINATION INCLUDE DEBUG ===');
-  console.log('totalPages received:', '{{ totalPages }}');
-  console.log('totalPages type:', typeof '{{ totalPages }}');
-  console.log('totalPages truthy?', !!'{{ totalPages }}');
-  console.log('totalPages as number:', Number('{{ totalPages }}'));
-  console.log('entityUrl received:', '{{ entityUrl }}');
-  console.log('=== END INCLUDE DEBUG ===');
-</script>
-
+  
 {% if totalPages %}
   <va-pagination
     max-page-list-length="7"
@@ -21,11 +11,6 @@
     uswds
   >
   </va-pagination>
-{% else %}
-  <script>
-    console.error('PAGINATION NOT RENDERED: totalPages is falsy or undefined');
-    console.log('totalPages value:', '{{ totalPages }}');
-  </script>
 {% endif %}
 
 <script>

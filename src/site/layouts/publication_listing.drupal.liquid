@@ -84,17 +84,9 @@
                 </div>
               </div>
               
-              <!-- Debug: Log filtering process -->
-              <script>
-                console.log('=== FILTERING DEBUG ===');
-                console.log('Starting to filter assets...');
-              </script>
-              
               {% assign even = true %}
-              {% assign filteredCount = 0 %}
               {% for entity in outreachAssetsDataArray.entities %}
                 {% if entity.fieldListing.targetId == entityId %}
-                  {% assign filteredCount = filteredCount | plus: 1 %}
                   {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
               <div data-topic="{{topicsString}}"
                 data-type="{{entity.fieldFormat}}" data-number={{forloop.index}}
@@ -249,52 +241,57 @@
               {% assign even = true %}
               {% endif %}
               {% endfor %}
-              
-              <!-- Debug: End of loop -->
-              <script>
-                console.log('Finished filtering. Total matched:', {{ filteredCount }});
-                console.log('=== END FILTERING DEBUG ===');
-              </script>
 
             </div>
 
-            <!-- Pagination Debug -->
-            <script>
-              console.log('=== PAGINATION DEBUG ===');
-              console.log('Filtered Count:', {{ filteredCount }});
-              console.log('Entity URL:', '{{ entityUrl.path }}');
-              console.log('Total Assets:', {{ outreachAssetsDataArray.entities.size }});
-              console.log('Current Entity ID:', '{{ entityId }}');
-              
-              // Check if va-pagination element exists
-              const paginationElement = document.querySelector('va-pagination');
-              console.log('va-pagination element found:', !!paginationElement);
-              
-              if (paginationElement) {
-                console.log('va-pagination attributes:');
-                console.log('  - pages:', paginationElement.getAttribute('pages'));
-                console.log('  - page:', paginationElement.getAttribute('page'));
-                console.log('  - max-page-list-length:', paginationElement.getAttribute('max-page-list-length'));
-                console.log('  - uswds:', paginationElement.getAttribute('uswds'));
-              } else {
-                console.error('va-pagination element NOT found in DOM!');
-              }
-              
-              // Check calculated pages
-              const calculatedPages = Math.ceil({{ filteredCount }} / 10);
-              console.log('Calculated pages (filteredCount / 10):', calculatedPages);
-              
-              // Log if pagination should show
-              console.log('Should pagination show?', {{ filteredCount }} > 10);
-              console.log('=== END DEBUG ===');
-            </script>
-
             <!-- Pagination -->
-            {% include "src/site/includes/pagination.drupal.liquid" with
-               totalPages = outreachAssetsDataArray.entities.length
-               pagePrefix = true
-               entityUrl = entityUrl.path
-            %}
+            <va-pagination
+              max-page-list-length="7"
+              page="1"
+              pages="1"
+              uswds
+            >
+            </va-pagination>
+
+            <script>
+              (function() {
+                const totalItems = {{ outreachAssetsDataArray.entities.size }};
+                const itemsPerPage = 10;
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                const pagination = document.querySelector('va-pagination');
+                
+                if (!pagination) {
+                  console.error('va-pagination element not found');
+                  return;
+                }
+                
+                // Set the total number of pages
+                pagination.setAttribute('pages', totalPages);
+                
+                // Handle page selection - navigate to hash URLs for library-filters.js
+                const handlePageSelect = event => {
+                  const newPage = event?.detail?.page;
+                  const currentPage = parseInt(pagination.getAttribute('page')) || 1;
+                  
+                  // Update the pagination component's page attribute
+                  pagination.setAttribute('page', newPage);
+                  
+                  // Navigate to the hash that library-filters.js is listening for
+                  if (newPage > currentPage) {
+                    // Going forward - navigate to #pager-next-click
+                    window.location.hash = 'pager-next-click';
+                  } else if (newPage < currentPage) {
+                    // Going backward - navigate to #pager-previous-click
+                    window.location.hash = 'pager-previous-click';
+                  } else {
+                    // Clicking specific page number - navigate to #pageNumber
+                    window.location.hash = newPage.toString();
+                  }
+                };
+                
+                pagination.addEventListener('pageSelect', handlePageSelect);
+              })();
+            </script>
 
             <div id="no-results">
               <div>
