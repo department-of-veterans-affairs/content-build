@@ -247,26 +247,6 @@
     }
   },
   {
-    "appName": "686C-674",
-    "entryName": "686C-674",
-    "rootUrl": "/manage-dependents/add-remove-form-21-686c",
-    "template": {
-      "layout": "page-react.html",
-      "vagovprod": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "manage-dependents/",
-          "name": "Manage dependents for disability, pension, or DIC benefits"
-        },
-        {
-          "path": "manage-dependents/add-remove-form-21-686c/",
-          "name": "Add or remove dependents with VA Form 21-686C"
-        }
-      ]
-    }
-  },
-  {
     "appName": "686C-674-v2",
     "entryName": "686C-674-v2",
     "rootUrl": "/manage-dependents/add-remove-form-21-686c-674",
@@ -538,18 +518,6 @@
       "title": "Auth",
       "layout": "page-react.html",
       "loadingMessage": "Please wait while we log you in."
-    }
-  },
-  {
-    "appName": "Sign-in changes reminder",
-    "entryName": "sign-in-changes",
-    "rootUrl": "/sign-in-changes-reminder",
-    "template": {
-      "title": "Sign-in changes reminder",
-      "layout": "page-react.html",
-      "description": "Learn more about the changes coming to sign-in",
-      "keywords": "Sign-in changes, identity verification, verify",
-      "vagovprod": true
     }
   },
   {
@@ -1086,7 +1054,7 @@
   {
     "appName": "Form Upload Flow",
     "entryName": "form-upload-flow",
-    "rootUrl": "/find-forms/upload",
+    "rootUrl": "/forms/upload",
     "productId": "88558f52-5c6c-447f-ab78-e006b01a32db",
     "template": {
       "vagovprod": true,
@@ -1476,7 +1444,18 @@
     "productId": "db17fe5b-107e-40c0-a105-b3ba913cf731",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "Submit other health insurance",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Submit other health insurance",
+        "subtitle": "VA Form 10-7959c"
+      }
     }
   },
   {
@@ -1648,7 +1627,7 @@
     "rootUrl": "/school-administrators/report-conflicting-interests",
     "productId": "b13f499a-24f7-4ff7-bf94-8c0dbe38a0e1",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1848,20 +1827,20 @@
     }
   },
   {
-    "appName": "Personalized Career Planning and Guidance/Chapter 36 (VA Form 27-8832)",
-    "entryName": "new-chapter-36-form",
-    "rootUrl": "/temporary/apply-career-guidance-form-27-8832",
-    "productId": "7636cb12-cc78-451b-ae8e-34e1eda87049",
+    "appName": "Decision Reviews Onramp Tool",
+    "entryName": "onramp",
+    "rootUrl": "/decision-reviews/explore-disability-claim-options",
+    "productId": "76fd4ae2-68e4-45b5-bec2-71bffbc34462",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
   },
   {
-    "appName": "Decision Reviews Onramp Tool",
-    "entryName": "onramp",
-    "rootUrl": "/decision-reviews/explore-disability-claim-decision-review-options",
-    "productId": "76fd4ae2-68e4-45b5-bec2-71bffbc34462",
+    "appName": "Personalized Career Planning and Guidance/Chapter 36 (VA Form 27-8832)",
+    "entryName": "new-chapter-36-form",
+    "rootUrl": "/temporary/apply-career-guidance-form-27-8832",
+    "productId": "7636cb12-cc78-451b-ae8e-34e1eda87049",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -1883,7 +1862,7 @@
     "rootUrl": "/school-administrators/commit-principles-of-excellence-form-22-10275",
     "productId": "7351a2b9-33f8-4b0e-9ed5-8db869276135",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1903,6 +1882,16 @@
     "entryName": "40-xxxx-ton",
     "rootUrl": "/burials-and-memorials/time-of-need",
     "productId": "ca34c8b1-8938-4fa2-bd69-cc28db76df44",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Authorize VA to Disclose Personal Information to a Third Party for Education Benefits",
+    "entryName": "10278-edu-benefits",
+    "rootUrl": "/education/disclose-information-to-third-party/authorize-disclosure-form-22-10278",
+    "productId": "67338352-0c30-4eaf-9392-1a5da78d51c8",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
@@ -2012,20 +2001,20 @@
     "template": {
       "title": "Verify marital status for DIC benefits",
       "layout": "page-react.html",
-      "vagovprod": false,
+      "vagovprod": true,
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
           "path": "family-and-caregiver-benefits",
-          "name": "Family and caregiver benefits"
+          "name": "VA Benefits For Family and Caregivers"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation",
-          "name": "Survivor compensation"
+          "name": "Survivors Pension and DIC"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation",
-          "name": "Dependency and indemnity compensation"
+          "name": "About VA DIC For Spouses, Dependents, and Parents"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation/verify-marital-status-21p-0537",
@@ -2036,8 +2025,8 @@
   },
   {
     "appName": "Submit Employment Questionnaire",
-    "entryName": "21-4140-income-verification",
-    "rootUrl": "/disability/eligibility/special-claims/unemployability/employment-questionnaire-form-21-4140",
+    "entryName": "21-4140",
+    "rootUrl": "/disability/verify-individual-unemployability-status/submit-employment-questionnaire-form-21-4140/",
     "productId": "4eb7d93c-8fd8-49d1-b1f9-8ac4ca4e6ebb",
     "template": {
       "vagovprod": false,
@@ -2057,7 +2046,7 @@
   {
     "appName": "Apply for additional compensation based on inability to work",
     "entryName": "21-8940",
-    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-form-21-8940",
+    "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-unemployability-compensation-form-21-8940",
     "productId": "549889a3-855d-409c-bb8d-bed6bc851c95",
     "template": {
       "vagovprod": false,
@@ -2080,7 +2069,7 @@
     "rootUrl": "/supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
     "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -2149,7 +2138,7 @@
     "template": {
       "title": "Apply for accrued benefits online",
       "layout": "page-react.html",
-      "vagovprod": false,
+      "vagovprod": true,
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
@@ -2178,6 +2167,15 @@
       "skeleton": "mhv-medications-refills/components/MedicationsRefillPage.Skeleton.html"
     }
   },
+    "appName": "Sign-in Health Portal",
+    "entryName": "sign-in-health-portal",
+    "rootUrl": "/sign-in-health-portal",
+    "productId": "9f231c06-f144-4aba-b572-7639b291cbaa",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html"
+    }
+  },
   {
     "appName": "0976",
     "entryName": "0976-edu-benefits",
@@ -2196,6 +2194,47 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "22-10272 Application for reimbursement of preparatory (prep) course for licensing or a certification test",
+    "entryName": "10272-edu-benefits",
+    "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-10272",
+    "productId": "97ac427e-8a1d-4d9c-8a2f-83d20b68ab09",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false
+    }
+   },
+   {
+    "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
+    "entryName": "0803-edu-benefits",
+    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees-online",
+    "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Mock Form with Prefill",
+    "entryName": "mock-form-prefill",
+    "rootUrl": "/mock-form-prefill",
+    "productId": "0290e36a-cd62-47db-ba4a-32af2ee7ae37",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Mock Form with Prefill",
+        "subtitle": "mock prefill testing (VA Form FORM_MOCK_PREFILL)"
+      }
     }
   }
 ]
