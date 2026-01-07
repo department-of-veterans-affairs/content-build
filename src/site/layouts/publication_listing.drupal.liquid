@@ -268,6 +268,36 @@
                 // Set the total number of pages
                 pagination.setAttribute('pages', totalPages);
                 
+                // Function to update the "Showing X-Y of Z results" text
+                const updateResultsCount = (pageNumber) => {
+                  const cards = document.querySelectorAll('.asset-card');
+                  const visibleCards = Array.from(cards).filter(card => 
+                    !card.classList.contains('hide-topic') && 
+                    !card.classList.contains('hide-type')
+                  );
+                  
+                  const totalVisible = visibleCards.length;
+                  const startIndex = (pageNumber - 1) * itemsPerPage + 1;
+                  const endIndex = Math.min(pageNumber * itemsPerPage, totalVisible);
+                  
+                  // Update the display text
+                  const totalPagesEl = document.getElementById('total-pages');
+                  const totalPagesSrEl = document.getElementById('total-pages-sr');
+                  const totalAllEl = document.getElementById('total-all');
+                  
+                  if (totalPagesEl && totalAllEl) {
+                    if (totalVisible === 0) {
+                      totalPagesEl.innerText = '0';
+                      totalPagesSrEl.innerText = '0';
+                      totalAllEl.innerText = ' of 0';
+                    } else {
+                      totalPagesEl.innerText = `${startIndex} - ${endIndex}`;
+                      totalPagesSrEl.innerText = `${startIndex} through ${endIndex}`;
+                      totalAllEl.innerText = ` of ${totalVisible}`;
+                    }
+                  }
+                };
+                
                 // Handle page selection - navigate to hash URLs for library-filters.js
                 const handlePageSelect = event => {
                   const newPage = event?.detail?.page;
@@ -276,20 +306,17 @@
                   // Update the pagination component's page attribute
                   pagination.setAttribute('page', newPage);
                   
+                  // Update the results count
+                  updateResultsCount(newPage);
+                  
                   // Navigate to the hash that library-filters.js is listening for
-                  if (newPage > currentPage) {
-                    // Going forward - navigate to #pager-next-click
-                    window.location.hash = 'pager-next-click';
-                  } else if (newPage < currentPage) {
-                    // Going backward - navigate to #pager-previous-click
-                    window.location.hash = 'pager-previous-click';
-                  } else {
-                    // Clicking specific page number - navigate to #pageNumber
-                    window.location.hash = newPage.toString();
-                  }
+                  window.location.hash = newPage.toString();
                 };
                 
                 pagination.addEventListener('pageSelect', handlePageSelect);
+                
+                // Initialize the count on page load
+                updateResultsCount(1);
               })();
             </script>
 
