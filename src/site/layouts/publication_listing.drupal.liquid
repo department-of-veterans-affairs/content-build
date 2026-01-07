@@ -254,20 +254,25 @@
             </va-pagination>
 
             <script>
-              (function() {
-                const totalItems = {{ outreachAssetsDataArray.entities.size }};
-                const itemsPerPage = 10;
-                const totalPages = Math.ceil(totalItems / itemsPerPage);
+              if (Number('{{ outreachAssetsDataArray.entities.size }}')) {
+                const pages = Math.ceil(Number('{{ outreachAssetsDataArray.entities.size }}') / 10);
                 const pagination = document.querySelector('va-pagination');
                 
-                if (!pagination) {
-                  console.error('va-pagination element not found');
-                  return;
+                if (pagination) {
+                  pagination.setAttribute('pages', pages);
                 }
-                
-                // Set the total number of pages
-                pagination.setAttribute('pages', totalPages);
-                
+              }
+            </script>
+
+            <script>
+              const totalItems = {{ outreachAssetsDataArray.entities.size }};
+              const itemsPerPage = 10;
+              const totalPages = Math.ceil(totalItems / itemsPerPage);
+              const pagination = document.querySelector('va-pagination');
+              
+              if (!pagination) {
+                console.error('va-pagination element not found');
+              } else {
                 // Function to update the "Showing X-Y of Z results" text
                 const updateResultsCount = (pageNumber) => {
                   const cards = document.querySelectorAll('.asset-card');
@@ -317,7 +322,7 @@
                 
                 // Initialize the count on page load
                 updateResultsCount(1);
-              })();
+              }
             </script>
 
             <div id="no-results">
