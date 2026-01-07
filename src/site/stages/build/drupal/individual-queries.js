@@ -7,10 +7,6 @@ const { getNodeVaFormQueries } = require('./graphql/vaFormPage.graphql');
 const { getNodeOfficeQueries } = require('./graphql/nodeOffice.graphql');
 
 const {
-  GetNodeVamcOperatingStatusAndAlerts,
-} = require('./graphql/vamcOperatingStatusAndAlerts.graphql');
-
-const {
   GetNodePublicationListingPages,
 } = require('./graphql/benefitListingPage.graphql');
 
@@ -41,23 +37,6 @@ const {
   GetCampaignLandingPages,
 } = require('./graphql/nodeCampaignLandingPage.graphql');
 
-const { GetPolicyPages } = require('./graphql/vamcPoliciesPage.graphql');
-const {
-  GetRegisterForCarePages,
-} = require('./graphql/vamcRegisterForCarePage.graphql');
-
-const {
-  GetMedicalRecordsOfficePages,
-} = require('./graphql/vamcMedicalRecordsOfficePage.graphql');
-
-const {
-  GetBillingAndInsurancePages,
-} = require('./graphql/vamcBillingAndInsurancePage.graphql');
-
-const {
-  GetVetCenterLocations,
-} = require('./graphql/vetCenterLocations.graphql');
-
 const {
   GetLocationsOperatingStatus,
 } = require('./graphql/locationsOperatingStatus.graphql');
@@ -68,7 +47,6 @@ function getNodeQueries(entityCounts) {
     GetNodeLandingPages,
     ...getNodeVaFormQueries(entityCounts),
     ...getNodeOfficeQueries(entityCounts),
-    GetNodeVamcOperatingStatusAndAlerts,
     GetNodePublicationListingPages,
     ...getNodeHealthCareRegionDetailPageQueries(entityCounts),
     ...getNodeQaQueries(entityCounts),
@@ -80,11 +58,6 @@ function getNodeQueries(entityCounts) {
     GetNodeSupportResourcesDetailPage,
     GetNodeBasicLandingPage,
     GetCampaignLandingPages,
-    GetVetCenterLocations,
-    GetPolicyPages,
-    GetBillingAndInsurancePages,
-    GetRegisterForCarePages,
-    GetMedicalRecordsOfficePages,
   };
 }
 
