@@ -247,26 +247,6 @@
     }
   },
   {
-    "appName": "686C-674",
-    "entryName": "686C-674",
-    "rootUrl": "/manage-dependents/add-remove-form-21-686c",
-    "template": {
-      "layout": "page-react.html",
-      "vagovprod": true,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "manage-dependents/",
-          "name": "Manage dependents for disability, pension, or DIC benefits"
-        },
-        {
-          "path": "manage-dependents/add-remove-form-21-686c/",
-          "name": "Add or remove dependents with VA Form 21-686C"
-        }
-      ]
-    }
-  },
-  {
     "appName": "686C-674-v2",
     "entryName": "686C-674-v2",
     "rootUrl": "/manage-dependents/add-remove-form-21-686c-674",
@@ -1857,6 +1837,16 @@
     }
   },
   {
+    "appName": "Personalized Career Planning and Guidance/Chapter 36 (VA Form 27-8832)",
+    "entryName": "new-chapter-36-form",
+    "rootUrl": "/temporary/apply-career-guidance-form-27-8832",
+    "productId": "7636cb12-cc78-451b-ae8e-34e1eda87049",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
     "appName": "0839",
     "entryName": "0839-edu-benefits",
     "rootUrl": "/school-administrators/submit-yellow-ribbon-program-agreement-form-22-0839",
@@ -1872,7 +1862,7 @@
     "rootUrl": "/school-administrators/commit-principles-of-excellence-form-22-10275",
     "productId": "7351a2b9-33f8-4b0e-9ed5-8db869276135",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -2016,15 +2006,15 @@
       "breadcrumbs_override": [
         {
           "path": "family-and-caregiver-benefits",
-          "name": "Family and caregiver benefits"
+          "name": "VA Benefits For Family and Caregivers"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation",
-          "name": "Survivor compensation"
+          "name": "Survivors Pension and DIC"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation",
-          "name": "Dependency and indemnity compensation"
+          "name": "About VA DIC For Spouses, Dependents, and Parents"
         },
         {
           "path": "family-and-caregiver-benefits/survivor-compensation/dependency-indemnity-compensation/verify-marital-status-21p-0537",
@@ -2079,7 +2069,7 @@
     "rootUrl": "/supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
     "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -2210,7 +2200,7 @@
    {
     "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
     "entryName": "0803-edu-benefits",
-    "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-0803",
+    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees-online",
     "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
     "template": {
       "vagovprod": false,
