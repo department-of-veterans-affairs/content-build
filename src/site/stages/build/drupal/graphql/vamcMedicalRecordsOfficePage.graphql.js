@@ -1,3 +1,6 @@
+// This file is no longer used to build production content.
+// Please make any changes you need in Next Build.
+
 const healthCareRegionNonClinicialServices = require('./facilities-fragments/healthCareRegionNonClinicialServices.node.graphql');
 const entityElementsFromPages = require('./entityElementsForPages.graphql');
 

@@ -120,7 +120,7 @@ const GetNodeSupportResourcesDetailPage = `
   ${nodeSupportResourcesDetailPage}
 
   query GetNodeSupportResourcesDetailPage($onlyPublishedContent: Boolean!) {
-    nodeQuery(limit: 100, filter: {
+    nodeQuery(limit: 150, filter: {
       conditions: [
         { field: "status", value: ["1"], enabled: $onlyPublishedContent },
         { field: "type", value: ["support_resources_detail_page"] }
