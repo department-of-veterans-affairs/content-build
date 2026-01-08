@@ -1059,7 +1059,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-       "minimalExcludePaths": [
+      "minimalExcludePaths": [
         "/introduction",
         "/confirmation",
         "/form-saved"
