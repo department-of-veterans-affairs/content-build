@@ -1059,6 +1059,16 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation",
+        "/form-saved"
+      ],
+      "minimalHeader": {
+        "title": "Upload VA Form",
+        "subtitle": ""
+      },
+      "minimalFooter": true,
       "private": true
     }
   },
