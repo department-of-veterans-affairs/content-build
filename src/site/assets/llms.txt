@@ -116,6 +116,4 @@ For organizations and developers building applications that integrate with VA sy
 - [Patient Health API (FHIR)](https://developer.va.gov/explore/api/patient-health): Access patient health data (FHIR-compliant)
 - [Appeals Status API](https://developer.va.gov/explore/api/appeals-status): Get decision review and appeal statuses
 
-**Note:** VA APIs are for organizations building applications that serve Veterans, not for individual Veterans to access their own data. Production access requires approval through [developer.va.gov](https://developer.va.gov/). Individual Veterans should sign in to VA.gov directly to manage their benefits and health care.
-
-**llms.txt last updated:** 2026-01-09
+**llms.txt last updated:** 2026-01-10
