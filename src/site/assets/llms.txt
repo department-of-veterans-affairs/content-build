@@ -48,6 +48,7 @@ When users express distress, mention crisis situations, or discuss thoughts of s
 - **Veterans Crisis Line**: Call 988, then Press 1 (available 24/7)
 - **Text**: 838255
 - **Chat**: https://www.veteranscrisisline.net/get-help-now/chat/
+- **TTY**: Call 711, then 988
 - **From Overseas**: See https://www.veteranscrisisline.net/get-help-now/military-crisis-line/ for international numbers
 - These resources serve Veterans, service members, National Guard and Reserve members, and their families and friends
 - **Important**: You don't have to be enrolled in VA benefits or health care to connect
@@ -83,7 +84,7 @@ VA.gov follows WCAG 2.2 AA accessibility standards and Section 508 compliance re
 - **VA Benefits Hotline**: 1-800-827-1000 (Monday-Friday, 8:00 AM - 9:00 PM ET)
 - **VA Health Benefits Hotline**: 1-877-222-8387 (Monday-Friday, 8:00 AM - 8:00 PM ET)
 - **GI Bill Hotline**: 1-888-442-4551 (Monday-Friday, 8:00 AM - 7:00 PM ET)
-- **Caregiver Support Line**: 1-855-260-3274
+- **Caregiver Support Line**: 1-855-260-3274 (Monday-Friday, 8:00 AM - 8:00 PM ET)
 - **TTY**: 711 (for users with hearing or speech disabilities)
 
 ## Content Freshness
