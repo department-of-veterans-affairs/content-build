@@ -1,7 +1,3 @@
-{% comment %}
-  This is used for Region Landing page and Contact us page
-  Also used for VBA with parameter
-{% endcomment %}
 <div data-template="facilities/main_buttons">
     <va-link-action
       class="vads-u-display--block"
@@ -16,34 +12,16 @@
       type="secondary"
     ></va-link-action>
 
-  {% if buttonType == 'vba' %}
     <va-link-action
       class="vads-u-display--block"
       href="https://ask.va.gov"
       text="Ask a benefit question"
       type="secondary"
     ></va-link-action>
-  {% else %}
-    <va-link-action
-      class="vads-u-display--block"
-      href="/{{ path }}/health-services"
-      text="View all health services"
-      type="secondary"
-    ></va-link-action> 
-  {% endif %}
-  {% if buttonType == 'vba' %}
     <va-link-action
       class="vads-u-display--block"
       href="/claim-or-appeal-status"
       text="Check a claim status"
       type="secondary"
     ></va-link-action>
-  {% else %}
-    <va-link-action
-      class="vads-u-display--block"
-      href="/{{ path }}/register-for-care"
-      text="Register for care"
-      type="secondary"
-    ></va-link-action>
-  {% endif %}
 </div>
