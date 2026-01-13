@@ -11,15 +11,12 @@ const buildtypeArg = process.env.npm_config_argv?.match(
 if (process.env.DRUPAL_ADDRESS) {
   queryAddress = `${process.env.DRUPAL_ADDRESS}/admin/content/exports/vamc-facilities-csv`;
 } else if (nodeEnv === 'production') {
-  if (buildtypeArg && buildtypeArg[1] === 'prod') {
+  if (buildtypeArg?.[1] === 'prod') {
     queryAddress =
       'https://prod.cms.va.gov/admin/content/exports/vamc-facilities-csv';
-  } else if (buildtypeArg && buildtypeArg[1] === 'staging') {
+  } else {
     queryAddress =
       'https://staging.cms.va.gov/admin/content/exports/vamc-facilities-csv';
-  } else if (buildtypeArg && buildtypeArg[1] === 'dev') {
-    queryAddress =
-      'https://dev.cms.va.gov/admin/content/exports/vamc-facilities-csv';
   }
 }
 
