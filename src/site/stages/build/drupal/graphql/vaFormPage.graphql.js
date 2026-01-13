@@ -84,6 +84,13 @@ fragment vaFormPage on NodeVaForm {
       ... linkTeaser
     }
   }
+  fieldVaFormReactWidget {
+    entity {
+      entityType
+      entityBundle
+      ... reactWidget
+    }
+  }
   status
 }
 `;
@@ -92,6 +99,7 @@ function getNodeVaFormSlice(operationName, offset, limit) {
   return `
     ${fragments.alert}
     ${fragments.linkTeaser}
+    ${fragments.reactWidget}
     ${vaFormFragment}
 
     query ${operationName}($onlyPublishedContent: Boolean!) {
