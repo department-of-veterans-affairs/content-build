@@ -10,7 +10,7 @@ const phoneNumberArrayToObject = require('./phoneNumberArrayToObject');
 const renameKey = require('../../platform/utilities/data/renameKey');
 const { SURVEY_NUMBERS, medalliaSurveys } = require('./medalliaSurveysConfig');
 const { deriveMostRecentDate, filterUpcomingEvents } = require('./events');
-
+const { processLink } = require('./links');
 // The default 2-minute timeout is insufficient with high node counts, likely
 // because metalsmith runs many tinyliquid engines in parallel.
 const TINYLIQUID_TIMEOUT_MINUTES = 20;
@@ -1166,20 +1166,19 @@ module.exports = function registerFilters() {
     const { fetched } = fieldCcGetUpdatesFromVba;
     processed.sectionHeader = fetched.fieldSectionHeader?.[0]?.value || '';
     for (const link of fetched.fieldLinks) {
-      if (link.url.path.startsWith('/')) {
-        processed.links.news = {
-          title: link.title,
-          uri: link.url.path,
-        };
+      if (link.url.path) {
+        if (link.url.path.startsWith('/')) {
+          processed.links.news = {
+            title: link.title,
+            uri: link.url.path,
+          };
+        } else {
+          const { key, value } = processLink(link.title, link.url.path);
+          processed.links[key] = value;
+        }
       } else {
-        // may throw if we get something that's not a URL in the data
-        const url = new URL(link.url.path);
-        const hostnameParts = url.hostname.split('.');
-        // just retrieving the domain part i.e. facebook/flickr/twitter
-        processed.links[hostnameParts.slice(-2, -1)[0]] = {
-          title: link.title,
-          uri: link.url.path,
-        };
+        const { key, value } = processLink(link.title, link.url);
+        processed.links[key] = value;
       }
     }
     // example:

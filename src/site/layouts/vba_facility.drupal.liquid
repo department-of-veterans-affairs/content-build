@@ -29,7 +29,7 @@
             {% assign basePath = entityUrl.path | regionBasePath %}
             {% assign lowercasePath = entityUrl.path | downcase %}
             {% if lowercasePath contains 'manila' %}
-            {% include "src/site/facilities/main_buttons_manila.drupal.liquid" %}
+              {% include "src/site/facilities/main_buttons_manila.drupal.liquid" %}
             {% else %}
               {% include "src/site/facilities/main_buttons.drupal.liquid" with path = basePath buttonType = 'vba'%}
             {% endif %}
