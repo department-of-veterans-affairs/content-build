@@ -1903,7 +1903,7 @@
     "rootUrl": "/pension/aid-attendance-housebound/apply-form-21-2680",
     "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
