@@ -1059,6 +1059,16 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation",
+        "/form-saved"
+      ],
+      "minimalHeader": {
+        "title": "Upload VA Form",
+        "subtitle": ""
+      },
+      "minimalFooter": true,
       "private": true
     }
   },
@@ -1569,7 +1579,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "lastupdate": "2025-09-15"
+      "lastupdate": "2026-01-20"
     }
   },
   {
@@ -1637,7 +1647,7 @@
     "rootUrl": "/school-administrators/update-certifying-officials",
     "productId": "bc4e797d-2a35-40f2-b072-66962e75fe89",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1903,7 +1913,7 @@
     "rootUrl": "/pension/aid-attendance-housebound/apply-form-21-2680",
     "productId": "803cc23f-a627-4ea7-a3ea-0f5595d0dfd3",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1928,7 +1938,7 @@
     "rootUrl": "/disability/eligibility/special-claims/unemployability/submit-employment-information-form-21-4192",
     "productId": "c61b0c39-7177-4340-9820-955c959b7f5b",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -1978,7 +1988,7 @@
     "rootUrl": "/supporting-forms-for-claims/submit-nursing-home-information-form-21-0779",
     "productId": "0383a035-c37c-4875-ad1d-5f85c59025fe",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
@@ -2189,15 +2199,15 @@
   {
     "appName": "22-10272 Application for reimbursement of preparatory (prep) course for licensing or a certification test",
     "entryName": "10272-edu-benefits",
-    "rootUrl": "/education/other-va-education-benefits/reimbursements/test-reimbursement-22-10272",
+    "rootUrl": "/forms/22-10272/request-prep-course-reimbursement-online",
     "productId": "97ac427e-8a1d-4d9c-8a2f-83d20b68ab09",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false
     }
-   },
-   {
+  },
+  {
     "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
     "entryName": "0803-edu-benefits",
     "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees-online",
