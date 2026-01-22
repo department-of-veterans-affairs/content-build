@@ -83,10 +83,11 @@
                   </span>
                 </div>
               </div>
+              
               {% assign even = true %}
               {% for entity in outreachAssetsDataArray.entities %}
-              {% if entity.fieldListing.targetId == entityId %}
-              {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
+                {% if entity.fieldListing.targetId == entityId %}
+                  {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
               <div data-topic="{{topicsString}}"
                 data-type="{{entity.fieldFormat}}" data-number={{forloop.index}}
                 class="vads-l-col--12
@@ -244,27 +245,85 @@
             </div>
 
             <!-- Pagination -->
-            <div class="va-pagination" id="va-pager-div">
-              <span class="va-pagination-prev">
-                <a
-                  href="#pager-previous-click"
-                  id="pager-previous-click"
-                  aria-label="Load previous page"
-                >
-                  Prev
-                </a>
-              </span>
-              <div id="pager-nums-insert" class="va-pagination-inner"></div>
-              <span class="va-pagination-next">
-                <a
-                  href="#pager-next-click"
-                  id="pager-next-click"
-                  aria-label="Load next page"
-                >
-                  Next
-                </a>
-              </span>
-            </div>
+            <va-pagination
+              max-page-list-length="7"
+              page="1"
+              pages="1"
+              uswds
+            >
+            </va-pagination>
+
+            <script>
+              if (Number('{{ outreachAssetsDataArray.entities.size }}')) {
+                const pages = Math.ceil(Number('{{ outreachAssetsDataArray.entities.size }}') / 10);
+                const pagination = document.querySelector('va-pagination');
+                
+                if (pagination) {
+                  pagination.setAttribute('pages', pages);
+                }
+              }
+            </script>
+
+            <script>
+              const totalItems = {{ outreachAssetsDataArray.entities.size }};
+              const itemsPerPage = 10;
+              const totalPages = Math.ceil(totalItems / itemsPerPage);
+              const pagination = document.querySelector('va-pagination');
+              
+              if (!pagination) {
+                console.error('va-pagination element not found');
+              } else {
+                // Function to update the "Showing X-Y of Z results" text
+                const updateResultsCount = (pageNumber) => {
+                  const cards = document.querySelectorAll('.asset-card');
+                  const visibleCards = Array.from(cards).filter(card => 
+                    !card.classList.contains('hide-topic') && 
+                    !card.classList.contains('hide-type')
+                  );
+                  
+                  const totalVisible = visibleCards.length;
+                  const startIndex = (pageNumber - 1) * itemsPerPage + 1;
+                  const endIndex = Math.min(pageNumber * itemsPerPage, totalVisible);
+                  
+                  // Update the display text
+                  const totalPagesEl = document.getElementById('total-pages');
+                  const totalPagesSrEl = document.getElementById('total-pages-sr');
+                  const totalAllEl = document.getElementById('total-all');
+                  
+                  if (totalPagesEl && totalAllEl) {
+                    if (totalVisible === 0) {
+                      totalPagesEl.innerText = '0';
+                      totalPagesSrEl.innerText = '0';
+                      totalAllEl.innerText = ' of 0';
+                    } else {
+                      totalPagesEl.innerText = `${startIndex} - ${endIndex}`;
+                      totalPagesSrEl.innerText = `${startIndex} through ${endIndex}`;
+                      totalAllEl.innerText = ` of ${totalVisible}`;
+                    }
+                  }
+                };
+                
+                // Handle page selection - navigate to hash URLs for library-filters.js
+                const handlePageSelect = event => {
+                  const newPage = event?.detail?.page;
+                  const currentPage = parseInt(pagination.getAttribute('page')) || 1;
+                  
+                  // Update the pagination component's page attribute
+                  pagination.setAttribute('page', newPage);
+                  
+                  // Update the results count
+                  updateResultsCount(newPage);
+                  
+                  // Navigate to the hash that library-filters.js is listening for
+                  window.location.hash = newPage.toString();
+                };
+                
+                pagination.addEventListener('pageSelect', handlePageSelect);
+                
+                // Initialize the count on page load
+                updateResultsCount(1);
+              }
+            </script>
 
             <div id="no-results">
               <div>

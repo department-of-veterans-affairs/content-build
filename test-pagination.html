@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Pagination - Publication Listing</title>
+  <link rel="stylesheet" href="https://unpkg.com/@department-of-veterans-affairs/formation/dist/formation.min.css">
+  <script type="module" src="https://unpkg.com/@department-of-veterans-affairs/web-components@latest/dist/component-library/component-library.esm.js"></script>
+</head>
+<body>
+  <div class="interior" id="content">
+    <main class="va-l-detail-page">
+      <div class="usa-grid usa-grid-full">
+        <div class="usa-width-three-fourths">
+          <article class="usa-content vads-l-grid-container--full">
+            <h1>Public outreach materials</h1>
+            
+            <div class="vads-l-grid-container--full asset-component-library" id="search-entry">
+              
+              <!-- Filter Form -->
+              <form class="usa-form outreach-asset-form-filters vads-u-padding-y--3 vads-u-padding-x--1p5 vads-u-margin-bottom--2">
+                <div class="vads-l-row">
+                  <div class="vads-l-col--12 large-screen:vads-l-col--6 vads-u-padding-x--1p5">
+                    <label for="outreach-topic">Select a topic</label>
+                    <select class="usa-select" name="outreach-topic" id="outreach-topic">
+                      <option value="select">- All topics -</option>
+                      <option value="general">General benefits information</option>
+                      <option value="healthcare">Health care</option>
+                      <option value="careers">Careers and employment</option>
+                      <option value="other">Other topics and questions</option>
+                    </select>
+                  </div>
+                  <div class="vads-l-col--12 large-screen:vads-l-col--6 vads-u-padding-x--1p5">
+                    <label for="outreach-type">Select file type</label>
+                    <select class="usa-select" name="outreach-type" id="outreach-type">
+                      <option value="select">- All types -</option>
+                      <option value="document">Poster, Flyer, brochure and fact sheets</option>
+                      <option value="video">Videos</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+
+              <div id="total-pages-div" class="vads-u-margin-bottom--1">
+                <div aria-live="polite" aria-atomic="true" id="pager-focus" role="status" tabindex="-1">
+                  <span>
+                    Showing
+                    <span aria-hidden="true" id="total-pages"></span>
+                    <span class="usa-sr-only" id="total-pages-sr"></span>
+                    <span id="total-all"></span> results
+                  </span>
+                </div>
+              </div>
+
+              <!-- Asset Cards Container -->
+              <div class="vads-grid-row vads-grid-gap-3">
+                
+                <!-- Card 1 -->
+                <div data-topic="general" data-type="document" data-number="1" 
+                     class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest">
+                    <div class="mobile-lg:vads-grid-col-4 tablet:vads-grid-col-12">
+                      <img alt="Fraud prevention tips" src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/hub-illustrations/records.png">
+                    </div>
+                    <div>
+                      <i>General benefits information</i>
+                      <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Fraud prevention tips for natural disasters</h2>
+                      <div class="vads-u-margin-bottom--2">Learn more about common scams and how you can avoid them.</div>
+                      <va-link download href="#" text="Download PDF (1.11MB)"></va-link>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div data-topic="general" data-type="document" data-number="2" 
+                     class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest">
+                    <div class="mobile-lg:vads-grid-col-4 tablet:vads-grid-col-12">
+                      <img alt="Fraud prevention tip sheet" src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/hub-illustrations/records.png">
+                    </div>
+                    <div>
+                      <i>General benefits information</i>
+                      <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Fraud prevention tip sheet</h2>
+                      <div class="vads-u-margin-bottom--2">Tips on how to avoid Veteran-targeted scams.</div>
+                      <va-link download href="#" text="Download PDF (0.96MB)"></va-link>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div data-topic="general" data-type="document" data-number="3" 
+                     class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest">
+                    <div class="mobile-lg:vads-grid-col-4 tablet:vads-grid-col-12">
+                      <img alt="Fraud protection toolkit" src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/hub-illustrations/records.png">
+                    </div>
+                    <div>
+                      <i>General benefits information</i>
+                      <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Fraud protection toolkit</h2>
+                      <div class="vads-u-margin-bottom--2">Tips and resources for identifying and reporting scams.</div>
+                      <va-link download href="#" text="Download PDF (10.63MB)"></va-link>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div data-topic="healthcare" data-type="document" data-number="4" 
+                     class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest">
+                    <div class="mobile-lg:vads-grid-col-4 tablet:vads-grid-col-12">
+                      <img alt="Whole health flyer" src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/hub-illustrations/health-care.png">
+                    </div>
+                    <div>
+                      <i>Health care</i>
+                      <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Whole health flyer</h2>
+                      <div class="vads-u-margin-bottom--2">Learn about whole health approaches.</div>
+                      <va-link download href="#" text="Download PDF (1.84MB)"></va-link>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div data-topic="other" data-type="document" data-number="5" 
+                     class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest">
+                    <div class="mobile-lg:vads-grid-col-4 tablet:vads-grid-col-12">
+                      <img alt="Language Line" src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/hub-illustrations/records.png">
+                    </div>
+                    <div>
+                      <i>Other topics and questions</i>
+                      <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Language Line</h2>
+                      <div class="vads-u-margin-bottom--2">Language assistance services.</div>
+                      <va-link download href="#" text="Download PDF (0.07MB)"></va-link>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div data-topic="careers" data-type="document" data-number="6" 
+                     class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest">
+                    <div class="mobile-lg:vads-grid-col-4 tablet:vads-grid-col-12">
+                      <img alt="Employment Scam Prevention" src="https://s3-us-gov-west-1.amazonaws.com/content.www.va.gov/img/hub-illustrations/careers.png">
+                    </div>
+                    <div>
+                      <i>Careers and employment</i>
+                      <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Employment Scam Prevention</h2>
+                      <div class="vads-u-margin-bottom--2">Employment Scam Prevention tips.</div>
+                      <va-link download href="#" text="Download PDF (0.67MB)"></va-link>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cards 7-25 for testing pagination -->
+                <div data-topic="other" data-type="document" data-number="7" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>Other</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 7</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="general" data-type="document" data-number="8" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>General</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 8</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="healthcare" data-type="document" data-number="9" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>Healthcare</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 9</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="careers" data-type="document" data-number="10" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>Careers</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 10</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="general" data-type="document" data-number="11" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>General</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 11 - Page 2</h2><div class="vads-u-margin-bottom--2">This should appear on page 2</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="other" data-type="document" data-number="12" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>Other</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 12</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="healthcare" data-type="document" data-number="13" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>Healthcare</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 13</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="careers" data-type="document" data-number="14" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>Careers</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 14</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+                <div data-topic="general" data-type="document" data-number="15" class="vads-grid-col-12 tablet:vads-grid-col-6 vads-u-margin-bottom--3 asset-card show-type show-topic">
+                  <div class="vads-u-padding--3 vads-u-background-color--gray-lightest"><div><i>General</i><h2 class="vads-u-margin-y--1 vads-u-font-size--lg">Test Card 15</h2><div class="vads-u-margin-bottom--2">Description</div><va-link download href="#" text="Download PDF"></va-link></div></div>
+                </div>
+
+              </div>
+
+              <!-- VA Pagination Component -->
+              <va-pagination
+                max-page-list-length="7"
+                page="1"
+                pages="1"
+                uswds
+              >
+              </va-pagination>
+
+              <script>
+                (function() {
+                  const totalItems = 15; // 15 test cards
+                  const itemsPerPage = 10;
+                  const totalPages = Math.ceil(totalItems / itemsPerPage);
+                  const pagination = document.querySelector('va-pagination');
+                  
+                  if (!pagination) {
+                    console.error('va-pagination element not found');
+                    return;
+                  }
+                  
+                  // Set the total number of pages
+                  pagination.setAttribute('pages', totalPages);
+                  
+                  console.log('Total items:', totalItems);
+                  console.log('Total pages:', totalPages);
+                  
+                  // Function to update the "Showing X-Y of Z results" text
+                  const updateResultsCount = (pageNumber) => {
+                    const cards = document.querySelectorAll('.asset-card');
+                    const visibleCards = Array.from(cards).filter(card => 
+                      !card.classList.contains('hide-topic') && 
+                      !card.classList.contains('hide-type')
+                    );
+                    
+                    const totalVisible = visibleCards.length;
+                    const startIndex = (pageNumber - 1) * itemsPerPage + 1;
+                    const endIndex = Math.min(pageNumber * itemsPerPage, totalVisible);
+                    
+                    // Update the display text
+                    const totalPagesEl = document.getElementById('total-pages');
+                    const totalPagesSrEl = document.getElementById('total-pages-sr');
+                    const totalAllEl = document.getElementById('total-all');
+                    
+                    if (totalPagesEl && totalAllEl) {
+                      if (totalVisible === 0) {
+                        totalPagesEl.innerText = '0';
+                        totalPagesSrEl.innerText = '0';
+                        totalAllEl.innerText = ' of 0';
+                      } else {
+                        totalPagesEl.innerText = `${startIndex} - ${endIndex}`;
+                        totalPagesSrEl.innerText = `${startIndex} through ${endIndex}`;
+                        totalAllEl.innerText = ` of ${totalVisible}`;
+                      }
+                    }
+                  };
+                  
+                  // Handle page selection
+                  const handlePageSelect = event => {
+                    const newPage = event?.detail?.page;
+                    const currentPage = parseInt(pagination.getAttribute('page')) || 1;
+                    
+                    console.log('Page changed from', currentPage, 'to', newPage);
+                    
+                    // Update the pagination component's page attribute
+                    pagination.setAttribute('page', newPage);
+                    
+                    // Update the results count
+                    updateResultsCount(newPage);
+                    
+                    // Show/hide cards based on page
+                    const cards = document.querySelectorAll('.asset-card');
+                    const visibleCards = Array.from(cards).filter(card => 
+                      !card.classList.contains('hide-topic') && 
+                      !card.classList.contains('hide-type')
+                    );
+                    
+                    const startIndex = (newPage - 1) * itemsPerPage;
+                    const endIndex = startIndex + itemsPerPage;
+                    
+                    visibleCards.forEach((card, index) => {
+                      if (index >= startIndex && index < endIndex) {
+                        card.classList.remove('pager-hide');
+                        card.style.display = '';
+                      } else {
+                        card.classList.add('pager-hide');
+                        card.style.display = 'none';
+                      }
+                    });
+                    
+                    // Scroll to top
+                    document.querySelector('.asset-component-library').scrollIntoView({ 
+                      behavior: 'smooth', 
+                      block: 'start' 
+                    });
+                    
+                    // Navigate to hash
+                    window.location.hash = newPage.toString();
+                  };
+                  
+                  pagination.addEventListener('pageSelect', handlePageSelect);
+                  
+                  // Initialize: hide items beyond first page
+                  const cards = document.querySelectorAll('.asset-card');
+                  cards.forEach((card, index) => {
+                    if (index >= itemsPerPage) {
+                      card.classList.add('pager-hide');
+                      card.style.display = 'none';
+                    }
+                  });
+                  
+                  console.log('Pagination initialized with', cards.length, 'cards');
+                  
+                  // Initialize the count on page load
+                  updateResultsCount(1);
+                })();
+              </script>
+
+              <div id="no-results" style="display: none;">
+                <div>
+                  <p><b>Select a different topic or file type</b></p>
+                </div>
+              </div>
+
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
