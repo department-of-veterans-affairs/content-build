@@ -20,6 +20,8 @@
     "heroku-serve": "http-server",
     "heroku-postbuild": "sh script/heroku-postbuild.sh",
     "install-repos": "./script/install-repos.sh",
+    "install-safe": "./script/install-safe.sh",
+    "run-postinstall": "./script/run-postinstall.sh",
     "lint": "npm run lint:js",
     "lint:changed": "npm run lint:js:changed",
     "lint:js": "eslint --quiet --ext .js --ext .jsx .",
