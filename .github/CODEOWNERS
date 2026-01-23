@@ -100,3 +100,12 @@ src/site/stages/build/drupal @department-of-veterans-affairs/vfs-public-websites
 
 # Site Assets
 src/site/assets/robots.txt @department-of-veterans-affairs/vfs-public-websites-frontend
+
+#Medallia Assets
+src/site/includes/medallia-feedback-button.drupal.liquid @department-of-veterans-affairs/veteran-support-team
+src/site/includes/above-footer-elements.drupal.liquid @department-of-veterans-affairs/veteran-support-team
+src/site/filters/medalliaSurveysConfig.js @department-of-veterans-affairs/veteran-support-team
+src/site/assets/js/google-analytics/medallia-events.js @department-of-veterans-affairs/veteran-support-team
+src/site/assets/js/medallia/vagovprod.js @department-of-veterans-affairs/veteran-support-team
+src/site/includes/survey-tools.html @department-of-veterans-affairs/veteran-support-team
+
