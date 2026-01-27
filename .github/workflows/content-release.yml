@@ -137,7 +137,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: |
             .cache/yarn
@@ -148,7 +148,7 @@ jobs:
       - name: Install dependencies
         uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
-          command: cd content-build && yarn install --frozen-lockfile --prefer-offline
+          command: cd content-build && yarn install-safe --frozen-lockfile --prefer-offline
           max_attempts: 3
           timeout_minutes: 7
         env:
@@ -531,7 +531,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": ":bangbang: <!subteam^S010U41C30V|cms-helpdesk> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed."
+                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed."
                       }
                     }
                   ]

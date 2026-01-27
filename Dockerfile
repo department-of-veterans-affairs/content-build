@@ -63,7 +63,7 @@ COPY --chown=vets-website:vets-website . /application/content-build
 
 WORKDIR /application/content-build
 
-RUN yarn install --production=false
+RUN yarn install-safe --frozen-lockfile --production=false
 
 FROM installer as builder
 

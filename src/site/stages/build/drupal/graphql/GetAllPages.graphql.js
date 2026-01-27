@@ -17,7 +17,6 @@ const facilitySidebarQuery = require('./navigation-fragments/facilitySidebar.nav
 const faqMultipleQaPage = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
 const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
-const healthServicesListingPage = require('./healthServicesListingPage.graphql');
 const homePageQuery = require('./homePage.graphql');
 const icsFileQuery = require('./file-fragments/ics.file.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
@@ -39,8 +38,6 @@ const storyListingPage = require('./storyListingPage.graphql');
 const supportResourcesDetailPage = require('./nodeSupportResourcesDetailPage.graphql');
 const taxonomiesQuery = require('./taxonomy-fragments/GetTaxonomies.graphql');
 const vaFormPage = require('./vaFormPage.graphql');
-const vamcOperatingStatusAndAlerts = require('./vamcOperatingStatusAndAlerts.graphql');
-const vamcPolicyPages = require('./vamcPoliciesPage.graphql');
 const { ALL_FRAGMENTS } = require('./fragments.graphql');
 
 // Get current feature flags
@@ -71,7 +68,6 @@ const buildQuery = () => {
   ${healthCareLocalFacilityPage.fragment}
   ${healthCareRegionDetailPage.fragment}
   ${pressReleasePage.fragment}
-  ${vamcOperatingStatusAndAlerts.fragment}
   ${newsStoryPage.fragment}
   ${nodeEvent.fragment}
   ${nodeEvent.fragmentWithoutBreadcrumbs}
@@ -82,7 +78,6 @@ const buildQuery = () => {
   ${nodeEventListing.fragment}
   ${storyListingPage.fragment}
   ${leadershipListingPage.fragment}
-  ${healthServicesListingPage.fragment}
   ${pressReleasesListingPage.fragment}
   ${locationListingPage.fragment}
   ${qaPage.fragment}
@@ -94,7 +89,6 @@ const buildQuery = () => {
   ${supportResourcesDetailPage.fragment}
   ${basicLandingPage.fragment}
   ${nodeCampaignLandingPage.fragment}
-  ${vamcPolicyPages.fragment}
 `;
 
   const nodeQuery = `
@@ -107,10 +101,8 @@ const buildQuery = () => {
         ... landingPage
         ... page
         ... healthCareRegionDetailPage
-        ... vamcOperatingStatusAndAlerts
         ... nodeOffice
         ... benefitListingPage
-        ... healthServicesListingPage
         ... vaFormPage
         ... nodeQa
         ... faqMultipleQA
@@ -121,8 +113,6 @@ const buildQuery = () => {
         ... nodeSupportResourcesDetailPage
         ... nodeBasicLandingPage
         ... nodeCampaignLandingPage
-        ... policiesPageFragment
-        ... vbaFacilityFragment
       }
     }`;
 
