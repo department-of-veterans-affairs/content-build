@@ -2246,7 +2246,7 @@
     "layout": "page-react.html",
     "description": "A new application!",
     "keywords": "not required, but good practice for public apps",
-    "vagovprod": false,
+    "vagovprod": true,
     "includeBreadcrumbs": false,
     "minimalExcludePaths": [
       "/introduction",
