@@ -30,7 +30,4 @@ run_pkg_cmd() {
 run_pkg_cmd "node-libcurl" "install" ../.bin/node-pre-gyp install --fallback-to-build
 run_pkg_cmd "node-libcurl" "postinstall" node scripts/postinstall
 
-run_pkg_cmd "node-sass" "install" node scripts/install.js
-run_pkg_cmd "node-sass" "postinstall" node scripts/build.js
-
 echo "✓ Postinstall scripts completed successfully"
