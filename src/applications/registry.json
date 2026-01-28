@@ -2236,5 +2236,27 @@
         "subtitle": "mock prefill testing (VA Form FORM_MOCK_PREFILL)"
       }
     }
+  },
+  {
+  "appName": "form-renderer",
+  "entryName": "form-renderer",
+  "rootUrl": "/form-renderer",
+  "template": {
+    "title": "Form Renderer",
+    "layout": "page-react.html",
+    "description": "A new application!",
+    "keywords": "not required, but good practice for public apps",
+    "vagovprod": true,
+    "includeBreadcrumbs": false,
+    "minimalExcludePaths": [
+      "/introduction",
+      "/confirmation"
+    ],
+    "minimalFooter": true,
+    "minimalHeader": {
+        "title": "Add or remove a dependent on VA benefits",
+        "subtitle": "VA Form 21-686c"
+      }
+    }
   }
 ]
