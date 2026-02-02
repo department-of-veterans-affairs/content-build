@@ -21,11 +21,7 @@
             NEWS</h2>
           {% if fieldPromoHeadline and fieldLink.url.path %}
             <h3 class="vads-u-font-family--serif vads-u-margin-top--0 vads-u-font-size--xl">
-              <va-link
-                href="{{ fieldLink.url.path }}"
-                text="{{ fieldPromoHeadline | encode }}"
-                reverse
-              ></va-link>
+              {{ fieldPromoHeadline | encode }}
             </h3>
           {% endif %}
 
