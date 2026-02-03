@@ -2074,7 +2074,7 @@
     }
   },
   {
-    "appName": "Submit Medical Expenses To Support A Pension or DIC Claim",
+    "appName": "Submit medical expenses to support a pension or parents’ DIC claim",
     "entryName": "medical-expense-report",
     "rootUrl": "/supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
     "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
@@ -2089,7 +2089,7 @@
         },
         {
           "path": "supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
-          "name": "Submit medical expenses to support a pension or DIC claim"
+          "name": "Submit medical expenses to support a pension or parents’ DIC claim"
         }
       ]
     }
