@@ -1475,7 +1475,18 @@
     "productId": "901c3f1f-2616-46da-89b2-30649821e335",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
+      "layout": "page-react.html",
+      "title": "Register for the Foreign Medical Program (FMP)",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Register for the Foreign Medical Program (FMP)",
+        "subtitle": "VA Form 10-7959f-1"
+      }
     }
   },
   {
@@ -1527,17 +1538,16 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "title": "File a Foreign Medical Program (FMP) claim",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "health-care",
-          "name": "Health care"
-        },
-        {
-          "path": "health-care/file-foreign-medical-program-claim",
-          "name": "File a Foreign Medical Program (FMP) claim"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "File a Foreign Medical Program (FMP) claim",
+        "subtitle": "VA Form 10-7959f-2"
+      }
     }
   },
   {
