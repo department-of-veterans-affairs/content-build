@@ -1883,7 +1883,7 @@
     "productId": "ad06fcf8-da87-4a7a-9efc-258b57ae944d",
     "template": {
       "title": "Confirm contact email address",
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
