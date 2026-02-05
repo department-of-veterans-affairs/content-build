@@ -58,7 +58,7 @@ function getDrupalClient(buildOptions, clientOptionsArg) {
     // time we'll be using cms.va.gov addresses is locally,
     // when we need a proxy
     usingProxy:
-      /cms\.va\.gov(:\d+)?$/.test(new URL(address).hostname) &&
+      /cms\.va\.gov$/.test(new URL(address).hostname) &&
       !buildOptions['no-drupal-proxy'],
 
     getSiteUri() {
