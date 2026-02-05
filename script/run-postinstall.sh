@@ -29,5 +29,6 @@ run_pkg_cmd() {
 # Native deps that must build/download binaries.
 run_pkg_cmd "node-libcurl" "install" ../.bin/node-pre-gyp install --fallback-to-build
 run_pkg_cmd "node-libcurl" "postinstall" node scripts/postinstall
+run_pkg_cmd "libxmljs2" "install" ../.bin/node-gyp rebuild
 
 echo "✓ Postinstall scripts completed successfully"
