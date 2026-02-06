@@ -199,7 +199,7 @@
     "style-loader": "^3.2.1",
     "table": "^6.7.6",
     "tar": "^6.1.9",
-    "webpack": "^5.76.0",
+    "webpack": "^5.104.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1"
   },
@@ -273,7 +273,8 @@
     "**/minimist": "^1.2.6",
     "**/uglify-js": "^2.2.24",
     "**/ansi-regex": "^4.1.1",
-    "**/@babel/core": "^7.23.2"
+    "**/@babel/core": "^7.23.2",
+    "**/diff": "^5.2.1"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
