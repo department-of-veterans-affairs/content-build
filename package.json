@@ -199,7 +199,7 @@
     "style-loader": "^3.2.1",
     "table": "^6.7.6",
     "tar": "^6.1.9",
-    "webpack": "^5.76.0",
+    "webpack": "^5.104.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1"
   },
