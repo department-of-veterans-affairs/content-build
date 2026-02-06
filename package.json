@@ -195,13 +195,13 @@
     "semver": "^7.5.2",
     "sentry-testkit": "^3.3.4",
     "sinon": "^3.2.1",
-    "socks-proxy-agent": "^5.0.0",
+    "socks-proxy-agent": "^8.0.0",
     "style-loader": "^3.2.1",
     "table": "^6.7.6",
     "tar": "^6.1.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-dev-server": "^4.15.2"
   },
   "optionalDependencies": {},
   "engines": {
