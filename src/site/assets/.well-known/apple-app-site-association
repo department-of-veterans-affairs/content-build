@@ -14,6 +14,10 @@
           {
             "/": "/my-health/appointments",
             "comment": "Matches any URL with a path that starts with /my-health/appointments and send to the mobile app."
+          },
+          {
+            "/": "/track-claims/your-claim-letters/link",
+            "comment": "Matches any URL with a path that starts with /track-claims/your-claim-letters/link and send to the mobile app."
           }
         ]
       }
