@@ -34,68 +34,68 @@
                       </a>
                     {% endif %}
                   </p>
-                {% endif %}
+<div class="usa-grid usa-grid-full">
+  <div class="usa-width-three-fourths">
+    <div class="usa-content vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0">
+      <va-need-help>
+        <div slot="content">
+          {% if 
+            entity.fieldContactInfoSwitch == 'DC' and
+            entity.fieldContactDefault != empty and
+            !entity.fieldAdditionalContact.entity.fieldEmailLabel and
+            !entity.fieldAdditionalContact.entity.fieldEmailAddress 
+          %}
+            <!-- Default contact only -->
+            <p>
+              Call <strong>{{ entity.fieldContactDefault.entity.title }}</strong> at
+              <va-telephone contact="{{ entity.fieldContactDefault.entity.fieldPhoneNumber }}"></va-telephone>.
+              If you have hearing loss, call <va-telephone contact="711" tty></va-telephone>.
+            </p>
+          {% else %}
+            <!-- Default contact -->
+            {% if entity.fieldContactInfoSwitch == 'DC' and entity.fieldContactDefault != empty %}
+              <p>
+                Call <strong>{{ entity.fieldContactDefault.entity.title }}</strong> at
+                <va-telephone contact="{{ entity.fieldContactDefault.entity.fieldPhoneNumber }}"></va-telephone>.
+                If you have hearing loss, call <va-telephone contact="711" tty></va-telephone>.
+              </p>
+            {% endif %}
 
-                <!-- Additional contact -->
-                {% if entity.fieldContactDefault != empty %}
-                  {% if entity.fieldAdditionalContact.entity.fieldEmailLabel or entity.fieldAdditionalContact.entity.fieldPhoneLabel %}
-                    <p>
-                      <!-- Email -->
-                      {% if entity.fieldAdditionalContact.entity.fieldEmailLabel and entity.fieldAdditionalContact.entity.fieldEmailAddress %}
-                        <strong>{{ entity.fieldAdditionalContact.entity.fieldEmailLabel }}:</strong>
-                        <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ entity.fieldAdditionalContact.entity.fieldEmailAddress | escape }}', 'links-list-section-header': 'Need more help?' })"
-                           href="mailto:{{ entity.fieldAdditionalContact.entity.fieldEmailAddress }}"
-                           rel="noreferrer noopener">
-                          {{ entity.fieldAdditionalContact.entity.fieldEmailAddress }}
-                        </a>
-                        {% if entity.fieldAdditionalContact.entity.fieldPhoneLabel and entity.fieldAdditionalContact.entity.fieldPhoneNumber %}
-                          <br />
-                        {% endif %}
-                      {% endif %}
-
-                      <!-- Phone number -->
-                      {% if entity.fieldAdditionalContact.entity.fieldPhoneLabel and entity.fieldAdditionalContact.entity.fieldPhoneNumber %}
-                        <strong>{{ entity.fieldAdditionalContact.entity.fieldPhoneLabel }}:</strong>
-                        {% assign phoneNumber = entity.fieldAdditionalContact.entity.fieldPhoneNumber %}
-                        {% assign shouldShowTelephoneComponent = phoneNumber | useTelephoneWebComponent %}
-                        {% if shouldShowTelephoneComponent %}
-                          <va-telephone contact="{{ phoneNumber }}"{% if entity.fieldAdditionalContact.entity.fieldPhoneExtension %} extension="{{ entity.fieldAdditionalContact.entity.fieldPhoneExtension }}"{% endif %}></va-telephone>
-                        {% else %}
-                          <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ phoneNumber | escape }}', 'links-list-section-header': 'Need more help?' })"
-                             href="tel:{{ phoneNumber }}{% if entity.fieldAdditionalContact.entity.fieldPhoneExtension %}p{{ entity.fieldAdditionalContact.entity.fieldPhoneExtension }}{% endif %}"
-                             rel="noreferrer noopener">
-                            {{ phoneNumber }}{% if entity.fieldAdditionalContact.entity.fieldPhoneExtension %}, ext. {{ entity.fieldAdditionalContact.entity.fieldPhoneExtension }}{% endif %}
-                          </a>
-                        {% endif %}
-                      {% endif %}
-                    </p>
+            <!-- Additional contact -->
+            {% if entity.fieldContactDefault != empty %}
+              {% if entity.fieldAdditionalContact.entity.fieldEmailLabel or entity.fieldAdditionalContact.entity.fieldPhoneLabel %}
+                <p>
+                  <!-- Email -->
+                  {% if entity.fieldAdditionalContact.entity.fieldEmailLabel and entity.fieldAdditionalContact.entity.fieldEmailAddress %}
+                    <strong>{{ entity.fieldAdditionalContact.entity.fieldEmailLabel }}:</strong>
+                    <a href="mailto:{{ entity.fieldAdditionalContact.entity.fieldEmailAddress }}">
+                      {{ entity.fieldAdditionalContact.entity.fieldEmailAddress }}
+                    </a>
                   {% endif %}
-                {% endif %}
 
-                <!-- Benefit hub contacts -->
-                {% if entity.fieldContactInfoSwitch == 'BHC' and entity.fieldBenefitHubContacts != empty %}
-                  {% for supportService in entity.fieldBenefitHubContacts.entity.fieldSupportServices %}
-                    <p>
-                      <strong>{{ supportService.entity.title }}</strong>
-                      {% if supportService.entity.fieldPhoneNumber %}
-                        {% assign shouldShowTelephoneComponent = supportService.entity.fieldPhoneNumber | useTelephoneWebComponent %}
-                        {% if shouldShowTelephoneComponent %}
-                          <va-telephone contact="{{ supportService.entity.fieldPhoneNumber }}"{% if supportService.entity.fieldPhoneExtension %} extension="{{ supportService.entity.fieldPhoneExtension }}"{% endif %}></va-telephone>
-                        {% else %}
-                          <a onclick="recordEvent({ 'event': 'nav-linkslist', 'links-list-header': '{{ supportService.entity.fieldPhoneNumber | escape }}', 'links-list-section-header': 'Need more help?' })"
-                             href="{{ supportService.entity.fieldLink.url.path }}"
-                             rel="noreferrer noopener">
-                            {{ supportService.entity.fieldPhoneNumber }}
-                          </a>
-                        {% endif %}
-                      {% endif %}
-                    </p>
-                  {% endfor %}
-                {% endif %}
+                  <!-- Phone number -->
+                  {% if entity.fieldAdditionalContact.entity.fieldPhoneLabel and entity.fieldAdditionalContact.entity.fieldPhoneNumber %}
+                    <strong>{{ entity.fieldAdditionalContact.entity.fieldPhoneLabel }}:</strong>
+                    <va-telephone contact="{{ entity.fieldAdditionalContact.entity.fieldPhoneNumber }}"{% if entity.fieldAdditionalContact.entity.fieldPhoneExtension %} extension="{{ entity.fieldAdditionalContact.entity.fieldPhoneExtension }}"{% endif %}></va-telephone>
+                  {% endif %}
+                </p>
               {% endif %}
-            </div>
-          </va-need-help>
+            {% endif %}
+
+            <!-- Benefit hub contacts -->
+            {% if entity.fieldContactInfoSwitch == 'BHC' and entity.fieldBenefitHubContacts != empty %}
+              {% for supportService in entity.fieldBenefitHubContacts.entity.fieldSupportServices %}
+                <p>
+                  Call <strong>{{ supportService.entity.title }}</strong> at
+                  <va-telephone contact="{{ supportService.entity.fieldPhoneNumber }}"{% if supportService.entity.fieldPhoneExtension %} extension="{{ supportService.entity.fieldPhoneExtension }}"{% endif %}></va-telephone>.
+                  If you have hearing loss, call <va-telephone contact="711" tty></va-telephone>.
+                </p>
+              {% endfor %}
+            {% endif %}
+          {% endif %}
         </div>
-      </div>
+      </va-need-help>
     </div>
+  </div>
+</div>
 {% endif %}
