@@ -376,6 +376,11 @@ jobs:
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
+      - name: Wait for server
+        run: |
+          timeout 30 bash -c 'until curl -sf http://127.0.0.1:3002 > /dev/null 2>&1; do sleep 1; done'
+          echo "Server is ready"
+
       - name: Run Cypress tests
         run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
 
