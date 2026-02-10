@@ -1,4 +1,4 @@
-const fs = require('fs');
+const { readFile } = require('fs').promises;
 const { fileURLToPath } = require('url');
 const fetch = require('node-fetch');
 const SocksProxyAgent = require('socks-proxy-agent');
@@ -10,7 +10,7 @@ const { Response } = fetch;
 // Returns a node-fetch response in all cases
 async function fetchWrapper(url, options) {
   if (url.startsWith('file:')) {
-    const data = fs.readFileSync(fileURLToPath(url));
+    const data = await readFile(fileURLToPath(url));
     return new Response(data, { status: 200, statusText: 'OK', url });
   }
   return fetch(url, options);
