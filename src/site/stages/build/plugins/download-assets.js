@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 
-require('isomorphic-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const buckets = require('../../../constants/buckets');
@@ -55,7 +54,7 @@ async function downloadFromLiveBucket(files, buildOptions) {
       // Store file contents directly on disk
       fs.outputFileSync(
         path.join(buildPath, bundleFileName),
-        await bundleResponse.buffer(),
+        Buffer.from(await bundleResponse.arrayBuffer()),
       );
 
       console.log(`Successfully downloaded asset: ${bundleUrl}`);
