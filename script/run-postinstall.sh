@@ -12,22 +12,4 @@ if [ ! -d "node_modules" ]; then
   exit 1
 fi
 
-run_pkg_cmd() {
-  local pkg="$1"
-  local step_name="$2"
-  shift 2
-
-  if [ ! -d "node_modules/${pkg}" ]; then
-    echo "→ Skipping ${pkg} (${step_name}): not installed"
-    return 0
-  fi
-
-  echo "→ Running ${step_name} for ${pkg}..."
-  (cd "node_modules/${pkg}" && "$@")
-}
-
-# Native deps that must build/download binaries.
-run_pkg_cmd "node-libcurl" "install" ../.bin/node-pre-gyp install --fallback-to-build
-run_pkg_cmd "node-libcurl" "postinstall" node scripts/postinstall
-
 echo "✓ Postinstall scripts completed successfully"

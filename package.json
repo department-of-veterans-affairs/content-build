@@ -166,7 +166,6 @@
     "husky": ">=6",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.2.1",
-    "libxmljs2": "^0.28.0",
     "lint-staged": "^11.1.2",
     "metalsmith-assets": "^0.1.0",
     "metalsmith-date-in-filename": "^0.0.14",
@@ -205,7 +204,7 @@
   },
   "optionalDependencies": {},
   "engines": {
-    "node": ">=14.15.0",
+    "node": ">=22.22.0",
     "yarn": "1.19.1"
   },
   "private": true,
@@ -235,7 +234,6 @@
     "metalsmith-sitemap": "^1.0.0",
     "moment": "^2.29.2",
     "moment-timezone": "^0.5.33",
-    "node-libcurl": "2.3.4",
     "number-to-words": "^1.2.4",
     "raven": "^2.6.4",
     "react": "^16.13.1",

@@ -337,7 +337,7 @@ jobs:
       - build
     timeout-minutes: 30
     container:
-      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/dsva/cypress-io/cypress/browsers:node16.16.0-chrome107-ff107-edge
+      image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/cypress/browsers:node-22.12.0-chrome-131.0.6778.108-1-ff-133.0-edge-131.0.2903.70-1
       credentials:
         username: ${{ needs.login-to-amazon-ecr.outputs.docker_username }}
         password: ${{ needs.login-to-amazon-ecr.outputs.docker_password }}
@@ -353,6 +353,11 @@ jobs:
     steps:
       - name: Checkout content-build
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Install system dependencies
+        run: |
+          apt-get update
+          apt-get install -y curl bzip2
 
       - name: Download production build
         run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
@@ -375,6 +380,11 @@ jobs:
 
       - name: Start server
         run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+
+      - name: Wait for server
+        run: |
+          timeout 30 bash -c 'until curl -sf http://127.0.0.1:3002 > /dev/null 2>&1; do sleep 1; done'
+          echo "Server is ready"
 
       - name: Run Cypress tests
         run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
