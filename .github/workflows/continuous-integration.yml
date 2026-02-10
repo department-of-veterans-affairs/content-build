@@ -379,7 +379,7 @@ jobs:
             node_modules
 
       - name: Start server
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 > /tmp/test-server.log 2>&1 &
+        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
 
       - name: Wait for server
         run: |
@@ -388,14 +388,6 @@ jobs:
 
       - name: Run Cypress tests
         run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
-
-      - name: Debug server output
-        if: ${{ always() }}
-        run: |
-          echo "=== Server process ==="
-          ps aux | grep test-server || true
-          echo "=== Server log ==="
-          cat /tmp/test-server.log || true
 
       - name: Publish test results
         if: ${{ always() }}

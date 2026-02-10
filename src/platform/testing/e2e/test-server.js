@@ -31,10 +31,6 @@ process.on('unhandledRejection', reason => {
   // eslint-disable-next-line no-console
   console.error('Test server unhandledRejection:', reason);
 });
-process.on('exit', code => {
-  // eslint-disable-next-line no-console
-  console.error(`Test server exiting with code ${code}`);
-});
 
 const app = express();
 
