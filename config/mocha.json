@@ -3,7 +3,6 @@
     "@babel/register",
     "core-js/stable",
     "regenerator-runtime/runtime",
-    "blob-polyfill",
     "choma",
     "isomorphic-fetch",
     "mocha-snapshots",
