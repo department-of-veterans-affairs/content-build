@@ -10,11 +10,26 @@ process.on('unhandledRejection', up => {
   throw up;
 });
 
+async function fetchWithRetry(url, retries = 3, delay = 1000) {
+  try {
+    return await fetch(url);
+  } catch (err) {
+    if (retries <= 1) throw err;
+    console.log(
+      `Fetch failed for ${url}: ${err.message}. Retrying in ${delay}ms...`,
+    );
+    await new Promise(resolve => setTimeout(resolve, delay));
+    return fetchWithRetry(url, retries - 1, delay * 2);
+  }
+}
+
 async function downloadFromLiveBucket(files, buildOptions) {
   const bucket = buckets[buildOptions.buildtype];
   const fileManifestPath = 'generated/file-manifest.json';
 
-  const fileManifestRequest = await fetch(`${bucket}/${fileManifestPath}`);
+  const fileManifestRequest = await fetchWithRetry(
+    `${bucket}/${fileManifestPath}`,
+  );
   const fileManifest = await fileManifestRequest.json();
 
   files[fileManifestPath] = {
@@ -31,7 +46,7 @@ async function downloadFromLiveBucket(files, buildOptions) {
     const bundleUrl = bundleFileName.includes(bucket)
       ? `${bundleFileName}`
       : `${bucket}${bundleFileName}`;
-    const bundleResponse = await fetch(bundleUrl);
+    const bundleResponse = await fetchWithRetry(bundleUrl);
 
     if (bundleFileName.includes('generated/../')) {
       console.log(`Excluding: ${bundleFileName} from download`);
@@ -76,3 +91,4 @@ function downloadAssets(buildOptions) {
 }
 
 module.exports = downloadAssets;
+module.exports.fetchWithRetry = fetchWithRetry;
