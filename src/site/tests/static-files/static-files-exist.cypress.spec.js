@@ -6,7 +6,7 @@ describe('Static Data Files Test', () => {
     cy.deleteFileOrDir('../cypress/downloads/vamc-ehr.json');
     cy.fileOrDirExists('cypress/downloads/vamc-ehr.json').should('eq', false);
     cy.downloadFile(
-      'http://localhost:3002/data/cms/vamc-ehr.json',
+      'http://127.0.0.1:3002/data/cms/vamc-ehr.json',
       '../cypress/downloads',
       'vamc-ehr.json',
     );
@@ -20,7 +20,7 @@ describe('Static Data Files Test', () => {
       'cypress/downloads/vamc-facility-supplemental-status.json',
     ).should('eq', false);
     cy.downloadFile(
-      'http://localhost:3002/data/cms/vamc-facility-supplemental-status.json',
+      'http://127.0.0.1:3002/data/cms/vamc-facility-supplemental-status.json',
       '../cypress/downloads',
       'vamc-facility-supplemental-status.json',
     );
@@ -28,7 +28,7 @@ describe('Static Data Files Test', () => {
       'cypress/downloads/vamc-facility-supplemental-status.json',
     ).should('exist');
     cy.downloadFile(
-      'http://localhost:3002/data/cms/vamc-system.json',
+      'http://127.0.0.1:3002/data/cms/vamc-system.json',
       '../cypress/downloads',
       'vamc-system.json',
     );
@@ -43,7 +43,7 @@ describe('Static Data Files Test', () => {
       false,
     );
     cy.downloadFile(
-      'http://localhost:3002/data/cms/vamc-police.json',
+      'http://127.0.0.1:3002/data/cms/vamc-police.json',
       '../cypress/downloads',
       'vamc-police.json',
     );
@@ -56,7 +56,7 @@ describe('Static Data Files Test', () => {
       false,
     );
     cy.downloadFile(
-      'http://localhost:3002/data/cms/va-healthcare-services.json',
+      'http://127.0.0.1:3002/data/cms/va-healthcare-services.json',
       '../cypress/downloads',
       'va-healthcare-services.json',
     );
