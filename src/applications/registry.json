@@ -1418,16 +1418,6 @@
     }
   },
   {
-    "appName": "10-10d Application for CHAMPVA benefits",
-    "entryName": "10-10D",
-    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-form-10-10d",
-    "productId": "c485d6da-8094-433d-9cd3-3d31e7813650",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "Find a VA accredited representative or VSO",
     "entryName": "find-a-representative",
     "rootUrl": "/get-help-from-accredited-representative/find-rep",
@@ -1799,6 +1789,27 @@
     "appName": "10-10d Extended",
     "entryName": "10-10d-extended",
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-champva-form-10-10d",
+    "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
+    "template": {
+      "vagovprod": true,
+      "layout": "page-react.html",
+      "title": "Apply for CHAMPVA benefits",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Apply for CHAMPVA benefits",
+        "subtitle": "VA Forms 10-10d and 10-7959c"
+      }
+    }
+  },
+  {
+    "appName": "10-10d Extended",
+    "entryName": "10-10d-extended",
+    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-form-10-10d",
     "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
     "template": {
       "vagovprod": true,
