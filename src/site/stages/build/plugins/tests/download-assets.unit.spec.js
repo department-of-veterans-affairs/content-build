@@ -1,9 +1,9 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { fetchWithRetry } from '../download-assets';
+import { downloadWithRetry } from '../download-assets';
 
-describe('fetchWithRetry', () => {
+describe('downloadWithRetry', () => {
   let originalFetch;
   let sandbox;
 
@@ -17,18 +17,33 @@ describe('fetchWithRetry', () => {
     sandbox.restore();
   });
 
-  it('should return the response on a successful fetch', async () => {
-    const mockResponse = { ok: true, status: 200 };
+  it('should return the response and buffer on a successful fetch', async () => {
+    const body = 'test content';
+    const mockResponse = {
+      ok: true,
+      status: 200,
+      arrayBuffer: sandbox
+        .stub()
+        .resolves(new TextEncoder().encode(body).buffer),
+    };
     global.fetch = sandbox.stub().resolves(mockResponse);
 
-    const result = await fetchWithRetry('https://example.com/file.js');
+    const result = await downloadWithRetry('https://example.com/file.js');
 
-    expect(result).to.equal(mockResponse);
+    expect(result.response).to.equal(mockResponse);
+    expect(result.buffer.toString()).to.equal(body);
     expect(global.fetch.calledOnce).to.be.true;
   });
 
-  it('should retry on failure and succeed on a subsequent attempt', async () => {
-    const mockResponse = { ok: true, status: 200 };
+  it('should retry on fetch failure and succeed on a subsequent attempt', async () => {
+    const body = 'test content';
+    const mockResponse = {
+      ok: true,
+      status: 200,
+      arrayBuffer: sandbox
+        .stub()
+        .resolves(new TextEncoder().encode(body).buffer),
+    };
     global.fetch = sandbox
       .stub()
       .onFirstCall()
@@ -36,13 +51,46 @@ describe('fetchWithRetry', () => {
       .onSecondCall()
       .resolves(mockResponse);
 
-    const result = await fetchWithRetry(
+    const result = await downloadWithRetry(
       'https://example.com/file.js',
       3,
       10, // short delay for tests
     );
 
-    expect(result).to.equal(mockResponse);
+    expect(result.response).to.equal(mockResponse);
+    expect(result.buffer.toString()).to.equal(body);
+    expect(global.fetch.calledTwice).to.be.true;
+  });
+
+  it('should retry on body read failure and succeed on a subsequent attempt', async () => {
+    const body = 'test content';
+    const failResponse = {
+      ok: true,
+      status: 200,
+      arrayBuffer: sandbox.stub().rejects(new Error('terminated')),
+    };
+    const successResponse = {
+      ok: true,
+      status: 200,
+      arrayBuffer: sandbox
+        .stub()
+        .resolves(new TextEncoder().encode(body).buffer),
+    };
+    global.fetch = sandbox
+      .stub()
+      .onFirstCall()
+      .resolves(failResponse)
+      .onSecondCall()
+      .resolves(successResponse);
+
+    const result = await downloadWithRetry(
+      'https://example.com/file.js',
+      3,
+      10,
+    );
+
+    expect(result.response).to.equal(successResponse);
+    expect(result.buffer.toString()).to.equal(body);
     expect(global.fetch.calledTwice).to.be.true;
   });
 
@@ -51,7 +99,7 @@ describe('fetchWithRetry', () => {
     global.fetch = sandbox.stub().rejects(error);
 
     try {
-      await fetchWithRetry('https://example.com/file.js', 2, 10);
+      await downloadWithRetry('https://example.com/file.js', 2, 10);
       expect.fail('should have thrown');
     } catch (err) {
       expect(err).to.equal(error);
@@ -64,12 +112,29 @@ describe('fetchWithRetry', () => {
     global.fetch = sandbox.stub().rejects(new Error('network error'));
 
     try {
-      await fetchWithRetry('https://example.com/file.js', 3, 10);
+      await downloadWithRetry('https://example.com/file.js', 3, 10);
       expect.fail('should have thrown');
     } catch (err) {
       expect(err.message).to.equal('network error');
     }
 
     expect(global.fetch.calledThrice).to.be.true;
+  });
+
+  it('should throw on non-ok HTTP response', async () => {
+    const mockResponse = {
+      ok: false,
+      status: 404,
+      statusText: 'Not Found',
+      arrayBuffer: sandbox.stub(),
+    };
+    global.fetch = sandbox.stub().resolves(mockResponse);
+
+    try {
+      await downloadWithRetry('https://example.com/file.js', 1, 10);
+      expect.fail('should have thrown');
+    } catch (err) {
+      expect(err.message).to.include('404');
+    }
   });
 });
