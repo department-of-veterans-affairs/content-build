@@ -378,11 +378,32 @@ jobs:
 
       - name: Wait for server
         run: |
-          timeout 30 bash -c 'until curl -sf http://127.0.0.1:3002 > /dev/null 2>&1; do sleep 1; done'
-          echo "Server is ready"
+          timeout 30 bash -c 'until curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3002 2>/dev/null | grep -q "^[2-4]"; do sleep 1; done'
+          echo "Server is ready on port 3002"
+
+      - name: Debug server (before tests)
+        run: |
+          echo "=== Server process ==="
+          ps aux | grep test-server || true
+          echo "=== curl / ==="
+          curl -s -o /dev/null -w "HTTP %{http_code}, %{size_download} bytes\n" http://127.0.0.1:3002/ || echo "FAILED: $?"
+          echo "=== curl /lovell-federal-health-care-va/about-us/ ==="
+          curl -s -o /dev/null -w "HTTP %{http_code}, %{size_download} bytes\n" http://127.0.0.1:3002/lovell-federal-health-care-va/about-us/ || echo "FAILED: $?"
+          echo "=== curl homepage ==="
+          curl -s -o /dev/null -w "HTTP %{http_code}, %{size_download} bytes\n" http://127.0.0.1:3002/index.html || echo "FAILED: $?"
 
       - name: Run Cypress tests
         run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
+
+      - name: Debug server (after tests)
+        if: ${{ always() }}
+        run: |
+          echo "=== Server process ==="
+          ps aux | grep test-server || true
+          echo "=== curl / ==="
+          curl -s -o /dev/null -w "HTTP %{http_code}, %{size_download} bytes\n" http://127.0.0.1:3002/ || echo "FAILED: $?"
+          echo "=== curl /lovell-federal-health-care-va/about-us/ ==="
+          curl -s -o /dev/null -w "HTTP %{http_code}, %{size_download} bytes\n" http://127.0.0.1:3002/lovell-federal-health-care-va/about-us/ || echo "FAILED: $?"
 
       - name: Publish test results
         if: ${{ always() }}
