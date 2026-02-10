@@ -354,6 +354,11 @@ jobs:
       - name: Checkout content-build
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
+      - name: Install system dependencies
+        run: |
+          apt-get update
+          apt-get install -y curl bzip2
+
       - name: Download production build
         run: curl -L "https://s3-us-gov-west-1.amazonaws.com/vetsgov-website-builds-s3-upload/content-build/${{ github.sha }}/vagovprod.tar.bz2" -o vagovprod.tar.bz2
 
