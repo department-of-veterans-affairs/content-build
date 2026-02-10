@@ -2177,6 +2177,16 @@
     }
   },
   {
+    "appName": "MHV Medications Refills",
+    "entryName": "medications-refills",
+    "rootUrl": "/medication-refills",
+    "template": {
+      "title": "Refill prescriptions",
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "skeleton": "mhv-medications-refills/components/MedicationsRefillPage.Skeleton.html"
+    }
+  },
     "appName": "Sign-in Health Portal",
     "entryName": "sign-in-health-portal",
     "rootUrl": "/sign-in-health-portal",
