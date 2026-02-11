@@ -121,7 +121,7 @@
               class="va-accordion-item"
               level="2"
               open="true"
-              header="Not a Veteran?"
+              header="Not a Veteran or family member?"
               id="{{ 'Get information for' | hashReference: 60 }}"
               bordered
               uswds
@@ -149,15 +149,6 @@
               uswds
               open="true"
               id="{{ fieldConnectWithUs.entity.fieldExternalLink.title | hashReference: 60 }}">
-              {% if fieldConnectWithUs.entity.fieldExternalLink.url.path != empty %}
-                <h3 class="va-nav-linkslist-list vads-u-font-size--h4">
-                  <va-link
-                    href="{{ fieldConnectWithUs.entity.fieldExternalLink.url.path }}"
-                    text="{{ fieldConnectWithUs.entity.fieldExternalLink.title }}"
-                  />
-                </h3>
-              {% endif %}
-
               <section>
                 <h3 class="vads-u-font-size--h4">Get updates</h3>
                   <p>
