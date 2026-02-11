@@ -1872,7 +1872,7 @@
     "rootUrl": "/school-administrators/submit-yellow-ribbon-program-agreement-form-22-0839",
     "productId": "27f9178f-3aa0-41cb-904d-d5a2326b0b4c",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
