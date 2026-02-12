@@ -16,15 +16,6 @@ describe('home page', () => {
       .should('be.visible')
       .contains(text);
 
-  const verifyLinkWithoutSelector = (index, text, href) =>
-    cy
-      .get('a')
-      .eq(index)
-      .should('be.visible')
-      .should('contain.text', text)
-      .should('have.attr', 'href')
-      .and('include', href);
-
   // Used for selecting buttons that don't have easy selectors on them
   const verifyButtonText = (index, text) =>
     cy
@@ -60,15 +51,17 @@ describe('home page', () => {
       verifyElement('.header');
 
       const header = () => cy.get('.header');
-
       header()
         .scrollIntoView()
         .within(() => {
           verifyElement('.va-header-logo-wrapper');
           verifyElement('.sitewide-search-drop-down-panel-button');
-          verifyLinkWithoutSelector(1, 'Contact us', '/contact-us');
+          cy.contains('a', 'Contact us')
+            .should('be.visible')
+            .should('have.attr', 'href')
+            .and('include', '/contact-us');
           verifyElement('.sign-in-nav');
-          verifyElement('.va-crisis-line');
+          verifyElement('va-crisis-line-modal');
         });
 
       // Hero =======================================================
