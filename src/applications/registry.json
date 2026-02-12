@@ -2246,5 +2246,15 @@
         "subtitle": "mock prefill testing (VA Form FORM_MOCK_PREFILL)"
       }
     }
+  },
+  {
+    "appName": "22-0989 Entitlement restoration",
+    "entryName": "0989-edu-benefits",
+    "rootUrl": "/forms/0989",
+    "productId": "27c9d9f9-0d33-424b-bda8-d551742e89a2",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
   }
 ]
