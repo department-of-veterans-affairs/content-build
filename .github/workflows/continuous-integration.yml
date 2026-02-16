@@ -647,7 +647,7 @@ jobs:
 
       - name: CMS GovDelivery callback
         if: ${{ matrix.environment == 'vagovstaging' }}
-        uses: fjogeleit/http-request-action@23ad54bcd1178fcff6a0d17538fa09de3a7f0a4d # v1.16.4
+        uses: fjogeleit/http-request-action@551353b829c3646756b2ec2b3694f819d7957495 # v2.0.0
         with:
           url: ${{ env.DRUPAL_ADDRESS }}/api/govdelivery_bulletins/queue?EndTime=${{ needs.build.outputs.vagovstaging_buildtime }}&src=gha&runId=${{ github.run_id }}&runNumber=${{ github.run_number }}
           method: GET
