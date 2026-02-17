@@ -1,24 +1,22 @@
 {% if fieldTags.entity != empty or fieldOtherCategories.entity != empty %}
-  <div class="vads-u-padding-y--3 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0"
-    data-template="includes/tags">
-      <!-- Title -->
-       <h2 class="vads-u-margin-y--0 vads-u-font-size--h3">Browse by topic</h2>
-             <!-- Topic tags -->
-        {% assign tags = fieldTags | getTagsList %}
-        {% assign categories = fieldOtherCategories | getOtherCategoriesList %}
-        <ul class="usa-unstyled-list" role="list"></ul>
-
+  <div class="vads-u-padding-y--3 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0" data-template="includes/tags">
+    <!-- Title -->
+    <h2 class="vads-u-margin-y--0 vads-u-font-size--h3">Browse by topic</h2>
+      <!-- Topic tags -->
+      {% assign tags = fieldTags | getTagsList %}
+      {% assign categories = fieldOtherCategories | getOtherCategoriesList %}
+      <ul class="usa-unstyled-list" role="list">
         {% for entity in tags %}
-          <li class="vads-u-margin-y--1">
+          <li class="vads-u-margin-y--2">
             <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}"></va-link>
           </li>
         {% endfor %}
 
         {% for entity in categories %}
-          <li class="vads-u-margin-y--1">
+          <li class="vads-u-margin-y--2">
             <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}"></va-link>
           </li>
         {% endfor %}
-
+      </ul>
   </div>
 {% endif %}
