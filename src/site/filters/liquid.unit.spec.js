@@ -1170,6 +1170,62 @@ describe('getTagsList', () => {
   });
 });
 
+describe('getOtherCategoriesList', () => {
+  it('returns category entities when passed an object with entity array', () => {
+    const fieldOtherCategories = {
+      entity: [
+        {
+          entity: {
+            name: 'Category A',
+          },
+        },
+        {
+          entity: {
+            name: 'Category B',
+          },
+        },
+      ],
+    };
+
+    const result = liquid.filters.getOtherCategoriesList(fieldOtherCategories);
+
+    expect(result).to.deep.equal([
+      {
+        name: 'Category A',
+      },
+      {
+        name: 'Category B',
+      },
+    ]);
+  });
+
+  it('returns category entities when passed an array', () => {
+    const categories = [
+      {
+        entity: {
+          name: 'Category A',
+        },
+      },
+      {
+        entity: {
+          name: 'Category B',
+        },
+      },
+    ];
+
+    const result = liquid.filters.getOtherCategoriesList(categories);
+
+    expect(result).to.deep.equal([
+      {
+        name: 'Category A',
+      },
+      {
+        name: 'Category B',
+      },
+    ]);
+  });
+});
+
 describe('replace', () => {
   it('replaces text with other text', () => {
     expect(liquid.filters.replace('<h3>some text</h3>', 'h3', 'h4')).to.equal(

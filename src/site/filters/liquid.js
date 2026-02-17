@@ -981,6 +981,13 @@ module.exports = function registerFilters() {
     return `${digits}${text}`;
   };
 
+  liquid.filters.getOtherCategoriesList = categories => {
+    if (!categories) return null;
+    return categories.map(category => {
+      return category.entity;
+    });
+  };
+
   liquid.filters.getTagsList = fieldTags => {
     const {
       entity: {
