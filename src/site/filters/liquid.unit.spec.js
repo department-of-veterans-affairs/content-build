@@ -1172,20 +1172,18 @@ describe('getTagsList', () => {
 
 describe('getOtherCategoriesList', () => {
   it('returns category entities when passed an object with entity array', () => {
-    const fieldOtherCategories = {
-      entity: [
-        {
-          entity: {
-            name: 'Category A',
-          },
+    const fieldOtherCategories = [
+      {
+        entity: {
+          name: 'Category A',
         },
-        {
-          entity: {
-            name: 'Category B',
-          },
+      },
+      {
+        entity: {
+          name: 'Category B',
         },
-      ],
-    };
+      },
+    ];
 
     const result = liquid.filters.getOtherCategoriesList(fieldOtherCategories);
 
