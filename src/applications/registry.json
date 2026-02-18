@@ -177,7 +177,7 @@
       "layout": "page-react.html",
       "description": "Use VA Form 21P-530EZ to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
       "order": 1,
-      "includeBreadcrumbs": true,
+      "includeBreadcrumbs": false,
       "breadcrumbs_override": [
         {
           "path": "burials-memorials/",
@@ -191,7 +191,16 @@
           "path": "burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
           "name": "Apply for a Veterans burial allowance and transportation benefits"
         }
-      ]
+      ],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "VA Benefits and Health Care",
+        "subtitle": "(VA Form 21P-530EZ)"
+      },
     }
   },
   {
