@@ -704,15 +704,6 @@
     }
   },
   {
-    "appName": "View your representative",
-    "entryName": "view-representative",
-    "rootUrl": "/manage-representative/view",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "VA Chatbot",
     "entryName": "virtual-agent",
     "rootUrl": "contact-us/virtual-agent",
@@ -1217,16 +1208,6 @@
     "productId": "",
     "template": {
       "vagovprod": true,
-      "layout": "page-react.html"
-    }
-  },
-  {
-    "appName": "Notification Center",
-    "entryName": "notification-center",
-    "rootUrl": "/notification-center",
-    "productId": "",
-    "template": {
-      "vagovprod": false,
       "layout": "page-react.html"
     }
   },
