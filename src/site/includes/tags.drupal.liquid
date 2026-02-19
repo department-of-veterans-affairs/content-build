@@ -1,4 +1,4 @@
-{% if fieldTags.entity != empty or fieldOtherCategories.entity != empty %}
+{% if fieldTags.entity != empty or fieldOtherCategories.length %}
   <div class="vads-u-padding-y--3 vads-u-display--flex vads-u-flex-direction--column vads-u-padding-x--1 desktop-lg:vads-u-padding-x--0 vads-u-border-top--1px vads-u-border-color--gray-light" data-template="includes/tags">
     <!-- Title -->
     <h2 class="vads-u-margin-y--0 vads-u-font-size--h3">Browse by topic</h2>
@@ -8,13 +8,13 @@
       <ul class="usa-unstyled-list" role="list">
         {% for entity in tags %}
           <li class="vads-u-margin-y--2">
-            <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}"></va-link>
+            <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}" onclick="recordEvent({ 'event': 'nav-page-tag-click', 'page-tag-click-label': '{{ entity.name }}', 'page-tag-category-label': '{{  entity.categoryLabel  }}' });" />
           </li>
         {% endfor %}
 
         {% for entity in categories %}
           <li class="vads-u-margin-y--2">
-            <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}"></va-link>
+            <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}" onclick="recordEvent({ 'event': 'nav-page-tag-click', 'page-tag-click-label': '{{ entity.name }}', 'page-tag-category-label': '{{  entity.categoryLabel  }}' });" />
           </li>
         {% endfor %}
       </ul>

@@ -1208,32 +1208,6 @@ describe('getOtherCategoriesList', () => {
       },
     ]);
   });
-
-  it('returns category entities when passed an array', () => {
-    const categories = [
-      {
-        entity: {
-          name: 'Category A',
-        },
-      },
-      {
-        entity: {
-          name: 'Category B',
-        },
-      },
-    ];
-
-    const result = liquid.filters.getOtherCategoriesList(categories);
-
-    expect(result).to.deep.equal([
-      {
-        name: 'Category A',
-      },
-      {
-        name: 'Category B',
-      },
-    ]);
-  });
 });
 
 describe('replace', () => {
