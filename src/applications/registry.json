@@ -1212,16 +1212,6 @@
     }
   },
   {
-    "appName": "Notification Center",
-    "entryName": "notification-center",
-    "rootUrl": "/notification-center",
-    "productId": "",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html"
-    }
-  },
-  {
     "appName": "DS Playground",
     "entryName": "ds-playground",
     "rootUrl": "/ds-playground",
