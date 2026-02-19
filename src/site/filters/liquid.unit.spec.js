@@ -1171,16 +1171,22 @@ describe('getTagsList', () => {
 });
 
 describe('getOtherCategoriesList', () => {
-  it('returns category entities when passed an object with entity array', () => {
+  it('returns category entities when passed an array with entity objects', () => {
     const fieldOtherCategories = [
       {
         entity: {
-          name: 'Category A',
+          entityUrl: {
+            path: '/resources/disability',
+          },
+          name: 'Disability',
         },
       },
       {
         entity: {
-          name: 'Category B',
+          entityUrl: {
+            path: '/resources/pension',
+          },
+          name: 'Pension',
         },
       },
     ];
@@ -1189,10 +1195,18 @@ describe('getOtherCategoriesList', () => {
 
     expect(result).to.deep.equal([
       {
-        name: 'Category A',
+        entityUrl: {
+          path: '/resources/disability',
+        },
+        name: 'Disability',
       },
       {
-        name: 'Category B',
+        entity: {
+          entityUrl: {
+            path: '/resources/pension',
+          },
+          name: 'Pension',
+        },
       },
     ]);
   });
