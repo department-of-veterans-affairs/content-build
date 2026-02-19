@@ -1201,12 +1201,10 @@ describe('getOtherCategoriesList', () => {
         name: 'Disability',
       },
       {
-        entity: {
-          entityUrl: {
-            path: '/resources/pension',
-          },
-          name: 'Pension',
+        entityUrl: {
+          path: '/resources/pension',
         },
+        name: 'Pension',
       },
     ]);
   });
