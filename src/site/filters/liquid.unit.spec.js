@@ -1199,12 +1199,14 @@ describe('getOtherCategoriesList', () => {
           path: '/resources/disability',
         },
         name: 'Disability',
+        categoryLabel: 'Resources and Support',
       },
       {
         entityUrl: {
           path: '/resources/pension',
         },
         name: 'Pension',
+        categoryLabel: 'Resources and Support',
       },
     ]);
   });

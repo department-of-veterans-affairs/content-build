@@ -984,7 +984,7 @@ module.exports = function registerFilters() {
   liquid.filters.getOtherCategoriesList = categories => {
     if (!categories) return null;
     return categories.map(category => {
-      return category.entity;
+      return { ...category.entity, categoryLabel: 'Resources and Support' };
     });
   };
 
