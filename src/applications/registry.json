@@ -2238,5 +2238,22 @@
         "subtitle": "mock prefill testing (VA Form FORM_MOCK_PREFILL)"
       }
     }
+  },
+  {
+    "appName": "22-08010 request for reimbursement of national exam fee",
+    "entryName": "0810-edu-benefits",
+    "rootUrl": "/education/0810",
+    "productId": "0bb255ba-56a1-4ca2-8ca3-778a5eccfae5",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "22-08010 request for reimbursement of national exam fee",
+        "subtitle": "request for reimbursement of national exam fee (VA Form 22-0810)"
+      }
+    }
   }
 ]
