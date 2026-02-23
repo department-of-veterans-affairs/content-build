@@ -70,8 +70,8 @@
         </div>
 
         <div class="usa-width-one-third">
-          <button onclick="recordEvent({ event: 'nav-main-vcl' });" class="homepage-button vcl va-overlay-trigger"
-            data-show="#modal-crisisline">
+          <button onclick="recordEvent({ event: 'nav-main-vcl' });document.dispatchEvent(new CustomEvent('vaCrisisLineModalOpen'));" class="homepage-button vcl va-overlay-trigger"
+            >
             <div class="icon-wrapper vcl"></div>
             <div class="button-inner">
               <span>Talk to a Veterans Crisis Line responder now</span>
