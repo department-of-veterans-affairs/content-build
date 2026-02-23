@@ -109,3 +109,5 @@ src/site/assets/js/google-analytics/medallia-events.js @department-of-veterans-a
 src/site/assets/js/medallia/vagovprod.js @department-of-veterans-affairs/veteran-support-team
 src/site/includes/survey-tools.html @department-of-veterans-affairs/veteran-support-team
 
+# Mobile app files
+src/site/assets/.well-known* @department-of-veterans-affairs/flagship-mobile-reviewers
