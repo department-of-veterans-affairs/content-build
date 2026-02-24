@@ -1323,13 +1323,6 @@
   resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/eslint-plugin/-/eslint-plugin-1.1.0.tgz#fcfb3651485aaddb66f1f46f227b670b2adce7da"
   integrity sha512-QLtevzdk7axqtFVVI0NRc9qhbCcSAdgmv/PkQF0kUPNZagKlDImL8acZRK0U74cixKIL1JUSkk8FSi761phL6w==
 
-"@department-of-veterans-affairs/vagov-platform@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/vagov-platform/-/vagov-platform-0.0.1.tgz#a971b3398feb0627297917a9df1fd7d07262412e"
-  integrity sha512-FpMWFknWkRZ5uSv4Qr5cfZ3Ad1uTuYAZkt/FxZbY1IP5/I3p6IrOJ8NTgoS69lUoHsrZ4vZ774d/Obo2OseRLg==
-  dependencies:
-    minimist "^1.2.6"
-
 "@department-of-veterans-affairs/web-components@22.6.2":
   version "22.6.2"
   resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-22.6.2.tgz#f8be59dc56e7ae3876fc49c92d0c915b25f05ba3"
@@ -2189,6 +2182,11 @@
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
+
+"@yarnpkg/lockfile@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz#e77a97fbd345b76d83245edcd17d393b1b41fb31"
+  integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
 JSONStream@^1.3.5:
   version "1.3.5"
@@ -11660,11 +11658,6 @@ tsconfig-paths@^3.11.0:
     json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
-
-tslib@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
-  integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
 tslib@^1.0.0, tslib@^1.9.0, tslib@^1.9.3:
   version "1.14.1"
