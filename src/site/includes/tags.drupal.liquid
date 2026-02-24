@@ -8,13 +8,13 @@
       <ul class="usa-unstyled-list" role="list">
         {% for entity in tags %}
           <li class="vads-u-margin-y--2">
-            <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}" onclick="recordEvent({ 'event': 'nav-page-tag-click', 'page-tag-click-label': '{{ entity.name }}', 'page-tag-category-label': '{{  entity.categoryLabel  }}' });" />
+            <va-link href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}" onclick="recordEvent({ 'event': 'nav-page-tag-click', 'page-tag-click-label': '{{ entity.name }}', 'page-tag-category-label': '{{  entity.categoryLabel  }}' });" />
           </li>
         {% endfor %}
 
         {% for entity in categories %}
           <li class="vads-u-margin-y--2">
-            <va-link active href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}" onclick="recordEvent({ 'event': 'nav-page-tag-click', 'page-tag-click-label': '{{ entity.name }}', 'page-tag-category-label': '{{  entity.categoryLabel  }}' });" />
+            <va-link href="{{ entity.entityUrl.path }}/" text="{{ entity.name }}" onclick="recordEvent({ 'event': 'nav-page-tag-click', 'page-tag-click-label': '{{ entity.name }}', 'page-tag-category-label': '{{  entity.categoryLabel  }}' });" />
           </li>
         {% endfor %}
       </ul>
