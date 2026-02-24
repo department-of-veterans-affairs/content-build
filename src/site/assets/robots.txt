@@ -5,6 +5,10 @@ Allow: /
 User-agent: Synapse
 Disallow: /
 
+# block Amazon's AI training crawler
+User-agent: Amazonbot
+Disallow: /
+
 # existing disallow from vets.gov
 User-Agent: *
 Disallow: /analytics-opt-out.html
