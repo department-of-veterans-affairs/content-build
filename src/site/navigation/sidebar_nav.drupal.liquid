@@ -29,7 +29,6 @@
                 {% assign deepLinks = deepLinksObj.links %}
 
                 {% if depth <= 2 %}
-                    <nav aria-label="Secondary">
                     <ul class="usa-accordion">
                     {% for link in link.links %}
                         <li>
@@ -85,7 +84,6 @@
                         </li>
                     {% endfor %}
                 </ul>
-                </nav>
             {% else %}
                 <div class="sidenav-previous-page">
                     <a href="{{ deepLinks.url.path }}">{{ deepLinks.label }}</a>
