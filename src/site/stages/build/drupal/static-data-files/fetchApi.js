@@ -1,15 +1,16 @@
+const { readFile } = require('fs').promises;
+const { fileURLToPath } = require('url');
 const fetch = require('node-fetch');
 const SocksProxyAgent = require('socks-proxy-agent');
 const syswidecas = require('syswide-cas');
-const { curly } = require('node-libcurl');
 
 const { Response } = fetch;
 
-// Uses fetch to make a request to a non-file URL or uses node-libcurl to make a request to a file URL
+// Uses fetch to make a request to a non-file URL or reads a local file for file: URLs
 // Returns a node-fetch response in all cases
 async function fetchWrapper(url, options) {
   if (url.startsWith('file:')) {
-    const { data } = await curly.get(url);
+    const data = await readFile(fileURLToPath(url));
     return new Response(data, { status: 200, statusText: 'OK', url });
   }
   return fetch(url, options);
