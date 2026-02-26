@@ -115,8 +115,8 @@ const writeProcessedDataFilesToCache = (
 };
 
 // Applies the process function to download the inputs to the DATA_FILE (A DATA_FILE for curl may have multiple inputs)
-const processCurlDataFile = async (dataFile, curlClient) => {
-  const { description, filename, query, postProcess } = dataFile;
+const processCurlDataFile = async (dataFile, curlClient, buildOptions) => {
+  const { description, filename, query: queryConfig, postProcess } = dataFile;
   const baseResult = {
     description,
     filename,
@@ -126,6 +126,14 @@ const processCurlDataFile = async (dataFile, curlClient) => {
     return Promise.resolve({
       ...baseResult,
       error: 'A filename must be provided.',
+    });
+  }
+  const query =
+    typeof queryConfig === 'function' ? queryConfig(buildOptions) : queryConfig;
+  if (!Array.isArray(query)) {
+    return Promise.resolve({
+      ...baseResult,
+      error: 'A query array or query function returning an array is required.',
     });
   }
   const responses = await Promise.all(
@@ -196,7 +204,9 @@ const pullDataFileContentFromCurls = async (
   const curlDataFiles = dataFiles.filter(isQueryTypeCurl);
   const curlClient = getCurlClient(buildOptions);
   return Promise.all(
-    curlDataFiles.map(dataFile => processCurlDataFile(dataFile, curlClient)),
+    curlDataFiles.map(dataFile =>
+      processCurlDataFile(dataFile, curlClient, buildOptions),
+    ),
   );
 };
 
