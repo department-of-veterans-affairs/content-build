@@ -114,7 +114,10 @@ const writeProcessedDataFilesToCache = (
   });
 };
 
-// Applies the process function to download the inputs to the DATA_FILE (A DATA_FILE for curl may have multiple inputs)
+// Applies the process function to download the inputs to the DATA_FILE.
+// For curl DATA_FILEs, `dataFile.query` may be:
+//   - an array of URLs, or
+//   - a function that takes `buildOptions` and returns an array of URLs.
 const processCurlDataFile = async (dataFile, curlClient, buildOptions) => {
   const { description, filename, query: queryConfig, postProcess } = dataFile;
   const baseResult = {
