@@ -2240,24 +2240,24 @@
     }
   },
   {
-  "appName": "form-renderer",
-  "entryName": "form-renderer",
-  "rootUrl": "/my-va/submissions/",
-  "template": {
-    "title": "Copy of Submission",
-    "layout": "page-react.html",
-    "description": "A new application!",
-    "keywords": "not required, but good practice for public apps",
-    "vagovprod": true,
-    "includeBreadcrumbs": false,
-    "minimalFooter": true,
-    "minimalHeader": {
+    "appName": "form-renderer",
+    "entryName": "form-renderer",
+    "rootUrl": "/my-va/submissions/",
+    "template": {
+      "title": "Copy of Submission",
+      "layout": "page-react.html",
+      "description": "A new application!",
+      "keywords": "not required, but good practice for public apps",
+      "vagovprod": true,
+      "includeBreadcrumbs": false,
+      "minimalFooter": true,
+      "minimalHeader": {
         "title": "Add or remove a dependent on VA benefits",
         "subtitle": "VA Form 21-686c"
       }
     }
   },
-   {
+  {
     "appName": "22-0810 request for reimbursement of national exam fee",
     "entryName": "0810-edu-benefits",
     "rootUrl": "/education/0810",
