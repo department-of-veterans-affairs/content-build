@@ -115,15 +115,17 @@ module.exports = function registerFilters() {
       ? 'fieldOutreachMaterialsTopics'
       : 'fieldLcCategories';
     return topics.reduce((topicArray, current) => {
-      current[fieldName].forEach(passedEntity => {
-        if (
-          !topicArray.some(
-            givenEntity => givenEntity.name === passedEntity.entity?.name,
-          )
-        ) {
-          topicArray.push(passedEntity.entity);
-        }
-      });
+      if (Array.isArray(current[fieldName])) {
+        current[fieldName].forEach(passedEntity => {
+          if (
+            !topicArray.some(
+              givenEntity => givenEntity.name === passedEntity.entity?.name,
+            )
+          ) {
+            topicArray.push(passedEntity.entity);
+          }
+        });
+      }
       return topicArray;
     }, []);
   };
