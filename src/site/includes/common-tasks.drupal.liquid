@@ -23,15 +23,10 @@
                 {% for link in searchLinks %}
                   {% if link.url.path and link.label %}
                     <li>
-                      <va-icon
-                        icon="arrow_forward"
-                        class="vads-u-color--link-default vads-u-margin-right--1"
-                        size="3"
-                      ></va-icon>
-                      <va-link
+                      <va-link-action
                         href="{{ link.url.path }}"
-                        text="{{ link.label }}" 
-                      ></va-link>
+                        text="{{ link.label }}"
+                        type="secondary"/>
                     </li>
                   {% endif %}
                 {% endfor %}

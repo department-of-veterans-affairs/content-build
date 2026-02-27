@@ -28,7 +28,7 @@ module.exports = env => {
     buildOptions.destination,
   );
 
-  const entryFiles = Object.assign({}, apps, globalEntryFiles);
+  const entryFiles = { ...apps, ...globalEntryFiles };
   const isOptimizedBuild = [VAGOVSTAGING, VAGOVPROD].includes(buildtype);
 
   return {
@@ -53,7 +53,12 @@ module.exports = env => {
                 },
               },
             },
-            'sass-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                implementation: require('sass'),
+              },
+            },
           ],
         },
         {

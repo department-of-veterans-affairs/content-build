@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
-const libxmljs2 = require('libxmljs2');
+const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 
 const SITEMAP_URL = `http://${process.env.WEB_HOST || 'localhost'}:${process.env
   .WEB_PORT || 3001}/sitemap-cb.xml`;
-const SITEMAP_LOC_NS = 'http://www.sitemaps.org/schemas/sitemap/0.9';
 
 const langs = ['espanol'];
 const langSuffixes = ['-esp/', '-tag/'];
@@ -18,8 +17,11 @@ const filterByLanguage = url => {
   return langs.some(substring => url.includes(substring));
 };
 
-const getUrlsFromXMLDoc = doc => {
-  return doc.find('//xmlns:loc', SITEMAP_LOC_NS).map(n => n.text());
+const getUrlsFromXML = body => {
+  const $ = cheerio.load(body, { xmlMode: true });
+  return $('loc')
+    .map((i, el) => $(el).text())
+    .get();
 };
 
 const parseNonEnglishContent = () => {
@@ -28,13 +30,10 @@ const parseNonEnglishContent = () => {
       return res.text();
     })
     .then(body => {
-      return libxmljs2.parseXmlString(body);
-    })
-
-    .then(doc => {
+      const urls = getUrlsFromXML(body);
       return [
-        ...getUrlsFromXMLDoc(doc).filter(filterByLanguage),
-        ...getUrlsFromXMLDoc(doc).filter(filterByLanguageSuffix),
+        ...urls.filter(filterByLanguage),
+        ...urls.filter(filterByLanguageSuffix),
       ];
     })
     .then(urls => {
