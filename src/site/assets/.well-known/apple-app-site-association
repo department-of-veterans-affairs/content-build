@@ -8,8 +8,8 @@
         ],
         "components": [
           {
-            "/": "/track-claims/your-claim-letters/link/?",
-            "comment": "Matches only the exact path /track-claims/your-claim-letters/link/ without nested paths and sends to the mobile app."
+            "/": "/track-claims/your-claim-letters/link",
+            "comment": "Matches the path /track-claims/your-claim-letters/link and sends to the mobile app."
           }
         ]
       }
