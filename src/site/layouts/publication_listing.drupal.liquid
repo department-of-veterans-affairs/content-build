@@ -86,7 +86,12 @@
               {% assign even = true %}
               {% for entity in outreachAssetsDataArray.entities %}
               {% if entity.fieldListing.targetId == entityId %}
-              {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
+                {% if enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS %}
+                  {% assign topicsString = entity.fieldOutreachMaterialsTopics | buildTopicsString %}
+                {% else %}
+                  {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
+                {% endif %}
+              {% endif %}
               <div data-topic="{{topicsString}}"
                 data-type="{{entity.fieldFormat}}" data-number={{forloop.index}}
                 class="vads-l-col--12
@@ -105,7 +110,11 @@
                 large-screen:vads-l-col--12
                   {{entity.fieldMedia.entity.entityBundle}}-asset-wrap">
                     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
-                    {% assign firstTopicCategory = entity.fieldLcCategories | first %}
+                    {% if enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS %}
+                      {% assign firstTopicCategory = entity.fieldOutreachMaterialsTopics | first %}
+                    {% else %}
+                      {% assign firstTopicCategory = entity.fieldLcCategories | first %}
+                    {% endif %}
                     {% case firstTopicCategory.entity.fieldTopicId %}
                     {% when 'general' %}
                     <img alt="{{entity.title | truncate: 36}}"

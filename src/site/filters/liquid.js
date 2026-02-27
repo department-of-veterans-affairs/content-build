@@ -111,8 +111,11 @@ module.exports = function registerFilters() {
 
   liquid.filters.buildTopicList = topics => {
     if (!topics) return null;
+    const fieldName = cmsFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS
+      ? 'fieldOutreachMaterialsTopics'
+      : 'fieldLcCategories';
     return topics.reduce((topicArray, current) => {
-      current.fieldLcCategories.forEach(passedEntity => {
+      current[fieldName].forEach(passedEntity => {
         if (
           !topicArray.some(
             givenEntity => givenEntity.name === passedEntity.entity?.name,
