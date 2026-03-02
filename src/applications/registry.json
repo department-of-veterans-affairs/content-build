@@ -2246,7 +2246,7 @@
   "template": {
     "title": "Copy of Submission",
     "layout": "page-react.html",
-    "vagovprod": true,
+    "vagovprod": false,
     "includeBreadcrumbs": false,
     "minimalFooter": true,
     "minimalHeader": {
