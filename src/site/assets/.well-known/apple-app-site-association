@@ -6,7 +6,12 @@
           "93B5WX72RE.gov.va.vamobileapp",
           "W2VK9K4NG2.gov.va.vamobileapp"
         ],
-        "components": []
+        "components": [
+          {
+            "/": "/track-claims/your-claim-letters/link",
+            "comment": "Matches the path /track-claims/your-claim-letters/link and sends to the mobile app."
+          }
+        ]
       }
     ]
   },
