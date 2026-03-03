@@ -2237,5 +2237,24 @@
       "vagovprod": false,
       "layout": "page-react.html"
     }
-  }
+  },
+  {
+  "appName": "Apply for automobile or adaptive equipment",
+  "entryName": "21-4502",
+  "rootUrl": "/disability/eligibility/automobile-adaptive-equipment/apply-form-21-4502",
+  "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Apply for automobile or adaptive equipment",
+        "subtitle": "(VA Form 21-4502)"
+      }
+    }
+}
 ]
