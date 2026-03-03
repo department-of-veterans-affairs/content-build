@@ -2208,7 +2208,7 @@
       }
     }
   },
-   {
+  {
     "appName": "22-0810 request for reimbursement of national exam fee",
     "entryName": "0810-edu-benefits",
     "rootUrl": "/education/0810",
@@ -2217,7 +2217,10 @@
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "22-0810 request for reimbursement of national exam fee",
