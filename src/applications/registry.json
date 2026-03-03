@@ -2117,7 +2117,7 @@
     "rootUrl": "/careers-employment/track-your-vre-benefits/vre-benefit-status",
     "productId": "edb97eef-35de-4c46-ac48-ecc5736e62e4",
     "template": {
-      "vagovprod": true,
+      "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false
     }
