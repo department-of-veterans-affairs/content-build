@@ -1769,27 +1769,6 @@
   {
     "appName": "10-10d Extended",
     "entryName": "10-10d-extended",
-    "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-champva-form-10-10d",
-    "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1c",
-    "template": {
-      "vagovprod": true,
-      "layout": "page-react.html",
-      "title": "Apply for CHAMPVA benefits",
-      "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
-      "minimalFooter": true,
-      "minimalHeader": {
-        "title": "Apply for CHAMPVA benefits",
-        "subtitle": "VA Forms 10-10d and 10-7959c"
-      }
-    }
-  },
-  {
-    "appName": "10-10d Extended",
-    "entryName": "10-10d-extended",
     "rootUrl": "/family-and-caregiver-benefits/health-and-disability/champva/apply-form-10-10d",
     "productId": "dee6902f-39e1-44ee-9d3d-4625cb32bb1b",
     "template": {
@@ -2061,7 +2040,7 @@
     "rootUrl": "/disability/eligibility/special-claims/unemployability/apply-unemployability-compensation-form-21-8940",
     "productId": "549889a3-855d-409c-bb8d-bed6bc851c95",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
       "minimalExcludePaths": [
@@ -2129,17 +2108,18 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "careers-employment/",
-          "name": "Careers and employment"
-        },
-        {
-          "path": "careers-employment/your-vre-eligibility",
-          "name": "Your VR&E eligibility and benefits"
-        }
-      ]
+      "includeBreadcrumbs": false
+    }
+  },
+  {
+    "appName": "Track your VR&E benefits",
+    "entryName": "track-your-vre-benefits",
+    "rootUrl": "/careers-employment/track-your-vre-benefits/vre-benefit-status",
+    "productId": "edb97eef-35de-4c46-ac48-ecc5736e62e4",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false
     }
   },
   {
@@ -2228,10 +2208,7 @@
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Mock Form with Prefill",
