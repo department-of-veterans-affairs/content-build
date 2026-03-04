@@ -1170,6 +1170,48 @@ describe('getTagsList', () => {
   });
 });
 
+describe('getOtherCategoriesList', () => {
+  it('returns category entities when passed an array with entity objects', () => {
+    const fieldOtherCategories = [
+      {
+        entity: {
+          entityUrl: {
+            path: '/resources/disability',
+          },
+          name: 'Disability',
+        },
+      },
+      {
+        entity: {
+          entityUrl: {
+            path: '/resources/pension',
+          },
+          name: 'Pension',
+        },
+      },
+    ];
+
+    const result = liquid.filters.getOtherCategoriesList(fieldOtherCategories);
+
+    expect(result).to.deep.equal([
+      {
+        entityUrl: {
+          path: '/resources/disability',
+        },
+        name: 'Disability',
+        categoryLabel: 'Resources and Support',
+      },
+      {
+        entityUrl: {
+          path: '/resources/pension',
+        },
+        name: 'Pension',
+        categoryLabel: 'Resources and Support',
+      },
+    ]);
+  });
+});
+
 describe('replace', () => {
   it('replaces text with other text', () => {
     expect(liquid.filters.replace('<h3>some text</h3>', 'h3', 'h4')).to.equal(

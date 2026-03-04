@@ -10,16 +10,16 @@ There are several repositories that contain the code and content used to build V
 
 Once you have the site set up locally, these are some common commands you might find useful:
 
-| I want to...                        | Then you should...                                                             |
-| ----------------------------------- | ------------------------------------------------------------------------------ |
-| fetch all dependencies              | `yarn install`. Run this any time `package.json` changes                       |
-| build static HTML pages             | `yarn build`                                                                   |
-| run the dev server                  | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server    |
-| watch for template/css changes      | `yarn watch`. Runs the dev server while watching for changes                   |
-| build CSS                           | `yarn build:webpack`. Runs the webpack                                         |
-| watch for CSS changes               | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
-| build in codespaces                 | `yarn build:codespaces`. Build with codespace options                          |
-| watch in codespaces                 | `yarn watch:codespaces`. Watch with codespace options                          |
+| I want to...                   | Then you should...                                                             |
+| ------------------------------ | ------------------------------------------------------------------------------ |
+| fetch all dependencies         | `yarn install-safe`. Run this any time `package.json` changes                  |
+| build static HTML pages        | `yarn build`                                                                   |
+| run the dev server             | `yarn serve`. Uses port 3002, keeping 3001 free for vets-website dev server    |
+| watch for template/css changes | `yarn watch`. Runs the dev server while watching for changes                   |
+| build CSS                      | `yarn build:webpack`. Runs the webpack                                         |
+| watch for CSS changes          | `yarn build:webpack --watch`. Watch CSS for changes without watching templates |
+| build in codespaces            | `yarn build:codespaces`. Build with codespace options                          |
+| watch in codespaces            | `yarn watch:codespaces`. Watch with codespace options                          |
 
 ### Building static content
 
@@ -192,7 +192,7 @@ for doing very specific things.
 | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | build the production site (dev features disabled).                                                          | `NODE_ENV=production yarn build --buildtype vagovprod`                                                                                                                                                                       |
 | fetch the latest content cache from S3                                                                      | `yarn fetch-drupal-cache` (does not require VA Network access)                                                                                                                                                              |
-| reset local environment (clean out node modules and runs npm install)                                       | `yarn reset:env`                                                                                                                                                                                                             |
+| reset local environment                                                                                     | `rm -rf node_modules && yarn install-safe`                                                                                                                                                                                                             |
 | run the site so that devices on your local network can access it                                            | `yarn watch --env.host 0.0.0.0 --env.public 198.162.x.x:3001` Note that we use CORS to limit what hosts can access different APIs, so accessing with a `192.168.x.x` address may run into problems                           |
 | run all unit tests and watch                                                                                | `yarn test:watch`                                                                                                                                                                                                            |
 | run only E2E tests (headless)                                                                               | Make sure the site is running locally (`yarn watch`) and run the tests with `yarn cy:run`                                                                                                                                  |
