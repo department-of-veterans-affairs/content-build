@@ -56,10 +56,12 @@
                 onclick="openLoginModal()"
               ></va-button>
               {% for link in createAccountBlock.fieldRelatedInfoLinks %}
-                <va-link
-                  href="{{ link.url.path }}"
-                  text="{{ link.title }}"
-                ></va-link>
+                <p>
+                  <va-link
+                    href="{{ link.url.path }}"
+                    text="{{ link.title }}"
+                  ></va-link>
+                </p>
               {% endfor %}
             </div>
           </div>
@@ -83,12 +85,14 @@
               <h2 class="vads-u-color--white vads-u-font-size--lg desktop:vads-u-font-size--xl">
                 Access and manage your VA benefits and health care
               </h2>
-              <va-link
-                reverse
-                class="vads-u-display--block vads-u-font-weight--normal"
-                href="/resources/creating-an-account-for-vagov/"
-                text="Learn how an account helps you"
-              ></va-link>
+              <p>
+                <va-link
+                  reverse
+                  class="vads-u-display--block vads-u-font-weight--normal"
+                  href="/resources/creating-an-account-for-vagov/"
+                  text="Learn how an account helps you"
+                ></va-link>
+              </p>
               <script>
               function openLoginModal() {
                 const params = (new URL(document.location)).searchParams;
