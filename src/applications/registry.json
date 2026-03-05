@@ -2217,6 +2217,22 @@
     }
   },
   {
+  "appName": "form-renderer",
+  "entryName": "form-renderer",
+  "rootUrl": "/my-va/submissions/",
+  "template": {
+    "title": "Copy of Submission",
+    "layout": "page-react.html",
+    "vagovprod": false,
+    "includeBreadcrumbs": false,
+    "minimalFooter": true,
+    "minimalHeader": {
+        "title": "Add or remove a dependent on VA benefits",
+        "subtitle": "VA Form 21-686c"
+      }
+    }
+  },
+  {
     "appName": "Request National Exam Fee Reimbursement Online",
     "entryName": "0810-edu-benefits",
     "rootUrl": "/forms/22-0810/request-reimbursement-national-exam-fee",
