@@ -1335,10 +1335,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Request personal records",
@@ -1428,10 +1425,7 @@
       "layout": "page-react.html",
       "title": "Submit other health insurance",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Submit other health insurance",
@@ -1449,10 +1443,7 @@
       "layout": "page-react.html",
       "title": "Register for the Foreign Medical Program (FMP)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Register for the Foreign Medical Program (FMP)",
@@ -1470,10 +1461,7 @@
       "layout": "page-react.html",
       "title": "File a CHAMPVA claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a CHAMPVA claim",
@@ -1489,10 +1477,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1510,10 +1495,7 @@
       "layout": "page-react.html",
       "title": "File a Foreign Medical Program (FMP) claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a Foreign Medical Program (FMP) claim",
@@ -1539,10 +1521,7 @@
       "title": "VA Form 21P-0969",
       "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Pension or DIC Income and Asset Statement",
@@ -1601,10 +1580,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1776,10 +1752,7 @@
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for CHAMPVA benefits",
@@ -2023,10 +1996,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Income Verification for Disability Benefits",
@@ -2043,10 +2013,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for additional compensation based on inability to work",
@@ -2192,7 +2159,7 @@
   {
     "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
     "entryName": "0803-edu-benefits",
-    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees-online",
+    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees",
     "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
     "template": {
       "vagovprod": false,
@@ -2217,16 +2184,16 @@
     }
   },
   {
-  "appName": "form-renderer",
-  "entryName": "form-renderer",
-  "rootUrl": "/my-va/submissions/",
-  "template": {
-    "title": "Copy of Submission",
-    "layout": "page-react.html",
-    "vagovprod": false,
-    "includeBreadcrumbs": false,
-    "minimalFooter": true,
-    "minimalHeader": {
+    "appName": "form-renderer",
+    "entryName": "form-renderer",
+    "rootUrl": "/my-va/submissions/",
+    "template": {
+      "title": "Copy of Submission",
+      "layout": "page-react.html",
+      "vagovprod": false,
+      "includeBreadcrumbs": false,
+      "minimalFooter": true,
+      "minimalHeader": {
         "title": "Add or remove a dependent on VA benefits",
         "subtitle": "VA Form 21-686c"
       }
