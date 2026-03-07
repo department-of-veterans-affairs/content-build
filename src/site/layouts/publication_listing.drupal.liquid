@@ -157,6 +157,7 @@
                       src="/img/hub-illustrations/records.png" />
                     {% endcase %}
                     {% endif %}
+                    {% endif %}
 
                     {% if entity.fieldMedia.entity.entityBundle == 'image' %}
                     {% if entity.fieldMedia.entity.image.url %}
@@ -188,7 +189,7 @@
                   medium-screen:vads-l-col--8
                   medium-body-utility
                   large-screen:vads-l-col--12">
-                    <i>{{firstTopicCategory.entity.name}}</i>
+                    {% if firstTopicCategory %}<i>{{firstTopicCategory.entity.name}}</i>{% endif %}
                     <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">
                       {{entity.title| truncate: 36}}</h2>
                     <div class="asset-body-text">
