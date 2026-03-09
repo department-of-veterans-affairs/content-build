@@ -2192,7 +2192,7 @@
   {
     "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
     "entryName": "0803-edu-benefits",
-    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees-online",
+    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees",
     "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
     "template": {
       "vagovprod": false,
@@ -2239,14 +2239,7 @@
     "productId": "0bb255ba-56a1-4ca2-8ca3-778a5eccfae5",
     "template": {
       "vagovprod": false,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
-      "minimalFooter": true,
-      "minimalHeader": {
-        "title": "Request national exam fee reimbursement online",
-        "subtitle": "Request for Reimbursement of National Exam Fee (VA Form 22-0810)"
-      }
+      "layout": "page-react.html"
     }
   },
   {
