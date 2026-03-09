@@ -1949,7 +1949,7 @@
   {
     "appName": "Submit a state or tribal organization request for interment allowance",
     "entryName": "21p-530a-interment-allowance",
-    "rootUrl": "/submit-state-interment-allowance-form-21p-530a",
+    "rootUrl": "/forms/21p-530a/submit-state-interment-allowance-request",
     "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
     "template": {
       "vagovprod": true,
@@ -1958,7 +1958,7 @@
       "breadcrumbs_override": [
         {
           "name": "Submit a state or tribal organization request for interment allowance",
-          "path": "submit-state-interment-allowance-form-21p-530a"
+          "path": "forms/21p-530a/submit-state-interment-allowance-request"
         }
       ]
     }
