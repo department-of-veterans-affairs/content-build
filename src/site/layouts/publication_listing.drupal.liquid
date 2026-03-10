@@ -108,6 +108,7 @@
                 medium-head-utility
                 large-screen:vads-l-col--12
                   {{entity.fieldMedia.entity.entityBundle}}-asset-wrap">
+                    {% assign firstTopicCategory = nil %}
                     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
                     {% if enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS %}
                       {% assign firstTopicCategory = entity.fieldOutreachMaterialsTopics | first %}

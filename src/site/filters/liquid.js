@@ -111,18 +111,18 @@ module.exports = function registerFilters() {
 
   liquid.filters.buildTopicList = topics => {
     if (!topics) return null;
-    const fieldName = cmsFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS
+    const fieldName = cmsFeatureFlags?.FEATURE_OUTREACH_MATERIALS_TOPICS
       ? 'fieldOutreachMaterialsTopics'
       : 'fieldLcCategories';
     return topics.reduce((topicArray, current) => {
       if (Array.isArray(current[fieldName])) {
         current[fieldName].forEach(passedEntity => {
+          const entity = passedEntity?.entity;
+          if (!entity || !entity.name || !entity.fieldTopicId) return;
           if (
-            !topicArray.some(
-              givenEntity => givenEntity.name === passedEntity.entity?.name,
-            )
+            !topicArray.some(givenEntity => givenEntity.name === entity.name)
           ) {
-            topicArray.push(passedEntity.entity);
+            topicArray.push(entity);
           }
         });
       }
