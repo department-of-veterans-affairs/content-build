@@ -356,6 +356,10 @@ jobs:
 
       - name: Install system dependencies
         run: |
+          # Add Google Chrome GPG key
+          wget -q -O /etc/apt/trusted.gpg.d/google-chrome.asc https://dl.google.com/linux/linux_signing_key.pub
+          # Remove duplicate Microsoft package source lists to avoid apt conflicts
+          find /etc/apt/sources.list.d -name "*microsoft*.list" -type f -delete || true
           apt-get update
           apt-get install -y curl bzip2
 
