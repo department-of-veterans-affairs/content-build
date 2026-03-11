@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 
-require('isomorphic-fetch');
 const Raven = require('raven');
 const commandLineArgs = require('command-line-args');
 const fs = require('fs-extra');
