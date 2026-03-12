@@ -1323,10 +1323,10 @@
   resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/eslint-plugin/-/eslint-plugin-1.1.0.tgz#fcfb3651485aaddb66f1f46f227b670b2adce7da"
   integrity sha512-QLtevzdk7axqtFVVI0NRc9qhbCcSAdgmv/PkQF0kUPNZagKlDImL8acZRK0U74cixKIL1JUSkk8FSi761phL6w==
 
-"@department-of-veterans-affairs/web-components@22.6.2":
-  version "22.6.2"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-22.6.2.tgz#f8be59dc56e7ae3876fc49c92d0c915b25f05ba3"
-  integrity sha512-WCoaHYMoCq0L3czw2wdjENyV1C2uHpSh/Nh/7q4tZ4gO9PBl+IBztTpbRhsryuMupvT0LthdpT5/fH+dUzsHsQ==
+"@department-of-veterans-affairs/web-components@24.0.0":
+  version "24.0.0"
+  resolved "https://registry.npmjs.org/@department-of-veterans-affairs/web-components/-/web-components-24.0.0.tgz#4ca311ac316953876093d4702ed6f2730840005d"
+  integrity sha512-7nbpE9EAmYqQw0RhMXLqqlbPkJNP/H4+mki/asTS0P8S3T8i7g26jNjt4LCQvnVhkI6Pwi8mFEDjjbzaEA0H/Q==
   dependencies:
     "@stencil/core" "4.20.0"
     aria-hidden "1.1.3"
