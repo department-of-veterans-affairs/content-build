@@ -114,7 +114,19 @@ module.exports = function registerFilters() {
     const fieldName = cmsFeatureFlags?.FEATURE_OUTREACH_MATERIALS_TOPICS
       ? 'fieldOutreachMaterialsTopics'
       : 'fieldLcCategories';
-    return topics.reduce((topicArray, current) => {
+    // #region agent log
+    if (!liquid.filters._topicListDebugLogged) {
+      liquid.filters._topicListDebugLogged = true;
+      const _dbgFlag = cmsFeatureFlags?.FEATURE_OUTREACH_MATERIALS_TOPICS;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisA] buildTopicList: FEATURE_OUTREACH_MATERIALS_TOPICS=${JSON.stringify(
+          _dbgFlag,
+        )}, using fieldName=${fieldName}, topicsCount=${topics?.length}`,
+      );
+    }
+    // #endregion
+    const result = topics.reduce((topicArray, current) => {
       if (Array.isArray(current[fieldName])) {
         current[fieldName].forEach(passedEntity => {
           const entity = passedEntity?.entity;
@@ -128,6 +140,20 @@ module.exports = function registerFilters() {
       }
       return topicArray;
     }, []);
+    // #region agent log
+    if (!liquid.filters._topicListResultLogged) {
+      liquid.filters._topicListResultLogged = true;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisB] buildTopicList result: found ${
+          result.length
+        } unique topics via ${fieldName}. Topics: ${JSON.stringify(
+          result.map(t => t.name),
+        )}`,
+      );
+    }
+    // #endregion
+    return result;
   };
 
   liquid.filters.buildTopicsString = topics => {
