@@ -1,0 +1,14 @@
+<!-- Footer Minimal -->
+{% assign exclude_paths = minimalExcludePaths %}
+{% if minimalFooter and minimalFooter.excludePaths %}
+  {% assign exclude_paths = minimalFooter.excludePaths %}
+{% endif %}
+<div
+  id="footer-minimal"
+  class="vads-u-display--none"
+  {% if exclude_paths %}
+    data-exclude-paths="{{ exclude_paths | json | escape }}"
+  {% endif %}
+>
+  <va-minimal-footer></va-minimal-footer>
+</div>
