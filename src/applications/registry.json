@@ -32,17 +32,13 @@
       "spoke": "Get benefits",
       "collection": "pension",
       "order": 3,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "pension/",
-          "name": "Pension benefits"
-        },
-        {
-          "path": "pension/apply-for-veteran-pension-form-21p-527ez",
-          "name": "Apply for Veterans Pension benefits"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Application for Veterans Pension",
+        "subtitle": "(VA Form 21P-527EZ)"
+      }
     }
   },
   {
