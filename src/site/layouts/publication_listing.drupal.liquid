@@ -86,6 +86,7 @@
               {% assign even = true %}
               {% for entity in outreachAssetsDataArray.entities %}
               {% if entity.fieldListing.targetId == entityId %}
+                {%- assign _flagDebug = enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS | debugTemplateFlag: "FEATURE_OUTREACH_MATERIALS_TOPICS" -%}
                 {% if enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS %}
                   {% assign topicsString = entity.fieldOutreachMaterialsTopics | buildTopicsString %}
                 {% else %}

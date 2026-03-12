@@ -161,8 +161,36 @@ module.exports = function registerFilters() {
     const fieldTopicIdArray = topics.map(topic => {
       return topic.entity.fieldTopicId;
     });
+    // #region agent log
+    if (!liquid.filters._topicsStringLogged) {
+      liquid.filters._topicsStringLogged = true;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisE] buildTopicsString first call: topicsLength=${
+          topics.length
+        }, firstEntity=${JSON.stringify(
+          topics[0],
+        )}, result="${fieldTopicIdArray.join(' ')}"`,
+      );
+    }
+    // #endregion
     return fieldTopicIdArray.join(' ');
   };
+
+  // #region agent log
+  liquid.filters.debugTemplateFlag = (value, label) => {
+    if (!liquid.filters._templateFlagLogged) {
+      liquid.filters._templateFlagLogged = true;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisF] Liquid template evaluated: ${label} = ${JSON.stringify(
+          value,
+        )}`,
+      );
+    }
+    return value;
+  };
+  // #endregion
 
   liquid.filters.alphabetizeList = items => {
     return _.orderBy(items, [item => item?.name?.toLowerCase()], ['asc']);
