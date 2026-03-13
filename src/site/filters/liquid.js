@@ -111,18 +111,49 @@ module.exports = function registerFilters() {
 
   liquid.filters.buildTopicList = topics => {
     if (!topics) return null;
-    return topics.reduce((topicArray, current) => {
-      current.fieldLcCategories.forEach(passedEntity => {
-        if (
-          !topicArray.some(
-            givenEntity => givenEntity.name === passedEntity.entity?.name,
-          )
-        ) {
-          topicArray.push(passedEntity.entity);
-        }
-      });
+    const fieldName = cmsFeatureFlags?.FEATURE_OUTREACH_MATERIALS_TOPICS
+      ? 'fieldOutreachMaterialsTopics'
+      : 'fieldLcCategories';
+    // #region agent log
+    if (!liquid.filters._topicListDebugLogged) {
+      liquid.filters._topicListDebugLogged = true;
+      const _dbgFlag = cmsFeatureFlags?.FEATURE_OUTREACH_MATERIALS_TOPICS;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisA] buildTopicList: FEATURE_OUTREACH_MATERIALS_TOPICS=${JSON.stringify(
+          _dbgFlag,
+        )}, using fieldName=${fieldName}, topicsCount=${topics?.length}`,
+      );
+    }
+    // #endregion
+    const result = topics.reduce((topicArray, current) => {
+      if (Array.isArray(current[fieldName])) {
+        current[fieldName].forEach(passedEntity => {
+          const entity = passedEntity?.entity;
+          if (!entity || !entity.name || !entity.fieldTopicId) return;
+          if (
+            !topicArray.some(givenEntity => givenEntity.name === entity.name)
+          ) {
+            topicArray.push(entity);
+          }
+        });
+      }
       return topicArray;
     }, []);
+    // #region agent log
+    if (!liquid.filters._topicListResultLogged) {
+      liquid.filters._topicListResultLogged = true;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisB] buildTopicList result: found ${
+          result.length
+        } unique topics via ${fieldName}. Topics: ${JSON.stringify(
+          result.map(t => t.name),
+        )}`,
+      );
+    }
+    // #endregion
+    return result;
   };
 
   liquid.filters.buildTopicsString = topics => {
@@ -130,8 +161,61 @@ module.exports = function registerFilters() {
     const fieldTopicIdArray = topics.map(topic => {
       return topic.entity.fieldTopicId;
     });
+    // #region agent log
+    if (!liquid.filters._topicsStringLogged) {
+      liquid.filters._topicsStringLogged = true;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisE] buildTopicsString first call: topicsLength=${
+          topics.length
+        }, firstEntity=${JSON.stringify(
+          topics[0],
+        )}, result="${fieldTopicIdArray.join(' ')}"`,
+      );
+    }
+    // #endregion
     return fieldTopicIdArray.join(' ');
   };
+
+  // #region agent log
+  liquid.filters.debugTemplateFlag = value => {
+    if (!liquid.filters._templateFlagLogged) {
+      liquid.filters._templateFlagLogged = true;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisF] enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS in template = ${JSON.stringify(
+          value,
+        )}`,
+      );
+    }
+    return value;
+  };
+
+  liquid.filters.debugEntityMatch = (entities, entityId) => {
+    if (!liquid.filters._entityMatchLogged) {
+      liquid.filters._entityMatchLogged = true;
+      const firstEntity = entities && entities[0];
+      const firstTargetId =
+        firstEntity &&
+        firstEntity.fieldListing &&
+        firstEntity.fieldListing.targetId;
+      const matchCount = entities
+        ? entities.filter(
+            e => e.fieldListing && e.fieldListing.targetId === entityId,
+          ).length
+        : 0;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisG] entityId=${JSON.stringify(
+          entityId,
+        )}, firstEntity.fieldListing.targetId=${JSON.stringify(
+          firstTargetId,
+        )}, matchingEntities=${matchCount}/${entities ? entities.length : 0}`,
+      );
+    }
+    return entities;
+  };
+  // #endregion
 
   liquid.filters.alphabetizeList = items => {
     return _.orderBy(items, [item => item?.name?.toLowerCase()], ['asc']);
