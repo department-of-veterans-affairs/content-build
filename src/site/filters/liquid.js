@@ -190,6 +190,31 @@ module.exports = function registerFilters() {
     }
     return value;
   };
+
+  liquid.filters.debugEntityMatch = (entities, entityId) => {
+    if (!liquid.filters._entityMatchLogged) {
+      liquid.filters._entityMatchLogged = true;
+      const firstEntity = entities && entities[0];
+      const firstTargetId =
+        firstEntity &&
+        firstEntity.fieldListing &&
+        firstEntity.fieldListing.targetId;
+      const matchCount = entities
+        ? entities.filter(
+            e => e.fieldListing && e.fieldListing.targetId === entityId,
+          ).length
+        : 0;
+      // eslint-disable-next-line no-console
+      console.log(
+        `[DEBUG-288164][hypothesisG] entityId=${JSON.stringify(
+          entityId,
+        )}, firstEntity.fieldListing.targetId=${JSON.stringify(
+          firstTargetId,
+        )}, matchingEntities=${matchCount}/${entities ? entities.length : 0}`,
+      );
+    }
+    return entities;
+  };
   // #endregion
 
   liquid.filters.alphabetizeList = items => {
