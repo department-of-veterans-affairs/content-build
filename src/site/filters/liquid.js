@@ -178,12 +178,12 @@ module.exports = function registerFilters() {
   };
 
   // #region agent log
-  liquid.filters.debugTemplateFlag = (value, label) => {
+  liquid.filters.debugTemplateFlag = value => {
     if (!liquid.filters._templateFlagLogged) {
       liquid.filters._templateFlagLogged = true;
       // eslint-disable-next-line no-console
       console.log(
-        `[DEBUG-288164][hypothesisF] Liquid template evaluated: ${label} = ${JSON.stringify(
+        `[DEBUG-288164][hypothesisF] enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS in template = ${JSON.stringify(
           value,
         )}`,
       );
