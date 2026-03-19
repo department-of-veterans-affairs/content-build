@@ -32,17 +32,13 @@
       "spoke": "Get benefits",
       "collection": "pension",
       "order": 3,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "pension/",
-          "name": "Pension benefits"
-        },
-        {
-          "path": "pension/apply-for-veteran-pension-form-21p-527ez",
-          "name": "Apply for Veterans Pension benefits"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Application for Veterans Pension",
+        "subtitle": "(VA Form 21P-527EZ)"
+      }
     }
   },
   {
@@ -177,21 +173,13 @@
       "layout": "page-react.html",
       "description": "Use VA Form 21P-530EZ to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
       "order": 1,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "burials-memorials/",
-          "name": "Burials and memorials"
-        },
-        {
-          "path": "burials-memorials/veterans-burial-allowance",
-          "name": "Veterans burial allowance and transportation benefits"
-        },
-        {
-          "path": "burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
-          "name": "Apply for a Veterans burial allowance and transportation benefits"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Application for burial benefits",
+        "subtitle": "(VA Form 21P-530EZ)"
+      }
     }
   },
   {
@@ -1335,10 +1323,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Request personal records",
@@ -1428,10 +1413,7 @@
       "layout": "page-react.html",
       "title": "Submit other health insurance",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Submit other health insurance",
@@ -1449,10 +1431,7 @@
       "layout": "page-react.html",
       "title": "Register for the Foreign Medical Program (FMP)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Register for the Foreign Medical Program (FMP)",
@@ -1470,10 +1449,7 @@
       "layout": "page-react.html",
       "title": "File a CHAMPVA claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a CHAMPVA claim",
@@ -1489,10 +1465,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1510,10 +1483,7 @@
       "layout": "page-react.html",
       "title": "File a Foreign Medical Program (FMP) claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a Foreign Medical Program (FMP) claim",
@@ -1539,10 +1509,7 @@
       "title": "VA Form 21P-0969",
       "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Pension or DIC Income and Asset Statement",
@@ -1569,7 +1536,7 @@
     "rootUrl": "/education/other-va-education-benefits/ibm-skillsbuild-program/apply-form-22-10282",
     "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1601,10 +1568,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1776,10 +1740,7 @@
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for CHAMPVA benefits",
@@ -1949,7 +1910,7 @@
   {
     "appName": "Submit a state or tribal organization request for interment allowance",
     "entryName": "21p-530a-interment-allowance",
-    "rootUrl": "/submit-state-interment-allowance-form-21p-530a",
+    "rootUrl": "/forms/21p-530a/submit-state-interment-allowance-request",
     "productId": "9fab5bb1-b901-458e-a5fe-ec4242cdc492",
     "template": {
       "vagovprod": true,
@@ -1958,7 +1919,7 @@
       "breadcrumbs_override": [
         {
           "name": "Submit a state or tribal organization request for interment allowance",
-          "path": "submit-state-interment-allowance-form-21p-530a"
+          "path": "forms/21p-530a/submit-state-interment-allowance-request"
         }
       ]
     }
@@ -2023,10 +1984,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Income Verification for Disability Benefits",
@@ -2043,10 +2001,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for additional compensation based on inability to work",
@@ -2179,9 +2134,9 @@
     }
   },
   {
-    "appName": "22-10272 Application for reimbursement of preparatory (prep) course for licensing or a certification test",
+    "appName": "Request Licensing or Certification Test Prep Course Fees Reimbursement Online",
     "entryName": "10272-edu-benefits",
-    "rootUrl": "/forms/22-10272/request-prep-course-reimbursement-online",
+    "rootUrl": "/forms/22-10272/request-prep-course-reimbursement",
     "productId": "97ac427e-8a1d-4d9c-8a2f-83d20b68ab09",
     "template": {
       "vagovprod": false,
@@ -2192,7 +2147,7 @@
   {
     "appName": "22-0803 Request for reimbursement of licensing or certification test fees",
     "entryName": "0803-edu-benefits",
-    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees-online",
+    "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees",
     "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
     "template": {
       "vagovprod": false,
@@ -2217,26 +2172,35 @@
     }
   },
   {
-    "appName": "22-0810 request for reimbursement of national exam fee",
-    "entryName": "0810-edu-benefits",
-    "rootUrl": "/education/0810",
-    "productId": "0bb255ba-56a1-4ca2-8ca3-778a5eccfae5",
-    "template": {
-      "vagovprod": false,
-      "layout": "page-react.html",
-      "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
-      "minimalFooter": true,
-      "minimalHeader": {
-        "title": "22-0810 request for reimbursement of national exam fee",
-        "subtitle": "request for reimbursement of national exam fee (VA Form 22-0810)"
+  "appName": "form-renderer",
+  "entryName": "form-renderer",
+  "rootUrl": "/my-va/submissions/",
+  "template": {
+    "title": "Copy of Submission",
+    "layout": "page-react.html",
+    "vagovprod": false,
+    "includeBreadcrumbs": false,
+    "minimalFooter": true,
+    "minimalHeader": {
+        "title": "Add or remove a dependent on VA benefits",
+        "subtitle": "VA Form 21-686c"
       }
     }
   },
   {
-    "appName": "22-0989 Entitlement restoration",
+    "appName": "Request National Exam Fee Reimbursement Online",
+    "entryName": "0810-edu-benefits",
+    "rootUrl": "/forms/22-0810/request-reimbursement-national-exam-fee",
+    "productId": "0bb255ba-56a1-4ca2-8ca3-778a5eccfae5",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html"
+    }
+  },
+  {
+    "appName": "Request Education Benefit Entitlement Restoration Online",
     "entryName": "0989-edu-benefits",
-    "rootUrl": "/forms/0989",
+    "rootUrl": "/forms/22-0989/request-education-benefit-entitlement-restoration",
     "productId": "27c9d9f9-0d33-424b-bda8-d551742e89a2",
     "template": {
       "vagovprod": false,
