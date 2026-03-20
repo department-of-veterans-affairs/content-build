@@ -2178,9 +2178,6 @@
   "template": {
     "title": "Copy of Submission",
     "layout": "page-react.html",
-    "vagovstaging": true,
-    "vagovdev": true,
-    "localhost": true,
     "includeBreadcrumbs": false,
     "minimalFooter": true,
     "minimalHeader": {
