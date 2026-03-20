@@ -497,7 +497,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed./n<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
+                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed.\n<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
                       }
                     }
                   ]
