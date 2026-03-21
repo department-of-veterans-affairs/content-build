@@ -2176,6 +2176,7 @@
   "entryName": "form-renderer",
   "rootUrl": "/my-va/submissions",
   "template": {
+    "vagovprod": false,
     "title": "Copy of Submission",
     "layout": "page-react.html",
     "includeBreadcrumbs": false,
