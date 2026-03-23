@@ -68,23 +68,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  notify-start-slack:
-    name: Notify Start (Slack)
-    runs-on: [self-hosted, asg]
-    needs: validate-build-status
-    steps:
-      - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stand by, content release for content-build coming up (using ${{ needs.validate-build-status.outputs.TAG }}). <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
   build:
     name: Build
     runs-on: [self-hosted, asg]
@@ -419,23 +402,6 @@ jobs:
           url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/ready
           method: GET
 
-  notify-success-slack:
-    name: Notify Success (Slack)
-    runs-on: [self-hosted, asg]
-    needs:
-      - validate-build-status
-      - deploy
-
-    steps:
-      - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 #
-        continue-on-error: true
-        with:
-          payload: '{"attachments": [{"color": "#2EB67D","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "content release using ${{ needs.validate-build-status.outputs.TAG }} is complete."}}]}]}'
-          channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
   notify-success-datadog:
     name: Notify Success (Datadog)
     runs-on: [self-hosted, asg]
@@ -531,7 +497,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed."
+                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed.\n<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
                       }
                     }
                   ]
