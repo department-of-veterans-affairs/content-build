@@ -2225,5 +2225,25 @@
         "subtitle": "(VA Form 21-4502)"
       }
     }
+  },
+  {
+  "appName": "Apply for Annual Clothing Allowance",
+  "entryName": "10-8678",
+  "rootUrl": "/disability/eligibility/annual-clothing-allowance/apply-form-10-8678",
+  "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Apply for Annual Clothing Allowance",
+        "subtitle": "(VA Form 10-8678)"
+      }
+    }
   }
+
 ]
