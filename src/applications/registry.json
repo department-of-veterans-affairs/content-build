@@ -2200,7 +2200,7 @@
   {
     "appName": "Request Education Benefit Entitlement Restoration Online",
     "entryName": "0989-edu-benefits",
-    "rootUrl": "/forms/22-0989/request-education-benefit-entitlement-restoration",
+    "rootUrl": "/forms/22-0989/request-entitlement-restoration",
     "productId": "27c9d9f9-0d33-424b-bda8-d551742e89a2",
     "template": {
       "vagovprod": false,
