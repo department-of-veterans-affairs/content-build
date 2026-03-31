@@ -2162,6 +2162,17 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
+      "includeBreadcrumbs": true
+    }
+  },
+  {
+    "appName": "Mock Form with Prefill (Minimal Header)",
+    "entryName": "mock-form-prefill-minimal",
+    "rootUrl": "/mock-form-prefill-minimal",
+    "productId": "0290e36a-cd62-47db-ba4a-32af2ee7ae37",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
       "includeBreadcrumbs": false,
       "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
