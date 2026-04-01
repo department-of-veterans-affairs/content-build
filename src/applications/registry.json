@@ -2150,7 +2150,7 @@
     "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees",
     "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
