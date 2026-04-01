@@ -527,7 +527,7 @@
     "entryName": "search",
     "rootUrl": "/search",
     "template": {
-      "title": "Search Results",
+      "title": "Search VA.gov",
       "layout": "page-react.html"
     }
   },
