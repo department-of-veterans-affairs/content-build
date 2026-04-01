@@ -93,7 +93,11 @@ https://github.com/department-of-veterans-affairs/next-build/tree/main/src/compo
               {% assign even = true %}
               {% for entity in outreachAssetsDataArray.entities %}
               {% if entity.fieldListing.targetId == entityId %}
-              {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
+                {% if enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS %}
+                  {% assign topicsString = entity.fieldOutreachMaterialsTopics | buildTopicsString %}
+                {% else %}
+                  {% assign topicsString = entity.fieldLcCategories | buildTopicsString %}
+                {% endif %}
               <div data-topic="{{topicsString}}"
                 data-type="{{entity.fieldFormat}}" data-number={{forloop.index}}
                 class="vads-l-col--12
@@ -111,8 +115,14 @@ https://github.com/department-of-veterans-affairs/next-build/tree/main/src/compo
                 medium-head-utility
                 large-screen:vads-l-col--12
                   {{entity.fieldMedia.entity.entityBundle}}-asset-wrap">
+                    {% assign firstTopicCategory = nil %}
                     {% if entity.fieldMedia.entity.entityBundle == 'document' %}
-                    {% assign firstTopicCategory = entity.fieldLcCategories | first %}
+                    {% if enabledFeatureFlags.FEATURE_OUTREACH_MATERIALS_TOPICS %}
+                      {% assign firstTopicCategory = entity.fieldOutreachMaterialsTopics | first %}
+                    {% else %}
+                      {% assign firstTopicCategory = entity.fieldLcCategories | first %}
+                    {% endif %}
+                    {% if firstTopicCategory %}
                     {% case firstTopicCategory.entity.fieldTopicId %}
                     {% when 'general' %}
                     <img alt="{{entity.title | truncate: 36}}"
@@ -154,6 +164,10 @@ https://github.com/department-of-veterans-affairs/next-build/tree/main/src/compo
                     <img alt="{{entity.title | truncate: 36}}"
                       src="/img/hub-illustrations/records.png" />
                     {% endcase %}
+                    {% else %}
+                    <img alt="{{entity.title | truncate: 36}}"
+                      src="/img/hub-illustrations/records.png" />
+                    {% endif %}
                     {% endif %}
 
                     {% if entity.fieldMedia.entity.entityBundle == 'image' %}
@@ -186,7 +200,7 @@ https://github.com/department-of-veterans-affairs/next-build/tree/main/src/compo
                   medium-screen:vads-l-col--8
                   medium-body-utility
                   large-screen:vads-l-col--12">
-                    <i>{{firstTopicCategory.entity.name}}</i>
+                    {% if firstTopicCategory %}<i>{{firstTopicCategory.entity.name}}</i>{% endif %}
                     <h2 class="vads-u-margin-y--1 vads-u-font-size--lg">
                       {{entity.title| truncate: 36}}</h2>
                     <div class="asset-body-text">
