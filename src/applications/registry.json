@@ -2188,7 +2188,7 @@
   "rootUrl": "/my-va/submissions",
   "template": {
     "vagovprod": false,
-    "title": "Copy of Submission",
+    "title": "Copy of 686c submission",
     "layout": "page-react.html",
     "includeBreadcrumbs": false,
     "minimalFooter": true,
