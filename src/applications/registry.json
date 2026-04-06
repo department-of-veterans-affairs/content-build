@@ -1463,7 +1463,7 @@
     "rootUrl": "/supporting-forms-for-claims/submit-statement-form-21-4138",
     "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
       "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
