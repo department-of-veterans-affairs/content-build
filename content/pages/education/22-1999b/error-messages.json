@@ -1,0 +1,120 @@
+{
+  "fieldValidation": {
+    "facilityCode": {
+      "required": "Enter your VA facility code",
+      "pattern": "Enter a valid 8-character facility code",
+      "invalid": "We can't find this facility code. Check the code and try again."
+    },
+    "schoolName": {
+      "required": "School name is required",
+      "maxLength": "School name must be 100 characters or less"
+    },
+    "scoName": {
+      "required": "Enter the School Certifying Official's name",
+      "pattern": "Name can only include letters, spaces, apostrophes, and hyphens",
+      "maxLength": "Name must be 50 characters or less"
+    },
+    "scoTitle": {
+      "required": "Enter your title",
+      "maxLength": "Title must be 50 characters or less"
+    },
+    "studentFirstName": {
+      "required": "Enter the student's first name",
+      "pattern": "First name can only include letters, spaces, apostrophes, and hyphens",
+      "maxLength": "First name must be 35 characters or less"
+    },
+    "studentLastName": {
+      "required": "Enter the student's last name",
+      "pattern": "Last name can only include letters, spaces, apostrophes, and hyphens",
+      "maxLength": "Last name must be 35 characters or less"
+    },
+    "ssn": {
+      "required": "Enter the student's Social Security number",
+      "pattern": "Enter a valid 9-digit Social Security number"
+    },
+    "dateOfBirth": {
+      "required": "Enter the student's date of birth",
+      "invalidDate": "Enter a valid date of birth",
+      "futureDate": "Date of birth can't be in the future",
+      "unreasonableDate": "Enter a reasonable date of birth"
+    },
+    "programName": {
+      "required": "Enter the program of study or course name",
+      "maxLength": "Program name must be 100 characters or less"
+    },
+    "termBeginDate": {
+      "required": "Enter the term begin date",
+      "invalidDate": "Enter a valid term begin date",
+      "unreasonableDate": "Term begin date must be within one year"
+    },
+    "termEndDate": {
+      "required": "Enter the term end date",
+      "invalidDate": "Enter a valid term end date",
+      "beforeBeginDate": "Term end date must be after the begin date"
+    },
+    "creditHours": {
+      "required": "Enter the number of credit hours",
+      "min": "Credit hours must be at least 0.5",
+      "max": "Credit hours can't be more than 30",
+      "pattern": "Enter credit hours as a number (decimals allowed)"
+    },
+    "trainingHours": {
+      "required": "Enter training hours per week",
+      "min": "Training hours must be at least 1",
+      "max": "Training hours can't be more than 40",
+      "pattern": "Enter training hours as a whole number"
+    },
+    "enrollmentStatus": {
+      "required": "Select the student's enrollment status"
+    },
+    "programType": {
+      "required": "Select the type of training program"
+    },
+    "trainingLocation": {
+      "required": "Select where the training takes place"
+    },
+    "zipCode": {
+      "required": "Enter the ZIP code of the training location",
+      "pattern": "Enter a valid 5-digit ZIP code"
+    },
+    "changeType": {
+      "required": "Select the type of change"
+    },
+    "effectiveDate": {
+      "required": "Enter the effective date of the change",
+      "invalidDate": "Enter a valid effective date"
+    },
+    "changeReason": {
+      "required": "Enter the reason for the change or withdrawal",
+      "maxLength": "Reason must be 500 characters or less"
+    },
+    "certificationAttestation": {
+      "required": "You must certify that the information is true and correct"
+    }
+  },
+  "crossFieldValidation": {
+    "termDates": "Term end date must be after the begin date",
+    "effectiveDateRange": "Effective date must be within the term dates",
+    "creditHoursStatus": "Credit hours don't match the selected enrollment status",
+    "trainingHoursStatus": "Training hours don't match the selected enrollment status"
+  },
+  "submission": {
+    "networkError": "We're sorry. Something went wrong when we tried to submit your form. Please try again in a few minutes.",
+    "validationError": "We found some problems with your form. Please review and fix the highlighted fields.",
+    "serverError": "We're sorry. We're having technical difficulties right now. Please try submitting your form again in a few minutes.",
+    "duplicateSubmission": "This enrollment certification has already been submitted. If you need to make changes, submit a new form and select 'Enrollment change.'",
+    "unauthorizedFacility": "You're not authorized to submit certifications for this facility. Contact your Education Liaison Representative for help.",
+    "maintenanceMode": "The enrollment certification system is temporarily unavailable for maintenance. Please try again later or submit a paper form if urgent."
+  },
+  "saveInProgress": {
+    "saveError": "We couldn't save your form right now. Please try again.",
+    "loadError": "We couldn't load your saved form. Please start over or contact support if this problem continues.",
+    "expiredForm": "Your saved form has expired. Please start a new form."
+  },
+  "fileUpload": {
+    "fileSize": "File must be smaller than 25MB",
+    "fileType": "File must be a PDF, JPG, or PNG",
+    "uploadFailed": "We couldn't upload your file. Please try again.",
+    "virusScan": "We couldn't upload your file because it may contain a virus. Please scan your file and try again."
+  }
+}
