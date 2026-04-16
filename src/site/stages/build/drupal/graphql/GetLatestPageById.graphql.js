@@ -2,7 +2,7 @@
 const bioPage = require('./bioPage.graphql');
 const faqMultipleQa = require('./faqMultipleQa.graphql');
 const healthCareLocalFacilityPage = require('./healthCareLocalFacilityPage.graphql');
-const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
+// const healthCareRegionDetailPage = require('./healthCareRegionDetailPage.graphql');
 const healthCareRegionPage = require('./healthCareRegionPage.graphql');
 const landingPage = require('./landingPage.graphql');
 const leadershipListingPage = require('./leadershipListingPage.graphql');
@@ -45,7 +45,6 @@ module.exports = `
   ${page.fragment}
   ${healthCareRegionPage.fragment}
   ${healthCareLocalFacilityPage.fragment}
-  ${healthCareRegionDetailPage.fragment}
   ${pressReleasePage.fragment}
   ${pressReleasesListingPage.fragment}
   ${storyListingPage.fragment}
@@ -81,7 +80,6 @@ module.exports = `
         ... page
         ... healthCareRegionPage
         ... healthCareLocalFacilityPage
-        ... healthCareRegionDetailPage
         ... storyListingPage
         ... newsStoryPage
         ... pressReleasePage

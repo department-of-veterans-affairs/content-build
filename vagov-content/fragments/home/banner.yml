@@ -1,0 +1,26 @@
+# ---------------------
+# Banner properties
+# ---------------------
+# visible: if set to true, the banner will become visible on the homepage.
+# type: One of the following - info, success, warning, error
+# title: The title of the banner that will be visible to the user
+# content: The actual content of the banner. Because of the format of .yml files, this should start and end with a "|" so that you can write on multiple lines.
+#
+# ---------------------
+# Example banner
+# ---------------------
+# visible: false
+# type: warning
+# title: Some VA.gov tools and features may not be working as expected
+# content: |
+#     We’re sorry. We’re working to fix some problems with DS Logon right now.
+#     Please check back later or call MyVA311 for help: <a href="tel:18446982311">1-844-698-2311</a>.
+#     If you have hearing loss, call TTY: 711.
+#
+
+visible: true
+type: warning
+title: VA facility and status updates
+
+content: |
+   <p><strong>Natural disaster affecting your area:</strong> Use the <a href="https://www.va.gov/find-locations">Find VA locations tool</a> to check the status and operating hours of your local VA facility.</p> <p><strong>Coronavirus information:</strong> To get the latest updates and sign up to stay informed about COVID-19 vaccines, visit our <a href="https://www.va.gov/health-care/covid-19-vaccine/">vaccine information page</a>. For questions about how COVID-19 may affect your VA health care and benefit services, visit our coronavirus <a href="https://www.va.gov/coronavirus-veteran-frequently-asked-questions/">FAQs</a> or read <a href="https://www.publichealth.va.gov/n-coronavirus/">VA’s public health response</a>.</p>

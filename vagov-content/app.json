@@ -1,0 +1,17 @@
+{
+  "name": "vagov-content",
+  "scripts": {
+  },
+  "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+  ]
+}
