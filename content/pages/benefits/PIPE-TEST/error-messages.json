@@ -1,0 +1,51 @@
+{
+  "formVerificationNotice": {
+    "title": "Form verification required",
+    "message": "VA Form PIPE-TEST does not exist in official VA form inventory. Please verify the correct form designation before proceeding with development."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "phone": "Enter a valid phone number",
+    "ssn": "Enter a valid 9-digit Social Security number",
+    "date": "Enter a valid date",
+    "zip": "Enter a valid ZIP code",
+    "generic": "Please check your entry and try again"
+  },
+  "submission": {
+    "blocked": "Form submission is not available. Form verification required.",
+    "serverError": "We're sorry. Something went wrong on our end. Please try again.",
+    "networkError": "We're having trouble connecting to VA.gov. Check your internet connection and try again.",
+    "timeout": "Your request timed out. Please try again.",
+    "maintenance": "VA.gov is currently under maintenance. Please try again later."
+  },
+  "saveInProgress": {
+    "saveError": "We couldn't save your form. Please try again.",
+    "loadError": "We couldn't load your saved form. Please try again.",
+    "expired": "Your saved form has expired. Please start a new application.",
+    "notFound": "We couldn't find your saved form. Please start a new application."
+  },
+  "eligibility": {
+    "notEligible": "Based on your answers, you may not be eligible for this benefit. Please call 800-827-1000 to speak with a representative.",
+    "incomplete": "Please answer all eligibility questions to continue."
+  },
+  "fileUpload": {
+    "sizeTooLarge": "Your file is too large. Please choose a file that's smaller than 25MB.",
+    "wrongType": "Please choose a PDF, JPEG, or PNG file.",
+    "virusDetected": "We detected a problem with your file. Please try uploading a different file.",
+    "uploadFailed": "Your file didn't upload. Please try again."
+  },
+  "authentication": {
+    "sessionExpired": "Your session has expired. Please sign in again to continue.",
+    "signInRequired": "Please sign in to save your progress and submit your form.",
+    "verificationRequired": "Please verify your identity to continue."
+  },
+  "prefill": {
+    "loadError": "We couldn't load your information from your VA.gov profile. You can continue filling out the form manually.",
+    "updateProfile": "Some of your information may be out of date. You can update it in your VA.gov profile."
+  },
+  "review": {
+    "missingData": "Please go back and complete all required sections before submitting.",
+    "certificationRequired": "Please certify that your information is correct by checking the box below."
+  }
+}
