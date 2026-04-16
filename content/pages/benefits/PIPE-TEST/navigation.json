@@ -1,0 +1,67 @@
+{
+  "name": "PIPE-TEST Benefits",
+  "sections": [
+    {
+      "name": "Get benefits",
+      "items": [
+        {
+          "label": "Apply for PIPE-TEST benefits",
+          "href": "/benefits/PIPE-TEST/",
+          "description": "Form verification required - not yet available"
+        },
+        {
+          "label": "Check your claim status",
+          "href": "/track-claims/",
+          "description": "Track the status of your VA claims and appeals"
+        }
+      ]
+    },
+    {
+      "name": "Get help",
+      "items": [
+        {
+          "label": "Help with Form PIPE-TEST",
+          "href": "/benefits/PIPE-TEST/help/",
+          "description": "Get help completing your application"
+        },
+        {
+          "label": "Contact us",
+          "href": "/contact-us/",
+          "description": "Find phone numbers and other ways to contact VA"
+        },
+        {
+          "label": "Find a VA location",
+          "href": "/find-locations/",
+          "description": "Find VA medical centers, regional offices, and cemeteries"
+        }
+      ]
+    },
+    {
+      "name": "Related information",
+      "items": [
+        {
+          "label": "All VA forms",
+          "href": "/find-forms/",
+          "description": "Search for a VA form"
+        },
+        {
+          "label": "VA benefits overview",
+          "href": "/benefits/",
+          "description": "Learn about VA benefits and how to apply"
+        },
+        {
+          "label": "Helpful phone numbers",
+          "href": "/resources/helpful-va-phone-numbers/",
+          "description": "Find phone numbers for VA benefits and services"
+        }
+      ]
+    }
+  ],
+  "crossLinks": [
+    {
+      "title": "Form verification required",
+      "url": "#",
+      "description": "This form does not exist in official VA inventory"
+    }
+  ]
+}
