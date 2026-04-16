@@ -1,0 +1,72 @@
+{
+  "section": "education",
+  "subsection": "22-1999b",
+  "title": "Enrollment Certification",
+  "links": [
+    {
+      "text": "How to apply",
+      "url": "/education/apply-for-benefits/22-1999b/introduction",
+      "description": "Start your enrollment certification"
+    },
+    {
+      "text": "Get help with your form",
+      "url": "/education/apply-for-benefits/22-1999b/help",
+      "description": "Common questions and contact information"
+    },
+    {
+      "text": "School Certifying Officials",
+      "url": "/education/school-certifying-officials/",
+      "description": "Resources and tools for SCOs"
+    }
+  ],
+  "relatedLinks": [
+    {
+      "text": "Find your Education Liaison Representative",
+      "url": "/education/school-certifying-officials/liaison-representatives/",
+      "description": "Contact your regional education representative"
+    },
+    {
+      "text": "Download school reports",
+      "url": "/education/download-school-reports/",
+      "description": "Access enrollment and payment reports"
+    },
+    {
+      "text": "VA education forms",
+      "url": "/find-forms/?q=education",
+      "description": "Find other VA education forms"
+    },
+    {
+      "text": "Contact us",
+      "url": "/education/contact-us/",
+      "description": "Get help with education benefits"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "text": "Home",
+      "url": "/"
+    },
+    {
+      "text": "Education and training",
+      "url": "/education/"
+    },
+    {
+      "text": "School Certifying Officials",
+      "url": "/education/school-certifying-officials/"
+    },
+    {
+      "text": "Enrollment Certification (22-1999b)",
+      "url": "/education/apply-for-benefits/22-1999b/"
+    }
+  ],
+  "hubLinks": [
+    {
+      "text": "Eligibility",
+      "url": "/education/eligibility/"
+    },
+    {
+      "text": "How to apply",
+      "url": "/education/how-to-apply/"
+    }
+  ]
+}
