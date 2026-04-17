@@ -94,12 +94,6 @@ jobs:
         run: echo BUILD_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
 
-      - name: Checkout vagov-content
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
-
       - name: Checkout content-build
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:

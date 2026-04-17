@@ -66,5 +66,3 @@ WORKDIR /application/content-build
 RUN yarn install-safe --frozen-lockfile --production=false
 
 FROM installer as builder
-
-RUN git clone --depth 1 https://github.com/department-of-veterans-affairs/vagov-content.git /application/vagov-content
