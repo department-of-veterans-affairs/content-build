@@ -2187,7 +2187,7 @@
   "entryName": "form-renderer",
   "rootUrl": "/my-va/submissions",
   "template": {
-    "vagovprod": false,
+    "vagovprod": true,
     "title": "Copy of 686c submission",
     "layout": "page-react.html",
     "includeBreadcrumbs": false,
