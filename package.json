@@ -200,7 +200,8 @@
     "tar": "^6.1.9",
     "webpack": "^5.104.1",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-dev-server": "^4.2.1",
+    "winston": "^3.19.0"
   },
   "optionalDependencies": {},
   "engines": {
