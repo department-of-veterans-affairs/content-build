@@ -7,6 +7,11 @@ const bucketsContent = require('../../../../constants/buckets-content');
 
 const FILE_MANIFEST_FILENAME = 'generated/file-manifest.json';
 
+// Entry names that are optional and should be removed from the DOM if not found
+// in the manifest, rather than throwing an error. This allows content-build to
+// deploy before vets-website when new entries are added.
+const OPTIONAL_ENTRY_NAMES = ['runtime.js'];
+
 function copyAssetsToTeamSitePaths(buildOptions, files, entryNamesDictionary) {
   // TeamSite pages such as "benefits.va.gov" have hardcoded references to certain
   // JavaScript bundles so that we can inject our header/footer into pages outside
@@ -118,10 +123,18 @@ module.exports = {
       const attribute = $el.is('script') ? 'src' : 'href';
       const timestamp = new Date().getTime();
 
+      // Check if this is an optional entry that can be skipped if not found
+      const isOptionalEntry = OPTIONAL_ENTRY_NAMES.includes(entryName);
+
       // Derive the hashed entry name.
       const hashedEntryName = this.entryNamesDictionary.get(entryName) || [];
 
       if (hashedEntryName.length <= 0) {
+        // If it's an optional entry, remove it from the DOM silently
+        if (isOptionalEntry) {
+          $el.remove();
+          file.modified = true;
+        }
         return;
       }
 
@@ -144,6 +157,12 @@ module.exports = {
         hashedEntryName !== '/generated/newForm.css' &&
         hashedEntryName !== '/generated/newForm.entry.js'
       ) {
+        // If it's an optional entry, remove it from the DOM instead of throwing
+        if (isOptionalEntry) {
+          $el.remove();
+          file.modified = true;
+          return;
+        }
         throw new Error(`Entry Name "${s3Search}" was not found.`);
       }
 
