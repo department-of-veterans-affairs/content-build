@@ -410,8 +410,9 @@ jobs:
       # vulnerable to teardown between steps on some runners, which surfaces as
       # ECONNREFUSED to 127.0.0.1:3002 during cy.visit (unrelated to IPv6/localhost DNS).
       - name: Run Cypress tests
+        # Container image defaults to `sh` (dash), which does not support `set -o pipefail`.
+        shell: bash
         run: |
-          set -euo pipefail
           node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
           timeout 60 bash -c 'until curl -sf http://127.0.0.1:3002 > /dev/null 2>&1; do sleep 1; done'
           echo "Server is ready"
