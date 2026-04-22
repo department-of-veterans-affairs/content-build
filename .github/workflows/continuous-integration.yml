@@ -405,16 +405,17 @@ jobs:
             /github/home/.cache/Cypress
             node_modules
 
-      - name: Start server
-        run: node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
-
-      - name: Wait for server
-        run: |
-          timeout 30 bash -c 'until curl -sf http://127.0.0.1:3002 > /dev/null 2>&1; do sleep 1; done'
-          echo "Server is ready"
-
+      # Run the static server in the same shell session as Cypress. Starting the
+      # server in a prior step and backgrounding with `&` can leave the process
+      # vulnerable to teardown between steps on some runners, which surfaces as
+      # ECONNREFUSED to 127.0.0.1:3002 during cy.visit (unrelated to IPv6/localhost DNS).
       - name: Run Cypress tests
-        run: yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
+        run: |
+          set -euo pipefail
+          node src/platform/testing/e2e/test-server.js --buildtype vagovprod --port=3002 &
+          timeout 60 bash -c 'until curl -sf http://127.0.0.1:3002 > /dev/null 2>&1; do sleep 1; done'
+          echo "Server is ready"
+          yarn cy:run --reporter cypress-multi-reporters --reporter-options "configFile=config/cypress-reporters.json" --env buildtype=vagovprod
 
       - name: Publish test results
         if: ${{ always() }}
