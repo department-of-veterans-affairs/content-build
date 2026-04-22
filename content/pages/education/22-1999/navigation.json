@@ -1,0 +1,257 @@
+// content/pages/education/22-1999/navigation.json
+{
+  "_comment": "Sidebar navigation configuration for VA Form 22-1999 (Enrollment Certification) section",
+  "_formNumber": "22-1999",
+  "_section": "education",
+
+  "sidebarNav": {
+    "title": "VA Form 22-1999 — Enrollment Certification",
+    "rootPath": "/education/22-1999",
+    "items": [
+      {
+        "label": "Introduction",
+        "href": "/education/22-1999/introduction",
+        "order": 1,
+        "isLandingPage": true,
+        "description": "Learn what the form is for, who should use it, and what information you need before you start."
+      },
+      {
+        "label": "Start your certification",
+        "href": "/education/22-1999/sco-authorization",
+        "order": 2,
+        "isFormStart": true,
+        "requiresAuth": true,
+        "description": "Sign in and begin your enrollment certification."
+      },
+      {
+        "label": "Help and FAQs",
+        "href": "/education/22-1999/help",
+        "order": 3,
+        "description": "Get answers to common questions and find contact information for support."
+      }
+    ]
+  },
+
+  "breadcrumbs": {
+    "home": {
+      "label": "Home",
+      "href": "/"
+    },
+    "education": {
+      "label": "Education and training",
+      "href": "/education/"
+    },
+    "schoolAdministrators": {
+      "label": "School administrators",
+      "href": "/school-administrators/"
+    },
+    "form22-1999": {
+      "label": "Submit an Enrollment Certification (VA Form 22-1999)",
+      "href": "/education/22-1999/introduction"
+    }
+  },
+
+  "formSteps": [
+    {
+      "stepNumber": 1,
+      "stepLabel": "Your authorization",
+      "slug": "sco-authorization",
+      "href": "/education/22-1999/sco-authorization",
+      "shortTitle": "Authorization",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 2,
+      "stepLabel": "Certification type",
+      "slug": "certification-type",
+      "href": "/education/22-1999/certification-type",
+      "shortTitle": "Cert type",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 3,
+      "stepLabel": "Institution information",
+      "slug": "institution-information",
+      "href": "/education/22-1999/institution-information",
+      "shortTitle": "Institution",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 4,
+      "stepLabel": "Student information",
+      "slug": "student-identification",
+      "href": "/education/22-1999/student-identification",
+      "shortTitle": "Student",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 5,
+      "stepLabel": "GI Bill chapter",
+      "slug": "benefit-chapter",
+      "href": "/education/22-1999/benefit-chapter",
+      "shortTitle": "Chapter",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 6,
+      "stepLabel": "Enrollment period",
+      "slug": "enrollment-period",
+      "href": "/education/22-1999/enrollment-period",
+      "shortTitle": "Enrollment",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 7,
+      "stepLabel": "Program information",
+      "slug": "program-information",
+      "href": "/education/22-1999/program-information",
+      "shortTitle": "Program",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 8,
+      "stepLabel": "Credit hours and training time",
+      "slug": "credit-hours-training-time",
+      "href": "/education/22-1999/credit-hours-training-time",
+      "shortTitle": "Hours",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 9,
+      "stepLabel": "Tuition and fees",
+      "slug": "tuition-fees",
+      "href": "/education/22-1999/tuition-fees",
+      "shortTitle": "Tuition",
+      "requiresAuth": true,
+      "visibleInProgressBar": true,
+      "conditionalDisplay": {
+        "showWhen": "chapter === '33'"
+      }
+    },
+    {
+      "stepNumber": 10,
+      "stepLabel": "Yellow Ribbon",
+      "slug": "yellow-ribbon",
+      "href": "/education/22-1999/yellow-ribbon",
+      "shortTitle": "Yellow Ribbon",
+      "requiresAuth": true,
+      "visibleInProgressBar": true,
+      "conditionalDisplay": {
+        "showWhen": "chapter === '33' && yellowRibbonOnFile === true && (institutionType === 'private' || nonResident === true)"
+      }
+    },
+    {
+      "stepNumber": 11,
+      "stepLabel": "Changes to prior certification",
+      "slug": "prior-certification-changes",
+      "href": "/education/22-1999/prior-certification-changes",
+      "shortTitle": "Changes",
+      "requiresAuth": true,
+      "visibleInProgressBar": true,
+      "conditionalDisplay": {
+        "showWhen": "certificationType === 'amended'"
+      }
+    },
+    {
+      "stepNumber": 12,
+      "stepLabel": "Termination information",
+      "slug": "termination-information",
+      "href": "/education/22-1999/termination-information",
+      "shortTitle": "Termination",
+      "requiresAuth": true,
+      "visibleInProgressBar": true,
+      "conditionalDisplay": {
+        "showWhen": "certificationType === 'termination'"
+      }
+    },
+    {
+      "stepNumber": 13,
+      "stepLabel": "Certifying official",
+      "slug": "sco-certification",
+      "href": "/education/22-1999/sco-certification",
+      "shortTitle": "Your info",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 14,
+      "stepLabel": "Review and submit",
+      "slug": "review-and-submit",
+      "href": "/education/22-1999/review-and-submit",
+      "shortTitle": "Review",
+      "requiresAuth": true,
+      "visibleInProgressBar": true
+    },
+    {
+      "stepNumber": 15,
+      "stepLabel": "Confirmation",
+      "slug": "confirmation",
+      "href": "/education/22-1999/confirmation",
+      "shortTitle": "Confirmation",
+      "requiresAuth": true,
+      "visibleInProgressBar": false,
+      "isConfirmationPage": true
+    }
+  ],
+
+  "relatedLinksPanel": {
+    "title": "Related resources",
+    "links": [
+      {
+        "label": "Help and FAQs for VA Form 22-1999",
+        "href": "/education/22-1999/help"
+      },
+      {
+        "label": "SCO Handbook (PDF)",
+        "href": "https://www.benefits.va.gov/gibill/docs/job_aids/SCO_Handbook.pdf",
+        "isExternal": true
+      },
+      {
+        "label": "VA-ONCE portal",
+        "href": "https://vaonce.vba.va.gov/",
+        "isExternal": true
+      },
+      {
+        "label": "GI Bill School Locator",
+        "href": "https://www.benefits.va.gov/gibill/gi_bill_comparison_tool.asp",
+        "isExternal": true
+      },
+      {
+        "label": "Post-9/11 GI Bill (Chapter 33) overview",
+        "href": "/education/about-gi-bill-benefits/post-9-11/"
+      },
+      {
+        "label": "Yellow Ribbon Program",
+        "href": "/education/about-gi-bill-benefits/post-9-11/yellow-ribbon-program/"
+      },
+      {
+        "label": "VA Form 22-1999b — OJT and apprenticeship certification",
+        "href": "https://www.vba.va.gov/pubs/forms/VBA-22-1999b-ARE.pdf",
+        "isExternal": true
+      }
+    ]
+  },
+
+  "contactPanel": {
+    "title": "Need help?",
+    "phone": {
+      "number": "1-888-442-4551",
+      "label": "1-888-GI-BILL-1",
+      "tty": "711",
+      "hours": "Monday through Friday, 8:00 a.m. to 7:00 p.m. ET"
+    },
+    "chat": {
+      "label": "Chat with us online",
+      "href": "#chat",
+      "hours": "Monday through Friday, 8:00 a.m. to 7:00 p.m. ET"
+    }
+  }
+}
