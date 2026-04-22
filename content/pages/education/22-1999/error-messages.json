@@ -1,0 +1,229 @@
+// content/pages/education/22-1999/error-messages.json
+{
+  "_comment": "VA Form 22-1999 — Enrollment Certification error message strings",
+  "_formNumber": "22-1999",
+  "_lastUpdated": "2024-01-01",
+
+  "fieldValidation": {
+
+    "scoAuthorization": {
+      "attestationRequired": "You must confirm your authorization as a School Certifying Official to continue.",
+      "userIdRequired": "Enter your VA-assigned SCO User ID.",
+      "userIdInvalid": "Enter a valid VA-assigned SCO User ID. If you do not know your User ID, contact your Regional Processing Office.",
+      "institutionNotFound": "We couldn't find an institution linked to your account. Make sure you are signed in with the correct account, or contact your Regional Processing Office for help."
+    },
+
+    "certificationType": {
+      "required": "Select the type of certification you are submitting."
+    },
+
+    "institutionInformation": {
+      "facilityCodeRequired": "Enter your institution's 8-digit VA Facility Code.",
+      "facilityCodePattern": "Enter a valid 8-digit VA Facility Code. The code should contain only numbers, with no letters, spaces, or dashes.",
+      "facilityCodeNotFound": "This facility code is not in VA's approved facility list. Check the code and try again. If you believe this is an error, contact your State Approving Agency (SAA) or Regional Processing Office.",
+      "institutionNameRequired": "Enter your institution's name.",
+      "addressLine1Required": "Enter the street address for your institution.",
+      "cityRequired": "Enter the city where your institution is located.",
+      "stateRequired": "Select the state where your institution is located.",
+      "zipCodeRequired": "Enter the ZIP code for your institution.",
+      "zipCodePattern": "Enter a valid 5-digit ZIP code.",
+      "institutionTypeRequired": "Select the type of institution.",
+      "yellowRibbonRequired": "Select whether your institution has a Yellow Ribbon Agreement on file with VA."
+    },
+
+    "studentIdentification": {
+      "identifierTypeRequired": "Select whether you are entering a Social Security Number or a VA file number.",
+      "ssnRequired": "Enter the student's Social Security Number.",
+      "ssnPattern": "Enter a valid 9-digit Social Security Number. Do not include dashes or spaces.",
+      "ssnInvalid": "The Social Security Number you entered doesn't match VA's records for this student. Check the number and try again.",
+      "vaFileNumberRequired": "Enter the student's VA file number.",
+      "vaFileNumberPattern": "Enter a valid VA file number. VA file numbers contain letters and numbers.",
+      "firstNameRequired": "Enter the student's first name.",
+      "firstNameMaxLength": "The student's first name cannot be longer than 30 characters.",
+      "lastNameRequired": "Enter the student's last name.",
+      "lastNameMaxLength": "The student's last name cannot be longer than 30 characters.",
+      "dobRequired": "Enter the student's date of birth.",
+      "dobInvalid": "Enter a valid date of birth in month, day, year format.",
+      "dobFuture": "The student's date of birth cannot be in the future.",
+      "dobTooOld": "Check the date of birth you entered. It appears to be more than 100 years ago.",
+      "emailInvalid": "Enter a valid email address, like student@example.com. This field is optional."
+    },
+
+    "benefitChapter": {
+      "chapterRequired": "Select the GI Bill chapter under which you are certifying this student.",
+      "chapterNotAvailable": "Digital certification for this chapter is not yet available. Use VA-ONCE or the paper VA Form 22-1999 to certify this student.",
+      "activeDutyRequired": "Select whether this student is currently on active duty."
+    },
+
+    "enrollmentPeriod": {
+      "beginDateRequired": "Enter the training period begin date.",
+      "beginDateInvalid": "Enter a valid training period begin date in month, day, year format.",
+      "endDateRequired": "Enter the training period end date.",
+      "endDateInvalid": "Enter a valid training period end date in month, day, year format.",
+      "endDateBeforeBeginDate": "The training period end date must be after the begin date.",
+      "beginDateTooFarFuture": "You can submit advance certifications up to 120 days before the term start date. The begin date you entered is more than 120 days in the future.",
+      "beginDateTooFarPast": "The training period begin date cannot be more than 1 year in the past. For retroactive certifications older than 1 year, contact your Regional Processing Office.",
+      "priorReferenceNumberRequired": "Enter the prior certification reference number. You received this number when you submitted the original certification.",
+      "priorReferenceNumberInvalid": "Enter a valid prior certification reference number.",
+      "effectiveDateRequired": "Enter the effective date of the change.",
+      "effectiveDateInvalid": "Enter a valid effective date in month, day, year format.",
+      "effectiveDateOutsideEnrollment": "The effective date of the change must fall within the training period."
+    },
+
+    "programInformation": {
+      "programNameRequired": "Enter the name of the program or major the student is enrolled in.",
+      "programNameMaxLength": "The program name cannot be longer than 100 characters.",
+      "degreeLevelRequired": "Select the degree or certificate level for this program.",
+      "programLengthRequired": "Select the standard length of this program.",
+      "programLengthOtherRequired": "Describe the standard length of this program.",
+      "missionActRestriction": "Licensing and certification programs may have restrictions under the MISSION Act. Review the SCO Handbook for eligibility requirements before certifying this student."
+    },
+
+    "creditHoursTrainingTime": {
+      "creditTypeRequired": "Select whether this student is enrolled in credit hours or clock hours.",
+      "hoursEnrolledRequired": "Enter the number of credit or clock hours the student is enrolled in this term.",
+      "hoursEnrolledMin": "The number of hours enrolled must be greater than 0.",
+      "hoursEnrolledMax": "The number of credit hours entered exceeds the typical maximum. Check the value and try again.",
+      "fullTimeStandardRequired": "Enter your institution's full-time credit hour standard for this program level.",
+      "fullTimeStandardMin": "The full-time standard must be greater than 0.",
+      "trainingTimeRequired": "Select the student's training time classification.",
+      "trainingTimeMismatch": "The training time classification you selected doesn't match the rate of pursuit calculated from the hours you entered. Review the hours and classification, then try again.",
+      "rateOfPursuitBelowMHAThreshold": "This student's rate of pursuit is below 50%. VA will not pay a Monthly Housing Allowance (MHA) for Chapter 33 at this enrollment level.",
+      "activeDutyMHANotice": "This student is on active duty. VA will not pay a Monthly Housing Allowance (MHA) regardless of enrollment level."
+    },
+
+    "tuitionFees": {
+      "tuitionRequired": "Enter the tuition charged for this term. Enter 0 if no tuition was charged.",
+      "tuitionMin": "Tuition charged cannot be less than $0.",
+      "feesRequired": "Enter the mandatory fees charged for this term. Enter 0 if no fees were charged.",
+      "feesMin": "Mandatory fees cannot be less than $0.",
+      "feeDescriptionRequired": "List each mandatory fee type and amount. This description is required when fees are greater than $0.",
+      "feeDescriptionMaxLength": "The fee description cannot be longer than 500 characters.",
+      "publicInStateCapNotice": "This institution is a public school. VA will pay tuition at the in-state rate for this state. If the student is paying out-of-state tuition, VA will cover only the in-state amount.",
+      "privateNationalMaxExceeded": "The total tuition and fees you entered exceed the national maximum for Chapter 33 ($27,120.05 for AY 2023–24). VA will pay only up to the national maximum. Any remaining balance may be covered by Yellow Ribbon if your institution participates.",
+      "nonResidentRequired": "Select whether this student is a non-resident paying out-of-state tuition."
+    },
+
+    "yellowRibbon": {
+      "schoolContributionRequired": "Enter your institution's Yellow Ribbon contribution for this term. Enter 0 if there is no contribution.",
+      "schoolContributionMin": "The Yellow Ribbon contribution cannot be less than $0.",
+      "schoolContributionExceedsAgreement": "The contribution amount you entered exceeds the maximum in your institution's Yellow Ribbon Agreement with VA. VA will match only up to the agreement maximum.",
+      "referenceNumberMaxLength": "The Yellow Ribbon Agreement reference number cannot be longer than 50 characters."
+    },
+
+    "priorCertificationChanges": {
+      "changeTypeRequired": "Select at least one type of change you are reporting in this amended certification.",
+      "changeDescriptionRequired": "Describe the change you are reporting. This description is required for all amended certifications.",
+      "changeDescriptionMaxLength": "The change description cannot be longer than 1,000 characters.",
+      "courseChangeDateRequired": "Enter the date the student added or dropped the course.",
+      "courseChangeDateInvalid": "Enter a valid course change date in month, day, year format.",
+      "courseChangeDateOutsideEnrollment": "The course change date must fall within the training period.",
+      "updatedHoursRequired": "Enter the updated number of credit or clock hours for this student.",
+      "mitigatingCircumstancesRequired": "Select whether mitigating circumstances apply.",
+      "mitigatingDescriptionRequired": "Describe the mitigating circumstances. This description is required when mitigating circumstances apply.",
+      "mitigatingDescriptionMaxLength": "The mitigating circumstances description cannot be longer than 1,000 characters."
+    },
+
+    "terminationInformation": {
+      "terminationReasonRequired": "Select the reason for this termination or reduction certification.",
+      "lastDateOfAttendanceRequired": "Enter the student's last date of attendance.",
+      "lastDateOfAttendanceInvalid": "Enter a valid last date of attendance in month, day, year format.",
+      "lastDateOfAttendanceOutsideEnrollment": "The last date of attendance must fall within or at the start of the training period.",
+      "withdrawalDateInvalid": "Enter a valid official withdrawal date in month, day, year format.",
+      "withdrawalDateBeforeLastAttendance": "The official withdrawal date cannot be before the last date of attendance.",
+      "nonPunitiveGradesRequired": "Select whether this student received any non-punitive grades this term.",
+      "mitigatingCircumstancesRequired": "Select whether mitigating circumstances apply.",
+      "mitigatingDescriptionRequired": "Describe the mitigating circumstances. This description is required when mitigating circumstances apply.",
+      "mitigatingDescriptionMaxLength": "The mitigating circumstances description cannot be longer than 1,000 characters."
+    },
+
+    "scoCertification": {
+      "firstNameRequired": "Enter the certifying SCO's first name.",
+      "lastNameRequired": "Enter the certifying SCO's last name.",
+      "titleRequired": "Enter your title or position at the institution.",
+      "phoneRequired": "Enter a phone number where VA can reach you about this certification.",
+      "phonePattern": "Enter a valid 10-digit phone number, like 2005551234. Do not include dashes, spaces, or parentheses.",
+      "emailRequired": "Enter your email address.",
+      "emailInvalid": "Enter a valid email address, like sco@institution.edu.",
+      "faxPattern": "Enter a valid 10-digit fax number, or leave this field blank.",
+      "attestationRequired": "You must check the certification box to confirm the information on this form is true and correct before you can submit.",
+      "certificationDateRequired": "Enter the date of certification.",
+      "certificationDateInvalid": "Enter a valid certification date in month, day, year format.",
+      "certificationDateFuture": "The certification date cannot be in the future."
+    }
+  },
+
+  "submissionErrors": {
+    "networkError": {
+      "title": "We couldn't submit your certification",
+      "message": "We're sorry. Something went wrong on our end. Your certification was not submitted. Please try again in a few minutes. If this problem keeps happening, call us at 1-888-GI-BILL-1 (1-888-442-4551), Monday through Friday, 8:00 a.m. to 7:00 p.m. ET."
+    },
+    "serverError": {
+      "title": "Something went wrong",
+      "message": "We're sorry. We couldn't process your submission right now because of a system error. Your information has been saved. Please try again later. If you continue to have problems, call us at 1-888-GI-BILL-1 (1-888-442-4551)."
+    },
+    "timeout": {
+      "title": "The request timed out",
+      "message": "Your submission is taking longer than expected. Your information has been saved. Please try submitting again. If the problem continues, call us at 1-888-GI-BILL-1 (1-888-442-4551)."
+    },
+    "duplicateSubmission": {
+      "title": "This certification may already be on file",
+      "message": "Our records show that a certification for this student and enrollment period may have already been submitted. Submitting again could cause an overpayment and processing delays. Review your submission and, if this is an amendment or correction, select 'Amended' as the certification type. If you believe this is an error, call us at 1-888-GI-BILL-1 (1-888-442-4551)."
+    },
+    "facilityCodeValidationFailed": {
+      "title": "We couldn't verify your facility code",
+      "message": "We tried to look up your facility code but couldn't connect to the VA facility lookup service. Check your internet connection and try again. If the problem continues, contact your Regional Processing Office."
+    },
+    "authorizationExpired": {
+      "title": "Your session has expired",
+      "message": "Your sign-in session has expired. Your progress has been saved. Sign in again to continue where you left off."
+    },
+    "accessDenied": {
+      "title": "We couldn't verify your SCO authorization",
+      "message": "We were unable to confirm that you are an authorized School Certifying Official for this institution. If you believe this is an error, contact your Regional Processing Office or your institution's Certifying Official of Record."
+    },
+    "invalidChapter": {
+      "title": "Digital certification is not yet available for this GI Bill chapter",
+      "message": "Right now, this digital form supports Chapter 33 (Post-9/11 GI Bill) certifications only. For Chapters 30, 1606, 35, and 32, use VA-ONCE or mail the paper VA Form 22-1999 to your Regional Processing Office. Support for additional chapters will be added in a future update."
+    }
+  },
+
+  "saveInProgress": {
+    "saveSuccess": {
+      "title": "Your progress has been saved",
+      "message": "We saved your certification progress. You can return to this form and continue where you left off. Your saved information will be available for 60 days."
+    },
+    "saveError": {
+      "title": "We couldn't save your progress",
+      "message": "Something went wrong and we couldn't save your progress. Your information is still on this page. Try saving again or continue filling out the form. Do not close this browser tab until your information is saved or submitted."
+    },
+    "savedFormFound": {
+      "title": "You have a saved certification in progress",
+      "message": "We found a certification you started but haven't submitted yet. You can continue where you left off or start a new certification.",
+      "continueButtonLabel": "Continue your saved certification",
+      "startOverButtonLabel": "Start a new certification"
+    },
+    "savedFormExpired": {
+      "title": "Your saved certification has expired",
+      "message": "Your saved certification expired after 60 days of inactivity. You will need to start a new certification. We're sorry for the inconvenience."
+    },
+    "sessionTimeoutWarning": {
+      "title": "Your session will expire soon",
+      "message": "Your session will expire in 5 minutes due to inactivity. To keep your session active, select 'Continue' below. Your progress has been saved and you can return to complete your certification after signing in again."
+    }
+  },
+
+  "reviewAndSubmit": {
+    "duplicateWarning": {
+      "title": "Check your submission before you submit",
+      "message": "If you have already submitted this certification through VA-ONCE or by mailing the paper form, do not submit it again here. Duplicate submissions cause overpayments and processing delays that can create a debt for the student."
+    }
+  },
+
+  "confirmation": {
+    "success": {
+      "title": "Your enrollment certification has been submitted",
+      "message": "Your certification has been received by VA. Your reference number is shown below. Save or print this page for your records. VA will process your certification within 30 days."
+    }
+  }
+}
