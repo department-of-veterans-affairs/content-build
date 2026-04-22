@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [content-release]
   workflow_dispatch:
+  # Temporary schedule.
+  schedule:
+    - cron: '10,40 8-20 * * 1-5'
+      timezone: "America/New_York" # Every day at midnight
 
 concurrency:
   group: content-release-prod
