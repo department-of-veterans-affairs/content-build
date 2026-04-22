@@ -3510,3 +3510,96 @@ describe('assignHardcodedMetaDescription', () => {
     ).to.be.null;
   });
 });
+
+describe('buildTopicList', () => {
+  const makeEntity = (name, fieldTopicId) => ({
+    entity: { name, fieldTopicId },
+  });
+
+  const makeNode = (fieldName, entities) => ({ [fieldName]: entities });
+
+  afterEach(() => {
+    delete global.cmsFeatureFlags;
+    registerFilters();
+  });
+
+  it('returns null when topics is null', () => {
+    expect(liquid.filters.buildTopicList(null)).to.be.null;
+  });
+
+  it('returns null when topics is undefined', () => {
+    expect(liquid.filters.buildTopicList(undefined)).to.be.null;
+  });
+
+  it('returns empty array when no nodes have the field', () => {
+    global.cmsFeatureFlags = { FEATURE_OUTREACH_MATERIALS_TOPICS: false };
+    registerFilters();
+    const topics = [makeNode('fieldLcCategories', [])];
+    expect(liquid.filters.buildTopicList(topics)).to.deep.equal([]);
+  });
+
+  it('uses fieldLcCategories when flag is off', () => {
+    global.cmsFeatureFlags = { FEATURE_OUTREACH_MATERIALS_TOPICS: false };
+    registerFilters();
+    const entity = makeEntity('Disability', 'disability');
+    const topics = [makeNode('fieldLcCategories', [entity])];
+    const result = liquid.filters.buildTopicList(topics);
+    expect(result).to.deep.equal([entity.entity]);
+  });
+
+  it('uses fieldOutreachMaterialsTopics when flag is on', () => {
+    global.cmsFeatureFlags = { FEATURE_OUTREACH_MATERIALS_TOPICS: true };
+    registerFilters();
+    const entity = makeEntity('Education', 'education');
+    const topics = [makeNode('fieldOutreachMaterialsTopics', [entity])];
+    const result = liquid.filters.buildTopicList(topics);
+    expect(result).to.deep.equal([entity.entity]);
+  });
+
+  it('does not include items with a null entity', () => {
+    global.cmsFeatureFlags = { FEATURE_OUTREACH_MATERIALS_TOPICS: false };
+    registerFilters();
+    const topics = [makeNode('fieldLcCategories', [{ entity: null }])];
+    expect(liquid.filters.buildTopicList(topics)).to.deep.equal([]);
+  });
+
+  it('does not include items missing entity.name', () => {
+    global.cmsFeatureFlags = { FEATURE_OUTREACH_MATERIALS_TOPICS: false };
+    registerFilters();
+    const topics = [
+      makeNode('fieldLcCategories', [{ entity: { fieldTopicId: 'pension' } }]),
+    ];
+    expect(liquid.filters.buildTopicList(topics)).to.deep.equal([]);
+  });
+
+  it('does not include items missing entity.fieldTopicId', () => {
+    global.cmsFeatureFlags = { FEATURE_OUTREACH_MATERIALS_TOPICS: false };
+    registerFilters();
+    const topics = [
+      makeNode('fieldLcCategories', [{ entity: { name: 'Pension' } }]),
+    ];
+    expect(liquid.filters.buildTopicList(topics)).to.deep.equal([]);
+  });
+
+  it('deduplicates topics with the same name', () => {
+    global.cmsFeatureFlags = { FEATURE_OUTREACH_MATERIALS_TOPICS: false };
+    registerFilters();
+    const entity = makeEntity('Healthcare', 'healthcare');
+    const topics = [
+      makeNode('fieldLcCategories', [entity, entity]),
+      makeNode('fieldLcCategories', [entity]),
+    ];
+    const result = liquid.filters.buildTopicList(topics);
+    expect(result).to.have.length(1);
+    expect(result[0].name).to.equal('Healthcare');
+  });
+
+  it('defaults to fieldLcCategories when cmsFeatureFlags is undefined', () => {
+    delete global.cmsFeatureFlags;
+    registerFilters();
+    const entity = makeEntity('Records', 'records');
+    const topics = [makeNode('fieldLcCategories', [entity])];
+    const result = liquid.filters.buildTopicList(topics);
+    expect(result).to.deep.equal([entity.entity]);
+  });
+});

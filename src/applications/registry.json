@@ -32,17 +32,13 @@
       "spoke": "Get benefits",
       "collection": "pension",
       "order": 3,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "pension/",
-          "name": "Pension benefits"
-        },
-        {
-          "path": "pension/apply-for-veteran-pension-form-21p-527ez",
-          "name": "Apply for Veterans Pension benefits"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Application for Veterans Pension",
+        "subtitle": "(VA Form 21P-527EZ)"
+      }
     }
   },
   {
@@ -177,21 +173,13 @@
       "layout": "page-react.html",
       "description": "Use VA Form 21P-530EZ to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
       "order": 1,
-      "includeBreadcrumbs": true,
-      "breadcrumbs_override": [
-        {
-          "path": "burials-memorials/",
-          "name": "Burials and memorials"
-        },
-        {
-          "path": "burials-memorials/veterans-burial-allowance",
-          "name": "Veterans burial allowance and transportation benefits"
-        },
-        {
-          "path": "burials-memorials/veterans-burial-allowance/apply-for-allowance-form-21p-530ez",
-          "name": "Apply for a Veterans burial allowance and transportation benefits"
-        }
-      ]
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Application for burial benefits",
+        "subtitle": "(VA Form 21P-530EZ)"
+      }
     }
   },
   {
@@ -539,7 +527,7 @@
     "entryName": "search",
     "rootUrl": "/search",
     "template": {
-      "title": "Search Results",
+      "title": "Search VA.gov",
       "layout": "page-react.html"
     }
   },
@@ -1335,10 +1323,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Request personal records",
@@ -1428,10 +1413,7 @@
       "layout": "page-react.html",
       "title": "Submit other health insurance",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Submit other health insurance",
@@ -1449,10 +1431,7 @@
       "layout": "page-react.html",
       "title": "Register for the Foreign Medical Program (FMP)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Register for the Foreign Medical Program (FMP)",
@@ -1470,10 +1449,7 @@
       "layout": "page-react.html",
       "title": "File a CHAMPVA claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a CHAMPVA claim",
@@ -1487,12 +1463,9 @@
     "rootUrl": "/supporting-forms-for-claims/submit-statement-form-21-4138",
     "productId": "11f151bf-bec3-436c-8779-2a13dc0886d8",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1510,10 +1483,7 @@
       "layout": "page-react.html",
       "title": "File a Foreign Medical Program (FMP) claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a Foreign Medical Program (FMP) claim",
@@ -1539,10 +1509,7 @@
       "title": "VA Form 21P-0969",
       "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Pension or DIC Income and Asset Statement",
@@ -1560,7 +1527,7 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "lastupdate": "2026-02-05"
+      "lastupdate": "2026-03-30"
     }
   },
   {
@@ -1569,7 +1536,7 @@
     "rootUrl": "/education/other-va-education-benefits/ibm-skillsbuild-program/apply-form-22-10282",
     "productId": "4172a63c-b93a-499e-946c-048da7a5cb6d",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -1601,10 +1568,7 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1776,10 +1740,7 @@
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for CHAMPVA benefits",
@@ -2023,10 +1984,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Income Verification for Disability Benefits",
@@ -2043,10 +2001,7 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": [
-        "/introduction",
-        "/confirmation"
-      ],
+      "minimalExcludePaths": ["/introduction", "/confirmation"],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for additional compensation based on inability to work",
@@ -2161,7 +2116,7 @@
   {
     "appName": "0976",
     "entryName": "0976-edu-benefits",
-    "rootUrl": "/education/0976",
+    "rootUrl": "/school-administrators/apply-for-approval-program-in-foreign-country-form-22-0976",
     "productId": "33766335-1941-479b-a3a0-36b05ef39fa7",
     "template": {
       "vagovprod": false,
@@ -2195,7 +2150,7 @@
     "rootUrl": "/forms/22-0803/request-reimbursement-licensing-or-certification-test-fees",
     "productId": "bdc3c651-5e60-4d96-acae-79d2fa2bef29",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
@@ -2204,6 +2159,17 @@
     "entryName": "mock-form-prefill",
     "rootUrl": "/mock-form-prefill",
     "productId": "0290e36a-cd62-47db-ba4a-32af2ee7ae37",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true
+    }
+  },
+  {
+    "appName": "Mock Form with Prefill (Minimal Header)",
+    "entryName": "mock-form-prefill-minimal",
+    "rootUrl": "/mock-form-minimal-prefill",
+    "productId": "7096ec8b-b3db-424b-8b01-c0236c333e19",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
@@ -2219,11 +2185,11 @@
   {
   "appName": "form-renderer",
   "entryName": "form-renderer",
-  "rootUrl": "/my-va/submissions/",
+  "rootUrl": "/my-va/submissions",
   "template": {
-    "title": "Copy of Submission",
+    "vagovprod": true,
+    "title": "Copy of 686c submission",
     "layout": "page-react.html",
-    "vagovprod": false,
     "includeBreadcrumbs": false,
     "minimalFooter": true,
     "minimalHeader": {
@@ -2245,11 +2211,50 @@
   {
     "appName": "Request Education Benefit Entitlement Restoration Online",
     "entryName": "0989-edu-benefits",
-    "rootUrl": "/forms/22-0989/request-education-benefit-entitlement-restoration",
+    "rootUrl": "/forms/22-0989/request-entitlement-restoration",
     "productId": "27c9d9f9-0d33-424b-bda8-d551742e89a2",
     "template": {
       "vagovprod": false,
       "layout": "page-react.html"
     }
+  },
+  {
+  "appName": "Apply for automobile or adaptive equipment",
+  "entryName": "21-4502",
+  "rootUrl": "/forms/21-4502/apply-automobile-and-adaptive-equipment",
+  "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Apply for automobile or adaptive equipment",
+        "subtitle": "(VA Form 21-4502)"
+      }
+    }
+  },
+  {
+  "appName": "Apply for Annual Clothing Allowance",
+  "entryName": "10-8678",
+  "rootUrl": "/disability/eligibility/annual-clothing-allowance/apply-form-10-8678",
+  "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Apply for Annual Clothing Allowance",
+        "subtitle": "(VA Form 10-8678)"
+      }
+    }
   }
+
 ]

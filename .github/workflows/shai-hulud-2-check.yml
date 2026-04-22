@@ -1,5 +1,8 @@
 name: Shai-Hulud 2.0 Security Check
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
@@ -8,9 +11,11 @@ on:
 
 jobs:
   security-check:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - uses: gensecaihq/Shai-Hulud-2.0-Detector@55cd78e683ee88b1f0a7e084919908e402462ec3 # v1.0.2
+      - uses: actions/checkout@v6.0.2
+      - uses: gensecaihq/Shai-Hulud-2.0-Detector@v2
         with:
           fail-on-critical: true

@@ -23,6 +23,14 @@ const outreachAssets = `
             }
           }
         }
+        fieldOutreachMaterialsTopics {
+          entity {
+            ... on TaxonomyTermOutreachMaterialsTopics {
+              name
+              fieldTopicId
+            }
+          }
+        }
         fieldMedia {
           entity {
             ... on MediaImage {
