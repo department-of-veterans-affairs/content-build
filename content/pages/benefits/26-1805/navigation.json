@@ -1,0 +1,235 @@
+{
+  "_comment": "Sidebar navigation configuration for VA Form 26-1805 (Request for Determination of Reasonable Value) section pages. Used by the content-build Metalsmith pipeline to render the left-hand sidebar on all pages in this section.",
+  "_section": "VA home loans — VA Form 26-1805",
+  "_rootPath": "/housing-assistance/home-loans/",
+  "_lastUpdated": "2025-01-01",
+
+  "sidebarNav": {
+    "id": "form-26-1805-sidebar",
+    "title": "VA home loans",
+    "rootUrl": "/housing-assistance/home-loans/",
+    "sections": [
+
+      {
+        "id": "va-home-loan-overview",
+        "label": "VA home loan overview",
+        "href": "/housing-assistance/home-loans/",
+        "order": 1,
+        "children": []
+      },
+
+      {
+        "id": "loan-types",
+        "label": "VA loan types",
+        "href": "/housing-assistance/home-loans/loan-types/",
+        "order": 2,
+        "children": [
+          {
+            "id": "purchase-loan",
+            "label": "Purchase loan",
+            "href": "/housing-assistance/home-loans/loan-types/purchase-loan/",
+            "order": 1
+          },
+          {
+            "id": "cash-out-refinance",
+            "label": "Cash-out refinance",
+            "href": "/housing-assistance/home-loans/loan-types/cash-out-refinance/",
+            "order": 2
+          },
+          {
+            "id": "irrrl",
+            "label": "IRRRL (Streamline Refinance)",
+            "href": "/housing-assistance/home-loans/loan-types/irrrl/",
+            "order": 3
+          },
+          {
+            "id": "native-american-direct-loan",
+            "label": "Native American Direct Loan",
+            "href": "/housing-assistance/home-loans/loan-types/native-american-direct-loan/",
+            "order": 4
+          }
+        ]
+      },
+
+      {
+        "id": "eligibility",
+        "label": "VA home loan eligibility",
+        "href": "/housing-assistance/home-loans/eligibility/",
+        "order": 3,
+        "children": []
+      },
+
+      {
+        "id": "certificate-of-eligibility",
+        "label": "Certificate of Eligibility (COE)",
+        "href": "/housing-assistance/home-loans/how-to-apply/",
+        "order": 4,
+        "children": []
+      },
+
+      {
+        "id": "appraisal-section",
+        "label": "VA home loan appraisals",
+        "href": "/housing-assistance/home-loans/appraisals/",
+        "order": 5,
+        "active": true,
+        "expanded": true,
+        "children": [
+
+          {
+            "id": "appraisal-overview",
+            "label": "About VA appraisals",
+            "href": "/housing-assistance/home-loans/appraisals/",
+            "order": 1
+          },
+
+          {
+            "id": "form-26-1805-introduction",
+            "label": "Request a VA appraisal (VA Form 26-1805)",
+            "href": "/housing-assistance/home-loans/26-1805/introduction/",
+            "order": 2,
+            "active": true,
+            "children": [
+              {
+                "id": "form-26-1805-start",
+                "label": "Start your appraisal request",
+                "href": "/housing-assistance/home-loans/26-1805/start/",
+                "order": 1,
+                "callToAction": true
+              },
+              {
+                "id": "form-26-1805-help",
+                "label": "Appraisal request — FAQs and help",
+                "href": "/housing-assistance/home-loans/26-1805/help/",
+                "order": 2
+              }
+            ]
+          },
+
+          {
+            "id": "appraisal-status",
+            "label": "Check your VA appraisal status",
+            "href": "/housing-assistance/home-loans/appraisal-status/",
+            "order": 3,
+            "badge": {
+              "text": "Sign in required",
+              "type": "info"
+            }
+          },
+
+          {
+            "id": "reconsideration-of-value",
+            "label": "Request a reconsideration of value",
+            "href": "/housing-assistance/home-loans/reconsideration-of-value/",
+            "order": 4
+          },
+
+          {
+            "id": "condo-project-approval",
+            "label": "VA condo project approval",
+            "href": "/housing-assistance/home-loans/condo-project-approval/",
+            "order": 5
+          },
+
+          {
+            "id": "minimum-property-requirements",
+            "label": "VA Minimum Property Requirements",
+            "href": "/housing-assistance/home-loans/appraisals/minimum-property-requirements/",
+            "order": 6
+          }
+
+        ]
+      },
+
+      {
+        "id": "lender-resources",
+        "label": "Resources for VA-approved lenders",
+        "href": "/housing-assistance/home-loans/lenders/",
+        "order": 6,
+        "children": [
+          {
+            "id": "weblgy-portal",
+            "label": "WebLGY lender portal",
+            "href": "https://weblgy.vba.va.gov",
+            "order": 1,
+            "external": true,
+            "externalLabel": "Opens in new tab"
+          },
+          {
+            "id": "lender-handbook",
+            "label": "VA Lender Handbook",
+            "href": "https://www.benefits.va.gov/warms/pam26_7.asp",
+            "order": 2,
+            "external": true,
+            "externalLabel": "Opens in new tab"
+          },
+          {
+            "id": "va-fee-schedule",
+            "label": "VA appraisal fee schedule",
+            "href": "/housing-assistance/home-loans/lenders/appraisal-fee-schedule/",
+            "order": 3
+          }
+        ]
+      },
+
+      {
+        "id": "regional-loan-centers",
+        "label": "VA Regional Loan Centers",
+        "href": "/resources/va-home-loan-regional-loan-centers/",
+        "order": 7,
+        "children": []
+      },
+
+      {
+        "id": "find-form",
+        "label": "Download VA Form 26-1805 (PDF)",
+        "href": "/find-forms/about-form-26-1805/",
+        "order": 8,
+        "note": "Use the digital form above instead of the PDF whenever possible.",
+        "children": []
+      }
+
+    ]
+  },
+
+  "breadcrumbs": {
+    "form-26-1805-introduction": [
+      { "label": "Home", "href": "/" },
+      { "label": "Housing assistance", "href": "/housing-assistance/" },
+      { "label": "VA home loans", "href": "/housing-assistance/home-loans/" },
+      { "label": "VA home loan appraisals", "href": "/housing-assistance/home-loans/appraisals/" },
+      { "label": "Request a VA appraisal (VA Form 26-1805)", "href": "/housing-assistance/home-loans/26-1805/introduction/", "current": true }
+    ],
+    "form-26-1805-help": [
+      { "label": "Home", "href": "/" },
+      { "label": "Housing assistance", "href": "/housing-assistance/" },
+      { "label": "VA home loans", "href": "/housing-assistance/home-loans/" },
+      { "label": "VA home loan appraisals", "href": "/housing-assistance/home-loans/appraisals/" },
+      { "label": "Request a VA appraisal (VA Form 26-1805)", "href": "/housing-assistance/home-loans/26-1805/introduction/" },
+      { "label": "Frequently asked questions and help", "href": "/housing-assistance/home-loans/26-1805/help/", "current": true }
+    ]
+  },
+
+  "footerLinks": [
+    {
+      "id": "find-form-footer",
+      "label": "VA Form 26-1805 on the VA forms search page",
+      "href": "/find-forms/about-form-26-1805/"
+    },
+    {
+      "id": "appraisal-status-footer",
+      "label": "Check your VA appraisal status",
+      "href": "/housing-assistance/home-loans/appraisal-status/"
+    },
+    {
+      "id": "rlc-locator-footer",
+      "label": "Find your VA Regional Loan Center",
+      "href": "/resources/va-home-loan-regional-loan-centers/"
+    },
+    {
+      "id": "ask-va-footer",
+      "label": "Ask VA — submit a question online",
+      "href": "https://ask.va.gov"
+    }
+  ]
+}
