@@ -2238,6 +2238,26 @@
     }
   },
   {
+  "appName": "Request apportionment of beneficiary's award",
+  "entryName": "21-0788",
+  "rootUrl": "/supporting-forms-for-claims/request-apportionment-form-21-0788",
+  "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
+      "minimalFooter": true,
+      "minimalHeader": {
+        "title": "Information Regarding Apportionment of Beneficiary's Award",
+        "subtitle": "(VA Form 21-0788)"
+
+      }
+    }
+  },
+  {
   "appName": "Apply for Annual Clothing Allowance",
   "entryName": "10-8678",
   "rootUrl": "/disability/eligibility/annual-clothing-allowance/apply-form-10-8678",
