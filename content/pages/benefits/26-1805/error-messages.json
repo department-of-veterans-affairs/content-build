@@ -1,0 +1,403 @@
+{
+  "_comment": "VA Form 26-1805 — Error message strings for field-level validation, submission errors, and save-in-progress errors. Used by the React form application at /housing-assistance/home-loans/26-1805/.",
+  "_formNumber": "26-1805",
+  "_formTitle": "Request for Determination of Reasonable Value",
+  "_lastUpdated": "2025-01-01",
+
+  "fieldValidation": {
+
+    "lenderName": {
+      "required": "Enter the full legal name of the VA-approved lending institution.",
+      "maxLength": "Lender name must be 100 characters or fewer.",
+      "pattern": "Enter a valid lender name using letters, spaces, and standard punctuation only."
+    },
+
+    "vaLenderID": {
+      "required": "Enter your VA Lender ID number. This is required to process your appraisal request.",
+      "pattern": "Enter your 7-digit VA Lender ID number. Use numbers only, with no dashes or spaces. Example: 1234567",
+      "notFound": "We could not verify this VA Lender ID number. Check the number and try again. If you believe this is an error, contact your VA Regional Loan Center.",
+      "inactive": "This VA Lender ID number is not currently active. Contact VA Loan Guaranty Service to confirm your lender approval status before submitting an appraisal request."
+    },
+
+    "lenderStreetAddress": {
+      "required": "Enter the lender's street address.",
+      "maxLength": "Street address must be 100 characters or fewer."
+    },
+
+    "lenderCity": {
+      "required": "Enter the city for the lender's address.",
+      "maxLength": "City must be 50 characters or fewer.",
+      "pattern": "Enter a city name using letters, spaces, hyphens, and periods only."
+    },
+
+    "lenderState": {
+      "required": "Select the state for the lender's address."
+    },
+
+    "lenderZIP": {
+      "required": "Enter the ZIP code for the lender's address.",
+      "pattern": "Enter a 5-digit ZIP code. Use numbers only, with no dashes or spaces. Example: 20420"
+    },
+
+    "lenderPOCName": {
+      "required": "Enter the name of the lender's point of contact for this appraisal request.",
+      "maxLength": "Contact name must be 75 characters or fewer."
+    },
+
+    "lenderPOCPhone": {
+      "required": "Enter a phone number for the lender's point of contact.",
+      "pattern": "Enter a 10-digit phone number, including area code. Use numbers only, with no dashes, spaces, or parentheses. Example: 8005551234"
+    },
+
+    "lenderPOCEmail": {
+      "required": "Enter an email address for the lender's point of contact.",
+      "pattern": "Enter a valid email address in the format name@domain.com",
+      "maxLength": "Email address must be 100 characters or fewer."
+    },
+
+    "lenderType": {
+      "required": "Select the lender type that best describes your institution."
+    },
+
+    "veteranFirstName": {
+      "required": "Enter the Veteran's first name.",
+      "maxLength": "First name must be 30 characters or fewer.",
+      "pattern": "Enter a first name using letters and hyphens only."
+    },
+
+    "veteranMiddleInitial": {
+      "maxLength": "Enter only one letter for the middle initial.",
+      "pattern": "Enter a single letter for the middle initial."
+    },
+
+    "veteranLastName": {
+      "required": "Enter the Veteran's last name.",
+      "maxLength": "Last name must be 40 characters or fewer.",
+      "pattern": "Enter a last name using letters, hyphens, and apostrophes only."
+    },
+
+    "veteranDOB": {
+      "required": "Enter the Veteran's date of birth.",
+      "month": {
+        "required": "Enter a month between 1 and 12.",
+        "range": "Enter a month between 1 and 12."
+      },
+      "day": {
+        "required": "Enter a valid day for the selected month.",
+        "range": "Enter a valid day for the selected month and year."
+      },
+      "year": {
+        "required": "Enter a 4-digit birth year.",
+        "range": "Enter a birth year between 1900 and the current year.",
+        "tooRecent": "The Veteran must be at least 17 years old. Check the date of birth and try again."
+      },
+      "invalidDate": "Enter a valid date. Check the month, day, and year and try again."
+    },
+
+    "veteranSSN": {
+      "required": "Enter the Veteran's Social Security number.",
+      "pattern": "Enter a 9-digit Social Security number. Use numbers only, with no dashes or spaces.",
+      "hint": "The Veteran's Social Security number is required to process the VA appraisal request and match it to the Veteran's VA records."
+    },
+
+    "veteranCOENumber": {
+      "pattern": "Enter a valid Certificate of Eligibility number, or leave this field blank if you do not have it.",
+      "maxLength": "COE number must be 30 characters or fewer."
+    },
+
+    "loanTransactionPreScreen": {
+      "required": "Select the loan transaction type for this appraisal request."
+    },
+
+    "estimatedValue": {
+      "required": "Enter the estimated purchase price or current estimated property value.",
+      "min": "Enter a value greater than $0.",
+      "max": "Enter a value of $10,000,000 or less. If the loan amount exceeds VA limits, contact your Regional Loan Center.",
+      "pattern": "Enter a dollar amount using numbers only, with no commas or dollar signs. Example: 325000"
+    },
+
+    "propertyStreetAddress": {
+      "required": "Enter the property's street address.",
+      "maxLength": "Street address must be 100 characters or fewer."
+    },
+
+    "propertyCity": {
+      "required": "Enter the city where the property is located.",
+      "maxLength": "City must be 50 characters or fewer.",
+      "pattern": "Enter a city name using letters, spaces, hyphens, and periods only."
+    },
+
+    "propertyState": {
+      "required": "Select the state where the property is located."
+    },
+
+    "propertyZIP": {
+      "required": "Enter the property's ZIP code.",
+      "pattern": "Enter a 5-digit ZIP code. Use numbers only, with no dashes or spaces. Example: 80202",
+      "routingNotFound": "We could not match this ZIP code to a VA Regional Loan Center. Check the ZIP code and try again. If the property is in a US territory, contact your Regional Loan Center directly.",
+      "routingConfirmed": "This property will be processed by the {rlcName} Regional Loan Center."
+    },
+
+    "propertyType": {
+      "required": "Select the property type."
+    },
+
+    "constructionType": {
+      "required": "Select whether the property is existing construction or proposed/new construction."
+    },
+
+    "condoProjectName": {
+      "required": "Enter the name of the condominium project.",
+      "maxLength": "Project name must be 100 characters or fewer.",
+      "notApproved": "This condominium project is not currently VA-approved. VA can only guarantee loans on condominiums in VA-approved projects. The project must complete the VA condo project approval process before an appraisal can be requested. Learn more at VA.gov/housing-assistance/home-loans/condo-project-approval/",
+      "approvalNotFound": "We could not find this condominium project in VA's approval database. Check the project name and try again. If you believe the project is approved, enter the VA project approval ID in the field below."
+    },
+
+    "condoHOAName": {
+      "maxLength": "HOA name must be 100 characters or fewer."
+    },
+
+    "condoVAApprovalID": {
+      "pattern": "Enter a valid VA condo project approval ID, or leave this field blank if you do not have it.",
+      "maxLength": "VA project approval ID must be 30 characters or fewer."
+    },
+
+    "manufacturedHomeFoundation": {
+      "required": "Select the foundation type for the manufactured home.",
+      "nonPermanent": "VA Minimum Property Requirements require that manufactured homes be permanently affixed to a foundation. This property does not meet VA MPR and is not eligible for a VA-guaranteed loan. The appraisal request cannot proceed for a manufactured home without a permanent affixed foundation."
+    },
+
+    "manufacturedHomeHIN": {
+      "required": "Enter the Housing Identification Number (HIN) for the manufactured home. The HIN is located on the rear of the home.",
+      "pattern": "Enter a valid HIN. A HIN contains letters and numbers, typically in the format AB1234567.",
+      "maxLength": "HIN must be 20 characters or fewer."
+    },
+
+    "builderName": {
+      "required": "Enter the builder's name for new construction.",
+      "maxLength": "Builder name must be 100 characters or fewer."
+    },
+
+    "builderAddress": {
+      "required": "Enter the builder's street address.",
+      "maxLength": "Builder address must be 100 characters or fewer."
+    },
+
+    "builderLicenseNumber": {
+      "required": "Enter the builder's license number.",
+      "maxLength": "Builder license number must be 50 characters or fewer."
+    },
+
+    "plansAndSpecsAvailable": {
+      "required": "Indicate whether plans and specifications are available for the new construction."
+    },
+
+    "yearBuilt": {
+      "required": "Enter the year the property was built.",
+      "pattern": "Enter a 4-digit year. Example: 1998",
+      "range": "Enter a year between 1800 and the current year.",
+      "tooRecent": "If the property was built this year or is under construction, select 'New construction' on the property type screen."
+    },
+
+    "occupancyStatus": {
+      "required": "Select the current occupancy status of the property."
+    },
+
+    "bedroomCount": {
+      "required": "Enter the number of bedrooms.",
+      "min": "Enter a number of bedrooms greater than 0.",
+      "max": "Enter a number of bedrooms of 20 or fewer. If you believe this is correct, contact your Regional Loan Center.",
+      "pattern": "Enter a whole number for the number of bedrooms."
+    },
+
+    "bathroomCount": {
+      "required": "Enter the number of bathrooms.",
+      "min": "Enter a number of bathrooms greater than 0.",
+      "max": "Enter a number of bathrooms of 20 or fewer.",
+      "pattern": "Enter a whole number or half number for bathrooms. Example: 2 or 2.5"
+    },
+
+    "legalDescription": {
+      "maxLength": "Legal description must be 500 characters or fewer."
+    },
+
+    "priorVAAppraisalFlag": {
+      "required": "Indicate whether this property has been previously appraised by VA."
+    },
+
+    "priorVACaseNumber": {
+      "required": "Enter the prior VA case number.",
+      "pattern": "Enter a valid VA case number. VA case numbers are typically in the format 000-000000-000.",
+      "maxLength": "VA case number must be 30 characters or fewer."
+    },
+
+    "priorAppraisalDate": {
+      "required": "Enter the approximate date of the prior VA appraisal.",
+      "invalidDate": "Enter a valid date for the prior appraisal. Check the month, day, and year.",
+      "futureDate": "The prior appraisal date cannot be in the future.",
+      "tooOld": "The prior appraisal date appears to be more than 30 years ago. Check the date and try again."
+    },
+
+    "propertyAccessContactType": {
+      "required": "Select the type of contact who will provide property access to the appraiser."
+    },
+
+    "propertyAccessContactName": {
+      "required": "Enter the name of the person who will provide property access to the appraiser.",
+      "maxLength": "Contact name must be 75 characters or fewer."
+    },
+
+    "propertyAccessContactPhone": {
+      "required": "Enter a phone number for the property access contact.",
+      "pattern": "Enter a 10-digit phone number, including area code. Use numbers only, with no dashes, spaces, or parentheses. Example: 3035551234"
+    },
+
+    "propertyAccessContactAlternatePhone": {
+      "pattern": "Enter a 10-digit phone number, including area code. Use numbers only, with no dashes, spaces, or parentheses. Example: 3035551234"
+    },
+
+    "propertyAccessContactEmail": {
+      "pattern": "Enter a valid email address in the format name@domain.com",
+      "maxLength": "Email address must be 100 characters or fewer."
+    },
+
+    "accessInstructions": {
+      "maxLength": "Access instructions must be 500 characters or fewer."
+    },
+
+    "timingUrgency": {
+      "required": "Select whether this is a standard or expedited appraisal request."
+    },
+
+    "expeditedJustification": {
+      "required": "Enter a justification for the expedited appraisal request.",
+      "maxLength": "Expedited justification must be 300 characters or fewer.",
+      "tooShort": "Enter at least 20 characters explaining why an expedited appraisal is needed."
+    },
+
+    "earliestAccessDate": {
+      "required": "Enter the earliest date the property will be available for the appraisal inspection.",
+      "invalidDate": "Enter a valid date. Check the month, day, and year.",
+      "pastDate": "The earliest access date cannot be in the past. Enter today's date or a future date.",
+      "tooFarFuture": "The earliest access date cannot be more than 90 days in the future. Contact your Regional Loan Center if you need special scheduling arrangements."
+    },
+
+    "lenderAttestation": {
+      "required": "You must check the attestation box to confirm the accuracy of the information before submitting."
+    }
+  },
+
+  "irrrlScreening": {
+    "waiversEligibleWarning": "IRRRLs may qualify for an appraisal waiver under VA Circular 26-18-13. Do not complete this form if your transaction qualifies for a waiver. Confirm waiver eligibility with your VA Regional Loan Center before proceeding.",
+    "confirmAppraisalRequired": "You must confirm that an appraisal is required for this IRRRL transaction before you can continue with this form."
+  },
+
+  "condoHardStop": {
+    "projectNotApproved": {
+      "heading": "This condominium project is not VA-approved",
+      "body": "VA can only guarantee loans on condominiums in projects that have received VA approval. This project is not currently in VA's approved condo project database. The project must complete the VA condo project approval process before an appraisal request can be submitted. Contact the HOA or condo developer for information about applying for VA approval.",
+      "linkText": "Learn about the VA condo project approval process",
+      "linkHref": "/housing-assistance/home-loans/condo-project-approval/"
+    }
+  },
+
+  "manufacturedHomeHardStop": {
+    "nonPermanentFoundation": {
+      "heading": "This manufactured home does not meet VA requirements",
+      "body": "VA Minimum Property Requirements (MPR) require that manufactured homes be on a permanent affixed foundation. A manufactured home that is not permanently affixed does not meet MPR and cannot be used as collateral for a VA-guaranteed loan. This appraisal request cannot proceed. For questions, contact your VA Regional Loan Center.",
+      "linkText": "Find your Regional Loan Center",
+      "linkHref": "/resources/va-home-loan-regional-loan-centers/"
+    }
+  },
+
+  "submission": {
+    "networkError": {
+      "heading": "We couldn't submit your appraisal request",
+      "body": "Something went wrong when we tried to submit your form. Your information has been saved. Please try again in a few minutes. If the problem continues, call VA at 1-800-827-1000 (TTY: 711), Monday through Friday, 8:00 a.m. to 9:00 p.m. ET.",
+      "retryLabel": "Try submitting again"
+    },
+
+    "serverError": {
+      "heading": "There was a problem processing your submission",
+      "body": "VA systems are having a temporary issue. Your form data has been saved. Please try again later. If you continue to have problems, contact your VA Regional Loan Center directly or call 1-800-827-1000.",
+      "linkText": "Find your Regional Loan Center",
+      "linkHref": "/resources/va-home-loan-regional-loan-centers/"
+    },
+
+    "timeout": {
+      "heading": "Your submission timed out",
+      "body": "Your request took too long and we couldn't confirm it was received. Your information has been saved. Try submitting again. If the problem continues, call 1-800-827-1000 (TTY: 711).",
+      "retryLabel": "Try submitting again"
+    },
+
+    "duplicateCaseDetected": {
+      "heading": "A duplicate case may already exist",
+      "body": "Our system found an existing VA appraisal case for this property address and Veteran. Submitting again will create a duplicate case, which delays processing. Before continuing, confirm with your VA Regional Loan Center whether an active case already exists for this transaction.",
+      "linkText": "Find your Regional Loan Center",
+      "linkHref": "/resources/va-home-loan-regional-loan-centers/",
+      "continueLabel": "I have confirmed there is no duplicate — continue with submission",
+      "cancelLabel": "Cancel — do not submit"
+    },
+
+    "validationSummary": {
+      "heading": "Fix these errors before submitting",
+      "body": "Your form has {count} error(s) that must be corrected before you can submit. Review the list below and update each field.",
+      "singleError": "Your form has 1 error that must be corrected before you can submit."
+    },
+
+    "attestationRequired": {
+      "heading": "Attestation required",
+      "body": "You must check the attestation box to confirm that the information in this form is accurate and complete before you can submit."
+    },
+
+    "success": {
+      "heading": "Your VA appraisal request has been submitted",
+      "body": "Your VA case number is {caseNumber}. Save or print this page for your records. The Veteran borrower can check their appraisal status at VA.gov.",
+      "statusLinkText": "Check appraisal status",
+      "statusLinkHref": "/housing-assistance/home-loans/appraisal-status/"
+    }
+  },
+
+  "saveInProgress": {
+    "savedSuccess": "Your application has been saved. Your progress will be held for 60 days from your last save.",
+    "savedError": {
+      "heading": "We couldn't save your progress",
+      "body": "Something went wrong when we tried to save your information. Try saving again in a moment. If the problem continues, don't close your browser — call VA at 1-800-827-1000 so we can help."
+    },
+    "sessionTimeout": {
+      "heading": "Your session is about to expire",
+      "body": "You've been inactive for a while. Your progress has been saved. To keep working on your form, select 'Continue session'. Your application will be available for 60 days.",
+      "continueLabel": "Continue session",
+      "signOutLabel": "Sign out"
+    },
+    "sessionExpired": {
+      "heading": "Your session has expired",
+      "body": "Your session expired due to inactivity. Your progress was saved. Sign back in to continue your application.",
+      "signInLabel": "Sign in to continue"
+    },
+    "prefillError": {
+      "heading": "We couldn't pre-fill your information",
+      "body": "We were unable to load your saved information from your VA profile. You can continue filling out the form manually. If you believe your profile information should be available, check your VA.gov profile settings."
+    }
+  },
+
+  "rlcRouting": {
+    "routingSuccess": "Based on the property ZIP code, your request will be sent to the {rlcName} Regional Loan Center.",
+    "routingWarning": "This property is in an area with limited VA-approved appraisers. Allow additional time for appraiser assignment and inspection scheduling.",
+    "routingError": "We could not determine the correct Regional Loan Center for ZIP code {zip}. Check the ZIP code and try again. If the property is in a US territory, contact your Regional Loan Center directly.",
+    "ruralMarketNotice": "The property ZIP code ({zip}) is in a rural market. Appraisal scheduling may take longer than the standard 10-business-day target due to limited VA fee appraiser availability in this area. We will communicate any expected delays to your lender."
+  },
+
+  "authentication": {
+    "notSignedIn": {
+      "heading": "Sign in to submit this form",
+      "body": "You must be signed in to a VA.gov account to submit VA Form 26-1805. Sign in with DS Logon, My HealtheVet, Login.gov, or ID.me.",
+      "signInLabel": "Sign in or create an account"
+    },
+    "insufficientLOA": {
+      "heading": "You need to verify your identity",
+      "body": "To submit this form, your VA.gov account must be identity-verified (LOA2 or higher). Verify your identity to continue.",
+      "verifyLabel": "Verify your identity"
+    }
+  }
+}
