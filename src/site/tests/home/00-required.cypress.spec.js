@@ -1,13 +1,17 @@
 const path = require('path');
 
 Cypress.Commands.add('verifyGoogleAnalytics', () => {
+  const envBuildtype = Cypress.env('buildtype') || 'vagovdev';
+  // Keep in sync with src/site/includes/google-analytics.liquid (localhost uses vagovdev assets).
+  const analyticsFileBuildtype =
+    envBuildtype === 'localhost' ? 'vagovdev' : envBuildtype;
   const filePath = path.join(
     'content-build',
     __dirname,
     '..',
     '..',
     'assets/js/google-analytics/',
-    `${Cypress.env('buildtype') || 'vagovdev'}.js`,
+    `${analyticsFileBuildtype}.js`,
   );
   cy.readFile(filePath).then(str => {
     cy.get('[data-e2e="analytics-script"]')
