@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
   # Temporary schedule.
   schedule:
-    - cron: '10,40 8-20 * * 1-5'
-      timezone: "America/New_York" # Every day at midnight
+    - cron: "*/30 12-18,20-23 * * 1-5"
+    - cron: "0 19 * * 1-5"
 
 concurrency:
   group: content-release-prod
@@ -97,12 +97,6 @@ jobs:
         id: export-build-start-time
         run: echo BUILD_START_TIME=$(date +"%s") >> $GITHUB_OUTPUT
         working-directory: ${{ github.workspace }}
-
-      - name: Checkout vagov-content
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-        with:
-          repository: department-of-veterans-affairs/vagov-content
-          path: vagov-content
 
       - name: Checkout content-build
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1

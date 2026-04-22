@@ -2,8 +2,8 @@
 const path = require('path');
 const commandLineUsage = require('command-line-usage');
 
-const parentDir = path.resolve(__dirname, '../../');
-const defaultContentDir = path.join(parentDir, 'vagov-content');
+const projectDir = path.resolve(__dirname, '../');
+const defaultContentDir = path.join(projectDir, 'vagov-content');
 
 const helpSections = [
   {

@@ -12,7 +12,7 @@ const projectRoot = path.resolve(__dirname, '../../../../');
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
-const defaultContentDir = path.join(projectRoot, '../vagov-content/pages');
+const defaultContentDir = path.join(projectRoot, './vagov-content/pages');
 const nextBuildDir = path.join(projectRoot, '../next-build/');
 
 const getDrupalClient = require('./drupal/api');

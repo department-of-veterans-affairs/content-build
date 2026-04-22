@@ -28,7 +28,7 @@ const {
 
 const defaultBuildtype = ENVIRONMENTS.LOCALHOST;
 const defaultHost = HOSTNAMES[defaultBuildtype];
-const defaultContentDir = '../../../../../vagov-content/pages';
+const defaultContentDir = '../../../../vagov-content/pages';
 
 const COMMAND_LINE_OPTIONS_DEFINITIONS = [
   {
