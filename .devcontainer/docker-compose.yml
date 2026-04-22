@@ -18,5 +18,4 @@ services:
     restart: unless-stopped
     volumes:
       - .:/application
-      - ../vagov-content:/vagov-content
       - ../content-build:/content-build
