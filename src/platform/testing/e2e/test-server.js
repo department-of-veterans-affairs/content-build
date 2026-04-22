@@ -22,16 +22,6 @@ const options = commandLineArgs(optionDefinitions);
 const root = path.resolve(__dirname, `../../../../build/${options.buildtype}`);
 const routes = manifestHelpers.getAppRoutes();
 
-// Prevent Node 22 from crashing on unhandled rejections/exceptions
-process.on('uncaughtException', err => {
-  // eslint-disable-next-line no-console
-  console.error('Test server uncaughtException:', err);
-});
-process.on('unhandledRejection', reason => {
-  // eslint-disable-next-line no-console
-  console.error('Test server unhandledRejection:', reason);
-});
-
 const app = express();
 
 app.use(
