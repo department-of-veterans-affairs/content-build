@@ -1,0 +1,129 @@
+{
+  "_comment": "Error messages for VA Form 26-8923 — IRRRL Worksheet. All messages follow VA.gov plain language content guidelines.",
+  "fieldValidation": {
+    "vaLoanNumber": {
+      "required": "Enter the VA loan number for the existing loan being refinanced.",
+      "invalid": "Enter a valid VA loan number. VA loan numbers contain letters and numbers only, with no special characters other than hyphens."
+    },
+    "nameOfLender": {
+      "required": "Enter the full legal name of the VA-approved lending institution."
+    },
+    "officerName": {
+      "required": "Enter the full name of the lending institution officer who is certifying this worksheet."
+    },
+    "officerTitle": {
+      "required": "Enter the officer's title (for example, Vice President or Loan Officer)."
+    },
+    "line1ExistingLoanBalance": {
+      "required": "Enter the existing VA loan balance in dollars and cents. Find this amount on the servicer payoff statement.",
+      "mustBePositive": "Enter a dollar amount greater than zero for the existing VA loan balance.",
+      "invalidFormat": "Enter a valid dollar amount using numbers only. For example, enter 245000.00 for $245,000."
+    },
+    "line2CashPayment": {
+      "required": "Enter a dollar amount for the Veteran's cash payment. Enter 0 if no cash payment is being made.",
+      "exceedsLine1": "The Veteran's cash payment (Line 2) cannot exceed the existing VA loan balance (Line 1: ${{line1Value}}). Enter an amount equal to or less than ${{line1Value}}, or enter 0.",
+      "invalidFormat": "Enter a valid dollar amount. Enter 0 if no cash payment is being made."
+    },
+    "line5DiscountPointsPercent": {
+      "required": "Enter the discount points percentage. Enter 0 if no discount points apply.",
+      "invalidFormat": "Enter a valid percentage. For example, enter 1.5 for 1.5%.",
+      "softWarningAbove2Percent": "Discount points above 2% may require special justification per 38 CFR § 36.4313. Verify this amount with VA Lender's Handbook Chapter 8 before proceeding. You can still continue, but review the amount carefully."
+    },
+    "line6OriginationFeePercent": {
+      "required": "Enter the origination fee percentage. Enter 0 if no origination fee applies.",
+      "invalidFormat": "Enter a valid percentage. For example, enter 1 for 1%.",
+      "exceedsCap": "The origination fee cannot exceed 1% of the loan amount per 38 CFR § 36.4313. The maximum allowable origination fee for this loan is ${{maxOriginationFee}}. Reduce the origination fee percentage to 1% or less before continuing."
+    },
+    "line7FundingFeePercent": {
+      "required": "Enter the VA funding fee percentage. The standard rate for an IRRRL is 0.5%. Enter 0 only if the Veteran is exempt from the funding fee.",
+      "invalidFormat": "Enter a valid percentage. Enter 0.5 for the standard IRRRL funding fee rate, or enter 0 if the Veteran is exempt.",
+      "exceedsCap": "The VA funding fee for an IRRRL is 0.5% per 38 CFR § 36.4312. The funding fee percentage cannot exceed 0.5%. If you believe a different rate applies, contact your VA Regional Loan Center before proceeding.",
+      "exemptionNotice": "You have entered 0% for the VA funding fee. This is appropriate only if the Veteran is exempt from the funding fee. You must verify and document the Veteran's exemption status in the closing package. VA may independently verify exemption status."
+    },
+    "line8OtherClosingCosts": {
+      "required": "Enter the total of other allowable closing costs and prepaids. Enter 0 if there are none.",
+      "invalidFormat": "Enter a valid dollar amount. Enter 0 if there are no other allowable closing costs."
+    },
+    "certificationDate": {
+      "required": "Enter the date you are completing this worksheet.",
+      "invalidDate": "Enter a valid date. Check that the month, day, and year are correct.",
+      "futureDate": "The date cannot be more than 7 days in the future. Check the date you entered.",
+      "tooFarInPast": "The date you entered is more than 30 days in the past. If this is the correct date, contact your VA Regional Loan Center."
+    },
+    "certificationCheckbox": {
+      "required": "You must confirm the certification statement before submitting this worksheet."
+    },
+    "fundingFeeExemptionCheckbox": {
+      "required": "You must confirm the Veteran's funding fee exemption status before submitting. Check the box to confirm that exemption documentation is included in the closing package."
+    }
+  },
+  "computedFieldErrors": {
+    "line3NegativeGuard": "Line 3 cannot be a negative number. The Veteran's cash payment on Line 2 (${{line2Value}}) cannot be greater than the existing loan balance on Line 1 (${{line1Value}}). Reduce Line 2.",
+    "sectionIIIInputsMissing": "Section III cannot be calculated because required values in Section I or Section II are missing or invalid. Go back to complete all required fields in Sections I and II.",
+    "line18RoundingAdjustmentLarge": "The rounding adjustment on Line 18 is ${{roundingDifference}}, which is $50 or more. Per VA form instructions, amounts of $50 or more require recomputation. This tool has automatically applied the correct round-down calculation. Review Line 18 to confirm the maximum loan amount is correct before continuing."
+  },
+  "pageValidation": {
+    "loanIdentificationIncomplete": "Complete all required fields before continuing. Check the VA loan number, lender name, officer name, and officer title.",
+    "sectionIIncomplete": "Complete all required fields in Section I before continuing. Check Lines 1 and 2.",
+    "sectionIIIncomplete": "Complete all required fields in Section II before continuing. Check Lines 5, 6, 7, and 8. Correct any fee cap errors before proceeding.",
+    "lenderCertificationIncomplete": "Complete all required fields before submitting. Enter the date and check the certification box."
+  },
+  "submissionErrors": {
+    "submissionFailed": {
+      "heading": "We couldn't submit your worksheet",
+      "body": "We're sorry. Something went wrong when we tried to submit your worksheet. Your information hasn't been sent. Please try again in a few minutes. If the problem continues, contact the VA LGY Contact Center at 1-888-768-2132 (Monday–Friday, 8:00 a.m.–6:00 p.m. ET).",
+      "action": "Try again"
+    },
+    "submissionTimeout": {
+      "heading": "The submission is taking longer than expected",
+      "body": "Your worksheet may or may not have been submitted. Do not click Submit again yet. Wait 5 minutes and check your confirmation number. If you don't have a confirmation number after 5 minutes, try submitting again or contact the VA LGY Contact Center at 1-888-768-2132.",
+      "action": "Check submission status"
+    },
+    "pdfGenerationFailed": {
+      "heading": "We couldn't generate your PDF",
+      "body": "Your worksheet was submitted successfully, but we couldn't generate the PDF download. Use your confirmation number ({{confirmationNumber}}) to contact the VA LGY Contact Center at 1-888-768-2132 and request a copy of your completed worksheet.",
+      "action": "Try downloading again"
+    },
+    "serverError": {
+      "heading": "Something went wrong on our end",
+      "body": "We're sorry. Our system isn't working right now. Please try again in a few minutes. If this keeps happening, contact the VA LGY Contact Center at 1-888-768-2132 (Monday–Friday, 8:00 a.m.–6:00 p.m. ET) or download the paper form at va.gov/find-forms/about-form-26-8923.",
+      "action": "Try again"
+    }
+  },
+  "saveInProgress": {
+    "saveSucceeded": "We saved your progress.",
+    "saveFailed": {
+      "heading": "We couldn't save your progress",
+      "body": "We're sorry. We couldn't save your work right now. Keep this page open and try saving again in a few minutes. If this keeps happening, you may need to start over.",
+      "action": "Try saving again"
+    },
+    "sessionExpiredWarning": {
+      "heading": "Your session is about to expire",
+      "body": "You've been inactive for a while. To keep your work, select Continue working. Otherwise your progress may be lost.",
+      "action": "Continue working"
+    },
+    "sessionExpired": {
+      "heading": "Your session has expired",
+      "body": "You've been inactive too long and your session has ended. Any unsaved progress has been lost. Return to the beginning of the form to start again.",
+      "action": "Start over"
+    }
+  },
+  "navigationWarnings": {
+    "leavePageWithUnsavedData": {
+      "heading": "You have unsaved changes",
+      "body": "If you leave this page, your current entries will be lost. Are you sure you want to leave?",
+      "confirmAction": "Leave this page",
+      "cancelAction": "Stay on this page"
+    },
+    "editAfterReview": {
+      "heading": "You've updated values in this worksheet",
+      "body": "All calculated amounts — including the Line 18 maximum loan amount — have been recalculated based on your changes. Review all sections before submitting."
+    }
+  },
+  "infoAlerts": {
+    "roundDownRule": "The maximum loan amount on Line 18 must always be rounded down, never up. This prevents cash from being disbursed to the Veteran, which is prohibited for an IRRRL. Round-down amounts less than $50 do not require recomputation. Amounts of $50 or more require recomputation.",
+    "wetInkSignatureRequired": "VA Form 26-8923 requires the signature and title of an officer of the lender, signed in ink on the printed form. Download and print the generated PDF. Have an authorized officer sign it in ink before including it in your IRRRL closing package.",
+    "submissionGeneratesPDF": "Submitting this worksheet will generate a completed VA Form 26-8923 (November 2024 version). You must download, print, and have the PDF signed in ink by an officer of your lending institution before including it in your IRRRL closing package.",
+    "useCurrentPayoffStatement": "Use the current payoff statement from the loan servicer for Line 1. Do not use a balance from your origination system or an older payoff statement. Using a stale balance may result in an incorrect maximum loan amount."
+  }
+}
