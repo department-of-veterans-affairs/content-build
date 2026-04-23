@@ -3,6 +3,9 @@ on:
 
 name: Preview Environment Cleanup
 
+permissions:
+  contents: read
+
 env:
   DELETED_BRANCH: ${{ github.event.ref }}
   CURRENT_REPOSITORY: ${{ github.event.repository.name }}
