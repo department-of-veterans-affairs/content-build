@@ -1,4 +1,6 @@
 name: 'Send GHA metrics to Datadog'
+permissions:
+  contents: read
 on:
   workflow_run:
     workflows:
