@@ -1,0 +1,290 @@
+{
+  "_comment": "VA Form 10-0137 — Advance Directive — Error Messages",
+  "_form": "VA Form 10-0137",
+  "_version": "1.0.0",
+  "_lastUpdated": "2024-03-01",
+
+  "fieldValidation": {
+
+    "personalInformation": {
+      "lastName": {
+        "required": "Please enter your last name",
+        "pattern": "Last name can only include letters, hyphens, apostrophes, and spaces",
+        "maxLength": "Last name must be 50 characters or fewer"
+      },
+      "firstName": {
+        "required": "Please enter your first name",
+        "pattern": "First name can only include letters, hyphens, apostrophes, and spaces",
+        "maxLength": "First name must be 50 characters or fewer"
+      },
+      "middleName": {
+        "pattern": "Middle name can only include letters, hyphens, apostrophes, and spaces",
+        "maxLength": "Middle name must be 50 characters or fewer"
+      },
+      "dateOfBirth": {
+        "required": "Please enter your date of birth",
+        "monthRequired": "Please enter a month",
+        "dayRequired": "Please enter a day",
+        "yearRequired": "Please enter a year",
+        "invalidDate": "Please enter a valid date of birth",
+        "futureDate": "Your date of birth can't be in the future",
+        "tooRecent": "Please enter a valid date of birth"
+      },
+      "streetAddress": {
+        "required": "Please enter your street address",
+        "maxLength": "Street address must be 100 characters or fewer"
+      },
+      "city": {
+        "required": "Please enter your city",
+        "maxLength": "City must be 50 characters or fewer"
+      },
+      "state": {
+        "required": "Please select a state"
+      },
+      "zipCode": {
+        "required": "Please enter your ZIP code",
+        "pattern": "Please enter a valid 5-digit ZIP code"
+      },
+      "phoneNumbers": {
+        "atLeastOne": "Please enter at least one phone number (home, work, or mobile)",
+        "invalidFormat": "Please enter a valid 10-digit phone number including area code. For example: 555-867-5309"
+      }
+    },
+
+    "healthCareAgent": {
+      "appointmentDecision": {
+        "required": "Please select whether you want to appoint a Health Care Agent"
+      },
+      "agentLastName": {
+        "required": "Please enter your Health Care Agent's last name",
+        "pattern": "Last name can only include letters, hyphens, apostrophes, and spaces",
+        "maxLength": "Last name must be 50 characters or fewer"
+      },
+      "agentFirstName": {
+        "required": "Please enter your Health Care Agent's first name",
+        "pattern": "First name can only include letters, hyphens, apostrophes, and spaces",
+        "maxLength": "First name must be 50 characters or fewer"
+      },
+      "agentMiddleName": {
+        "pattern": "Middle name can only include letters, hyphens, apostrophes, and spaces",
+        "maxLength": "Middle name must be 50 characters or fewer"
+      },
+      "agentRelationship": {
+        "required": "Please describe this person's relationship to you (for example: spouse, sibling, friend, child)",
+        "maxLength": "Relationship must be 50 characters or fewer"
+      },
+      "agentStreetAddress": {
+        "required": "Please enter your Health Care Agent's street address",
+        "maxLength": "Street address must be 100 characters or fewer"
+      },
+      "agentCity": {
+        "required": "Please enter your Health Care Agent's city",
+        "maxLength": "City must be 50 characters or fewer"
+      },
+      "agentState": {
+        "required": "Please select your Health Care Agent's state"
+      },
+      "agentZipCode": {
+        "required": "Please enter your Health Care Agent's ZIP code",
+        "pattern": "Please enter a valid 5-digit ZIP code"
+      },
+      "agentPhoneNumbers": {
+        "atLeastOne": "Please enter at least one phone number for your Health Care Agent (home, work, or mobile)",
+        "invalidFormat": "Please enter a valid 10-digit phone number including area code"
+      },
+      "alternateDecision": {
+        "required": "Please select whether you want to appoint an Alternate Health Care Agent"
+      },
+      "alternatePhoneNumbers": {
+        "atLeastOne": "Please enter at least one phone number for your Alternate Health Care Agent (home, work, or mobile)",
+        "invalidFormat": "Please enter a valid 10-digit phone number including area code"
+      }
+    },
+
+    "livingWill": {
+      "otherScenarioDescription": {
+        "required": "Please describe the situation you have in mind, or clear your selection for this scenario",
+        "maxLength": "Your description must be 500 characters or fewer"
+      },
+      "mentalHealthPreferences": {
+        "maxLength": "Your mental health care preferences must be 4,000 characters or fewer"
+      },
+      "additionalPreferences": {
+        "maxLength": "Your other health care preferences must be 4,000 characters or fewer"
+      },
+      "strictness": {
+        "required": "Please select how strictly you want your preferences followed"
+      }
+    },
+
+    "veteranSignature": {
+      "attestationCheckbox": {
+        "required": "You must certify that this form accurately describes your preferences before you can submit"
+      },
+      "typedName": {
+        "required": "Please enter your full legal name to complete your digital signature",
+        "noMatch": "The name you entered doesn't match the name in Part I. Please enter your full legal name exactly as it appears at the top of this form.",
+        "maxLength": "Your name must be 100 characters or fewer"
+      },
+      "signatureDate": {
+        "required": "Please enter the date you are signing this form",
+        "monthRequired": "Please enter a month",
+        "dayRequired": "Please enter a day",
+        "yearRequired": "Please enter a year",
+        "futureDate": "The date you are signing cannot be in the future",
+        "tooOld": "Please enter today's date or a recent date within the past 30 days",
+        "invalidDate": "Please enter a valid date"
+      }
+    },
+
+    "witnessSignature": {
+      "eligibilityCheckboxes": {
+        "allRequired": "You must confirm all statements to serve as a witness for this advance directive. If any statement is not true for you, you cannot witness this advance directive."
+      },
+      "witnessName": {
+        "required": "Please enter your full name",
+        "maxLength": "Your name must be 100 characters or fewer"
+      },
+      "witnessStreetAddress": {
+        "required": "Please enter your street address",
+        "maxLength": "Street address must be 100 characters or fewer"
+      },
+      "witnessCity": {
+        "required": "Please enter your city",
+        "maxLength": "City must be 50 characters or fewer"
+      },
+      "witnessState": {
+        "required": "Please select your state"
+      },
+      "witnessZipCode": {
+        "required": "Please enter your ZIP code",
+        "pattern": "Please enter a valid 5-digit ZIP code"
+      },
+      "witnessTypedSignature": {
+        "required": "Please type your full name to complete your witness signature",
+        "noMatch": "Your typed signature must match the name you entered above",
+        "maxLength": "Your name must be 100 characters or fewer"
+      },
+      "witnessSignatureDate": {
+        "required": "Please enter the date you are signing as a witness",
+        "monthRequired": "Please enter a month",
+        "dayRequired": "Please enter a day",
+        "yearRequired": "Please enter a year",
+        "futureDate": "The witness signature date cannot be in the future",
+        "beforeVeteranSignature": "The witness signature date cannot be before the date the Veteran signed the form",
+        "invalidDate": "Please enter a valid date"
+      },
+      "witness1SameAsVeteran": "The patient cannot serve as their own witness. Please have a qualifying person serve as Witness 1.",
+      "witness2SameAsVeteran": "The patient cannot serve as their own witness. Please have a qualifying person serve as Witness 2.",
+      "witness2SameAsWitness1": "Witness 2 must be a different person from Witness 1. Please enter a different name.",
+      "agentIsWitness": "The person you named as Health Care Agent cannot serve as a witness. Please go back and update your witness information."
+    }
+  },
+
+  "authentication": {
+    "notSignedIn": {
+      "title": "You need to sign in to complete this form",
+      "message": "To protect your health information, you must sign in with a verified VA.gov account before you can complete and submit your advance directive.",
+      "action": "Sign in or create an account"
+    },
+    "unverifiedAccount": {
+      "title": "You need to verify your identity",
+      "message": "This form involves sensitive health information and requires a verified account. Please verify your identity to continue.",
+      "action": "Verify your identity"
+    },
+    "sessionExpiringSoon": {
+      "title": "Your session is about to expire",
+      "message": "For your security, you'll be signed out in 2 minutes. Select 'Stay signed in' to keep working on your advance directive. Your progress has been saved.",
+      "staySignedIn": "Stay signed in",
+      "signOut": "Sign out"
+    },
+    "sessionExpired": {
+      "title": "Your session has expired",
+      "message": "You've been signed out for your security. Your advance directive progress has been saved. Sign in again to continue.",
+      "action": "Sign back in"
+    }
+  },
+
+  "saveInProgress": {
+    "saveSuccess": {
+      "title": "Your advance directive has been saved",
+      "message": "You can return to finish it at any time by signing in to VA.gov."
+    },
+    "saveFailure": {
+      "title": "We couldn't save your progress",
+      "message": "We're sorry. We weren't able to save your advance directive progress. Please try again. If the problem continues, call us at 1-800-698-2411 (TTY: 711), Monday through Friday, 8:00 a.m. to 8:00 p.m. ET."
+    },
+    "loadSavedForm": {
+      "title": "You have a saved advance directive in progress",
+      "message": "Would you like to continue where you left off or start over?",
+      "continueButton": "Continue saved form",
+      "startOverButton": "Start a new form"
+    },
+    "startOverConfirmation": {
+      "title": "Are you sure you want to start over?",
+      "message": "Starting a new form will delete your saved progress. This can't be undone.",
+      "confirmButton": "Yes, start a new form",
+      "cancelButton": "Cancel"
+    },
+    "loadFailure": {
+      "title": "We couldn't load your saved form",
+      "message": "We're sorry. We weren't able to load your saved advance directive. You can start a new form or try again later.",
+      "startNewButton": "Start a new form",
+      "tryAgainButton": "Try again"
+    }
+  },
+
+  "submission": {
+    "submissionPending": {
+      "title": "Submitting your advance directive",
+      "message": "Please don't close this window. We're sending your form to VA."
+    },
+    "submissionSuccess": {
+      "title": "Your advance directive has been submitted",
+      "message": "We've received your VA Advance Directive. Your form has been sent to your VA care team and will be added to your VA health record within 3 business days."
+    },
+    "submissionFailure": {
+      "title": "We couldn't submit your advance directive",
+      "message": "We're sorry. Something went wrong and we weren't able to submit your advance directive. Your progress has been saved. Please try again in a few minutes. If the problem continues, call us at 1-800-698-2411 (TTY: 711), Monday through Friday, 8:00 a.m. to 8:00 p.m. ET.",
+      "tryAgainButton": "Try to submit again"
+    },
+    "submissionTimeout": {
+      "title": "This is taking longer than expected",
+      "message": "We're still working on submitting your advance directive. Please wait. If you don't see a confirmation message within a few minutes, check your email or call us at 1-800-698-2411 (TTY: 711)."
+    },
+    "duplicateSubmission": {
+      "title": "You may have already submitted this form",
+      "message": "It looks like you may have recently submitted an advance directive. If you want to update your preferences, you can submit a new form. A newer form will replace your previous one in your VA health record."
+    }
+  },
+
+  "prefill": {
+    "prefillSuccess": {
+      "message": "We've filled in some of your information from your VA profile. Check that everything looks right before you continue. If anything is wrong, you can update it here."
+    },
+    "prefillPartial": {
+      "message": "We found some of your information in your VA profile, but some fields need to be filled in. Please review everything before you continue."
+    },
+    "prefillFailure": {
+      "message": "We weren't able to load your information from your VA profile. Please fill in your information manually. If you think this is an error, you can try refreshing the page."
+    }
+  },
+
+  "pdfDownload": {
+    "downloadFailure": {
+      "title": "We couldn't generate your PDF",
+      "message": "We're sorry. We weren't able to create a PDF copy of your advance directive right now. Please try again. You can also contact your VA care team to request a copy."
+    }
+  },
+
+  "reviewPage": {
+    "agentIsWitness": {
+      "title": "Your Health Care Agent cannot be a witness",
+      "message": "The person you named as Health Care Agent cannot serve as a witness. Please go back and update your witness information before submitting."
+    },
+    "missingRequiredSections": {
+      "title": "Some required sections are incomplete",
+      "message": "Please complete all required sections before submitting your advance directive."
+    }
+  }
+}
