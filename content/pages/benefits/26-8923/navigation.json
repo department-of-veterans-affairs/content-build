@@ -1,0 +1,156 @@
+{
+  "_comment": "Sidebar navigation for VA Form 26-8923 — IRRRL Worksheet content section. Used by content-build Liquid templates to render the left-rail nav on static pages adjacent to the form application.",
+  "section": "VA-backed home loans",
+  "navItems": [
+    {
+      "label": "VA-backed home loans",
+      "href": "/housing-assistance/home-loans",
+      "isSection": true,
+      "expanded": true,
+      "children": [
+        {
+          "label": "About VA home loan types",
+          "href": "/housing-assistance/home-loans/loan-types",
+          "isSection": false
+        },
+        {
+          "label": "Eligibility",
+          "href": "/housing-assistance/home-loans/eligibility",
+          "isSection": false
+        },
+        {
+          "label": "How to apply",
+          "href": "/housing-assistance/home-loans/how-to-apply",
+          "isSection": false
+        },
+        {
+          "label": "Interest Rate Reduction Refinancing Loan (IRRRL)",
+          "href": "/housing-assistance/home-loans/loan-types/interest-rate-reduction-loan",
+          "isSection": true,
+          "expanded": true,
+          "children": [
+            {
+              "label": "IRRRL Worksheet (VA Form 26-8923)",
+              "href": "/housing-assistance/home-loans/irrrl-worksheet-form-26-8923",
+              "isSection": true,
+              "isCurrentSection": true,
+              "expanded": true,
+              "children": [
+                {
+                  "label": "Introduction",
+                  "href": "/housing-assistance/home-loans/irrrl-worksheet-form-26-8923",
+                  "isCurrentPage": false,
+                  "description": "About this form, who completes it, and what you need"
+                },
+                {
+                  "label": "Start the worksheet",
+                  "href": "/housing-assistance/home-loans/irrrl-worksheet-form-26-8923/introduction",
+                  "isCurrentPage": false,
+                  "description": "Begin the digital IRRRL worksheet",
+                  "isFormEntry": true
+                },
+                {
+                  "label": "Help and FAQs",
+                  "href": "/housing-assistance/home-loans/irrrl-worksheet-form-26-8923/help",
+                  "isCurrentPage": false,
+                  "description": "Common questions about completing VA Form 26-8923"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Funding fee and closing costs",
+          "href": "/housing-assistance/home-loans/funding-fee-and-closing-costs",
+          "isSection": false
+        },
+        {
+          "label": "Find a VA-approved lender",
+          "href": "/housing-assistance/home-loans/find-a-lender",
+          "isSection": false
+        },
+        {
+          "label": "VA home loan forms",
+          "href": "/housing-assistance/home-loans/home-loan-forms",
+          "isSection": true,
+          "expanded": false,
+          "children": [
+            {
+              "label": "VA Form 26-8923 — IRRRL Worksheet",
+              "href": "/housing-assistance/home-loans/irrrl-worksheet-form-26-8923",
+              "isCurrentPage": false
+            },
+            {
+              "label": "VA Form 26-1880 — Request for Certificate of Eligibility",
+              "href": "/find-forms/about-form-26-1880",
+              "isCurrentPage": false
+            },
+            {
+              "label": "VA Form 26-6393 — Loan Analysis",
+              "href": "/find-forms/about-form-26-6393",
+              "isCurrentPage": false
+            },
+            {
+              "label": "All VA home loan forms",
+              "href": "/find-forms/?q=home+loan",
+              "isCurrentPage": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "relatedLinks": {
+    "heading": "Related resources",
+    "links": [
+      {
+        "label": "VA Lender's Handbook (Pamphlet 26-7)",
+        "href": "https://www.benefits.va.gov/WARMS/pam26_7.asp",
+        "isExternal": true,
+        "description": "Complete lender guidance including IRRRL procedures and allowable closing costs"
+      },
+      {
+        "label": "38 CFR Part 36 — Loan Guaranty regulations",
+        "href": "https://www.ecfr.gov/current/title-38/chapter-I/part-36",
+        "isExternal": true,
+        "description": "Federal regulations governing VA home loan programs including IRRRL fee caps"
+      },
+      {
+        "label": "Find a VA Regional Loan Center",
+        "href": "https://benefits.va.gov/homeloans/contact_rlc_info.asp",
+        "isExternal": true,
+        "description": "Contact the VA Regional Loan Center that serves your state"
+      },
+      {
+        "label": "VA Form 26-8923 (PDF download)",
+        "href": "https://www.va.gov/vaforms/va/pdf/VA26-8923.pdf",
+        "isExternal": false,
+        "description": "Paper PDF version of the IRRRL Worksheet (November 2024 version)"
+      },
+      {
+        "label": "VA Find a Form — 26-8923",
+        "href": "/find-forms/about-form-26-8923",
+        "isExternal": false,
+        "description": "VA's official form page with download link and form details"
+      }
+    ]
+  },
+  "contactBlock": {
+    "heading": "Need help?",
+    "items": [
+      {
+        "type": "phone",
+        "label": "VA.gov Help Desk (technical issues)",
+        "number": "1-855-574-7286",
+        "tty": "711",
+        "hours": "Monday–Friday, 8 a.m.–8 p.m. ET"
+      },
+      {
+        "type": "link",
+        "label": "Find a VA Regional Loan Center",
+        "href": "https://benefits.va.gov/homeloans/contact_rlc_info.asp",
+        "description": "For IRRRL policy and loan guaranty questions"
+      }
+    ]
+  }
+}
