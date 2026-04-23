@@ -1,0 +1,103 @@
+{
+  "_comment": "VA Form 26-8923 — IRRRL Worksheet error messages. Field IDs match VADS component names in the screen flow spec.",
+  "fieldValidation": {
+    "vaLoanNumber": {
+      "required": "Enter the VA loan number for the existing VA-guaranteed loan being refinanced.",
+      "pattern": "Enter a valid VA loan number. Use only letters, numbers, and hyphens."
+    },
+    "nameOfLender": {
+      "required": "Enter the full legal name of your VA-approved lending institution."
+    },
+    "officerName": {
+      "required": "Enter the full name of the lending institution officer who is certifying this worksheet."
+    },
+    "officerTitle": {
+      "required": "Enter the officer's title (for example, Vice President or Loan Officer)."
+    },
+    "line1ExistingBalance": {
+      "required": "Enter the existing VA loan balance in dollars and cents. Get this amount from the servicer payoff statement.",
+      "min": "Enter a dollar amount greater than zero for the existing VA loan balance.",
+      "max": "The loan balance you entered may be outside the expected range. Check the servicer payoff statement and re-enter the amount.",
+      "invalid": "Enter a valid dollar amount for the existing VA loan balance. Use numbers and a decimal point only (for example, 142500.00)."
+    },
+    "line2CashPayment": {
+      "required": "Enter the cash payment from the Veteran, or enter 0 if no cash payment is being made.",
+      "exceedsLine1": "The cash payment from the Veteran (Line 2) cannot exceed the existing VA loan balance on Line 1 (${{line1Value}}). Reduce Line 2 to an amount equal to or less than Line 1.",
+      "negative": "Enter 0 or a positive dollar amount for Line 2. This field cannot be negative.",
+      "invalid": "Enter a valid dollar amount for Line 2. Use numbers and a decimal point only (for example, 5000.00)."
+    },
+    "line3ComputedTotal": {
+      "cannotBeNegative": "Line 3 cannot be negative. The cash payment on Line 2 (${{line2Value}}) exceeds the existing loan balance on Line 1 (${{line1Value}}). Reduce Line 2 before continuing."
+    },
+    "line5DiscountPercentage": {
+      "required": "Enter the discount points as a percentage, or enter 0 if no discount points apply.",
+      "negative": "Enter 0 or a positive percentage for discount points.",
+      "invalid": "Enter a valid percentage for discount points (for example, 1.5 for 1.5%)."
+    },
+    "line6OriginationFeePercentage": {
+      "required": "Enter the origination fee as a percentage, or enter 0 if no origination fee applies.",
+      "exceedsCap": "The origination fee cannot exceed 1% of the loan amount per 38 CFR § 36.4313. The maximum allowable origination fee for this loan is ${{maxOriginationFee}}. Reduce the origination fee percentage to 1% or less before continuing.",
+      "negative": "Enter 0 or a positive percentage for the origination fee.",
+      "invalid": "Enter a valid percentage for the origination fee (for example, 1 for 1%)."
+    },
+    "line7FundingFeePercentage": {
+      "required": "Enter the VA funding fee percentage. The standard rate for an IRRRL is 0.5%. Enter 0 only if the Veteran is exempt from the funding fee.",
+      "exceedsCap": "The VA funding fee for an IRRRL is 0.5% per 38 CFR § 36.4312. The funding fee percentage cannot exceed 0.5%. If you believe a different rate applies, contact your VA Regional Loan Center before continuing.",
+      "negative": "Enter 0 (for an exempt Veteran) or 0.5 for the standard IRRRL funding fee. This field cannot be negative.",
+      "invalid": "Enter a valid percentage for the VA funding fee. For most IRRRLs, this is 0.5."
+    },
+    "line8OtherClosingCosts": {
+      "required": "Enter the total of other allowable closing costs and prepaids, or enter 0 if there are none.",
+      "negative": "Enter 0 or a positive dollar amount for other allowable closing costs.",
+      "invalid": "Enter a valid dollar amount for other allowable closing costs (for example, 3200.00)."
+    },
+    "certificationDate": {
+      "required": "Enter the date you are completing this worksheet.",
+      "invalidDate": "Enter a valid date. Check that the month, day, and year are correct.",
+      "futureDate": "The worksheet date cannot be more than 7 days in the future. Check the date you entered.",
+      "staleDate": "The date you entered is more than 30 days in the past. If this date is correct, contact your VA Regional Loan Center before submitting."
+    },
+    "certificationCheckbox": {
+      "required": "You must certify the accuracy of this worksheet before submitting. Check the certification box to continue."
+    },
+    "fundingFeeExemptionCheckbox": {
+      "required": "You entered 0% for the VA funding fee. You must certify that the Veteran (or eligible surviving spouse) is exempt from the funding fee and that documentation is included in the closing package."
+    }
+  },
+  "softWarnings": {
+    "line5DiscountAbove2Pct": "Discount points above 2% may require special justification per 38 CFR § 36.4313. Verify that this amount complies with VA Lender's Handbook Chapter 8 guidance before proceeding.",
+    "line7FundingFeeZero": "You entered 0% for the VA funding fee. This is appropriate only if the Veteran is exempt from the VA funding fee — for example, because the Veteran has a service-connected disability rated at 10% or more, or the Veteran's surviving spouse is receiving Dependency and Indemnity Compensation (DIC). You must verify and document the Veteran's exemption status in the closing package. VA may independently verify exemption status.",
+    "line18RoundingAdjustmentLarge": "The rounding adjustment on Line 18 is ${{roundingDifference}}, which equals or exceeds $50. Per the form's rounding rule, amounts of $50 or more require recomputation. The tool has automatically applied the correct round-down value and recomputed. Review Line 18 before continuing.",
+    "sectionIIIInputsIncomplete": "Section III cannot be calculated because required values in Section I or Section II are missing or contain errors. Return to the earlier sections and complete all required fields before reviewing Section III."
+  },
+  "pageValidation": {
+    "pageHasErrors": "This page has errors. Fix the errors below before continuing.",
+    "sectionIIncomplete": "Complete all required fields in Section I before moving to Section II.",
+    "sectionIIIncomplete": "Complete all required fields in Section II before reviewing Section III.",
+    "reviewPageEdited": "You updated values in this worksheet. All calculated amounts, including the Line 18 Maximum Loan Amount, have been recalculated. Review all sections before resubmitting."
+  },
+  "submission": {
+    "submissionError": "We couldn't submit your worksheet. Your entries have been saved. Wait a few minutes and try again. If the problem continues, call the VA.gov Help Desk at 1-855-574-7286 (TTY: 711), Monday through Friday, 8 a.m. to 8 p.m. ET.",
+    "submissionTimeout": "The submission took too long to complete. Your entries have been saved. Check your internet connection and try again.",
+    "pdfGenerationError": "Your worksheet was submitted, but we had trouble generating the PDF. Call the VA.gov Help Desk at 1-855-574-7286 (TTY: 711) for help downloading your completed form.",
+    "networkError": "We couldn't connect to VA.gov. Check your internet connection and try submitting again. Your entries have been saved.",
+    "sessionExpired": "Your session expired and your entries may not have been saved. Sign in again and re-enter your worksheet data. If you need help, call the VA.gov Help Desk at 1-855-574-7286 (TTY: 711)."
+  },
+  "saveInProgress": {
+    "saveSuccess": "We saved your worksheet progress.",
+    "saveError": "We couldn't save your progress right now. Your entries are still on screen. Try saving again in a few minutes.",
+    "saveErrorFinal": "We couldn't save your worksheet. If you leave this page, your entries may be lost. Copy down your entered values before leaving, or try again.",
+    "savedApplicationFound": "You have a worksheet in progress. The last save was on {{savedDate}} at {{savedTime}}. Do you want to continue where you left off, or start a new worksheet?",
+    "continueApplication": "Continue your saved worksheet",
+    "startNewApplication": "Start a new worksheet"
+  },
+  "accessibilityAnnouncements": {
+    "line3Updated": "Line 3 total updated: ${{line3Value}}",
+    "line4Updated": "Line 4 carried forward from Line 3: ${{line4Value}}",
+    "line9Updated": "Line 9 preliminary total updated: ${{line9Value}}",
+    "line18Updated": "Line 18 Maximum Loan Amount updated: ${{line18Value}}. This amount is rounded down as required.",
+    "errorSummaryHeading": "There are {{errorCount}} errors on this page. Fix the errors before continuing.",
+    "formSectionLoaded": "{{sectionName}} loaded. Complete the required fields and select Continue.",
+    "computationIncomplete": "Not yet calculated. Complete Sections I and II first."
+  }
+}
