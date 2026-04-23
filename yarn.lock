@@ -1323,12 +1323,12 @@
   resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/eslint-plugin/-/eslint-plugin-1.1.0.tgz#fcfb3651485aaddb66f1f46f227b670b2adce7da"
   integrity sha512-QLtevzdk7axqtFVVI0NRc9qhbCcSAdgmv/PkQF0kUPNZagKlDImL8acZRK0U74cixKIL1JUSkk8FSi761phL6w==
 
-"@department-of-veterans-affairs/web-components@24.1.0":
-  version "24.1.0"
-  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-24.1.0.tgz#7e3bca080b3b720ff9acf96af58b34207991a896"
-  integrity sha512-18w+mfcZDKVlqM9hmNhY/QvMHtGNMFRHuwW/wQ9KSoe8gh9OaZSIWEGHyC91L8P9CZTZ+AuP/w4Sypn9q+7AmA==
+"@department-of-veterans-affairs/web-components@24.2.1":
+  version "24.2.1"
+  resolved "https://registry.yarnpkg.com/@department-of-veterans-affairs/web-components/-/web-components-24.2.1.tgz#13530dade60201b9b102517241c413da0f13dbcf"
+  integrity sha512-C/7TLaru+rH8opC7vUtOp6pDGFiehrxnVzzZhtecJRbHc2zheme9TAACvNYKJGQkrrpr7TgvsqneUud5Nwka/g==
   dependencies:
-    "@stencil/core" "4.20.0"
+    "@stencil/core" "4.43.2"
     aria-hidden "1.1.3"
     body-scroll-lock "4.0.0-beta.0"
     chromatic "11.0.4"
@@ -1707,6 +1707,46 @@
     "@parcel/watcher-win32-ia32" "2.5.4"
     "@parcel/watcher-win32-x64" "2.5.4"
 
+"@rollup/rollup-darwin-arm64@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.44.0.tgz#60a51a61b22b1f4fdf97b4adf5f0f447f492759d"
+  integrity sha512-VGF3wy0Eq1gcEIkSCr8Ke03CWT+Pm2yveKLaDvq51pPpZza3JX/ClxXOCmTYYq3us5MvEuNRTaeyFThCKRQhOA==
+
+"@rollup/rollup-darwin-x64@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-darwin-x64/-/rollup-darwin-x64-4.44.0.tgz#bfe3059440f7032de11e749ece868cd7f232e609"
+  integrity sha512-fBkyrDhwquRvrTxSGH/qqt3/T0w5Rg0L7ZIDypvBPc1/gzjJle6acCpZ36blwuwcKD/u6oCE/sRWlUAcxLWQbQ==
+
+"@rollup/rollup-linux-arm64-gnu@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.44.0.tgz#dbc5036a85e3ca3349887c8bdbebcfd011e460b0"
+  integrity sha512-ZTR2mxBHb4tK4wGf9b8SYg0Y6KQPjGpR4UWwTFdnmjB4qRtoATZ5dWn3KsDwGa5Z2ZBOE7K52L36J9LueKBdOQ==
+
+"@rollup/rollup-linux-arm64-musl@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-arm64-musl/-/rollup-linux-arm64-musl-4.44.0.tgz#72efc633aa0b93531bdfc69d70bcafa88e6152fc"
+  integrity sha512-GFWfAhVhWGd4r6UxmnKRTBwP1qmModHtd5gkraeW2G490BpFOZkFtem8yuX2NyafIP/mGpRJgTJ2PwohQkUY/Q==
+
+"@rollup/rollup-linux-x64-gnu@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.44.0.tgz#597d40f60d4b15bedbbacf2491a69c5b67a58e93"
+  integrity sha512-iUVJc3c0o8l9Sa/qlDL2Z9UP92UZZW1+EmQ4xfjTc1akr0iUFZNfxrXJ/R1T90h/ILm9iXEY6+iPrmYB3pXKjw==
+
+"@rollup/rollup-linux-x64-musl@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.44.0.tgz#0a062d6fee35ec4fbb607b2a9d933a9372ccf63a"
+  integrity sha512-PQUobbhLTQT5yz/SPg116VJBgz+XOtXt8D1ck+sfJJhuEsMj2jSej5yTdp8CvWBSceu+WW+ibVL6dm0ptG5fcA==
+
+"@rollup/rollup-win32-arm64-msvc@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-arm64-msvc/-/rollup-win32-arm64-msvc-4.44.0.tgz#41ffab489857987c75385b0fc8cccf97f7e69d0a"
+  integrity sha512-M0CpcHf8TWn+4oTxJfh7LQuTuaYeXGbk0eageVjQCKzYLsajWS/lFC94qlRqOlyC2KvRT90ZrfXULYmukeIy7w==
+
+"@rollup/rollup-win32-x64-msvc@4.44.0":
+  version "4.44.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.44.0.tgz#a36e79b6ccece1533f777a1bca1f89c13f0c5f62"
+  integrity sha512-Q2Mgwt+D8hd5FIPUuPDsvPR7Bguza6yTkJxspDGkZj7tBRn2y4KSWYuIXpftFSjBra76TbKerCV7rgFPQrn+wQ==
+
 "@sentry/browser@^6.13.1":
   version "6.13.2"
   resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-6.13.2.tgz#8b731ecf8c3cdd92a4b6893a26f975fd5844056d"
@@ -1788,10 +1828,19 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@stencil/core@4.20.0":
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.20.0.tgz#221f2b36ab999891560449b02d6915862c435f49"
-  integrity sha512-WPrTHFngvN081RY+dJPneKQLwnOFD60OMCOQGmmSHfCW0f4ujPMzzhwWU1gcSwXPWXz5O+8cBiiCaxAbJU7kAg==
+"@stencil/core@4.43.2":
+  version "4.43.2"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.43.2.tgz#482ef872ace6e4e7b430c8290d12dd92b273ad4a"
+  integrity sha512-hOprMw/n1fyu5OOtZG7N8sqiKxPshR1oss/y1qr6r98cVV9NcVoCMz2x2TT2enkHan6pCMpiQgUU7vmN90lIVw==
+  optionalDependencies:
+    "@rollup/rollup-darwin-arm64" "4.44.0"
+    "@rollup/rollup-darwin-x64" "4.44.0"
+    "@rollup/rollup-linux-arm64-gnu" "4.44.0"
+    "@rollup/rollup-linux-arm64-musl" "4.44.0"
+    "@rollup/rollup-linux-x64-gnu" "4.44.0"
+    "@rollup/rollup-linux-x64-musl" "4.44.0"
+    "@rollup/rollup-win32-arm64-msvc" "4.44.0"
+    "@rollup/rollup-win32-x64-msvc" "4.44.0"
 
 "@testing-library/cypress@^8.0.3":
   version "8.0.3"
