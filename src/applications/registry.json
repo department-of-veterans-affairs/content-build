@@ -33,7 +33,10 @@
       "collection": "pension",
       "order": 3,
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Application for Veterans Pension",
@@ -174,7 +177,10 @@
       "description": "Use VA Form 21P-530EZ to apply for VA burial benefits online now. Get step-by-step instructions, and consider signing in to save your in-progress application if you need to come back to finish filling it out later.",
       "order": 1,
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Application for burial benefits",
@@ -189,7 +195,7 @@
     "template": {
       "title": "Apply for VA health care",
       "display_title": "Apply Now",
-      "description": "Apply for VA health care benefits. Find out which documents you’ll need, and start your online application today.",
+      "description": "Apply for VA health care benefits. Find out which documents you\u2019ll need, and start your online application today.",
       "body_class": "page-healthcare",
       "layout": "page-react.html",
       "collection": "healthCare",
@@ -298,7 +304,7 @@
       "layout": "page-react.html",
       "includeBreadcrumbs": true,
       "in_maintenance": false,
-      "maintenance_line1": "We’re sorry. The page you’re looking for is currently down while we fix a few things. We’ll get it back online as soon as we can.",
+      "maintenance_line1": "We\u2019re sorry. The page you\u2019re looking for is currently down while we fix a few things. We\u2019ll get it back online as soon as we can.",
       "maintenance_line2": "In the meantime, please try the search box above or one of the options listed below to find more information."
     }
   },
@@ -350,7 +356,7 @@
       "spoke": "Manage benefits",
       "order": 2,
       "in_maintenance": false,
-      "maintenance_line1": "We’re sorry. Our system is temporarily down while we fix a few things. Please try again later.",
+      "maintenance_line1": "We\u2019re sorry. Our system is temporarily down while we fix a few things. Please try again later.",
       "includeBreadcrumbs": true,
       "breadcrumbs_override": [
         {
@@ -400,7 +406,7 @@
       "title": "Apply for the Rogers STEM Scholarship",
       "heading": "Apply for the Rogers STEM Scholarship",
       "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
+      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you\u2019ll need to apply for benefits, and start your online application today.",
       "order": 1,
       "hideFromSidebar": true,
       "includeBreadcrumbs": true,
@@ -429,8 +435,8 @@
     "entryName": "feedback-tool",
     "rootUrl": "/education/submit-school-feedback",
     "template": {
-      "title": "GI Bill® School Feedback Tool",
-      "heading": "GI Bill® School Feedback Tool",
+      "title": "GI Bill\u00ae School Feedback Tool",
+      "heading": "GI Bill\u00ae School Feedback Tool",
       "layout": "page-react.html",
       "description": "Find out how to give us feedback about your GI Bill school. ",
       "includeBreadcrumbs": true,
@@ -445,7 +451,7 @@
       "title": "Veteran Request For Change",
       "heading": "Veteran request for change",
       "layout": "page-react.html",
-      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you’ll need to apply for benefits, and start your online application today.",
+      "description": "Use your VA education benefits to pay for college or training programs. Find out which documents you\u2019ll need to apply for benefits, and start your online application today.",
       "order": 1,
       "hideFromSidebar": true,
       "includeBreadcrumbs": true,
@@ -515,7 +521,7 @@
     "template": {
       "title": "GI Bill Comparison Tool",
       "display_title": "GI Bill school comparison",
-      "description": "Use our GI Bill Comparison Tool to help you decide which education program and school is best for you. Find out which benefits you’ll get at your chosen school.",
+      "description": "Use our GI Bill Comparison Tool to help you decide which education program and school is best for you. Find out which benefits you\u2019ll get at your chosen school.",
       "layout": "page-react.html",
       "collection": "education",
       "spoke": "More resources",
@@ -579,7 +585,7 @@
         },
         {
           "path": "/careers-employment/vocational-rehabilitation/apply-vre-form-28-1900",
-          "name": "Apply for Veteran Readiness and Employment Form 28‑1900"
+          "name": "Apply for Veteran Readiness and Employment Form 28\u20111900"
         }
       ]
     }
@@ -604,7 +610,7 @@
         },
         {
           "path": "careers-employment/education-and-career-counseling/apply-career-guidance-form-25-8832/introduction",
-          "name": "Apply for Personalized Career Planning and Guidance Form 27‑8832"
+          "name": "Apply for Personalized Career Planning and Guidance Form 27\u20118832"
         }
       ]
     }
@@ -912,7 +918,7 @@
     }
   },
   {
-    "appName": "'Fry/DEA — VA Education Benefits For Survivors And Dependents'",
+    "appName": "'Fry/DEA \u2014 VA Education Benefits For Survivors And Dependents'",
     "entryName": "fry-dea",
     "rootUrl": "/fry-dea",
     "productId": "bafad5fa-0b44-4377-b183-affb8d16ca55",
@@ -1323,7 +1329,10 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Request personal records",
@@ -1413,7 +1422,10 @@
       "layout": "page-react.html",
       "title": "Submit other health insurance",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Submit other health insurance",
@@ -1431,7 +1443,10 @@
       "layout": "page-react.html",
       "title": "Register for the Foreign Medical Program (FMP)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Register for the Foreign Medical Program (FMP)",
@@ -1449,7 +1464,10 @@
       "layout": "page-react.html",
       "title": "File a CHAMPVA claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a CHAMPVA claim",
@@ -1465,7 +1483,10 @@
     "template": {
       "vagovprod": true,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Submit a statement to support a claim",
         "subtitle": "Statement in support of a claim (VA Form 21-4138)"
@@ -1483,7 +1504,10 @@
       "layout": "page-react.html",
       "title": "File a Foreign Medical Program (FMP) claim",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "File a Foreign Medical Program (FMP) claim",
@@ -1509,7 +1533,10 @@
       "title": "VA Form 21P-0969",
       "description": "Income and Asset Statement in Support of Claim for Pension or Parents' Dependency and Indemnity Compensation (DIC)",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Pension or DIC Income and Asset Statement",
@@ -1568,7 +1595,10 @@
     "template": {
       "vagovprod": false,
       "layout": "page-react.html",
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalHeader": {
         "title": "Explore pattern demonstrations in our sample form",
         "subtitle": "Mock Form Minimal Header"
@@ -1740,7 +1770,10 @@
       "layout": "page-react.html",
       "title": "Apply for CHAMPVA benefits",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for CHAMPVA benefits",
@@ -1984,7 +2017,10 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Income Verification for Disability Benefits",
@@ -2001,7 +2037,10 @@
       "vagovprod": true,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Apply for additional compensation based on inability to work",
@@ -2010,7 +2049,7 @@
     }
   },
   {
-    "appName": "Submit medical expenses to support a pension or parents’ DIC claim",
+    "appName": "Submit medical expenses to support a pension or parents\u2019 DIC claim",
     "entryName": "medical-expense-report",
     "rootUrl": "/supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
     "productId": "66940f08-4d8d-486c-8dc2-605ddeb9247e",
@@ -2025,7 +2064,7 @@
         },
         {
           "path": "supporting-forms-for-claims/submit-medical-expense-report-form-21p-8416",
-          "name": "Submit medical expenses to support a pension or parents’ DIC claim"
+          "name": "Submit medical expenses to support a pension or parents\u2019 DIC claim"
         }
       ]
     }
@@ -2174,7 +2213,10 @@
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
-      "minimalExcludePaths": ["/introduction", "/confirmation"],
+      "minimalExcludePaths": [
+        "/introduction",
+        "/confirmation"
+      ],
       "minimalFooter": true,
       "minimalHeader": {
         "title": "Mock Form with Prefill",
@@ -2183,16 +2225,16 @@
     }
   },
   {
-  "appName": "form-renderer",
-  "entryName": "form-renderer",
-  "rootUrl": "/my-va/submissions",
-  "template": {
-    "vagovprod": true,
-    "title": "Copy of 686c submission",
-    "layout": "page-react.html",
-    "includeBreadcrumbs": false,
-    "minimalFooter": true,
-    "minimalHeader": {
+    "appName": "form-renderer",
+    "entryName": "form-renderer",
+    "rootUrl": "/my-va/submissions",
+    "template": {
+      "vagovprod": true,
+      "title": "Copy of 686c submission",
+      "layout": "page-react.html",
+      "includeBreadcrumbs": false,
+      "minimalFooter": true,
+      "minimalHeader": {
         "title": "Add or remove a dependent on VA benefits",
         "subtitle": "VA Form 21-686c"
       }
@@ -2219,10 +2261,10 @@
     }
   },
   {
-  "appName": "Apply for automobile or adaptive equipment",
-  "entryName": "21-4502",
-  "rootUrl": "/forms/21-4502/apply-automobile-and-adaptive-equipment",
-  "template": {
+    "appName": "Apply for automobile or adaptive equipment",
+    "entryName": "21-4502",
+    "rootUrl": "/forms/21-4502/apply-automobile-and-adaptive-equipment",
+    "template": {
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
@@ -2238,10 +2280,10 @@
     }
   },
   {
-  "appName": "Request apportionment of beneficiary's award",
-  "entryName": "21-0788",
-  "rootUrl": "/supporting-forms-for-claims/request-apportionment-form-21-0788",
-  "template": {
+    "appName": "Request apportionment of beneficiary's award",
+    "entryName": "21-0788",
+    "rootUrl": "/supporting-forms-for-claims/request-apportionment-form-21-0788",
+    "template": {
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
@@ -2253,15 +2295,14 @@
       "minimalHeader": {
         "title": "Information Regarding Apportionment of Beneficiary's Award",
         "subtitle": "(VA Form 21-0788)"
-
       }
     }
   },
   {
-  "appName": "Apply for Annual Clothing Allowance",
-  "entryName": "10-8678",
-  "rootUrl": "/disability/eligibility/annual-clothing-allowance/apply-form-10-8678",
-  "template": {
+    "appName": "Apply for Annual Clothing Allowance",
+    "entryName": "10-8678",
+    "rootUrl": "/disability/eligibility/annual-clothing-allowance/apply-form-10-8678",
+    "template": {
       "vagovprod": false,
       "layout": "page-react.html",
       "includeBreadcrumbs": false,
@@ -2275,6 +2316,29 @@
         "subtitle": "(VA Form 10-8678)"
       }
     }
+  },
+  {
+    "appName": "IRRRL Worksheet (VA Form 26-8923)",
+    "entryName": "irrrl-worksheet-26-8923",
+    "rootUrl": "/housing-assistance/home-loans/irrrl-worksheet",
+    "template": {
+      "vagovprod": false,
+      "layout": "page-react.html",
+      "includeBreadcrumbs": true,
+      "breadcrumbs_override": [
+        {
+          "name": "Housing assistance",
+          "path": "housing-assistance"
+        },
+        {
+          "name": "VA-backed home loans",
+          "path": "housing-assistance/home-loans"
+        },
+        {
+          "name": "IRRRL worksheet (VA Form 26-8923)",
+          "path": "housing-assistance/home-loans/irrrl-worksheet"
+        }
+      ]
+    }
   }
-
 ]
