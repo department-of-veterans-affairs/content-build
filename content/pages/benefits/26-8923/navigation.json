@@ -1,0 +1,131 @@
+{
+  "_comment": "Sidebar navigation configuration for VA Form 26-8923 — IRRRL Worksheet pages. Used by content-build to render the left-nav sidebar on static content pages surrounding the form application.",
+  "navTitle": "VA-backed home loans — lender resources",
+  "rootPath": "/housing-assistance/home-loans",
+  "items": [
+    {
+      "label": "VA-backed home loans",
+      "path": "/housing-assistance/home-loans",
+      "expanded": true,
+      "children": [
+        {
+          "label": "Loan programs",
+          "path": "/housing-assistance/home-loans/loan-programs",
+          "expanded": false,
+          "children": [
+            {
+              "label": "Interest Rate Reduction Refinancing Loan (IRRRL)",
+              "path": "/housing-assistance/home-loans/loan-programs/irrrl"
+            },
+            {
+              "label": "Purchase loans",
+              "path": "/housing-assistance/home-loans/loan-programs/purchase-loan"
+            },
+            {
+              "label": "Cash-out refinance loan",
+              "path": "/housing-assistance/home-loans/loan-programs/cash-out-refinance-loan"
+            }
+          ]
+        },
+        {
+          "label": "IRRRL worksheet (VA Form 26-8923)",
+          "path": "/housing-assistance/home-loans/irrrl-worksheet",
+          "expanded": true,
+          "active": true,
+          "children": [
+            {
+              "label": "Introduction",
+              "path": "/housing-assistance/home-loans/irrrl-worksheet",
+              "matchExact": true
+            },
+            {
+              "label": "Help and FAQs",
+              "path": "/housing-assistance/home-loans/irrrl-worksheet/help"
+            }
+          ]
+        },
+        {
+          "label": "VA home loan eligibility",
+          "path": "/housing-assistance/home-loans/eligibility"
+        },
+        {
+          "label": "VA funding fee",
+          "path": "/housing-assistance/home-loans/funding-fee-and-closing-costs"
+        },
+        {
+          "label": "Find a VA-approved lender",
+          "path": "/housing-assistance/home-loans/find-a-lender"
+        }
+      ]
+    },
+    {
+      "label": "Lender resources",
+      "path": "/housing-assistance/home-loans/lenders",
+      "expanded": false,
+      "children": [
+        {
+          "label": "VA Lender's Handbook (Pamphlet 26-7)",
+          "path": "https://www.benefits.va.gov/homeloans/lenders_handbook.asp",
+          "external": true
+        },
+        {
+          "label": "VA forms for lenders",
+          "path": "/find-forms",
+          "query": "?q=26"
+        },
+        {
+          "label": "VA Regional Loan Centers",
+          "path": "https://www.benefits.va.gov/homeloans/contact_rlc_info.asp",
+          "external": true
+        }
+      ]
+    }
+  ],
+  "relatedLinks": {
+    "heading": "Related forms and resources",
+    "links": [
+      {
+        "label": "VA Form 26-8923 (PDF — November 2024)",
+        "path": "https://www.va.gov/find-forms/about-form-26-8923",
+        "description": "Download the paper version of the IRRRL worksheet",
+        "external": true
+      },
+      {
+        "label": "About VA Form 26-8923",
+        "path": "https://www.va.gov/find-forms/about-form-26-8923",
+        "description": "Form details, version history, and OMB information",
+        "external": true
+      },
+      {
+        "label": "38 CFR Part 36 — Loan guaranty regulations",
+        "path": "https://www.ecfr.gov/current/title-38/chapter-I/part-36",
+        "description": "Federal regulations governing VA IRRRL fee limits and eligibility",
+        "external": true
+      },
+      {
+        "label": "VA Lender's Handbook — Chapter 6 (IRRRL procedures)",
+        "path": "https://www.benefits.va.gov/homeloans/lenders_handbook_chapter6.asp",
+        "description": "Detailed guidance on completing IRRRL transactions",
+        "external": true
+      },
+      {
+        "label": "VA Lender's Handbook — Chapter 8 (Allowable fees and charges)",
+        "path": "https://www.benefits.va.gov/homeloans/lenders_handbook_chapter8.asp",
+        "description": "Complete list of allowable closing costs for VA loans",
+        "external": true
+      }
+    ]
+  },
+  "formMetadata": {
+    "formNumber": "26-8923",
+    "formTitle": "Interest Rate Reduction Refinancing Loan Worksheet",
+    "formVersion": "November 2024",
+    "ombControlNumber": "2900-0386",
+    "ombExpirationDate": "11/30/2027",
+    "digitalToolUrl": "/housing-assistance/home-loans/irrrl-worksheet",
+    "pdfDownloadUrl": "https://www.va.gov/vaforms/va/pdf/VA26-8923.pdf",
+    "findFormUrl": "https://www.va.gov/find-forms/about-form-26-8923",
+    "entryName": "irrrl-worksheet-26-8923",
+    "rootUrl": "/housing-assistance/home-loans/irrrl-worksheet"
+  }
+}
