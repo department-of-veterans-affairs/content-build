@@ -1,0 +1,243 @@
+{
+  "_comment": "VA Form 10-0137 — Advance Directive — Sidebar Navigation",
+  "_form": "VA Form 10-0137",
+  "_version": "1.0.0",
+
+  "sidebarNav": {
+    "title": "VA Advance Directive",
+    "rootPath": "/health-care/advance-directive",
+    "sections": [
+      {
+        "label": "About VA Form 10-0137",
+        "links": [
+          {
+            "label": "Introduction",
+            "path": "/health-care/advance-directive/introduction/",
+            "description": "What the form does, who can complete it, and what to prepare"
+          },
+          {
+            "label": "Help and FAQs",
+            "path": "/health-care/advance-directive/help/",
+            "description": "Common questions about the form, witnesses, and what happens after you submit"
+          }
+        ]
+      },
+      {
+        "label": "Complete your advance directive",
+        "links": [
+          {
+            "label": "Start VA Form 10-0137",
+            "path": "/health-care/advance-directive/",
+            "description": "Sign in to complete and submit your advance directive online",
+            "isPrimary": true
+          },
+          {
+            "label": "Download the paper form (PDF)",
+            "path": "https://www.va.gov/find-forms/about-form-10-0137/",
+            "description": "Download VA Form 10-0137 to complete by hand",
+            "isExternal": true
+          }
+        ]
+      },
+      {
+        "label": "Related health care actions",
+        "links": [
+          {
+            "label": "Apply for VA health care",
+            "path": "/health-care/apply/",
+            "description": "You must be enrolled in VA health care to complete this form"
+          },
+          {
+            "label": "Update your VA profile",
+            "path": "/profile/",
+            "description": "Keep your contact information current so your advance directive is accurate"
+          },
+          {
+            "label": "Send a secure message to your care team",
+            "path": "https://www.myhealth.va.gov/",
+            "description": "Talk to your VA care team about your advance directive",
+            "isExternal": true
+          },
+          {
+            "label": "Schedule a VA appointment",
+            "path": "/health-care/schedule-view-va-appointments/",
+            "description": "Talk to your provider about your health care wishes in person or by telehealth"
+          }
+        ]
+      },
+      {
+        "label": "Get help",
+        "links": [
+          {
+            "label": "Call MyVA411",
+            "path": "tel:18006982411",
+            "description": "1-800-698-2411 (TTY: 711) — Monday–Friday, 8:00 a.m. to 8:00 p.m. ET",
+            "isPhone": true
+          },
+          {
+            "label": "Contact VA online",
+            "path": "/contact-us/",
+            "description": "Chat, email, or find your local VA facility"
+          },
+          {
+            "label": "Find a VA patient advocate",
+            "path": "/find-locations/",
+            "description": "A patient advocate at your VA facility can help you complete this form in person"
+          }
+        ]
+      }
+    ]
+  },
+
+  "formStepperNav": {
+    "_comment": "Labels for the multi-step form progress indicator displayed within the React application",
+    "chapters": [
+      {
+        "chapterKey": "personalInformation",
+        "chapterTitle": "Your information",
+        "screenUrl": "/health-care/advance-directive/personal-information",
+        "stepNumber": 1
+      },
+      {
+        "chapterKey": "healthCareAgent",
+        "chapterTitle": "Health Care Agent",
+        "screenUrl": "/health-care/advance-directive/health-care-agent/choice",
+        "stepNumber": 2,
+        "conditionalSteps": [
+          {
+            "stepKey": "primaryAgent",
+            "screenUrl": "/health-care/advance-directive/health-care-agent/primary",
+            "condition": "veteranAppointsAgent === true"
+          },
+          {
+            "stepKey": "alternateAgent",
+            "screenUrl": "/health-care/advance-directive/health-care-agent/alternate",
+            "condition": "veteranAppointsAgent === true"
+          }
+        ]
+      },
+      {
+        "chapterKey": "livingWill",
+        "chapterTitle": "Living Will",
+        "stepNumber": 3,
+        "screens": [
+          {
+            "stepKey": "lifeSustainingTreatments",
+            "screenUrl": "/health-care/advance-directive/living-will/life-sustaining-treatments",
+            "label": "Life-sustaining treatments"
+          },
+          {
+            "stepKey": "mentalHealthPreferences",
+            "screenUrl": "/health-care/advance-directive/living-will/mental-health-preferences",
+            "label": "Mental health preferences"
+          },
+          {
+            "stepKey": "additionalPreferences",
+            "screenUrl": "/health-care/advance-directive/living-will/additional-preferences",
+            "label": "Other care preferences"
+          },
+          {
+            "stepKey": "strictness",
+            "screenUrl": "/health-care/advance-directive/living-will/strictness",
+            "label": "How strictly to follow your preferences"
+          }
+        ]
+      },
+      {
+        "chapterKey": "signatures",
+        "chapterTitle": "Sign your form",
+        "stepNumber": 4,
+        "screens": [
+          {
+            "stepKey": "veteranSignature",
+            "screenUrl": "/health-care/advance-directive/signature/veteran",
+            "label": "Your signature"
+          },
+          {
+            "stepKey": "witnessInstructions",
+            "screenUrl": "/health-care/advance-directive/signature/witness-instructions",
+            "label": "Witness instructions"
+          },
+          {
+            "stepKey": "witness1",
+            "screenUrl": "/health-care/advance-directive/signature/witness-1",
+            "label": "Witness 1 signature"
+          },
+          {
+            "stepKey": "witness2",
+            "screenUrl": "/health-care/advance-directive/signature/witness-2",
+            "label": "Witness 2 signature"
+          }
+        ]
+      },
+      {
+        "chapterKey": "reviewAndSubmit",
+        "chapterTitle": "Review and submit",
+        "screenUrl": "/health-care/advance-directive/review-and-submit",
+        "stepNumber": 5
+      }
+    ]
+  },
+
+  "breadcrumbs": {
+    "_comment": "Breadcrumb trail used on all 10-0137 content pages and the React application",
+    "default": [
+      {
+        "name": "Home",
+        "path": "/"
+      },
+      {
+        "name": "Health care",
+        "path": "/health-care/"
+      },
+      {
+        "name": "VA Advance Directive (VA Form 10-0137)",
+        "path": "/health-care/advance-directive/"
+      }
+    ],
+    "help": [
+      {
+        "name": "Home",
+        "path": "/"
+      },
+      {
+        "name": "Health care",
+        "path": "/health-care/"
+      },
+      {
+        "name": "VA Advance Directive (VA Form 10-0137)",
+        "path": "/health-care/advance-directive/"
+      },
+      {
+        "name": "Help",
+        "path": "/health-care/advance-directive/help/"
+      }
+    ]
+  },
+
+  "relatedLinks": {
+    "title": "More VA health care resources",
+    "links": [
+      {
+        "label": "Learn about advance care planning at VA",
+        "path": "/health-care/about-va-health-benefits/advance-care-planning/",
+        "description": "How VA supports your health care wishes"
+      },
+      {
+        "label": "VA health care benefits overview",
+        "path": "/health-care/about-va-health-benefits/",
+        "description": "Learn what VA health care covers"
+      },
+      {
+        "label": "Find a VA location",
+        "path": "/find-locations/",
+        "description": "Find a VA facility near you for in-person help"
+      },
+      {
+        "label": "Find VA forms",
+        "path": "/find-forms/",
+        "description": "Search for other VA forms"
+      }
+    ]
+  }
+}
