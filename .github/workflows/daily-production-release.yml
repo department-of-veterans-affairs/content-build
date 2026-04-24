@@ -1,4 +1,6 @@
 name: Daily Production Release
+permissions:
+  contents: read
 
 on:
   workflow_dispatch:
@@ -32,6 +34,9 @@ jobs:
     name: Create Release
     needs: holiday-checker
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
     # Do not run the workflow during VA holidays unless we explicitly override it.
     if: >
       (needs.holiday-checker.outputs.is_holiday == 'false' || (inputs && inputs.override_code_freeze))

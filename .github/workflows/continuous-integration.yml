@@ -1,4 +1,6 @@
 name: Continuous Integration
+permissions:
+  contents: read
 
 on:
   push:
@@ -222,6 +224,9 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -352,6 +357,9 @@ jobs:
     needs:
       - login-to-amazon-ecr
       - build
+    permissions:
+      checks: write
+      contents: read
     timeout-minutes: 30
     container:
       image: 008577686731.dkr.ecr.us-gov-west-1.amazonaws.com/dsva/cypress-io/cypress/browsers:node16.16.0-chrome107-ff107-edge
@@ -443,6 +451,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [cypress-tests]
     if: ${{ needs.cypress-tests.result == 'failure' || needs.cypress-tests.result == 'success' }}
+    permissions:
+      checks: write
+      contents: read
     continue-on-error: true
     timeout-minutes: 30
     steps:
@@ -576,6 +587,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ always() && github.ref == 'refs/heads/main' && needs.cypress-tests.result == 'success' }}
     needs: cypress-tests
+    permissions:
+      actions: read
+      contents: read
     outputs:
       latest_run_number: ${{ steps.latest-run-number.outputs.latest_run_number }}
 

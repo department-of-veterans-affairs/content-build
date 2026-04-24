@@ -1,5 +1,8 @@
 name: Prune Self-Hosted Runners
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
   schedule:

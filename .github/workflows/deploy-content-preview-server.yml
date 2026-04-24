@@ -1,5 +1,7 @@
 name: Deploy Content Preview Server
 
+permissions: {}
+
 on:
   workflow_run:
     workflows:
