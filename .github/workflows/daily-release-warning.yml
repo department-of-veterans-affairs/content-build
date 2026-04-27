@@ -1,5 +1,8 @@
 name: Daily Release Warning
 
+permissions:
+  contents: read
+
 on:
   schedule:
     - cron: 0 15 * * 1-5
@@ -17,6 +20,9 @@ jobs:
   notify:
     name: Notify Start
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
 
     steps:
       - name: Cancel workflow due to DSVA schedule

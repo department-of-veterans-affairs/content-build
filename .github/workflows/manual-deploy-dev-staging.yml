@@ -1,4 +1,6 @@
 name: Manual dev/staging Deploy
+permissions:
+  contents: read
 
 on:
   workflow_dispatch:

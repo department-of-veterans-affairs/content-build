@@ -1,4 +1,7 @@
 name: Content Release
+permissions:
+  actions: read
+  contents: read
 
 on:
   repository_dispatch:

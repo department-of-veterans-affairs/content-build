@@ -22,9 +22,7 @@ https://github.com/department-of-veterans-affairs/next-build/tree/main/src/compo
           <h1>{{ title }}</h1>
         {% endif %}
 
-        <div class="va-introtext">
-          <p>{{ fieldIntroText }}</p>
-        </div>
+        <p class="va-introtext">{{ fieldIntroText | escape | newline_to_br }}</p>
 
         {% if fieldSpokes != empty and fieldSpokes.length > 1 %}
           <va-on-this-page></va-on-this-page>
