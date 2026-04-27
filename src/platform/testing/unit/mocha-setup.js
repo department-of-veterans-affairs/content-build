@@ -41,6 +41,20 @@ function filterStackTrace(trace) {
     .join(os.EOL);
 }
 
+/** JSDOM 21+ exposes spec-accurate `location` (non-configurable); skip instead of throwing. */
+function defineWritableIfConfigurable(obj, key, value) {
+  const existing = Object.getOwnPropertyDescriptor(obj, key);
+  if (existing && !existing.configurable) {
+    return;
+  }
+  Object.defineProperty(obj, key, {
+    value,
+    configurable: true,
+    enumerable: true,
+    writable: true,
+  });
+}
+
 /**
  * Sets up JSDom in the testing environment. Allows testing of DOM functions without a browser.
  */
@@ -151,12 +165,7 @@ function setupJSDom() {
     writable: true,
   });
 
-  Object.defineProperty(window, 'location', {
-    value: window.location,
-    configurable: true,
-    enumerable: true,
-    writable: true,
-  });
+  defineWritableIfConfigurable(window, 'location', window.location);
 } // end setupJSDom()
 
 setupJSDom();
