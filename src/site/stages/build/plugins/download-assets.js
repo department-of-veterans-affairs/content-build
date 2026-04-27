@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 
-require('isomorphic-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const buckets = require('../../../constants/buckets');
@@ -11,12 +10,32 @@ process.on('unhandledRejection', up => {
   throw up;
 });
 
+async function downloadWithRetry(url, retries = 3, delay = 1000) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    const buffer = Buffer.from(await response.arrayBuffer());
+    return { response, buffer };
+  } catch (err) {
+    if (retries <= 1) throw err;
+    console.log(
+      `Fetch failed for ${url}: ${err.message}. Retrying in ${delay}ms...`,
+    );
+    await new Promise(resolve => setTimeout(resolve, delay));
+    return downloadWithRetry(url, retries - 1, delay * 2);
+  }
+}
+
 async function downloadFromLiveBucket(files, buildOptions) {
   const bucket = buckets[buildOptions.buildtype];
   const fileManifestPath = 'generated/file-manifest.json';
 
-  const fileManifestRequest = await fetch(`${bucket}/${fileManifestPath}`);
-  const fileManifest = await fileManifestRequest.json();
+  const { buffer: manifestBuffer } = await downloadWithRetry(
+    `${bucket}/${fileManifestPath}`,
+  );
+  const fileManifest = JSON.parse(manifestBuffer.toString());
 
   files[fileManifestPath] = {
     path: fileManifestPath,
@@ -32,14 +51,11 @@ async function downloadFromLiveBucket(files, buildOptions) {
     const bundleUrl = bundleFileName.includes(bucket)
       ? `${bundleFileName}`
       : `${bucket}${bundleFileName}`;
-    const bundleResponse = await fetch(bundleUrl);
 
     if (bundleFileName.includes('generated/../')) {
       console.log(`Excluding: ${bundleFileName} from download`);
     } else {
-      if (!bundleResponse.ok) {
-        throw new Error(`Failed to download asset: ${bundleUrl}`);
-      }
+      const { buffer } = await downloadWithRetry(bundleUrl);
 
       if (bundleFileName.startsWith('/')) {
         bundleFileName = bundleFileName.slice(1);
@@ -53,10 +69,7 @@ async function downloadFromLiveBucket(files, buildOptions) {
       };
 
       // Store file contents directly on disk
-      fs.outputFileSync(
-        path.join(buildPath, bundleFileName),
-        await bundleResponse.buffer(),
-      );
+      fs.outputFileSync(path.join(buildPath, bundleFileName), buffer);
 
       console.log(`Successfully downloaded asset: ${bundleUrl}`);
     }
@@ -77,3 +90,4 @@ function downloadAssets(buildOptions) {
 }
 
 module.exports = downloadAssets;
+module.exports.downloadWithRetry = downloadWithRetry;

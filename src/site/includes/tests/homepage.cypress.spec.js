@@ -38,7 +38,7 @@ describe('home page', () => {
     includeShadowDom: true,
     waitForAnimations: true,
     pageLoadTimeout: 120000,
-    baseUrl: 'http://localhost:3002',
+    baseUrl: 'http://127.0.0.1:3002',
   });
 
   beforeEach(() => {
