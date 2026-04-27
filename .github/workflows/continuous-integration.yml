@@ -231,6 +231,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
+      - name: Setup Node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
+
       - name: Install dependencies
         uses: ./.github/workflows/install
         timeout-minutes: 30
@@ -507,7 +512,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
-          node-version: 14 # ${{ steps.get-node-version.outputs.NODE_VERSION }}
+          node-version: ${{ steps.get-node-version.outputs.NODE_VERSION }}
 
       # TODO: Potentially use install composite
       - name: Install dependencies
