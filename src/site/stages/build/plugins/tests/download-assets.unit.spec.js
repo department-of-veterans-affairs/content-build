@@ -1,55 +1,53 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 import { expect } from 'chai';
-import sinon from 'sinon';
 import { downloadWithRetry } from '../download-assets';
 
 describe('downloadWithRetry', () => {
   let originalFetch;
-  let sandbox;
 
   beforeEach(() => {
     originalFetch = global.fetch;
-    sandbox = sinon.sandbox.create();
   });
 
   afterEach(() => {
     global.fetch = originalFetch;
-    sandbox.restore();
   });
 
   it('should return the response and buffer on a successful fetch', async () => {
     const body = 'test content';
+    let fetchCalls = 0;
     const mockResponse = {
       ok: true,
       status: 200,
-      arrayBuffer: sandbox
-        .stub()
-        .resolves(new TextEncoder().encode(body).buffer),
+      arrayBuffer: async () => new TextEncoder().encode(body).buffer,
     };
-    global.fetch = sandbox.stub().resolves(mockResponse);
+    global.fetch = async () => {
+      fetchCalls += 1;
+      return mockResponse;
+    };
 
     const result = await downloadWithRetry('https://example.com/file.js');
 
     expect(result.response).to.equal(mockResponse);
     expect(result.buffer.toString()).to.equal(body);
-    expect(global.fetch.calledOnce).to.be.true;
+    expect(fetchCalls).to.equal(1);
   });
 
   it('should retry on fetch failure and succeed on a subsequent attempt', async () => {
     const body = 'test content';
+    let fetchCalls = 0;
     const mockResponse = {
       ok: true,
       status: 200,
-      arrayBuffer: sandbox
-        .stub()
-        .resolves(new TextEncoder().encode(body).buffer),
+      arrayBuffer: async () => new TextEncoder().encode(body).buffer,
     };
-    global.fetch = sandbox
-      .stub()
-      .onFirstCall()
-      .rejects(new Error('socket closed'))
-      .onSecondCall()
-      .resolves(mockResponse);
+    global.fetch = async () => {
+      fetchCalls += 1;
+      if (fetchCalls === 1) {
+        throw new Error('socket closed');
+      }
+      return mockResponse;
+    };
 
     const result = await downloadWithRetry(
       'https://example.com/file.js',
@@ -59,29 +57,31 @@ describe('downloadWithRetry', () => {
 
     expect(result.response).to.equal(mockResponse);
     expect(result.buffer.toString()).to.equal(body);
-    expect(global.fetch.calledTwice).to.be.true;
+    expect(fetchCalls).to.equal(2);
   });
 
   it('should retry on body read failure and succeed on a subsequent attempt', async () => {
     const body = 'test content';
+    let fetchCalls = 0;
     const failResponse = {
       ok: true,
       status: 200,
-      arrayBuffer: sandbox.stub().rejects(new Error('terminated')),
+      arrayBuffer: async () => {
+        throw new Error('terminated');
+      },
     };
     const successResponse = {
       ok: true,
       status: 200,
-      arrayBuffer: sandbox
-        .stub()
-        .resolves(new TextEncoder().encode(body).buffer),
+      arrayBuffer: async () => new TextEncoder().encode(body).buffer,
     };
-    global.fetch = sandbox
-      .stub()
-      .onFirstCall()
-      .resolves(failResponse)
-      .onSecondCall()
-      .resolves(successResponse);
+    global.fetch = async () => {
+      fetchCalls += 1;
+      if (fetchCalls === 1) {
+        return failResponse;
+      }
+      return successResponse;
+    };
 
     const result = await downloadWithRetry(
       'https://example.com/file.js',
@@ -91,12 +91,16 @@ describe('downloadWithRetry', () => {
 
     expect(result.response).to.equal(successResponse);
     expect(result.buffer.toString()).to.equal(body);
-    expect(global.fetch.calledTwice).to.be.true;
+    expect(fetchCalls).to.equal(2);
   });
 
   it('should throw after all retries are exhausted', async () => {
     const error = new Error('socket closed');
-    global.fetch = sandbox.stub().rejects(error);
+    let fetchCalls = 0;
+    global.fetch = async () => {
+      fetchCalls += 1;
+      throw error;
+    };
 
     try {
       await downloadWithRetry('https://example.com/file.js', 2, 10);
@@ -105,11 +109,15 @@ describe('downloadWithRetry', () => {
       expect(err).to.equal(error);
     }
 
-    expect(global.fetch.calledTwice).to.be.true;
+    expect(fetchCalls).to.equal(2);
   });
 
   it('should retry the correct number of times', async () => {
-    global.fetch = sandbox.stub().rejects(new Error('network error'));
+    let fetchCalls = 0;
+    global.fetch = async () => {
+      fetchCalls += 1;
+      throw new Error('network error');
+    };
 
     try {
       await downloadWithRetry('https://example.com/file.js', 3, 10);
@@ -118,7 +126,7 @@ describe('downloadWithRetry', () => {
       expect(err.message).to.equal('network error');
     }
 
-    expect(global.fetch.calledThrice).to.be.true;
+    expect(fetchCalls).to.equal(3);
   });
 
   it('should throw on non-ok HTTP response', async () => {
@@ -126,9 +134,8 @@ describe('downloadWithRetry', () => {
       ok: false,
       status: 404,
       statusText: 'Not Found',
-      arrayBuffer: sandbox.stub(),
     };
-    global.fetch = sandbox.stub().resolves(mockResponse);
+    global.fetch = async () => mockResponse;
 
     try {
       await downloadWithRetry('https://example.com/file.js', 1, 10);
