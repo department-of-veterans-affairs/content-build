@@ -18,21 +18,21 @@ Note: GitHub Copilot will be added as a PR reviewer automatically. Please pay at
 ## Related issue(s)
 
 - _Link to ticket created in va.gov-team repo_
-department-of-veterans-affairs/va.gov-team#0000
+software/va.gov-team#0000
 - _Link to previous change of the code/bug (if applicable)_
-department-of-veterans-affairs/vets-website#0000
+software/vets-website#0000
 - _Link to epic if not included in ticket_
-department-of-veterans-affairs/va.gov-team#0000
+software/va.gov-team#0000
 
 ## Are you removing or changing a registry.json `entryName` in this PR?
 - [ ] No, I'm not changing any `entryName`s (skip to Summary and delete the rest of this section)
 - [ ] Yes, I'm removing or changing an `entryName`
 
 If you are:
-1. **Deleting an entryName**: First search [vets-website](https://github.com/department-of-veterans-affairs/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that removes those references, if any.
+1. **Deleting an entryName**: First search [vets-website](https://va.ghe.com/software/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that removes those references, if any.
    - _Add the link to your merged vets-website PR here_
 
-2. **Changing an entryName**: First search [vets-website](https://github.com/department-of-veterans-affairs/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that updates those references, if any.
+2. **Changing an entryName**: First search [vets-website](https://va.ghe.com/software/vets-website/) for references to this `entryName` that are _not_ in the app folder (particularly in `src/applications/static-pages/static-pages-entry.js` and `src/platform/forms/constants.js`) and merge a PR that updates those references, if any.
    - _Add the link to your merged vets-website PR here_
 
 _**If you do not do this, other applications will break!**_

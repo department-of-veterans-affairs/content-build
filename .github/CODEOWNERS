@@ -1,113 +1,113 @@
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence,
-#  @department-of-veterans-affairs/va-platform-cop-frontend will be requested for
+#  @software/va-platform-cop-frontend will be requested for
 # review when someone opens a pull request.
 #
 # Review the CODEOWNERS guide before editing:
-# https://github.com/department-of-veterans-affairs/va.gov-team/blob/master/platform/engineering/codeowners.md
+# https://va.ghe.com/software/va.gov-team/blob/master/platform/engineering/codeowners.md
 
 # General ownership: CMS Team & FE COP
-*       @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
+*       @software/cms-infrastructure @software/va-platform-cop-frontend
 
 # Content release
-.github/workflows/content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
-.github/workflows/request-content-release.yml @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
-.github/workflows/deploy-content-preview-server.yml @department-of-veterans-affairs/cms-infrastructure
-.github/workflows/wait-for-cms-ready @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
-.github/workflows/record-release-interval @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
-script @department-of-veterans-affairs/cms-infrastructure @department-of-veterans-affairs/va-platform-cop-frontend
+.github/workflows/content-release.yml @software/cms-infrastructure @software/va-platform-cop-frontend
+.github/workflows/request-content-release.yml @software/cms-infrastructure @software/va-platform-cop-frontend
+.github/workflows/deploy-content-preview-server.yml @software/cms-infrastructure
+.github/workflows/wait-for-cms-ready @software/cms-infrastructure @software/va-platform-cop-frontend
+.github/workflows/record-release-interval @software/cms-infrastructure @software/va-platform-cop-frontend
+script @software/cms-infrastructure @software/va-platform-cop-frontend
 
 # Shared templates
-src/site/includes @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/1010-health-apps-frontend
-src/site/components @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/1010-health-apps-frontend
-src/site/layouts @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/teasers @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/filters @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/includes @software/vfs-public-websites-frontend @software/vfs-facilities-frontend @software/1010-health-apps-frontend
+src/site/components @software/vfs-public-websites-frontend @software/vfs-facilities-frontend @software/1010-health-apps-frontend
+src/site/layouts @software/vfs-public-websites-frontend @software/vfs-facilities-frontend
+src/site/teasers @software/vfs-public-websites-frontend @software/vfs-facilities-frontend
+src/site/filters @software/vfs-public-websites-frontend @software/vfs-facilities-frontend
 
 # Accredited representative
-src/site/layouts/accredited-representative-portal.html @department-of-veterans-affairs/benefits-accredited-rep-facing-engineers
-src/site/includes/accredited-representative-portal/head.html @department-of-veterans-affairs/benefits-accredited-rep-facing-engineers
+src/site/layouts/accredited-representative-portal.html @software/benefits-accredited-rep-facing-engineers
+src/site/includes/accredited-representative-portal/head.html @software/benefits-accredited-rep-facing-engineers
 
 # Facility Locator and VAMC pages
 ## Multiple Facility types
-src/site/facilities @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/locations_listing.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/navigation/facility_sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/paragraphs/facilities @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/facilities @software/vfs-facilities-frontend
+src/site/layouts/locations_listing.drupal.liquid @software/vfs-facilities-frontend
+src/site/navigation/facility_no_drupal_page_sidebar_nav.drupal.liquid @software/vfs-facilities-frontend
+src/site/navigation/facility_sidebar_nav.drupal.liquid @software/vfs-facilities-frontend
+src/site/paragraphs/facilities @software/vfs-facilities-frontend
 
 
 ## Facility locator
 
 ## VAMC
-src/site/includes/va_police @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/health*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/leadership_listing*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/news_story.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/person_profile.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/press_release.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/press_releases_listing.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/regional_health_care_service_des.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/story_listing.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/tests/vamc* @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/vamc*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/stages/build/drupal/static-data-files/vaPoliceData @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/tests/police @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/includes/va_police @software/vfs-facilities-frontend
+src/site/layouts/health*.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/leadership_listing*.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/news_story.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/person_profile.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/press_release.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/press_releases_listing.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/regional_health_care_service_des.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/story_listing.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/tests/vamc* @software/vfs-facilities-frontend
+src/site/layouts/vamc*.drupal.liquid @software/vfs-facilities-frontend
+src/site/stages/build/drupal/static-data-files/vaPoliceData @software/vfs-facilities-frontend
+src/site/tests/police @software/vfs-facilities-frontend
 
 ## VBA
-src/site/includes/vba_facilities @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/vba*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/tests/vba* @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/includes/vba_facilities @software/vfs-facilities-frontend
+src/site/layouts/vba*.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/tests/vba* @software/vfs-facilities-frontend
 
 ## Vet Center
-src/site/includes/vet_centers @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/vet_center*.drupal.liquid @department-of-veterans-affairs/vfs-facilities-frontend
-src/site/layouts/tests/vet_center* @department-of-veterans-affairs/vfs-facilities-frontend
+src/site/includes/vet_centers @software/vfs-facilities-frontend
+src/site/layouts/vet_center*.drupal.liquid @software/vfs-facilities-frontend
+src/site/layouts/tests/vet_center* @software/vfs-facilities-frontend
 
 # Public Websites
-src/site/blocks @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/basic_landing_page.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/campaign_landing_page.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/checklist.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/event* @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/ap-admins
-src/site/layouts/faq*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/full_width_banner_alert.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/home* @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/landing_page.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/media_list*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/office.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/outreach_asset.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/page* @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/publication_listing.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/q_a.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/step_by_step.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/support*.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/layouts/va_form.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/navigation/sidebar_nav.drupal.liquid @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/paragraphs @department-of-veterans-affairs/vfs-public-websites-frontend
-src/site/tests/home @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/blocks @software/vfs-public-websites-frontend
+src/site/layouts/basic_landing_page.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/campaign_landing_page.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/checklist.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/event* @software/vfs-public-websites-frontend @software/ap-admins
+src/site/layouts/faq*.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/full_width_banner_alert.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/home* @software/vfs-public-websites-frontend
+src/site/layouts/landing_page.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/media_list*.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/office.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/outreach_asset.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/page* @software/vfs-public-websites-frontend
+src/site/layouts/publication_listing.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/q_a.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/step_by_step.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/support*.drupal.liquid @software/vfs-public-websites-frontend
+src/site/layouts/va_form.drupal.liquid @software/vfs-public-websites-frontend
+src/site/navigation/sidebar_nav.drupal.liquid @software/vfs-public-websites-frontend
+src/site/paragraphs @software/vfs-public-websites-frontend
+src/site/tests/home @software/vfs-public-websites-frontend
 
 # Platform Design System
-src/site/includes/footer.html @department-of-veterans-affairs/platform-design-system-fe
-src/site/includes/header-minimal.html @department-of-veterans-affairs/platform-design-system-fe
-src/site/includes/header.html @department-of-veterans-affairs/platform-design-system-fe
-src/site/includes/top-nav.html @department-of-veterans-affairs/platform-design-system-fe
-src/site/includes/usa-website-header.html @department-of-veterans-affairs/platform-design-system-fe
+src/site/includes/footer.html @software/platform-design-system-fe
+src/site/includes/header-minimal.html @software/platform-design-system-fe
+src/site/includes/header.html @software/platform-design-system-fe
+src/site/includes/top-nav.html @software/platform-design-system-fe
+src/site/includes/usa-website-header.html @software/platform-design-system-fe
 
 
 # GraphQL Queries
-src/site/stages/build/drupal @department-of-veterans-affairs/vfs-public-websites-frontend @department-of-veterans-affairs/vfs-facilities-frontend @department-of-veterans-affairs/cms-infrastructure
+src/site/stages/build/drupal @software/vfs-public-websites-frontend @software/vfs-facilities-frontend @software/cms-infrastructure
 
 # Site Assets
-src/site/assets/robots.txt @department-of-veterans-affairs/vfs-public-websites-frontend
+src/site/assets/robots.txt @software/vfs-public-websites-frontend
 
 #Medallia Assets
-src/site/includes/medallia-feedback-button.drupal.liquid @department-of-veterans-affairs/veteran-support-team
-src/site/includes/above-footer-elements.drupal.liquid @department-of-veterans-affairs/veteran-support-team
-src/site/filters/medalliaSurveysConfig.js @department-of-veterans-affairs/veteran-support-team
-src/site/assets/js/google-analytics/medallia-events.js @department-of-veterans-affairs/veteran-support-team
-src/site/assets/js/medallia/vagovprod.js @department-of-veterans-affairs/veteran-support-team
-src/site/includes/survey-tools.html @department-of-veterans-affairs/veteran-support-team
+src/site/includes/medallia-feedback-button.drupal.liquid @software/veteran-support-team
+src/site/includes/above-footer-elements.drupal.liquid @software/veteran-support-team
+src/site/filters/medalliaSurveysConfig.js @software/veteran-support-team
+src/site/assets/js/google-analytics/medallia-events.js @software/veteran-support-team
+src/site/assets/js/medallia/vagovprod.js @software/veteran-support-team
+src/site/includes/survey-tools.html @software/veteran-support-team
 
 # Mobile app files
-src/site/assets/.well-known* @department-of-veterans-affairs/flagship-mobile-reviewers
+src/site/assets/.well-known* @software/flagship-mobile-reviewers

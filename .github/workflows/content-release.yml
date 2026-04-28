@@ -157,13 +157,13 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: set Drupal prod password
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/password
           env_variable_name: DRUPAL_PASSWORD
 
       - name: set Drupal prod username
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
@@ -217,7 +217,7 @@ jobs:
           jq '.series[].tags[4] = "trigger:${{env.BUILD_TRIGGER}}"' > metrics.json
 
       - name: Get Datadog api key from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
@@ -268,7 +268,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_NONPROD_ROLE
           env_variable_name: AWS_FRONTEND_NONPROD_ROLE
@@ -331,7 +331,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get role from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /frontend-team/github-actions/parameters/AWS_FRONTEND_PROD_ROLE
           env_variable_name: AWS_FRONTEND_PROD_ROLE
@@ -418,7 +418,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Datadog token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
@@ -481,7 +481,7 @@ jobs:
     needs: deploy
     steps:
       - name: Notify Slack
-        uses: department-of-veterans-affairs/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4
+        uses: software/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4
         continue-on-error: true
         with:
           payload: >
@@ -523,7 +523,7 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Datadog token from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
@@ -613,13 +613,13 @@ jobs:
           aws-region: us-gov-west-1
 
       - name: Get Datadog api key from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_API_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_API_KEY
 
       - name: Get Datadog app key from Parameter Store
-        uses: department-of-veterans-affairs/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
+        uses: software/action-inject-ssm-secrets@d8e6de3bde4dd728c9d732baef58b3c854b8c4bb # latest
         with:
           ssm_parameter: /dsva-vagov/content-build/GHA_CONTENT_BUILD_DATADOG_APP_KEY
           env_variable_name: GHA_CONTENT_BUILD_DATADOG_APP_KEY

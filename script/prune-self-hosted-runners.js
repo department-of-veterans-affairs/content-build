@@ -42,8 +42,7 @@ const THRESHOLD_DAYS = process.env.THRESHOLD_DAYS || 5;
 const TERMINATE_LIMIT = process.env.TERMINATE_LIMIT || 3;
 
 // The owner of the repository.
-const GITHUB_OWNER =
-  process.env.GITHUB_OWNER || 'department-of-veterans-affairs';
+const GITHUB_OWNER = process.env.GITHUB_OWNER || 'software';
 const GITHUB_REPO = process.env.GITHUB_REPO || 'content-build';
 
 // The GitHub token.

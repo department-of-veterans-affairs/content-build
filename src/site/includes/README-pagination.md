@@ -1,6 +1,6 @@
 # Pagination in Drupal static pages
 
-Template: [pagination.drupal.liquid](https://github.com/department-of-veterans-affairs/content-build/blob/main/src/site/includes/pagination.drupal.liquid)
+Template: [pagination.drupal.liquid](https://va.ghe.com/software/content-build/blob/main/src/site/includes/pagination.drupal.liquid)
 
 As of March 2024, content-build is using the V3 pagination web component ([docs here](https://design.va.gov/components/pagination)).
 
