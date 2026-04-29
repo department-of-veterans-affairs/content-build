@@ -101,7 +101,7 @@
     "@babel/register": "^7.23.7",
     "@department-of-veterans-affairs/eslint-plugin": "^1.1.0",
     "@department-of-veterans-affairs/web-components": "24.1.0",
-    "@octokit/rest": "^18.10.0",
+    "@octokit/rest": "^20.1.2",
     "@sentry/browser": "^6.13.1",
     "@testing-library/cypress": "^8.0.3",
     "@yarnpkg/lockfile": "^1.1.0",
