@@ -1,8 +1,6 @@
 const { readFile } = require('fs').promises;
 const { fileURLToPath } = require('url');
 const fetch = require('node-fetch');
-const SocksProxyAgent = require('socks-proxy-agent');
-const syswidecas = require('syswide-cas');
 
 const { Response } = fetch;
 
@@ -39,33 +37,9 @@ function getCurlClient(buildOptions, _clientOptionsArg = { verbose: true }) {
     Authorization: `Basic ${encodedCredentials}`,
     'Content-Type': 'application/json',
   };
-  const agent = new SocksProxyAgent('socks://127.0.0.1:2001');
   return {
-    // We have to point to aws urls on Jenkins, so the only
-    // time we'll be using cms.va.gov addresses is locally,
-    // when we need a proxy
-
     async proxyFetch(url, options = { headers }) {
-      const usingProxy =
-        /^https?:\/\/.*\.cms\.va\.gov\//.test(url) &&
-        !buildOptions['no-drupal-proxy'];
-
-      if (usingProxy) {
-        // addCAs() is here because VA uses self-signed certificates with a
-        // non-globally trusted Root Certificate Authority and we need to
-        // tell our code to trust it, otherwise we get self-signed certificate errors.
-        syswidecas.addCAs([
-          'certs/VA-Internal-S2-RCA1-v1.pem',
-          'certs/VA-Internal-S2-RCA2.pem',
-        ]);
-      }
-      return fetchWrapper(
-        url,
-        // eslint-disable-next-line prefer-object-spread
-        Object.assign({}, options, {
-          agent: usingProxy ? agent : undefined,
-        }),
-      );
+      return fetchWrapper(url, options);
     },
   };
 }

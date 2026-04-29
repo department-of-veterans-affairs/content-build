@@ -194,7 +194,6 @@
     "sass-loader": "^12.1.0",
     "semver": "^7.5.2",
     "sentry-testkit": "^6.4.1",
-    "socks-proxy-agent": "^5.0.0",
     "style-loader": "^3.2.1",
     "table": "^6.7.6",
     "tar": "^7.5.10",
