@@ -427,7 +427,7 @@ jobs:
         run: |
           jq --null-input '{}' | \
           jq '.title = "VA.gov CMS content release was successful"' | \
-          jq '.text = "VA.gov Content release ${{github.run_id}} completed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.text = "VA.gov Content release ${{github.run_id}} completed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://va.ghe.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
           jq '.date_happened = now' | \
           jq '.aggregation_key = "content release ${{github.run_id}}"' | \
           jq '.tags[0] = "project:vagov"' | \
@@ -494,7 +494,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed.\n<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
+                        "text": ":bangbang: <!subteam^S09760WRN3T|cms-troubleshooting> Content release using ${{ needs.validate-build-status.outputs.TAG || 'an unknown version' }} has failed.\n<https://va.ghe.com/${{github.repository}}/actions/runs/${{github.run_id}}>"
                       }
                     }
                   ]
@@ -532,7 +532,7 @@ jobs:
         run: |
           jq --null-input '{}' | \
           jq '.title = "VA.gov CMS content release has failed"' | \
-          jq '.text = "VA.gov Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
+          jq '.text = "VA.gov Content release ${{github.run_id}} failed at \(now|strftime("%Y-%m-%d %H:%M:%S"))! https://va.ghe.com/${{github.repository}}/actions/runs/${{github.run_id}}"' | \
           jq '.date_happened = now' | \
           jq '.aggregation_key = "content release ${{github.run_id}}"' | \
           jq '.tags[0] = "project:vagov"' | \

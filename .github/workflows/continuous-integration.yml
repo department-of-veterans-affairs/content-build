@@ -457,7 +457,7 @@ jobs:
         env:
           SSL_CERT_DIR: /etc/ssl/certs
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `main` branch, run: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!here> E2E tests in `content-build` have failed on the `main` branch, run: <https://va.ghe.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.run_id}}>"}}]}]}'
           channel_id: C026PD47Z19
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -718,7 +718,7 @@ jobs:
         uses: software/platform-release-tools-actions/slack-notify@8c496a4b0c9158d18edcd9be8722ed0f79e8c5b4 # main
         continue-on-error: true
         with:
-          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!subteam^S01JXBLLMJL|cms-devops-engineers> content-build main branch CI failed!: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
+          payload: '{"attachments": [{"color": "#D33834","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "<!subteam^S01JXBLLMJL|cms-devops-engineers> content-build main branch CI failed!: <https://va.ghe.com/${{github.repository}}/actions/runs/${{github.run_id}}>"}}]}]}'
           channel_id: ${{ env.CONTENT_BUILD_CHANNEL_ID }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
