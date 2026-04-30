@@ -2,7 +2,7 @@ const commandLineArgs = require('command-line-args');
 const printUnitTestHelp = require('./run-unit-test-help.js');
 const { runCommand } = require('./utils');
 
-// For usage instructions see https://github.com/department-of-veterans-affairs/vets-website#unit-tests
+// For usage instructions see https://va.ghe.com/software/vets-website#unit-tests
 
 const defaultPath = './src/**/*.unit.spec.js?(x)';
 
