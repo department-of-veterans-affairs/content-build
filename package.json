@@ -250,6 +250,7 @@
     "**/js-yaml": "^3.13.1",
     "**/jpeg-js": "^0.4.0",
     "**/dot-prop": "^5.1.1",
+    "**/flatted": "^3.4.2",
     "**/form-data": "^2.5.4",
     "**/graceful-fs": "^4.2.11",
     "**/handlebars": "^4.7.9",
@@ -271,7 +272,13 @@
     "**/uglify-js": "^2.2.24",
     "**/ansi-regex": "^4.1.1",
     "**/@babel/core": "^7.23.2",
-    "**/diff": "^5.2.1"
+    "**/diff": "^5.2.1",
+    "mocha/minimatch": "5.1.8",
+    "babel-plugin-module-resolver/glob/minimatch": "5.1.8",
+    "**/minimatch": "3.1.4",
+    "**/picomatch": "^4.0.4",
+    "mocker-api/path-to-regexp": "6.3.0",
+    "**/path-to-regexp": "0.1.13"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
