@@ -41,7 +41,7 @@ const makeHTMLFileName = (layoutPath, dataName) => {
 
 const createDirectory = async () => {
   const directoryPath = path.resolve(__dirname, '../', 'html');
-  await mkdir(directoryPath);
+  await mkdir(directoryPath, { recursive: true });
 };
 
 const saveFile = async (name, html) => {

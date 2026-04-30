@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-require('isomorphic-fetch');
 const path = require('path');
 const fs = require('fs-extra');
 const chalk = require('chalk');
@@ -75,7 +74,7 @@ async function downloadFile(
       contents: '',
     };
 
-    const contents = await response.buffer();
+    const contents = Buffer.from(await response.arrayBuffer());
 
     // Store file contents directly on disk
     outputPaths.forEach(outputPath => fs.outputFileSync(outputPath, contents));

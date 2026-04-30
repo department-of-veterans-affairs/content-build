@@ -1,10 +1,23 @@
 /* eslint-disable @department-of-veterans-affairs/axe-check-required */
 
 import { expect } from 'chai';
-import sinon from 'sinon';
 import queryResult from './fixtures/queryResult.json';
 
 const { postProcessDigitalForm } = require('../postProcessDigitalForm');
+
+/** Callable spy with Sinon-compatible `calledOnce` for function loggers. */
+function createFnSpy() {
+  let callCount = 0;
+  const fn = () => {
+    callCount += 1;
+  };
+  Object.defineProperty(fn, 'calledOnce', {
+    get() {
+      return callCount === 1;
+    },
+  });
+  return fn;
+}
 
 describe('postProcessDigitalForm', () => {
   const [oneStepEntity, manyStepEntity] = queryResult.data.nodeQuery.entities;
@@ -58,7 +71,7 @@ describe('postProcessDigitalForm', () => {
     let logger;
 
     beforeEach(() => {
-      logger = sinon.spy();
+      logger = createFnSpy();
     });
 
     context('when the entire query is bad', () => {

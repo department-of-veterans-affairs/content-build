@@ -4,17 +4,17 @@
  * If you're looking to add polyfills for all unit tests, this is the place.
  */
 
-import os from 'os';
-import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import chaiDOM from 'chai-dom';
-import { JSDOM } from 'jsdom';
-import '../../site-wide/moment-setup';
-import ENVIRONMENTS from 'site/constants/environments';
-import * as Sentry from '@sentry/browser';
-import chaiAxe from './axe-plugin';
+const os = require('os');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const chaiDOM = require('chai-dom');
+const { JSDOM } = require('jsdom');
+require('../../site-wide/moment-setup');
+const ENVIRONMENTS = require('site/constants/environments');
+const Sentry = require('@sentry/browser');
+const chaiAxe = require('./axe-plugin');
 
-import { sentryTransport } from './sentry';
+const { sentryTransport } = require('./sentry');
 
 Sentry.init({
   transport: sentryTransport,
@@ -39,6 +39,20 @@ function filterStackTrace(trace) {
     .split(os.EOL)
     .filter(line => !line.includes('node_modules'))
     .join(os.EOL);
+}
+
+/** JSDOM 21+ exposes spec-accurate `location` (non-configurable); skip instead of throwing. */
+function defineWritableIfConfigurable(obj, key, value) {
+  const existing = Object.getOwnPropertyDescriptor(obj, key);
+  if (existing && !existing.configurable) {
+    return;
+  }
+  Object.defineProperty(obj, key, {
+    value,
+    configurable: true,
+    enumerable: true,
+    writable: true,
+  });
 }
 
 /**
@@ -80,7 +94,11 @@ function setupJSDom() {
   global.dom = dom;
   global.window = window;
   global.document = window.document;
-  global.navigator = { userAgent: 'node.js' };
+  Object.defineProperty(global, 'navigator', {
+    value: { userAgent: 'node.js' },
+    configurable: true,
+    writable: true,
+  });
 
   /* eslint-disable-next-line func-names */
   global.requestAnimationFrame = function(callback) {
@@ -147,12 +165,7 @@ function setupJSDom() {
     writable: true,
   });
 
-  Object.defineProperty(window, 'location', {
-    value: window.location,
-    configurable: true,
-    enumerable: true,
-    writable: true,
-  });
+  defineWritableIfConfigurable(window, 'location', window.location);
 } // end setupJSDom()
 
 setupJSDom();
@@ -161,7 +174,7 @@ setupJSDom();
 // axe has strange issues with globals not being set up
 chai.use(chaiAxe);
 
-export const mochaHooks = {
+module.exports.mochaHooks = {
   beforeEach() {
     setupJSDom();
   },
