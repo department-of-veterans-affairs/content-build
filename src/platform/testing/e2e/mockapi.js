@@ -13,7 +13,23 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
 const winston = require('winston');
-const apiMocker = require('mocker-api');
+// Inline replacement for mocker-api: loads a module that exports
+// route definitions (e.g. "GET /api/foo": handler) and registers them.
+function apiMocker(app, mockerPath) {
+  // eslint-disable-next-line import/no-dynamic-require, global-require
+  const mocks = require(mockerPath);
+  Object.keys(mocks).forEach(key => {
+    const [method, ...pathParts] = key.split(/\s+/);
+    const routePath = pathParts.join(' ');
+    if (
+      method &&
+      routePath &&
+      typeof app[method.toLowerCase()] === 'function'
+    ) {
+      app[method.toLowerCase()](routePath, mocks[key]);
+    }
+  });
+}
 
 const optionDefinitions = [
   { name: 'buildtype', type: String, defaultValue: 'vagovdev' },
