@@ -11,7 +11,7 @@ _Templates_ are files composed of HTML and some programming directives used to p
 ### How templating works with Markdown files
 After setting up the project, the `vagov-content` repo should be a sibling repo to `vets-website`. `vagov-content` contains static content files in the form of Markdown (`.md`) in the `vagov-content/pages` directory. At the top of each Markdown file, there are declarations of key-value pairs referred to as "frontmatter", which are often used to define metadata about the page or to describe how the page should be processed during the HTML compilation.
 
-The most common key in frontmatter is a `layout` property, which refers to a file in `vets-website/src/site/layouts`. For example, this [`layout`](https://github.com/department-of-veterans-affairs/vagov-content/blame/68a9ca3d87214bee2e14a95f54044cd5c7d19f5a/pages/coronavirus-chatbot.md#L3) property refers to this [layout file](https://github.com/department-of-veterans-affairs/vets-website/blob/6c61531163be7b52345b6096dc6a76fc38e7776e/src/site/layouts/page-breadcrumbs.html) in `vets-website`. The frontmatter of the `.md` file are passed to the layout file as the global scope.
+The most common key in frontmatter is a `layout` property, which refers to a file in `vets-website/src/site/layouts`. For example, this [`layout`](https://va.ghe.com/software/vagov-content/blame/68a9ca3d87214bee2e14a95f54044cd5c7d19f5a/pages/coronavirus-chatbot.md#L3) property refers to this [layout file](https://va.ghe.com/software/vets-website/blob/6c61531163be7b52345b6096dc6a76fc38e7776e/src/site/layouts/page-breadcrumbs.html) in `vets-website`. The frontmatter of the `.md` file are passed to the layout file as the global scope.
 
 <details>
 
@@ -347,4 +347,4 @@ In liquid templates you can check for `isPreview` to allow unpublished content t
 
 ## Liquid Template Unit Testing Framework
 
-Please see the documentation [here](https://github.com/department-of-veterans-affairs/va.gov-team/tree/master/platform/testing/liquid-templates).
+Please see the documentation [here](https://va.ghe.com/software/va.gov-team/tree/master/platform/testing/liquid-templates).

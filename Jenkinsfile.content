@@ -53,7 +53,7 @@ node('vetsgov-general-purpose') {
   }
 
   dir("content-build") {
-    checkout scm: [$class: 'GitSCM', branches: [[name: ref]], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@github.com:department-of-veterans-affairs/content-build.git']]]
+    checkout scm: [$class: 'GitSCM', branches: [[name: ref]], userRemoteConfigs: [[credentialsId: 'va-bot', url: 'git@va.ghe.com:software/content-build.git']]]
   }
 
   def commonStages = load "content-build/jenkins/common.groovy"

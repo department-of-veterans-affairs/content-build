@@ -1,4 +1,4 @@
-# VA.gov Content Build ![Build Status](https://github.com/department-of-veterans-affairs/content-build/actions/workflows/continuous-integration.yml/badge.svg?branch=main)
+# VA.gov Content Build ![Build Status](https://va.ghe.com/software/content-build/actions/workflows/continuous-integration.yml/badge.svg?branch=main)
 
 ## What is this?
 
@@ -93,7 +93,7 @@ yarn fetch-drupal-cache
 ```
 
 #### Troubleshooting
-The [vagov-content](https://github.com/department-of-veterans-affairs/vagov-content) repository sits adjacent to `content-build` in the same way that `vets-website` does. The markdown files in `vagov-content` are pulled in during the build process. If a markdown file is present in `vagov-content`, but the template was deleted in `content-build`, you'll see a build error that reads something like this:
+The [vagov-content](https://va.ghe.com/software/vagov-content) repository sits adjacent to `content-build` in the same way that `vets-website` does. The markdown files in `vagov-content` are pulled in during the build process. If a markdown file is present in `vagov-content`, but the template was deleted in `content-build`, you'll see a build error that reads something like this:
 
 ```
 [Error: ENOENT: no such file or directory, open '{file path on your local machine}']
@@ -202,7 +202,7 @@ for doing very specific things.
 | run lint on JS and fix anything that changed                                                                | `yarn lint:js:changed:fix`                                                                                                                                                                                                   |
 | run visual regression testing                                                                               | Start the site. Generate your baseline image set using `yarn test:visual:baseline`. Make your changes. Then run `yarn test:visual`.                                                                                          |
 | add new npm modules                                                                                         | `yarn add my-module`. Use the `--dev` flag for modules that are build or test related.                                                                                                                                       |
-| get the latest json schema                                                                                  | `yarn update:schema`. This updates our [vets-json-schema](https://github.com/department-of-veterans-affairs/vets-json-schema) vets-json-schema https://github.com/department-of-veterans-affairs/ to the most recent commit. |
+| get the latest json schema                                                                                  | `yarn update:schema`. This updates our [vets-json-schema](https://va.ghe.com/software/vets-json-schema) vets-json-schema https://va.ghe.com/software/ to the most recent commit. |
 | check test coverage                                                                                         | `yarn test:coverage`                                                                                                                                                                                                         |
 
 ## Supported Browsers
