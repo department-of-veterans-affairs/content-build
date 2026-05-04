@@ -1,5 +1,7 @@
-const { runCommandSync } = require('./utils');
 const commandLineArgs = require('command-line-args');
+const express = require('express');
+const fallback = require('express-history-api-fallback');
+const path = require('path');
 
 const ENVIRONMENTS = require('../src/site/constants/environments');
 
@@ -11,7 +13,22 @@ const COMMAND_LINE_OPTIONS_DEFINITIONS = [
 ];
 
 const options = commandLineArgs(COMMAND_LINE_OPTIONS_DEFINITIONS);
+const root = path.resolve(__dirname, `../build/${options.buildtype}`);
 
-runCommandSync(
-  `yarn http-server build/${options.buildtype} -s -c-1 -p ${options.port}`,
-);
+const app = express();
+
+// Disable caching (equivalent to http-server -c-1)
+app.use((_req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  next();
+});
+
+app.use(express.static(root));
+
+// SPA fallback (equivalent to http-server -s)
+app.use(fallback('index.html', { root }));
+
+app.listen(options.port, () => {
+  // eslint-disable-next-line no-console
+  console.log(`Serving ${root} on http://localhost:${options.port}`);
+});
