@@ -828,7 +828,7 @@ module.exports = function registerFilters() {
 
   // check if this is an about menu page
   liquid.filters.isAboutItem = (menuArray, path) => {
-    const outreachPattern = new RegExp('outreach');
+    const outreachPattern = /outreach/;
     if (outreachPattern.test(path)) {
       return false;
     }
@@ -1575,7 +1575,7 @@ module.exports = function registerFilters() {
     const pathSections = path?.split('/')?.filter(section => !!section);
 
     // Derive the last section.
-    const lastSection = pathSections?.[pathSections?.length - 1];
+    const lastSection = pathSections && pathSections[pathSections.length - 1];
 
     // If the last path section is a number greater than 2, return true.
     return parseInt(lastSection, 10) >= 2;

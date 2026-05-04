@@ -431,8 +431,8 @@ function compilePage(page, contentData) {
 
       fieldFacilityOperatingStatus = [
         ...fieldFacilityOperatingStatus,
-        ...otherOperatingStatusEntities
-          ?.map(e => ({
+        ...(otherOperatingStatusEntities ?? [])
+          .map(e => ({
             entity: e,
           }))
           .sort((e1, e2) => {

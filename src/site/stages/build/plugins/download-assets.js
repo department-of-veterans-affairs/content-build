@@ -23,7 +23,9 @@ async function downloadWithRetry(url, retries = 3, delay = 1000) {
     console.log(
       `Fetch failed for ${url}: ${err.message}. Retrying in ${delay}ms...`,
     );
-    await new Promise(resolve => setTimeout(resolve, delay));
+    await new Promise(resolve => {
+      setTimeout(resolve, delay);
+    });
     return downloadWithRetry(url, retries - 1, delay * 2);
   }
 }

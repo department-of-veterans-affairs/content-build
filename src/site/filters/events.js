@@ -16,10 +16,10 @@ const deriveMostRecentDate = (
   }
 
   const dates = _.sortBy(fieldDatetimeRangeTimezone, 'endValue');
-  const futureDates = _.filter(dates, date => date?.endValue - now > 0);
+  const futureDates = _.filter(dates, date => (date?.endValue ?? 0) - now > 0);
 
   if (_.isEmpty(futureDates)) {
-    return dates[dates?.length - 1];
+    return dates[(dates?.length ?? 1) - 1];
   }
 
   return futureDates[0];
@@ -35,7 +35,7 @@ const filterUpcomingEvents = data => {
       event.fieldDatetimeRangeTimezone,
     );
 
-    return mostRecentEvent?.value * 1000 >= currentTimestamp;
+    return (mostRecentEvent?.value ?? 0) * 1000 >= currentTimestamp;
   });
 };
 

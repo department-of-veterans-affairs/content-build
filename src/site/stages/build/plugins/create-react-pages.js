@@ -2,7 +2,8 @@
 const path = require('path');
 const appRegistry = require('../../../../applications/registry.json');
 
-function createReactPages(files, drupalData = { data: {} }, done) {
+function createReactPages(files, drupalData, done) {
+  const data = drupalData || { data: {} };
   const {
     data: {
       alerts: alertsItem = {},
@@ -10,7 +11,7 @@ function createReactPages(files, drupalData = { data: {} }, done) {
       bannerAlerts: bannerAlertsItem = {},
       promoBanners,
     },
-  } = drupalData;
+  } = data;
   const alertItems = { alert: alertsItem };
 
   appRegistry.forEach(
