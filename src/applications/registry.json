@@ -2260,7 +2260,7 @@
   {
   "appName": "Apply for Annual Clothing Allowance",
   "entryName": "10-8678",
-  "rootUrl": "/disability/eligibility/annual-clothing-allowance/apply-form-10-8678",
+  "rootUrl": "/forms/10-8678/apply-annual-clothing-allowance",
   "template": {
       "vagovprod": false,
       "layout": "page-react.html",
