@@ -2204,7 +2204,7 @@
     "rootUrl": "/forms/22-0810/request-reimbursement-national-exam-fee",
     "productId": "0bb255ba-56a1-4ca2-8ca3-778a5eccfae5",
     "template": {
-      "vagovprod": false,
+      "vagovprod": true,
       "layout": "page-react.html"
     }
   },
