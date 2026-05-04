@@ -107,7 +107,7 @@ const renderHTML = (layoutPath, data, dataName) => {
 
   const render = liquid.compile(layout);
 
-  return new Promise((resolve, reject) =>
+  return new Promise((resolve, reject) => {
     render(context, err => {
       if (err) {
         reject(err);
@@ -136,8 +136,8 @@ const renderHTML = (layoutPath, data, dataName) => {
 
         resolve(dom.window.document);
       }
-    }),
-  );
+    });
+  });
 };
 
 // This is a simplified version of the function used in the metalsmith pipeline:

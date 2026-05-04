@@ -48,7 +48,7 @@ const axeCheck = container => {
     },
   };
 
-  return new Promise((resolve, reject) =>
+  return new Promise((resolve, reject) => {
     run(container, options, (error, { violations }) => {
       if (error) {
         reject(error);
@@ -59,8 +59,8 @@ const axeCheck = container => {
 
         resolve(violations);
       }
-    }),
-  );
+    });
+  });
 };
 
 export default axeCheck;

@@ -92,10 +92,8 @@ function convertDrupalFilesToLocal(drupalData, files) {
     if (data.match(/^https?:\/\/[^/\s]+\/sites\/[\w-]+\/files\//)) {
       const newPath = convertAssetPath(data);
       const decodedFileName = decodeURIComponent(newPath).substring(1);
-      const htmlRegex = new RegExp(/<\/?[a-z][\s\S]*>/i);
-      const vaDomainRegex = new RegExp(
-        /^https?:\/\/([a-z0-9]+(-[a-z0-9]+)*\.)+cms\.va\.gov/i,
-      );
+      const htmlRegex = /<\/?[a-z][\s\S]*>/i;
+      const vaDomainRegex = /^https?:\/\/([a-z0-9]+(-[a-z0-9]+)*\.)+cms\.va\.gov/i;
 
       // Check that this item is on a VA domain.
       // @todo Allow specified domains not of form *.cms.va.gov.

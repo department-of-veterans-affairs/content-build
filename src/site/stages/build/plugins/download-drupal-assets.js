@@ -53,7 +53,9 @@ async function downloadFile(
         );
         // Pause to give the proxy connection a break.
         // eslint-disable-next-line no-await-in-loop,no-loop-func
-        await new Promise(resolve => setTimeout(resolve, 2000 - retries * 500));
+        await new Promise(resolve => {
+          setTimeout(resolve, 2000 - retries * 500);
+        });
       } else if (options.buildtype === ENVIRONMENTS.LOCALHOST) {
         // If this is local, do not fail on missing assets, but inform the user.
         // Note that review instances run as local.
