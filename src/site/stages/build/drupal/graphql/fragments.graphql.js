@@ -58,7 +58,6 @@ const ALL_FRAGMENTS = `
   ${reactWidget}
   ${richTextCharLimit1000}
   ${spanishSummary}
-  ${staffProfile}
   ${supportService}
   ${table}
   ${termLcCategory}
