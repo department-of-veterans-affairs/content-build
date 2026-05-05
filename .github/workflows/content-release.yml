@@ -45,14 +45,6 @@ jobs:
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
 
-      - name: Notify CMS - Starting
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/starting
-          method: GET
-
       - name: Install dependencies
         uses: ./.github/workflows/install
         with:
@@ -167,14 +159,6 @@ jobs:
         with:
           ssm_parameter: /cms/prod/drupal_api_users/content_build_api/username
           env_variable_name: DRUPAL_USERNAME
-
-      - name: Notify CMS - In Progress
-        uses: ./content-build/.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/inprogress
-          method: GET
 
       - name: Get verbose level
         if: ${{ env.ACTIONS_RUNNER_DEBUG == 'true' }}
@@ -355,14 +339,6 @@ jobs:
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
 
-      - name: Notify CMS - Complete
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/complete
-          method: GET
-
       - name: CMS GovDelivery callback
         uses: ./.github/workflows/authenticated-cms-request
         with:
@@ -390,14 +366,6 @@ jobs:
 
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
-
-      - name: Notify CMS - Ready
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/ready
-          method: GET
 
   notify-success-datadog:
     name: Notify Success (Datadog)
@@ -464,14 +432,6 @@ jobs:
 
       - name: Wait for the CMS to be ready
         uses: ./.github/workflows/wait-for-cms-ready
-
-      - name: Notify CMS - Error
-        uses: ./.github/workflows/authenticated-cms-request
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          url: ${{ env.DRUPAL_ADDRESS }}/api/content_release/error
-          method: GET
 
   notify-failure-slack:
     name: Notify Failure (Slack)
