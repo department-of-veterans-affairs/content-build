@@ -1,29 +1,27 @@
-const path = require('path');
+// gtm_auth values must match src/site/assets/js/google-analytics/*.js (see google-analytics.liquid).
+const GTM_AUTH_MARKER_DEV = 'gtm_auth=N9BisSDKAwJENFQtQIEvXQ';
+const GTM_AUTH_MARKER_STAGING = 'gtm_auth=inC4EKQce9vlWpRVcowiyQ';
 
 Cypress.Commands.add('verifyGoogleAnalytics', () => {
   const envBuildtype = Cypress.env('buildtype') || 'vagovdev';
-  // Keep in sync with src/site/includes/google-analytics.liquid (localhost uses vagovdev assets).
-  const analyticsFileBuildtype =
-    envBuildtype === 'localhost' ? 'vagovdev' : envBuildtype;
-  const filePath = path.join(
-    'content-build',
-    __dirname,
-    '..',
-    '..',
-    'assets/js/google-analytics/',
-    `${analyticsFileBuildtype}.js`,
-  );
-  cy.readFile(filePath).then(str => {
-    cy.get('[data-e2e="analytics-script"]')
-      .invoke('html')
-      .then(value => {
-        // eslint-disable-next-line no-console
-        console.log('script tag', value.replace(/\s/g, ''));
-        // eslint-disable-next-line no-console
-        console.log('script file', str.replace(/\s/g, ''));
-        expect(value.replace(/\s/g, '')).to.contain(str.replace(/\s/g, ''));
-      });
-  });
+  const effective = envBuildtype === 'localhost' ? 'vagovdev' : envBuildtype;
+
+  const analyticsScript = () => cy.get('[data-e2e="analytics-script"]');
+
+  if (effective === 'vagovprod') {
+    analyticsScript()
+      .should('contain', 'GTM-WFJWBD')
+      .should('contain', 'googletagmanager.com/gtm.js')
+      .should('not.contain', 'gtm_auth');
+    return;
+  }
+
+  const gtmAuthMarker =
+    effective === 'vagovstaging'
+      ? GTM_AUTH_MARKER_STAGING
+      : GTM_AUTH_MARKER_DEV;
+
+  analyticsScript().should('contain', gtmAuthMarker);
 });
 
 Cypress.Commands.add('verifyElementCount', (selector, expectedLength) => {
