@@ -17,6 +17,10 @@ Cypress.Commands.add('verifyGoogleAnalytics', () => {
     cy.get('[data-e2e="analytics-script"]')
       .invoke('html')
       .then(value => {
+        // eslint-disable-next-line no-console
+        console.log('script tag', value.replace(/\s/g, ''));
+        // eslint-disable-next-line no-console
+        console.log('script file', str.replace(/\s/g, ''));
         expect(value.replace(/\s/g, '')).to.contain(str.replace(/\s/g, ''));
       });
   });
